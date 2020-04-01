@@ -1,0 +1,13 @@
+<% code = local_assigns.fetch(:code) %>
+
+<tr class="code">
+  <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+    <%= link_to code.title, code, class: 'text-gray-600 hover:text-gray-900 focus:outline-none focus:underline' %>
+  </td>
+  <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+    <%= link_to 'Edit', edit_code_path(code), class: 'text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline' %>
+  </td>
+  <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+    <%= link_to 'Destroy', code, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline' %>
+  </td>
+</tr>
