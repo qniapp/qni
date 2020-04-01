@@ -1,0 +1,69 @@
+.button {
+  $inner-elements: a, input;
+
+  @apply inline-flex rounded-md;
+  @apply shadow-sm;
+
+  @each $element in $inner-elements {
+    #{$element} {
+      @apply border;
+      @apply inline-flex justify-center;
+      @apply py-2 px-4;
+      @apply rounded-md;
+      @apply text-sm leading-5 font-medium;
+    }
+
+    #{$element}:hover {
+      @apply cursor-pointer;
+    }
+
+    #{$element}:focus {
+      @apply outline-none;
+    }
+
+    #{$element}:active {
+      @apply transition duration-150 ease-in-out;
+    }
+
+    // Primary buttons
+    &--primary #{$element} {
+      @apply bg-indigo-600;
+      @apply border-transparent;
+      @apply text-white;
+    }
+
+    &--primary #{$element}:hover {
+      @apply bg-indigo-500;
+    }
+
+    &--primary #{$element}:focus {
+      @apply border-indigo-700;
+      @apply shadow-outline-indigo;
+    }
+
+    &--primary #{$element}:active {
+      @apply bg-indigo-700;
+    }
+
+    // White buttons
+    &--white #{$element} {
+      @apply border-gray-300;
+      @apply text-gray-700;
+    }
+
+    &--white #{$element}:hover {
+      @apply text-gray-500;
+    }
+
+    &--white #{$element}:focus {
+      @apply border-blue-300;
+      @apply outline-none;
+      @apply shadow-outline-blue;
+    }
+
+    &--white #{$element}:active {
+      @apply bg-gray-50;
+      @apply text-gray-800;
+    }
+  }
+}
