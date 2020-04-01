@@ -240,6 +240,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_html
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
