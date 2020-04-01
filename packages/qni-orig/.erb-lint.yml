@@ -1,0 +1,16 @@
+---
+EnableDefaultLinters: true
+linters:
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Layout/LineLength:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
