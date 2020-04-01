@@ -2,9 +2,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ master develop ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master develop ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -17,8 +17,14 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
     - name: Build and test with Rake
       run: |
+        sudo apt-get install libsqlite3-dev
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+        bundle exec rails yarn:install db:setup assets:precompile
+        bundle exec rails test
