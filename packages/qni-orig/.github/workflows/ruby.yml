@@ -21,10 +21,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: Build and test with Rake
+    - name: Build
       run: |
         sudo apt-get install libsqlite3-dev
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rails yarn:install db:setup assets:precompile
+    - name: Rubocop
+      run: |
+        bundle exec rubocop
+    - name: Test with Rake
+      run: |
         bundle exec rails test
