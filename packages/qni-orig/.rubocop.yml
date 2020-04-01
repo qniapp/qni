@@ -21,9 +21,15 @@ AllCops:
 
 Style/Documentation:
   Exclude:
+    - 'app/controllers/*_controller.rb'
     - 'app/helpers/*_helper.rb'
+    - 'app/mailers/*_mailer.rb'
+    - 'app/models/application_record.rb'
+    - 'config/application.rb'
+    - 'db/migrate/*.rb'
     - 'test/**/*_test.rb'
     - 'test/application_system_test_case.rb'
+    - 'test/test_helper.rb'
 
 Style/HashEachMethods:
   Enabled: true
