@@ -11,21 +11,19 @@ export default class extends Controller {
   qubitCircleGroupTargets: Array<HTMLElement>;
   qubitCircleTargets: Array<HTMLElement>;
 
-  // TODO: gotoBreakpoint() との共通点をメソッドに切り出す
   connect() {
-    this.toggleCircuitColumnActive(0);
-    this.toggleCircleGroupActive(0);
+    this.gotoBreakpoint(0);
   }
 
-  gotoBreakpoint(event: MouseEvent) {
-    const circuitColumn = event.currentTarget as HTMLElement;
+  gotoBreakpoint(breakpoint: number) {
+    this.toggleCircuitColumnActive(breakpoint);
+    this.toggleCircleGroupActive(breakpoint);
+  }
 
-    this.circuitColumnTargets.forEach((el: HTMLElement, i: number) => {
-      if (el.isEqualNode(circuitColumn)) {
-        this.toggleCircuitColumnActive(i);
-        this.toggleCircleGroupActive(i);
-      }
-    })
+  circuitColumnClicked(event: MouseEvent) {
+    const circuitColumn = event.currentTarget as HTMLElement;
+    const breakpoint = this.circuitColumnTargets.indexOf(circuitColumn);
+    this.gotoBreakpoint(breakpoint);
   }
 
   private toggleCircuitColumnActive(breakpoint: number) {
@@ -42,14 +40,18 @@ export default class extends Controller {
     this.qubitCircleGroupTargets.forEach((el: HTMLElement, i: number) => {
       if (i == breakpoint) {
         el.classList.remove('hidden');
-        this.showCircleGroup(el);
+        this.maybeDrawCircleGroup(el);
       } else {
         el.classList.add('hidden');
       }
     })
   }
 
-  private showCircleGroup(circleGroupEl: HTMLElement) {
+  private maybeDrawCircleGroup(circleGroupEl: HTMLElement) {
+    if (circleGroupEl.dataset.drawn == 'true') {
+      return;
+    }
+
     const qubitCircles = circleGroupEl.getElementsByClassName('qubit-circle');
     const circleDiameter = qubitCircles[0].clientWidth;
 
@@ -68,5 +70,7 @@ export default class extends Controller {
         (phaseMagnitudeEl as HTMLElement).style.width = `${diameter / 2}px`;
       }
     });
+
+    circleGroupEl.dataset.drawn = 'true';
   }
 }
