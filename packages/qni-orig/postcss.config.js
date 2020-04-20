@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const purgecss = require('@fullhuman/postcss-purgecss')({
   // Specify the paths to all of the template files in your project
   content: ['./app/**/*.html.erb', './app/helpers/**/*.rb'],
@@ -16,6 +17,7 @@ module.exports = {
     require('autoprefixer'),
     require('postcss-import'),
     require('postcss-flexbugs-fixes'),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('postcss-preset-env')({
       autoprefixer: {
         flexbox: 'no-2009',
