@@ -1,0 +1,43 @@
+.wire {
+  @apply relative;
+  @apply w-12 h-8;
+
+  &:nth-of-type(n+2) {
+    @apply mt-4;
+  }
+
+  &__line {
+    @apply absolute;
+    @apply border-t-2 border-gray-600;
+    @apply mt-4;
+    @apply w-full;
+
+    top: -1px;
+  }
+
+  &--light &__line {
+    @apply border-gray-200;
+  }
+
+  &--placeholder &__line {
+    @apply border-transparent;
+  }
+
+  &__top {
+    @apply -mt-2 ml-6;
+    @apply absolute top-0;
+    @apply border-l-4 border-teal-400;
+    @apply h-6;
+
+    left: -2px;
+  }
+
+  &__bottom {
+    @apply absolute top-0;
+    @apply border-l-4 border-teal-400;
+    @apply h-6;
+    @apply mt-4 ml-6;
+
+    left: -2px;
+  }
+}

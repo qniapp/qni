@@ -9,8 +9,7 @@ class CodesController < ApplicationController
 
   # GET /codes/1
   # GET /codes/1.json
-  def show
-  end
+  def show; end
 
   # GET /codes/new
   def new
@@ -18,8 +17,7 @@ class CodesController < ApplicationController
   end
 
   # GET /codes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /codes
   # POST /codes.json
@@ -62,13 +60,14 @@ class CodesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_code
-      @code = Code.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def code_params
-      params.require(:code).permit(:title, :body)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_code
+    @code = Code.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def code_params
+    params.require(:code).permit(:title, :body)
+  end
 end

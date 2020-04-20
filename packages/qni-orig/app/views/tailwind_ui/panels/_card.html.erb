@@ -1,0 +1,7 @@
+<% klass = local_assigns[:class] %>
+<% data = local_assigns[:data] %>
+<% body = yield.presence || raise('body is a mandatory') %>
+
+<%= tag.div class: class_string('border-b border-t border-gray-200 sm:border sm:rounded-lg overflow-hidden', klass => klass), data: data do %>
+  <%= body %>
+<% end %>

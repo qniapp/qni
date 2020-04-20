@@ -1,0 +1,6 @@
+<% rows = local_assigns.fetch(:rows) %>
+<% body = yield.presence || raise('body is a mandatory') %>
+
+<div class="grid gap-2 grid-cols-1 grid-rows-<%= rows %> mr-2">
+  <%= body %>
+</div>

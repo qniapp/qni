@@ -3,13 +3,194 @@
     <%= notice %>
   </p>
 
-  <h3 class="text-xl font-bold mt-8">Title</h3>
-  <div class="mt-1"><%= @code.title %></div>
+  <div class="grid gap-2 grid-cols-1 sm:grid-cols-6 mt-8">
+    <div class="sm:col-span-2">
+      <%= card do %>
+        <%= card_header do %>
+          <h3 class="font-regular text-base md:text-lg leading-snug truncate">
+            <%= @code.title %>
+          </h3>
+        <% end %>
+        <%= card_body do %>
+          <pre class="mt-1"><%= @code.body %></pre>
+        <% end %>
+      <% end %>
+    </div>
 
-  <h3 class="text-xl font-bold mt-8">Body</h3>
-  <pre class="mt-1"><%= @code.body %></pre>
+    <div class="sm:col-span-4">
+      <%= card do %>
+        <%= card_header do %>
+          <h3 class="font-regular text-base md:text-lg leading-snug truncate">
+            Quantum Circuit
+          </h3>
+        <% end %>
+        <%= card_body do %>
+          <%= circuit do %>
+            <%= circuit_header do %>
+              <div class="grid gap-2 grid-cols-1 grid-rows-6 mr-2">
+                <div class="row-span-4 flex items-center border-r-2 border-red-300">
+                  <span class="font-semibold mr-2">a</span>
+                </div>
+                <div class="row-span-2 flex items-center border-r-2 border-red-300">
+                  <span class="font-semibold mr-2">b</span>
+                </div>
+              </div>
 
-  <div class="mt-8 border-t border-gray-200 pt-5">
+              <%= circuit_column class: 'mr-2' do %>
+                <%= qubit_value_label label: '0x1' %>
+                <%= qubit_value_label label: '0x2' %>
+                <%= qubit_value_label label: '0x4' %>
+                <%= qubit_value_label label: '0x8' %>
+                <%= qubit_value_label label: '0x1' %>
+                <%= qubit_value_label label: '0x2' %>
+              <% end %>
+            <% end %>
+
+            <%= circuit_block label: 'prepare' do %>
+              <%= circuit_column do %>
+                <%= write value: 1 %>
+                <%= write value: 0 %>
+                <%= write value: 0 %>
+                <%= write value: 0 %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= hadamard_gate %>
+                <%= wire %>
+                <%= wire light: true %>
+                <%= wire light: true %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= phase_gate theta: 'π/4' %>
+                <%= wire %>
+                <%= wire light: true %>
+                <%= wire light: true %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= write value: 1 %>
+                <%= write value: 0 %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= hadamard_gate %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= phase_gate theta: 'π/2' %>
+              <% end %>
+            <% end %>
+
+            <%= circuit_block_divider do %>
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+              <% end %>
+            <% end %>
+
+            <%= circuit_block label: 'a += b' do %>
+              <%= circuit_column do %>
+                <%= control_dot bottom: true %>
+                <%= control_dot top: true, bottom: true %>
+                <%= control_dot top: true, bottom: true %>
+                <%= not_gate top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= control_dot bottom: true %>
+                <%= control_dot top: true, bottom: true %>
+                <%= not_gate top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= control_dot bottom: true %>
+                <%= not_gate top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= not_gate bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= control_dot bottom: true %>
+                <%= control_dot top: true, bottom: true %>
+                <%= not_gate top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= control_dot bottom: true %>
+                <%= not_gate top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= not_gate bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= wire top: true, bottom: true %>
+                <%= control_dot top: true %>
+                <%= wire %>
+              <% end %>
+            <% end %>
+
+            <%= circuit_block_divider do %>
+              <%= circuit_column do %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+                <%= wire %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-8">
     <div class="flex justify-end">
       <span class="button button--white">
         <%= link_to 'Back', codes_path %>
