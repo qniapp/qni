@@ -9,9 +9,9 @@
 <% balloon_label = "|#{ket}⟩\nmagnitude = #{magnitude_string}" %>
 <% balloon_label += "\nphase = #{phase_string}" if magnitude.positive? %>
 
-<%= tag.div class: class_string('qubit-circle', klass => klass),
-            data: { target: 'simulator.qubitCircle', magnitude: magnitude, balloon_pos: 'up', balloon_break: '' },
-            aria: { label: balloon_label } do %>
+<div class="<%= class_string('qubit-circle', klass => klass) %>"
+     data-target="simulator.qubitCircle" data-magnitude="<%= magnitude %>" data-balloon-pos="up" data-balloon-break
+     aria-label="<%= balloon_label %>">
   <div class="qubit-circle__border">
     <div class="qubit-circle__magnitude"></div>
     <% if magnitude.positive? %>
@@ -25,4 +25,4 @@
     <% end %>
   </div>
   <span class="qubit-circle__ket">|<%= ket %>&#10217;</span>
-<% end %>
+</div>
