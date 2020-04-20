@@ -1,0 +1,6 @@
+<% body = yield.presence || raise('body is a mandatory') %>
+<% data = local_assigns[:data] %>
+
+<%= tag.div class: 'card__body', data: data do %>
+  <%= body %>
+<% end %>

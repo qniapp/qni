@@ -1,0 +1,19 @@
+<% value = local_assigns.fetch(:value) %>
+<% label = local_assigns[:label] %>
+<% klass = local_assigns[:class] %>
+
+<%= tag.div class: class_string('readout', 'readout--zero' => value.zero?, 'readout--one' => value == 1, klass => klass) do %>
+  <div class="readout__wire left-0 border-gray-600"></div>
+
+  <% if label %>
+    <div class="absolute top-0 -mt-5 w-full flex items-center justify-center">
+      <span class="text-xs font-mono text-gray-400"><%= label %></span>
+    </div>
+  <% end %>
+
+  <div class="readout__body flex justify-center items-center">
+    |<%= tag.span value, class: 'readout__value' %>&#10217;
+  </div>
+
+  <div class="readout__wire right-0 border-gray-200"></div>
+<% end %>

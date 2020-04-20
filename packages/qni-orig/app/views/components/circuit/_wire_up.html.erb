@@ -1,0 +1,12 @@
+<% bottom = local_assigns[:bottom] %>
+<% klass = local_assigns[:class] %>
+
+<div class="<%= class_string 'up-wire', klass => klass %>">
+  <div class="absolute border-t-2 border-gray-200 mt-4 w-full" style="top: -1px"></div>
+
+  <div class="absolute border-t-2 border-gray-600 mt-4 origin-top-left transform -rotate-45 z-10" style="width: 69px; left: -1px"></div>
+
+  <% if bottom %>
+    <div class="absolute top-0 -mt-2 ml-6 border-l-4 border-teal-400 h-12 z-20" style="left: -2px"></div>
+  <% end %>
+</div>
