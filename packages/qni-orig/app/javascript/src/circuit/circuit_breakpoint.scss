@@ -1,0 +1,16 @@
+.circuit-breakpoint {
+  @apply w-0;
+  @apply z-10;
+
+  &:hover {
+    @apply cursor-pointer;
+  }
+
+  &__line {
+    @apply bg-transparent;
+    @apply min-h-full;
+
+    padding: 2px;
+    margin-left: -2px;
+  }
+}

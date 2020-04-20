@@ -1,0 +1,17 @@
+<% disabled = local_assigns[:disabled] %>
+<% label = local_assigns[:label] %>
+<% klass = local_assigns[:class] %>
+
+<div class="<%= class_string 'hadamard-gate', 'hadamard-gate--disabled' => disabled, klass => klass %>">
+  <div class="absolute mt-4 border-t-2 border-gray-600 w-full" style="top: -1px"></div>
+
+  <% if label %>
+    <div class="absolute top-0 -mt-5 w-full flex items-center justify-center">
+      <span class="text-xs font-mono text-gray-400 whitespace-no-wrap"><%= label %></span>
+    </div>
+  <% end %>
+
+  <div class="hadamard-gate__box absolute w-8 h-8 top-0 mx-2 flex justify-center items-center">
+    <span class="hadamard-gate__label">H</span>
+  </div>
+</div>
