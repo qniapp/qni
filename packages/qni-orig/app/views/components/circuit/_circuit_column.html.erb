@@ -3,7 +3,7 @@
 <% klass = local_assigns[:class] %>
 
 <div class="<%= class_string('circuit-column', klass => klass) %>"
-     data-action="click->simulator#gotoBreakpoint"
+     data-action="click->simulator#circuitColumnClicked"
      data-target="simulator.circuitColumn">
   <div class="flex flex-col">
     <%= body %>
