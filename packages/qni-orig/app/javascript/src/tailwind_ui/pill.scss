@@ -1,0 +1,22 @@
+.pill {
+  @apply font-medium;
+  @apply inline-block;
+  @apply leading-none;
+  @apply py-2 px-3;
+  @apply rounded-lg;
+  @apply text-gray-500;
+
+  &:focus {
+    @apply outline-none;
+    @apply text-indigo-600;
+  }
+
+  &:hover {
+    @apply text-indigo-600;
+  }
+
+  &--active {
+    @apply bg-indigo-50;
+    @apply text-indigo-700;
+  }
+}

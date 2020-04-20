@@ -1,0 +1,20 @@
+<% top = local_assigns[:top] %>
+<% bottom = local_assigns[:bottom] %>
+<% light = local_assigns[:light] %>
+<% klass = local_assigns[:class] %>
+
+<div class="<%= class_string 'control-dot', klass => klass %>">
+  <div class="<%= class_string 'absolute mt-4 border-t-2 w-full', 'border-gray-600' => !light, 'border-gray-200' => light %>" style="top: -1px"></div>
+
+  <% if top %>
+    <div class="absolute top-0 -mt-2 ml-6 border-l-4 border-teal-400 h-6" style="left: -2px"></div>
+  <% end %>
+
+  <% if bottom %>
+    <div class="absolute top-0 mt-4 ml-6 border-l-4 border-teal-400 h-6" style="left: -2px"></div>
+  <% end %>
+
+  <div class="absolute w-8 h-8 rounded-full top-0 mx-2 flex justify-center items-center">
+    <div class="w-3 h-3 rounded-full bg-teal-400"></div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.circuit-column {
+  @apply flex flex-row;
+
+  &:hover .circuit-breakpoint__line {
+    @apply bg-indigo-300;
+    @apply transition duration-150 ease-in-out;
+  }
+}
