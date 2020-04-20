@@ -31,9 +31,9 @@ export default class extends Controller {
   private toggleCircuitColumnActive(breakpoint: number) {
     this.circuitColumnTargets.forEach((el: HTMLElement, i: number) => {
       if (i == breakpoint) {
-        el.classList.add('circuit-column--active');
+        el.querySelector('.circuit-breakpoint').classList.add('circuit-breakpoint--active')
       } else {
-        el.classList.remove('circuit-column--active');
+        el.querySelector('.circuit-breakpoint').classList.remove('circuit-breakpoint--active')
       }
     })
   }
