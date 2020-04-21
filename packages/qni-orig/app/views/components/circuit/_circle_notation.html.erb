@@ -1,6 +1,6 @@
 <% body = yield.presence || raise('body is a mandatory') %>
 <% size = local_assigns.fetch(:size, :base) %>
 
-<%= tag.div class: class_string('circle-notation', 'circle-notation--small' => size == :small) do %>
+<%= tag.div class: class_string('circle-notation', 'circle-notation--sm' => size == :sm, 'circle-notation--xs' => size == :xs) do %>
   <%= body %>
 <% end %>
