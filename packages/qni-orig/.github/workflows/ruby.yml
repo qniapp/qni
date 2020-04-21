@@ -8,8 +8,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -23,16 +36,25 @@ jobs:
         node-version: 12.x
     - name: Build
       run: |
-        sudo apt-get install libsqlite3-dev
+        sudo apt-get -y install libpq-dev
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rails yarn:install db:setup assets:precompile
+        bundle exec rails yarn:install assets:precompile
     - name: Rubocop
-      run: |
-        bundle exec rubocop
+      run: bundle exec rubocop
     - name: Erblint
-      run: |
-        bundle exec erblint --lint-all
+      run: bundle exec erblint --lint-all
+    - name: Setup DB
+      run: |-
+        cp config/database.yml.github-actions config/database.yml
+        bundle exec rails db:setup
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
     - name: Test with Rake
-      run: |
-        bundle exec rails test
+      run: bundle exec rails test
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
