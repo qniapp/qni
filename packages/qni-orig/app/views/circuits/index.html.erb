@@ -1866,15 +1866,95 @@
     <%%= wire light: true %>
     <%%= readout value: 1 %>
   <%% end %>
-
-  <%%= circuit_column do %>
-    <%%= wire light: true %>
-    <%%= wire light: true %>
-  <%% end %>
 <%% end %>
   <% end %>
 
-  <%= circuit_card heading: 'TODO: Remote-controlled randomness', circuit_erb: circuit_erb, class: 'mt-8' do %>
+  <%= circuit_card heading: 'Remote-controlled randomness', circuit_erb: circuit_erb, class: 'mt-8' do %>
+    <%= circle_notation do %>
+      <%= qubit_circle_group do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 1 %>
+          <%= qubit_circle ket: 1, magnitude: 0 %>
+          <%= qubit_circle ket: 2, magnitude: 0 %>
+          <%= qubit_circle ket: 3, magnitude: 0 %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 1 %>
+          <%= qubit_circle ket: 1, magnitude: 0 %>
+          <%= qubit_circle ket: 2, magnitude: 0 %>
+          <%= qubit_circle ket: 3, magnitude: 0 %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 1 / Math.sqrt(2), magnitude_string: '1/√2' %>
+          <%= qubit_circle ket: 1, magnitude: 1 / Math.sqrt(2), magnitude_string: '1/√2' %>
+          <%= qubit_circle ket: 2, magnitude: 0 %>
+          <%= qubit_circle ket: 3, magnitude: 0 %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 0.5, magnitude_string: '1/2' %>
+          <%= qubit_circle ket: 1, magnitude: 0.5, magnitude_string: '1/2' %>
+          <%= qubit_circle ket: 2, magnitude: 0.5, magnitude_string: '1/2' %>
+          <%= qubit_circle ket: 3, magnitude: 0.5, magnitude_string: '1/2' %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 0.5, magnitude_string: '1/2' %>
+          <%= qubit_circle ket: 1, magnitude: 0.5, magnitude_string: '1/2' %>
+          <%= qubit_circle ket: 2, magnitude: 0.5, magnitude_string: '1/2', phase: 45, phase_string: 'π/4' %>
+          <%= qubit_circle ket: 3, magnitude: 0.5, magnitude_string: '1/2', phase: 45, phase_string: 'π/4' %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 0.6532814824381883, magnitude_string: '√2*√(√2/4 + 1/2)/2', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>
+          <%= qubit_circle ket: 1, magnitude: 0.6532814824381883, magnitude_string: '√2*√(√2/4 + 1/2)/2', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>
+          <%= qubit_circle ket: 2, magnitude: 0.2705980500730985, magnitude_string: '√2*√(1/2 - √2/4)/2', phase: -67.53423698003536, phase_string: '-atan(√2/(2 - √2))' %>
+          <%= qubit_circle ket: 3, magnitude: 0.2705980500730985, magnitude_string: '√2*√(1/2 - √2/4)/2', phase: -67.53423698003536, phase_string: '-atan(√2/(2 - √2))' %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle ket: 0, magnitude: 0.6532814824381883, magnitude_string: '√2*√(√2/4 + 1/2)/2', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>
+          <%= qubit_circle ket: 1, magnitude: 0.2705980500730985, magnitude_string: '√2*√(1/2 - √2/4)/2', phase: -67.53423698003536, phase_string: '-atan(√2/(2 - √2))' %>
+          <%= qubit_circle ket: 2, magnitude: 0.2705980500730985, magnitude_string: '√2*√(1/2 - √2/4)/2', phase: -67.53423698003536, phase_string: '-atan(√2/(2 - √2))' %>
+          <%= qubit_circle ket: 3, magnitude: 0.6532814824381883, magnitude_string: '√2*√(√2/4 + 1/2)/2', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>                <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle_group_row do %>
+            <%= qubit_circle ket: 0, magnitude: 0 %>
+            <%= qubit_circle ket: 1, magnitude: 0.3826834323650898, magnitude_string: '...', phase: -67.53423698003536, phase_string: '-atan(√2/(2 - √2))' %>
+            <%= qubit_circle ket: 2, magnitude: 0 %>
+            <%= qubit_circle ket: 3, magnitude: 0.9238795325112868, magnitude_string: '...', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= qubit_circle_group class: 'hidden' do %>
+        <%= qubit_circle_group_row do %>
+          <%= qubit_circle_group_row do %>
+            <%= qubit_circle ket: 0, magnitude: 0 %>
+            <%= qubit_circle ket: 1, magnitude: 0 %>
+            <%= qubit_circle ket: 2, magnitude: 0 %>
+            <%= qubit_circle ket: 3, magnitude: 1, magnitude_string: '1', phase: 22.511412326678453, phase_string: 'atan(√2/(√2 + 2))' %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% circuit_erb = capture do %>
