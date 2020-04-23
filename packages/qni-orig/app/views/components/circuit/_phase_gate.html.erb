@@ -14,7 +14,7 @@
     <div class="absolute top-0 mt-4 ml-6 border-l-4 border-teal-400 h-6" style="left: -2px"></div>
   <% end %>
 
-  <% if theta %>
+  <% if theta && !top %>
     <div class="absolute top-0 -mt-5 w-full flex items-center justify-center">
       <span class="text-xs font-mono text-gray-400 whitespace-no-wrap"><%= theta %></span>
     </div>
@@ -23,4 +23,10 @@
   <div class="absolute w-8 h-8 rounded-full top-0 mx-2 bg-teal-400 flex justify-center items-center">
     <span class="text-white -mt-1">φ</span>
   </div>
+
+  <% if theta && top && !bottom %>
+    <div class="absolute top-0 mt-8 w-full flex items-center justify-center">
+      <span class="text-xs font-mono text-gray-400 whitespace-no-wrap"><%= theta %></span>
+    </div>
+  <% end %>
 </div>
