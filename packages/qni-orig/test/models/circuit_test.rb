@@ -381,5 +381,14 @@ class CircuitTest
 
       assert_equal circle_notation, circuit.circle_notation
     end
+
+    test 'QFT square wave' do
+      circuit = circuits('qft_square_wave')
+      circle_notation = circuit.circle_notation.chomp
+
+      circuit.generate_circle_notation
+
+      assert_equal circle_notation, circuit.circle_notation
+    end
   end
 end
