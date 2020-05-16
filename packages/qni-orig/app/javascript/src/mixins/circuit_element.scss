@@ -1,0 +1,84 @@
+$wire-width: 2;
+$wire-color: gray-600;
+$wire-inactive-color: gray-200;
+
+@mixin circuit-element {
+  @apply flex justify-center items-center;
+  @apply relative;
+  @apply w-12 h-8;
+
+  &:nth-of-type(n+2) {
+    @apply mt-4;
+  }
+
+  .gate-label {
+    @apply -mt-5;
+    @apply absolute top-0;
+    @apply flex items-center justify-center;
+    @apply font-mono;
+    @apply text-gray-400;
+    @apply text-xs;
+    @apply w-full;
+    @apply whitespace-no-wrap;
+  }
+
+  .gate-label--bottom {
+    @apply mt-8
+  }
+
+  .bg-wire {
+    @apply absolute;
+    @apply border-t-#{$wire-width} border-#{$wire-color};
+    @apply mt-4;
+    @apply w-full;
+
+    top: -1px;
+  }
+
+  .bg-wire--inactive {
+    @apply border-#{$wire-inactive-color};
+  }
+
+  .top-wire {
+    @apply -mt-2 ml-6;
+    @apply absolute top-0;
+    @apply border-l-4 border-teal-400;
+    @apply h-6;
+
+    left: -2px;
+  }
+
+  .bottom-wire {
+    @apply absolute top-0;
+    @apply border-l-4 border-teal-400;
+    @apply h-6;
+    @apply mt-4 ml-6;
+
+    left: -2px;
+  }
+
+  .gate-box {
+    @apply absolute top-0 left-0 right-0;
+    @apply bg-teal-400;
+    @apply flex justify-center items-center;
+    @apply mx-2;
+    @apply text-white;
+    @apply w-8 h-8;
+  }
+
+  &--disabled .gate-box {
+    @apply bg-white;
+    @apply border-2 border-dashed border-gray-300;
+    @apply text-gray-300;
+  }
+
+  .gate-circle {
+    @apply absolute top-0 left-0 right-0;
+    @apply bg-teal-400;
+    @apply flex justify-center items-center;
+    @apply mx-2;
+    @apply rounded-full;
+    @apply stroke-current text-white;
+    @apply w-8 h-8;
+  }
+}

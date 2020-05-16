@@ -1,0 +1,3 @@
+<% active = local_assigns.fetch(:active, true) %>
+
+<div class="<%= class_string 'bg-wire', 'bg-wire--inactive' => !active %>"></div>

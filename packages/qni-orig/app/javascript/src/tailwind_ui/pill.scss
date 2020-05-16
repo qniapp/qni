@@ -1,10 +1,12 @@
 .pill {
   @apply font-medium;
   @apply inline-block;
+  @apply leading-5;
   @apply leading-none;
   @apply py-2 px-3;
   @apply rounded-lg;
   @apply text-gray-500;
+  @apply text-sm;
 
   &:focus {
     @apply outline-none;

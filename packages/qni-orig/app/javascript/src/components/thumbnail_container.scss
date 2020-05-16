@@ -1,0 +1,22 @@
+.thumbnail-container {
+  @apply inline-block;
+  @apply overflow-hidden;
+  @apply relative;
+  @apply w-full h-full;
+
+  .thumbnail {
+    @apply relative;
+    @apply transform origin-top-left;
+  }
+
+  .thumbnail:after {
+    @apply block;
+    @apply absolute inset-0;
+
+    content: "";
+  }
+
+  iframe {
+    @apply overflow-hidden;
+  }
+}

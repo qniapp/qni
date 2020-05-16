@@ -1,0 +1,12 @@
+.register-label {
+  @apply bg-white;
+  @apply flex justify-end items-center;
+  @apply font-semibold;
+  @apply h-8;
+  @apply mr-2;
+  @apply whitespace-no-wrap;
+
+  &:nth-of-type(n+2) {
+    @apply mt-4;
+  }
+}

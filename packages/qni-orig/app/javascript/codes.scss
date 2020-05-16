@@ -1,9 +1,0 @@
-.code {
-  &:nth-child(odd) {
-    @apply bg-white;
-  }
-
-  &:nth-child(even) {
-    @apply bg-gray-50;
-  }
-}

@@ -1,0 +1,271 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_register_column_span rows: 4 do %>
+      <%= register_label_span label: 'register', row_span: 4 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x2' %>
+      <%= qubit_label label: '0x4' %>
+      <%= qubit_label label: '0x8' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'prep' do %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'Amplitude Amplification' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'Amplitude Amplification' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'Amplitude Amplification' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'Amplitude Amplification' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+<% end %>

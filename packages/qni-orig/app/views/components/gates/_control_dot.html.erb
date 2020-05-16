@@ -1,0 +1,10 @@
+<% top = local_assigns.fetch(:top, false) %>
+<% bottom = local_assigns.fetch(:bottom, false) %>
+<% wire_active = local_assigns.fetch(:wire_active, true) %>
+
+<div class="control-dot">
+  <%= bg_wire active: wire_active %>
+  <%= top_wire if top %>
+  <div class="control-dot__dot"></div>
+  <%= bottom_wire if bottom %>
+</div>

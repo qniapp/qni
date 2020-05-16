@@ -1,8 +1,0 @@
-.phase-gate {
-  @apply relative;
-  @apply w-12 h-8;
-
-  &:nth-of-type(n+2) {
-    @apply mt-4;
-  }
-}

@@ -1,0 +1,12 @@
+.circuit-block-divider {
+  @apply flex flex-col;
+  @apply flex-shrink-0;
+  @apply my-6;
+
+  &__body {
+    @apply border-t-2 border-transparent;
+    @apply flex flex-row;
+    @apply h-full;
+    @apply py-8;
+  }
+}

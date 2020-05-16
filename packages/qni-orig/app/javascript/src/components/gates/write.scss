@@ -1,0 +1,43 @@
+.write {
+  @include circuit-element;
+
+  &__wire {
+    @apply absolute;
+    @apply border-t-#{$wire-width};
+    @apply mt-4;
+    @apply w-2;
+
+    top: -1px;
+  }
+
+  &__wire--left {
+    @apply border-#{$wire-inactive-color};
+    @apply left-0;
+  }
+
+  &__wire--right {
+    @apply border-#{$wire-color};
+    @apply right-0;
+  }
+
+  &__body {
+    @apply absolute top-0 right-0;
+    @apply flex justify-end items-center;
+    @apply mx-2;
+    @apply text-center;
+    @apply text-xl;
+    @apply w-8 h-8;
+  }
+
+  &__value {
+    @apply w-4;
+  }
+
+  &--0 &__value {
+    @apply text-blue-500;
+  }
+
+  &--1 &__value {
+    @apply text-orange-500;
+  }
+}

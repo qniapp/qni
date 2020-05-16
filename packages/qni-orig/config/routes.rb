@@ -3,5 +3,11 @@ Rails.application.routes.draw do
   root 'circuits#index'
 
   resources :circuits
-  resources :codes
+  resources :circuit_previews, only: :show
+
+  namespace :admin do
+    resources :circuits
+
+    root to: 'circuits#index'
+  end
 end

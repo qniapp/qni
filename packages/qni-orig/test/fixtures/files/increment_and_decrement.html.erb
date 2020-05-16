@@ -1,0 +1,111 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_register_column_span rows: 4 do %>
+      <%= register_label_span label: 'a', row_span: 4 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x2' %>
+      <%= qubit_label label: '0x4' %>
+      <%= qubit_label label: '0x8' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'prepare' do %>
+    <%= circuit_column do %>
+      <%= write value: 1 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= hadamard_gate %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= phase_gate theta: 'π/4' %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'increment' do %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'decrement' do %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+<% end %>

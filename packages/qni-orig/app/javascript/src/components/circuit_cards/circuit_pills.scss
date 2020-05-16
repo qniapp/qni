@@ -1,0 +1,12 @@
+.circuit-pills {
+  @apply items-center;
+  @apply text-sm;
+
+  @screen sm {
+    @apply flex;
+  }
+
+  @screen md {
+    @apply text-base;
+  }
+}

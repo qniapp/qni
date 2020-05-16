@@ -1,0 +1,42 @@
+<%= circuit do %>
+  <%= circuit_column do %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x2' %>
+    <%= qubit_label label: '0x4' %>
+    <%= qubit_label label: '0x8' %>
+    <%= qubit_label label: '0x10' %>
+    <%= qubit_label label: '0x20' %>
+    <%= qubit_label label: '0x40' %>
+    <%= qubit_label label: '0x80' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= readout value: 0 %>
+    <%= readout value: 1 %>
+    <%= readout value: 1 %>
+    <%= readout value: 0 %>
+    <%= readout value: 1 %>
+    <%= readout value: 0 %>
+    <%= readout value: 0 %>
+    <%= readout value: 1 %>
+  <% end %>
+<% end %>

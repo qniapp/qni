@@ -18,7 +18,7 @@
 /* purgecss end ignore */
 
 // highlight.js
-@import 'highlight.js/styles/railscasts.css';
+@import 'highlight.js/styles/rainbow.css';
 
 // balloon-css
 @import 'balloon-css/balloon.css';
@@ -28,28 +28,34 @@
 @import "tailwind_ui/card";
 @import "tailwind_ui/pill";
 
-// Models
-@import "codes";
+// Mixins
+@import "mixins/circuit_element";
 
-// Quantum circuit
-@import "circuit/circuit_breakpoint";
-@import "circuit/circuit_column";
-@import "circuit/control_dot";
-@import "circuit/hadamard_gate";
-@import "circuit/not_gate";
-@import "circuit/phase_gate";
-@import "circuit/qubit_label";
-@import "circuit/qubit_value_label";
-@import "circuit/readout";
-@import "circuit/root_not_gate";
-@import "circuit/wire";
-@import "circuit/wire_down";
-@import "circuit/wire_up";
-@import "circuit/write";
+// Components
 @import "components/circle_notation";
+@import "components/circle_notations/qubit_circle";
+@import "components/circle_notations/qubit_circle_group_row";
 @import "components/circuit";
-@import "components/qubit_circle";
-@import "components/qubit_circle_group_row";
+@import "components/circuit_cards/circuit_code";
+@import "components/circuit_cards/circuit_pills";
+@import "components/circuits/circuit_block";
+@import "components/circuits/circuit_block_divider";
+@import "components/circuits/circuit_breakpoint";
+@import "components/circuits/circuit_column";
+@import "components/circuits/qubit_label";
+@import "components/circuits/register_label";
+@import "components/circuits/register_label_span";
+@import "components/gates/control_dot";
+@import "components/gates/down_wire";
+@import "components/gates/hadamard_gate";
+@import "components/gates/not_gate";
+@import "components/gates/phase_gate";
+@import "components/gates/readout";
+@import "components/gates/root_not_gate";
+@import "components/gates/up_wire";
+@import "components/gates/wire";
+@import "components/gates/write";
+@import "components/thumbnail_container";
 
 // tailwind utilities
 @import "tailwindcss/utilities";

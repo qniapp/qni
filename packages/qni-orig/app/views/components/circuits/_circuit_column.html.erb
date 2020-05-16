@@ -1,0 +1,11 @@
+<% body = yield.presence || raise('body is a mandatory') %>
+
+<div class="circuit-column"
+     data-action="click->simulator#circuitColumnClicked"
+     data-target="simulator.circuitColumn">
+  <div class="flex flex-col">
+    <%= body %>
+  </div>
+
+  <%= circuit_breakpoint %>
+</div>
