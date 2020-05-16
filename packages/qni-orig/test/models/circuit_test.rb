@@ -363,5 +363,14 @@ class CircuitTest
 
       assert_equal circle_notation, circuit.circle_notation
     end
+
+    test 'QFT to distinguish 3 states' do
+      circuit = circuits('qft_to_distinguish_3_states')
+      circle_notation = circuit.circle_notation.chomp
+
+      circuit.generate_circle_notation
+
+      assert_equal circle_notation, circuit.circle_notation
+    end
   end
 end

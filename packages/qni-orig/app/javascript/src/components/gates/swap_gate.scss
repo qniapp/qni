@@ -1,0 +1,11 @@
+.swap-gate {
+  @include circuit-element;
+
+  svg {
+    @apply stroke-current;
+    @apply text-teal-400;
+    @apply w-8 h-8;
+
+    stroke-width: 3;
+  }
+}

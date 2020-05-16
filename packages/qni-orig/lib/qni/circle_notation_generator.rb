@@ -39,6 +39,7 @@ module Qni
         f.puts python
         f
       end
+      Rails.logger.debug "Generated a sympy script = #{@sympy_script.path}"
     end
 
     def body
@@ -159,6 +160,10 @@ module Qni
     def phase(targets, _opts = {})
       dict = targets.map { |k, v| "#{k}: #{v.delete("'").gsub(/π/, 'pi')}" }.join(', ')
       "psi = p({#{dict}}, psi)\n"
+    end
+
+    def swap(targets)
+      "psi = swap([#{targets.join(', ')}], psi)\n"
     end
 
     def cphase(targets)

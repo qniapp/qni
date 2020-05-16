@@ -212,6 +212,14 @@ class DslTest
   end
 
   class MultiQubitGateTest < ActiveSupport::TestCase
+    test 'swap 1, 2' do
+      dsl = Qni::Dsl.load <<~DSL
+        swap 1, 2
+      DSL
+
+      assert_equal [:swap, [1, 2]], dsl[0]
+    end
+
     test 'cnot 0 => 1' do
       dsl = Qni::Dsl.load <<~DSL
         cnot 0 => 1

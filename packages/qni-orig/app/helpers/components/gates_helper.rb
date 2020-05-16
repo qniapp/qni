@@ -15,6 +15,10 @@ module Components::GatesHelper
     render 'components/gates/root_not_gate', *options
   end
 
+  def swap_gate(*options)
+    render 'components/gates/swap_gate', *options
+  end
+
   def control_dot(*options)
     render 'components/gates/control_dot', *options
   end

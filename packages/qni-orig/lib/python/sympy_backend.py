@@ -95,6 +95,18 @@ def CNOT(control, target, nqubits):
     return CU(control, target, X, nqubits)
 
 
+def swap(targets, psi):
+    nqubits = int(math.log2(psi.rows))
+
+    ucnot1 = CNOT(targets[0], targets[1], nqubits)
+    ucnot2 = CNOT(targets[1], targets[0], nqubits)
+    uswap = ucnot1 * ucnot2 * ucnot1
+
+    new_psi = simplify(uswap * psi)
+    print_psi(new_psi)
+    return new_psi
+
+
 def cnot(control, target, psi):
     nqubits = int(math.log2(psi.rows))
 

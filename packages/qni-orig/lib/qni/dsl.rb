@@ -142,6 +142,10 @@ module Qni
 
     # Multi Qubit Gates
 
+    def swap(*qubits)
+      @time_evolution << [:swap, qubits]
+    end
+
     def cnot(values)
       @time_evolution <<
         if values.keys.first.is_a?(Array)

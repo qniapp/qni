@@ -82,6 +82,16 @@ class Components::GatesHelperTest < ActionView::TestCase
     ERB
   end
 
+  test 'swap gate' do
+    assert_dom_equal beautify(<<~ERB), beautify(swap_gate(bottom: true))
+      <div class="swap-gate">
+        <div class="bg-wire"></div>
+        <div class="bottom-wire"></div>
+        <span>#{swap}</span>
+      </div>
+    ERB
+  end
+
   test 'control dot' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot)
       <div class="control-dot">

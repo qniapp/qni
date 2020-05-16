@@ -121,3 +121,10 @@ multiple_flipped_entries:
   dsl: <%= file_text('multiple_flipped_entries.dsl.rb') %>
   erb: <%= file_text('multiple_flipped_entries.html.erb') %>
   circle_notation: <%= file_text('multiple_flipped_entries_cn.html.erb') %>
+
+qft_to_distinguish_3_states:
+  name: QFT to distinguish 3 states
+  dsl: <%= file_text('qft_to_distinguish_3_states.dsl.rb') %>
+  erb: <%= file_text('qft_to_distinguish_3_states.html.erb') %>
+  circle_notation: <%= file_text('qft_to_distinguish_3_states_cn.html.erb') %>
+
