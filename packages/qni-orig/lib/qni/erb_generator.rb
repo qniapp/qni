@@ -137,6 +137,40 @@ module Qni
 
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
+    def swap(targets)
+      circuit_column do
+        (0...@dsl.nqubit).map do |each|
+          top = false
+          bottom = false
+
+          if ((targets[0] + 1)...targets[1]).cover?(each)
+            top = true
+            bottom = true
+          end
+
+          if each == targets[0] && targets[1] - targets[0] == 1
+            "<%= down_wire %>\n"
+          elsif each == targets[1] && targets[1] - targets[0] == 1
+            "<%= up_wire %>\n"
+          elsif each == targets[0] && targets[1] - targets[0] > 1
+            "<%= swap_gate bottom: true %>\n"
+          elsif each == targets[1] && targets[1] - targets[0] > 1
+            "<%= swap_gate top: true %>\n"
+          else
+            wire top: top, bottom: bottom, active: @wire_active[each]
+          end
+        end.join
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
+
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def cphase(targets)
       controls = targets.keys.first
       theta = targets.values.first
