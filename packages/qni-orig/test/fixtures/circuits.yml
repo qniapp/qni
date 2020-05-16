@@ -133,3 +133,9 @@ qft_of_simple_qpu_signal:
   dsl: <%= file_text('qft_of_simple_qpu_signal.dsl.rb') %>
   erb: <%= file_text('qft_of_simple_qpu_signal.html.erb') %>
   circle_notation: <%= file_text('qft_of_simple_qpu_signal_cn.html.erb') %>
+
+qft_square_wave:
+  name: QFT square wave
+  dsl: <%= file_text('qft_square_wave.dsl.rb') %>
+  erb: <%= file_text('qft_square_wave.html.erb') %>
+  circle_notation: <%= file_text('qft_square_wave_cn.html.erb') %>
