@@ -7,7 +7,9 @@
   <%= card class: klass do %>
     <%= card_header do %>
       <%= card_title text: heading %>
-      <%= link_to 'Open', circuit, type: 'button', class: 'button button--secondary button--sm' %>
+      <div class="flex flex-shrink-0 items-center ml-4">
+        <%= link_to 'Open', circuit, type: 'button', class: 'button button--secondary button--sm' %>
+      </div>
     <% end %>
 
     <%= card_body do %>
