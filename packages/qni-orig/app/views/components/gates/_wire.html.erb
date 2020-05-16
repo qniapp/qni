@@ -1,0 +1,9 @@
+<% active = local_assigns.fetch(:active, true) %>
+<% top = local_assigns.fetch(:top, false) %>
+<% bottom = local_assigns.fetch(:bottom, false) %>
+
+<div class="wire">
+  <%= bg_wire active: active %>
+  <%= top_wire if top %>
+  <%= bottom_wire if bottom %>
+</div>

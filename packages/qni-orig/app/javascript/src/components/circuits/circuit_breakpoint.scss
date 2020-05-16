@@ -1,0 +1,26 @@
+.circuit-breakpoint {
+  @apply w-0;
+  @apply z-10;
+
+  .simulator &:hover {
+    @apply cursor-pointer;
+  }
+
+  &__line {
+    @apply bg-transparent;
+    @apply min-h-full;
+
+    padding: 2px;
+    margin-left: -2px;
+  }
+
+  .simulator .circuit-column:hover &__line {
+    @apply bg-indigo-300;
+    @apply transition duration-150 ease-in-out;
+  }
+
+  .simulator .circuit:hover &--active &__line {
+    @apply bg-yellow-300;
+    @apply transition duration-150 ease-in-out;
+  }
+}

@@ -1,0 +1,30 @@
+.circuit-block {
+  @apply flex flex-col;
+  @apply my-6;
+  @apply relative;
+
+  &__label {
+    @apply absolute;
+    @apply flex justify-center;
+    @apply text-indigo-700;
+    @apply w-full;
+    @apply whitespace-no-wrap;
+  }
+
+  &__label--top {
+    @apply -mt-8;
+    @apply top-0;
+  }
+
+  &__label--bottom {
+    @apply -mb-8;
+    @apply bottom-0;
+  }
+
+  &__body {
+    @apply bg-gray-100;
+    @apply border-t-2 border-b-2 border-indigo-200;
+    @apply flex flex-row;
+    @apply py-8;
+  }
+}

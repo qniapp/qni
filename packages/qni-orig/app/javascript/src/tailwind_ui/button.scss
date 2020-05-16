@@ -1,69 +1,109 @@
 .button {
-  $inner-elements: a, input;
-
+  @apply appearance-none;
+  @apply border;
+  @apply font-medium;
+  @apply inline-flex justify-center;
   @apply inline-flex rounded-md;
+  @apply rounded-md;
   @apply shadow-sm;
 
-  @each $element in $inner-elements {
-    #{$element} {
-      @apply border;
-      @apply inline-flex justify-center;
-      @apply py-2 px-4;
-      @apply rounded-md;
-      @apply text-sm leading-5 font-medium;
-    }
+  // base size
+  @apply leading-5;
+  @apply py-2 px-4;
+  @apply text-sm;
 
-    #{$element}:hover {
-      @apply cursor-pointer;
-    }
+  &--xs {
+    @apply leading-4;
+    @apply px-2.5 py-1.5;
+    @apply text-xs;
+  }
 
-    #{$element}:focus {
-      @apply outline-none;
-    }
+  &--sm {
+    @apply leading-4;
+    @apply px-3 py-2;
+  }
 
-    #{$element}:active {
-      @apply transition duration-150 ease-in-out;
-    }
+  &--lg {
+    @apply leading-6;
+  }
 
-    // Primary buttons
-    &--primary #{$element} {
-      @apply bg-indigo-600;
-      @apply border-transparent;
-      @apply text-white;
-    }
+  &--xl {
+    @apply text-base;
+    @apply leading-6;
+    @apply px-6 py-3;
+  }
 
-    &--primary #{$element}:hover {
-      @apply bg-indigo-500;
-    }
+  &:hover {
+    @apply cursor-pointer;
+  }
 
-    &--primary #{$element}:focus {
-      @apply border-indigo-700;
-      @apply shadow-outline-indigo;
-    }
+  &:focus {
+    @apply outline-none;
+  }
 
-    &--primary #{$element}:active {
-      @apply bg-indigo-700;
-    }
+  &:active {
+    @apply transition duration-150 ease-in-out;
+  }
 
-    // White buttons
-    &--white #{$element} {
-      @apply border-gray-300;
-      @apply text-gray-700;
-    }
+  // Primary buttons
+  &--primary {
+    @apply bg-indigo-600;
+    @apply border-transparent;
+    @apply text-white;
+  }
 
-    &--white #{$element}:hover {
-      @apply text-gray-500;
-    }
+  &--primary:hover {
+    @apply bg-indigo-500;
+  }
 
-    &--white #{$element}:focus {
-      @apply border-blue-300;
-      @apply outline-none;
-      @apply shadow-outline-blue;
-    }
+  &--primary:focus {
+    @apply border-indigo-700;
+    @apply shadow-outline-indigo;
+  }
 
-    &--white #{$element}:active {
-      @apply bg-gray-50;
-      @apply text-gray-800;
-    }
+  &--primary:active {
+    @apply bg-indigo-700;
+  }
+
+  // Secondary buttons
+  &--secondary {
+    @apply bg-indigo-100;
+    @apply border-transparent;
+    @apply text-indigo-700;
+  }
+
+  &--secondary:hover {
+    @apply bg-indigo-50;
+  }
+
+  &--secondary:focus {
+    @apply border-indigo-300;
+    @apply outline-none;
+    @apply shadow-outline-indigo;
+  }
+
+  &--secondary:active {
+    @apply bg-indigo-200;
+  }
+
+  // White buttons
+  &--white {
+    @apply border-gray-300;
+    @apply text-gray-700;
+  }
+
+  &--white:hover {
+    @apply text-gray-500;
+  }
+
+  &--white:focus {
+    @apply border-blue-300;
+    @apply outline-none;
+    @apply shadow-outline-blue;
+  }
+
+  &--white:active {
+    @apply bg-gray-50;
+    @apply text-gray-800;
   }
 }

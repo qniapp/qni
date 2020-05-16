@@ -1,0 +1,16 @@
+<% label = local_assigns.fetch(:label) %>
+<% body = yield.presence || raise('body is a mandatory') %>
+
+<div class="circuit-block">
+  <div class="circuit-block__label circuit-block__label--top">
+    <span><%= label %></span>
+  </div>
+
+  <div class="circuit-block__body">
+    <%= body %>
+  </div>
+
+  <div class="circuit-block__label circuit-block__label--bottom">
+    <span><%= label %></span>
+  </div>
+</div>

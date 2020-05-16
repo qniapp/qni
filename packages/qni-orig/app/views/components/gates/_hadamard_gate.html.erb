@@ -1,0 +1,9 @@
+<% label = local_assigns.fetch(:label, nil) %>
+<% disabled = local_assigns.fetch(:disabled, false) %>
+<% wire_active = local_assigns.fetch(:wire_active, true) %>
+
+<div class="<%= class_string 'hadamard-gate', 'hadamard-gate--disabled' => disabled %>">
+  <%= bg_wire active: wire_active %>
+  <%= gate_box label: 'H' %>
+  <%= gate_label(label: label) if label %>
+</div>

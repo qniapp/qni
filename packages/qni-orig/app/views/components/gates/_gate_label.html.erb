@@ -1,0 +1,4 @@
+<% label = local_assigns.fetch(:label) %>
+<% bottom = local_assigns.fetch(:bottom, false) %>
+
+<div class="<%= class_string 'gate-label', 'gate-label--bottom' => bottom %>"><%= label %></div>

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_070745) do
+ActiveRecord::Schema.define(version: 2020_04_23_053252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "codes", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
+  create_table "circuits", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "dsl", null: false
+    t.text "erb", null: false
+    t.text "circle_notation", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

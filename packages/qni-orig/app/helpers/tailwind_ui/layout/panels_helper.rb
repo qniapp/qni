@@ -7,6 +7,10 @@ module TailwindUi::Layout::PanelsHelper
     render 'tailwind_ui/panels/card/card_header', &block
   end
 
+  def card_title(text:)
+    render 'tailwind_ui/panels/card/card_title', text: text
+  end
+
   def card_body(*options, &block)
     render 'tailwind_ui/panels/card/card_body', *options, &block
   end

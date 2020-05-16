@@ -1,0 +1,11 @@
+<% value = local_assigns.fetch(:value) %>
+<% label = local_assigns.fetch(:label, nil) %>
+
+<%= tag.div class: "readout readout--#{value}" do %>
+  <div class="readout__wire readout__wire--left"></div>
+  <div class="readout__wire readout__wire--right"></div>
+  <div class="readout__body">
+    |<%= tag.span value, class: 'readout__value' %>&#10217;
+  </div>
+  <%= gate_label(label: label) if label %>
+<% end %>

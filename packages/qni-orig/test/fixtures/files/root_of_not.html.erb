@@ -1,0 +1,57 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'RNOT' do %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= phase_gate theta: '-π/2' %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'RNOT' do %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= phase_gate theta: '-π/2' %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'Built-in RNOT' do %>
+    <%= circuit_column do %>
+      <%= root_not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= root_not_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+<% end %>

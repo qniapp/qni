@@ -1,0 +1,38 @@
+<%= circuit do %>
+  <%= circuit_column do %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x2' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/4' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= control_dot bottom: true %>
+    <%= not_gate top: true %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= phase_gate theta: '-π/4' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= control_dot bottom: true %>
+    <%= not_gate top: true %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= phase_gate theta: 'π/4' %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= phase_gate theta: 'π/2', bottom: true %>
+    <%= phase_gate theta: 'π/2', top: true %>
+  <% end %>
+<% end %>

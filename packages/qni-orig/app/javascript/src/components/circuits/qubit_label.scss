@@ -1,0 +1,22 @@
+.qubit-label {
+  @include circuit-element;
+
+  @apply bg-white;
+  @apply h-8;
+
+  &__wire {
+    @apply absolute;
+    @apply border-#{$wire-inactive-color};
+    @apply border-t-#{$wire-width};
+    @apply mt-4;
+    @apply right-0;
+    @apply w-2;
+
+    top: -1px;
+  }
+
+  &__value {
+    @apply mr-2;
+    @apply text-gray-300;
+  }
+}

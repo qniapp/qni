@@ -1,0 +1,191 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_register_column_span rows: 5 do %>
+      <%= register_label_span label: 'a', row_span: 3 %>
+      <%= register_label_span label: 'b', row_span: 2 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x2' %>
+      <%= qubit_label label: '0x4' %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x2' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'a = 0, 1, 2, 3' do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= wire %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'b = 1, 3' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= write value: 1 %>
+      <%= write value: 0 %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'a -= 3' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'flip if (a < 0 && b == 1)' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= control_dot top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= not_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'a += 3' do %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= control_dot top: true, bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= control_dot bottom: true %>
+      <%= not_gate top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= not_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+<% end %>
