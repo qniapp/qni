@@ -1,0 +1,125 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_register_column_span rows: 4 do %>
+      <%= register_label_span label: 'signal', row_span: 4 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x2' %>
+      <%= qubit_label label: '0x4' %>
+      <%= qubit_label label: '0x8' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'prepare' do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+      <%= write value: 0 %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= phase_gate theta: 'π' %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'QFT' do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= hadamard_gate %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= phase_gate theta: '-π/2', bottom: true %>
+      <%= phase_gate theta: '-π/2', top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= phase_gate theta: '-π/4', bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= phase_gate theta: '-π/4', top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= phase_gate theta: '-π/8', bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= phase_gate theta: '-π/8', top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= hadamard_gate %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= phase_gate theta: '-π/2', bottom: true %>
+      <%= phase_gate theta: '-π/2', top: true %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= phase_gate theta: '-π/4', bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= phase_gate theta: '-π/4', top: true %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= hadamard_gate %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= phase_gate theta: '-π/2', bottom: true %>
+      <%= phase_gate theta: '-π/2', top: true %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= swap_gate bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= wire top: true, bottom: true %>
+      <%= swap_gate top: true %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= down_wire %>
+      <%= up_wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+<% end %>
