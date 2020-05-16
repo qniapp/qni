@@ -1,0 +1,27 @@
+<%= circuit do %>
+  <%= circuit_register_column do %>
+    <%= register_label label: 'qubit1' %>
+    <%= register_label label: 'qubit2' %>
+    <%= register_label label: 'qubit3' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x1' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= hadamard_gate %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= hadamard_gate %>
+  <% end %>
+<% end %>

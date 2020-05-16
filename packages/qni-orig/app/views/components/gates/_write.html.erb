@@ -1,0 +1,9 @@
+<% value = local_assigns.fetch(:value) %>
+
+<%= tag.div class: "write write--#{value}" do %>
+  <div class="write__wire write__wire--left"></div>
+  <div class="write__wire write__wire--right"></div>
+  <div class="write__body">
+    |<%= tag.span value, class: 'write__value' %>&#10217;
+  </div>
+<% end %>

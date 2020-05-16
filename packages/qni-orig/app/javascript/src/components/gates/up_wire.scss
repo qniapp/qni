@@ -1,0 +1,27 @@
+.up-wire {
+  @apply relative;
+  @apply w-12 h-8;
+
+  &:nth-of-type(n+2) {
+    @apply mt-4;
+  }
+
+  &__line {
+    @apply absolute;
+    @apply border-t-2 border-gray-600;
+    @apply mt-4;
+    @apply origin-top-left transform -rotate-45;
+
+    top: -1px;
+    width: 69px;
+  }
+
+  &__bottom {
+    @apply -mt-2 ml-6;
+    @apply absolute top-0;
+    @apply border-l-4 border-teal-400;
+    @apply h-12;
+
+    left: -2px;
+  }
+}

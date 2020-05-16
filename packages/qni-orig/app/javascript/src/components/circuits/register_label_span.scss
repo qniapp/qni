@@ -1,0 +1,10 @@
+.register-label-span {
+  @apply border-gray-400;
+  @apply border-r-2;
+  @apply flex justify-end items-center;
+
+  &__label {
+    @apply font-semibold;
+    @apply mr-2;
+  }
+}

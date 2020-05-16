@@ -1,0 +1,15 @@
+<% circuit = local_assigns.fetch(:circuit) %>
+
+<% cache circuit do %>
+  <div class="thumbnail-container invisible"
+       data-controller="circuit-thumbnail"
+       data-circuit-thumbnail-name="<%= circuit.name %>">
+    <div class="thumbnail" data-target="circuit-thumbnail.thumbnail">
+      <iframe src="<%= circuit_preview_path(circuit) %>"
+              frameborder="0" scrolling="no"
+              data-target="circuit-thumbnail.iframe"
+              data-action="load->circuit-thumbnail#init resize@window->circuit-thumbnail#resize"
+              data-circuit-thumbnail-name="<%= circuit.name %>"></iframe>
+    </div>
+  </div>
+<% end %>

@@ -21,22 +21,20 @@ AllCops:
 
 Style/Documentation:
   Exclude:
-    - 'app/controllers/*_controller.rb'
+    - 'app/controllers/**/*_controller.rb'
     - 'app/helpers/**/*_helper.rb'
     - 'app/mailers/*_mailer.rb'
-    - 'app/models/application_record.rb'
+    - 'app/models/**/*.rb'
     - 'config/application.rb'
     - 'db/migrate/*.rb'
+    - 'lib/**/*.rb'
     - 'test/**/*_test.rb'
+    - 'test/*_helper.rb'
     - 'test/application_system_test_case.rb'
-    - 'test/test_helper.rb'
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Exclude:
     - 'config/environments/production.rb'
-
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
 
 Rails/FilePath:
   Exclude:
@@ -51,23 +49,6 @@ Style/StringLiterals:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/helpers/**/*_helper.rb'
+    - 'test/**/*_test.rb'
     - 'test/channels/application_cable/connection_test.rb'
     - 'test/test_helper.rb'
-
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Style/ExponentialNotation:
-  Enabled: true
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true

@@ -1,0 +1,187 @@
+<%= circuit do %>
+  <%= circuit_block_divider do %>
+    <%= circuit_register_column do %>
+      <%= register_label label: '👩Alice' %>
+      <%= register_label label: '😈Eve' %>
+      <%= register_label label: '👦🏻Bob' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x1' %>
+      <%= qubit_label label: '0x1' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'get two random bits' do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= readout value: 0, label: 'alice_h' %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= hadamard_gate %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= readout value: 1, label: 'alice_v' %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= write value: 0 %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'set value' do %>
+    <%= circuit_column do %>
+      <%= not_gate top: false, bottom: false, label: 'if alice_v' %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'apply H' do %>
+    <%= circuit_column do %>
+      <%= hadamard_gate disabled: true, label: 'if alice_h' %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= down_wire %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: '🕶spy' do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= hadamard_gate %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= readout value: 1, label: 'eve_v' %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= write value: 0 %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= not_gate top: false, bottom: false, label: 'if eve_v' %>
+      <%= wire active: false %>
+    <% end %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= hadamard_gate %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire %>
+      <%= write value: 0 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire %>
+      <%= hadamard_gate %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire %>
+      <%= readout value: 0, label: 'bob_h' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= down_wire %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'apply H' do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+      <%= hadamard_gate disabled: true, label: 'if bob_h' %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+      <%= wire %>
+    <% end %>
+  <% end %>
+  <%= circuit_block label: 'readout' do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+      <%= readout value: 0 %>
+    <% end %>
+  <% end %>
+  <%= circuit_block_divider do %>
+    <%= circuit_column do %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+      <%= wire active: false %>
+    <% end %>
+  <% end %>
+<% end %>

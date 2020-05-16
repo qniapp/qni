@@ -1,0 +1,67 @@
+<%= circuit do %>
+  <%= circuit_register_column do %>
+    <%= register_label label: 'a' %>
+    <%= register_label label: 'b' %>
+    <%= register_label label: 'c' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x1' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= wire active: false %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= wire active: false %>
+    <%= not_gate %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= wire active: false %>
+    <%= readout value: 1 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= write value: 1 %>
+    <%= wire active: false %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= wire %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= control_dot bottom: true %>
+    <%= not_gate top: true %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= readout value: 1 %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire active: false %>
+    <%= wire active: false %>
+    <%= readout value: 1 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= write value: 1 %>
+    <%= write value: 1 %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= control_dot bottom: true %>
+    <%= control_dot top: true, bottom: true %>
+    <%= not_gate top: true %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= readout value: 1 %>
+    <%= readout value: 1 %>
+    <%= readout value: 1 %>
+  <% end %>
+<% end %>

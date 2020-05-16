@@ -30,6 +30,14 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.7.x
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sympy
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -58,3 +66,9 @@ jobs:
         RAILS_ENV: test
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
+    - name: Archive Rails test log
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Rails test log
+        path: log/test.log

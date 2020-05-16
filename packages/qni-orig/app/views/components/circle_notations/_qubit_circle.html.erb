@@ -1,0 +1,27 @@
+<% ket = local_assigns.fetch(:ket) %>
+<% magnitude = local_assigns.fetch(:magnitude) %>
+<% magnitude_string = local_assigns.fetch(:magnitude_string, magnitude) %>
+<% phase = magnitude.positive? ? local_assigns.fetch(:phase, 0) : nil %>
+<% phase_string = local_assigns.fetch(:phase_string, phase) if phase %>
+<% phase_klass = phase.positive? ? "rotate-#{phase}" : "-rotate#{phase}" if phase %>
+
+<% balloon_label = "|#{ket}⟩\nmagnitude = #{magnitude_string}" %>
+<% balloon_label += "\nphase = #{phase_string}" if magnitude.positive? %>
+
+<div class="qubit-circle"
+     data-target="simulator.qubitCircle" data-magnitude="<%= magnitude %>" data-balloon-pos="up" data-balloon-break
+     aria-label="<%= balloon_label %>">
+  <div class="qubit-circle__border">
+    <div class="qubit-circle__magnitude"></div>
+    <% if magnitude.positive? %>
+      <div class="qubit-circle__phase" style="--transform-rotate: <%= phase * -1 %>deg;">
+        <div class="relative w-full h-full">
+          <div class="qubit-circle__phase-line"></div>
+          <dev class="qubit-circle__phase-magnitude"></dev>
+          <div class="qubit-circle__phase-dot"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <span class="qubit-circle__ket">|<%= ket %>&#10217;</span>
+</div>
