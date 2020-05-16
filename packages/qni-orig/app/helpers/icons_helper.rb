@@ -10,4 +10,8 @@ module IconsHelper
   def plus
     render 'components/icons/plus'
   end
+
+  def swap
+    render 'components/icons/swap'
+  end
 end
