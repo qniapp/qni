@@ -244,6 +244,15 @@ class CircuitTest
 
       assert_equal erb, circuit.erb
     end
+
+    test 'QFT rotating phases' do
+      circuit = circuits('qft_rotating_phases')
+      erb = circuit.erb.chomp
+
+      circuit.generate_erb
+
+      assert_equal erb, circuit.erb
+    end
   end
 
   class CircleNotationTest < ActiveSupport::TestCase
@@ -485,6 +494,15 @@ class CircuitTest
 
     test 'QFT frequency manipulation' do
       circuit = circuits('qft_frequency_manipulation')
+      circle_notation = circuit.circle_notation.chomp
+
+      circuit.generate_circle_notation
+
+      assert_equal circle_notation, circuit.circle_notation
+    end
+
+    test 'QFT rotating phases' do
+      circuit = circuits('qft_rotating_phases')
       circle_notation = circuit.circle_notation.chomp
 
       circuit.generate_circle_notation
