@@ -250,6 +250,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scout_apm (2.6.7)
+      parser
     selectize-rails (0.12.6)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -328,6 +330,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   sass-rails (>= 6)
+  scout_apm
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
