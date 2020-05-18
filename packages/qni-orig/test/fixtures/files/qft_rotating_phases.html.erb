@@ -1,0 +1,110 @@
+<%= circuit do %>
+  <%= circuit_column do %>
+    <%= qubit_label label: '0x1' %>
+    <%= qubit_label label: '0x2' %>
+    <%= qubit_label label: '0x4' %>
+    <%= qubit_label label: '0x8' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+    <%= write value: 0 %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+    <%= hadamard_gate %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+    <%= wire %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+  <%= circuit_column do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= phase_gate theta: 'π/9' %>
+  <% end %>
+<% end %>
