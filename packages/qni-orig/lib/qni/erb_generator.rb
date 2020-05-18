@@ -203,24 +203,27 @@ module Qni
     # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/AbcSize
-    def cnot(targets)
-      control = targets.keys.first
-      target = targets[control]
+    # rubocop:disable Metrics/MethodLength
+    def cnot(candt)
+      control = candt.keys.first
+      targets = [candt[control]].flatten.sort
 
       circuit_column do
         (0...@dsl.nqubit).map do |each|
           if each == control
-            control_dot top: target < control, bottom: target > control, wire_active: @wire_active[each]
-          elsif each == target
-            not_gate top: target > control, bottom: target < control
+            control_dot top: targets.last < control, bottom: control < targets.first, wire_active: @wire_active[each]
+          elsif targets.include?(each)
+            not_gate top: control < each || targets.first < each, bottom: each < control || each < targets.last
           else
-            top_bottom = (control < target && (control..target).cover?(each)) || (target < control && (target..control).cover?(each))
+            g = ([control] + targets).sort
+            top_bottom = (g.first..g.last).cover?(each)
             wire top: top_bottom, bottom: top_bottom, active: @wire_active[each]
           end
         end.join
       end
     end
     # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize

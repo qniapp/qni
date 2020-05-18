@@ -151,3 +151,9 @@ qft_frequency_to_state:
   dsl: <%= file_text('qft_frequency_to_state.dsl.rb') %>
   erb: <%= file_text('qft_frequency_to_state.html.erb') %>
   circle_notation: <%= file_text('qft_frequency_to_state_cn.html.erb') %>
+
+qft_prepare_a_state:
+  name: QFT Prepare a state
+  dsl: <%= file_text('qft_prepare_a_state.dsl.rb') %>
+  erb: <%= file_text('qft_prepare_a_state.html.erb') %>
+  circle_notation: <%= file_text('qft_prepare_a_state_cn.html.erb') %>
