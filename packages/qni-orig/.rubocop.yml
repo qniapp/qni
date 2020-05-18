@@ -52,3 +52,7 @@ Style/ClassAndModuleChildren:
     - 'test/**/*_test.rb'
     - 'test/channels/application_cable/connection_test.rb'
     - 'test/test_helper.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/fixtures/files/*.dsl.rb'

@@ -1,7 +1,7 @@
 import math
 import sympy
 from sympy.physics.quantum import TensorProduct
-from sympy import sin, cos, sqrt, pi, I, Matrix
+from sympy import sin, cos, sqrt, pi, I, Matrix, re
 
 BRA0 = Matrix([[1, 0]])
 KET0 = Matrix([[1], [0]])
@@ -247,7 +247,7 @@ def print_psi(vector):
         print(f"Magnitude (symbolic): m{v} = {sympy.Abs(vector[v, 0])}")
 
     for v in range(vector.rows):
-        print(f"Magnitude: m{v} = {float(sympy.Abs(vector[v, 0]))}")
+        print(f"Magnitude: m{v} = {re(sympy.Abs(vector[v, 0]).n())}")
 
     for v in range(vector.rows):
         print(f"Relational phase (symbolic): p{v} = {sympy.arg(vector[v, 0])}")

@@ -181,6 +181,42 @@ class CircuitTest
 
       assert_equal erb, circuit.erb
     end
+
+    test 'QFT to distinguish 3 states' do
+      circuit = circuits('qft_to_distinguish_3_states')
+      erb = circuit.erb.chomp
+
+      circuit.generate_erb
+
+      assert_equal erb, circuit.erb
+    end
+
+    test 'QFT of simple QPU signal' do
+      circuit = circuits('qft_of_simple_qpu_signal')
+      erb = circuit.erb.chomp
+
+      circuit.generate_erb
+
+      assert_equal erb, circuit.erb
+    end
+
+    test 'QFT square wave' do
+      circuit = circuits('qft_square_wave')
+      erb = circuit.erb.chomp
+
+      circuit.generate_erb
+
+      assert_equal erb, circuit.erb
+    end
+
+    test 'QFT big square wave' do
+      circuit = circuits('qft_big_square_wave')
+      erb = circuit.erb.chomp
+
+      circuit.generate_erb
+
+      assert_equal erb, circuit.erb
+    end
   end
 
   class CircleNotationTest < ActiveSupport::TestCase
@@ -384,6 +420,17 @@ class CircuitTest
 
     test 'QFT square wave' do
       circuit = circuits('qft_square_wave')
+      circle_notation = circuit.circle_notation.chomp
+
+      circuit.generate_circle_notation
+
+      assert_equal circle_notation, circuit.circle_notation
+    end
+
+    test 'QFT big square wave' do
+      skip '時間がかかるので一旦スキップ'
+
+      circuit = circuits('qft_big_square_wave')
       circle_notation = circuit.circle_notation.chomp
 
       circuit.generate_circle_notation
