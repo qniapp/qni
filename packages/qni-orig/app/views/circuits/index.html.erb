@@ -4,6 +4,6 @@
   </p>
 
   <div id="shuffle" class="mb-8" data-controller="shuffle">
-    <%= render partial: 'components/circuit_preview', collection: @circuits, as: :circuit %>
+    <%= render partial: 'components/circuit_preview', collection: @circuits, as: :circuit, cached: true %>
   </div>
 <% end %>

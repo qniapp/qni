@@ -221,6 +221,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.1.4)
     regexp_parser (1.7.0)
     rubocop (0.79.0)
       jaro_winkler (~> 1.5.1)
@@ -326,6 +327,7 @@ DEPENDENCIES
   pg
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.2)
+  redis (~> 4.0)
   rubocop (~> 0.79.0)
   rubocop-performance
   rubocop-rails
