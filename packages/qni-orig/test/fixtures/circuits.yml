@@ -139,3 +139,9 @@ qft_square_wave:
   dsl: <%= file_text('qft_square_wave.dsl.rb') %>
   erb: <%= file_text('qft_square_wave.html.erb') %>
   circle_notation: <%= file_text('qft_square_wave_cn.html.erb') %>
+
+qft_big_square_wave:
+  name: QFT big square wave
+  dsl: <%= file_text('qft_big_square_wave.dsl.rb') %>
+  erb: <%= file_text('qft_big_square_wave.html.erb') %>
+  circle_notation: <%= file_text('qft_big_square_wave_cn.html.erb') %>
