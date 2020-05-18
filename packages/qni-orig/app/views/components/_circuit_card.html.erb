@@ -5,19 +5,21 @@
 <% code = circuit.dsl %>
 <% klass = local_assigns.fetch(:class, nil) %>
 
-<%= card class: klass, data: { controller: 'circuit-card', circuit_card_active_pill_class: 'pill--active', circuit_card_hidden_class: 'hidden' } do %>
-  <%= card_header do %>
-    <%= card_title text: name %>
-    <div class="flex flex-shrink-0 items-center ml-4">
-      <%= circuit_pills %>
-    </div>
-  <% end %>
+<% cache circuit do %>
+  <%= card class: klass, data: { controller: 'circuit-card', circuit_card_active_pill_class: 'pill--active', circuit_card_hidden_class: 'hidden' } do %>
+    <%= card_header do %>
+      <%= card_title text: name %>
+      <div class="flex flex-shrink-0 items-center ml-4">
+        <%= circuit_pills %>
+      </div>
+    <% end %>
 
-  <%= card_body data: { target: 'circuit-card.body' } do %>
-    <%= simulator do %>
-      <%= circuit_view erb: erb %>
-      <%= circuit_code code: code %>
-      <%= render inline: circle_notation if circle_notation %>
+    <%= card_body data: { target: 'circuit-card.body' } do %>
+      <%= simulator do %>
+        <%= circuit_view circuit: circuit %>
+        <%= circuit_code code: code %>
+        <%= render inline: circle_notation if circle_notation %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
