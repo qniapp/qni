@@ -163,3 +163,9 @@ qft_frequency_manipulation:
   dsl: <%= file_text('qft_frequency_manipulation.dsl.rb') %>
   erb: <%= file_text('qft_frequency_manipulation.html.erb') %>
   circle_notation: <%= file_text('qft_frequency_manipulation_cn.html.erb') %>
+
+qft_rotating_phases:
+  name: QFT rotating phases
+  dsl: <%= file_text('qft_rotating_phases.dsl.rb') %>
+  erb: <%= file_text('qft_rotating_phases.html.erb') %>
+  circle_notation: <%= file_text('qft_rotating_phases_cn.html.erb') %>
