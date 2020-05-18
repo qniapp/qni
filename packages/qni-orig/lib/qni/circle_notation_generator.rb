@@ -170,11 +170,11 @@ module Qni
       "psi = cphase(#{targets.keys.first}, #{targets.values.first.delete("'").gsub(/π/, 'pi')}, psi)\n"
     end
 
-    def cnot(targets)
-      control = targets.keys.first
-      target = targets[control]
+    def cnot(candt)
+      control = candt.keys.first
+      targets = [candt[control]].flatten.sort
 
-      "psi = cnot(#{control}, #{target}, psi)\n"
+      "psi = cnot(#{control}, [#{targets.join(', ')}], psi)\n"
     end
 
     def ccnot(targets)

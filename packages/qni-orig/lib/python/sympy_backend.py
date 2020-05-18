@@ -107,10 +107,18 @@ def swap(targets, psi):
     return new_psi
 
 
-def cnot(control, target, psi):
+def cnot(control, targets, psi):
     nqubits = int(math.log2(psi.rows))
 
-    new_psi = simplify(CNOT(control, target, nqubits) * psi)
+    m0 = [E] * nqubits
+    m1 = [E] * nqubits
+    m0[nqubits - 1 - control] = KET0 * BRA0
+    m1[nqubits - 1 - control] = KET1 * BRA1
+    for t in targets:
+        m1[nqubits - 1 - t] = X
+    u = TensorProduct(*m0) + TensorProduct(*m1)
+
+    new_psi = simplify(u * psi)
     print_psi(new_psi)
     return new_psi
 
