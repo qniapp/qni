@@ -24,7 +24,7 @@ class Components::CircuitCardsHelperTest < ActionView::TestCase
           circuit_column { hadamard_gate } +
           circuit_column { readout value: 1 }
       end
-    assert_dom_equal beautify(expected), beautify(circuit_view(erb: circuits(:random_bit).erb))
+    assert_dom_equal beautify(expected), beautify(circuit_view(circuit: circuits(:random_bit)))
   end
 
   test 'circuit code' do
