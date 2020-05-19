@@ -8,8 +8,7 @@ export default class extends Controller {
     })
   }
 
-  circuitLoaded(circuit) {
+  update() {
     this.shuffle.update()
-    circuit.classList.remove("invisible")
   }
 }
