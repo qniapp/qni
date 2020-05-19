@@ -1,12 +1,18 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["iframe", "thumbnail"];
+  static targets = ["loader", "thumbnailContainer", "thumbnail", "iframe"];
 
   init() {
     this.resizeIframe()
     this.resizeThumbnail()
-    this.shuffleController.circuitLoaded(this.element)
+    this.shuffleController.update()
+    this.hideLoader()
+    this.thumbnailContainerTarget.classList.remove("invisible")
+  }
+
+  hideLoader() {
+    this.loaderTarget.classList.add("hidden")
   }
 
   resize() {
@@ -22,15 +28,16 @@ export default class extends Controller {
   resizeThumbnail() {
     if (this.cardBodyWidth < this.iframeWidth) {
       const scale = this.cardBodyWidth / this.iframeWidth
-      this.element.style.width = this.cardBodyWidth + "px"
-      this.element.style.height = this.iframeHeight * scale + "px"
+      this.thumbnailContainerTarget.style.width = this.cardBodyWidth + "px"
+      this.thumbnailContainerTarget.style.height =
+        this.iframeHeight * scale + "px"
       this.thumbnailTarget.style.transform = `scale(${scale},${scale})`
     } else if (this.cardBodyHeight * 2 < this.iframeHeight) {
-      this.element.style.width = this.cardBodyWidth + "px"
-      this.element.style.height = this.iframeHeight / 2 + "px"
+      this.thumbnailContainerTarget.style.width = this.cardBodyWidth + "px"
+      this.thumbnailContainerTarget.style.height = this.iframeHeight / 2 + "px"
       this.thumbnailTarget.style.transform = "scale(0.5,0.5)"
     } else {
-      this.element.style.height = this.iframeHeight + "px"
+      this.thumbnailContainerTarget.style.height = this.iframeHeight + "px"
     }
   }
 
@@ -47,11 +54,11 @@ export default class extends Controller {
   }
 
   get cardBodyWidth() {
-    return this.element.parentElement.clientWidth
+    return this.element.clientWidth
   }
 
   get cardBodyHeight() {
-    return this.element.parentElement.clientHeight
+    return this.element.clientHeight
   }
 
   get shuffleController() {
