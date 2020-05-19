@@ -14,7 +14,10 @@
       <% end %>
 
       <%= card_body do %>
-        <div class="w-full h-full">
+        <div class="w-full h-full" data-controller="circuit-thumbnail">
+          <div class="w-16 h-16 mx-auto my-auto text-gray-300" data-target="circuit-thumbnail.loader">
+            <%= oval_loader %>
+          </div>
           <%= circuit_thumbnail circuit: circuit %>
         </div>
       <% end %>
