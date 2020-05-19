@@ -121,7 +121,7 @@ module Qni
     def block_start(_args); end
 
     def block_end
-      "psi = nop(psi)\n"
+      "psi = nop(psi, #{@dsl.nqubit})\n"
     end
 
     def write_all(value)
@@ -134,7 +134,7 @@ module Qni
 
     def write(targets, _label: nil)
       dict = targets.map { |k, v| "#{k}: #{v}" }.join(', ')
-      "psi = write({#{dict}}, psi)\n"
+      "psi = write({#{dict}}, psi, #{@dsl.nqubit})\n"
     end
 
     def h_all(opts = {})
@@ -143,9 +143,9 @@ module Qni
 
     def h(targets, opts = {})
       if opts.fetch(:disabled, false)
-        "psi = nop(psi)\n"
+        "psi = nop(psi, #{@dsl.nqubit})\n"
       else
-        "psi = h([#{targets.join(', ')}], psi)\n"
+        "psi = h([#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
       end
     end
 
@@ -154,34 +154,34 @@ module Qni
     end
 
     def x(targets, _opts = {})
-      "psi = x([#{targets.join(', ')}], psi)\n"
+      "psi = x([#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
 
     def phase(targets, _opts = {})
       dict = targets.map { |k, v| "#{k}: #{v.delete("'").gsub(/π/, 'pi')}" }.join(', ')
-      "psi = p({#{dict}}, psi)\n"
+      "psi = phase({#{dict}}, psi, #{@dsl.nqubit})\n"
     end
 
     def swap(targets)
-      "psi = swap([#{targets.join(', ')}], psi)\n"
+      "psi = swap([#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
 
     def cphase(targets)
-      "psi = cphase(#{targets.keys.first}, #{targets.values.first.delete("'").gsub(/π/, 'pi')}, psi)\n"
+      "psi = cphase(#{targets.keys.first}, #{targets.values.first.delete("'").gsub(/π/, 'pi')}, psi, #{@dsl.nqubit})\n"
     end
 
     def cnot(candt)
       control = candt.keys.first
       targets = [candt[control]].flatten.sort
 
-      "psi = cnot(#{control}, [#{targets.join(', ')}], psi)\n"
+      "psi = cnot(#{control}, [#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
 
     def ccnot(targets)
       controls = targets.keys.first
       target = targets[controls]
 
-      "psi = ccnot(#{controls}, #{target}, psi)\n"
+      "psi = ccnot(#{controls}, #{target}, psi, #{@dsl.nqubit})\n"
     end
 
     def cccnot(controls, target)
@@ -192,20 +192,20 @@ module Qni
       control = values.keys.first
       targets = values[control]
 
-      "psi = cswap(#{control}, [#{targets.join(', ')}], psi)\n"
+      "psi = cswap(#{control}, [#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
 
     def rnot(targets)
-      "psi = rnot([#{targets.join(', ')}], psi)\n"
+      "psi = rnot([#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
 
     def read(targets, _opts = {})
       dict = targets.map { |k, v| "#{k}: #{v}" }.join(', ')
-      "psi = read({#{dict}}, psi)\n"
+      "psi = read({#{dict}}, psi, #{@dsl.nqubit})\n"
     end
 
     def down(targets)
-      "psi = down([#{targets.join(', ')}], psi)\n"
+      "psi = down([#{targets.join(', ')}], psi, #{@dsl.nqubit})\n"
     end
   end
 end
