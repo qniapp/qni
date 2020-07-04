@@ -2,15 +2,42 @@
   @apply w-0;
   @apply z-10;
 
+  @apply min-w-full;
+  margin-top: -2px;
+
+  @screen md {
+    @apply h-full;
+    @apply min-w-0;
+    @apply mt-0;
+  }
+
+  .circuit-preview & {
+    @apply h-full;
+    @apply min-w-0;
+    @apply mt-0;
+  }
+
   .simulator &:hover {
     @apply cursor-pointer;
   }
 
   &__line {
     @apply bg-transparent;
-    @apply min-h-full;
-
+    @apply min-w-full;
+    margin-top: -2px;
     padding: 2px;
+
+    @screen md {
+      @apply min-h-full;
+      @apply min-w-0;
+      @apply mt-0;
+      margin-left: -2px;
+    }
+  }
+
+  .circuit-preview & &__line {
+    @apply min-w-0;
+    @apply min-h-full;
     margin-left: -2px;
   }
 
@@ -19,7 +46,7 @@
     @apply transition duration-150 ease-in-out;
   }
 
-  .simulator .circuit:hover &--active &__line {
+  .circuit:hover &--active &__line {
     @apply bg-yellow-300;
     @apply transition duration-150 ease-in-out;
   }

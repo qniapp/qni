@@ -1,6 +1,6 @@
-<%= circuit do %>
+<%= circuit nqubit: 3 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column do %>
+    <%= circuit_register_group do %>
       <%= register_label label: 'Input 1' %>
       <%= register_label label: 'Input 2' %>
       <%= register_label label: 'Output' %>

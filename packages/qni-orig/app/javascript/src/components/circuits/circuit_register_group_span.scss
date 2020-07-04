@@ -1,0 +1,62 @@
+.circuit-register-group-span {
+  @apply grid gap-2;
+
+  @apply grid-flow-col-dense;
+  @apply grid-rows-none;
+  @apply mb-2;
+  @apply w-full;
+
+  @screen md {
+    @apply mb-0;
+    @apply min-h-full;
+    @apply mr-2;
+    @apply w-auto;
+  }
+
+  .circuit-preview & {
+    @apply mb-0;
+    @apply min-h-full;
+    @apply mr-2;
+    @apply w-auto;
+  }
+
+  @for $i from 1 to 12 {
+    &.qubits-#{$i} {
+      @apply grid-cols-#{$i};
+    }
+  }
+
+  @for $i from 1 to 7 {
+    .circuit-preview &.qubits-#{$i} {
+      @apply grid-cols-none;
+      @apply grid-rows-#{$i};
+    }
+
+    @screen md {
+      &.qubits-#{$i} {
+        @apply grid-cols-none;
+        @apply grid-rows-#{$i};
+      }
+    }
+  }
+
+  @for $i from 1 to 13 {
+    .reg-start-#{$i} {
+      @apply col-start-#{$i};
+    }
+
+    .reg-end-#{$i} {
+      @apply col-end-#{$i};
+    }
+
+    @screen md {
+      .reg-start-#{$i} {
+        @apply col-start-auto;
+      }
+
+      .reg-end-#{$i} {
+        @apply col-end-auto;
+      }
+    }
+  }
+}

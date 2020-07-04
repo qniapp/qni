@@ -1,0 +1,6 @@
+<% nqubit = local_assigns.fetch(:nqubit) %>
+<% body = yield.presence || raise('body is a mandatory') %>
+
+<div class="simulator-wrapper simulator-wrapper--<%= nqubit %>qubit">
+  <%= body %>
+</div>

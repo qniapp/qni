@@ -1,8 +1,33 @@
 .circuit {
-  @apply flex flex-row;
-  @apply py-5;
+  @apply flex;
 
-  .simulator & {
-    @apply overflow-y-scroll;
+  @apply flex-col items-center;
+
+  @screen md {
+    @apply flex-row;
+    @apply py-5;
+
+    .simulator & {
+      @apply overflow-y-scroll;
+    }
+  }
+
+  .circuit-preview & {
+    @apply flex-row;
+    @apply py-5;
+  }
+
+  &__body {
+    @apply flex;
+
+    @apply flex-col;
+
+    @screen md {
+      @apply flex-row;
+    }
+  }
+
+  .circuit-preview &__body {
+    @apply flex-row;
   }
 }

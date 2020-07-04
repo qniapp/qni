@@ -1,7 +1,7 @@
-<%= circuit do %>
+<%= circuit nqubit: 4 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column_span rows: 4 do %>
-      <%= register_label_span label: 'qin', row_span: 4 %>
+    <%= circuit_register_group_span rows: 4 do %>
+      <%= register_label_span label: 'qin', span: 4, start: 1 %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>

@@ -1,7 +1,51 @@
 .qubit-circle-group-row {
   @apply flex flex-row;
+  @apply flex-shrink-0;
 
-  &:nth-of-type(n+2) {
+  .circle-notation--4qubit & {
+    @apply flex-col;
+
+    .qubit-circle-octet:last-child {
+      @apply mt-1;
+
+      @screen md {
+        @apply mt-0;
+      }
+    }
+  }
+
+  @screen md {
+    @apply flex-row;
+
+    .circle-notation--4qubit & {
+      @apply flex-row;
+    }
+  }
+
+  &:nth-of-type(n + 2) {
     @apply mt-1;
+  }
+
+  .qubit-circle-octet {
+    @apply flex flex-row;
+  }
+
+  .circle-notation--5qubit & .qubit-circle-octet:nth-child(even) {
+    @apply ml-1;
+
+    @screen md {
+      @apply ml-2;
+    }
+  }
+
+  .circle-notation--6qubit & .qubit-circle-octet:nth-child(even),
+  .circle-notation--8qubit & .qubit-circle-octet:nth-child(even) {
+    @apply ml-1;
+  }
+
+  .qubit-circle-octet:nth-of-type(2) {
+    @screen md {
+      @apply ml-2;
+    }
   }
 }

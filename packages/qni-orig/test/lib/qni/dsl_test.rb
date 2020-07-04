@@ -43,7 +43,7 @@ class DslTest
       assert_equal [:h, [0]], dsl[1]
       assert_equal [:phase, { 0 => '-π/2' }], dsl[2]
       assert_equal [:h, [0]], dsl[3]
-      assert_equal [:block_end], dsl[4]
+      assert_equal [:block_end, 4], dsl[4]
     end
   end
 

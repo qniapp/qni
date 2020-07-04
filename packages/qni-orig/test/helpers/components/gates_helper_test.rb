@@ -149,7 +149,9 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="write__wire write__wire--left"></div>
         <div class="write__wire write__wire--right"></div>
         <div class="write__body">
-          |<span class="write__value">0</span>&#10217;
+          <div>
+            |<span class="write__value">0</span>&#10217;
+          </div>
         </div>
       </div>
     ERB
@@ -161,7 +163,9 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="write__wire write__wire--left"></div>
         <div class="write__wire write__wire--right"></div>
         <div class="write__body">
-          |<span class="write__value">0</span>&#10217;
+          <div>
+            |<span class="write__value">0</span>&#10217;
+          </div>
         </div>
       </div>
     ERB
@@ -173,7 +177,9 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="readout__wire readout__wire--left"></div>
         <div class="readout__wire readout__wire--right"></div>
         <div class="readout__body">
-          |<span class="readout__value">0</span>&#10217;
+          <div>
+            |<span class="readout__value">0</span>&#10217;
+          </div>
         </div>
       </div>
     ERB
@@ -185,7 +191,9 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="readout__wire readout__wire--left"></div>
         <div class="readout__wire readout__wire--right"></div>
         <div class="readout__body">
-          |<span class="readout__value">0</span>&#10217;
+          <div>
+            |<span class="readout__value">0</span>&#10217;
+          </div>
         </div>
       </div>
     ERB
@@ -197,7 +205,9 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="readout__wire readout__wire--left"></div>
         <div class="readout__wire readout__wire--right"></div>
         <div class="readout__body">
-          |<span class="readout__value">0</span>&#10217;
+          <div>
+            |<span class="readout__value">0</span>&#10217;
+          </div>
         </div>
         <div class="gate-label">alice_v</div>
       </div>
