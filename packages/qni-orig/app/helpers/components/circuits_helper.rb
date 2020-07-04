@@ -1,6 +1,6 @@
 module Components::CircuitsHelper
-  def circuit(&block)
-    render 'components/circuit', &block
+  def circuit(*options, &block)
+    render 'components/circuit', *options, &block
   end
 
   def circuit_thumbnail(*options)
@@ -20,12 +20,12 @@ module Components::CircuitsHelper
     render 'components/circuits/circuit_column', *options, &block
   end
 
-  def circuit_register_column(&block)
-    render 'components/circuits/circuit_register_column', &block
+  def circuit_register_group(&block)
+    render 'components/circuits/circuit_register_group', &block
   end
 
-  def circuit_register_column_span(*options, &block)
-    render 'components/circuits/circuit_register_column_span', *options, &block
+  def circuit_register_group_span(*options, &block)
+    render 'components/circuits/circuit_register_group_span', *options, &block
   end
 
   def circuit_breakpoint(*options)

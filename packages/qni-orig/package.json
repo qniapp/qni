@@ -32,24 +32,23 @@
     "printWidth": 80
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^2.1.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "~5.1",
     "@tailwindcss/ui": "~0.3",
-    "balloon-css": "^1.0.4",
-    "highlight.js": "~10.0",
-    "shufflejs": "^5.2.3",
+    "magic-grid": "^3.2.4",
     "stimulus": "^1.1.1",
-    "tailwindcss": "^1.2.0",
-    "turbolinks": "^5.2.0"
+    "tailwindcss": "~1.4",
+    "tippy.js": "^6.2.3",
+    "turbolinks": "^5.2.0",
+    "vanilla-lazyload": "^17.1.0"
   },
   "version": "0.1.0",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "cz-conventional-changelog": "~3.2",
-    "eslint": "^6.8.0",
+    "eslint": "~7.3",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.5",

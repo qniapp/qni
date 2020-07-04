@@ -1,11 +1,10 @@
+<%= navbar title: @circuit.name %>
+
 <%= container do %>
-  <p id="notice" class="mt-6">
-    <%= notice %>
-  </p>
-
-  <div>
-    <%= link_to 'Index', circuits_path, class: 'font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out' %>
-  </div>
-
-  <%= circuit_card circuit: @circuit, class: 'mt-8 mb-16' %>
+  <%= simulator_wrapper nqubit: @circuit.nqubit do %>
+    <%= simulator do %>
+      <%= circuit_view circuit: @circuit %>
+      <%= render inline: @circuit.circle_notation if @circuit.circle_notation %>
+    <% end %>
+  <% end %>
 <% end %>

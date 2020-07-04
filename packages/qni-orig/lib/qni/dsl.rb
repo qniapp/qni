@@ -41,7 +41,7 @@ module Qni
       @have_block = true
       @time_evolution << [:block_start, label]
       code.yield
-      @time_evolution << [:block_end]
+      @time_evolution << [:block_end, @time_evolution.size]
     end
 
     # Read and Write

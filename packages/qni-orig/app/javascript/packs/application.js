@@ -5,8 +5,8 @@
 
 require("@rails/ujs").start()
 require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+// require("@rails/activestorage").start()
+// require("channels")
 
 // CSS の読み込み
 import "src/application"

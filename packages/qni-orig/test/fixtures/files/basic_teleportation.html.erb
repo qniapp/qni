@@ -1,6 +1,6 @@
-<%= circuit do %>
+<%= circuit nqubit: 3 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column do %>
+    <%= circuit_register_group do %>
       <%= register_label label: '👩Alice' %>
       <%= register_label label: 'ep' %>
       <%= register_label label: '👦🏻Bob' %>
@@ -30,13 +30,6 @@
       <%= wire active: false %>
       <%= control_dot bottom: true %>
       <%= not_gate top: true %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= wire active: false %>
-      <%= wire %>
-      <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>

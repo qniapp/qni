@@ -1,12 +1,12 @@
-<%= circuit do %>
-  <%= circuit_register_column_span rows: 3 do %>
-    <%= register_label_span label: 'Register 1', row_span: 2 %>
-    <%= register_label_span label: 'Register 2', row_span: 1 %>
+<%= circuit nqubit: 3 do %>
+  <%= circuit_register_group_span rows: 3 do %>
+    <%= register_label_span label: 'Register 1', span: 2, start: 2 %>
+    <%= register_label_span label: 'Register 2', span: 1, start: 1 %>
   <% end %>
   <%= circuit_column do %>
     <%= qubit_label label: '0x1' %>
     <%= qubit_label label: '0x2' %>
-    <%= qubit_label label: '0x2' %>
+    <%= qubit_label label: '0x1' %>
   <% end %>
   <%= circuit_column do %>
     <%= write value: 0 %>

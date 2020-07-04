@@ -1,0 +1,16 @@
+.circuit-register-group {
+  @apply flex flex-row-reverse flex-no-wrap items-end;
+  @apply mb-2;
+
+  @screen md {
+    @apply flex-col;
+    @apply mb-0;
+    @apply mx-0;
+  }
+
+  .circuit-preview & {
+    @apply flex-col;
+    @apply mb-0;
+    @apply mx-0;
+  }
+}

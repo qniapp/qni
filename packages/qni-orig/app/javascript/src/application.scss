@@ -1,62 +1,57 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- */
+// This is a manifest file that'll be compiled into application.css, which will include all the files
+// listed below.
+//
+// Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+// vendor/assets/stylesheets directory can be referenced here using a relative path.
+//
+// You're free to add application-wide styles to this file and they'll appear at the bottom of the
+// compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+// files in this directory. Styles in this file should be added after the last require_* statement.
+// It is generally better to create a new file per style scope.
 
-/* purgecss start ignore */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-/* purgecss end ignore */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 
-// highlight.js
-@import 'highlight.js/styles/rainbow.css';
-
-// balloon-css
-@import 'balloon-css/balloon.css';
+// Tippy
+@import 'tippy.js/dist/tippy.css';
 
 // tailwind UI
-@import "tailwind_ui/button";
-@import "tailwind_ui/card";
-@import "tailwind_ui/pill";
+@import 'tailwind_ui/button';
+@import 'tailwind_ui/card';
+@import 'tailwind_ui/pill';
 
 // Mixins
-@import "mixins/circuit_element";
+@import 'mixins/circuit_element';
 
 // Components
-@import "components/circle_notation";
-@import "components/circle_notations/qubit_circle";
-@import "components/circle_notations/qubit_circle_group_row";
-@import "components/circuit";
-@import "components/circuit_cards/circuit_code";
-@import "components/circuit_cards/circuit_pills";
-@import "components/circuits/circuit_block";
-@import "components/circuits/circuit_block_divider";
-@import "components/circuits/circuit_breakpoint";
-@import "components/circuits/circuit_column";
-@import "components/circuits/qubit_label";
-@import "components/circuits/register_label";
-@import "components/circuits/register_label_span";
-@import "components/gates/control_dot";
-@import "components/gates/down_wire";
-@import "components/gates/hadamard_gate";
-@import "components/gates/not_gate";
-@import "components/gates/phase_gate";
-@import "components/gates/readout";
-@import "components/gates/root_not_gate";
-@import "components/gates/swap_gate";
-@import "components/gates/up_wire";
-@import "components/gates/wire";
-@import "components/gates/write";
-@import "components/thumbnail_container";
+@import 'components/circle_notation';
+@import 'components/circle_notations/qubit_circle';
+@import 'components/circle_notations/qubit_circle_group_row';
+@import 'components/circuit';
+@import 'components/circuit_card';
+@import 'components/circuits/circuit_block';
+@import 'components/circuits/circuit_block_divider';
+@import 'components/circuits/circuit_breakpoint';
+@import 'components/circuits/circuit_column';
+@import 'components/circuits/circuit_register_group';
+@import 'components/circuits/circuit_register_group_span';
+@import 'components/circuits/qubit_label';
+@import 'components/circuits/register_label';
+@import 'components/circuits/register_label_span';
+@import 'components/gates/control_dot';
+@import 'components/gates/down_wire';
+@import 'components/gates/hadamard_gate';
+@import 'components/gates/not_gate';
+@import 'components/gates/phase_gate';
+@import 'components/gates/readout';
+@import 'components/gates/root_not_gate';
+@import 'components/gates/swap_gate';
+@import 'components/gates/up_wire';
+@import 'components/gates/wire';
+@import 'components/gates/write';
+@import 'components/simulator_wrapper';
+@import 'components/thumbnail_container';
+@import 'components/tippy';
 
 // tailwind utilities
-@import "tailwindcss/utilities";
+@import 'tailwindcss/utilities';

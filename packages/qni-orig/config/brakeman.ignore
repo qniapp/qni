@@ -1,0 +1,37 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 84,
+      "fingerprint": "df4f4accebdc404ef36acc7dc2211d031e4e15f564f9d312c48eddf816811176",
+      "check_name": "RenderInline",
+      "message": "Unescaped model attribute rendered inline",
+      "file": "app/views/circuits/show.html.erb",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross-site_scripting/",
+      "code": "render(inline => Circuit.find(params[:id]).circle_notation, {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CircuitsController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/circuits_controller.rb",
+          "rendered": {
+            "name": "circuits/show",
+            "file": "app/views/circuits/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "circuits/show"
+      },
+      "user_input": "Circuit.find(params[:id]).circle_notation",
+      "confidence": "Medium",
+      "note": ""
+    }
+  ],
+  "updated": "2020-07-01 14:18:58 +0900",
+  "brakeman_version": "4.8.2"
+}

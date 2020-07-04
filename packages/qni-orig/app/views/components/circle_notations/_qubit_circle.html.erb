@@ -1,17 +1,22 @@
 <% ket = local_assigns.fetch(:ket) %>
 <% magnitude = local_assigns.fetch(:magnitude) %>
-<% magnitude_string = local_assigns.fetch(:magnitude_string, magnitude) %>
+<% magnitude_string = local_assigns.fetch(:magnitude_string, magnitude.to_s) %>
 <% phase = magnitude.positive? ? local_assigns.fetch(:phase, 0) : nil %>
-<% phase_string = local_assigns.fetch(:phase_string, phase) if phase %>
+<% phase_string = local_assigns.fetch(:phase_string, phase.to_s) if phase %>
 <% phase_klass = phase.positive? ? "rotate-#{phase}" : "-rotate#{phase}" if phase %>
 
 <% balloon_label = "|#{ket}⟩\nmagnitude = #{magnitude_string}" %>
 <% balloon_label += "\nphase = #{phase_string}" if magnitude.positive? %>
 
 <div class="qubit-circle"
-     data-target="simulator.qubitCircle" data-magnitude="<%= magnitude %>" data-balloon-pos="up" data-balloon-break
-     aria-label="<%= balloon_label %>">
-  <div class="qubit-circle__border">
+     data-target="circle-notation.qubitCircle"
+     data-target="simulator.qubitCircle"
+     data-ket="<%= ket %>"
+     data-magnitude="<%= magnitude %>"
+     data-magnitude-string="<%= magnitude_string.gsub('sqrt', '√').gsub(/√\((.)\)/, '√\1').gsub(/\s+/, '') %>"
+     data-phase-string="<%= phase_string ? phase_string.gsub('sqrt', '√').gsub(/√\((.)\)/, '√\1').gsub('pi', 'π').gsub(/\s+/, '') : nil %>">
+  <div class="qubit-circle__border"></div>
+  <div class="qubit-circle__body">
     <div class="qubit-circle__magnitude"></div>
     <% if magnitude.positive? %>
       <div class="qubit-circle__phase" style="--transform-rotate: <%= phase * -1 %>deg;">

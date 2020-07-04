@@ -5,7 +5,9 @@
   <div class="readout__wire readout__wire--left"></div>
   <div class="readout__wire readout__wire--right"></div>
   <div class="readout__body">
-    |<%= tag.span value, class: 'readout__value' %>&#10217;
+    <div>
+      |<%= tag.span value, class: 'readout__value' %>&#10217;
+    </div>
   </div>
   <%= gate_label(label: label) if label %>
 <% end %>

@@ -1,0 +1,36 @@
+.simulator-wrapper {
+  &--1qubit,
+  &--2qubit,
+  &--3qubit {
+    @apply mt-28;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+
+  &--4qubit {
+    @apply mt-32;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+
+  &--5qubit,
+  &--6qubit {
+    @apply mt-28;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+
+  &--8qubit {
+    @apply mt-40;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+}

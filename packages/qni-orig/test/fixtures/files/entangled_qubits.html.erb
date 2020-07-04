@@ -1,6 +1,6 @@
-<%= circuit do %>
+<%= circuit nqubit: 2 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column do %>
+    <%= circuit_register_group do %>
       <%= register_label label: 'a' %>
       <%= register_label label: 'b' %>
     <% end %>
@@ -23,12 +23,6 @@
     <%= circuit_column do %>
       <%= control_dot bottom: true %>
       <%= not_gate top: true %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= wire %>
-      <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>

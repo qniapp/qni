@@ -1,30 +1,148 @@
 .circuit-block {
-  @apply flex flex-col;
-  @apply my-6;
+  @apply flex;
   @apply relative;
+
+  @apply flex-row justify-between;
+
+  @screen md {
+    @apply flex-col justify-start;
+    @apply my-6;
+  }
+
+  .circuit-preview & {
+    @apply flex-col justify-start;
+    @apply my-6;
+  }
 
   &__label {
     @apply absolute;
     @apply flex justify-center;
+    @apply flex-grow-0;
+    @apply font-mono;
     @apply text-indigo-700;
-    @apply w-full;
     @apply whitespace-no-wrap;
+
+    @apply h-full;
+    @apply items-center;
+    @apply text-lg;
+    @apply w-6;
+    writing-mode: vertical-lr;
+
+    @screen md {
+      @apply absolute;
+      @apply h-auto;
+      @apply text-base;
+      @apply w-full;
+      writing-mode: horizontal-tb;
+    }
+  }
+
+  .circuit--4qubit & &__label,
+  .circuit--5qubit & &__label,
+  .circuit--6qubit & &__label {
+    @apply text-sm;
+
+    @screen md {
+      @apply text-base;
+    }
+  }
+
+  .circuit--8qubit & &__label {
+    @apply text-xs;
+
+    @screen md {
+      @apply text-base;
+    }
+  }
+
+  .circuit-preview & &__label {
+    @apply absolute;
+    @apply h-auto;
+    @apply text-base;
+    @apply w-full;
+    writing-mode: horizontal-tb;
   }
 
   &__label--top {
-    @apply -mt-8;
     @apply top-0;
+    @apply -mr-8;
+    @apply right-0;
+
+    @screen md {
+      @apply -mt-8;
+      right: unset;
+    }
+  }
+
+  .circuit-preview & &__label--top {
+    @apply -mt-8;
+    right: unset;
   }
 
   &__label--bottom {
+    @apply -ml-8;
+    @apply left-0;
+    @apply top-0;
+
+    @screen md {
+      @apply -mb-8;
+      @apply bottom-0;
+      @apply ml-0;
+      left: unset;
+      top: unset;
+    }
+  }
+
+  .circuit-preview & &__label--bottom {
     @apply -mb-8;
     @apply bottom-0;
+    @apply ml-0;
+    left: unset;
+    top: unset;
   }
 
   &__body {
     @apply bg-gray-100;
-    @apply border-t-2 border-b-2 border-indigo-200;
-    @apply flex flex-row;
+    @apply border-indigo-200;
+    @apply flex;
+
+    @apply border-l-2 border-r-2;
+    @apply flex-col;
+    @apply flex-grow;
+
+    @screen md {
+      @apply border-l-0 border-r-0;
+      @apply border-t-2 border-b-2;
+      @apply flex-row;
+      @apply px-0;
+      @apply py-8;
+    }
+  }
+
+  .circuit--1qubit & &__body {
+    @apply px-#{$circuit-element-margin-extralarge};
+
+    @screen md {
+      @apply px-0;
+    }
+  }
+
+  .circuit--3qubit & &__body,
+  .circuit--4qubit & &__body,
+  .circuit--5qubit & &__body,
+  .circuit--8qubit & &__body {
+    @apply px-4;
+
+    @screen md {
+      @apply px-0;
+    }
+  }
+
+  .circuit-preview & &__body {
+    @apply border-l-0 border-r-0;
+    @apply border-t-2 border-b-2;
+    @apply flex-row;
+    @apply px-0;
     @apply py-8;
   }
 }

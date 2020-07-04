@@ -2,14 +2,14 @@
 
 <% cache circuit do %>
   <div class="thumbnail-container invisible"
-       data-target="circuit-thumbnail.thumbnailContainer"
-       data-circuit-thumbnail-name="<%= circuit.name %>">
-    <%= link_to circuit_path(circuit), class: 'thumbnail block', data: { target: 'circuit-thumbnail.thumbnail' } do %>
+       data-target="circuit-thumbnail.thumbnailContainer">
+    <div class="thumbnail" data-target="circuit-thumbnail.thumbnail">
       <iframe frameborder="0" scrolling="no"
-              class="h-0"
-              src="<%= circuit_preview_path(circuit) %>"
+              class="lazy h-0"
+              data-src="<%= circuit_preview_path(circuit) %>"
               data-target="circuit-thumbnail.iframe"
-              data-action="load->circuit-thumbnail#init resize@window->circuit-thumbnail#resize"></iframe>
-    <% end %>
+              data-action="iframeLazyLoad->circuit-thumbnail#iframeLazyLoad resize@window->circuit-thumbnail#resize"
+              data-circuit-name="<%= circuit.name %>"></iframe>
+    </div>
   </div>
 <% end %>

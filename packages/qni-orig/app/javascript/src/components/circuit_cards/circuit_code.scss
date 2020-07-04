@@ -1,4 +1,6 @@
 .circuit-code {
+  $circuit-code-background-color: #474949;
+
   @apply -mt-6 -mx-6;
   @apply block;
 
@@ -10,7 +12,7 @@
     @apply p-0;
     @apply text-sm;
 
-    background: #474949;
+    background: $circuit-code-background-color;
   }
 
   code {
