@@ -1,8 +1,8 @@
-<%= circuit do %>
+<%= circuit nqubit: 6 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column_span rows: 6 do %>
-      <%= register_label_span label: 'a', row_span: 4 %>
-      <%= register_label_span label: 'b', row_span: 2 %>
+    <%= circuit_register_group_span rows: 6 do %>
+      <%= register_label_span label: 'a', span: 4, start: 3 %>
+      <%= register_label_span label: 'b', span: 2, start: 1 %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>

@@ -7,4 +7,12 @@
     @apply rounded-full;
     @apply w-3 h-3;
   }
+
+  .circuit--8qubit & &__dot {
+    @apply w-2 h-2;
+
+    @screen md {
+      @apply w-3 h-3;
+    }
+  }
 }

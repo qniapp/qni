@@ -2,36 +2,326 @@ $wire-width: 2;
 $wire-color: gray-600;
 $wire-inactive-color: gray-200;
 
+$circuit-element-top-bottom-wire-width: 4;
+
+$circuit-element-color: teal-400;
+
+$circuit-element-size-extralarge: 12;
+$circuit-element-size-large: 10;
+$circuit-element-size-base: 8;
+$circuit-element-size-small: 6;
+$circuit-element-size-extrasmall: 4;
+$circuit-element-size-screen-md: 8;
+
+$circuit-element-margin-extralarge: 4;
+$circuit-element-margin-large: 4;
+$circuit-element-margin-base: 4;
+$circuit-element-margin-small: 2;
+$circuit-element-margin-extrasmall: 1;
+
+$circuit-element-label-font-size-extralarge: 4xl;
+$circuit-element-label-font-size-large: 3xl;
+$circuit-element-label-font-size-base: xl;
+$circuit-element-label-font-size-small: base;
+$circuit-element-label-font-size-extrasmall: xs;
+
+$circuit-element-shape-size: 8;
+$circuit-element-wire-length: (
+    $circuit-element-size-base - $circuit-element-shape-size
+  ) / 2;
+$circuit-element-wire-length-mobile: 4;
+
 @mixin circuit-element {
   @apply flex justify-center items-center;
   @apply relative;
-  @apply w-12 h-8;
 
-  &:nth-of-type(n+2) {
-    @apply mt-4;
+  // Base size
+  @apply mx-#{$circuit-element-margin-base};
+  @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base + $circuit-element-margin-base * 2};
+
+  // Extra large size
+  .circuit--1qubit & {
+    @apply mx-#{$circuit-element-margin-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge + $circuit-element-margin-extralarge * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+    }
   }
 
+  // Large size
+  .circuit--2qubit & {
+    @apply mx-#{$circuit-element-margin-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large + $circuit-element-margin-large * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+    }
+  }
+
+  // Base size
+  .circuit--3qubit & {
+    @apply mx-#{$circuit-element-margin-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base + $circuit-element-margin-base * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+    }
+  }
+
+  // Small size
+  .circuit--4qubit &,
+  .circuit--5qubit &,
+  .circuit--6qubit & {
+    @apply mx-#{$circuit-element-margin-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small + $circuit-element-margin-small * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+    }
+  }
+
+  .circuit--8qubit & {
+    @apply mx-#{$circuit-element-margin-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall + $circuit-element-margin-extrasmall * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+    }
+  }
+
+  @screen md {
+    @apply mx-0;
+    @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+  }
+
+  .circuit-preview & {
+    @apply mx-0;
+    @apply w-#{$circuit-element-size-base + $circuit-element-margin-base} h-#{$circuit-element-size-screen-md};
+  }
+
+  // 上要素との間隔
+  &:nth-of-type(n + 2) {
+    @screen md {
+      @apply mt-#{$circuit-element-margin-base};
+    }
+
+    .circuit-preview & {
+      @apply mt-#{$circuit-element-margin-base};
+    }
+  }
+
+  // ラベル
   .gate-label {
-    @apply -mt-5;
-    @apply absolute top-0;
+    @apply absolute;
     @apply flex items-center justify-center;
     @apply font-mono;
     @apply text-gray-400;
-    @apply text-xs;
-    @apply w-full;
     @apply whitespace-no-wrap;
+
+    @apply -mr-6;
+    @apply h-full;
+    @apply right-0;
+    @apply text-base;
+    writing-mode: vertical-lr;
+
+    @screen md {
+      @apply -mt-4;
+      @apply mr-0;
+      @apply text-xs;
+      @apply top-0;
+      @apply h-auto;
+      @apply w-full;
+      writing-mode: horizontal-tb;
+    }
+  }
+
+  .circuit-preview & .gate-label {
+    @apply -mt-4;
+    @apply mr-0;
+    @apply text-xs;
+    @apply top-0;
+    @apply h-auto;
+    @apply w-full;
+    writing-mode: horizontal-tb;
   }
 
   .gate-label--bottom {
-    @apply mt-8
+    @apply mr-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mr-0;
+      @apply mt-8;
+    }
+  }
+
+  .circuit--1qubit & .gate-label--bottom {
+    @apply mr-#{$circuit-element-size-extralarge};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--2qubit & .gate-label--bottom {
+    @apply mr-#{$circuit-element-size-large};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--3qubit & .gate-label--bottom {
+    @apply mr-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--4qubit & .gate-label--bottom,
+  .circuit--5qubit & .gate-label--bottom,
+  .circuit--6qubit & .gate-label--bottom {
+    @apply mr-#{$circuit-element-size-small};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--8qubit & .gate-label {
+    @apply -mr-4;
+    @apply text-xs;
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--8qubit & .gate-label--bottom {
+    @apply mr-#{$circuit-element-size-extrasmall};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit-preview & .gate-label.gate-label--bottom {
+    @apply mr-0;
+    @apply mt-8;
   }
 
   .bg-wire {
     @apply absolute;
-    @apply border-t-#{$wire-width} border-#{$wire-color};
+    @apply border-#{$wire-color};
+
+    @apply border-l-#{$wire-width};
+    @apply h-full;
+    @apply ml-#{$circuit-element-size-base / 2};
+    left: -#{$wire-width / 2}px;
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit--1qubit & .bg-wire {
+    @apply ml-#{$circuit-element-size-extralarge / 2};
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit--2qubit & .bg-wire {
+    @apply ml-#{$circuit-element-size-large / 2};
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit--3qubit & .bg-wire {
+    @apply ml-#{$circuit-element-size-base / 2};
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit--4qubit & .bg-wire,
+  .circuit--5qubit & .bg-wire,
+  .circuit--6qubit & .bg-wire {
+    @apply ml-#{$circuit-element-size-small / 2};
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit--8qubit & .bg-wire {
+    @apply ml-#{$circuit-element-size-extrasmall / 2};
+
+    @screen md {
+      @apply border-l-0;
+      @apply border-t-#{$wire-width};
+      @apply h-4;
+      @apply ml-0;
+      @apply mt-4;
+      @apply w-full;
+      left: unset;
+      top: -1px;
+    }
+  }
+
+  .circuit-preview & .bg-wire {
+    @apply border-l-0;
+    @apply border-t-#{$wire-width};
+    @apply h-4;
+    @apply ml-0;
     @apply mt-4;
     @apply w-full;
-
+    left: unset;
     top: -1px;
   }
 
@@ -40,30 +330,313 @@ $wire-inactive-color: gray-200;
   }
 
   .top-wire {
-    @apply -mt-2 ml-6;
-    @apply absolute top-0;
-    @apply border-l-4 border-teal-400;
-    @apply h-6;
+    @apply absolute;
+    @apply border-#{$circuit-element-color};
 
-    left: -2px;
+    @apply border-t-4;
+    @apply mt-10 -mr-4;
+    @apply right-0;
+    @apply w-10;
+    top: -2px;
+  }
+
+  .circuit--1qubit & .top-wire {
+    @apply -mr-#{$circuit-element-margin-extralarge};
+    @apply mt-#{$circuit-element-size-extralarge / 2 + $circuit-element-margin-extralarge};
+    @apply w-#{$circuit-element-size-extralarge / 2 + $circuit-element-margin-extralarge};
+
+    @screen md {
+      @apply -mt-2 ml-#{$circuit-element-size-extralarge / 2};
+      @apply border-l-#{$circuit-element-top-bottom-wire-width};
+      @apply border-t-0;
+      @apply h-#{$circuit-element-size-extralarge / 2};
+      @apply top-0;
+      @apply w-#{$circuit-element-size-extralarge / 2};
+      left: -#{$circuit-element-top-bottom-wire-width / 2}px;
+      right: unset;
+    }
+  }
+
+  .circuit--2qubit & .top-wire {
+    @apply -mr-#{$circuit-element-margin-large};
+    @apply mt-#{$circuit-element-size-large / 2 + $circuit-element-margin-large};
+    @apply w-#{$circuit-element-size-large / 2 + $circuit-element-margin-large};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-#{$circuit-element-top-bottom-wire-width};
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      @apply w-#{$circuit-element-size-large / 2};
+      left: -#{$circuit-element-top-bottom-wire-width / 2}px;
+      right: unset;
+    }
+  }
+
+  .circuit--3qubit & .top-wire {
+    @apply -mr-#{$circuit-element-margin-base};
+    @apply mt-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
+    @apply w-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit--4qubit & .top-wire,
+  .circuit--5qubit & .top-wire,
+  .circuit--6qubit & .top-wire {
+    @apply -mr-#{$circuit-element-margin-small};
+    @apply mt-#{$circuit-element-size-small / 2 + $circuit-element-margin-small};
+    @apply w-#{$circuit-element-size-small / 2 + $circuit-element-margin-small};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit--8qubit & .top-wire {
+    @apply -mr-#{$circuit-element-margin-extrasmall};
+    @apply border-t-2;
+    @apply mt-#{$circuit-element-size-extrasmall / 2 + $circuit-element-margin-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall / 2 + $circuit-element-margin-extrasmall};
+    top: -1px;
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit-preview & .top-wire {
+    @apply -mt-2 ml-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
+    @apply border-l-#{$circuit-element-top-bottom-wire-width};
+    @apply border-t-0;
+    @apply h-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
+    @apply top-0;
+    @apply w-#{$circuit-element-size-base / 2};
+    left: -#{$circuit-element-top-bottom-wire-width / 2}px;
+    right: unset;
   }
 
   .bottom-wire {
-    @apply absolute top-0;
-    @apply border-l-4 border-teal-400;
-    @apply h-6;
-    @apply mt-4 ml-6;
+    @apply absolute;
+    @apply border-#{$circuit-element-color};
 
-    left: -2px;
+    @apply -ml-#{$circuit-element-margin-base};
+    @apply border-t-4;
+    @apply left-0;
+    @apply mt-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
+    top: -2px;
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-5;
+      @apply mt-4 ml-5;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit--1qubit & .bottom-wire {
+    @apply -ml-#{$circuit-element-margin-extralarge};
+    @apply mt-#{$circuit-element-size-extralarge / 2 + $circuit-element-margin-extralarge};
+    @apply w-#{$circuit-element-size-extralarge / 2 + $circuit-element-margin-extralarge};
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply ml-#{$circuit-element-size-extralarge / 2};
+      @apply mt-4;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit--2qubit & .bottom-wire {
+    @apply -ml-#{$circuit-element-margin-large};
+    @apply mt-#{$circuit-element-size-large / 2 + $circuit-element-margin-large};
+    @apply w-#{$circuit-element-size-large / 2 + $circuit-element-margin-large};
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply mt-4 ml-6;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit--3qubit & .bottom-wire {
+    @apply -ml-#{$circuit-element-margin-base};
+    @apply mt-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
+    @apply w-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply mt-4 ml-6;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit--4qubit & .bottom-wire,
+  .circuit--5qubit & .bottom-wire,
+  .circuit--6qubit & .bottom-wire {
+    @apply -ml-#{$circuit-element-margin-small};
+    @apply mt-#{$circuit-element-size-small / 2 + $circuit-element-margin-small};
+    @apply w-#{$circuit-element-size-small / 2 + $circuit-element-margin-small};
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply mt-4 ml-6;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit--8qubit & .bottom-wire {
+    @apply -ml-#{$circuit-element-margin-extrasmall};
+    @apply border-t-2;
+    @apply mt-#{$circuit-element-size-extrasmall / 2 + $circuit-element-margin-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall / 2 + $circuit-element-margin-extrasmall};
+    top: -1px;
+
+    @screen md {
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply mt-4 ml-6;
+      @apply top-0;
+      left: -2px;
+    }
+  }
+
+  .circuit-preview & .bottom-wire {
+    @apply border-l-#{$circuit-element-top-bottom-wire-width};
+    @apply border-t-0;
+    @apply h-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
+    @apply mt-4 ml-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
+    @apply top-0;
+    left: -#{$circuit-element-top-bottom-wire-width / 2}px;
   }
 
   .gate-box {
-    @apply absolute top-0 left-0 right-0;
-    @apply bg-teal-400;
+    @apply absolute inset-0;
+    @apply bg-#{$circuit-element-color};
     @apply flex justify-center items-center;
-    @apply mx-2;
+    @apply rounded;
     @apply text-white;
-    @apply w-8 h-8;
+
+    @apply my-#{$circuit-element-wire-length-mobile};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--1qubit & .gate-box {
+    @apply my-#{$circuit-element-margin-extralarge};
+    @apply text-#{$circuit-element-label-font-size-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-#{$circuit-element-label-font-size-base};
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--2qubit & .gate-box {
+    @apply my-#{$circuit-element-margin-large};
+    @apply text-#{$circuit-element-label-font-size-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--3qubit & .gate-box {
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--4qubit & .gate-box,
+  .circuit--5qubit & .gate-box,
+  .circuit--6qubit & .gate-box {
+    @apply my-#{$circuit-element-margin-small};
+    @apply text-#{$circuit-element-label-font-size-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--8qubit & .gate-box {
+    @apply my-#{$circuit-element-margin-extrasmall};
+    @apply text-#{$circuit-element-label-font-size-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit-preview & .gate-box {
+    @apply mx-#{$circuit-element-margin-base / 2};
+    @apply my-0;
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
   }
 
   &--disabled .gate-box {
@@ -74,11 +647,133 @@ $wire-inactive-color: gray-200;
 
   .gate-circle {
     @apply absolute top-0 left-0 right-0;
-    @apply bg-teal-400;
+    @apply bg-#{$circuit-element-color};
     @apply flex justify-center items-center;
-    @apply mx-2;
+    @apply leading-none;
     @apply rounded-full;
     @apply stroke-current text-white;
+
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--1qubit & .gate-circle {
+    @apply my-#{$circuit-element-margin-extralarge};
+    @apply text-#{$circuit-element-label-font-size-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--2qubit & .gate-circle {
+    @apply my-#{$circuit-element-margin-large};
+    @apply text-#{$circuit-element-label-font-size-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--3qubit & .gate-circle {
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--4qubit & .gate-circle,
+  .circuit--5qubit & .gate-circle,
+  .circuit--6qubit & .gate-circle {
+    @apply my-#{$circuit-element-margin-small};
+    @apply text-#{$circuit-element-label-font-size-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit--8qubit & .gate-circle {
+    @apply my-#{$circuit-element-margin-extrasmall};
+    @apply text-#{$circuit-element-label-font-size-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall};
+
+    @screen md {
+      @apply mx-#{$circuit-element-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$circuit-element-shape-size} h-#{$circuit-element-shape-size};
+    }
+  }
+
+  .circuit-preview & .gate-circle {
+    @apply mx-2;
+    @apply my-0;
+    @apply text-base;
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
+  }
+
+  .gate-circle svg {
     @apply w-8 h-8;
+
+    @screen md {
+      @apply w-5 h-5;
+    }
+  }
+
+  .circuit--1qubit & .gate-circle svg {
+    @apply w-8 h-8;
+
+    @screen md {
+      @apply w-6 h-6;
+    }
+  }
+
+  .circuit--2qubit & .gate-circle svg {
+    @apply w-6 h-6;
+  }
+
+  .circuit--3qubit & .gate-circle svg {
+    @apply w-5 h-5;
+  }
+
+  .circuit--4qubit & .gate-circle svg,
+  .circuit--5qubit & .gate-circle svg,
+  .circuit--6qubit & .gate-circle svg {
+    @apply w-5 h-5;
+  }
+
+  .circuit--8qubit & .gate-circle svg {
+    @apply w-4 h-4;
+  }
+
+  .circuit-preview & .gate-circle svg {
+    @apply w-5 h-5;
   }
 }

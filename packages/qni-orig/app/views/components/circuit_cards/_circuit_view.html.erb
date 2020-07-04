@@ -1,5 +1,5 @@
 <% circuit = local_assigns.fetch(:circuit) %>
 
 <% cache circuit do %>
-  <%= render inline: circuit.erb.gsub(/<%%/, '<%') %>
+  <%= render inline: circuit.erb %>
 <% end %>

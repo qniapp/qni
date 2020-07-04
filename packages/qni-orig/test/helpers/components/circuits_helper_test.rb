@@ -18,7 +18,7 @@ class Components::CircuitsHelperTest < ActionView::TestCase
       <div class="circuit-column"
            data-action="click->simulator#circuitColumnClicked"
            data-target="simulator.circuitColumn">
-        <div class="flex flex-col">
+        <div class="circuit-column__body">
           #{hadamard_gate}
         </div>
         #{circuit_breakpoint}
@@ -30,13 +30,13 @@ class Components::CircuitsHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { not_gate })
       <div class="circuit-block">
         <div class="circuit-block__label circuit-block__label--top">
-          <span>set value</span>
+          set value
         </div>
         <div class="circuit-block__body">
           #{not_gate}
         </div>
         <div class="circuit-block__label circuit-block__label--bottom">
-          <span>set value</span>
+          set value
         </div>
       </div>
     ERB
@@ -64,31 +64,31 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   test 'register label' do
     assert_dom_equal beautify(<<~ERB), beautify(register_label(label: '👩Alice'))
       <div class="register-label">
-        <span>👩Alice</span>
+        <span class="register-label__value">👩Alice</span>
       </div>
     ERB
   end
 
-  test 'circuit register column' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_column { register_label label: '👩Alice' })
-      <div class="flex flex-col">
+  test 'circuit register group' do
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_group { register_label label: '👩Alice' })
+      <div class="circuit-register-group">
         #{register_label label: '👩Alice'}
       </div>
     ERB
   end
 
   test 'circuit register column span' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_column_span(rows: 6) { register_label_span(label: 'a', row_span: 4) + register_label_span(label: 'b', row_span: 2) })
-      <div class="grid gap-2 grid-cols-1 grid-rows-6 mr-2 flex-shrink-0">
-        #{register_label_span label: 'a', row_span: 4}
-        #{register_label_span label: 'b', row_span: 2}
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_group_span(rows: 6) { register_label_span(label: 'a', start: 3, span: 4) + register_label_span(label: 'b', start: 1, span: 2) })
+      <div class="circuit-register-group-span qubits-6">
+        #{register_label_span label: 'a', start: 3, span: 4}
+        #{register_label_span label: 'b', start: 1, span: 2}
       </div>
     ERB
   end
 
   test 'register label span' do
-    assert_dom_equal beautify(<<~ERB), beautify(register_label_span(label: 'register a', row_span: 3))
-      <div class="register-label-span row-span-3">
+    assert_dom_equal beautify(<<~ERB), beautify(register_label_span(label: 'register a', start: 1, span: 3))
+      <div class="register-label-span reg-start-1 reg-end-4 span-3">
         <span class="register-label-span__label">register a</span>
       </div>
     ERB

@@ -1,23 +1,40 @@
 import { Controller } from "stimulus"
 
+window.onmessage = (m) => {
+  const json = JSON.parse(m.data)
+  const event = new CustomEvent("iframeSize")
+  event.json = json
+  document.getElementById(json.id).dispatchEvent(event)
+}
+
 export default class extends Controller {
   static targets = ["loader", "thumbnailContainer", "thumbnail", "iframe"];
 
-  init() {
-    this.resizeIframe()
-    this.resizeThumbnail()
-    this.shuffleController.update()
-    this.hideLoader()
-    this.thumbnailContainerTarget.classList.remove("invisible")
+  iframeLazyLoad() {
+    this.iframeTarget.contentWindow.postMessage(this.element.id, "*")
   }
 
-  hideLoader() {
-    this.loaderTarget.classList.add("hidden")
+  iframeSize(event) {
+    this.iframeWidth = event.json.width
+    this.iframeHeight = event.json.height
+
+    this.resizeIframe()
+    this.resizeThumbnail()
+    this.hideLoader()
+    this.thumbnailContainerTarget.classList.remove("invisible")
+    this.masonry.dispatchEvent(new CustomEvent("circuitThumbnailResized"))
   }
 
   resize() {
     this.resizeIframe()
     this.resizeThumbnail()
+    this.masonry.dispatchEvent(new CustomEvent("circuitThumbnailResized"))
+  }
+
+  // Private
+
+  hideLoader() {
+    this.loaderTarget.classList.add("hidden")
   }
 
   resizeIframe() {
@@ -41,17 +58,17 @@ export default class extends Controller {
     }
   }
 
-  get iframeWidth() {
-    return (this._iframeWidth =
-      this._iframeWidth ||
-      this.iframeTarget.contentWindow.document.documentElement.scrollWidth)
-  }
+  // get iframeWidth() {
+  //   return (this.originalIframeWidth =
+  //     this.originalIframeWidth ||
+  //     this.iframeTarget.contentWindow.document.documentElement.scrollWidth)
+  // }
 
-  get iframeHeight() {
-    return (this._iframeHeight =
-      this._iframeHeight ||
-      this.iframeTarget.contentWindow.document.documentElement.scrollHeight)
-  }
+  // get iframeHeight() {
+  //   return (this.originalIframeHeight =
+  //     this.originalIframeHeight ||
+  //     this.iframeTarget.contentWindow.document.documentElement.scrollHeight)
+  // }
 
   get cardBodyWidth() {
     return this.element.clientWidth
@@ -61,10 +78,7 @@ export default class extends Controller {
     return this.element.clientHeight
   }
 
-  get shuffleController() {
-    return this.application.getControllerForElementAndIdentifier(
-      document.getElementById("shuffle"),
-      "shuffle",
-    )
+  get masonry() {
+    return document.getElementById("masonry")
   }
 }

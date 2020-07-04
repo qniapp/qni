@@ -1,6 +1,6 @@
 <% body = yield.presence || raise('body is a mandatory') %>
-<% size = local_assigns.fetch(:size, :base) %>
+<% nqubit = local_assigns.fetch(:nqubit) %>
 
-<%= tag.div class: class_string('circle-notation', 'circle-notation--sm' => size == :sm, 'circle-notation--xs' => size == :xs) do %>
+<%= tag.div class: class_string('circle-notation', "circle-notation--#{nqubit}qubit"), data: { controller: 'circle-notation' } do %>
   <%= body %>
 <% end %>

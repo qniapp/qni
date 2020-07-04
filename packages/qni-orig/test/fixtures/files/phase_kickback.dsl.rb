@@ -1,5 +1,5 @@
 register 'Register 1' => 2, 'Register 2' => 1
-label '0x1', '0x2', '0x2'
+label '0x1', '0x2', '0x1'
 
 write 0 => 0, 1 => 0
 write 2 => 1

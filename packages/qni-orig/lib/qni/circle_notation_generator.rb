@@ -10,15 +10,8 @@ module Qni
 
     def generate_circle_notation
       generate_python_script_file
-      size = if @dsl.nqubit < 4
-               :base
-             elsif @dsl.nqubit == 4
-               :sm
-             else
-               :xs
-             end
       HtmlBeautifier.beautify(<<~ERB)
-        <%= circle_notation #{size ? "size: :#{size} " : ''}do %>
+        <%= circle_notation nqubit: #{@dsl.nqubit} do %>
           #{body}
         <% end %>
       ERB
@@ -54,6 +47,7 @@ module Qni
 
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
     def parse_sympy_stdout(stdout)
       qubit_circle_groups = []
 
@@ -81,7 +75,7 @@ module Qni
       end
 
       erb = ''
-      qubit_circle_groups.each_with_index do |each, index|
+      qubit_circle_groups.each_with_index do |each, index| # rubocop:disable Metrics/BlockLength
         circles = each.keys.map do |ket|
           if each[ket][:magnitude].positive?
             "<%= qubit_circle ket: #{ket}, magnitude: #{each[ket][:magnitude]}, magnitude_string: '#{each[ket][:symbolic_magnitude]}', phase: #{each[ket][:relational_phase]}, phase_string: '#{each[ket][:symbolic_relational_phase]}' %>"
@@ -90,13 +84,25 @@ module Qni
           end
         end
 
-        rows = circles.in_groups_of(16, false).map do |slice|
-          <<~ERB
-            <%= qubit_circle_group_row do %>
-              #{slice.join("\n")}
-            <% end %>
-          ERB
-        end.join("\n")
+        rows =
+          if @dsl.nqubit > 3
+            circles.in_groups_of(16, false).map do |slice|
+              <<~ERB
+                <%= qubit_circle_group_row do %>
+                  <div class="qubit-circle-octet">#{slice[0..7].join("\n")}</div>
+                  <div class="qubit-circle-octet">#{slice[8..15].join("\n")}</div>
+                <% end %>
+              ERB
+            end.join("\n")
+          else
+            circles.in_groups_of(16, false).map do |slice|
+              <<~ERB
+                <%= qubit_circle_group_row do %>
+                  #{slice.join("\n")}
+                <% end %>
+              ERB
+            end.join("\n")
+          end
 
         erb += <<~ERB
           <%= qubit_circle_group #{index.zero? ? 'hidden: false ' : ''}do %>
@@ -109,6 +115,7 @@ module Qni
     end
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     def register(_args); end
 
@@ -120,8 +127,8 @@ module Qni
 
     def block_start(_args); end
 
-    def block_end
-      "psi = nop(psi, #{@dsl.nqubit})\n"
+    def block_end(index)
+      return "psi = nop(psi, #{@dsl.nqubit})\n" if @dsl[index + 1].nil? || @dsl[index + 1].first == :block_start
     end
 
     def write_all(value)

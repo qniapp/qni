@@ -12,8 +12,19 @@ module Qni
     end
 
     def generate_erb
+      # size = if @dsl.nqubit > 6
+      #          :extrasmall
+      #        elsif @dsl.nqubit > 4
+      #          :small
+      #        elsif @dsl.nqubit > 3
+      #          :base
+      #        elsif @dsl.nqubit > 2
+      #          :large
+      #        else
+      #          :extralarge
+      #        end
       HtmlBeautifier.beautify(<<~ERB)
-        <%= circuit do %>
+        <%= circuit nqubit: #{@dsl.nqubit} do %>
           #{body}
         <% end %>
       ERB
@@ -27,16 +38,22 @@ module Qni
 
     def register(registers)
       circuit_block_divider do
-        erb = "<%= circuit_register_column do %>\n"
+        erb = "<%= circuit_register_group do %>\n"
         erb += registers.map { |each| %(<%= register_label label: '#{each}' %>\n) }.join
         erb + "<% end %>\n"
       end
     end
 
     def register_span(registers)
+      start = 1
+
       circuit_block_divider do
-        erb = "<%= circuit_register_column_span rows: #{@dsl.nqubit} do %>\n"
-        erb += registers.map { |k, v| "<%= register_label_span label: '#{k}', row_span: #{v} %>\n" }.join
+        erb = "<%= circuit_register_group_span rows: #{@dsl.nqubit} do %>\n"
+        erb += registers.to_a.reverse.map do |label, span|
+          str = "<%= register_label_span label: '#{label}', span: #{span}, start: #{start} %>\n"
+          start += span
+          str
+        end.reverse.join
         erb + "<% end %>\n"
       end
     end
@@ -54,9 +71,11 @@ module Qni
       "<%= circuit_block label: '#{label}' do %>\n"
     end
 
-    def block_end
+    def block_end(index)
       @in_block = false
       erb = "<% end %>\n"
+      return erb if @dsl[index + 1] && @dsl[index + 1].first != :block_start
+
       erb + block_divider do
         circuit_column do
           (0...@dsl.nqubit).map do |each|

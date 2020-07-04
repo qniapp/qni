@@ -30,7 +30,7 @@ class CircuitTest
     end
 
     test 'Quantum Spy Hunter' do
-      circuit = circuits('root_of_not')
+      circuit = circuits('quantum_spy_hunter')
       erb = circuit.erb.chomp
 
       circuit.generate_erb
@@ -284,7 +284,7 @@ class CircuitTest
     end
 
     test 'Quantum Spy Hunter' do
-      circuit = circuits('root_of_not')
+      circuit = circuits('quantum_spy_hunter')
       circle_notation = circuit.circle_notation.chomp
 
       circuit.generate_circle_notation

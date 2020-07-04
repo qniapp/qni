@@ -1,3 +1,25 @@
 .circuit-column {
-  @apply flex flex-row;
+  @apply flex;
+
+  @apply flex-col justify-center items-center;
+
+  @screen md {
+    @apply flex-row;
+  }
+
+  .circuit-preview & {
+    @apply flex-row;
+  }
+
+  &__body {
+    @apply flex flex-row-reverse flex-no-wrap;
+
+    @screen md {
+      @apply flex-col;
+    }
+  }
+
+  .circuit-preview & &__body {
+    @apply flex-col;
+  }
 }

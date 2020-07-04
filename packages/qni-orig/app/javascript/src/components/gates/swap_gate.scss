@@ -8,4 +8,12 @@
 
     stroke-width: 3;
   }
+
+  .circuit--8qubit & svg {
+    @apply w-6 h-6;
+
+    @screen md {
+      @apply w-8 h-8;
+    }
+  }
 }

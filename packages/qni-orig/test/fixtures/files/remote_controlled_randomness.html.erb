@@ -1,5 +1,5 @@
-<%= circuit do %>
-  <%= circuit_register_column do %>
+<%= circuit nqubit: 2 do %>
+  <%= circuit_register_group do %>
     <%= register_label label: 'a' %>
     <%= register_label label: 'b' %>
   <% end %>

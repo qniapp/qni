@@ -1,6 +1,6 @@
-<%= circuit do %>
+<%= circuit nqubit: 3 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_column do %>
+    <%= circuit_register_group do %>
       <%= register_label label: '👩Alice' %>
       <%= register_label label: '😈Eve' %>
       <%= register_label label: '👦🏻Bob' %>
@@ -47,13 +47,6 @@
   <% end %>
   <%= circuit_block_divider do %>
     <%= circuit_column do %>
-      <%= wire active: false %>
-      <%= wire active: false %>
-      <%= wire active: false %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_column do %>
       <%= write value: 0 %>
       <%= wire active: false %>
       <%= wire active: false %>
@@ -61,7 +54,7 @@
   <% end %>
   <%= circuit_block label: 'set value' do %>
     <%= circuit_column do %>
-      <%= not_gate top: false, bottom: false, label: 'if alice_v' %>
+      <%= not_gate %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
@@ -76,13 +69,6 @@
   <%= circuit_block label: 'apply H' do %>
     <%= circuit_column do %>
       <%= hadamard_gate disabled: true, label: 'if alice_h' %>
-      <%= wire active: false %>
-      <%= wire active: false %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= wire %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
@@ -112,19 +98,12 @@
     <% end %>
     <%= circuit_column do %>
       <%= wire active: false %>
-      <%= not_gate top: false, bottom: false, label: 'if eve_v' %>
+      <%= not_gate %>
       <%= wire active: false %>
     <% end %>
     <%= circuit_column do %>
       <%= wire active: false %>
       <%= hadamard_gate %>
-      <%= wire active: false %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= wire active: false %>
-      <%= wire %>
       <%= wire active: false %>
     <% end %>
   <% end %>

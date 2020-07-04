@@ -60,6 +60,8 @@ jobs:
         RAILS_ENV: test
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
+    - name: Scan vulnerabilities using Brakeman
+      run: bundle exec brakeman
     - name: Test with Rake
       run: bundle exec rails test
       env:

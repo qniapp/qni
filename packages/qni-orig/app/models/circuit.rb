@@ -17,4 +17,8 @@ class Circuit < ApplicationRecord
   def generate_circle_notation
     self.circle_notation = Qni::CircleNotationGenerator.new(self).generate_circle_notation
   end
+
+  def nqubit
+    Qni::Dsl.load(dsl).nqubit
+  end
 end
