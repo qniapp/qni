@@ -211,6 +211,7 @@ GEM
       ffi (>= 1.0.6)
       msgpack (>= 0.4.3)
       optimist (>= 3.0.0)
+    rdoc (6.2.1)
     redis (4.2.1)
     regexp_parser (1.7.1)
     rubocop (0.79.0)
@@ -248,6 +249,8 @@ GEM
       parser
     scss_lint (0.59.0)
       sass (~> 3.5, >= 3.5.5)
+    sdoc (1.1.0)
+      rdoc (>= 5.0)
     selectize-rails (0.12.6)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -324,6 +327,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   scout_apm
   scss_lint
+  sdoc
   spring
   stackprof
   turbolinks (~> 5)
