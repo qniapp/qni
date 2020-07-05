@@ -4,7 +4,7 @@
 <% wire_active = local_assigns.fetch(:wire_active, true) %>
 
 <div class="phase-gate">
-  <%= bg_wire active: wire_active %>
+  <%= gate_wire active: wire_active %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
   <%= gate_label(label: theta) unless top %>
