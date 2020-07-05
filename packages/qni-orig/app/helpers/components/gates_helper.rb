@@ -1,4 +1,14 @@
 module Components::GatesHelper
+  # Returns a partial of the hadamard gate.
+  #
+  #   # Add a label on top of the gate (default - nil)
+  #   hadamard_gate(label: 'if alice_h')
+  #
+  #   # Disable the gate (default - false)
+  #   hadamard_gate(disabled: true)
+  #
+  #   # Deactivate the wire (default - true)
+  #   hadamard_gate(wire_active: false)
   def hadamard_gate(*options)
     render 'components/gates/hadamard_gate', *options
   end
@@ -51,8 +61,8 @@ module Components::GatesHelper
     render 'components/gates/wire', *options
   end
 
-  def bg_wire(*options)
-    render 'components/gates/bg_wire', *options
+  def gate_wire(*options)
+    render 'components/gates/gate_wire', *options
   end
 
   def top_wire

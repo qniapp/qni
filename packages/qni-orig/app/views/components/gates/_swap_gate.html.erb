@@ -3,7 +3,7 @@
 <% wire_active = local_assigns.fetch(:wire_active, true) %>
 
 <div class="swap-gate">
-  <%= bg_wire active: wire_active %>
+  <%= gate_wire active: wire_active %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
   <span><%= swap %></span>

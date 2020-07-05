@@ -7,28 +7,37 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'hadamard gate' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate)
-      <div class="hadamard-gate">
-        <div class="bg-wire"></div>
-        <div class="gate-box">H</div>
+      <div class="gate hadamard-gate">
+        <div class="gate__wire"></div>
+        <div class="gate__box">H</div>
       </div>
     ERB
   end
 
-  test 'hadamard gate with label' do
+  test 'hadamard gate (labeled)' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate(label: 'if alice_h'))
-      <div class="hadamard-gate">
-        <div class="bg-wire"></div>
-        <div class="gate-box">H</div>
-        <div class="gate-label">if alice_h</div>
+      <div class="gate hadamard-gate">
+        <div class="gate__wire"></div>
+        <div class="gate__box">H</div>
+        <div class="gate__label">if alice_h</div>
       </div>
     ERB
   end
 
-  test 'disabled hadamard gate' do
+  test 'hadamard gate (disabled)' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate(disabled: true))
-      <div class="hadamard-gate hadamard-gate--disabled">
-        <div class="bg-wire"></div>
-        <div class="gate-box">H</div>
+      <div class="gate hadamard-gate gate--disabled">
+        <div class="gate__wire"></div>
+        <div class="gate__box">H</div>
+      </div>
+    ERB
+  end
+
+  test 'hadamard gate (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate(wire_active: false))
+      <div class="gate hadamard-gate gate--inactive-wire">
+        <div class="gate__wire"></div>
+        <div class="gate__box">H</div>
       </div>
     ERB
   end
@@ -36,7 +45,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'not gate' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate)
       <div class="not-gate">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="gate-circle">#{plus}</div>
       </div>
     ERB
@@ -45,8 +54,8 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'not gate with label' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(label: 'if alice_v'))
       <div class="not-gate">
-        <div class="bg-wire"></div>
-        <div class="gate-label">if alice_v</div>
+        <div class="gate__wire"></div>
+        <div class="gate__label">if alice_v</div>
         <div class="gate-circle">#{plus}</div>
       </div>
     ERB
@@ -55,8 +64,8 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'phase gate' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2'))
       <div class="phase-gate">
-        <div class="bg-wire"></div>
-        <div class="gate-label">π/2</div>
+        <div class="gate__wire"></div>
+        <div class="gate__label">π/2</div>
         <div class="gate-circle">φ</div>
       </div>
     ERB
@@ -65,9 +74,9 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'phase gate with bottom label' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', top: true))
       <div class="phase-gate">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="top-wire"></div>
-        <div class="gate-label gate-label--bottom">π/2</div>
+        <div class="gate__label gate__label--bottom">π/2</div>
         <div class="gate-circle">φ</div>
       </div>
     ERB
@@ -76,8 +85,8 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'root-not gate' do
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate)
       <div class="root-not-gate">
-        <div class="bg-wire"></div>
-        <div class="gate-box">√N</div>
+        <div class="gate__wire"></div>
+        <div class="gate__box">√N</div>
       </div>
     ERB
   end
@@ -85,7 +94,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'swap gate' do
     assert_dom_equal beautify(<<~ERB), beautify(swap_gate(bottom: true))
       <div class="swap-gate">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="bottom-wire"></div>
         <span>#{swap}</span>
       </div>
@@ -95,7 +104,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'control dot' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot)
       <div class="control-dot">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="control-dot__dot"></div>
       </div>
     ERB
@@ -104,7 +113,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'control dot with top link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true))
       <div class="control-dot">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="control-dot__dot"></div>
       </div>
@@ -114,7 +123,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'control dot with both top and bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true, bottom: true))
       <div class="control-dot">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="control-dot__dot"></div>
         <div class="bottom-wire"></div>
@@ -125,7 +134,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'control dot with bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(bottom: true))
       <div class="control-dot">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="control-dot__dot"></div>
         <div class="bottom-wire"></div>
       </div>
@@ -135,7 +144,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'control dot on inactive wire' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(wire_active: false))
       <div class="control-dot">
-        <div class="bg-wire bg-wire--inactive"></div>
+        <div class="gate__wire gate__wire--inactive"></div>
         <div class="control-dot__dot"></div>
       </div>
     ERB
@@ -209,7 +218,7 @@ class Components::GatesHelperTest < ActionView::TestCase
             |<span class="readout__value">0</span>&#10217;
           </div>
         </div>
-        <div class="gate-label">alice_v</div>
+        <div class="gate__label">alice_v</div>
       </div>
     ERB
   end
@@ -219,7 +228,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'wire' do
     assert_dom_equal beautify(<<~ERB), beautify(wire)
       <div class="wire">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
       </div>
     ERB
   end
@@ -227,7 +236,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'wire with top link' do
     assert_dom_equal beautify(<<~ERB), beautify(wire(top: true))
       <div class="wire">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="top-wire"></div>
       </div>
     ERB
@@ -236,7 +245,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'wire with bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(wire(bottom: true))
       <div class="wire">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="bottom-wire"></div>
       </div>
     ERB
@@ -245,7 +254,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'wire with both top and bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(wire(top: true, bottom: true))
       <div class="wire">
-        <div class="bg-wire"></div>
+        <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="bottom-wire"></div>
       </div>
@@ -255,7 +264,7 @@ class Components::GatesHelperTest < ActionView::TestCase
   test 'inactive wire' do
     assert_dom_equal beautify(<<~ERB), beautify(wire(active: false))
       <div class="wire">
-        <div class="bg-wire bg-wire--inactive"></div>
+        <div class="gate__wire gate__wire--inactive"></div>
       </div>
     ERB
   end
