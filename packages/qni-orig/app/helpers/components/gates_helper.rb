@@ -7,7 +7,7 @@ module Components::GatesHelper
   #   # Disable the gate (default - false)
   #   hadamard_gate(disabled: true)
   #
-  #   # Deactivate the wire (default - true)
+  #   # Activate the wire (default - true)
   #   hadamard_gate(wire_active: false)
   def hadamard_gate(*options)
     render 'components/gates/hadamard_gate', *options
@@ -21,7 +21,7 @@ module Components::GatesHelper
   #   # Disable the gate (default - false)
   #   not_gate(disabled: true)
   #
-  #   # Deactivate the wire (default - true)
+  #   # Activate the wire (default - true)
   #   not_gate(wire_active: false)
   #
   #   # Connect with upper gate (default - false)
@@ -41,7 +41,7 @@ module Components::GatesHelper
   #   # Disable the gate (default - false)
   #   phase_gate(theta: 'π/2', disabled: true)
   #
-  #   # Deactivate the wire (default - true)
+  #   # Activate the wire (default - true)
   #   phase_gate(theta: 'π/2', wire_active: false)
   #
   #   # Connect with upper gate (default - false)
@@ -53,6 +53,22 @@ module Components::GatesHelper
     render 'components/gates/phase_gate', *options
   end
 
+  # Returns a partial of the root-not gate.
+  #
+  #   # Add a label on top of the gate (default - nil)
+  #   root_not_gate(label: 'root-of-not')
+  #
+  #   # Disable the gate (default - false)
+  #   root_not_gate(disabled: true)
+  #
+  #   # Activate the wire (default - true)
+  #   root_not_gate(wire_active: false)
+  #
+  #   # Connect with upper gate (default - false)
+  #   root_not_gate(top: true)
+  #
+  #   # Connect with lower gate (default - false)
+  #   root_not_gate(bottom: true)
   def root_not_gate(*options)
     render 'components/gates/root_not_gate', *options
   end
@@ -85,31 +101,5 @@ module Components::GatesHelper
 
   def readout(*options)
     render 'components/gates/readout', *options
-  end
-
-  # Wires
-
-  def wire(*options)
-    render 'components/gates/wire', *options
-  end
-
-  def gate_wire(*options)
-    render 'components/gates/gate_wire', *options
-  end
-
-  def top_wire
-    render 'components/wires/top_wire'
-  end
-
-  def bottom_wire
-    render 'components/wires/bottom_wire'
-  end
-
-  def down_wire(*options)
-    render 'components/gates/down_wire', *options
-  end
-
-  def up_wire(*options)
-    render 'components/gates/up_wire', *options
   end
 end
