@@ -1,0 +1,107 @@
+.top-wire {
+  @apply absolute;
+  @apply border-#{$gate-color};
+
+  @apply border-t-4;
+  @apply mt-10 -mr-4;
+  @apply right-0;
+  @apply w-10;
+  top: -2px;
+
+  .circuit--1qubit & {
+    @apply -mr-#{$gate-margin-extralarge};
+    @apply mt-#{$gate-size-extralarge / 2 + $gate-margin-extralarge};
+    @apply w-#{$gate-size-extralarge / 2 + $gate-margin-extralarge};
+
+    @screen md {
+      @apply -mt-2 ml-#{$gate-size-extralarge / 2};
+      @apply border-l-#{$gate-size-base / 2};
+      @apply border-t-0;
+      @apply h-#{$gate-size-extralarge / 2};
+      @apply top-0;
+      @apply w-#{$gate-size-extralarge / 2};
+      left: -#{$gate-size-base / 2 / 2}px;
+      right: unset;
+    }
+  }
+
+  .circuit--2qubit & {
+    @apply -mr-#{$gate-margin-large};
+    @apply mt-#{$gate-size-large / 2 + $gate-margin-large};
+    @apply w-#{$gate-size-large / 2 + $gate-margin-large};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-#{$gate-size-base / 2};
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      @apply w-#{$gate-size-large / 2};
+      left: -#{$gate-size-base / 2 / 2}px;
+      right: unset;
+    }
+  }
+
+  .circuit--3qubit & {
+    @apply -mr-#{$gate-margin-base};
+    @apply mt-#{$gate-size-base / 2 + $gate-margin-base};
+    @apply w-#{$gate-size-base / 2 + $gate-margin-base};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit--4qubit &,
+  .circuit--5qubit &,
+  .circuit--6qubit & {
+    @apply -mr-#{$gate-margin-small};
+    @apply mt-#{$gate-size-small / 2 + $gate-margin-small};
+    @apply w-#{$gate-size-small / 2 + $gate-margin-small};
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit--8qubit & {
+    @apply -mr-#{$gate-margin-extrasmall};
+    @apply border-t-2;
+    @apply mt-#{$gate-size-extrasmall / 2 + $gate-margin-extrasmall};
+    @apply w-#{$gate-size-extrasmall / 2 + $gate-margin-extrasmall};
+    top: -1px;
+
+    @screen md {
+      @apply -mt-2 ml-6;
+      @apply border-l-4;
+      @apply border-t-0;
+      @apply h-6;
+      @apply top-0;
+      left: -2px;
+      right: unset;
+    }
+  }
+
+  .circuit-preview & {
+    @apply -mt-2 ml-#{($gate-size-base + $gate-margin-base) / 2};
+    @apply border-l-#{$gate-size-base / 2};
+    @apply border-t-0;
+    @apply h-#{($gate-size-base + $gate-margin-base) / 2};
+    @apply top-0;
+    @apply w-#{$gate-size-base / 2};
+    left: -#{$gate-size-base / 2 / 2}px;
+    right: unset;
+  }
+}

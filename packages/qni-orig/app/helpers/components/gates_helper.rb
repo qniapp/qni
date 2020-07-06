@@ -13,6 +13,22 @@ module Components::GatesHelper
     render 'components/gates/hadamard_gate', *options
   end
 
+  # Returns a partial of the not gate.
+  #
+  #   # Add a label on top of the gate (default - nil)
+  #   not_gate(label: 'if alice_h')
+  #
+  #   # Disable the gate (default - false)
+  #   not_gate(disabled: true)
+  #
+  #   # Deactivate the wire (default - true)
+  #   not_gate(wire_active: false)
+  #
+  #   # Connect with upper gate (default - false)
+  #   not_gate(top: true)
+  #
+  #   # Connect with lower gate (default - false)
+  #   not_gate(bottom: true)
   def not_gate(*options)
     render 'components/gates/not_gate', *options
   end
@@ -66,11 +82,11 @@ module Components::GatesHelper
   end
 
   def top_wire
-    render 'components/gates/top_wire'
+    render 'components/wires/top_wire'
   end
 
   def bottom_wire
-    render 'components/gates/bottom_wire'
+    render 'components/wires/bottom_wire'
   end
 
   def down_wire(*options)

@@ -116,7 +116,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--2qubit & .gate__box {
+  .circuit--2qubit & &__box {
     @apply my-#{$gate-margin-large};
     @apply text-#{$gate-label-font-size-large};
     @apply w-#{$gate-size-large} h-#{$gate-size-large};
@@ -142,9 +142,9 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--4qubit & .gate__box,
-  .circuit--5qubit & .gate__box,
-  .circuit--6qubit & .gate__box {
+  .circuit--4qubit & &__box,
+  .circuit--5qubit & &__box,
+  .circuit--6qubit & &__box {
     @apply my-#{$gate-margin-small};
     @apply text-#{$gate-label-font-size-small};
     @apply w-#{$gate-size-small} h-#{$gate-size-small};
@@ -157,7 +157,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--8qubit & .gate__box {
+  .circuit--8qubit & &__box {
     @apply my-#{$gate-margin-extrasmall};
     @apply text-#{$gate-label-font-size-extrasmall};
     @apply w-#{$gate-size-extrasmall} h-#{$gate-size-extrasmall};
@@ -170,7 +170,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit-preview & .gate__box {
+  .circuit-preview & &__box {
     @apply mx-#{$gate-margin-base / 2};
     @apply my-0;
     @apply text-#{$gate-label-font-size-base};
@@ -181,6 +181,138 @@ $gate-label-font-size-extrasmall: xs;
     @apply bg-white;
     @apply border-2 border-dashed border-gray-300;
     @apply text-gray-300;
+  }
+
+  &__circle {
+    @apply absolute top-0 left-0 right-0;
+    @apply bg-#{$gate-color};
+    @apply flex justify-center items-center;
+    @apply leading-none;
+    @apply rounded-full;
+    @apply stroke-current text-white;
+
+    @apply my-#{$gate-margin-base};
+    @apply text-#{$gate-label-font-size-base};
+    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit--1qubit & &__circle {
+    @apply my-#{$gate-margin-extralarge};
+    @apply text-#{$gate-label-font-size-extralarge};
+    @apply w-#{$gate-size-extralarge} h-#{$gate-size-extralarge};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit--2qubit & &__circle {
+    @apply my-#{$gate-margin-large};
+    @apply text-#{$gate-label-font-size-large};
+    @apply w-#{$gate-size-large} h-#{$gate-size-large};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit--3qubit & &__circle {
+    @apply my-#{$gate-margin-base};
+    @apply text-#{$gate-label-font-size-base};
+    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit--4qubit & &__circle,
+  .circuit--5qubit & &__circle,
+  .circuit--6qubit & &__circle {
+    @apply my-#{$gate-margin-small};
+    @apply text-#{$gate-label-font-size-small};
+    @apply w-#{$gate-size-small} h-#{$gate-size-small};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit--8qubit & &__circle {
+    @apply my-#{$gate-margin-extrasmall};
+    @apply text-#{$gate-label-font-size-extrasmall};
+    @apply w-#{$gate-size-extrasmall} h-#{$gate-size-extrasmall};
+
+    @screen md {
+      @apply mx-#{$gate-margin-base / 2};
+      @apply my-0;
+      @apply text-base;
+      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    }
+  }
+
+  .circuit-preview & &__circle {
+    @apply mx-2;
+    @apply my-0;
+    @apply text-base;
+    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+  }
+
+  &__circle svg {
+    @apply w-8 h-8;
+
+    @screen md {
+      @apply w-5 h-5;
+    }
+  }
+
+  .circuit--1qubit & &__circle svg {
+    @apply w-8 h-8;
+
+    @screen md {
+      @apply w-6 h-6;
+    }
+  }
+
+  .circuit--2qubit & &__circle svg {
+    @apply w-6 h-6;
+  }
+
+  .circuit--3qubit & &__circle svg {
+    @apply w-5 h-5;
+  }
+
+  .circuit--4qubit & &__circle svg,
+  .circuit--5qubit & &__circle svg,
+  .circuit--6qubit & &__circle svg {
+    @apply w-5 h-5;
+  }
+
+  .circuit--8qubit & &__circle svg {
+    @apply w-4 h-4;
+  }
+
+  .circuit-preview & &__circle svg {
+    @apply w-5 h-5;
   }
 
   &__wire {
@@ -223,7 +355,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--2qubit & .gate__wire {
+  .circuit--2qubit & &__wire {
     @apply ml-#{$gate-size-large / 2};
 
     @screen md {
@@ -253,9 +385,9 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--4qubit & .gate__wire,
-  .circuit--5qubit & .gate__wire,
-  .circuit--6qubit & .gate__wire {
+  .circuit--4qubit & &__wire,
+  .circuit--5qubit & &__wire,
+  .circuit--6qubit & &__wire {
     @apply ml-#{$gate-size-small / 2};
 
     @screen md {
@@ -270,7 +402,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit--8qubit & .gate__wire {
+  .circuit--8qubit & &__wire {
     @apply ml-#{$gate-size-extrasmall / 2};
 
     @screen md {
@@ -285,7 +417,7 @@ $gate-label-font-size-extrasmall: xs;
     }
   }
 
-  .circuit-preview & .gate__wire {
+  .circuit-preview & &__wire {
     @apply border-l-0;
     @apply border-t-#{$wire-width};
     @apply h-4;

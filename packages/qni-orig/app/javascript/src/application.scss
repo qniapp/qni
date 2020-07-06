@@ -41,7 +41,6 @@
 @import 'components/gate';
 @import 'components/gates/control_dot';
 @import 'components/gates/down_wire';
-@import 'components/gates/not_gate';
 @import 'components/gates/phase_gate';
 @import 'components/gates/readout';
 @import 'components/gates/root_not_gate';
@@ -52,6 +51,8 @@
 @import 'components/simulator_wrapper';
 @import 'components/thumbnail_container';
 @import 'components/tippy';
+@import 'components/wires/bottom_wire';
+@import 'components/wires/top_wire';
 
 // tailwind utilities
 @import 'tailwindcss/utilities';
