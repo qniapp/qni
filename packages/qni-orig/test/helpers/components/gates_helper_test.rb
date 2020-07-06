@@ -164,8 +164,56 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'root-not gate' do
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate)
-      <div class="root-not-gate">
+      <div class="gate root-not-gate">
         <div class="gate__wire"></div>
+        <div class="gate__box">√N</div>
+      </div>
+    ERB
+  end
+
+  test 'root-not gate (labeled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(label: 'if alice_v'))
+      <div class="gate root-not-gate">
+        <div class="gate__wire"></div>
+        <div class="gate__box">√N</div>
+        <div class="gate__label">if alice_v</div>
+      </div>
+    ERB
+  end
+
+  test 'root-not gate (disabled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(disabled: true))
+      <div class="gate root-not-gate gate--disabled">
+        <div class="gate__wire"></div>
+        <div class="gate__box">√N</div>
+      </div>
+    ERB
+  end
+
+  test 'root-not gate (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(wire_active: false))
+      <div class="gate root-not-gate gate--inactive-wire">
+        <div class="gate__wire"></div>
+        <div class="gate__box">√N</div>
+      </div>
+    ERB
+  end
+
+  test 'root-not gate (connected with upper gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(top: true))
+      <div class="gate root-not-gate">
+        <div class="gate__wire"></div>
+        <div class="top-wire"></div>
+        <div class="gate__box">√N</div>
+      </div>
+    ERB
+  end
+
+  test 'root-not gate (connected with lower gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(bottom: true))
+      <div class="gate root-not-gate">
+        <div class="gate__wire"></div>
+        <div class="bottom-wire"></div>
         <div class="gate__box">√N</div>
       </div>
     ERB
@@ -299,77 +347,6 @@ class Components::GatesHelperTest < ActionView::TestCase
           </div>
         </div>
         <div class="gate__label">alice_v</div>
-      </div>
-    ERB
-  end
-
-  # Wires
-
-  test 'wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire)
-      <div class="wire">
-        <div class="gate__wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'wire with top link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(top: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="top-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'wire with bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(bottom: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'wire with both top and bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(top: true, bottom: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="top-wire"></div>
-        <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'inactive wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(active: false))
-      <div class="wire">
-        <div class="gate__wire gate__wire--inactive"></div>
-      </div>
-    ERB
-  end
-
-  test 'up wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(up_wire)
-      <div class="up-wire">
-        <div class="up-wire__line"></div>
-      </div>
-    ERB
-  end
-
-  test 'up wire with bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(up_wire(bottom: true))
-      <div class="up-wire">
-        <div class="up-wire__line"></div>
-        <div class="up-wire__bottom"></div>
-      </div>
-    ERB
-  end
-
-  test 'down wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(down_wire)
-      <div class="down-wire">
-        <div class="down-wire__line"></div>
       </div>
     ERB
   end
