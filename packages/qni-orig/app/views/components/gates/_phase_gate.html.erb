@@ -3,7 +3,7 @@
 <% bottom = local_assigns.fetch(:bottom, false) %>
 <% wire_active = local_assigns.fetch(:wire_active, true) %>
 
-<div class="phase-gate">
+<div class="gate phase-gate">
   <%= gate_wire active: wire_active %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>

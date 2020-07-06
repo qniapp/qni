@@ -44,40 +44,78 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'not gate' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate)
-      <div class="not-gate">
+      <div class="gate not-gate">
         <div class="gate__wire"></div>
-        <div class="gate-circle">#{plus}</div>
+        <div class="gate__circle">#{plus}</div>
       </div>
     ERB
   end
 
-  test 'not gate with label' do
+  test 'not gate (labeled)' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(label: 'if alice_v'))
-      <div class="not-gate">
+      <div class="gate not-gate">
         <div class="gate__wire"></div>
+        <div class="gate__circle">#{plus}</div>
         <div class="gate__label">if alice_v</div>
-        <div class="gate-circle">#{plus}</div>
+      </div>
+    ERB
+  end
+
+  test 'not gate (disabled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(not_gate(disabled: true))
+      <div class="gate not-gate gate--disabled">
+        <div class="gate__wire"></div>
+        <div class="gate__circle">#{plus}</div>
+      </div>
+    ERB
+  end
+
+  test 'not gate (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(not_gate(wire_active: false))
+      <div class="gate not-gate gate--inactive-wire">
+        <div class="gate__wire"></div>
+        <div class="gate__circle">#{plus}</div>
+      </div>
+    ERB
+  end
+
+  test 'not gate (connected with upper gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(not_gate(top: true))
+      <div class="gate not-gate">
+        <div class="gate__wire"></div>
+        <div class="top-wire"></div>
+        <div class="gate__circle">#{plus}</div>
+      </div>
+    ERB
+  end
+
+  test 'not gate (connected with lower gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(not_gate(bottom: true))
+      <div class="gate not-gate">
+        <div class="gate__wire"></div>
+        <div class="bottom-wire"></div>
+        <div class="gate__circle">#{plus}</div>
       </div>
     ERB
   end
 
   test 'phase gate' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2'))
-      <div class="phase-gate">
+      <div class="gate phase-gate">
         <div class="gate__wire"></div>
         <div class="gate__label">π/2</div>
-        <div class="gate-circle">φ</div>
+        <div class="gate__circle">φ</div>
       </div>
     ERB
   end
 
   test 'phase gate with bottom label' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', top: true))
-      <div class="phase-gate">
+      <div class="gate phase-gate">
         <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="gate__label gate__label--bottom">π/2</div>
-        <div class="gate-circle">φ</div>
+        <div class="gate__circle">φ</div>
       </div>
     ERB
   end
@@ -103,7 +141,7 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'control dot' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot)
-      <div class="control-dot">
+      <div class="gate control-dot">
         <div class="gate__wire"></div>
         <div class="control-dot__dot"></div>
       </div>
@@ -112,7 +150,7 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'control dot with top link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true))
-      <div class="control-dot">
+      <div class="gate control-dot">
         <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="control-dot__dot"></div>
@@ -122,7 +160,7 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'control dot with both top and bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true, bottom: true))
-      <div class="control-dot">
+      <div class="gate control-dot">
         <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="control-dot__dot"></div>
@@ -133,7 +171,7 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'control dot with bottom link' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(bottom: true))
-      <div class="control-dot">
+      <div class="gate control-dot">
         <div class="gate__wire"></div>
         <div class="control-dot__dot"></div>
         <div class="bottom-wire"></div>
@@ -143,7 +181,7 @@ class Components::GatesHelperTest < ActionView::TestCase
 
   test 'control dot on inactive wire' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(wire_active: false))
-      <div class="control-dot">
+      <div class="gate control-dot">
         <div class="gate__wire gate__wire--inactive"></div>
         <div class="control-dot__dot"></div>
       </div>
