@@ -40,7 +40,7 @@
     "magic-grid": "^3.2.4",
     "stimulus": "^1.1.1",
     "tailwindcss": "~1.4",
-    "tippy.js": "^6.2.3",
+    "tippy.js": "^6.2.4",
     "turbolinks": "^5.2.0",
     "vanilla-lazyload": "^17.1.0"
   },
