@@ -1,11 +1,13 @@
-<% top = local_assigns[:top] %>
-<% bottom = local_assigns[:bottom] %>
-<% label = local_assigns[:label] %>
+<% top = local_assigns.fetch(:top, false) %>
+<% bottom = local_assigns.fetch(:bottom, false) %>
+<% label = local_assigns.fetch(:label, nil) %>
+<% disabled = local_assigns.fetch(:disabled, false) %>
+<% wire_active = local_assigns.fetch(:wire_active, true) %>
 
-<div class="not-gate">
+<%= tag.div class: class_string('gate', 'not-gate', 'gate--disabled' => disabled, 'gate--inactive-wire' => !wire_active) do %>
   <%= gate_wire %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
-  <%= gate_label(label: label) if label %>
   <%= gate_circle label: plus %>
-</div>
+  <%= gate_label(label: label) if label %>
+<% end %>
