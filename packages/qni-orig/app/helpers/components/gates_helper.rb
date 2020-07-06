@@ -77,20 +77,21 @@ module Components::GatesHelper
     render 'components/gates/swap_gate', *options
   end
 
+  # Returns a partial of the control dot gate.
+  #
+  #   # Add a label on top of the gate (default - nil)
+  #   control_dot_gate(label: 'controlled')
+  #
+  #   # Activate the wire (default - true)
+  #   control_dot_gate(wire_active: false)
+  #
+  #   # Connect with upper gate (default - false)
+  #   control_dot_gate(top: true)
+  #
+  #   # Connect with lower gate (default - false)
+  #   control_dot_gate(bottom: true)
   def control_dot(*options)
     render 'components/gates/control_dot', *options
-  end
-
-  def gate_box(*options)
-    render 'components/gates/gate_box', *options
-  end
-
-  def gate_circle(*options)
-    render 'components/gates/gate_circle', *options
-  end
-
-  def gate_label(*options)
-    render 'components/gates/gate_label', *options
   end
 
   # read and write

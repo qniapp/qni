@@ -238,7 +238,26 @@ class Components::GatesHelperTest < ActionView::TestCase
     ERB
   end
 
-  test 'control dot with top link' do
+  test 'control dot (labeled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(control_dot(label: 'controlled'))
+      <div class="gate control-dot">
+        <div class="gate__wire"></div>
+        <div class="control-dot__dot"></div>
+        <div class="gate__label">controlled</div>
+      </div>
+    ERB
+  end
+
+  test 'control dot (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(control_dot(wire_active: false))
+      <div class="gate control-dot gate--inactive-wire">
+        <div class="gate__wire"></div>
+        <div class="control-dot__dot"></div>
+      </div>
+    ERB
+  end
+
+  test 'control dot (connected with upper gate)' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true))
       <div class="gate control-dot">
         <div class="gate__wire"></div>
@@ -248,36 +267,15 @@ class Components::GatesHelperTest < ActionView::TestCase
     ERB
   end
 
-  test 'control dot with both top and bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(control_dot(top: true, bottom: true))
-      <div class="gate control-dot">
-        <div class="gate__wire"></div>
-        <div class="top-wire"></div>
-        <div class="control-dot__dot"></div>
-        <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'control dot with bottom link' do
+  test 'control dot (connected with lower gate)' do
     assert_dom_equal beautify(<<~ERB), beautify(control_dot(bottom: true))
       <div class="gate control-dot">
         <div class="gate__wire"></div>
-        <div class="control-dot__dot"></div>
         <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'control dot on inactive wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(control_dot(wire_active: false))
-      <div class="gate control-dot">
-        <div class="gate__wire gate__wire--inactive"></div>
         <div class="control-dot__dot"></div>
       </div>
     ERB
   end
-
   # Read and write
 
   test 'write 0' do

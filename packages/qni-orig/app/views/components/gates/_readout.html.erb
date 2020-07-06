@@ -9,5 +9,5 @@
       |<%= tag.span value, class: 'readout__value' %>&#10217;
     </div>
   </div>
-  <%= gate_label(label: label) if label %>
+  <%= tag.div(label, class: 'gate__label') if label %>
 <% end %>
