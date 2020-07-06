@@ -33,6 +33,22 @@ module Components::GatesHelper
     render 'components/gates/not_gate', *options
   end
 
+  # Returns a partial of the phase gate.
+  #
+  #   # Specify θ
+  #   phase_gate(theta: 'π/2')
+  #
+  #   # Disable the gate (default - false)
+  #   phase_gate(theta: 'π/2', disabled: true)
+  #
+  #   # Deactivate the wire (default - true)
+  #   phase_gate(theta: 'π/2', wire_active: false)
+  #
+  #   # Connect with upper gate (default - false)
+  #   phase_gate(theta: 'π/2', top: true)
+  #
+  #   # Connect with lower gate (default - false)
+  #   phase_gate(theta: 'π/2', bottom: true)
   def phase_gate(*options)
     render 'components/gates/phase_gate', *options
   end

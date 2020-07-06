@@ -451,4 +451,70 @@ $gate-label-font-size-extrasmall: xs;
       writing-mode: horizontal-tb;
     }
   }
+
+  .circuit-preview & &__label {
+    @apply -mt-4;
+    @apply mr-0;
+    @apply text-xs;
+    @apply top-0;
+    @apply h-auto;
+    @apply w-full;
+    writing-mode: horizontal-tb;
+  }
+
+  &__label--bottom {
+    @apply mr-#{$gate-size-base};
+
+    @screen md {
+      @apply mr-0;
+      @apply mt-8;
+    }
+  }
+
+  .circuit--1qubit & &__label--bottom {
+    @apply mr-#{$gate-size-extralarge};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--2qubit & &__label--bottom {
+    @apply mr-#{$gate-size-large};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--3qubit & &__label--bottom {
+    @apply mr-#{$gate-size-base};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--4qubit & &__label--bottom,
+  .circuit--5qubit & &__label--bottom,
+  .circuit--6qubit & &__label--bottom {
+    @apply mr-#{$gate-size-small};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit--8qubit & &__label--bottom {
+    @apply mr-#{$gate-size-extrasmall};
+
+    @screen md {
+      @apply mr-0;
+    }
+  }
+
+  .circuit-preview & &__label--bottom {
+    @apply mr-0;
+    @apply mt-8;
+  }
 }
