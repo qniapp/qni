@@ -4,6 +4,6 @@
 
 <%= tag.div class: class_string('gate', 'hadamard-gate', 'gate--disabled' => disabled, 'gate--inactive-wire' => !wire_active) do %>
   <%= gate_wire %>
-  <%= gate_box label: 'H' %>
-  <%= gate_label(label: label) if label %>
+  <div class="gate__box">H</div>
+  <%= tag.div(label, class: 'gate__label') if label %>
 <% end %>

@@ -8,6 +8,6 @@
   <%= gate_wire %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
-  <%= gate_box label: '√N' %>
-  <%= gate_label(label: label) if label %>
+  <div class="gate__box">√N</div>
+  <%= tag.div(label, class: 'gate__label') if label %>
 <% end %>

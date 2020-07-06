@@ -1,6 +1,4 @@
 .control-dot {
-  @include circuit-element;
-
   &__dot {
     @apply absolute;
     @apply bg-teal-400;
