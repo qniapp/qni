@@ -109,12 +109,54 @@ class Components::GatesHelperTest < ActionView::TestCase
     ERB
   end
 
-  test 'phase gate with bottom label' do
+  test 'phase gate (labeled)' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', top: true))
       <div class="gate phase-gate">
         <div class="gate__wire"></div>
         <div class="top-wire"></div>
         <div class="gate__label gate__label--bottom">π/2</div>
+        <div class="gate__circle">φ</div>
+      </div>
+    ERB
+  end
+
+  test 'phase gate (disabled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', disabled: true))
+      <div class="gate phase-gate gate--disabled">
+        <div class="gate__wire"></div>
+        <div class="gate__label">π/2</div>
+        <div class="gate__circle">φ</div>
+      </div>
+    ERB
+  end
+
+  test 'phase gate (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', wire_active: false))
+      <div class="gate phase-gate gate--inactive-wire">
+        <div class="gate__wire gate__wire--inactive"></div>
+        <div class="gate__label">π/2</div>
+        <div class="gate__circle">φ</div>
+      </div>
+    ERB
+  end
+
+  test 'phase gate (connected with upper gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', top: true))
+      <div class="gate phase-gate">
+        <div class="gate__wire"></div>
+        <div class="top-wire"></div>
+        <div class="gate__label gate__label--bottom">π/2</div>
+        <div class="gate__circle">φ</div>
+      </div>
+    ERB
+  end
+
+  test 'phase gate (connected with lower gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2', bottom: true))
+      <div class="gate phase-gate">
+        <div class="gate__wire"></div>
+        <div class="bottom-wire"></div>
+        <div class="gate__label">π/2</div>
         <div class="gate__circle">φ</div>
       </div>
     ERB

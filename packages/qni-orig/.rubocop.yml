@@ -60,3 +60,6 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Exclude:
     - 'test/**/*.rb'
+
+Style/AsciiComments:
+  Enabled: false
