@@ -106,14 +106,4 @@ module Components::GatesHelper
   def control_dot(*options)
     render 'components/gates/control_dot', *options
   end
-
-  # read and write
-
-  def write(*options)
-    render 'components/gates/write', *options
-  end
-
-  def readout(*options)
-    render 'components/gates/readout', *options
-  end
 end

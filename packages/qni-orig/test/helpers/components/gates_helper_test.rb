@@ -3,6 +3,7 @@
 require 'test_helper'
 
 class Components::GatesHelperTest < ActionView::TestCase
+  include Components::RwHelper
   include IconsHelper
 
   test 'hadamard gate' do
@@ -311,79 +312,6 @@ class Components::GatesHelperTest < ActionView::TestCase
         <div class="gate__wire"></div>
         <div class="bottom-wire"></div>
         <div class="control-dot__dot"></div>
-      </div>
-    ERB
-  end
-
-  # Read and write
-
-  test 'write 0' do
-    assert_dom_equal beautify(<<~ERB), beautify(write(value: 0))
-      <div class="write write--0">
-        <div class="write__wire write__wire--left"></div>
-        <div class="write__wire write__wire--right"></div>
-        <div class="write__body">
-          <div>
-            |<span class="write__value">0</span>&#10217;
-          </div>
-        </div>
-      </div>
-    ERB
-  end
-
-  test 'write 1' do
-    assert_dom_equal beautify(<<~ERB), beautify(write(value: 0))
-      <div class="write write--0">
-        <div class="write__wire write__wire--left"></div>
-        <div class="write__wire write__wire--right"></div>
-        <div class="write__body">
-          <div>
-            |<span class="write__value">0</span>&#10217;
-          </div>
-        </div>
-      </div>
-    ERB
-  end
-
-  test 'readout 0' do
-    assert_dom_equal beautify(<<~ERB), beautify(readout(value: 0))
-      <div class="readout readout--0">
-        <div class="readout__wire readout__wire--left"></div>
-        <div class="readout__wire readout__wire--right"></div>
-        <div class="readout__body">
-          <div>
-            |<span class="readout__value">0</span>&#10217;
-          </div>
-        </div>
-      </div>
-    ERB
-  end
-
-  test 'readout 1' do
-    assert_dom_equal beautify(<<~ERB), beautify(readout(value: 0))
-      <div class="readout readout--0">
-        <div class="readout__wire readout__wire--left"></div>
-        <div class="readout__wire readout__wire--right"></div>
-        <div class="readout__body">
-          <div>
-            |<span class="readout__value">0</span>&#10217;
-          </div>
-        </div>
-      </div>
-    ERB
-  end
-
-  test 'readout 0 with label' do
-    assert_dom_equal beautify(<<~ERB), beautify(readout(value: 0, label: 'alice_v'))
-      <div class="readout readout--0">
-        <div class="readout__wire readout__wire--left"></div>
-        <div class="readout__wire readout__wire--right"></div>
-        <div class="readout__body">
-          <div>
-            |<span class="readout__value">0</span>&#10217;
-          </div>
-        </div>
-        <div class="gate__label">alice_v</div>
       </div>
     ERB
   end

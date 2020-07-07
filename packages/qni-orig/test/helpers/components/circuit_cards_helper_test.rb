@@ -5,6 +5,7 @@ require 'test_helper'
 class Components::CircuitCardsHelperTest < ActionView::TestCase
   include Components::CircuitsHelper
   include Components::GatesHelper
+  include Components::RwHelper
 
   test 'circuit view' do
     expected =

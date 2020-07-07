@@ -41,11 +41,12 @@
 @import 'components/gate';
 @import 'components/gates/control_dot';
 @import 'components/gates/down_wire';
-@import 'components/gates/readout';
 @import 'components/gates/swap_gate';
 @import 'components/gates/up_wire';
 @import 'components/gates/wire';
-@import 'components/gates/write';
+@import 'components/rw/readout';
+@import 'components/rw/rw';
+@import 'components/rw/write';
 @import 'components/simulator_wrapper';
 @import 'components/thumbnail_container';
 @import 'components/tippy';
