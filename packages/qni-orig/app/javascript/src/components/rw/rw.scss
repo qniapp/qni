@@ -1,14 +1,12 @@
-.write {
-  $write-wire-length: 2;
-  $write-wire-length-mobile: 4;
-
-  @include circuit-element;
+.rw {
+  $wire-length: 2;
+  $wire-length-mobile: 4;
 
   &__wire {
     @apply absolute;
 
     @apply border-l-#{$wire-width};
-    @apply h-#{$write-wire-length-mobile};
+    @apply h-#{$wire-length-mobile};
     @apply left-0;
     @apply ml-#{$circuit-element-size-base / 2};
     left: -#{$wire-width / 2}px;
@@ -18,7 +16,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -32,7 +30,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -46,7 +44,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -60,7 +58,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -76,7 +74,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -90,7 +88,7 @@
       @apply border-t-#{$wire-width};
       @apply ml-0;
       @apply mt-#{$circuit-element-size-base / 2};
-      @apply w-#{$write-wire-length};
+      @apply w-#{$wire-length};
       left: unset;
     }
   }
@@ -100,13 +98,11 @@
     @apply border-t-#{$wire-width};
     @apply ml-0;
     @apply mt-#{$circuit-element-size-base / 2};
-    @apply w-#{$write-wire-length};
+    @apply w-#{$wire-length};
     left: unset;
   }
 
   &__wire--left {
-    @apply border-#{$wire-inactive-color};
-
     @apply top-0;
 
     @screen md {
@@ -163,8 +159,6 @@
   }
 
   &__wire--right {
-    @apply border-#{$wire-color};
-
     @apply bottom-0;
 
     @screen md {
@@ -180,7 +174,7 @@
 
   &__body {
     @apply absolute inset-0;
-    @apply flex justify-end items-center;
+    @apply flex items-center;
     writing-mode: vertical-lr;
 
     @screen md {
@@ -270,6 +264,10 @@
     @apply text-xl;
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     writing-mode: horizontal-tb;
+  }
+
+  &__value {
+    @apply leading-none;
   }
 
   &--0 &__value {
