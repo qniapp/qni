@@ -37,6 +37,18 @@ class Components::WiresHelperTest < ActionView::TestCase
     ERB
   end
 
+  test 'top wire' do
+    assert_dom_equal beautify(<<~ERB), beautify(top_wire)
+      <div class="top-wire"></div>
+    ERB
+  end
+
+  test 'bottom wire' do
+    assert_dom_equal beautify(<<~ERB), beautify(bottom_wire)
+      <div class="bottom-wire"></div>
+    ERB
+  end
+
   test 'up wire' do
     assert_dom_equal beautify(<<~ERB), beautify(up_wire)
       <div class="up-wire">
