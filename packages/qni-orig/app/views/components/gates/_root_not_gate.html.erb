@@ -4,10 +4,10 @@
 <% disabled = local_assigns.fetch(:disabled, false) %>
 <% wire_active = local_assigns.fetch(:wire_active, true) %>
 
-<%= tag.div class: class_string('gate', 'root-not-gate', 'gate--disabled' => disabled, 'gate--inactive-wire' => !wire_active) do %>
-  <%= gate_wire %>
+<%= tag.div class: class_string('circuit-element', 'gate', 'root-not-gate', 'gate--disabled' => disabled, 'circuit-element--inactive-wire' => !wire_active) do %>
+  <%= circuit_element_wire %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
-  <div class="gate__box">√N</div>
-  <%= tag.div(label, class: 'gate__label') if label %>
+  <%= gate_box label: '√N' %>
+  <%= circuit_element_label label: label %>
 <% end %>

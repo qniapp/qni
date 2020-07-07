@@ -106,4 +106,12 @@ module Components::GatesHelper
   def control_dot(*options)
     render 'components/gates/control_dot', *options
   end
+
+  def gate_box(*options)
+    render 'components/gates/box', *options
+  end
+
+  def gate_circle(*options)
+    render 'components/gates/circle', *options
+  end
 end

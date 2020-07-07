@@ -2,8 +2,8 @@
 <% top = local_assigns.fetch(:top, false) %>
 <% bottom = local_assigns.fetch(:bottom, false) %>
 
-<div class="wire">
-  <%= gate_wire active: active %>
+<%= tag.div class: class_string('circuit-element', 'wire', 'circuit-element--inactive-wire' => !active) do %>
+  <%= circuit_element_wire %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
-</div>
+<% end %>

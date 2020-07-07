@@ -1,0 +1,27 @@
+// Circuit element
+$circuit-element-size-extralarge: 12;
+$circuit-element-size-large: 10;
+$circuit-element-size-base: 8;
+$circuit-element-size-small: 6;
+$circuit-element-size-extrasmall: 4;
+$circuit-element-size-screen-md: 8;
+
+$circuit-element-margin-extralarge: 4;
+$circuit-element-margin-large: 4;
+$circuit-element-margin-base: 4;
+$circuit-element-margin-small: 2;
+$circuit-element-margin-extrasmall: 1;
+
+$circuit-element-label-font-size-extralarge: 4xl;
+$circuit-element-label-font-size-large: 3xl;
+$circuit-element-label-font-size-base: xl;
+$circuit-element-label-font-size-small: base;
+$circuit-element-label-font-size-extrasmall: xs;
+
+// Gate
+$gate-color: teal-400;
+
+// Wire
+$wire-color: gray-600;
+$wire-inactive-color: gray-200;
+$wire-width: 2;
