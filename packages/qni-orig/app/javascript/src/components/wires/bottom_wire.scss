@@ -48,7 +48,8 @@
     }
   }
 
-  .circuit--3qubit & {
+  .circuit--3qubit &,
+  .circuit--4qubit & {
     @apply -ml-#{$circuit-element-margin-base};
     @apply mt-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
     @apply w-#{$circuit-element-size-base / 2 + $circuit-element-margin-base};
@@ -63,7 +64,6 @@
     }
   }
 
-  .circuit--4qubit &,
   .circuit--5qubit &,
   .circuit--6qubit & {
     @apply -ml-#{$circuit-element-margin-small};

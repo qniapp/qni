@@ -4,6 +4,7 @@ module.exports = {
     options: {
       whitelist: ["qubit-circle-octet", "text-center", "font-bold"],
       whitelistPatterns: [
+        /-gate$/,
         /^circle-notation--\d+qubit/,
         /^circuit/,
         /^pill/,

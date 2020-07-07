@@ -25,7 +25,8 @@
   }
 
   // Base size
-  .circuit--3qubit & {
+  .circuit--3qubit &,
+  .circuit--4qubit & {
     @apply mx-#{$circuit-element-margin-base};
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base + $circuit-element-margin-base * 2};
 
@@ -36,7 +37,6 @@
   }
 
   // Small size
-  .circuit--4qubit &,
   .circuit--5qubit &,
   .circuit--6qubit & {
     @apply mx-#{$circuit-element-margin-small};
@@ -129,7 +129,8 @@
     }
   }
 
-  .circuit--3qubit & &__wire {
+  .circuit--3qubit & &__wire,
+  .circuit--4qubit & &__wire {
     @apply ml-#{$circuit-element-size-base / 2};
 
     @screen md {
@@ -144,7 +145,6 @@
     }
   }
 
-  .circuit--4qubit & &__wire,
   .circuit--5qubit & &__wire,
   .circuit--6qubit & &__wire {
     @apply ml-#{$circuit-element-size-small / 2};
@@ -246,7 +246,8 @@
     }
   }
 
-  .circuit--3qubit & &__label--bottom {
+  .circuit--3qubit & &__label--bottom,
+  .circuit--4qubit & &__label--bottom {
     @apply mr-#{$circuit-element-size-base};
 
     @screen md {
@@ -254,7 +255,6 @@
     }
   }
 
-  .circuit--4qubit & &__label--bottom,
   .circuit--5qubit & &__label--bottom,
   .circuit--6qubit & &__label--bottom {
     @apply mr-#{$circuit-element-size-small};
