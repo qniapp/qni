@@ -220,8 +220,46 @@ class Components::GatesHelperTest < ActionView::TestCase
   end
 
   test 'swap gate' do
+    assert_dom_equal beautify(<<~ERB), beautify(swap_gate)
+      <div class="gate swap-gate">
+        <div class="gate__wire"></div>
+        <span>#{swap}</span>
+      </div>
+    ERB
+  end
+
+  test 'swap gate (labeled)' do
+    assert_dom_equal beautify(<<~ERB), beautify(swap_gate(label: 'controlled'))
+      <div class="gate swap-gate">
+        <div class="gate__wire"></div>
+        <span>#{swap}</span>
+        <div class="gate__label">controlled</div>
+      </div>
+    ERB
+  end
+
+  test 'swap gate (inactive wire)' do
+    assert_dom_equal beautify(<<~ERB), beautify(swap_gate(wire_active: false))
+      <div class="gate swap-gate gate--inactive-wire">
+        <div class="gate__wire"></div>
+        <span>#{swap}</span>
+      </div>
+    ERB
+  end
+
+  test 'swap gate (connected with upper gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(swap_gate(top: true))
+      <div class="gate swap-gate">
+        <div class="gate__wire"></div>
+        <div class="top-wire"></div>
+        <span>#{swap}</span>
+      </div>
+    ERB
+  end
+
+  test 'swap gate (connected with lower gate)' do
     assert_dom_equal beautify(<<~ERB), beautify(swap_gate(bottom: true))
-      <div class="swap-gate">
+      <div class="gate swap-gate">
         <div class="gate__wire"></div>
         <div class="bottom-wire"></div>
         <span>#{swap}</span>
@@ -276,6 +314,7 @@ class Components::GatesHelperTest < ActionView::TestCase
       </div>
     ERB
   end
+
   # Read and write
 
   test 'write 0' do
