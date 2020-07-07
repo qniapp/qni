@@ -13,14 +13,12 @@ module Components::WiresHelper
     render 'components/wires/wire', *options
   end
 
-  def circuit_element_wire(*options)
-    render 'components/wires/circuit_element_wire', *options
-  end
-
+  # Returns a partial of vertical wire on top.
   def top_wire
     render 'components/wires/top_wire'
   end
 
+  # Returns a partial of vertical wire on bottom.
   def bottom_wire
     render 'components/wires/bottom_wire'
   end
