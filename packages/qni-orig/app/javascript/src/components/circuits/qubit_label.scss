@@ -41,7 +41,8 @@
     }
   }
 
-  .circuit--3qubit & {
+  .circuit--3qubit &,
+  .circuit--4qubit & {
     @apply mx-#{$circuit-element-margin-base};
     @apply w-#{$circuit-element-size-base};
 
@@ -53,7 +54,6 @@
     }
   }
 
-  .circuit--4qubit &,
   .circuit--5qubit &,
   .circuit--6qubit & {
     @apply mx-#{$circuit-element-margin-small};
@@ -156,7 +156,8 @@
     }
   }
 
-  .circuit--3qubit & &__wire {
+  .circuit--3qubit & &__wire,
+  .circuit--4qubit & &__wire {
     @apply ml-#{$circuit-element-size-base / 2};
 
     @screen md {
@@ -171,7 +172,6 @@
     }
   }
 
-  .circuit--4qubit & &__wire,
   .circuit--5qubit & &__wire,
   .circuit--6qubit & &__wire {
     @apply ml-#{$circuit-element-size-small / 2};
@@ -250,7 +250,8 @@
     }
   }
 
-  .circuit--3qubit & &__value {
+  .circuit--3qubit & &__value,
+  .circuit--4qubit & &__value {
     @apply text-#{$circuit-element-label-font-size-base};
 
     @screen md {
@@ -260,7 +261,6 @@
     }
   }
 
-  .circuit--4qubit & &__value,
   .circuit--5qubit & &__value,
   .circuit--6qubit & &__value {
     @apply text-#{$circuit-element-label-font-size-small};
