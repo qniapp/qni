@@ -1,6 +1,4 @@
 .swap-gate {
-  @include circuit-element;
-
   svg {
     @apply stroke-current;
     @apply text-teal-400;
