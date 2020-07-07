@@ -5,44 +5,34 @@ require 'test_helper'
 class Components::WiresHelperTest < ActionView::TestCase
   test 'wire' do
     assert_dom_equal beautify(<<~ERB), beautify(wire)
-      <div class="wire">
-        <div class="gate__wire"></div>
+      <div class="circuit-element wire">
+        <div class="circuit-element__wire"></div>
       </div>
     ERB
   end
 
-  test 'wire with top link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(top: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="top-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'wire with bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(bottom: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'wire with both top and bottom link' do
-    assert_dom_equal beautify(<<~ERB), beautify(wire(top: true, bottom: true))
-      <div class="wire">
-        <div class="gate__wire"></div>
-        <div class="top-wire"></div>
-        <div class="bottom-wire"></div>
-      </div>
-    ERB
-  end
-
-  test 'inactive wire' do
+  test 'wire (inactive)' do
     assert_dom_equal beautify(<<~ERB), beautify(wire(active: false))
-      <div class="wire">
-        <div class="gate__wire gate__wire--inactive"></div>
+      <div class="circuit-element wire circuit-element--inactive-wire">
+        <div class="circuit-element__wire"></div>
+      </div>
+    ERB
+  end
+
+  test 'wire (connected with upper gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(wire(top: true))
+      <div class="circuit-element wire">
+        <div class="circuit-element__wire"></div>
+        <div class="top-wire"></div>
+      </div>
+    ERB
+  end
+
+  test 'wire (connected with lower gate)' do
+    assert_dom_equal beautify(<<~ERB), beautify(wire(bottom: true))
+      <div class="circuit-element wire">
+        <div class="circuit-element__wire"></div>
+        <div class="bottom-wire"></div>
       </div>
     ERB
   end

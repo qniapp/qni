@@ -1,10 +1,20 @@
 module Components::WiresHelper
+  # Returns a partial of horizontal wire.
+  #
+  #   # Activate the wire (default - true)
+  #   wire(active: false)
+  #
+  #   # Connect with upper gate (default - false)
+  #   wire(top: true)
+  #
+  #   # Connect with lower gate (default - false)
+  #   wire(bottom: true)
   def wire(*options)
-    render 'components/gates/wire', *options
+    render 'components/wires/wire', *options
   end
 
-  def gate_wire(*options)
-    render 'components/gates/gate_wire', *options
+  def circuit_element_wire(*options)
+    render 'components/wires/circuit_element_wire', *options
   end
 
   def top_wire

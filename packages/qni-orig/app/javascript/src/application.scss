@@ -20,8 +20,8 @@
 @import 'tailwind_ui/card';
 @import 'tailwind_ui/pill';
 
-// Mixins
-@import 'mixins/circuit_element';
+// Variables
+@import 'variables';
 
 // Components
 @import 'components/circle_notation';
@@ -29,6 +29,7 @@
 @import 'components/circle_notations/qubit_circle_group_row';
 @import 'components/circuit';
 @import 'components/circuit_card';
+@import 'components/circuit_element';
 @import 'components/circuits/circuit_block';
 @import 'components/circuits/circuit_block_divider';
 @import 'components/circuits/circuit_breakpoint';
@@ -43,7 +44,6 @@
 @import 'components/gates/down_wire';
 @import 'components/gates/swap_gate';
 @import 'components/gates/up_wire';
-@import 'components/gates/wire';
 @import 'components/rw/readout';
 @import 'components/rw/rw';
 @import 'components/rw/write';

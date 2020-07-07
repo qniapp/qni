@@ -1,7 +1,7 @@
 <% value = local_assigns.fetch(:value) %>
 <% label = local_assigns.fetch(:label, nil) %>
 
-<%= tag.div class: "rw gate write rw--#{value}" do %>
+<%= tag.div class: "circuit-element rw gate write rw--#{value}" do %>
   <div class="rw__wire rw__wire--left"></div>
   <div class="rw__wire rw__wire--right"></div>
   <div class="rw__body">
@@ -9,5 +9,5 @@
       |<%= tag.span value, class: 'rw__value' %>&#10217;
     </div>
   </div>
-  <%= tag.div(label, class: 'gate__label') if label %>
+  <%= circuit_element_label label: label %>
 <% end %>
