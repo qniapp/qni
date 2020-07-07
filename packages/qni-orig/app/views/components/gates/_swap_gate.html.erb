@@ -3,10 +3,10 @@
 <% label = local_assigns.fetch(:label, nil) %>
 <% wire_active = local_assigns.fetch(:wire_active, true) %>
 
-<%= tag.div class: class_string('gate', 'swap-gate', 'gate--inactive-wire' => !wire_active) do %>
-  <%= gate_wire %>
+<%= tag.div class: class_string('circuit-element', 'gate', 'swap-gate', 'circuit-element--inactive-wire' => !wire_active) do %>
+  <%= circuit_element_wire %>
   <%= top_wire if top %>
   <%= bottom_wire if bottom %>
   <span><%= swap %></span>
-  <%= tag.div(label, class: 'gate__label') if label %>
+  <%= circuit_element_label label: label %>
 <% end %>

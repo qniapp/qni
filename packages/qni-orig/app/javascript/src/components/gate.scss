@@ -1,100 +1,4 @@
-$gate-color: teal-400;
-
-$gate-size-extralarge: 12;
-$gate-size-large: 10;
-$gate-size-base: 8;
-$gate-size-small: 6;
-$gate-size-extrasmall: 4;
-$gate-size-screen-md: 8;
-
-$gate-margin-extralarge: 4;
-$gate-margin-large: 4;
-$gate-margin-base: 4;
-$gate-margin-small: 2;
-$gate-margin-extrasmall: 1;
-
-$gate-label-font-size-extralarge: 4xl;
-$gate-label-font-size-large: 3xl;
-$gate-label-font-size-base: xl;
-$gate-label-font-size-small: base;
-$gate-label-font-size-extrasmall: xs;
-
 .gate {
-  @apply flex justify-center items-center;
-  @apply relative;
-
-  // Extra large size
-  .circuit--1qubit & {
-    @apply mx-#{$gate-margin-extralarge};
-    @apply w-#{$gate-size-extralarge} h-#{$gate-size-extralarge + $gate-margin-extralarge * 2};
-
-    @screen md {
-      @apply mx-0;
-      @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-    }
-  }
-
-  // Large size
-  .circuit--2qubit & {
-    @apply mx-#{$gate-margin-large};
-    @apply w-#{$gate-size-large} h-#{$gate-size-large + $gate-margin-large * 2};
-
-    @screen md {
-      @apply mx-0;
-      @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-    }
-  }
-
-  // Base size
-  .circuit--3qubit & {
-    @apply mx-#{$gate-margin-base};
-    @apply w-#{$gate-size-base} h-#{$gate-size-base + $gate-margin-base * 2};
-
-    @screen md {
-      @apply mx-0;
-      @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-    }
-  }
-
-  // Small size
-  .circuit--4qubit &,
-  .circuit--5qubit &,
-  .circuit--6qubit & {
-    @apply mx-#{$gate-margin-small};
-    @apply w-#{$gate-size-small} h-#{$gate-size-small + $gate-margin-small * 2};
-
-    @screen md {
-      @apply mx-0;
-      @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-    }
-  }
-
-  .circuit--8qubit & {
-    @apply mx-#{$gate-margin-extrasmall};
-    @apply w-#{$gate-size-extrasmall} h-#{$gate-size-extrasmall + $gate-margin-extrasmall * 2};
-
-    @screen md {
-      @apply mx-0;
-      @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-    }
-  }
-
-  // Preview
-  .circuit-preview & {
-    @apply mx-0;
-    @apply w-#{$gate-size-base + $gate-margin-base} h-#{$gate-size-screen-md};
-  }
-
-  &:nth-of-type(n + 2) {
-    @screen md {
-      @apply mt-#{$gate-margin-base};
-    }
-
-    .circuit-preview & {
-      @apply mt-#{$gate-margin-base};
-    }
-  }
-
   &__box {
     @apply absolute inset-0;
     @apply bg-#{$gate-color};
@@ -104,77 +8,77 @@ $gate-label-font-size-extrasmall: xs;
   }
 
   .circuit--1qubit & &__box {
-    @apply my-#{$gate-margin-extralarge};
-    @apply text-#{$gate-label-font-size-extralarge};
-    @apply w-#{$gate-size-extralarge} h-#{$gate-size-extralarge};
+    @apply my-#{$circuit-element-margin-extralarge};
+    @apply text-#{$circuit-element-label-font-size-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
-      @apply text-#{$gate-label-font-size-base};
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply text-#{$circuit-element-label-font-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--2qubit & &__box {
-    @apply my-#{$gate-margin-large};
-    @apply text-#{$gate-label-font-size-large};
-    @apply w-#{$gate-size-large} h-#{$gate-size-large};
+    @apply my-#{$circuit-element-margin-large};
+    @apply text-#{$circuit-element-label-font-size-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--3qubit & &__box {
-    @apply my-#{$gate-margin-base};
-    @apply text-#{$gate-label-font-size-base};
-    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--4qubit & &__box,
   .circuit--5qubit & &__box,
   .circuit--6qubit & &__box {
-    @apply my-#{$gate-margin-small};
-    @apply text-#{$gate-label-font-size-small};
-    @apply w-#{$gate-size-small} h-#{$gate-size-small};
+    @apply my-#{$circuit-element-margin-small};
+    @apply text-#{$circuit-element-label-font-size-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--8qubit & &__box {
-    @apply my-#{$gate-margin-extrasmall};
-    @apply text-#{$gate-label-font-size-extrasmall};
-    @apply w-#{$gate-size-extrasmall} h-#{$gate-size-extrasmall};
+    @apply my-#{$circuit-element-margin-extrasmall};
+    @apply text-#{$circuit-element-label-font-size-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit-preview & &__box {
-    @apply mx-#{$gate-margin-base / 2};
+    @apply mx-#{$circuit-element-margin-base / 2};
     @apply my-0;
-    @apply text-#{$gate-label-font-size-base};
-    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
   }
 
   &--disabled &__box {
@@ -191,82 +95,82 @@ $gate-label-font-size-extrasmall: xs;
     @apply rounded-full;
     @apply stroke-current text-white;
 
-    @apply my-#{$gate-margin-base};
-    @apply text-#{$gate-label-font-size-base};
-    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--1qubit & &__circle {
-    @apply my-#{$gate-margin-extralarge};
-    @apply text-#{$gate-label-font-size-extralarge};
-    @apply w-#{$gate-size-extralarge} h-#{$gate-size-extralarge};
+    @apply my-#{$circuit-element-margin-extralarge};
+    @apply text-#{$circuit-element-label-font-size-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--2qubit & &__circle {
-    @apply my-#{$gate-margin-large};
-    @apply text-#{$gate-label-font-size-large};
-    @apply w-#{$gate-size-large} h-#{$gate-size-large};
+    @apply my-#{$circuit-element-margin-large};
+    @apply text-#{$circuit-element-label-font-size-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--3qubit & &__circle {
-    @apply my-#{$gate-margin-base};
-    @apply text-#{$gate-label-font-size-base};
-    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    @apply my-#{$circuit-element-margin-base};
+    @apply text-#{$circuit-element-label-font-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--4qubit & &__circle,
   .circuit--5qubit & &__circle,
   .circuit--6qubit & &__circle {
-    @apply my-#{$gate-margin-small};
-    @apply text-#{$gate-label-font-size-small};
-    @apply w-#{$gate-size-small} h-#{$gate-size-small};
+    @apply my-#{$circuit-element-margin-small};
+    @apply text-#{$circuit-element-label-font-size-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
   .circuit--8qubit & &__circle {
-    @apply my-#{$gate-margin-extrasmall};
-    @apply text-#{$gate-label-font-size-extrasmall};
-    @apply w-#{$gate-size-extrasmall} h-#{$gate-size-extrasmall};
+    @apply my-#{$circuit-element-margin-extrasmall};
+    @apply text-#{$circuit-element-label-font-size-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall};
 
     @screen md {
-      @apply mx-#{$gate-margin-base / 2};
+      @apply mx-#{$circuit-element-margin-base / 2};
       @apply my-0;
       @apply text-base;
-      @apply w-#{$gate-size-base} h-#{$gate-size-base};
+      @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
     }
   }
 
@@ -274,7 +178,7 @@ $gate-label-font-size-extrasmall: xs;
     @apply mx-2;
     @apply my-0;
     @apply text-base;
-    @apply w-#{$gate-size-base} h-#{$gate-size-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
   }
 
   &__circle svg {
@@ -313,208 +217,5 @@ $gate-label-font-size-extrasmall: xs;
 
   .circuit-preview & &__circle svg {
     @apply w-5 h-5;
-  }
-
-  &__wire {
-    @apply absolute;
-    @apply border-#{$wire-color};
-
-    @apply border-l-#{$wire-width};
-    @apply h-full;
-    @apply ml-#{$gate-size-base / 2};
-    left: -#{$wire-width / 2}px;
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  &--inactive-wire &__wire {
-    @apply border-#{$wire-inactive-color};
-  }
-
-  .circuit--1qubit & &__wire {
-    @apply ml-#{$gate-size-extralarge / 2};
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  .circuit--2qubit & &__wire {
-    @apply ml-#{$gate-size-large / 2};
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  .circuit--3qubit & &__wire {
-    @apply ml-#{$gate-size-base / 2};
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  .circuit--4qubit & &__wire,
-  .circuit--5qubit & &__wire,
-  .circuit--6qubit & &__wire {
-    @apply ml-#{$gate-size-small / 2};
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  .circuit--8qubit & &__wire {
-    @apply ml-#{$gate-size-extrasmall / 2};
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-  }
-
-  .circuit-preview & &__wire {
-    @apply border-l-0;
-    @apply border-t-#{$wire-width};
-    @apply h-4;
-    @apply ml-0;
-    @apply mt-4;
-    @apply w-full;
-    left: unset;
-    top: -1px;
-  }
-
-  &__label {
-    @apply absolute;
-    @apply flex items-center justify-center;
-    @apply font-mono;
-    @apply text-gray-400;
-    @apply whitespace-no-wrap;
-
-    @apply -mr-6;
-    @apply h-full;
-    @apply right-0;
-    @apply text-base;
-    writing-mode: vertical-lr;
-
-    @screen md {
-      @apply -mt-4;
-      @apply mr-0;
-      @apply text-xs;
-      @apply top-0;
-      @apply h-auto;
-      @apply w-full;
-      writing-mode: horizontal-tb;
-    }
-  }
-
-  .circuit-preview & &__label {
-    @apply -mt-4;
-    @apply mr-0;
-    @apply text-xs;
-    @apply top-0;
-    @apply h-auto;
-    @apply w-full;
-    writing-mode: horizontal-tb;
-  }
-
-  &__label--bottom {
-    @apply mr-#{$gate-size-base};
-
-    @screen md {
-      @apply mr-0;
-      @apply mt-8;
-    }
-  }
-
-  .circuit--1qubit & &__label--bottom {
-    @apply mr-#{$gate-size-extralarge};
-
-    @screen md {
-      @apply mr-0;
-    }
-  }
-
-  .circuit--2qubit & &__label--bottom {
-    @apply mr-#{$gate-size-large};
-
-    @screen md {
-      @apply mr-0;
-    }
-  }
-
-  .circuit--3qubit & &__label--bottom {
-    @apply mr-#{$gate-size-base};
-
-    @screen md {
-      @apply mr-0;
-    }
-  }
-
-  .circuit--4qubit & &__label--bottom,
-  .circuit--5qubit & &__label--bottom,
-  .circuit--6qubit & &__label--bottom {
-    @apply mr-#{$gate-size-small};
-
-    @screen md {
-      @apply mr-0;
-    }
-  }
-
-  .circuit--8qubit & &__label--bottom {
-    @apply mr-#{$gate-size-extrasmall};
-
-    @screen md {
-      @apply mr-0;
-    }
-  }
-
-  .circuit-preview & &__label--bottom {
-    @apply mr-0;
-    @apply mt-8;
   }
 }

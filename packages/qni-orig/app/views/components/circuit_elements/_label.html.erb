@@ -1,0 +1,4 @@
+<% label = local_assigns.fetch(:label) %>
+<% bottom = local_assigns.fetch(:bottom, false) %>
+
+<%= tag.div(label, class: class_string('circuit-element__label', 'circuit-element__label--bottom' => bottom)) if label %>

@@ -18,14 +18,14 @@
 
   @screen md {
     @apply flex justify-end items-center;
-    @apply h-#{$circuit-element-shape-size};
+    @apply h-#{$circuit-element-size-base};
     @apply mr-2 ml-0;
     @apply w-auto;
   }
 
   .circuit-preview & {
     @apply flex justify-end items-center;
-    @apply h-#{$circuit-element-shape-size};
+    @apply h-#{$circuit-element-size-base};
     @apply mr-2 ml-0;
     @apply w-auto;
   }

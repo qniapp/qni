@@ -1,7 +1,7 @@
 .qubit-label {
   $qubit-label-font-color: gray-300;
   $qubit-label-wire-length: (
-      $circuit-element-size-base - $circuit-element-shape-size
+      $circuit-element-size-base - $circuit-element-size-base
     ) / 2;
   $qubit-label-wire-length-mobile: 4;
 
@@ -22,7 +22,7 @@
     @apply w-#{$circuit-element-size-extralarge};
 
     @screen md {
-      @apply h-#{$circuit-element-shape-size};
+      @apply h-#{$circuit-element-size-base};
       @apply items-center;
       @apply mx-0;
       @apply w-auto;
@@ -34,7 +34,7 @@
     @apply w-#{$circuit-element-size-large};
 
     @screen md {
-      @apply h-#{$circuit-element-shape-size};
+      @apply h-#{$circuit-element-size-base};
       @apply items-center;
       @apply mx-0;
       @apply w-auto;
@@ -46,7 +46,7 @@
     @apply w-#{$circuit-element-size-base};
 
     @screen md {
-      @apply h-#{$circuit-element-shape-size};
+      @apply h-#{$circuit-element-size-base};
       @apply items-center;
       @apply mx-0;
       @apply w-auto;
@@ -60,7 +60,7 @@
     @apply w-#{$circuit-element-size-small};
 
     @screen md {
-      @apply h-#{$circuit-element-shape-size};
+      @apply h-#{$circuit-element-size-base};
       @apply items-center;
       @apply mx-0;
       @apply w-auto;
@@ -72,7 +72,7 @@
     @apply w-#{$circuit-element-size-extrasmall};
 
     @screen md {
-      @apply h-#{$circuit-element-shape-size};
+      @apply h-#{$circuit-element-size-base};
       @apply items-center;
       @apply mx-0;
       @apply w-auto;
@@ -80,7 +80,7 @@
   }
 
   @screen md {
-    @apply h-#{$circuit-element-shape-size};
+    @apply h-#{$circuit-element-size-base};
     @apply items-center;
     @apply mx-0;
     @apply w-auto;
@@ -88,7 +88,7 @@
 
   .circuit-preview & {
     @apply flex-row items-center;
-    @apply h-#{$circuit-element-shape-size};
+    @apply h-#{$circuit-element-size-base};
     @apply mx-0;
     @apply w-auto;
   }
@@ -117,7 +117,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -132,7 +132,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -147,7 +147,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -162,7 +162,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -179,7 +179,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -194,7 +194,7 @@
     @screen md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+      @apply mt-#{$circuit-element-size-base / 2} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
@@ -206,7 +206,7 @@
   .circuit-preview & &__wire {
     @apply border-l-0;
     @apply border-t-#{$wire-width};
-    @apply mt-#{$circuit-element-shape-size / 2} ml-0;
+    @apply mt-#{$circuit-element-size-base / 2} ml-0;
     @apply right-0;
     @apply w-#{$qubit-label-wire-length};
     bottom: unset;

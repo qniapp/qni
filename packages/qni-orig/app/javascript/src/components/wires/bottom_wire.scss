@@ -1,6 +1,6 @@
 .bottom-wire {
   @apply absolute;
-  @apply border-#{$circuit-element-color};
+  @apply border-#{$gate-color};
 
   @apply -ml-#{$circuit-element-margin-base};
   @apply border-t-4;
@@ -98,11 +98,11 @@
   }
 
   .circuit-preview & {
-    @apply border-l-#{$circuit-element-top-bottom-wire-width};
+    @apply border-l-#{$circuit-element-size-base / 2};
     @apply border-t-0;
     @apply h-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
     @apply mt-4 ml-#{($circuit-element-size-base + $circuit-element-margin-base) / 2};
     @apply top-0;
-    left: -#{$circuit-element-top-bottom-wire-width / 2}px;
+    left: -#{$circuit-element-size-base / 2 / 2}px;
   }
 }
