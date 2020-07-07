@@ -57,7 +57,7 @@ class Components::WiresHelperTest < ActionView::TestCase
     ERB
   end
 
-  test 'up wire with bottom link' do
+  test 'up wire (connected with lower gate)' do
     assert_dom_equal beautify(<<~ERB), beautify(up_wire(bottom: true))
       <div class="up-wire">
         <div class="up-wire__line"></div>
