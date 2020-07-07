@@ -1,0 +1,13 @@
+.readout {
+  .rw__body {
+    @apply justify-start;
+  }
+
+  .rw__wire--left {
+    @apply border-#{$wire-color};
+  }
+
+  .rw__wire--right {
+    @apply border-#{$wire-inactive-color};
+  }
+}

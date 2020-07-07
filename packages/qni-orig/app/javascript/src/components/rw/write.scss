@@ -1,0 +1,13 @@
+.write {
+  .rw__body {
+    @apply justify-end;
+  }
+
+  .rw__wire--left {
+    @apply border-#{$wire-inactive-color};
+  }
+
+  .rw__wire--right {
+    @apply border-#{$wire-color};
+  }
+}
