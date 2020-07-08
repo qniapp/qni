@@ -4,7 +4,7 @@
   <%= simulator_wrapper nqubit: @circuit.nqubit do %>
     <%= simulator do %>
       <%= circuit_view circuit: @circuit %>
-      <%= render inline: @circuit.circle_notation if @circuit.circle_notation %>
+      <%= render inline: @circuit.circle_notation %>
     <% end %>
   <% end %>
 <% end %>
