@@ -23,7 +23,7 @@
     writing-mode: vertical-lr;
 
     @apply mb-2;
-    @apply text-3xl;
+    @apply text-base;
 
     @screen md {
       @apply mb-0;
@@ -33,24 +33,17 @@
     }
   }
 
-  .circuit--3qubit & &__label {
-    @apply text-#{$circuit-element-label-font-size-base};
-  }
+  .circuit--3qubit &__label {
+    @apply text-3xl;
 
-  .circuit--4qubit & &__label,
-  .circuit--5qubit & &__label,
-  .circuit--6qubit & &__label {
-    @apply text-base;
-  }
-
-  .circuit--8qubit & &__label {
-    @apply text-base;
+    @screen md {
+      @apply text-base;
+    }
   }
 
   .circuit-preview &__label {
     @apply mb-0;
     @apply mr-2;
-    @apply text-base;
     writing-mode: horizontal-tb;
   }
 
