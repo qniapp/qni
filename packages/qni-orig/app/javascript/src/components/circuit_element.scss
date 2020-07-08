@@ -211,6 +211,16 @@
     }
   }
 
+  .circuit--8qubit &__label {
+    @apply -mr-3;
+    font-size: .2rem;
+
+    @screen md {
+      @apply mr-0;
+      @apply text-xs;
+    }
+  }
+
   .circuit-preview & &__label {
     @apply -mt-4;
     @apply mr-0;
