@@ -1,8 +1,8 @@
 .register-label {
   $register-label-font-size: base;
-  $register-label-font-size-mobile: 3xl;
+  $register-label-font-size-mobile: 2xl;
 
-  @apply flex items-center;
+  @apply flex items-center justify-center;
 
   // Mobile
   @apply mx-#{$circuit-element-margin-base};
@@ -46,6 +46,7 @@
 
     // Mobile
     @apply text-#{$register-label-font-size-mobile};
+    @apply leading-none;
     writing-mode: vertical-lr;
 
     @screen md {
@@ -59,6 +60,22 @@
 
     @screen md {
       @apply w-auto;
+    }
+  }
+
+  .circuit--3qubit & {
+    @apply w-#{$circuit-element-size-large};
+
+    @screen md {
+      @apply w-auto;
+    }
+  }
+
+  .circuit--3qubit & &__value {
+    @apply text-3xl;
+
+    @screen md {
+      @apply text-base;
     }
   }
 
