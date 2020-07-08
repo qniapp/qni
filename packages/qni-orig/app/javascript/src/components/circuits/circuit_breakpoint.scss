@@ -6,15 +6,13 @@
   margin-top: -2px;
 
   @screen md {
-    @apply h-full;
+    @apply -my-6;
+    @apply min-h-full;
     @apply min-w-0;
-    @apply mt-0;
   }
 
   .circuit-preview & {
-    @apply h-full;
-    @apply min-w-0;
-    @apply mt-0;
+    @apply hidden;
   }
 
   .simulator &:hover {
@@ -35,18 +33,12 @@
     }
   }
 
-  .circuit-preview & &__line {
-    @apply min-w-0;
-    @apply min-h-full;
-    margin-left: -2px;
-  }
-
   .simulator .circuit-column:hover &__line {
     @apply bg-indigo-300;
     @apply transition duration-150 ease-in-out;
   }
 
-  .circuit:hover &--active &__line {
+  &--active &__line {
     @apply bg-yellow-300;
     @apply transition duration-150 ease-in-out;
   }
