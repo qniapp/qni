@@ -45,6 +45,11 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-magnitude="1"
            data-magnitude-string="1"
            data-phase-string="0">
+        <div class="qubit-circle__tooltip hidden">
+          <div class="text-center font-bold">|0&gt;</div>
+          <div>M=1</div>
+          <div>φ=0</div>
+        </div>
         <div class="qubit-circle__border"></div>
         <div class="qubit-circle__body">
           <div class="qubit-circle__magnitude"></div>
@@ -70,6 +75,11 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-magnitude="0.7071067811865476"
            data-magnitude-string="√2/2"
            data-phase-string="π/2">
+        <div class="qubit-circle__tooltip hidden">
+          <div class="text-center font-bold">|0&gt;</div>
+          <div>M=√2/2</div>
+          <div>φ=π/2</div>
+        </div>
         <div class="qubit-circle__border"></div>
         <div class="qubit-circle__body">
           <div class="qubit-circle__magnitude"></div>
