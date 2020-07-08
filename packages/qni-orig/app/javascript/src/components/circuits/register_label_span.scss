@@ -44,6 +44,8 @@
   .circuit-preview &__label {
     @apply mb-0;
     @apply mr-2;
+    @apply text-base;
+
     writing-mode: horizontal-tb;
   }
 
