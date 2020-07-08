@@ -50,7 +50,8 @@
     }
   }
 
-  .circuit--4qubit & &__wire {
+  .circuit--4qubit & &__wire,
+  .circuit--5qubit & &__wire {
     @apply h-#{$circuit-element-margin-base};
     @apply ml-#{$circuit-element-size-base / 2};
 
@@ -64,7 +65,6 @@
     }
   }
 
-  .circuit--5qubit & &__wire,
   .circuit--6qubit & &__wire {
     @apply h-#{$circuit-element-margin-small};
     @apply ml-#{$circuit-element-size-small / 2};
@@ -126,14 +126,14 @@
     }
   }
 
-  .circuit--4qubit & &__wire--left {
+  .circuit--4qubit & &__wire--left,
+  .circuit--5qubit & &__wire--left {
     @screen md {
       @apply left-0;
       top: -#{$wire-width / 2}px;
     }
   }
 
-  .circuit--5qubit & &__wire--left,
   .circuit--6qubit & &__wire--left {
     @screen md {
       @apply left-0;
@@ -215,7 +215,8 @@
     }
   }
 
-  .circuit--4qubit & &__body {
+  .circuit--4qubit & &__body,
+  .circuit--5qubit & &__body {
     @apply my-#{$circuit-element-margin-base};
     @apply text-2xl;
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
@@ -229,7 +230,6 @@
     }
   }
 
-  .circuit--5qubit & &__body,
   .circuit--6qubit & &__body {
     @apply my-#{$circuit-element-margin-small};
     @apply text-#{$circuit-element-label-font-size-small};
