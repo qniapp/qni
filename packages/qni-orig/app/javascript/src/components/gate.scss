@@ -20,7 +20,8 @@
     }
   }
 
-  .circuit--2qubit & &__box {
+  .circuit--2qubit & &__box,
+  .circuit--3qubit & &__box {
     @apply my-#{$circuit-element-margin-large};
     @apply text-#{$circuit-element-label-font-size-large};
     @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
@@ -33,7 +34,6 @@
     }
   }
 
-  .circuit--3qubit & &__box,
   .circuit--4qubit & &__box {
     @apply my-#{$circuit-element-margin-base};
     @apply text-#{$circuit-element-label-font-size-base};
@@ -120,7 +120,8 @@
     }
   }
 
-  .circuit--2qubit & &__circle {
+  .circuit--2qubit & &__circle,
+  .circuit--3qubit & &__circle {
     @apply my-#{$circuit-element-margin-large};
     @apply text-#{$circuit-element-label-font-size-large};
     @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large};
@@ -133,7 +134,6 @@
     }
   }
 
-  .circuit--3qubit & &__circle,
   .circuit--4qubit & &__circle {
     @apply my-#{$circuit-element-margin-base};
     @apply text-#{$circuit-element-label-font-size-base};
@@ -197,11 +197,11 @@
     }
   }
 
-  .circuit--2qubit & &__circle svg {
+  .circuit--2qubit & &__circle svg,
+  .circuit--3qubit & &__circle svg {
     @apply w-6 h-6;
   }
 
-  .circuit--3qubit & &__circle svg,
   .circuit--4qubit & &__circle svg {
     @apply w-5 h-5;
   }
