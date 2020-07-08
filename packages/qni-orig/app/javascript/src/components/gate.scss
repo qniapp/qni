@@ -34,7 +34,8 @@
     }
   }
 
-  .circuit--4qubit & &__box {
+  .circuit--4qubit & &__box,
+  .circuit--5qubit & &__box {
     @apply my-#{$circuit-element-margin-base};
     @apply text-#{$circuit-element-label-font-size-base};
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
@@ -47,7 +48,6 @@
     }
   }
 
-  .circuit--5qubit & &__box,
   .circuit--6qubit & &__box {
     @apply my-#{$circuit-element-margin-small};
     @apply text-#{$circuit-element-label-font-size-small};
@@ -134,7 +134,8 @@
     }
   }
 
-  .circuit--4qubit & &__circle {
+  .circuit--4qubit & &__circle,
+  .circuit--5qubit & &__circle {
     @apply my-#{$circuit-element-margin-base};
     @apply text-#{$circuit-element-label-font-size-base};
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
@@ -147,7 +148,6 @@
     }
   }
 
-  .circuit--5qubit & &__circle,
   .circuit--6qubit & &__circle {
     @apply my-#{$circuit-element-margin-small};
     @apply text-#{$circuit-element-label-font-size-small};
@@ -202,11 +202,11 @@
     @apply w-6 h-6;
   }
 
-  .circuit--4qubit & &__circle svg {
+  .circuit--4qubit & &__circle svg,
+  .circuit--5qubit & &__circle svg {
     @apply w-5 h-5;
   }
 
-  .circuit--5qubit & &__circle svg,
   .circuit--6qubit & &__circle svg {
     @apply w-5 h-5;
   }
