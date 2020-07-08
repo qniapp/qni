@@ -1,7 +1,6 @@
 .circuit-column {
   @apply flex;
-
-  @apply flex-col justify-center items-center;
+  @apply flex-col justify-center;
 
   @screen md {
     @apply flex-row;
