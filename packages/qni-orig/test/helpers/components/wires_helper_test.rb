@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class Components::WiresHelperTest < ActionView::TestCase
+  include ComponentsHelper
+
   test 'wire' do
     assert_dom_equal beautify(<<~ERB), beautify(wire)
       <div class="circuit-element wire">
@@ -50,26 +52,26 @@ class Components::WiresHelperTest < ActionView::TestCase
   end
 
   test 'up wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(up_wire)
-      <div class="up-wire">
-        <div class="up-wire__line"></div>
+    assert_dom_equal beautify(<<~ERB), beautify(component('up_gate'))
+      <div class="circuit-element up-gate">
+        <div class="up-gate__line"></div>
       </div>
     ERB
   end
 
   test 'up wire (connected with lower gate)' do
-    assert_dom_equal beautify(<<~ERB), beautify(up_wire(bottom: true))
-      <div class="up-wire">
-        <div class="up-wire__line"></div>
-        <div class="up-wire__bottom"></div>
+    assert_dom_equal beautify(<<~ERB), beautify(component('up_gate', bottom: true))
+      <div class="circuit-element up-gate">
+        <div class="up-gate__line"></div>
+        <div class="up-gate__bottom"></div>
       </div>
     ERB
   end
 
   test 'down wire' do
-    assert_dom_equal beautify(<<~ERB), beautify(down_wire)
-      <div class="down-wire">
-        <div class="down-wire__line"></div>
+    assert_dom_equal beautify(<<~ERB), beautify(component('down_gate'))
+      <div class="circuit-element down-gate">
+        <div class="down-gate__line"></div>
       </div>
     ERB
   end

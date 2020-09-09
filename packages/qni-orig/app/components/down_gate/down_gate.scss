@@ -1,0 +1,168 @@
+.down-gate {
+  @apply relative;
+
+  @apply mx-#{$circuit-element-margin-base};
+  @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base + $circuit-element-margin-base * 2};
+
+  .circuit--1qubit & {
+    @apply mx-#{$circuit-element-margin-extralarge};
+    @apply w-#{$circuit-element-size-extralarge} h-#{$circuit-element-size-extralarge + $circuit-element-margin-extralarge * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-12 h-8;
+    }
+  }
+
+  .circuit--2qubit &,
+  .circuit--3qubit & {
+    @apply mx-#{$circuit-element-margin-large};
+    @apply w-#{$circuit-element-size-large} h-#{$circuit-element-size-large + $circuit-element-margin-large * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-12 h-8;
+    }
+  }
+
+  .circuit--4qubit & {
+    @apply mx-#{$circuit-element-margin-base};
+    @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base + $circuit-element-margin-base * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-12 h-8;
+    }
+  }
+
+  .circuit--5qubit &,
+  .circuit--6qubit & {
+    @apply mx-#{$circuit-element-margin-small};
+    @apply w-#{$circuit-element-size-small} h-#{$circuit-element-size-small + $circuit-element-margin-small * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-12 h-8;
+    }
+  }
+
+  .circuit--8qubit & {
+    @apply mx-#{$circuit-element-margin-extrasmall};
+    @apply w-#{$circuit-element-size-extrasmall} h-#{$circuit-element-size-extrasmall + $circuit-element-margin-extrasmall * 2};
+
+    @screen md {
+      @apply mx-0;
+      @apply w-12 h-8;
+    }
+  }
+
+  @screen md {
+    @apply mx-0;
+    @apply w-12 h-8;
+  }
+
+  .circuit-preview & {
+    @apply mx-0;
+    @apply w-12 h-8;
+  }
+
+  &:nth-of-type(n + 2) {
+    @screen md {
+      @apply mt-4;
+    }
+
+    .circuit-preview & {
+      @apply mt-4;
+    }
+  }
+
+  &__line {
+    @apply absolute;
+    @apply border-t-2 border-gray-600;
+    @apply origin-top-right -rotate-45;
+    @apply top-0 right-0;
+    @apply transform;
+
+    @screen md {
+      @apply left-0 right-auto;
+      @apply ml-0;
+      @apply origin-top-left rotate-45;
+      top: -1px;
+    }
+  }
+
+  .circuit--1qubit &__line {
+    @apply -rotate-45;
+    @apply mr-#{$circuit-element-size-extralarge / 2};
+    width: 113.13708498984761px; // 5rem * √2
+
+    @screen md {
+      @apply mt-4;
+      @apply rotate-45;
+      width: 67.88225099390857px; // 3rem * √2
+    }
+  }
+
+  .circuit--2qubit &__line,
+  .circuit--3qubit &__line {
+    @apply -rotate-45;
+    @apply mr-#{$circuit-element-size-large / 2};
+    width: 101.82337649086286px; // 4.5rem * √2
+
+    @screen md {
+      @apply mt-4;
+      @apply rotate-45;
+      width: 67.88225099390857px; // 3rem * √2
+    }
+  }
+
+  .circuit--4qubit &__line {
+    @apply -rotate-45;
+    @apply mr-#{$circuit-element-size-base / 2};
+    width: 90.50966799187809px; // 4rem * √2
+
+    @screen md {
+      @apply mt-4;
+      @apply rotate-45;
+      width: 67.88225099390857px; // 3rem * √2
+    }
+  }
+
+  .circuit--5qubit &__line,
+  .circuit--6qubit &__line {
+    @apply -rotate-45;
+    @apply mr-#{$circuit-element-size-small / 2};
+    width: 56.568542494923804px; // 2.5rem * √2
+
+    @screen md {
+      @apply mt-4;
+      @apply rotate-45;
+      width: 67.88225099390857px; // 3rem * √2
+    }
+  }
+
+  .circuit--8qubit &__line {
+    @apply -rotate-45;
+    @apply mr-#{$circuit-element-size-extrasmall / 2};
+    width: 33.941125496954285px;
+
+    @screen md {
+      @apply mt-4;
+      @apply rotate-45;
+      width: 67.88225099390857px; // 3rem * √2
+    }
+  }
+
+  .circuit-preview &__line {
+    @apply ml-0;
+    @apply mr-0;
+    @apply mt-4;
+    @apply origin-top-left;
+    @apply left-0 right-auto;
+    @apply rotate-45;
+  }
+
+  .circuit-preview .circuit--3qubit &__line {
+    width: 67.88225099390857px; // 3rem * √2
+  }
+}

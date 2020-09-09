@@ -64,9 +64,6 @@ def phase(targets, psi, nqubit):
 
 
 def cphase(targets, theta, psi, nqubit):
-    control = [E] * nqubit
-    target = [E] * nqubit
-
     m0 = [E] * nqubit
     m1 = [E] * nqubit
     m1[nqubit - targets[-1] - 1] = PHASE(theta) - E

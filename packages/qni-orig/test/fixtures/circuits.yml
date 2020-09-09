@@ -5,167 +5,111 @@
 random_bit:
   name: Random bit
   dsl: <%= file_text('random_bit.dsl.rb') %>
-  erb: <%= file_text('random_bit.html.erb') %>
-  circle_notation: <%= file_text('random_bit_cn.html.erb') %>
 
 random_byte:
   name: Random byte
   dsl: <%= file_text('random_byte.dsl.rb') %>
-  erb: <%= file_text('random_byte.html.erb') %>
-  circle_notation: <%= file_text('random_byte_cn.html.erb') %>
 
 root_of_not:
   name: Root-of-not
   dsl: <%= file_text('root_of_not.dsl.rb') %>
-  erb: <%= file_text('root_of_not.html.erb') %>
-  circle_notation: <%= file_text('root_of_not_cn.html.erb') %>
 
 quantum_spy_hunter:
   name: Quantum Spy Hunter
   dsl: <%= file_text('quantum_spy_hunter.dsl.rb') %>
-  erb: <%= file_text('quantum_spy_hunter.html.erb') %>
-  circle_notation: <%= file_text('quantum_spy_hunter_cn.html.erb') %>
 
 separable_qubits:
   name: Separable qubits
   dsl: <%= file_text('separable_qubits.dsl.rb') %>
-  erb: <%= file_text('separable_qubits.html.erb') %>
-  circle_notation: <%= file_text('separable_qubits_cn.html.erb') %>
 
 entangled_qubits:
   name: Entangled qubits
   dsl: <%= file_text('entangled_qubits.dsl.rb') %>
-  erb: <%= file_text('entangled_qubits.html.erb') %>
-  circle_notation: <%= file_text('entangled_qubits_cn.html.erb') %>
 
 phase_kickback:
   name: Phase kickback
   dsl: <%= file_text('phase_kickback.dsl.rb') %>
-  erb: <%= file_text('phase_kickback.html.erb') %>
-  circle_notation: <%= file_text('phase_kickback_cn.html.erb') %>
 
 swap_test:
   name: Swap test
   dsl: <%= file_text('swap_test.dsl.rb') %>
-  erb: <%= file_text('swap_test.html.erb') %>
-  circle_notation: <%= file_text('swap_test_cn.html.erb') %>
 
 custom_conditional_phase:
   name: Custom conditional-phase
   dsl: <%= file_text('custom_conditional_phase.dsl.rb') %>
-  erb: <%= file_text('custom_conditional_phase.html.erb') %>
-  circle_notation: <%= file_text('custom_conditional_phase_cn.html.erb') %>
 
 remote_controlled_randomness:
   name: Remote-controlled randomness
   dsl: <%= file_text('remote_controlled_randomness.dsl.rb') %>
-  erb: <%= file_text('remote_controlled_randomness.html.erb') %>
-  circle_notation: <%= file_text('remote_controlled_randomness_cn.html.erb') %>
 
 basic_teleportation:
   name: Basic teleportation
   dsl: <%= file_text('basic_teleportation.dsl.rb') %>
-  erb: <%= file_text('basic_teleportation.html.erb') %>
-  circle_notation: <%= file_text('basic_teleportation_cn.html.erb') %>
 
 increment_and_decrement:
   name: Increment and decrement
   dsl: <%= file_text('increment_and_decrement.dsl.rb') %>
-  erb: <%= file_text('increment_and_decrement.html.erb') %>
-  circle_notation: <%= file_text('increment_and_decrement_cn.html.erb') %>
 
 adding_two_quantum_integers:
   name: Adding two quantum integers
   dsl: <%= file_text('adding_two_quantum_integers.dsl.rb') %>
-  erb: <%= file_text('adding_two_quantum_integers.html.erb') %>
-  circle_notation: <%= file_text('adding_two_quantum_integers_cn.html.erb') %>
 
 add_squared:
   name: Add-squared
   dsl: <%= file_text('add_squared.dsl.rb') %>
-  erb: <%= file_text('add_squared.html.erb') %>
-  circle_notation: <%= file_text('add_squared_cn.html.erb') %>
 
 quantum_conditional_execution:
   name: Quantum conditional execution
   dsl: <%= file_text('quantum_conditional_execution.dsl.rb') %>
-  erb: <%= file_text('quantum_conditional_execution.html.erb') %>
-  circle_notation: <%= file_text('quantum_conditional_execution_cn.html.erb') %>
 
 quantum_conditional_phase_flip:
   name: Quantum conditional phase flip
   dsl: <%= file_text('quantum_conditional_phase_flip.dsl.rb') %>
-  erb: <%= file_text('quantum_conditional_phase_flip.html.erb') %>
-  circle_notation: <%= file_text('quantum_conditional_phase_flip_cn.html.erb') %>
 
 cnot_logic:
   name: CNOT logic
   dsl: <%= file_text('cnot_logic.dsl.rb') %>
-  erb: <%= file_text('cnot_logic.html.erb') %>
-  circle_notation: <%= file_text('cnot_logic_cn.html.erb') %>
 
 apply_mirror_to_flipped_phase:
   name: Apply mirror to flipped phase
   dsl: <%= file_text('apply_mirror_to_flipped_phase.dsl.rb') %>
-  erb: <%= file_text('apply_mirror_to_flipped_phase.html.erb') %>
-  circle_notation: <%= file_text('apply_mirror_to_flipped_phase_cn.html.erb') %>
 
 repeated_iterations:
   name: Repeated iterations
   dsl: <%= file_text('repeated_iterations.dsl.rb') %>
-  erb: <%= file_text('repeated_iterations.html.erb') %>
-  circle_notation: <%= file_text('repeated_iterations_cn.html.erb') %>
 
 multiple_flipped_entries:
   name: Multiple flipped entries
   dsl: <%= file_text('multiple_flipped_entries.dsl.rb') %>
-  erb: <%= file_text('multiple_flipped_entries.html.erb') %>
-  circle_notation: <%= file_text('multiple_flipped_entries_cn.html.erb') %>
 
 qft_to_distinguish_3_states:
   name: QFT to distinguish 3 states
   dsl: <%= file_text('qft_to_distinguish_3_states.dsl.rb') %>
-  erb: <%= file_text('qft_to_distinguish_3_states.html.erb') %>
-  circle_notation: <%= file_text('qft_to_distinguish_3_states_cn.html.erb') %>
 
 qft_of_simple_qpu_signal:
   name: QFT of simple QPU signal
   dsl: <%= file_text('qft_of_simple_qpu_signal.dsl.rb') %>
-  erb: <%= file_text('qft_of_simple_qpu_signal.html.erb') %>
-  circle_notation: <%= file_text('qft_of_simple_qpu_signal_cn.html.erb') %>
 
 qft_square_wave:
   name: QFT square wave
   dsl: <%= file_text('qft_square_wave.dsl.rb') %>
-  erb: <%= file_text('qft_square_wave.html.erb') %>
-  circle_notation: <%= file_text('qft_square_wave_cn.html.erb') %>
 
 qft_big_square_wave:
   name: QFT big square wave
   dsl: <%= file_text('qft_big_square_wave.dsl.rb') %>
-  erb: <%= file_text('qft_big_square_wave.html.erb') %>
-  circle_notation: <%= file_text('qft_big_square_wave_cn.html.erb') %>
 
 qft_frequency_to_state:
   name: QFT Frequency to state
   dsl: <%= file_text('qft_frequency_to_state.dsl.rb') %>
-  erb: <%= file_text('qft_frequency_to_state.html.erb') %>
-  circle_notation: <%= file_text('qft_frequency_to_state_cn.html.erb') %>
 
 qft_prepare_a_state:
   name: QFT Prepare a state
   dsl: <%= file_text('qft_prepare_a_state.dsl.rb') %>
-  erb: <%= file_text('qft_prepare_a_state.html.erb') %>
-  circle_notation: <%= file_text('qft_prepare_a_state_cn.html.erb') %>
 
 qft_frequency_manipulation:
   name: QFT frequency manipulation
   dsl: <%= file_text('qft_frequency_manipulation.dsl.rb') %>
-  erb: <%= file_text('qft_frequency_manipulation.html.erb') %>
-  circle_notation: <%= file_text('qft_frequency_manipulation_cn.html.erb') %>
 
 qft_rotating_phases:
   name: QFT rotating phases
   dsl: <%= file_text('qft_rotating_phases.dsl.rb') %>
-  erb: <%= file_text('qft_rotating_phases.html.erb') %>
-  circle_notation: <%= file_text('qft_rotating_phases_cn.html.erb') %>

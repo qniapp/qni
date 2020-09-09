@@ -1,27 +1,27 @@
-<%= circuit nqubit: 3 do %>
+<%= component 'circuit', nqubit: 3 do %>
   <%= circuit_register_group do %>
     <%= register_label label: 'qubit1' %>
     <%= register_label label: 'qubit2' %>
     <%= register_label label: 'qubit3' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x1' %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x1' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
-    <%= hadamard_gate %>
+    <%= component 'hadamard_gate' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
-    <%= hadamard_gate %>
+    <%= component 'hadamard_gate' %>
   <% end %>
 <% end %>

@@ -1,0 +1,55 @@
+.circuit {
+  &__breakpoint {
+    @apply w-0;
+    @apply z-10;
+
+    @apply min-w-full;
+    margin-top: -2px;
+
+    @screen md {
+      @apply -my-6;
+      @apply min-h-full;
+      @apply min-w-0;
+    }
+  }
+
+  .circuit-preview &__breakpoint {
+    @apply hidden;
+  }
+
+  .simulator &__breakpoint:hover {
+    @apply cursor-pointer;
+  }
+
+  &__breakpoint-line {
+    @apply bg-transparent;
+    @apply min-w-full;
+    margin-top: -2px;
+    padding: 2px;
+
+    @screen md {
+      @apply min-h-full;
+      @apply min-w-0;
+      @apply mt-0;
+      margin-left: -2px;
+    }
+  }
+
+  .simulator &__step--done:hover &__breakpoint-line {
+    @apply bg-indigo-300;
+    @apply transition duration-150 ease-in-out;
+  }
+
+  .simulator &__step--done:active &__breakpoint-line {
+    @apply bg-yellow-300;
+  }
+
+  &__breakpoint--active &__breakpoint-line {
+    @apply bg-yellow-300;
+    @apply transition duration-150 ease-in-out;
+  }
+
+  .simulator &__step--done:hover &__breakpoint--active &__breakpoint-line {
+    @apply bg-yellow-300;
+  }
+}

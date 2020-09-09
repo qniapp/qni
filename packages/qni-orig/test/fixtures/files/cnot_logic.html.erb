@@ -1,67 +1,67 @@
-<%= circuit nqubit: 3 do %>
+<%= component 'circuit', nqubit: 3 do %>
   <%= circuit_register_group do %>
     <%= register_label label: 'a' %>
     <%= register_label label: 'b' %>
     <%= register_label label: 'c' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x1' %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x1' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
     <%= wire active: false %>
-    <%= write value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
     <%= wire active: false %>
-    <%= not_gate %>
+    <%= component 'not_gate' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
     <%= wire active: false %>
-    <%= readout value: 1 %>
+    <%= component 'rw', type: :readout %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
-    <%= write value: 1 %>
+    <%= component 'rw', type: :write, value: 1 %>
     <%= wire active: false %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
     <%= wire %>
-    <%= write value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
-    <%= control_dot bottom: true %>
-    <%= not_gate top: true %>
+    <%= component 'control_dot', targets: [2], bottom: true %>
+    <%= component 'not_gate', controls: [1], top: true %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
-    <%= readout value: 1 %>
+    <%= component 'rw', type: :readout %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire active: false %>
     <%= wire active: false %>
-    <%= readout value: 1 %>
+    <%= component 'rw', type: :readout %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 1 %>
-    <%= write value: 1 %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 1 %>
+    <%= component 'rw', type: :write, value: 1 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= control_dot bottom: true %>
-    <%= control_dot top: true, bottom: true %>
-    <%= not_gate top: true %>
+  <%= component 'circuit/step' do %>
+    <%= component 'control_dot', targets: [2], bottom: true %>
+    <%= component 'control_dot', targets: [2], top: true, bottom: true %>
+    <%= component 'not_gate', top: true %>
   <% end %>
-  <%= circuit_column do %>
-    <%= readout value: 1 %>
-    <%= readout value: 1 %>
-    <%= readout value: 1 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :readout %>
+    <%= component 'rw', type: :readout %>
+    <%= component 'rw', type: :readout %>
   <% end %>
 <% end %>

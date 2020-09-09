@@ -1,8 +1,6 @@
 module Qni
   class Dsl
-    attr_reader :labels
-    attr_reader :registers
-    attr_reader :time_evolution
+    attr_reader :labels, :registers, :time_evolution
 
     def self.load(dsl)
       new.tap do |obj|
@@ -57,20 +55,12 @@ module Qni
       end
     end
 
-    def read(opts)
-      targets = opts.dup
-      rd_opts = {}
-
-      if opts.fetch(:label, false)
-        targets.delete(:label)
-        rd_opts[:label] = opts.fetch(:label)
-      end
-
+    def read(*targets, set: nil)
       @time_evolution <<
-        if rd_opts.empty?
-          [:read, targets]
+        if set
+          [:read, targets, { set: set }]
         else
-          [:read, targets, rd_opts]
+          [:read, targets]
         end
     end
 
@@ -79,7 +69,7 @@ module Qni
     def h(*qubits, **opts)
       h_opts = {}
       h_opts[:disabled] = true if opts.fetch(:disabled, false)
-      h_opts[:label] = opts.fetch(:label, nil) if opts.fetch(:label, nil)
+      h_opts[:if] = opts.fetch(:if, nil) if opts.fetch(:if, nil)
 
       @time_evolution <<
         if qubits.empty?
@@ -92,7 +82,7 @@ module Qni
     def x(*qubits, **opts)
       x_opts = {}
       x_opts[:disabled] = true if opts.fetch(:disabled, false)
-      x_opts[:label] = opts.fetch(:label, nil) if opts.fetch(:label, nil)
+      x_opts[:if] = opts.fetch(:if, nil) if opts.fetch(:if, nil)
 
       @time_evolution <<
         if qubits.empty?
@@ -133,7 +123,7 @@ module Qni
 
       @time_evolution <<
         if targets.is_a?(String)
-          [:phase_all, theta: targets]
+          [:phase_all, { theta: targets }]
         else
           p_opts.empty? ? [:phase, targets] : [:phase, targets, p_opts]
         end

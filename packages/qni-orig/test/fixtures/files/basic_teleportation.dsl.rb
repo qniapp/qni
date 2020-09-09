@@ -19,8 +19,8 @@ end
 block 'send' do
   cnot 0 => 1
   h 0
-  read 0 => 1
-  read 1 => 0
+  read 0
+  read 1
 end
 
 block 'receive' do
@@ -32,5 +32,5 @@ block 'verify' do
   h 2
   phase 2 => '-π/4'
   h 2
-  read 2 => 0
+  read 2
 end

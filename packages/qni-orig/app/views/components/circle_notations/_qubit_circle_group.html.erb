@@ -1,6 +1,0 @@
-<% body = yield.presence || raise('body is a mandatory') %>
-<% hidden = local_assigns.fetch(:hidden, true) %>
-
-<%= tag.div class: class_string('circle-notation__state-vector', 'hidden' => hidden), data: { target: 'simulator.qubitCircleGroup', drawn: 'false' } do %>
-  <%= body %>
-<% end %>

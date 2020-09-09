@@ -14,4 +14,8 @@ module IconsHelper
   def swap
     render 'components/icons/swap'
   end
+
+  def reload
+    render 'components/icons/reload'
+  end
 end

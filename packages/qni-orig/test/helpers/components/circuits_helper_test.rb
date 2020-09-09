@@ -5,36 +5,37 @@ require 'test_helper'
 class Components::CircuitsHelperTest < ActionView::TestCase
   include Components::GatesHelper
   include Components::WiresHelper
+  include ComponentsHelper
 
   test 'circuit breakpoint' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_breakpoint)
-      <div class="circuit-breakpoint">
-        <div class="circuit-breakpoint__line"></div>
+    assert_dom_equal beautify(<<~ERB), beautify(component('circuit/breakpoint'))
+      <div class="circuit__breakpoint">
+        <div class="circuit__breakpoint-line"></div>
       </div>
     ERB
   end
 
   test 'circuit column' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_column { hadamard_gate })
-      <div class="circuit-column"
-           data-action="click->simulator#circuitColumnClicked"
-           data-target="simulator.circuitColumn">
-        <div class="circuit-column__body">
-          #{hadamard_gate}
+    assert_dom_equal beautify(<<~ERB), beautify(component('circuit/step') { component 'hadamard_gate' })
+      <div class="circuit__step"
+           data-action="click->simulator#circuitStepClicked"
+           data-target="circuit.step simulator.circuitStep">
+        <div class="circuit__step-body">
+          #{component 'hadamard_gate'}
         </div>
-        #{circuit_breakpoint}
+        #{component 'circuit/breakpoint'}
       </div>
     ERB
   end
 
   test 'circuit block' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { not_gate })
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { component 'not_gate' })
       <div class="circuit-block">
         <div class="circuit-block__label circuit-block__label--top">
           set value
         </div>
         <div class="circuit-block__body">
-          #{not_gate}
+          #{component 'not_gate'}
         </div>
         <div class="circuit-block__label circuit-block__label--bottom">
           set value
@@ -54,8 +55,8 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   end
 
   test 'qubit label' do
-    assert_dom_equal beautify(<<~ERB), beautify(qubit_label(label: '0x1'))
-      <div class="qubit-label">
+    assert_dom_equal beautify(<<~ERB), beautify(component('qubit_label', label: '0x1'))
+      <div class="qubit-label circuit-element">
         <div class="qubit-label__wire"></div>
         <span class="qubit-label__value">0x1</span>
       </div>

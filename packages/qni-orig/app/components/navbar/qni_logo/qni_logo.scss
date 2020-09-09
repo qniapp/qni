@@ -1,0 +1,21 @@
+.navbar {
+  &__qni-logo {
+    @apply bg-indigo-900;
+    @apply block;
+    @apply flex items-center justify-center;
+    @apply rounded;
+    @apply w-8 h-8;
+  }
+
+  &__qni-logo-body {
+    @apply font-serif font-black;
+
+    @apply leading-none;
+    @apply text-white;
+    @apply text-xl;
+
+    @screen md {
+      @apply text-2xl;
+    }
+  }
+}

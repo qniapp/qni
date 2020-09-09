@@ -1,36 +1,36 @@
-<%= circuit nqubit: 3 do %>
+<%= component 'circuit', nqubit: 3 do %>
   <%= circuit_register_group_span rows: 3 do %>
     <%= register_label_span label: 'Register 1', span: 2, start: 2 %>
     <%= register_label_span label: 'Register 2', span: 1, start: 1 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x2' %>
-    <%= qubit_label label: '0x1' %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x2' %>
+    <%= component 'qubit_label', label: '0x1' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
     <%= wire active: false %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
-    <%= write value: 1 %>
+    <%= component 'rw', type: :write, value: 1 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= hadamard_gate %>
-    <%= hadamard_gate %>
+  <%= component 'circuit/step' do %>
+    <%= component 'hadamard_gate' %>
+    <%= component 'hadamard_gate' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
-    <%= phase_gate theta: 'π/4', bottom: true %>
+  <%= component 'circuit/step' do %>
+    <%= component 'phase_gate', theta: 'π/4', bottom: true %>
     <%= wire top: true, bottom: true %>
-    <%= phase_gate theta: 'π/4', top: true %>
+    <%= component 'phase_gate', theta: 'π/4', top: true %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
-    <%= phase_gate theta: 'π/2', bottom: true %>
-    <%= phase_gate theta: 'π/2', top: true %>
+    <%= component 'phase_gate', theta: 'π/2', bottom: true %>
+    <%= component 'phase_gate', theta: 'π/2', top: true %>
   <% end %>
 <% end %>

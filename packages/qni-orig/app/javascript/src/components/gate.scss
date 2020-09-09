@@ -181,6 +181,12 @@
     @apply w-#{$circuit-element-size-base} h-#{$circuit-element-size-base};
   }
 
+  &--disabled &__circle {
+    @apply bg-white;
+    @apply border-2 border-dashed border-gray-300;
+    @apply text-gray-300;
+  }
+
   &__circle svg {
     @apply w-8 h-8;
 
