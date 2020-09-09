@@ -1,39 +1,39 @@
-<%= circuit nqubit: 4 do %>
+<%= component 'circuit', nqubit: 4 do %>
   <%= circuit_block_divider do %>
     <%= circuit_register_group_span rows: 4 do %>
       <%= register_label_span label: 'a', span: 4, start: 1 %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= qubit_label label: '0x1' %>
-      <%= qubit_label label: '0x2' %>
-      <%= qubit_label label: '0x4' %>
-      <%= qubit_label label: '0x8' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'qubit_label', label: '0x1' %>
+      <%= component 'qubit_label', label: '0x2' %>
+      <%= component 'qubit_label', label: '0x4' %>
+      <%= component 'qubit_label', label: '0x8' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'prepare' do %>
-    <%= circuit_column do %>
-      <%= write value: 1 %>
-      <%= write value: 0 %>
-      <%= write value: 0 %>
-      <%= write value: 0 %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :write, value: 1 %>
+      <%= component 'rw', type: :write, value: 0 %>
+      <%= component 'rw', type: :write, value: 0 %>
+      <%= component 'rw', type: :write, value: 0 %>
     <% end %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire %>
-      <%= hadamard_gate %>
+      <%= component 'hadamard_gate' %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire %>
-      <%= phase_gate theta: 'π/4' %>
+      <%= component 'phase_gate', theta: 'π/4' %>
       <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire %>
       <%= wire %>
@@ -41,33 +41,33 @@
     <% end %>
   <% end %>
   <%= circuit_block label: 'increment' do %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [3], bottom: true %>
+      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
+      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
+      <%= component 'not_gate', top: true %>
     <% end %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [2], bottom: true %>
+      <%= component 'control_dot', targets: [2], top: true, bottom: true %>
+      <%= component 'not_gate', top: true %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [1], bottom: true %>
+      <%= component 'not_gate', controls: [0], top: true %>
       <%= wire %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
-      <%= not_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'not_gate' %>
       <%= wire %>
       <%= wire %>
       <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire %>
       <%= wire %>
@@ -75,33 +75,33 @@
     <% end %>
   <% end %>
   <%= circuit_block label: 'decrement' do %>
-    <%= circuit_column do %>
-      <%= not_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'not_gate' %>
       <%= wire %>
       <%= wire %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [1], bottom: true %>
+      <%= component 'not_gate', controls: [0], top: true %>
       <%= wire %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [2], bottom: true %>
+      <%= component 'control_dot', targets: [2], top: true, bottom: true %>
+      <%= component 'not_gate', top: true %>
       <%= wire %>
     <% end %>
-    <%= circuit_column do %>
-      <%= control_dot bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= control_dot top: true, bottom: true %>
-      <%= not_gate top: true %>
+    <%= component 'circuit/step' do %>
+      <%= component 'control_dot', targets: [3], bottom: true %>
+      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
+      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
+      <%= component 'not_gate', top: true %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire %>
       <%= wire %>

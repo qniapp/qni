@@ -9,49 +9,53 @@
 // files in this directory. Styles in this file should be added after the last require_* statement.
 // It is generally better to create a new file per style scope.
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 
 // Tippy
-@import 'tippy.js/dist/tippy.css';
+@import "tippy.js/dist/tippy.css";
 
 // tailwind UI
-@import 'tailwind_ui/button';
-@import 'tailwind_ui/card';
-@import 'tailwind_ui/pill';
+@import "tailwind_ui/button";
+@import "tailwind_ui/card";
+@import "tailwind_ui/pill";
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Components
-@import 'components/circle_notation';
-@import 'components/circle_notations/qubit_circle';
-@import 'components/circle_notations/qubit_circle_group_row';
-@import 'components/circuit';
-@import 'components/circuit_card';
-@import 'components/circuit_element';
-@import 'components/circuits/circuit_block';
-@import 'components/circuits/circuit_block_divider';
-@import 'components/circuits/circuit_breakpoint';
-@import 'components/circuits/circuit_column';
-@import 'components/circuits/circuit_register_group';
-@import 'components/circuits/circuit_register_group_span';
-@import 'components/circuits/qubit_label';
-@import 'components/circuits/register_label';
-@import 'components/circuits/register_label_span';
-@import 'components/gate';
-@import 'components/gates/control_dot';
-@import 'components/gates/down_wire';
-@import 'components/gates/swap_gate';
-@import 'components/gates/up_wire';
-@import 'components/rw/readout';
-@import 'components/rw/rw';
-@import 'components/rw/write';
-@import 'components/simulator_wrapper';
-@import 'components/thumbnail_container';
-@import 'components/tippy';
-@import 'components/wires/bottom_wire';
-@import 'components/wires/top_wire';
+@import "components/circle_notation";
+@import "components/circuit_card";
+@import "components/circuit_element";
+@import "components/circuits/circuit_block";
+@import "components/circuits/circuit_block_divider";
+@import "components/circuits/circuit_register_group";
+@import "components/circuits/circuit_register_group_span";
+@import "components/circuits/register_label";
+@import "components/circuits/register_label_span";
+@import "components/gate";
+@import "components/gates/swap_gate";
+@import "components/simulator_wrapper";
+@import "components/thumbnail_container";
+@import "components/tippy";
+@import "components/wires/bottom_wire";
+@import "components/wires/top_wire";
+
+@import "circuit/breakpoint/breakpoint";
+@import "circuit/circuit";
+@import "circuit/step/step";
+@import "control_dot/control_dot";
+@import "down_gate/down_gate";
+@import "navbar/qni_logo/qni_logo";
+@import "qubit_circle/qubit_circle";
+@import "qubit_label/qubit_label";
+@import "run_button/run_button";
+@import "rw/readout";
+@import "rw/rw";
+@import "rw/write";
+@import "state_vector/row/row";
+@import "state_vector/state_vector";
+@import "up_gate/up_gate";
 
 // tailwind utilities
-@import 'tailwindcss/utilities';
+@import "tailwindcss/utilities";

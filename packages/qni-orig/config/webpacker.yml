@@ -8,10 +8,11 @@ default: &default
   cache_path: tmp/cache/webpacker
   check_yarn_integrity: false
   webpack_compile_output: true
+  service_workers_entry_path: service_workers
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  resolved_paths: []
+  additional_paths: ['app/components']
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false

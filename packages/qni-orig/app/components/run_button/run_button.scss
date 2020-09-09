@@ -1,0 +1,48 @@
+.run-button {
+  @apply bg-purple-500;
+  @apply bottom-0 right-0;
+  @apply cursor-pointer;
+  @apply fixed;
+  @apply flex justify-center items-center;
+  @apply mr-8 mb-8;
+  @apply rounded-full;
+  @apply shadow;
+  @apply w-16 h-16;
+  @apply z-20;
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:disabled {
+    @apply cursor-wait;
+  }
+
+  .reload {
+    @apply fill-current;
+    @apply text-white;
+    @apply w-8 h-8;
+  }
+
+  .oval {
+    @apply fill-current;
+    @apply text-white;
+    @apply w-8 h-8;
+  }
+
+  &:not(&--running) .oval {
+    @apply hidden;
+  }
+
+  &--running {
+    @apply bg-purple-400;
+  }
+
+  &--running .reload {
+    @apply hidden;
+  }
+
+  &--running .oval {
+    @apply block;
+  }
+}

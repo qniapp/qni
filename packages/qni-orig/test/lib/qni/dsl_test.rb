@@ -64,20 +64,20 @@ class DslTest
       assert_equal [:write, { 0 => 1, 1 => 0, 2 => 0 }], dsl[0]
     end
 
-    test 'read 0 => 1, 1 => 0' do
+    test 'read 0, 1' do
       dsl = Qni::Dsl.load <<~DSL
-        read 0 => 1, 1 => 0
+        read 0, 1
       DSL
 
-      assert_equal [:read, { 0 => 1, 1 => 0 }], dsl[0]
+      assert_equal [:read, [0, 1]], dsl[0]
     end
 
-    test "read 0 => 1, label: 'alice_h'" do
+    test "read 0, 1, set: 'alice_h'" do
       dsl = Qni::Dsl.load <<~DSL
-        read 0 => 1, label: 'alice_h'
+        read 0, 1, set: 'alice_h'
       DSL
 
-      assert_equal [:read, { 0 => 1 }, label: 'alice_h'], dsl[0]
+      assert_equal [:read, [0, 1], { set: 'alice_h' }], dsl[0]
     end
   end
 
@@ -103,15 +103,15 @@ class DslTest
         h 0, 1, disabled: true
       DSL
 
-      assert_equal [:h, [0, 1], disabled: true], dsl[0]
+      assert_equal [:h, [0, 1], { disabled: true }], dsl[0]
     end
 
     test "h 1, label: 'if alice_v'" do
       dsl = Qni::Dsl.load <<~DSL
-        h 1, label: 'if alice_h'
+        h 1, if: 'alice_h'
       DSL
 
-      assert_equal [:h, [1], label: 'if alice_h'], dsl[0]
+      assert_equal [:h, [1], { if: 'alice_h' }], dsl[0]
     end
 
     test 'x' do
@@ -135,15 +135,15 @@ class DslTest
         x 0, 1, disabled: true
       DSL
 
-      assert_equal [:x, [0, 1], disabled: true], dsl[0]
+      assert_equal [:x, [0, 1], { disabled: true }], dsl[0]
     end
 
     test "x 1, label: 'if alice_v'" do
       dsl = Qni::Dsl.load <<~DSL
-        x 1, label: 'if alice_v'
+        x 1, if: 'alice_v'
       DSL
 
-      assert_equal [:x, [1], label: 'if alice_v'], dsl[0]
+      assert_equal [:x, [1], { if: 'alice_v' }], dsl[0]
     end
 
     test 'rnot' do
@@ -167,7 +167,7 @@ class DslTest
         rnot 0, 1, disabled: true
       DSL
 
-      assert_equal [:rnot, [0, 1], disabled: true], dsl[0]
+      assert_equal [:rnot, [0, 1], { disabled: true }], dsl[0]
     end
 
     test "rnot 1, label: 'if alice_rnot'" do
@@ -175,7 +175,7 @@ class DslTest
         rnot 1, label: 'if alice_rnot'
       DSL
 
-      assert_equal [:rnot, [1], label: 'if alice_rnot'], dsl[0]
+      assert_equal [:rnot, [1], { label: 'if alice_rnot' }], dsl[0]
     end
 
     test "phase 'π/2'" do
@@ -183,7 +183,7 @@ class DslTest
         phase 'π/2'
       DSL
 
-      assert_equal [:phase_all, theta: 'π/2'], dsl[0]
+      assert_equal [:phase_all, { theta: 'π/2' }], dsl[0]
     end
 
     test "phase 0 => 'π/2', 1 => '-π/2'" do
@@ -199,7 +199,7 @@ class DslTest
         phase 0 => 'π/2', disabled: true
       DSL
 
-      assert_equal [:phase, { 0 => 'π/2' }, disabled: true], dsl[0]
+      assert_equal [:phase, { 0 => 'π/2' }, { disabled: true }], dsl[0]
     end
 
     test "phase 0 => 'π/2', label: 'if alice_p'" do
@@ -207,7 +207,7 @@ class DslTest
         phase 0 => 'π/2', label: 'if alice_p'
       DSL
 
-      assert_equal [:phase, { 0 => 'π/2' }, label: 'if alice_p'], dsl[0]
+      assert_equal [:phase, { 0 => 'π/2' }, { label: 'if alice_p' }], dsl[0]
     end
   end
 
@@ -225,7 +225,7 @@ class DslTest
         cnot 0 => 1
       DSL
 
-      assert_equal [:cnot, 0 => 1], dsl[0]
+      assert_equal [:cnot, { 0 => 1 }], dsl[0]
     end
 
     test 'cnot [0, 1] => 2' do
@@ -233,7 +233,7 @@ class DslTest
         cnot [0, 1] => 2
       DSL
 
-      assert_equal [:ccnot, [0, 1] => 2], dsl[0]
+      assert_equal [:ccnot, { [0, 1] => 2 }], dsl[0]
     end
 
     test "cphase [0, 1, 2] => 'π/4'" do
@@ -241,7 +241,7 @@ class DslTest
         cphase [0, 1, 2] => 'π/4'
       DSL
 
-      assert_equal [:cphase, [0, 1, 2] => 'π/4'], dsl[0]
+      assert_equal [:cphase, { [0, 1, 2] => 'π/4' }], dsl[0]
     end
 
     test 'cswap 2 => [0, 1]' do
@@ -249,7 +249,7 @@ class DslTest
         cswap 2 => [0, 1]
       DSL
 
-      assert_equal [:cswap, 2 => [0, 1]], dsl[0]
+      assert_equal [:cswap, { 2 => [0, 1] }], dsl[0]
     end
   end
 

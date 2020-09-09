@@ -1,14 +1,14 @@
-<%= circuit nqubit: 1 do %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
+<%= component 'circuit', nqubit: 1 do %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= hadamard_gate %>
+  <%= component 'circuit/step' do %>
+    <%= component 'hadamard_gate' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= readout value: 1 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :readout %>
   <% end %>
 <% end %>

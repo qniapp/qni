@@ -1,110 +1,110 @@
-<%= circuit nqubit: 4 do %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x2' %>
-    <%= qubit_label label: '0x4' %>
-    <%= qubit_label label: '0x8' %>
+<%= component 'circuit', nqubit: 4 do %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x2' %>
+    <%= component 'qubit_label', label: '0x4' %>
+    <%= component 'qubit_label', label: '0x8' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= hadamard_gate %>
-    <%= hadamard_gate %>
-    <%= hadamard_gate %>
-    <%= hadamard_gate %>
+  <%= component 'circuit/step' do %>
+    <%= component 'hadamard_gate' %>
+    <%= component 'hadamard_gate' %>
+    <%= component 'hadamard_gate' %>
+    <%= component 'hadamard_gate' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= phase_gate theta: 'π/9' %>
+  <%= component 'circuit/step' do %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
-    <%= wire %>
-    <%= wire %>
-  <% end %>
-  <%= circuit_column do %>
-    <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
     <%= wire %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
-    <%= wire %>
-  <% end %>
-  <%= circuit_column do %>
-    <%= wire %>
-    <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
+    <%= component 'phase_gate', theta: 'π/9' %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
     <%= wire %>
     <%= wire %>
-    <%= phase_gate theta: 'π/9' %>
+    <%= component 'phase_gate', theta: 'π/9' %>
+  <% end %>
+  <%= component 'circuit/step' do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= component 'phase_gate', theta: 'π/9' %>
+  <% end %>
+  <%= component 'circuit/step' do %>
+    <%= wire %>
+    <%= wire %>
+    <%= wire %>
+    <%= component 'phase_gate', theta: 'π/9' %>
   <% end %>
 <% end %>

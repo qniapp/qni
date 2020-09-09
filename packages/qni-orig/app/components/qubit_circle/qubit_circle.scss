@@ -1,0 +1,335 @@
+.qubit-circle {
+  $size-xl: 16;
+  $size-large: $size-xl / 2;
+  $size-base: $size-large / 2;
+
+  $ml-xl: 4;
+  $ml-large: 2;
+  $ml-base: 1;
+
+  $border-width-base: 2;
+  $border-width-sm: 2;
+  $border-width-xs: 1;
+
+  @apply flex flex-col items-center;
+  @apply flex-none;
+  @apply relative;
+
+  // tooltip
+  --balloon-color: theme("colors.indigo.500");
+  --balloon-font-size: theme("fontSize.xs");
+
+  .circle-notation--1qubit &:nth-of-type(n + 2),
+  .circle-notation--2qubit &:nth-of-type(n + 2) {
+    @apply ml-#{$ml-xl};
+  }
+
+  .circle-notation--3qubit &:nth-of-type(n + 2),
+  .circle-notation--4qubit &:nth-of-type(n + 2) {
+    @apply ml-#{$ml-large};
+  }
+
+  .circle-notation--3qubit &:nth-of-type(n + 2) {
+    @screen md {
+      @apply ml-#{$ml-xl};
+    }
+  }
+
+  .circle-notation--5qubit &:nth-of-type(n + 2),
+  .circle-notation--6qubit &:nth-of-type(n + 2),
+  .circle-notation--8qubit &:nth-of-type(n + 2) {
+    @apply ml-#{$ml-base};
+  }
+
+  .circle-notation--5qubit &:nth-of-type(n + 2) {
+    @screen md {
+      @apply ml-#{$ml-large};
+    }
+  }
+
+  &__border {
+    @apply bg-white;
+    @apply flex items-center justify-center;
+    @apply flex-none;
+    @apply relative;
+    @apply rounded-full;
+  }
+
+  &__border::after {
+    @apply absolute inset-0;
+    @apply block;
+    @apply rounded-full;
+    @apply border-#{$border-width-base} border-gray-400;
+
+    content: '';
+    margin: -#{$border-width-base}px;
+  }
+
+  .circle-notation--1qubit &__border,
+  .circle-notation--2qubit &__border {
+    @apply w-#{$size-xl} h-#{$size-xl};
+  }
+
+  .circle-notation--3qubit &__border,
+  .circle-notation--4qubit &__border {
+    @apply w-#{$size-large} h-#{$size-large};
+  }
+
+  .circle-notation--3qubit &__border {
+    @screen md {
+      @apply w-#{$size-xl} h-#{$size-xl};
+    }
+  }
+
+  .circle-notation--5qubit &__border,
+  .circle-notation--6qubit &__border,
+  .circle-notation--8qubit &__border {
+    @apply w-#{$size-base} h-#{$size-base};
+  }
+
+  .circle-notation--5qubit &__border {
+    @screen md {
+      @apply w-#{$size-large} h-#{$size-large};
+    }
+  }
+
+  &__body {
+    @apply absolute inset-0;
+    @apply flex items-center justify-center;
+  }
+
+  .circle-notation--1qubit &__body,
+  .circle-notation--2qubit &__body {
+    @apply w-#{$size-xl} h-#{$size-xl};
+  }
+
+  .circle-notation--3qubit &__body,
+  .circle-notation--4qubit &__body {
+    @apply w-#{$size-large} h-#{$size-large};
+  }
+
+  .circle-notation--3qubit &__body {
+    @screen md {
+      @apply w-#{$size-xl} h-#{$size-xl};
+    }
+  }
+
+  .circle-notation--5qubit &__body,
+  .circle-notation--6qubit &__body,
+  .circle-notation--8qubit &__body {
+    @apply w-#{$size-base} h-#{$size-base};
+  }
+
+  .circle-notation--5qubit &__body {
+    @screen md {
+      @apply w-#{$size-large} h-#{$size-large};
+    }
+  }
+
+  &__magnitude {
+    @apply absolute;
+    @apply bg-blue-200;
+    @apply flex-none;
+    @apply rounded-full;
+  }
+
+  .circle-notation--5qubit &__magnitude,
+  .circle-notation--6qubit &__magnitude,
+  .circle-notation--8qubit &__magnitude {
+    @apply bg-blue-400;
+  }
+
+  .circle-notation--5qubit &__magnitude {
+    @screen md {
+      @apply bg-blue-200;
+    }
+  }
+
+  &__phase-dot {
+    @apply absolute;
+    @apply bg-gray-500;
+    @apply flex-none;
+    @apply rounded-full;
+  }
+
+  .circle-notation--1qubit &__phase-dot,
+  .circle-notation--2qubit &__phase-dot {
+    @apply ml-#{$size-xl / 2};
+    @apply w-2 h-2;
+    left: -4px;
+    top: -4px;
+  }
+
+  .circle-notation--3qubit &__phase-dot,
+  .circle-notation--4qubit &__phase-dot {
+    @apply ml-#{$size-large / 2};
+    @apply w-2 h-2;
+    left: -4px;
+    top: -5px;
+  }
+
+  .circle-notation--3qubit &__phase-dot {
+    @screen md {
+      @apply ml-#{$size-xl / 2};
+      @apply w-2 h-2;
+      left: -4px;
+      top: -4px;
+    }
+  }
+
+  .circle-notation--5qubit &__phase-dot,
+  .circle-notation--6qubit &__phase-dot,
+  .circle-notation--8qubit &__phase-dot {
+    @apply ml-#{$size-base / 2};
+    height: 6px;
+    left: -3px;
+    top: -3px;
+    width: 6px;
+  }
+
+  .circle-notation--5qubit &__phase-dot {
+    @screen md {
+      @apply ml-#{$size-large / 2};
+      @apply w-2 h-2;
+      left: -4px;
+      top: -5px;
+    }
+  }
+
+  &__phase {
+    @apply absolute top-0;
+    @apply origin-center;
+    @apply transform;
+    @apply w-full h-full;
+  }
+
+  &[data-magnitude="0"] &__phase {
+    @apply hidden;
+  }
+
+  &__phase-line {
+    @apply absolute top-0 left-0;
+    @apply border-l-2 border-blue-300;
+    @apply flex-none;
+    @apply w-#{$size-base / 2} h-#{$size-base / 2};
+
+    margin-left: #{.25 * $size-base * 8 - 1}px;
+  }
+
+  .circle-notation--1qubit &__phase-line,
+  .circle-notation--2qubit &__phase-line {
+    @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
+    margin-left: #{.25 * $size-xl * 8 - 1}px;
+  }
+
+  .circle-notation--3qubit &__phase-line,
+  .circle-notation--4qubit &__phase-line {
+    @apply w-#{$size-large / 2} h-#{$size-large / 2};
+    margin-left: #{.25 * $size-large * 8 - 1}px;
+  }
+
+  .circle-notation--3qubit &__phase-line {
+    @screen md {
+      @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
+      margin-left: #{.25 * $size-xl * 8 - 1}px;
+    }
+  }
+
+  .circle-notation--5qubit &__phase-line,
+  .circle-notation--6qubit &__phase-line,
+  .circle-notation--8qubit &__phase-line {
+    @apply w-#{$size-base / 2} h-#{$size-base / 2};
+
+    margin-left: #{.25 * $size-base * 8 - 1}px;
+  }
+
+  .circle-notation--5qubit &__phase-line {
+    @screen md {
+      @apply w-#{$size-large / 2} h-#{$size-large / 2};
+      margin-left: #{.25 * $size-large * 8 - 1}px;
+    }
+  }
+
+  &__phase-magnitude {
+    @apply absolute top-0 left-0;
+    @apply border-l-2 border-blue-700;
+    @apply flex-none;
+    @apply w-#{$size-base / 2} h-#{$size-base / 2};
+
+    margin-left: #{.25 * $size-base * 8 - 1}px;
+  }
+
+  .circle-notation--1qubit &__phase-magnitude,
+  .circle-notation--2qubit &__phase-magnitude {
+    @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
+    margin-left: #{.25 * $size-xl * 8 - 1}px;
+  }
+
+  .circle-notation--3qubit &__phase-magnitude,
+  .circle-notation--4qubit &__phase-magnitude {
+    @apply w-#{$size-large / 2} h-#{$size-large / 2};
+    margin-left: #{.25 * $size-large * 8 - 1}px;
+  }
+
+  .circle-notation--3qubit &__phase-magnitude {
+    @screen md {
+      @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
+      margin-left: #{.25 * $size-xl * 8 - 1}px;
+    }
+  }
+
+  .circle-notation--5qubit &__phase-magnitude,
+  .circle-notation--6qubit &__phase-magnitude,
+  .circle-notation--8qubit &__phase-magnitude {
+    @apply w-#{$size-base / 2} h-#{$size-base / 2};
+
+    margin-left: #{.25 * $size-base * 8 - 1}px;
+  }
+
+  .circle-notation--5qubit &__phase-magnitude {
+    @screen md {
+      @apply w-#{$size-large / 2} h-#{$size-large / 2};
+      margin-left: #{.25 * $size-large * 8 - 1}px;
+    }
+  }
+
+  // Ket notations such as |112⟩ below circles
+  &__ket {
+    @apply leading-none;
+    @apply text-gray-400;
+    @apply whitespace-no-wrap;
+  }
+
+  .circle-notation--1qubit &__ket,
+  .circle-notation--2qubit &__ket {
+    @apply mt-1;
+    @apply text-base;
+  }
+
+  .circle-notation--3qubit &__ket,
+  .circle-notation--4qubit &__ket {
+    @apply mt-1;
+    @apply text-sm;
+  }
+
+  .circle-notation--3qubit &__ket {
+    @screen md {
+      @apply mt-1;
+      @apply text-base;
+    }
+  }
+
+  .circle-notation--5qubit &__ket,
+  .circle-notation--6qubit &__ket,
+  .circle-notation--8qubit &__ket {
+    @apply hidden;
+  }
+
+  .circle-notation--5qubit &__ket {
+    @screen md {
+      @apply inline;
+      @apply mt-1;
+      @apply text-sm;
+    }
+  }
+}

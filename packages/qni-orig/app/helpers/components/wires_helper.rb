@@ -22,17 +22,4 @@ module Components::WiresHelper
   def bottom_wire
     render 'components/wires/bottom_wire'
   end
-
-  # Returns a partial of wire connected to the upper qubit.
-  def down_wire
-    render 'components/wires/down_wire'
-  end
-
-  # Returns a partial of wire connected to the lower qubit.
-  #
-  #   # Add a controlled wire (default - false)
-  #   up_wire(bottom: true)
-  def up_wire(*options)
-    render 'components/wires/up_wire', *options
-  end
 end

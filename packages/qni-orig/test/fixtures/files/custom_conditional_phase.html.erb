@@ -1,38 +1,38 @@
-<%= circuit nqubit: 2 do %>
-  <%= circuit_column do %>
-    <%= qubit_label label: '0x1' %>
-    <%= qubit_label label: '0x2' %>
+<%= component 'circuit', nqubit: 2 do %>
+  <%= component 'circuit/step' do %>
+    <%= component 'qubit_label', label: '0x1' %>
+    <%= component 'qubit_label', label: '0x2' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= write value: 0 %>
-    <%= write value: 0 %>
+  <%= component 'circuit/step' do %>
+    <%= component 'rw', type: :write, value: 0 %>
+    <%= component 'rw', type: :write, value: 0 %>
   <% end %>
-  <%= circuit_column do %>
-    <%= hadamard_gate %>
-    <%= hadamard_gate %>
+  <%= component 'circuit/step' do %>
+    <%= component 'hadamard_gate' %>
+    <%= component 'hadamard_gate' %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
-    <%= phase_gate theta: 'π/4' %>
+    <%= component 'phase_gate', theta: 'π/4' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= control_dot bottom: true %>
-    <%= not_gate top: true %>
+  <%= component 'circuit/step' do %>
+    <%= component 'control_dot', targets: [1], bottom: true %>
+    <%= component 'not_gate', controls: [0], top: true %>
   <% end %>
-  <%= circuit_column do %>
+  <%= component 'circuit/step' do %>
     <%= wire %>
-    <%= phase_gate theta: '-π/4' %>
+    <%= component 'phase_gate', theta: '-π/4' %>
   <% end %>
-  <%= circuit_column do %>
-    <%= control_dot bottom: true %>
-    <%= not_gate top: true %>
+  <%= component 'circuit/step' do %>
+    <%= component 'control_dot', targets: [1], bottom: true %>
+    <%= component 'not_gate', controls: [0], top: true %>
   <% end %>
-  <%= circuit_column do %>
-    <%= phase_gate theta: 'π/4' %>
+  <%= component 'circuit/step' do %>
+    <%= component 'phase_gate', theta: 'π/4' %>
     <%= wire %>
   <% end %>
-  <%= circuit_column do %>
-    <%= phase_gate theta: 'π/2', bottom: true %>
-    <%= phase_gate theta: 'π/2', top: true %>
+  <%= component 'circuit/step' do %>
+    <%= component 'phase_gate', theta: 'π/2', bottom: true %>
+    <%= component 'phase_gate', theta: 'π/2', top: true %>
   <% end %>
 <% end %>

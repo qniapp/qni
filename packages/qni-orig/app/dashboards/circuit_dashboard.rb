@@ -11,8 +11,6 @@ class CircuitDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     dsl: Field::Text,
-    erb: Field::Text,
-    circle_notation: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime
   }.freeze
@@ -25,8 +23,6 @@ class CircuitDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     name
     dsl
-    erb
-    circle_notation
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,8 +31,6 @@ class CircuitDashboard < Administrate::BaseDashboard
     id
     name
     dsl
-    erb
-    circle_notation
     created_at
     updated_at
   ].freeze
@@ -47,8 +41,6 @@ class CircuitDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     dsl
-    erb
-    circle_notation
   ].freeze
 
   # COLLECTION_FILTERS

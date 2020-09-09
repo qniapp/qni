@@ -1,4 +1,4 @@
-<%= circuit nqubit: 3 do %>
+<%= component 'circuit', nqubit: 3 do %>
   <%= circuit_block_divider do %>
     <%= circuit_register_group do %>
       <%= register_label label: '👩Alice' %>
@@ -7,157 +7,157 @@
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= qubit_label label: '0x1' %>
-      <%= qubit_label label: '0x1' %>
-      <%= qubit_label label: '0x1' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'qubit_label', label: '0x1' %>
+      <%= component 'qubit_label', label: '0x1' %>
+      <%= component 'qubit_label', label: '0x1' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'get two random bits' do %>
-    <%= circuit_column do %>
-      <%= write value: 0 %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :write, value: 0 %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
-      <%= readout value: 0, label: 'alice_h' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :readout, set: 'alice_h' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
-      <%= write value: 0 %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :write, value: 0 %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
-      <%= readout value: 1, label: 'alice_v' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :readout, set: 'alice_v' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= write value: 0 %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :write, value: 0 %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'set value' do %>
-    <%= circuit_column do %>
-      <%= not_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'not_gate', if: 'alice_v' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'apply H' do %>
-    <%= circuit_column do %>
-      <%= hadamard_gate disabled: true, label: 'if alice_h' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate', disabled: true, if: 'alice_h' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= down_wire %>
+    <%= component 'circuit/step' do %>
+      <%= component 'down_gate' %>
       <%= wire active: false %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block label: '🕶spy' do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
-      <%= hadamard_gate %>
-      <%= wire active: false %>
-    <% end %>
-    <%= circuit_column do %>
-      <%= wire active: false %>
-      <%= readout value: 1, label: 'eve_v' %>
+      <%= component 'hadamard_gate' %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
-      <%= write value: 0 %>
-      <%= wire active: false %>
-    <% end %>
-    <%= circuit_column do %>
-      <%= wire active: false %>
-      <%= not_gate %>
+      <%= component 'rw', type: :readout, set: 'eve_v' %>
       <%= wire active: false %>
     <% end %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
-      <%= hadamard_gate %>
+      <%= component 'rw', type: :write, value: 0 %>
+      <%= wire active: false %>
+    <% end %>
+    <%= component 'circuit/step' do %>
+      <%= wire active: false %>
+      <%= component 'not_gate', if: 'eve_v' %>
+      <%= wire active: false %>
+    <% end %>
+    <%= component 'circuit/step' do %>
+      <%= wire active: false %>
+      <%= component 'hadamard_gate' %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire %>
-      <%= write value: 0 %>
+      <%= component 'rw', type: :write, value: 0 %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire %>
-      <%= hadamard_gate %>
+      <%= component 'hadamard_gate' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire %>
-      <%= readout value: 0, label: 'bob_h' %>
+      <%= component 'rw', type: :readout, set: 'bob_h' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
-      <%= down_wire %>
+      <%= component 'down_gate' %>
       <%= wire active: false %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'apply H' do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire active: false %>
-      <%= hadamard_gate disabled: true, label: 'if bob_h' %>
+      <%= component 'hadamard_gate', disabled: true, if: 'bob_h' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire active: false %>
       <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'readout' do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire active: false %>
-      <%= readout value: 0 %>
+      <%= component 'rw', type: :readout %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire active: false %>
       <%= wire active: false %>
       <%= wire active: false %>

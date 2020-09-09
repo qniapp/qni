@@ -1,0 +1,7 @@
+<% hadamard_gate = local_assigns.fetch(:hadamard_gate) %>
+
+<%= tag.div class: class_string('circuit-element', 'gate', 'hadamard-gate', 'gate--disabled' => hadamard_gate.disabled?, 'circuit-element--inactive-wire' => !hadamard_gate.wire_active?), data: { if: hadamard_gate.if } do %>
+  <%= circuit_element_wire %>
+  <%= gate_box label: 'H' %>
+  <%= circuit_element_label label: hadamard_gate.if ? "if #{hadamard_gate.if}" : nil %>
+<% end %>

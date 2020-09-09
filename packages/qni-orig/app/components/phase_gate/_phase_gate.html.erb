@@ -1,0 +1,10 @@
+<% phase_gate = local_assigns.fetch(:phase_gate) %>
+
+<%= tag.div class: class_string('circuit-element', 'gate', 'phase-gate', 'gate--disabled' => phase_gate.disabled?, 'circuit-element--inactive-wire' => !phase_gate.wire_active?), data: { value: phase_gate.theta.gsub('π', 'pi') } do %>
+  <%= circuit_element_wire %>
+  <%= top_wire if phase_gate.top %>
+  <%= bottom_wire if phase_gate.bottom %>
+  <%= circuit_element_label(label: phase_gate.theta) unless phase_gate.top %>
+  <%= circuit_element_label(label: phase_gate.theta, bottom: true) if phase_gate.top && !phase_gate.bottom %>
+  <%= gate_circle label: 'φ' %>
+<% end %>

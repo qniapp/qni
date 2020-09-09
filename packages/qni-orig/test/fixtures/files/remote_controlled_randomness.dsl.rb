@@ -7,5 +7,5 @@ h 1
 phase 1 => 'π/4'
 h 1
 cnot 0 => 1
-read 0 => 1
-read 1 => 1
+read 0
+read 1

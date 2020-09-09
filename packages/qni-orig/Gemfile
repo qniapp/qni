@@ -15,10 +15,10 @@ gem 'puma', '~> 4.1'
 
 # JavaScript and assets
 gem 'css-class-string'
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
-gem 'webpacker', '~> 5.1'
+gem 'webpacker'
 
 # Logging
 gem 'scout_apm'
@@ -36,6 +36,7 @@ gem 'stackprof'
 gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'htmlbeautifier'
+gem 'webpacker-pwa'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -45,7 +46,7 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
   gem 'erb_lint', require: false
-  gem 'rubocop', '~> 0.79.0', require: false
+  gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'scss_lint', require: false
