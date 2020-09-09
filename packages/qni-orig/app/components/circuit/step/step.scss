@@ -1,0 +1,39 @@
+.circuit {
+  &__step {
+    @apply cursor-wait;
+    @apply flex-col justify-center;
+    @apply flex;
+
+    @screen md {
+      @apply flex-row;
+    }
+  }
+
+  .circuit-preview &__step {
+    @apply flex-row;
+  }
+
+  &__step-body {
+    @apply flex flex-row-reverse flex-no-wrap;
+
+    @screen md {
+      @apply flex-col;
+    }
+  }
+
+  .circuit-preview &__step &__step-body {
+    @apply flex-col;
+  }
+
+  @keyframes fade {
+    from { @apply bg-purple-300; }
+    to { background: bg-transparent; }
+  }
+
+  &__step--done {
+    @apply cursor-pointer;
+
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+}

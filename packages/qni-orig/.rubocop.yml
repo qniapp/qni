@@ -18,9 +18,21 @@ require:
 AllCops:
   TargetRubyVersion: 2.7
   TargetRailsVersion: 6.0
+  NewCops: enable
 
+# Layout
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - 'config/environments/production.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'test/**/*_test.rb'
+
+# Style
 Style/Documentation:
   Exclude:
+    - 'app/components/**/*.rb'
     - 'app/controllers/**/*_controller.rb'
     - 'app/helpers/**/*_helper.rb'
     - 'app/mailers/*_mailer.rb'
@@ -32,13 +44,10 @@ Style/Documentation:
     - 'test/*_helper.rb'
     - 'test/application_system_test_case.rb'
 
-Layout/SpaceInsideArrayLiteralBrackets:
+Style/RedundantFetchBlock:
+  Enabled: true
   Exclude:
-    - 'config/environments/production.rb'
-
-Rails/FilePath:
-  Exclude:
-    - 'config/environments/development.rb'
+    - 'config/puma.rb'
 
 Style/StringLiterals:
   Exclude:
@@ -48,11 +57,16 @@ Style/StringLiterals:
 
 Style/ClassAndModuleChildren:
   Exclude:
+    - 'app/components/**/*_component.rb'
     - 'app/helpers/**/*_helper.rb'
     - 'test/**/*_test.rb'
     - 'test/channels/application_cable/connection_test.rb'
     - 'test/test_helper.rb'
 
+Style/AsciiComments:
+  Enabled: false
+
+# Metrics
 Metrics/BlockLength:
   Exclude:
     - 'test/fixtures/files/*.dsl.rb'
@@ -61,5 +75,12 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*.rb'
 
-Style/AsciiComments:
-  Enabled: false
+# Rails
+Rails/FilePath:
+  Exclude:
+    - 'config/environments/development.rb'
+
+Rails/RenderInline:
+  Enabled: true
+  Exclude:
+    - 'app/views/components/circuit_cards/_circuit_view.html.erb'

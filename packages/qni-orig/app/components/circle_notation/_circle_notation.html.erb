@@ -1,0 +1,5 @@
+<% circle_notation = local_assigns.fetch(:circle_notation) %>
+
+<%= tag.div id: 'circle-notation', class: class_string('circle-notation', "circle-notation--#{circle_notation.nqubit}qubit"), data: { controller: 'circle-notation', target: 'simulator.circleNotation' } do %>
+  <%= circle_notation.content %>
+<% end %>

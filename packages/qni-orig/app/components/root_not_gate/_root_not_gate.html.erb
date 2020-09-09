@@ -1,0 +1,9 @@
+<% root_not_gate = local_assigns.fetch(:root_not_gate) %>
+
+<%= tag.div class: class_string('circuit-element', 'gate', 'root-not-gate', 'gate--disabled' => root_not_gate.disabled?, 'circuit-element--inactive-wire' => !root_not_gate.wire_active?) do %>
+  <%= circuit_element_wire %>
+  <%= top_wire if root_not_gate.top? %>
+  <%= bottom_wire if root_not_gate.bottom? %>
+  <%= gate_box label: '√N' %>
+  <%= circuit_element_label label: root_not_gate.label %>
+<% end %>

@@ -1,14 +1,21 @@
 import { Controller } from "stimulus"
 
 window.onmessage = (m) => {
+  if (m.data.type == "webpackOk") {
+    return
+  }
+
   const json = JSON.parse(m.data)
   const event = new CustomEvent("iframeSize")
   event.json = json
-  document.getElementById(json.id).dispatchEvent(event)
+
+  if (json.id.type != "webpackOk") {
+    document.getElementById(json.id).dispatchEvent(event)
+  }
 }
 
 export default class extends Controller {
-  static targets = ["loader", "thumbnailContainer", "thumbnail", "iframe"];
+  static targets = ["loader", "thumbnailContainer", "thumbnail", "iframe"]
 
   iframeLazyLoad() {
     this.iframeTarget.contentWindow.postMessage(this.element.id, "*")

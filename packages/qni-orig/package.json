@@ -11,6 +11,10 @@
       "prettier --write",
       "eslint --fix"
     ],
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ],
     "{app,lib,test}/**/*.rb": [
       "bundle exec rubocop --safe-auto-correct"
     ],
@@ -27,33 +31,55 @@
       "prettier --write --prose-wrap always"
     ]
   },
+  "scripts": {
+    "test": "karma start",
+    "test:watch": "yarn test --auto-watch --no-single-run",
+    "build:doc": "typedoc --out doc/api --name Qni --mode file --excludePrivate --excludeProtected --excludeNotExported --hideGenerator --tsconfig tsconfig.json app/javascript/"
+  },
   "prettier": {
+    "semi": false,
     "trailingComma": "all",
     "printWidth": 80
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.10.4",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "~5.1",
-    "@tailwindcss/ui": "~0.3",
+    "@rails/webpacker": "~5.2",
+    "@tailwindcss/ui": "~0.5",
     "magic-grid": "^3.2.4",
+    "mathjs": "^7.1.0",
     "stimulus": "^1.1.1",
-    "tailwindcss": "~1.4",
+    "tailwindcss": "~1.7",
     "tippy.js": "^6.2.4",
     "turbolinks": "^5.2.0",
-    "vanilla-lazyload": "^17.1.0"
+    "typescript": "^4.0.2",
+    "vanilla-lazyload": "^17.1.0",
+    "webpacker-pwa": "^0.1.2"
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@types/mathjs": "^6.0.5",
+    "@types/qunit": "^2.9.1",
+    "@typescript-eslint/eslint-plugin": "~4.0",
+    "@typescript-eslint/parser": "~4.0",
     "babel-eslint": "^10.1.0",
-    "cz-conventional-changelog": "~3.2",
-    "eslint": "~7.4",
+    "cz-conventional-changelog": "~3.3",
+    "eslint": "~7.8",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.3",
+    "karma": "~5.2",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
+    "karma-qunit": "^4.1.1",
+    "karma-spec-reporter": "^0.0.32",
+    "karma-webpack": "^4.0.2",
+    "lint-staged": "~10.3",
     "prettier": "^2.0.4",
+    "qunit": "^2.11.1",
+    "typedoc": "^0.19.0",
     "webpack-dev-server": "^3.10.3"
   },
   "config": {

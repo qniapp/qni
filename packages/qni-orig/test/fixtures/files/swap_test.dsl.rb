@@ -12,5 +12,5 @@ block 'swap test' do
   cswap 2 => [0, 1]
   h 2
   x 2
-  read 2 => 1
+  read 2
 end

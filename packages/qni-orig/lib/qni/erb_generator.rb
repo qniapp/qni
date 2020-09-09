@@ -2,6 +2,7 @@ require 'qni/circuit_erb'
 require 'qni/dsl'
 
 module Qni
+  # rubocop:disable Metrics/ClassLength
   class ErbGenerator
     include CircuitErb
 
@@ -12,19 +13,8 @@ module Qni
     end
 
     def generate_erb
-      # size = if @dsl.nqubit > 6
-      #          :extrasmall
-      #        elsif @dsl.nqubit > 4
-      #          :small
-      #        elsif @dsl.nqubit > 3
-      #          :base
-      #        elsif @dsl.nqubit > 2
-      #          :large
-      #        else
-      #          :extralarge
-      #        end
       HtmlBeautifier.beautify(<<~ERB)
-        <%= circuit nqubit: #{@dsl.nqubit} do %>
+        <%= component 'circuit', nqubit: #{@dsl.nqubit} do %>
           #{body}
         <% end %>
       ERB
@@ -38,9 +28,11 @@ module Qni
 
     def register(registers)
       circuit_block_divider do
-        erb = "<%= circuit_register_group do %>\n"
-        erb += registers.map { |each| %(<%= register_label label: '#{each}' %>\n) }.join
-        erb + "<% end %>\n"
+        <<~ERB
+          <%= circuit_register_group do %>
+            #{registers.map { |each| %(<%= register_label label: '#{each}' %>\n) }.join}
+          <% end %>
+        ERB
       end
     end
 
@@ -54,14 +46,14 @@ module Qni
           start += span
           str
         end.reverse.join
-        erb + "<% end %>\n"
+        "#{erb}<% end %>\n"
       end
     end
 
     def label(labels)
       circuit_block_divider do
-        circuit_column do
-          labels.map { |each| "<%= qubit_label label: '#{each}' %>\n" }.join
+        circuit_step do
+          labels.map { |each| "<%= component 'qubit_label', label: '#{each}' %>\n" }.join
         end
       end
     end
@@ -77,7 +69,7 @@ module Qni
       return erb if @dsl[index + 1] && @dsl[index + 1].first != :block_start
 
       erb + block_divider do
-        circuit_column do
+        circuit_step do
           (0...@dsl.nqubit).map do |each|
             wire(active: @wire_active[each])
           end.join
@@ -95,11 +87,11 @@ module Qni
 
     def write(targets, _label: nil)
       block_divider do
-        circuit_column do
+        circuit_step do
           (0...@dsl.nqubit).map do |each|
             if targets.key?(each)
               @wire_active[each] = true
-              "<%= write value: #{targets[each]} %>\n"
+              "<%= component 'rw', type: :write, value: #{targets[each]} %>\n"
             else
               wire active: @wire_active[each]
             end
@@ -114,10 +106,10 @@ module Qni
 
     def h(targets, opts = {})
       block_divider do
-        circuit_column do
+        circuit_step do
           (0...@dsl.nqubit).map do |each|
             if targets.include?(each)
-              hadamard_gate disabled: opts.fetch(:disabled, false), label: opts.fetch(:label, nil)
+              hadamard_gate disabled: opts.fetch(:disabled, false), if: opts.fetch(:if, nil)
             else
               wire active: @wire_active[each]
             end
@@ -131,10 +123,10 @@ module Qni
     end
 
     def x(targets, opts = {})
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           if targets.include?(each)
-            not_gate label: opts.fetch(:label, nil)
+            not_gate if: opts.fetch(:if, nil)
           else
             wire active: @wire_active[each]
           end
@@ -143,7 +135,7 @@ module Qni
     end
 
     def phase(targets, _opts = {})
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           if targets.key?(each)
             phase_gate theta: targets[each]
@@ -159,7 +151,7 @@ module Qni
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
     def swap(targets)
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           top = false
           bottom = false
@@ -170,9 +162,9 @@ module Qni
           end
 
           if each == targets[0] && targets[1] - targets[0] == 1
-            "<%= down_wire %>\n"
+            "<%= component 'down_gate' %>\n"
           elsif each == targets[1] && targets[1] - targets[0] == 1
-            "<%= up_wire %>\n"
+            "<%= component 'up_gate' %>\n"
           elsif each == targets[0] && targets[1] - targets[0] > 1
             "<%= swap_gate bottom: true %>\n"
           elsif each == targets[1] && targets[1] - targets[0] > 1
@@ -194,7 +186,7 @@ module Qni
       controls = targets.keys.first
       theta = targets.values.first
 
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           top = false
           bottom = false
@@ -208,7 +200,7 @@ module Qni
 
           if controls.include?(each)
             if theta == 'π'
-              control_dot top: top, bottom: bottom, wire_active: @wire_active[each]
+              control_dot targets: controls, top: top, bottom: bottom, wire_active: @wire_active[each]
             else
               phase_gate theta: theta, top: top, bottom: bottom, wire_active: @wire_active[each]
             end
@@ -227,12 +219,12 @@ module Qni
       control = candt.keys.first
       targets = [candt[control]].flatten.sort
 
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           if each == control
-            control_dot top: targets.last < control, bottom: control < targets.first, wire_active: @wire_active[each]
+            control_dot targets: targets, top: targets.last < control, bottom: control < targets.first, wire_active: @wire_active[each]
           elsif targets.include?(each)
-            not_gate top: control < each || targets.first < each, bottom: each < control || each < targets.last
+            not_gate controls: [control], top: control < each || targets.first < each, bottom: each < control || each < targets.last
           else
             g = ([control] + targets).sort
             top_bottom = (g.first..g.last).cover?(each)
@@ -250,7 +242,7 @@ module Qni
       controls = targets.keys.first
       target = targets[controls]
 
-      circuit_column do
+      circuit_step do
         controls_targets = (controls + [target]).sort
 
         (0...@dsl.nqubit).map do |each|
@@ -265,7 +257,7 @@ module Qni
           end
 
           if controls.include?(each)
-            control_dot top: top, bottom: bottom, wire_active: @wire_active[each]
+            control_dot targets: [target], top: top, bottom: bottom, wire_active: @wire_active[each]
           elsif each == target
             not_gate top: top, bottom: bottom
           else
@@ -283,7 +275,7 @@ module Qni
       control = values.keys.first
       targets = values[control]
 
-      circuit_column do
+      circuit_step do
         control_targets = ([control] + targets).sort
 
         (0...@dsl.nqubit).map do |each|
@@ -298,11 +290,11 @@ module Qni
           end
 
           if control == each
-            control_dot top: top, bottom: bottom, wire_active: @wire_active[each]
+            control_dot targets: targets, top: top, bottom: bottom, wire_active: @wire_active[each]
           elsif each == targets[0]
-            "<%= down_wire %>\n"
+            "<%= component 'down_gate' %>\n"
           elsif each == targets[1]
-            "<%= up_wire bottom: true %>\n"
+            "<%= component 'up_gate', bottom: true %>\n"
           else
             wire top: top, bottom: bottom, active: @wire_active[each]
           end
@@ -313,10 +305,10 @@ module Qni
     # rubocop:enable Metrics/AbcSize
 
     def rnot(targets)
-      circuit_column do
+      circuit_step do
         (0...@dsl.nqubit).map do |each|
           if targets.include?(each)
-            "<%= root_not_gate %>\n"
+            "<%= component 'root_not_gate' %>\n"
           else
             wire
           end
@@ -326,11 +318,11 @@ module Qni
 
     def read(targets, opts = {})
       block_divider do
-        circuit_column do
+        circuit_step do
           (0...@dsl.nqubit).map do |each|
-            if targets.key?(each)
+            if targets.include?(each)
               @wire_active[each] = false
-              readout value: targets[each], label: opts.fetch(:label, nil)
+              readout set: opts.fetch(:set, nil)
             else
               wire active: @wire_active[each]
             end
@@ -341,18 +333,19 @@ module Qni
 
     def down(targets)
       block_divider do
-        circuit_column do
+        circuit_step do
           (0...@dsl.nqubit).map do |each|
             if targets.include?(each)
               @wire_active[each] = false
               @wire_active[each + 1] = true if each < @dsl.nqubit
-              "<%= down_wire %>\n"
+              "<%= component 'down_gate' %>\n"
             else
-              wire active: @wire_active[each] && !each.zero? && !targets.include?(each - 1)
+              wire active: @wire_active[each] && !each.zero? && targets.exclude?(each - 1)
             end
           end.join
         end
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

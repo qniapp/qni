@@ -1,8 +1,0 @@
-<% nqubit = local_assigns.fetch(:nqubit) %>
-<% body = yield.presence || raise('body is a mandatory') %>
-
-<div class="circuit circuit--<%= nqubit %>qubit" data-target="circuit-card.circuit">
-  <div class="circuit__body">
-    <%= body %>
-  </div>
-</div>

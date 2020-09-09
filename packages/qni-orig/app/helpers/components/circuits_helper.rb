@@ -1,8 +1,4 @@
 module Components::CircuitsHelper
-  def circuit(*options, &block)
-    render 'components/circuit', *options, &block
-  end
-
   def circuit_thumbnail(*options)
     render 'components/circuits/circuit_thumbnail', *options
   end
@@ -14,10 +10,6 @@ module Components::CircuitsHelper
 
   def circuit_block_divider(*options, &block)
     render 'components/circuits/circuit_block_divider', *options, &block
-  end
-
-  def circuit_column(*options, &block)
-    render 'components/circuits/circuit_column', *options, &block
   end
 
   def circuit_register_group(&block)
@@ -33,10 +25,6 @@ module Components::CircuitsHelper
   end
 
   # Labels
-  def qubit_label(*options)
-    render 'components/circuits/qubit_label', *options
-  end
-
   def register_label(*options)
     render 'components/circuits/register_label', *options
   end

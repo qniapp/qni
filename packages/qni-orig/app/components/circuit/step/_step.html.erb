@@ -1,0 +1,11 @@
+<% step = local_assigns.fetch(:step) %>
+
+<div class="circuit__step"
+     data-action="click->simulator#circuitStepClicked"
+     data-target="circuit.step simulator.circuitStep">
+  <div class="circuit__step-body">
+    <%= step.content %>
+  </div>
+
+  <%= component 'circuit/breakpoint' %>
+</div>

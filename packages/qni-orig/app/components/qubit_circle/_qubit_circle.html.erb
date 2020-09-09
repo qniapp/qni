@@ -1,0 +1,22 @@
+<% qubit_circle = local_assigns.fetch(:qubit_circle) %>
+
+<div class="qubit-circle"
+     data-target="circle-notation.qubitCircle"
+     data-target="simulator.qubitCircle"
+     data-ket="<%= qubit_circle.ket %>">
+  <div class="qubit-circle__tooltip hidden">
+    <div class="text-center font-bold">|<%= qubit_circle.ket %>&gt;</div>
+  </div>
+  <div class="qubit-circle__border"></div>
+  <div class="qubit-circle__body">
+    <div class="qubit-circle__magnitude"></div>
+    <div class="qubit-circle__phase">
+      <div class="relative w-full h-full">
+        <div class="qubit-circle__phase-line"></div>
+        <dev class="qubit-circle__phase-magnitude"></dev>
+        <div class="qubit-circle__phase-dot"></div>
+      </div>
+    </div>
+  </div>
+  <span class="qubit-circle__ket">|<%= qubit_circle.ket %>&#10217;</span>
+</div>

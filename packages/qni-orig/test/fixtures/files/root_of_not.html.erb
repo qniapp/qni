@@ -1,56 +1,56 @@
-<%= circuit nqubit: 1 do %>
+<%= component 'circuit', nqubit: 1 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= qubit_label label: '0x1' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'qubit_label', label: '0x1' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
-      <%= write value: 0 %>
+    <%= component 'circuit/step' do %>
+      <%= component 'rw', type: :write, value: 0 %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'RNOT' do %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
     <% end %>
-    <%= circuit_column do %>
-      <%= phase_gate theta: '-π/2' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'phase_gate', theta: '-π/2' %>
     <% end %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'RNOT' do %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
     <% end %>
-    <%= circuit_column do %>
-      <%= phase_gate theta: '-π/2' %>
+    <%= component 'circuit/step' do %>
+      <%= component 'phase_gate', theta: '-π/2' %>
     <% end %>
-    <%= circuit_column do %>
-      <%= hadamard_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'hadamard_gate' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'Built-in RNOT' do %>
-    <%= circuit_column do %>
-      <%= root_not_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'root_not_gate' %>
     <% end %>
-    <%= circuit_column do %>
-      <%= root_not_gate %>
+    <%= component 'circuit/step' do %>
+      <%= component 'root_not_gate' %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= circuit_column do %>
+    <%= component 'circuit/step' do %>
       <%= wire %>
     <% end %>
   <% end %>

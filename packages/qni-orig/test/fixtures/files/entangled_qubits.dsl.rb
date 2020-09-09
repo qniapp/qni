@@ -7,5 +7,5 @@ block 'entangle' do
   cnot 0 => 1
 end
 
-read 0 => 1
-read 1 => 1
+read 0
+read 1

@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
   root 'circuits#index'
 
-  resources :circuits
+  resources :circuits, only: %i[index show]
   resources :circuit_previews, only: :show
 
   namespace :admin do

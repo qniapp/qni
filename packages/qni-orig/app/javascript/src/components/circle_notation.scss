@@ -41,13 +41,4 @@
     @apply mt-5;
     top: unset;
   }
-
-  &__state-vector {
-    @apply flex flex-col;
-  }
-
-  &--8qubit &__state-vector {
-    @apply absolute top-0;
-    @apply my-4;
-  }
 }

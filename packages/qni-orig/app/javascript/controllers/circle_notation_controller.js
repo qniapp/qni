@@ -2,18 +2,26 @@ import { Controller } from "stimulus"
 import tippy from "tippy.js"
 
 export default class extends Controller {
-  static targets = ["qubitCircle"];
+  static targets = ["qubitCircle"]
 
   connect() {
-    Array.prototype.forEach.call(this.qubitCircleTargets, (el) => {
-      this.addTooltip(el)
+    this.tippies = {}
+  }
+
+  updateTooltips() {
+    Array.prototype.forEach.call(this.qubitCircleTargets, (el, i) => {
+      this.addTooltip(el, i)
     })
   }
 
   // Private
 
-  addTooltip(el) {
-    tippy(el, {
+  addTooltip(el, i) {
+    if (!this.tippies[i]) {
+      this.tippies[i] = tippy(el)
+    }
+
+    this.tippies[i].setProps({
       allowHTML: true,
       content: this.tooltipContent(el),
       theme: "qni",
@@ -21,6 +29,14 @@ export default class extends Controller {
   }
 
   tooltipContent(el) {
-    return el.getElementsByClassName("qubit-circle__tooltip")[0].innerHTML
+    const magnitude = parseFloat(el.getAttribute("data-magnitude"))
+    const phase = el.getAttribute("data-phase")
+    var html =
+      el.getElementsByClassName("qubit-circle__tooltip")[0].innerHTML +
+      `<div>M=${magnitude}`
+    if (magnitude > 0) {
+      html += `<div>φ=${phase}</div>`
+    }
+    return html
   }
 }
