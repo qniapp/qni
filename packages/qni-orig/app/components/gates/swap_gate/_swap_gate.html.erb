@@ -1,0 +1,7 @@
+<% swap_gate = local_assigns.fetch(:swap_gate) %>
+
+<%= tag.div class: swap_gate.klass, data: swap_gate.data do %>
+  <%= connection_top %>
+  <%= connection_bottom %>
+  <%= gate_swap %>
+<% end %>

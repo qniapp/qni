@@ -15,7 +15,7 @@ module.exports = function (config) {
 
     frameworks: ["qunit"],
 
-    files: ["app/javascript/lib/**/*.ts", "app/javascript/test/**/*.ts"],
+    files: ["app/javascript/test/**/*.ts"],
 
     exclude: [],
 

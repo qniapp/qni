@@ -1,0 +1,53 @@
+.circuit-breakpoint {
+  $parent: &;
+
+  @apply relative;
+  @apply w-0;
+  @apply cursor-pointer;
+
+  @apply min-w-full;
+  margin-top: -#{$breakpoint-width-px / 2}px;
+
+  @screen md {
+    // TODO: -my をゲートの幅の半分にする。回路の量子ビット数によって変える。
+    @apply -my-4;
+    @apply min-h-full;
+    @apply min-w-0;
+  }
+
+  .circuit-preview & {
+    @apply hidden;
+  }
+
+  &__body {
+    @apply absolute inset-0;
+    @apply opacity-75;
+    @apply z-10;
+    padding: #{$breakpoint-width-px / 2}px;
+
+    margin-top: -#{$breakpoint-width-px / 2}px;
+
+    @screen md {
+      @apply mt-0;
+      margin-left: -#{$breakpoint-width-px / 2}px;
+    }
+
+    .circuit-step--done:hover & {
+      @apply bg-#{$breakpoint-color-hover};
+      @apply transition duration-#{$breakpoint-transition-duration} ease-in-out;
+    }
+
+    .circuit-step--done:active & {
+      @apply bg-#{$breakpoint-color};
+    }
+
+    #{$parent}--active & {
+      @apply bg-#{$breakpoint-color};
+      @apply transition duration-#{$breakpoint-transition-duration} ease-in-out;
+    }
+
+    .circuit-step--done:hover #{$parent}--active & {
+      @apply bg-#{$breakpoint-color};
+    }
+  }
+}

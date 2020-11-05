@@ -1,0 +1,39 @@
+.simulator {
+  @apply overflow-x-auto;
+  @apply h-full;
+
+  &[data-simulator-nqubit="1"],
+  &[data-simulator-nqubit="2"],
+  &[data-simulator-nqubit="3"] {
+    @apply mt-28;
+
+    @screen md {
+      @apply mt-0;
+    }
+  }
+
+  &[data-simulator-nqubit="4"] {
+    @apply mt-32;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+
+  &[data-simulator-nqubit="5"],
+  &[data-simulator-nqubit="6"] {
+    @apply mt-28;
+
+    @screen md {
+      @apply mt-8;
+    }
+  }
+
+  &[data-simulator-nqubit="8"] {
+    @apply mt-40;
+
+    @screen md {
+      @apply mt-0;
+    }
+  }
+}

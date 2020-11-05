@@ -1,0 +1,103 @@
+.rw {
+  $parent: &;
+  $wire-length: 2;
+  $wire-length-mobile: 4;
+
+  @apply relative;
+  @apply flex justify-center;
+  @apply w-full h-full;
+
+  @apply flex-col;
+
+  @screen md {
+    @apply flex-row;
+  }
+
+  &__body {
+    @apply flex items-center;
+    @apply border-2 border-transparent rounded;
+    @apply leading-none;
+    writing-mode: vertical-lr;
+
+    @screen md {
+      @apply my-0;
+      @apply text-xl;
+      @apply w-#{$instruction-size-base} h-#{$instruction-size-base};
+      writing-mode: horizontal-tb;
+    }
+
+    .draggable:hover & {
+      @apply bg-white;
+      @apply border-#{$gate-hover-color};
+    }
+
+    .circuit-step:hover #{$parent}:hover & {
+      @apply bg-white;
+    }
+
+    .draggable--shadow & {
+      @apply bg-white;
+      @apply border-#{$gate-shadow-color};
+    }
+
+    .instruction--bordered & {
+      @apply bg-white;
+      @apply border-#{$gate-border-color};
+    }
+  }
+
+  .drggable--palette & &__body {
+    @screen md {
+      @apply mx-0;
+    }
+  }
+
+  @each $nqubit in $nqubits {
+    .circuit[data-nqubit="#{$nqubit}"] &__body {
+      @apply text-#{map-get($instruction-label-font-size, $nqubit)};
+      @apply w-#{map-get($instruction-size, $nqubit)};
+      @apply h-#{map-get($instruction-size, $nqubit)};
+
+      @screen md {
+        @apply my-0;
+        @apply text-xl;
+        @apply w-#{$instruction-size-base} h-#{$instruction-size-base};
+        writing-mode: horizontal-tb;
+      }
+    }
+  }
+
+  .circuit-preview & &__body {
+    @apply my-0;
+    @apply mx-#{$instruction-margin-base / 2};
+    @apply text-xl;
+    @apply w-#{$instruction-size-base} h-#{$instruction-size-base};
+    writing-mode: horizontal-tb;
+  }
+
+  &__value {
+    @apply font-mono;
+    @apply leading-none;
+    @apply text-purple-500;
+
+    &:after {
+      content: "?";
+    }
+
+    #{$parent}[data-value="0"] & {
+      @apply text-blue-500;
+    }
+
+    #{$parent}[data-value="0"] &:after {
+      content: "0";
+    }
+
+    #{$parent}[data-value="1"] & {
+      @apply text-orange-500;
+    }
+
+    #{$parent}[data-value="1"] &:after {
+      content: "1";
+    }
+  }
+}

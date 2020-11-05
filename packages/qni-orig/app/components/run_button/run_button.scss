@@ -8,7 +8,7 @@
   @apply rounded-full;
   @apply shadow;
   @apply w-16 h-16;
-  @apply z-20;
+  @apply z-40;
 
   &:focus {
     @apply outline-none;
@@ -18,7 +18,7 @@
     @apply cursor-wait;
   }
 
-  .reload {
+  .reload-icon {
     @apply fill-current;
     @apply text-white;
     @apply w-8 h-8;
@@ -38,7 +38,7 @@
     @apply bg-purple-400;
   }
 
-  &--running .reload {
+  &--running .reload-icon {
     @apply hidden;
   }
 

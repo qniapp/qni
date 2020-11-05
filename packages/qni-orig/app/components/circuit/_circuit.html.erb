@@ -1,6 +1,9 @@
 <% circuit = local_assigns.fetch(:circuit) %>
 
-<div class="circuit circuit--<%= circuit.nqubit %>qubit" data-target="circuit-card.circuit">
+<div id="circuit"
+     class="circuit"
+     data-target="simulator.circuit"
+     data-nqubit="<%= circuit.nqubit %>">
   <div class="circuit__body">
     <%= circuit.content %>
   </div>

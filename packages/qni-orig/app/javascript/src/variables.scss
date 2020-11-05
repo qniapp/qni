@@ -1,27 +1,116 @@
-// Circuit element
-$circuit-element-size-extralarge: 12;
-$circuit-element-size-large: 10;
-$circuit-element-size-base: 8;
-$circuit-element-size-small: 6;
-$circuit-element-size-extrasmall: 4;
-$circuit-element-size-screen-md: 8;
+$nqubits: 1, 2, 3, 4, 5, 6, 7, 8;
 
-$circuit-element-margin-extralarge: 4;
-$circuit-element-margin-large: 4;
-$circuit-element-margin-base: 4;
-$circuit-element-margin-small: 2;
-$circuit-element-margin-extrasmall: 1;
+// Instructions
+$instruction-size-extralarge: 12;
+$instruction-size-large: 10;
+$instruction-size-base: 8;
+$instruction-size-small: 6;
+$instruction-size-extrasmall: 4;
+$instruction-size-screen-md: 8;
 
-$circuit-element-label-font-size-extralarge: 4xl;
-$circuit-element-label-font-size-large: 3xl;
-$circuit-element-label-font-size-base: xl;
-$circuit-element-label-font-size-small: base;
-$circuit-element-label-font-size-extrasmall: xs;
+$instruction-size: (
+  1: $instruction-size-extralarge,
+  2: $instruction-size-extralarge,
+  3: $instruction-size-large,
+  4: $instruction-size-base,
+  5: $instruction-size-small,
+  6: $instruction-size-small,
+  7: $instruction-size-extrasmall,
+  8: $instruction-size-extrasmall,
+);
+
+$instruction-margin-extralarge: 4;
+$instruction-margin-large: 4;
+$instruction-margin-base: 4;
+$instruction-margin-small: 2;
+$instruction-margin-extrasmall: 1;
+
+$instruction-margin: (
+  1: $instruction-margin-extralarge,
+  2: $instruction-margin-extralarge,
+  3: $instruction-margin-large,
+  4: $instruction-margin-base,
+  5: $instruction-margin-small,
+  6: $instruction-margin-small,
+  7: $instruction-margin-extrasmall,
+  8: $instruction-margin-extrasmall,
+);
+
+$instruction-label-font-size-extralarge: 4xl;
+$instruction-label-font-size-large: 2xl;
+$instruction-label-font-size-base: base;
+$instruction-label-font-size-small: base;
+$instruction-label-font-size-extrasmall: xs;
+
+$instruction-label-font-size: (
+  1: $instruction-label-font-size-extralarge,
+  2: $instruction-label-font-size-extralarge,
+  3: $instruction-label-font-size-large,
+  4: $instruction-label-font-size-base,
+  5: $instruction-label-font-size-small,
+  6: $instruction-label-font-size-small,
+  7: $instruction-label-font-size-extrasmall,
+  8: $instruction-label-font-size-extrasmall,
+);
+
+$instruction-label-icon-size-extralarge: 8;
+$instruction-label-icon-size-large: 6;
+$instruction-label-icon-size-base: 5;
+$instruction-label-icon-size-small: 4;
+$instruction-label-icon-size-extrasmall: 4;
+
+$instruction-label-icon-size: (
+  1: $instruction-label-icon-size-extralarge,
+  2: $instruction-label-icon-size-extralarge,
+  3: $instruction-label-icon-size-large,
+  4: $instruction-label-icon-size-base,
+  5: $instruction-label-icon-size-small,
+  6: $instruction-label-icon-size-small,
+  7: $instruction-label-icon-size-extrasmall,
+  8: $instruction-label-icon-size-extrasmall,
+);
 
 // Gate
 $gate-color: teal-400;
+$gate-color-disabled: "white";
+$gate-label-color: "white";
+$gate-label-color-disabled: gray-300;
+$gate-hover-color: orange-500;
+$gate-shadow-color: orange-400;
+$gate-border-width: 2;
+$gate-border-color: gray-200;
+$gate-source-color: teal-500;
+
+// Gate label
+$gate-label-font-size-extralarge: base;
+$gate-label-font-size-large: base;
+$gate-label-font-size-base: base;
+$gate-label-font-size-small: base;
+$gate-label-font-size-extrasmall: base;
+
+$gate-label-font-size: (
+  1: $gate-label-font-size-extralarge,
+  2: $gate-label-font-size-large,
+  3: $gate-label-font-size-large,
+  4: $gate-label-font-size-base,
+  5: $gate-label-font-size-small,
+  6: $gate-label-font-size-small,
+  7: $gate-label-font-size-extrasmall,
+  8: $gate-label-font-size-extrasmall,
+);
 
 // Wire
 $wire-color: gray-600;
 $wire-inactive-color: gray-200;
 $wire-width: 2;
+
+$connection-width: 4;
+
+// Breakpoint
+$breakpoint-color: yellow-300;
+$breakpoint-color-hover: indigo-300;
+$breakpoint-transition-duration: 75;
+$breakpoint-width-px: 4;
+
+// Qubit label
+$qubit-label-font-color: gray-300;

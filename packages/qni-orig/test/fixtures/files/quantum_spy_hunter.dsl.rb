@@ -17,7 +17,7 @@ block 'set value' do
 end
 
 block 'apply H' do
-  h 0, disabled: true, if: 'alice_h'
+  h 0, if: 'alice_h'
 end
 
 down 0
@@ -37,7 +37,7 @@ read 2, set: 'bob_h'
 down 1
 
 block 'apply H' do
-  h 2, disabled: true, if: 'bob_h'
+  h 2, if: 'bob_h'
 end
 
 block 'readout' do

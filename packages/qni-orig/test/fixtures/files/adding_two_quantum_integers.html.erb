@@ -1,4 +1,4 @@
-<%= component 'circuit', nqubit: 6 do %>
+<%= circuit nqubit: 6 do %>
   <%= circuit_block_divider do %>
     <%= circuit_register_group_span rows: 6 do %>
       <%= register_label_span label: 'a', span: 4, start: 3 %>
@@ -6,141 +6,281 @@
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= component 'circuit/step' do %>
-      <%= component 'qubit_label', label: '0x1' %>
-      <%= component 'qubit_label', label: '0x2' %>
-      <%= component 'qubit_label', label: '0x4' %>
-      <%= component 'qubit_label', label: '0x8' %>
-      <%= component 'qubit_label', label: '0x1' %>
-      <%= component 'qubit_label', label: '0x2' %>
+    <%= circuit_step do %>
+      <%= qubit_label '0x1' %>
+      <%= qubit_label '0x2' %>
+      <%= qubit_label '0x4' %>
+      <%= qubit_label '0x8' %>
+      <%= qubit_label '0x1' %>
+      <%= qubit_label '0x2' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'prepare' do %>
-    <%= component 'circuit/step' do %>
-      <%= component 'rw', type: :write, value: 1 %>
-      <%= component 'rw', type: :write, value: 0 %>
-      <%= component 'rw', type: :write, value: 0 %>
-      <%= component 'rw', type: :write, value: 0 %>
-      <%= wire active: false %>
-      <%= wire active: false %>
+    <%= circuit_step do %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 1 %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 0 %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 0 %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 0 %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_active: false %>
+      <%= dropzone wire_active: false %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= component 'hadamard_gate' %>
-      <%= wire %>
-      <%= wire active: false %>
-      <%= wire active: false %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= hadamard_gate %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
+      <%= dropzone wire_active: false %>
+      <%= dropzone wire_active: false %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= component 'phase_gate', theta: 'π/4' %>
-      <%= wire %>
-      <%= wire active: false %>
-      <%= wire active: false %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= phase_gate bit: 2, theta: 'π/4' %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
+      <%= dropzone wire_active: false %>
+      <%= dropzone wire_active: false %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= component 'rw', type: :write, value: 1 %>
-      <%= component 'rw', type: :write, value: 0 %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 1 %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable write: true do %>
+          <%= write 0 %>
+        <% end %>
+      <% end %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= component 'hadamard_gate' %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= hadamard_gate %>
+        <% end %>
+      <% end %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= component 'phase_gate', theta: 'π/2' %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= phase_gate bit: 5, theta: 'π/2' %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'a += b' do %>
-    <%= component 'circuit/step' do %>
-      <%= component 'control_dot', targets: [3], bottom: true %>
-      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
-      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
-      <%= component 'not_gate', top: true, bottom: true %>
-      <%= component 'control_dot', targets: [3], top: true %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 0, targets: [3], controls: [0, 1, 2, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 1, targets: [3], controls: [0, 1, 2, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 2, targets: [3], controls: [0, 1, 2, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 3, controls: [0, 1, 2, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 4, targets: [3], controls: [0, 1, 2, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= component 'control_dot', targets: [2], bottom: true %>
-      <%= component 'control_dot', targets: [2], top: true, bottom: true %>
-      <%= component 'not_gate', top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [2], top: true %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 0, targets: [2], controls: [0, 1, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 1, targets: [2], controls: [0, 1, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 2, controls: [0, 1, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 4, targets: [2], controls: [0, 1, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= component 'control_dot', targets: [1], bottom: true %>
-      <%= component 'not_gate', top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [1], top: true %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 0, targets: [1], controls: [0, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 1, controls: [0, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 4, targets: [1], controls: [0, 4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= component 'not_gate', controls: [4], bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [0], top: true %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 0, controls: [4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 4, targets: [0], controls: [4] %>
+        <% end %>
+      <% end %>
+      <%= dropzone %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= component 'control_dot', targets: [3], bottom: true %>
-      <%= component 'control_dot', targets: [3], top: true, bottom: true %>
-      <%= component 'not_gate', top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [3], top: true %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 1, targets: [3], controls: [1, 2, 5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 2, targets: [3], controls: [1, 2, 5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 3, controls: [1, 2, 5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 5, targets: [3], controls: [1, 2, 5] %>
+        <% end %>
+      <% end %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= component 'control_dot', targets: [2], bottom: true %>
-      <%= component 'not_gate', top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [2], top: true %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 1, targets: [2], controls: [1, 5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 2, controls: [1, 5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 5, targets: [2], controls: [1, 5] %>
+        <% end %>
+      <% end %>
     <% end %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= component 'not_gate', controls: [5], bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= wire top: true, bottom: true %>
-      <%= component 'control_dot', targets: [1], top: true %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= not_gate bit: 1, controls: [5] %>
+        <% end %>
+      <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= control_gate bit: 5, targets: [1], controls: [5] %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
-    <%= component 'circuit/step' do %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
-      <%= wire %>
+    <%= circuit_step do %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
+      <%= dropzone %>
     <% end %>
+  <% end %>
+  <%= circuit_step shadow_source: true do %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
   <% end %>
 <% end %>

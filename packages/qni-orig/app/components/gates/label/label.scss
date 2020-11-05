@@ -1,0 +1,94 @@
+.gate {
+  $parent: &;
+
+  &__label {
+    @apply absolute;
+    @apply flex items-center justify-center;
+    @apply font-mono;
+    @apply text-gray-400;
+    @apply whitespace-no-wrap;
+    @apply leading-none;
+
+    &--top {
+      .draggable--palette &,
+      .gate--connected-with-lower-bit > & {
+        @apply hidden;
+      }
+
+      @each $nqubit in $nqubits {
+        .circuit[data-nqubit="#{$nqubit}"] & {
+          @apply h-full;
+          @apply left-0;
+          @apply ml-#{map-get($instruction-size, $nqubit)};
+          @apply text-#{map-get($gate-label-font-size, $nqubit)};
+
+          writing-mode: vertical-lr;
+
+          @screen md {
+            @apply bottom-0;
+            @apply h-auto;
+            @apply mb-#{$instruction-size-base};
+            @apply ml-0;
+            @apply text-xs;
+            @apply w-full;
+
+            writing-mode: horizontal-tb;
+          }
+        }
+      }
+
+      .circuit-preview #{$parent} & {
+        @apply bottom-0;
+        @apply h-auto;
+        @apply mb-#{$instruction-size-base};
+        @apply ml-0;
+        @apply text-xs;
+        @apply w-full;
+
+        writing-mode: horizontal-tb;
+      }
+    }
+
+    &--bottom {
+      .draggable--palette &,
+      .gate--connected-with-upper-bit > &,
+      :not(.gate--connected-with-upper-bit):not(.gate--connected-with-lower-bit)
+        > & {
+        @apply hidden;
+      }
+
+      @each $nqubit in $nqubits {
+        .circuit[data-nqubit="#{$nqubit}"] & {
+          @apply h-full;
+          @apply mr-#{map-get($instruction-size, $nqubit)};
+          @apply right-0;
+          @apply text-#{map-get($gate-label-font-size, $nqubit)};
+
+          writing-mode: vertical-lr;
+
+          @screen md {
+            @apply h-auto;
+            @apply mr-0;
+            @apply mt-#{$instruction-size-base};
+            @apply text-xs;
+            @apply top-0;
+            @apply w-full;
+
+            writing-mode: horizontal-tb;
+          }
+        }
+      }
+
+      .circuit-preview #{$parent} & {
+        @apply top-0;
+        @apply h-auto;
+        @apply mt-#{$instruction-size-base};
+        @apply mr-0;
+        @apply text-xs;
+        @apply w-full;
+
+        writing-mode: horizontal-tb;
+      }
+    }
+  }
+}

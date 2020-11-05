@@ -1,5 +1,9 @@
 <% simulator = local_assigns.fetch(:simulator) %>
 
-<div class="simulator pt-8 pb-20 md:pt-0 md:pb-0" data-controller="simulator" data-simulator-nqubit="<%= simulator.nqubit %>">
+<div id="simulator"
+     class="simulator"
+     data-target="editor.simulator"
+     data-controller="simulator"
+     data-simulator-nqubit="<%= simulator.nqubit %>">
   <%= simulator.content %>
 </div>

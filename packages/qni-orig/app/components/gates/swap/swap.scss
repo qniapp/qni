@@ -1,0 +1,10 @@
+.gate {
+  $self: &;
+
+  &__swap {
+    #{$self}:hover & {
+      @apply stroke-current;
+      @apply text-#{$gate-hover-color};
+    }
+  }
+}

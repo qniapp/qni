@@ -1,7 +1,0 @@
-<% body = yield.presence || raise('body is a mandatory') %>
-<% klass = local_assigns.fetch(:class, nil) %>
-<% data = local_assigns.fetch(:data, nil) %>
-
-<%= tag.div class: class_string('card__body', klass => klass), data: data do %>
-  <%= body %>
-<% end %>
