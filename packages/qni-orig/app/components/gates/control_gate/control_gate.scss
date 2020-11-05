@@ -1,0 +1,24 @@
+.control-gate {
+  @apply flex items-center justify-center;
+  @apply rounded;
+
+  .draggable:hover &,
+  .draggable--grabbed & {
+    @apply bg-white;
+    @apply border-#{$gate-hover-color};
+  }
+
+  .draggable--shadow & {
+    @apply bg-white;
+    @apply border-#{$gate-shadow-color};
+  }
+
+  &.instruction--bordered {
+    @apply bg-white;
+    @apply border-#{$gate-border-color};
+  }
+
+  &.gate--disabled .gate__shape {
+    @apply bg-gray-500;
+  }
+}

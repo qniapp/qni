@@ -1,0 +1,9 @@
+<% connection = local_assigns.fetch(:connection) %>
+
+<% if connection.position == :top %>
+  <div class="connection connection--top"></div>
+<% elsif connection.position == :bottom %>
+  <div class="connection connection--bottom"></div>
+<% else %>
+  <% raise "Invalid connection position: #{connection}" %>
+<% end %>

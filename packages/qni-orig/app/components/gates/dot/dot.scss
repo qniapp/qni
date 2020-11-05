@@ -1,0 +1,23 @@
+.gate {
+  $parent: &;
+
+  &__dot {
+    @apply bg-#{$gate-color};
+    @apply rounded-full;
+    @apply w-3 h-3;
+    @apply z-10;
+
+    .draggable:hover & {
+      @apply bg-#{$gate-hover-color};
+      @apply transition duration-75 ease-in-out;
+    }
+
+    .circuit[data-nqubit="8"] #{parent} & {
+      @apply w-2 h-2;
+
+      @screen md {
+        @apply w-3 h-3;
+      }
+    }
+  }
+}

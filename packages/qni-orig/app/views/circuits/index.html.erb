@@ -1,7 +1,9 @@
 <%= component 'navbar' %>
 
 <%= container do %>
-  <div id="masonry" class="mt-4 mb-8 md:-mx-4" data-controller="masonry" data-action="circuitThumbnailResized->masonry#update resize@window->masonry#update">
+  <div id="masonry" class="mt-4 mb-8 md:mx-6 lg:mx-8"
+       data-controller="masonry"
+       data-action="circuitThumbnailResized->masonry#update resize@window->masonry#update">
     <%= render partial: 'components/circuit_preview', collection: @circuits, as: :circuit, cached: true %>
   </div>
 <% end %>

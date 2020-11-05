@@ -1,6 +1,0 @@
-<% rows = local_assigns.fetch(:rows) %>
-<% body = yield.presence || raise('body is a mandatory') %>
-
-<div class="circuit-register-group-span qubits-<%= rows %>">
-  <%= body %>
-</div>

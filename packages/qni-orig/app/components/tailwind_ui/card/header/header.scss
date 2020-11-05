@@ -1,0 +1,9 @@
+.card__header {
+  @apply border-b;
+  @apply border-gray-200;
+  @apply px-4 py-5;
+
+  @screen sm {
+    @apply px-6;
+  }
+}

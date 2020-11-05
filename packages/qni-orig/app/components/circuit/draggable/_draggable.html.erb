@@ -1,0 +1,5 @@
+<% draggable = local_assigns.fetch(:draggable) %>
+
+<%= tag.div class: draggable.klass, data: draggable.data do %>
+  <%= draggable.content %>
+<% end %>

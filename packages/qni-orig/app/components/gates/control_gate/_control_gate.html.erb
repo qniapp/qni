@@ -1,0 +1,7 @@
+<% control_gate = local_assigns.fetch(:control_gate) %>
+
+<%= tag.div class: control_gate.klass, data: control_gate.data do %>
+  <%= connection_top %>
+  <%= connection_bottom %>
+  <%= gate_dot %>
+<% end %>

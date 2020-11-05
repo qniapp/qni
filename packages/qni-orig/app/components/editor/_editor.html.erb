@@ -1,0 +1,7 @@
+<% editor = local_assigns.fetch(:editor) %>
+
+<div class="editor relative h-full"
+     data-controller="editor"
+     data-action="circuitUpdateEvent->editor#onCircuitUpdate">
+  <%= editor.content %>
+</div>

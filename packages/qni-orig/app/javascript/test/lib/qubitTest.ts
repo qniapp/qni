@@ -1,7 +1,7 @@
 /* eslint-env qunit */
 
 import { matrix, divide, kron } from "mathjs"
-import { Qubit } from "lib/qubit"
+import { Qubit } from "lib/simulator/qubit"
 
 QUnit.module("new Qubit('0')", (hooks) => {
   let qubit: Qubit

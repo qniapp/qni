@@ -1,67 +1,144 @@
-<%= component 'circuit', nqubit: 3 do %>
+<%= circuit nqubit: 3 do %>
   <%= circuit_register_group do %>
-    <%= register_label label: 'a' %>
-    <%= register_label label: 'b' %>
-    <%= register_label label: 'c' %>
+    <%= register_label 'a' %>
+    <%= register_label 'b' %>
+    <%= register_label 'c' %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'qubit_label', label: '0x1' %>
-    <%= component 'qubit_label', label: '0x1' %>
-    <%= component 'qubit_label', label: '0x1' %>
+  <%= circuit_step do %>
+    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x1' %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= wire active: false %>
-    <%= component 'rw', type: :write, value: 0 %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= wire active: false %>
-    <%= component 'not_gate' %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= not_gate bit: 2 %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= wire active: false %>
-    <%= component 'rw', type: :readout %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= component 'rw', type: :write, value: 1 %>
-    <%= wire active: false %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 1 %>
+      <% end %>
+    <% end %>
+    <%= dropzone wire_active: false %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= wire %>
-    <%= component 'rw', type: :write, value: 0 %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= component 'control_dot', targets: [2], bottom: true %>
-    <%= component 'not_gate', controls: [1], top: true %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= control_gate bit: 1, targets: [2], controls: [1] %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= not_gate bit: 2, controls: [1] %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= component 'rw', type: :readout %>
-    <%= wire %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
+    <%= dropzone %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire active: false %>
-    <%= wire active: false %>
-    <%= component 'rw', type: :readout %>
+  <%= circuit_step do %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone wire_active: false %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'rw', type: :write, value: 1 %>
-    <%= component 'rw', type: :write, value: 1 %>
-    <%= component 'rw', type: :write, value: 0 %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 1 %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 1 %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'control_dot', targets: [2], bottom: true %>
-    <%= component 'control_dot', targets: [2], top: true, bottom: true %>
-    <%= component 'not_gate', top: true %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= control_gate bit: 0, targets: [2], controls: [0, 1] %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= control_gate bit: 1, targets: [2], controls: [0, 1] %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= not_gate bit: 2, controls: [0, 1] %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'rw', type: :readout %>
-    <%= component 'rw', type: :readout %>
-    <%= component 'rw', type: :readout %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable readout: true do %>
+        <%= readout %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= circuit_step shadow_source: true do %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
   <% end %>
 <% end %>

@@ -1,0 +1,72 @@
+.register-label {
+  $self: &;
+
+  @apply flex;
+
+  @mixin label($nqubit) {
+    @apply items-center justify-center;
+    @apply mx-#{map-get($instruction-margin, $nqubit)};
+    @apply w-#{map-get($instruction-size, $nqubit)};
+  }
+
+  @mixin label-md {
+    @apply justify-end items-center;
+    @apply h-#{$instruction-size-base};
+    @apply mr-2 ml-0;
+    @apply w-auto;
+  }
+
+  @each $nqubit in $nqubits {
+    .circuit[data-nqubit="#{$nqubit}"] & {
+      @include label($nqubit);
+
+      @screen md {
+        @include label-md;
+      }
+    }
+
+    .circuit-preview .circuit & {
+      @include label-md;
+    }
+  }
+
+  &:nth-of-type(n + 2) {
+    @screen md {
+      @apply mt-#{$instruction-margin-base};
+    }
+
+    .circuit-preview .circuit & {
+      @apply mt-#{$instruction-margin-base};
+    }
+  }
+
+  &__value {
+    @apply font-semibold;
+    @apply leading-none;
+    @apply whitespace-no-wrap;
+
+    @mixin value($nqubit) {
+      @apply text-#{map-get($instruction-label-font-size, $nqubit)};
+      writing-mode: vertical-lr;
+    }
+
+    @mixin value-md {
+      @apply text-#{$instruction-label-font-size-base};
+      writing-mode: horizontal-tb;
+    }
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        @include value($nqubit);
+
+        @screen md {
+          @include value-md;
+        }
+      }
+    }
+
+    .circuit-preview #{$self} & {
+      @include value-md;
+    }
+  }
+}

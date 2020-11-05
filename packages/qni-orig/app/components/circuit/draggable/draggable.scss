@@ -1,0 +1,71 @@
+.draggable {
+  $parent: &;
+
+  @apply absolute inset-0;
+  @apply flex items-center;
+  @apply z-20;
+  cursor: grab;
+
+  // For interact.js
+  @apply select-none;
+  touch-action: none;
+
+  * {
+    pointer-events: none;
+  }
+
+  @apply mx-0;
+
+  @screen md {
+    &--circuit {
+      @apply mx-#{$instruction-margin-base / 2};
+    }
+
+    &--write,
+    &--readout {
+      @apply mx-0;
+    }
+  }
+
+  .circuit-preview &--circuit {
+    @apply mx-#{$instruction-margin-base / 2};
+  }
+
+  .circuit-preview &--write,
+  .circuit-preview &--readout {
+    @apply mx-0;
+  }
+
+  // Placeholder to display when it is droppable
+  &--shadow {
+    @apply z-20;
+    @apply mx-#{$instruction-margin-base / 2};
+
+    :not(svg).gate__shape {
+      @apply bg-#{$gate-shadow-color};
+    }
+  }
+
+  // Reference for coordinates during dragging
+  &--source {
+    :not(svg).gate__shape {
+      @apply bg-#{$gate-source-color};
+    }
+
+    svg.gate__shape {
+      @apply stroke-current;
+      @apply text-#{$gate-source-color};
+    }
+  }
+
+  // States
+
+  &--grabbed {
+    @apply z-50;
+    cursor: grabbing !important;
+  }
+
+  &--dragging {
+    @apply z-50;
+  }
+}

@@ -27,6 +27,9 @@
     "*.json": [
       "prettier --write"
     ],
+    "*.scss": [
+      "prettier --write"
+    ],
     "*.md": [
       "prettier --write --prose-wrap always"
     ]
@@ -42,16 +45,19 @@
     "printWidth": 80
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.10.4",
+    "@babel/plugin-proposal-throw-expressions": "~7.12",
+    "@babel/preset-typescript": "~7.12",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "~5.2",
-    "@tailwindcss/ui": "~0.5",
+    "@tailwindcss/ui": "^0.6.2",
+    "animate.css": "^4.1.1",
+    "interactjs": "~1.10",
     "magic-grid": "^3.2.4",
-    "mathjs": "^7.1.0",
+    "mathjs": "^7.3.0",
     "stimulus": "^1.1.1",
-    "tailwindcss": "~1.7",
+    "tailwindcss": "^1.8.10",
     "tippy.js": "^6.2.4",
     "turbolinks": "^5.2.0",
     "typescript": "^4.0.2",
@@ -61,25 +67,26 @@
   "version": "0.1.0",
   "devDependencies": {
     "@types/mathjs": "^6.0.5",
-    "@types/qunit": "^2.9.1",
-    "@typescript-eslint/eslint-plugin": "~4.0",
-    "@typescript-eslint/parser": "~4.0",
+    "@types/qunit": "^2.9.5",
+    "@types/typpy": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "~4.6",
+    "@typescript-eslint/parser": "~4.6",
     "babel-eslint": "^10.1.0",
     "cz-conventional-changelog": "~3.3",
-    "eslint": "~7.8",
-    "eslint-config-prettier": "^6.10.1",
+    "eslint": "~7.12",
+    "eslint-config-prettier": "~6.15",
     "eslint-plugin-prettier": "^3.1.2",
-    "husky": "^4.2.5",
-    "karma": "~5.2",
+    "husky": "^4.3.0",
+    "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",
     "karma-qunit": "^4.1.1",
     "karma-spec-reporter": "^0.0.32",
     "karma-webpack": "^4.0.2",
-    "lint-staged": "~10.3",
-    "prettier": "^2.0.4",
-    "qunit": "^2.11.1",
-    "typedoc": "^0.19.0",
+    "lint-staged": "~10.5",
+    "prettier": "^2.1.2",
+    "qunit": "^2.11.2",
+    "typedoc": "~0.19",
     "webpack-dev-server": "^3.10.3"
   },
   "config": {

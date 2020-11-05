@@ -1,9 +1,0 @@
-<% not_gate = local_assigns.fetch(:not_gate) %>
-
-<%= tag.div class: class_string('circuit-element', 'gate', 'not-gate', 'gate--disabled' => not_gate.disabled?, 'circuit-element--inactive-wire' => !not_gate.wire_active?), data: { controls: not_gate.controls.join(', '), if: not_gate.if } do %>
-  <%= circuit_element_wire %>
-  <%= top_wire if not_gate.top? %>
-  <%= bottom_wire if not_gate.bottom? %>
-  <%= gate_circle label: plus %>
-  <%= circuit_element_label label: not_gate.if ? "if #{not_gate.if}" : nil %>
-<% end %>

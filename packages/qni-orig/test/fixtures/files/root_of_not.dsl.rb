@@ -4,7 +4,7 @@ write 0
 block 'RNOT' do
   h
   phase 0 => '-π/2'
-  h 0
+  h
 end
 
 block 'RNOT' do

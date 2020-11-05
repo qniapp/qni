@@ -1,0 +1,37 @@
+.swap-gate {
+  $self: &;
+
+  @apply rounded;
+
+  .draggable:hover & {
+    @apply bg-white;
+    @apply border-#{$gate-hover-color};
+  }
+
+  .gate__shape {
+    @apply stroke-current;
+    @apply text-#{$gate-color};
+    @apply w-full h-full;
+
+    stroke-width: 3;
+
+    .draggable:hover & {
+      @apply text-#{$gate-hover-color};
+    }
+  }
+
+  &.gate--disabled .gate__shape {
+    @apply text-gray-500;
+  }
+
+  .draggable--shadow & {
+    @apply bg-white;
+    @apply text-#{$gate-shadow-color};
+    @apply border-#{$gate-shadow-color};
+  }
+
+  &.instruction--bordered {
+    @apply bg-white;
+    @apply border-#{$gate-border-color};
+  }
+}

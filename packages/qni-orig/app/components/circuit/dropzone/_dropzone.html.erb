@@ -1,0 +1,18 @@
+<% dropzone = local_assigns.fetch(:dropzone) %>
+
+<%= tag.div class: class_string('dropzone',
+                                'dropzone--circuit' => dropzone.circuit?,
+                                'dropzone--palette' => dropzone.palette?,
+                                'dropzone--trash' => dropzone.trash?,
+                                'dropzone--occupied' => dropzone.occupied?,
+                                'dropzone--wire-inactive' => !dropzone.wire_active?,
+                                'dropzone--no-wire' => dropzone.no_wire?,
+                                'dropzone--connected-with-lower-bit' => dropzone.wire_top?,
+                                'dropzone--connected-with-upper-bit' => dropzone.wire_bottom?) do %>
+  <%= dropzone.content %>
+  <div class="dropzone__wire"></div>
+  <%= connection_top %>
+  <%= connection_bottom %>
+  <div class="dropzone__rw-wire dropzone__rw-wire--left"></div>
+  <div class="dropzone__rw-wire dropzone__rw-wire--right"></div>
+<% end %>

@@ -1,0 +1,7 @@
+<% root_not_gate = local_assigns.fetch(:root_not_gate) %>
+
+<%= tag.div class: root_not_gate.klass do %>
+  <%= connection_top if root_not_gate.wire_top? %>
+  <%= connection_bottom if root_not_gate.wire_bottom? %>
+  <%= gate_box label: '√N' %>
+<% end %>
