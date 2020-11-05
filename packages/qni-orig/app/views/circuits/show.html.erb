@@ -5,8 +5,9 @@
 <%= component 'navbar', title: @circuit.name %>
 
 <%= container do %>
-  <%= simulator_wrapper nqubit: @circuit.nqubit do %>
+  <%= editor do %>
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
+      <%= palette %>
       <%= circuit_view circuit: @circuit %>
       <%= circle_notation @circuit %>
       <%= component 'run_button' %>

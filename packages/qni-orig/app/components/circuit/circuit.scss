@@ -1,14 +1,23 @@
 .circuit {
   @apply flex;
-
   @apply flex-col items-center;
+
+  @apply pt-8;
 
   @screen md {
     @apply flex-row;
+    @apply mt-32;
     @apply py-5;
+  }
 
-    .simulator & {
-      @apply overflow-y-scroll;
+  .circuit-preview & {
+    @screen md {
+      @apply mt-0;
+    }
+  }
+
+  .simulator & {
+    @screen md {
       @apply py-6;
     }
   }
@@ -20,15 +29,19 @@
 
   &__body {
     @apply flex;
-
     @apply flex-col;
 
     @screen md {
+      @apply px-6;
       @apply flex-row;
     }
-  }
 
-  .circuit-preview &__body {
-    @apply flex-row;
+    @screen lg {
+      @apply px-8;
+    }
+
+    .circuit-preview & {
+      @apply flex-row;
+    }
   }
 }

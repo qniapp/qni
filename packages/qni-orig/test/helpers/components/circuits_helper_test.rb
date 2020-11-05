@@ -3,39 +3,26 @@
 require 'test_helper'
 
 class Components::CircuitsHelperTest < ActionView::TestCase
-  include Components::GatesHelper
-  include Components::WiresHelper
+  include CircuitHelper
   include ComponentsHelper
+  include GatesHelper
 
   test 'circuit breakpoint' do
-    assert_dom_equal beautify(<<~ERB), beautify(component('circuit/breakpoint'))
-      <div class="circuit__breakpoint">
-        <div class="circuit__breakpoint-line"></div>
-      </div>
-    ERB
-  end
-
-  test 'circuit column' do
-    assert_dom_equal beautify(<<~ERB), beautify(component('circuit/step') { component 'hadamard_gate' })
-      <div class="circuit__step"
-           data-action="click->simulator#circuitStepClicked"
-           data-target="circuit.step simulator.circuitStep">
-        <div class="circuit__step-body">
-          #{component 'hadamard_gate'}
-        </div>
-        #{component 'circuit/breakpoint'}
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_breakpoint)
+      <div class="circuit-breakpoint">
+        <div class="circuit-breakpoint__body"></div>
       </div>
     ERB
   end
 
   test 'circuit block' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { component 'not_gate' })
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { not_gate })
       <div class="circuit-block">
         <div class="circuit-block__label circuit-block__label--top">
           set value
         </div>
         <div class="circuit-block__body">
-          #{component 'not_gate'}
+          #{not_gate}
         </div>
         <div class="circuit-block__label circuit-block__label--bottom">
           set value
@@ -45,18 +32,18 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   end
 
   test 'circuit block divider' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_block_divider { wire })
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_block_divider { dropzone })
       <div class="circuit-block-divider">
         <div class="circuit-block-divider__body">
-          #{wire}
+          #{dropzone}
         </div>
       </div>
     ERB
   end
 
   test 'qubit label' do
-    assert_dom_equal beautify(<<~ERB), beautify(component('qubit_label', label: '0x1'))
-      <div class="qubit-label circuit-element">
+    assert_dom_equal beautify(<<~ERB), beautify(qubit_label('0x1'))
+      <div class="instruction qubit-label" data-value="0x1">
         <div class="qubit-label__wire"></div>
         <span class="qubit-label__value">0x1</span>
       </div>
@@ -64,7 +51,7 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   end
 
   test 'register label' do
-    assert_dom_equal beautify(<<~ERB), beautify(register_label(label: '👩Alice'))
+    assert_dom_equal beautify(<<~ERB), beautify(register_label('👩Alice'))
       <div class="register-label">
         <span class="register-label__value">👩Alice</span>
       </div>
@@ -72,9 +59,9 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   end
 
   test 'circuit register group' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_group { register_label label: '👩Alice' })
+    assert_dom_equal beautify(<<~ERB), beautify(circuit_register_group { register_label '👩Alice' })
       <div class="circuit-register-group">
-        #{register_label label: '👩Alice'}
+        #{register_label '👩Alice'}
       </div>
     ERB
   end

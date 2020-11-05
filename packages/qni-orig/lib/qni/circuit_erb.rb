@@ -10,10 +10,71 @@ module Qni
 
     def circuit_step(&block)
       <<~ERB
-        <%= component 'circuit/step' do %>
+        <%= circuit_step do %>
           #{block.yield}
         <% end %>
       ERB
+    end
+
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/PerceivedComplexity
+    def dropzone(wire_top: false, wire_bottom: false, wire_active: true, no_wire: false, &block)
+      opts_h = %i[wire_top wire_bottom wire_active no_wire].each_with_object({}) do |each, h|
+        case each
+        when :wire_top
+          h[:wire_top] = true if wire_top
+        when :wire_bottom
+          h[:wire_bottom] = true if wire_bottom
+        when :wire_active
+          h[:wire_active] = false unless wire_active
+        when :no_wire
+          h[:no_wire] = true if no_wire
+        end
+      end
+      opts = opts_h.map { |k, v| "#{k}: #{v}" }.join(', ')
+
+      if block
+        if opts.empty?
+          <<~ERB
+            <%= dropzone do %>
+              #{block.yield}
+            <% end %>
+          ERB
+        else
+          <<~ERB
+            <%= dropzone #{opts} do %>
+              #{block.yield}
+            <% end %>
+          ERB
+        end
+      elsif opts.empty?
+        "<%= dropzone %>\n"
+      else
+        "<%= dropzone #{opts} %>\n"
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/PerceivedComplexity
+
+    def draggable(write: false, readout: false, &block)
+      opts = option_string(write: write, readout: readout)
+      if opts
+        <<~ERB
+          <%= draggable #{opts} do %>
+            #{block.yield}
+          <% end %>
+        ERB
+      else
+        <<~ERB
+          <%= draggable do %>
+            #{block.yield}
+          <% end %>
+        ERB
+      end
     end
 
     def block_divider(&block)
@@ -27,125 +88,82 @@ module Qni
       @dsl.block? && !@in_block
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def wire(active: true, top: false, bottom: false)
-      opts_h = %i[active top bottom].each_with_object({}) do |each, h|
-        case each
-        when :active
-          h[:active] = false unless active
-        when :top
-          h[:top] = true if top
-        when :bottom
-          h[:bottom] = true if bottom
-        end
-      end
-      opts = opts_h.map { |k, v| "#{k}: #{v}" }.join(', ')
-      if opts.empty?
-        "<%= wire %>\n"
-      else
-        "<%= wire #{opts} %>\n"
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
-
     def hadamard_gate(opts = {})
-      opts_h = %i[disabled if].each_with_object({}) do |each, h|
-        case each
-        when :disabled
-          h[:disabled] = opts[:disabled] if opts[:disabled]
-        when :if
-          h[:if] = opts[:if] if opts[:if]
-        end
-      end
-      opts = opts_h.map { |k, v| v.is_a?(String) ? "#{k}: '#{v}'" : "#{k}: #{v}" }.join(', ')
-      if opts.empty?
-        "<%= component 'hadamard_gate' %>\n"
+      opts = option_string(disabled: opts.fetch(:disabled, false), if: opts.fetch(:if, nil))
+      opts ? "<%= hadamard_gate #{opts} %>\n" : "<%= hadamard_gate %>\n"
+    end
+
+    def not_gate(opts = {})
+      opts = option_string(bit: opts.fetch(:bit), controls: opts.fetch(:controls, []), if: opts.fetch(:if, nil))
+      "<%= not_gate #{opts} %>\n"
+    end
+
+    def phase_gate(bit:, theta:, targets: [], wire_active: true)
+      opts = option_string(bit: bit, theta: theta, targets: targets, wire_active: wire_active)
+      "<%= phase_gate #{opts} %>\n"
+    end
+
+    def control_gate(bit:, targets:, controls:, wire_active: true)
+      opts = option_string(bit: bit, targets: targets, controls: controls, wire_active: wire_active)
+      "<%= control_gate #{opts} %>\n"
+    end
+
+    def readout(set: nil)
+      opts = option_string(set: set)
+      opts ? "<%= readout #{opts} %>\n" : "<%= readout %>\n"
+    end
+
+    def down_gate(targets:)
+      opts = option_string(targets: targets)
+      "<%= down_gate #{opts} %>\n"
+    end
+
+    def up_gate(targets:, bottom: false)
+      if bottom
+        "<%= up_gate targets: #{targets}, bottom: true %>\n"
       else
-        "<%= component 'hadamard_gate', #{opts} %>\n"
+        "<%= up_gate targets: #{targets} %>\n"
       end
     end
 
+    private
+
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/AbcSize
-    def not_gate(opts = {})
-      opts_h = %i[controls active top bottom if].each_with_object({}) do |each, h|
+    def option_string(options)
+      options_hash = options.keys.each_with_object({}) do |each, h|
         case each
+        when :bit
+          h[:bit] = options[:bit]
         when :controls
-          h[:controls] = opts[:controls] unless opts.fetch(:controls, []).empty?
-        when :top
-          h[:top] = true if opts[:top]
-        when :bottom
-          h[:bottom] = true if opts[:bottom]
+          h[:controls] = options[:controls] unless options[:controls].empty?
+        when :targets
+          h[:targets] = options[:targets] unless options[:targets].empty?
+        when :wire_active
+          h[:wire_active] = options[:wire_active] unless options[:wire_active]
         when :if
-          h[:if] = opts[:if] if opts[:if]
+          h[:if] = "'#{options[:if]}'" if options[:if]
+        when :disabled
+          h[:disabled] = options[:disabled] if options[:disabled]
+        when :set
+          h[:set] = "'#{options[:set]}'" if options[:set]
+        when :write
+          h[:write] = options[:write] if options[:write]
+        when :readout
+          h[:readout] = options[:readout] if options[:readout]
+        when :theta
+          h[:theta] = "'#{options[:theta]}'"
         end
       end
 
-      opts = opts_h.map do |k, v|
-        case v
-        when String
-          "#{k}: '#{v}'"
-        else
-          "#{k}: #{v}"
-        end
-      end.join(', ')
-      if opts.empty?
-        "<%= component 'not_gate' %>\n"
-      else
-        "<%= component 'not_gate', #{opts} %>\n"
-      end
+      options_hash.empty? ? nil : options_hash.map { |k, v| "#{k}: #{v}" }.join(', ')
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/AbcSize
-
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def phase_gate(theta:, top: false, bottom: false, wire_active: true)
-      opts_h = %i[theta top bottom wire_active].each_with_object({}) do |each, h|
-        case each
-        when :theta
-          h[:theta] = theta
-        when :top
-          h[:top] = true if top
-        when :bottom
-          h[:bottom] = true if bottom
-        when :wire_active
-          h[:wire_active] = wire_active unless wire_active
-        end
-      end
-      opts = opts_h.map { |k, v| v.is_a?(String) ? "#{k}: '#{v}'" : "#{k}: #{v}" }.join(', ')
-      "<%= component 'phase_gate', #{opts} %>\n"
-    end
-    # rubocop:enable Metrics/CyclomaticComplexity
-
-    def control_dot(targets:, top: false, bottom: false, wire_active: true)
-      opts_h = %i[targets top bottom wire_active].each_with_object({}) do |each, h|
-        case each
-        when :targets
-          h[:targets] = targets
-        when :top
-          h[:top] = true if top
-        when :bottom
-          h[:bottom] = true if bottom
-        when :wire_active
-          h[:wire_active] = wire_active unless wire_active
-        end
-      end
-
-      opts = opts_h.map { |k, v| "#{k}: #{v}" }.join(', ')
-      "<%= component 'control_dot', #{opts} %>\n"
-    end
-
-    def readout(set:)
-      if set
-        "<%= component 'rw', type: :readout, set: '#{set}' %>\n"
-      else
-        "<%= component 'rw', type: :readout %>\n"
-      end
-    end
   end
   # rubocop:enable Metrics/ModuleLength
 end

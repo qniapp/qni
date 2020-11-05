@@ -4,6 +4,8 @@ module Qni
   class CircleNotationGenerator
     include ComponentsHelper
 
+    MAX_NQUBIT = 8
+
     def initialize(circuit, view)
       @circuit = circuit
       @view = view
@@ -52,7 +54,7 @@ module Qni
     end
 
     def circles
-      (0..2**@dsl.nqubit - 1).map do |ket|
+      (0..2**MAX_NQUBIT - 1).map do |ket|
         component 'qubit_circle', ket: ket, view: @view
       end
     end

@@ -1,0 +1,41 @@
+@mixin basic-gate-shape($name, $border-radius) {
+  &__#{$name} {
+    @apply absolute inset-0;
+    @apply flex justify-center items-center;
+
+    @apply bg-#{$gate-color};
+    @apply leading-none;
+    @apply stroke-current;
+    @apply text-#{$gate-label-color};
+    @apply #{$border-radius};
+
+    .draggable:hover & {
+      @apply bg-#{$gate-hover-color};
+    }
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply text-#{map-get($instruction-label-font-size, $nqubit)};
+
+        @screen md {
+          @apply text-#{$instruction-label-font-size-base};
+        }
+      }
+    }
+
+    .circuit-preview .circuit & {
+      @apply text-#{$instruction-label-font-size-base};
+    }
+
+    .gate--disabled & {
+      @apply bg-#{$gate-color-disabled};
+      @apply border-2 border-dashed border-#{$gate-label-color-disabled};
+      @apply text-#{$gate-label-color-disabled};
+    }
+
+    svg {
+      @apply p-1;
+      @apply w-full h-full;
+    }
+  }
+}

@@ -1,8 +1,7 @@
 .circuit {
   &__step {
-    @apply cursor-wait;
-    @apply flex-col justify-center;
-    @apply flex;
+    @apply cursor-pointer;
+    @apply flex flex-col justify-center;
 
     @screen md {
       @apply flex-row;
@@ -26,13 +25,15 @@
   }
 
   @keyframes fade {
-    from { @apply bg-purple-300; }
-    to { background: bg-transparent; }
+    from {
+      @apply bg-purple-300;
+    }
+    to {
+      background: bg-transparent;
+    }
   }
 
   &__step--done {
-    @apply cursor-pointer;
-
     animation-name: fade;
     animation-duration: 1.5s;
   }

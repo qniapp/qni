@@ -1,9 +1,0 @@
-<% active = local_assigns.fetch(:active, true) %>
-<% top = local_assigns.fetch(:top, false) %>
-<% bottom = local_assigns.fetch(:bottom, false) %>
-
-<%= tag.div class: class_string('circuit-element', 'wire', 'circuit-element--inactive-wire' => !active) do %>
-  <%= circuit_element_wire %>
-  <%= top_wire if top %>
-  <%= bottom_wire if bottom %>
-<% end %>

@@ -1,0 +1,140 @@
+.circle-notation {
+  $self: &;
+
+  // Position
+  @apply fixed;
+  @apply mt-16;
+  @apply top-0 left-0 right-0;
+  @apply z-40;
+
+  // Layout
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+
+  // Other
+  @apply bg-gray-100;
+  @apply shadow;
+
+  @screen md {
+    @apply bottom-0;
+    @apply mt-5;
+    top: unset;
+  }
+
+  &[data-circle-notation-nqubit="1"] {
+    @apply h-28;
+
+    .state-vector__row {
+      &:first-of-type {
+        .qubit-circle:nth-child(n + 3) {
+          @apply hidden;
+        }
+      }
+
+      &:nth-child(n + 2) {
+        @apply hidden;
+
+        * {
+          @apply hidden;
+        }
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="2"] {
+    @apply h-28;
+
+    .state-vector__row {
+      &:first-of-type {
+        .qubit-circle:nth-child(n + 5) {
+          @apply hidden;
+        }
+      }
+
+      &:nth-child(n + 2) {
+        @apply hidden;
+
+        * {
+          @apply hidden;
+        }
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="3"] {
+    @apply h-28;
+
+    .state-vector__row {
+      &:first-of-type {
+        .qubit-circle:nth-child(n + 9) {
+          @apply hidden;
+        }
+      }
+
+      &:nth-child(n + 2) {
+        @apply hidden;
+
+        * {
+          @apply hidden;
+        }
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="4"] {
+    @apply h-32;
+
+    .state-vector__row:nth-child(n + 2) {
+      @apply hidden;
+
+      * {
+        @apply hidden;
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="5"] {
+    @apply h-28;
+
+    .state-vector__row:nth-child(n + 3) {
+      @apply hidden;
+
+      * {
+        @apply hidden;
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="6"] {
+    @apply h-28;
+
+    .state-vector__row:nth-child(n + 5) {
+      @apply hidden;
+
+      * {
+        @apply hidden;
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="7"] {
+    @apply h-40;
+    @apply overflow-x-hidden;
+    @apply overflow-y-scroll;
+
+    .state-vector__row:nth-child(n + 9) {
+      @apply hidden;
+
+      * {
+        @apply hidden;
+      }
+    }
+  }
+
+  &[data-circle-notation-nqubit="8"] {
+    @apply h-40;
+    @apply overflow-x-hidden;
+    @apply overflow-y-scroll;
+  }
+}

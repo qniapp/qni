@@ -1,27 +1,52 @@
-<%= component 'circuit', nqubit: 3 do %>
+<%= circuit nqubit: 3 do %>
   <%= circuit_register_group do %>
-    <%= register_label label: 'qubit1' %>
-    <%= register_label label: 'qubit2' %>
-    <%= register_label label: 'qubit3' %>
+    <%= register_label 'qubit1' %>
+    <%= register_label 'qubit2' %>
+    <%= register_label 'qubit3' %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'qubit_label', label: '0x1' %>
-    <%= component 'qubit_label', label: '0x1' %>
-    <%= component 'qubit_label', label: '0x1' %>
+  <%= circuit_step do %>
+    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x1' %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= component 'rw', type: :write, value: 0 %>
-    <%= component 'rw', type: :write, value: 0 %>
-    <%= component 'rw', type: :write, value: 0 %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
+    <%= dropzone do %>
+      <%= draggable write: true do %>
+        <%= write 0 %>
+      <% end %>
+    <% end %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire %>
-    <%= component 'hadamard_gate' %>
-    <%= wire %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= hadamard_gate %>
+      <% end %>
+    <% end %>
+    <%= dropzone %>
   <% end %>
-  <%= component 'circuit/step' do %>
-    <%= wire %>
-    <%= wire %>
-    <%= component 'hadamard_gate' %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= draggable do %>
+        <%= hadamard_gate %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= circuit_step shadow_source: true do %>
+    <%= dropzone %>
+    <%= dropzone %>
+    <%= dropzone %>
   <% end %>
 <% end %>

@@ -1,135 +1,199 @@
-import { CcnotStep } from "lib/ccnotStep"
-import { CnotStep } from "lib/cnotStep"
-import { CphaseStep } from "lib/cphaseStep"
-import { CswapStep } from "lib/cswapStep"
-import { HStep } from "lib/hStep"
-import { IStep } from "lib/iStep"
-import { PhaseStep } from "lib/phaseStep"
-import { Qubit } from "lib/qubit"
-import { ReadStep } from "lib/readStep"
-import { RnotStep } from "lib/rnotStep"
-import { SwapStep } from "lib/swapStep"
-import { WriteStep } from "lib/writeStep"
-import { XStep } from "lib/xStep"
+import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
+import { Instruction, QubitLabel } from "./editor/instructions"
+import { DropEventHandlers } from "./editor/mixins"
+import { InternalError } from "./error"
+import { classNameFor } from "./base"
 
-import { abs, arg, round } from "mathjs"
-import { subset, index } from "mathjs"
-import { divide, multiply } from "mathjs"
-import { pi } from "mathjs"
+class CircuitWire {
+  public elements: HTMLElement[]
 
-export class Circuit {
-  public state: Qubit
-
-  constructor(bits: string | Qubit) {
-    if ("string" === typeof bits) {
-      this.state = new Qubit(bits)
-    } else {
-      this.state = bits
-    }
+  constructor(elements: HTMLElement[]) {
+    this.elements = elements
   }
 
-  nop(): Circuit {
+  clone(): CircuitWire {
+    const elements = this.elements.map((each) => {
+      return each.cloneNode(true) as HTMLElement
+    })
+    return new CircuitWire(elements)
+  }
+
+  clear(): CircuitWire {
+    this.elements.forEach((each) => {
+      if (each.classList.contains(classNameFor("dropzone"))) {
+        const circuitDropzone = new CircuitDropzone(each)
+        circuitDropzone.clear()
+        circuitDropzone.wireActive = false
+      }
+    })
     return this
   }
 
-  write(
-    valueOrTargets: number | { [bit: number]: number },
-    ...targets: number[]
-  ): Circuit {
-    const qubit = new WriteStep().run(this.state, valueOrTargets, ...targets)
-
-    return new Circuit(qubit)
+  get isEmpty(): boolean {
+    return this.elements
+      .slice(2)
+      .filter((each) => {
+        return each.classList.contains(classNameFor("dropzone"))
+      })
+      .map((each) => {
+        return new CircuitDropzone(each)
+      })
+      .every((each) => {
+        return !each.isOccupied()
+      })
   }
 
-  read(
-    ...targets: number[]
-  ): { circuit: Circuit; bits: { [bit: number]: number } } {
-    const result = new ReadStep().run(this.state, ...targets)
-
-    return { circuit: new Circuit(result.qubit), bits: result.bits }
+  get dropzones(): CircuitDropzone[] {
+    return this.elements
+      .filter((each) => {
+        return each.classList.contains(classNameFor("dropzone"))
+      })
+      .map((each) => {
+        return new CircuitDropzone(each)
+      })
   }
 
-  i(...targets: number[]): Circuit {
-    const qubit = new IStep().run(this.state, targets)
-
-    return new Circuit(qubit)
+  incrementQubitLabelValue(): CircuitWire {
+    this.elements.forEach((each) => {
+      if (
+        each.classList.contains(classNameFor("instruction:type:qubitLabel"))
+      ) {
+        const qubitLabel = new QubitLabel(each)
+        if (/^0x/.exec(qubitLabel.value)) {
+          const labelValue = parseInt(qubitLabel.value)
+          qubitLabel.value = `0x${(labelValue * 2).toString(16)}`
+        }
+      }
+    })
+    return this
   }
 
-  x(...targets: number[]): Circuit {
-    const qubit = new XStep().run(this.state, targets)
+  remove() {
+    this.elements.forEach((each) => {
+      if (each.classList.contains(classNameFor("dropzone"))) {
+        new CircuitDropzone(each).unsetInteract()
+      }
+      each.parentNode?.removeChild(each)
+    })
+  }
+}
 
-    return new Circuit(qubit)
+export class Circuit {
+  private element: Element
+
+  constructor() {
+    const el = document.getElementById("circuit")
+
+    if (!el) {
+      throw new Error("circuit element not found")
+    }
+    this.element = el
   }
 
-  h(...targets: number[]): Circuit {
-    const qubit = new HStep().run(this.state, targets)
-
-    return new Circuit(qubit)
+  get steps(): CircuitStep[] {
+    return Array.from(
+      this.element.getElementsByClassName(classNameFor("circuitStep")),
+    ).map((each) => {
+      return new CircuitStep(each)
+    })
   }
 
-  phase(theta: string, ...targets: number[]): Circuit {
-    const qubit = new PhaseStep().run(this.state, theta, targets)
-
-    return new Circuit(qubit)
+  get emptySteps(): CircuitStep[] {
+    return this.steps
+      .filter((each) => {
+        return each.isEmpty
+      })
+      .slice(0, -1)
   }
 
-  rnot(...targets: number[]): Circuit {
-    const qubit = new RnotStep().run(this.state, targets)
-
-    return new Circuit(qubit)
+  get draggables(): CircuitDraggable[] {
+    return Array.from(
+      this.element.getElementsByClassName(
+        classNameFor("draggable:type:circuit"),
+      ),
+    ).map((each) => {
+      return new CircuitDraggable(each)
+    })
   }
 
-  cnot(control: number, targets: number[]): Circuit {
-    const qubit = new CnotStep().run(this.state, control, targets)
-
-    return new Circuit(qubit)
+  get dropzones(): CircuitDropzone[] {
+    return Array.from(
+      this.element.getElementsByClassName(
+        classNameFor("dropzone:type:circuit"),
+      ),
+    ).map((each) => {
+      return new CircuitDropzone(each)
+    })
   }
 
-  cphase(theta: string, targets: number[]): Circuit {
-    const qubit = new CphaseStep().run(this.state, theta, targets)
+  prevDropzoneOf(dropzone: CircuitDropzone): CircuitDropzone | null {
+    const circuitStepIndex = dropzone.circuitStep.index
 
-    return new Circuit(qubit)
+    if (circuitStepIndex == 0) return null
+    return this.steps[circuitStepIndex - 1].dropzones[dropzone.bit]
   }
 
-  swap(target0: number, target1: number): Circuit {
-    const qubit = new SwapStep().run(this.state, target0, target1)
+  nextDropzoneOf(dropzone: CircuitDropzone): CircuitDropzone | null {
+    const circuitStepIndex = dropzone.circuitStep.index
 
-    return new Circuit(qubit)
+    if (circuitStepIndex == this.steps.length - 1) return null
+    return this.steps[circuitStepIndex + 1].dropzones[dropzone.bit]
   }
 
-  down(target: number): Circuit {
-    const qubit = new SwapStep().run(this.state, target, target + 1)
-
-    return new Circuit(qubit)
+  instructions(): Instruction[] {
+    return this.dropzones.map((each) => {
+      return each.instruction
+    })
   }
 
-  up(target: number): Circuit {
-    const qubit = new SwapStep().run(this.state, target - 1, target)
+  appendNewWire(dropzoneHandlers: DropEventHandlers): void {
+    const wires = this.wires
+    const newWire = wires[wires.length - 1]
+      .clone()
+      .clear()
+      .incrementQubitLabelValue()
 
-    return new Circuit(qubit)
+    newWire.dropzones.forEach((each) => {
+      each.setInteract(dropzoneHandlers)
+    })
+    this.appendWire(newWire)
   }
 
-  ccnot(controls: number[], target: number): Circuit {
-    const qubit = new CcnotStep().apply(this.state, controls, target)
-
-    return new Circuit(qubit)
+  removeEmptyWire(): void {
+    this.wires.forEach((each) => {
+      if (each.isEmpty) each.remove()
+    })
   }
 
-  cswap(control: number, targets: number[]): Circuit {
-    const qubit = new CswapStep().apply(this.state, control, targets)
+  get nqubit(): number {
+    const dataNqubit = this.element.getAttribute("data-nqubit")
+    if (!dataNqubit) throw new InternalError("Couldn't get data-nqubit")
 
-    return new Circuit(qubit)
+    return parseInt(dataNqubit)
   }
 
-  magnitude(bit: number): number {
-    return round(abs(this.amplitude(bit)), 3)
+  updateNqubit(): void {
+    this.element.setAttribute("data-nqubit", this.wires.length.toString())
   }
 
-  degree(bit: number): number {
-    return round(multiply(divide(arg(this.amplitude(bit)), pi), 180), 3)
+  get wires(): CircuitWire[] {
+    const wireElements: HTMLElement[][] = []
+
+    this.steps.map((step) => {
+      step.childElements.forEach((child, i) => {
+        if (!wireElements[i]) wireElements.push([])
+        wireElements[i].push(child as HTMLElement)
+      })
+    })
+
+    return wireElements.map((each) => {
+      return new CircuitWire(each)
+    })
   }
 
-  amplitude(bit: number): number {
-    return (subset(this.state.matrix, index(bit, 0)) as unknown) as number
+  private appendWire(wire: CircuitWire): void {
+    this.steps.forEach((each, i) => {
+      each.appendChild(wire.elements[i])
+    })
   }
 }

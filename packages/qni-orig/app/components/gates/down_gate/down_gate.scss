@@ -1,0 +1,46 @@
+.down-gate {
+  $self: &;
+
+  &__line {
+    @apply absolute;
+    @apply border-t-2 border-gray-600;
+    @apply transform;
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply origin-top-right -rotate-45;
+        @apply -mt-#{map-get($instruction-margin, $nqubit)};
+        @apply mr-#{map-get($instruction-size, $nqubit) / 2};
+        right: -2px;
+        top: -2px;
+        width: calc(
+          #{(
+              map-get($instruction-size, $nqubit) +
+                map-get($instruction-margin, $nqubit) *
+                2
+            ) /
+            4}rem *
+            #{sqrt(2)}
+        );
+
+        @screen md {
+          @apply origin-top-left rotate-45;
+          @apply -ml-#{$instruction-margin-base / 2};
+          @apply mt-4;
+          left: -2px;
+          top: -2px;
+          width: calc(3rem * #{sqrt(2)});
+        }
+      }
+    }
+
+    .circuit-preview #{$self} & {
+      @apply origin-top-left rotate-45;
+      @apply -ml-#{$instruction-margin-base / 2};
+      @apply mt-4;
+      left: -2px;
+      top: -2px;
+      width: calc(3rem * #{sqrt(2)});
+    }
+  }
+}

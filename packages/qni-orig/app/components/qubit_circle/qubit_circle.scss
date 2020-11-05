@@ -19,29 +19,30 @@
   --balloon-color: theme("colors.indigo.500");
   --balloon-font-size: theme("fontSize.xs");
 
-  .circle-notation--1qubit &:nth-of-type(n + 2),
-  .circle-notation--2qubit &:nth-of-type(n + 2) {
+  .circle-notation[data-circle-notation-nqubit="1"] &:nth-of-type(n + 2),
+  .circle-notation[data-circle-notation-nqubit="2"] &:nth-of-type(n + 2) {
     @apply ml-#{$ml-xl};
   }
 
-  .circle-notation--3qubit &:nth-of-type(n + 2),
-  .circle-notation--4qubit &:nth-of-type(n + 2) {
+  .circle-notation[data-circle-notation-nqubit="3"] &:nth-of-type(n + 2),
+  .circle-notation[data-circle-notation-nqubit="4"] &:nth-of-type(n + 2) {
     @apply ml-#{$ml-large};
   }
 
-  .circle-notation--3qubit &:nth-of-type(n + 2) {
+  .circle-notation[data-circle-notation-nqubit="3"] &:nth-of-type(n + 2) {
     @screen md {
       @apply ml-#{$ml-xl};
     }
   }
 
-  .circle-notation--5qubit &:nth-of-type(n + 2),
-  .circle-notation--6qubit &:nth-of-type(n + 2),
-  .circle-notation--8qubit &:nth-of-type(n + 2) {
+  .circle-notation[data-circle-notation-nqubit="5"] &:nth-of-type(n + 2),
+  .circle-notation[data-circle-notation-nqubit="6"] &:nth-of-type(n + 2),
+  .circle-notation[data-circle-notation-nqubit="7"] &:nth-of-type(n + 2),
+  .circle-notation[data-circle-notation-nqubit="8"] &:nth-of-type(n + 2) {
     @apply ml-#{$ml-base};
   }
 
-  .circle-notation--5qubit &:nth-of-type(n + 2) {
+  .circle-notation[data-circle-notation-nqubit="5"] &:nth-of-type(n + 2) {
     @screen md {
       @apply ml-#{$ml-large};
     }
@@ -61,33 +62,34 @@
     @apply rounded-full;
     @apply border-#{$border-width-base} border-gray-400;
 
-    content: '';
+    content: "";
     margin: -#{$border-width-base}px;
   }
 
-  .circle-notation--1qubit &__border,
-  .circle-notation--2qubit &__border {
+  .circle-notation[data-circle-notation-nqubit="1"] &__border,
+  .circle-notation[data-circle-notation-nqubit="2"] &__border {
     @apply w-#{$size-xl} h-#{$size-xl};
   }
 
-  .circle-notation--3qubit &__border,
-  .circle-notation--4qubit &__border {
+  .circle-notation[data-circle-notation-nqubit="3"] &__border,
+  .circle-notation[data-circle-notation-nqubit="4"] &__border {
     @apply w-#{$size-large} h-#{$size-large};
   }
 
-  .circle-notation--3qubit &__border {
+  .circle-notation[data-circle-notation-nqubit="3"] &__border {
     @screen md {
       @apply w-#{$size-xl} h-#{$size-xl};
     }
   }
 
-  .circle-notation--5qubit &__border,
-  .circle-notation--6qubit &__border,
-  .circle-notation--8qubit &__border {
+  .circle-notation[data-circle-notation-nqubit="5"] &__border,
+  .circle-notation[data-circle-notation-nqubit="6"] &__border,
+  .circle-notation[data-circle-notation-nqubit="7"] &__border,
+  .circle-notation[data-circle-notation-nqubit="8"] &__border {
     @apply w-#{$size-base} h-#{$size-base};
   }
 
-  .circle-notation--5qubit &__border {
+  .circle-notation[data-circle-notation-nqubit="5"] &__border {
     @screen md {
       @apply w-#{$size-large} h-#{$size-large};
     }
@@ -98,29 +100,30 @@
     @apply flex items-center justify-center;
   }
 
-  .circle-notation--1qubit &__body,
-  .circle-notation--2qubit &__body {
+  .circle-notation[data-circle-notation-nqubit="1"] &__body,
+  .circle-notation[data-circle-notation-nqubit="2"] &__body {
     @apply w-#{$size-xl} h-#{$size-xl};
   }
 
-  .circle-notation--3qubit &__body,
-  .circle-notation--4qubit &__body {
+  .circle-notation[data-circle-notation-nqubit="3"] &__body,
+  .circle-notation[data-circle-notation-nqubit="4"] &__body {
     @apply w-#{$size-large} h-#{$size-large};
   }
 
-  .circle-notation--3qubit &__body {
+  .circle-notation[data-circle-notation-nqubit="3"] &__body {
     @screen md {
       @apply w-#{$size-xl} h-#{$size-xl};
     }
   }
 
-  .circle-notation--5qubit &__body,
-  .circle-notation--6qubit &__body,
-  .circle-notation--8qubit &__body {
+  .circle-notation[data-circle-notation-nqubit="5"] &__body,
+  .circle-notation[data-circle-notation-nqubit="6"] &__body,
+  .circle-notation[data-circle-notation-nqubit="7"] &__body,
+  .circle-notation[data-circle-notation-nqubit="8"] &__body {
     @apply w-#{$size-base} h-#{$size-base};
   }
 
-  .circle-notation--5qubit &__body {
+  .circle-notation[data-circle-notation-nqubit="5"] &__body {
     @screen md {
       @apply w-#{$size-large} h-#{$size-large};
     }
@@ -133,13 +136,14 @@
     @apply rounded-full;
   }
 
-  .circle-notation--5qubit &__magnitude,
-  .circle-notation--6qubit &__magnitude,
-  .circle-notation--8qubit &__magnitude {
+  .circle-notation[data-circle-notation-nqubit="5"] &__magnitude,
+  .circle-notation[data-circle-notation-nqubit="6"] &__magnitude,
+  .circle-notation[data-circle-notation-nqubit="7"] &__magnitude,
+  .circle-notation[data-circle-notation-nqubit="8"] &__magnitude {
     @apply bg-blue-400;
   }
 
-  .circle-notation--5qubit &__magnitude {
+  .circle-notation[data-circle-notation-nqubit="5"] &__magnitude {
     @screen md {
       @apply bg-blue-200;
     }
@@ -152,23 +156,23 @@
     @apply rounded-full;
   }
 
-  .circle-notation--1qubit &__phase-dot,
-  .circle-notation--2qubit &__phase-dot {
+  .circle-notation[data-circle-notation-nqubit="1"] &__phase-dot,
+  .circle-notation[data-circle-notation-nqubit="2"] &__phase-dot {
     @apply ml-#{$size-xl / 2};
     @apply w-2 h-2;
     left: -4px;
     top: -4px;
   }
 
-  .circle-notation--3qubit &__phase-dot,
-  .circle-notation--4qubit &__phase-dot {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-dot,
+  .circle-notation[data-circle-notation-nqubit="4"] &__phase-dot {
     @apply ml-#{$size-large / 2};
     @apply w-2 h-2;
     left: -4px;
     top: -5px;
   }
 
-  .circle-notation--3qubit &__phase-dot {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-dot {
     @screen md {
       @apply ml-#{$size-xl / 2};
       @apply w-2 h-2;
@@ -177,9 +181,10 @@
     }
   }
 
-  .circle-notation--5qubit &__phase-dot,
-  .circle-notation--6qubit &__phase-dot,
-  .circle-notation--8qubit &__phase-dot {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-dot,
+  .circle-notation[data-circle-notation-nqubit="6"] &__phase-dot,
+  .circle-notation[data-circle-notation-nqubit="7"] &__phase-dot,
+  .circle-notation[data-circle-notation-nqubit="8"] &__phase-dot {
     @apply ml-#{$size-base / 2};
     height: 6px;
     left: -3px;
@@ -187,7 +192,7 @@
     width: 6px;
   }
 
-  .circle-notation--5qubit &__phase-dot {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-dot {
     @screen md {
       @apply ml-#{$size-large / 2};
       @apply w-2 h-2;
@@ -213,40 +218,41 @@
     @apply flex-none;
     @apply w-#{$size-base / 2} h-#{$size-base / 2};
 
-    margin-left: #{.25 * $size-base * 8 - 1}px;
+    margin-left: #{0.25 * $size-base * 8 - 1}px;
   }
 
-  .circle-notation--1qubit &__phase-line,
-  .circle-notation--2qubit &__phase-line {
+  .circle-notation[data-circle-notation-nqubit="1"] &__phase-line,
+  .circle-notation[data-circle-notation-nqubit="2"] &__phase-line {
     @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
-    margin-left: #{.25 * $size-xl * 8 - 1}px;
+    margin-left: #{0.25 * $size-xl * 8 - 1}px;
   }
 
-  .circle-notation--3qubit &__phase-line,
-  .circle-notation--4qubit &__phase-line {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-line,
+  .circle-notation[data-circle-notation-nqubit="4"] &__phase-line {
     @apply w-#{$size-large / 2} h-#{$size-large / 2};
-    margin-left: #{.25 * $size-large * 8 - 1}px;
+    margin-left: #{0.25 * $size-large * 8 - 1}px;
   }
 
-  .circle-notation--3qubit &__phase-line {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-line {
     @screen md {
       @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
-      margin-left: #{.25 * $size-xl * 8 - 1}px;
+      margin-left: #{0.25 * $size-xl * 8 - 1}px;
     }
   }
 
-  .circle-notation--5qubit &__phase-line,
-  .circle-notation--6qubit &__phase-line,
-  .circle-notation--8qubit &__phase-line {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-line,
+  .circle-notation[data-circle-notation-nqubit="6"] &__phase-line,
+  .circle-notation[data-circle-notation-nqubit="7"] &__phase-line,
+  .circle-notation[data-circle-notation-nqubit="8"] &__phase-line {
     @apply w-#{$size-base / 2} h-#{$size-base / 2};
 
-    margin-left: #{.25 * $size-base * 8 - 1}px;
+    margin-left: #{0.25 * $size-base * 8 - 1}px;
   }
 
-  .circle-notation--5qubit &__phase-line {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-line {
     @screen md {
       @apply w-#{$size-large / 2} h-#{$size-large / 2};
-      margin-left: #{.25 * $size-large * 8 - 1}px;
+      margin-left: #{0.25 * $size-large * 8 - 1}px;
     }
   }
 
@@ -256,40 +262,41 @@
     @apply flex-none;
     @apply w-#{$size-base / 2} h-#{$size-base / 2};
 
-    margin-left: #{.25 * $size-base * 8 - 1}px;
+    margin-left: #{0.25 * $size-base * 8 - 1}px;
   }
 
-  .circle-notation--1qubit &__phase-magnitude,
-  .circle-notation--2qubit &__phase-magnitude {
+  .circle-notation[data-circle-notation-nqubit="1"] &__phase-magnitude,
+  .circle-notation[data-circle-notation-nqubit="2"] &__phase-magnitude {
     @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
-    margin-left: #{.25 * $size-xl * 8 - 1}px;
+    margin-left: #{0.25 * $size-xl * 8 - 1}px;
   }
 
-  .circle-notation--3qubit &__phase-magnitude,
-  .circle-notation--4qubit &__phase-magnitude {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-magnitude,
+  .circle-notation[data-circle-notation-nqubit="4"] &__phase-magnitude {
     @apply w-#{$size-large / 2} h-#{$size-large / 2};
-    margin-left: #{.25 * $size-large * 8 - 1}px;
+    margin-left: #{0.25 * $size-large * 8 - 1}px;
   }
 
-  .circle-notation--3qubit &__phase-magnitude {
+  .circle-notation[data-circle-notation-nqubit="3"] &__phase-magnitude {
     @screen md {
       @apply w-#{$size-xl / 2} h-#{$size-xl / 2};
-      margin-left: #{.25 * $size-xl * 8 - 1}px;
+      margin-left: #{0.25 * $size-xl * 8 - 1}px;
     }
   }
 
-  .circle-notation--5qubit &__phase-magnitude,
-  .circle-notation--6qubit &__phase-magnitude,
-  .circle-notation--8qubit &__phase-magnitude {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-magnitude,
+  .circle-notation[data-circle-notation-nqubit="6"] &__phase-magnitude,
+  .circle-notation[data-circle-notation-nqubit="7"] &__phase-magnitude,
+  .circle-notation[data-circle-notation-nqubit="8"] &__phase-magnitude {
     @apply w-#{$size-base / 2} h-#{$size-base / 2};
 
-    margin-left: #{.25 * $size-base * 8 - 1}px;
+    margin-left: #{0.25 * $size-base * 8 - 1}px;
   }
 
-  .circle-notation--5qubit &__phase-magnitude {
+  .circle-notation[data-circle-notation-nqubit="5"] &__phase-magnitude {
     @screen md {
       @apply w-#{$size-large / 2} h-#{$size-large / 2};
-      margin-left: #{.25 * $size-large * 8 - 1}px;
+      margin-left: #{0.25 * $size-large * 8 - 1}px;
     }
   }
 
@@ -300,32 +307,33 @@
     @apply whitespace-no-wrap;
   }
 
-  .circle-notation--1qubit &__ket,
-  .circle-notation--2qubit &__ket {
+  .circle-notation[data-circle-notation-nqubit="1"] &__ket,
+  .circle-notation[data-circle-notation-nqubit="2"] &__ket {
     @apply mt-1;
     @apply text-base;
   }
 
-  .circle-notation--3qubit &__ket,
-  .circle-notation--4qubit &__ket {
+  .circle-notation[data-circle-notation-nqubit="3"] &__ket,
+  .circle-notation[data-circle-notation-nqubit="4"] &__ket {
     @apply mt-1;
     @apply text-sm;
   }
 
-  .circle-notation--3qubit &__ket {
+  .circle-notation[data-circle-notation-nqubit="3"] &__ket {
     @screen md {
       @apply mt-1;
       @apply text-base;
     }
   }
 
-  .circle-notation--5qubit &__ket,
-  .circle-notation--6qubit &__ket,
-  .circle-notation--8qubit &__ket {
+  .circle-notation[data-circle-notation-nqubit="5"] &__ket,
+  .circle-notation[data-circle-notation-nqubit="6"] &__ket,
+  .circle-notation[data-circle-notation-nqubit="7"] &__ket,
+  .circle-notation[data-circle-notation-nqubit="8"] &__ket {
     @apply hidden;
   }
 
-  .circle-notation--5qubit &__ket {
+  .circle-notation[data-circle-notation-nqubit="5"] &__ket {
     @screen md {
       @apply inline;
       @apply mt-1;

@@ -1,0 +1,10 @@
+<% hadamard_gate = local_assigns.fetch(:hadamard_gate) %>
+
+<%= tag.div class: hadamard_gate.klass, data: hadamard_gate.data do %>
+  <%= connection_top %>
+  <%= connection_bottom %>
+  <%= gate_box label: 'H' %>
+  <%= gate_label text: hadamard_gate.label_text %>
+  <%= gate_label text: hadamard_gate.label_text, bottom: true %>
+  <%= gate_popup label: 'if', error_message: 'ifの値が正しくありません' %>
+<% end %>

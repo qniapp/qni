@@ -1,0 +1,9 @@
+.card {
+  @apply bg-white;
+  @apply overflow-hidden;
+  @apply shadow;
+
+  @screen sm {
+    @apply rounded-lg;
+  }
+}
