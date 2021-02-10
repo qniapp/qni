@@ -1,8 +1,8 @@
 .gate {
   $self: &;
 
-  &__swap {
-    #{$self}:hover & {
+  &__shape--swap {
+    #{$self}:hover & svg {
       @apply stroke-current;
       @apply text-#{$gate-hover-color};
     }
