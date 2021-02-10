@@ -1,3 +1,9 @@
 <% shape = local_assigns.fetch(:shape) %>
 
-<div class="gate__shape gate__shape--<%= shape.type %>"><%= shape.label %></div>
+<div class="gate__shape gate__shape--<%= shape.type %>">
+  <% if shape.type == 'swap' %>
+    <%= swap_icon %>
+  <% else %>
+    <%= shape.label %>
+  <% end %>
+</div>
