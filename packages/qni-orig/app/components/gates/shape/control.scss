@@ -1,7 +1,7 @@
 .gate {
   $parent: &;
 
-  &__dot {
+  &__shape--control {
     @apply bg-#{$gate-color};
     @apply rounded-full;
     @apply w-3 h-3;

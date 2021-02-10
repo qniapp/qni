@@ -5,5 +5,5 @@ class Gates::ShapeComponent < Component
   attribute :label
 
   validates :type, presence: true
-  validates :label, presence: true
+  validates :label, presence: true, if: -> { type == 'box' || type == 'circle' }
 end

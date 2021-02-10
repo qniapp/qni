@@ -41,7 +41,6 @@
 @import "circuit_thumbnail/circuit_thumbnail";
 @import "editor/palette/palette";
 @import "gates/control_gate/control_gate";
-@import "gates/dot/dot";
 @import "gates/down_gate/down_gate";
 @import "gates/gate";
 @import "gates/label/label";
@@ -51,6 +50,7 @@
 @import "gates/rw/write";
 @import "gates/shape/box";
 @import "gates/shape/circle";
+@import "gates/shape/control";
 @import "gates/swap/swap";
 @import "gates/swap_gate/swap_gate";
 @import "gates/up_gate/up_gate";
