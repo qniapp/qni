@@ -3,5 +3,5 @@
 <%= tag.div class: root_not_gate.klass do %>
   <%= connection_top if root_not_gate.wire_top? %>
   <%= connection_bottom if root_not_gate.wire_bottom? %>
-  <%= gate_box label: '√N' %>
+  <%= gate_shape type: 'box', label: '√N' %>
 <% end %>
