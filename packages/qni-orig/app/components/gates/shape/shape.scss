@@ -1,5 +1,5 @@
-@mixin basic-gate-shape($name, $border-radius) {
-  &__#{$name} {
+@mixin gate-shape($name, $border-radius) {
+  &__shape--#{$name} {
     @apply absolute inset-0;
     @apply flex justify-center items-center;
 

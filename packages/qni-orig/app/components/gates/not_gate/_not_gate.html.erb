@@ -3,7 +3,7 @@
 <%= tag.div class: not_gate.klass, data: not_gate.data do %>
   <%= connection_top %>
   <%= connection_bottom %>
-  <%= gate_circle label: plus_icon %>
+  <%= gate_shape type: 'circle', label: plus_icon %>
   <%= gate_label text: not_gate.label_text %>
   <%= gate_label text: not_gate.label_text, bottom: true %>
   <%= gate_popup label: 'if', error_message: 'ifの値が正しくありません' %>
