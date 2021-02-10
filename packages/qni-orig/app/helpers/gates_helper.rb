@@ -43,10 +43,6 @@ module GatesHelper
     component 'gates/shape', *options
   end
 
-  def gate_swap(*options)
-    component 'gates/swap', *options
-  end
-
   def gate_label(*options)
     component 'gates/label', *options
   end
