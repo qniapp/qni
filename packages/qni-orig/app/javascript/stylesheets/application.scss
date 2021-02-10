@@ -18,9 +18,6 @@
 @import "tailwind_ui/card/header/header";
 @import "tailwind_ui/pill";
 
-// Mixins
-@import "mixins/basic_gate_shape";
-
 // Functions
 @import "functions/sqrt";
 
@@ -43,8 +40,6 @@
 @import "circuit_card/circuit_card";
 @import "circuit_thumbnail/circuit_thumbnail";
 @import "editor/palette/palette";
-@import "gates/box/box";
-@import "gates/circle/circle";
 @import "gates/control_gate/control_gate";
 @import "gates/dot/dot";
 @import "gates/down_gate/down_gate";
@@ -54,6 +49,8 @@
 @import "gates/rw/readout";
 @import "gates/rw/rw";
 @import "gates/rw/write";
+@import "gates/shape/box";
+@import "gates/shape/circle";
 @import "gates/swap/swap";
 @import "gates/swap_gate/swap_gate";
 @import "gates/up_gate/up_gate";

@@ -39,12 +39,8 @@ module GatesHelper
     component 'gates/up_gate', *options
   end
 
-  def gate_box(*options)
-    component 'gates/box', *options
-  end
-
-  def gate_circle(*options)
-    component 'gates/circle', *options
+  def gate_shape(*options)
+    component 'gates/shape', *options
   end
 
   def gate_dot(*options)
