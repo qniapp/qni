@@ -43,7 +43,7 @@
   &__value {
     @apply font-semibold;
     @apply leading-none;
-    @apply whitespace-no-wrap;
+    @apply whitespace-nowrap;
 
     @mixin value($nqubit) {
       @apply text-#{map-get($instruction-label-font-size, $nqubit)};

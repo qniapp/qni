@@ -14,7 +14,7 @@
   }
 
   &__body {
-    @apply flex flex-row-reverse flex-no-wrap;
+    @apply flex flex-row-reverse flex-nowrap;
 
     @screen md {
       @apply flex-col;

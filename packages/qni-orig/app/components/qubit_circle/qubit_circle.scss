@@ -304,7 +304,7 @@
   &__ket {
     @apply leading-none;
     @apply text-gray-400;
-    @apply whitespace-no-wrap;
+    @apply whitespace-nowrap;
   }
 
   .circle-notation[data-circle-notation-nqubit="1"] &__ket,
