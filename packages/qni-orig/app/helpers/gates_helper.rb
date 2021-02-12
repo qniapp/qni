@@ -1,8 +1,4 @@
 module GatesHelper
-  def not_gate(*options, &block)
-    component 'gates/not_gate', *options, &block
-  end
-
   def phase_gate(*options, &block)
     component 'gates/phase_gate', *options, &block
   end
