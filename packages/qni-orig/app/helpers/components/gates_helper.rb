@@ -8,4 +8,8 @@ module Components::GatesHelper
   def not_gate(*options, &block)
     component 'gates/not_gate', *options, &block
   end
+
+  def root_not_gate(*options, &block)
+    component 'gates/root_not_gate', *options, &block
+  end
 end

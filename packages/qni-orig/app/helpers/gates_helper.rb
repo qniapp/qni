@@ -3,10 +3,6 @@ module GatesHelper
     component 'gates/phase_gate', *options, &block
   end
 
-  def root_not_gate(*options, &block)
-    component 'gates/root_not_gate', *options, &block
-  end
-
   def control_gate(*options, &block)
     component 'gates/control_gate', *options, &block
   end
