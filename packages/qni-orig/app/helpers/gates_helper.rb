@@ -1,8 +1,4 @@
 module GatesHelper
-  def control_gate(*options, &block)
-    component 'gates/control_gate', *options, &block
-  end
-
   def write(value)
     component 'gates/rw', type: :write, value: value
   end
