@@ -3,8 +3,8 @@
 <%= tag.div class: phase_gate.klass, data: phase_gate.data do %>
   <%= connection_top %>
   <%= connection_bottom %>
+  <%= gate_shape type: 'circle', label: '𝟇' %>
   <%= gate_label text: phase_gate.theta %>
   <%= gate_label text: phase_gate.theta, bottom: true %>
-  <%= gate_shape type: 'circle', label: 'φ' %>
   <%= gate_popup label: 'theta', error_message: 'thetaの値が正しくありません' %>
 <% end %>
