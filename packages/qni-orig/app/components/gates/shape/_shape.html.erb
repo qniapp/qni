@@ -3,6 +3,10 @@
 <div class="gate__shape gate__shape--<%= shape.type %>">
   <% if shape.type == 'swap' %>
     <%= swap_icon %>
+  <% elsif shape.type == 'rw' %>
+    <div>
+      &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
+    </div>
   <% else %>
     <%= shape.label %>
   <% end %>

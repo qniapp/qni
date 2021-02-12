@@ -7,9 +7,9 @@ class Components::RwHelperTest < ActionView::TestCase
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="instruction rw write" data-value="0">
-        <div class="rw__body">
+        <div class="gate__shape gate__shape--rw">
           <div>
-            |<span class="rw__value"></span>&#10217;
+            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -21,9 +21,9 @@ class Components::RwHelperTest < ActionView::TestCase
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="instruction rw write" data-value="0">
-        <div class="rw__body">
+        <div class="gate__shape gate__shape--rw">
           <div>
-            |<span class="rw__value"></span>&#10217;
+            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -35,9 +35,9 @@ class Components::RwHelperTest < ActionView::TestCase
   test 'readout' do
     assert_dom_equal beautify(<<~ERB), beautify(readout)
       <div class="instruction rw readout" data-controller="gate-popup">
-        <div class="rw__body">
+        <div class="gate__shape gate__shape--rw">
           <div>
-            |<span class="rw__value"></span>&#10217;
+            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -56,9 +56,9 @@ class Components::RwHelperTest < ActionView::TestCase
   test 'readout (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
       <div class="instruction rw readout" data-set="alice_v" data-controller="gate-popup">
-        <div class="rw__body">
+        <div class="gate__shape gate__shape--rw">
           <div>
-            |<span class="rw__value"></span>&#10217;
+            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">alice_v</div>
