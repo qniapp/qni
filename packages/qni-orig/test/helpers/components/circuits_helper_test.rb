@@ -4,6 +4,7 @@ require 'test_helper'
 
 class Components::CircuitsHelperTest < ActionView::TestCase
   include CircuitHelper
+  include Components::GatesHelper
   include ComponentsHelper
   include GatesHelper
 
