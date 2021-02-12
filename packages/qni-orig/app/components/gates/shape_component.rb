@@ -5,5 +5,11 @@ class Gates::ShapeComponent < Component
   attribute :label
 
   validates :type, presence: true
-  validates :label, presence: true, if: -> { type == 'box' || type == 'circle' }
+  validates :label, presence: true, if: :labelable?
+
+  private
+
+  def labelable?
+    type == 'box' || type == 'circle' || type == 'swap'
+  end
 end
