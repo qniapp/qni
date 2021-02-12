@@ -1,11 +1,7 @@
 <% rw = local_assigns.fetch(:rw) %>
 
 <%= tag.div class: class_string('instruction', 'rw', rw.type), data: rw.data do %>
-  <div class="rw__body">
-    <div>
-      |<span class="rw__value"></span>&#10217;
-    </div>
-  </div>
+  <%= gate_shape type: 'rw' %>
   <%= gate_label text: rw.set %>
   <%= gate_label text: rw.set, bottom: true %>
   <% if rw.readout? %>
