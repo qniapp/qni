@@ -20,4 +20,8 @@ module Components::GatesHelper
   def root_not_gate(*options, &block)
     component 'gates/root_not_gate', *options, &block
   end
+
+  def swap_gate(*options)
+    component 'gates/swap_gate', *options
+  end
 end
