@@ -7,10 +7,6 @@ module GatesHelper
     component 'gates/rw', type: :readout, set: set
   end
 
-  def swap_gate(*options)
-    component 'gates/swap_gate', *options
-  end
-
   def down_gate(*options)
     component 'gates/down_gate', *options
   end
