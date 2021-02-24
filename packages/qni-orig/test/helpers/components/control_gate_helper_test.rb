@@ -9,6 +9,7 @@ class Components::ControlGateHelperTest < ActionView::TestCase
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--control">
+          <div class="control-gate__dot"></div>
         </div>
       </div>
     ERB

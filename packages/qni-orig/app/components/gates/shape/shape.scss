@@ -1,9 +1,15 @@
 @mixin gate-shape($name, $border-radius) {
+  &__shape--box,
+  &__shape--circle {
+    @apply bg-#{$gate-color};
+  }
+
   &__shape--#{$name} {
+    @apply w-8 h-8;
+
     @apply absolute inset-0;
     @apply flex justify-center items-center;
 
-    @apply bg-#{$gate-color};
     @apply leading-none;
     @apply stroke-current;
     @apply text-#{$gate-label-color};
@@ -34,6 +40,8 @@
     }
 
     svg {
+      @apply stroke-current;
+      @apply text-#{$gate-label-color};
       @apply p-1;
       @apply w-full h-full;
     }
