@@ -5,6 +5,8 @@
     <div>
       &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
     </div>
+  <% elsif shape.type == 'control' %>
+    <div class="control-gate__dot"></div>
   <% else %>
     <%= shape.label %>
   <% end %>
