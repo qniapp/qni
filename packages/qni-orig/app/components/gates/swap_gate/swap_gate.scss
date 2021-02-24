@@ -8,10 +8,9 @@
     @apply border-#{$gate-hover-color};
   }
 
-  .gate__shape {
+  .gate__shape svg {
     @apply stroke-current;
     @apply text-#{$gate-color};
-    @apply w-full h-full;
 
     stroke-width: 3;
 

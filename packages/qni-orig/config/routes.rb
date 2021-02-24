@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :circuits, only: %i[index show]
   resources :circuit_previews, only: :show
 
+  resources :styleguide, only: :index
+
   namespace :admin do
     resources :circuits
 
