@@ -9,7 +9,7 @@ class Components::ControlGateHelperTest < ActionView::TestCase
       <div class="instruction gate swap-gate gate--connected-with-upper-bit" data-targets="0,1">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--swap">
+        <div class="gate__shape gate__shape--square">
           #{swap_icon}
         </div>
       </div>
