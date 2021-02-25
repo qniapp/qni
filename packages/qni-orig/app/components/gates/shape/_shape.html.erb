@@ -1,6 +1,6 @@
 <% shape = local_assigns.fetch(:shape) %>
 
-<div class="gate__shape gate__shape--<%= shape.type %>">
+<div class="<%= class_string 'gate__shape', "gate__shape--#{shape.type}", 'gate__shape--fill' => shape.fill %>">
   <% if shape.type == 'rw' %>
     <div>
       &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
