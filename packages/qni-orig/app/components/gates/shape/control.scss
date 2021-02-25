@@ -3,13 +3,6 @@
 
   $parent: &;
 
-  .control-gate__dot {
-    @apply bg-#{$gate-color};
-    @apply rounded-full;
-    @apply w-3 h-3;
-    @apply z-10;
-  }
-
   &__shape--control {
     .draggable:hover & {
       @apply bg-#{$gate-hover-color};
