@@ -1,7 +1,11 @@
 <% control_gate = local_assigns.fetch(:control_gate) %>
 
+<% control_gate_dot = capture do %>
+  <div class="control-gate__dot"></div>
+<% end %>
+
 <%= tag.div class: control_gate.klass, data: control_gate.data do %>
   <%= connection_top %>
   <%= connection_bottom %>
-  <%= gate_shape type: 'control' %>
+  <%= gate_shape label: control_gate_dot, type: 'square' %>
 <% end %>
