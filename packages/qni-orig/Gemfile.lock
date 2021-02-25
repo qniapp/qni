@@ -257,6 +257,7 @@ GEM
       parser
     scss_lint (0.59.0)
       sass (~> 3.5, >= 3.5.5)
+    scss_lint_reporter_checkstyle (0.2.0)
     sdoc (1.1.0)
       rdoc (>= 5.0)
     selectize-rails (0.12.6)
@@ -340,6 +341,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   scout_apm
   scss_lint
+  scss_lint_reporter_checkstyle
   sdoc
   spring
   stackprof
