@@ -35,8 +35,8 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout' do
     assert_dom_equal beautify(<<~ERB), beautify(readout)
-      <div class="instruction rw readout" data-controller="gate-popup">
-        <div class="gate__shape gate__shape--rw">
+      <div class="instruction gate readout-gate" data-controller="gate-popup">
+        <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
@@ -56,8 +56,8 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
-      <div class="instruction rw readout" data-set="alice_v" data-controller="gate-popup">
-        <div class="gate__shape gate__shape--rw">
+      <div class="instruction gate readout-gate" data-set="alice_v" data-controller="gate-popup">
+        <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>

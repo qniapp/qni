@@ -51,30 +51,4 @@
       }
     }
   }
-
-  &-label {
-    @apply font-mono;
-    @apply leading-none;
-    @apply text-purple-500;
-
-    &:after {
-      content: "?";
-    }
-
-    .rw[data-value="0"] & {
-      @apply text-blue-500;
-    }
-
-    .rw[data-value="0"] &:after {
-      content: "0";
-    }
-
-    .rw[data-value="1"] & {
-      @apply text-orange-500;
-    }
-
-    .rw[data-value="1"] &:after {
-      content: "1";
-    }
-  }
 }

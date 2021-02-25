@@ -45,9 +45,8 @@
 @import "gates/gate";
 @import "gates/label/label";
 @import "gates/popup/popup";
-@import "gates/rw/readout";
-@import "gates/rw/rw";
-@import "gates/rw/write";
+@import "gates/readout_gate/readout_gate";
+@import "gates/readout_gate/rw";
 @import "gates/shape/circle";
 @import "gates/shape/square";
 @import "gates/swap_gate/swap_gate";

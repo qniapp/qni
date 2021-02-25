@@ -1,8 +1,4 @@
 module GatesHelper
-  def readout(set: nil)
-    component 'gates/rw', type: :readout, set: set
-  end
-
   def down_gate(*options)
     component 'gates/down_gate', *options
   end
