@@ -8,7 +8,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--thetable gate phase-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--circle">
+        <div class="gate__shape gate__shape--circle gate__shape--fill">
           𝟇
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -17,7 +17,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">theta</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">thetaの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">theta の値が正しくありません</p>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--thetable gate phase-gate" data-theta="pi/2" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--circle">
+        <div class="gate__shape gate__shape--circle gate__shape--fill">
           𝟇
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">π/2</div>
@@ -38,7 +38,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">theta</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">thetaの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">theta の値が正しくありません</p>
           </div>
         </div>
       </div>

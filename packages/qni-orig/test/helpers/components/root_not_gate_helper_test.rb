@@ -8,7 +8,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate root-not-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--square">
+        <div class="gate__shape gate__shape--square gate__shape--fill">
           √N
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -29,7 +29,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate root-not-gate" data-if="alice_rn" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--square">
+        <div class="gate__shape gate__shape--square gate__shape--fill">
           √N
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">if alice_rn</div>

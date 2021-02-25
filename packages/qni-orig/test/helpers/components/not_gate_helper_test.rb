@@ -9,7 +9,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate not-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--circle">
+        <div class="gate__shape gate__shape--circle gate__shape--fill">
           #{plus_icon}
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -18,7 +18,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">ifの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">if の値が正しくありません</p>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate not-gate" data-if="alice_v" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--circle">
+        <div class="gate__shape gate__shape--circle gate__shape--fill">
           #{plus_icon}
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">if alice_v</div>
@@ -39,7 +39,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">ifの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">if の値が正しくありません</p>
           </div>
         </div>
       </div>
