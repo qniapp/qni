@@ -1,0 +1,13 @@
+<% write_gate = local_assigns.fetch(:write_gate) %>
+
+<% label = capture do %>
+  <div>
+    &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
+  </div>
+<% end %>
+
+<%= tag.div class: write_gate.klass, data: write_gate.data do %>
+  <%= gate_shape label: label, type: 'square' %>
+  <%= gate_label text: write_gate.set %>
+  <%= gate_label text: write_gate.set, bottom: true %>
+<% end %>

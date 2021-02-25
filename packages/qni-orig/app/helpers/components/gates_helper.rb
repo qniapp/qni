@@ -24,4 +24,8 @@ module Components::GatesHelper
   def swap_gate(*options)
     component 'gates/swap_gate', *options
   end
+
+  def write(value)
+    component 'gates/write_gate', value: value
+  end
 end

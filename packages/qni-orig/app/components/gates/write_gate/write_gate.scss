@@ -1,0 +1,32 @@
+.write-gate {
+  .gate__shape {
+    @apply text-gray-900;
+    @apply text-xl;
+  }
+
+  .gate__shape-label {
+    @apply font-mono;
+    @apply leading-none;
+    @apply text-purple-500;
+
+    &:after {
+      content: "?";
+    }
+  }
+
+  &[data-value="0"] .gate__shape-label {
+    @apply text-blue-500;
+  }
+
+  &[data-value="0"] .gate__shape-label:after {
+    content: "0";
+  }
+
+  &[data-value="1"] .gate__shape-label {
+    @apply text-orange-500;
+  }
+
+  &[data-value="1"] .gate__shape-label:after {
+    content: "1";
+  }
+}
