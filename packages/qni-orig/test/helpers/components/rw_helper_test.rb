@@ -1,13 +1,14 @@
 require 'test_helper'
 
 class Components::RwHelperTest < ActionView::TestCase
+  include Components::GatesHelper
   include ComponentsHelper
   include GatesHelper
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="instruction rw write" data-value="0">
-        <div class="gate__shape gate__shape--rw">
+      <div class="instruction gate write-gate" data-value="0">
+        <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>
@@ -20,8 +21,8 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="instruction rw write" data-value="0">
-        <div class="gate__shape gate__shape--rw">
+      <div class="instruction gate write-gate" data-value="0">
+        <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
           </div>

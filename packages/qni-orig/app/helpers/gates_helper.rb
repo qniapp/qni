@@ -1,8 +1,4 @@
 module GatesHelper
-  def write(value)
-    component 'gates/rw', type: :write, value: value
-  end
-
   def readout(set: nil)
     component 'gates/rw', type: :readout, set: set
   end
