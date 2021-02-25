@@ -1,5 +1,5 @@
 @mixin gate-shape($name, $border-radius) {
-  &__shape--box,
+  &__shape--square,
   &__shape--circle {
     @apply bg-#{$gate-color};
   }

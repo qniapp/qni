@@ -8,7 +8,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate root-not-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--box">
+        <div class="gate__shape gate__shape--square">
           √N
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
@@ -17,7 +17,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">ifの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">if の値が正しくありません</p>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="instruction instruction--ifable gate root-not-gate" data-if="alice_rn" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
-        <div class="gate__shape gate__shape--box">
+        <div class="gate__shape gate__shape--square">
           √N
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">if alice_rn</div>
@@ -38,7 +38,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">ifの値が正しくありません</p>
+            <p class="gate-popup__input-error invisible">if の値が正しくありません</p>
           </div>
         </div>
       </div>
