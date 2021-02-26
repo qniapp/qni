@@ -5,10 +5,7 @@ export type RootNotGateInstruction = { type: "root-not-gate" }
 
 export class RootNotGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:rootNotGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:rootNot")
   }
 
   serialize(): RootNotGateInstruction {

@@ -8,10 +8,7 @@ export type ControlGateInstruction = {
 
 export class ControlGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:controlGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:control")
   }
 
   serialize(): ControlGateInstruction {

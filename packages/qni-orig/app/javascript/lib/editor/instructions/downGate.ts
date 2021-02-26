@@ -5,10 +5,7 @@ export type DownGateInstruction = { type: "down-gate"; controls: number[] }
 
 export class DownGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:downGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:down")
   }
 
   serialize(): DownGateInstruction {

@@ -16,10 +16,7 @@ export type HadamardGateInstruction = {
 
 export class HadamardGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:hadamardGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:hadamard")
   }
 
   serialize(): HadamardGateInstruction {
