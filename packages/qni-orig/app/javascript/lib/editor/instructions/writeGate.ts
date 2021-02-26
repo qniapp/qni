@@ -4,11 +4,11 @@ import { applyMixins } from "lib/base"
 
 export type WriteInstruction = { type: "write"; value: number }
 
-export class Write {
+export class WriteGate {
   constructor(element: Element) {
     this.element = this.validateElementClassName(
       element,
-      "instruction:type:write",
+      "instruction:type:writeGate",
     )
   }
 
@@ -23,5 +23,5 @@ export class Write {
   }
 }
 
-export interface Write extends Instructionable, Valueable {}
-applyMixins(Write, [Instructionable, Valueable])
+export interface WriteGate extends Instructionable, Valueable {}
+applyMixins(WriteGate, [Instructionable, Valueable])
