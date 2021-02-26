@@ -7,9 +7,8 @@ class Gates::HadamardGateComponent < Component
   include Wireable
 
   def klass
-    class_string('instruction',
-                 'instruction--ifable',
-                 'gate', 'hadamard-gate',
+    class_string('gate', 'gate--ifable',
+                 'hadamard-gate',
                  'instruction--wire-inactive' => !wire_active?,
                  'gate--disabled' => disabled?)
   end

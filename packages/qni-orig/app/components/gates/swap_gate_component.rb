@@ -9,8 +9,7 @@ class Gates::SwapGateComponent < Component
   include Wireable
 
   def klass
-    class_string('instruction',
-                 'gate',
+    class_string('gate',
                  'swap-gate',
                  'gate--connected-with-upper-bit' => connected_with_upper_bit?,
                  'gate--connected-with-lower-bit' => connected_with_lower_bit?,

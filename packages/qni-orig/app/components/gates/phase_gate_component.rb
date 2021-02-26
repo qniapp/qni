@@ -11,8 +11,7 @@ class Gates::PhaseGateComponent < Component
   attribute :theta
 
   def klass
-    class_string('instruction',
-                 'instruction--thetable',
+    class_string('instruction--thetable',
                  'gate',
                  'phase-gate',
                  'gate--connected-with-upper-bit' => connected_with_upper_bit?,

@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<%= tag.div class: class_string('instruction', 'gate', 'readout-gate'), data: readout_gate.data do %>
+<%= tag.div class: 'gate readout-gate', data: readout_gate.data do %>
   <%= gate_shape label: label, type: 'square' %>
   <%= gate_label text: readout_gate.set %>
   <%= gate_label text: readout_gate.set, bottom: true %>

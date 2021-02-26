@@ -11,9 +11,7 @@ class Gates::NotGateComponent < Component
   include Wireable
 
   def klass
-    class_string('instruction',
-                 'instruction--ifable',
-                 'gate',
+    class_string('gate', 'gate--ifable',
                  'not-gate',
                  'gate--connected-with-upper-bit' => with_upper_bit?,
                  'gate--connected-with-lower-bit' => with_lower_bit?,
