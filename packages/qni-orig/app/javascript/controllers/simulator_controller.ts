@@ -2,7 +2,7 @@ import CircleNotationController from "./circle_notation_controller"
 import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
-import { HadamardGate, NotGate, Readout } from "lib/editor/instructions"
+import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/instructions"
 
 class RunButton {
   private element: HTMLInputElement
@@ -112,7 +112,7 @@ export default class SimulatorController extends Controller {
             const dropzones = step.dropzones
             for (const bit in bits) {
               const instruction = dropzones[bit].instruction
-              if (instruction instanceof Readout) {
+              if (instruction instanceof ReadoutGate) {
                 instruction.value = bits[bit]
               }
             }
