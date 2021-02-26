@@ -6,7 +6,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
 
   test 'not_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate)
-      <div class="instruction instruction--ifable gate not-gate" data-controller="gate-popup">
+      <div class="gate gate--ifable not-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
@@ -27,7 +27,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
 
   test 'not_gate if:' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(if: 'alice_v'))
-      <div class="instruction instruction--ifable gate not-gate" data-if="alice_v" data-controller="gate-popup">
+      <div class="gate gate--ifable not-gate" data-if="alice_v" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">

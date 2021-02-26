@@ -5,7 +5,7 @@ class Components::HadamardGateHelperTest < ActionView::TestCase
 
   test 'hadamard_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate)
-      <div class="instruction instruction--ifable gate hadamard-gate" data-controller="gate-popup">
+      <div class="gate gate--ifable hadamard-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">
@@ -26,7 +26,7 @@ class Components::HadamardGateHelperTest < ActionView::TestCase
 
   test 'hadamard_gate if:' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate(if: 'alice_h'))
-      <div class="instruction instruction--ifable gate hadamard-gate" data-if="alice_h" data-controller="gate-popup">
+      <div class="gate gate--ifable hadamard-gate" data-if="alice_h" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">

@@ -83,7 +83,7 @@ export abstract class Draggable {
 
   get instruction(): Instruction {
     const el = this.element
-      .getElementsByClassName("instruction")
+      .getElementsByClassName("gate")
       .item(0) as HTMLElement
     return Instruction.create(el)
   }

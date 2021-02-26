@@ -5,7 +5,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
 
   test 'phase_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate)
-      <div class="instruction instruction--thetable gate phase-gate" data-controller="gate-popup">
+      <div class="instruction--thetable gate phase-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
@@ -26,7 +26,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
 
   test 'phase_gate theta:' do
     assert_dom_equal beautify(<<~ERB), beautify(phase_gate(theta: 'π/2'))
-      <div class="instruction instruction--thetable gate phase-gate" data-theta="pi/2" data-controller="gate-popup">
+      <div class="instruction--thetable gate phase-gate" data-theta="pi/2" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">

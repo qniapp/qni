@@ -7,7 +7,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="instruction gate write-gate" data-value="0">
+      <div class="gate write-gate" data-value="0">
         <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
@@ -21,7 +21,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="instruction gate write-gate" data-value="0">
+      <div class="gate write-gate" data-value="0">
         <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
@@ -35,7 +35,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout' do
     assert_dom_equal beautify(<<~ERB), beautify(readout)
-      <div class="instruction gate readout-gate" data-controller="gate-popup">
+      <div class="gate readout-gate" data-controller="gate-popup">
         <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
@@ -56,7 +56,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
-      <div class="instruction gate readout-gate" data-set="alice_v" data-controller="gate-popup">
+      <div class="gate readout-gate" data-set="alice_v" data-controller="gate-popup">
         <div class="gate__shape gate__shape--square">
           <div>
             &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
