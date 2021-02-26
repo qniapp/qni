@@ -10,10 +10,7 @@ export type ReadoutInstruction = {
 
 export class ReadoutGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:readoutGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:readout")
   }
 
   serialize(): ReadoutInstruction {

@@ -9,10 +9,7 @@ export type PhaseGateInstruction = {
 
 export class PhaseGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:phaseGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:phase")
   }
 
   serialize(): PhaseGateInstruction {

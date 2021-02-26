@@ -6,10 +6,7 @@ export type WriteInstruction = { type: "write"; value: number }
 
 export class WriteGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:writeGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:write")
   }
 
   serialize(): WriteInstruction {

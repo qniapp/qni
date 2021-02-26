@@ -16,10 +16,7 @@ export type NotGateInstruction = {
 
 export class NotGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:notGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:not")
   }
 
   serialize(): NotGateInstruction {

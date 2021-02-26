@@ -15,10 +15,7 @@ export type SwapGateInstruction = {
 
 export class SwapGate {
   constructor(element: Element) {
-    this.element = this.validateElementClassName(
-      element,
-      "instruction:type:swapGate",
-    )
+    this.element = this.validateElementClassName(element, "gate:type:swap")
   }
 
   serialize(): SwapGateInstruction {
