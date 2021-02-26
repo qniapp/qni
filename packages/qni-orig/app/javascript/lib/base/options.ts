@@ -40,11 +40,11 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:type:notGate": "not-gate",
     "instruction:type:phaseGate": "phase-gate",
     "instruction:type:qubitLabel": "qubit-label",
-    "instruction:type:readout": "readout",
+    "instruction:type:readoutGate": "readout-gate",
     "instruction:type:rootNotGate": "root-not-gate",
     "instruction:type:swapGate": "swap-gate",
     "instruction:type:upGate": "up-gate",
-    "instruction:type:write": "write",
+    "instruction:type:writeGate": "write-gate",
   },
   attributes: {
     "draggable:x": "data-draggable-x",

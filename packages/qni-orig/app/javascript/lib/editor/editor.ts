@@ -1,13 +1,13 @@
 import { Circuit } from "lib/circuit"
 import {
-  Write,
-  Readout,
-  NotGate,
   ControlGate,
-  IGate,
-  SwapGate,
   HadamardGate,
+  IGate,
   Instruction,
+  NotGate,
+  ReadoutGate,
+  SwapGate,
+  WriteGate,
 } from "./instructions"
 
 import { CircuitDraggable } from "./circuitDraggable"
@@ -243,12 +243,12 @@ export class Editor {
         onEnd: this.onCircuitDraggableEnd.bind(this),
       })
 
-      if (dropzone.instruction instanceof Write) {
+      if (dropzone.instruction instanceof WriteGate) {
         newCircuitDraggableElement.classList.add(
           classNameFor("draggable:type:write"),
         )
       }
-      if (dropzone.instruction instanceof Readout) {
+      if (dropzone.instruction instanceof ReadoutGate) {
         newCircuitDraggableElement.classList.add(
           classNameFor("draggable:type:readout"),
         )
@@ -283,13 +283,13 @@ export class Editor {
       if (dropzones.length == 0) return
 
       dropzones.forEach((dz, bit) => {
-        if (dz.instruction instanceof Write) {
+        if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
         }
         if (dz.instruction instanceof SwapGate) {
           dz.wireActive = true
           wireActive[bit] = true
-        } else if (dz.instruction instanceof Readout) {
+        } else if (dz.instruction instanceof ReadoutGate) {
           wireActive[bit] = false
         } else {
           dz.wireActive = wireActive[bit]

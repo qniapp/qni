@@ -8,11 +8,11 @@ export type ReadoutInstruction = {
   set: string | null
 }
 
-export class Readout {
+export class ReadoutGate {
   constructor(element: Element) {
     this.element = this.validateElementClassName(
       element,
-      "instruction:type:readout",
+      "instruction:type:readoutGate",
     )
   }
 
@@ -41,5 +41,5 @@ export class Readout {
   }
 }
 
-export interface Readout extends Instructionable, Popuppable, Valueable {}
-applyMixins(Readout, [Instructionable, Popuppable, Valueable])
+export interface ReadoutGate extends Instructionable, Popuppable, Valueable {}
+applyMixins(ReadoutGate, [Instructionable, Popuppable, Valueable])
