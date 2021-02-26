@@ -5,13 +5,7 @@ class Gates::ShapeComponent < Component
   attribute :type
   attribute :fill, default: false
 
-  validates :label, presence: true, if: :labelable?
-  validates :type, presence: true
+  validates :label, presence: true
+  validates :type, presence: true, inclusion: { in: %w[square circle] }
   validates :fill, inclusion: { in: [true, false] }
-
-  private
-
-  def labelable?
-    type == 'box' || type == 'circle' || type == 'swap'
-  end
 end
