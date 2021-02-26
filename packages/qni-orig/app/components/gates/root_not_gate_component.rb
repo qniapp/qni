@@ -6,9 +6,8 @@ class Gates::RootNotGateComponent < Component
   include Wireable
 
   def klass
-    class_string('instruction',
-                 'instruction--ifable',
-                 'gate', 'root-not-gate',
+    class_string('gate', 'gate--ifable',
+                 'root-not-gate',
                  'instruction--wire-inactive' => !wire_active?)
   end
 

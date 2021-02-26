@@ -5,7 +5,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
 
   test 'root_not_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate)
-      <div class="instruction instruction--ifable gate root-not-gate" data-controller="gate-popup">
+      <div class="gate gate--ifable root-not-gate" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">
@@ -26,7 +26,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
 
   test 'root_not_gate if:' do
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(if: 'alice_rn'))
-      <div class="instruction instruction--ifable gate root-not-gate" data-if="alice_rn" data-controller="gate-popup">
+      <div class="gate gate--ifable root-not-gate" data-if="alice_rn" data-controller="gate-popup">
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">

@@ -85,9 +85,7 @@ export default class GatePopupController extends Controller {
   }
 
   private get isIfable(): boolean {
-    return this.element.classList.contains(
-      classNameFor("instruction:mixin:ifable"),
-    )
+    return this.element.classList.contains(classNameFor("gate:mixin:ifable"))
   }
 
   private get if(): string | null {

@@ -11,8 +11,7 @@ class Gates::ControlGateComponent < Component
   include Wireable
 
   def klass
-    class_string('instruction',
-                 'gate',
+    class_string('gate',
                  'control-gate',
                  'instruction--wire-inactive' => !wire_active?,
                  'gate--connected-with-upper-bit' => connected_with_upper_bit?,

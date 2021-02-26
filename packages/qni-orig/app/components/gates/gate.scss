@@ -1,4 +1,6 @@
 .gate {
+  --animate-duration: 0.2s;
+
   @apply relative;
   @apply border-#{$gate-border-width} border-transparent;
 
