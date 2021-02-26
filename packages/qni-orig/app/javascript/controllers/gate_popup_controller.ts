@@ -60,9 +60,7 @@ export default class GatePopupController extends Controller {
   }
 
   private get isSettable(): boolean {
-    return this.element.classList.contains(
-      classNameFor("instruction:type:readoutGate"),
-    )
+    return this.element.classList.contains(classNameFor("gate:type:readout"))
   }
 
   private get set(): string | null {
