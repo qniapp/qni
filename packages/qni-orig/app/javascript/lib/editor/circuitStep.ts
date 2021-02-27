@@ -1,9 +1,9 @@
-import { Elementable } from "lib/mixins"
-import { Instruction, QubitLabel } from "./instructions"
 import { CircuitDropzone } from "./circuitDropzone"
-import { applyMixins, classNameFor } from "lib/base"
 import { DropEventHandlers } from "./mixins"
+import { Elementable } from "lib/mixins"
+import { Instruction, QubitLabel } from "./gates"
 import { InternalError } from "lib/error"
+import { applyMixins, classNameFor } from "lib/base"
 
 export class CircuitStep {
   public element: HTMLElement

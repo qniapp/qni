@@ -2,7 +2,7 @@ import CircleNotationController from "./circle_notation_controller"
 import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
-import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/instructions"
+import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/gates"
 
 class RunButton {
   private element: HTMLInputElement

@@ -1,8 +1,8 @@
 import { DraggableItem } from "./draggableItem"
 import { Dropzonable } from "./mixins"
-import { Instruction } from "./instructions"
-import { classNameFor } from "lib/base"
+import { Instruction } from "./gates"
 import { InternalError } from "lib/error"
+import { classNameFor } from "lib/base"
 
 export class DraggableShadow {
   private draggable: DraggableItem

@@ -1,8 +1,5 @@
 import { Qubit } from "lib/simulator/qubit"
-import {
-  SeriarizedInstruction,
-  PhaseGateInstruction,
-} from "lib/editor/instructions"
+import { SeriarizedInstruction, PhaseGateInstruction } from "lib/editor/gates"
 
 import { Matrix, pow, sum } from "mathjs"
 import { abs, arg, round } from "mathjs"

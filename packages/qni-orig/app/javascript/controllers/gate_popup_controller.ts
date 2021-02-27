@@ -107,9 +107,7 @@ export default class GatePopupController extends Controller {
   }
 
   private get isThetable(): boolean {
-    return this.element.classList.contains(
-      classNameFor("instruction:mixin:thetable"),
-    )
+    return this.element.classList.contains(classNameFor("gate:mixin:thetable"))
   }
 
   private get theta(): string | null {
