@@ -4,7 +4,7 @@ import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
 import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
-import { Instruction, ReadoutGate } from "./gates"
+import { Instruction, ReadoutGate, WriteGate } from "./gates"
 import { InternalError } from "lib/error"
 import { applyMixins, classNameFor } from "lib/base"
 
@@ -49,7 +49,7 @@ export class CircuitDropzone {
 
   enter(draggable: DraggableItem): void {
     this.active = true
-    if (draggable.instruction instanceof Write) this.write = true
+    if (draggable.instruction instanceof WriteGate) this.write = true
     if (draggable.instruction instanceof ReadoutGate) this.readout = true
     new DraggableShadow(draggable, this).create()
   }
