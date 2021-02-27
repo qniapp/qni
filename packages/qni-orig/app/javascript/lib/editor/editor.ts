@@ -8,7 +8,7 @@ import {
   ReadoutGate,
   SwapGate,
   WriteGate,
-} from "./instructions"
+} from "./gates"
 
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
@@ -22,7 +22,7 @@ import {
   DropEventHandlers,
 } from "./mixins"
 import { InternalError } from "lib/error"
-import { Connectable, Controllable, Disableable } from "./instructions/mixins"
+import { Connectable, Controllable, Disableable } from "./gates/mixins"
 
 export class Editor {
   private element: Element

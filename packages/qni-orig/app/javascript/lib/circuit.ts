@@ -1,6 +1,6 @@
 import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
-import { Instruction, QubitLabel } from "./editor/instructions"
 import { DropEventHandlers } from "./editor/mixins"
+import { Instruction, QubitLabel } from "./editor/gates"
 import { InternalError } from "./error"
 import { classNameFor } from "./base"
 
