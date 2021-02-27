@@ -1,5 +1,5 @@
 import { Draggable } from "./mixins"
-import { ControlGate, Instruction, NotGate, SwapGate } from "./instructions"
+import { ControlGate, Instruction, NotGate, SwapGate } from "./gates"
 import { applyMixins } from "lib/base"
 import { CircuitDropzone } from "./circuitDropzone"
 

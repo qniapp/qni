@@ -4,9 +4,9 @@ import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
 import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
-import { Instruction, ReadoutGate, WriteGate } from "./instructions"
-import { applyMixins, classNameFor } from "lib/base"
+import { Instruction, ReadoutGate } from "./gates"
 import { InternalError } from "lib/error"
+import { applyMixins, classNameFor } from "lib/base"
 
 export class CircuitDropzone {
   private _circuitStep: CircuitStep | undefined

@@ -1,7 +1,7 @@
 import interact from "interactjs"
 import { DragEventHandlers, Interactable } from "./interactable"
 import { DraggableSource, Dropzone } from ".."
-import { Instruction } from "../instructions"
+import { Instruction } from "../gates"
 import { InternalError } from "lib/error"
 import { applyMixins, attributeNameFor, classNameFor } from "lib/base"
 
