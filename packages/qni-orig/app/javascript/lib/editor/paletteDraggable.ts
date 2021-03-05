@@ -1,9 +1,17 @@
-import { applyMixins } from "lib/base"
 import { Draggable } from "./mixins"
+import { Mixin } from "ts-mixer"
 import { PaletteDropzone } from "./paletteDropzone"
 
-export class PaletteDraggable {
-  constructor(element: HTMLElement | Element | null | undefined) {
+export class PaletteDraggable extends Mixin(Draggable) {
+  static create(
+    element: HTMLElement | Element | null | undefined,
+  ): PaletteDraggable {
+    const paletteDraggable = new PaletteDraggable()
+    paletteDraggable.assignElement(element)
+    return paletteDraggable
+  }
+
+  assignElement(element: HTMLElement | Element | null | undefined): void {
     this.element = this.validateElementClassName(
       element,
       "draggable:type:palette",
@@ -37,7 +45,3 @@ export class PaletteDraggable {
     return this.getDropzone() as PaletteDropzone
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface PaletteDraggable extends Draggable {}
-applyMixins(PaletteDraggable, [Draggable])

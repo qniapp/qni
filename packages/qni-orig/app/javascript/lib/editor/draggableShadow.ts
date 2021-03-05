@@ -60,7 +60,7 @@ export class DraggableShadow {
   }
 
   private instructionElement(draggableElement = this.element): Element {
-    const className = classNameFor("instruction")
+    const className = classNameFor("gate")
     const el = draggableElement.getElementsByClassName(className).item(0)
     if (!el) throw new InternalError(`.${className} not found`)
 

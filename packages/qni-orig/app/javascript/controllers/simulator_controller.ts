@@ -66,7 +66,7 @@ export default class SimulatorController extends Controller {
   }
 
   circuitStepClicked(event: MouseEvent): void {
-    const circuitStep = new CircuitStep(event.currentTarget as HTMLElement)
+    const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
 
     if (!circuitStep.isDone) {
       return

@@ -1,8 +1,15 @@
 import { Elementable } from "lib/mixins"
-import { applyMixins, classNameFor } from "lib/base"
+import { classNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
 
-export class DraggableSource {
-  constructor(element: HTMLElement) {
+export class DraggableSource extends Mixin(Elementable) {
+  static create(element: HTMLElement): DraggableSource {
+    const draggableSource = new DraggableSource()
+    draggableSource.assignElement(element)
+    return draggableSource
+  }
+
+  assignElement(element: HTMLElement): void {
     this.element = this.validateElementClassName(
       element,
       "draggable:type:source",
@@ -19,7 +26,3 @@ export class DraggableSource {
     return element
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface DraggableSource extends Elementable {}
-applyMixins(DraggableSource, [Elementable])

@@ -1,9 +1,18 @@
 import interact from "interactjs"
 import { DropEventHandlers, Dropzonable } from "./mixins"
-import { applyMixins, classNameFor } from "lib/base"
+import { classNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
 
-export class TrashDropzone {
-  constructor(element: HTMLElement | Element | null | undefined) {
+export class TrashDropzone extends Mixin(Dropzonable) {
+  static create(
+    element: HTMLElement | Element | null | undefined,
+  ): TrashDropzone {
+    const trashDropzone = new TrashDropzone()
+    trashDropzone.assignElement(element)
+    return trashDropzone
+  }
+
+  assignElement(element: HTMLElement | Element | null | undefined): void {
     this.element = this.validateElementClassName(element, "dropzone:type:trash")
   }
 
@@ -16,7 +25,3 @@ export class TrashDropzone {
     })
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface TrashDropzone extends Dropzonable {}
-applyMixins(TrashDropzone, [Dropzonable])

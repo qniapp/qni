@@ -1,4 +1,4 @@
-export abstract class Targetable {
+export class Targetable {
   public element!: HTMLElement
 
   get targets(): number[] {

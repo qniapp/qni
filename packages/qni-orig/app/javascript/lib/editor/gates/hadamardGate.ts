@@ -1,4 +1,3 @@
-import { applyMixins } from "lib/base"
 import {
   Connectable,
   Controllable,
@@ -7,6 +6,7 @@ import {
   Instructionable,
   Popuppable,
 } from "./mixins"
+import { Mixin } from "ts-mixer"
 
 export type HadamardGateInstruction = {
   type: "hadamard-gate"
@@ -14,28 +14,25 @@ export type HadamardGateInstruction = {
   if: string | null
 }
 
-export class HadamardGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:hadamard")
+export class HadamardGate extends Mixin(
+  Connectable,
+  Controllable,
+  Disableable,
+  Ifable,
+  Instructionable,
+  Popuppable,
+) {
+  static create(element: Element): HadamardGate {
+    const hadamardGate = new HadamardGate()
+    hadamardGate.assignElement(element)
+    return hadamardGate
   }
 
   serialize(): HadamardGateInstruction {
     return { type: "hadamard-gate", controls: this.controls, if: this.if }
   }
-}
 
-export interface HadamardGate
-  extends Instructionable,
-    Controllable,
-    Connectable,
-    Popuppable,
-    Ifable,
-    Disableable {}
-applyMixins(HadamardGate, [
-  Instructionable,
-  Controllable,
-  Connectable,
-  Popuppable,
-  Ifable,
-  Disableable,
-])
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:hadamard")
+  }
+}

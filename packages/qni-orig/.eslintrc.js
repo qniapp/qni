@@ -33,6 +33,9 @@ module.exports = {
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "prettier/@typescript-eslint",
       ],
+      rules: {
+        "@typescript-eslint/ban-ts-comment": "off",
+      },
       files: ["*.ts"],
     },
   ],

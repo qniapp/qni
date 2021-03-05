@@ -1,4 +1,4 @@
-export abstract class Animatable {
+export class Animatable {
   public element!: HTMLElement
 
   set jello(value: boolean) {

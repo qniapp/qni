@@ -1,10 +1,18 @@
 import { Draggable } from "./mixins"
 import { ControlGate, Instruction, NotGate, SwapGate } from "./gates"
-import { applyMixins } from "lib/base"
 import { CircuitDropzone } from "./circuitDropzone"
+import { Mixin } from "ts-mixer"
 
-export class CircuitDraggable {
-  constructor(element: HTMLElement | Element | null | undefined) {
+export class CircuitDraggable extends Mixin(Draggable) {
+  static create(
+    element: HTMLElement | Element | null | undefined,
+  ): CircuitDraggable {
+    const circuitDraggable = new CircuitDraggable()
+    circuitDraggable.assignElement(element)
+    return circuitDraggable
+  }
+
+  assignElement(element: HTMLElement | Element | null | undefined): void {
     this.element = this.validateElementClassName(
       element,
       "draggable:type:circuit",
@@ -68,7 +76,3 @@ export class CircuitDraggable {
       .item(0) as HTMLElement
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CircuitDraggable extends Draggable {}
-applyMixins(CircuitDraggable, [Draggable])

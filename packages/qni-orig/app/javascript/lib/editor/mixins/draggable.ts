@@ -3,9 +3,10 @@ import { DragEventHandlers, Interactable } from "./interactable"
 import { DraggableSource, Dropzone } from ".."
 import { Instruction } from "../gates"
 import { InternalError } from "lib/error"
-import { applyMixins, attributeNameFor, classNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
+import { attributeNameFor, classNameFor } from "lib/base"
 
-export abstract class Draggable {
+export class Draggable extends Mixin(Interactable) {
   setInteract(handlers: DragEventHandlers): void {
     if (interact.isSet(this.element)) return
     this.unsetInteract()
@@ -18,8 +19,11 @@ export abstract class Draggable {
       .styleCursor(false)
   }
 
-  abstract mouseDown(event: MouseEvent): void
-  abstract mouseUp(): void
+  // @ts-ignore: "Abstract methods can only appear within an abstract class"
+  // mouseDown(event: MouseEvent): void
+
+  // @ts-ignore: "Abstract methods can only appear within an abstract class"
+  // mouseUp(): void
 
   move(dx: number, dy: number): void {
     const x = this.x + dx
@@ -111,7 +115,7 @@ export abstract class Draggable {
     el.classList.add(classNameFor("draggable:type:source"))
     this.getDropzone().element.insertBefore(el, this.element)
 
-    return new DraggableSource(el)
+    return DraggableSource.create(el)
   }
 
   get source(): DraggableSource | null {
@@ -140,7 +144,3 @@ export abstract class Draggable {
     this.setClassName("draggable:state:dragging", flag)
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Draggable extends Interactable {}
-applyMixins(Draggable, [Interactable])

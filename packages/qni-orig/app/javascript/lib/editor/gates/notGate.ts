@@ -6,7 +6,7 @@ import {
   Instructionable,
   Popuppable,
 } from "./mixins"
-import { applyMixins } from "lib/base"
+import { Mixin } from "ts-mixer"
 
 export type NotGateInstruction = {
   type: "not-gate"
@@ -14,28 +14,25 @@ export type NotGateInstruction = {
   if: string | null
 }
 
-export class NotGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:not")
-  }
-
-  serialize(): NotGateInstruction {
-    return { type: "not-gate", controls: this.controls, if: this.if }
-  }
-}
-
-export interface NotGate
-  extends Instructionable,
-    Controllable,
-    Connectable,
-    Popuppable,
-    Ifable,
-    Disableable {}
-applyMixins(NotGate, [
+export class NotGate extends Mixin(
   Instructionable,
   Controllable,
   Connectable,
   Popuppable,
   Ifable,
   Disableable,
-])
+) {
+  static create(element: Element): NotGate {
+    const notGate = new NotGate()
+    notGate.assignElement(element)
+    return notGate
+  }
+
+  serialize(): NotGateInstruction {
+    return { type: "not-gate", controls: this.controls, if: this.if }
+  }
+
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:not")
+  }
+}

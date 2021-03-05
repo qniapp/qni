@@ -1,7 +1,7 @@
 import { InternalError } from "lib/error"
 import { classNameFor } from "lib/base"
 
-export abstract class Elementable {
+export class Elementable {
   public element!: HTMLElement
 
   protected validateElementClassName(

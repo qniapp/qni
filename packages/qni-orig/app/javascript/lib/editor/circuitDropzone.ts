@@ -6,12 +6,21 @@ import { DraggableShadow } from "./draggableShadow"
 import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
 import { Instruction, ReadoutGate, WriteGate } from "./gates"
 import { InternalError } from "lib/error"
-import { applyMixins, classNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
+import { classNameFor } from "lib/base"
 
-export class CircuitDropzone {
+export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
   private _circuitStep: CircuitStep | undefined
 
-  constructor(element: HTMLElement | Element | null | undefined) {
+  static create(
+    element: HTMLElement | Element | null | undefined,
+  ): CircuitDropzone {
+    const circuitDropzone = new CircuitDropzone()
+    circuitDropzone.assignElement(element)
+    return circuitDropzone
+  }
+
+  assignElement(element: HTMLElement | Element | null | undefined): void {
     this.element = this.validateElementClassName(
       element,
       "dropzone:type:circuit",
@@ -71,13 +80,13 @@ export class CircuitDropzone {
     if (this.element === draggable.dropzone.element) return
 
     const el = new DraggableShadow(draggable, this).toPlainDraggableElement()
-    return new CircuitDraggable(el).element
+    return CircuitDraggable.create(el).element
   }
 
   get draggable(): CircuitDraggable | null {
     const el = this.draggableElement()
 
-    if (el) return new CircuitDraggable(el)
+    if (el) return CircuitDraggable.create(el)
     return null
   }
 
@@ -88,7 +97,7 @@ export class CircuitDropzone {
     const el = this.element.closest(`.${className}`)
     if (!el) throw new InternalError(`.${className} not found`)
 
-    this._circuitStep = new CircuitStep(el)
+    this._circuitStep = CircuitStep.create(el)
     return this._circuitStep
   }
 
@@ -160,7 +169,3 @@ export class CircuitDropzone {
       : document.body.contains(this.element)
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CircuitDropzone extends Dropzonable, Occupiable {}
-applyMixins(CircuitDropzone, [Dropzonable, Occupiable])

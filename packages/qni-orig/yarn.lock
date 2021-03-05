@@ -8681,6 +8681,11 @@ traverse@^0.6.6:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
+ts-mixer@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/ts-mixer/-/ts-mixer-5.4.0.tgz#f98583e6acd72bf4c7a04481352ebfd203171297"
+  integrity sha512-Z5u/hpTkP4VWTIQT5vzxyeFAe8siPkatOC0Q49Uf56ccMGSHosI/IEo+t8BFvJX9yiF111YEOKfKY3m72V7F/w==
+
 ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"

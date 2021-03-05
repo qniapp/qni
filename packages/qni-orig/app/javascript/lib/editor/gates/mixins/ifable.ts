@@ -1,6 +1,6 @@
 import { attributeNameFor, classNameFor } from "lib/base"
 
-export abstract class Ifable {
+export class Ifable {
   public element!: HTMLElement
 
   get if(): string | null {

@@ -1,5 +1,6 @@
 import { Connectable, Instructionable, Popuppable, Targetable } from "./mixins"
-import { applyMixins, attributeNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
+import { attributeNameFor } from "lib/base"
 
 export type PhaseGateInstruction = {
   type: "phase-gate"
@@ -7,9 +8,16 @@ export type PhaseGateInstruction = {
   targets: number[]
 }
 
-export class PhaseGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:phase")
+export class PhaseGate extends Mixin(
+  Instructionable,
+  Targetable,
+  Connectable,
+  Popuppable,
+) {
+  static create(element: Element): PhaseGate {
+    const phaseGate = new PhaseGate()
+    phaseGate.assignElement(element)
+    return phaseGate
   }
 
   serialize(): PhaseGateInstruction {
@@ -20,14 +28,11 @@ export class PhaseGate {
     }
   }
 
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:phase")
+  }
+
   get theta(): string | null {
     return this.element.getAttribute(attributeNameFor("instruction:theta"))
   }
 }
-
-export interface PhaseGate
-  extends Instructionable,
-    Targetable,
-    Connectable,
-    Popuppable {}
-applyMixins(PhaseGate, [Instructionable, Targetable, Connectable, Popuppable])
