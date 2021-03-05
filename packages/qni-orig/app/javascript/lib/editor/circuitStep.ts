@@ -3,12 +3,17 @@ import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
 import { Instruction, QubitLabel } from "./gates"
 import { InternalError } from "lib/error"
-import { applyMixins, classNameFor } from "lib/base"
+import { Mixin } from "ts-mixer"
+import { classNameFor } from "lib/base"
 
-export class CircuitStep {
-  public element: HTMLElement
+export class CircuitStep extends Mixin(Elementable) {
+  static create(element: Element | null): CircuitStep {
+    const circuitStep = new CircuitStep()
+    circuitStep.assignElement(element)
+    return circuitStep
+  }
 
-  constructor(element: Element | null) {
+  assignElement(element: Element | null): void {
     this.element = this.validateElementClassName(element, "circuitStep")
   }
 
@@ -36,7 +41,7 @@ export class CircuitStep {
       classNameFor("circuitStep:type:shadowSource"),
     )
     shadowSourceElement.classList.add(classNameFor("circuitStep:type:shadow"))
-    const shadow = new CircuitStep(shadowSourceElement)
+    const shadow = CircuitStep.create(shadowSourceElement)
 
     this.element.parentNode?.insertBefore(shadow.element, this.element)
     shadow.dropzones.forEach((each) => {
@@ -118,9 +123,9 @@ export class CircuitStep {
 
     return Array.from(bodyEl.children).map((each) => {
       if (each.classList.contains(classNameFor("dropzone:type:circuit"))) {
-        return new CircuitDropzone(each).instruction
+        return CircuitDropzone.create(each).instruction
       } else if (each.classList.contains("instruction")) {
-        return new QubitLabel(each as HTMLElement)
+        return QubitLabel.create(each as HTMLElement)
       } else {
         throw new Error("instruction not found")
       }
@@ -168,7 +173,7 @@ export class CircuitStep {
         classNameFor("dropzone:type:circuit"),
       ),
     ).map((each) => {
-      return new CircuitDropzone(each)
+      return CircuitDropzone.create(each)
     })
   }
 
@@ -180,7 +185,3 @@ export class CircuitStep {
     return el
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CircuitStep extends Elementable {}
-applyMixins(CircuitStep, [Elementable])

@@ -33,25 +33,25 @@ export const Instruction = {
 
     const classList = element.classList
     if (classList.contains("write-gate")) {
-      return new WriteGate(element)
+      return WriteGate.create(element)
     } else if (classList.contains("hadamard-gate")) {
-      return new HadamardGate(element)
+      return HadamardGate.create(element)
     } else if (classList.contains("not-gate")) {
-      return new NotGate(element)
+      return NotGate.create(element)
     } else if (classList.contains("readout-gate")) {
-      return new ReadoutGate(element)
+      return ReadoutGate.create(element)
     } else if (classList.contains("phase-gate")) {
-      return new PhaseGate(element)
+      return PhaseGate.create(element)
     } else if (classList.contains("root-not-gate")) {
-      return new RootNotGate(element)
+      return RootNotGate.create(element)
     } else if (classList.contains("control-gate")) {
-      return new ControlGate(element)
+      return ControlGate.create(element)
     } else if (classList.contains("down-gate")) {
-      return new DownGate(element)
+      return DownGate.create(element)
     } else if (classList.contains("up-gate")) {
-      return new UpGate(element)
+      return UpGate.create(element)
     } else if (classList.contains("swap-gate")) {
-      return new SwapGate(element)
+      return SwapGate.create(element)
     }
 
     throw new InternalError(`Unknown instruction: ${element.outerHTML}`)

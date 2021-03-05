@@ -1,7 +1,7 @@
 import { Elementable } from "lib/mixins"
-import { applyMixins } from "lib/base"
+import { Mixin } from "ts-mixer"
 
-export abstract class Occupiable {
+export class Occupiable extends Mixin(Elementable) {
   set occupied(flag: boolean) {
     this.setClassName("dropzone:state:occupied", flag)
   }
@@ -10,7 +10,3 @@ export abstract class Occupiable {
     return this.isClassNamed("dropzone:state:occupied")
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Occupiable extends Elementable {}
-applyMixins(Occupiable, [Elementable])

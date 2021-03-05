@@ -1,17 +1,20 @@
-import { applyMixins } from "lib/base"
 import { Controllable, Instructionable } from "./mixins"
+import { Mixin } from "ts-mixer"
 
 export type DownGateInstruction = { type: "down-gate"; controls: number[] }
 
-export class DownGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:down")
+export class DownGate extends Mixin(Instructionable, Controllable) {
+  static create(element: Element) {
+    const downGate = new DownGate()
+    downGate.assignElement(element)
+    return downGate
   }
 
   serialize(): DownGateInstruction {
     return { type: "down-gate", controls: this.controls }
   }
-}
 
-export interface DownGate extends Instructionable, Controllable {}
-applyMixins(DownGate, [Instructionable, Controllable])
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:down")
+  }
+}

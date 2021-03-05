@@ -1,6 +1,6 @@
 import { classNameFor } from "lib/base"
 
-export abstract class Connectable {
+export class Connectable {
   public element!: HTMLElement
 
   connectWith(bits: number[]): void {
@@ -44,5 +44,6 @@ export abstract class Connectable {
     this.element.classList.remove(classNameFor("gate:connection:upperBit"))
   }
 
-  abstract get bit(): number
+  // @ts-ignore: "Abstract methods can only appear within an abstract class"
+  get bit(): number
 }

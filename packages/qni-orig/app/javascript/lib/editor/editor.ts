@@ -32,7 +32,7 @@ export class Editor {
     this.element = element
     this.circuit = new Circuit()
 
-    new TrashDropzone(this.trashDropzoneElement).setInteract({
+    TrashDropzone.create(this.trashDropzoneElement).setInteract({
       onDrop: this.onTrashDropzoneDrop.bind(this),
     })
     this.circuit.dropzones.forEach((each) => {
@@ -101,15 +101,15 @@ export class Editor {
   }
 
   private onCircuitDraggableStart(event: Interact.DragEvent): void {
-    new CircuitDraggable(event.target).start()
+    CircuitDraggable.create(event.target).start()
   }
 
   private onCircuitDraggableMove(event: Interact.DragEvent): void {
-    new CircuitDraggable(event.target).move(event.dx, event.dy)
+    CircuitDraggable.create(event.target).move(event.dx, event.dy)
   }
 
   private onCircuitDraggableEnd(event: Interact.DragEvent): void {
-    new CircuitDraggable(event.target).end()
+    CircuitDraggable.create(event.target).end()
     this.removeEmptySteps()
   }
 
@@ -126,15 +126,15 @@ export class Editor {
   }
 
   private onPaletteDraggableStart(event: Interact.DragEvent): void {
-    new PaletteDraggable(event.target).start()
+    PaletteDraggable.create(event.target).start()
   }
 
   private onPaletteDraggableMove(event: Interact.DragEvent): void {
-    new PaletteDraggable(event.target).move(event.dx, event.dy)
+    PaletteDraggable.create(event.target).move(event.dx, event.dy)
   }
 
   private onPaletteDraggableEnd(event: Interact.DragEvent): void {
-    new PaletteDraggable(event.target).end()
+    PaletteDraggable.create(event.target).end()
     this.removeEmptySteps()
   }
 
@@ -173,7 +173,7 @@ export class Editor {
   }
 
   private onCircuitDropzoneDragEnter(event: Interact.DropEvent): void {
-    const dropzone = new CircuitDropzone(event.target)
+    const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
     const nextDropzone = this.circuit.nextDropzoneOf(dropzone)
@@ -185,7 +185,7 @@ export class Editor {
   }
 
   private onCircuitDropzoneDragLeave(event: Interact.DropEvent): void {
-    const dropzone = new CircuitDropzone(event.target)
+    const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
     const nextDropzone = this.circuit.nextDropzoneOf(dropzone)
@@ -197,7 +197,7 @@ export class Editor {
   }
 
   private onCircuitDropzoneDrop(event: Interact.DropEvent): void {
-    const dropzone = new CircuitDropzone(event.target)
+    const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const originalDropzone = draggable.dropzone
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
@@ -233,7 +233,7 @@ export class Editor {
 
     const newCircuitDraggableElement = dropzone.drop(draggable)
     if (newCircuitDraggableElement) {
-      const newCircuitDraggable = new CircuitDraggable(
+      const newCircuitDraggable = CircuitDraggable.create(
         newCircuitDraggableElement,
       )
 

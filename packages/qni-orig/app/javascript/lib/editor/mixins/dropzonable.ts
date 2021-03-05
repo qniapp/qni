@@ -1,8 +1,9 @@
-import { applyMixins, classNameFor } from "lib/base"
 import { DraggableSource } from ".."
 import { Interactable } from "./interactable"
+import { Mixin } from "ts-mixer"
+import { classNameFor } from "lib/base"
 
-export abstract class Dropzonable {
+export class Dropzonable extends Mixin(Interactable) {
   set active(flag: boolean) {
     this.setClassName("dropzone:state:active", flag)
   }
@@ -26,14 +27,10 @@ export abstract class Dropzonable {
         classNameFor("draggable:type:source"),
       ),
     )[0] as HTMLElement
-    return el ? new DraggableSource(el) : null
+    return el ? DraggableSource.create(el) : null
   }
 
   isEqualTo(other: Dropzonable): boolean {
     return this.element === other.element
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Dropzonable extends Interactable {}
-applyMixins(Dropzonable, [Interactable])

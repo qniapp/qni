@@ -1,18 +1,20 @@
 import { Instructionable } from "./mixins"
-import { applyMixins } from "lib/base"
+import { Mixin } from "ts-mixer"
 
 export type RootNotGateInstruction = { type: "root-not-gate" }
 
-export class RootNotGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:rootNot")
+export class RootNotGate extends Mixin(Instructionable) {
+  static create(element: Element): RootNotGate {
+    const rootNotGate = new RootNotGate()
+    rootNotGate.assignElement(element)
+    return rootNotGate
   }
 
   serialize(): RootNotGateInstruction {
     return { type: "root-not-gate" }
   }
-}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface RootNotGate extends Instructionable {}
-applyMixins(RootNotGate, [Instructionable])
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:rootNot")
+  }
+}
