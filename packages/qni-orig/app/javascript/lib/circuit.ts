@@ -21,7 +21,7 @@ class CircuitWire {
   clear(): CircuitWire {
     this.elements.forEach((each) => {
       if (each.classList.contains(classNameFor("dropzone"))) {
-        const circuitDropzone = new CircuitDropzone(each)
+        const circuitDropzone = CircuitDropzone.create(each)
         circuitDropzone.clear()
         circuitDropzone.wireActive = false
       }
@@ -36,7 +36,7 @@ class CircuitWire {
         return each.classList.contains(classNameFor("dropzone"))
       })
       .map((each) => {
-        return new CircuitDropzone(each)
+        return CircuitDropzone.create(each)
       })
       .every((each) => {
         return !each.isOccupied()
@@ -49,7 +49,7 @@ class CircuitWire {
         return each.classList.contains(classNameFor("dropzone"))
       })
       .map((each) => {
-        return new CircuitDropzone(each)
+        return CircuitDropzone.create(each)
       })
   }
 
@@ -58,7 +58,7 @@ class CircuitWire {
       if (
         each.classList.contains(classNameFor("instruction:type:qubitLabel"))
       ) {
-        const qubitLabel = new QubitLabel(each)
+        const qubitLabel = QubitLabel.create(each)
         if (/^0x/.exec(qubitLabel.value)) {
           const labelValue = parseInt(qubitLabel.value)
           qubitLabel.value = `0x${(labelValue * 2).toString(16)}`
@@ -71,7 +71,7 @@ class CircuitWire {
   remove() {
     this.elements.forEach((each) => {
       if (each.classList.contains(classNameFor("dropzone"))) {
-        new CircuitDropzone(each).unsetInteract()
+        CircuitDropzone.create(each).unsetInteract()
       }
       each.parentNode?.removeChild(each)
     })
@@ -94,7 +94,7 @@ export class Circuit {
     return Array.from(
       this.element.getElementsByClassName(classNameFor("circuitStep")),
     ).map((each) => {
-      return new CircuitStep(each)
+      return CircuitStep.create(each)
     })
   }
 
@@ -112,7 +112,7 @@ export class Circuit {
         classNameFor("draggable:type:circuit"),
       ),
     ).map((each) => {
-      return new CircuitDraggable(each)
+      return CircuitDraggable.create(each)
     })
   }
 
@@ -122,7 +122,7 @@ export class Circuit {
         classNameFor("dropzone:type:circuit"),
       ),
     ).map((each) => {
-      return new CircuitDropzone(each)
+      return CircuitDropzone.create(each)
     })
   }
 

@@ -1,6 +1,7 @@
-import { InternalError } from "lib/error"
-import { applyMixins, attributeNameFor } from "lib/base"
 import { Instructionable, Popuppable, Valueable } from "./mixins"
+import { InternalError } from "lib/error"
+import { Mixin } from "ts-mixer"
+import { attributeNameFor } from "lib/base"
 
 export type ReadoutInstruction = {
   type: "readout"
@@ -8,9 +9,11 @@ export type ReadoutInstruction = {
   set: string | null
 }
 
-export class ReadoutGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:readout")
+export class ReadoutGate extends Mixin(Instructionable, Popuppable, Valueable) {
+  static create(element: Element): ReadoutGate {
+    const readoutGate = new ReadoutGate()
+    readoutGate.assignElement(element)
+    return readoutGate
   }
 
   serialize(): ReadoutInstruction {
@@ -19,6 +22,10 @@ export class ReadoutGate {
       value: this.value,
       set: this.element.getAttribute(attributeNameFor("instruction:set")),
     }
+  }
+
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:readout")
   }
 
   get value(): number | null {
@@ -37,6 +44,3 @@ export class ReadoutGate {
     this.dataValue = value.toString()
   }
 }
-
-export interface ReadoutGate extends Instructionable, Popuppable, Valueable {}
-applyMixins(ReadoutGate, [Instructionable, Popuppable, Valueable])

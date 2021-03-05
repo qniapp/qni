@@ -6,20 +6,32 @@ import {
   Targetable,
 } from "./mixins"
 import { InternalError } from "lib/error"
-import { applyMixins } from "lib/base"
+import { Mixin } from "ts-mixer"
 
 export type SwapGateInstruction = {
   type: "swap-gate"
   targets: [number, number] | []
 }
 
-export class SwapGate {
-  constructor(element: Element) {
-    this.element = this.validateElementClassName(element, "gate:type:swap")
+export class SwapGate extends Mixin(
+  Instructionable,
+  Targetable,
+  Controllable,
+  Connectable,
+  Disableable,
+) {
+  static create(element: Element): SwapGate {
+    const swapGate = new SwapGate()
+    swapGate.assignElement(element)
+    return swapGate
   }
 
   serialize(): SwapGateInstruction {
     return { type: "swap-gate", targets: this.swapTargets }
+  }
+
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:swap")
   }
 
   private get swapTargets(): [number, number] | [] {
@@ -35,17 +47,3 @@ export class SwapGate {
     return [targets[0], targets[1]]
   }
 }
-
-export interface SwapGate
-  extends Instructionable,
-    Targetable,
-    Controllable,
-    Connectable,
-    Disableable {}
-applyMixins(SwapGate, [
-  Instructionable,
-  Targetable,
-  Controllable,
-  Connectable,
-  Disableable,
-])

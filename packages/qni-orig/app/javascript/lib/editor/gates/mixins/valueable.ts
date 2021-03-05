@@ -1,6 +1,6 @@
 import { attributeNameFor } from "lib/base"
 
-export abstract class Valueable {
+export class Valueable {
   public element!: HTMLElement
 
   protected get dataValue(): string | null {

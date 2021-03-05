@@ -1,6 +1,6 @@
 import interact from "interactjs"
 import { Elementable } from "lib/mixins"
-import { applyMixins } from "lib/base"
+import { Mixin } from "ts-mixer"
 
 export type DragEventHandler = (event: Interact.DragEvent) => void
 export type DragEventHandlers = {
@@ -12,14 +12,11 @@ export type DropEventHandlers = {
   [key: string]: DropEventHandler
 }
 
-export abstract class Interactable {
-  abstract setInteract(handlers: DragEventHandlers | DropEventHandlers): void
+export class Interactable extends Mixin(Elementable) {
+  // @ts-ignore: "Abstract methods can only appear within an abstract class"
+  // setInteract(handlers: DragEventHandlers | DropEventHandlers): void
 
   unsetInteract(): void {
     interact(this.element).unset()
   }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Interactable extends Elementable {}
-applyMixins(Interactable, [Elementable])

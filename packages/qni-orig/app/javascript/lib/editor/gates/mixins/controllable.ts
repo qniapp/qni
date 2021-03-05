@@ -1,6 +1,6 @@
 import { attributeNameFor } from "lib/base"
 
-export abstract class Controllable {
+export class Controllable {
   public element!: HTMLElement
 
   get controls(): number[] {

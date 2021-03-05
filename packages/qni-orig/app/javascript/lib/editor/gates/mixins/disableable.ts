@@ -1,6 +1,6 @@
 import { classNameFor } from "lib/base"
 
-export abstract class Disableable {
+export class Disableable {
   public element!: HTMLElement
 
   get disabled(): boolean {
