@@ -1,6 +1,6 @@
 import { Instructionable, Valueable } from "./mixins"
-import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
+import { Util } from "lib/base"
 
 export type WriteInstruction = { type: "write"; value: number }
 
@@ -15,13 +15,13 @@ export class WriteGate extends Mixin(Instructionable, Valueable) {
     return { type: "write", value: this.value }
   }
 
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:write")
-  }
-
   get value(): number {
     const value = this.dataValue
-    if (!value) throw new InternalError("Couldn't get Write value")
+    Util.notNull(value)
     return parseInt(value)
+  }
+
+  assignElement(element: Element): void {
+    this.element = this.validateElementClassName(element, "gate:type:write")
   }
 }
