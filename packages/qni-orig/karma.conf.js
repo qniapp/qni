@@ -24,7 +24,7 @@ module.exports = function (config) {
       "app/javascript/test/**/*.ts": ["webpack"],
     },
 
-    reporters: ["spec"],
+    reporters: ["dots"],
 
     autoWatch: false,
 

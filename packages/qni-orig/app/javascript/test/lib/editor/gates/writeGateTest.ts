@@ -2,21 +2,28 @@ import { Util } from "lib/base"
 import { WriteGate } from "lib/editor/gates"
 import { describe } from "lib/base"
 
+function writeGateFixture(value: 0 | 1) {
+  return `<div id="write-gate" class="write-gate" data-value="${value}"></div>`
+}
+
+function createWriteGateElement(value: 0 | 1): HTMLElement {
+  document.body.insertAdjacentHTML("afterbegin", writeGateFixture(value))
+  const el = document.getElementById("write-gate")
+  Util.notNull(el)
+  return el
+}
+
 QUnit.module("WriteGate0", (hooks) => {
+  let writeGateEl: HTMLElement
   let writeGate: WriteGate
 
   hooks.beforeEach(() => {
-    const fixture = "<div id=\"write-gate\" class=\"write-gate\" data-value=\"0\"></div>"
-    document.body.insertAdjacentHTML("afterbegin", fixture)
-    const el = document.getElementById("write-gate")
-    Util.notNull(el)
-    writeGate = WriteGate.create(el)
+    writeGateEl = createWriteGateElement(0)
+    writeGate = WriteGate.create(writeGateEl)
   })
 
   hooks.afterEach(() => {
-    document.body.removeChild(
-      document.getElementById("write-gate") as HTMLElement,
-    )
+    document.body.removeChild(writeGateEl)
   })
 
   QUnit.test(".value", (assert) => {
@@ -32,20 +39,16 @@ QUnit.module("WriteGate0", (hooks) => {
 })
 
 QUnit.module("WriteGate1", (hooks) => {
+  let writeGateEl: HTMLElement
   let writeGate: WriteGate
 
   hooks.beforeEach(() => {
-    const fixture = "<div id=\"write-gate\" class=\"write-gate\" data-value=\"1\"></div>"
-    document.body.insertAdjacentHTML("afterbegin", fixture)
-    const el = document.getElementById("write-gate")
-    Util.notNull(el)
-    writeGate = WriteGate.create(el)
+    writeGateEl = createWriteGateElement(1)
+    writeGate = WriteGate.create(writeGateEl)
   })
 
   hooks.afterEach(() => {
-    document.body.removeChild(
-      document.getElementById("write-gate") as HTMLElement,
-    )
+    document.body.removeChild(writeGateEl)
   })
 
   QUnit.test(".value", (assert) => {
