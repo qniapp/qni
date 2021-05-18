@@ -58,7 +58,7 @@
 
   &--primary:focus {
     @apply border-indigo-700;
-    @apply shadow-outline-indigo;
+    @apply ring-indigo-50;
   }
 
   &--primary:active {
@@ -79,7 +79,7 @@
   &--secondary:focus {
     @apply border-indigo-300;
     @apply outline-none;
-    @apply shadow-outline-indigo;
+    @apply ring-indigo-50;
   }
 
   &--secondary:active {
@@ -99,7 +99,7 @@
   &--white:focus {
     @apply border-blue-300;
     @apply outline-none;
-    @apply shadow-outline-blue;
+    @apply ring-blue-50;
   }
 
   &--white:active {
