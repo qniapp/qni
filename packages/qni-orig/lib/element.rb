@@ -61,7 +61,7 @@ class Element
     @view = view
     initialize_attributes(attributes || {})
     initialize_elements
-    @yield = block_given? ? @view.capture(self, &block) : nil
+    @yield = block ? @view.capture(self, &block) : nil
     validate!
   end
 

@@ -1,37 +1,26 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 84,
-      "fingerprint": "df4f4accebdc404ef36acc7dc2211d031e4e15f564f9d312c48eddf816811176",
-      "check_name": "RenderInline",
-      "message": "Unescaped model attribute rendered inline",
-      "file": "app/views/circuits/show.html.erb",
-      "line": 18,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross-site_scripting/",
-      "code": "render(inline => Circuit.find(params[:id]).circle_notation, {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CircuitsController",
-          "method": "show",
-          "line": 9,
-          "file": "app/controllers/circuits_controller.rb",
-          "rendered": {
-            "name": "circuits/show",
-            "file": "app/views/circuits/show.html.erb"
-          }
-        }
-      ],
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "970d1507b3d0388781b56f1955f02c9e6347cbbad583e05c3a306248a9b7036d",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "node_modules/@rails/webpacker/lib/webpacker/compiler.rb",
+      "line": 73,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "Open3.capture3(webpack_env, \"#{RbConfig.ruby} ./bin/webpack\", :chdir => File.expand_path(config.root_path))",
+      "render_path": null,
       "location": {
-        "type": "template",
-        "template": "circuits/show"
+        "type": "method",
+        "class": "Webpacker::Compiler",
+        "method": "run_webpack"
       },
-      "user_input": "Circuit.find(params[:id]).circle_notation",
+      "user_input": "RbConfig.ruby",
       "confidence": "Medium",
       "note": ""
     }
   ],
-  "updated": "2020-07-01 14:18:58 +0900",
-  "brakeman_version": "4.8.2"
+  "updated": "2021-05-18 13:19:52 +0900",
+  "brakeman_version": "5.0.1"
 }

@@ -58,6 +58,7 @@
     "magic-grid": "^3.2.4",
     "mathjs": "^7.3.0",
     "postcss": "^8.2.4",
+    "sass-loader": "^10",
     "stimulus": "^1.1.1",
     "tailwindcss": "^2.0.2",
     "tippy.js": "^6.2.4",
