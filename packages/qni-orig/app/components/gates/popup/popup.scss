@@ -12,7 +12,7 @@
 
     &:focus {
       @apply outline-none;
-      @apply shadow-outline;
+      @apply ring;
     }
 
     &--error {
