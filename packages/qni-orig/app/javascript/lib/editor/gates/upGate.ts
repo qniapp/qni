@@ -4,7 +4,7 @@ import { Mixin } from "ts-mixer"
 export type UpGateInstruction = { type: "up-gate"; controls: number[] }
 
 export class UpGate extends Mixin(Instructionable, Controllable) {
-  static create(element: Element) {
+  static create(element: Element): UpGate {
     const upGate = new UpGate()
     upGate.assignElement(element)
     return upGate
