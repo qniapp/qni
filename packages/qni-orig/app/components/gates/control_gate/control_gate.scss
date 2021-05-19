@@ -17,6 +17,10 @@
     @apply border-#{$gate-hover-color};
   }
 
+  .draggable:hover &__dot {
+    @apply bg-#{$gate-hover-color};
+  }
+
   .draggable:hover & #{$gate-shape-class}--square {
     @apply bg-transparent;
   }
