@@ -23,7 +23,7 @@
 
     &--write,
     &--readout {
-      @apply mx-0;
+      @apply mx-#{$instruction-margin-base / 2};
     }
   }
 
