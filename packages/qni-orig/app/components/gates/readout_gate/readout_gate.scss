@@ -12,7 +12,7 @@
       &
       #{$gate-shape-class}#{$gate-shape-class}--square {
       @apply text-gray-900;
-      @apply text-#{map-get($instruction-label-font-size, $nqubit)};
+      @apply text-#{map-get($write-readout-gate-label-font-size, $nqubit)};
       writing-mode: vertical-lr;
 
       @screen md {

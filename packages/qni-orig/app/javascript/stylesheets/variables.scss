@@ -43,8 +43,8 @@ $instruction-label-font-size-small: base;
 $instruction-label-font-size-extrasmall: xs;
 
 $instruction-label-font-size: (
-  1: $instruction-label-font-size-extralarge,
-  2: $instruction-label-font-size-extralarge,
+  1: $instruction-label-font-size-large,
+  2: $instruction-label-font-size-large,
   3: $instruction-label-font-size-large,
   4: $instruction-label-font-size-base,
   5: $instruction-label-font-size-small,
@@ -119,3 +119,14 @@ $qubit-label-font-color: gray-300;
 $rw-gate-label-0-color: text-blue-500;
 $rw-gate-label-1-color: text-red-500;
 $rw-gate-label-01-color: text-purple-500;
+
+$write-readout-gate-label-font-size: (
+  1: $instruction-label-font-size-extralarge,
+  2: $instruction-label-font-size-extralarge,
+  3: $instruction-label-font-size-large,
+  4: $instruction-label-font-size-base,
+  5: $instruction-label-font-size-small,
+  6: $instruction-label-font-size-small,
+  7: $instruction-label-font-size-extrasmall,
+  8: $instruction-label-font-size-extrasmall,
+);
