@@ -1,5 +1,5 @@
 import { Draggable } from "./mixins"
-import { ControlGate, Instruction, NotGate, SwapGate } from "./gates"
+import { ControlGate, CircuitElement, NotGate, SwapGate } from "./gates"
 import { CircuitDropzone } from "./circuitDropzone"
 import { Mixin } from "ts-mixer"
 
@@ -24,22 +24,22 @@ export class CircuitDraggable extends Mixin(Draggable) {
     this.grabbed = true
     this.moveToGrabbedPosition(event)
 
-    const instruction = this.instruction
+    const circuitElement = this.circuitElement
     if (
-      instruction instanceof ControlGate ||
-      instruction instanceof NotGate ||
-      instruction instanceof SwapGate
+      circuitElement instanceof ControlGate ||
+      circuitElement instanceof NotGate ||
+      circuitElement instanceof SwapGate
     ) {
-      instruction.disconnectFromLowerBit()
-      instruction.disconnectFromUpperBit()
+      circuitElement.disconnectFromLowerBit()
+      circuitElement.disconnectFromUpperBit()
     }
-    this.instruction.animateJello = true
+    this.circuitElement.animateJello = true
   }
 
   mouseUp(): void {
     this.moveTo(0, 0)
     this.grabbed = false
-    this.instruction.animateJello = false
+    this.circuitElement.animateJello = false
   }
 
   start(): void {
@@ -54,7 +54,7 @@ export class CircuitDraggable extends Mixin(Draggable) {
     } else {
       this.moveTo(0, 0)
     }
-    this.instruction.animateJello = false
+    this.circuitElement.animateJello = false
   }
 
   remove(): void {
@@ -66,13 +66,11 @@ export class CircuitDraggable extends Mixin(Draggable) {
     return this.getDropzone() as CircuitDropzone
   }
 
-  get instruction(): Instruction {
-    return Instruction.create(this.instructionElement())
+  get circuitElement(): CircuitElement {
+    return CircuitElement.create(this.circuitElementHTMLElement())
   }
 
-  private instructionElement(): HTMLElement | null {
-    return this.element
-      .getElementsByClassName("instruction")
-      .item(0) as HTMLElement
+  private circuitElementHTMLElement(): HTMLElement | null {
+    return this.element.getElementsByClassName("gate").item(0) as HTMLElement
   }
 }

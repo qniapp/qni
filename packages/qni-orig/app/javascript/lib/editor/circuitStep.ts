@@ -1,7 +1,7 @@
 import { CircuitDropzone } from "./circuitDropzone"
 import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
-import { Instruction, QubitLabel } from "./gates"
+import { CircuitElement, QubitLabel } from "./gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { classNameFor } from "lib/base"
@@ -113,7 +113,7 @@ export class CircuitStep extends Mixin(Elementable) {
     return this.isClassNamed("circuitStep:state:done")
   }
 
-  get instructions(): Instruction[] {
+  get instructions(): CircuitElement[] {
     const bodyEl = this.element
       .getElementsByClassName("circuit-step__body")
       .item(0)
@@ -132,16 +132,16 @@ export class CircuitStep extends Mixin(Elementable) {
     })
   }
 
-  gatesOf<T extends Instruction>(gateClass: {
+  gatesOf<T extends CircuitElement>(gateClass: {
     new (arg: HTMLElement): T
   }): T[] {
-    const isGateClass = (obj: Instruction): obj is T => {
+    const isGateClass = (obj: CircuitElement): obj is T => {
       return obj instanceof gateClass
     }
     return this.instructions.filter(isGateClass)
   }
 
-  get controllableGates(): Instruction[] {
+  get controllableGates(): CircuitElement[] {
     return this.instructions.filter((each) => {
       return "controls" in each
     })
