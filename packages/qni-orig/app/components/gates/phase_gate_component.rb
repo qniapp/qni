@@ -20,10 +20,10 @@ class Gates::PhaseGateComponent < Component
 
   def data
     h = if targets.empty?
-          if !theta
-            {}
-          else
+          if theta
             { theta: theta_pi }
+          else
+            {}
           end
         elsif theta
           { theta: theta_pi, targets: targets.join(',') }
