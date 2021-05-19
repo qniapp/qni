@@ -1,6 +1,6 @@
+export * from "./circuitElement"
 export * from "./controlGate"
 export * from "./downGate"
-export * from "./gates"
 export * from "./hadamardGate"
 export * from "./iGate"
 export * from "./notGate"

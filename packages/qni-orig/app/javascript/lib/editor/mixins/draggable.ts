@@ -1,7 +1,7 @@
 import interact from "interactjs"
+import { CircuitElement } from "../gates"
 import { DragEventHandlers, Interactable } from "./interactable"
 import { DraggableSource, Dropzone } from ".."
-import { Instruction } from "../gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { attributeNameFor, classNameFor } from "lib/base"
@@ -85,11 +85,11 @@ export class Draggable extends Mixin(Interactable) {
 
   // Instruction
 
-  get instruction(): Instruction {
+  get circuitElement(): CircuitElement {
     const el = this.element
       .getElementsByClassName("gate")
       .item(0) as HTMLElement
-    return Instruction.create(el)
+    return CircuitElement.create(el)
   }
 
   // Dropzone

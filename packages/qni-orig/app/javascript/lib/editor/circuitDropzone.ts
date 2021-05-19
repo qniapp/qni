@@ -4,7 +4,7 @@ import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
 import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
-import { Instruction, ReadoutGate, WriteGate } from "./gates"
+import { CircuitElement, ReadoutGate, WriteGate } from "./gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { classNameFor } from "lib/base"
@@ -58,8 +58,8 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
 
   enter(draggable: DraggableItem): void {
     this.active = true
-    if (draggable.instruction instanceof WriteGate) this.write = true
-    if (draggable.instruction instanceof ReadoutGate) this.readout = true
+    if (draggable.circuitElement instanceof WriteGate) this.write = true
+    if (draggable.circuitElement instanceof ReadoutGate) this.readout = true
     new DraggableShadow(draggable, this).create()
   }
 
@@ -108,13 +108,13 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     return allDropzoneEls.indexOf(this.element)
   }
 
-  get instruction(): Instruction {
+  get instruction(): CircuitElement {
     const draggable = this.draggable
 
     if (draggable && !draggable.isGrabbed()) {
-      return draggable.instruction
+      return draggable.circuitElement
     }
-    return Instruction.create()
+    return CircuitElement.create()
   }
 
   clear(): void {

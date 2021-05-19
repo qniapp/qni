@@ -1,6 +1,6 @@
 import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
 import { DropEventHandlers } from "./editor/mixins"
-import { Instruction, QubitLabel } from "./editor/gates"
+import { CircuitElement, QubitLabel } from "./editor/gates"
 import { InternalError } from "./error"
 import { classNameFor } from "./base"
 
@@ -140,7 +140,7 @@ export class Circuit {
     return this.steps[circuitStepIndex + 1].dropzones[dropzone.bit]
   }
 
-  instructions(): Instruction[] {
+  instructions(): CircuitElement[] {
     return this.dropzones.map((each) => {
       return each.instruction
     })

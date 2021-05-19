@@ -1,9 +1,9 @@
 import { Circuit } from "lib/circuit"
 import {
+  CircuitElement,
   ControlGate,
   HadamardGate,
   IGate,
-  Instruction,
   NotGate,
   ReadoutGate,
   SwapGate,
@@ -60,9 +60,9 @@ export class Editor {
 
     if (
       draggable instanceof CircuitDraggable &&
-      "showPopup" in draggable.instruction
+      "showPopup" in draggable.circuitElement
     ) {
-      draggable.instruction.showPopup()
+      draggable.circuitElement.showPopup()
     }
   }
 
@@ -145,7 +145,7 @@ export class Editor {
 
     draggable.dropped = true
     draggable.dropzone.occupied = false
-    draggable.instruction.animateJello = false
+    draggable.circuitElement.animateJello = false
 
     if (draggable instanceof CircuitDraggable) {
       this.updateGateConnections(draggable.dropzone.circuitStep.index)
@@ -206,7 +206,7 @@ export class Editor {
     if (prevDropzone) prevDropzone.instruction.bordered = false
     if (nextDropzone) nextDropzone.instruction.bordered = false
 
-    draggable.instruction.animateJello = false
+    draggable.circuitElement.animateJello = false
 
     if (this.circuit.wires[dropzone.bit].isEmpty) {
       const paletteElement = document.getElementById("palette")
@@ -341,7 +341,7 @@ export class Editor {
         each.disabled = true
       })
     } else {
-      const toBit = (gate: Instruction) => {
+      const toBit = (gate: CircuitElement) => {
         return gate.bit
       }
       const controlGateBits = controlGates.map(toBit)
@@ -386,10 +386,10 @@ export class Editor {
 
   private updateIGateConnections(circuitStepIndex: number) {
     const circuitStep = this.circuit.steps[circuitStepIndex]
-    const toBit = (gate: Instruction) => {
+    const toBit = (gate: CircuitElement) => {
       return gate.bit
     }
-    const isEnabled = (gate: Instruction) => {
+    const isEnabled = (gate: CircuitElement) => {
       return !(gate as Disableable).disabled
     }
     const notGateBits = circuitStep.gatesOf(NotGate).map(toBit)
