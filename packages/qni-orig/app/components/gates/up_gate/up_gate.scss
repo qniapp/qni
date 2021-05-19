@@ -12,8 +12,8 @@
         @apply -mt-#{map-get($instruction-margin, $nqubit)};
         @apply ml-#{map-get($instruction-size, $nqubit) / 2};
         @apply rotate-45;
-        top: -2px;
         left: -2px;
+        top: -2px;
         width: calc(
           #{(
               map-get($instruction-size, $nqubit) +
@@ -47,7 +47,7 @@
 
   &__bottom {
     @apply absolute;
-    @apply border-green-400;
+    @apply border-#{$gate-color};
 
     @apply -ml-4;
     @apply mt-4;

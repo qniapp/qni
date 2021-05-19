@@ -1,5 +1,5 @@
 .draggable {
-  $parent: &;
+  $gate-shape-class: ".gate__shape";
 
   @apply absolute inset-0;
   @apply flex items-center;
@@ -17,23 +17,17 @@
   @apply mx-0;
 
   @screen md {
-    &--circuit {
-      @apply mx-#{$instruction-margin-base / 2};
-    }
-
+    &--circuit,
     &--write,
     &--readout {
       @apply mx-#{$instruction-margin-base / 2};
     }
   }
 
-  .circuit-preview &--circuit {
-    @apply mx-#{$instruction-margin-base / 2};
-  }
-
+  .circuit-preview &--circuit,
   .circuit-preview &--write,
   .circuit-preview &--readout {
-    @apply mx-0;
+    @apply mx-#{$instruction-margin-base / 2};
   }
 
   // Placeholder to display when it is droppable
@@ -41,18 +35,18 @@
     @apply z-20;
     @apply mx-#{$instruction-margin-base / 2};
 
-    :not(svg).gate__shape {
+    :not(svg)#{$gate-shape-class} {
       @apply bg-#{$gate-shadow-color};
     }
   }
 
   // Reference for coordinates during dragging
   &--source {
-    :not(svg).gate__shape {
+    :not(svg)#{$gate-shape-class} {
       @apply bg-#{$gate-source-color};
     }
 
-    svg.gate__shape {
+    svg#{$gate-shape-class} {
       @apply stroke-current;
       @apply text-#{$gate-source-color};
     }
@@ -62,7 +56,7 @@
 
   &--grabbed {
     @apply z-50;
-    cursor: grabbing !important;
+    cursor: grabbing;
   }
 
   &--dragging {

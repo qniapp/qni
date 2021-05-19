@@ -20,6 +20,14 @@
         writing-mode: horizontal-tb;
       }
     }
+
+    .circuit-preview
+      .circuit[data-nqubit="#{$nqubit}"]
+      &
+      #{$gate-shape-class}#{$gate-shape-class}--square {
+      @apply text-xl;
+      writing-mode: horizontal-tb;
+    }
   }
 
   #{$gate-shape-label-class} {
