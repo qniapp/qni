@@ -1,4 +1,6 @@
 .control-gate {
+  $gate-shape-class: ".gate__shape";
+
   @apply flex items-center justify-center;
   @apply rounded;
 
@@ -15,6 +17,10 @@
     @apply border-#{$gate-hover-color};
   }
 
+  .draggable:hover & #{$gate-shape-class}--square {
+    @apply bg-transparent;
+  }
+
   .draggable--shadow & {
     @apply bg-white;
     @apply border-#{$gate-shadow-color};
@@ -25,7 +31,7 @@
     @apply border-#{$gate-border-color};
   }
 
-  &.gate--disabled .gate__shape {
+  &.gate--disabled #{$gate-shape-class} {
     @apply bg-gray-500;
   }
 }
