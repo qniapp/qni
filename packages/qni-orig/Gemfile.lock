@@ -166,7 +166,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.2.3)
     public_suffix (4.0.6)
-    puma (4.3.8)
+    puma (5.3.1)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -327,7 +327,7 @@ DEPENDENCIES
   jbuilder
   listen (>= 3.0.5, < 3.2)
   pg
-  puma (~> 4.1)
+  puma (~> 5.3)
   rack-mini-profiler
   rails (~> 6.1)
   rbtrace
