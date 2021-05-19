@@ -2,9 +2,24 @@
   $gate-shape-class: ".gate__shape";
   $gate-shape-label-class: ".gate__shape-label";
 
-  #{$gate-shape-class}#{$gate-shape-class}--square {
-    @apply text-gray-900;
-    @apply text-xl;
+  @each $nqubit in $nqubits {
+    .palette & #{$gate-shape-class}#{$gate-shape-class}--square {
+      @apply text-gray-900;
+      @apply text-xl;
+    }
+
+    .circuit[data-nqubit="#{$nqubit}"]
+      &
+      #{$gate-shape-class}#{$gate-shape-class}--square {
+      @apply text-gray-900;
+      @apply text-#{map-get($instruction-label-font-size, $nqubit)};
+      writing-mode: vertical-lr;
+
+      @screen md {
+        @apply text-xl;
+        writing-mode: horizontal-tb;
+      }
+    }
   }
 
   #{$gate-shape-label-class} {
