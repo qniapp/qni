@@ -1,32 +1,44 @@
 .readout-gate {
-  .gate__shape {
-    @apply text-gray-900;
-    @apply text-xl;
+  $gate-shape-class: ".gate__shape";
+  $gate-shape-label-class: ".gate__shape-label";
+
+  @each $nqubit in $nqubits {
+    .palette & #{$gate-shape-class}#{$gate-shape-class}--square {
+      @apply text-gray-900;
+      @apply text-xl;
+    }
+
+    .circuit[data-nqubit="#{$nqubit}"]
+      &
+      #{$gate-shape-class}#{$gate-shape-class}--square {
+      @apply text-gray-900;
+      @apply text-xl;
+    }
   }
 
-  .gate__shape-label {
+  #{$gate-shape-label-class} {
     @apply font-mono;
     @apply leading-none;
-    @apply text-purple-500;
+    @apply #{$rw-gate-label-01-color};
 
-    &:after {
+    &::after {
       content: "?";
     }
   }
 
-  &[data-value="0"] .gate__shape-label {
-    @apply text-blue-500;
+  &[data-value="0"] #{$gate-shape-label-class} {
+    @apply #{$rw-gate-label-0-color};
   }
 
-  &[data-value="0"] .gate__shape-label:after {
+  &[data-value="0"] #{$gate-shape-label-class}::after {
     content: "0";
   }
 
-  &[data-value="1"] .gate__shape-label {
-    @apply text-purple-500;
+  &[data-value="1"] #{$gate-shape-label-class} {
+    @apply #{$rw-gate-label-1-color};
   }
 
-  &[data-value="1"] .gate__shape-label:after {
+  &[data-value="1"] #{$gate-shape-label-class}::after {
     content: "1";
   }
 }

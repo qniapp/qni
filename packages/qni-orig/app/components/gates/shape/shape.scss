@@ -19,6 +19,7 @@
         @apply text-#{map-get($instruction-label-font-size, $nqubit)};
 
         @screen md {
+          @apply leading-none;
           @apply text-#{$instruction-label-font-size-base};
         }
       }
