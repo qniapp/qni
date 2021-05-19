@@ -11,7 +11,7 @@ gem 'tzinfo-data'
 gem 'pg'
 gem 'redis', '~> 4.0'
 
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 5.3'
 
 # JavaScript and assets
 gem 'css-class-string'
