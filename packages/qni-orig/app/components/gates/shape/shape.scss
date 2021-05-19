@@ -1,11 +1,10 @@
 @mixin gate-shape($name, $border-radius) {
   &__shape--#{$name} {
-    @apply w-8 h-8;
+    @apply w-full h-full;
 
     @apply absolute inset-0;
     @apply flex justify-center items-center;
 
-    @apply leading-none;
     @apply stroke-current;
     @apply text-#{$gate-label-color};
     @apply #{$border-radius};
@@ -16,6 +15,7 @@
 
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply leading-none;
         @apply text-#{map-get($instruction-label-font-size, $nqubit)};
 
         @screen md {
