@@ -12,7 +12,7 @@ import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { UpGate, UpGateInstruction } from "./upGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
-export type Instruction =
+export type CircuitElement =
   | QubitLabel
   | IGate
   | NotGate
@@ -27,8 +27,8 @@ export type Instruction =
   | DownGate
   | SwapGate
 
-export const Instruction = {
-  create(element?: HTMLElement | Element | null): Instruction {
+export const CircuitElement = {
+  create(element?: HTMLElement | Element | null): CircuitElement {
     if (!element) return new IGate()
 
     const classList = element.classList
