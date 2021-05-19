@@ -32,4 +32,9 @@
   &[data-value="1"] #{$gate-shape-label-class}::after {
     content: "1";
   }
+
+  .draggable:hover & #{$gate-shape-class} {
+    @apply border-2 border-#{$gate-hover-color} rounded;
+    @apply bg-transparent;
+  }
 }

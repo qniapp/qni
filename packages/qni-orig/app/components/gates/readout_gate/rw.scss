@@ -1,5 +1,4 @@
 .rw {
-  $parent: &;
   $wire-length: 2;
   $wire-length-mobile: 4;
 
@@ -24,11 +23,6 @@
       @apply text-xl;
       @apply w-#{$instruction-size-base} h-#{$instruction-size-base};
       writing-mode: horizontal-tb;
-    }
-
-    .draggable:hover & {
-      @apply bg-white;
-      @apply border-#{$gate-hover-color};
     }
 
     .circuit-step:hover .rw:hover & {
