@@ -1,5 +1,5 @@
 .swap-gate {
-  $self: &;
+  $gate-shape-class: ".gate__shape";
 
   @apply rounded;
 
@@ -8,7 +8,11 @@
     @apply border-#{$gate-hover-color};
   }
 
-  .gate__shape svg {
+  .draggable:hover & #{$gate-shape-class}--square {
+    @apply bg-transparent;
+  }
+
+  #{$gate-shape-class} svg {
     @apply stroke-current;
     @apply text-#{$gate-color};
 
@@ -19,7 +23,7 @@
     }
   }
 
-  &.gate--disabled .gate__shape {
+  &.gate--disabled #{$gate-shape-class} {
     @apply text-gray-500;
   }
 
