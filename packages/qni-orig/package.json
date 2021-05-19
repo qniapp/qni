@@ -22,7 +22,7 @@
       "bundle exec rubocop --safe-auto-correct"
     ],
     "app/**/*.html.erb": [
-      "bin/bundle exec erblint"
+      "bundle exec erblint"
     ],
     "*.json": [
       "prettier --write"
