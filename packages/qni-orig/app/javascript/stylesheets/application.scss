@@ -43,10 +43,14 @@
 @import "gates/control_gate/control_gate";
 @import "gates/down_gate/down_gate";
 @import "gates/gate";
+@import "gates/hadamard_gate/hadamard_gate";
 @import "gates/label/label";
+@import "gates/not_gate/not_gate";
+@import "gates/phase_gate/phase_gate";
 @import "gates/popup/popup";
 @import "gates/readout_gate/readout_gate";
 @import "gates/readout_gate/rw";
+@import "gates/root_not_gate/root_not_gate";
 @import "gates/shape/circle";
 @import "gates/shape/square";
 @import "gates/swap_gate/swap_gate";

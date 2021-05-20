@@ -9,10 +9,6 @@
     @apply text-#{$gate-label-color};
     @apply #{$border-radius};
 
-    .draggable:hover & {
-      @apply bg-#{$gate-hover-color};
-    }
-
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
         @apply leading-none;
