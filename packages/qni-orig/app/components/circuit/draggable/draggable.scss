@@ -40,18 +40,6 @@
     }
   }
 
-  // Reference for coordinates during dragging
-  &--source {
-    :not(svg)#{$gate-shape-class} {
-      @apply bg-#{$gate-source-color};
-    }
-
-    svg#{$gate-shape-class} {
-      @apply stroke-current;
-      @apply text-#{$gate-source-color};
-    }
-  }
-
   // States
 
   &--grabbed {

@@ -3,26 +3,41 @@
 
   @apply rounded;
 
-  .draggable:hover & {
+  // X 部分の SVG
+  #{$gate-shape-class} svg {
+    @apply stroke-3;
+    @apply stroke-current;
+    @apply text-#{$gate-color};
+  }
+
+  // ホバー中
+  .draggable:not(.draggable--source):hover & {
     @apply bg-white;
     @apply border-#{$gate-hover-color};
   }
 
-  .draggable:hover & #{$gate-shape-class}--square {
+  .draggable:not(.draggable--source):hover & #{$gate-shape-class}--square {
     @apply bg-transparent;
   }
 
-  #{$gate-shape-class} svg {
-    @apply stroke-current;
-    @apply text-#{$gate-color};
-
-    stroke-width: 3;
-
-    .draggable:hover & {
-      @apply text-#{$gate-hover-color};
-    }
+  .draggable:not(.draggable--source):hover & #{$gate-shape-class} svg {
+    @apply text-#{$gate-hover-color};
   }
 
+  // Reference for coordinates during dragging
+  .draggable--source & {
+    @apply border-#{$gate-source-color};
+  }
+
+  .draggable--source & #{$gate-shape-class} {
+    @apply bg-transparent;
+  }
+
+  .draggable--source & #{$gate-shape-class} svg {
+    @apply text-#{$gate-source-color};
+  }
+
+  // TODO: 未整理
   &.gate--disabled #{$gate-shape-class} {
     @apply text-gray-500;
   }
