@@ -4,4 +4,8 @@
   .draggable:hover & #{$gate-shape-class} {
     @apply bg-#{$gate-hover-color};
   }
+
+  .draggable--source & #{$gate-shape-class} {
+    @apply bg-#{$gate-source-color};
+  }
 }
