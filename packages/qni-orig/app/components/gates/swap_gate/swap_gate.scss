@@ -50,11 +50,16 @@
     @apply text-#{$gate-shadow-color};
   }
 
-  // TODO: 未整理
+  // Disabled state
   &.gate--disabled #{$gate-shape-class} {
-    @apply text-gray-500;
+    @apply bg-transparent;
   }
 
+  &.gate--disabled #{$gate-shape-class} svg {
+    @apply text-#{$gate-label-color-disabled};
+  }
+
+  // TODO: 未整理
   &.instruction--bordered {
     @apply bg-white;
     @apply border-#{$gate-border-color};

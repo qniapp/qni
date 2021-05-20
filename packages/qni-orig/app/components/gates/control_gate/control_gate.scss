@@ -51,13 +51,18 @@
     @apply bg-#{$gate-shadow-color};
   }
 
+  // Disabled state
+  &.gate--disabled #{$gate-shape-class} {
+    @apply bg-transparent;
+  }
+
+  &.gate--disabled #{$gate-shape-class} &__dot {
+    @apply bg-#{$gate-label-color-disabled};
+  }
+
   // 未整理
   &.instruction--bordered {
     @apply bg-white;
     @apply border-#{$gate-border-color};
-  }
-
-  &.gate--disabled #{$gate-shape-class} {
-    @apply bg-gray-500;
   }
 }
