@@ -2,22 +2,28 @@
   $gate-shape-class: ".gate__shape";
   $gate-shape-label-class: ".gate__shape-label";
 
-  @each $nqubit in $nqubits {
-    .palette & #{$gate-shape-class}#{$gate-shape-class}--square {
-      @apply text-gray-900;
-      @apply text-xl;
-    }
+  .palette & #{$gate-shape-class}#{$gate-shape-class}--square {
+    @apply text-gray-900;
+    @apply text-xl;
+  }
 
+  #{$gate-shape-class}#{$gate-shape-class}--square {
+    @apply text-gray-900;
+    writing-mode: vertical-lr;
+
+    @screen md {
+      writing-mode: horizontal-tb;
+    }
+  }
+
+  @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"]
       &
       #{$gate-shape-class}#{$gate-shape-class}--square {
-      @apply text-gray-900;
       @apply text-#{map-get($write-readout-gate-label-font-size, $nqubit)};
-      writing-mode: vertical-lr;
 
       @screen md {
         @apply text-xl;
-        writing-mode: horizontal-tb;
       }
     }
 
@@ -77,5 +83,19 @@
 
   .draggable--source & #{$gate-shape-label-class} {
     @apply text-#{$gate-source-color};
+  }
+
+  // Placeholder to display when it is droppable
+  .draggable--shadow & #{$gate-shape-class} {
+    @apply bg-white;
+    @apply border-2 border-#{$gate-shadow-color};
+  }
+
+  .draggable--shadow & #{$gate-shape-class}#{$gate-shape-class}--square {
+    @apply text-#{$gate-shadow-color};
+  }
+
+  .draggable--shadow & #{$gate-shape-label-class} {
+    @apply text-#{$gate-shadow-color};
   }
 }
