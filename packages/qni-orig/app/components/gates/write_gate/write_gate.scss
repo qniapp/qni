@@ -56,8 +56,13 @@
     content: "1";
   }
 
-  .draggable:hover & #{$gate-shape-class} {
-    @apply border-2 border-#{$gate-hover-color} rounded;
+  .draggable:not(.draggable--grabbed):hover & #{$gate-shape-class} {
     @apply bg-transparent;
+    @apply border-2 border-#{$gate-hover-color} rounded;
+  }
+
+  .draggable--grabbed & #{$gate-shape-class} {
+    @apply bg-white;
+    @apply border-2 border-#{$gate-hover-color} rounded;
   }
 }
