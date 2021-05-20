@@ -65,4 +65,17 @@
     @apply bg-white;
     @apply border-2 border-#{$gate-hover-color} rounded;
   }
+
+  // Reference for coordinates during dragging
+  .draggable--source & #{$gate-shape-class} {
+    @apply border-2 border-#{$gate-source-color};
+  }
+
+  .draggable--source & #{$gate-shape-class}#{$gate-shape-class}--square {
+    @apply text-#{$gate-source-color};
+  }
+
+  .draggable--source & #{$gate-shape-label-class} {
+    @apply text-#{$gate-source-color};
+  }
 }
