@@ -38,12 +38,20 @@
     @apply bg-#{$gate-source-color};
   }
 
-  // 未整理
+  // Placeholder to display when it is droppable
   .draggable--shadow & {
-    @apply bg-white;
     @apply border-#{$gate-shadow-color};
   }
 
+  .draggable--shadow & #{$gate-shape-class} {
+    @apply bg-white;
+  }
+
+  .draggable--shadow & #{$gate-shape-class} &__dot {
+    @apply bg-#{$gate-shadow-color};
+  }
+
+  // 未整理
   &.instruction--bordered {
     @apply bg-white;
     @apply border-#{$gate-border-color};
