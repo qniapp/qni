@@ -34,10 +34,6 @@
   &--shadow {
     @apply z-20;
     @apply mx-#{$instruction-margin-base / 2};
-
-    :not(svg)#{$gate-shape-class} {
-      @apply bg-#{$gate-shadow-color};
-    }
   }
 
   // States

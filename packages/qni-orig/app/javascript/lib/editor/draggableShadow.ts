@@ -22,6 +22,7 @@ export class DraggableShadow {
     }
 
     const el = draggableSource.clonePlainDraggableElement()
+    el.classList.remove(classNameFor("draggable:type:palette"))
     el.classList.add(classNameFor("draggable:type:shadow"))
 
     const instructionEl = this.instructionElement(el)
