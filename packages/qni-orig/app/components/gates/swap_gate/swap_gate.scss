@@ -37,15 +37,22 @@
     @apply text-#{$gate-source-color};
   }
 
+  // Placeholder to display when it is droppable
+  .draggable--shadow & {
+    @apply border-#{$gate-shadow-color};
+  }
+
+  .draggable--shadow & #{$gate-shape-class} {
+    @apply bg-white;
+  }
+
+  .draggable--shadow & #{$gate-shape-class} svg {
+    @apply text-#{$gate-shadow-color};
+  }
+
   // TODO: 未整理
   &.gate--disabled #{$gate-shape-class} {
     @apply text-gray-500;
-  }
-
-  .draggable--shadow & {
-    @apply bg-white;
-    @apply text-#{$gate-shadow-color};
-    @apply border-#{$gate-shadow-color};
   }
 
   &.instruction--bordered {
