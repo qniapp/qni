@@ -1,0 +1,7 @@
+.not-gate {
+  $gate-shape-class: ".gate__shape";
+
+  .draggable:hover & #{$gate-shape-class} {
+    @apply bg-#{$gate-hover-color};
+  }
+}
