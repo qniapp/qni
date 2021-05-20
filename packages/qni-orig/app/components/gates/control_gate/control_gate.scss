@@ -25,6 +25,20 @@
     @apply bg-transparent;
   }
 
+  // Reference for coordinates during dragging
+  .draggable--source & {
+    @apply border-#{$gate-source-color};
+  }
+
+  .draggable--source & #{$gate-shape-class} {
+    @apply bg-transparent;
+  }
+
+  .draggable--source & #{$gate-shape-class} &__dot {
+    @apply bg-#{$gate-source-color};
+  }
+
+  // 未整理
   .draggable--shadow & {
     @apply bg-white;
     @apply border-#{$gate-shadow-color};
