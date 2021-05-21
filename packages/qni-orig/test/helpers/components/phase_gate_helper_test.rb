@@ -9,7 +9,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
-          𝟇
+          𝜙
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
@@ -30,7 +30,7 @@ class Components::PhaseGateHelperTest < ActionView::TestCase
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
-          𝟇
+          𝜙
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">π/2</div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel">π/2</div>
