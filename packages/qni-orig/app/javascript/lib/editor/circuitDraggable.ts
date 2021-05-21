@@ -1,5 +1,5 @@
 import { Draggable } from "./mixins"
-import { ControlGate, CircuitElement, NotGate, SwapGate } from "./gates"
+import { ControlGate, CircuitElement, HadamardGate, NotGate, SwapGate } from "./gates"
 import { CircuitDropzone } from "./circuitDropzone"
 import { Mixin } from "ts-mixer"
 
@@ -28,6 +28,7 @@ export class CircuitDraggable extends Mixin(Draggable) {
     if (
       circuitElement instanceof ControlGate ||
       circuitElement instanceof NotGate ||
+      circuitElement instanceof HadamardGate ||
       circuitElement instanceof SwapGate
     ) {
       circuitElement.disconnectFromLowerBit()
