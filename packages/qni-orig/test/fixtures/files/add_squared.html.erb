@@ -191,7 +191,7 @@
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 0, controls: [4] %>
+          <%= not_gate bit: 0, controls: [4], targets: [0] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
@@ -252,7 +252,7 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 1, controls: [5] %>
+          <%= not_gate bit: 1, controls: [5], targets: [1] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
@@ -361,7 +361,7 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 2, controls: [5] %>
+          <%= not_gate bit: 2, controls: [5], targets: [2] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
