@@ -393,6 +393,7 @@ export class Editor {
       return !(gate as Disableable).disabled
     }
     const notGateBits = circuitStep.gatesOf(NotGate).map(toBit)
+    const hadamardGateBits = circuitStep.gatesOf(HadamardGate).map(toBit)
     const controlGateBits = circuitStep
       .gatesOf(ControlGate)
       .filter(isEnabled)
@@ -401,7 +402,7 @@ export class Editor {
       .gatesOf(SwapGate)
       .filter(isEnabled)
       .map(toBit)
-    const bits = notGateBits.concat(controlGateBits).concat(swapGateBits).sort()
+    const bits = notGateBits.concat(hadamardGateBits).concat(controlGateBits).concat(swapGateBits).sort()
 
     circuitStep.dropzones.forEach((each, i) => {
       if (
