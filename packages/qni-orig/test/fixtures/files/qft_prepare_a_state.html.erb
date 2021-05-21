@@ -53,17 +53,17 @@
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 1, controls: [0] %>
+          <%= not_gate bit: 1, controls: [0], targets: [1, 2, 3] %>
         <% end %>
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 2, controls: [0] %>
+          <%= not_gate bit: 2, controls: [0], targets: [1, 2, 3] %>
         <% end %>
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 3, controls: [0] %>
+          <%= not_gate bit: 3, controls: [0], targets: [1, 2, 3] %>
         <% end %>
       <% end %>
     <% end %>
@@ -80,7 +80,7 @@
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 0, controls: [1] %>
+          <%= not_gate bit: 0, controls: [1], targets: [0] %>
         <% end %>
       <% end %>
       <%= dropzone do %>

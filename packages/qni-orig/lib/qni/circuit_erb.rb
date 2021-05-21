@@ -94,7 +94,10 @@ module Qni
     end
 
     def not_gate(opts = {})
-      opts = option_string(bit: opts.fetch(:bit), controls: opts.fetch(:controls, []), if: opts.fetch(:if, nil))
+      opts = option_string(bit: opts.fetch(:bit),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
       "<%= not_gate #{opts} %>\n"
     end
 

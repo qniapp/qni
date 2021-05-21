@@ -2,12 +2,14 @@ require 'component'
 require 'concerns/connectable'
 require 'concerns/controllable'
 require 'concerns/ifable'
+require 'concerns/targetable'
 require 'concerns/wireable'
 
 class Gates::NotGateComponent < Component
   include Connectable
   include Controllable
   include Ifable
+  include Targetable
   include Wireable
 
   def klass
@@ -33,12 +35,12 @@ class Gates::NotGateComponent < Component
   def with_upper_bit?
     return false unless bit
 
-    controls.any? { |each| each > bit }
+    (controls + targets).any? { |each| each > bit }
   end
 
   def with_lower_bit?
     return false unless bit
 
-    controls.any? { |each| each < bit }
+    (controls + targets).any? { |each| each < bit }
   end
 end
