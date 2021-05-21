@@ -271,7 +271,7 @@ module Qni
           elsif targets.include?(bit)
             dropzone do
               draggable do
-                not_gate bit: bit, controls: [control]
+                not_gate bit: bit, controls: [control], targets: targets
               end
             end
           else

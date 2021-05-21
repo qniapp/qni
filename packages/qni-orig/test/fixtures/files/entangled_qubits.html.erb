@@ -40,7 +40,7 @@
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= not_gate bit: 1, controls: [0] %>
+          <%= not_gate bit: 1, controls: [0], targets: [1] %>
         <% end %>
       <% end %>
     <% end %>
