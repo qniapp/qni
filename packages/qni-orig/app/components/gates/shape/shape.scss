@@ -28,7 +28,6 @@
     svg {
       @apply stroke-current;
       @apply text-#{$gate-label-color};
-      @apply p-1;
       @apply w-full h-full;
     }
   }

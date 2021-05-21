@@ -1,7 +1,6 @@
 .control-gate {
   $gate-shape-class: ".gate__shape";
 
-  @apply flex items-center justify-center;
   @apply rounded;
 
   &__dot {
