@@ -11,6 +11,9 @@ module.exports = {
         84: "21rem",
         108: "27rem",
       },
+      fontSize: {
+        "xxs": ".5rem",
+      },
       strokeWidth: {
         "3": "3",
       }
