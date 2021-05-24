@@ -2,18 +2,6 @@
   @apply flex flex-row;
   @apply flex-shrink-0;
 
-  .circle-notation[data-circle-notation-nqubit="4"] & {
-    @apply flex-col;
-
-    .qubit-circle-octet:last-child {
-      @apply mt-1;
-
-      @screen md {
-        @apply mt-0;
-      }
-    }
-  }
-
   @screen md {
     @apply flex-row;
 
@@ -28,6 +16,19 @@
 
   .qubit-circle-octet {
     @apply flex flex-row;
+  }
+
+  .circle-notation[data-circle-notation-nqubit="4"] & {
+    @apply flex-col;
+
+    .qubit-circle-octet:last-child {
+      @apply mt-1;
+
+      @screen md {
+        @apply ml-0;
+        @apply mt-0;
+      }
+    }
   }
 
   .circle-notation[data-circle-notation-nqubit="5"] & .qubit-circle-octet:nth-child(even) {
