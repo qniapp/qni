@@ -130,3 +130,16 @@ $write-readout-gate-label-font-size: (
   7: $instruction-label-font-size-extrasmall,
   8: $instruction-label-font-size-extrasmall,
 );
+
+// Circle notation
+$circle-notation-height: (
+  1: 28,
+  2: 28,
+  3: 28,
+  4: 32,
+  5: 14,
+  6: 24,
+  7: 44,
+  8: 84,
+);
+$circle-notation-margin-top: 12;
