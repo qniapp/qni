@@ -1,12 +1,12 @@
 .run-button {
-  @apply bg-purple-500;
+  @apply bg-gradient-to-br from-purple-600 via-purple-700 to-blue-600;
   @apply bottom-0 right-0;
   @apply cursor-pointer;
   @apply fixed;
   @apply flex justify-center items-center;
-  @apply mr-8 mb-8;
+  @apply mr-6 mb-6;
   @apply rounded-full;
-  @apply shadow;
+  @apply shadow-lg;
   @apply w-16 h-16;
   @apply z-40;
 

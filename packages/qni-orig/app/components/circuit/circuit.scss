@@ -2,7 +2,11 @@
   @apply flex;
   @apply flex-col items-center;
 
-  @apply pt-8;
+  @each $nqubit in $nqubits {
+    &[data-nqubit="#{$nqubit}"] {
+      @apply py-#{map-get($circle-notation-height, $nqubit) + ($circle-notation-margin-top * 2)};
+    }
+  }
 
   @screen md {
     @apply flex-row;

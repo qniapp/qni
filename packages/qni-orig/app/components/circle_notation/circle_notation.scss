@@ -3,7 +3,7 @@
 
   // Position
   @apply fixed;
-  @apply mt-16;
+  @apply mt-#{$circle-notation-margin-top} mx-6;
   @apply top-0 left-0 right-0;
   @apply z-40;
 
@@ -13,17 +13,23 @@
   @apply justify-center;
 
   // Other
-  @apply bg-gray-100;
-  @apply shadow;
+  @apply bg-white;
+  @apply border border-gray-100;
+  @apply rounded-md;
+  @apply shadow-lg;
 
   @screen md {
+    @apply bg-gray-100;
+    @apply border-0;
     @apply bottom-0;
-    @apply mt-5;
+    @apply mt-5 mx-0;
+    @apply rounded-none;
+    @apply h-40;
     top: unset;
   }
 
   &[data-circle-notation-nqubit="1"] {
-    @apply h-28;
+    @apply h-#{map-get($circle-notation-height, 1)};
 
     .state-vector__row {
       &:first-of-type {
@@ -40,10 +46,14 @@
         }
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="2"] {
-    @apply h-28;
+    @apply h-#{map-get($circle-notation-height, 1)};
 
     .state-vector__row {
       &:first-of-type {
@@ -60,10 +70,14 @@
         }
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="3"] {
-    @apply h-28;
+    @apply h-#{map-get($circle-notation-height, 3)};
 
     .state-vector__row {
       &:first-of-type {
@@ -80,10 +94,14 @@
         }
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="4"] {
-    @apply h-32;
+    @apply h-#{map-get($circle-notation-height, 4)};
 
     .state-vector__row:nth-child(n + 2) {
       @apply hidden;
@@ -92,10 +110,14 @@
         @apply hidden;
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="5"] {
-    @apply h-28;
+    @apply h-#{map-get($circle-notation-height, 5)};
 
     .state-vector__row:nth-child(n + 3) {
       @apply hidden;
@@ -104,10 +126,14 @@
         @apply hidden;
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="6"] {
-    @apply h-28;
+    @apply h-#{map-get($circle-notation-height, 6)};
 
     .state-vector__row:nth-child(n + 5) {
       @apply hidden;
@@ -116,12 +142,14 @@
         @apply hidden;
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="7"] {
-    @apply h-40;
-    @apply overflow-x-hidden;
-    @apply overflow-y-scroll;
+    @apply h-#{map-get($circle-notation-height, 7)};
 
     .state-vector__row:nth-child(n + 9) {
       @apply hidden;
@@ -130,11 +158,13 @@
         @apply hidden;
       }
     }
+
+    @screen md {
+      @apply h-40;
+    }
   }
 
   &[data-circle-notation-nqubit="8"] {
-    @apply h-40;
-    @apply overflow-x-hidden;
-    @apply overflow-y-scroll;
+    @apply h-#{map-get($circle-notation-height, 8)};
   }
 }

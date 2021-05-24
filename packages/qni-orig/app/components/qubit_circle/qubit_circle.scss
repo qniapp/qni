@@ -1,4 +1,6 @@
 .qubit-circle {
+  $parent: &;
+
   $size-xl: 16;
   $size-large: $size-xl / 2;
   $size-base: $size-large / 2;
@@ -302,42 +304,39 @@
 
   // Ket notations such as |112⟩ below circles
   &__ket {
-    @apply leading-none;
     @apply text-gray-400;
     @apply whitespace-nowrap;
-  }
 
-  .circle-notation[data-circle-notation-nqubit="1"] &__ket,
-  .circle-notation[data-circle-notation-nqubit="2"] &__ket {
-    @apply mt-1;
-    @apply text-base;
-  }
-
-  .circle-notation[data-circle-notation-nqubit="3"] &__ket,
-  .circle-notation[data-circle-notation-nqubit="4"] &__ket {
-    @apply mt-1;
-    @apply text-sm;
-  }
-
-  .circle-notation[data-circle-notation-nqubit="3"] &__ket {
-    @screen md {
-      @apply mt-1;
+    .circle-notation[data-circle-notation-nqubit="1"] &,
+    .circle-notation[data-circle-notation-nqubit="2"] & {
       @apply text-base;
     }
-  }
 
-  .circle-notation[data-circle-notation-nqubit="5"] &__ket,
-  .circle-notation[data-circle-notation-nqubit="6"] &__ket,
-  .circle-notation[data-circle-notation-nqubit="7"] &__ket,
-  .circle-notation[data-circle-notation-nqubit="8"] &__ket {
-    @apply hidden;
-  }
-
-  .circle-notation[data-circle-notation-nqubit="5"] &__ket {
-    @screen md {
-      @apply inline;
-      @apply mt-1;
+    .circle-notation[data-circle-notation-nqubit="3"] &,
+    .circle-notation[data-circle-notation-nqubit="4"] & {
       @apply text-sm;
+    }
+
+    .circle-notation[data-circle-notation-nqubit="3"] & {
+      @screen md {
+        @apply mt-1;
+        @apply text-base;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="5"] &,
+    .circle-notation[data-circle-notation-nqubit="6"] &,
+    .circle-notation[data-circle-notation-nqubit="7"] &,
+    .circle-notation[data-circle-notation-nqubit="8"] & {
+      @apply hidden;
+    }
+
+    .circle-notation[data-circle-notation-nqubit="5"] & {
+      @screen md {
+        @apply inline;
+        @apply mt-1;
+        @apply text-sm;
+      }
     }
   }
 }
