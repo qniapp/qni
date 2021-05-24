@@ -1,5 +1,6 @@
 import CircleNotationController from "./circle_notation_controller"
 import SimulatorController from "./simulator_controller"
+import { Breakpoint } from "lib/base"
 import { Controller } from "stimulus"
 import { Editor } from "lib/editor"
 
@@ -22,6 +23,8 @@ export default class EditorController extends Controller {
   }
 
   onDraggableMouseOver(event: MouseEvent): void {
+    if (Breakpoint.isMobile()) return
+
     this.editor.onDraggableMouseOver(event)
   }
 
@@ -30,6 +33,8 @@ export default class EditorController extends Controller {
   }
 
   onDraggableMouseDown(event: MouseEvent): void {
+    if (Breakpoint.isMobile()) return
+
     this.mouseIsDown = true
     setTimeout(this.onDraggableMouseHold.bind(this), 100, event)
   }
@@ -43,6 +48,7 @@ export default class EditorController extends Controller {
   }
 
   onDraggableMouseUp(event: MouseEvent): void {
+    if (Breakpoint.isMobile()) return
     if (!this.mouseIsHolded) this.editor.onDraggableMouseClick(event)
 
     this.mouseIsHolded = false

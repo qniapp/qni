@@ -2,7 +2,9 @@
   $gate-shape-class: ".gate__shape";
 
   .draggable:hover & #{$gate-shape-class} {
-    @apply bg-#{$gate-hover-color};
+    @screen md {
+      @apply bg-#{$gate-hover-color};
+    }
   }
 
   // Reference for coordinates during dragging

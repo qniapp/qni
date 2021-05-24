@@ -12,16 +12,22 @@
 
   // ホバー中
   .draggable:not(.draggable--source):hover & {
-    @apply bg-white;
-    @apply border-#{$gate-hover-color};
+    @screen md {
+      @apply bg-white;
+      @apply border-#{$gate-hover-color};
+    }
   }
 
   .draggable:not(.draggable--source):hover & #{$gate-shape-class}--square {
-    @apply bg-transparent;
+    @screen md {
+      @apply bg-transparent;
+    }
   }
 
   .draggable:not(.draggable--source):hover & #{$gate-shape-class} svg {
-    @apply text-#{$gate-hover-color};
+    @screen md {
+      @apply text-#{$gate-hover-color};
+    }
   }
 
   // Reference for coordinates during dragging
