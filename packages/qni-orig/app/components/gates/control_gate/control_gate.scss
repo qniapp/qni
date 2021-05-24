@@ -12,16 +12,22 @@
 
   .draggable:hover &,
   .draggable--grabbed & {
-    @apply bg-white;
-    @apply border-#{$gate-hover-color};
+    @screen md {
+      @apply bg-white;
+      @apply border-#{$gate-hover-color};
+    }
   }
 
   .draggable:hover &__dot {
-    @apply bg-#{$gate-hover-color};
+    @screen md {
+      @apply bg-#{$gate-hover-color};
+    }
   }
 
   .draggable:hover & #{$gate-shape-class}--square {
-    @apply bg-transparent;
+    @screen md {
+      @apply bg-transparent;
+    }
   }
 
   // Reference for coordinates during dragging

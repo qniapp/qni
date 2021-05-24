@@ -1,8 +1,8 @@
-import { InternalError } from "lib/error"
-import { attributeNameFor, classNameFor } from "lib/base"
-import { parse } from "mathjs"
-import { Controller } from "stimulus"
 import tippy, { Instance, Props } from "tippy.js"
+import { Controller } from "stimulus"
+import { InternalError } from "lib/error"
+import { attributeNameFor, classNameFor, Breakpoint } from "lib/base"
+import { parse } from "mathjs"
 
 export default class GatePopupController extends Controller {
   static targets = ["content", "topLabel", "bottomLabel"]
@@ -22,6 +22,8 @@ export default class GatePopupController extends Controller {
   }
 
   show(): void {
+    if (Breakpoint.isMobile()) return
+
     this.popup = tippy(this.element, {
       allowHTML: true,
       content: this.contentTarget.innerHTML,
