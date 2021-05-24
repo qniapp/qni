@@ -6,6 +6,10 @@ module.exports = {
       spacing: {
         9: "2.25rem",
         18: "4.5rem",
+        38: "9.5rem",
+        68: "17rem",
+        84: "21rem",
+        108: "27rem",
       },
       strokeWidth: {
         "3": "3",
