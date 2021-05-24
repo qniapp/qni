@@ -9,7 +9,8 @@ class CircleNotationComponent < Component
 
   def data
     { controller: 'circle-notation',
-      target: 'simulator.circleNotation editor.circleNotation',
+      simulator_target: 'circleNotation',
+      editor_target: 'circleNotation',
       circle_notation_nqubit: nqubit }
   end
 end
