@@ -85,8 +85,9 @@ $gate-source-color: indigo-500;
 $gate-label-font-size-extralarge: base;
 $gate-label-font-size-large: base;
 $gate-label-font-size-base: base;
-$gate-label-font-size-small: base;
-$gate-label-font-size-extrasmall: base;
+$gate-label-font-size-small: sm;
+$gate-label-font-size-extrasmall: xs;
+$gate-label-font-size-extraextrasmall: xxs;
 
 $gate-label-font-size: (
   1: $gate-label-font-size-extralarge,
@@ -96,7 +97,7 @@ $gate-label-font-size: (
   5: $gate-label-font-size-small,
   6: $gate-label-font-size-small,
   7: $gate-label-font-size-extrasmall,
-  8: $gate-label-font-size-extrasmall,
+  8: $gate-label-font-size-extraextrasmall,
 );
 
 // Wire
