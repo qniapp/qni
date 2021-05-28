@@ -9,7 +9,7 @@
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
       <%= palette %>
       <%= circuit_view circuit: @circuit %>
-      <%= circle_notation @circuit %>
+      <%= circle_notation nqubit: @circuit.nqubit %>
       <%= component 'run_button' %>
     <% end %>
   <% end %>
