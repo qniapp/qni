@@ -2,33 +2,28 @@
   @apply flex;
   @apply flex-col items-center;
 
-  @each $nqubit in $nqubits {
-    &[data-nqubit="#{$nqubit}"] {
-      @apply py-#{map-get($circle-notation-height, $nqubit) + ($circle-notation-margin-top * 2)};
-    }
-  }
-
   @screen md {
     @apply flex-row;
     @apply mt-32;
-    @apply py-5;
   }
 
-  .circuit-preview & {
-    @screen md {
-      @apply mt-0;
-    }
-  }
+  @each $nqubit in $nqubits {
+    &[data-nqubit="#{$nqubit}"] {
+      @apply py-#{map-get($circle-notation-height, $nqubit) + ($circle-notation-margin-top * 2)};
 
-  .simulator & {
-    @screen md {
-      @apply py-6;
+      @screen md {
+        @apply py-0;
+      }
     }
   }
 
   .circuit-preview & {
     @apply flex-row;
     @apply py-5;
+
+    @screen md {
+      @apply mt-0;
+    }
   }
 
   &__body {

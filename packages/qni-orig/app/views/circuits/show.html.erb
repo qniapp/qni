@@ -2,8 +2,6 @@
   <%= javascript_pack_tag 'service_worker', 'data-turbolinks-track': 'reload' %>
 <% end %>
 
-<%= component 'navbar', title: @circuit.name %>
-
 <%= container do %>
   <%= editor do %>
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
