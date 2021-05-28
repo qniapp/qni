@@ -1,4 +1,3 @@
-require 'qni/circle_notation_generator'
 require 'qni/erb_generator'
 
 class Circuit < ApplicationRecord
