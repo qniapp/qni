@@ -1,16 +1,8 @@
 {
   "name": "qni",
   "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ],
+    "*.js": "eslint --cache --fix",
     "*.ts": [
       "prettier --write",
       "eslint --fix"
@@ -28,7 +20,7 @@
       "prettier --write"
     ],
     "*.scss": [
-      "bundle exec scss-lint",
+      "bin/bundle exec scss-lint",
       "prettier --write"
     ],
     "*.md": [
@@ -38,7 +30,8 @@
   "scripts": {
     "test": "karma start",
     "test:watch": "yarn test --auto-watch --no-single-run",
-    "build:doc": "typedoc --out doc/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.json app/javascript/"
+    "build:doc": "typedoc --out doc/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.json app/javascript/",
+    "prepare": "husky install"
   },
   "prettier": {
     "semi": false,
@@ -81,7 +74,7 @@
     "eslint": "~7.26",
     "eslint-config-prettier": "~8.3",
     "eslint-plugin-prettier": "^3.1.2",
-    "husky": "^4.3.0",
+    "husky": ">=6",
     "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "^2.0.0",

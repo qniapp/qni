@@ -7,18 +7,18 @@
        data-controller="circuit-thumbnail"
        data-action="iframeSize->circuit-thumbnail#iframeSize"
        data-circuit-thumbnail-name="<%= circuit.name %>">
-    <div class="circuit-thumbnail--loader" data-target="circuit-thumbnail.loader">
+    <div class="circuit-thumbnail--loader" data-circuit-thumbnail-target="loader">
       <%= oval_loader %>
     </div>
 
     <div class="circuit-thumbnail--container invisible"
-         data-target="circuit-thumbnail.thumbnailContainer">
+         data-circuit-thumbnail-target="thumbnailContainer">
       <div class="circuit-thumbnail--thumbnail"
-           data-target="circuit-thumbnail.thumbnail">
+           data-circuit-thumbnail-target="thumbnail">
         <iframe frameborder="0" scrolling="no"
                 class="lazy h-0"
                 data-src="<%= circuit_preview_path(circuit) %>"
-                data-target="circuit-thumbnail.iframe"
+                data-circuit-thumbnail-target="iframe"
                 data-action="iframeLazyLoad->circuit-thumbnail#iframeLazyLoad resize@window->circuit-thumbnail#resize"
                 data-circuit-name="<%= circuit.name %>"></iframe>
       </div>

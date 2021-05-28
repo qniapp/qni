@@ -100,12 +100,33 @@ $gate-label-font-size: (
   8: $gate-label-font-size-extraextrasmall,
 );
 
+$gate-label-rotate: (
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 45,
+);
+
 // Wire
 $wire-color: gray-600;
 $wire-inactive-color: gray-200;
 $wire-width: 2;
 
-$connection-width: 4;
+$connection-width-base: 4;
+$connection-width: (
+  1: 4,
+  2: 4,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 4,
+  7: 4,
+  8: 2,
+);
 
 // Breakpoint
 $breakpoint-color: yellow-300;
@@ -138,9 +159,24 @@ $circle-notation-height: (
   2: 28,
   3: 28,
   4: 32,
-  5: 14,
+  5: 20,
   6: 24,
   7: 44,
-  8: 84,
+  8: 24,
 );
 $circle-notation-margin-top: 12;
+
+// Qubit Circle
+$qubit-circle-size-xl: 16;
+$qubit-circle-size-large: 8;
+$qubit-circle-size-base: 4;
+$qubit-circle-size-sm: 2;
+
+$qubit-circle-border-width-xl: 2;
+$qubit-circle-border-width-large: 2;
+$qubit-circle-border-width-base: 1;
+
+$qubit-circle-ml-xl: 4;
+$qubit-circle-ml-large: 2;
+$qubit-circle-ml-base: 1;
+$qubit-circle-ml-xs: 'px';
