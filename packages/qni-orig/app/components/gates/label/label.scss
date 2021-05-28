@@ -21,6 +21,7 @@
           @apply left-0;
           @apply ml-#{map-get($instruction-size, $nqubit)};
           @apply text-#{map-get($gate-label-font-size, $nqubit)};
+          @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
 
           writing-mode: vertical-lr;
 
@@ -30,6 +31,7 @@
             @apply mb-#{$instruction-size-base};
             @apply ml-0;
             @apply text-xs;
+            @apply transform rotate-0;
             @apply w-full;
 
             writing-mode: horizontal-tb;
@@ -63,6 +65,7 @@
           @apply mr-#{map-get($instruction-size, $nqubit)};
           @apply right-0;
           @apply text-#{map-get($gate-label-font-size, $nqubit)};
+          @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
 
           writing-mode: vertical-lr;
 
@@ -72,6 +75,7 @@
             @apply mt-#{$instruction-size-base};
             @apply text-xs;
             @apply top-0;
+            @apply transform rotate-0;
             @apply w-full;
 
             writing-mode: horizontal-tb;
