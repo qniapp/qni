@@ -181,4 +181,12 @@
       @apply h-40;
     }
   }
+
+  &[data-circle-notation-nqubit="8"] {
+    @apply h-#{map-get($circle-notation-height, 8)};
+
+    @screen md {
+      @apply h-40;
+    }
+  }
 }
