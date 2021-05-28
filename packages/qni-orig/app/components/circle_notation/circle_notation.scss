@@ -19,8 +19,7 @@
   @apply shadow-lg;
 
   @screen md {
-    @apply bg-gray-100;
-    @apply border-0;
+    @apply border-t-2 border-r-0 border-b-0 border-l-0;
     @apply bottom-0;
     @apply mt-5 mx-0;
     @apply rounded-none;
@@ -31,20 +30,26 @@
   &[data-circle-notation-nqubit="1"] {
     @apply h-#{map-get($circle-notation-height, 1)};
 
-    .state-vector__row {
-      &:first-of-type {
-        .qubit-circle:nth-child(n + 3) {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-      &:nth-child(n + 2) {
-        @apply hidden;
+    .qubit-circle-group--size32:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-        * {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size16:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size8:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle:nth-of-type(n + 3) {
+      @apply hidden;
     }
 
     @screen md {
@@ -55,20 +60,26 @@
   &[data-circle-notation-nqubit="2"] {
     @apply h-#{map-get($circle-notation-height, 1)};
 
-    .state-vector__row {
-      &:first-of-type {
-        .qubit-circle:nth-child(n + 5) {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-      &:nth-child(n + 2) {
-        @apply hidden;
+    .qubit-circle-group--size32:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-        * {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size16:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size8:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle:nth-of-type(n + 5) {
+      @apply hidden;
     }
 
     @screen md {
@@ -79,20 +90,22 @@
   &[data-circle-notation-nqubit="3"] {
     @apply h-#{map-get($circle-notation-height, 3)};
 
-    .state-vector__row {
-      &:first-of-type {
-        .qubit-circle:nth-child(n + 9) {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-      &:nth-child(n + 2) {
-        @apply hidden;
+    .qubit-circle-group--size32:nth-of-type(n + 2) {
+      @apply hidden;
+    }
 
-        * {
-          @apply hidden;
-        }
-      }
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size16:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size8:nth-of-type(n + 2) {
+      @apply hidden;
     }
 
     @screen md {
@@ -103,12 +116,17 @@
   &[data-circle-notation-nqubit="4"] {
     @apply h-#{map-get($circle-notation-height, 4)};
 
-    .state-vector__row:nth-child(n + 2) {
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
+    }
 
-      * {
-        @apply hidden;
-      }
+    .qubit-circle-group--size32:nth-of-type(n + 2) {
+      @apply hidden;
+    }
+
+    .qubit-circle-group--size32:first-of-type
+      .qubit-circle-group--size16:nth-of-type(n + 2) {
+      @apply hidden;
     }
 
     @screen md {
@@ -119,12 +137,12 @@
   &[data-circle-notation-nqubit="5"] {
     @apply h-#{map-get($circle-notation-height, 5)};
 
-    .state-vector__row:nth-child(n + 3) {
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
+    }
 
-      * {
-        @apply hidden;
-      }
+    .qubit-circle-group--size32:nth-of-type(n + 2) {
+      @apply hidden;
     }
 
     @screen md {
@@ -135,12 +153,12 @@
   &[data-circle-notation-nqubit="6"] {
     @apply h-#{map-get($circle-notation-height, 6)};
 
-    .state-vector__row:nth-child(n + 5) {
+    .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
+    }
 
-      * {
-        @apply hidden;
-      }
+    .qubit-circle-group--size32:nth-of-type(n + 3) {
+      @apply hidden;
     }
 
     @screen md {
@@ -151,20 +169,16 @@
   &[data-circle-notation-nqubit="7"] {
     @apply h-#{map-get($circle-notation-height, 7)};
 
-    .state-vector__row:nth-child(n + 9) {
+    .qubit-circle-group--size64:nth-of-type(n + 3) {
       @apply hidden;
+    }
 
-      * {
-        @apply hidden;
-      }
+    .qubit-circle-group--size32:nth-of-type(n + 5) {
+      @apply hidden;
     }
 
     @screen md {
       @apply h-40;
     }
-  }
-
-  &[data-circle-notation-nqubit="8"] {
-    @apply h-#{map-get($circle-notation-height, 8)};
   }
 }

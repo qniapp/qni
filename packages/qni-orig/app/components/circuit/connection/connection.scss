@@ -1,41 +1,43 @@
 .connection {
-  $connection-width: 4;
-
   @apply absolute;
   @apply border-#{$gate-color};
 
   &--top {
     @apply hidden;
 
-    .dropzone--connected-with-lower-bit &,
-    .gate--connected-with-lower-bit & {
-      @apply block;
-    }
-
-    @apply border-b-#{$connection-width};
-    @apply right-0;
-
-    @screen md {
-      @apply border-b-0;
-      right: unset;
-      top: 0;
-    }
-
     @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] .dropzone--connected-with-lower-bit &,
+      .circuit[data-nqubit="#{$nqubit}"] .gate--connected-with-lower-bit & {
+        @apply block;
+        @apply border-b-#{map-get($connection-width, $nqubit)};
+        @apply right-0;
+        @if $nqubit == 8 {
+          top: -1px;
+        } @else {
+          @apply top-0;
+        }
+
+        @screen md {
+          @apply border-b-0;
+          right: unset;
+          top: 0;
+        }
+      }
+
       .circuit[data-nqubit="#{$nqubit}"] .dropzone > & {
         @apply h-#{map-get($instruction-size, $nqubit) / 2 + map-get($instruction-margin, $nqubit)};
         @apply -mr-#{map-get($instruction-margin, $nqubit)};
         @apply w-#{map-get($instruction-size, $nqubit) / 2 + map-get($instruction-margin, $nqubit)};
-        top: 2px;
+        top: #{map-get($connection-width, $nqubit) / 2}px;
 
         @screen md {
-          @apply border-l-#{$connection-width};
+          @apply border-l-#{$connection-width-base};
           @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply ml-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply mr-0;
           @apply -mt-2;
           top: unset;
-          left: -#{$connection-width / 2}px;
+          left: -#{$connection-width-base / 2}px;
         }
       }
 
@@ -46,15 +48,15 @@
         right: -2px;
 
         @screen md {
-          @apply border-l-#{$connection-width};
+          @apply border-l-#{$connection-width-base};
           @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply -mt-#{$instruction-margin-base / 2};
           @apply ml-#{$instruction-size-base / 2};
 
           right: unset;
-          width: #{$connection-width}px;
-          top: -#{$connection-width}px;
-          left: -#{$connection-width}px;
+          width: #{$connection-width-base}px;
+          top: -#{$connection-width-base}px;
+          left: -#{$connection-width-base}px;
         }
       }
 
@@ -68,23 +70,24 @@
     .circuit-preview .circuit .dropzone > & {
       @apply -mt-2;
       @apply border-b-0;
-      @apply border-l-#{$connection-width};
+      @apply border-l-#{$connection-width-base};
       @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply ml-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply mr-0;
+
+      left: -#{$connection-width-base / 2}px;
       top: unset;
-      left: -#{$connection-width / 2}px;
     }
 
     .circuit-preview .circuit .gate > & {
-      @apply border-l-#{$connection-width};
+      @apply border-l-#{$connection-width-base};
       @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply -mt-#{$instruction-margin-base / 2};
       @apply ml-#{$instruction-size-base / 2};
 
-      width: #{$connection-width}px;
-      top: -#{$connection-width}px;
-      left: -#{$connection-width}px;
+      left: -#{$connection-width-base}px;
+      top: -#{$connection-width-base}px;
+      width: #{$connection-width-base}px;
     }
 
     .circuit-preview .circuit .instruction & {
@@ -100,32 +103,50 @@
       @apply block;
     }
 
-    @apply border-b-#{$connection-width};
-    @apply top-0;
-    left: -#{$connection-width / 2}px;
+    // @apply border-b-#{$connection-width-base};
+    // @apply top-0;
+    // left: -#{$connection-width-base / 2}px;
 
     @screen md {
-      @apply border-b-0;
+      // @apply border-b-0;
       @apply bottom-0 left-0;
-      top: unset;
+      // top: unset;
       right: unset;
     }
 
     @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] .dropzone--connected-with-upper-bit &,
+      .circuit[data-nqubit="#{$nqubit}"] .gate--connected-with-upper-bit & {
+        @apply block;
+        @apply border-b-#{map-get($connection-width, $nqubit)};
+        @apply top-0;
+        left: -#{map-get($connection-width, $nqubit) / 2}px;
+        @if $nqubit == 8 {
+          top: -1px;
+        } @else {
+          @apply top-0;
+        }
+
+        @screen md {
+          @apply border-b-0;
+          top: unset;
+        }
+      }
+
       .circuit[data-nqubit="#{$nqubit}"] .dropzone > & {
         @apply h-#{map-get($instruction-size, $nqubit) / 2 + map-get($instruction-margin, $nqubit)};
         @apply -ml-#{map-get($instruction-margin, $nqubit)};
         @apply w-#{map-get($instruction-size, $nqubit) / 2 + map-get($instruction-margin, $nqubit)};
         @apply left-0;
-        top: 2px;
+        top: #{map-get($connection-width, $nqubit) / 2}px;
 
         @screen md {
-          @apply border-l-#{$connection-width};
+          @apply border-l-#{$connection-width-base};
           @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply ml-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply -mb-2;
           top: unset;
-          left: -#{$connection-width / 2}px;
+          left: -#{$connection-width-base / 2}px;
         }
       }
 
@@ -133,42 +154,43 @@
         @apply h-#{map-get($instruction-size, $nqubit) / 2};
         @apply -ml-#{map-get($instruction-margin, $nqubit)};
         @apply w-#{map-get($instruction-size, $nqubit) / 2 + map-get($instruction-margin, $nqubit)};
+        left: -2px;
 
         @screen md {
           @apply -mb-#{$instruction-margin-base / 2};
-          @apply border-l-#{$connection-width};
+          @apply border-l-#{$connection-width-base};
           @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply ml-#{$instruction-size-base / 2};
           @apply w-auto;
 
           bottom: -2px;
-          left: -#{$connection-width}px;
+          left: -#{$connection-width-base}px;
         }
       }
     }
 
     .circuit-preview .circuit .dropzone > & {
-      @apply border-l-#{$connection-width};
+      @apply border-l-#{$connection-width-base};
       @apply border-b-0;
       @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply ml-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply -mb-2;
 
       bottom: 0;
-      left: -#{$connection-width / 2}px;
+      left: -#{$connection-width-base / 2}px;
       top: unset;
     }
 
     .circuit-preview .circuit .gate > & {
       @apply -mb-#{$instruction-margin-base / 2};
-      @apply border-l-#{$connection-width};
+      @apply border-l-#{$connection-width-base};
       @apply h-#{($instruction-size-base + $instruction-margin-base) / 2};
       @apply ml-#{$instruction-size-base / 2};
       @apply w-auto;
 
-      top: unset;
       bottom: -2px;
-      left: -#{$connection-width}px;
+      left: -#{$connection-width-base}px;
+      top: unset;
     }
 
     .circuit-preview .circuit .instruction & {

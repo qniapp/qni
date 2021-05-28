@@ -1,6 +1,6 @@
 <% palette = local_assigns.fetch(:palette) %>
 
-<div id="palette" class="palette absolute top-0 left-0 rounded bg-gray-100 mt-8">
+<div id="palette" class="palette absolute top-0 left-0 rounded-md bg-white mt-8 border-2 border-gray-200 shadow-lg z-40">
   <%= dropzone trash: true do %>
     <%= dropzone palette: true do %>
       <%= draggable palette: true do %>

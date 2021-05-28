@@ -1,6 +1,10 @@
 .hadamard-gate {
   $gate-shape-class: ".gate__shape";
 
+  .circuit[data-nqubit="8"] & #{$gate-shape-class} {
+    @apply rounded-sm;
+  }
+
   .draggable:hover & #{$gate-shape-class} {
     @screen md {
       @apply bg-#{$gate-hover-color};
