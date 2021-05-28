@@ -1,6 +1,4 @@
 .circle-notation {
-  $self: &;
-
   // Position
   @apply fixed;
   @apply mt-#{$circle-notation-margin-top} mx-6;
@@ -12,7 +10,7 @@
   @apply items-center;
   @apply justify-center;
 
-  // Other
+  // Misc.
   @apply bg-white;
   @apply border-2 border-gray-200;
   @apply rounded-md;
@@ -21,15 +19,12 @@
   @screen md {
     @apply border-t-2 border-r-0 border-b-0 border-l-0;
     @apply bottom-0;
-    @apply mt-5 mx-0;
+    @apply m-0;
     @apply rounded-none;
-    @apply h-40;
     top: unset;
   }
 
   &[data-circle-notation-nqubit="1"] {
-    @apply h-#{map-get($circle-notation-height, 1)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -52,14 +47,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 1)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="2"] {
-    @apply h-#{map-get($circle-notation-height, 1)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -82,14 +76,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 1)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="3"] {
-    @apply h-#{map-get($circle-notation-height, 3)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -108,14 +101,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 3)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="4"] {
-    @apply h-#{map-get($circle-notation-height, 4)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -129,14 +121,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 4)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="5"] {
-    @apply h-#{map-get($circle-notation-height, 5)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -145,14 +136,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 5)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="6"] {
-    @apply h-#{map-get($circle-notation-height, 6)};
-
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
@@ -161,14 +151,13 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 6)};
     @screen md {
       @apply h-40;
     }
   }
 
   &[data-circle-notation-nqubit="7"] {
-    @apply h-#{map-get($circle-notation-height, 7)};
-
     .qubit-circle-group--size64:nth-of-type(n + 3) {
       @apply hidden;
     }
@@ -177,6 +166,7 @@
       @apply hidden;
     }
 
+    @apply h-#{map-get($circle-notation-height, 7)};
     @screen md {
       @apply h-40;
     }
@@ -184,7 +174,6 @@
 
   &[data-circle-notation-nqubit="8"] {
     @apply h-#{map-get($circle-notation-height, 8)};
-
     @screen md {
       @apply h-40;
     }
