@@ -1,8 +1,3 @@
 .state-vector {
   @apply flex flex-col;
-
-  .circle-notation--8qubit & {
-    @apply absolute top-0;
-    @apply my-4;
-  }
 }
