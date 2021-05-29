@@ -30,7 +30,7 @@
   "scripts": {
     "test": "karma start",
     "test:watch": "yarn test --auto-watch --no-single-run",
-    "build:doc": "typedoc --out doc/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.json app/javascript/",
+    "build:doc": "typedoc --out doc/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json app/javascript/",
     "prepare": "husky install"
   },
   "prettier": {
