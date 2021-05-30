@@ -1,6 +1,7 @@
 import tippy from "tippy.js"
 import { Controller } from "stimulus"
 import { Instance } from "tippy.js"
+import { Util } from "lib/base"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
@@ -51,56 +52,48 @@ export default class CircleNotationController extends Controller {
     phases: { [bit: number]: number },
   ) {
     const qubitCircleCount = Object.keys(magnitudes).length
-    Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
-      const qubitCircle = this.qubitCircleTargets[c]
-      const magnitudeEl = qubitCircle.querySelector(
-        ".qubit-circle__magnitude",
-      ) as HTMLElement
-      const phaseEl = qubitCircle.querySelector(
-        ".qubit-circle__phase",
-      ) as HTMLElement
-      if (!magnitudeEl) throw new Error("magnitude element not found")
-      if (!phaseEl) throw new Error("phase element not found")
+    const qubitCircleTargets = this.qubitCircleTargets
 
+    Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
+      const qubitCircle = qubitCircleTargets[c]
       qubitCircle.setAttribute("data-magnitude", magnitudes[c].toString())
       qubitCircle.setAttribute("data-phase", phases[c].toString())
     })
   }
 
   private drawCircles() {
+    const qubitCircleTargets = this.qubitCircleTargets
+
     Array.from(Array(2 ** this.nqubit)).map((_, c) => {
-      const qubitCircle = this.qubitCircleTargets[c]
-      const magnitudeEl = qubitCircle.querySelector(
-        ".qubit-circle__magnitude",
-      ) as HTMLElement
-      const phaseEl = qubitCircle.querySelector(
-        ".qubit-circle__phase",
-      ) as HTMLElement
-      if (!magnitudeEl) throw new Error("magnitude element not found")
-      if (!phaseEl) throw new Error("phase element not found")
-
+      const qubitCircle = qubitCircleTargets[c]
       const dataMagnitude = qubitCircle.getAttribute("data-magnitude")
-      const dataPhase = qubitCircle.getAttribute("data-phase")
       if (!dataMagnitude) return
-      if (!dataPhase) return
 
-      const magnitude = parseFloat(dataMagnitude)
-      const phase = parseFloat(dataPhase)
-      const circleDiameter = qubitCircle.clientWidth
-      const diameter = circleDiameter * magnitude
+      if (dataMagnitude != "0") {
+        const dataPhase = qubitCircle.getAttribute("data-phase")
+        if (!dataPhase) return
+        const magnitude = parseFloat(dataMagnitude)
+        const phase = parseFloat(dataPhase)
+        const circleDiameter = qubitCircle.clientWidth
+        const diameter = circleDiameter * magnitude
 
-      phaseEl.style.transform = `rotate(${-1 * phase}deg)`
+        const magnitudeEl = qubitCircle.querySelector(
+          ".qubit-circle__magnitude",
+        ) as HTMLElement
+        Util.notNull(magnitudeEl)
+        magnitudeEl.style.width = `${diameter}px`
+        magnitudeEl.style.height = `${diameter}px`
 
-      magnitudeEl.style.width = `${diameter}px`
-      magnitudeEl.style.height = `${diameter}px`
+        const phaseEl = qubitCircle.querySelector(
+          ".qubit-circle__phase",
+        ) as HTMLElement
+        Util.notNull(phaseEl)
+        phaseEl.style.transform = `rotate(${-1 * phase}deg)`
 
-      if (magnitude > 0) {
         const phaseMagnitudeEl = qubitCircle.querySelector(
           ".qubit-circle__phase-magnitude",
         ) as HTMLElement
-        if (!phaseMagnitudeEl) {
-          throw new Error("phase-magnitude element not found")
-        }
+        Util.notNull(phaseMagnitudeEl)
 
         phaseMagnitudeEl.style.marginTop = `${
           (circleDiameter - diameter) / 2
@@ -112,8 +105,10 @@ export default class CircleNotationController extends Controller {
   }
 
   private updateTooltips(qubitCircleCount: number): void {
+    const qubitCircleTargets = this.qubitCircleTargets
+
     Array.from(Array(qubitCircleCount).keys()).forEach((i) => {
-      this.addTooltip(this.qubitCircleTargets[i], i)
+      this.addTooltip(qubitCircleTargets[i], i)
     })
   }
 
