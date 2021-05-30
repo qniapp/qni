@@ -1,5 +1,12 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: ["production"].includes(process.env.NODE_ENV),
+    content: [
+      "./**/*.html.erb",
+      "./app/helpers/**/*.rb",
+      "./app/javascript/**/*.js",
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -15,7 +22,7 @@ module.exports = {
         "xxs": ".5rem",
       },
       borderWidth: {
-        '1': '1px',
+        "1": "1px",
       },
       strokeWidth: {
         "3": "3",
