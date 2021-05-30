@@ -1,7 +1,6 @@
 import tippy from "tippy.js"
 import { Controller } from "stimulus"
 import { Instance } from "tippy.js"
-import { Util } from "lib/base"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
@@ -23,12 +22,10 @@ export default class CircleNotationController extends Controller {
 
   incrementNqubit(): void {
     this.data.set("nqubit", (this.nqubit + 1).toString())
-    this.drawCircles()
   }
 
   set nqubit(nqubit: number) {
     this.data.set("nqubit", nqubit.toString())
-    this.drawCircles()
   }
 
   get nqubit(): number {
@@ -43,7 +40,6 @@ export default class CircleNotationController extends Controller {
     phases: { [bit: number]: number },
   ): void {
     this.setCircleAttributes(magnitudes, phases)
-    this.drawCircles()
     this.updateTooltips(Object.keys(magnitudes).length)
   }
 
@@ -56,51 +52,11 @@ export default class CircleNotationController extends Controller {
 
     Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
       const qubitCircle = qubitCircleTargets[c]
-      qubitCircle.setAttribute("data-magnitude", magnitudes[c].toString())
-      qubitCircle.setAttribute("data-phase", phases[c].toString())
-    })
-  }
-
-  private drawCircles() {
-    const qubitCircleTargets = this.qubitCircleTargets
-
-    Array.from(Array(2 ** this.nqubit)).map((_, c) => {
-      const qubitCircle = qubitCircleTargets[c]
-      const dataMagnitude = qubitCircle.getAttribute("data-magnitude")
-      if (!dataMagnitude) return
-
-      if (dataMagnitude != "0") {
-        const dataPhase = qubitCircle.getAttribute("data-phase")
-        if (!dataPhase) return
-        const magnitude = parseFloat(dataMagnitude)
-        const phase = parseFloat(dataPhase)
-        const circleDiameter = qubitCircle.clientWidth
-        const diameter = circleDiameter * magnitude
-
-        const magnitudeEl = qubitCircle.querySelector(
-          ".qubit-circle__magnitude",
-        ) as HTMLElement
-        Util.notNull(magnitudeEl)
-        magnitudeEl.style.width = `${diameter}px`
-        magnitudeEl.style.height = `${diameter}px`
-
-        const phaseEl = qubitCircle.querySelector(
-          ".qubit-circle__phase",
-        ) as HTMLElement
-        Util.notNull(phaseEl)
-        phaseEl.style.transform = `rotate(${-1 * phase}deg)`
-
-        const phaseMagnitudeEl = qubitCircle.querySelector(
-          ".qubit-circle__phase-magnitude",
-        ) as HTMLElement
-        Util.notNull(phaseMagnitudeEl)
-
-        phaseMagnitudeEl.style.marginTop = `${
-          (circleDiameter - diameter) / 2
-        }px`
-        phaseMagnitudeEl.style.height = `${diameter / 2}px`
-        phaseMagnitudeEl.style.width = `${diameter / 2}px`
-      }
+      qubitCircle.setAttribute(
+        "data-magnitude",
+        magnitudes[c].toFixed(3).toString(),
+      )
+      qubitCircle.setAttribute("data-phase", phases[c].toFixed(3).toString())
     })
   }
 
