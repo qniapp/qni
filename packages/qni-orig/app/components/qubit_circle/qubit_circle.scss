@@ -172,8 +172,27 @@
     @apply flex-none;
     @apply rounded-full;
 
-    #{$parent}[data-magnitude="0"] & {
+    #{$parent}[data-magnitude="0.000"] & {
       @apply hidden;
+    }
+
+    #{$parent}[data-magnitude="1.000"] & {
+      @apply h-full;
+      @apply w-full;
+    }
+
+    $zm: "";
+    @for $magnitude from 1 through 99 {
+      @if $magnitude < 10 {
+        $zm: "0#{$magnitude}";
+      } @else {
+        $zm: $magnitude;
+      }
+
+      #{$parent}[data-magnitude^="0.#{$zm}"] & {
+        height: #{$magnitude + "%"};
+        width: #{$magnitude + "%"};
+      }
     }
 
     .circle-notation[data-circle-notation-nqubit="5"] & {
@@ -280,8 +299,14 @@
     @apply transform;
     @apply w-full h-full;
 
-    #{$parent}[data-magnitude="0"] & {
+    #{$parent}[data-magnitude="0.000"] & {
       @apply hidden;
+    }
+
+    @for $phase from -360 through 360 {
+      #{$parent}[data-phase^="#{$phase}."] & {
+        --tw-rotate: #{-1 * $phase + "deg"};
+      }
     }
   }
 
@@ -342,45 +367,63 @@
     @apply w-#{$qubit-circle-size-base / 2} h-#{$qubit-circle-size-base / 2};
     margin-left: #{0.25 * $qubit-circle-size-base * 8 - 1}px;
 
+    #{$parent}[data-magnitude="1.000"] & {
+      @apply h-1/2;
+    }
+
+    $zm: "";
+    @for $magnitude from 1 through 99 {
+      @if $magnitude < 10 {
+        $zm: "0#{$magnitude}";
+      } @else {
+        $zm: $magnitude;
+      }
+
+      #{$parent}[data-magnitude^="0.#{$zm}"] & {
+        height: #{$magnitude / 2 + "%"};
+        margin-top: #{(100 - $magnitude) / 2 + "%"};
+      }
+    }
+
     .circle-notation[data-circle-notation-nqubit="1"] &,
     .circle-notation[data-circle-notation-nqubit="2"] & {
-      @apply w-#{$qubit-circle-size-xl / 2} h-#{$qubit-circle-size-xl / 2};
+      @apply w-#{$qubit-circle-size-xl / 2};
       margin-left: #{0.25 * $qubit-circle-size-xl * 8 - 1}px;
     }
 
     .circle-notation[data-circle-notation-nqubit="3"] & {
-      @apply w-#{$qubit-circle-size-large / 2} h-#{$qubit-circle-size-large / 2};
+      @apply w-#{$qubit-circle-size-large / 2};
       margin-left: #{0.25 * $qubit-circle-size-large * 8 - 1}px;
 
       @screen md {
-        @apply w-#{$qubit-circle-size-xl / 2} h-#{$qubit-circle-size-xl / 2};
+        @apply w-#{$qubit-circle-size-xl / 2};
         margin-left: #{0.25 * $qubit-circle-size-xl * 8 - 1}px;
       }
     }
 
     .circle-notation[data-circle-notation-nqubit="4"] & {
-      @apply w-#{$qubit-circle-size-large / 2} h-#{$qubit-circle-size-large / 2};
+      @apply w-#{$qubit-circle-size-large / 2};
       margin-left: #{0.25 * $qubit-circle-size-large * 8 - 1}px;
     }
 
     .circle-notation[data-circle-notation-nqubit="5"] & {
-      @apply w-#{$qubit-circle-size-base / 2} h-#{$qubit-circle-size-base / 2};
+      @apply w-#{$qubit-circle-size-base / 2};
       margin-left: #{0.25 * $qubit-circle-size-base * 8 - 1}px;
 
       @screen md {
-        @apply w-#{$qubit-circle-size-large / 2} h-#{$qubit-circle-size-large / 2};
+        @apply w-#{$qubit-circle-size-large / 2};
         margin-left: #{0.25 * $qubit-circle-size-large * 8 - 1}px;
       }
     }
 
     .circle-notation[data-circle-notation-nqubit="6"] &,
     .circle-notation[data-circle-notation-nqubit="7"] & {
-      @apply w-#{$qubit-circle-size-base / 2} h-#{$qubit-circle-size-base / 2};
+      @apply w-#{$qubit-circle-size-base / 2};
       margin-left: #{0.25 * $qubit-circle-size-base * 8 - 1}px;
     }
 
     .circle-notation[data-circle-notation-nqubit="8"] & {
-      @apply w-#{$qubit-circle-size-sm / 2} h-#{$qubit-circle-size-sm / 2};
+      @apply w-#{$qubit-circle-size-sm / 2};
       margin-left: #{0.25 * $qubit-circle-size-sm * 8 - 1}px;
     }
   }
