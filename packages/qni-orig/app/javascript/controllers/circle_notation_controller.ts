@@ -1,27 +1,41 @@
 import tippy from "tippy.js"
 import { Controller } from "stimulus"
-import { Instance } from "tippy.js"
+import { Util } from "lib/base"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
   declare readonly qubitCircleTargets: HTMLElement[]
-
-  private tippies: { [index: number]: Instance } | undefined
+  declare tooltipEl: HTMLElement
 
   connect(): void {
-    this.tippies = {}
-  }
-
-  disconnect(): void {
-    if (this.tippies) {
-      for (const i in this.tippies) {
-        this.tippies[i].destroy()
-      }
-    }
+    this.tooltipEl = document.getElementById(
+      "qubit-circle-tooltip",
+    ) as HTMLElement
+    Util.notNull(this.tooltipEl)
   }
 
   incrementNqubit(): void {
     this.data.set("nqubit", (this.nqubit + 1).toString())
+  }
+
+  qubitCircleMouseEnter(event: MouseEvent): void {
+    const qubitCircleEl = event.target as HTMLElement
+    Util.notNull(qubitCircleEl)
+    const t = tippy(qubitCircleEl)
+    t.setProps({
+      allowHTML: true,
+      content: this.tooltipContent(qubitCircleEl),
+      theme: "qni",
+    })
+    t.show()
+  }
+
+  qubitCircleMouseLeave(event: MouseEvent): void {
+    const qubitCircleEl = event.target as HTMLElement
+    Util.notNull(qubitCircleEl)
+    const t = tippy(qubitCircleEl)
+    t.hide()
+    t.destroy()
   }
 
   set nqubit(nqubit: number) {
@@ -40,7 +54,6 @@ export default class CircleNotationController extends Controller {
     phases: { [bit: number]: number },
   ): void {
     this.setCircleAttributes(magnitudes, phases)
-    this.updateTooltips(Object.keys(magnitudes).length)
   }
 
   private setCircleAttributes(
@@ -60,52 +73,34 @@ export default class CircleNotationController extends Controller {
     })
   }
 
-  private updateTooltips(qubitCircleCount: number): void {
-    const qubitCircleTargets = this.qubitCircleTargets
-
-    Array.from(Array(qubitCircleCount).keys()).forEach((i) => {
-      this.addTooltip(qubitCircleTargets[i], i)
-    })
-  }
-
-  private addTooltip(el: HTMLElement, i: number): void {
-    if (!this.tippies) this.tippies = {}
-    if (!this.tippies[i]) this.tippies[i] = tippy(el)
-
-    this.tippies[i].setProps({
-      allowHTML: true,
-      content: this.tooltipContent(el),
-      theme: "qni",
-    })
-  }
-
   private tooltipContent(el: HTMLElement): string {
+    const ket = this.ket(el)
     const magnitude = this.magnitude(el)
     const phase = this.phase(el)
 
-    let html = this.tooltipEl(el).innerHTML + `<div>M=${magnitude}</div>`
+    let html =
+      this.tooltipEl.innerHTML +
+      `<div class="text-center font-bold">|${ket}&gt;</div>`
+    html += `<div>M=${magnitude}</div>`
     if (magnitude > 0) html += `<div>φ=${phase}</div>`
     return html
   }
 
+  private ket(el: HTMLElement): number {
+    const dataKet = el.getAttribute("data-ket")
+    Util.notNull(dataKet)
+    return parseInt(dataKet)
+  }
+
   private magnitude(el: HTMLElement): number {
     const dataMagnitude = el.getAttribute("data-magnitude")
-
-    if (!dataMagnitude) throw new Error("data-magnitude is not set")
+    Util.notNull(dataMagnitude)
     return parseFloat(dataMagnitude)
   }
 
   private phase(el: HTMLElement): string {
     const dataPhase = el.getAttribute("data-phase")
-
-    if (!dataPhase) throw new Error("data-phase is not set")
+    Util.notNull(dataPhase)
     return dataPhase
-  }
-
-  private tooltipEl(el: HTMLElement): HTMLElement {
-    const tooltipEl = el.getElementsByClassName("qubit-circle__tooltip").item(0)
-
-    if (!tooltipEl) throw new Error("tooltip element not found")
-    return tooltipEl as HTMLElement
   }
 }

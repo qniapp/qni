@@ -14,6 +14,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
             #{component('qubit_circle', ket: 1, magnitude: 0)}
           </div>
         </div>
+        <div id="qubit-circle-tooltip" class="qubit-circle-tooltip hidden"></div>
       </div>
     ERB
   end
@@ -44,10 +45,8 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-circle-notation-target="qubitCircle"
            data-simulator-target="qubitCircle"
            data-ket="0"
-           data-magnitude="0">
-        <div class="qubit-circle__tooltip hidden">
-          <div class="text-center font-bold">|0&gt;</div>
-        </div>
+           data-magnitude="0"
+           data-action="mouseenter->circle-notation#qubitCircleMouseEnter mouseleave->circle-notation#qubitCircleMouseLeave">
         <div class="qubit-circle__border"></div>
         <div class="qubit-circle__body">
           <div class="qubit-circle__magnitude"></div>
