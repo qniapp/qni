@@ -65,6 +65,17 @@ export default class SimulatorController extends Controller {
     this.drawStateVector(stepIndex)
   }
 
+  circuitStepMouseEntered(event: MouseEvent): void {
+    const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
+    this.drawStateVector(circuitStep.index)
+  }
+
+  circuitStepMouseLeave(): void {
+    const breakpoint = this.breakpoint
+    if (breakpoint === null) return
+    this.drawStateVector(breakpoint)
+  }
+
   circuitStepClicked(event: MouseEvent): void {
     const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
 
@@ -152,10 +163,12 @@ export default class SimulatorController extends Controller {
     if (!this.magnitudes) throw new Error("magnitudes not set")
     if (!this.phases) throw new Error("phases not set")
 
-    this.circleNotationController.update(
-      this.magnitudes[breakpoint],
-      this.phases[breakpoint],
-    )
+    const magnitudes = this.magnitudes[breakpoint]
+    const phases = this.phases[breakpoint]
+    if (!magnitudes) return
+    if (!phases) return
+
+    this.circleNotationController.update(magnitudes, phases)
   }
 
   private get circuit(): Circuit {
