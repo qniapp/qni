@@ -45,7 +45,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-circle-notation-target="qubitCircle"
            data-simulator-target="qubitCircle"
            data-ket="0"
-           data-magnitude="0"
+           data-magnitude="0.000"
            data-action="mouseenter->circle-notation#qubitCircleMouseEnter mouseleave->circle-notation#qubitCircleMouseLeave">
         <div class="qubit-circle__border"></div>
         <div class="qubit-circle__body">
