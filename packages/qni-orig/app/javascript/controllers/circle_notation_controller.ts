@@ -53,13 +53,6 @@ export default class CircleNotationController extends Controller {
     magnitudes: { [bit: number]: number },
     phases: { [bit: number]: number },
   ): void {
-    this.setCircleAttributes(magnitudes, phases)
-  }
-
-  private setCircleAttributes(
-    magnitudes: { [bit: number]: number },
-    phases: { [bit: number]: number },
-  ) {
     const qubitCircleCount = Object.keys(magnitudes).length
     const qubitCircleTargets = this.qubitCircleTargets
 

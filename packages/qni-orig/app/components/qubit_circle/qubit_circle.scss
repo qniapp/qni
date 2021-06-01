@@ -39,10 +39,6 @@
     @apply ml-#{$qubit-circle-ml-base};
   }
 
-  .circle-notation[data-circle-notation-nqubit="8"] & {
-    @apply w-#{$qubit-circle-size-sm} h-#{$qubit-circle-size-sm};
-  }
-
   .circle-notation[data-circle-notation-nqubit="8"] &:nth-of-type(n + 2) {
     @apply ml-#{$qubit-circle-ml-xs};
   }
@@ -119,6 +115,10 @@
 
     .circle-notation[data-circle-notation-nqubit="8"] & {
       @apply w-#{$qubit-circle-size-sm} h-#{$qubit-circle-size-sm};
+
+      @screen md {
+        @apply w-#{$qubit-circle-size-base} h-#{$qubit-circle-size-base};
+      }
     }
 
     .circle-notation[data-circle-notation-nqubit="8"] &::after {
@@ -163,6 +163,10 @@
 
     .circle-notation[data-circle-notation-nqubit="8"] & {
       @apply w-#{$qubit-circle-size-sm} h-#{$qubit-circle-size-sm};
+
+      @screen md {
+        @apply w-#{$qubit-circle-size-base} h-#{$qubit-circle-size-base};
+      }
     }
   }
 
@@ -260,7 +264,8 @@
       }
     }
 
-    .circle-notation[data-circle-notation-nqubit="6"] & {
+    .circle-notation[data-circle-notation-nqubit="6"] &,
+    .circle-notation[data-circle-notation-nqubit="7"] & {
       @apply ml-#{$qubit-circle-size-base / 2};
       height: 4px;
       left: -2px;
@@ -269,19 +274,7 @@
 
       @screen md {
         @apply ml-#{$qubit-circle-size-base / 2};
-        height: 6px;
-        left: -3px;
-        top: -3px;
-        width: 6px;
       }
-    }
-
-    .circle-notation[data-circle-notation-nqubit="7"] & {
-      @apply ml-#{$qubit-circle-size-base / 2};
-      height: 6px;
-      left: -3px;
-      top: -3px;
-      width: 6px;
     }
 
     .circle-notation[data-circle-notation-nqubit="8"] & {
@@ -290,6 +283,10 @@
       left: -2px;
       top: -2px;
       width: 4px;
+
+      @screen md {
+        @apply ml-#{$qubit-circle-size-base / 2};
+      }
     }
   }
 
@@ -357,6 +354,11 @@
     .circle-notation[data-circle-notation-nqubit="8"] & {
       @apply w-#{$qubit-circle-size-sm / 2} h-#{$qubit-circle-size-sm / 2};
       margin-left: #{0.25 * $qubit-circle-size-sm * 8 - 1}px;
+
+      @screen md {
+        @apply w-#{$qubit-circle-size-base / 2} h-#{$qubit-circle-size-base / 2};
+        margin-left: #{0.25 * $qubit-circle-size-base * 8 - 1}px;
+      }
     }
   }
 
@@ -425,6 +427,11 @@
     .circle-notation[data-circle-notation-nqubit="8"] & {
       @apply w-#{$qubit-circle-size-sm / 2};
       margin-left: #{0.25 * $qubit-circle-size-sm * 8 - 1}px;
+
+      @screen md {
+        @apply w-#{$qubit-circle-size-base / 2};
+        margin-left: #{0.25 * $qubit-circle-size-base * 8 - 1}px;
+      }
     }
   }
 
