@@ -85,10 +85,18 @@
 
     .circle-notation[data-circle-notation-nqubit="8"] & {
       @apply flex flex-row flex-nowrap items-center;
+
+      @screen md {
+        @apply mt-1;
+      }
     }
 
     .circle-notation[data-circle-notation-nqubit="8"] &:nth-of-type(n + 2) {
       @apply mt-px;
+
+      @screen md {
+        @apply mt-1;
+      }
     }
 
     .circle-notation[data-circle-notation-nqubit="8"]
@@ -103,6 +111,10 @@
       #{$parent}--size16
       .qubit-circle {
       @apply ml-px;
+
+      @screen md {
+        @apply ml-1;
+      }
     }
   }
 
