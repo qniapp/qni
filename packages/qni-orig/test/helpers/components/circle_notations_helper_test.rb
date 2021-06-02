@@ -47,17 +47,15 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-ket="0"
            data-magnitude="0.000"
            data-action="mouseenter->circle-notation#qubitCircleMouseEnter mouseleave->circle-notation#qubitCircleMouseLeave">
-        <div class="qubit-circle__border"></div>
-        <div class="qubit-circle__body">
-          <div class="qubit-circle__magnitude"></div>
-          <div class="qubit-circle__phase">
-            <div class="relative w-full h-full">
-              <div class="qubit-circle__phase-line"></div>
-              <dev class="qubit-circle__phase-magnitude"></dev>
-              <div class="qubit-circle__phase-dot"></div>
-            </div>
-          </div>
-        </div>
+        <svg width="116" height="116" viewBox="0 0 116 116">
+          <line class="qubit-circle__phase" x1="58" y1="58" x2="58" y2="6" stroke-width="2" vector-effect="non-scaling-stroke"></line>
+          <g class="qubit-circle__magnitude-g">
+            <circle class="qubit-circle__magnitude" cx="58" cy="58" r="50" fill="none"></circle>
+            <line class="qubit-circle__phase-dark" x1="58" y1="58" x2="58" y2="8" stroke-width="2" vector-effect="non-scaling-stroke"></line>
+          </g>
+          <circle class="qubit-circle__border" cx="58" cy="58" r="50" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"></circle>
+          <circle class="qubit-circle__phase-dot" cx="58" cy="8" r="8"></circle>
+        </svg>
         <span class="qubit-circle__ket">|0&#10217;</span>
       </div>
     ERB
