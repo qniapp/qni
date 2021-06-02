@@ -154,15 +154,15 @@ $write-readout-gate-label-font-size: (
 );
 
 // Circle notation
-$circle-notation-height: (
-  1: 28,
-  2: 28,
-  3: 28,
-  4: 32,
+$circle-notation-height-mobile: (
+  1: 32,
+  2: 32,
+  3: 20,
+  4: 36,
   5: 20,
   6: 24,
-  7: 44,
-  8: 24,
+  7: 40,
+  8: 28,
 );
 $circle-notation-margin-top: 12;
 
@@ -172,11 +172,66 @@ $qubit-circle-size-large: 8;
 $qubit-circle-size-base: 4;
 $qubit-circle-size-sm: 2;
 
-$qubit-circle-border-width-xl: 2;
-$qubit-circle-border-width-large: 2;
+$qubit-circle-size: (
+  1: $qubit-circle-size-xl,
+  2: $qubit-circle-size-xl,
+  3: $qubit-circle-size-xl,
+  4: $qubit-circle-size-large,
+  5: $qubit-circle-size-large,
+  6: $qubit-circle-size-large,
+  7: $qubit-circle-size-base,
+  8: $qubit-circle-size-base,
+);
+
+$qubit-circle-size-mobile: (
+  1: $qubit-circle-size-xl,
+  2: $qubit-circle-size-xl,
+  3: $qubit-circle-size-large,
+  4: $qubit-circle-size-large,
+  5: $qubit-circle-size-base,
+  6: $qubit-circle-size-base,
+  7: $qubit-circle-size-base,
+  8: $qubit-circle-size-sm,
+);
+
+$qubit-circle-border-width-bold: 2;
 $qubit-circle-border-width-base: 1;
 
-$qubit-circle-ml-xl: 4;
-$qubit-circle-ml-large: 2;
-$qubit-circle-ml-base: 1;
-$qubit-circle-ml-xs: 'px';
+$qubit-circle-border-width: (
+  1: $qubit-circle-border-width-bold,
+  2: $qubit-circle-border-width-bold,
+  3: $qubit-circle-border-width-bold,
+  4: $qubit-circle-border-width-bold,
+  5: $qubit-circle-border-width-bold,
+  6: $qubit-circle-border-width-base,
+  7: $qubit-circle-border-width-base,
+  8: $qubit-circle-border-width-base,
+);
+
+$qubit-circle-border-width-mobile: (
+  1: $qubit-circle-border-width-bold,
+  2: $qubit-circle-border-width-bold,
+  3: $qubit-circle-border-width-bold,
+  4: $qubit-circle-border-width-bold,
+  5: $qubit-circle-border-width-base,
+  6: $qubit-circle-border-width-base,
+  7: $qubit-circle-border-width-base,
+  8: $qubit-circle-border-width-base,
+);
+
+$qubit-circle-ket-font-size: (
+  1: base,
+  2: base,
+  3: base,
+  4: sm,
+  5: sm,
+  6: xxs,
+);
+
+$qubit-circle-ket-font-size-mobile: (
+  1: base,
+  2: base,
+  3: sm,
+  4: sm,
+  5: xxs,
+);
