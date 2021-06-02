@@ -32,31 +32,31 @@
     .circle-notation[data-circle-notation-nqubit="5"]
       &
       #{$parent}--size8:nth-child(even) {
-      @apply ml-1;
+      @apply ml-0;
 
       @screen md {
-        @apply ml-2;
+        @apply ml-0;
       }
     }
 
     .circle-notation[data-circle-notation-nqubit="6"] & {
-      @apply mt-1;
+      @apply mt-0;
     }
 
     .circle-notation[data-circle-notation-nqubit="6"]
       &
       #{$parent}--size8:nth-child(even) {
-      @apply ml-1;
+      @apply ml-0;
     }
 
     .circle-notation[data-circle-notation-nqubit="7"] & {
-      @apply mt-1;
+      @apply mt-0;
     }
 
     .circle-notation[data-circle-notation-nqubit="7"]
       &
       #{$parent}--size8:nth-child(even) {
-      @apply ml-1;
+      @apply ml-0;
     }
 
     .circle-notation[data-circle-notation-nqubit="8"]
@@ -73,13 +73,13 @@
   &--size32 {
     .circle-notation[data-circle-notation-nqubit="6"] &:nth-of-type(n + 2) {
       @screen md {
-        @apply ml-1;
+        @apply ml-0;
       }
     }
 
     .circle-notation[data-circle-notation-nqubit="7"] &:nth-of-type(even) {
       @screen md {
-        @apply ml-1;
+        @apply ml-0;
       }
     }
 
@@ -87,15 +87,13 @@
       @apply flex flex-row flex-nowrap items-center;
 
       @screen md {
-        @apply mt-1;
+        @apply mt-px;
       }
     }
 
     .circle-notation[data-circle-notation-nqubit="8"] &:nth-of-type(n + 2) {
-      @apply mt-px;
-
       @screen md {
-        @apply mt-1;
+        @apply mt-px;
       }
     }
 
@@ -113,7 +111,7 @@
       @apply ml-px;
 
       @screen md {
-        @apply ml-1;
+        @apply ml-px;
       }
     }
   }
@@ -121,7 +119,7 @@
   &--size64 {
     .circle-notation[data-circle-notation-nqubit="6"] & {
       @screen md {
-        @apply flex flex-row flex-nowrap items-center;
+        @apply flex flex-col flex-nowrap;
       }
     }
 

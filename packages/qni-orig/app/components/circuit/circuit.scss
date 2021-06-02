@@ -9,7 +9,7 @@
 
   @each $nqubit in $nqubits {
     &[data-nqubit="#{$nqubit}"] {
-      @apply py-#{map-get($circle-notation-height, $nqubit) + ($circle-notation-margin-top * 2)};
+      @apply py-#{map-get($circle-notation-height-mobile, $nqubit) + ($circle-notation-margin-top * 2)};
 
       @screen md {
         @apply py-0;
