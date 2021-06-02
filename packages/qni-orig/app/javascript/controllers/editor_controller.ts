@@ -1,6 +1,6 @@
 import CircleNotationController from "./circle_notation_controller"
 import SimulatorController from "./simulator_controller"
-import { Breakpoint } from "lib/base"
+import { Breakpoint, Util } from "lib/base"
 import { Controller } from "stimulus"
 import { Editor } from "lib/editor"
 
@@ -43,8 +43,12 @@ export default class EditorController extends Controller {
     if (!this.mouseIsDown) return
 
     this.mouseIsHolded = true
-    this.circleNotationController.incrementNqubit()
-    this.editor.onDraggableMouseHold(event)
+    if (this.simulatorController.nqubit + 1 <= this.maxNqubit) {
+      this.circleNotationController.incrementNqubit()
+      this.editor.onDraggableMouseHold(event)
+    } else {
+      this.editor.onDraggableMouseHold(event, false)
+    }
   }
 
   onDraggableMouseUp(event: MouseEvent): void {
@@ -58,7 +62,7 @@ export default class EditorController extends Controller {
   }
 
   private get editor(): Editor {
-    if (!this._editor) throw new Error("editor not found")
+    Util.notNull(this._editor)
     return this._editor
   }
 
@@ -67,8 +71,7 @@ export default class EditorController extends Controller {
       this.simulatorTarget,
       "simulator",
     )
-
-    if (!controller) throw new Error("simulator controller not found")
+    Util.notNull(controller)
     return controller as SimulatorController
   }
 
@@ -77,8 +80,13 @@ export default class EditorController extends Controller {
       this.circleNotationTarget,
       "circle-notation",
     )
-
-    if (!controller) throw new Error("circle notation controller not found")
+    Util.notNull(controller)
     return controller as CircleNotationController
+  }
+
+  get maxNqubit(): number {
+    const maxNqubit = this.data.get("max-nqubit")
+    Util.notNull(maxNqubit)
+    return parseInt(maxNqubit)
   }
 }

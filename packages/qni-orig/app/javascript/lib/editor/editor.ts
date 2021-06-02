@@ -66,8 +66,10 @@ export class Editor {
     }
   }
 
-  onDraggableMouseHold(event: MouseEvent): void {
-    this.circuit.appendNewWire(this.circuitDropzoneHandlers())
+  onDraggableMouseHold(event: MouseEvent, addNewQubit = true): void {
+    if (addNewQubit) {
+      this.circuit.appendNewWire(this.circuitDropzoneHandlers())
+    }
     this.circuit.steps.slice(2).forEach((step) => {
       step.prependShadow(this.circuitDropzoneHandlers())
     })
@@ -402,7 +404,11 @@ export class Editor {
       .gatesOf(SwapGate)
       .filter(isEnabled)
       .map(toBit)
-    const bits = notGateBits.concat(hadamardGateBits).concat(controlGateBits).concat(swapGateBits).sort()
+    const bits = notGateBits
+      .concat(hadamardGateBits)
+      .concat(controlGateBits)
+      .concat(swapGateBits)
+      .sort()
 
     circuitStep.dropzones.forEach((each, i) => {
       if (
