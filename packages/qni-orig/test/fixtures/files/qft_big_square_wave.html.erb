@@ -798,14 +798,14 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= down_gate targets: [3] %>
+          <%= swap_gate bit: 3, targets: [3, 4] %>
         <% end %>
       <% end %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= up_gate targets: 3 %>
+          <%= swap_gate bit: 4, targets: [3, 4] %>
         <% end %>
       <% end %>
       <%= dropzone %>

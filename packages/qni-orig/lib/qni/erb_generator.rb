@@ -169,10 +169,8 @@ module Qni
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def swap(targets)
-      # rubocop:disable Metrics/BlockLength
       circuit_step do
         (0...@dsl.nqubit).map do |bit|
           wire_top = false
@@ -183,19 +181,7 @@ module Qni
             wire_bottom = true
           end
 
-          if bit == targets[0] && targets[1] - targets[0] == 1
-            dropzone(no_wire: true) do
-              draggable do
-                down_gate targets: [targets.min]
-              end
-            end
-          elsif bit == targets[1] && targets[1] - targets[0] == 1
-            dropzone(no_wire: true) do
-              draggable do
-                up_gate targets: targets.min
-              end
-            end
-          elsif targets.include?(bit)
+          if targets.include?(bit)
             dropzone do
               draggable do
                 "<%= swap_gate bit: #{bit}, targets: #{targets} %>\n"
@@ -206,10 +192,8 @@ module Qni
           end
         end.join
       end
-      # rubocop:enable Metrics/BlockLength
     end
 
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
@@ -355,16 +339,10 @@ module Qni
                 control_gate bit: each, targets: targets, controls: [control], wire_active: @wire_active[each]
               end
             end
-          elsif each == targets[0]
-            dropzone(no_wire: true) do
+          elsif each == targets[0] || each == targets[1]
+            dropzone do
               draggable do
-                down_gate targets: [targets.min]
-              end
-            end
-          elsif each == targets[1]
-            dropzone(no_wire: true) do
-              draggable do
-                up_gate targets: targets.min, bottom: true
+                "<%= swap_gate bit: #{each}, targets: #{targets}, controls: [#{control}] %>\n"
               end
             end
           else
@@ -414,29 +392,16 @@ module Qni
     end
     # rubocop:enable Metrics/MethodLength
 
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/MethodLength
     def down(targets)
-      block_divider do
-        circuit_step do
-          (0...@dsl.nqubit).map do |each|
-            if targets.include?(each)
-              @wire_active[each] = false
-              @wire_active[each + 1] = true if each < @dsl.nqubit
-              dropzone(no_wire: true) do
-                draggable do
-                  down_gate targets: [targets.min]
-                end
-              end
-            else
-              dropzone wire_active: @wire_active[each] && !each.zero? && targets.exclude?(each - 1)
-            end
-          end.join
+      targets.map do |each|
+        t = @wire_active[each]
+        @wire_active[each] = @wire_active[each + 1]
+        @wire_active[each + 1] = t
+        block_divider do
+          swap [each, each + 1]
         end
-      end
+      end.join
     end
-    # rubocop:enable Metrics/AbcSize
-    # rubocop:enable Metrics/MethodLength
   end
   # rubocop:enable Metrics/ClassLength
 end

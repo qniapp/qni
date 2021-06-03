@@ -111,12 +111,16 @@
   <% end %>
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= down_gate targets: [0] %>
+          <%= swap_gate bit: 0, targets: [0, 1] %>
         <% end %>
       <% end %>
-      <%= dropzone wire_active: false %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= swap_gate bit: 1, targets: [0, 1] %>
+        <% end %>
+      <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
   <% end %>
@@ -203,12 +207,16 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= down_gate targets: [1] %>
+          <%= swap_gate bit: 1, targets: [1, 2] %>
         <% end %>
       <% end %>
-      <%= dropzone wire_active: false %>
+      <%= dropzone do %>
+        <%= draggable do %>
+          <%= swap_gate bit: 2, targets: [1, 2] %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'apply H' do %>
