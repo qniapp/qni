@@ -237,14 +237,14 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= down_gate targets: [1] %>
+          <%= swap_gate bit: 1, targets: [1, 2] %>
         <% end %>
       <% end %>
-      <%= dropzone no_wire: true do %>
+      <%= dropzone do %>
         <%= draggable do %>
-          <%= up_gate targets: 1 %>
+          <%= swap_gate bit: 2, targets: [1, 2] %>
         <% end %>
       <% end %>
       <%= dropzone %>

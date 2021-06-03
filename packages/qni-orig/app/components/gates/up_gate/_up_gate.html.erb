@@ -1,8 +1,0 @@
-<% up_gate = local_assigns.fetch(:up_gate) %>
-
-<%= tag.div class: up_gate.klass, data: up_gate.data do %>
-  <div class="up-gate__line"></div>
-  <% if up_gate.bottom? %>
-    <div class="up-gate__bottom"></div>
-  <% end %>
-<% end %>
