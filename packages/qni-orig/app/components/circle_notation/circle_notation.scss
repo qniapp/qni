@@ -17,7 +17,7 @@
   @screen md {
     // Position
     @apply bottom-0;
-    @apply h-44;
+    @apply h-#{$circle-notation-height};
     @apply m-0;
     top: unset;
 
