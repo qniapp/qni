@@ -14,7 +14,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
-        <div class="gate-popup hidden" data-target="gate-popup.content">
+        <div class="gate-popup hidden" data-gate-popup-target="content">
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">
@@ -35,7 +35,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">if alice_v</div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel">if alice_v</div>
-        <div class="gate-popup hidden" data-target="gate-popup.content">
+        <div class="gate-popup hidden" data-gate-popup-target="content">
           <div class="flex flex-col px-2 py-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">if</label>
             <input class="gate-popup__input" type="text">

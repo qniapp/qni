@@ -116,19 +116,6 @@ module Qni
       opts ? "<%= readout #{opts} %>\n" : "<%= readout %>\n"
     end
 
-    def down_gate(targets:)
-      opts = option_string(targets: targets)
-      "<%= down_gate #{opts} %>\n"
-    end
-
-    def up_gate(targets:, bottom: false)
-      if bottom
-        "<%= up_gate targets: #{targets}, bottom: true %>\n"
-      else
-        "<%= up_gate targets: #{targets} %>\n"
-      end
-    end
-
     private
 
     # rubocop:disable Metrics/MethodLength
