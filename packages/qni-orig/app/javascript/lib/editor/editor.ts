@@ -318,13 +318,12 @@ export class Editor {
       .sort()
 
     swapGates.forEach((each) => {
+      each.connectWith(swapBits)
       if (swapBits.length == 2) {
         each.targets = swapBits
-        each.connectWith(swapBits)
         each.disabled = false
       } else {
         each.targets = []
-        each.connectWith([])
         each.disabled = true
       }
     })
@@ -336,7 +335,7 @@ export class Editor {
     const controllableGates = circuitStep.controllableGates
     if (controlGates.length == 0) return
 
-    if (controllableGates.length == 0) {
+    if (controllableGates.length == 0 && controlGates.length == 0) {
       controlGates.forEach((each) => {
         each.targets = []
         each.connectWith([])
@@ -391,24 +390,17 @@ export class Editor {
     const toBit = (gate: CircuitElement) => {
       return gate.bit
     }
-    const isEnabled = (gate: CircuitElement) => {
-      return !(gate as Disableable).disabled
-    }
     const notGateBits = circuitStep.gatesOf(NotGate).map(toBit)
     const hadamardGateBits = circuitStep.gatesOf(HadamardGate).map(toBit)
-    const controlGateBits = circuitStep
-      .gatesOf(ControlGate)
-      .filter(isEnabled)
-      .map(toBit)
-    const swapGateBits = circuitStep
-      .gatesOf(SwapGate)
-      .filter(isEnabled)
-      .map(toBit)
+    const controlGateBits = circuitStep.gatesOf(ControlGate).map(toBit)
+    const swapGateBits = circuitStep.gatesOf(SwapGate).map(toBit)
     const bits = notGateBits
       .concat(hadamardGateBits)
       .concat(controlGateBits)
       .concat(swapGateBits)
       .sort()
+
+    if (controlGateBits.length == 0 && swapGateBits.length == 0) return
 
     circuitStep.dropzones.forEach((each, i) => {
       if (
