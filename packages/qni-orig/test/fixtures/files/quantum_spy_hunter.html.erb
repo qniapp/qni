@@ -111,12 +111,12 @@
   <% end %>
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
-      <%= dropzone do %>
+      <%= dropzone output_wire_active: false do %>
         <%= draggable do %>
           <%= swap_gate bit: 0, targets: [0, 1] %>
         <% end %>
       <% end %>
-      <%= dropzone do %>
+      <%= dropzone input_wire_active: false do %>
         <%= draggable do %>
           <%= swap_gate bit: 1, targets: [0, 1] %>
         <% end %>
@@ -207,12 +207,12 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
-      <%= dropzone do %>
+      <%= dropzone output_wire_active: false do %>
         <%= draggable do %>
           <%= swap_gate bit: 1, targets: [1, 2] %>
         <% end %>
       <% end %>
-      <%= dropzone do %>
+      <%= dropzone input_wire_active: false do %>
         <%= draggable do %>
           <%= swap_gate bit: 2, targets: [1, 2] %>
         <% end %>

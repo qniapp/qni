@@ -9,6 +9,7 @@ module Qni
     def initialize(dsl)
       @dsl = Dsl.load(dsl)
       @wire_active = [false] * @dsl.nqubit
+      @wire_active_orig = [false] * @dsl.nqubit
       @in_block = false
     end
 
@@ -95,6 +96,7 @@ module Qni
           (0...@dsl.nqubit).map do |each|
             if targets.key?(each)
               @wire_active[each] = true
+              @wire_active_orig[each] = true
               dropzone do
                 draggable(write: true) do
                   "<%= write #{targets[each]} %>\n"
@@ -170,6 +172,7 @@ module Qni
     end
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def swap(targets)
       circuit_step do
         (0...@dsl.nqubit).map do |bit|
@@ -182,7 +185,9 @@ module Qni
           end
 
           if targets.include?(bit)
-            dropzone do
+            other_target = (targets - [bit])[0]
+            @wire_active[bit] = @wire_active_orig[other_target]
+            dropzone(input_wire_active: @wire_active_orig[bit], output_wire_active: @wire_active_orig[other_target]) do
               draggable do
                 "<%= swap_gate bit: #{bit}, targets: #{targets} %>\n"
               end
@@ -193,8 +198,9 @@ module Qni
         end.join
       end
     end
-
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
+
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def cphase(targets)
@@ -378,6 +384,7 @@ module Qni
           (0...@dsl.nqubit).map do |bit|
             if targets.include?(bit)
               @wire_active[bit] = false
+              @wire_active_orig[bit] = false
               dropzone do
                 draggable(readout: true) do
                   readout set: opts.fetch(:set, nil)
@@ -394,9 +401,6 @@ module Qni
 
     def down(targets)
       targets.map do |each|
-        t = @wire_active[each]
-        @wire_active[each] = @wire_active[each + 1]
-        @wire_active[each + 1] = t
         block_divider do
           swap [each, each + 1]
         end

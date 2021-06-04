@@ -20,8 +20,12 @@ module Qni
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/PerceivedComplexity
-    def dropzone(wire_top: false, wire_bottom: false, wire_active: true, no_wire: false, &block)
-      opts_h = %i[wire_top wire_bottom wire_active no_wire].each_with_object({}) do |each, h|
+    # rubocop:disable Metrics/ParameterLists
+    def dropzone(wire_top: false, wire_bottom: false,
+                 wire_active: true, input_wire_active: true, output_wire_active: true,
+                 no_wire: false, &block)
+      opts_h = %i[wire_top wire_bottom wire_active input_wire_active output_wire_active
+                  no_wire].each_with_object({}) do |each, h|
         case each
         when :wire_top
           h[:wire_top] = true if wire_top
@@ -29,6 +33,10 @@ module Qni
           h[:wire_bottom] = true if wire_bottom
         when :wire_active
           h[:wire_active] = false unless wire_active
+        when :input_wire_active
+          h[:input_wire_active] = false unless input_wire_active
+        when :output_wire_active
+          h[:output_wire_active] = false unless output_wire_active
         when :no_wire
           h[:no_wire] = true if no_wire
         end
@@ -59,6 +67,7 @@ module Qni
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/ParameterLists
 
     def draggable(write: false, readout: false, &block)
       opts = option_string(write: write, readout: readout)

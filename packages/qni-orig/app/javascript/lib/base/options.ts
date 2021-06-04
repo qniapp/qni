@@ -16,6 +16,8 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "dropzone:state:active": "dropzone--active",
     "dropzone:state:occupied": "dropzone--occupied",
     "dropzone:state:wireInactive": "dropzone--wire-inactive",
+    "dropzone:state:inputWireInactive": "dropzone--input-wire-inactive",
+    "dropzone:state:outputWireInactive": "dropzone--output-wire-inactive",
     "dropzone:type:circuit": "dropzone--circuit",
     "dropzone:type:palette": "dropzone--palette",
     "dropzone:type:trash": "dropzone--trash",
