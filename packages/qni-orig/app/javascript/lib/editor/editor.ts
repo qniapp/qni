@@ -23,6 +23,7 @@ import {
 } from "./mixins"
 import { InternalError } from "lib/error"
 import { Connectable, Controllable, Disableable } from "./gates/mixins"
+import { Util } from "lib/base"
 
 export class Editor {
   private element: Element
@@ -151,6 +152,7 @@ export class Editor {
 
     if (draggable instanceof CircuitDraggable) {
       this.updateGateConnections(draggable.dropzone.circuitStep.index)
+      this.updateWires()
       this.removeEmptySteps()
       this.element.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
     }
@@ -159,7 +161,7 @@ export class Editor {
   private get trashDropzoneElement(): Element {
     const className = classNameFor("dropzone:type:trash")
     const el = this.element.getElementsByClassName(className).item(0)
-    if (!el) throw new InternalError(`.${className} not found`)
+    Util.notNull(el)
 
     return el
   }
@@ -265,8 +267,6 @@ export class Editor {
     draggable.dropzone.occupied = false
     this.removeEmptySteps()
     this.circuit.updateNqubit()
-    this.updateWires()
-
     this.updateGateConnections(dropzone.circuitStep.index)
     if (
       originalDropzone instanceof CircuitDropzone &&
@@ -274,11 +274,13 @@ export class Editor {
     ) {
       this.updateGateConnections(originalDropzone.circuitStep.index)
     }
+    this.updateWires()
     this.element.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
   }
 
   private updateWires(): void {
     const wireActive = Array<boolean>(this.circuit.nqubit).fill(false)
+    const wireActiveOrig = Array<boolean>(this.circuit.nqubit).fill(false)
 
     this.circuit.steps.forEach((each) => {
       const dropzones = each.dropzones
@@ -287,12 +289,19 @@ export class Editor {
       dropzones.forEach((dz, bit) => {
         if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
-        }
-        if (dz.instruction instanceof SwapGate) {
-          dz.wireActive = true
-          wireActive[bit] = true
+          wireActiveOrig[bit] = true
         } else if (dz.instruction instanceof ReadoutGate) {
           wireActive[bit] = false
+          wireActiveOrig[bit] = false
+        } else if (
+          dz.instruction instanceof SwapGate &&
+          !dz.instruction.disabled
+        ) {
+          const otherTarget = dz.instruction.targets.find((t) => t != bit)
+          Util.notNull(otherTarget)
+          dz.inputWireActive = wireActiveOrig[bit]
+          dz.outputWireActive = wireActiveOrig[otherTarget]
+          wireActive[bit] = wireActiveOrig[otherTarget]
         } else {
           dz.wireActive = wireActive[bit]
         }

@@ -1,5 +1,5 @@
 .dropzone {
-  $self: &;
+  $parent: &;
 
   @apply relative;
 
@@ -34,10 +34,10 @@
       @apply w-#{$instruction-size-base + $instruction-margin-base};
       @apply h-#{$instruction-size-base};
       @apply mx-0;
+    }
 
-      &:nth-of-type(n + 2) {
-        @apply mt-4;
-      }
+    .circuit-preview &:nth-of-type(n + 2) {
+      @apply mt-#{$instruction-margin-base};
     }
   }
 
@@ -47,158 +47,117 @@
   }
 
   &__wire {
-    @apply absolute;
-    @apply border-#{$wire-color};
+    @apply stroke-current text-#{$wire-color};
+    @apply w-full h-full;
 
-    @apply border-l-#{$wire-width};
-    @apply h-full;
-    @apply ml-#{$instruction-size-base / 2};
-    left: -#{$wire-width / 2}px;
-
-    @screen md {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
+    #{$parent}--wire-inactive & {
+      @apply stroke-current text-#{$wire-inactive-color};
     }
 
-    #{$self}--palette &,
-    #{$self}--trash &,
-    #{$self}--no-wire & {
-      @apply hidden;
-    }
-
-    #{$self}--wire-inactive & {
-      @apply border-#{$wire-inactive-color};
-    }
-
-    @each $nqubit in $nqubits {
-      .circuit[data-nqubit="#{$nqubit}"] & {
-        @apply ml-#{map-get($instruction-size, $nqubit) / 2};
-
-        @screen md {
-          @apply border-l-0;
-          @apply border-t-#{$wire-width};
-          @apply h-4;
-          @apply ml-0;
-          @apply mt-4;
-          @apply w-full;
-          left: unset;
-          top: -1px;
-        }
-      }
-    }
-
-    .circuit-preview .circuit & {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply h-4;
-      @apply ml-0;
-      @apply mt-4;
-      @apply w-full;
-      left: unset;
-      top: -1px;
-    }
-
-    .draggable--write + &,
-    .draggable--readout + & {
+    #{$parent}--palette &,
+    #{$parent}--trash &,
+    #{$parent}--no-wire & {
       @apply hidden;
     }
   }
 
-  &__rw-wire {
-    $rw-wire-length: 2;
-    $rw-wire-length-mobile: 4;
-
-    @apply absolute;
+  &__wire-pc {
     @apply hidden;
 
-    @apply border-l-#{$wire-width};
-    @apply h-#{$rw-wire-length-mobile};
-    @apply ml-#{$instruction-size-base / 2};
-    left: -#{$wire-width / 2}px;
-
-    @each $nqubit in $nqubits {
-      .circuit[data-nqubit="#{$nqubit}"] & {
-        @apply h-#{map-get($instruction-margin, $nqubit)};
-        @apply ml-#{map-get($instruction-size, $nqubit) / 2};
-
-        @screen md {
-          @apply border-l-0;
-          @apply border-t-#{$wire-width};
-          @apply ml-0;
-          @apply mt-#{$instruction-size-base / 2};
-          @apply w-#{$rw-wire-length};
-          left: unset;
-        }
-      }
-    }
-
-    .circuit-preview #{$self} & {
-      @apply border-l-0;
-      @apply border-t-#{$wire-width};
-      @apply ml-0;
-      @apply mt-#{$instruction-size-base / 2};
-      @apply w-#{$rw-wire-length};
-      left: unset;
-    }
-
-    .draggable--write ~ &,
-    .draggable--readout ~ & {
+    @screen md {
       @apply block;
     }
 
-    &--left {
-      @apply top-0;
+    .circuit-preview & {
+      @apply block;
+    }
+  }
 
-      @screen md {
-        @apply left-0;
-        top: -#{$wire-width / 2}px;
-      }
+  &__wire-pc-left,
+  &__wire-mobile-top {
+    #{$parent}--input-wire-inactive & {
+      @apply stroke-current text-#{$wire-inactive-color};
+    }
+  }
 
-      .draggable--write ~ & {
-        @apply border-#{$wire-inactive-color};
-      }
+  &__wire-pc-right,
+  &__wire-mobile-bottom {
+    #{$parent}--output-wire-inactive & {
+      @apply stroke-current text-#{$wire-inactive-color};
+    }
+  }
 
-      .draggable--readout ~ & {
-        @apply border-#{$wire-color};
-      }
+  .draggable--write ~ &__wire &__wire-pc-left {
+    @apply stroke-current text-#{$wire-inactive-color};
+  }
 
-      .circuit-preview #{$self} & {
-        @apply left-0;
-        top: -#{$wire-width / 2}px;
+  .draggable--write ~ &__wire &__wire-pc-left-right {
+    @apply invisible;
+  }
 
-        @screen md {
-          @apply left-0;
-          top: -#{$wire-width / 2}px;
-        }
-      }
+  .draggable--write ~ &__wire &__wire-pc-right {
+    @apply stroke-current text-#{$wire-color};
+  }
+
+  .draggable--write ~ &__wire &__wire-pc-right-left {
+    @apply invisible;
+  }
+
+  .draggable--readout ~ &__wire &__wire-pc-left {
+    @apply stroke-current text-#{$wire-color};
+  }
+
+  .draggable--readout ~ &__wire &__wire-pc-left-right {
+    @apply invisible;
+  }
+
+  .draggable--readout ~ &__wire &__wire-pc-right {
+    @apply stroke-current text-#{$wire-inactive-color};
+  }
+
+  .draggable--readout ~ &__wire &__wire-pc-right-left {
+    @apply invisible;
+  }
+
+  &__wire-mobile {
+    @screen md {
+      @apply hidden;
     }
 
-    &--right {
-      @apply bottom-0;
-
-      @screen md {
-        @apply right-0;
-        top: -#{$wire-width / 2}px;
-      }
-
-      .draggable--write ~ & {
-        @apply border-#{$wire-color};
-      }
-
-      .draggable--readout ~ & {
-        @apply border-#{$wire-inactive-color};
-      }
-
-      .circuit-preview #{$self} & {
-        @apply right-0;
-        top: -#{$wire-width / 2}px;
-      }
+    .circuit-preview & {
+      @apply hidden;
     }
+  }
+
+  .draggable--write ~ &__wire &__wire-mobile-top {
+    @apply stroke-current text-#{$wire-inactive-color};
+  }
+
+  .draggable--write ~ &__wire &__wire-mobile-top-bottom {
+    @apply invisible;
+  }
+
+  .draggable--write ~ &__wire &__wire-mobile-bottom {
+    @apply stroke-current text-#{$wire-color};
+  }
+
+  .draggable--write ~ &__wire &__wire-mobile-bottom-top {
+    @apply invisible;
+  }
+
+  .draggable--readout ~ &__wire &__wire-mobile-top {
+    @apply stroke-current text-#{$wire-color};
+  }
+
+  .draggable--readout ~ &__wire &__wire-mobile-top-bottom {
+    @apply invisible;
+  }
+
+  .draggable--readout ~ &__wire &__wire-mobile-bottom {
+    @apply stroke-current text-#{$wire-inactive-color};
+  }
+
+  .draggable--readout ~ &__wire &__wire-mobile-bottom-top {
+    @apply invisible;
   }
 }
