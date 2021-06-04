@@ -27,9 +27,10 @@
     }
 
     .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & &__ket {
+      @apply leading-none;
+
       $font-size: map-get($qubit-circle-ket-font-size-mobile, $nqubit);
       @if $font-size {
-        @apply leading-none;
         @apply text-#{$font-size};
       } @else {
         @apply hidden;
@@ -38,8 +39,7 @@
       @screen md {
         $font-size-md: map-get($qubit-circle-ket-font-size, $nqubit);
         @if $font-size-md {
-          @apply inline;
-          @apply leading-none;
+          @apply block;
           @apply text-#{$font-size-md};
         } @else {
           @apply hidden;
@@ -49,43 +49,29 @@
   }
 
   svg {
-    will-change: transform;
-
     #{$parent}__border {
-      @apply stroke-current text-gray-400;
+      @apply text-gray-400;
     }
 
     #{$parent}__phase {
-      @apply stroke-current text-blue-300;
-    }
-
-    #{$parent}__magnitude-g {
-      transform-origin: center center;
-      will-change: transform;
+      @apply origin-center;
+      @apply text-blue-700 opacity-70;
     }
 
     #{$parent}__magnitude {
+      @apply origin-center;
       fill: theme("colors.blue.200");
-    }
-
-    #{$parent}__phase-dark {
-      @apply stroke-current text-blue-700;
-    }
-
-    #{$parent}__phase-dot {
-      fill: theme("colors.gray.500");
     }
   }
 
   @for $phase from -360 through 360 {
-    &[data-phase^="#{$phase}."] > svg {
+    &[data-phase^="#{$phase}."] &__phase {
       transform: rotate(#{-1 * $phase + "deg"});
     }
   }
 
-  &[data-magnitude="0.000"] &__magnitude-g,
-  &[data-magnitude="0.000"] &__phase,
-  &[data-magnitude="0.000"] &__phase-dot {
+  &[data-magnitude="0.000"] &__magnitude,
+  &[data-magnitude="0.000"] &__phase {
     @apply hidden;
   }
 
@@ -97,7 +83,7 @@
       $zmagnitude: $magnitude;
     }
 
-    &[data-magnitude^="0.#{$zmagnitude}"] svg > &__magnitude-g {
+    &[data-magnitude^="0.#{$zmagnitude}"] &__magnitude {
       transform: scale(#{$magnitude / 100});
     }
   }
