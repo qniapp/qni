@@ -1,10 +1,6 @@
 .not-gate {
   $gate-shape-class: ".gate__shape";
 
-  svg {
-    @apply p-1;
-  }
-
   .draggable:hover & #{$gate-shape-class} {
     @screen md {
       @apply bg-#{$gate-hover-color};
