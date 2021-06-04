@@ -36,7 +36,7 @@
           @apply ml-#{($instruction-size-base + $instruction-margin-base) / 2};
           @apply mr-0;
           @apply -mt-2;
-          top: unset;
+          top: 0;
           left: -#{$connection-width-base / 2}px;
         }
       }
@@ -76,7 +76,7 @@
       @apply mr-0;
 
       left: -#{$connection-width-base / 2}px;
-      top: unset;
+      top: 0;
     }
 
     .circuit-preview .circuit .gate > & {

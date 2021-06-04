@@ -163,6 +163,28 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     }
   }
 
+  set inputWireActive(flag: boolean) {
+    const classList = this.element.classList
+    const className = classNameFor("dropzone:state:inputWireInactive")
+
+    if (flag) {
+      classList.remove(className)
+    } else {
+      classList.add(className)
+    }
+  }
+
+  set outputWireActive(flag: boolean) {
+    const classList = this.element.classList
+    const className = classNameFor("dropzone:state:outputWireInactive")
+
+    if (flag) {
+      classList.remove(className)
+    } else {
+      classList.add(className)
+    }
+  }
+
   isInPage(): boolean {
     return this.element === document.body
       ? false

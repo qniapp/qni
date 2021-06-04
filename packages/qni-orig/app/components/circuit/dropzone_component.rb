@@ -7,11 +7,15 @@ class Circuit::DropzoneComponent < Component
   attribute :palette, default: false
   attribute :trash, default: false
   attribute :wire_active, default: true
+  attribute :input_wire_active, default: true
+  attribute :output_wire_active, default: true
   attribute :no_wire, default: false
 
   validates :palette, inclusion: { in: [true, false] }
   validates :trash, inclusion: { in: [true, false] }
   validates :wire_active, inclusion: { in: [true, false] }
+  validates :input_wire_active, inclusion: { in: [true, false] }
+  validates :output_wire_active, inclusion: { in: [true, false] }
   validates :no_wire, inclusion: { in: [true, false] }
 
   def circuit?
@@ -32,6 +36,14 @@ class Circuit::DropzoneComponent < Component
 
   def wire_active?
     wire_active
+  end
+
+  def input_wire_active?
+    input_wire_active
+  end
+
+  def output_wire_active?
+    output_wire_active
   end
 
   def no_wire?
