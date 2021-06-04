@@ -21,6 +21,9 @@
   &.gate--disabled #{$gate-shape-class} {
     @apply bg-#{$gate-color-disabled};
     @apply border-2 border-dashed border-#{$gate-label-color-disabled};
+  }
+
+  &.gate--disabled #{$gate-shape-class} svg {
     @apply text-#{$gate-label-color-disabled};
   }
 }

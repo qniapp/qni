@@ -15,6 +15,10 @@ module IconsHelper
     render 'components/icons/swap', *options
   end
 
+  def root_not_icon(*options)
+    render 'components/icons/root_not', *options
+  end
+
   def reload_icon
     render 'components/icons/reload'
   end
