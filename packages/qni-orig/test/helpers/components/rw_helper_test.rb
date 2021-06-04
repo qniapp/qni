@@ -4,14 +4,14 @@ class Components::RwHelperTest < ActionView::TestCase
   include Components::GatesHelper
   include ComponentsHelper
   include GatesHelper
+  include IconsHelper
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="gate write-gate" data-value="0">
         <div class="gate__shape gate__shape--square">
-          <div>
-            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
-          </div>
+          #{ket_icon}
+          <div class="gate__shape-label"></div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
@@ -23,9 +23,8 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="gate write-gate" data-value="0">
         <div class="gate__shape gate__shape--square">
-          <div>
-            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
-          </div>
+          #{ket_icon}
+          <div class="gate__shape-label"></div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
@@ -37,9 +36,8 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(readout)
       <div class="gate readout-gate" data-controller="gate-popup">
         <div class="gate__shape gate__shape--square">
-          <div>
-            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
-          </div>
+          #{ket_icon}
+          <div class="gate__shape-label"></div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
@@ -58,9 +56,8 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
       <div class="gate readout-gate" data-set="alice_v" data-controller="gate-popup">
         <div class="gate__shape gate__shape--square">
-          <div>
-            &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
-          </div>
+          #{ket_icon}
+          <div class="gate__shape-label"></div>
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">alice_v</div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel">alice_v</div>
