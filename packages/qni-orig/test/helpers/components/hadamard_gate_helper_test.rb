@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Components::HadamardGateHelperTest < ActionView::TestCase
   include Components::GatesHelper
+  include IconsHelper
 
   test 'hadamard_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(hadamard_gate)
@@ -9,7 +10,7 @@ class Components::HadamardGateHelperTest < ActionView::TestCase
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">
-          H
+          #{hadamard_icon}
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
@@ -30,7 +31,7 @@ class Components::HadamardGateHelperTest < ActionView::TestCase
         <div class="connection connection--top"></div>
         <div class="connection connection--bottom"></div>
         <div class="gate__shape gate__shape--square gate__shape--fill">
-          H
+          #{hadamard_icon}
         </div>
         <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">if alice_h</div>
         <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel">if alice_h</div>

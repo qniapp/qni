@@ -1,4 +1,8 @@
 module IconsHelper
+  def hadamard_icon
+    render 'components/icons/hadamard'
+  end
+
   def plus_icon
     render 'components/icons/plus'
   end
