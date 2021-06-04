@@ -3,6 +3,10 @@ module IconsHelper
     render 'components/icons/plus'
   end
 
+  def phi_icon
+    render 'components/icons/phi'
+  end
+
   def swap_icon(*options)
     render 'components/icons/swap', *options
   end
