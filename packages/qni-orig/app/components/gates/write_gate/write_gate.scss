@@ -2,18 +2,31 @@
   $gate-shape-class: ".gate__shape";
   $gate-shape-label-class: ".gate__shape-label";
 
+  @apply rounded;
+
   .palette & #{$gate-shape-class}#{$gate-shape-class}--square {
-    @apply text-gray-900;
-    @apply text-xl;
+    @apply text-lg;
   }
 
   #{$gate-shape-class}#{$gate-shape-class}--square {
-    @apply text-gray-900;
     writing-mode: vertical-lr;
 
     @screen md {
       writing-mode: horizontal-tb;
     }
+  }
+
+  #{$gate-shape-class}#{$gate-shape-class}--square svg {
+    @apply text-#{$wire-color};
+    transform: rotate(90deg);
+
+    @screen md {
+      transform: rotate(0deg);
+    }
+  }
+
+  .circuit-preview & #{$gate-shape-class}#{$gate-shape-class}--square svg {
+    transform: rotate(0deg);
   }
 
   @each $nqubit in $nqubits {
@@ -23,7 +36,7 @@
       @apply text-#{map-get($write-readout-gate-label-font-size, $nqubit)};
 
       @screen md {
-        @apply text-xl;
+        @apply text-lg;
       }
     }
 
@@ -31,12 +44,13 @@
       .circuit[data-nqubit="#{$nqubit}"]
       &
       #{$gate-shape-class}#{$gate-shape-class}--square {
-      @apply text-xl;
+      @apply text-lg;
       writing-mode: horizontal-tb;
     }
   }
 
   #{$gate-shape-label-class} {
+    @apply absolute;
     @apply font-mono;
     @apply leading-none;
     @apply text-purple-500;
@@ -62,21 +76,25 @@
     content: "1";
   }
 
+  .draggable:hover & {
+    @screen md {
+      @apply border-#{$gate-hover-color};
+    }
+  }
+
   .draggable:not(.draggable--grabbed):hover & #{$gate-shape-class} {
     @screen md {
       @apply bg-transparent;
-      @apply border-2 border-#{$gate-hover-color} rounded;
     }
   }
 
   .draggable--grabbed & #{$gate-shape-class} {
     @apply bg-white;
-    @apply border-2 border-#{$gate-hover-color} rounded;
   }
 
   // Reference for coordinates during dragging
-  .draggable--source & #{$gate-shape-class} {
-    @apply border-2 border-#{$gate-source-color};
+  .draggable--source & {
+    @apply border-#{$gate-source-color};
   }
 
   .draggable--source & #{$gate-shape-class}#{$gate-shape-class}--square {
@@ -88,9 +106,9 @@
   }
 
   // Placeholder to display when it is droppable
-  .draggable--shadow & #{$gate-shape-class} {
+  .draggable--shadow & {
     @apply bg-white;
-    @apply border-2 border-#{$gate-shadow-color};
+    @apply border-#{$gate-shadow-color};
   }
 
   .draggable--shadow & #{$gate-shape-class}#{$gate-shape-class}--square {

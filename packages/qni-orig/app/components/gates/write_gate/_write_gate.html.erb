@@ -1,9 +1,8 @@
 <% write_gate = local_assigns.fetch(:write_gate) %>
 
 <% label = capture do %>
-  <div>
-    &VerticalLine;<span class="gate__shape-label"></span>&RightAngleBracket;
-  </div>
+  <%= ket_icon %>
+  <div class="gate__shape-label"></div>
 <% end %>
 
 <%= tag.div class: 'gate write-gate', data: write_gate.data do %>
