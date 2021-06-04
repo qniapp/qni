@@ -22,4 +22,8 @@ module IconsHelper
   def reload_icon
     render 'components/icons/reload'
   end
+
+  def ket_icon
+    render 'components/icons/ket'
+  end
 end
