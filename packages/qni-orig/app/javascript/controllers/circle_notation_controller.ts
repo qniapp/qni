@@ -1,41 +1,51 @@
-import tippy from "tippy.js"
+import tippy, {
+  createSingleton,
+  Instance,
+  CreateSingletonInstance,
+  Props,
+  CreateSingletonProps,
+} from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
   declare readonly qubitCircleTargets: HTMLElement[]
-  declare tooltipEl: HTMLElement
+  declare tippyInstances: Instance<Props>[]
+  declare tippySingleton: CreateSingletonInstance<CreateSingletonProps<Props>>
+  declare popupEl: HTMLElement
 
   connect(): void {
-    this.tooltipEl = document.getElementById(
-      "qubit-circle-tooltip",
-    ) as HTMLElement
-    Util.notNull(this.tooltipEl)
+    this.popupEl = document.getElementById("qubit-circle-popup") as HTMLElement
+    Util.notNull(this.popupEl)
+
+    this.tippyInstances = tippy(this.qubitCircleTargets)
+    this.tippySingleton = createSingleton(this.tippyInstances, {
+      allowHTML: true,
+      theme: "qni",
+      delay: 1000,
+      moveTransition: "transform 0.2s ease-out",
+    })
+  }
+
+  disconnect(): void {
+    this.tippyInstances.forEach((each) => {
+      each.destroy()
+    })
+    this.tippySingleton.destroy()
   }
 
   incrementNqubit(): void {
     this.data.set("nqubit", (this.nqubit + 1).toString())
   }
 
-  qubitCircleMouseEnter(event: MouseEvent): void {
+  showPopup(event: MouseEvent): void {
     const qubitCircleEl = event.target as HTMLElement
     Util.notNull(qubitCircleEl)
-    const t = tippy(qubitCircleEl)
-    t.setProps({
-      allowHTML: true,
-      content: this.tooltipContent(qubitCircleEl),
-      theme: "qni",
-    })
-    t.show()
-  }
 
-  qubitCircleMouseLeave(event: MouseEvent): void {
-    const qubitCircleEl = event.target as HTMLElement
-    Util.notNull(qubitCircleEl)
-    const t = tippy(qubitCircleEl)
-    t.hide()
-    t.destroy()
+    const tippy = qubitCircleEl._tippy as Instance
+    tippy.setContent(this.popupContent(qubitCircleEl))
+    this.tippySingleton.show(qubitCircleEl)
   }
 
   set nqubit(nqubit: number) {
@@ -44,8 +54,7 @@ export default class CircleNotationController extends Controller {
 
   get nqubit(): number {
     const nqubit = this.data.get("nqubit")
-
-    if (!nqubit) throw new Error("Cannot get data-nqubit")
+    Util.notNull(nqubit)
     return parseInt(nqubit)
   }
 
@@ -60,23 +69,37 @@ export default class CircleNotationController extends Controller {
       const qubitCircle = qubitCircleTargets[c]
       qubitCircle.setAttribute(
         "data-magnitude",
-        magnitudes[c].toFixed(3).toString(),
+        magnitudes[c].toFixed(5).toString(),
       )
       qubitCircle.setAttribute("data-phase", phases[c].toFixed(3).toString())
     })
   }
 
-  private tooltipContent(el: HTMLElement): string {
+  private popupContent(el: HTMLElement): string {
+    const prob = this.prob(el)
     const ket = this.ket(el)
-    const magnitude = this.magnitude(el)
-    const phase = this.phase(el)
 
     let html =
-      this.tooltipEl.innerHTML +
-      `<div class="text-center font-bold">|${ket}&gt;</div>`
-    html += `<div>M=${magnitude}</div>`
-    if (magnitude > 0) html += `<div>φ=${phase}</div>`
+      this.popupEl.innerHTML +
+      `<div class="text-lg mb-2">|<span class="font-mono">${ket}</span>&#10217;</div>`
+    html += `<ul class="list-none"><li>Prob: <span class="font-bold font-mono">${this.round(
+      prob,
+      5,
+    )}%</span></li>`
+    if (prob > 0) {
+      html += `<li>Phase: <span class="font-bold font-mono">${this.round(
+        this.phase(el),
+        2,
+      )}°</span></li>`
+    } else {
+      html += "<li>Phase: <span class=\"font-bold font-mono\">-</span></li>"
+    }
+    html += "</ul>"
     return html
+  }
+
+  private round(n: number, decimal: number): number {
+    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
   }
 
   private ket(el: HTMLElement): number {
@@ -85,15 +108,20 @@ export default class CircleNotationController extends Controller {
     return parseInt(dataKet)
   }
 
+  private prob(el: HTMLElement): number {
+    const magnitude = this.magnitude(el)
+    return magnitude * magnitude * 100
+  }
+
   private magnitude(el: HTMLElement): number {
     const dataMagnitude = el.getAttribute("data-magnitude")
     Util.notNull(dataMagnitude)
     return parseFloat(dataMagnitude)
   }
 
-  private phase(el: HTMLElement): string {
+  private phase(el: HTMLElement): number {
     const dataPhase = el.getAttribute("data-phase")
     Util.notNull(dataPhase)
-    return dataPhase
+    return parseFloat(dataPhase)
   }
 }

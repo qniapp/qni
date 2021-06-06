@@ -14,7 +14,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
             #{component('qubit_circle', ket: 1, magnitude: 0)}
           </div>
         </div>
-        <div id="qubit-circle-tooltip" class="qubit-circle-tooltip hidden"></div>
+        <div id="qubit-circle-popup" class="qubit-circle-popup hidden"></div>
       </div>
     ERB
   end
@@ -44,14 +44,14 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
       <div class="qubit-circle"
            data-circle-notation-target="qubitCircle"
            data-ket="0"
-           data-magnitude="0.000"
-           data-action="mouseenter->circle-notation#qubitCircleMouseEnter mouseleave->circle-notation#qubitCircleMouseLeave">
+           data-magnitude="0.00000"
+           data-action="mouseenter->circle-notation#showPopup">
         <svg width="100" height="100" viewBox="0 0 100 100">
-          <circle class="qubit-circle__magnitude" cx="50" cy="50" r="48" fill="none"></circle>
+          <circle class="qubit-circle__magnitude" cx="50" cy="50" r="48" fill="currentColor"></circle>
           <line class="qubit-circle__phase" x1="50" y1="50" x2="50" y2="2" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></line>
           <circle class="qubit-circle__border" cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"></circle>
         </svg>
-        <div class="qubit-circle__ket">|0&#10217;</div>
+        <div class="qubit-circle__ket">|<span class="font-mono">0</span>&#10217;</div>
       </div>
     ERB
   end
