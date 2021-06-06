@@ -145,7 +145,7 @@ export class Simulator {
 
   phase(phi: string, ...targets: number[]): Simulator {
     const numPhi = parse(phi).evaluate() as number
-    const u11 = (complex(cos(numPhi), sin(numPhi)) as unknown) as number
+    const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
 
     targets.forEach((t) => {
       Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
@@ -249,7 +249,7 @@ export class Simulator {
 
   cphase(phi: string, target0: number, target1: number): Simulator {
     const numPhi = parse(phi).evaluate() as number
-    const u11 = (complex(cos(numPhi), sin(numPhi)) as unknown) as number
+    const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
 
     Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
       if ((bit & (1 << target0)) == 0 && (bit & (1 << target1)) != 0) {
@@ -309,7 +309,7 @@ export class Simulator {
   }
 
   magnitude(bit: number): number {
-    return round(abs(this.amplitude(bit)), 3)
+    return round(abs(this.amplitude(bit)), 6)
   }
 
   degree(bit: number): number {
@@ -317,7 +317,7 @@ export class Simulator {
   }
 
   amplitude(bit: number): number {
-    return (subset(this.state.matrix, index(bit, 0)) as unknown) as number
+    return subset(this.state.matrix, index(bit, 0)) as unknown as number
   }
 
   private applyWriteGates(instructions: SeriarizedInstruction[]) {

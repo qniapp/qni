@@ -3,12 +3,12 @@
 <div class="qubit-circle"
      data-circle-notation-target="qubitCircle"
      data-ket="<%= qubit_circle.ket %>"
-     data-magnitude="0.000"
-     data-action="mouseenter->circle-notation#qubitCircleMouseEnter mouseleave->circle-notation#qubitCircleMouseLeave">
+     data-magnitude="0.00000"
+     data-action="mouseenter->circle-notation#showPopup">
     <svg width="100" height="100" viewBox="0 0 100 100">
-        <circle class="qubit-circle__magnitude" cx="50" cy="50" r="48" fill="none"></circle>
+        <circle class="qubit-circle__magnitude" cx="50" cy="50" r="48" fill="currentColor"></circle>
         <line class="qubit-circle__phase" x1="50" y1="50" x2="50" y2="2" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></line>
         <circle class="qubit-circle__border" cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"></circle>
     </svg>
-    <div class="qubit-circle__ket">|<%= qubit_circle.ket %>&#10217;</div>
+    <div class="qubit-circle__ket">|<span class="font-mono"><%= qubit_circle.ket %></span>&#10217;</div>
 </div>

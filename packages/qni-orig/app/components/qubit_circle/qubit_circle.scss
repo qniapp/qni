@@ -48,19 +48,30 @@
     }
   }
 
-  svg {
-    #{$parent}__border {
-      @apply text-gray-400;
-    }
+  &__border {
+    @apply text-gray-400;
 
-    #{$parent}__phase {
-      @apply origin-center;
-      @apply text-blue-700 opacity-70;
+    #{$parent}:hover & {
+      @apply text-red-500;
     }
+  }
 
-    #{$parent}__magnitude {
-      @apply origin-center;
-      fill: theme("colors.blue.200");
+  &__phase {
+    @apply opacity-70;
+    @apply origin-center;
+    @apply text-blue-700;
+
+    #{$parent}:hover & {
+      @apply text-yellow-700;
+    }
+  }
+
+  &__magnitude {
+    @apply origin-center;
+    @apply text-blue-200;
+
+    #{$parent}:hover & {
+      @apply text-pink-300;
     }
   }
 
@@ -70,8 +81,8 @@
     }
   }
 
-  &[data-magnitude="0.000"] &__magnitude,
-  &[data-magnitude="0.000"] &__phase {
+  &[data-magnitude="0.00000"] &__magnitude,
+  &[data-magnitude="0.00000"] &__phase {
     @apply hidden;
   }
 
@@ -84,7 +95,7 @@
     }
 
     &[data-magnitude^="0.#{$zmagnitude}"] &__magnitude {
-      transform: scale(#{$magnitude / 100});
+      r: #{$magnitude / 100 * 48};
     }
   }
 
