@@ -54,6 +54,18 @@
       @apply stroke-current text-#{$wire-inactive-color};
     }
 
+    g {
+      @apply transform rotate-90 origin-center;
+
+      @screen md {
+        @apply transform rotate-0;
+      }
+    }
+
+    .circuit-preview & g {
+      @apply transform rotate-0;
+    }
+
     #{$parent}--palette &,
     #{$parent}--trash &,
     #{$parent}--no-wire & {
@@ -61,103 +73,31 @@
     }
   }
 
-  &__wire-pc {
-    @apply hidden;
-
-    @screen md {
-      @apply block;
-    }
-
-    .circuit-preview & {
-      @apply block;
-    }
+  .dropzone--input-wire-inactive &__wire-left {
+    @apply text-#{$wire-inactive-color};
   }
 
-  &__wire-pc-left,
-  &__wire-mobile-top {
-    #{$parent}--input-wire-inactive & {
-      @apply stroke-current text-#{$wire-inactive-color};
-    }
+  .dropzone--output-wire-inactive &__wire-right {
+    @apply text-#{$wire-inactive-color};
   }
 
-  &__wire-pc-right,
-  &__wire-mobile-bottom {
-    #{$parent}--output-wire-inactive & {
-      @apply stroke-current text-#{$wire-inactive-color};
-    }
+  .draggable--write ~ &__wire &__wire-left {
+    @apply text-#{$wire-inactive-color};
+    @apply transform scale-x-50 origin-left;
   }
 
-  .draggable--write ~ &__wire &__wire-pc-left {
-    @apply stroke-current text-#{$wire-inactive-color};
+  .draggable--write ~ &__wire &__wire-right {
+    @apply text-#{$wire-color};
+    @apply transform scale-x-50 origin-right;
   }
 
-  .draggable--write ~ &__wire &__wire-pc-left-right {
-    @apply invisible;
+  .draggable--readout ~ &__wire &__wire-left {
+    @apply text-#{$wire-color};
+    @apply transform scale-x-50 origin-left;
   }
 
-  .draggable--write ~ &__wire &__wire-pc-right {
-    @apply stroke-current text-#{$wire-color};
-  }
-
-  .draggable--write ~ &__wire &__wire-pc-right-left {
-    @apply invisible;
-  }
-
-  .draggable--readout ~ &__wire &__wire-pc-left {
-    @apply stroke-current text-#{$wire-color};
-  }
-
-  .draggable--readout ~ &__wire &__wire-pc-left-right {
-    @apply invisible;
-  }
-
-  .draggable--readout ~ &__wire &__wire-pc-right {
-    @apply stroke-current text-#{$wire-inactive-color};
-  }
-
-  .draggable--readout ~ &__wire &__wire-pc-right-left {
-    @apply invisible;
-  }
-
-  &__wire-mobile {
-    @screen md {
-      @apply hidden;
-    }
-
-    .circuit-preview & {
-      @apply hidden;
-    }
-  }
-
-  .draggable--write ~ &__wire &__wire-mobile-top {
-    @apply stroke-current text-#{$wire-inactive-color};
-  }
-
-  .draggable--write ~ &__wire &__wire-mobile-top-bottom {
-    @apply invisible;
-  }
-
-  .draggable--write ~ &__wire &__wire-mobile-bottom {
-    @apply stroke-current text-#{$wire-color};
-  }
-
-  .draggable--write ~ &__wire &__wire-mobile-bottom-top {
-    @apply invisible;
-  }
-
-  .draggable--readout ~ &__wire &__wire-mobile-top {
-    @apply stroke-current text-#{$wire-color};
-  }
-
-  .draggable--readout ~ &__wire &__wire-mobile-top-bottom {
-    @apply invisible;
-  }
-
-  .draggable--readout ~ &__wire &__wire-mobile-bottom {
-    @apply stroke-current text-#{$wire-inactive-color};
-  }
-
-  .draggable--readout ~ &__wire &__wire-mobile-bottom-top {
-    @apply invisible;
+  .draggable--readout ~ &__wire &__wire-right {
+    @apply text-#{$wire-inactive-color};
+    @apply transform scale-x-50 origin-right;
   }
 }
