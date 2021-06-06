@@ -17,7 +17,6 @@
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {
       @apply w-#{map-get($instruction-size, $nqubit)};
-      @apply mx-#{map-get($instruction-margin, $nqubit)};
 
       @screen md {
         @apply h-#{$instruction-size-base};
@@ -25,6 +24,19 @@
         @apply mx-0;
         @apply w-16;
       }
+    }
+
+    .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
+      @apply mr-#{map-get($instruction-margin, $nqubit)};
+
+      @screen md {
+        @apply mr-0;
+        @apply mt-#{$instruction-margin-base};
+      }
+    }
+
+    .circuit-preview .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
+      @apply mr-0;
     }
   }
 
@@ -36,10 +48,6 @@
   }
 
   &:nth-of-type(n + 2) {
-    @screen md {
-      @apply mt-#{$instruction-margin-base};
-    }
-
     .circuit-preview .circuit & {
       @apply mt-#{$instruction-margin-base};
     }
