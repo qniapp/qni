@@ -75,9 +75,13 @@
     }
   }
 
-  @for $phase from -360 through 360 {
+  @for $phase from 0 through 360 {
     &[data-phase^="#{$phase}."] &__phase {
-      transform: rotate(#{-1 * $phase + "deg"});
+      @apply transform rotate-#{360 - $phase};
+    }
+
+    &[data-phase^="-#{$phase}."] &__phase {
+      @apply transform rotate-#{$phase};
     }
   }
 

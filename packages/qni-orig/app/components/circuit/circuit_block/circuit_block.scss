@@ -109,6 +109,7 @@
     @apply border-l-2 border-r-2;
     @apply flex-col;
     @apply flex-grow;
+    @apply px-8;
 
     @screen md {
       @apply border-l-0 border-r-0;
@@ -116,25 +117,6 @@
       @apply flex-row;
       @apply px-0;
       @apply py-8;
-    }
-  }
-
-  .circuit[data-nqubit="1"] &__body {
-    @apply px-#{$instruction-margin-extralarge};
-
-    @screen md {
-      @apply px-0;
-    }
-  }
-
-  .circuit[data-nqubit="3"] &__body,
-  .circuit[data-nqubit="4"] &__body,
-  .circuit[data-nqubit="5"] &__body,
-  .circuit[data-nqubit="8"] &__body {
-    @apply px-4;
-
-    @screen md {
-      @apply px-0;
     }
   }
 

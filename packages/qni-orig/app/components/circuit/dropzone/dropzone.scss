@@ -14,13 +14,25 @@
       .circuit[data-nqubit="#{$nqubit}"] & {
         @apply w-#{map-get($instruction-size, $nqubit)};
         @apply h-#{map-get($instruction-size, $nqubit) + map-get($instruction-margin, $nqubit) * 2};
-        @apply mx-#{map-get($instruction-margin, $nqubit)};
 
         @screen md {
           @apply w-#{$instruction-size-base + $instruction-margin-base};
           @apply h-#{$instruction-size-base};
           @apply mx-0;
         }
+      }
+
+      .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
+        @apply mr-#{map-get($instruction-margin, $nqubit)};
+
+        @screen md {
+          @apply mr-0;
+          @apply mt-#{$instruction-margin-base};
+        }
+      }
+
+      .circuit-preview .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
+        @apply mr-0;
       }
     }
 
@@ -47,7 +59,6 @@
   }
 
   &__wire {
-    @apply stroke-current text-#{$wire-color};
     @apply w-full h-full;
 
     #{$parent}--wire-inactive & {
@@ -71,6 +82,16 @@
     #{$parent}--no-wire & {
       @apply hidden;
     }
+  }
+
+  &__wire-left,
+  &__wire-right {
+    @apply text-#{$wire-color};
+  }
+
+  .dropzone--wire-inactive &__wire-left,
+  .dropzone--wire-inactive &__wire-right {
+    @apply text-#{$wire-inactive-color};
   }
 
   .dropzone--input-wire-inactive &__wire-left {
@@ -99,5 +120,32 @@
   .draggable--readout ~ &__wire &__wire-right {
     @apply text-#{$wire-inactive-color};
     @apply transform scale-x-50 origin-right;
+  }
+
+  &__wire-top,
+  &__wire-bottom {
+    @apply hidden;
+    @apply text-#{$gate-color};
+  }
+
+  @each $nqubit in $nqubits {
+    .circuit[data-nqubit="#{$nqubit}"] &__wire-top,
+    .circuit[data-nqubit="#{$nqubit}"] &__wire-bottom {
+      stroke-width: #{map-get($connection-width, $nqubit)};
+
+      @screen md {
+        stroke-width: #{$connection-width-base};
+      }
+    }
+  }
+
+  .dropzone--connected-with-lower-bit &__wire-top {
+    @apply block;
+    @apply transform scale-y-150 -translate-y-1/4 origin-top;
+  }
+
+  .dropzone--connected-with-upper-bit &__wire-bottom {
+    @apply block;
+    @apply transform scale-y-150 translate-y-1/4 origin-bottom;
   }
 }
