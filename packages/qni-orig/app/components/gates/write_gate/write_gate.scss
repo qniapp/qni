@@ -49,6 +49,15 @@
     }
   }
 
+  &::before {
+    @screen md {
+      @apply absolute inset-0;
+      @apply border-#{$gate-border-width} border-transparent rounded;
+      @apply w-full h-full;
+      content: "";
+    }
+  }
+
   #{$gate-shape-label-class} {
     @apply absolute;
     @apply font-mono;
@@ -76,7 +85,7 @@
     content: "1";
   }
 
-  .draggable:hover & {
+  .draggable:hover &::before {
     @screen md {
       @apply border-#{$gate-hover-color};
     }
@@ -88,12 +97,14 @@
     }
   }
 
-  .draggable--grabbed & #{$gate-shape-class} {
-    @apply bg-white;
+  .draggable--grabbed &::before {
+    @screen md {
+      @apply bg-white;
+    }
   }
 
   // Reference for coordinates during dragging
-  .draggable--source & {
+  .draggable--source &::before {
     @apply border-#{$gate-source-color};
   }
 
@@ -108,6 +119,9 @@
   // Placeholder to display when it is droppable
   .draggable--shadow & {
     @apply bg-white;
+  }
+
+  .draggable--shadow &::before {
     @apply border-#{$gate-shadow-color};
   }
 

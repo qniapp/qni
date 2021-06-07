@@ -3,15 +3,22 @@
 
   @apply rounded;
 
-  // X 部分の SVG
   #{$gate-shape-class} svg {
     @apply stroke-3;
     @apply stroke-current;
     @apply text-#{$gate-color};
   }
 
-  // ホバー中
-  .draggable:not(.draggable--source):hover & {
+  &::before {
+    @screen md {
+      @apply absolute inset-0;
+      @apply border-#{$gate-border-width} border-transparent rounded;
+      @apply w-full h-full;
+      content: "";
+    }
+  }
+
+  .draggable:not(.draggable--source):hover &::before {
     @screen md {
       @apply bg-white;
       @apply border-#{$gate-hover-color};
@@ -31,7 +38,7 @@
   }
 
   // Reference for coordinates during dragging
-  .draggable--source & {
+  .draggable--source &::before {
     @apply border-#{$gate-source-color};
   }
 
@@ -44,12 +51,9 @@
   }
 
   // Placeholder to display when it is droppable
-  .draggable--shadow & {
-    @apply border-#{$gate-shadow-color};
-  }
-
-  .draggable--shadow & #{$gate-shape-class} {
+  .draggable--shadow &::before {
     @apply bg-white;
+    @apply border-#{$gate-shadow-color};
   }
 
   .draggable--shadow & #{$gate-shape-class} svg {

@@ -7,8 +7,10 @@ class Components::NotGateHelperTest < ActionView::TestCase
   test 'not_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate)
       <div class="gate gate--ifable not-gate" data-controller="gate-popup">
-        <div class="connection connection--top"></div>
-        <div class="connection connection--bottom"></div>
+        <svg class="connection overflow-visible" width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line class="connection__top" x1="50" y1="0" x2="50" y2="50" stroke-width="2" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+          <line class="connection__bottom" x1="50" y1="100" x2="50" y2="50" stroke-width="2" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+        </svg>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
           #{plus_icon}
         </div>
@@ -28,8 +30,10 @@ class Components::NotGateHelperTest < ActionView::TestCase
   test 'not_gate if:' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(if: 'alice_v'))
       <div class="gate gate--ifable not-gate" data-if="alice_v" data-controller="gate-popup">
-        <div class="connection connection--top"></div>
-        <div class="connection connection--bottom"></div>
+        <svg class="connection overflow-visible" width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line class="connection__top" x1="50" y1="0" x2="50" y2="50" stroke-width="2" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+          <line class="connection__bottom" x1="50" y1="100" x2="50" y2="50" stroke-width="2" stroke="currentColor" vector-effect="non-scaling-stroke"></line>
+        </svg>
         <div class="gate__shape gate__shape--circle gate__shape--fill">
           #{plus_icon}
         </div>
