@@ -29,7 +29,7 @@
       @apply border-t-2 border-b-2 border-transparent;
       @apply flex-row;
       @apply px-0;
-      @apply py-8;
+      @apply py-#{$instruction-size-base};
     }
 
     .circuit-preview & {
@@ -37,7 +37,7 @@
       @apply border-t-2 border-b-2 border-transparent;
       @apply flex-row;
       @apply px-0;
-      @apply py-8;
+      @apply py-#{$instruction-size-base};
     }
   }
 }

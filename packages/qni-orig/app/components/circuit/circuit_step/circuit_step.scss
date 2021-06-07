@@ -28,7 +28,7 @@
   &--shadow {
     @apply w-0;
 
-    & .dropzone__wire {
+    .wires {
       @apply hidden;
     }
   }

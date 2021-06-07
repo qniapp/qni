@@ -18,8 +18,8 @@
       @each $nqubit in $nqubits {
         .circuit[data-nqubit="#{$nqubit}"] & {
           @apply h-full;
-          @apply left-0;
-          @apply ml-#{map-get($instruction-size, $nqubit)};
+          @apply top-0 left-0;
+          @apply ml-#{map-get($instruction-size, $nqubit) + 1};
           @apply text-#{map-get($gate-label-font-size, $nqubit)};
           @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
 
@@ -34,6 +34,7 @@
             @apply transform rotate-0;
             @apply w-full;
 
+            top: unset;
             writing-mode: horizontal-tb;
           }
         }
@@ -47,6 +48,7 @@
         @apply text-xs;
         @apply w-full;
 
+        top: unset;
         writing-mode: horizontal-tb;
       }
     }
@@ -63,9 +65,9 @@
         .circuit[data-nqubit="#{$nqubit}"] & {
           @apply h-full;
           @apply mr-#{map-get($instruction-size, $nqubit)};
-          @apply right-0;
+          @apply bottom-0 right-0;
           @apply text-#{map-get($gate-label-font-size, $nqubit)};
-          @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
+          @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)} origin-top;
 
           writing-mode: vertical-lr;
 
@@ -78,6 +80,7 @@
             @apply transform rotate-0;
             @apply w-full;
 
+            bottom: unset;
             writing-mode: horizontal-tb;
           }
         }
@@ -91,6 +94,7 @@
         @apply text-xs;
         @apply w-full;
 
+        bottom: unset;
         writing-mode: horizontal-tb;
       }
     }

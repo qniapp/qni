@@ -109,14 +109,22 @@
     @apply border-l-2 border-r-2;
     @apply flex-col;
     @apply flex-grow;
-    @apply px-8;
 
     @screen md {
       @apply border-l-0 border-r-0;
       @apply border-t-2 border-b-2;
       @apply flex-row;
-      @apply px-0;
-      @apply py-8;
+    }
+  }
+
+  @each $nqubit in $nqubits {
+    .circuit[data-nqubit="#{$nqubit}"] &__body {
+      @apply px-#{map-get($instruction-size, $nqubit)};
+
+      @screen md {
+        @apply px-0;
+        @apply py-#{$instruction-size-base};
+      }
     }
   }
 

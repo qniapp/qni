@@ -21,7 +21,6 @@ import {
   DragEventHandlers,
   DropEventHandlers,
 } from "./mixins"
-import { InternalError } from "lib/error"
 import { Connectable, Controllable, Disableable } from "./gates/mixins"
 import { Util } from "lib/base"
 

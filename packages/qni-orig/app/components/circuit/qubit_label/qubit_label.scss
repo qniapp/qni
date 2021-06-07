@@ -27,11 +27,11 @@
     }
 
     .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
-      @apply mr-#{map-get($instruction-margin, $nqubit)};
+      @apply mr-#{map-get($instruction-size, $nqubit) / 2};
 
       @screen md {
         @apply mr-0;
-        @apply mt-#{$instruction-margin-base};
+        @apply mt-#{$instruction-size-base / 2};
       }
     }
 
@@ -49,7 +49,7 @@
 
   &:nth-of-type(n + 2) {
     .circuit-preview .circuit & {
-      @apply mt-#{$instruction-margin-base};
+      @apply mt-#{$instruction-size-base / 2};
     }
   }
 
