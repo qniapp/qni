@@ -1,6 +1,7 @@
 .control-gate {
   $gate-shape-class: ".gate__shape";
 
+  @apply border-0;
   @apply rounded;
 
   &__dot {
@@ -10,11 +11,20 @@
     @apply z-10;
   }
 
-  .draggable:hover &,
-  .draggable--grabbed & {
+  &::before {
+    @screen md {
+      @apply absolute inset-0;
+      @apply border-#{$gate-border-width} border-transparent rounded;
+      @apply w-full h-full;
+      content: "";
+    }
+  }
+
+  .draggable:hover &::before,
+  .draggable--grabbed &::before {
     @screen md {
       @apply bg-white;
-      @apply border-#{$gate-hover-color};
+      @apply border-#{$gate-border-width} border-#{$gate-hover-color};
     }
   }
 
@@ -31,7 +41,7 @@
   }
 
   // Reference for coordinates during dragging
-  .draggable--source & {
+  .draggable--source &::before {
     @apply border-#{$gate-source-color};
   }
 
@@ -44,12 +54,9 @@
   }
 
   // Placeholder to display when it is droppable
-  .draggable--shadow & {
-    @apply border-#{$gate-shadow-color};
-  }
-
-  .draggable--shadow & #{$gate-shape-class} {
+  .draggable--shadow &::before {
     @apply bg-white;
+    @apply border-#{$gate-shadow-color};
   }
 
   .draggable--shadow & #{$gate-shape-class} &__dot {

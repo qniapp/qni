@@ -2,7 +2,6 @@
   --animate-duration: 0.2s;
 
   @apply relative;
-  @apply border-#{$gate-border-width} border-transparent;
 
   @mixin box($nqubit) {
     @apply w-#{map-get($instruction-size, $nqubit)};
