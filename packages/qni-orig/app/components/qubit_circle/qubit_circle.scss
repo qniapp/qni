@@ -90,6 +90,10 @@
     @apply hidden;
   }
 
+  &[data-magnitude="1.00000"] &__magnitude {
+    @apply transform scale-100;
+  }
+
   $zmagnitude: "";
   @for $magnitude from 1 through 99 {
     @if $magnitude < 10 {
@@ -99,7 +103,7 @@
     }
 
     &[data-magnitude^="0.#{$zmagnitude}"] &__magnitude {
-      r: #{$magnitude / 100 * 48};
+      transform: scale(#{$magnitude / 100});
     }
   }
 

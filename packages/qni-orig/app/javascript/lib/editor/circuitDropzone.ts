@@ -137,24 +137,24 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
   }
 
   connectWithLowerBit(): void {
-    this.element.classList.add(classNameFor("dropzone:connection:lowerBit"))
+    this.element.classList.add(classNameFor("connectable:lowerBit"))
   }
 
   connectWithUpperBit(): void {
-    this.element.classList.add(classNameFor("dropzone:connection:upperBit"))
+    this.element.classList.add(classNameFor("connectable:upperBit"))
   }
 
   disconnectFromLowerBit(): void {
-    this.element.classList.remove(classNameFor("dropzone:connection:lowerBit"))
+    this.element.classList.remove(classNameFor("connectable:lowerBit"))
   }
 
   disconnectFromUpperBit(): void {
-    this.element.classList.remove(classNameFor("dropzone:connection:upperBit"))
+    this.element.classList.remove(classNameFor("connectable:upperBit"))
   }
 
   set wireActive(flag: boolean) {
     const classList = this.element.classList
-    const className = classNameFor("dropzone:state:wireInactive")
+    const className = classNameFor("wireable:inactive")
 
     if (flag) {
       classList.remove(className)
@@ -165,7 +165,7 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
 
   set inputWireActive(flag: boolean) {
     const classList = this.element.classList
-    const className = classNameFor("dropzone:state:inputWireInactive")
+    const className = classNameFor("wireable:inputInactive")
 
     if (flag) {
       classList.remove(className)
@@ -176,7 +176,7 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
 
   set outputWireActive(flag: boolean) {
     const classList = this.element.classList
-    const className = classNameFor("dropzone:state:outputWireInactive")
+    const className = classNameFor("wireable:outputInactive")
 
     if (flag) {
       classList.remove(className)
