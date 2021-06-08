@@ -30,4 +30,14 @@
   &.gate--disabled #{$gate-shape-class} svg {
     @apply text-#{$gate-label-color-disabled};
   }
+
+  .draggable:hover &.gate--disabled #{$gate-shape-class} {
+    @apply bg-#{$gate-hover-color};
+    @apply border-0;
+    @apply text-#{$gate-label-color};
+  }
+
+  .draggable:hover &.gate--disabled #{$gate-shape-class} svg {
+    @apply text-#{$gate-label-color};
+  }
 }
