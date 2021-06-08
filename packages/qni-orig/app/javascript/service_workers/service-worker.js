@@ -29,7 +29,6 @@ self.addEventListener(
     })
 
     self.postMessage({ type: "finish" })
-    self.close()
   },
   false,
 )

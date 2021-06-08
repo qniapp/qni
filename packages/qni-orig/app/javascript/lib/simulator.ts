@@ -1,7 +1,7 @@
 import { Qubit } from "lib/simulator/qubit"
 import { SeriarizedInstruction, PhaseGateInstruction } from "lib/editor/gates"
 
-import { Matrix, pow, sum } from "mathjs"
+import { pow, sum } from "mathjs"
 import { abs, arg, round } from "mathjs"
 import { add, subtract, divide, multiply } from "mathjs"
 import { complex, i } from "mathjs"
@@ -560,11 +560,5 @@ export class Simulator {
         return add(prev, each)
       }) as number
     return round(value, 5)
-  }
-
-  private multiply(...matrices: Matrix[]): Matrix {
-    return matrices.reduce((pre, value) => {
-      return multiply(pre, value)
-    })
   }
 }

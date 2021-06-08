@@ -37,11 +37,56 @@ export default class SimulatorController extends Controller {
 
   static targets = ["circuit", "stateVector", "runButton"]
 
+  declare worker: Worker
   declare readonly circuitTarget: HTMLElement
   declare readonly stateVectorTarget: HTMLElement
   declare readonly runButtonTarget: HTMLElement
 
   connect(): void {
+    this.worker = new Worker("/service-worker.js")
+    this.worker.addEventListener(
+      "message",
+      ((e: MessageEvent) => {
+        if (!e.data) {
+          throw new Error("event data is not set")
+        }
+
+        const data = e.data as MessageEventData
+        this.magnitudes = this.magnitudes || {}
+        this.phases = this.phases || {}
+
+        if (data.type === "step") {
+          const step = this.circuit.steps[data.step]
+
+          if (data.bits) {
+            const bits = data.bits
+            const dropzones = step.dropzones
+            for (const bit in bits) {
+              const instruction = dropzones[bit].instruction
+              if (instruction instanceof ReadoutGate) {
+                instruction.value = bits[bit]
+              }
+            }
+          }
+
+          step.instructions.forEach((each) => {
+            if (each instanceof NotGate || each instanceof HadamardGate) {
+              if (each.if) {
+                each.disabled = !data.flags[each.if]
+              }
+            }
+          })
+
+          this.magnitudes[data.step] = data.magnitudes
+          this.phases[data.step] = data.phases
+          step.done = true
+        } else if (data.type === "finish") {
+          this.gotoBreakpoint(this.breakpoint || 0)
+          this.runButton.running = false
+        }
+      }).bind(this),
+    )
+
     this.run()
   }
 
@@ -103,52 +148,8 @@ export default class SimulatorController extends Controller {
     this.magnitudes = {}
     this.phases = {}
 
-    const worker = new Worker("/service-worker.js")
-    worker.addEventListener(
-      "message",
-      ((e: MessageEvent) => {
-        if (!e.data) {
-          throw new Error("event data is not set")
-        }
-
-        const data = e.data as MessageEventData
-        this.magnitudes = this.magnitudes || {}
-        this.phases = this.phases || {}
-
-        if (data.type === "step") {
-          const step = this.circuit.steps[data.step]
-
-          if (data.bits) {
-            const bits = data.bits
-            const dropzones = step.dropzones
-            for (const bit in bits) {
-              const instruction = dropzones[bit].instruction
-              if (instruction instanceof ReadoutGate) {
-                instruction.value = bits[bit]
-              }
-            }
-          }
-
-          step.instructions.forEach((each) => {
-            if (each instanceof NotGate || each instanceof HadamardGate) {
-              if (each.if) {
-                each.disabled = !data.flags[each.if]
-              }
-            }
-          })
-
-          this.magnitudes[data.step] = data.magnitudes
-          this.phases[data.step] = data.phases
-          step.done = true
-        } else if (data.type === "finish") {
-          this.gotoBreakpoint(this.breakpoint || 0)
-          this.runButton.running = false
-        }
-      }).bind(this),
-    )
-
     const steps = this.steps
-    worker.postMessage({ nqubit: steps[0].length, steps: steps })
+    this.worker.postMessage({ nqubit: steps[0].length, steps: steps })
   }
 
   private get steps() {
