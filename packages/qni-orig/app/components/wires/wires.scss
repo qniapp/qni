@@ -1,4 +1,6 @@
 .wires {
+  $parent: &;
+
   @apply overflow-visible;
   @apply w-full h-full;
   @apply transform rotate-90 origin-center;
@@ -11,75 +13,151 @@
     @apply rotate-0;
   }
 
-  &__left,
-  &__right {
+  &__left {
     @apply text-#{$wire-color};
-    @apply transform;
+    @apply transform scale-x-150 -translate-x-1/4 origin-left;
+
+    @screen md {
+      @apply transform scale-x-100 translate-x-0;
+    }
+
+    .circuit-preview & {
+      @apply transform scale-x-100;
+    }
+
+    .wireable--inactive & {
+      @apply text-#{$wire-inactive-color};
+    }
+
+    .wireable--input-inactive & {
+      @apply text-#{$wire-inactive-color};
+    }
+
+    .draggable--write ~ #{$parent} & {
+      @apply text-#{$wire-inactive-color};
+      @apply transform scale-x-75 -translate-x-1/4 origin-left;
+
+      @screen md {
+        @apply scale-x-50;
+        @apply translate-x-0;
+      }
+    }
+
+    .circuit-preview .draggable--write ~ #{$parent} & {
+      @apply scale-x-50;
+      @apply translate-x-0;
+    }
+
+    .draggable--readout ~ #{$parent} & {
+      @apply text-#{$wire-color};
+      @apply transform scale-x-75 -translate-x-1/4 origin-left;
+
+      @screen md {
+        @apply scale-x-50;
+        @apply translate-x-0;
+      }
+    }
+
+    .circuit-preview .draggable--readout ~ #{$parent} & {
+      @apply scale-x-50;
+      @apply translate-x-0;
+    }
   }
 
-  &__top,
-  &__bottom {
+  &__right {
+    @apply text-#{$wire-color};
+    @apply transform scale-x-150 translate-x-1/4 origin-right;
+
+    @screen md {
+      @apply transform scale-x-100 translate-x-0;
+    }
+
+    .wireable--inactive & {
+      @apply text-#{$wire-inactive-color};
+    }
+
+    .wireable--output-inactive & {
+      @apply text-#{$wire-inactive-color};
+    }
+
+    .draggable--write ~ #{$parent} & {
+      @apply text-#{$wire-color};
+      @apply transform scale-x-75 translate-x-1/4 origin-right;
+
+      @screen md {
+        @apply scale-x-50;
+        @apply translate-x-0;
+      }
+    }
+
+    .circuit-preview .draggable--write ~ #{$parent} & {
+      @apply scale-x-50;
+      @apply translate-x-0;
+    }
+
+    .draggable--readout ~ #{$parent} & {
+      @apply text-#{$wire-inactive-color};
+      @apply transform scale-x-75 translate-x-1/4 origin-right;
+
+      @screen md {
+        @apply scale-x-50;
+        @apply translate-x-0;
+      }
+    }
+
+    .circuit-preview .draggable--readout ~ #{$parent} & {
+      @apply scale-x-50;
+      @apply translate-x-0;
+    }
+  }
+
+  &__top {
     @apply hidden;
     @apply text-#{$gate-color};
     @apply transform;
-  }
 
-  @each $nqubit in $nqubits {
-    .circuit[data-nqubit="#{$nqubit}"] &__top,
-    .circuit[data-nqubit="#{$nqubit}"] &__bottom {
-      stroke-width: #{map-get($connection-width, $nqubit)};
+    .connectable--lower-bit & {
+      @apply block;
+      @apply scale-y-150 -translate-y-1/4 origin-top;
+    }
 
-      @screen md {
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        stroke-width: #{map-get($connection-width, $nqubit)};
+
+        @screen md {
+          stroke-width: #{$connection-width-base};
+        }
+      }
+
+      .circuit-preview .circuit[data-nqubit="#{$nqubit}"] & {
         stroke-width: #{$connection-width-base};
       }
     }
   }
 
-  &__left {
-    @apply scale-x-150 -translate-x-1/4 origin-left;
-  }
+  &__bottom {
+    @apply hidden;
+    @apply text-#{$gate-color};
+    @apply transform;
 
-  &__right {
-    @apply scale-x-150 translate-x-1/4 origin-right;
-  }
+    .connectable--upper-bit & {
+      @apply block;
+      @apply scale-y-150 translate-y-1/4 origin-bottom;
+    }
 
-  .wireable--inactive & &__left,
-  .wireable--inactive & &__right {
-    @apply text-#{$wire-inactive-color};
-  }
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        stroke-width: #{map-get($connection-width, $nqubit)};
 
-  .wireable--input-inactive & &__left,
-  .wireable--output-inactive & &__right {
-    @apply text-#{$wire-inactive-color};
-  }
+        @screen md {
+          stroke-width: #{$connection-width-base};
+        }
+      }
 
-  .connectable--lower-bit &__top {
-    @apply block;
-    @apply scale-y-150 -translate-y-1/4 origin-top;
-  }
-
-  .connectable--upper-bit &__bottom {
-    @apply block;
-    @apply scale-y-150 translate-y-1/4 origin-bottom;
-  }
-
-  .draggable--write ~ & &__left {
-    @apply text-#{$wire-inactive-color};
-    @apply scale-x-50 origin-left;
-  }
-
-  .draggable--write ~ & &__right {
-    @apply text-#{$wire-color};
-    @apply scale-x-50 origin-right;
-  }
-
-  .draggable--readout ~ & &__left {
-    @apply text-#{$wire-color};
-    @apply scale-x-50 origin-left;
-  }
-
-  .draggable--readout ~ & &__right {
-    @apply text-#{$wire-inactive-color};
-    @apply scale-x-50 origin-right;
+      .circuit-preview .circuit[data-nqubit="#{$nqubit}"] & {
+        stroke-width: #{$connection-width-base};
+      }
+    }
   }
 }

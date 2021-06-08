@@ -5,13 +5,13 @@
     @apply absolute;
     @apply flex items-center justify-center;
     @apply font-mono;
-    @apply text-gray-400;
-    @apply whitespace-nowrap;
     @apply leading-none;
+    @apply text-gray-600;
+    @apply whitespace-nowrap;
 
     &--top {
       .draggable--palette &,
-      .gate--connected-with-lower-bit > & {
+      .connectable--lower-bit > & {
         @apply hidden;
       }
 
@@ -55,8 +55,8 @@
 
     &--bottom {
       .draggable--palette &,
-      .gate--connected-with-upper-bit > &,
-      :not(.gate--connected-with-upper-bit):not(.gate--connected-with-lower-bit)
+      .connectable--upper-bit > &,
+      :not(.connectable--upper-bit):not(.connectable--lower-bit)
         > & {
         @apply hidden;
       }

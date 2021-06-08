@@ -26,8 +26,8 @@ export class DraggableShadow {
     el.classList.add(classNameFor("draggable:type:shadow"))
 
     const instructionEl = this.instructionElement(el)
-    instructionEl.classList.remove(classNameFor("gate:connection:lowerBit"))
-    instructionEl.classList.remove(classNameFor("gate:connection:upperBit"))
+    instructionEl.classList.remove(classNameFor("connectable:lowerBit"))
+    instructionEl.classList.remove(classNameFor("connectable:upperBit"))
     instructionEl.classList.add("animate__animated", "animate__jello")
 
     this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)

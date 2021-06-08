@@ -7,108 +7,122 @@
   --balloon-color: theme("colors.indigo.500");
   --balloon-font-size: theme("fontSize.xs");
 
-  @each $nqubit in $nqubits {
-    .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & > svg {
-      @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
-      @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
+  svg {
+    @each $nqubit in $nqubits {
+      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
+        @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 
-      @screen md {
-        @apply h-#{map-get($qubit-circle-size, $nqubit)};
-        @apply w-#{map-get($qubit-circle-size, $nqubit)};
-      }
-    }
-
-    .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & &__border {
-      stroke-width: #{map-get($qubit-circle-border-width-mobile, $nqubit)};
-
-      @screen md {
-        stroke-width: #{map-get($qubit-circle-border-width, $nqubit)};
-      }
-    }
-
-    .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & &__ket {
-      @apply leading-none;
-
-      $font-size: map-get($qubit-circle-ket-font-size-mobile, $nqubit);
-      @if $font-size {
-        @apply text-#{$font-size};
-      } @else {
-        @apply hidden;
-      }
-
-      @screen md {
-        $font-size-md: map-get($qubit-circle-ket-font-size, $nqubit);
-        @if $font-size-md {
-          @apply block;
-          @apply text-#{$font-size-md};
-        } @else {
-          @apply hidden;
+        @screen md {
+          @apply h-#{map-get($qubit-circle-size, $nqubit)};
+          @apply w-#{map-get($qubit-circle-size, $nqubit)};
         }
       }
     }
   }
 
   &__border {
-    @apply text-gray-400;
+    @apply text-#{$qubit-circle-border-color};
 
     #{$parent}:hover & {
-      @apply text-red-500;
+      @apply text-#{$qubit-circle-border-hover-color};
+    }
+
+    @each $nqubit in $nqubits {
+      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @apply stroke-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
+
+        @screen md {
+          @apply stroke-#{map-get($qubit-circle-border-width, $nqubit)};
+        }
+      }
     }
   }
 
   &__phase {
-    @apply opacity-70;
     @apply origin-center;
-    @apply text-blue-700;
+    @apply text-#{$qubit-circle-phase-color};
 
     #{$parent}:hover & {
-      @apply text-yellow-700;
+      @apply text-#{$qubit-circle-phase-hover-color};
+    }
+
+    @each $nqubit in $nqubits {
+      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @apply stroke-#{map-get($qubit-circle-phase-stroke-width, $nqubit)};
+      }
+    }
+
+    @for $phase from 0 through 360 {
+      #{$parent}[data-phase^="#{$phase}."] & {
+        @apply transform rotate-#{360 - $phase};
+      }
+
+      #{$parent}[data-phase^="-#{$phase}."] & {
+        @apply transform rotate-#{$phase};
+      }
+    }
+
+    #{$parent}[data-magnitude="0.00000"] & {
+      @apply hidden;
     }
   }
 
   &__magnitude {
     @apply origin-center;
-    @apply text-blue-200;
+    @apply text-#{$qubit-circle-magnitude-color};
 
     #{$parent}:hover & {
-      @apply text-pink-300;
-    }
-  }
-
-  @for $phase from 0 through 360 {
-    &[data-phase^="#{$phase}."] &__phase {
-      @apply transform rotate-#{360 - $phase};
+      @apply text-#{$qubit-circle-magnitude-hover-color};
     }
 
-    &[data-phase^="-#{$phase}."] &__phase {
-      @apply transform rotate-#{$phase};
-    }
-  }
-
-  &[data-magnitude="0.00000"] &__magnitude,
-  &[data-magnitude="0.00000"] &__phase {
-    @apply hidden;
-  }
-
-  &[data-magnitude="1.00000"] &__magnitude {
-    @apply transform scale-100;
-  }
-
-  $zmagnitude: "";
-  @for $magnitude from 1 through 99 {
-    @if $magnitude < 10 {
-      $zmagnitude: "0#{$magnitude}";
-    } @else {
-      $zmagnitude: $magnitude;
+    #{$parent}[data-magnitude="0.00000"] & {
+      @apply hidden;
     }
 
-    &[data-magnitude^="0.#{$zmagnitude}"] &__magnitude {
-      transform: scale(#{$magnitude / 100});
+    #{$parent}[data-magnitude="1.00000"] & {
+      @apply transform scale-100;
+    }
+
+    $zmagnitude: "";
+    @for $magnitude from 1 through 99 {
+      @if $magnitude < 10 {
+        $zmagnitude: "0#{$magnitude}";
+      } @else {
+        $zmagnitude: $magnitude;
+      }
+
+      #{$parent}[data-magnitude^="0.#{$zmagnitude}"] & {
+        @apply transform scale-#{$magnitude};
+      }
     }
   }
 
   &__ket {
-    @apply text-gray-400;
+    @apply text-#{$qubit-circle-ket-font-color};
     @apply whitespace-nowrap;
+
+    @each $nqubit in $nqubits {
+      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @apply leading-none;
+
+        $font-size: map-get($qubit-circle-ket-font-size-mobile, $nqubit);
+        @if $font-size {
+          @apply text-#{$font-size};
+        } @else {
+          @apply hidden;
+        }
+
+        @screen md {
+          $font-size-md: map-get($qubit-circle-ket-font-size, $nqubit);
+          @if $font-size-md {
+            @apply block;
+            @apply text-#{$font-size-md};
+          } @else {
+            @apply hidden;
+          }
+        }
+      }
+    }
   }
 }

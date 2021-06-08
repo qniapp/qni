@@ -46,12 +46,4 @@ module CircuitHelper
   def draggable(*options, &block)
     component 'circuit/draggable', *options, &block
   end
-
-  def connection_top
-    component 'circuit/connection', position: :top
-  end
-
-  def connection_bottom
-    component 'circuit/connection', position: :bottom
-  end
 end

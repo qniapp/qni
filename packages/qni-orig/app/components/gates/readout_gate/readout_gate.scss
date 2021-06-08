@@ -87,6 +87,7 @@
 
   .draggable:hover &::before {
     @screen md {
+      @apply bg-white;
       @apply border-#{$gate-hover-color};
     }
   }
@@ -131,5 +132,10 @@
 
   .draggable--shadow & #{$gate-shape-label-class} {
     @apply text-#{$gate-shadow-color};
+  }
+
+  &.instruction--bordered::before {
+    @apply bg-white;
+    @apply border-#{$gate-border-color};
   }
 }

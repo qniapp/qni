@@ -15,8 +15,8 @@ class Gates::NotGateComponent < Component
   def klass
     class_string('gate', 'gate--ifable',
                  'not-gate',
-                 'gate--connected-with-upper-bit' => with_upper_bit?,
-                 'gate--connected-with-lower-bit' => with_lower_bit?,
+                 'connectable--upper-bit' => with_upper_bit?,
+                 'connectable--lower-bit' => with_lower_bit?,
                  'instruction--wire-inactive' => !wire_active?,
                  'gate--disabled' => disabled?)
   end
