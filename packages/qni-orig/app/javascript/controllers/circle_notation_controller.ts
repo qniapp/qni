@@ -81,7 +81,7 @@ export default class CircleNotationController extends Controller {
 
     let html =
       this.popupEl.innerHTML +
-      `<div class="text-lg mb-2">|<span class="font-mono">${ket}</span>&#10217;</div>`
+      `<div class="text-lg">|<span class="font-mono">${ket}</span>&#10217;</div>`
     html += `<ul class="list-none"><li>Prob: <span class="font-bold font-mono">${this.round(
       prob,
       5,
