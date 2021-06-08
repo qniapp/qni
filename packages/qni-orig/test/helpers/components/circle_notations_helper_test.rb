@@ -47,9 +47,9 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
            data-magnitude="0.00000"
            data-action="mouseenter->circle-notation#showPopup">
         <svg width="100" height="100" viewBox="0 0 100 100" stroke-linecap="round">
-          <circle class="qubit-circle__magnitude" cx="50" cy="50" r="48" fill="currentColor" />
-          <line class="qubit-circle__phase" x1="50" y1="50" x2="50" y2="2" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
-          <circle class="qubit-circle__border" cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" fill="none" />
+          <circle class="qubit-circle__magnitude" cx="50" cy="50" r="46" fill="currentColor" />
+          <line class="qubit-circle__phase" x1="50" y1="50" x2="50" y2="4" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+          <circle class="qubit-circle__border" cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" fill="none" />
         </svg>
         <div class="qubit-circle__ket">|<span class="font-mono">0</span>&#10217;</div>
       </div>
