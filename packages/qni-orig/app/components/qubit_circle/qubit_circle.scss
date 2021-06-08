@@ -37,6 +37,10 @@
         }
       }
     }
+
+    #{$parent}[data-magnitude="0.00000"] & {
+      @apply text-#{$qubit-circle-border-inactive-color};
+    }
   }
 
   &__phase {

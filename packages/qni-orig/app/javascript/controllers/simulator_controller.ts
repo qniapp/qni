@@ -3,6 +3,7 @@ import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
 import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/gates"
+import { Util } from "lib/base"
 
 class RunButton {
   private element: HTMLInputElement
@@ -47,9 +48,7 @@ export default class SimulatorController extends Controller {
     this.worker.addEventListener(
       "message",
       ((e: MessageEvent) => {
-        if (!e.data) {
-          throw new Error("event data is not set")
-        }
+        Util.notNull(e.data)
 
         const data = e.data as MessageEventData
         this.magnitudes = this.magnitudes || {}
@@ -79,6 +78,7 @@ export default class SimulatorController extends Controller {
 
           this.magnitudes[data.step] = data.magnitudes
           this.phases[data.step] = data.phases
+
           step.done = true
         } else if (data.type === "finish") {
           this.gotoBreakpoint(this.breakpoint || 0)
@@ -92,8 +92,7 @@ export default class SimulatorController extends Controller {
 
   get nqubit(): number {
     const dataNqubit = this.circuitTarget.getAttribute("data-nqubit")
-
-    if (!dataNqubit) throw new Error("Cannot get data-nqubit")
+    Util.notNull(dataNqubit)
     return parseInt(dataNqubit)
   }
 
@@ -161,8 +160,8 @@ export default class SimulatorController extends Controller {
   }
 
   private drawStateVector(breakpoint: number): void {
-    if (!this.magnitudes) throw new Error("magnitudes not set")
-    if (!this.phases) throw new Error("phases not set")
+    Util.notNull(this.magnitudes)
+    Util.notNull(this.phases)
 
     const magnitudes = this.magnitudes[breakpoint]
     const phases = this.phases[breakpoint]
@@ -182,19 +181,14 @@ export default class SimulatorController extends Controller {
 
   private get circleNotationController(): CircleNotationController {
     const el = document.getElementById("circle-notation")
-
-    if (!el) {
-      throw new Error("circle notation not found")
-    }
+    Util.notNull(el)
 
     const controller = this.application.getControllerForElementAndIdentifier(
       el,
       "circle-notation",
     )
+    Util.notNull(controller)
 
-    if (!controller) {
-      throw new Error("circle-notation controller not found")
-    }
     return controller as CircleNotationController
   }
 }
