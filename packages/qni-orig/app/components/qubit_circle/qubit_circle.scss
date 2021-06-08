@@ -49,7 +49,11 @@
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @apply stroke-#{map-get($qubit-circle-phase-stroke-width, $nqubit)};
+        @apply stroke-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
+
+        @screen md {
+          @apply stroke-#{map-get($qubit-circle-border-width, $nqubit)};
+        }
       }
     }
 
