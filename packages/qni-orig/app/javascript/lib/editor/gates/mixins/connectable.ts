@@ -29,19 +29,19 @@ export class Connectable {
   }
 
   protected connectWithLowerBit(): void {
-    this.element.classList.add(classNameFor("gate:connection:lowerBit"))
+    this.element.classList.add(classNameFor("connectable:lowerBit"))
   }
 
   protected connectWithUpperBit(): void {
-    this.element.classList.add(classNameFor("gate:connection:upperBit"))
+    this.element.classList.add(classNameFor("connectable:upperBit"))
   }
 
   disconnectFromLowerBit(): void {
-    this.element.classList.remove(classNameFor("gate:connection:lowerBit"))
+    this.element.classList.remove(classNameFor("connectable:lowerBit"))
   }
 
   disconnectFromUpperBit(): void {
-    this.element.classList.remove(classNameFor("gate:connection:upperBit"))
+    this.element.classList.remove(classNameFor("connectable:upperBit"))
   }
 
   // @ts-ignore: "Abstract methods can only appear within an abstract class"

@@ -135,7 +135,7 @@ $breakpoint-transition-duration: 75;
 $breakpoint-width-px: 4;
 
 // Qubit label
-$qubit-label-font-color: gray-300;
+$qubit-label-font-color: gray-500;
 
 // write & readout gate
 $rw-gate-label-0-color: text-blue-500;
@@ -168,6 +168,14 @@ $circle-notation-height-mobile: (
 $circle-notation-margin-top: 12;
 
 // Qubit Circle
+$qubit-circle-border-color: gray-400;
+$qubit-circle-border-hover-color: red-500;
+$qubit-circle-magnitude-color: blue-300;
+$qubit-circle-magnitude-hover-color: pink-300;
+$qubit-circle-phase-color: blue-900;
+$qubit-circle-phase-hover-color: yellow-900;
+$qubit-circle-ket-font-color: gray-400;
+
 $qubit-circle-size-2xl: 16;
 $qubit-circle-size-xl: 8;
 $qubit-circle-size-large: 6;
@@ -196,29 +204,40 @@ $qubit-circle-size-mobile: (
   8: $qubit-circle-size-sm,
 );
 
-$qubit-circle-border-width-bold: 2;
-$qubit-circle-border-width-base: 1;
+$stroke-width-bold: 2;
+$stroke-width-base: 1;
 
 $qubit-circle-border-width: (
-  1: $qubit-circle-border-width-bold,
-  2: $qubit-circle-border-width-bold,
-  3: $qubit-circle-border-width-bold,
-  4: $qubit-circle-border-width-bold,
-  5: $qubit-circle-border-width-bold,
-  6: $qubit-circle-border-width-base,
-  7: $qubit-circle-border-width-base,
-  8: $qubit-circle-border-width-base,
+  1: $stroke-width-bold,
+  2: $stroke-width-bold,
+  3: $stroke-width-bold,
+  4: $stroke-width-bold,
+  5: $stroke-width-bold,
+  6: $stroke-width-base,
+  7: $stroke-width-base,
+  8: $stroke-width-base,
 );
 
 $qubit-circle-border-width-mobile: (
-  1: $qubit-circle-border-width-bold,
-  2: $qubit-circle-border-width-bold,
-  3: $qubit-circle-border-width-bold,
-  4: $qubit-circle-border-width-bold,
-  5: $qubit-circle-border-width-base,
-  6: $qubit-circle-border-width-base,
-  7: $qubit-circle-border-width-base,
-  8: $qubit-circle-border-width-base,
+  1: $stroke-width-bold,
+  2: $stroke-width-bold,
+  3: $stroke-width-bold,
+  4: $stroke-width-bold,
+  5: $stroke-width-base,
+  6: $stroke-width-base,
+  7: $stroke-width-base,
+  8: $stroke-width-base,
+);
+
+$qubit-circle-phase-stroke-width: (
+  1: $stroke-width-bold,
+  2: $stroke-width-bold,
+  3: $stroke-width-bold,
+  4: $stroke-width-bold,
+  5: $stroke-width-bold,
+  6: $stroke-width-bold,
+  7: $stroke-width-bold,
+  8: $stroke-width-base,
 );
 
 $qubit-circle-ket-font-size: (

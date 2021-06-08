@@ -69,8 +69,7 @@
     @apply text-#{$gate-label-color-disabled};
   }
 
-  // TODO: 未整理
-  &.instruction--bordered {
+  &.instruction--bordered::before {
     @apply bg-white;
     @apply border-#{$gate-border-color};
   }

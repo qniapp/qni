@@ -31,8 +31,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "circuitStep:type:shadowSource": "circuit-step--shadow-source",
     "qubitLabel:value": "qubit-label__value",
     gate: "gate",
-    "gate:connection:lowerBit": "gate--connected-with-lower-bit",
-    "gate:connection:upperBit": "gate--connected-with-upper-bit",
     "gate:mixin:ifable": "gate--ifable",
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",

@@ -72,8 +72,7 @@
     @apply bg-#{$gate-label-color-disabled};
   }
 
-  // 未整理
-  &.instruction--bordered {
+  &.instruction--bordered::before {
     @apply bg-white;
     @apply border-#{$gate-border-color};
   }

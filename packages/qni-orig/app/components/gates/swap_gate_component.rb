@@ -13,8 +13,8 @@ class Gates::SwapGateComponent < Component
   def klass
     class_string('gate',
                  'swap-gate',
-                 'gate--connected-with-upper-bit' => connected_with_upper_bit?,
-                 'gate--connected-with-lower-bit' => connected_with_lower_bit?,
+                 'connectable--upper-bit' => connected_with_upper_bit?,
+                 'connectable--lower-bit' => connected_with_lower_bit?,
                  'instruction--wire-inactive' => !wire_active?)
   end
 
