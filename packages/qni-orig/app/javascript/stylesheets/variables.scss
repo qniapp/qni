@@ -128,11 +128,11 @@ $connection-width: (
   8: 2,
 );
 
-// Breakpoint
-$breakpoint-color: yellow-300;
-$breakpoint-color-hover: indigo-300;
-$breakpoint-transition-duration: 75;
-$breakpoint-width-px: 4;
+// Circuit Breakpoint
+$circuit-breakpoint-color: pink-400;
+$circuit-breakpoint-active-hover-color: pink-600;
+$circuit-breakpoint-color-hover: indigo-400;
+$circuit-breakpoint-width-px: 4;
 
 // Qubit label
 $qubit-label-font-color: gray-500;
