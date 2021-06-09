@@ -8,7 +8,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
   test 'circle notation' do
     assert_dom_equal beautify(<<~ERB), beautify(component('circle_notation', nqubit: 1) { component('state_vector') { component('qubit_circle_group', size: 16) { component('qubit_circle', ket: 0, magnitude: 1) + component('qubit_circle', ket: 1, magnitude: 0) } } })
       <div id="circle-notation" class="circle-notation" data-controller="circle-notation" data-simulator-target="circleNotation" data-editor-target="circleNotation" data-circle-notation-nqubit="1">
-        <div class="state-vector" data-simulator-target="stateVector" data-drawn="false">
+        <div class="state-vector">
           <div class="qubit-circle-group--size16">
             #{component('qubit_circle', ket: 0, magnitude: 1)}
             #{component('qubit_circle', ket: 1, magnitude: 0)}
@@ -21,7 +21,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
 
   test 'qubit circuit group' do
     assert_dom_equal beautify(<<~ERB), beautify(component('state_vector') { component('qubit_circle_group', size: 16) { component('qubit_circle', ket: 0, magnitude: 1) + component('qubit_circle', ket: 1, magnitude: 0) } })
-      <div class="state-vector" data-simulator-target="stateVector" data-drawn="false">
+      <div class="state-vector">
         <div class="qubit-circle-group--size16">
           #{component('qubit_circle', ket: 0, magnitude: 1)}
           #{component('qubit_circle', ket: 1, magnitude: 0)}
