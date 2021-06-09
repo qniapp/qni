@@ -1,16 +1,23 @@
 .circuit-breakpoint {
   $parent: &;
 
-  @apply relative;
-  @apply w-0;
   @apply cursor-pointer;
-
+  @apply min-h-0;
   @apply min-w-full;
-  margin-top: -#{$breakpoint-width-px / 2}px;
+  @apply relative;
+
+  @each $nqubit in $nqubits {
+    .circuit[data-nqubit="#{$nqubit}"] & {
+      @apply -mx-#{map-get($instruction-size, $nqubit) / 2};
+
+      @screen md {
+        @apply mx-0;
+      }
+    }
+  }
 
   @screen md {
-    // TODO: -my をゲートの幅の半分にする。回路の量子ビット数によって変える。
-    @apply -my-4;
+    @apply -my-#{$instruction-size-base / 2};
     @apply min-h-full;
     @apply min-w-0;
   }
@@ -23,31 +30,29 @@
     @apply absolute inset-0;
     @apply opacity-75;
     @apply z-10;
-    padding: #{$breakpoint-width-px / 2}px;
 
-    margin-top: -#{$breakpoint-width-px / 2}px;
+    margin-top: -#{$circuit-breakpoint-width-px / 2}px;
+    padding: #{$circuit-breakpoint-width-px / 2}px;
 
     @screen md {
       @apply mt-0;
-      margin-left: -#{$breakpoint-width-px / 2}px;
+      margin-left: -#{$circuit-breakpoint-width-px / 2}px;
     }
 
     .circuit-step--done:hover & {
-      @apply bg-#{$breakpoint-color-hover};
-      @apply transition duration-#{$breakpoint-transition-duration} ease-in-out;
+      @apply bg-#{$circuit-breakpoint-color-hover};
     }
 
     .circuit-step--done:active & {
-      @apply bg-#{$breakpoint-color};
+      @apply bg-#{$circuit-breakpoint-color};
     }
 
     #{$parent}--active & {
-      @apply bg-#{$breakpoint-color};
-      @apply transition duration-#{$breakpoint-transition-duration} ease-in-out;
+      @apply bg-#{$circuit-breakpoint-color};
     }
 
     .circuit-step--done:hover #{$parent}--active & {
-      @apply bg-#{$breakpoint-color};
+      @apply bg-#{$circuit-breakpoint-active-hover-color};
     }
   }
 }
