@@ -47,6 +47,8 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     instruction: "instruction",
     "instruction:state:bordered": "instruction--bordered",
     "instruction:type:qubitLabel": "qubit-label",
+    runButton: "run-button",
+    "runButton::running": "run-button--running",
   },
   attributes: {
     "draggable:x": "data-draggable-x",

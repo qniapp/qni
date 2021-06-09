@@ -1,14 +1,14 @@
 .run-button {
+  $parent: &;
+
   @apply bg-gradient-to-br from-purple-600 via-purple-700 to-blue-600;
-  @apply bottom-0 right-0;
   @apply cursor-pointer;
-  @apply fixed;
+  @apply fixed bottom-0 right-0 mr-6 mb-6;
   @apply flex justify-center items-center;
-  @apply mr-6 mb-6;
   @apply rounded-full;
   @apply shadow-lg;
-  @apply w-16 h-16;
-  @apply z-40;
+  @apply w-#{$run-button-size} h-#{$run-button-size};
+  @apply z-#{$run-button-z};
 
   &:focus {
     @apply outline-none;
@@ -19,30 +19,23 @@
   }
 
   .reload-icon {
-    @apply fill-current;
-    @apply text-white;
-    @apply w-8 h-8;
+    @apply fill-current text-white;
+    @apply w-#{$run-button-icon-size} h-#{$run-button-icon-size};
   }
 
   .oval {
-    @apply fill-current;
-    @apply text-white;
-    @apply w-8 h-8;
-  }
-
-  &:not(&--running) .oval {
+    @apply fill-current text-white;
+    @apply w-#{$run-button-icon-size} h-#{$run-button-icon-size};
     @apply hidden;
   }
 
   &--running {
-    @apply bg-purple-400;
-  }
+    .oval {
+      @apply block;
+    }
 
-  &--running .reload-icon {
-    @apply hidden;
-  }
-
-  &--running .oval {
-    @apply block;
+    .reload-icon {
+      @apply hidden;
+    }
   }
 }

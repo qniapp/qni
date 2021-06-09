@@ -3,25 +3,8 @@ import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
 import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/gates"
+import { RunButton } from "lib/simulator/runButton"
 import { Util } from "lib/base"
-
-class RunButton {
-  private element: HTMLInputElement
-
-  constructor(element: HTMLInputElement) {
-    this.element = element
-  }
-
-  set running(value: boolean) {
-    if (value) {
-      this.element.classList.add("run-button--running")
-      this.element.disabled = true
-    } else {
-      this.element.classList.remove("run-button--running")
-      this.element.disabled = false
-    }
-  }
-}
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -36,14 +19,16 @@ export default class SimulatorController extends Controller {
   private magnitudes: { [step: number]: { [bit: number]: number } } | undefined
   private phases: { [step: number]: { [bit: number]: number } } | undefined
 
-  static targets = ["circuit", "stateVector", "runButton"]
+  static targets = ["circuit", "runButton"]
 
+  declare runButton: RunButton
   declare worker: Worker
   declare readonly circuitTarget: HTMLElement
-  declare readonly stateVectorTarget: HTMLElement
   declare readonly runButtonTarget: HTMLElement
 
   connect(): void {
+    this.runButton = new RunButton(this.runButtonTarget as HTMLInputElement)
+
     this.worker = new Worker("/service-worker.js")
     this.worker.addEventListener(
       "message",
@@ -173,10 +158,6 @@ export default class SimulatorController extends Controller {
 
   private get circuit(): Circuit {
     return new Circuit()
-  }
-
-  private get runButton(): RunButton {
-    return new RunButton(this.runButtonTarget as HTMLInputElement)
   }
 
   private get circleNotationController(): CircleNotationController {
