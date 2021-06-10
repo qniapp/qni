@@ -12,6 +12,7 @@
     .draggable:hover &,
     .draggable--grabbed & {
       @screen md {
+        @apply bg-white;
         @apply border-#{$gate-hover-color};
       }
     }
@@ -53,10 +54,6 @@
   }
 
   // Disabled state
-  &.gate--disabled #{$gate-shape-class} {
-    @apply bg-transparent;
-  }
-
   &.gate--disabled #{$gate-shape-class} &__dot {
     @apply bg-#{$gate-label-color-disabled};
   }
