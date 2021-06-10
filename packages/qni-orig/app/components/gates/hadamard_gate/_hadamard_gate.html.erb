@@ -3,7 +3,4 @@
 <%= tag.div class: hadamard_gate.klass, data: hadamard_gate.data do %>
   <%= wires wireable: false %>
   <%= gate_shape label: hadamard_icon, type: 'square', fill: true %>
-  <%= gate_label text: hadamard_gate.label_text %>
-  <%= gate_label text: hadamard_gate.label_text, bottom: true %>
-  <%= gate_popup label: 'if', error_message: 'if の値が正しくありません' %>
 <% end %>

@@ -3,7 +3,4 @@
 <%= tag.div class: root_not_gate.klass, data: root_not_gate.data do %>
   <%= wires wireable: false %>
   <%= gate_shape label: root_not_icon, type: 'square', fill: true %>
-  <%= gate_label text: root_not_gate.label_text %>
-  <%= gate_label text: root_not_gate.label_text, bottom: true %>
-  <%= gate_popup label: 'if', error_message: 'if の値が正しくありません' %>
 <% end %>

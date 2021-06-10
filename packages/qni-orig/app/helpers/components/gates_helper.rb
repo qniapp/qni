@@ -29,7 +29,7 @@ module Components::GatesHelper
     component 'gates/write_gate', value: value
   end
 
-  def readout(set: nil)
-    component 'gates/readout_gate', set: set
+  def readout(*options)
+    component 'gates/readout_gate', *options
   end
 end

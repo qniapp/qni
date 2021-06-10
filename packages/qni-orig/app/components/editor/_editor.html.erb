@@ -2,8 +2,11 @@
 
 <div id="editor"
      class="editor relative h-full"
-     data-controller="editor"
+     data-controller="editor gate-popup"
      data-action="circuitUpdateEvent->editor#onCircuitUpdate"
      data-editor-max-nqubit="<%= Qni::MAX_NQUBIT %>">
   <%= editor.content %>
+  <%= gate_popup type: 'theta', label: 'theta', error_message: 'theta の値が正しくありません' %>
+  <%= gate_popup type: 'if', label: 'if', error_message: 'if の値が正しくありません' %>
+  <%= gate_popup type: 'set', label: 'set', error_message: 'set の値が正しくありません' %>
 </div>

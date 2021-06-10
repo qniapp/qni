@@ -1,10 +1,12 @@
 require 'component'
 require 'concerns/connectable'
+require 'concerns/popuppable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
 class Gates::PhaseGateComponent < Component
   include Connectable
+  include Popuppable
   include Targetable
   include Wireable
 
@@ -21,16 +23,16 @@ class Gates::PhaseGateComponent < Component
   def data
     h = if targets.empty?
           if theta
-            { theta: theta_pi }
+            { theta: theta_pi, 'gate-label': theta }
           else
             {}
           end
         elsif theta
-          { theta: theta_pi, targets: targets.join(',') }
+          { theta: theta_pi, 'gate-label': theta, targets: targets.join(',') }
         else
           { targets: targets.join(',') }
         end
-    h.merge({ controller: 'gate-popup' })
+    h.merge(data_popup)
   end
 
   def connected_with_upper_bit?
@@ -49,5 +51,9 @@ class Gates::PhaseGateComponent < Component
 
   def theta_pi
     theta.gsub 'π', 'pi'
+  end
+
+  def popup_type
+    :theta
   end
 end

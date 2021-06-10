@@ -14,17 +14,17 @@
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
       <%= draggable palette: true do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate popup: false %>
       <% end %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
       <%= draggable palette: true do %>
-        <%= not_gate %>
+        <%= not_gate popup: false %>
       <% end %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
       <%= draggable palette: true do %>
-        <%= phase_gate theta: 'π/2' %>
+        <%= phase_gate theta: 'π/2', popup: false %>
       <% end %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
@@ -39,12 +39,12 @@
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
       <%= draggable palette: true do %>
-        <%= root_not_gate %>
+        <%= root_not_gate popup: false %>
       <% end %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
       <%= draggable palette: true do %>
-        <%= readout %>
+        <%= readout popup: false %>
       <% end %>
     <% end %>
   <% end %>

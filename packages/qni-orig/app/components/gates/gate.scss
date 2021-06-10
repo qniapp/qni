@@ -23,6 +23,115 @@
     }
   }
 
+  .draggable--palette &::before,
+  &.connectable--lower-bit::before {
+    @apply hidden;
+  }
+
+  &::before {
+    @apply absolute;
+    @apply flex items-center justify-center;
+    @apply font-mono;
+    @apply leading-none;
+    @apply text-gray-600;
+    @apply whitespace-nowrap;
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply h-full;
+        @apply top-0 left-0;
+        @apply ml-#{map-get($instruction-size, $nqubit) + 1};
+        @apply text-#{map-get($gate-label-font-size, $nqubit)};
+        @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
+
+        writing-mode: vertical-lr;
+
+        @screen md {
+          @apply bottom-0;
+          @apply h-auto;
+          @apply mb-#{$instruction-size-base};
+          @apply ml-0;
+          @apply text-xs;
+          @apply transform rotate-0;
+          @apply w-full;
+
+          top: unset;
+          writing-mode: horizontal-tb;
+        }
+      }
+
+      .circuit-preview .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply bottom-0;
+        @apply h-auto;
+        @apply mb-#{$instruction-size-base};
+        @apply ml-0;
+        @apply text-xs;
+        @apply transform rotate-0;
+        @apply w-full;
+
+        top: unset;
+        writing-mode: horizontal-tb;
+      }
+    }
+
+    content: attr(data-gate-label) "";
+  }
+
+  .draggable--palette &::after,
+  &.connectable--upper-bit::after,
+  &:not(.connectable--upper-bit):not(.connectable--lower-bit)::after {
+    @apply hidden;
+  }
+
+  &::after {
+    @apply absolute;
+    @apply flex items-center justify-center;
+    @apply font-mono;
+    @apply leading-none;
+    @apply text-gray-600;
+    @apply whitespace-nowrap;
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply h-full;
+        @apply mr-#{map-get($instruction-size, $nqubit)};
+        @apply bottom-0 right-0;
+        @apply text-#{map-get($gate-label-font-size, $nqubit)};
+        @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)} origin-top;
+
+        writing-mode: vertical-lr;
+
+        @screen md {
+          @apply h-auto;
+          @apply mr-0;
+          @apply mt-#{$instruction-size-base};
+          @apply text-xs;
+          @apply top-0;
+          @apply transform rotate-0;
+          @apply w-full;
+
+          bottom: unset;
+          writing-mode: horizontal-tb;
+        }
+      }
+
+      .circuit-preview .circuit[data-nqubit="#{$nqubit}"] & {
+        @apply h-auto;
+        @apply mr-0;
+        @apply mt-#{$instruction-size-base};
+        @apply text-xs;
+        @apply top-0;
+        @apply transform rotate-0;
+        @apply w-full;
+
+        bottom: unset;
+        writing-mode: horizontal-tb;
+      }
+    }
+
+    content: attr(data-gate-label) "";
+  }
+
   .palette & {
     @screen md {
       @include box-md;

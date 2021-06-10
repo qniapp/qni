@@ -1,9 +1,17 @@
-import { Instructionable } from "./mixins"
+import { Disableable, Ifable, Instructionable, Popuppable } from "./mixins"
 import { Mixin } from "ts-mixer"
 
-export type RootNotGateInstruction = { type: "root-not-gate" }
+export type RootNotGateInstruction = {
+  type: "root-not-gate"
+  if: string | null
+}
 
-export class RootNotGate extends Mixin(Instructionable) {
+export class RootNotGate extends Mixin(
+  Disableable,
+  Ifable,
+  Instructionable,
+  Popuppable,
+) {
   static create(element: Element): RootNotGate {
     const rootNotGate = new RootNotGate()
     rootNotGate.assignElement(element)
@@ -11,7 +19,7 @@ export class RootNotGate extends Mixin(Instructionable) {
   }
 
   serialize(): RootNotGateInstruction {
-    return { type: "root-not-gate" }
+    return { type: "root-not-gate", if: this.if }
   }
 
   assignElement(element: Element): void {
