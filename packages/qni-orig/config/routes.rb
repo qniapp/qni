@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :circuits, only: %i[index show]
   resources :circuit_previews, only: :show
+  get 'circle_notations', to: 'circle_notations#show'
 
   resources :styleguide, only: :index
 
