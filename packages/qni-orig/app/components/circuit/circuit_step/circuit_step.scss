@@ -4,6 +4,8 @@
   @apply flex items-stretch flex-col justify-center items-center;
   @apply cursor-pointer;
 
+  -webkit-tap-highlight-color: theme("colors.transparent");
+
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {
       @apply -mx-#{map-get($instruction-size, $nqubit) / 2} px-#{map-get($instruction-size, $nqubit) / 2};

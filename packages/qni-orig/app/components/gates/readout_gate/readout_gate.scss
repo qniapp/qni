@@ -25,8 +25,10 @@
     }
 
     .draggable:hover & {
-      @apply bg-white;
-      @apply border-#{$gate-hover-color};
+      @screen md {
+        @apply bg-white;
+        @apply border-#{$gate-hover-color};
+      }
     }
 
     // Reference for coordinates during dragging
