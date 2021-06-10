@@ -3,7 +3,4 @@
 <%= tag.div class: phase_gate.klass, data: phase_gate.data do %>
   <%= wires wireable: false %>
   <%= gate_shape label: phi_icon, type: 'circle', fill: true %>
-  <%= gate_label text: phase_gate.theta %>
-  <%= gate_label text: phase_gate.theta, bottom: true %>
-  <%= gate_popup label: 'theta', error_message: 'theta の値が正しくありません' %>
 <% end %>

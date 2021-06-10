@@ -1,7 +1,0 @@
-<% label = local_assigns.fetch(:label) %>
-
-<%= tag.div(label.text,
-            class: class_string('gate__label',
-                                'gate__label--top' => label.top?,
-                                'gate__label--bottom' => label.bottom?),
-            data: label.data) %>

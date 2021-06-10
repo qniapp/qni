@@ -4,7 +4,7 @@
 
   @screen md {
     @apply flex-row;
-    @apply mt-32;
+    @apply mt-40;
   }
 
   @each $nqubit in $nqubits {

@@ -13,8 +13,6 @@ class Components::RwHelperTest < ActionView::TestCase
           #{ket_icon}
           <div class="gate__shape-label"></div>
         </div>
-        <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
-        <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
       </div>
     ERB
   end
@@ -26,27 +24,16 @@ class Components::RwHelperTest < ActionView::TestCase
           #{ket_icon}
           <div class="gate__shape-label"></div>
         </div>
-        <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
-        <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
       </div>
     ERB
   end
 
   test 'readout' do
     assert_dom_equal beautify(<<~ERB), beautify(readout)
-      <div class="gate readout-gate" data-controller="gate-popup">
+      <div class="gate readout-gate" data-gate-popup-target="gate" data-gate-popup-type="set">
         <div class="gate__shape gate__shape--square">
           #{ket_icon}
           <div class="gate__shape-label"></div>
-        </div>
-        <div class="gate__label gate__label--top" data-target="gate-popup.topLabel"></div>
-        <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel"></div>
-        <div class="gate-popup hidden" data-gate-popup-target="content">
-          <div class="flex flex-col px-2 py-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">set</label>
-            <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">setの値が正しくありません</p>
-          </div>
         </div>
       </div>
     ERB
@@ -54,19 +41,10 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
-      <div class="gate readout-gate" data-set="alice_v" data-controller="gate-popup">
+      <div class="gate readout-gate" data-set="alice_v" data-gate-label="alice_v" data-gate-popup-target="gate" data-gate-popup-type="set">
         <div class="gate__shape gate__shape--square">
           #{ket_icon}
           <div class="gate__shape-label"></div>
-        </div>
-        <div class="gate__label gate__label--top" data-target="gate-popup.topLabel">alice_v</div>
-        <div class="gate__label gate__label--bottom" data-target="gate-popup.bottomLabel">alice_v</div>
-        <div class="gate-popup hidden" data-gate-popup-target="content">
-          <div class="flex flex-col px-2 py-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">set</label>
-            <input class="gate-popup__input" type="text">
-            <p class="gate-popup__input-error invisible">setの値が正しくありません</p>
-          </div>
         </div>
       </div>
     ERB

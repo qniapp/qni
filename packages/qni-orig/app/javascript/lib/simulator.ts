@@ -78,6 +78,12 @@ export class Simulator {
         }
         return
       } else if (each.type === "root-not-gate") {
+        if (each.if) {
+          if (this.flags[each.if]) {
+            this.rnot(bit)
+          }
+          return
+        }
         this.rnot(bit)
         return
       } else if (each.type === "up-gate" && each.controls.length > 0) {

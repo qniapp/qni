@@ -1,8 +1,10 @@
 require 'component'
+require 'concerns/popuppable'
 require 'concerns/wireable'
 
 class Gates::RootNotGateComponent < Component
   include Ifable
+  include Popuppable
   include Wireable
 
   def klass
@@ -12,7 +14,10 @@ class Gates::RootNotGateComponent < Component
   end
 
   def data
-    { if: self.if, controller: 'gate-popup' }
+    { if: self.if,
+      'gate-label': label_text,
+      'gate-popup-target': popup && 'gate',
+      'gate-popup-type': 'if' }
   end
 
   def label_text

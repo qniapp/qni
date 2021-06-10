@@ -2,7 +2,12 @@ import CircleNotationController from "./circle_notation_controller"
 import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
-import { HadamardGate, NotGate, ReadoutGate } from "lib/editor/gates"
+import {
+  HadamardGate,
+  NotGate,
+  ReadoutGate,
+  RootNotGate,
+} from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
 import { Util } from "lib/base"
 
@@ -54,7 +59,11 @@ export default class SimulatorController extends Controller {
           }
 
           step.instructions.forEach((each) => {
-            if (each instanceof NotGate || each instanceof HadamardGate) {
+            if (
+              each instanceof NotGate ||
+              each instanceof HadamardGate ||
+              each instanceof RootNotGate
+            ) {
               if (each.if) {
                 each.disabled = !data.flags[each.if]
               }
