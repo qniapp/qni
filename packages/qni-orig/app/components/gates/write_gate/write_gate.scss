@@ -1,4 +1,6 @@
 .write-gate {
+  $parent: &;
+
   $gate-shape-class: ".gate__shape";
   $gate-shape-label-class: ".gate__shape-label";
 
@@ -33,6 +35,7 @@
 
     // Reference for coordinates during dragging
     .draggable--source & {
+      @apply bg-white;
       @apply border-#{$gate-source-color};
     }
 
@@ -40,11 +43,6 @@
     .draggable--shadow & {
       @apply bg-white;
       @apply border-#{$gate-hover-color};
-    }
-
-    .instruction--bordered & {
-      @apply bg-white;
-      @apply border-#{$gate-border-color};
     }
 
     svg {
@@ -90,5 +88,10 @@
 
   &[data-value="1"] #{$gate-shape-label-class}::after {
     content: "1";
+  }
+
+  &.instruction--bordered #{$gate-shape-class} {
+    @apply bg-white;
+    @apply border-#{$gate-border-color};
   }
 }
