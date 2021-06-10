@@ -3,32 +3,33 @@
 
   @apply rounded;
 
+  #{$gate-shape-class} {
+    @apply border-#{$gate-border-width} border-transparent rounded;
+
+    .draggable:not(.draggable--source):hover &,
+    .draggable--grabbed {
+      @screen md {
+        @apply bg-white;
+        @apply border-#{$gate-hover-color};
+      }
+    }
+
+    // Reference for coordinates during dragging
+    .draggable--source & {
+      @apply border-#{$gate-source-color};
+    }
+
+    // Placeholder to display when it is droppable
+    .draggable--shadow & {
+      @apply bg-white;
+      @apply border-#{$gate-shadow-color};
+    }
+  }
+
   #{$gate-shape-class} svg {
     @apply stroke-3;
     @apply stroke-current;
     @apply text-#{$gate-color};
-  }
-
-  &::before {
-    @screen md {
-      @apply absolute inset-0;
-      @apply border-#{$gate-border-width} border-transparent rounded;
-      @apply w-full h-full;
-      content: "";
-    }
-  }
-
-  .draggable:not(.draggable--source):hover &::before {
-    @screen md {
-      @apply bg-white;
-      @apply border-#{$gate-hover-color};
-    }
-  }
-
-  .draggable:not(.draggable--source):hover & #{$gate-shape-class}--square {
-    @screen md {
-      @apply bg-transparent;
-    }
   }
 
   .draggable:not(.draggable--source):hover & #{$gate-shape-class} svg {
@@ -37,23 +38,12 @@
     }
   }
 
-  // Reference for coordinates during dragging
-  .draggable--source &::before {
-    @apply border-#{$gate-source-color};
-  }
-
   .draggable--source & #{$gate-shape-class} {
     @apply bg-transparent;
   }
 
   .draggable--source & #{$gate-shape-class} svg {
     @apply text-#{$gate-source-color};
-  }
-
-  // Placeholder to display when it is droppable
-  .draggable--shadow &::before {
-    @apply bg-white;
-    @apply border-#{$gate-shadow-color};
   }
 
   .draggable--shadow & #{$gate-shape-class} svg {
@@ -69,7 +59,7 @@
     @apply text-#{$gate-label-color-disabled};
   }
 
-  &.instruction--bordered::before {
+  &.instruction--bordered #{$gate-shape-class} {
     @apply bg-white;
     @apply border-#{$gate-border-color};
   }

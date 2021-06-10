@@ -343,7 +343,7 @@ export class Editor {
     const controllableGates = circuitStep.controllableGates
     if (controlGates.length == 0) return
 
-    if (controllableGates.length == 0 && controlGates.length == 0) {
+    if (controllableGates.length == 0 && controlGates.length <= 1) {
       controlGates.forEach((each) => {
         each.targets = []
         each.connectWith([])
