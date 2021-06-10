@@ -7,15 +7,31 @@ import tippy, {
 } from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
+import Rails from "rails-ujs"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
+
+  declare loaded: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
   declare tippyInstances: Instance<Props>[]
   declare tippySingleton: CreateSingletonInstance<CreateSingletonProps<Props>>
   declare popupEl: HTMLElement
 
   connect(): void {
+    this.loaded = false
+  }
+
+  disconnect(): void {
+    if (!this.loaded) return
+
+    this.tippyInstances.forEach((each) => {
+      each.destroy()
+    })
+    this.tippySingleton.destroy()
+  }
+
+  private initPopup(): void {
     this.popupEl = document.getElementById("qubit-circle-popup") as HTMLElement
     Util.notNull(this.popupEl)
 
@@ -26,13 +42,6 @@ export default class CircleNotationController extends Controller {
       delay: 1000,
       moveTransition: "transform 0.2s ease-out",
     })
-  }
-
-  disconnect(): void {
-    this.tippyInstances.forEach((each) => {
-      each.destroy()
-    })
-    this.tippySingleton.destroy()
   }
 
   incrementNqubit(): void {
@@ -59,6 +68,27 @@ export default class CircleNotationController extends Controller {
   }
 
   update(
+    magnitudes: { [bit: number]: number },
+    phases: { [bit: number]: number },
+  ): void {
+    if (this.loaded) {
+      this.updateQubitCircles(magnitudes, phases)
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      Rails.ajax({
+        type: "GET",
+        url: "/circle_notations",
+        dataType: "script",
+        success: () => {
+          this.initPopup()
+          this.loaded = true
+          this.updateQubitCircles(magnitudes, phases)
+        },
+      })
+    }
+  }
+
+  private updateQubitCircles(
     magnitudes: { [bit: number]: number },
     phases: { [bit: number]: number },
   ): void {

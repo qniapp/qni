@@ -7,39 +7,30 @@
   --balloon-color: theme("colors.indigo.500");
   --balloon-font-size: theme("fontSize.xs");
 
-  svg {
+  &__border {
+    @apply rounded-full;
+    @apply border-#{$qubit-circle-border-color};
+
+    #{$parent}:hover & {
+      @apply border-#{$qubit-circle-border-hover-color};
+    }
+
+    #{$parent}[data-magnitude="0.00000"] & {
+      @apply border-#{$qubit-circle-border-inactive-color};
+    }
+
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @apply border-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
         @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
         @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 
         @screen md {
+          @apply border-#{map-get($qubit-circle-border-width, $nqubit)};
           @apply h-#{map-get($qubit-circle-size, $nqubit)};
           @apply w-#{map-get($qubit-circle-size, $nqubit)};
         }
       }
-    }
-  }
-
-  &__border {
-    @apply text-#{$qubit-circle-border-color};
-
-    #{$parent}:hover & {
-      @apply text-#{$qubit-circle-border-hover-color};
-    }
-
-    @each $nqubit in $nqubits {
-      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @apply stroke-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
-
-        @screen md {
-          @apply stroke-#{map-get($qubit-circle-border-width, $nqubit)};
-        }
-      }
-    }
-
-    #{$parent}[data-magnitude="0.00000"] & {
-      @apply text-#{$qubit-circle-border-inactive-color};
     }
   }
 
