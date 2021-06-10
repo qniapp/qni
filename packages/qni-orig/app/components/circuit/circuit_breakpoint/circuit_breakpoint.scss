@@ -40,7 +40,9 @@
     }
 
     .circuit-step--done:hover & {
-      @apply bg-#{$circuit-breakpoint-color-hover};
+      @screen md {
+        @apply bg-#{$circuit-breakpoint-color-hover};
+      }
     }
 
     .circuit-step--done:active & {
@@ -52,7 +54,9 @@
     }
 
     .circuit-step--done:hover #{$parent}--active & {
-      @apply bg-#{$circuit-breakpoint-active-hover-color};
+      @screen md {
+        @apply bg-#{$circuit-breakpoint-active-hover-color};
+      }
     }
   }
 }

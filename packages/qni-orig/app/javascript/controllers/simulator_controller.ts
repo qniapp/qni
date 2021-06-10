@@ -9,7 +9,7 @@ import {
   RootNotGate,
 } from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
-import { Util } from "lib/base"
+import { Breakpoint, Util } from "lib/base"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -75,7 +75,7 @@ export default class SimulatorController extends Controller {
 
           step.done = true
         } else if (data.type === "finish") {
-          this.gotoBreakpoint(this.breakpoint || 0)
+          this.gotoCircuitBreakpoint(this.circuitBreakpoint || 0)
           this.runButton.running = false
         }
       }).bind(this),
@@ -90,28 +90,32 @@ export default class SimulatorController extends Controller {
     return parseInt(dataNqubit)
   }
 
-  get breakpoint(): number | null {
-    let breakpoint = null
+  get circuitBreakpoint(): number | null {
+    let circuitBreakpoint = null
     this.circuit.steps.forEach((each, i) => {
-      if (each.isActive()) breakpoint = i
+      if (each.isActive()) circuitBreakpoint = i
     })
-    return breakpoint
+    return circuitBreakpoint
   }
 
-  gotoBreakpoint(stepIndex: number): void {
+  gotoCircuitBreakpoint(stepIndex: number): void {
     this.toggleCircuitStepActive(stepIndex)
     this.drawStateVector(stepIndex)
   }
 
   circuitStepMouseEntered(event: MouseEvent): void {
+    if (Breakpoint.isMobile()) return
+
     const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
     this.drawStateVector(circuitStep.index)
   }
 
   circuitStepMouseLeave(): void {
-    const breakpoint = this.breakpoint
-    if (breakpoint === null) return
-    this.drawStateVector(breakpoint)
+    if (Breakpoint.isMobile()) return
+
+    const circuitBreakpoint = this.circuitBreakpoint
+    if (circuitBreakpoint === null) return
+    this.drawStateVector(circuitBreakpoint)
   }
 
   circuitStepClicked(event: MouseEvent): void {
@@ -120,7 +124,7 @@ export default class SimulatorController extends Controller {
     if (!circuitStep.isDone) {
       return
     }
-    this.gotoBreakpoint(circuitStep.index)
+    this.gotoCircuitBreakpoint(circuitStep.index)
   }
 
   toggleCircuitStepActive(stepIndex: number): void {
@@ -153,12 +157,12 @@ export default class SimulatorController extends Controller {
     })
   }
 
-  private drawStateVector(breakpoint: number): void {
+  private drawStateVector(circuitBreakpoint: number): void {
     Util.notNull(this.magnitudes)
     Util.notNull(this.phases)
 
-    const magnitudes = this.magnitudes[breakpoint]
-    const phases = this.phases[breakpoint]
+    const magnitudes = this.magnitudes[circuitBreakpoint]
+    const phases = this.phases[circuitBreakpoint]
     if (!magnitudes) return
     if (!phases) return
 
