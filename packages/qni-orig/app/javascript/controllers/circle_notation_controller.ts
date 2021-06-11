@@ -38,9 +38,10 @@ export default class CircleNotationController extends Controller {
     this.tippyInstances = tippy(this.qubitCircleTargets)
     this.tippySingleton = createSingleton(this.tippyInstances, {
       allowHTML: true,
-      theme: "qni",
+      animation: false,
       delay: 1000,
       moveTransition: "transform 0.2s ease-out",
+      theme: "qni",
     })
   }
 
