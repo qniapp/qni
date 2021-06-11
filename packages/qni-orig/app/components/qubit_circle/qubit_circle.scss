@@ -37,6 +37,8 @@
   &__phase {
     @apply origin-center;
     @apply text-#{$qubit-circle-phase-color};
+    @apply transition-transform;
+    will-change: transform;
 
     #{$parent}:hover & {
       @apply text-#{$qubit-circle-phase-hover-color};
@@ -70,13 +72,15 @@
   &__magnitude {
     @apply origin-center;
     @apply text-#{$qubit-circle-magnitude-color};
+    @apply transition-transform;
+    will-change: transform;
 
     #{$parent}:hover & {
       @apply text-#{$qubit-circle-magnitude-hover-color};
     }
 
     #{$parent}[data-magnitude="0.00000"] & {
-      @apply hidden;
+      @apply transform scale-0;
     }
 
     #{$parent}[data-magnitude="1.00000"] & {
