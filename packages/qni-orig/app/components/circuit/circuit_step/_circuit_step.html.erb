@@ -3,7 +3,7 @@
 <%= tag.div class: class_string('circuit-step',
                                 'circuit-step--shadow' => circuit_step.shadow?,
                                 'circuit-step--shadow-source' => circuit_step.shadow_source?),
-            data: { action: 'mouseenter->simulator#circuitStepMouseEntered mouseleave->simulator#circuitStepMouseLeave click->simulator#circuitStepClicked',
+            data: { action: 'mouseenter->simulator#circuitStepMouseEntered:passive mouseleave->simulator#circuitStepMouseLeave:passive click->simulator#circuitStepClicked:passive',
                     target: 'circuit.step simulator.circuitStep' } do %>
   <div class="circuit-step__body">
     <%= circuit_step.content %>

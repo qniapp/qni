@@ -18,9 +18,9 @@ class Circuit::DraggableComponent < Component
   end
 
   def data
-    { action: 'mouseover->editor#onDraggableMouseOver ' \
-              'mousedown->editor#onDraggableMouseDown ' \
-              'mouseup->editor#onDraggableMouseUp' }
+    { action: 'mouseover->editor#onDraggableMouseOver:passive ' \
+              'mousedown->editor#onDraggableMouseDown:passive ' \
+              'mouseup->editor#onDraggableMouseUp:passive' }
   end
 
   private
