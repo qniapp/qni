@@ -60,7 +60,7 @@
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 0, theta: 'π/4' %>
+          <%= phase_gate bit: 0, phi: 'π/4' %>
         <% end %>
       <% end %>
       <%= dropzone %>
@@ -71,7 +71,7 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 1, theta: 'π/2' %>
+          <%= phase_gate bit: 1, phi: 'π/2' %>
         <% end %>
       <% end %>
       <%= dropzone %>
@@ -82,7 +82,7 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 2, theta: 'π' %>
+          <%= phase_gate bit: 2, phi: 'π' %>
         <% end %>
       <% end %>
       <%= dropzone %>
@@ -112,12 +112,12 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 2, theta: '-π/2', targets: [2, 3] %>
+          <%= phase_gate bit: 2, phi: '-π/2', targets: [2, 3] %>
         <% end %>
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 3, theta: '-π/2', targets: [2, 3] %>
+          <%= phase_gate bit: 3, phi: '-π/2', targets: [2, 3] %>
         <% end %>
       <% end %>
     <% end %>
@@ -125,27 +125,27 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 1, theta: '-π/4', targets: [1, 3] %>
+          <%= phase_gate bit: 1, phi: '-π/4', targets: [1, 3] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 3, theta: '-π/4', targets: [1, 3] %>
+          <%= phase_gate bit: 3, phi: '-π/4', targets: [1, 3] %>
         <% end %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 0, theta: '-π/8', targets: [0, 3] %>
+          <%= phase_gate bit: 0, phi: '-π/8', targets: [0, 3] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 3, theta: '-π/8', targets: [0, 3] %>
+          <%= phase_gate bit: 3, phi: '-π/8', targets: [0, 3] %>
         <% end %>
       <% end %>
     <% end %>
@@ -163,12 +163,12 @@
       <%= dropzone %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 1, theta: '-π/2', targets: [1, 2] %>
+          <%= phase_gate bit: 1, phi: '-π/2', targets: [1, 2] %>
         <% end %>
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 2, theta: '-π/2', targets: [1, 2] %>
+          <%= phase_gate bit: 2, phi: '-π/2', targets: [1, 2] %>
         <% end %>
       <% end %>
       <%= dropzone %>
@@ -176,13 +176,13 @@
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 0, theta: '-π/4', targets: [0, 2] %>
+          <%= phase_gate bit: 0, phi: '-π/4', targets: [0, 2] %>
         <% end %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 2, theta: '-π/4', targets: [0, 2] %>
+          <%= phase_gate bit: 2, phi: '-π/4', targets: [0, 2] %>
         <% end %>
       <% end %>
       <%= dropzone %>
@@ -200,12 +200,12 @@
     <%= circuit_step do %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 0, theta: '-π/2', targets: [0, 1] %>
+          <%= phase_gate bit: 0, phi: '-π/2', targets: [0, 1] %>
         <% end %>
       <% end %>
       <%= dropzone do %>
         <%= draggable do %>
-          <%= phase_gate bit: 1, theta: '-π/2', targets: [0, 1] %>
+          <%= phase_gate bit: 1, phi: '-π/2', targets: [0, 1] %>
         <% end %>
       <% end %>
       <%= dropzone %>

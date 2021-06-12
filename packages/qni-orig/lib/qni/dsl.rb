@@ -123,7 +123,7 @@ module Qni
 
       @time_evolution <<
         if targets.is_a?(String)
-          [:phase_all, { theta: targets }]
+          [:phase_all, { phi: targets }]
         else
           p_opts.empty? ? [:phase, targets] : [:phase, targets, p_opts]
         end

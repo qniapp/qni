@@ -161,7 +161,7 @@ module Qni
           if targets.key?(bit)
             dropzone do
               draggable do
-                phase_gate bit: bit, theta: targets[bit]
+                phase_gate bit: bit, phi: targets[bit]
               end
             end
           else
@@ -205,7 +205,7 @@ module Qni
     # rubocop:disable Metrics/MethodLength
     def cphase(targets)
       controls = targets.keys.first
-      theta = targets.values.first
+      phi = targets.values.first
 
       # rubocop:disable Metrics/BlockLength
       circuit_step do
@@ -221,7 +221,7 @@ module Qni
           end
 
           if controls.include?(bit)
-            if theta == 'π'
+            if phi == 'π'
               dropzone(wire_active: @wire_active[bit]) do
                 draggable do
                   control_gate bit: bit, targets: controls, controls: controls
@@ -230,7 +230,7 @@ module Qni
             else
               dropzone(wire_active: @wire_active[bit]) do
                 draggable do
-                  phase_gate bit: bit, theta: theta, targets: controls
+                  phase_gate bit: bit, phi: phi, targets: controls
                 end
               end
             end

@@ -1,4 +1,4 @@
-import { Instructionable, Popuppable, Valueable } from "./mixins"
+import { Instructionable, Valueable } from "./mixins"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { attributeNameFor } from "lib/base"
@@ -9,7 +9,7 @@ export type ReadoutInstruction = {
   set: string | null
 }
 
-export class ReadoutGate extends Mixin(Instructionable, Popuppable, Valueable) {
+export class ReadoutGate extends Mixin(Instructionable, Valueable) {
   static create(element: Element): ReadoutGate {
     const readoutGate = new ReadoutGate()
     readoutGate.assignElement(element)

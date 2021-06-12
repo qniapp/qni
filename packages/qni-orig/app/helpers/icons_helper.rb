@@ -26,4 +26,8 @@ module IconsHelper
   def ket_icon
     render 'components/icons/ket'
   end
+
+  def exclamation_circle_icon
+    render 'components/icons/exclamation_circle_icon'
+  end
 end

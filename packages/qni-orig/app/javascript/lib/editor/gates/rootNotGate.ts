@@ -1,4 +1,4 @@
-import { Disableable, Ifable, Instructionable, Popuppable } from "./mixins"
+import { Disableable, Ifable, Instructionable } from "./mixins"
 import { Mixin } from "ts-mixer"
 
 export type RootNotGateInstruction = {
@@ -6,12 +6,7 @@ export type RootNotGateInstruction = {
   if: string | null
 }
 
-export class RootNotGate extends Mixin(
-  Disableable,
-  Ifable,
-  Instructionable,
-  Popuppable,
-) {
+export class RootNotGate extends Mixin(Disableable, Ifable, Instructionable) {
   static create(element: Element): RootNotGate {
     const rootNotGate = new RootNotGate()
     rootNotGate.assignElement(element)

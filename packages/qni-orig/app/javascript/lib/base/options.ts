@@ -32,7 +32,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "qubitLabel:value": "qubit-label__value",
     gate: "gate",
     "gate:mixin:ifable": "gate--ifable",
-    "gate:mixin:thetable": "gate--thetable",
+    "gate:mixin:phiable": "gate--phiable",
     "gate:state:disabled": "gate--disabled",
     "gate:type:control": "control-gate",
     "gate:type:down": "down-gate",
@@ -57,7 +57,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:if": "data-if",
     "instruction:set": "data-set",
     "instruction:controls": "data-controls",
-    "instruction:theta": "data-theta",
+    "instruction:phi": "data-phi",
   },
 }
 
