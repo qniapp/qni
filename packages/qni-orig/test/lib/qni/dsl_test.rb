@@ -183,7 +183,7 @@ class DslTest
         phase 'π/2'
       DSL
 
-      assert_equal [:phase_all, { theta: 'π/2' }], dsl[0]
+      assert_equal [:phase_all, { phi: 'π/2' }], dsl[0]
     end
 
     test "phase 0 => 'π/2', 1 => '-π/2'" do

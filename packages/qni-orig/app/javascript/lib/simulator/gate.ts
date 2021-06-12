@@ -29,12 +29,12 @@ export class Gate {
     ) as Matrix
   }
 
-  static PHASE(theta: string): Matrix {
-    const pi = parse(theta).evaluate() as number
+  static PHASE(phi: string): Matrix {
+    const pi = parse(phi).evaluate() as number
 
     return matrix([
       [1, 0],
-      [0, (complex(cos(pi), sin(pi)) as unknown) as number],
+      [0, complex(cos(pi), sin(pi)) as unknown as number],
     ])
   }
 

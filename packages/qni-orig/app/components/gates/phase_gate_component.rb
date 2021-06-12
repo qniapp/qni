@@ -10,10 +10,10 @@ class Gates::PhaseGateComponent < Component
   include Targetable
   include Wireable
 
-  attribute :theta
+  attribute :phi
 
   def klass
-    class_string('gate', 'gate--thetable',
+    class_string('gate', 'gate--phiable',
                  'phase-gate',
                  'connectable--upper-bit' => connected_with_upper_bit?,
                  'connectable--lower-bit' => connected_with_lower_bit?,
@@ -22,13 +22,13 @@ class Gates::PhaseGateComponent < Component
 
   def data
     h = if targets.empty?
-          if theta
-            { theta: theta_pi, 'gate-label': theta }
+          if phi
+            { phi: phi_pi, 'gate-label': phi }
           else
             {}
           end
-        elsif theta
-          { theta: theta_pi, 'gate-label': theta, targets: targets.join(',') }
+        elsif phi
+          { phi: phi_pi, 'gate-label': phi, targets: targets.join(',') }
         else
           { targets: targets.join(',') }
         end
@@ -49,11 +49,11 @@ class Gates::PhaseGateComponent < Component
 
   private
 
-  def theta_pi
-    theta.gsub 'π', 'pi'
+  def phi_pi
+    phi.gsub 'π', 'pi'
   end
 
   def popup_type
-    :theta
+    :phi
   end
 end

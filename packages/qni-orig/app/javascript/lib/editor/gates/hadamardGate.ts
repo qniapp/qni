@@ -4,7 +4,6 @@ import {
   Disableable,
   Ifable,
   Instructionable,
-  Popuppable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
 
@@ -20,7 +19,6 @@ export class HadamardGate extends Mixin(
   Disableable,
   Ifable,
   Instructionable,
-  Popuppable,
 ) {
   static create(element: Element): HadamardGate {
     const hadamardGate = new HadamardGate()

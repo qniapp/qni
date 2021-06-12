@@ -8,52 +8,58 @@ export default class GatePopupController extends Controller {
   static targets = ["gate"]
   declare readonly gateTargets: HTMLElement[]
 
-  private popup: Instance<Props> | undefined
-
-  connect(): void {
-    this.gateTargets.forEach((each) => {
-      each.addEventListener("ShowGatePopupEvent", this.show.bind(this))
-    })
-  }
+  private popup: Instance<Props> | null | undefined
 
   disconnect(): void {
-    this.gateTargets.forEach((each) => {
-      each.removeEventListener("ShowGatePopupEvent", this.show.bind(this))
-    })
     this.popup?.destroy()
   }
 
-  show(ev: CustomEvent): void {
+  show(element: HTMLElement): void {
     if (Breakpoint.isMobile()) return
-
-    const element = ev.target as HTMLElement
-    Util.notNull(element)
+    if (element.dataset.gatePopupType === undefined) return
 
     this.popup = tippy(element, {
       allowHTML: true,
       content: this.popupHtml(element),
-      duration: [0, 0],
-      theme: "light-border",
+      theme: "qni",
     })
     this.popup.show()
 
-    if (this.isSettable && this.set) this.input.value = this.set
-    if (this.isIfable && this.if) this.input.value = this.if
-    if (this.isThetable && this.theta) this.input.value = this.theta
+    if (this.originalValue !== null) this.input.value = this.originalValue
     this.input.addEventListener("keydown", this.inputKeydown.bind(this))
     this.input.focus()
   }
 
+  hide(): void {
+    if (Breakpoint.isMobile()) return
+
+    this.popup?.hide()
+    this.popup?.destroy()
+    this.popup = null
+  }
+
+  private get originalValue(): string | null {
+    if (this.isSettable) return this.set
+    if (this.isIfable) return this.if
+    if (this.isPhiable) return this.phi
+
+    throw new Error("Should not reach here")
+  }
+
   private popupHtml(el: HTMLElement): string {
     const type = el.dataset.gatePopupType
-    Util.notNull(type)
+    if (type === undefined) throw new Error("gate popup type not set")
+
     const popupEl = document.getElementById(`gate-popup--${type}`)
     Util.notNull(popupEl)
+
     return popupEl.innerHTML
   }
 
   private get input(): HTMLInputElement {
-    const el = this.popup?.popper.getElementsByTagName("input").item(0)
+    Util.notNull(this.popup)
+
+    const el = this.popup.popper.getElementsByTagName("input").item(0)
     Util.notNull(el)
 
     return el
@@ -65,12 +71,12 @@ export default class GatePopupController extends Controller {
       try {
         if (this.isSettable) this.set = value
         if (this.isIfable) this.if = value
-        if (this.isThetable) this.theta = value
+        if (this.isPhiable) this.phi = value
         this.popup?.hide()
         this.circuitUpdated()
       } catch (e) {
-        this.input.classList.add("gate-popup__input--error")
-        this.inputError.classList.remove("invisible")
+        Util.notNull(this.popup)
+        this.popup.popper.classList.add("gate-popup--error")
       }
     }
   }
@@ -134,58 +140,50 @@ export default class GatePopupController extends Controller {
     this.dataGateLabel = labelString
   }
 
-  private get isThetable(): boolean {
+  private get isPhiable(): boolean {
     return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:mixin:thetable"),
+      classNameFor("gate:mixin:phiable"),
     )
   }
 
-  private get theta(): string | null {
+  private get phi(): string | null {
     return this.popupReferenceEl.getAttribute(
-      attributeNameFor("instruction:theta"),
+      attributeNameFor("instruction:phi"),
     )
   }
 
-  private set theta(theta: string | null) {
-    const thetaString = this.validateThetaString(theta)
+  private set phi(phi: string | null) {
+    const phiString = this.validatePhiString(phi)
 
     this.popupReferenceEl.setAttribute(
-      attributeNameFor("instruction:theta"),
-      thetaString,
+      attributeNameFor("instruction:phi"),
+      phiString,
     )
-    this.dataGateLabel = thetaString.replace("pi", "π")
+    this.dataGateLabel = phiString.replace("pi", "π")
   }
 
   private set dataGateLabel(label: string) {
     this.popupReferenceEl.dataset.gateLabel = label
   }
 
-  private validateThetaString(theta: string | null): string {
-    if (!theta || theta.trim().length == 0) {
-      throw new InternalError("Theta not set")
+  private validatePhiString(phi: string | null): string {
+    if (!phi || phi.trim().length == 0) {
+      throw new InternalError("Phi not set")
     }
-    if (isNaN(parse(theta).evaluate())) {
-      throw new InternalError("Invalid theta")
+    if (isNaN(parse(phi).evaluate())) {
+      throw new InternalError("Invalid phi")
     }
 
-    return theta
+    return phi
   }
 
   private circuitUpdated(): void {
     this.editorElement.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
   }
 
-  private get inputError(): Element {
-    const el = this.popup?.popper
-      .getElementsByClassName("gate-popup__input-error")
-      .item(0)
-    if (!el) throw new InternalError("input error element not found")
-
-    return el
-  }
-
   private get popupReferenceEl(): HTMLElement {
     Util.notNull(this.popup)
+
     return this.popup.reference as HTMLElement
   }
 

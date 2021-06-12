@@ -1,4 +1,5 @@
 import CircleNotationController from "./circle_notation_controller"
+import GatePopupController from "./gate_popup_controller"
 import SimulatorController from "./simulator_controller"
 import { Breakpoint, Util } from "lib/base"
 import { Controller } from "stimulus"
@@ -6,7 +7,7 @@ import { Editor } from "lib/editor"
 
 export default class EditorController extends Controller {
   private _editor: Editor | undefined
-  private mouseIsDown: boolean | undefined
+  // private mouseIsDown: boolean | undefined
   private mouseIsHolded: boolean | undefined
 
   static targets = ["simulator", "circleNotation"]
@@ -25,24 +26,20 @@ export default class EditorController extends Controller {
   onDraggableMouseOver(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
-    this.editor.onDraggableMouseOver(event)
+    this.editor.onDraggableMouseOver(event, this.gatePopupController)
   }
 
   onDraggableMouseLeave(event: MouseEvent): void {
-    this.editor.onDraggableMouseLeave(event)
+    if (Breakpoint.isMobile()) return
+
+    this.editor.onDraggableMouseLeave(event, this.gatePopupController)
   }
 
   onDraggableMouseDown(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
-    this.mouseIsDown = true
-    setTimeout(this.onDraggableMouseHold.bind(this), 100, event)
-  }
+    this.gatePopupController.hide()
 
-  private onDraggableMouseHold(event: MouseEvent): void {
-    if (!this.mouseIsDown) return
-
-    this.mouseIsHolded = true
     if (this.simulatorController.nqubit + 1 <= this.maxNqubit) {
       this.circleNotationController.incrementNqubit()
       this.editor.onDraggableMouseHold(event)
@@ -53,10 +50,7 @@ export default class EditorController extends Controller {
 
   onDraggableMouseUp(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
-    if (!this.mouseIsHolded) this.editor.onDraggableMouseClick(event)
 
-    this.mouseIsHolded = false
-    this.mouseIsDown = false
     this.editor.onDraggableMouseUp(event)
     this.circleNotationController.nqubit = this.simulatorController.nqubit
   }
@@ -73,6 +67,15 @@ export default class EditorController extends Controller {
     )
     Util.notNull(controller)
     return controller as SimulatorController
+  }
+
+  private get gatePopupController(): GatePopupController {
+    const controller = this.application.getControllerForElementAndIdentifier(
+      this.element,
+      "gate-popup",
+    )
+    Util.notNull(controller)
+    return controller as GatePopupController
   }
 
   private get circleNotationController(): CircleNotationController {

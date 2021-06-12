@@ -1,12 +1,8 @@
 .gate-popup {
   &__input {
-    @apply appearance-none;
-    @apply border;
-    @apply leading-tight;
-    @apply mb-3;
     @apply py-2 px-3;
-    @apply rounded;
-    @apply shadow;
+    @apply rounded-md;
+    @apply shadow-sm;
     @apply text-gray-700;
     @apply w-full;
 
@@ -14,14 +10,33 @@
       @apply outline-none;
       @apply ring;
     }
+  }
 
-    &--error {
-      @apply border-red-500;
-    }
+  &__error-icon {
+    @apply invisible;
   }
 
   &__input-error {
-    @apply text-red-500;
-    @apply text-xs;
+    @apply invisible;
+    @apply mt-2;
+    @apply text-red-400;
+    @apply text-sm;
+  }
+
+  &--error &__input {
+    @apply border-red-300;
+    @apply text-red-900;
+
+    &:focus {
+      @apply ring-red-400;
+    }
+  }
+
+  &--error &__error-icon {
+    @apply visible;
+  }
+
+  &--error &__input-error {
+    @apply visible;
   }
 }

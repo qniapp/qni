@@ -40,9 +40,8 @@
       .circuit[data-nqubit="#{$nqubit}"] & {
         @apply h-full;
         @apply top-0 left-0;
-        @apply ml-#{map-get($instruction-size, $nqubit) + 1};
+        @apply ml-#{map-get($instruction-size, $nqubit)};
         @apply text-#{map-get($gate-label-font-size, $nqubit)};
-        @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)};
 
         writing-mode: vertical-lr;
 
@@ -97,7 +96,6 @@
         @apply mr-#{map-get($instruction-size, $nqubit)};
         @apply bottom-0 right-0;
         @apply text-#{map-get($gate-label-font-size, $nqubit)};
-        @apply transform rotate-#{map-get($gate-label-rotate, $nqubit)} origin-top;
 
         writing-mode: vertical-lr;
 

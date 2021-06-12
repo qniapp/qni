@@ -72,8 +72,8 @@ export class Simulator {
       } else if (each.type === "phase-gate") {
         if (each.targets.length > 0) {
           return
-        } else if (each.theta) {
-          this.phase(each.theta, bit)
+        } else if (each.phi) {
+          this.phase(each.phi, bit)
           return
         }
         return
@@ -484,7 +484,7 @@ export class Simulator {
         return
       }
 
-      this.cphase(each.theta || "pi", each.targets[0], each.targets[1])
+      this.cphase(each.phi || "pi", each.targets[0], each.targets[1])
 
       doneCPhaseTargets.push(each.targets)
     })

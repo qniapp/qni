@@ -21,7 +21,8 @@ import {
   DragEventHandlers,
   DropEventHandlers,
 } from "./mixins"
-import { Connectable, Controllable, Disableable } from "./gates/mixins"
+import { Connectable, Controllable } from "./gates/mixins"
+import GatePopupController from "../../controllers/gate_popup_controller"
 import { Util } from "lib/base"
 
 export class Editor {
@@ -42,28 +43,26 @@ export class Editor {
 
   // Draggable event handlers
 
-  onDraggableMouseOver(event: MouseEvent): void {
+  onDraggableMouseOver(
+    event: MouseEvent,
+    gatePopupController: GatePopupController,
+  ): void {
     const draggable = DraggableItem.create(event.target)
 
     if (draggable instanceof PaletteDraggable) {
       draggable.setInteract(this.paletteDraggableHandlers())
     } else if (draggable instanceof CircuitDraggable) {
       draggable.setInteract(this.circuitDraggableHandlers())
+      gatePopupController.show(draggable.circuitElement.element)
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  onDraggableMouseLeave(_event: MouseEvent): void {}
-
-  onDraggableMouseClick(event: MouseEvent): void {
-    const draggable = DraggableItem.create(event.target)
-
-    if (
-      draggable instanceof CircuitDraggable &&
-      "showPopup" in draggable.circuitElement
-    ) {
-      draggable.circuitElement.showPopup()
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDraggableMouseLeave(
+    _event: MouseEvent,
+    gatePopupController: GatePopupController,
+  ): void {
+    gatePopupController.hide()
   }
 
   onDraggableMouseHold(event: MouseEvent, addNewQubit = true): void {

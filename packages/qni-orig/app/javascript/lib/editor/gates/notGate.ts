@@ -4,7 +4,6 @@ import {
   Disableable,
   Ifable,
   Instructionable,
-  Popuppable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
 
@@ -18,7 +17,6 @@ export class NotGate extends Mixin(
   Instructionable,
   Controllable,
   Connectable,
-  Popuppable,
   Ifable,
   Disableable,
 ) {
