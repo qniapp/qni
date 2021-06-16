@@ -361,6 +361,7 @@ export class Editor {
           each.connectWith(controlGateBits)
           each.disabled = false
         })
+        this.updateIGateConnections(circuitStepIndex, controlGateBits)
       } else {
         controlGates.forEach((each) => {
           each.targets = []
