@@ -397,26 +397,6 @@ QUnit.module("Simulator", () => {
     })
   })
 
-  QUnit.module(".down", () => {
-    QUnit.test("|01>.down(0) should be |10>", (assert) => {
-      const simulator = new Simulator("01")
-      assert.equal(
-        round(simulator.down(0).state.matrix, 5).toString(),
-        new Qubit("10").matrix.toString(),
-      )
-    })
-  })
-
-  QUnit.module(".up", () => {
-    QUnit.test("|01>.up(1) should be |10>", (assert) => {
-      const simulator = new Simulator("01")
-      assert.equal(
-        round(simulator.up(1).state.matrix, 5).toString(),
-        new Qubit("10").matrix.toString(),
-      )
-    })
-  })
-
   QUnit.module(".cnot", () => {
     QUnit.test("|00>.cnot(0, 1) should be |00>", (assert) => {
       const simulator = new Simulator("00")

@@ -252,14 +252,4 @@ class DslTest
       assert_equal [:cswap, { 2 => [0, 1] }], dsl[0]
     end
   end
-
-  class WiresTest < ActiveSupport::TestCase
-    test 'down 1, 2' do
-      dsl = Qni::Dsl.load <<~DSL
-        down 1, 2
-      DSL
-
-      assert_equal [:down, [1, 2]], dsl[0]
-    end
-  end
 end

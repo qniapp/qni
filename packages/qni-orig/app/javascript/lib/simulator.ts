@@ -34,7 +34,6 @@ export class Simulator {
     this.applyCCNotGates(instructions)
     this.applyCPhaseGates(this.cphaseInstructions(instructions))
     this.applySwapGates(instructions)
-    this.applyDownGates(instructions)
     this.applyCSwapGates(instructions)
 
     instructions.forEach((each, bit) => {
@@ -85,12 +84,6 @@ export class Simulator {
           return
         }
         this.rnot(bit)
-        return
-      } else if (each.type === "up-gate" && each.controls.length > 0) {
-        return
-      } else if (each.type === "down-gate") {
-        return
-      } else if (each.type === "up-gate") {
         return
       } else if (each.type === "swap-gate") {
         return
@@ -201,18 +194,10 @@ export class Simulator {
     return this
   }
 
-  down(target: number): Simulator {
-    this.swap(target, target + 1)
-    return this
-  }
-
-  up(target: number): Simulator {
-    this.swap(target, target - 1)
-    return this
-  }
-
   cswap(control: number, target0: number, target1: number): Simulator {
-    if (this.pZero(control) != 1) this.swap(target0, target1)
+    this.ccnot(control, target0, target1)
+      .ccnot(control, target1, target0)
+      .ccnot(control, target0, target1)
     return this
   }
 
@@ -516,6 +501,7 @@ export class Simulator {
     instructions.forEach((each) => {
       if (each.type !== "swap-gate") return
       if (each.targets.length == 0) return
+      if (each.controls.length != 0) return
       if (
         doneSwapTargets.some((done) => {
           return (
@@ -527,25 +513,18 @@ export class Simulator {
       ) {
         return
       }
-
       this.swap(each.targets[0], each.targets[1])
       doneSwapTargets.push(each.targets)
-    })
-  }
-
-  private applyDownGates(instructions: SeriarizedInstruction[]): void {
-    instructions.forEach((each, index) => {
-      if (each.type === "down-gate" && each.controls.length == 0) {
-        this.down(index)
-      }
     })
   }
 
   private applyCSwapGates(instructions: SeriarizedInstruction[]): void {
     instructions.forEach((each, index) => {
       if (each.type === "control-gate" && each.targets.length == 2) {
-        const targetInstruction = instructions[each.targets[0]]
-        if (targetInstruction.type !== "down-gate") {
+        if (
+          instructions[each.targets[0]].type !== "swap-gate" ||
+          instructions[each.targets[1]].type !== "swap-gate"
+        ) {
           return
         }
         this.cswap(index, each.targets[0], each.targets[1])

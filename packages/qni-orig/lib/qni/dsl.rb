@@ -153,12 +153,6 @@ module Qni
       @time_evolution << [:cswap, values]
     end
 
-    # Wires
-
-    def down(*qubits)
-      @time_evolution << [:down, qubits]
-    end
-
     # Internal APIs
 
     def load_dsl(dsl)

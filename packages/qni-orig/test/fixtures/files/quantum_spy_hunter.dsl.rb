@@ -20,7 +20,7 @@ block 'apply H' do
   h 0, if: 'alice_h'
 end
 
-down 0
+swap 0, 1
 
 block '🕶spy' do
   h 1
@@ -34,7 +34,7 @@ write 2 => 0
 h 2
 read 2, set: 'bob_h'
 
-down 1
+swap 1, 2
 
 block 'apply H' do
   h 2, if: 'bob_h'
