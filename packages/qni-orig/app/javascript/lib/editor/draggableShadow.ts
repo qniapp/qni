@@ -25,6 +25,7 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("connectable:lowerBit"))
     el.classList.remove(classNameFor("connectable:upperBit"))
     el.classList.add("animate__animated", "animate__jello")
+    this.disableAction(el)
 
     this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)
   }
@@ -38,21 +39,31 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("draggable:type:shadow"))
     el.classList.remove(classNameFor("draggable:type:palette"))
     el.classList.add(classNameFor("draggable:type:circuit"))
-
+    this.enableAction(el)
     this.instruction().jello = false
 
     return el
   }
 
-  private get element(): Element {
+  private get element(): HTMLElement {
     const className = classNameFor("draggable")
     const el = this.dropzone.element.getElementsByClassName(className).item(0)
     Util.notNull(el)
 
-    return el
+    return el as HTMLElement
   }
 
   private instruction(draggableElement = this.element): CircuitElement {
     return CircuitElement.create(draggableElement)
+  }
+
+  private disableAction(element: HTMLElement) {
+    const dataAction = element.dataset.action
+    element.dataset.actionDisabled = dataAction
+    element.dataset.action = ""
+  }
+
+  private enableAction(element: HTMLElement) {
+    element.dataset.action = element.dataset.actionDisabled
   }
 }

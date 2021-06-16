@@ -1,6 +1,6 @@
 import CircleNotationController from "./circle_notation_controller"
 import SimulatorController from "./simulator_controller"
-import { Breakpoint, Util } from "lib/base"
+import { Breakpoint, classNameFor, Util } from "lib/base"
 import { Controller } from "stimulus"
 import { DraggableItem, Editor } from "lib/editor"
 

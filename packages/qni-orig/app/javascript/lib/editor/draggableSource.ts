@@ -20,8 +20,8 @@ export class DraggableSource extends Mixin(Elementable) {
     this.element.parentNode?.removeChild(this.element)
   }
 
-  clonePlainDraggableElement(): Element {
-    const element = this.element.cloneNode(true) as Element
+  clonePlainDraggableElement(): HTMLElement {
+    const element = this.element.cloneNode(true) as HTMLElement
     element.classList.remove(classNameFor("draggable:type:source"))
     return element
   }
