@@ -1,5 +1,4 @@
 import { ControlGate, ControlGateInstruction } from "./controlGate"
-import { DownGate, DownGateInstruction } from "./downGate"
 import { HadamardGate, HadamardGateInstruction } from "./hadamardGate"
 import { IGate, IGateInstruction } from "./iGate"
 import { InternalError } from "lib/error"
@@ -9,7 +8,6 @@ import { QubitLabel, QubitLabelInstruction } from "./qubitLabel"
 import { ReadoutGate, ReadoutInstruction } from "./readoutGate"
 import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
-import { UpGate, UpGateInstruction } from "./upGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
 export type CircuitElement =
@@ -22,9 +20,6 @@ export type CircuitElement =
   | RootNotGate
   | ReadoutGate
   | WriteGate
-  | DownGate
-  | UpGate
-  | DownGate
   | SwapGate
 
 export const CircuitElement = {
@@ -46,10 +41,6 @@ export const CircuitElement = {
       return RootNotGate.create(element)
     } else if (classList.contains("control-gate")) {
       return ControlGate.create(element)
-    } else if (classList.contains("down-gate")) {
-      return DownGate.create(element)
-    } else if (classList.contains("up-gate")) {
-      return UpGate.create(element)
     } else if (classList.contains("swap-gate")) {
       return SwapGate.create(element)
     }
@@ -68,7 +59,4 @@ export type SeriarizedInstruction =
   | RootNotGateInstruction
   | ReadoutInstruction
   | WriteInstruction
-  | DownGateInstruction
-  | UpGateInstruction
-  | DownGateInstruction
   | SwapGateInstruction

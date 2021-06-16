@@ -164,26 +164,29 @@ module Qni
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     def swap(targets)
-      circuit_step do
-        (0...@dsl.nqubit).map do |bit|
-          wire_top = false
-          wire_bottom = false
+      block_divider do
+        circuit_step do
+          (0...@dsl.nqubit).map do |bit|
+            wire_top = false
+            wire_bottom = false
 
-          if ((targets[0] + 1)...targets[1]).cover?(bit)
-            wire_top = true
-            wire_bottom = true
-          end
-
-          if targets.include?(bit)
-            other_target = (targets - [bit])[0]
-            @wire_active[bit] = @wire_active_orig[other_target]
-            dropzone(input_wire_active: @wire_active_orig[bit], output_wire_active: @wire_active_orig[other_target]) do
-              "<%= swap_gate bit: #{bit}, targets: #{targets} %>\n"
+            if ((targets[0] + 1)...targets[1]).cover?(bit)
+              wire_top = true
+              wire_bottom = true
             end
-          else
-            dropzone wire_top: wire_top, wire_bottom: wire_bottom, wire_active: @wire_active[bit]
-          end
-        end.join
+
+            if targets.include?(bit)
+              other_target = (targets - [bit])[0]
+              @wire_active[bit] = @wire_active_orig[other_target]
+              dropzone(input_wire_active: @wire_active_orig[bit],
+                       output_wire_active: @wire_active_orig[other_target]) do
+                "<%= swap_gate bit: #{bit}, targets: #{targets} %>\n"
+              end
+            else
+              dropzone wire_top: wire_top, wire_bottom: wire_bottom, wire_active: @wire_active[bit]
+            end
+          end.join
+        end
       end
     end
     # rubocop:enable Metrics/MethodLength
@@ -360,14 +363,6 @@ module Qni
       end
     end
     # rubocop:enable Metrics/MethodLength
-
-    def down(targets)
-      targets.map do |each|
-        block_divider do
-          swap [each, each + 1]
-        end
-      end.join
-    end
   end
   # rubocop:enable Metrics/ClassLength
 end

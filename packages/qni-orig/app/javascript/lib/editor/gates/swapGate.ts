@@ -11,6 +11,7 @@ import { Mixin } from "ts-mixer"
 export type SwapGateInstruction = {
   type: "swap-gate"
   targets: [number, number] | []
+  controls: number[]
 }
 
 export class SwapGate extends Mixin(
@@ -27,7 +28,11 @@ export class SwapGate extends Mixin(
   }
 
   serialize(): SwapGateInstruction {
-    return { type: "swap-gate", targets: this.swapTargets }
+    return {
+      type: "swap-gate",
+      targets: this.swapTargets,
+      controls: this.controls,
+    }
   }
 
   assignElement(element: Element): void {
