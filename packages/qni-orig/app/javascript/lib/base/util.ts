@@ -25,6 +25,6 @@ export class Util {
   }
 
   static notNull<T>(v: T): asserts v is NonNullable<T> {
-    Util.need(v !== null, "notNull")
+    Util.need(v !== null && v !== undefined, "notNull")
   }
 }

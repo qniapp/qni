@@ -19,12 +19,6 @@ export class Draggable extends Mixin(Interactable) {
       .styleCursor(false)
   }
 
-  // @ts-ignore: "Abstract methods can only appear within an abstract class"
-  // mouseDown(event: MouseEvent): void
-
-  // @ts-ignore: "Abstract methods can only appear within an abstract class"
-  // mouseUp(): void
-
   move(dx: number, dy: number): void {
     const x = this.x + dx
     const y = this.y + dy
@@ -86,10 +80,7 @@ export class Draggable extends Mixin(Interactable) {
   // Instruction
 
   get circuitElement(): CircuitElement {
-    const el = this.element
-      .getElementsByClassName("gate")
-      .item(0) as HTMLElement
-    return CircuitElement.create(el)
+    return CircuitElement.create(this.element)
   }
 
   // Dropzone
@@ -112,6 +103,7 @@ export class Draggable extends Mixin(Interactable) {
 
     interact(el).unset()
     el.classList.remove(classNameFor("draggable:state:dragging"))
+    el.classList.remove(classNameFor("gate:state:updated"))
     el.classList.add(classNameFor("draggable:type:source"))
     this.getDropzone().element.insertBefore(el, this.element)
 

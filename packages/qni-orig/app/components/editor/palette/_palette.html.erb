@@ -3,49 +3,31 @@
 <div id="palette" class="palette absolute top-0 left-0 rounded-md bg-white mt-8 border-2 border-gray-200 shadow-lg z-40">
   <%= dropzone trash: true, no_wire: true do %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= write 1 %>
-      <% end %>
+      <%= write 1, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= hadamard_gate popup: false %>
-      <% end %>
+      <%= hadamard_gate popup: false, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= not_gate popup: false %>
-      <% end %>
+      <%= not_gate popup: false, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= phase_gate phi: 'π/2', popup: false %>
-      <% end %>
+      <%= phase_gate phi: 'π/2', popup: false, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= control_gate %>
-      <% end %>
+      <%= control_gate palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= swap_gate %>
-      <% end %>
+      <%= swap_gate palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= root_not_gate popup: false %>
-      <% end %>
+      <%= root_not_gate popup: false, palette: true %>
     <% end %>
     <%= dropzone palette: true, no_wire: true do %>
-      <%= draggable palette: true do %>
-        <%= readout popup: false %>
-      <% end %>
+      <%= readout popup: false, palette: true %>
     <% end %>
   <% end %>
 </div>

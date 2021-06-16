@@ -163,6 +163,7 @@ export class Circuit {
     this.wires.forEach((each) => {
       if (each.isEmpty) each.remove()
     })
+    this.updateNqubit()
   }
 
   get nqubit(): number {

@@ -2,5 +2,7 @@
 
 <%= tag.div class: phase_gate.klass, data: phase_gate.data do %>
   <%= wires wireable: false %>
-  <%= gate_shape label: phi_icon, type: 'circle', fill: true %>
+  <div class="gate__body">
+    <%= phi_icon class: 'gate-icon' %>
+  </div>
 <% end %>

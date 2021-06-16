@@ -5,6 +5,7 @@ import {
   HadamardGate,
   IGate,
   NotGate,
+  PhaseGate,
   ReadoutGate,
   SwapGate,
   WriteGate,
@@ -13,6 +14,7 @@ import {
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
 import { DraggableItem } from "./draggableItem"
+import { GatePopup } from "lib/editor"
 import { PaletteDraggable } from "./paletteDraggable"
 import { TrashDropzone } from "./trashDropzone"
 import { classNameFor } from "lib/base"
@@ -22,7 +24,6 @@ import {
   DropEventHandlers,
 } from "./mixins"
 import { Connectable, Controllable } from "./gates/mixins"
-import GatePopupController from "../../controllers/gate_popup_controller"
 import { Util } from "lib/base"
 
 export class Editor {
@@ -34,50 +35,37 @@ export class Editor {
     this.circuit = new Circuit()
 
     TrashDropzone.create(this.trashDropzoneElement).setInteract({
-      onDrop: this.onTrashDropzoneDrop.bind(this),
+      onDrop: this.trashGate.bind(this),
     })
     this.circuit.dropzones.forEach((each) => {
       each.setInteract(this.circuitDropzoneHandlers())
     })
   }
 
-  // Draggable event handlers
-
-  onDraggableMouseOver(
-    event: MouseEvent,
-    gatePopupController: GatePopupController,
-  ): void {
-    const draggable = DraggableItem.create(event.target)
-
+  enableDnd(draggable: PaletteDraggable | CircuitDraggable): void {
     if (draggable instanceof PaletteDraggable) {
       draggable.setInteract(this.paletteDraggableHandlers())
     } else if (draggable instanceof CircuitDraggable) {
       draggable.setInteract(this.circuitDraggableHandlers())
-      gatePopupController.show(draggable.circuitElement.element)
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onDraggableMouseLeave(
-    _event: MouseEvent,
-    gatePopupController: GatePopupController,
+  addNewQubit(): void {
+    this.circuit.appendNewWire(this.circuitDropzoneHandlers())
+  }
+
+  grabDraggable(
+    draggable: PaletteDraggable | CircuitDraggable,
+    event: MouseEvent,
   ): void {
-    gatePopupController.hide()
-  }
-
-  onDraggableMouseHold(event: MouseEvent, addNewQubit = true): void {
-    if (addNewQubit) {
-      this.circuit.appendNewWire(this.circuitDropzoneHandlers())
-    }
     this.circuit.steps.slice(2).forEach((step) => {
       step.prependShadow(this.circuitDropzoneHandlers())
     })
 
-    const draggable = DraggableItem.create(event.target)
-    draggable.mouseDown(event)
+    draggable.grab(event)
   }
 
-  onDraggableMouseUp(event: MouseEvent): void {
+  releaseDraggable(event: MouseEvent): void {
     const draggable = DraggableItem.create(event.target)
 
     draggable.mouseUp()
@@ -87,8 +75,15 @@ export class Editor {
 
     const dropzone = draggable.dropzone
     if (dropzone instanceof CircuitDropzone) {
-      this.updateGateConnections(dropzone.circuitStep.index)
+      this.updateGateConnections()
     }
+  }
+
+  showGatePopup(element: HTMLElement): void {
+    const gatePopup = new GatePopup()
+    gatePopup.show(element, () => {
+      this.updateGateConnections()
+    })
   }
 
   // Circuit draggable event handlers
@@ -101,15 +96,15 @@ export class Editor {
     }
   }
 
-  private onCircuitDraggableStart(event: Interact.DragEvent): void {
+  private onCircuitDraggableStart(event: Interact.DragEvent) {
     CircuitDraggable.create(event.target).start()
   }
 
-  private onCircuitDraggableMove(event: Interact.DragEvent): void {
+  private onCircuitDraggableMove(event: Interact.DragEvent) {
     CircuitDraggable.create(event.target).move(event.dx, event.dy)
   }
 
-  private onCircuitDraggableEnd(event: Interact.DragEvent): void {
+  private onCircuitDraggableEnd(event: Interact.DragEvent) {
     CircuitDraggable.create(event.target).end()
     this.removeEmptySteps()
   }
@@ -126,32 +121,31 @@ export class Editor {
     }
   }
 
-  private onPaletteDraggableStart(event: Interact.DragEvent): void {
+  private onPaletteDraggableStart(event: Interact.DragEvent) {
     PaletteDraggable.create(event.target).start()
   }
 
-  private onPaletteDraggableMove(event: Interact.DragEvent): void {
+  private onPaletteDraggableMove(event: Interact.DragEvent) {
     PaletteDraggable.create(event.target).move(event.dx, event.dy)
   }
 
-  private onPaletteDraggableEnd(event: Interact.DragEvent): void {
+  private onPaletteDraggableEnd(event: Interact.DragEvent) {
     PaletteDraggable.create(event.target).end()
     this.removeEmptySteps()
   }
 
   // Trash dropzone handler
 
-  private onTrashDropzoneDrop(event: Interact.DropEvent): void {
+  private trashGate(event: Interact.DropEvent) {
     const draggable = DraggableItem.create(event.relatedTarget)
 
     draggable.dropped = true
     draggable.dropzone.occupied = false
-    draggable.circuitElement.animateJello = false
 
     if (draggable instanceof CircuitDraggable) {
-      this.updateGateConnections(draggable.dropzone.circuitStep.index)
-      this.updateWires()
       this.removeEmptySteps()
+      this.updateGateConnections()
+      this.updateWires()
       this.element.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
     }
   }
@@ -174,41 +168,39 @@ export class Editor {
     }
   }
 
-  private onCircuitDropzoneDragEnter(event: Interact.DropEvent): void {
+  private onCircuitDropzoneDragEnter(event: Interact.DropEvent) {
     const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
     const nextDropzone = this.circuit.nextDropzoneOf(dropzone)
 
-    if (prevDropzone) prevDropzone.instruction.bordered = true
-    if (nextDropzone) nextDropzone.instruction.bordered = true
+    if (prevDropzone) prevDropzone.adjoining = true
+    if (nextDropzone) nextDropzone.adjoining = true
 
     dropzone.enter(draggable)
   }
 
-  private onCircuitDropzoneDragLeave(event: Interact.DropEvent): void {
+  private onCircuitDropzoneDragLeave(event: Interact.DropEvent) {
     const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
     const nextDropzone = this.circuit.nextDropzoneOf(dropzone)
 
-    if (prevDropzone) prevDropzone.instruction.bordered = false
-    if (nextDropzone) nextDropzone.instruction.bordered = false
+    if (prevDropzone) prevDropzone.adjoining = false
+    if (nextDropzone) nextDropzone.adjoining = false
 
     dropzone.leave(draggable)
   }
 
-  private onCircuitDropzoneDrop(event: Interact.DropEvent): void {
+  private onCircuitDropzoneDrop(event: Interact.DropEvent) {
     const dropzone = CircuitDropzone.create(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const originalDropzone = draggable.dropzone
     const prevDropzone = this.circuit.prevDropzoneOf(dropzone)
     const nextDropzone = this.circuit.nextDropzoneOf(dropzone)
 
-    if (prevDropzone) prevDropzone.instruction.bordered = false
-    if (nextDropzone) nextDropzone.instruction.bordered = false
-
-    draggable.circuitElement.animateJello = false
+    if (prevDropzone) prevDropzone.adjoining = false
+    if (nextDropzone) nextDropzone.adjoining = false
 
     if (this.circuit.wires[dropzone.bit].isEmpty) {
       const paletteElement = document.getElementById("palette")
@@ -244,17 +236,6 @@ export class Editor {
         onMove: this.onCircuitDraggableMove.bind(this),
         onEnd: this.onCircuitDraggableEnd.bind(this),
       })
-
-      if (dropzone.instruction instanceof WriteGate) {
-        newCircuitDraggableElement.classList.add(
-          classNameFor("draggable:type:write"),
-        )
-      }
-      if (dropzone.instruction instanceof ReadoutGate) {
-        newCircuitDraggableElement.classList.add(
-          classNameFor("draggable:type:readout"),
-        )
-      }
     }
 
     dropzone.circuitStep.shadow = false
@@ -264,27 +245,23 @@ export class Editor {
 
     draggable.dropzone.occupied = false
     this.removeEmptySteps()
-    this.circuit.updateNqubit()
-    this.updateGateConnections(dropzone.circuitStep.index)
+    this.updateGateConnections()
     if (
       originalDropzone instanceof CircuitDropzone &&
       originalDropzone.isInPage()
     ) {
-      this.updateGateConnections(originalDropzone.circuitStep.index)
+      this.updateGateConnections()
     }
     this.updateWires()
     this.element.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
   }
 
-  private updateWires(): void {
+  private updateWires() {
     const wireActive = Array<boolean>(this.circuit.nqubit).fill(false)
     const wireActiveOrig = Array<boolean>(this.circuit.nqubit).fill(false)
 
     this.circuit.steps.forEach((each) => {
-      const dropzones = each.dropzones
-      if (dropzones.length == 0) return
-
-      dropzones.forEach((dz, bit) => {
+      each.dropzones.forEach((dz, bit) => {
         if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
           wireActiveOrig[bit] = true
@@ -297,6 +274,7 @@ export class Editor {
         ) {
           const otherTarget = dz.instruction.targets.find((t) => t != bit)
           Util.notNull(otherTarget)
+
           dz.inputWireActive = wireActiveOrig[bit]
           dz.outputWireActive = wireActiveOrig[otherTarget]
           wireActive[bit] = wireActiveOrig[otherTarget]
@@ -307,10 +285,13 @@ export class Editor {
     })
   }
 
-  private updateGateConnections(circuitStepIndex: number) {
-    this.updateSwaps(circuitStepIndex)
-    this.updateControls(circuitStepIndex)
-    this.updateIGateConnections(circuitStepIndex)
+  private updateGateConnections() {
+    this.circuit.steps.forEach((_each, i) => {
+      this.resetGateConnections(i)
+      this.updateSwaps(i)
+      this.updateCphases(i)
+      this.updateControls(i)
+    })
   }
 
   private updateSwaps(circuitStepIndex: number) {
@@ -329,9 +310,36 @@ export class Editor {
       if (swapBits.length == 2) {
         each.targets = swapBits
         each.disabled = false
+        this.updateIGateConnections(circuitStepIndex, swapBits)
       } else {
         each.targets = []
         each.disabled = true
+      }
+    })
+  }
+
+  private updateCphases(circuitStepIndex: number) {
+    const circuitStep = this.circuit.steps[circuitStepIndex]
+    const phaseGates = circuitStep.instructions.filter((each) => {
+      return each instanceof PhaseGate
+    }) as PhaseGate[]
+
+    phaseGates.forEach((each) => {
+      const phaseBits = phaseGates
+        .filter((other) => {
+          return other.phi === each.phi
+        })
+        .map((other) => {
+          return other.bit
+        })
+        .sort()
+      if (phaseBits.length == 2) {
+        each.connectWith(phaseBits)
+        each.targets = phaseBits
+        this.updateIGateConnections(circuitStepIndex, phaseBits)
+      } else {
+        each.connectWith([])
+        each.targets = []
       }
     })
   }
@@ -340,21 +348,27 @@ export class Editor {
     const circuitStep = this.circuit.steps[circuitStepIndex]
     const controlGates = circuitStep.gatesOf(ControlGate)
     const controllableGates = circuitStep.controllableGates
-    if (controlGates.length == 0) return
+    const toBit = (gate: CircuitElement) => {
+      return gate.bit
+    }
+    const controlGateBits = controlGates.map(toBit)
+    const controllableGateBits = controllableGates.map(toBit)
 
-    if (controllableGates.length == 0 && controlGates.length <= 1) {
-      controlGates.forEach((each) => {
-        each.targets = []
-        each.connectWith([])
-        each.disabled = true
-      })
-    } else {
-      const toBit = (gate: CircuitElement) => {
-        return gate.bit
+    if (controllableGates.length == 0) {
+      if (controlGates.length == 2) {
+        controlGates.forEach((each) => {
+          each.targets = controlGateBits
+          each.connectWith(controlGateBits)
+          each.disabled = false
+        })
+      } else {
+        controlGates.forEach((each) => {
+          each.targets = []
+          each.connectWith([])
+          each.disabled = true
+        })
       }
-      const controlGateBits = controlGates.map(toBit)
-      const controllableGateBits = controllableGates.map(toBit)
-
+    } else {
       controlGates.forEach((each) => {
         each.targets = controllableGateBits
         each.connectWith(controlGateBits.concat(controllableGateBits))
@@ -376,6 +390,13 @@ export class Editor {
         controlGateBits,
         controllableGateBits,
       )
+
+      if (controlGateBits.length > 0) {
+        this.updateIGateConnections(
+          circuitStepIndex,
+          controlGateBits.concat(controllableGateBits),
+        )
+      }
     }
   }
 
@@ -392,39 +413,50 @@ export class Editor {
     })
   }
 
-  private updateIGateConnections(circuitStepIndex: number) {
+  private resetGateConnections(circuitStepIndex: number) {
     const circuitStep = this.circuit.steps[circuitStepIndex]
-    const toBit = (gate: CircuitElement) => {
-      return gate.bit
-    }
-    const notGateBits = circuitStep.gatesOf(NotGate).map(toBit)
-    const hadamardGateBits = circuitStep.gatesOf(HadamardGate).map(toBit)
-    const controlGateBits = circuitStep.gatesOf(ControlGate).map(toBit)
-    const swapGateBits = circuitStep.gatesOf(SwapGate).map(toBit)
-    const bits = notGateBits
-      .concat(hadamardGateBits)
-      .concat(controlGateBits)
-      .concat(swapGateBits)
-      .sort()
 
-    if (controlGateBits.length == 0 && swapGateBits.length == 0) return
-
-    circuitStep.dropzones.forEach((each, i) => {
-      if (
-        each.instruction instanceof IGate &&
-        bits[0] < i &&
-        i < bits[bits.length - 1]
-      ) {
-        each.connectWithLowerBit()
-        each.connectWithUpperBit()
-      } else {
+    circuitStep.dropzones.forEach((each) => {
+      if (each.instruction instanceof IGate) {
         each.disconnectFromLowerBit()
         each.disconnectFromUpperBit()
+      } else {
+        each.instruction.controls = []
+        each.instruction.targets = []
+        if (
+          "disconnectFromLowerBit" in each.instruction &&
+          "disconnectFromUpperBit" in each.instruction
+        ) {
+          each.instruction.disconnectFromLowerBit()
+          each.instruction.disconnectFromUpperBit()
+        }
       }
     })
   }
 
-  private removeEmptySteps(): void {
+  private updateIGateConnections(
+    circuitStepIndex: number,
+    targetBits: number[],
+  ) {
+    const circuitStep = this.circuit.steps[circuitStepIndex]
+    const bits = targetBits.sort()
+
+    circuitStep.dropzones.forEach((dropzone, i) => {
+      if (
+        dropzone.instruction instanceof IGate &&
+        bits[0] < i &&
+        i < bits[bits.length - 1]
+      ) {
+        dropzone.connectWithLowerBit()
+        dropzone.connectWithUpperBit()
+      } else {
+        dropzone.disconnectFromLowerBit()
+        dropzone.disconnectFromUpperBit()
+      }
+    })
+  }
+
+  private removeEmptySteps() {
     this.circuit.emptySteps.forEach((each) => {
       each.remove()
     })

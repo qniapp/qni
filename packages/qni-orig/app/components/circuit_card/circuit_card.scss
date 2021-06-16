@@ -9,7 +9,7 @@
     @apply w-full h-full;
   }
 
-  &__clickable:after {
+  &__clickable::after {
     @apply -mx-4 -my-5;
     @apply absolute;
     @apply cursor-pointer;

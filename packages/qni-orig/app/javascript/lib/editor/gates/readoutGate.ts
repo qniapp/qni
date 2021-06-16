@@ -1,7 +1,7 @@
 import { Instructionable, Valueable } from "./mixins"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor } from "lib/base"
+import { attributeNameFor, classNameFor } from "lib/base"
 
 export type ReadoutInstruction = {
   type: "readout"
@@ -42,5 +42,10 @@ export class ReadoutGate extends Mixin(Instructionable, Valueable) {
     if (value === null) throw new InternalError("Cannot set Readout value null")
 
     this.dataValue = value.toString()
+    this.updated()
+  }
+
+  private updated(): void {
+    this.element.classList.add(classNameFor("gate:state:updated"))
   }
 }

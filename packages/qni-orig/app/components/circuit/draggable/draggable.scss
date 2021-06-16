@@ -1,12 +1,4 @@
 .draggable {
-  $gate-shape-class: ".gate__shape";
-
-  @apply absolute inset-0;
-  @apply flex items-center;
-  @apply z-20;
-  cursor: grab;
-
-  // For interact.js
   @apply select-none;
   touch-action: none;
 
@@ -14,36 +6,23 @@
     pointer-events: none;
   }
 
-  @apply mx-0;
+  @apply m-auto;
+  @apply z-20;
 
   @screen md {
-    &--circuit,
-    &--write,
-    &--readout {
-      @apply mx-#{$instruction-margin-base / 2};
+    cursor: grab;
+
+    &--grabbed {
+      @apply z-50;
+      cursor: grabbing;
     }
-  }
 
-  .circuit-preview &--circuit,
-  .circuit-preview &--write,
-  .circuit-preview &--readout {
-    @apply mx-#{$instruction-margin-base / 2};
-  }
+    &--dragging {
+      @apply z-50;
+    }
 
-  // Placeholder to display when it is droppable
-  &--shadow {
-    @apply z-20;
-    @apply mx-#{$instruction-margin-base / 2};
-  }
-
-  // States
-
-  &--grabbed {
-    @apply z-50;
-    cursor: grabbing;
-  }
-
-  &--dragging {
-    @apply z-50;
+    &--shadow {
+      @apply z-20;
+    }
   }
 }

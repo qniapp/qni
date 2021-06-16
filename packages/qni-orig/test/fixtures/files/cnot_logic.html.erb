@@ -13,35 +13,27 @@
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 1 %>
-      <% end %>
+      <%= write 1 %>
     <% end %>
     <%= dropzone wire_active: false %>
   <% end %>
@@ -49,30 +41,22 @@
     <%= dropzone wire_active: false %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [2], controls: [1] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [2], controls: [1] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2, controls: [1], targets: [2] %>
-      <% end %>
+      <%= not_gate bit: 2, controls: [1], targets: [2] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
     <%= dropzone %>
   <% end %>
@@ -80,60 +64,40 @@
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 1 %>
-      <% end %>
+      <%= write 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 1 %>
-      <% end %>
+      <%= write 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [2], controls: [0, 1] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [2], controls: [0, 1] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [2], controls: [0, 1] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [2], controls: [0, 1] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2, controls: [0, 1] %>
-      <% end %>
+      <%= not_gate bit: 2, controls: [0, 1] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable readout: true do %>
-        <%= readout %>
-      <% end %>
+      <%= readout %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

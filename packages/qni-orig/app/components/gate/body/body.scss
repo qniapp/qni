@@ -1,0 +1,20 @@
+.gate {
+  &__body {
+    @apply border-2 border-transparent;
+    @apply flex justify-center items-center;
+    @apply relative;
+    @apply w-full h-full;
+
+    .gate-icon {
+      @apply absolute inset-0;
+      @apply stroke-current;
+
+      bottom: -2px;
+      height: calc(100% + 4px);
+      left: -2px;
+      right: -2px;
+      top: -2px;
+      width: calc(100% + 4px);
+    }
+  }
+}

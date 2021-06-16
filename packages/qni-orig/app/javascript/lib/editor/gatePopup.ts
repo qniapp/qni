@@ -1,41 +1,33 @@
 import tippy, { Instance, Props } from "tippy.js"
-import { Controller } from "stimulus"
 import { InternalError } from "lib/error"
 import { attributeNameFor, classNameFor, Breakpoint, Util } from "lib/base"
 import { parse } from "mathjs"
 
-export default class GatePopupController extends Controller {
-  static targets = ["gate"]
-  declare readonly gateTargets: HTMLElement[]
+export class GatePopup {
+  onUpdate!: () => void
+  popup: Instance<Props> | null | undefined
 
-  private popup: Instance<Props> | null | undefined
-
-  disconnect(): void {
-    this.popup?.destroy()
-  }
-
-  show(element: HTMLElement): void {
+  show(element: HTMLElement, onUpdate: () => void): void {
     if (Breakpoint.isMobile()) return
     if (element.dataset.gatePopupType === undefined) return
+    this.onUpdate = onUpdate
 
     this.popup = tippy(element, {
       allowHTML: true,
+      appendTo: document.body,
       content: this.popupHtml(element),
+      duration: [0, 0],
+      interactive: true,
       theme: "qni",
+      onHidden(instance) {
+        instance.destroy()
+      },
     })
     this.popup.show()
 
     if (this.originalValue !== null) this.input.value = this.originalValue
     this.input.addEventListener("keydown", this.inputKeydown.bind(this))
     this.input.focus()
-  }
-
-  hide(): void {
-    if (Breakpoint.isMobile()) return
-
-    this.popup?.hide()
-    this.popup?.destroy()
-    this.popup = null
   }
 
   private get originalValue(): string | null {
@@ -73,7 +65,8 @@ export default class GatePopupController extends Controller {
         if (this.isIfable) this.if = value
         if (this.isPhiable) this.phi = value
         this.popup?.hide()
-        this.circuitUpdated()
+        this.onUpdate()
+        this.runCircuit()
       } catch (e) {
         Util.notNull(this.popup)
         this.popup.popper.classList.add("gate-popup--error")
@@ -177,7 +170,7 @@ export default class GatePopupController extends Controller {
     return phi
   }
 
-  private circuitUpdated(): void {
+  private runCircuit(): void {
     this.editorElement.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
   }
 

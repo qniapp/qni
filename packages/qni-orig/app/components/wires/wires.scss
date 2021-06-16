@@ -1,9 +1,16 @@
 .wires {
   $parent: &;
 
+  @apply absolute;
   @apply overflow-visible;
-  @apply w-full h-full;
   @apply transform rotate-90 origin-center;
+
+  bottom: -2px;
+  height: calc(100% + 4px);
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  width: calc(100% + 4px);
 
   @screen md {
     @apply rotate-0;
@@ -33,7 +40,7 @@
       @apply text-#{$wire-inactive-color};
     }
 
-    .draggable--write ~ #{$parent} & {
+    .write-gate ~ #{$parent} & {
       @apply text-#{$wire-inactive-color};
       @apply transform scale-x-75 -translate-x-1/4 origin-left;
 
@@ -43,12 +50,12 @@
       }
     }
 
-    .circuit-preview .draggable--write ~ #{$parent} & {
+    .circuit-preview .write-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }
 
-    .draggable--readout ~ #{$parent} & {
+    .readout-gate ~ #{$parent} & {
       @apply text-#{$wire-color};
       @apply transform scale-x-75 -translate-x-1/4 origin-left;
 
@@ -58,7 +65,7 @@
       }
     }
 
-    .circuit-preview .draggable--readout ~ #{$parent} & {
+    .circuit-preview .readout-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }
@@ -84,7 +91,7 @@
       @apply text-#{$wire-inactive-color};
     }
 
-    .draggable--write ~ #{$parent} & {
+    .write-gate ~ #{$parent} & {
       @apply text-#{$wire-color};
       @apply transform scale-x-75 translate-x-1/4 origin-right;
 
@@ -94,12 +101,12 @@
       }
     }
 
-    .circuit-preview .draggable--write ~ #{$parent} & {
+    .circuit-preview .write-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }
 
-    .draggable--readout ~ #{$parent} & {
+    .readout-gate ~ #{$parent} & {
       @apply text-#{$wire-inactive-color};
       @apply transform scale-x-75 translate-x-1/4 origin-right;
 
@@ -109,7 +116,7 @@
       }
     }
 
-    .circuit-preview .draggable--readout ~ #{$parent} & {
+    .circuit-preview .readout-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }

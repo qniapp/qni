@@ -7,6 +7,9 @@
   --balloon-color: theme("colors.indigo.500");
   --balloon-font-size: theme("fontSize.xs");
 
+  // Disable double tap zoom
+  touch-action: manipulation;
+
   &__border {
     @apply rounded-full;
     @apply border-#{$qubit-circle-border-color};
@@ -102,6 +105,7 @@
   }
 
   &__ket {
+    @apply select-none;
     @apply text-#{$qubit-circle-ket-font-color};
     @apply whitespace-nowrap;
 

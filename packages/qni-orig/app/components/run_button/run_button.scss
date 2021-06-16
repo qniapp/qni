@@ -10,6 +10,9 @@
   @apply w-#{$run-button-size} h-#{$run-button-size};
   @apply z-#{$run-button-z};
 
+  // Disable double tap zoom
+  touch-action: manipulation;
+
   &:focus {
     @apply outline-none;
   }

@@ -18,17 +18,15 @@ export class PaletteDraggable extends Mixin(Draggable) {
     )
   }
 
-  mouseDown(event: MouseEvent): void {
+  grab(event: MouseEvent): void {
     this.createSource()
     this.grabbed = true
     this.moveToGrabbedPosition(event)
-    this.circuitElement.animateJello = true
   }
 
   mouseUp(): void {
     this.moveTo(0, 0)
     this.grabbed = false
-    this.circuitElement.animateJello = false
   }
 
   start(): void {
@@ -38,7 +36,6 @@ export class PaletteDraggable extends Mixin(Draggable) {
   end(): void {
     this.dragging = false
     this.moveTo(0, 0)
-    this.circuitElement.animateJello = false
   }
 
   get dropzone(): PaletteDropzone {

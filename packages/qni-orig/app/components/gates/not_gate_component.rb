@@ -1,6 +1,7 @@
 require 'component'
 require 'concerns/connectable'
 require 'concerns/controllable'
+require 'concerns/draggable'
 require 'concerns/ifable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
@@ -9,14 +10,19 @@ require 'concerns/wireable'
 class Gates::NotGateComponent < Component
   include Connectable
   include Controllable
+  include Draggable
   include Ifable
   include Popuppable
   include Targetable
   include Wireable
 
   def klass
-    class_string('gate', 'gate--ifable',
+    class_string('gate',
+                 'gate--ifable',
                  'not-gate',
+                 'draggable',
+                 'draggable--palette' => palette?,
+                 'draggable--circuit' => circuit?,
                  'connectable--upper-bit' => with_upper_bit?,
                  'connectable--lower-bit' => with_lower_bit?,
                  'instruction--wire-inactive' => !wire_active?,
@@ -27,6 +33,7 @@ class Gates::NotGateComponent < Component
     (controls.empty? ? {} : { controls: controls.join(',') })
       .merge({ if: self.if, 'gate-label': label_text })
       .merge(data_popup)
+      .merge(data_draggable)
   end
 
   def label_text

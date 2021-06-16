@@ -2,5 +2,7 @@
 
 <%= tag.div class: swap_gate.klass, data: swap_gate.data do %>
   <%= wires wireable: false %>
-  <%= gate_shape label: swap_icon, type: 'square' %>
+  <div class="gate__body">
+    <%= swap_icon class: 'gate-icon' %>
+  </div>
 <% end %>

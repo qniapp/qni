@@ -1,66 +1,25 @@
 .swap-gate {
-  $gate-shape-class: ".gate__shape";
+  @include recutangular-gate;
+  @include transparent-gate;
 
-  @apply rounded;
+  @apply text-#{$gate-color};
 
-  #{$gate-shape-class} {
-    @apply border-#{$gate-border-width} border-transparent rounded;
-
-    .draggable:not(.draggable--source):hover &,
-    .draggable--grabbed {
-      @screen md {
-        @apply bg-white;
-        @apply border-#{$gate-hover-color};
-      }
-    }
-
-    // Reference for coordinates during dragging
-    .draggable--source & {
-      @apply border-#{$gate-source-color};
-    }
-
-    // Placeholder to display when it is droppable
-    .draggable--shadow & {
-      @apply bg-white;
-      @apply border-#{$gate-shadow-color};
-    }
-  }
-
-  #{$gate-shape-class} svg {
-    @apply stroke-3;
-    @apply stroke-current;
-    @apply text-#{$gate-color};
-  }
-
-  .draggable:not(.draggable--source):hover & #{$gate-shape-class} svg {
-    @screen md {
+  @screen md {
+    &.draggable:hover {
       @apply text-#{$gate-hover-color};
     }
-  }
 
-  .draggable--source & #{$gate-shape-class} {
-    @apply bg-transparent;
-  }
+    &.draggable--source {
+      @apply text-#{$gate-source-color};
+    }
 
-  .draggable--source & #{$gate-shape-class} svg {
-    @apply text-#{$gate-source-color};
-  }
+    &.draggable--shadow {
+      @apply text-#{$gate-shadow-color};
+    }
 
-  .draggable--shadow & #{$gate-shape-class} svg {
-    @apply text-#{$gate-shadow-color};
-  }
-
-  // Disabled state
-  &.gate--disabled #{$gate-shape-class} {
-    @apply bg-transparent;
-  }
-
-  &.gate--disabled #{$gate-shape-class} svg {
-    @apply text-#{$gate-label-color-disabled};
-  }
-
-  &.instruction--bordered #{$gate-shape-class} {
-    @apply bg-white;
-    @apply border-#{$gate-border-color};
+    &.gate--disabled:not(.draggable--source):not(:hover) {
+      @apply border-solid border-transparent;
+      @apply text-#{$gate-label-color-disabled};
+    }
   }
 }

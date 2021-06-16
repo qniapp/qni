@@ -10,6 +10,16 @@
   }
 
   &--circuit {
+    writing-mode: vertical-lr;
+
+    @screen md {
+      writing-mode: horizontal-tb;
+    }
+
+    .circuit-preview & {
+      writing-mode: horizontal-tb;
+    }
+
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
         @apply w-#{map-get($instruction-size, $nqubit)};

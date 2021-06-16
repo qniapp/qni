@@ -1,0 +1,7 @@
+@mixin circular-gate {
+  .gate {
+    &__body {
+      @apply rounded-full;
+    }
+  }
+}

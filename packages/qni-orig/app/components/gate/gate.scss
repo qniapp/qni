@@ -1,24 +1,21 @@
+.animate {
+  &__jello {
+    --animate-duration: 0.2s;
+  }
+}
+
 .gate {
-  --animate-duration: 0.2s;
-
+  @apply flex justify-center items-center;
   @apply relative;
-
-  @mixin box($nqubit) {
-    @apply w-#{map-get($instruction-size, $nqubit)};
-    @apply h-#{map-get($instruction-size, $nqubit)};
-  }
-
-  @mixin box-md {
-    @apply w-#{$instruction-size-base};
-    @apply h-#{$instruction-size-base};
-  }
 
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {
-      @include box($nqubit);
+      @apply w-#{map-get($instruction-size, $nqubit)};
+      @apply h-#{map-get($instruction-size, $nqubit)};
 
       @screen md {
-        @include box-md;
+        @apply w-#{$instruction-size-base};
+        @apply h-#{$instruction-size-base};
       }
     }
   }
@@ -132,11 +129,28 @@
 
   .palette & {
     @screen md {
-      @include box-md;
+      @apply w-#{$instruction-size-base};
+      @apply h-#{$instruction-size-base};
     }
   }
 
   .circuit-preview .circuit & {
-    @include box-md;
+    @apply w-#{$instruction-size-base};
+    @apply h-#{$instruction-size-base};
+  }
+
+  @keyframes bg-fade {
+    from {
+      @apply bg-yellow-200;
+    }
+
+    to {
+      @apply bg-transparent;
+    }
+  }
+
+  &--updated {
+    animation-duration: 1.5s;
+    animation-name: bg-fade;
   }
 }

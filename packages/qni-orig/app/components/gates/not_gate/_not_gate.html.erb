@@ -2,5 +2,7 @@
 
 <%= tag.div class: not_gate.klass, data: not_gate.data do %>
   <%= wires wireable: false %>
-  <%= gate_shape label: plus_icon, type: 'circle', fill: true %>
+  <div class="gate__body">
+    <%= plus_icon class: 'gate-icon' %>
+  </div>
 <% end %>

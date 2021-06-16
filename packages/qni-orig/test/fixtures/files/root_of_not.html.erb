@@ -7,32 +7,24 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: '-π/2' %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: '-π/2' %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
   <% end %>
@@ -44,23 +36,17 @@
   <%= circuit_block label: 'RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: '-π/2' %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: '-π/2' %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
   <% end %>
@@ -72,16 +58,12 @@
   <%= circuit_block label: 'Built-in RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= root_not_gate %>
-        <% end %>
+        <%= root_not_gate %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= root_not_gate %>
-        <% end %>
+        <%= root_not_gate %>
       <% end %>
     <% end %>
   <% end %>

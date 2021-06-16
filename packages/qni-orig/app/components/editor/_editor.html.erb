@@ -2,8 +2,8 @@
 
 <div id="editor"
      class="editor relative h-full"
-     data-controller="editor gate-popup"
-     data-action="circuitUpdateEvent->editor#onCircuitUpdate"
+     data-controller="editor"
+     data-action="circuitUpdateEvent->editor#runCircuit"
      data-editor-max-nqubit="<%= Qni::MAX_NQUBIT %>">
   <%= editor.content %>
   <%= gate_popup type: 'phi', label: 'phi', error_message: 'phi の値が無効です' %>

@@ -4,7 +4,7 @@ import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
 import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
-import { CircuitElement, ReadoutGate, WriteGate } from "./gates"
+import { CircuitElement } from "./gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { classNameFor } from "lib/base"
@@ -58,8 +58,6 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
 
   enter(draggable: DraggableItem): void {
     this.active = true
-    if (draggable.circuitElement instanceof WriteGate) this.write = true
-    if (draggable.circuitElement instanceof ReadoutGate) this.readout = true
     new DraggableShadow(draggable, this).create()
   }
 
@@ -167,6 +165,7 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     const classList = this.element.classList
     const className = classNameFor("wireable:inputInactive")
 
+    this.wireActive = true
     if (flag) {
       classList.remove(className)
     } else {
@@ -182,6 +181,19 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
       classList.remove(className)
     } else {
       classList.add(className)
+    }
+  }
+
+  set adjoining(value: boolean) {
+    if (!this.draggable) return
+
+    const classList = this.draggable.element.classList
+    const className = classNameFor("draggable:state:adjoining")
+
+    if (value) {
+      classList.add(className)
+    } else {
+      classList.remove(className)
     }
   }
 

@@ -1,66 +1,65 @@
 import CircleNotationController from "./circle_notation_controller"
-import GatePopupController from "./gate_popup_controller"
 import SimulatorController from "./simulator_controller"
 import { Breakpoint, Util } from "lib/base"
 import { Controller } from "stimulus"
-import { Editor } from "lib/editor"
+import { DraggableItem, Editor } from "lib/editor"
 
 export default class EditorController extends Controller {
-  private _editor: Editor | undefined
-  // private mouseIsDown: boolean | undefined
-  private mouseIsHolded: boolean | undefined
-
   static targets = ["simulator", "circleNotation"]
+
+  declare editor: Editor
   declare readonly simulatorTarget: HTMLElement
   declare readonly circleNotationTarget: HTMLElement
 
   connect(): void {
-    this._editor = new Editor(this.element)
+    this.editor = new Editor(this.element)
   }
 
-  onCircuitUpdate(): void {
-    this.circleNotationController.nqubit = this.simulatorController.nqubit
-    this.simulatorController.run()
+  runCircuit(): void {
+    this.circleNotation.nqubit = this.simulator.nqubit
+    this.simulator.run()
   }
 
-  onDraggableMouseOver(event: MouseEvent): void {
+  enableDnd(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
-    this.editor.onDraggableMouseOver(event, this.gatePopupController)
+    const draggable = DraggableItem.create(event.target)
+    this.editor.enableDnd(draggable)
   }
 
-  onDraggableMouseLeave(event: MouseEvent): void {
+  grabDraggable(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
-    this.editor.onDraggableMouseLeave(event, this.gatePopupController)
-  }
-
-  onDraggableMouseDown(event: MouseEvent): void {
-    if (Breakpoint.isMobile()) return
-
-    this.gatePopupController.hide()
-
-    if (this.simulatorController.nqubit + 1 <= this.maxNqubit) {
-      this.circleNotationController.incrementNqubit()
-      this.editor.onDraggableMouseHold(event)
-    } else {
-      this.editor.onDraggableMouseHold(event, false)
+    if (this.isRightClickEvent(event)) {
+      Util.notNull(event.target)
+      this.editor.showGatePopup(event.target as HTMLElement)
+      return
     }
+
+    if (this.simulator.nqubit + 1 <= this.maxNqubit) {
+      this.circleNotation.incrementNqubit()
+      this.editor.addNewQubit()
+    }
+
+    const draggable = DraggableItem.create(event.target)
+    this.editor.grabDraggable(draggable, event)
+
+    return
   }
 
-  onDraggableMouseUp(event: MouseEvent): void {
+  releaseDraggable(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
+    if (this.isRightClickEvent(event)) return
 
-    this.editor.onDraggableMouseUp(event)
-    this.circleNotationController.nqubit = this.simulatorController.nqubit
+    this.editor.releaseDraggable(event)
+    this.circleNotation.nqubit = this.simulator.nqubit
   }
 
-  private get editor(): Editor {
-    Util.notNull(this._editor)
-    return this._editor
+  private isRightClickEvent(event: MouseEvent): boolean {
+    return event.button == 2 || event.ctrlKey
   }
 
-  private get simulatorController(): SimulatorController {
+  private get simulator(): SimulatorController {
     const controller = this.application.getControllerForElementAndIdentifier(
       this.simulatorTarget,
       "simulator",
@@ -69,16 +68,7 @@ export default class EditorController extends Controller {
     return controller as SimulatorController
   }
 
-  private get gatePopupController(): GatePopupController {
-    const controller = this.application.getControllerForElementAndIdentifier(
-      this.element,
-      "gate-popup",
-    )
-    Util.notNull(controller)
-    return controller as GatePopupController
-  }
-
-  private get circleNotationController(): CircleNotationController {
+  private get circleNotation(): CircleNotationController {
     const controller = this.application.getControllerForElementAndIdentifier(
       this.circleNotationTarget,
       "circle-notation",
