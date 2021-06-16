@@ -42,8 +42,4 @@ module CircuitHelper
   def dropzone(*options, &block)
     component 'circuit/dropzone', *options, &block
   end
-
-  def draggable(*options, &block)
-    component 'circuit/draggable', *options, &block
-  end
 end

@@ -10,686 +10,446 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable write: true do %>
-        <%= write 0 %>
-      <% end %>
+      <%= write 0 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone %>
     <%= dropzone %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-      <% end %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 0 %>
-      <% end %>
+      <%= not_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 1 %>
-      <% end %>
+      <%= not_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 2 %>
-      <% end %>
+      <%= not_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= not_gate bit: 3 %>
-      <% end %>
+      <%= not_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
     <%= dropzone do %>
-      <%= draggable do %>
-        <%= hadamard_gate %>
-      <% end %>
+      <%= hadamard_gate %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

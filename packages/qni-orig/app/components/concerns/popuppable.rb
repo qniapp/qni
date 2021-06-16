@@ -3,14 +3,15 @@ module Popuppable
 
   included do
     attribute :popup, default: true
+
     validates :popup, inclusion: { in: [true, false] }
   end
 
   private
 
   def data_popup
-    { 'gate-popup-target': popup && 'gate',
-      'gate-popup-type': popup_type }
+    { 'gate-popup-type': popup_type,
+      action: 'contextmenu->editor#showGatePopup' }
   end
 
   def popup_type

@@ -14,6 +14,9 @@
   @apply rounded-md;
   @apply shadow-lg;
 
+  // Disable double tap zoom
+  touch-action: manipulation;
+
   @screen md {
     // Position
     @apply bottom-0;

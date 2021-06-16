@@ -25,8 +25,8 @@ module Components::GatesHelper
     component 'gates/swap_gate', *options
   end
 
-  def write(value)
-    component 'gates/write_gate', value: value
+  def write(value, *options)
+    component 'gates/write_gate', (options[0] || {}).merge(value: value)
   end
 
   def readout(*options)

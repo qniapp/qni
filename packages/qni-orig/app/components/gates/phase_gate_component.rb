@@ -1,11 +1,13 @@
 require 'component'
 require 'concerns/connectable'
+require 'concerns/draggable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
 class Gates::PhaseGateComponent < Component
   include Connectable
+  include Draggable
   include Popuppable
   include Targetable
   include Wireable
@@ -13,8 +15,12 @@ class Gates::PhaseGateComponent < Component
   attribute :phi
 
   def klass
-    class_string('gate', 'gate--phiable',
+    class_string('gate',
+                 'gate--phiable',
                  'phase-gate',
+                 'draggable',
+                 'draggable--palette' => palette?,
+                 'draggable--circuit' => circuit?,
                  'connectable--upper-bit' => connected_with_upper_bit?,
                  'connectable--lower-bit' => connected_with_lower_bit?,
                  'instruction--wire-inactive' => !wire_active?)
@@ -32,7 +38,7 @@ class Gates::PhaseGateComponent < Component
         else
           { targets: targets.join(',') }
         end
-    h.merge(data_popup)
+    h.merge(data_popup).merge(data_draggable)
   end
 
   def connected_with_upper_bit?

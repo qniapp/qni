@@ -1,43 +1,4 @@
 .hadamard-gate {
-  $gate-shape-class: ".gate__shape";
-
-  .circuit[data-nqubit="8"] & #{$gate-shape-class} {
-    @apply rounded-sm;
-  }
-
-  .draggable:hover & #{$gate-shape-class} {
-    @screen md {
-      @apply bg-#{$gate-hover-color};
-    }
-  }
-
-  // Reference for coordinates during dragging
-  .draggable--source & #{$gate-shape-class} {
-    @apply bg-#{$gate-source-color};
-  }
-
-  // Placeholder to display when it is droppable
-  .draggable--shadow & #{$gate-shape-class} {
-    @apply bg-#{$gate-shadow-color};
-  }
-
-  // Disabled state
-  &.gate--disabled #{$gate-shape-class} {
-    @apply bg-#{$gate-color-disabled};
-    @apply border-2 border-dashed border-#{$gate-label-color-disabled};
-  }
-
-  &.gate--disabled #{$gate-shape-class} svg {
-    @apply text-#{$gate-label-color-disabled};
-  }
-
-  .draggable:hover &.gate--disabled #{$gate-shape-class} {
-    @apply bg-#{$gate-hover-color};
-    @apply border-0;
-    @apply text-#{$gate-label-color};
-  }
-
-  .draggable:hover &.gate--disabled #{$gate-shape-class} svg {
-    @apply text-#{$gate-label-color};
-  }
+  @include color-filled-gate;
+  @include recutangular-gate;
 }

@@ -14,43 +14,31 @@
   <%= circuit_block label: 'entangle' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= control_gate bit: 0, targets: [1], controls: [0] %>
-        <% end %>
+        <%= control_gate bit: 0, targets: [1], controls: [0] %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= not_gate bit: 1, controls: [0], targets: [1] %>
-        <% end %>
+        <%= not_gate bit: 1, controls: [0], targets: [1] %>
       <% end %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout %>
-        <% end %>
+        <%= readout %>
       <% end %>
       <%= dropzone %>
     <% end %>
@@ -59,9 +47,7 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout %>
-        <% end %>
+        <%= readout %>
       <% end %>
     <% end %>
   <% end %>

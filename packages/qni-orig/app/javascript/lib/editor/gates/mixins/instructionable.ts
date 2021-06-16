@@ -14,19 +14,6 @@ export class Instructionable extends Mixin(Elementable, Animatable) {
     return this.circuitDropzone.bit
   }
 
-  set bordered(value: boolean) {
-    if (!this.element) return
-
-    const classList = this.element.classList
-    const className = classNameFor("instruction:state:bordered")
-
-    if (value) {
-      classList.add(className)
-    } else {
-      classList.remove(className)
-    }
-  }
-
   set animateJello(value: boolean) {
     if (!this.element) return
 

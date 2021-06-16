@@ -1,10 +1,8 @@
 <% control_gate = local_assigns.fetch(:control_gate) %>
 
-<% control_gate_dot = capture do %>
-  <div class="control-gate__dot"></div>
-<% end %>
-
 <%= tag.div class: control_gate.klass, data: control_gate.data do %>
   <%= wires wireable: false %>
-  <%= gate_shape label: control_gate_dot, type: 'square' %>
+  <div class="gate__body">
+    <%= control_dot_icon class: 'gate-icon' %>
+  </div>
 <% end %>

@@ -1,65 +1,25 @@
 .control-gate {
-  $parent: &;
+  @include recutangular-gate;
+  @include transparent-gate;
 
-  $gate-shape-class: ".gate__shape";
+  @apply text-#{$gate-color};
 
-  @apply border-0;
-  @apply rounded;
-
-  #{$gate-shape-class} {
-    @apply border-#{$gate-border-width} border-transparent rounded;
-
-    .draggable:hover &,
-    .draggable--grabbed & {
-      @screen md {
-        @apply bg-white;
-        @apply border-#{$gate-hover-color};
-      }
+  @screen md {
+    &.draggable:hover {
+      @apply text-#{$gate-hover-color};
     }
 
-    // Reference for coordinates during dragging
-    .draggable--source & {
-      @apply bg-white;
-      @apply border-#{$gate-source-color};
+    &.draggable--source {
+      @apply text-#{$gate-source-color};
     }
 
-    // Placeholder to display when it is droppable
-    .draggable--shadow & {
-      @apply bg-white;
-      @apply border-#{$gate-hover-color};
-    }
-  }
-
-  &__dot {
-    @apply bg-#{$gate-color};
-    @apply rounded-full;
-    @apply w-3 h-3;
-    @apply z-10;
-
-    .draggable:hover & {
-      @screen md {
-        @apply bg-#{$gate-hover-color};
-      }
+    &.draggable--shadow {
+      @apply text-#{$gate-shadow-color};
     }
 
-    // Reference for coordinates during dragging
-    .draggable--source & {
-      @apply bg-#{$gate-source-color};
+    &.gate--disabled:not(.draggable--source):not(:hover) {
+      @apply border-solid border-transparent;
+      @apply text-#{$gate-label-color-disabled};
     }
-
-    // Placeholder to display when it is droppable
-    .draggable--shadow & {
-      @apply bg-#{$gate-shadow-color};
-    }
-  }
-
-  // Disabled state
-  &.gate--disabled #{$gate-shape-class} &__dot {
-    @apply bg-#{$gate-label-color-disabled};
-  }
-
-  &.instruction--bordered #{$gate-shape-class} {
-    @apply bg-white;
-    @apply border-#{$gate-border-color};
   }
 }

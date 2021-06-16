@@ -1,8 +1,7 @@
 import { DraggableItem } from "./draggableItem"
 import { Dropzonable } from "./mixins"
 import { CircuitElement } from "./gates"
-import { InternalError } from "lib/error"
-import { classNameFor } from "lib/base"
+import { Util, classNameFor } from "lib/base"
 
 export class DraggableShadow {
   private draggable: DraggableItem
@@ -17,18 +16,15 @@ export class DraggableShadow {
     if (this.dropzone.isEqualTo(this.draggable.dropzone)) return
 
     const draggableSource = this.draggable.source
-    if (!draggableSource) {
-      throw new InternalError("Draggable source not found")
-    }
+    Util.notNull(draggableSource)
 
     const el = draggableSource.clonePlainDraggableElement()
     el.classList.remove(classNameFor("draggable:type:palette"))
     el.classList.add(classNameFor("draggable:type:shadow"))
-
-    const instructionEl = this.instructionElement(el)
-    instructionEl.classList.remove(classNameFor("connectable:lowerBit"))
-    instructionEl.classList.remove(classNameFor("connectable:upperBit"))
-    instructionEl.classList.add("animate__animated", "animate__jello")
+    el.classList.remove(classNameFor("gate:state:disabled"))
+    el.classList.remove(classNameFor("connectable:lowerBit"))
+    el.classList.remove(classNameFor("connectable:upperBit"))
+    el.classList.add("animate__animated", "animate__jello")
 
     this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)
   }
@@ -51,20 +47,12 @@ export class DraggableShadow {
   private get element(): Element {
     const className = classNameFor("draggable")
     const el = this.dropzone.element.getElementsByClassName(className).item(0)
-    if (!el) throw new InternalError(`.${className} not found`)
+    Util.notNull(el)
 
     return el
   }
 
   private instruction(draggableElement = this.element): CircuitElement {
-    return CircuitElement.create(this.instructionElement(draggableElement))
-  }
-
-  private instructionElement(draggableElement = this.element): Element {
-    const className = classNameFor("gate")
-    const el = draggableElement.getElementsByClassName(className).item(0)
-    if (!el) throw new InternalError(`.${className} not found`)
-
-    return el
+    return CircuitElement.create(draggableElement)
   }
 }

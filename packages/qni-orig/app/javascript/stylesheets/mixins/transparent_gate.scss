@@ -1,0 +1,41 @@
+@mixin transparent-gate {
+  .gate {
+    &__body {
+      @apply bg-transparent;
+    }
+  }
+
+  @screen md {
+    &.draggable:hover > .gate {
+      &__body {
+        @apply border-#{$gate-hover-color};
+      }
+    }
+
+    &.draggable--grabbed > .gate {
+      &__body {
+        @apply bg-white;
+      }
+    }
+
+    &.draggable--source > .gate {
+      &__body {
+        @apply border-#{$gate-source-color};
+      }
+    }
+
+    &.draggable--shadow > .gate {
+      &__body {
+        @apply bg-white;
+        @apply border-#{$gate-shadow-color};
+      }
+    }
+
+    &.draggable--adjoining > .gate {
+      &__body {
+        @apply bg-white;
+        @apply border-#{$gate-border-color};
+      }
+    }
+  }
+}

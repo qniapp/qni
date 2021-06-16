@@ -15,53 +15,35 @@
   <%= circuit_block label: 'prepare' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: 'π/4' %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: 'π/4' %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
@@ -70,9 +52,7 @@
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 1, phi: 'π/2' %>
-        <% end %>
+        <%= phase_gate bit: 1, phi: 'π/2' %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
@@ -81,9 +61,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 2, phi: 'π' %>
-        <% end %>
+        <%= phase_gate bit: 2, phi: 'π' %>
       <% end %>
       <%= dropzone %>
     <% end %>
@@ -102,120 +80,88 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 2, phi: '-π/2', targets: [2, 3] %>
-        <% end %>
+        <%= phase_gate bit: 2, phi: '-π/2', targets: [2, 3] %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 3, phi: '-π/2', targets: [2, 3] %>
-        <% end %>
+        <%= phase_gate bit: 3, phi: '-π/2', targets: [2, 3] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 1, phi: '-π/4', targets: [1, 3] %>
-        <% end %>
+        <%= phase_gate bit: 1, phi: '-π/4', targets: [1, 3] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 3, phi: '-π/4', targets: [1, 3] %>
-        <% end %>
+        <%= phase_gate bit: 3, phi: '-π/4', targets: [1, 3] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: '-π/8', targets: [0, 3] %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: '-π/8', targets: [0, 3] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 3, phi: '-π/8', targets: [0, 3] %>
-        <% end %>
+        <%= phase_gate bit: 3, phi: '-π/8', targets: [0, 3] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 1, phi: '-π/2', targets: [1, 2] %>
-        <% end %>
+        <%= phase_gate bit: 1, phi: '-π/2', targets: [1, 2] %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 2, phi: '-π/2', targets: [1, 2] %>
-        <% end %>
+        <%= phase_gate bit: 2, phi: '-π/2', targets: [1, 2] %>
       <% end %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: '-π/4', targets: [0, 2] %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: '-π/4', targets: [0, 2] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 2, phi: '-π/4', targets: [0, 2] %>
-        <% end %>
+        <%= phase_gate bit: 2, phi: '-π/4', targets: [0, 2] %>
       <% end %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 0, phi: '-π/2', targets: [0, 1] %>
-        <% end %>
+        <%= phase_gate bit: 0, phi: '-π/2', targets: [0, 1] %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= phase_gate bit: 1, phi: '-π/2', targets: [0, 1] %>
-        <% end %>
+        <%= phase_gate bit: 1, phi: '-π/2', targets: [0, 1] %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
@@ -223,29 +169,21 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 0, targets: [0, 3] %>
-        <% end %>
+        <%= swap_gate bit: 0, targets: [0, 3] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 3, targets: [0, 3] %>
-        <% end %>
+        <%= swap_gate bit: 3, targets: [0, 3] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 1, targets: [1, 2] %>
-        <% end %>
+        <%= swap_gate bit: 1, targets: [1, 2] %>
       <% end %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 2, targets: [1, 2] %>
-        <% end %>
+        <%= swap_gate bit: 2, targets: [1, 2] %>
       <% end %>
       <%= dropzone %>
     <% end %>

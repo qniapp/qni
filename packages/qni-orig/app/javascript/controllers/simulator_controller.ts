@@ -9,7 +9,7 @@ import {
   RootNotGate,
 } from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
-import { Breakpoint, Util } from "lib/base"
+import { Breakpoint, Util, classNameFor } from "lib/base"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -142,6 +142,10 @@ export default class SimulatorController extends Controller {
     this.circuit.steps.forEach((each) => {
       each.done = false
     })
+    Array.from(document.getElementsByClassName(classNameFor("gate:type:readout"))).forEach((each) => {
+      each.classList.remove(classNameFor("gate:state:updated"))
+    })
+
     this.magnitudes = {}
     this.phases = {}
 

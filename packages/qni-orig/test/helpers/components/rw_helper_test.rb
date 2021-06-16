@@ -8,10 +8,10 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate" data-value="0">
-        <div class="gate__shape gate__shape--square">
-          #{ket_icon}
-          <div class="gate__shape-label"></div>
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseover->editor#enableDnd:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive">
+        <div class="gate__body">
+          #{ket_icon class: 'gate-icon'}
+          <div class="gate-ket-label"></div>
         </div>
       </div>
     ERB
@@ -19,10 +19,10 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate" data-value="0">
-        <div class="gate__shape gate__shape--square">
-          #{ket_icon}
-          <div class="gate__shape-label"></div>
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseover-&gt;editor#enableDnd:passive mousedown-&gt;editor#grabDraggable:passive mouseup-&gt;editor#releaseDraggable:passive">
+        <div class="gate__body">
+          #{ket_icon class: 'gate-icon'}
+          <div class="gate-ket-label"></div>
         </div>
       </div>
     ERB
@@ -30,10 +30,10 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout' do
     assert_dom_equal beautify(<<~ERB), beautify(readout)
-      <div class="gate readout-gate" data-gate-popup-target="gate" data-gate-popup-type="set">
-        <div class="gate__shape gate__shape--square">
-          #{ket_icon}
-          <div class="gate__shape-label"></div>
+      <div class="gate readout-gate draggable draggable--circuit" data-gate-popup-type="set" data-action="mouseover-&gt;editor#enableDnd:passive mousedown-&gt;editor#grabDraggable:passive mouseup-&gt;editor#releaseDraggable:passive">
+        <div class="gate__body">
+          #{ket_icon class: 'gate-icon'}
+          <div class="gate-ket-label"></div>
         </div>
       </div>
     ERB
@@ -41,10 +41,10 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'readout (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(readout(set: 'alice_v'))
-      <div class="gate readout-gate" data-set="alice_v" data-gate-label="alice_v" data-gate-popup-target="gate" data-gate-popup-type="set">
-        <div class="gate__shape gate__shape--square">
-          #{ket_icon}
-          <div class="gate__shape-label"></div>
+      <div class="gate readout-gate draggable draggable--circuit" data-set="alice_v" data-gate-label="alice_v" data-gate-popup-type="set" data-action="mouseover->editor#enableDnd:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive">
+        <div class="gate__body">
+          #{ket_icon class: 'gate-icon'}
+          <div class="gate-ket-label"></div>
         </div>
       </div>
     ERB

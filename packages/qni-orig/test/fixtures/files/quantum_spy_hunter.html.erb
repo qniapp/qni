@@ -16,54 +16,42 @@
   <%= circuit_block label: 'get two random bits' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout set: 'alice_h' %>
-        <% end %>
+        <%= readout set: 'alice_h' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout set: 'alice_v' %>
-        <% end %>
+        <%= readout set: 'alice_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -72,9 +60,7 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -83,9 +69,7 @@
   <%= circuit_block label: 'set value' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= not_gate bit: 0, if: 'alice_v' %>
-        <% end %>
+        <%= not_gate bit: 0, if: 'alice_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -101,9 +85,7 @@
   <%= circuit_block label: 'apply H' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate if: 'alice_h' %>
-        <% end %>
+        <%= hadamard_gate if: 'alice_h' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -112,14 +94,10 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone output_wire_active: false do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 0, targets: [0, 1] %>
-        <% end %>
+        <%= swap_gate bit: 0, targets: [0, 1] %>
       <% end %>
       <%= dropzone input_wire_active: false do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 1, targets: [0, 1] %>
-        <% end %>
+        <%= swap_gate bit: 1, targets: [0, 1] %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -128,45 +106,35 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout set: 'eve_v' %>
-        <% end %>
+        <%= readout set: 'eve_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= not_gate bit: 1, if: 'eve_v' %>
-        <% end %>
+        <%= not_gate bit: 1, if: 'eve_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -176,9 +144,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable write: true do %>
-          <%= write 0 %>
-        <% end %>
+        <%= write 0 %>
       <% end %>
     <% end %>
   <% end %>
@@ -187,9 +153,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate %>
-        <% end %>
+        <%= hadamard_gate %>
       <% end %>
     <% end %>
   <% end %>
@@ -198,9 +162,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout set: 'bob_h' %>
-        <% end %>
+        <%= readout set: 'bob_h' %>
       <% end %>
     <% end %>
   <% end %>
@@ -208,14 +170,10 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone output_wire_active: false do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 1, targets: [1, 2] %>
-        <% end %>
+        <%= swap_gate bit: 1, targets: [1, 2] %>
       <% end %>
       <%= dropzone input_wire_active: false do %>
-        <%= draggable do %>
-          <%= swap_gate bit: 2, targets: [1, 2] %>
-        <% end %>
+        <%= swap_gate bit: 2, targets: [1, 2] %>
       <% end %>
     <% end %>
   <% end %>
@@ -224,9 +182,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable do %>
-          <%= hadamard_gate if: 'bob_h' %>
-        <% end %>
+        <%= hadamard_gate if: 'bob_h' %>
       <% end %>
     <% end %>
   <% end %>
@@ -242,9 +198,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= draggable readout: true do %>
-          <%= readout %>
-        <% end %>
+        <%= readout %>
       <% end %>
     <% end %>
   <% end %>

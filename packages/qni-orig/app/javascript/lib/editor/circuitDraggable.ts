@@ -1,5 +1,11 @@
 import { Draggable } from "./mixins"
-import { ControlGate, CircuitElement, HadamardGate, NotGate, SwapGate } from "./gates"
+import {
+  ControlGate,
+  CircuitElement,
+  HadamardGate,
+  NotGate,
+  SwapGate,
+} from "./gates"
 import { CircuitDropzone } from "./circuitDropzone"
 import { Mixin } from "ts-mixer"
 
@@ -19,7 +25,7 @@ export class CircuitDraggable extends Mixin(Draggable) {
     )
   }
 
-  mouseDown(event: MouseEvent): void {
+  grab(event: MouseEvent): void {
     this.createSource()
     this.grabbed = true
     this.moveToGrabbedPosition(event)
@@ -34,13 +40,11 @@ export class CircuitDraggable extends Mixin(Draggable) {
       circuitElement.disconnectFromLowerBit()
       circuitElement.disconnectFromUpperBit()
     }
-    this.circuitElement.animateJello = true
   }
 
   mouseUp(): void {
     this.moveTo(0, 0)
     this.grabbed = false
-    this.circuitElement.animateJello = false
   }
 
   start(): void {
@@ -55,7 +59,6 @@ export class CircuitDraggable extends Mixin(Draggable) {
     } else {
       this.moveTo(0, 0)
     }
-    this.circuitElement.animateJello = false
   }
 
   remove(): void {
@@ -68,10 +71,6 @@ export class CircuitDraggable extends Mixin(Draggable) {
   }
 
   get circuitElement(): CircuitElement {
-    return CircuitElement.create(this.circuitElementHTMLElement())
-  }
-
-  private circuitElementHTMLElement(): HTMLElement | null {
-    return this.element.getElementsByClassName("gate").item(0) as HTMLElement
+    return CircuitElement.create(this.element)
   }
 }
