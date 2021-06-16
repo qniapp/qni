@@ -76,14 +76,11 @@
     @apply origin-center;
     @apply text-#{$qubit-circle-magnitude-color};
     @apply transition-transform;
+    @apply transform scale-0;
     will-change: transform;
 
     #{$parent}:hover & {
       @apply text-#{$qubit-circle-magnitude-hover-color};
-    }
-
-    #{$parent}[data-magnitude="0.00000"] & {
-      @apply transform scale-0;
     }
 
     #{$parent}[data-magnitude="1.00000"] & {
