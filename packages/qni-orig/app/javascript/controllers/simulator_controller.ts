@@ -32,6 +32,7 @@ export default class SimulatorController extends Controller {
   declare readonly runButtonTarget: HTMLElement
 
   connect(): void {
+    this.toggleCircuitStepActive(0)
     this.runButton = new RunButton(this.runButtonTarget as HTMLInputElement)
 
     this.worker = new Worker("/service-worker.js")
@@ -75,7 +76,7 @@ export default class SimulatorController extends Controller {
 
           step.done = true
         } else if (data.type === "finish") {
-          this.gotoCircuitBreakpoint(this.circuitBreakpoint || 0)
+          this.gotoCircuitBreakpoint(this.circuitBreakpoint)
           this.runButton.running = false
         }
       }).bind(this),
@@ -90,35 +91,32 @@ export default class SimulatorController extends Controller {
     return parseInt(dataNqubit)
   }
 
-  get circuitBreakpoint(): number | null {
-    let circuitBreakpoint = null
-    this.circuit.steps.forEach((each, i) => {
-      if (each.isActive()) circuitBreakpoint = i
-    })
-    return circuitBreakpoint
+  get circuitBreakpoint(): number {
+    const bp = this.circuit.steps.findIndex((each) => each.isActive())
+    Util.need(bp !== -1, "Active breakpoint not found")
+
+    return bp
   }
 
-  gotoCircuitBreakpoint(stepIndex: number): void {
+  private gotoCircuitBreakpoint(stepIndex: number): void {
     this.toggleCircuitStepActive(stepIndex)
     this.drawStateVector(stepIndex)
   }
 
-  circuitStepMouseEntered(event: MouseEvent): void {
+  showStateVector(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
     const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
     this.drawStateVector(circuitStep.index)
   }
 
-  circuitStepMouseLeave(): void {
+  maybeBackToCurrentBreakpoint(): void {
     if (Breakpoint.isMobile()) return
 
-    const circuitBreakpoint = this.circuitBreakpoint
-    if (circuitBreakpoint === null) return
-    this.drawStateVector(circuitBreakpoint)
+    this.drawStateVector(this.circuitBreakpoint)
   }
 
-  circuitStepClicked(event: MouseEvent): void {
+  activateBreakpoint(event: MouseEvent): void {
     const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
 
     if (!circuitStep.isDone) {
@@ -127,7 +125,7 @@ export default class SimulatorController extends Controller {
     this.gotoCircuitBreakpoint(circuitStep.index)
   }
 
-  toggleCircuitStepActive(stepIndex: number): void {
+  private toggleCircuitStepActive(stepIndex: number): void {
     this.circuit.steps.forEach((each, i) => {
       if (i == stepIndex) {
         each.active = true
@@ -142,12 +140,11 @@ export default class SimulatorController extends Controller {
     this.circuit.steps.forEach((each) => {
       each.done = false
     })
-    Array.from(document.getElementsByClassName(classNameFor("gate:type:readout"))).forEach((each) => {
+    Array.from(
+      document.getElementsByClassName(classNameFor("gate:type:readout")),
+    ).forEach((each) => {
       each.classList.remove(classNameFor("gate:state:updated"))
     })
-
-    this.magnitudes = {}
-    this.phases = {}
 
     const steps = this.steps
     this.worker.postMessage({ nqubit: steps[0].length, steps: steps })
@@ -162,8 +159,8 @@ export default class SimulatorController extends Controller {
   }
 
   private drawStateVector(circuitBreakpoint: number): void {
-    Util.notNull(this.magnitudes)
-    Util.notNull(this.phases)
+    if (this.magnitudes === undefined) return
+    if (this.phases === undefined) return
 
     const magnitudes = this.magnitudes[circuitBreakpoint]
     const phases = this.phases[circuitBreakpoint]

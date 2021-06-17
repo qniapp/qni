@@ -3,5 +3,9 @@
     &__body {
       @apply rounded-full;
     }
+
+    &__body::after {
+      @apply rounded;
+    }
   }
 }

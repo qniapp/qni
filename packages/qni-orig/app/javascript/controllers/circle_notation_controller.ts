@@ -12,6 +12,9 @@ import Rails from "rails-ujs"
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
 
+  private qubitCircleTargetsCache: HTMLElement[] | undefined
+
+  declare loading: boolean
   declare loaded: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
   declare tippyInstances: Instance<Props>[]
@@ -19,6 +22,7 @@ export default class CircleNotationController extends Controller {
   declare popupEl: HTMLElement
 
   connect(): void {
+    this.loading = false
     this.loaded = false
   }
 
@@ -72,9 +76,12 @@ export default class CircleNotationController extends Controller {
     magnitudes: { [bit: number]: number },
     phases: { [bit: number]: number },
   ): void {
+    if (this.loading) return
+
     if (this.loaded) {
       this.updateQubitCircles(magnitudes, phases)
     } else {
+      this.loading = true
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       Rails.ajax({
         type: "GET",
@@ -82,6 +89,7 @@ export default class CircleNotationController extends Controller {
         dataType: "script",
         success: () => {
           this.initPopup()
+          this.loading = false
           this.loaded = true
           this.updateQubitCircles(magnitudes, phases)
         },
@@ -94,15 +102,14 @@ export default class CircleNotationController extends Controller {
     phases: { [bit: number]: number },
   ): void {
     const qubitCircleCount = Object.keys(magnitudes).length
-    const qubitCircleTargets = this.qubitCircleTargets
 
     Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
-      const qubitCircle = qubitCircleTargets[c]
-      qubitCircle.setAttribute(
-        "data-magnitude",
-        magnitudes[c].toFixed(5).toString(),
-      )
-      qubitCircle.setAttribute("data-phase", phases[c].toFixed(3).toString())
+      const qubitCircle = this.qubitCircles[c]
+      const magnitude = magnitudes[c].toFixed(5).toString()
+      const phase = phases[c].toFixed(3).toString()
+
+      qubitCircle.setAttribute("data-magnitude", magnitude)
+      if (magnitude !== "0.00000") qubitCircle.setAttribute("data-phase", phase)
     })
   }
 
@@ -154,5 +161,10 @@ export default class CircleNotationController extends Controller {
     const dataPhase = el.getAttribute("data-phase")
     Util.notNull(dataPhase)
     return parseFloat(dataPhase)
+  }
+
+  private get qubitCircles(): HTMLElement[] {
+    this.qubitCircleTargetsCache ||= this.qubitCircleTargets
+    return this.qubitCircleTargetsCache
   }
 }

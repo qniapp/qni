@@ -7,8 +7,8 @@
 
   @screen md {
     &.draggable:hover > .gate {
-      &__body {
-        @apply border-#{$gate-hover-color};
+      &__body::after {
+        @apply opacity-100;
       }
     }
 
@@ -19,22 +19,31 @@
     }
 
     &.draggable--source > .gate {
-      &__body {
+      &__body::after {
         @apply border-#{$gate-source-color};
+        @apply opacity-100;
       }
     }
 
     &.draggable--shadow > .gate {
       &__body {
         @apply bg-white;
+      }
+
+      &__body::after {
         @apply border-#{$gate-shadow-color};
+        @apply opacity-100;
       }
     }
 
     &.draggable--adjoining > .gate {
       &__body {
         @apply bg-white;
+      }
+
+      &__body::after {
         @apply border-#{$gate-border-color};
+        @apply opacity-100;
       }
     }
   }

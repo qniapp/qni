@@ -1,6 +1,5 @@
 .gate {
   &__body {
-    @apply border-2 border-transparent;
     @apply flex justify-center items-center;
     @apply relative;
     @apply w-full h-full;
@@ -16,5 +15,14 @@
       top: -2px;
       width: calc(100% + 4px);
     }
+  }
+
+  &__body::after {
+    @apply absolute inset-0;
+    @apply border-2 border-#{$gate-hover-color};
+    @apply opacity-0;
+
+    content: "";
+    will-change: opacity;
   }
 }

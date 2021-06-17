@@ -7,9 +7,9 @@
   }
 
   &.draggable:hover > .gate {
-    &__body {
+    &__body::after {
       @screen md {
-        @apply bg-#{$gate-hover-color};
+        @apply opacity-100;
       }
     }
   }
@@ -33,18 +33,7 @@
   &.gate--disabled:not(.draggable--source) > .gate {
     &__body {
       @apply bg-#{$gate-color-disabled};
-      @apply border-dashed border-#{$gate-label-color-disabled};
       @apply text-#{$gate-label-color-disabled};
-    }
-  }
-
-  &.gate--disabled:hover > .gate {
-    &__body {
-      @screen md {
-        @apply bg-#{$gate-hover-color};
-        @apply border-solid border-transparent;
-        @apply text-#{$gate-label-color};
-      }
     }
   }
 }

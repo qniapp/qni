@@ -5,10 +5,6 @@
   @apply text-#{$gate-color};
 
   @screen md {
-    &.draggable:hover {
-      @apply text-#{$gate-hover-color};
-    }
-
     &.draggable--source {
       @apply text-#{$gate-source-color};
     }
@@ -17,9 +13,9 @@
       @apply text-#{$gate-shadow-color};
     }
 
-    &.gate--disabled:not(.draggable--source):not(:hover) {
+    &.gate--disabled:not(.draggable--source) {
       @apply border-solid border-transparent;
-      @apply text-#{$gate-label-color-disabled};
+      @apply text-#{$gate-color-disabled};
     }
   }
 }
