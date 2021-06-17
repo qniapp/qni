@@ -1,6 +1,7 @@
 @mixin recutangular-gate {
   .gate {
-    &__body {
+    &__body,
+    &__body::after {
       @apply rounded;
     }
   }

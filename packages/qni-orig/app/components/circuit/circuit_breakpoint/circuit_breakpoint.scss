@@ -28,11 +28,13 @@
 
   &__body {
     @apply absolute inset-0;
-    @apply opacity-75;
+    @apply bg-#{$circuit-breakpoint-color};
+    @apply opacity-0;
     @apply z-10;
 
     margin-top: -#{$circuit-breakpoint-width-px / 2}px;
     padding: #{$circuit-breakpoint-width-px / 2}px;
+    will-change: opacity;
 
     @screen md {
       @apply mt-0;
@@ -41,21 +43,21 @@
 
     .circuit-step--done:hover & {
       @screen md {
-        @apply bg-#{$circuit-breakpoint-color-hover};
+        @apply opacity-30;
       }
     }
 
     .circuit-step--done:active & {
-      @apply bg-#{$circuit-breakpoint-color};
+      @apply opacity-80;
     }
 
     #{$parent}--active & {
-      @apply bg-#{$circuit-breakpoint-color};
+      @apply opacity-80;
     }
 
     .circuit-step--done:hover #{$parent}--active & {
       @screen md {
-        @apply bg-#{$circuit-breakpoint-active-hover-color};
+        @apply opacity-80;
       }
     }
   }

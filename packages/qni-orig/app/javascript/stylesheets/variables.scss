@@ -72,9 +72,9 @@ $instruction-label-icon-size: (
 
 // Gate
 $gate-color: green-500;
-$gate-color-disabled: "white";
+$gate-color-disabled: gray-400;
 $gate-label-color: "white";
-$gate-label-color-disabled: gray-300;
+$gate-label-color-disabled: "white";
 $gate-hover-color: pink-500;
 $gate-shadow-color: pink-400;
 $gate-border-width: 2;
@@ -176,7 +176,7 @@ $qubit-circle-size: (
   1: $qubit-circle-size-2xl,
   2: $qubit-circle-size-2xl,
   3: $qubit-circle-size-2xl,
-  4: $qubit-circle-size-xl,
+  4: $qubit-circle-size-2xl,
   5: $qubit-circle-size-xl,
   6: $qubit-circle-size-xl,
   7: $qubit-circle-size-large,
