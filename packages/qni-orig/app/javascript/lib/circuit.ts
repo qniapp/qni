@@ -112,7 +112,7 @@ export class Circuit {
         classNameFor("draggable:type:circuit"),
       ),
     ).map((each) => {
-      return CircuitDraggable.create(each)
+      return new CircuitDraggable(each as HTMLElement)
     })
   }
 

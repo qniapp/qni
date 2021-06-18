@@ -57,7 +57,7 @@
 
     .circuit-step--done:hover #{$parent}--active & {
       @screen md {
-        @apply opacity-80;
+        @apply opacity-100;
       }
     }
   }

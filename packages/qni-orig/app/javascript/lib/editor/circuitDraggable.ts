@@ -1,64 +1,37 @@
-import { Draggable } from "./mixins"
-import {
-  ControlGate,
-  CircuitElement,
-  HadamardGate,
-  NotGate,
-  SwapGate,
-} from "./gates"
 import { CircuitDropzone } from "./circuitDropzone"
-import { Mixin } from "ts-mixer"
+import { CircuitElement } from "./gates"
+import { Connectable } from "./gates/mixins"
+import { Draggable } from "./mixins"
+import { Mixin, hasMixin } from "ts-mixer"
 
 export class CircuitDraggable extends Mixin(Draggable) {
-  static create(
-    element: HTMLElement | Element | null | undefined,
-  ): CircuitDraggable {
-    const circuitDraggable = new CircuitDraggable()
-    circuitDraggable.assignElement(element)
-    return circuitDraggable
-  }
-
-  assignElement(element: HTMLElement | Element | null | undefined): void {
+  constructor(element: HTMLElement) {
+    super()
     this.element = this.validateElementClassName(
       element,
       "draggable:type:circuit",
     )
   }
 
+  enableDnd(): void {
+    this.setInteract({
+      onStart: this.startDragging.bind(this),
+      onMove: this.dragMove.bind(this),
+      onEnd: this.endDragging.bind(this),
+    })
+  }
+
   grab(event: MouseEvent): void {
     this.createSource()
     this.grabbed = true
-    this.moveToGrabbedPosition(event)
 
     const circuitElement = this.circuitElement
-    if (
-      circuitElement instanceof ControlGate ||
-      circuitElement instanceof NotGate ||
-      circuitElement instanceof HadamardGate ||
-      circuitElement instanceof SwapGate
-    ) {
+    if (hasMixin(circuitElement, Connectable)) {
       circuitElement.disconnectFromLowerBit()
       circuitElement.disconnectFromUpperBit()
     }
-  }
 
-  mouseUp(): void {
-    this.moveTo(0, 0)
-    this.grabbed = false
-  }
-
-  start(): void {
-    this.dragging = true
-  }
-
-  end(): void {
-    this.dragging = false
-    this.source?.remove()
-    if (this.isDropped) {
-      this.remove()
-    } else {
-      this.moveTo(0, 0)
-    }
+    this.moveToGrabbedPosition(event)
   }
 
   remove(): void {
@@ -72,5 +45,26 @@ export class CircuitDraggable extends Mixin(Draggable) {
 
   get circuitElement(): CircuitElement {
     return CircuitElement.create(this.element)
+  }
+
+  private startDragging(event: Interact.DragEvent) {
+    const draggable = new CircuitDraggable(event.target as HTMLElement)
+    draggable.dragging = true
+  }
+
+  private dragMove(event: Interact.DragEvent) {
+    const draggable = new CircuitDraggable(event.target as HTMLElement)
+    draggable.move(event.dx, event.dy)
+  }
+
+  private endDragging(event: Interact.DragEvent) {
+    const draggable = new CircuitDraggable(event.target as HTMLElement)
+    draggable.dragging = false
+    draggable.source?.remove()
+    if (draggable.isDropped) {
+      draggable.remove()
+    } else {
+      draggable.moveTo(0, 0)
+    }
   }
 }

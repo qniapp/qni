@@ -34,7 +34,7 @@ export class DraggableShadow {
     this.dropzone.element.removeChild(this.element)
   }
 
-  toPlainDraggableElement(): Element {
+  toPlainDraggableElement(): HTMLElement {
     const el = this.element
     el.classList.remove(classNameFor("draggable:type:shadow"))
     el.classList.remove(classNameFor("draggable:type:palette"))
