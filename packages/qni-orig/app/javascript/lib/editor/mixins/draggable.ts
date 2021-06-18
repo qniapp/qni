@@ -124,6 +124,11 @@ export class Draggable extends Mixin(Interactable) {
     return this.isClassNamed("draggable:state:grabbed")
   }
 
+  unGrab(): void {
+    this.moveTo(0, 0)
+    this.grabbed = false
+  }
+
   set dropped(flag: boolean) {
     this.setClassName("draggable:state:dropped", flag)
   }

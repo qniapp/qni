@@ -70,7 +70,7 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     this.readout = false
   }
 
-  drop(draggable: DraggableItem): Element | void {
+  drop(draggable: DraggableItem): HTMLElement | void {
     this.active = false
     this.occupied = true
 
@@ -78,13 +78,13 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     if (this.element === draggable.dropzone.element) return
 
     const el = new DraggableShadow(draggable, this).toPlainDraggableElement()
-    return CircuitDraggable.create(el).element
+    return new CircuitDraggable(el).element
   }
 
   get draggable(): CircuitDraggable | null {
     const el = this.draggableElement()
 
-    if (el) return CircuitDraggable.create(el)
+    if (el) return new CircuitDraggable(el)
     return null
   }
 

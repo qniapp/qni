@@ -13,18 +13,14 @@ import {
 
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
+import { Connectable, Controllable } from "./gates/mixins"
 import { DraggableItem } from "./draggableItem"
+import { DropEventHandlers } from "./mixins"
 import { GatePopup } from "lib/editor"
 import { PaletteDraggable } from "./paletteDraggable"
 import { TrashDropzone } from "./trashDropzone"
-import { classNameFor } from "lib/base"
-import {
-  DragEventHandler,
-  DragEventHandlers,
-  DropEventHandlers,
-} from "./mixins"
-import { Connectable, Controllable } from "./gates/mixins"
 import { Util } from "lib/base"
+import { classNameFor } from "lib/base"
 
 export class Editor {
   private element: Element
@@ -43,11 +39,7 @@ export class Editor {
   }
 
   enableDnd(draggable: PaletteDraggable | CircuitDraggable): void {
-    if (draggable instanceof PaletteDraggable) {
-      draggable.setInteract(this.paletteDraggableHandlers())
-    } else if (draggable instanceof CircuitDraggable) {
-      draggable.setInteract(this.circuitDraggableHandlers())
-    }
+    draggable.enableDnd()
   }
 
   addNewQubit(): void {
@@ -68,7 +60,7 @@ export class Editor {
   releaseDraggable(event: MouseEvent): void {
     const draggable = DraggableItem.create(event.target)
 
-    draggable.mouseUp()
+    draggable.unGrab()
     draggable.source?.remove()
 
     this.removeEmptySteps()
@@ -84,54 +76,6 @@ export class Editor {
     gatePopup.show(element, () => {
       this.updateGateConnections()
     })
-  }
-
-  // Circuit draggable event handlers
-
-  private circuitDraggableHandlers(): DragEventHandlers {
-    return {
-      onStart: this.onCircuitDraggableStart.bind(this),
-      onMove: this.onCircuitDraggableMove.bind(this),
-      onEnd: this.onCircuitDraggableEnd.bind(this),
-    }
-  }
-
-  private onCircuitDraggableStart(event: Interact.DragEvent) {
-    CircuitDraggable.create(event.target).start()
-  }
-
-  private onCircuitDraggableMove(event: Interact.DragEvent) {
-    CircuitDraggable.create(event.target).move(event.dx, event.dy)
-  }
-
-  private onCircuitDraggableEnd(event: Interact.DragEvent) {
-    CircuitDraggable.create(event.target).end()
-    this.removeEmptySteps()
-  }
-
-  // Palette draggable handlers
-
-  private paletteDraggableHandlers(): {
-    [key: string]: DragEventHandler
-  } {
-    return {
-      onStart: this.onPaletteDraggableStart.bind(this),
-      onMove: this.onPaletteDraggableMove.bind(this),
-      onEnd: this.onPaletteDraggableEnd.bind(this),
-    }
-  }
-
-  private onPaletteDraggableStart(event: Interact.DragEvent) {
-    PaletteDraggable.create(event.target).start()
-  }
-
-  private onPaletteDraggableMove(event: Interact.DragEvent) {
-    PaletteDraggable.create(event.target).move(event.dx, event.dy)
-  }
-
-  private onPaletteDraggableEnd(event: Interact.DragEvent) {
-    PaletteDraggable.create(event.target).end()
-    this.removeEmptySteps()
   }
 
   // Trash dropzone handler
@@ -227,15 +171,7 @@ export class Editor {
 
     const newCircuitDraggableElement = dropzone.drop(draggable)
     if (newCircuitDraggableElement) {
-      const newCircuitDraggable = CircuitDraggable.create(
-        newCircuitDraggableElement,
-      )
-
-      newCircuitDraggable.setInteract({
-        onStart: this.onCircuitDraggableStart.bind(this),
-        onMove: this.onCircuitDraggableMove.bind(this),
-        onEnd: this.onCircuitDraggableEnd.bind(this),
-      })
+      new CircuitDraggable(newCircuitDraggableElement).enableDnd()
     }
 
     dropzone.circuitStep.shadow = false

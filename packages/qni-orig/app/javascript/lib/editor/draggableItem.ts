@@ -13,9 +13,9 @@ export const DraggableItem = {
     const classList = element.classList
 
     if (classList.contains(classNameFor("draggable:type:circuit"))) {
-      return CircuitDraggable.create(element)
+      return new CircuitDraggable(element)
     } else if (classList.contains(classNameFor("draggable:type:palette"))) {
-      return PaletteDraggable.create(element)
+      return new PaletteDraggable(element)
     }
 
     throw new InternalError(`Unknown draggable: ${element.outerHTML}`)
