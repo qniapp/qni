@@ -55,6 +55,12 @@ export default class EditorController extends Controller {
     this.circleNotation.nqubit = this.simulator.nqubit
   }
 
+  ignoreDraggableClick(event: MouseEvent): void {
+    if (Breakpoint.isMobile()) return
+
+    event.stopPropagation()
+  }
+
   private isRightClickEvent(event: MouseEvent): boolean {
     return event.button == 2 || event.ctrlKey
   }

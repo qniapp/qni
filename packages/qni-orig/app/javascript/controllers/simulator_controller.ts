@@ -76,7 +76,7 @@ export default class SimulatorController extends Controller {
 
           step.done = true
         } else if (data.type === "finish") {
-          this.gotoCircuitBreakpoint(this.circuitBreakpoint)
+          this.gotoCircuitBreakpoint(this.circuitBreakpoint || 0)
           this.runButton.running = false
         }
       }).bind(this),
@@ -91,11 +91,10 @@ export default class SimulatorController extends Controller {
     return parseInt(dataNqubit)
   }
 
-  get circuitBreakpoint(): number {
+  get circuitBreakpoint(): number | null {
     const bp = this.circuit.steps.findIndex((each) => each.isActive())
-    Util.need(bp !== -1, "Active breakpoint not found")
-
-    return bp
+    if (bp !== -1) return bp
+    return null
   }
 
   private gotoCircuitBreakpoint(stepIndex: number): void {
@@ -112,6 +111,7 @@ export default class SimulatorController extends Controller {
 
   maybeBackToCurrentBreakpoint(): void {
     if (Breakpoint.isMobile()) return
+    Util.notNull(this.circuitBreakpoint)
 
     this.drawStateVector(this.circuitBreakpoint)
   }

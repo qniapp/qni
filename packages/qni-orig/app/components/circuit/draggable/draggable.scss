@@ -1,6 +1,6 @@
 .draggable {
   @apply select-none;
-  touch-action: none;
+  will-change: transform;
 
   * {
     pointer-events: none;
@@ -19,10 +19,6 @@
 
     &--dragging {
       @apply z-50;
-    }
-
-    &--shadow {
-      @apply z-20;
     }
   }
 }
