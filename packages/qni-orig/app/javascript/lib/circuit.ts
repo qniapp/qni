@@ -126,20 +126,6 @@ export class Circuit {
     })
   }
 
-  prevDropzoneOf(dropzone: CircuitDropzone): CircuitDropzone | null {
-    const circuitStepIndex = dropzone.circuitStep.index
-
-    if (circuitStepIndex == 0) return null
-    return this.steps[circuitStepIndex - 1].dropzones[dropzone.bit]
-  }
-
-  nextDropzoneOf(dropzone: CircuitDropzone): CircuitDropzone | null {
-    const circuitStepIndex = dropzone.circuitStep.index
-
-    if (circuitStepIndex == this.steps.length - 1) return null
-    return this.steps[circuitStepIndex + 1].dropzones[dropzone.bit]
-  }
-
   instructions(): CircuitElement[] {
     return this.dropzones.map((each) => {
       return each.instruction

@@ -47,10 +47,6 @@
       }
     }
 
-    .circuit-step--done:active & {
-      @apply opacity-80;
-    }
-
     #{$parent}--active & {
       @apply opacity-80;
     }

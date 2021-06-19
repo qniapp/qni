@@ -16,6 +16,7 @@
   .gate-ket-label {
     @apply font-mono;
     @apply leading-none;
+    @apply relative;
     @apply text-purple-500;
 
     writing-mode: vertical-lr;

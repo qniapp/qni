@@ -4,7 +4,19 @@ import { Elementable } from "lib/mixins"
 import { CircuitElement, QubitLabel } from "./gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
-import { classNameFor } from "lib/base"
+import { Util, classNameFor } from "lib/base"
+import { Connectable, Controllable } from "./gates/mixins"
+import {
+  // CircuitElement,
+  ControlGate,
+  HadamardGate,
+  IGate,
+  NotGate,
+  PhaseGate,
+  // ReadoutGate,
+  SwapGate,
+  // WriteGate,
+} from "./gates"
 
 export class CircuitStep extends Mixin(Elementable) {
   static create(element: Element | null): CircuitStep {
@@ -49,6 +61,166 @@ export class CircuitStep extends Mixin(Elementable) {
     })
   }
 
+  updateGateConnections(): void {
+    this.resetGateConnections()
+    this.updateSwaps()
+    this.updateCphases()
+    this.updateControls()
+  }
+
+  private resetGateConnections() {
+    this.dropzones.forEach((each) => {
+      if (each.instruction instanceof IGate) {
+        each.disconnectFromLowerBit()
+        each.disconnectFromUpperBit()
+      } else {
+        each.instruction.controls = []
+        each.instruction.targets = []
+        if (
+          "disconnectFromLowerBit" in each.instruction &&
+          "disconnectFromUpperBit" in each.instruction
+        ) {
+          each.instruction.disconnectFromLowerBit()
+          each.instruction.disconnectFromUpperBit()
+        }
+      }
+    })
+  }
+
+  private updateSwaps() {
+    const swapGates = this.instructions.filter((each) => {
+      return each instanceof SwapGate
+    }) as SwapGate[]
+    const swapBits = swapGates
+      .map((each) => {
+        return each.bit
+      })
+      .sort()
+
+    swapGates.forEach((each) => {
+      each.connectWith(swapBits)
+      if (swapBits.length == 2) {
+        each.targets = swapBits
+        each.disabled = false
+        this.updateIGateConnections(swapBits)
+      } else {
+        each.targets = []
+        each.disabled = true
+      }
+    })
+  }
+
+  private updateCphases() {
+    const phaseGates = this.instructions.filter((each) => {
+      return each instanceof PhaseGate
+    }) as PhaseGate[]
+
+    phaseGates.forEach((each) => {
+      const phaseBits = phaseGates
+        .filter((other) => {
+          return other.phi === each.phi
+        })
+        .map((other) => {
+          return other.bit
+        })
+        .sort()
+      if (phaseBits.length == 2) {
+        each.connectWith(phaseBits)
+        each.targets = phaseBits
+        this.updateIGateConnections(phaseBits)
+      } else {
+        each.connectWith([])
+        each.targets = []
+      }
+    })
+  }
+
+  private updateControls() {
+    const controlGates = this.gatesOf(ControlGate)
+    const controllableGates = this.controllableGates
+    const toBit = (gate: CircuitElement) => {
+      return gate.bit
+    }
+    const controlGateBits = controlGates.map(toBit)
+    const controllableGateBits = controllableGates.map(toBit)
+
+    if (controllableGates.length == 0) {
+      if (controlGates.length == 2) {
+        controlGates.forEach((each) => {
+          each.targets = controlGateBits
+          each.connectWith(controlGateBits)
+          each.disabled = false
+        })
+        this.updateIGateConnections(controlGateBits)
+      } else {
+        controlGates.forEach((each) => {
+          each.targets = []
+          each.connectWith([])
+          each.disabled = true
+        })
+      }
+    } else {
+      controlGates.forEach((each) => {
+        each.targets = controllableGateBits
+        each.connectWith(controlGateBits.concat(controllableGateBits))
+        each.disabled = false
+      })
+
+      this.updateControlledUConnections(
+        this.gatesOf(NotGate),
+        controlGateBits,
+        controllableGateBits,
+      )
+      this.updateControlledUConnections(
+        this.gatesOf(HadamardGate),
+        controlGateBits,
+        controllableGateBits,
+      )
+      this.updateControlledUConnections(
+        this.gatesOf(SwapGate),
+        controlGateBits,
+        controllableGateBits,
+      )
+
+      if (controlGateBits.length > 0) {
+        this.updateIGateConnections(
+          controlGateBits.concat(controllableGateBits),
+        )
+      }
+    }
+  }
+
+  private updateControlledUConnections<T extends Controllable & Connectable>(
+    gates: T[],
+    controlGateBits: number[],
+    controllableGateBits: number[],
+  ) {
+    if (controlGateBits.length == 0) return
+
+    gates.forEach((each) => {
+      each.controls = controlGateBits
+      each.connectWith(controlGateBits.concat(controllableGateBits))
+    })
+  }
+
+  private updateIGateConnections(targetBits: number[]) {
+    const bits = targetBits.sort()
+
+    this.dropzones.forEach((dropzone, i) => {
+      if (
+        dropzone.instruction instanceof IGate &&
+        bits[0] < i &&
+        i < bits[bits.length - 1]
+      ) {
+        dropzone.connectWithLowerBit()
+        dropzone.connectWithUpperBit()
+      } else {
+        dropzone.disconnectFromLowerBit()
+        dropzone.disconnectFromUpperBit()
+      }
+    })
+  }
+
   get index(): number {
     const circuit = this.element.closest(".circuit")
     if (!circuit) throw new Error("circuit element not found")
@@ -62,10 +234,8 @@ export class CircuitStep extends Mixin(Elementable) {
   set active(value: boolean) {
     const className = "circuit-breakpoint--active"
     const el = this.element.querySelector(".circuit-breakpoint")
+    Util.notNull(el)
 
-    if (!el) {
-      throw new Error("breakpoint element not found")
-    }
     if (value) {
       el.classList.add(className)
     } else {
@@ -76,10 +246,7 @@ export class CircuitStep extends Mixin(Elementable) {
   isActive(): boolean {
     const className = "circuit-breakpoint--active"
     const el = this.element.querySelector(".circuit-breakpoint")
-
-    if (!el) {
-      throw new Error("breakpoint element not found")
-    }
+    Util.notNull(el)
 
     return el.classList.contains(className)
   }
