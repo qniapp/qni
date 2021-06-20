@@ -72,16 +72,16 @@
       @apply text-#{$qubit-circle-phase-hover-color};
     }
 
-    #{$parent}[data-phase^="0."] & {
+    #{$parent}[data-phase-int="0"] & {
       @apply transform rotate-0;
     }
 
     @for $phase from 1 through 360 {
-      #{$parent}[data-phase^="#{$phase}."] & {
+      #{$parent}[data-phase-int="#{$phase}"] & {
         @apply transform -rotate-#{$phase};
       }
 
-      #{$parent}[data-phase^="-#{$phase}."] & {
+      #{$parent}[data-phase-int="-#{$phase}"] & {
         @apply transform rotate-#{$phase};
       }
     }
@@ -128,19 +128,9 @@
       @apply bg-#{$qubit-circle-magnitude-hover-color};
     }
 
-    #{$parent}[data-magnitude="1.00000"] & {
-      @apply transform scale-100;
-    }
-
     $zmagnitude: "";
-    @for $magnitude from 1 through 99 {
-      @if $magnitude < 10 {
-        $zmagnitude: "0#{$magnitude}";
-      } @else {
-        $zmagnitude: $magnitude;
-      }
-
-      #{$parent}[data-magnitude^="0.#{$zmagnitude}"] & {
+    @for $magnitude from 1 through 100 {
+      #{$parent}[data-magnitude-int="#{$magnitude}"] & {
         @apply transform scale-#{$magnitude};
       }
     }

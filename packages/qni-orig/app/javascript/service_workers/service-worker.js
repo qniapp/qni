@@ -10,22 +10,14 @@ self.addEventListener(
     const t0 = performance.now()
 
     steps.forEach((instructions, i) => {
-      const magnitudes = []
-      const phases = []
-
       simulator.runStep(instructions)
-
-      for (let c = 0; c < 2 ** nqubit; c++) {
-        magnitudes.push(simulator.magnitude(c))
-        phases.push(simulator.degree(c))
-      }
 
       self.postMessage({
         type: "step",
         step: i,
         bits: simulator.bits,
-        magnitudes: magnitudes,
-        phases: phases,
+        magnitudes: simulator.magnitudes(),
+        phases: simulator.phases(),
         flags: simulator.flags,
       })
     })

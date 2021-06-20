@@ -1,7 +1,7 @@
 /* eslint-env qunit */
 
 import { Matrix } from "mathjs"
-import { Qubit } from "lib/simulator/qubit"
+import { StateVector } from "lib/simulator/stateVector"
 import { Simulator } from "lib/simulator"
 import { i } from "mathjs"
 import { multiply, divide } from "mathjs"
@@ -13,76 +13,88 @@ QUnit.module("Simulator", () => {
   QUnit.module(".write", () => {
     QUnit.test("|0>.write(0, 0) should be |0>", (assert) => {
       const simulator = new Simulator("0")
-      assert.deepEqual(simulator.write(0, 0).state, new Qubit("0"))
+      assert.deepEqual(simulator.write(0, 0).state, new StateVector("0"))
     })
 
     QUnit.test("|0>.write(0, 1) should be |1>", (assert) => {
       const simulator = new Simulator("0")
-      assert.deepEqual(simulator.write(1, 0).state, new Qubit("1"))
+      assert.deepEqual(simulator.write(1, 0).state, new StateVector("1"))
     })
 
     QUnit.test("|1>.write(0, 0) should be |0>", (assert) => {
       const simulator = new Simulator("1")
-      assert.deepEqual(simulator.write(0, 0).state, new Qubit("0"))
+      assert.deepEqual(simulator.write(0, 0).state, new StateVector("0"))
     })
 
     QUnit.test("|1>.write(1, 0) should be |1>", (assert) => {
       const simulator = new Simulator("1")
-      assert.deepEqual(simulator.write(1, 0).state, new Qubit("1"))
+      assert.deepEqual(simulator.write(1, 0).state, new StateVector("1"))
     })
 
     QUnit.test("|00>.write(0, 0, 1) should be |00>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.write(0, 0, 1).state, new Qubit("00"))
+      assert.deepEqual(simulator.write(0, 0, 1).state, new StateVector("00"))
     })
 
     QUnit.test("|00>.write(1, 0) should be |01>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.write(1, 0).state, new Qubit("01"))
+      assert.equal(
+        simulator.write(1, 0).state.toString(),
+        new StateVector("01").toString(),
+      )
     })
 
     QUnit.test("|00>.write(1, 0, 1) should be |11>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.write(1, 0, 1).state, new Qubit("11"))
+      assert.equal(
+        simulator.write(1, 0, 1).state.toString(),
+        new StateVector("11").toString(),
+      )
     })
 
     QUnit.test("|11>.write(1, 0, 1) should be |11>", (assert) => {
       const simulator = new Simulator("11")
-      assert.deepEqual(simulator.write(1, 0, 1).state, new Qubit("11"))
+      assert.deepEqual(simulator.write(1, 0, 1).state, new StateVector("11"))
     })
 
     QUnit.test("|11>.write(0, 0) should be |10>", (assert) => {
       const simulator = new Simulator("11")
-      assert.deepEqual(simulator.write(0, 0).state, new Qubit("10"))
+      assert.equal(
+        simulator.write(0, 0).state.toString(),
+        new StateVector("10").toString(),
+      )
     })
 
     QUnit.test("|11>.write(0, 0, 1) should be |00>", (assert) => {
       const simulator = new Simulator("11")
-      assert.deepEqual(simulator.write(0, 0, 1).state, new Qubit("00"))
+      assert.equal(
+        simulator.write(0, 0, 1).state.toString(),
+        new StateVector("00").toString(),
+      )
     })
   })
 
   QUnit.module(".x", () => {
     QUnit.test("|0>.x(0) should be |1>", (assert) => {
       const simulator = new Simulator("0")
-      assert.deepEqual(simulator.x(0).state, new Qubit("1"))
+      assert.deepEqual(simulator.x(0).state, new StateVector("1"))
     })
 
     QUnit.test("|1>.x(0) should be |0>", (assert) => {
       const simulator = new Simulator("1")
-      assert.deepEqual(simulator.x(0).state, new Qubit("0"))
+      assert.deepEqual(simulator.x(0).state, new StateVector("0"))
     })
 
     QUnit.test("|+>.x(0) should be |+>", (assert) => {
       const simulator = new Simulator("+")
-      assert.deepEqual(simulator.x(0).state, new Qubit("+"))
+      assert.deepEqual(simulator.x(0).state, new StateVector("+"))
     })
 
     QUnit.test("|->.x(0) should be -|->", (assert) => {
       const simulator = new Simulator("-")
       assert.equal(
         simulator.x(0).state.toString(),
-        multiply(-1, new Qubit("-").matrix).toString(),
+        multiply(-1, new StateVector("-").matrix).toString(),
       )
     })
 
@@ -90,7 +102,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("i")
       assert.equal(
         simulator.x(0).state.toString(),
-        multiply(i, new Qubit("-i").matrix).toString(),
+        multiply(i, new StateVector("-i").matrix).toString(),
       )
     })
 
@@ -99,42 +111,54 @@ QUnit.module("Simulator", () => {
 
       assert.equal(
         simulator.x(0).state.toString(),
-        multiply(-1, multiply(i, new Qubit("i").matrix)).toString(),
+        multiply(-1, multiply(i, new StateVector("i").matrix)).toString(),
       )
     })
 
     QUnit.test("|00>.x(0) should be |01>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.x(0).state, new Qubit("01"))
+      assert.equal(
+        simulator.x(0).state.toString(),
+        new StateVector("01").toString(),
+      )
     })
 
     QUnit.test("|00>.x(1) should be |10>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.x(1).state, new Qubit("10"))
+      assert.equal(
+        simulator.x(1).state.toString(),
+        new StateVector("10").toString(),
+      )
     })
 
     QUnit.test("|00>.x(0, 1) should be |11>", (assert) => {
       const simulator = new Simulator("00")
-      assert.deepEqual(simulator.x(0, 1).state, new Qubit("11"))
+      assert.equal(
+        simulator.x(0, 1).state.toString(),
+        new StateVector("11").toString(),
+      )
     })
   })
 
   QUnit.module(".h", () => {
     QUnit.test("|0>.h(0) should be |+>", (assert) => {
       const simulator = new Simulator("0")
-      assert.deepEqual(simulator.h(0).state, new Qubit("+"))
+      assert.equal(
+        simulator.h(0).state.toString(),
+        new StateVector("+").toString(),
+      )
     })
 
     QUnit.test("|1>.h(0) should be |->", (assert) => {
       const simulator = new Simulator("1")
-      assert.deepEqual(simulator.h(0).state, new Qubit("-"))
+      assert.deepEqual(simulator.h(0).state, new StateVector("-"))
     })
 
     QUnit.test("|+>.h(0) should be |0>", (assert) => {
       const simulator = new Simulator("+")
       assert.deepEqual(
         round(simulator.h(0).state.matrix, 5),
-        new Qubit("0").matrix,
+        new StateVector("0").matrix,
       )
     })
 
@@ -142,7 +166,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("-")
       assert.deepEqual(
         round(simulator.h(0).state.matrix, 5),
-        new Qubit("1").matrix,
+        new StateVector("1").matrix,
       )
     })
 
@@ -153,7 +177,7 @@ QUnit.module("Simulator", () => {
         round(
           multiply(
             pow(e, divide(multiply(i, pi), 4)),
-            new Qubit("-i").matrix,
+            new StateVector("-i").matrix,
           ) as Matrix,
           5,
         ).toString(),
@@ -167,7 +191,7 @@ QUnit.module("Simulator", () => {
         round(
           multiply(
             pow(e, divide(multiply(i, pi), -4)),
-            new Qubit("i").matrix,
+            new StateVector("i").matrix,
           ) as Matrix,
           5,
         ).toString(),
@@ -176,19 +200,25 @@ QUnit.module("Simulator", () => {
 
     QUnit.test("|00>.h(0) should be |0+>", (assert) => {
       const simulator = new Simulator("00")
-      assert.equal(simulator.h(0).state.toString(), new Qubit("0+").toString())
+      assert.equal(
+        simulator.h(0).state.toString(),
+        new StateVector("0+").toString(),
+      )
     })
 
     QUnit.test("|00>.h(1) should be |+0>", (assert) => {
       const simulator = new Simulator("00")
-      assert.equal(simulator.h(1).state.toString(), new Qubit("+0").toString())
+      assert.equal(
+        simulator.h(1).state.toString(),
+        new StateVector("+0").toString(),
+      )
     })
 
     QUnit.test("|00>.h(0, 1) should be |++>", (assert) => {
       const simulator = new Simulator("00")
       assert.equal(
         round(simulator.h(0, 1).state.matrix, 5).toString(),
-        round(new Qubit("++").matrix, 5).toString(),
+        round(new StateVector("++").matrix, 5).toString(),
       )
     })
   })
@@ -198,7 +228,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("0")
       assert.equal(
         simulator.phase("pi", 0).state.toString(),
-        new Qubit("0").toString(),
+        new StateVector("0").toString(),
       )
     })
 
@@ -206,7 +236,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("1")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        multiply(-1, new Qubit("1").matrix).toString(),
+        multiply(-1, new StateVector("1").matrix).toString(),
       )
     })
 
@@ -214,7 +244,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("+")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        round(new Qubit("-").matrix, 5).toString(),
+        round(new StateVector("-").matrix, 5).toString(),
       )
     })
 
@@ -222,7 +252,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("-")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        round(new Qubit("+").matrix, 5).toString(),
+        round(new StateVector("+").matrix, 5).toString(),
       )
     })
 
@@ -230,7 +260,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("i")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        round(new Qubit("-i").matrix, 5).toString(),
+        round(new StateVector("-i").matrix, 5).toString(),
       )
     })
 
@@ -238,7 +268,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("-i")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        round(new Qubit("i").matrix, 5).toString(),
+        round(new StateVector("i").matrix, 5).toString(),
       )
     })
 
@@ -246,7 +276,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("++")
       assert.equal(
         round(simulator.phase("pi", 0).state.matrix, 5).toString(),
-        round(new Qubit("+-").matrix, 5).toString(),
+        round(new StateVector("+-").matrix, 5).toString(),
       )
     })
 
@@ -254,7 +284,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("++")
       assert.equal(
         round(simulator.phase("pi", 1).state.matrix, 5).toString(),
-        round(new Qubit("-+").matrix, 5).toString(),
+        round(new StateVector("-+").matrix, 5).toString(),
       )
     })
 
@@ -262,7 +292,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("++")
       assert.equal(
         round(simulator.phase("pi", 0, 1).state.matrix, 5).toString(),
-        round(new Qubit("--").matrix, 5).toString(),
+        round(new StateVector("--").matrix, 5).toString(),
       )
     })
   })
@@ -392,7 +422,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("01")
       assert.equal(
         round(simulator.swap(0, 1).state.matrix, 5).toString(),
-        new Qubit("10").matrix.toString(),
+        new StateVector("10").matrix.toString(),
       )
     })
   })
@@ -402,7 +432,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       assert.equal(
         simulator.cnot(0, 1).state.toString(),
-        new Qubit("00").toString(),
+        new StateVector("00").toString(),
       )
     })
 
@@ -410,7 +440,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       assert.equal(
         simulator.cnot(1, 0).state.toString(),
-        new Qubit("00").toString(),
+        new StateVector("00").toString(),
       )
     })
 
@@ -418,7 +448,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       assert.equal(
         simulator.cnot(0, 1).state.toString(),
-        new Qubit("01").toString(),
+        new StateVector("01").toString(),
       )
     })
 
@@ -426,7 +456,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       assert.equal(
         simulator.cnot(1, 0).state.toString(),
-        new Qubit("10").toString(),
+        new StateVector("10").toString(),
       )
     })
   })
@@ -436,7 +466,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       assert.equal(
         simulator.cphase("pi", 0, 1).state.toString(),
-        new Qubit("00").toString(),
+        new StateVector("00").toString(),
       )
     })
 
@@ -444,7 +474,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       assert.equal(
         round(simulator.cphase("pi", 0, 1).state.matrix, 5).toString(),
-        multiply(-1, new Qubit("11").matrix).toString(),
+        multiply(-1, new StateVector("11").matrix).toString(),
       )
     })
   })
@@ -453,14 +483,14 @@ QUnit.module("Simulator", () => {
     QUnit.test("|0>.read(0) should be |0>", (assert) => {
       const simulator = new Simulator("0")
       simulator.read(0)
-      assert.deepEqual(simulator.state, new Qubit("0"))
+      assert.deepEqual(simulator.state, new StateVector("0"))
       assert.deepEqual(simulator.bits, { 0: 0 })
     })
 
     QUnit.test("|1>.read(0) should be |1>", (assert) => {
       const simulator = new Simulator("1")
       simulator.read(0)
-      assert.deepEqual(simulator.state, new Qubit("1"))
+      assert.deepEqual(simulator.state, new StateVector("1"))
       assert.deepEqual(simulator.bits, { 0: 1 })
     })
 
@@ -470,9 +500,9 @@ QUnit.module("Simulator", () => {
 
       assert.ok(
         round(simulator.state.matrix, 5).toString() ==
-          new Qubit("0").toString() ||
+          new StateVector("0").toString() ||
           round(simulator.state.matrix, 5).toString() ==
-            new Qubit("1").toString(),
+            new StateVector("1").toString(),
       )
       assert.equal(Object.keys(simulator.bits).length, 1)
       assert.ok(simulator.bits[0] == 0 || simulator.bits[0] == 1)
@@ -484,7 +514,7 @@ QUnit.module("Simulator", () => {
 
       assert.ok(
         round(simulator.state.matrix, 5).toString() ==
-          new Qubit("0").toString() ||
+          new StateVector("0").toString() ||
           round(simulator.state.matrix, 5).toString() == "[[0], [-1]]",
       )
     })
@@ -495,7 +525,7 @@ QUnit.module("Simulator", () => {
 
       assert.ok(
         round(simulator.state.matrix, 5).toString() ==
-          new Qubit("0").toString() ||
+          new StateVector("0").toString() ||
           round(simulator.state.matrix, 5).toString() == "[[0], [i]]",
       )
     })
@@ -506,7 +536,7 @@ QUnit.module("Simulator", () => {
 
       assert.ok(
         round(simulator.state.matrix, 5).toString() ==
-          new Qubit("0").toString() ||
+          new StateVector("0").toString() ||
           round(simulator.state.matrix, 5).toString() == "[[0], [-i]]",
       )
     })
@@ -515,7 +545,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       simulator.read(0)
 
-      assert.equal(simulator.state.toString(), new Qubit("00").toString())
+      assert.equal(simulator.state.toString(), new StateVector("00").toString())
       assert.deepEqual(simulator.bits, { 0: 0 })
     })
 
@@ -523,7 +553,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       simulator.read(1)
 
-      assert.equal(simulator.state.toString(), new Qubit("00").toString())
+      assert.equal(simulator.state.toString(), new StateVector("00").toString())
       assert.deepEqual(simulator.bits, { 1: 0 })
     })
 
@@ -531,7 +561,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("00")
       simulator.read(0, 1)
 
-      assert.equal(simulator.state.toString(), new Qubit("00").toString())
+      assert.equal(simulator.state.toString(), new StateVector("00").toString())
       assert.deepEqual(simulator.bits, { 0: 0, 1: 0 })
     })
 
@@ -539,7 +569,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       simulator.read(0)
 
-      assert.equal(simulator.state.toString(), new Qubit("11").toString())
+      assert.equal(simulator.state.toString(), new StateVector("11").toString())
       assert.deepEqual(simulator.bits, { 0: 1 })
     })
 
@@ -547,7 +577,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       simulator.read(1)
 
-      assert.equal(simulator.state.toString(), new Qubit("11").toString())
+      assert.equal(simulator.state.toString(), new StateVector("11").toString())
       assert.deepEqual(simulator.bits, { 1: 1 })
     })
 
@@ -555,7 +585,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       simulator.read(0, 1)
 
-      assert.equal(simulator.state.toString(), new Qubit("11").toString())
+      assert.equal(simulator.state.toString(), new StateVector("11").toString())
       assert.deepEqual(simulator.bits, { 0: 1, 1: 1 })
     })
   })
@@ -565,7 +595,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("010")
       assert.equal(
         round(simulator.ccnot(0, 1, 2).state.matrix, 5).toString(),
-        new Qubit("010").matrix.toString(),
+        new StateVector("010").matrix.toString(),
       )
     })
 
@@ -573,7 +603,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("011")
       assert.equal(
         round(simulator.ccnot(0, 1, 2).state.matrix, 5).toString(),
-        new Qubit("111").matrix.toString(),
+        new StateVector("111").matrix.toString(),
       )
     })
   })
@@ -583,7 +613,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("011")
       assert.equal(
         round(simulator.cswap(0, 1, 2).state.matrix, 5).toString(),
-        new Qubit("101").matrix.toString(),
+        new StateVector("101").matrix.toString(),
       )
     })
 
@@ -591,7 +621,7 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("011")
       assert.equal(
         round(simulator.cswap(2, 0, 1).state.matrix, 5).toString(),
-        new Qubit("011").matrix.toString(),
+        new StateVector("011").matrix.toString(),
       )
     })
   })
