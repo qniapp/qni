@@ -41,8 +41,6 @@
   "dependencies": {
     "@babel/plugin-proposal-throw-expressions": "~7.12",
     "@babel/preset-typescript": "~7.13",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "~5.4",
     "animate.css": "^4.1.1",
@@ -51,7 +49,6 @@
     "magic-grid": "^3.2.4",
     "mathjs": "~9.4",
     "postcss": "^7",
-    "rails-ujs": "^5.2.6",
     "sass-loader": "^10",
     "stimulus": "~2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",

@@ -1,7 +1,17 @@
-import { Qubit } from "lib/simulator/qubit"
-import { SeriarizedInstruction } from "lib/editor/gates"
+import {
+  ControlGateInstruction,
+  HadamardGateInstruction,
+  NotGateInstruction,
+  PhaseGateInstruction,
+  ReadoutInstruction,
+  RootNotGateInstruction,
+  SeriarizedInstruction,
+  SwapGateInstruction,
+  WriteInstruction,
+} from "lib/editor/gates"
+import { StateVector } from "lib/simulator/stateVector"
 
-import { pow, sum } from "mathjs"
+import { Complex, pow, sum } from "mathjs"
 import { abs, arg, round } from "mathjs"
 import { add, subtract, divide, multiply } from "mathjs"
 import { complex, i } from "mathjs"
@@ -9,16 +19,15 @@ import { parse } from "mathjs"
 import { pi } from "mathjs"
 import { sin, cos } from "mathjs"
 import { sqrt } from "mathjs"
-import { subset, index } from "mathjs"
 
 export class Simulator {
-  public state: Qubit
+  public state: StateVector
   public bits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
 
-  constructor(bits: string | Qubit) {
+  constructor(bits: string | StateVector) {
     if ("string" === typeof bits) {
-      this.state = new Qubit(bits)
+      this.state = new StateVector(bits)
     } else {
       this.state = bits
     }
@@ -33,188 +42,32 @@ export class Simulator {
     instructions.forEach((each, bit) => {
       switch (each.type) {
         case "qubit-label":
-          break
         case "i-gate":
           break
         case "write":
-          this.write(each.value, bit)
+          this.handleWriteGate(each, bit)
           break
         case "readout":
-          this.read(bit)
-          if (each.set) {
-            this.flags[each.set] = this.bits[bit] == 1
-          }
+          this.handleReadoutGate(each, bit)
           break
-        case "not-gate": {
-          const controls = each.controls
-
-          if (controls.length == 0) {
-            if (each.if && this.flags[each.if]) {
-              this.x(bit)
-            } else {
-              this.x(bit)
-            }
-          } else if (controls.length == 1) {
-            this.cnot(controls[0], bit)
-          } else {
-            const allControlsMet = controls
-              .map((c) => {
-                return this.pZero(c) != 1
-              })
-              .every((c) => {
-                return c
-              })
-            if (allControlsMet) {
-              Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
-                const isXable = controls
-                  .map((c) => {
-                    return (b & (1 << c)) != 0
-                  })
-                  .every((c) => {
-                    return c
-                  })
-                if (!isXable) return
-
-                if ((b & (1 << bit)) == 0) {
-                  const a0 = b
-                  const a1 = a0 ^ (1 << bit)
-                  const va0 = this.state.amplifier(a0)
-                  const va1 = this.state.amplifier(a1)
-
-                  this.state.setAmplifier(a0, va1)
-                  this.state.setAmplifier(a1, va0)
-                }
-              })
-            }
-          }
+        case "not-gate":
+          this.handleNotGate(each, bit)
           break
-        }
         case "root-not-gate":
-          if (each.if) {
-            if (this.flags[each.if]) {
-              this.rnot(bit)
-            }
-            break
-          }
-          this.rnot(bit)
+          this.handleRootNotGate(each, bit)
           break
-        case "phase-gate": {
-          const targets = each.targets
-
-          if (targets.length == 0) {
-            if (each.phi) {
-              this.phase(each.phi, bit)
-            }
-          } else if (targets.length == 2) {
-            if (
-              doneCPhaseTargets.some((done) => {
-                return done[0] === targets[0] && done[1] === targets[1]
-              })
-            ) {
-              break
-            }
-            this.cphase(each.phi, targets[0], targets[1])
-            doneCPhaseTargets.push(targets)
-          }
+        case "phase-gate":
+          this.handlePhaseGate(each, bit, doneCPhaseTargets)
           break
-        }
-        case "hadamard-gate": {
-          if (each.controls.length == 0) {
-            if (each.if) {
-              if (this.flags[each.if]) {
-                this.h(bit)
-              }
-              break
-            }
-            this.h(bit)
-            break
-          } else {
-            const target = bit
-            const targetInstruction = instructions[target]
-            if (targetInstruction.type !== "hadamard-gate") {
-              break
-            }
-            const controls = targetInstruction.controls
-
-            if (controls.length >= 1) {
-              const allControlsMet = controls
-                .map((c) => {
-                  return this.pZero(c) != 1
-                })
-                .every((c) => {
-                  return c
-                })
-              if (!allControlsMet) return
-
-              Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
-                const isHable = controls
-                  .map((c) => {
-                    return (b & (1 << c)) != 0
-                  })
-                  .every((c) => {
-                    return c
-                  })
-                if (!isHable) return
-
-                if ((b & (1 << target)) == 0) {
-                  const a0 = b
-                  const a1 = a0 ^ (1 << target)
-                  const va0 = this.state.amplifier(a0)
-                  const va1 = this.state.amplifier(a1)
-
-                  this.state.setAmplifier(a0, divide(sum(va0, va1), sqrt(2)))
-                  this.state.setAmplifier(
-                    a1,
-                    divide(subtract(va0, va1), sqrt(2)) as number,
-                  )
-                }
-              })
-            }
-          }
+        case "hadamard-gate":
+          this.handleHadamardGate(each, bit)
           break
-        }
-        case "control-gate": {
-          const targets = each.targets
-
-          if (
-            targets.length == 2 &&
-            instructions[targets[0]].type === "control-gate" &&
-            instructions[targets[1]].type === "control-gate"
-          ) {
-            if (
-              doneCPhaseTargets.some((done) => {
-                return done[0] === targets[0] && done[1] === targets[1]
-              })
-            ) {
-              break
-            }
-
-            this.cphase("pi", targets[0], targets[1])
-            doneCPhaseTargets.push(targets)
-          }
+        case "control-gate":
+          this.handleControlGate(each, instructions, doneCPhaseTargets)
           break
-        }
-        case "swap-gate": {
-          const targets = each.targets
-
-          if (targets.length != 2) break
-          if (
-            doneSwapTargets.some((done) => {
-              return done[0] === targets[0] && done[1] === targets[1]
-            })
-          ) {
-            break
-          }
-
-          if (each.controls.length == 0) {
-            this.swap(targets[0], targets[1])
-            doneSwapTargets.push(targets)
-          } else if (each.controls.length == 1) {
-            doneSwapTargets.push(targets)
-            this.cswap(each.controls[0], targets[0], targets[1])
-          }
+        case "swap-gate":
+          this.handleSwapGate(each, doneSwapTargets)
           break
-        }
         default:
           throw new Error("Unknown instruction")
       }
@@ -427,16 +280,26 @@ export class Simulator {
     return this
   }
 
-  magnitude(bit: number): number {
-    return round(abs(this.amplitude(bit)), 6)
+  magnitudes(): number[] {
+    return this.state.matrix
+      .map((each) => {
+        return abs(each)
+      }, true)
+      .toArray()
+      .map((each) => {
+        return (each as Complex[])[0]
+      })
   }
 
-  degree(bit: number): number {
-    return round(multiply(divide(arg(this.amplitude(bit)), pi), 180), 3)
-  }
-
-  amplitude(bit: number): number {
-    return subset(this.state.matrix, index(bit, 0)) as unknown as number
+  phases(): number[] {
+    return this.state.matrix
+      .map((each) => {
+        return multiply(divide(arg(each), pi), 180)
+      }, true)
+      .toArray()
+      .map((each) => {
+        return (each as Complex[])[0]
+      })
   }
 
   private pZero(target: number): number {
@@ -452,5 +315,194 @@ export class Simulator {
         return add(prev, each)
       }) as number
     return round(value, 5)
+  }
+
+  private handleWriteGate(gate: WriteInstruction, bit: number): void {
+    this.write(gate.value, bit)
+  }
+
+  private handleReadoutGate(gate: ReadoutInstruction, bit: number): void {
+    this.read(bit)
+    if (gate.set) {
+      this.flags[gate.set] = this.bits[bit] == 1
+    }
+  }
+
+  private handleNotGate(gate: NotGateInstruction, bit: number): void {
+    const controls = gate.controls
+
+    if (controls.length == 0) {
+      if (gate.if) {
+        if (this.flags[gate.if]) {
+          this.x(bit)
+        }
+      } else {
+        this.x(bit)
+      }
+    } else if (controls.length == 1) {
+      this.cnot(controls[0], bit)
+    } else {
+      const allControlsMet = controls
+        .map((c) => {
+          return this.pZero(c) != 1
+        })
+        .every((c) => {
+          return c
+        })
+      if (allControlsMet) {
+        Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+          const isXable = controls
+            .map((c) => {
+              return (b & (1 << c)) != 0
+            })
+            .every((c) => {
+              return c
+            })
+          if (!isXable) return
+
+          if ((b & (1 << bit)) == 0) {
+            const a0 = b
+            const a1 = a0 ^ (1 << bit)
+            const va0 = this.state.amplifier(a0)
+            const va1 = this.state.amplifier(a1)
+
+            this.state.setAmplifier(a0, va1)
+            this.state.setAmplifier(a1, va0)
+          }
+        })
+      }
+    }
+  }
+
+  private handleRootNotGate(gate: RootNotGateInstruction, bit: number): void {
+    if (gate.if) {
+      if (this.flags[gate.if]) {
+        this.rnot(bit)
+      }
+    } else {
+      this.rnot(bit)
+    }
+  }
+
+  private handlePhaseGate(
+    gate: PhaseGateInstruction,
+    bit: number,
+    gatesDone: [number, number][],
+  ): void {
+    const targets = gate.targets
+
+    if (targets.length == 0) {
+      if (gate.phi) {
+        this.phase(gate.phi, bit)
+      }
+    } else if (targets.length == 2) {
+      if (
+        gatesDone.some((done) => {
+          return done[0] === targets[0] && done[1] === targets[1]
+        })
+      ) {
+        return
+      }
+      this.cphase(gate.phi, targets[0], targets[1])
+      gatesDone.push(targets)
+    }
+  }
+
+  private handleHadamardGate(gate: HadamardGateInstruction, bit: number): void {
+    if (gate.controls.length == 0) {
+      if (gate.if) {
+        if (this.flags[gate.if]) {
+          this.h(bit)
+        }
+      } else {
+        this.h(bit)
+      }
+    } else {
+      const controls = gate.controls
+
+      if (controls.length >= 1) {
+        const allControlsMet = controls
+          .map((c) => {
+            return this.pZero(c) != 1
+          })
+          .every((c) => {
+            return c
+          })
+        if (!allControlsMet) return
+
+        Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+          const isHable = controls
+            .map((c) => {
+              return (b & (1 << c)) != 0
+            })
+            .every((c) => {
+              return c
+            })
+          if (!isHable) return
+
+          if ((b & (1 << bit)) == 0) {
+            const a0 = b
+            const a1 = a0 ^ (1 << bit)
+            const va0 = this.state.amplifier(a0)
+            const va1 = this.state.amplifier(a1)
+
+            this.state.setAmplifier(a0, divide(sum(va0, va1), sqrt(2)))
+            this.state.setAmplifier(
+              a1,
+              divide(subtract(va0, va1), sqrt(2)) as number,
+            )
+          }
+        })
+      }
+    }
+  }
+
+  private handleControlGate(
+    gate: ControlGateInstruction,
+    instructions: SeriarizedInstruction[],
+    gatesDone: [number, number][],
+  ): void {
+    const targets = gate.targets
+
+    if (
+      targets.length == 2 &&
+      instructions[targets[0]].type === "control-gate" &&
+      instructions[targets[1]].type === "control-gate"
+    ) {
+      if (
+        gatesDone.some((done) => {
+          return done[0] === targets[0] && done[1] === targets[1]
+        })
+      ) {
+        return
+      }
+
+      this.cphase("pi", targets[0], targets[1])
+      gatesDone.push(targets)
+    }
+  }
+
+  private handleSwapGate(
+    gate: SwapGateInstruction,
+    gatesDone: [number, number][],
+  ): void {
+    const targets = gate.targets
+
+    if (targets.length != 2) return
+    if (
+      gatesDone.some((done) => {
+        return done[0] === targets[0] && done[1] === targets[1]
+      })
+    ) {
+      return
+    }
+
+    if (gate.controls.length == 0) {
+      this.swap(targets[0], targets[1])
+      gatesDone.push(targets)
+    } else if (gate.controls.length == 1) {
+      gatesDone.push(targets)
+      this.cswap(gate.controls[0], targets[0], targets[1])
+    }
   }
 }

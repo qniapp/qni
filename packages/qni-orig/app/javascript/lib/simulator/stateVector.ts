@@ -1,11 +1,14 @@
-import { Matrix, subset, index } from "mathjs"
+import { Util } from "lib/base"
+import { Matrix, MathType, subset, index } from "mathjs"
 
-import { matrix, kron, conj, transpose } from "mathjs"
+import { matrix, kron, conj, transpose, sparse } from "mathjs"
 import { sqrt } from "mathjs"
 import { complex, divide } from "mathjs"
 
-export class Qubit {
+export class StateVector {
   public matrix: Matrix
+  public size: number
+  public nqubit: number
 
   constructor(bits: string | Matrix) {
     if ("string" === typeof bits) {
@@ -13,6 +16,9 @@ export class Qubit {
     } else {
       this.matrix = bits
     }
+
+    this.size = this.matrix.size()[0]
+    this.nqubit = Math.log2(this.size)
   }
 
   get bra(): Matrix {
@@ -23,16 +29,8 @@ export class Qubit {
     return this.matrix
   }
 
-  get nqubit(): number {
-    return Math.log2(this.size)
-  }
-
-  get size(): number {
-    return this.matrix.size()[0]
-  }
-
   amplifier(i: number): number {
-    return (subset(this.matrix, index(i, 0)) as unknown) as number
+    return subset(this.matrix, index(i, 0)) as unknown as number
   }
 
   setAmplifier(i: number, value: number): void {
@@ -51,7 +49,7 @@ export class Qubit {
           return this.ketVector(each)
         })
         .reduce((result, each) => {
-          return kron(result, each)
+          return sparse(kron(result, each))
         })
     } else {
       return this.ketVector(bits)
@@ -59,25 +57,23 @@ export class Qubit {
   }
 
   private ketVector(bit: string): Matrix {
-    const matrices: { [bit: string]: Matrix } = {
-      "0": matrix([[1], [0]]),
-      "1": matrix([[0], [1]]),
-      "+": divide(matrix([[1], [1]]), sqrt(2)) as Matrix,
-      "-": divide(matrix([[1], [-1]]), sqrt(2)) as Matrix,
+    const matrices: { [bit: string]: Matrix | MathType } = {
+      "0": matrix([[1], [0]], "sparse"),
+      "1": matrix([[0], [1]], "sparse"),
+      "+": divide(matrix([[1], [1]], "sparse"), sqrt(2)),
+      "-": divide(matrix([[1], [-1]], "sparse"), sqrt(2)),
       i: divide(
-        matrix([[1], [(complex(0, 1) as unknown) as number]]),
+        matrix([[1], [complex(0, 1) as unknown as number]], "sparse"),
         sqrt(2),
-      ) as Matrix,
+      ),
       "-i": divide(
-        matrix([[1], [(complex(0, -1) as unknown) as number]]),
+        matrix([[1], [complex(0, -1) as unknown as number]], "sparse"),
         sqrt(2),
-      ) as Matrix,
+      ),
     }
-    const m: Matrix = matrices[bit]
-    if (!m) {
-      throw new Error(`Unknown bit: ${bit}`)
-    }
+    const m = matrices[bit]
+    Util.notNull(m)
 
-    return m
+    return m as Matrix
   }
 }

@@ -7,7 +7,7 @@ import tippy, {
 } from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
-import Rails from "rails-ujs"
+import Rails from "@rails/ujs"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
@@ -105,11 +105,22 @@ export default class CircleNotationController extends Controller {
 
     Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
       const qubitCircle = this.qubitCircles[c]
-      const magnitude = magnitudes[c].toFixed(5).toString()
-      const phase = phases[c].toFixed(3).toString()
 
-      qubitCircle.setAttribute("data-magnitude", magnitude)
-      if (magnitude !== "0.00000") qubitCircle.setAttribute("data-phase", phase)
+      const magnitude = magnitudes[c]
+      qubitCircle.setAttribute(
+        "data-magnitude",
+        magnitude.toFixed(5).toString(),
+      )
+      qubitCircle.setAttribute(
+        "data-magnitude-int",
+        Math.round(magnitude * 100).toString(),
+      )
+
+      if (magnitude !== 0) {
+        const phase = phases[c]
+        qubitCircle.setAttribute("data-phase", phase.toFixed(3).toString())
+        qubitCircle.setAttribute("data-phase-int", Math.round(phase).toString())
+      }
     })
   }
 
