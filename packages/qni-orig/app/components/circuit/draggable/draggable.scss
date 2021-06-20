@@ -1,5 +1,7 @@
 .draggable {
   @apply select-none;
+
+  touch-action: manipulation;
   will-change: transform;
 
   * {
