@@ -1,14 +1,25 @@
-import { Connectable, Instructionable, Targetable } from "./mixins"
+import {
+  Controllable,
+  Connectable,
+  Instructionable,
+  Targetable,
+} from "./mixins"
 import { Mixin } from "ts-mixer"
 import { attributeNameFor } from "lib/base"
 
 export type PhaseGateInstruction = {
   type: "phase-gate"
   phi: string | null
+  controls: number[]
   targets: number[]
 }
 
-export class PhaseGate extends Mixin(Instructionable, Targetable, Connectable) {
+export class PhaseGate extends Mixin(
+  Instructionable,
+  Targetable,
+  Connectable,
+  Controllable,
+) {
   static create(element: Element): PhaseGate {
     const phaseGate = new PhaseGate()
     phaseGate.assignElement(element)
@@ -19,6 +30,7 @@ export class PhaseGate extends Mixin(Instructionable, Targetable, Connectable) {
     return {
       type: "phase-gate",
       phi: this.phi,
+      controls: this.controls,
       targets: this.targets,
     }
   }
