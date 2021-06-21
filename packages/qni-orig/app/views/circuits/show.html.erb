@@ -6,7 +6,9 @@
   <%= editor do %>
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
       <%= palette %>
-      <%= circuit_view circuit: @circuit %>
+      <%= dropzone trash: true, klass: 'md:pt-40 md:pb-60 md:h-full md:overflow-x-auto', no_wire: true do %>
+        <%= circuit_view circuit: @circuit %>
+      <% end %>
       <%= circle_notation nqubit: @circuit.nqubit %>
       <%= component 'run_button' %>
     <% end %>

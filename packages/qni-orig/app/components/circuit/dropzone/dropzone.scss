@@ -62,9 +62,4 @@
       @apply mt-#{$instruction-margin-base};
     }
   }
-
-  &--trash {
-    @apply flex;
-    @apply px-4 py-5;
-  }
 }

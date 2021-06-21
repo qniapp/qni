@@ -10,6 +10,7 @@ class Circuit::DropzoneComponent < Component
   attribute :input_wire_active, default: true
   attribute :output_wire_active, default: true
   attribute :no_wire, default: false
+  attribute :klass
 
   validates :palette, inclusion: { in: [true, false] }
   validates :trash, inclusion: { in: [true, false] }

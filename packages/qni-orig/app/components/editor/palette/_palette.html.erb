@@ -1,33 +1,31 @@
 <% palette = local_assigns.fetch(:palette) %>
 
-<div id="palette" class="palette absolute top-0 left-0 rounded-md bg-white mt-8 border-2 border-gray-200 shadow-lg z-40">
-  <%= dropzone trash: true, no_wire: true do %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= write 0, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= write 1, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= hadamard_gate popup: false, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= not_gate popup: false, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= phase_gate phi: 'π/2', popup: false, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= control_gate palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= swap_gate palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= root_not_gate popup: false, palette: true %>
-    <% end %>
-    <%= dropzone palette: true, no_wire: true do %>
-      <%= readout popup: false, palette: true %>
-    <% end %>
+<div id="palette" class="palette hidden md:flex flex-row absolute top-0 left-0 px-4 py-5 rounded-md bg-white mt-8 border-2 border-gray-200 shadow-lg z-40">
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= write 0, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= write 1, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= hadamard_gate popup: false, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= not_gate popup: false, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= phase_gate phi: 'π/2', popup: false, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= control_gate palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= swap_gate palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= root_not_gate popup: false, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= readout popup: false, palette: true %>
   <% end %>
 </div>
