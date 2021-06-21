@@ -1,14 +1,20 @@
 .qubit-circle-group {
   $parent: &;
 
+  &--size4 {
+    @apply flex flex-row;
+  }
+
   &--size8 {
     @apply flex flex-row;
-    @apply flex-shrink-0;
+
+    .circle-notation[data-circle-notation-nqubit="3"] & {
+      @apply flex-col;
+    }
   }
 
   &--size16 {
     @apply flex flex-row;
-    @apply flex-shrink-0;
 
     @screen md {
       @apply flex-row;
@@ -21,11 +27,17 @@
     .circle-notation[data-circle-notation-nqubit="4"]
       &
       #{$parent}--size8:last-child {
-      @apply mt-1;
-
       @screen md {
         @apply ml-0;
         @apply mt-0;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="5"] & {
+      @apply flex-col;
+
+      @screen md {
+        @apply flex-row;
       }
     }
 

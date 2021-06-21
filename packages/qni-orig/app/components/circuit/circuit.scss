@@ -1,20 +1,11 @@
 .circuit {
-  @apply flex;
-  @apply flex-col items-center;
+  @apply flex flex-col items-center;
+  @apply py-#{$circle-notation-height-mobile + ($circle-notation-margin-top * 2)};
 
   @screen md {
     @apply flex-row;
     @apply mt-40;
-  }
-
-  @each $nqubit in $nqubits {
-    &[data-nqubit="#{$nqubit}"] {
-      @apply py-#{map-get($circle-notation-height-mobile, $nqubit) + ($circle-notation-margin-top * 2)};
-
-      @screen md {
-        @apply py-0;
-      }
-    }
+    @apply py-0;
   }
 
   .circuit-preview & {

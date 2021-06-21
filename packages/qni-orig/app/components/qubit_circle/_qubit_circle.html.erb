@@ -1,8 +1,8 @@
 <% qubit_circle = local_assigns.fetch(:qubit_circle) %>
 
-<div class="qubit-circle"
+<div id="<%= qubit_circle.id %>"
+     class="qubit-circle"
      data-circle-notation-target="qubitCircle"
-     data-ket="<%= qubit_circle.ket %>"
      data-magnitude="0.00000"
      data-action="mouseenter->circle-notation#showPopup">
   <div class="relative">
