@@ -1,6 +1,7 @@
 <% dropzone = local_assigns.fetch(:dropzone) %>
 
 <%= tag.div class: class_string('dropzone',
+                                dropzone.klass,
                                 'dropzone--circuit' => dropzone.circuit?,
                                 'dropzone--palette' => dropzone.palette?,
                                 'dropzone--trash' => dropzone.trash?,
