@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root 'circuits#index'
   resources :circuits, only: %i[index show]
   resources :circuit_previews, only: :show
-  get 'circle_notations', to: 'circle_notations#show'
 
   namespace :admin do
     resources :circuits

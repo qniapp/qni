@@ -4,6 +4,7 @@
 
   // Position
   @apply fixed;
+  @apply h-#{$circle-notation-height-mobile};
   @apply mt-#{$circle-notation-margin-top} mx-6;
   @apply top-0 left-0 right-0;
   @apply z-40;
@@ -35,6 +36,7 @@
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2),
     .qubit-circle-group--size8:nth-of-type(2),
+    .qubit-circle-group--size4:nth-of-type(2),
     .qubit-circle:nth-of-type(n + 3) {
       @apply hidden;
     }
@@ -45,6 +47,7 @@
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2),
     .qubit-circle-group--size8:nth-of-type(2),
+    .qubit-circle-group--size4:nth-of-type(2),
     .qubit-circle:nth-of-type(n + 5) {
       @apply hidden;
     }

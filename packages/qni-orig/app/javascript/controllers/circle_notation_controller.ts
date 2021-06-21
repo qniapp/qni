@@ -7,46 +7,29 @@ import tippy, {
 } from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
-import Rails from "@rails/ujs"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
 
   private qubitCircleTargetsCache: HTMLElement[] | undefined
 
-  declare loading: boolean
-  declare loaded: boolean
+  declare initialized: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
   declare tippyInstances: Instance<Props>[]
   declare tippySingleton: CreateSingletonInstance<CreateSingletonProps<Props>>
   declare popupEl: HTMLElement
 
   connect(): void {
-    this.loading = false
-    this.loaded = false
+    this.initialized = false
   }
 
   disconnect(): void {
-    if (!this.loaded) return
+    if (!this.initialized) return
 
     this.tippyInstances.forEach((each) => {
       each.destroy()
     })
     this.tippySingleton.destroy()
-  }
-
-  private initPopup(): void {
-    this.popupEl = document.getElementById("qubit-circle-popup") as HTMLElement
-    Util.notNull(this.popupEl)
-
-    this.tippyInstances = tippy(this.qubitCircleTargets)
-    this.tippySingleton = createSingleton(this.tippyInstances, {
-      allowHTML: true,
-      animation: false,
-      delay: 1000,
-      moveTransition: "transform 0.2s ease-out",
-      theme: "qni",
-    })
   }
 
   incrementNqubit(): void {
@@ -76,25 +59,103 @@ export default class CircleNotationController extends Controller {
     magnitudes: { [bit: number]: number },
     phases: { [bit: number]: number },
   ): void {
-    if (this.loading) return
-
-    if (this.loaded) {
-      this.updateQubitCircles(magnitudes, phases)
-    } else {
-      this.loading = true
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      Rails.ajax({
-        type: "GET",
-        url: "/circle_notations",
-        dataType: "script",
-        success: () => {
-          this.initPopup()
-          this.loading = false
-          this.loaded = true
-          this.updateQubitCircles(magnitudes, phases)
-        },
-      })
+    if (!this.initialized) {
+      this.initQubitCircles()
+      this.initPopup()
+      this.initialized = true
     }
+    this.updateQubitCircles(magnitudes, phases)
+  }
+
+  private initQubitCircles() {
+    const circleNotation = document.getElementById("circle-notation")
+    Util.notNull(circleNotation)
+
+    const stateVector = document.createElement("div")
+    stateVector.classList.add("state-vector")
+
+    this.qubitCircleGroup(
+      [...Array(2 ** 8).keys()],
+      (qc64: number[]) => {
+        return this.qubitCircleGroup(qc64, (qc32: number[]) => {
+          return this.qubitCircleGroup(qc32, (qc16: number[]) => {
+            return this.qubitCircleGroup(qc16, (qc8: number[]) => {
+              return this.qubitCircleGroup(qc8)
+            })
+          })
+        })
+      },
+      64,
+    ).forEach((each) => {
+      stateVector.appendChild(each)
+    })
+
+    circleNotation.appendChild(stateVector)
+  }
+
+  private initPopup(): void {
+    this.popupEl = document.getElementById("qubit-circle-popup") as HTMLElement
+    Util.notNull(this.popupEl)
+
+    this.tippyInstances = tippy(this.qubitCircleTargets)
+    this.tippySingleton = createSingleton(this.tippyInstances, {
+      allowHTML: true,
+      animation: false,
+      delay: 1000,
+      moveTransition: "transform 0.2s ease-out",
+      theme: "qni",
+    })
+  }
+
+  private qubitCircleGroup(
+    kets: number[],
+    block?: (kets: number[]) => HTMLElement[],
+    size: number = kets.length / 2,
+  ): HTMLElement[] {
+    const arrayChunk = ([...array]: number[], chunkSize = 1): number[][] => {
+      return array.reduce(
+        (acc, _value, index) =>
+          index % chunkSize
+            ? acc
+            : [...acc, array.slice(index, index + chunkSize)],
+        [],
+      )
+    }
+
+    return arrayChunk(kets, size).map((each) => {
+      const group = document.createElement("div")
+      group.classList.add(`qubit-circle-group--size${size}`)
+
+      if (block) {
+        block(each).forEach((subGroup) => {
+          group.appendChild(subGroup)
+        })
+      } else {
+        each.forEach((ket) => {
+          group.appendChild(this.qubitCircle(ket))
+        })
+      }
+
+      return group
+    })
+  }
+
+  private qubitCircle(ket: number): HTMLElement {
+    const template = document.getElementById("qubit-circle-template")
+    Util.notNull(template)
+
+    const qubitCircle = template.cloneNode(true) as HTMLElement
+    qubitCircle.removeAttribute("id")
+    qubitCircle.dataset.ket = ket.toString()
+    return qubitCircle
+  }
+
+  private inGroupsOf(kets: number[], size: number): number[][] {
+    const length = Math.ceil(kets.length / size)
+
+    return new Array(length).fill().map((_, i) => {
+      kets.slice(i * size, (i + 1) * size)
+    })
   }
 
   private updateQubitCircles(

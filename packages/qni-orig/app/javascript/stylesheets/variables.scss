@@ -144,16 +144,7 @@ $gate-ket-label-font-size: (
 
 // Circle notation
 $circle-notation-height: 44;
-$circle-notation-height-mobile: (
-  1: 32,
-  2: 32,
-  3: 20,
-  4: 36,
-  5: 20,
-  6: 24,
-  7: 40,
-  8: 28,
-);
+$circle-notation-height-mobile: 32;
 $circle-notation-margin-top: 12;
 
 // Qubit Circle
@@ -188,9 +179,9 @@ $qubit-circle-size-mobile: (
   2: $qubit-circle-size-2xl,
   3: $qubit-circle-size-xl,
   4: $qubit-circle-size-xl,
-  5: $qubit-circle-size-base,
+  5: $qubit-circle-size-large,
   6: $qubit-circle-size-base,
-  7: $qubit-circle-size-base,
+  7: $qubit-circle-size-sm,
   8: $qubit-circle-size-sm,
 );
 
