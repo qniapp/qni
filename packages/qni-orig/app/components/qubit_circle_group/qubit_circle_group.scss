@@ -80,6 +80,16 @@
     .circle-notation[data-circle-notation-nqubit="8"] &:nth-of-type(n + 2) {
       @apply mt-px;
     }
+
+    .circle-notation[data-circle-notation-nqubit="9"]
+      &
+      #{$parent}--size8:nth-child(even) {
+      @apply ml-px;
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"] &:nth-of-type(n + 2) {
+      @apply mt-px;
+    }
   }
 
   &--size32 {
@@ -117,6 +127,38 @@
     }
 
     .circle-notation[data-circle-notation-nqubit="8"]
+      &
+      #{$parent}--size16
+      .qubit-circle {
+      @apply ml-px;
+
+      @screen md {
+        @apply ml-px;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"] & {
+      @apply flex flex-row flex-nowrap items-center;
+
+      @screen md {
+        @apply mt-px;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"] &:nth-of-type(n + 2) {
+      @screen md {
+        @apply mt-px;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"]
+      &
+      #{$parent}--size16
+      #{$parent}--size8 {
+      @apply m-0;
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"]
       &
       #{$parent}--size16
       .qubit-circle {

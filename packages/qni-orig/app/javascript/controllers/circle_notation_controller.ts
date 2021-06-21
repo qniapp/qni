@@ -75,7 +75,7 @@ export default class CircleNotationController extends Controller {
     stateVector.classList.add("state-vector")
 
     this.qubitCircleGroup(
-      [...Array(2 ** 8).keys()],
+      [...Array(2 ** this.maxNqubit).keys()],
       (qc64: number[]) => {
         return this.qubitCircleGroup(qc64, (qc32: number[]) => {
           return this.qubitCircleGroup(qc32, (qc16: number[]) => {
@@ -238,5 +238,11 @@ export default class CircleNotationController extends Controller {
   private get qubitCircles(): HTMLElement[] {
     this.qubitCircleTargetsCache ||= this.qubitCircleTargets
     return this.qubitCircleTargetsCache
+  }
+
+  get maxNqubit(): number {
+    const maxNqubit = this.data.get("max-nqubit")
+    Util.notNull(maxNqubit)
+    return parseInt(maxNqubit)
   }
 }

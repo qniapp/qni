@@ -1,4 +1,9 @@
-import interact from "interactjs"
+import "@interactjs/auto-start"
+import "@interactjs/actions/drag"
+import "@interactjs/actions/drop"
+import "@interactjs/dev-tools"
+import interact from "@interactjs/interact"
+import { Interactable } from "@interactjs/types"
 import { DropEventHandlers, Dropzonable } from "./mixins"
 import { classNameFor } from "lib/base"
 import { Mixin } from "ts-mixer"
@@ -18,7 +23,10 @@ export class TrashDropzone extends Mixin(Dropzonable) {
 
   setInteract(handlers: DropEventHandlers): void {
     this.unsetInteract()
-    interact(this.element as Interact.Target).dropzone({
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(this.element) as Interactable
+    interactable.dropzone({
       accept: `.${classNameFor("draggable")}`,
       overlap: 0.2,
       ondrop: handlers.onDrop,

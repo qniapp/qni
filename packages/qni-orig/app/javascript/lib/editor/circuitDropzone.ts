@@ -1,4 +1,9 @@
-import interact from "interactjs"
+import "@interactjs/auto-start"
+import "@interactjs/actions/drag"
+import "@interactjs/actions/drop"
+import "@interactjs/dev-tools"
+import interact from "@interactjs/interact"
+import { Interactable } from "@interactjs/types"
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
@@ -29,7 +34,10 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
 
   setInteract(handlers: DropEventHandlers): void {
     this.unsetInteract()
-    interact(this.element as Interact.Target).dropzone({
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(this.element) as Interactable
+    interactable.dropzone({
       accept: `.${classNameFor("draggable")}`,
       overlap: "pointer",
       ondragenter: handlers.onDragEnter,

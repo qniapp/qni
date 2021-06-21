@@ -9,6 +9,7 @@ class CircleNotationComponent < Component
     { controller: 'circle-notation',
       simulator_target: 'circleNotation',
       editor_target: 'circleNotation',
-      circle_notation_nqubit: nqubit }
+      circle_notation_nqubit: nqubit,
+      circle_notation_max_nqubit: Qni::MAX_NQUBIT }
   end
 end
