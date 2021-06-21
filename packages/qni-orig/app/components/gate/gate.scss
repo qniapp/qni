@@ -20,8 +20,8 @@
     }
   }
 
-  .draggable--palette &::before,
-  &.connectable--lower-bit::before {
+  &.draggable--palette::before,
+  &.connectable--lower-bit:not(.connectable--upper-bit)::before {
     @apply hidden;
   }
 
@@ -32,6 +32,7 @@
     @apply leading-none;
     @apply text-gray-600;
     @apply whitespace-nowrap;
+    @apply z-10;
 
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
@@ -86,6 +87,7 @@
     @apply leading-none;
     @apply text-gray-600;
     @apply whitespace-nowrap;
+    @apply z-10;
 
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {

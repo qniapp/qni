@@ -389,22 +389,55 @@ export class Simulator {
     bit: number,
     gatesDone: [number, number][],
   ): void {
+    const controls = gate.controls
     const targets = gate.targets
 
-    if (targets.length == 0) {
-      if (gate.phi) {
-        this.phase(gate.phi, bit)
+    if (controls.length == 0) {
+      if (targets.length == 0) {
+        if (gate.phi) {
+          this.phase(gate.phi, bit)
+        }
+      } else if (targets.length == 2) {
+        if (
+          gatesDone.some((done) => {
+            return done[0] === targets[0] && done[1] === targets[1]
+          })
+        ) {
+          return
+        }
+        this.cphase(gate.phi, targets[0], targets[1])
+        gatesDone.push(targets)
       }
-    } else if (targets.length == 2) {
-      if (
-        gatesDone.some((done) => {
-          return done[0] === targets[0] && done[1] === targets[1]
+    } else {
+      const allControlsMet = controls
+        .map((c) => {
+          return this.pZero(c) != 1
         })
-      ) {
-        return
-      }
-      this.cphase(gate.phi, targets[0], targets[1])
-      gatesDone.push(targets)
+        .every((c) => {
+          return c
+        })
+      if (!allControlsMet) return
+
+      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+        const isPhasable = controls
+          .map((c) => {
+            return (b & (1 << c)) != 0
+          })
+          .every((c) => {
+            return c
+          })
+        if (!isPhasable) return
+
+        const numPhi = parse(gate.phi).evaluate() as number
+        const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(a1, multiply(u11, va1))
+        }
+      })
     }
   }
 

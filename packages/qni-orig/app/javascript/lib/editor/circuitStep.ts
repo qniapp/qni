@@ -181,6 +181,11 @@ export class CircuitStep extends Mixin(Elementable) {
         controlGateBits,
         controllableGateBits,
       )
+      this.updateControlledUConnections(
+        this.gatesOf(PhaseGate),
+        controlGateBits,
+        controllableGateBits,
+      )
 
       if (controlGateBits.length > 0) {
         this.updateIGateConnections(
