@@ -1,16 +1,25 @@
-import interact from "interactjs"
+import "@interactjs/auto-start"
+import "@interactjs/actions/drag"
+import "@interactjs/actions/drop"
+import "@interactjs/dev-tools"
+import interact from "@interactjs/interact"
+import { Interactable } from "@interactjs/types"
 import { CircuitElement } from "../gates"
-import { DragEventHandlers, Interactable } from "./interactable"
+import { Dndable, DragEventHandlers } from "./dndable"
 import { DraggableSource, Dropzone } from ".."
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { attributeNameFor, classNameFor } from "lib/base"
 
-export class Draggable extends Mixin(Interactable) {
+export class Draggable extends Mixin(Dndable) {
   setInteract(handlers: DragEventHandlers): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     if (interact.isSet(this.element)) return
     this.unsetInteract()
-    interact(this.element as Interact.Target)
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(this.element) as Interactable
+    interactable
       .draggable({
         onstart: handlers.onStart,
         onmove: handlers.onMove,
@@ -55,7 +64,9 @@ export class Draggable extends Mixin(Interactable) {
   }
 
   remove(): void {
-    interact(this.element).unset()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(this.element) as Interactable
+    interactable.unset()
     this.getDropzone().element.removeChild(this.element)
   }
 
@@ -100,8 +111,10 @@ export class Draggable extends Mixin(Interactable) {
 
   createSource(): DraggableSource {
     const el = this.element.cloneNode(true) as HTMLElement
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(el) as Interactable
 
-    interact(el).unset()
+    interactable.unset()
     el.classList.remove(classNameFor("draggable:state:dragging"))
     el.classList.remove(classNameFor("gate:state:updated"))
     el.classList.add(classNameFor("draggable:type:source"))

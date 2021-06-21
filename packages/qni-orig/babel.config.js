@@ -42,6 +42,7 @@ module.exports = function (api) {
       "@babel/plugin-syntax-dynamic-import",
       "@babel/plugin-proposal-throw-expressions",
       isTestEnv && "babel-plugin-dynamic-import-node",
+      isProductionEnv && "@interactjs/dev-tools/babel-plugin-prod",
       "@babel/plugin-transform-destructuring",
       [
         "@babel/plugin-transform-typescript",

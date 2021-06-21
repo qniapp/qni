@@ -17,6 +17,7 @@ $instruction-size: (
   6: $instruction-size-small,
   7: $instruction-size-extrasmall,
   8: $instruction-size-extrasmall,
+  9: $instruction-size-extrasmall,
 );
 
 $instruction-margin-extralarge: 4;
@@ -34,6 +35,7 @@ $instruction-margin: (
   6: $instruction-margin-small,
   7: $instruction-margin-extrasmall,
   8: $instruction-margin-extrasmall,
+  9: $instruction-margin-extrasmall,
 );
 
 $instruction-label-font-size-extralarge: 4xl;
@@ -51,6 +53,7 @@ $instruction-label-font-size: (
   6: $instruction-label-font-size-small,
   7: $instruction-label-font-size-extrasmall,
   8: $instruction-label-font-size-extrasmall,
+  9: $instruction-label-font-size-extrasmall,
 );
 
 $instruction-label-icon-size-extralarge: 8;
@@ -68,6 +71,7 @@ $instruction-label-icon-size: (
   6: $instruction-label-icon-size-small,
   7: $instruction-label-icon-size-extrasmall,
   8: $instruction-label-icon-size-extrasmall,
+  9: $instruction-label-icon-size-extrasmall,
 );
 
 // Gate
@@ -98,6 +102,7 @@ $gate-label-font-size: (
   6: $gate-label-font-size-small,
   7: $gate-label-font-size-extrasmall,
   8: $gate-label-font-size-extraextrasmall,
+  9: $gate-label-font-size-extraextrasmall,
 );
 
 // Wire
@@ -115,6 +120,7 @@ $connection-width: (
   6: 4,
   7: 4,
   8: 2,
+  9: 2,
 );
 
 // Circuit Breakpoint
@@ -140,6 +146,7 @@ $gate-ket-label-font-size: (
   6: $instruction-label-font-size-small,
   7: $instruction-label-font-size-extrasmall,
   8: $instruction-label-font-size-extrasmall,
+  9: $instruction-label-font-size-extrasmall,
 );
 
 // Circle notation
@@ -172,6 +179,7 @@ $qubit-circle-size: (
   6: $qubit-circle-size-xl,
   7: $qubit-circle-size-large,
   8: $qubit-circle-size-base,
+  9: $qubit-circle-size-base,
 );
 
 $qubit-circle-size-mobile: (
@@ -183,6 +191,7 @@ $qubit-circle-size-mobile: (
   6: $qubit-circle-size-base,
   7: $qubit-circle-size-sm,
   8: $qubit-circle-size-sm,
+  9: $qubit-circle-size-sm,
 );
 
 $stroke-width-bold: 2;
@@ -197,6 +206,7 @@ $qubit-circle-border-width: (
   6: $stroke-width-base,
   7: $stroke-width-base,
   8: $stroke-width-base,
+  9: $stroke-width-base,
 );
 
 $qubit-circle-border-width-mobile: (
@@ -208,24 +218,7 @@ $qubit-circle-border-width-mobile: (
   6: $stroke-width-base,
   7: $stroke-width-base,
   8: $stroke-width-base,
-);
-
-$qubit-circle-ket-font-size: (
-  1: base,
-  2: base,
-  3: base,
-  4: sm,
-  5: sm,
-  6: xxs,
-  7: xxs,
-);
-
-$qubit-circle-ket-font-size-mobile: (
-  1: base,
-  2: base,
-  3: sm,
-  4: sm,
-  5: xxs,
+  9: $stroke-width-base,
 );
 
 // Run button

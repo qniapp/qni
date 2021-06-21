@@ -1,9 +1,9 @@
 import { DraggableSource } from ".."
-import { Interactable } from "./interactable"
+import { Dndable } from "./dndable"
 import { Mixin } from "ts-mixer"
 import { classNameFor } from "lib/base"
 
-export class Dropzonable extends Mixin(Interactable) {
+export class Dropzonable extends Mixin(Dndable) {
   set active(flag: boolean) {
     this.setClassName("dropzone:state:active", flag)
   }

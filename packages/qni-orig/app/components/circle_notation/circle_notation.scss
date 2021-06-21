@@ -88,4 +88,10 @@
       @apply hidden;
     }
   }
+
+  &[data-circle-notation-nqubit="8"] {
+    .qubit-circle-group--size64:nth-of-type(n + 5) {
+      @apply hidden;
+    }
+  }
 }
