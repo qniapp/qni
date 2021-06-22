@@ -12,6 +12,8 @@ export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
 
   private qubitCircleTargetsCache: HTMLElement[] | undefined
+  private magnitudes!: number[]
+  private phases!: number[]
 
   declare initialized: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
@@ -59,12 +61,15 @@ export default class CircleNotationController extends Controller {
     magnitudes: { [bit: number]: number },
     phases: { [bit: number]: number },
   ): void {
+    this.magnitudes = magnitudes
+    this.phases = phases
+
     if (!this.initialized) {
       this.initQubitCircles()
       this.initPopup()
       this.initialized = true
     }
-    this.updateQubitCircles(magnitudes, phases)
+    this.updateQubitCircles()
   }
 
   private initQubitCircles() {
@@ -150,57 +155,36 @@ export default class CircleNotationController extends Controller {
     return qubitCircle
   }
 
-  private inGroupsOf(kets: number[], size: number): number[][] {
-    const length = Math.ceil(kets.length / size)
+  private updateQubitCircles(): void {
+    const qubitCircleCount = Object.keys(this.magnitudes).length
 
-    return new Array(length).fill().map((_, i) => {
-      kets.slice(i * size, (i + 1) * size)
-    })
-  }
-
-  private updateQubitCircles(
-    magnitudes: { [bit: number]: number },
-    phases: { [bit: number]: number },
-  ): void {
-    const qubitCircleCount = Object.keys(magnitudes).length
-
-    Array.from(Array(qubitCircleCount).keys()).forEach((c) => {
+    for (let c = 0; c < qubitCircleCount; c++) {
       const qubitCircle = this.qubitCircles[c]
+      const magnitude = this.magnitudes[c]
 
-      const magnitude = magnitudes[c]
-      qubitCircle.setAttribute(
-        "data-magnitude",
-        magnitude.toFixed(5).toString(),
-      )
       qubitCircle.setAttribute(
         "data-magnitude-int",
         Math.round(magnitude * 100).toString(),
       )
 
       if (magnitude !== 0) {
-        const phase = phases[c]
-        qubitCircle.setAttribute("data-phase", phase.toFixed(3).toString())
+        const phase = this.phases[c]
         qubitCircle.setAttribute("data-phase-int", Math.round(phase).toString())
       }
-    })
+    }
   }
 
   private popupContent(el: HTMLElement): string {
-    const prob = this.prob(el)
     const ket = this.ket(el)
+    const prob = this.round(this.prob(ket), 5)
+    const phase = this.round(this.phases[ket], 2)
 
     let html =
       this.popupEl.innerHTML +
       `<div class="text-lg">|<span class="font-mono">${ket}</span>&#10217;</div>`
-    html += `<ul class="list-none"><li>Prob: <span class="font-bold font-mono">${this.round(
-      prob,
-      5,
-    )}%</span></li>`
+    html += `<ul class="list-none"><li>Prob: <span class="font-bold font-mono">${prob}%</span></li>`
     if (prob > 0) {
-      html += `<li>Phase: <span class="font-bold font-mono">${this.round(
-        this.phase(el),
-        2,
-      )}°</span></li>`
+      html += `<li>Phase: <span class="font-bold font-mono">${phase}°</span></li>`
     } else {
       html += "<li>Phase: <span class=\"font-bold font-mono\">-</span></li>"
     }
@@ -218,21 +202,9 @@ export default class CircleNotationController extends Controller {
     return parseInt(dataKet)
   }
 
-  private prob(el: HTMLElement): number {
-    const magnitude = this.magnitude(el)
+  private prob(ket: number): number {
+    const magnitude = this.magnitudes[ket]
     return magnitude * magnitude * 100
-  }
-
-  private magnitude(el: HTMLElement): number {
-    const dataMagnitude = el.getAttribute("data-magnitude")
-    Util.notNull(dataMagnitude)
-    return parseFloat(dataMagnitude)
-  }
-
-  private phase(el: HTMLElement): number {
-    const dataPhase = el.getAttribute("data-phase")
-    Util.notNull(dataPhase)
-    return parseFloat(dataPhase)
   }
 
   private get qubitCircles(): HTMLElement[] {

@@ -4,7 +4,8 @@
      class="circuit"
      data-simulator-target="circuit"
      data-nqubit="<%= circuit.nqubit %>">
-  <div class="circuit__body">
+  <div class="circuit__body"
+       data-action="mouseleave->simulator#maybeBackToCurrentBreakpoint:passive">
     <%= circuit.content %>
   </div>
 </div>
