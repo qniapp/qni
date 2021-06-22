@@ -18,8 +18,7 @@ module Draggable
   end
 
   def data_draggable
-    { action: 'mouseover->editor#enableDnd:passive ' \
-              'mousedown->editor#grabDraggable:passive ' \
+    { action: 'mousedown->editor#grabDraggable:passive ' \
               'mouseup->editor#releaseDraggable:passive ' \
               'click->editor#ignoreDraggableClick:passive' }
   end
