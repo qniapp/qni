@@ -7,6 +7,7 @@
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
       <%= palette %>
       <%= dropzone trash: true, klass: 'md:pt-40 md:pb-60 md:h-full md:overflow-x-auto', no_wire: true do %>
+        <%= link_to 'Example circuits', circuits_path, class: 'hidden md:inline fixed top-0 right-0 mr-4 mt-5 no-underline hover:underline text-indigo-700' %>
         <%= circuit_view circuit: @circuit %>
       <% end %>
       <%= circle_notation nqubit: @circuit.nqubit %>

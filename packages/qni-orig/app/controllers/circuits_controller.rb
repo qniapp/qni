@@ -10,6 +10,11 @@ class CircuitsController < ApplicationController
   private
 
   def set_circuit
-    @circuit = Circuit.find(params[:id])
+    @circuit =
+      if params[:id]
+        Circuit.find(params[:id])
+      else
+        Circuit.find_by(name: 'Random bit')
+      end
   end
 end
