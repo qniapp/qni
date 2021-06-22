@@ -13,18 +13,17 @@ export default class EditorController extends Controller {
 
   connect(): void {
     this.editor = new Editor(this.element)
+
+    if (Breakpoint.isMobile()) return
+    Array.from(document.getElementsByClassName("draggable")).forEach((each) => {
+      const draggable = DraggableItem.create(each)
+      draggable.enableDnd()
+    })
   }
 
   runCircuit(): void {
     this.circleNotation.nqubit = this.simulator.nqubit
     this.simulator.run()
-  }
-
-  enableDnd(event: MouseEvent): void {
-    if (Breakpoint.isMobile()) return
-
-    const draggable = DraggableItem.create(event.target)
-    this.editor.enableDnd(draggable)
   }
 
   grabDraggable(event: MouseEvent): void {

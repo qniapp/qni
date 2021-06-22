@@ -26,10 +26,6 @@ export class Editor {
     })
   }
 
-  enableDnd(draggable: PaletteDraggable | CircuitDraggable): void {
-    draggable.enableDnd()
-  }
-
   addNewQubit(): void {
     this.circuit.appendNewWire(this.circuitDropzoneHandlers())
   }

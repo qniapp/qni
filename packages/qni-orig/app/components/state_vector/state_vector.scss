@@ -1,3 +1,7 @@
 .state-vector {
-  @apply flex flex-col justify-center;
+  @apply my-auto;
+
+  .circle-notation[data-circle-notation-nqubit="9"] & {
+    @apply py-4;
+  }
 }
