@@ -1,3 +1,3 @@
 module Qni
-  MAX_NQUBIT = 9
+  MAX_NQUBIT = 10
 end

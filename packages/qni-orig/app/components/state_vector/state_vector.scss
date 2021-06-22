@@ -1,7 +1,8 @@
 .state-vector {
   @apply my-auto;
 
-  .circle-notation[data-circle-notation-nqubit="9"] & {
+  .circle-notation[data-circle-notation-nqubit="9"] &,
+  .circle-notation[data-circle-notation-nqubit="10"] & {
     @apply py-4;
   }
 }
