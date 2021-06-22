@@ -1,7 +1,7 @@
 import tippy, { Instance, Props } from "tippy.js"
 import { InternalError } from "lib/error"
 import { attributeNameFor, classNameFor, Breakpoint, Util } from "lib/base"
-import { parse } from "mathjs"
+import { PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
 
 export class GatePopup {
   onUpdate!: () => void
@@ -163,9 +163,7 @@ export class GatePopup {
     if (!phi || phi.trim().length == 0) {
       throw new InternalError("Phi not set")
     }
-    if (isNaN(parse(phi).evaluate())) {
-      throw new InternalError("Invalid phi")
-    }
+    parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
 
     return phi
   }

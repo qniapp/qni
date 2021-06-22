@@ -44,7 +44,7 @@
       @apply border-#{$qubit-circle-border-hover-color};
     }
 
-    #{$parent}[data-magnitude="0.00000"] & {
+    #{$parent}[data-magnitude-int="0"] & {
       @apply opacity-25;
     }
   }
@@ -53,16 +53,11 @@
     @apply absolute;
     @apply origin-center;
     @apply text-#{$qubit-circle-phase-color};
+    @apply transition-transform;
     will-change: transform;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @if $nqubit <= 6 {
-          @apply transition-transform;
-        } @else {
-          @apply transition-none;
-        }
-
         @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
         @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 
@@ -91,7 +86,7 @@
       }
     }
 
-    #{$parent}[data-magnitude="0.00000"] & {
+    #{$parent}[data-magnitude-int="0"] & {
       @apply transform scale-0;
     }
   }
@@ -114,16 +109,11 @@
     @apply origin-center;
     @apply rounded-full;
     @apply transform scale-0;
+    @apply transition-transform;
     will-change: transform;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @if $nqubit <= 6 {
-          @apply transition-transform;
-        } @else {
-          @apply transition-none;
-        }
-
         @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
         @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 

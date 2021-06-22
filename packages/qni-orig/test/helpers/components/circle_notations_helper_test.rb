@@ -20,7 +20,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
       <div id="test"
            class="qubit-circle"
            data-circle-notation-target="qubitCircle"
-           data-magnitude="0.00000"
+           data-magnitude-int="0"
            data-action="mouseenter->circle-notation#showPopup">
         <div class="relative">
           <div class="qubit-circle__magnitude"></div>

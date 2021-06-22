@@ -1,9 +1,5 @@
 import { Util } from "lib/base"
-import { Matrix, MathType, subset, index } from "mathjs"
-
-import { matrix, kron, conj, transpose, sparse } from "mathjs"
-import { sqrt } from "mathjs"
-import { complex, divide } from "mathjs"
+import { Complex, Matrix } from "lib/math"
 
 export class StateVector {
   public matrix: Matrix
@@ -17,24 +13,38 @@ export class StateVector {
       this.matrix = bits
     }
 
-    this.size = this.matrix.size()[0]
+    this.size = this.matrix.height
     this.nqubit = Math.log2(this.size)
   }
 
   get bra(): Matrix {
-    return conj(transpose(this.matrix))
+    return this.matrix.adjoint()
   }
 
   get ket(): Matrix {
     return this.matrix
   }
 
-  amplifier(i: number): number {
-    return subset(this.matrix, index(i, 0)) as unknown as number
+  amplifier(i: number): Complex {
+    return this.matrix.cell(0, i)
   }
 
-  setAmplifier(i: number, value: number): void {
-    this.matrix.subset(index(i, 0), value)
+  setAmplifier(i: number, value: Complex): void {
+    this.matrix.set(0, i, value)
+  }
+
+  /**
+   * Determines if the receiving state vector is approximately equal to the
+   * given state vector.
+   */
+  isApproximatelyEqualTo(
+    other: StateVector | unknown,
+    epsilon: number,
+  ): boolean {
+    return (
+      other instanceof StateVector &&
+      this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
+    )
   }
 
   toString(): string {
@@ -49,7 +59,7 @@ export class StateVector {
           return this.ketVector(each)
         })
         .reduce((result, each) => {
-          return sparse(kron(result, each))
+          return result.tensorProduct(each)
         })
     } else {
       return this.ketVector(bits)
@@ -57,23 +67,17 @@ export class StateVector {
   }
 
   private ketVector(bit: string): Matrix {
-    const matrices: { [bit: string]: Matrix | MathType } = {
-      "0": matrix([[1], [0]], "sparse"),
-      "1": matrix([[0], [1]], "sparse"),
-      "+": divide(matrix([[1], [1]], "sparse"), sqrt(2)),
-      "-": divide(matrix([[1], [-1]], "sparse"), sqrt(2)),
-      i: divide(
-        matrix([[1], [complex(0, 1) as unknown as number]], "sparse"),
-        sqrt(2),
-      ),
-      "-i": divide(
-        matrix([[1], [complex(0, -1) as unknown as number]], "sparse"),
-        sqrt(2),
-      ),
+    const matrices: { [bit: string]: Matrix } = {
+      "0": Matrix.col(1, 0),
+      "1": Matrix.col(0, 1),
+      "+": Matrix.col(1, 1).times(Math.sqrt(0.5)),
+      "-": Matrix.col(1, -1).times(Math.sqrt(0.5)),
+      i: Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)),
+      "-i": Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5)),
     }
     const m = matrices[bit]
     Util.notNull(m)
 
-    return m as Matrix
+    return m
   }
 }

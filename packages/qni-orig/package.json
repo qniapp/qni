@@ -51,7 +51,6 @@
     "animate.css": "^4.1.1",
     "autoprefixer": "^9",
     "magic-grid": "^3.2.4",
-    "mathjs": "~9.4",
     "postcss": "^7",
     "sass-loader": "^10",
     "stimulus": "~2.0",
@@ -66,7 +65,6 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@types/mathjs": "~9.4",
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "~4.28",

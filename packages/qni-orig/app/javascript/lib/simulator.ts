@@ -10,15 +10,8 @@ import {
   WriteInstruction,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
-
-import { Complex, pow, sum } from "mathjs"
-import { abs, arg, round } from "mathjs"
-import { add, subtract, divide, multiply } from "mathjs"
-import { complex, i } from "mathjs"
-import { parse } from "mathjs"
-import { pi } from "mathjs"
-import { sin, cos } from "mathjs"
-import { sqrt } from "mathjs"
+import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
+import { parseFormula } from "./math"
 
 export class Simulator {
   public state: StateVector
@@ -88,7 +81,7 @@ export class Simulator {
 
   x(...targets: number[]): Simulator {
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
@@ -98,52 +91,49 @@ export class Simulator {
           this.state.setAmplifier(a0, va1)
           this.state.setAmplifier(a1, va0)
         }
-      })
+      }
     })
     return this
   }
 
   h(...targets: number[]): Simulator {
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
           const va0 = this.state.amplifier(a0)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(a0, divide(add(va0, va1), sqrt(2)) as number)
-          this.state.setAmplifier(
-            a1,
-            divide(subtract(va0, va1), sqrt(2)) as number,
-          )
+          this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
+          this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
         }
-      })
+      }
     })
     return this
   }
 
   phase(phi: string, ...targets: number[]): Simulator {
-    const numPhi = parse(phi).evaluate() as number
-    const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
+    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
 
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(a1, multiply(u11, va1))
+          this.state.setAmplifier(a1, u11.times(va1))
         }
-      })
+      }
     })
     return this
   }
 
   rnot(...targets: number[]): Simulator {
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
@@ -152,20 +142,21 @@ export class Simulator {
 
           this.state.setAmplifier(
             a0,
-            divide(
-              add(multiply(subtract(1, i), va0), multiply(add(1, i), va1)),
-              2,
-            ) as number,
+            new Complex(0, -1)
+              .plus(1)
+              .times(va0)
+              .plus(Complex.I.plus(1).times(va1))
+              .dividedBy(2),
           )
           this.state.setAmplifier(
             a1,
-            divide(
-              add(multiply(add(1, i), va0), multiply(subtract(1, i), va1)),
-              2,
-            ) as number,
+            Complex.I.plus(1)
+              .times(va0)
+              .plus(new Complex(0, -1).plus(1).times(va1))
+              .dividedBy(2),
           )
         }
-      })
+      }
     })
     return this
   }
@@ -184,7 +175,7 @@ export class Simulator {
 
   cnot(control: number, ...targets: number[]): Simulator {
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
@@ -194,57 +185,54 @@ export class Simulator {
           this.state.setAmplifier(a0, va1)
           this.state.setAmplifier(a1, va0)
         }
-      })
+      }
     })
     return this
   }
 
   ch(control: number, ...targets: number[]): Simulator {
     targets.forEach((t) => {
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
         if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
           const a0 = bit
           const a1 = a0 ^ (1 << t)
           const va0 = this.state.amplifier(a0)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(a0, divide(sum(va0, va1), sqrt(2)))
-          this.state.setAmplifier(
-            a1,
-            divide(subtract(va0, va1), sqrt(2)) as number,
-          )
+          this.state.setAmplifier(a0, va0.plus(va1).times(Math.sqrt(0.5)))
+          this.state.setAmplifier(a1, va0.minus(va1).times(Math.sqrt(0.5)))
         }
-      })
+      }
     })
     return this
   }
 
   cphase(phi: string, target0: number, target1: number): Simulator {
-    const numPhi = parse(phi).evaluate() as number
-    const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
+    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
 
-    Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+    for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
       if ((bit & (1 << target0)) == 0 && (bit & (1 << target1)) != 0) {
         const a0 = bit
         const a1 = a0 ^ (1 << target0)
         const va1 = this.state.amplifier(a1)
 
-        this.state.setAmplifier(a1, multiply(u11, va1))
+        this.state.setAmplifier(a1, u11.times(va1))
       }
-    })
+    }
     return this
   }
 
   ccz(control1: number, control2: number, target: number): Simulator {
-    Array.from(Array(2 ** this.state.nqubit).keys()).forEach((bit) => {
+    for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
       if (
         (bit & (1 << target)) != 0 &&
         (bit & (1 << control1)) != 0 &&
         (bit & (1 << control2)) != 0
       ) {
-        this.state.setAmplifier(bit, multiply(-1, this.state.amplifier(bit)))
+        this.state.setAmplifier(bit, this.state.amplifier(bit).times(-1))
       }
-    })
+    }
     return this
   }
 
@@ -257,23 +245,24 @@ export class Simulator {
     targets.forEach((t) => {
       const pZero = this.pZero(t)
       const rand = Math.random()
+
       if (rand <= pZero) {
-        Array.from(Array(2 ** this.state.nqubit).keys()).map((bit) => {
-          if ((bit & (1 << t)) != 0) this.state.setAmplifier(bit, 0)
+        for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+          if ((bit & (1 << t)) != 0) this.state.setAmplifier(bit, Complex.ZERO)
           this.state.setAmplifier(
             bit,
-            divide(this.state.amplifier(bit), sqrt(pZero)),
+            this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)),
           )
-        })
+        }
         this.bits[t] = 0
       } else {
-        Array.from(Array(2 ** this.state.nqubit).keys()).map((bit) => {
-          if ((bit & (1 << t)) == 0) this.state.setAmplifier(bit, 0)
+        for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+          if ((bit & (1 << t)) == 0) this.state.setAmplifier(bit, Complex.ZERO)
           this.state.setAmplifier(
             bit,
-            divide(this.state.amplifier(bit), sqrt(1 - pZero)),
+            this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero)),
           )
-        })
+        }
         this.bits[t] = 1
       }
     })
@@ -281,40 +270,30 @@ export class Simulator {
   }
 
   magnitudes(): number[] {
-    return this.state.matrix
-      .map((each) => {
-        return abs(each)
-      }, true)
-      .toArray()
-      .map((each) => {
-        return (each as Complex[])[0]
-      })
+    const m = []
+    for (let r = 0; r < this.state.matrix.height; r++) {
+      m.push(this.state.matrix.cell(0, r).abs())
+    }
+    return m
   }
 
   phases(): number[] {
-    return this.state.matrix
-      .map((each) => {
-        return multiply(divide(arg(each), pi), 180)
-      }, true)
-      .toArray()
-      .map((each) => {
-        return (each as Complex[])[0]
-      })
+    const p = []
+    for (let r = 0; r < this.state.matrix.height; r++) {
+      p.push((this.state.matrix.cell(0, r).phase() / Math.PI) * 180)
+    }
+    return p
   }
 
   private pZero(target: number): number {
-    const value = Array.from(Array(2 ** this.state.nqubit).keys())
-      .map((bit) => {
-        if ((bit & (1 << target)) == 0) {
-          return pow(abs(this.state.amplifier(bit)), 2)
-        } else {
-          return 0
-        }
-      })
-      .reduce((prev, each) => {
-        return add(prev, each)
-      }) as number
-    return round(value, 5)
+    let p = 0
+
+    for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+      if ((bit & (1 << target)) == 0) {
+        p += Math.pow(this.state.amplifier(bit).abs(), 2)
+      }
+    }
+    return p
   }
 
   private handleWriteGate(gate: WriteInstruction, bit: number): void {
@@ -350,7 +329,7 @@ export class Simulator {
           return c
         })
       if (allControlsMet) {
-        Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+        for (let b = 0; b < 1 << this.state.nqubit; b++) {
           const isXable = controls
             .map((c) => {
               return (b & (1 << c)) != 0
@@ -369,7 +348,7 @@ export class Simulator {
             this.state.setAmplifier(a0, va1)
             this.state.setAmplifier(a1, va0)
           }
-        })
+        }
       }
     }
   }
@@ -418,7 +397,7 @@ export class Simulator {
         })
       if (!allControlsMet) return
 
-      Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
         const isPhasable = controls
           .map((c) => {
             return (b & (1 << c)) != 0
@@ -428,16 +407,19 @@ export class Simulator {
           })
         if (!isPhasable) return
 
-        const numPhi = parse(gate.phi).evaluate() as number
-        const u11 = complex(cos(numPhi), sin(numPhi)) as unknown as number
+        const numPhi = parseFormula<number>(
+          gate.phi,
+          PARSE_COMPLEX_TOKEN_MAP_RAD,
+        )
+        const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
         if ((b & (1 << bit)) == 0) {
           const a0 = b
           const a1 = a0 ^ (1 << bit)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(a1, multiply(u11, va1))
+          this.state.setAmplifier(a1, u11.times(va1))
         }
-      })
+      }
     }
   }
 
@@ -463,7 +445,7 @@ export class Simulator {
           })
         if (!allControlsMet) return
 
-        Array.from(Array(2 ** this.state.nqubit).keys()).forEach((b) => {
+        for (let b = 0; b < 1 << this.state.nqubit; b++) {
           const isHable = controls
             .map((c) => {
               return (b & (1 << c)) != 0
@@ -479,13 +461,10 @@ export class Simulator {
             const va0 = this.state.amplifier(a0)
             const va1 = this.state.amplifier(a1)
 
-            this.state.setAmplifier(a0, divide(sum(va0, va1), sqrt(2)))
-            this.state.setAmplifier(
-              a1,
-              divide(subtract(va0, va1), sqrt(2)) as number,
-            )
+            this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
+            this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
           }
-        })
+        }
       }
     }
   }
