@@ -15,8 +15,8 @@ export default class CircleNotationController extends Controller {
   private qubitCircleVisibilityChanged!: boolean
   private visibleQubitCirclesCache!: HTMLElement[]
 
-  private magnitudes!: { [bit: number]: number }
-  private phases!: { [bit: number]: number }
+  private magnitudes!: number[]
+  private phases!: number[]
 
   declare initialized: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
@@ -63,10 +63,7 @@ export default class CircleNotationController extends Controller {
     return parseInt(nqubit)
   }
 
-  update(
-    magnitudes: { [bit: number]: number },
-    phases: { [bit: number]: number },
-  ): void {
+  update(magnitudes: number[], phases: number[]): void {
     this.magnitudes = magnitudes
     this.phases = phases
 
@@ -170,7 +167,9 @@ export default class CircleNotationController extends Controller {
 
     const qubitCircle = template.cloneNode(true) as HTMLElement
     qubitCircle.removeAttribute("id")
-    qubitCircle.dataset.ket = ket.toString()
+    qubitCircle.setAttribute("data-ket", ket.toString())
+    qubitCircle.classList.remove("hidden")
+
     return qubitCircle
   }
 
@@ -180,22 +179,24 @@ export default class CircleNotationController extends Controller {
     const qubitCircles = this.visibleQubitCircles()
 
     for (let i = 0; i < qubitCircles.length; i++) {
-      const c = qubitCircles[i]
-      const ket = this.ket(c)
+      const qc = qubitCircles[i]
+      const ket = this.ket(qc)
       const magnitude = this.magnitudes[ket]
 
-      c.setAttribute(
+      if (magnitude === undefined) break
+
+      qc.setAttribute(
         "data-magnitude-int",
         Math.round(magnitude * 100).toString(),
       )
       if (magnitude !== 0) {
         const phase = this.phases[ket]
-        c.setAttribute("data-phase-int", Math.round(phase).toString())
+        qc.setAttribute("data-phase-int", Math.round(phase).toString())
       }
     }
 
     // const t1 = performance.now()
-    // console.log(Math.floor(t1 - t0) + " ms")
+    // console.log(Math.floor(t1 - t0).toString() + " ms")
   }
 
   private popupContent(el: HTMLElement): string {

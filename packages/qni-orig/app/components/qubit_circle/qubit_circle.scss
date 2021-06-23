@@ -1,6 +1,10 @@
 .qubit-circle {
   $parent: &;
 
+  @screen md {
+    @apply m-px;
+  }
+
   @each $nqubit in $nqubits {
     .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
       @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
@@ -24,7 +28,6 @@
     @apply absolute;
     @apply rounded-full;
     @apply border-#{$qubit-circle-border-color};
-    will-change: opacity;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -53,8 +56,6 @@
     @apply absolute;
     @apply origin-center;
     @apply text-#{$qubit-circle-phase-color};
-    @apply transition-transform;
-    will-change: transform;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -109,8 +110,6 @@
     @apply origin-center;
     @apply rounded-full;
     @apply transform scale-0;
-    @apply transition-transform;
-    will-change: transform;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {

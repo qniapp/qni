@@ -1,5 +1,5 @@
 module QubitCircleHelper
-  def qubit_circle(id:)
-    component 'qubit_circle', id: id
+  def qubit_circle(*options)
+    component 'qubit_circle', *options
   end
 end
