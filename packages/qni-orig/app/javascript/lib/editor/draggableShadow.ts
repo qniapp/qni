@@ -24,7 +24,6 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("gate:state:disabled"))
     el.classList.remove(classNameFor("connectable:lowerBit"))
     el.classList.remove(classNameFor("connectable:upperBit"))
-    el.classList.add("animate__animated", "animate__jello")
     this.disableAction(el)
 
     this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)
@@ -40,7 +39,6 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("draggable:type:palette"))
     el.classList.add(classNameFor("draggable:type:circuit"))
     this.enableAction(el)
-    this.instruction().jello = false
 
     return el
   }

@@ -48,7 +48,6 @@
     "@interactjs/types": "^1.10.11",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "~5.4",
-    "animate.css": "^4.1.1",
     "autoprefixer": "^9",
     "emergence.js": "^1.1.2",
     "magic-grid": "^3.2.4",
