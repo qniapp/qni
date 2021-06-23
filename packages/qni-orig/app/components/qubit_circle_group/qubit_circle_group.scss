@@ -10,6 +10,10 @@
 
     .circle-notation[data-circle-notation-nqubit="3"] & {
       @apply flex-col;
+
+      @screen md {
+        @apply flex-row;
+      }
     }
   }
 

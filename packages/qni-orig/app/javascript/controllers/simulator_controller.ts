@@ -111,6 +111,7 @@ export default class SimulatorController extends Controller {
 
   maybeBackToCurrentBreakpoint(): void {
     if (Breakpoint.isMobile()) return
+
     Util.notNull(this.circuitBreakpoint)
 
     this.drawStateVector(this.circuitBreakpoint)

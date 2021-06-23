@@ -1,7 +1,7 @@
 <% qubit_circle = local_assigns.fetch(:qubit_circle) %>
 
 <div id="<%= qubit_circle.id %>"
-     class="qubit-circle"
+     class="<%= class_string 'qubit-circle', qubit_circle.klass %>"
      data-circle-notation-target="qubitCircle"
      data-magnitude-int="0"
      data-action="mouseenter->circle-notation#showPopup">

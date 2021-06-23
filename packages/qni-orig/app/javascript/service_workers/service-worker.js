@@ -7,7 +7,7 @@ self.addEventListener(
     const steps = e.data.steps
     var simulator = new Simulator("0".repeat(nqubit))
 
-    const t0 = performance.now()
+    // const t0 = performance.now()
 
     steps.forEach((instructions, i) => {
       simulator.runStep(instructions)
@@ -22,8 +22,8 @@ self.addEventListener(
       })
     })
 
-    const t1 = performance.now()
-    console.log("Simulation took " + Math.floor(t1 - t0) + " ms")
+    // const t1 = performance.now()
+    // console.log("Simulation took " + Math.floor(t1 - t0) + " ms")
 
     self.postMessage({ type: "finish" })
   },
