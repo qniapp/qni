@@ -191,6 +191,25 @@ export class Simulator {
     return this
   }
 
+  cr(phi: string, control: number, ...targets: number[]): Simulator {
+    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const e = new Complex(Math.E, 0)
+    const i = Complex.I
+
+    targets.forEach((t) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+        if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
+          const a0 = bit
+          const a1 = a0 ^ (1 << t)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(a1, va1.times(e.raisedTo(i.times(numPhi))))
+        }
+      }
+    })
+    return this
+  }
+
   ch(control: number, ...targets: number[]): Simulator {
     targets.forEach((t) => {
       for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
@@ -381,6 +400,8 @@ export class Simulator {
         this.cphase(gate.phi, targets[0], targets[1])
         gatesDone.push(targets)
       }
+    } else if (controls.length == 1) {
+      this.cr(gate.phi, controls[0], bit)
     } else {
       const allControlsOn = controls
         .map((c) => {
