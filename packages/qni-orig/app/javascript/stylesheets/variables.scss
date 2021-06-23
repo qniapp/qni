@@ -157,7 +157,7 @@ $gate-ket-label-font-size: (
 );
 
 // Circle notation
-$circle-notation-height: 44;
+$circle-notation-height: 36;
 $circle-notation-height-mobile: 32;
 $circle-notation-margin-top: 12;
 
@@ -184,10 +184,10 @@ $qubit-circle-size: (
   4: $qubit-circle-size-2xl,
   5: $qubit-circle-size-xl,
   6: $qubit-circle-size-xl,
-  7: $qubit-circle-size-large,
-  8: $qubit-circle-size-base,
-  9: $qubit-circle-size-base,
-  10: $qubit-circle-size-base,
+  7: $qubit-circle-size-xl,
+  8: $qubit-circle-size-xl,
+  9: $qubit-circle-size-xl,
+  10: $qubit-circle-size-xl,
 );
 
 $qubit-circle-size-mobile: (
@@ -197,10 +197,10 @@ $qubit-circle-size-mobile: (
   4: $qubit-circle-size-xl,
   5: $qubit-circle-size-large,
   6: $qubit-circle-size-base,
-  7: $qubit-circle-size-sm,
-  8: $qubit-circle-size-sm,
-  9: $qubit-circle-size-sm,
-  10: $qubit-circle-size-sm,
+  7: $qubit-circle-size-base,
+  8: $qubit-circle-size-base,
+  9: $qubit-circle-size-base,
+  10: $qubit-circle-size-base,
 );
 
 $stroke-width-bold: 2;
@@ -211,7 +211,7 @@ $qubit-circle-border-width: (
   2: $stroke-width-bold,
   3: $stroke-width-bold,
   4: $stroke-width-bold,
-  5: $stroke-width-bold,
+  5: $stroke-width-base,
   6: $stroke-width-base,
   7: $stroke-width-base,
   8: $stroke-width-base,
