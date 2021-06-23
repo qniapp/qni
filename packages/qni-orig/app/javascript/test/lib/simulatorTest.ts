@@ -405,14 +405,11 @@ QUnit.module("Simulator", () => {
       simulator.read(0)
 
       assert.ok(
-        simulator.state.matrix.isApproximatelyEqualTo(
-          Matrix.col(1, 0),
+        simulator.state.isApproximatelyEqualTo(
+          new StateVector("0"),
           0.000001,
         ) ||
-          simulator.state.matrix.isApproximatelyEqualTo(
-            Matrix.col(0, 1),
-            0.000001,
-          ),
+          simulator.state.isApproximatelyEqualTo(new StateVector("1"), 0.00001),
       )
       assert.equates(Object.keys(simulator.bits).length, 1)
       assert.ok(simulator.bits[0] == 0 || simulator.bits[0] == 1)

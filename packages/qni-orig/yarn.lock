@@ -3373,6 +3373,11 @@ elliptic@^6.5.3:
     minimalistic-assert "^1.0.1"
     minimalistic-crypto-utils "^1.0.1"
 
+emergence.js@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/emergence.js/-/emergence.js-1.1.2.tgz#f03871d6dd80edadb9afe17999d3c95030c11494"
+  integrity sha512-NbmHXQTRZxhlhVxyDHq7zCNmsd+CQfsu5bHtt7MWvIDUTH2TwoUIzzwtkhqMhHamvBE4SYRvu8EHXvD7l6XuPw==
+
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"

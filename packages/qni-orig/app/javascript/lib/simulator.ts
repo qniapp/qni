@@ -31,6 +31,7 @@ export class Simulator {
   runStep(instructions: SeriarizedInstruction[]): Simulator {
     const doneSwapTargets: [number, number][] = []
     const doneCPhaseTargets: [number, number][] = []
+    const controlOn: { [bit: number]: boolean } = {}
 
     instructions.forEach((each, bit) => {
       switch (each.type) {
@@ -44,16 +45,16 @@ export class Simulator {
           this.handleReadoutGate(each, bit)
           break
         case "not-gate":
-          this.handleNotGate(each, bit)
+          this.handleNotGate(each, bit, controlOn)
           break
         case "root-not-gate":
           this.handleRootNotGate(each, bit)
           break
         case "phase-gate":
-          this.handlePhaseGate(each, bit, doneCPhaseTargets)
+          this.handlePhaseGate(each, bit, doneCPhaseTargets, controlOn)
           break
         case "hadamard-gate":
-          this.handleHadamardGate(each, bit)
+          this.handleHadamardGate(each, bit, controlOn)
           break
         case "control-gate":
           this.handleControlGate(each, instructions, doneCPhaseTargets)
@@ -287,13 +288,16 @@ export class Simulator {
 
   private pZero(target: number): number {
     let p = 0
-
     for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
       if ((bit & (1 << target)) == 0) {
         p += Math.pow(this.state.amplifier(bit).abs(), 2)
       }
     }
-    return p
+    return this.round(p, 5)
+  }
+
+  private round(n: number, decimal: number): number {
+    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
   }
 
   private handleWriteGate(gate: WriteInstruction, bit: number): void {
@@ -307,7 +311,11 @@ export class Simulator {
     }
   }
 
-  private handleNotGate(gate: NotGateInstruction, bit: number): void {
+  private handleNotGate(
+    gate: NotGateInstruction,
+    bit: number,
+    controlOn: { [bit: number]: boolean },
+  ): void {
     const controls = gate.controls
 
     if (controls.length == 0) {
@@ -321,35 +329,20 @@ export class Simulator {
     } else if (controls.length == 1) {
       this.cnot(controls[0], bit)
     } else {
-      const allControlsMet = controls
+      const allControlsOn = controls
         .map((c) => {
-          return this.pZero(c) != 1
+          if (controlOn[c] === undefined) {
+            const pZero = this.pZero(c)
+            controlOn[c] = pZero != 1
+          }
+          return controlOn[c]
         })
         .every((c) => {
           return c
         })
-      if (allControlsMet) {
-        for (let b = 0; b < 1 << this.state.nqubit; b++) {
-          const isXable = controls
-            .map((c) => {
-              return (b & (1 << c)) != 0
-            })
-            .every((c) => {
-              return c
-            })
-          if (!isXable) return
+      if (!allControlsOn) return
 
-          if ((b & (1 << bit)) == 0) {
-            const a0 = b
-            const a1 = a0 ^ (1 << bit)
-            const va0 = this.state.amplifier(a0)
-            const va1 = this.state.amplifier(a1)
-
-            this.state.setAmplifier(a0, va1)
-            this.state.setAmplifier(a1, va0)
-          }
-        }
-      }
+      this.x(bit)
     }
   }
 
@@ -367,6 +360,7 @@ export class Simulator {
     gate: PhaseGateInstruction,
     bit: number,
     gatesDone: [number, number][],
+    controlOn: { [bit: number]: boolean },
   ): void {
     const controls = gate.controls
     const targets = gate.targets
@@ -388,42 +382,28 @@ export class Simulator {
         gatesDone.push(targets)
       }
     } else {
-      const allControlsMet = controls
+      const allControlsOn = controls
         .map((c) => {
-          return this.pZero(c) != 1
+          if (controlOn[c] === undefined) {
+            const pZero = this.pZero(c)
+            controlOn[c] = pZero != 1
+          }
+          return controlOn[c]
         })
         .every((c) => {
           return c
         })
-      if (!allControlsMet) return
+      if (!allControlsOn) return
 
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        const isPhasable = controls
-          .map((c) => {
-            return (b & (1 << c)) != 0
-          })
-          .every((c) => {
-            return c
-          })
-        if (!isPhasable) return
-
-        const numPhi = parseFormula<number>(
-          gate.phi,
-          PARSE_COMPLEX_TOKEN_MAP_RAD,
-        )
-        const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, u11.times(va1))
-        }
-      }
+      this.phase(gate.phi, bit)
     }
   }
 
-  private handleHadamardGate(gate: HadamardGateInstruction, bit: number): void {
+  private handleHadamardGate(
+    gate: HadamardGateInstruction,
+    bit: number,
+    controlOn: { [bit: number]: boolean },
+  ): void {
     if (gate.controls.length == 0) {
       if (gate.if) {
         if (this.flags[gate.if]) {
@@ -434,38 +414,20 @@ export class Simulator {
       }
     } else {
       const controls = gate.controls
-
-      if (controls.length >= 1) {
-        const allControlsMet = controls
-          .map((c) => {
-            return this.pZero(c) != 1
-          })
-          .every((c) => {
-            return c
-          })
-        if (!allControlsMet) return
-
-        for (let b = 0; b < 1 << this.state.nqubit; b++) {
-          const isHable = controls
-            .map((c) => {
-              return (b & (1 << c)) != 0
-            })
-            .every((c) => {
-              return c
-            })
-          if (!isHable) return
-
-          if ((b & (1 << bit)) == 0) {
-            const a0 = b
-            const a1 = a0 ^ (1 << bit)
-            const va0 = this.state.amplifier(a0)
-            const va1 = this.state.amplifier(a1)
-
-            this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
-            this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
+      const allControlsOn = controls
+        .map((c) => {
+          if (controlOn[c] === undefined) {
+            const pZero = this.pZero(c)
+            controlOn[c] = pZero != 1
           }
-        }
-      }
+          return controlOn[c]
+        })
+        .every((c) => {
+          return c
+        })
+      if (!allControlsOn) return
+
+      this.h(bit)
     }
   }
 

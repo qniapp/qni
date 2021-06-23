@@ -7,13 +7,16 @@ import tippy, {
 } from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
+import emergence from "emergence.js"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle"]
 
-  private qubitCircleTargetsCache: HTMLElement[] | undefined
-  private magnitudes!: number[]
-  private phases!: number[]
+  private qubitCircleVisibilityChanged!: boolean
+  private visibleQubitCirclesCache!: HTMLElement[]
+
+  private magnitudes!: { [bit: number]: number }
+  private phases!: { [bit: number]: number }
 
   declare initialized: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
@@ -23,6 +26,7 @@ export default class CircleNotationController extends Controller {
 
   connect(): void {
     this.initialized = false
+    this.qubitCircleVisibilityChanged = true
   }
 
   disconnect(): void {
@@ -36,6 +40,8 @@ export default class CircleNotationController extends Controller {
 
   incrementNqubit(): void {
     this.data.set("nqubit", (this.nqubit + 1).toString())
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    emergence.engage()
   }
 
   showPopup(event: MouseEvent): void {
@@ -96,6 +102,18 @@ export default class CircleNotationController extends Controller {
     })
 
     circleNotation.appendChild(stateVector)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    emergence.init({
+      container: circleNotation,
+      callback: (_element: unknown, state: string) => {
+        if (state === "visible") {
+          this.updateQubitCircles()
+          this.qubitCircleVisibilityChanged = true
+        }
+      },
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    emergence.engage()
   }
 
   private initPopup(): void {
@@ -130,6 +148,7 @@ export default class CircleNotationController extends Controller {
     return arrayChunk(kets, size).map((each) => {
       const group = document.createElement("div")
       group.classList.add(`qubit-circle-group--size${size}`)
+      if (size == 4) group.dataset.emergence = "hidden"
 
       if (block) {
         block(each).forEach((subGroup) => {
@@ -156,22 +175,27 @@ export default class CircleNotationController extends Controller {
   }
 
   private updateQubitCircles(): void {
-    const qubitCircleCount = Object.keys(this.magnitudes).length
+    // const t0 = performance.now()
 
-    for (let c = 0; c < qubitCircleCount; c++) {
-      const qubitCircle = this.qubitCircles[c]
-      const magnitude = this.magnitudes[c]
+    const qubitCircles = this.visibleQubitCircles()
 
-      qubitCircle.setAttribute(
+    for (let i = 0; i < qubitCircles.length; i++) {
+      const c = qubitCircles[i]
+      const ket = this.ket(c)
+      const magnitude = this.magnitudes[ket]
+
+      c.setAttribute(
         "data-magnitude-int",
         Math.round(magnitude * 100).toString(),
       )
-
       if (magnitude !== 0) {
-        const phase = this.phases[c]
-        qubitCircle.setAttribute("data-phase-int", Math.round(phase).toString())
+        const phase = this.phases[ket]
+        c.setAttribute("data-phase-int", Math.round(phase).toString())
       }
     }
+
+    // const t1 = performance.now()
+    // console.log(Math.floor(t1 - t0) + " ms")
   }
 
   private popupContent(el: HTMLElement): string {
@@ -207,9 +231,18 @@ export default class CircleNotationController extends Controller {
     return magnitude * magnitude * 100
   }
 
-  private get qubitCircles(): HTMLElement[] {
-    this.qubitCircleTargetsCache ||= this.qubitCircleTargets
-    return this.qubitCircleTargetsCache
+  private visibleQubitCircles(): HTMLElement[] {
+    if (!this.qubitCircleVisibilityChanged) {
+      return this.visibleQubitCirclesCache
+    }
+
+    this.visibleQubitCirclesCache = Array.from(
+      this.element.querySelectorAll(
+        ".qubit-circle-group--size4[data-emergence='visible'] .qubit-circle",
+      ),
+    )
+    this.qubitCircleVisibilityChanged = false
+    return this.visibleQubitCirclesCache
   }
 
   get maxNqubit(): number {
