@@ -1,4 +1,3 @@
-export * from "./animatable"
 export * from "./connectable"
 export * from "./controllable"
 export * from "./disableable"

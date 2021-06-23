@@ -1,9 +1,3 @@
-.animate {
-  &__jello {
-    --animate-duration: 0.2s;
-  }
-}
-
 .gate {
   @apply flex justify-center items-center;
   @apply relative;

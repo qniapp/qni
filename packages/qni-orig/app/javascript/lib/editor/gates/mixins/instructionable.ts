@@ -1,4 +1,3 @@
-import { Animatable } from "./animatable"
 import { CircuitDropzone } from "lib/editor"
 import { Elementable } from "lib/mixins"
 import { InternalError } from "lib/error"
@@ -6,24 +5,12 @@ import { Mixin } from "ts-mixer"
 import { SeriarizedInstruction } from ".."
 import { classNameFor } from "lib/base"
 
-export class Instructionable extends Mixin(Elementable, Animatable) {
+export class Instructionable extends Mixin(Elementable) {
   // @ts-ignore: "Abstract methods can only appear within an abstract class"
   serialize(): SeriarizedInstruction
 
   get bit(): number {
     return this.circuitDropzone.bit
-  }
-
-  set animateJello(value: boolean) {
-    if (!this.element) return
-
-    const classList = this.element.classList
-
-    if (value) {
-      classList.add("animate__animated", "animate__jello")
-    } else {
-      classList.remove("animate__animated", "animate__jello")
-    }
   }
 
   private get circuitDropzone(): CircuitDropzone {
