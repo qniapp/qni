@@ -145,7 +145,7 @@ export class CircuitStep extends Mixin(Elementable) {
     const controllableGateBits = controllableGates.map(toBit)
 
     if (controllableGates.length == 0) {
-      if (controlGates.length == 2) {
+      if (controlGates.length >= 2) {
         controlGates.forEach((each) => {
           each.targets = controlGateBits
           each.connectWith(controlGateBits)

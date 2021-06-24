@@ -7,10 +7,10 @@ export type ControlGateInstruction = {
 }
 
 export class ControlGate extends Mixin(
-  Instructionable,
-  Targetable,
   Connectable,
   Disableable,
+  Instructionable,
+  Targetable,
 ) {
   static create(element: Element): ControlGate {
     const controlGate = new ControlGate()
