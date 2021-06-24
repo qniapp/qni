@@ -31,6 +31,7 @@ export class Simulator {
   runStep(instructions: SeriarizedInstruction[]): Simulator {
     const doneSwapTargets: [number, number][] = []
     const doneCPhaseTargets: [number, number][] = []
+    const doneControlTargets: number[][] = []
     const controlOn: { [bit: number]: boolean } = {}
 
     instructions.forEach((each, bit) => {
@@ -57,7 +58,7 @@ export class Simulator {
           this.handleHadamardGate(each, bit, controlOn)
           break
         case "control-gate":
-          this.handleControlGate(each, instructions, doneCPhaseTargets)
+          this.handleControlGate(each, instructions, doneControlTargets)
           break
         case "swap-gate":
           this.handleSwapGate(each, doneSwapTargets)
@@ -491,26 +492,57 @@ export class Simulator {
   private handleControlGate(
     gate: ControlGateInstruction,
     instructions: SeriarizedInstruction[],
-    gatesDone: [number, number][],
+    gatesDone: number[][],
   ): void {
-    const targets = gate.targets
+    const targets = gate.targets.sort()
+
+    if (targets.length < 2) return
 
     if (
-      targets.length == 2 &&
-      instructions[targets[0]].type === "control-gate" &&
-      instructions[targets[1]].type === "control-gate"
+      gatesDone.some((done) => {
+        return String(done) === String(targets)
+      })
     ) {
-      if (
-        gatesDone.some((done) => {
-          return done[0] === targets[0] && done[1] === targets[1]
-        })
-      ) {
-        return
-      }
-
-      this.cphase("pi", targets[0], targets[1])
-      gatesDone.push(targets)
+      return
     }
+
+    const allControl = targets.every((each) => {
+      return instructions[each].type === "control-gate"
+    })
+    if (!allControl) return
+
+    const controls = targets.slice(1)
+
+    const allControlsOn = controls
+      .map((c) => {
+        return this.pZero(c) != 1
+      })
+      .every((c) => {
+        return c
+      })
+    if (!allControlsOn) return
+
+    const bit = targets[0]
+    for (let b = 0; b < 1 << this.state.nqubit; b++) {
+      const isCzable = controls
+        .map((c) => {
+          return (b & (1 << c)) != 0
+        })
+        .every((c) => {
+          return c
+        })
+      if (!isCzable) continue
+
+      if ((b & (1 << bit)) == 0) {
+        const a0 = b
+        const a1 = a0 ^ (1 << bit)
+        const va1 = this.state.amplifier(a1)
+
+        this.state.setAmplifier(a1, va1.times(-1))
+      }
+    }
+
+    gatesDone.push(targets)
   }
 
   private handleSwapGate(
