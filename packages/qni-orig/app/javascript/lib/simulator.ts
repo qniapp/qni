@@ -32,7 +32,6 @@ export class Simulator {
     const doneSwapTargets: [number, number][] = []
     const doneCPhaseTargets: [number, number][] = []
     const doneControlTargets: number[][] = []
-    const controlOn: { [bit: number]: boolean } = {}
 
     instructions.forEach((each, bit) => {
       switch (each.type) {
@@ -40,28 +39,28 @@ export class Simulator {
         case "i-gate":
           break
         case "write":
-          this.handleWriteGate(each, bit)
+          this.applyWriteGate(each, bit)
           break
         case "readout":
-          this.handleReadoutGate(each, bit)
+          this.applyReadoutGate(each, bit)
           break
         case "not-gate":
-          this.handleNotGate(each, bit, controlOn)
+          this.applyNotGate(each, bit)
           break
         case "root-not-gate":
-          this.handleRootNotGate(each, bit)
+          this.applyRootNotGate(each, bit)
           break
         case "phase-gate":
-          this.handlePhaseGate(each, bit, doneCPhaseTargets, controlOn)
+          this.applyPhaseGate(each, bit, doneCPhaseTargets)
           break
         case "hadamard-gate":
-          this.handleHadamardGate(each, bit, controlOn)
+          this.applyHadamardGate(each, bit)
           break
         case "control-gate":
-          this.handleControlGate(each, instructions, doneControlTargets)
+          this.applyControlGate(each, instructions, doneControlTargets)
           break
         case "swap-gate":
-          this.handleSwapGate(each, doneSwapTargets)
+          this.applySwapGate(each, doneSwapTargets)
           break
         default:
           throw new Error("Unknown instruction")
@@ -301,22 +300,18 @@ export class Simulator {
     return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
   }
 
-  private handleWriteGate(gate: WriteInstruction, bit: number): void {
+  private applyWriteGate(gate: WriteInstruction, bit: number): void {
     this.write(gate.value, bit)
   }
 
-  private handleReadoutGate(gate: ReadoutInstruction, bit: number): void {
+  private applyReadoutGate(gate: ReadoutInstruction, bit: number): void {
     this.read(bit)
     if (gate.set) {
       this.flags[gate.set] = this.bits[bit] == 1
     }
   }
 
-  private handleNotGate(
-    gate: NotGateInstruction,
-    bit: number,
-    controlOn: { [bit: number]: boolean },
-  ): void {
+  private applyNotGate(gate: NotGateInstruction, bit: number): void {
     const controls = gate.controls
 
     if (controls.length == 0) {
@@ -330,27 +325,14 @@ export class Simulator {
     } else if (controls.length == 1) {
       this.cnot(controls[0], bit)
     } else {
-      const allControlsOn = controls
-        .map((c) => {
-          if (controlOn[c] === undefined) {
-            controlOn[c] = this.pZero(c) != 1
-          }
-          return controlOn[c]
-        })
-        .every((c) => {
-          return c
-        })
-      if (!allControlsOn) return
-
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        const isXable = controls
-          .map((c) => {
+        if (
+          !controls.every((c) => {
             return (b & (1 << c)) != 0
           })
-          .every((c) => {
-            return c
-          })
-        if (!isXable) continue
+        ) {
+          continue
+        }
 
         if ((b & (1 << bit)) == 0) {
           const a0 = b
@@ -365,7 +347,7 @@ export class Simulator {
     }
   }
 
-  private handleRootNotGate(gate: RootNotGateInstruction, bit: number): void {
+  private applyRootNotGate(gate: RootNotGateInstruction, bit: number): void {
     if (gate.if) {
       if (this.flags[gate.if]) {
         this.rnot(bit)
@@ -375,11 +357,10 @@ export class Simulator {
     }
   }
 
-  private handlePhaseGate(
+  private applyPhaseGate(
     gate: PhaseGateInstruction,
     bit: number,
     gatesDone: [number, number][],
-    controlOn: { [bit: number]: boolean },
   ): void {
     const controls = gate.controls
     const targets = gate.targets
@@ -401,27 +382,14 @@ export class Simulator {
         gatesDone.push(targets)
       }
     } else {
-      const allControlsOn = controls
-        .map((c) => {
-          if (controlOn[c] === undefined) {
-            controlOn[c] = this.pZero(c) != 1
-          }
-          return controlOn[c]
-        })
-        .every((c) => {
-          return c
-        })
-      if (!allControlsOn) return
-
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        const isPhasable = controls
-          .map((c) => {
+        if (
+          !controls.every((c) => {
             return (b & (1 << c)) != 0
           })
-          .every((c) => {
-            return c
-          })
-        if (!isPhasable) continue
+        ) {
+          continue
+        }
 
         const numPhi = parseFormula<number>(
           gate.phi,
@@ -439,11 +407,7 @@ export class Simulator {
     }
   }
 
-  private handleHadamardGate(
-    gate: HadamardGateInstruction,
-    bit: number,
-    controlOn: { [bit: number]: boolean },
-  ): void {
+  private applyHadamardGate(gate: HadamardGateInstruction, bit: number): void {
     if (gate.controls.length == 0) {
       if (gate.if) {
         if (this.flags[gate.if]) {
@@ -454,27 +418,14 @@ export class Simulator {
       }
     } else {
       const controls = gate.controls
-      const allControlsOn = controls
-        .map((c) => {
-          if (controlOn[c] === undefined) {
-            controlOn[c] = this.pZero(c) != 1
-          }
-          return controlOn[c]
-        })
-        .every((c) => {
-          return c
-        })
-      if (!allControlsOn) return
-
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        const isHable = controls
-          .map((c) => {
+        if (
+          !controls.every((c) => {
             return (b & (1 << c)) != 0
           })
-          .every((c) => {
-            return c
-          })
-        if (!isHable) continue
+        ) {
+          continue
+        }
 
         if ((b & (1 << bit)) == 0) {
           const a0 = b
@@ -489,7 +440,7 @@ export class Simulator {
     }
   }
 
-  private handleControlGate(
+  private applyControlGate(
     gate: ControlGateInstruction,
     instructions: SeriarizedInstruction[],
     gatesDone: number[][],
@@ -513,25 +464,15 @@ export class Simulator {
 
     const controls = targets.slice(1)
 
-    const allControlsOn = controls
-      .map((c) => {
-        return this.pZero(c) != 1
-      })
-      .every((c) => {
-        return c
-      })
-    if (!allControlsOn) return
-
     const bit = targets[0]
     for (let b = 0; b < 1 << this.state.nqubit; b++) {
-      const isCzable = controls
-        .map((c) => {
+      if (
+        !controls.every((c) => {
           return (b & (1 << c)) != 0
         })
-        .every((c) => {
-          return c
-        })
-      if (!isCzable) continue
+      ) {
+        continue
+      }
 
       if ((b & (1 << bit)) == 0) {
         const a0 = b
@@ -545,7 +486,7 @@ export class Simulator {
     gatesDone.push(targets)
   }
 
-  private handleSwapGate(
+  private applySwapGate(
     gate: SwapGateInstruction,
     gatesDone: [number, number][],
   ): void {
