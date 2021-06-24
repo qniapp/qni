@@ -191,25 +191,6 @@ export class Simulator {
     return this
   }
 
-  cr(phi: string, control: number, ...targets: number[]): Simulator {
-    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const e = new Complex(Math.E, 0)
-    const i = Complex.I
-
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, va1.times(e.raisedTo(i.times(numPhi))))
-        }
-      }
-    })
-    return this
-  }
-
   ch(control: number, ...targets: number[]): Simulator {
     targets.forEach((t) => {
       for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
@@ -351,8 +332,7 @@ export class Simulator {
       const allControlsOn = controls
         .map((c) => {
           if (controlOn[c] === undefined) {
-            const pZero = this.pZero(c)
-            controlOn[c] = pZero != 1
+            controlOn[c] = this.pZero(c) != 1
           }
           return controlOn[c]
         })
@@ -361,7 +341,26 @@ export class Simulator {
         })
       if (!allControlsOn) return
 
-      this.x(bit)
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        const isXable = controls
+          .map((c) => {
+            return (b & (1 << c)) != 0
+          })
+          .every((c) => {
+            return c
+          })
+        if (!isXable) continue
+
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(a0, va1)
+          this.state.setAmplifier(a1, va0)
+        }
+      }
     }
   }
 
@@ -400,14 +399,11 @@ export class Simulator {
         this.cphase(gate.phi, targets[0], targets[1])
         gatesDone.push(targets)
       }
-    } else if (controls.length == 1) {
-      this.cr(gate.phi, controls[0], bit)
     } else {
       const allControlsOn = controls
         .map((c) => {
           if (controlOn[c] === undefined) {
-            const pZero = this.pZero(c)
-            controlOn[c] = pZero != 1
+            controlOn[c] = this.pZero(c) != 1
           }
           return controlOn[c]
         })
@@ -416,7 +412,29 @@ export class Simulator {
         })
       if (!allControlsOn) return
 
-      this.phase(gate.phi, bit)
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        const isPhasable = controls
+          .map((c) => {
+            return (b & (1 << c)) != 0
+          })
+          .every((c) => {
+            return c
+          })
+        if (!isPhasable) continue
+
+        const numPhi = parseFormula<number>(
+          gate.phi,
+          PARSE_COMPLEX_TOKEN_MAP_RAD,
+        )
+        const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(a1, u11.times(va1))
+        }
+      }
     }
   }
 
@@ -438,8 +456,7 @@ export class Simulator {
       const allControlsOn = controls
         .map((c) => {
           if (controlOn[c] === undefined) {
-            const pZero = this.pZero(c)
-            controlOn[c] = pZero != 1
+            controlOn[c] = this.pZero(c) != 1
           }
           return controlOn[c]
         })
@@ -448,7 +465,26 @@ export class Simulator {
         })
       if (!allControlsOn) return
 
-      this.h(bit)
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        const isHable = controls
+          .map((c) => {
+            return (b & (1 << c)) != 0
+          })
+          .every((c) => {
+            return c
+          })
+        if (!isHable) continue
+
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
+          this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
+        }
+      }
     }
   }
 
