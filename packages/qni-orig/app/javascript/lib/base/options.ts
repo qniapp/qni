@@ -9,7 +9,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "draggable:state:dragging": "draggable--dragging",
     "draggable:state:dropped": "draggable--dropped",
     "draggable:state:grabbed": "draggable--grabbed",
-    "draggable:state:adjoining": "draggable--adjoining",
     "draggable:type:circuit": "draggable--circuit",
     "draggable:type:palette": "draggable--palette",
     "draggable:type:shadow": "draggable--shadow",

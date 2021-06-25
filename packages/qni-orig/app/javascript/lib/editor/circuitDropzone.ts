@@ -192,19 +192,6 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     }
   }
 
-  set adjoining(value: boolean) {
-    if (!this.draggable) return
-
-    const classList = this.draggable.element.classList
-    const className = classNameFor("draggable:state:adjoining")
-
-    if (value) {
-      classList.add(className)
-    } else {
-      classList.remove(className)
-    }
-  }
-
   isInPage(): boolean {
     return this.element === document.body
       ? false

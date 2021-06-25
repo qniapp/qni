@@ -838,6 +838,43 @@ module.exports = {
       360: "360deg",
     },
     extend: {
+      colors: {
+        // qubit circles
+        "qubit-circle-border": "#777777",
+        "qubit-circle-border-hover": "#FF4B4B",
+        "qubit-circle-magnitude": "#1CB0F6",
+        "qubit-circle-magnitude-hover": "#F49000",
+        "qubit-circle-phase": "#4B4B4B",
+
+        // gates
+        gate: "#43C000",
+        "gate-disabled": "#4B4B4B",
+        "gate-label": "#FFFFFF",
+        "ket": "#4B4B4B",
+        "ket-0": "#1CB0F6",
+        "ket-1": "#FF4B4B",
+        "ket-01": "#CE82FF",
+        "gate-active": "#FF4B4B",
+        "gate-shadow": "#FF9600",
+        "gate-source": "#CE82FF",
+
+        // wires
+        "wire": "#777777",
+        "wire-inactive": "#E5E5E5",
+
+        // breakpoint
+        "breakpoint": "#FF4B4B",
+
+        // circuit blocks
+        "circuit-block": "#1CB0F6",
+        "circuit-block-body": "#F7F7F7",
+
+        // qubit label
+        "qubit-label": "#777777",
+
+        // run button
+        "run-button": "#CE82FF"
+      },
       spacing: {
         9: "2.25rem",
         13: "3.25rem",

@@ -20,7 +20,7 @@
 
     &.draggable--source > .gate {
       &__body::after {
-        @apply border-#{$gate-source-color};
+        @apply border-gate-source;
         @apply opacity-100;
       }
     }
@@ -31,18 +31,7 @@
       }
 
       &__body::after {
-        @apply border-#{$gate-shadow-color};
-        @apply opacity-100;
-      }
-    }
-
-    &.draggable--adjoining > .gate {
-      &__body {
-        @apply bg-white;
-      }
-
-      &__body::after {
-        @apply border-#{$gate-border-color};
+        @apply border-gate-shadow;
         @apply opacity-100;
       }
     }

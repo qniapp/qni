@@ -55,7 +55,7 @@
 
   &__wire {
     @apply absolute;
-    @apply border-#{$wire-inactive-color};
+    @apply border-wire-inactive;
 
     @mixin wire($nqubit) {
       @apply border-l-#{$wire-width};
@@ -95,7 +95,7 @@
   &__value {
     @apply font-mono;
     @apply leading-none;
-    @apply text-#{$qubit-label-font-color};
+    @apply text-qubit-label;
 
     @mixin label($nqubit) {
       @apply text-#{map-get($instruction-label-font-size, $nqubit)};
