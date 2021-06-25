@@ -210,8 +210,7 @@ export class Simulator {
   }
 
   cphase(phi: string, target0: number, target1: number): Simulator {
-    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
+    const u11 = this.eiphi(phi)
 
     for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
       if ((bit & (1 << target0)) == 0 && (bit & (1 << target1)) != 0) {
