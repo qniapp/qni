@@ -55,6 +55,10 @@
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @if $nqubit < 6 {
+          @apply transition-transform;
+        }
+
         @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
         @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 
@@ -105,6 +109,10 @@
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        @if $nqubit < 6 {
+          @apply transition-transform;
+        }
+
         @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
         @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
 
