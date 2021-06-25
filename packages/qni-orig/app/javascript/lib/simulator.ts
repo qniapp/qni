@@ -17,6 +17,7 @@ export class Simulator {
   public state: StateVector
   public bits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
+  private eiphiCache!: { [phi: string]: Complex }
 
   constructor(bits: string | StateVector) {
     if ("string" === typeof bits) {
@@ -26,6 +27,7 @@ export class Simulator {
     }
     this.bits = {}
     this.flags = {}
+    this.eiphiCache = {}
   }
 
   runStep(instructions: SeriarizedInstruction[]): Simulator {
@@ -115,8 +117,7 @@ export class Simulator {
   }
 
   phase(phi: string, ...targets: number[]): Simulator {
-    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
+    const u11 = this.eiphi(phi)
 
     targets.forEach((t) => {
       for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
@@ -325,14 +326,11 @@ export class Simulator {
     } else if (controls.length == 1) {
       this.cnot(controls[0], bit)
     } else {
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if (
-          !controls.every((c) => {
-            return (b & (1 << c)) != 0
-          })
-        ) {
-          continue
-        }
+        if ((b & controlBits) != controlBits) continue
 
         if ((b & (1 << bit)) == 0) {
           const a0 = b
@@ -382,20 +380,13 @@ export class Simulator {
         gatesDone.push(targets)
       }
     } else {
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if (
-          !controls.every((c) => {
-            return (b & (1 << c)) != 0
-          })
-        ) {
-          continue
-        }
+        if ((b & controlBits) != controlBits) continue
 
-        const numPhi = parseFormula<number>(
-          gate.phi,
-          PARSE_COMPLEX_TOKEN_MAP_RAD,
-        )
-        const u11 = new Complex(Math.cos(numPhi), Math.sin(numPhi))
+        const u11 = this.eiphi(gate.phi)
         if ((b & (1 << bit)) == 0) {
           const a0 = b
           const a1 = a0 ^ (1 << bit)
@@ -408,7 +399,9 @@ export class Simulator {
   }
 
   private applyHadamardGate(gate: HadamardGateInstruction, bit: number): void {
-    if (gate.controls.length == 0) {
+    const controls = gate.controls
+
+    if (controls.length == 0) {
       if (gate.if) {
         if (this.flags[gate.if]) {
           this.h(bit)
@@ -417,15 +410,11 @@ export class Simulator {
         this.h(bit)
       }
     } else {
-      const controls = gate.controls
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
       for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if (
-          !controls.every((c) => {
-            return (b & (1 << c)) != 0
-          })
-        ) {
-          continue
-        }
+        if ((b & controlBits) != controlBits) continue
 
         if ((b & (1 << bit)) == 0) {
           const a0 = b
@@ -463,16 +452,13 @@ export class Simulator {
     if (!allControl) return
 
     const controls = targets.slice(1)
+    const controlBits = controls.reduce((result, each) => {
+      return result | (1 << each)
+    }, 0)
 
     const bit = targets[0]
     for (let b = 0; b < 1 << this.state.nqubit; b++) {
-      if (
-        !controls.every((c) => {
-          return (b & (1 << c)) != 0
-        })
-      ) {
-        continue
-      }
+      if ((b & controlBits) != controlBits) continue
 
       if ((b & (1 << bit)) == 0) {
         const a0 = b
@@ -508,5 +494,19 @@ export class Simulator {
       gatesDone.push(targets)
       this.cswap(gate.controls[0], targets[0], targets[1])
     }
+  }
+
+  // e^iφ
+  private eiphi(phi: string): Complex {
+    const cache = this.eiphiCache[phi]
+    if (cache) return cache
+
+    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const i = Complex.I
+    const e = new Complex(Math.E, 0)
+    const eiphi = e.raisedTo(i.times(numPhi))
+    this.eiphiCache[phi] = eiphi
+
+    return eiphi
   }
 }
