@@ -14,7 +14,7 @@
 
     &.draggable--grabbed > .gate {
       &__body {
-        @apply bg-white;
+        @apply bg-snow;
       }
     }
 
@@ -27,7 +27,7 @@
 
     &.draggable--shadow > .gate {
       &__body {
-        @apply bg-white;
+        @apply bg-snow;
       }
 
       &__body::after {

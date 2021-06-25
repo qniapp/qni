@@ -22,12 +22,12 @@
   }
 
   .reload-icon {
-    @apply fill-current text-white;
+    @apply fill-current text-snow;
     @apply w-#{$run-button-icon-size} h-#{$run-button-icon-size};
   }
 
   .oval {
-    @apply fill-current text-white;
+    @apply fill-current text-snow;
     @apply w-#{$run-button-icon-size} h-#{$run-button-icon-size};
     @apply hidden;
   }
