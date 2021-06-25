@@ -3,7 +3,7 @@ require 'component'
 class CircleNotationComponent < Component
   attribute :nqubit
 
-  validates :nqubit, numericality: { only_integer: true, greater_than: 0, less_than: 9 }
+  validates :nqubit, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: Qni::MAX_NQUBIT }
 
   def data
     { controller: 'circle-notation',

@@ -192,6 +192,45 @@ module Qni
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
+    def cr(control_targets)
+      control = control_targets.keys.first
+      targets = control_targets[control].map { |bit, _phi| bit }
+
+      circuit_step do
+        controls_targets = ([control] + targets).sort
+
+        (0...@dsl.nqubit).map do |bit|
+          top = false
+          bottom = false
+
+          bottom = true if controls_targets.first == bit
+          top = true if controls_targets.last == bit
+
+          if ((controls_targets.first + 1)...controls_targets.last).cover?(bit)
+            top = true
+            bottom = true
+          end
+
+          if control == bit
+            dropzone do
+              control_gate bit: bit, targets: targets, controls: [control], wire_active: @wire_active[bit]
+            end
+          elsif targets.include?(bit)
+            dropzone do
+              phi = control_targets[control].find { |b, _phi| b == bit }[1]
+              phase_gate bit: bit, phi: phi, controls: [control], targets: targets
+            end
+          else
+            dropzone wire_top: top, wire_bottom: bottom, wire_active: @wire_active[bit]
+          end
+        end.join
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
+
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/MethodLength
     def cphase(targets)

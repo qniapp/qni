@@ -113,3 +113,7 @@ qft_frequency_manipulation:
 qft_rotating_phases:
   name: QFT rotating phases
   dsl: <%= file_text('qft_rotating_phases.dsl.rb') %>
+
+qft_without_the_bit_reversal_step:
+  name: QFT without the bit reversal step
+  dsl: <%= file_text('qft_without_the_bit_reversal_step.dsl.rb') %>
