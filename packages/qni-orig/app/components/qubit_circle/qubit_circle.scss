@@ -26,8 +26,8 @@
 
   &__border {
     @apply absolute;
+    @apply border-qubit-circle-border;
     @apply rounded-full;
-    @apply border-#{$qubit-circle-border-color};
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -44,7 +44,7 @@
     }
 
     #{$parent}:hover & {
-      @apply border-#{$qubit-circle-border-hover-color};
+      @apply border-qubit-circle-border-hover;
     }
 
     #{$parent}[data-magnitude-int="0"] & {
@@ -55,7 +55,7 @@
   &__phase {
     @apply absolute;
     @apply origin-center;
-    @apply text-#{$qubit-circle-phase-color};
+    @apply text-qubit-circle-phase;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -67,10 +67,6 @@
           @apply w-#{map-get($qubit-circle-size, $nqubit)};
         }
       }
-    }
-
-    #{$parent}:hover & {
-      @apply text-#{$qubit-circle-phase-hover-color};
     }
 
     #{$parent}[data-phase-int="0"] & {
@@ -106,7 +102,7 @@
 
   &__magnitude {
     @apply absolute;
-    @apply bg-#{$qubit-circle-magnitude-color};
+    @apply bg-qubit-circle-magnitude;
     @apply origin-center;
     @apply rounded-full;
     @apply transform scale-0;
@@ -124,7 +120,7 @@
     }
 
     #{$parent}:hover & {
-      @apply bg-#{$qubit-circle-magnitude-hover-color};
+      @apply bg-qubit-circle-magnitude-hover;
     }
 
     $zmagnitude: "";

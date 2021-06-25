@@ -28,7 +28,7 @@
 
   &__body {
     @apply absolute inset-0;
-    @apply bg-#{$circuit-breakpoint-color};
+    @apply bg-breakpoint;
     @apply opacity-0;
     @apply z-10;
 

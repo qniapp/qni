@@ -1,8 +1,8 @@
 @mixin color-filled-gate {
   .gate {
     &__body {
-      @apply bg-#{$gate-color};
-      @apply text-#{$gate-label-color};
+      @apply bg-gate;
+      @apply text-gate-label;
     }
   }
 
@@ -17,7 +17,7 @@
   &.draggable--source > .gate {
     &__body {
       @screen md {
-        @apply bg-#{$gate-source-color};
+        @apply bg-gate-source;
       }
     }
   }
@@ -25,15 +25,15 @@
   &.draggable--shadow > .gate {
     &__body {
       @screen md {
-        @apply bg-#{$gate-shadow-color};
+        @apply bg-gate-shadow;
       }
     }
   }
 
   &.gate--disabled:not(.draggable--source) > .gate {
     &__body {
-      @apply bg-#{$gate-color-disabled};
-      @apply text-#{$gate-label-color-disabled};
+      @apply bg-gate-disabled;
+      @apply text-gate-label;
     }
   }
 }

@@ -1,7 +1,7 @@
 .run-button {
   $parent: &;
 
-  @apply bg-gradient-to-br from-purple-600 via-purple-700 to-blue-600;
+  @apply bg-run-button;
   @apply cursor-pointer;
   @apply fixed bottom-0 right-0 mr-6 mb-6;
   @apply flex justify-center items-center;

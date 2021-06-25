@@ -78,17 +78,6 @@ $instruction-label-icon-size: (
   10: $instruction-label-icon-size-extrasmall,
 );
 
-// Gate
-$gate-color: green-500;
-$gate-color-disabled: gray-400;
-$gate-label-color: "white";
-$gate-label-color-disabled: "white";
-$gate-hover-color: pink-500;
-$gate-shadow-color: pink-400;
-$gate-border-width: 2;
-$gate-border-color: gray-200;
-$gate-source-color: indigo-500;
-
 // Gate label
 $gate-label-font-size-extralarge: base;
 $gate-label-font-size-large: base;
@@ -111,8 +100,6 @@ $gate-label-font-size: (
 );
 
 // Wire
-$wire-color: gray-600;
-$wire-inactive-color: gray-200;
 $wire-width: 2;
 
 $connection-width-base: 4;
@@ -130,19 +117,9 @@ $connection-width: (
 );
 
 // Circuit Breakpoint
-$circuit-breakpoint-color: pink-400;
-$circuit-breakpoint-active-hover-color: pink-600;
-$circuit-breakpoint-color-hover: indigo-400;
 $circuit-breakpoint-width-px: 4;
 
-// Qubit label
-$qubit-label-font-color: gray-500;
-
 // write & readout gate
-$rw-gate-label-0-color: text-blue-500;
-$rw-gate-label-1-color: text-red-500;
-$rw-gate-label-01-color: text-purple-500;
-
 $gate-ket-label-font-size: (
   1: $instruction-label-font-size-large,
   2: $instruction-label-font-size-large,
@@ -162,15 +139,6 @@ $circle-notation-height-mobile: 32;
 $circle-notation-margin-top: 12;
 
 // Qubit Circle
-$qubit-circle-border-color: gray-600;
-$qubit-circle-border-hover-color: red-600;
-$qubit-circle-border-inactive-color: gray-300;
-$qubit-circle-magnitude-color: blue-300;
-$qubit-circle-magnitude-hover-color: pink-300;
-$qubit-circle-phase-color: blue-900;
-$qubit-circle-phase-hover-color: yellow-900;
-$qubit-circle-ket-font-color: gray-400;
-
 $qubit-circle-size-2xl: 16;
 $qubit-circle-size-xl: 12;
 $qubit-circle-size-large: 8;

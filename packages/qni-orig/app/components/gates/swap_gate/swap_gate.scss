@@ -2,20 +2,20 @@
   @include recutangular-gate;
   @include transparent-gate;
 
-  @apply text-#{$gate-color};
+  @apply text-gate;
 
   @screen md {
     &.draggable--source {
-      @apply text-#{$gate-source-color};
+      @apply text-gate-source;
     }
 
     &.draggable--shadow {
-      @apply text-#{$gate-shadow-color};
+      @apply text-gate-shadow;
     }
 
     &.gate--disabled:not(.draggable--source) {
       @apply border-solid border-transparent;
-      @apply text-#{$gate-color-disabled};
+      @apply text-gate-disabled;
     }
   }
 }
