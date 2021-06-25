@@ -24,7 +24,7 @@
     @apply flex items-center justify-center;
     @apply font-mono;
     @apply leading-none;
-    @apply text-gray-600;
+    @apply text-wolf;
     @apply whitespace-nowrap;
     @apply z-10;
 
@@ -79,7 +79,7 @@
     @apply flex items-center justify-center;
     @apply font-mono;
     @apply leading-none;
-    @apply text-gray-600;
+    @apply text-wolf;
     @apply whitespace-nowrap;
     @apply z-10;
 
@@ -137,7 +137,7 @@
 
   @keyframes bg-fade {
     from {
-      @apply bg-yellow-200;
+      @apply bg-gate-updated;
     }
 
     to {

@@ -1,7 +1,6 @@
 .circuit-card {
-  @apply border border-gray-200;
-  @apply border-b;
-  @apply border-t;
+  @apply border-2 border-swan;
+  @apply border-b-4;
 
   &__clickable {
     @apply block;

@@ -9,6 +9,10 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+    },
     scale: {
       0: "0",
       1: ".01",
@@ -839,6 +843,12 @@ module.exports = {
     },
     extend: {
       colors: {
+        "snow": "#FFFFFF",
+        "polar": "#F7F7F7",
+        "swan": "#E5E5E5",
+        "hare": "#AFAFAF",
+        "wolf": "#777777",
+
         // qubit circles
         "qubit-circle-border": "#777777",
         "qubit-circle-border-hover": "#FF4B4B",
@@ -857,6 +867,7 @@ module.exports = {
         "gate-active": "#FF4B4B",
         "gate-shadow": "#FF9600",
         "gate-source": "#CE82FF",
+        "gate-updated": "#FFC800",
 
         // wires
         "wire": "#777777",
@@ -872,8 +883,15 @@ module.exports = {
         // qubit label
         "qubit-label": "#777777",
 
+        // button
+        "button": "#1cb0f6",
+
         // run button
-        "run-button": "#CE82FF"
+        "run-button": "#CE82FF",
+
+        // popup
+        "popup": "#2B70C9",
+        "popup-warning": "#ff4b4b",
       },
       spacing: {
         9: "2.25rem",

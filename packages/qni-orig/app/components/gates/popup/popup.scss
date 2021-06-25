@@ -3,7 +3,7 @@
     @apply py-2 px-3;
     @apply rounded-md;
     @apply shadow-sm;
-    @apply text-gray-700;
+    @apply text-wolf;
     @apply w-full;
 
     &:focus {
@@ -19,16 +19,16 @@
   &__input-error {
     @apply invisible;
     @apply mt-2;
-    @apply text-red-400;
     @apply text-sm;
+    @apply text-snow;
   }
 
   &--error &__input {
-    @apply border-red-300;
-    @apply text-red-900;
+    @apply border-popup-warning;
+    @apply text-popup-warning;
 
     &:focus {
-      @apply ring-red-400;
+      @apply ring-popup-warning;
     }
   }
 
