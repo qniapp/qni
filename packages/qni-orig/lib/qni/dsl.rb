@@ -145,6 +145,10 @@ module Qni
         end
     end
 
+    def cr(values)
+      @time_evolution << [:cr, values]
+    end
+
     def cphase(values)
       @time_evolution << [:cphase, values]
     end

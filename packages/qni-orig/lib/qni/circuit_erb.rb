@@ -110,8 +110,8 @@ module Qni
       "<%= not_gate #{opts} %>\n"
     end
 
-    def phase_gate(bit:, phi:, targets: [], wire_active: true)
-      opts = option_string(bit: bit, phi: phi, targets: targets, wire_active: wire_active)
+    def phase_gate(bit:, phi:, controls: [], targets: [], wire_active: true)
+      opts = option_string(bit: bit, phi: phi, controls: controls, targets: targets, wire_active: wire_active)
       "<%= phase_gate #{opts} %>\n"
     end
 
