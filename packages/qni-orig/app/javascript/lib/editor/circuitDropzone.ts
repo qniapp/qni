@@ -74,8 +74,6 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     if (this.element !== draggable.dropzone.element) {
       new DraggableShadow(draggable, this).remove()
     }
-    this.write = false
-    this.readout = false
   }
 
   drop(draggable: DraggableItem): HTMLElement | void {
@@ -132,14 +130,6 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
   remove(): void {
     this.unsetInteract()
     this.element.parentNode?.removeChild(this.element)
-  }
-
-  set write(flag: boolean) {
-    this.setClassName("draggable:type:write", flag)
-  }
-
-  set readout(flag: boolean) {
-    this.setClassName("draggable:type:readout", flag)
   }
 
   connectWithLowerBit(): void {
