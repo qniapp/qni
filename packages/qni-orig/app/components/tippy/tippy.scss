@@ -1,6 +1,7 @@
 .tippy-box[data-theme~="qni"] {
-  @apply bg-popup;
-  @apply text-snow;
+  @apply bg-snow;
+  @apply border-2 border-solid border-eel;
+  @apply text-wolf;
   @apply text-xs;
 
   @screen md {
@@ -8,18 +9,36 @@
   }
 }
 
-.tippy-box[data-theme~="qni"][data-placement^="top"] > .tippy-arrow::before {
-  border-top-color: theme("colors.popup");
+// The border
+.tippy-box[data-theme~="qni"] > .tippy-svg-arrow > svg:first-child {
+  fill: theme("colors.eel");
 }
 
-.tippy-box[data-theme~="qni"][data-placement^="bottom"] > .tippy-arrow::before {
-  border-bottom-color: theme("colors.popup");
+// The fill
+.tippy-box[data-theme~="qni"] > .tippy-svg-arrow > svg:last-child {
+  fill: theme("colors.snow");
 }
 
-.tippy-box[data-theme~="qni"][data-placement^="left"] > .tippy-arrow::before {
-  border-left-color: theme("colors.popup");
+.tippy-box[data-theme~="qni"][data-placement^="top"]
+  > .tippy-svg-arrow
+  svg:first-child {
+  top: 18px;
 }
 
-.tippy-box[data-theme~="qni"][data-placement^="right"] > .tippy-arrow::before {
-  border-right-color: theme("colors.popup");
+.tippy-box[data-theme~="qni"][data-placement^="bottom"]
+  > .tippy-svg-arrow
+  svg:first-child {
+  bottom: 18px;
+}
+
+.tippy-box[data-theme~="qni"][data-placement^="left"]
+  > .tippy-svg-arrow
+  svg:first-child {
+  left: 18px;
+}
+
+.tippy-box[data-theme~="qni"][data-placement^="right"]
+  > .tippy-svg-arrow
+  svg:first-child {
+  right: 18px;
 }

@@ -1,10 +1,12 @@
 import tippy, {
-  createSingleton,
-  Instance,
   CreateSingletonInstance,
-  Props,
   CreateSingletonProps,
+  Instance,
+  Props,
+  createSingleton,
+  roundArrow,
 } from "tippy.js"
+
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
 import emergence from "emergence.js"
@@ -124,6 +126,7 @@ export default class CircleNotationController extends Controller {
       delay: 1000,
       moveTransition: "transform 0.2s ease-out",
       theme: "qni",
+      arrow: roundArrow + roundArrow,
     })
   }
 

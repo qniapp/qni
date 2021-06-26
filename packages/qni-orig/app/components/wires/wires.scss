@@ -21,7 +21,7 @@
   }
 
   &__left {
-    @apply text-wire;
+    @apply text-wolf;
     @apply transform scale-x-150 -translate-x-1/4 origin-left;
 
     @screen md {
@@ -33,15 +33,15 @@
     }
 
     .wireable--inactive & {
-      @apply text-wire-inactive;
+      @apply text-swan;
     }
 
     .wireable--input-inactive & {
-      @apply text-wire-inactive;
+      @apply text-swan;
     }
 
     .write-gate ~ #{$parent} & {
-      @apply text-wire-inactive;
+      @apply text-swan;
       @apply transform scale-x-75 -translate-x-1/4 origin-left;
 
       @screen md {
@@ -56,7 +56,7 @@
     }
 
     .readout-gate ~ #{$parent} & {
-      @apply text-wire;
+      @apply text-wolf;
       @apply transform scale-x-75 -translate-x-1/4 origin-left;
 
       @screen md {
@@ -72,7 +72,7 @@
   }
 
   &__right {
-    @apply text-wire;
+    @apply text-wolf;
     @apply transform scale-x-150 translate-x-1/4 origin-right;
 
     @screen md {
@@ -84,15 +84,15 @@
     }
 
     .wireable--inactive & {
-      @apply text-wire-inactive;
+      @apply text-swan;
     }
 
     .wireable--output-inactive & {
-      @apply text-wire-inactive;
+      @apply text-swan;
     }
 
     .write-gate ~ #{$parent} & {
-      @apply text-wire;
+      @apply text-wolf;
       @apply transform scale-x-75 translate-x-1/4 origin-right;
 
       @screen md {
@@ -107,7 +107,7 @@
     }
 
     .readout-gate ~ #{$parent} & {
-      @apply text-wire-inactive;
+      @apply text-swan;
       @apply transform scale-x-75 translate-x-1/4 origin-right;
 
       @screen md {

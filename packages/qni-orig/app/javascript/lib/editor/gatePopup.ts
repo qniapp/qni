@@ -1,4 +1,4 @@
-import tippy, { Instance, Props } from "tippy.js"
+import tippy, { Instance, Props, roundArrow } from "tippy.js"
 import { InternalError } from "lib/error"
 import { attributeNameFor, classNameFor, Breakpoint, Util } from "lib/base"
 import { PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
@@ -19,6 +19,7 @@ export class GatePopup {
       duration: [0, 0],
       interactive: true,
       theme: "qni",
+      arrow: roundArrow + roundArrow,
       onHidden(instance) {
         instance.destroy()
       },

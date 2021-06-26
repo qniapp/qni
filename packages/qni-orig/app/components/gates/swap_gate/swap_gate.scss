@@ -6,16 +6,16 @@
 
   @screen md {
     &.draggable--source {
-      @apply text-gate-source;
+      @apply text-fox;
     }
 
     &.draggable--shadow {
-      @apply text-gate-shadow;
+      @apply text-superposition;
     }
 
     &.gate--disabled:not(.draggable--source) {
       @apply border-solid border-transparent;
-      @apply text-gate-disabled;
+      @apply text-eel;
     }
   }
 }
