@@ -140,6 +140,9 @@ export class Draggable extends Mixin(Dndable) {
   unGrab(): void {
     this.moveTo(0, 0)
     this.grabbed = false
+    this.element.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: true }),
+    )
   }
 
   set dropped(flag: boolean) {

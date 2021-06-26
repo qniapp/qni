@@ -1,8 +1,8 @@
 .draggable {
+  @apply absolute inset-0;
   @apply select-none;
 
   touch-action: manipulation;
-  will-change: transform;
 
   * {
     pointer-events: none;
