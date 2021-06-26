@@ -48,18 +48,18 @@
 
     &:nth-of-type(n + 2) {
       @screen md {
-        @apply mt-#{$instruction-margin-base};
+        @apply mt-#{$instruction-size-screen-md / 2};
       }
     }
 
     .circuit-preview .circuit & {
-      @apply w-#{$instruction-size-base + $instruction-margin-base};
+      @apply w-#{$instruction-size-base * 1.5};
       @apply h-#{$instruction-size-base};
       @apply mx-0;
     }
 
     .circuit-preview &:nth-of-type(n + 2) {
-      @apply mt-#{$instruction-margin-base};
+      @apply mt-#{$instruction-size-screen-md / 2};
     }
   }
 }

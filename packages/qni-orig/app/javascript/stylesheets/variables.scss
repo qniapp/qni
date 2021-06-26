@@ -21,26 +21,6 @@ $instruction-size: (
   10: $instruction-size-extrasmall,
 );
 
-$instruction-margin-extralarge: 4;
-$instruction-margin-large: 4;
-$instruction-margin-base: 4;
-$instruction-margin-small: 2;
-$instruction-margin-extrasmall: 1;
-
-$instruction-margin: (
-  1: $instruction-margin-extralarge,
-  2: $instruction-margin-extralarge,
-  3: $instruction-margin-large,
-  4: $instruction-margin-base,
-  5: $instruction-margin-small,
-  6: $instruction-margin-small,
-  7: $instruction-margin-extrasmall,
-  8: $instruction-margin-extrasmall,
-  9: $instruction-margin-extrasmall,
-  10: $instruction-margin-extrasmall,
-);
-
-$instruction-label-font-size-extralarge: 4xl;
 $instruction-label-font-size-large: 2xl;
 $instruction-label-font-size-base: base;
 $instruction-label-font-size-small: base;
@@ -57,25 +37,6 @@ $instruction-label-font-size: (
   8: $instruction-label-font-size-extrasmall,
   9: $instruction-label-font-size-extrasmall,
   10: $instruction-label-font-size-extrasmall,
-);
-
-$instruction-label-icon-size-extralarge: 8;
-$instruction-label-icon-size-large: 6;
-$instruction-label-icon-size-base: 5;
-$instruction-label-icon-size-small: 4;
-$instruction-label-icon-size-extrasmall: 4;
-
-$instruction-label-icon-size: (
-  1: $instruction-label-icon-size-extralarge,
-  2: $instruction-label-icon-size-extralarge,
-  3: $instruction-label-icon-size-large,
-  4: $instruction-label-icon-size-base,
-  5: $instruction-label-icon-size-small,
-  6: $instruction-label-icon-size-small,
-  7: $instruction-label-icon-size-extrasmall,
-  8: $instruction-label-icon-size-extrasmall,
-  9: $instruction-label-icon-size-extrasmall,
-  10: $instruction-label-icon-size-extrasmall,
 );
 
 // Gate label
