@@ -13,8 +13,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "draggable:type:palette": "draggable--palette",
     "draggable:type:shadow": "draggable--shadow",
     "draggable:type:source": "draggable--source",
-    "draggable:type:write": "draggable--write",
-    "draggable:type:readout": "draggable--readout",
     wireable: "wireable",
     "wireable:inactive": "wireable--inactive",
     "wireable:inputInactive": "wireable--input-inactive",

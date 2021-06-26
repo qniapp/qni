@@ -126,18 +126,22 @@ export class Editor {
         throw new Error(`.${classNameFor("draggable:type:palette")} not found`)
       }
 
-      const newWriteDraggable = writeDraggable.cloneNode(true) as Element
-      newWriteDraggable.classList.remove(classNameFor("draggable:type:palette"))
-      newWriteDraggable.classList.add(classNameFor("draggable:type:circuit"))
-      newWriteDraggable.classList.add(classNameFor("draggable:type:write"))
+      const newWriteDraggableEl = writeDraggable.cloneNode(true) as HTMLElement
+      newWriteDraggableEl.classList.remove(
+        classNameFor("draggable:type:palette"),
+      )
+      newWriteDraggableEl.classList.add(classNameFor("draggable:type:circuit"))
+      const newWriteDraggable = new CircuitDraggable(newWriteDraggableEl)
 
       const writeStep = this.circuit.steps[1]
       const newWriteDropzone = writeStep.dropzones[dropzone.bit]
       newWriteDropzone.element.insertBefore(
-        newWriteDraggable,
+        newWriteDraggableEl,
         newWriteDropzone.element.firstChild,
       )
       newWriteDropzone.occupied = true
+
+      newWriteDraggable.enableDnd()
     }
 
     const newCircuitDraggableElement = dropzone.drop(draggable)
