@@ -5206,6 +5206,13 @@ karma-qunit@^4.1.1:
   resolved "https://registry.yarnpkg.com/karma-qunit/-/karma-qunit-4.1.2.tgz#fa27697470e749fb4bd63b1b5e487b6165ec9ec8"
   integrity sha512-taTPqBeHCOlkeKTSzQgIKzAUb79vw3rfbCph+xwwh63tyGjNtljwx91VArhIM9DzIIR3gB9G214wQg+oXI9ycw==
 
+karma-sourcemap-loader@^0.3.8:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/karma-sourcemap-loader/-/karma-sourcemap-loader-0.3.8.tgz#d4bae72fb7a8397328a62b75013d2df937bdcf9c"
+  integrity sha512-zorxyAakYZuBcHRJE+vbrK2o2JXLFWK8VVjiT/6P+ltLBUGUvqTEkUiQ119MGdOrK7mrmxXHZF1/pfT6GgIZ6g==
+  dependencies:
+    graceful-fs "^4.1.2"
+
 karma-webpack@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-4.0.2.tgz#23219bd95bdda853e3073d3874d34447c77bced0"

@@ -20,8 +20,7 @@ module.exports = function (config) {
     exclude: [],
 
     preprocessors: {
-      "app/javascript/lib/**/*.ts": ["webpack"],
-      "app/javascript/test/**/*.ts": ["webpack"],
+      "app/javascript/test/**/*.ts": ["webpack", "sourcemap"],
     },
 
     reporters: ["dots"],
