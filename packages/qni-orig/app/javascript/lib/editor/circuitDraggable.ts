@@ -22,6 +22,9 @@ export class CircuitDraggable extends Mixin(Draggable) {
   }
 
   grab(event: MouseEvent): void {
+    this.element.dispatchEvent(
+      new CustomEvent("userGrabbingGate", { bubbles: true }),
+    )
     this.createSource()
     this.grabbed = true
 
@@ -62,9 +65,15 @@ export class CircuitDraggable extends Mixin(Draggable) {
     draggable.dragging = false
     draggable.source?.remove()
     if (draggable.isDropped) {
+      this.element.dispatchEvent(
+        new CustomEvent("userReleasedGate", { bubbles: true }),
+      )
       draggable.remove()
     } else {
       draggable.moveTo(0, 0)
+      this.element.dispatchEvent(
+        new CustomEvent("userReleasedGate", { bubbles: true }),
+      )
     }
   }
 }

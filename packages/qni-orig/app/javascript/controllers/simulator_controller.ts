@@ -23,6 +23,7 @@ type MessageEventData = {
 export default class SimulatorController extends Controller {
   private magnitudes: { [step: number]: { [bit: number]: number } } | undefined
   private phases: { [step: number]: { [bit: number]: number } } | undefined
+  private userDraggingGate!: boolean
 
   static targets = ["circuit", "runButton"]
 
@@ -34,6 +35,17 @@ export default class SimulatorController extends Controller {
   connect(): void {
     this.toggleCircuitStepActive(0)
     this.runButton = new RunButton(this.runButtonTarget as HTMLInputElement)
+    this.userDraggingGate = false
+
+    this.element.addEventListener("userGrabbingGate", (event) => {
+      this.userDraggingGate = true
+      event.stopPropagation()
+    })
+
+    this.element.addEventListener("userReleasedGate", (event) => {
+      this.userDraggingGate = false
+      event.stopPropagation()
+    })
 
     this.worker = new Worker("/service-worker.js")
     this.worker.addEventListener(
@@ -104,6 +116,7 @@ export default class SimulatorController extends Controller {
 
   showStateVector(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
+    if (this.userDraggingGate) return
 
     const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
     this.drawStateVector(circuitStep.index)

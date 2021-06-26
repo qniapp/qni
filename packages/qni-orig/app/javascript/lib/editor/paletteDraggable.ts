@@ -20,6 +20,9 @@ export class PaletteDraggable extends Mixin(Draggable) {
   }
 
   grab(event: MouseEvent): void {
+    this.element.dispatchEvent(
+      new CustomEvent("userGrabbingGate", { bubbles: true }),
+    )
     this.createSource()
     this.grabbed = true
     this.moveToGrabbedPosition(event)
@@ -43,5 +46,8 @@ export class PaletteDraggable extends Mixin(Draggable) {
     const draggable = new PaletteDraggable(event.target as HTMLElement)
     draggable.dragging = false
     draggable.moveTo(0, 0)
+    this.element.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: true }),
+    )
   }
 }
