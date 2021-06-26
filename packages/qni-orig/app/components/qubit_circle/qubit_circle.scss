@@ -22,7 +22,7 @@
 
   &__border {
     @apply absolute;
-    @apply border-qubit-circle-border;
+    @apply border-wolf;
     @apply rounded-full;
 
     @each $nqubit in $nqubits {
@@ -40,7 +40,7 @@
     }
 
     #{$parent}:hover & {
-      @apply border-qubit-circle-border-hover;
+      @apply border-cardinal;
     }
 
     #{$parent}[data-magnitude-int="0"] & {
@@ -51,7 +51,7 @@
   &__phase {
     @apply absolute;
     @apply origin-center;
-    @apply text-qubit-circle-phase;
+    @apply text-eel;
 
     @each $nqubit in $nqubits {
       .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -102,7 +102,7 @@
 
   &__magnitude {
     @apply absolute;
-    @apply bg-qubit-circle-magnitude;
+    @apply bg-magnitude;
     @apply origin-center;
     @apply rounded-full;
     @apply transform scale-0;
@@ -124,7 +124,7 @@
     }
 
     #{$parent}:hover & {
-      @apply bg-qubit-circle-magnitude-hover;
+      @apply bg-fox;
     }
 
     $zmagnitude: "";

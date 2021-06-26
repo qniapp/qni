@@ -1,5 +1,5 @@
 @mixin rw-gate {
-  @apply text-ket;
+  @apply text-eel;
 
   .gate-icon {
     @apply transform rotate-90;
@@ -17,7 +17,7 @@
     @apply font-mono;
     @apply leading-none;
     @apply relative;
-    @apply text-ket-01;
+    @apply text-superposition;
 
     writing-mode: vertical-lr;
 
@@ -49,7 +49,7 @@
   }
 
   &[data-value="0"] .gate-ket-label {
-    @apply text-ket-0;
+    @apply text-cardinal;
   }
 
   &[data-value="0"] .gate-ket-label::after {
@@ -57,7 +57,7 @@
   }
 
   &[data-value="1"] .gate-ket-label {
-    @apply text-ket-1;
+    @apply text-magnitude;
   }
 
   &[data-value="1"] .gate-ket-label::after {

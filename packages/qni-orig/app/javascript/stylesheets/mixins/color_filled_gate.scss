@@ -2,7 +2,7 @@
   .gate {
     &__body {
       @apply bg-gate;
-      @apply text-gate-label;
+      @apply text-snow;
     }
   }
 
@@ -17,7 +17,7 @@
   &.draggable--source > .gate {
     &__body {
       @screen md {
-        @apply bg-gate-source;
+        @apply bg-fox;
       }
     }
   }
@@ -25,15 +25,15 @@
   &.draggable--shadow > .gate {
     &__body {
       @screen md {
-        @apply bg-gate-shadow;
+        @apply bg-superposition;
       }
     }
   }
 
   &.gate--disabled:not(.draggable--source) > .gate {
     &__body {
-      @apply bg-gate-disabled;
-      @apply text-gate-label;
+      @apply bg-eel;
+      @apply text-snow;
     }
   }
 }

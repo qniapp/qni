@@ -19,7 +19,7 @@
 
   &__body::after {
     @apply absolute inset-0;
-    @apply border-2 border-gate-active;
+    @apply border-2 border-cardinal;
     @apply opacity-0;
 
     content: "";

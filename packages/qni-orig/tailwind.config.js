@@ -1,3 +1,24 @@
+// https://design.duolingo.com/identity/color#core-brand-colors
+const palette = {
+  // Primary Colors
+  gate: "#43C000",
+  magnitude: "#1CB0F6",
+
+  // Secondary Colors
+  fox: "#FF9600",
+  cardinal: "#FF4B4B",
+  superposition: "#CE82FF",
+  flash: "#FFC800",
+
+  // Neutrals
+  snow: "#FFFFFF",
+  polar: "#F7F7F7",
+  swan: "#E5E5E5",
+  hare: "#AFAFAF",
+  wolf: "#777777",
+  eel: "#4B4B4B",
+}
+
 module.exports = {
   purge: {
     enabled: ["production"].includes(process.env.NODE_ENV),
@@ -10,6 +31,21 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
+      gate: palette.gate,
+      magnitude: palette.magnitude,
+
+      cardinal: palette.cardinal,
+      superposition: palette.superposition,
+      fox: palette.fox,
+      flash: palette.flash,
+
+      snow: palette.snow,
+      polar: palette.polar,
+      swan: palette.swan,
+      hare: palette.hare,
+      wolf: palette.wolf,
+      eel: palette.eel,
+
       transparent: "transparent",
       current: "currentColor",
     },
@@ -842,57 +878,6 @@ module.exports = {
       360: "360deg",
     },
     extend: {
-      colors: {
-        "snow": "#FFFFFF",
-        "polar": "#F7F7F7",
-        "swan": "#E5E5E5",
-        "hare": "#AFAFAF",
-        "wolf": "#777777",
-
-        // qubit circles
-        "qubit-circle-border": "#777777",
-        "qubit-circle-border-hover": "#FF4B4B",
-        "qubit-circle-magnitude": "#1CB0F6",
-        "qubit-circle-magnitude-hover": "#F49000",
-        "qubit-circle-phase": "#4B4B4B",
-
-        // gates
-        gate: "#43C000",
-        "gate-disabled": "#4B4B4B",
-        "gate-label": "#FFFFFF",
-        "ket": "#4B4B4B",
-        "ket-0": "#1CB0F6",
-        "ket-1": "#FF4B4B",
-        "ket-01": "#CE82FF",
-        "gate-active": "#FF4B4B",
-        "gate-shadow": "#FF9600",
-        "gate-source": "#CE82FF",
-        "gate-updated": "#FFC800",
-
-        // wires
-        "wire": "#777777",
-        "wire-inactive": "#E5E5E5",
-
-        // breakpoint
-        "breakpoint": "#FF4B4B",
-
-        // circuit blocks
-        "circuit-block": "#1CB0F6",
-        "circuit-block-body": "#F7F7F7",
-
-        // qubit label
-        "qubit-label": "#777777",
-
-        // button
-        "button": "#1cb0f6",
-
-        // run button
-        "run-button": "#CE82FF",
-
-        // popup
-        "popup": "#2B70C9",
-        "popup-warning": "#ff4b4b",
-      },
       spacing: {
         9: "2.25rem",
         13: "3.25rem",

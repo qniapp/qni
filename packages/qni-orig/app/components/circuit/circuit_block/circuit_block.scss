@@ -19,7 +19,7 @@
     @apply flex justify-center;
     @apply flex-grow-0;
     @apply font-mono;
-    @apply text-circuit-block;
+    @apply text-magnitude;
     @apply whitespace-nowrap;
 
     @apply h-full;
@@ -102,8 +102,8 @@
   }
 
   &__body {
-    @apply bg-circuit-block-body;
-    @apply border-circuit-block;
+    @apply bg-polar;
+    @apply border-magnitude;
     @apply flex;
 
     @apply border-l-2 border-r-2;

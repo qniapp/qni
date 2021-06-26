@@ -20,7 +20,7 @@
 
     &.draggable--source > .gate {
       &__body::after {
-        @apply border-gate-source;
+        @apply border-fox;
         @apply opacity-100;
       }
     }
@@ -31,7 +31,7 @@
       }
 
       &__body::after {
-        @apply border-gate-shadow;
+        @apply border-superposition;
         @apply opacity-100;
       }
     }
