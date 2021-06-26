@@ -1,9 +1,7 @@
 .qubit-circle {
   $parent: &;
 
-  @screen md {
-    @apply m-px;
-  }
+  @apply m-px;
 
   @each $nqubit in $nqubits {
     .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
