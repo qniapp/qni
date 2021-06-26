@@ -14,6 +14,8 @@
     </div>
   <% end %>
 
+  <div class="border-b-2 border-swan mx-6 md:mx-4"></div>
+
   <%= component 'tailwind_ui/card/body' do %>
     <%= link_to circuit_path(circuit), class: 'circuit-card__clickable' do %>
       <%= circuit_thumbnail circuit: circuit %>

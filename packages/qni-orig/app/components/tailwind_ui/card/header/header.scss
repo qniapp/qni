@@ -1,11 +1,10 @@
 .card {
   &__header {
-    @apply border-b-2;
-    @apply border-swan;
-    @apply px-4 py-5;
+    @apply px-6;
+    @apply py-5;
 
-    @screen sm {
-      @apply px-6;
+    @screen md {
+      @apply px-4;
     }
   }
 }

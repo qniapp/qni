@@ -1,9 +1,5 @@
 .card {
   @apply bg-snow;
   @apply overflow-hidden;
-  @apply shadow;
-
-  @screen sm {
-    @apply rounded-lg;
-  }
+  @apply rounded-lg;
 }

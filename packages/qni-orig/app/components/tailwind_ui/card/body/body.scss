@@ -1,9 +1,10 @@
 .card {
   &__body {
-    @apply px-4 py-5;
+    @apply py-5;
+    @apply p-6;
 
-    @screen sm {
-      @apply p-6;
+    @screen md {
+      @apply px-4;
     }
   }
 }
