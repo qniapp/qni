@@ -191,14 +191,10 @@ export default class CircleNotationController extends Controller {
     Util.notNull(template)
 
     const qubitCircle = template.cloneNode(true) as HTMLElement
-    const removeHint = () => {
-      qubitCircle.classList.remove("qubit-circle--will-change")
-    }
 
     qubitCircle.removeAttribute("id")
     qubitCircle.setAttribute("data-ket", ket.toString())
     qubitCircle.classList.remove("hidden")
-    qubitCircle.addEventListener("transitionend", removeHint, false)
 
     return qubitCircle
   }
@@ -217,7 +213,7 @@ export default class CircleNotationController extends Controller {
       const mInt = Math.round(magnitude * 100)
       const mRounded =
         mInt < 10 ? (mInt == 0 ? 0 : 10) : Math.round(mInt / 10) * 10
-      className += `qubit-circle qubit-circle--will-change qubit-circle--magnitude-${mRounded}`
+      className += `qubit-circle qubit-circle--magnitude-${mRounded}`
 
       if (mRounded != 0) {
         const p = Math.round(this.phases[ket])

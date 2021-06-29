@@ -4,7 +4,7 @@
   @apply relative;
   @apply m-px;
 
-  @apply border-wolf;
+  @apply border-swan;
   @apply rounded-full;
 
   // Disable double tap zoom
@@ -14,10 +14,6 @@
     @apply border-cardinal;
   }
 
-  &.qubit-circle--magnitude-0 {
-    @apply border-opacity-25;
-  }
-
   @each $nqubit in $nqubits {
     #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
       border-width: #{map-get($qubit-circle-border-width-px-mobile, $nqubit)}px;
@@ -25,16 +21,6 @@
       @screen md {
         border-width: #{map-get($qubit-circle-border-width-px, $nqubit)}px;
       }
-    }
-  }
-
-  &--will-change {
-    #{$parent}__magnitude {
-      will-change: transform;
-    }
-
-    #{$parent}__phase {
-      will-change: transform;
     }
   }
 
@@ -54,7 +40,8 @@
     @apply absolute inset-0;
     @apply bg-magnitude;
     @apply rounded-full;
-    @apply transform scale-0 origin-center;
+    transform: scaleX(0) scaleY(0);
+    transform-origin: center;
 
     #{$parent}:hover > & {
       @apply bg-fox;
@@ -63,17 +50,60 @@
     // 1..100 (step = 10)
     @for $magnitude from 1 through 10 {
       #{$parent}--magnitude-#{$magnitude * 10} > & {
-        @apply scale-#{$magnitude * 10};
+        transform: scaleX(#{$magnitude / 10}) scaleY(#{$magnitude / 10});
       }
     }
   }
 
   &__phase {
+    @apply absolute inset-0;
+    @apply border-wolf rounded-full;
+    transform: rotate(0deg);
+    transform-origin: center;
+
+    @each $nqubit in $nqubits {
+      #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        $border-width: map-get($qubit-circle-border-width-px-mobile, $nqubit);
+
+        border-width: #{$border-width}px;
+        bottom: -#{$border-width}px;
+        left: -#{$border-width}px;
+        right: -#{$border-width}px;
+        top: -#{$border-width}px;
+
+        @screen md {
+          $border-width-md: #{map-get($qubit-circle-border-width-px, $nqubit)};
+
+          border-width: #{$border-width-md}px;
+          bottom: -#{$border-width-md}px;
+          left: -#{$border-width-md}px;
+          right: -#{$border-width-md}px;
+          top: -#{$border-width-md}px;
+        }
+      }
+    }
+
+    #{$parent}--magnitude-0 > & {
+      transform: scaleX(0) scaleY(0);
+    }
+
+    #{$parent}:hover > & {
+      @apply border-cardinal;
+    }
+
+    // 10, 20, 30, ..., 360 (step = 10)
+    @for $phase from 1 through 36 {
+      #{$parent}--phase-#{$phase * 10} > & {
+        transform: rotate(-#{$phase * 10}deg);
+      }
+    }
+  }
+
+  &__phase::after {
     @apply absolute top-0 left-0 right-0;
     @apply bg-eel;
     @apply h-1/2;
     @apply mx-auto;
-    @apply transform rotate-0 origin-bottom;
 
     @each $nqubit in $nqubits {
       #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
@@ -85,15 +115,6 @@
       }
     }
 
-    #{$parent}--magnitude-0 > & {
-      @apply transform scale-0;
-    }
-
-    // 10, 20, 30, ..., 360 (step = 10)
-    @for $phase from 1 through 36 {
-      #{$parent}--phase-#{$phase * 10} > & {
-        @apply transform -rotate-#{$phase * 10};
-      }
-    }
+    content: "";
   }
 }
