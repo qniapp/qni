@@ -1,3 +1,8 @@
+import "@interactjs/auto-start"
+import "@interactjs/actions/drag"
+import "@interactjs/dev-tools"
+// import interact from "@interactjs/interact"
+
 import tippy, {
   CreateSingletonInstance,
   CreateSingletonProps,
@@ -29,6 +34,19 @@ export default class CircleNotationController extends Controller {
   connect(): void {
     this.initialized = false
     this.qubitCircleVisibilityChanged = true
+    // const position = { x: 0, y: 0 }
+
+    // interact(this.element).draggable({
+    //   listeners: {
+    //     move (event) {
+    //       position.x += event.dx
+    //       position.y += event.dy
+
+    //       event.target.style.transform =
+    //         `translate(${position.x}px, ${position.y}px)`
+    //     },
+    //   }
+    // })
   }
 
   disconnect(): void {
@@ -74,7 +92,7 @@ export default class CircleNotationController extends Controller {
       this.initPopup()
       this.initialized = true
     }
-    this.updateQubitCircles()
+    window.requestAnimationFrame(this.updateQubitCircles.bind(this))
   }
 
   private initQubitCircles() {
@@ -86,16 +104,20 @@ export default class CircleNotationController extends Controller {
 
     this.qubitCircleGroup(
       [...Array(2 ** this.maxNqubit).keys()],
-      (qc64: number[]) => {
-        return this.qubitCircleGroup(qc64, (qc32: number[]) => {
-          return this.qubitCircleGroup(qc32, (qc16: number[]) => {
-            return this.qubitCircleGroup(qc16, (qc8: number[]) => {
-              return this.qubitCircleGroup(qc8)
+      (qc256: number[]) => {
+        return this.qubitCircleGroup(qc256, (qc128: number[]) => {
+          return this.qubitCircleGroup(qc128, (qc64: number[]) => {
+            return this.qubitCircleGroup(qc64, (qc32: number[]) => {
+              return this.qubitCircleGroup(qc32, (qc16: number[]) => {
+                return this.qubitCircleGroup(qc16, (qc8: number[]) => {
+                  return this.qubitCircleGroup(qc8)
+                })
+              })
             })
           })
         })
       },
-      64,
+      256,
     ).forEach((each) => {
       stateVector.appendChild(each)
     })
@@ -106,8 +128,8 @@ export default class CircleNotationController extends Controller {
       container: circleNotation,
       callback: (_element: unknown, state: string) => {
         if (state === "visible") {
-          this.updateQubitCircles()
           this.qubitCircleVisibilityChanged = true
+          window.requestAnimationFrame(this.updateQubitCircles.bind(this))
         }
       },
     })
@@ -148,7 +170,7 @@ export default class CircleNotationController extends Controller {
     return arrayChunk(kets, size).map((each) => {
       const group = document.createElement("div")
       group.classList.add(`qubit-circle-group--size${size}`)
-      if (size == 4) group.dataset.emergence = "hidden"
+      if (size == 64) group.dataset.emergence = "hidden"
 
       if (block) {
         block(each).forEach((subGroup) => {
@@ -169,16 +191,19 @@ export default class CircleNotationController extends Controller {
     Util.notNull(template)
 
     const qubitCircle = template.cloneNode(true) as HTMLElement
+    const removeHint = () => {
+      qubitCircle.classList.remove("qubit-circle--will-change")
+    }
+
     qubitCircle.removeAttribute("id")
     qubitCircle.setAttribute("data-ket", ket.toString())
     qubitCircle.classList.remove("hidden")
+    qubitCircle.addEventListener("transitionend", removeHint, false)
 
     return qubitCircle
   }
 
   private updateQubitCircles(): void {
-    // const t0 = performance.now()
-
     const qubitCircles = this.visibleQubitCircles()
 
     for (let i = 0; i < qubitCircles.length; i++) {
@@ -188,18 +213,21 @@ export default class CircleNotationController extends Controller {
 
       if (magnitude === undefined) break
 
-      qc.setAttribute(
-        "data-magnitude-int",
-        Math.round(magnitude * 100).toString(),
-      )
-      if (magnitude !== 0) {
-        const phase = this.phases[ket]
-        qc.setAttribute("data-phase-int", Math.round(phase).toString())
-      }
-    }
+      let className = ""
+      const mInt = Math.round(magnitude * 100)
+      const mRounded =
+        mInt < 10 ? (mInt == 0 ? 0 : 10) : Math.round(mInt / 10) * 10
+      className += `qubit-circle qubit-circle--will-change qubit-circle--magnitude-${mRounded}`
 
-    // const t1 = performance.now()
-    // console.log(Math.floor(t1 - t0).toString() + " ms")
+      if (mRounded != 0) {
+        const p = Math.round(this.phases[ket])
+        let phaseRounded = Math.round(p / 10) * 10
+        if (phaseRounded < 0) phaseRounded = 360 + phaseRounded
+        className += ` qubit-circle--phase-${phaseRounded.toString()}`
+      }
+
+      qc.className = className
+    }
   }
 
   private popupContent(el: HTMLElement): string {
@@ -242,7 +270,7 @@ export default class CircleNotationController extends Controller {
 
     this.visibleQubitCirclesCache = Array.from(
       this.element.querySelectorAll(
-        ".qubit-circle-group--size4[data-emergence='visible'] .qubit-circle",
+        ".qubit-circle-group--size64[data-emergence='visible'] .qubit-circle",
       ),
     )
     this.qubitCircleVisibilityChanged = false

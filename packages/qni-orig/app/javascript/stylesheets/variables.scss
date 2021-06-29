@@ -95,7 +95,7 @@ $gate-ket-label-font-size: (
 );
 
 // Circle notation
-$circle-notation-height: 36;
+$circle-notation-height: 40;
 $circle-notation-height-mobile: 32;
 $circle-notation-margin-top: 12;
 
@@ -106,59 +106,59 @@ $qubit-circle-size-large: 8;
 $qubit-circle-size-base: 6;
 $qubit-circle-size-sm: 4;
 
-$qubit-circle-size: (
-  1: $qubit-circle-size-2xl,
-  2: $qubit-circle-size-2xl,
-  3: $qubit-circle-size-2xl,
-  4: $qubit-circle-size-xl,
-  5: $qubit-circle-size-large,
-  6: $qubit-circle-size-large,
-  7: $qubit-circle-size-large,
-  8: $qubit-circle-size-large,
-  9: $qubit-circle-size-large,
-  10: $qubit-circle-size-large,
+$qubit-circle-size-px: (
+  1: $qubit-circle-size-2xl * 4,
+  2: $qubit-circle-size-2xl * 4,
+  3: $qubit-circle-size-2xl * 4,
+  4: $qubit-circle-size-xl * 4,
+  5: $qubit-circle-size-large * 4,
+  6: $qubit-circle-size-base * 4 + 1,
+  7: $qubit-circle-size-sm * 4 + 1,
+  8: $qubit-circle-size-sm * 4 + 1,
+  9: $qubit-circle-size-sm * 4 + 1,
+  10: $qubit-circle-size-sm * 4 + 1,
 );
 
-$qubit-circle-size-mobile: (
-  1: $qubit-circle-size-2xl,
-  2: $qubit-circle-size-2xl,
-  3: $qubit-circle-size-xl,
-  4: $qubit-circle-size-large,
-  5: $qubit-circle-size-base,
-  6: $qubit-circle-size-sm,
-  7: $qubit-circle-size-sm,
-  8: $qubit-circle-size-sm,
-  9: $qubit-circle-size-sm,
-  10: $qubit-circle-size-sm,
+$qubit-circle-size-px-mobile: (
+  1: $qubit-circle-size-2xl * 4,
+  2: $qubit-circle-size-2xl * 4,
+  3: $qubit-circle-size-xl * 4,
+  4: $qubit-circle-size-large * 4,
+  5: $qubit-circle-size-base * 4 - 1,
+  6: $qubit-circle-size-sm * 4 - 1,
+  7: $qubit-circle-size-sm * 4 - 1,
+  8: $qubit-circle-size-sm * 4 - 1,
+  9: $qubit-circle-size-sm * 4 - 1,
+  10: $qubit-circle-size-sm * 4 - 1,
 );
 
-$stroke-width-bold: 2;
-$stroke-width-base: 1;
+$stroke-width-px-bold: 2;
+$stroke-width-px-base: 1;
 
-$qubit-circle-border-width: (
-  1: $stroke-width-bold,
-  2: $stroke-width-bold,
-  3: $stroke-width-bold,
-  4: $stroke-width-bold,
-  5: $stroke-width-bold,
-  6: $stroke-width-bold,
-  7: $stroke-width-bold,
-  8: $stroke-width-bold,
-  9: $stroke-width-bold,
-  10: $stroke-width-bold,
+$qubit-circle-border-width-px: (
+  1: $stroke-width-px-bold,
+  2: $stroke-width-px-bold,
+  3: $stroke-width-px-bold,
+  4: $stroke-width-px-bold,
+  5: $stroke-width-px-bold,
+  6: $stroke-width-px-base,
+  7: $stroke-width-px-base,
+  8: $stroke-width-px-base,
+  9: $stroke-width-px-base,
+  10: $stroke-width-px-base,
 );
 
-$qubit-circle-border-width-mobile: (
-  1: $stroke-width-bold,
-  2: $stroke-width-bold,
-  3: $stroke-width-bold,
-  4: $stroke-width-bold,
-  5: $stroke-width-base,
-  6: $stroke-width-base,
-  7: $stroke-width-base,
-  8: $stroke-width-base,
-  9: $stroke-width-base,
-  10: $stroke-width-base,
+$qubit-circle-border-width-px-mobile: (
+  1: $stroke-width-px-bold,
+  2: $stroke-width-px-bold,
+  3: $stroke-width-px-bold,
+  4: $stroke-width-px-bold,
+  5: $stroke-width-px-base,
+  6: $stroke-width-px-base,
+  7: $stroke-width-px-base,
+  8: $stroke-width-px-base,
+  9: $stroke-width-px-base,
+  10: $stroke-width-px-base,
 );
 
 // Run button

@@ -9,7 +9,7 @@ import { Dndable, DragEventHandlers } from "./dndable"
 import { DraggableSource, Dropzone } from ".."
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor, classNameFor } from "lib/base"
+import { Util, attributeNameFor, classNameFor } from "lib/base"
 
 export class Draggable extends Mixin(Dndable) {
   setInteract(handlers: DragEventHandlers): void {
@@ -140,8 +140,8 @@ export class Draggable extends Mixin(Dndable) {
   unGrab(): void {
     this.moveTo(0, 0)
     this.grabbed = false
-    this.element.dispatchEvent(
-      new CustomEvent("userReleasedGate", { bubbles: true }),
+    this.simulatorElement.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: false }),
     )
   }
 
@@ -155,5 +155,12 @@ export class Draggable extends Mixin(Dndable) {
 
   set dragging(flag: boolean) {
     this.setClassName("draggable:state:dragging", flag)
+  }
+
+  private get simulatorElement(): HTMLElement {
+    const el = document.getElementById("simulator")
+    Util.notNull(el)
+
+    return el
   }
 }

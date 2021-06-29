@@ -1,6 +1,5 @@
 .gate {
   @apply flex justify-center items-center;
-  @apply relative;
 
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {

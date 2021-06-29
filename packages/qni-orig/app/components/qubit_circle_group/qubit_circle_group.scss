@@ -65,13 +65,18 @@
   }
 
   &--size32 {
-    .circle-notation[data-circle-notation-nqubit="6"] &,
+    .circle-notation[data-circle-notation-nqubit="6"] & {
+      @screen md {
+        @apply flex flex-col;
+      }
+    }
+
     .circle-notation[data-circle-notation-nqubit="7"] &,
     .circle-notation[data-circle-notation-nqubit="8"] &,
     .circle-notation[data-circle-notation-nqubit="9"] &,
     .circle-notation[data-circle-notation-nqubit="10"] & {
       @screen md {
-        @apply flex flex-col;
+        @apply flex flex-row;
       }
     }
   }
@@ -79,8 +84,18 @@
   &--size64 {
     .circle-notation[data-circle-notation-nqubit="6"] &,
     .circle-notation[data-circle-notation-nqubit="7"] &,
-    .circle-notation[data-circle-notation-nqubit="8"] &,
-    .circle-notation[data-circle-notation-nqubit="9"] &,
+    .circle-notation[data-circle-notation-nqubit="8"] & {
+      @screen md {
+        @apply flex flex-col;
+      }
+    }
+
+    .circle-notation[data-circle-notation-nqubit="9"] & {
+      @screen md {
+        @apply flex flex-col;
+      }
+    }
+
     .circle-notation[data-circle-notation-nqubit="10"] & {
       @screen md {
         @apply flex flex-col;

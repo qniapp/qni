@@ -1,6 +1,7 @@
 import { Draggable } from "./mixins"
 import { Mixin } from "ts-mixer"
 import { PaletteDropzone } from "./paletteDropzone"
+import { Util } from "lib/base"
 
 export class PaletteDraggable extends Mixin(Draggable) {
   constructor(element: HTMLElement) {
@@ -20,8 +21,8 @@ export class PaletteDraggable extends Mixin(Draggable) {
   }
 
   grab(event: MouseEvent): void {
-    this.element.dispatchEvent(
-      new CustomEvent("userGrabbingGate", { bubbles: true }),
+    this.simulatorElement.dispatchEvent(
+      new CustomEvent("userGrabbingGate", { bubbles: false }),
     )
     this.createSource()
     this.grabbed = true
@@ -46,8 +47,15 @@ export class PaletteDraggable extends Mixin(Draggable) {
     const draggable = new PaletteDraggable(event.target as HTMLElement)
     draggable.dragging = false
     draggable.moveTo(0, 0)
-    this.element.dispatchEvent(
-      new CustomEvent("userReleasedGate", { bubbles: true }),
+    this.simulatorElement.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: false }),
     )
+  }
+
+  private get simulatorElement(): HTMLElement {
+    const el = document.getElementById("simulator")
+    Util.notNull(el)
+
+    return el
   }
 }

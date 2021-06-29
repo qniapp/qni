@@ -1,15 +1,9 @@
 <% qubit_circle = local_assigns.fetch(:qubit_circle) %>
 
 <div id="<%= qubit_circle.id %>"
-     class="<%= class_string 'qubit-circle', qubit_circle.klass %>"
+     class="<%= class_string 'qubit-circle', 'qubit-circle--magnitude-0', qubit_circle.klass %>"
      data-circle-notation-target="qubitCircle"
-     data-magnitude-int="0"
      data-action="mouseenter->circle-notation#showPopup">
-  <div class="relative">
-    <div class="qubit-circle__magnitude"></div>
-    <svg class="qubit-circle__phase" width="64" height="64" viewBox="0 0 64 64" stroke-linecap="round">
-      <line class="qubit-circle__phase-line" x1="32" y1="32" x2="32" y2="0" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
-    </svg>
-    <div class="qubit-circle__border"></div>
-  </div>
+  <div class="qubit-circle__magnitude"></div>
+  <div class="qubit-circle__phase"></div>
 </div>

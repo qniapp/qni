@@ -3,6 +3,7 @@ import { CircuitElement } from "./gates"
 import { Connectable } from "./gates/mixins"
 import { Draggable } from "./mixins"
 import { Mixin, hasMixin } from "ts-mixer"
+import { Util } from "lib/base"
 
 export class CircuitDraggable extends Mixin(Draggable) {
   constructor(element: HTMLElement) {
@@ -22,9 +23,10 @@ export class CircuitDraggable extends Mixin(Draggable) {
   }
 
   grab(event: MouseEvent): void {
-    this.element.dispatchEvent(
-      new CustomEvent("userGrabbingGate", { bubbles: true }),
+    this.simulatorElement.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: false }),
     )
+
     this.createSource()
     this.grabbed = true
 
@@ -65,15 +67,20 @@ export class CircuitDraggable extends Mixin(Draggable) {
     draggable.dragging = false
     draggable.source?.remove()
     if (draggable.isDropped) {
-      this.element.dispatchEvent(
-        new CustomEvent("userReleasedGate", { bubbles: true }),
-      )
       draggable.remove()
     } else {
       draggable.moveTo(0, 0)
-      this.element.dispatchEvent(
-        new CustomEvent("userReleasedGate", { bubbles: true }),
-      )
     }
+
+    this.simulatorElement.dispatchEvent(
+      new CustomEvent("userReleasedGate", { bubbles: false }),
+    )
+  }
+
+  private get simulatorElement(): HTMLElement {
+    const el = document.getElementById("simulator")
+    Util.notNull(el)
+
+    return el
   }
 }
