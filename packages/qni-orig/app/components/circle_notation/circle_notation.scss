@@ -7,7 +7,6 @@
   @apply h-#{$circle-notation-height-mobile};
   @apply mt-#{$circle-notation-margin-top} mx-6;
   @apply top-0 left-0 right-0;
-  @apply z-40;
 
   // Style
   @apply bg-snow;
@@ -21,17 +20,17 @@
   @screen md {
     // Position
     @apply bottom-0;
-    @apply h-#{$circle-notation-height};
-    @apply m-0;
+    @apply w-auto h-auto;
+    @apply m-4 mx-auto;
     top: unset;
-
-    // Style
-    @apply border-t-2 border-r-0 border-b-0 border-l-0;
-    @apply rounded-none;
+    left: unset;
+    right: unset;
   }
 
   // Hide unneeded qubit circles
   &[data-circle-notation-nqubit="1"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2),
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2),
@@ -43,6 +42,8 @@
   }
 
   &[data-circle-notation-nqubit="2"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2),
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2),
@@ -54,6 +55,8 @@
   }
 
   &[data-circle-notation-nqubit="3"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2),
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2),
@@ -63,6 +66,8 @@
   }
 
   &[data-circle-notation-nqubit="4"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2),
     .qubit-circle-group--size32:nth-of-type(2),
     .qubit-circle-group--size16:nth-of-type(2) {
@@ -71,6 +76,8 @@
   }
 
   &[data-circle-notation-nqubit="5"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2),
     .qubit-circle-group--size32:nth-of-type(2) {
       @apply hidden;
@@ -78,26 +85,51 @@
   }
 
   &[data-circle-notation-nqubit="6"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 2) {
       @apply hidden;
     }
   }
 
   &[data-circle-notation-nqubit="7"] {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 2),
     .qubit-circle-group--size64:nth-of-type(n + 3) {
       @apply hidden;
     }
   }
 
   &[data-circle-notation-nqubit="8"] {
-    .qubit-circle-group--size64:nth-of-type(n + 5) {
+    .qubit-circle-group--size256:nth-of-type(n + 2),
+    .qubit-circle-group--size128:nth-of-type(n + 3) {
       @apply hidden;
+    }
+
+    @screen md {
+      @apply block;
+      @apply overflow-y-scroll;
+      @apply h-#{$circle-notation-height};
     }
   }
 
   &[data-circle-notation-nqubit="9"] {
-    .qubit-circle-group--size64:nth-of-type(n + 9) {
+    .qubit-circle-group--size256:nth-of-type(n + 3) {
       @apply hidden;
+    }
+
+    @screen md {
+      @apply block;
+      @apply overflow-y-scroll;
+      @apply h-#{$circle-notation-height};
+    }
+  }
+
+  &[data-circle-notation-nqubit="10"] {
+    @screen md {
+      @apply block;
+      @apply overflow-y-scroll;
+      @apply h-#{$circle-notation-height};
     }
   }
 }

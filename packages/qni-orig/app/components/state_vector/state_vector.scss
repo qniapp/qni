@@ -1,11 +1,11 @@
 .state-vector {
   @apply my-auto;
+  @apply py-4;
 
-  .circle-notation[data-circle-notation-nqubit="6"] &,
-  .circle-notation[data-circle-notation-nqubit="7"] &,
-  .circle-notation[data-circle-notation-nqubit="8"] &,
-  .circle-notation[data-circle-notation-nqubit="9"] &,
-  .circle-notation[data-circle-notation-nqubit="10"] & {
-    @apply py-4;
+  @screen md {
+    // https://stackoverflow.com/questions/10054870/when-a-child-element-overflows-horizontally-why-is-the-right-padding-of-the-par
+    @apply inline-block;
+    @apply my-0;
+    @apply px-4 py-5;
   }
 }

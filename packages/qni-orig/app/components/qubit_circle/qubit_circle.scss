@@ -1,134 +1,98 @@
 .qubit-circle {
   $parent: &;
 
+  @apply relative;
   @apply m-px;
 
-  @each $nqubit in $nqubits {
-    .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-      @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
-      @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
-
-      @screen md {
-        @apply h-#{map-get($qubit-circle-size, $nqubit)};
-        @apply w-#{map-get($qubit-circle-size, $nqubit)};
-      }
-    }
-  }
+  @apply border-wolf;
+  @apply rounded-full;
 
   // Disable double tap zoom
   touch-action: manipulation;
 
-  &__border {
-    @apply absolute;
-    @apply border-wolf;
-    @apply rounded-full;
+  &:hover {
+    @apply border-cardinal;
+  }
 
-    @each $nqubit in $nqubits {
-      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @apply border-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
-        @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
-        @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
+  &.qubit-circle--magnitude-0 {
+    @apply border-opacity-25;
+  }
 
-        @screen md {
-          @apply border-#{map-get($qubit-circle-border-width, $nqubit)};
-          @apply h-#{map-get($qubit-circle-size, $nqubit)};
-          @apply w-#{map-get($qubit-circle-size, $nqubit)};
-        }
+  @each $nqubit in $nqubits {
+    #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+      border-width: #{map-get($qubit-circle-border-width-px-mobile, $nqubit)}px;
+
+      @screen md {
+        border-width: #{map-get($qubit-circle-border-width-px, $nqubit)}px;
       }
-    }
-
-    #{$parent}:hover & {
-      @apply border-cardinal;
-    }
-
-    #{$parent}[data-magnitude-int="0"] & {
-      @apply opacity-25;
     }
   }
 
-  &__phase {
-    @apply absolute;
-    @apply origin-center;
-    @apply text-eel;
-
-    @each $nqubit in $nqubits {
-      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @if $nqubit < 6 {
-          @apply transition-transform;
-        }
-
-        @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
-        @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
-
-        @screen md {
-          @apply h-#{map-get($qubit-circle-size, $nqubit)};
-          @apply w-#{map-get($qubit-circle-size, $nqubit)};
-        }
-      }
+  &--will-change {
+    #{$parent}__magnitude {
+      will-change: transform;
     }
 
-    #{$parent}[data-phase-int="0"] & {
-      @apply transform rotate-0;
-    }
-
-    @for $phase from 1 through 360 {
-      #{$parent}[data-phase-int="#{$phase}"] & {
-        @apply transform -rotate-#{$phase};
-      }
-
-      #{$parent}[data-phase-int="-#{$phase}"] & {
-        @apply transform rotate-#{$phase};
-      }
-    }
-
-    #{$parent}[data-magnitude-int="0"] & {
-      @apply transform scale-0;
+    #{$parent}__phase {
+      will-change: transform;
     }
   }
 
-  &__phase-line {
-    @each $nqubit in $nqubits {
-      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @apply stroke-#{map-get($qubit-circle-border-width-mobile, $nqubit)};
+  @each $nqubit in $nqubits {
+    #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+      height: #{map-get($qubit-circle-size-px-mobile, $nqubit)}px;
+      width: #{map-get($qubit-circle-size-px-mobile, $nqubit)}px;
 
-        @screen md {
-          @apply stroke-#{map-get($qubit-circle-border-width, $nqubit)};
-        }
+      @screen md {
+        height: #{map-get($qubit-circle-size-px, $nqubit)}px;
+        width: #{map-get($qubit-circle-size-px, $nqubit)}px;
       }
     }
   }
 
   &__magnitude {
-    @apply absolute;
+    @apply absolute inset-0;
     @apply bg-magnitude;
-    @apply origin-center;
     @apply rounded-full;
-    @apply transform scale-0;
+    @apply transform scale-0 origin-center;
+
+    #{$parent}:hover > & {
+      @apply bg-fox;
+    }
+
+    // 1..100 (step = 10)
+    @for $magnitude from 1 through 10 {
+      #{$parent}--magnitude-#{$magnitude * 10} > & {
+        @apply scale-#{$magnitude * 10};
+      }
+    }
+  }
+
+  &__phase {
+    @apply absolute top-0 left-0 right-0;
+    @apply bg-eel;
+    @apply h-1/2;
+    @apply mx-auto;
+    @apply transform rotate-0 origin-bottom;
 
     @each $nqubit in $nqubits {
-      .circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
-        @if $nqubit < 6 {
-          @apply transition-transform;
-        }
-
-        @apply h-#{map-get($qubit-circle-size-mobile, $nqubit)};
-        @apply w-#{map-get($qubit-circle-size-mobile, $nqubit)};
+      #circle-notation[data-circle-notation-nqubit="#{$nqubit}"] & {
+        width: #{map-get($qubit-circle-border-width-px-mobile, $nqubit)}px;
 
         @screen md {
-          @apply h-#{map-get($qubit-circle-size, $nqubit)};
-          @apply w-#{map-get($qubit-circle-size, $nqubit)};
+          width: #{map-get($qubit-circle-border-width-px, $nqubit)}px;
         }
       }
     }
 
-    #{$parent}:hover & {
-      @apply bg-fox;
+    #{$parent}--magnitude-0 > & {
+      @apply transform scale-0;
     }
 
-    $zmagnitude: "";
-    @for $magnitude from 1 through 100 {
-      #{$parent}[data-magnitude-int="#{$magnitude}"] & {
-        @apply transform scale-#{$magnitude};
+    // 10, 20, 30, ..., 360 (step = 10)
+    @for $phase from 1 through 36 {
+      #{$parent}--phase-#{$phase * 10} > & {
+        @apply transform -rotate-#{$phase * 10};
       }
     }
   }
