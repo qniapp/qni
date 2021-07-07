@@ -2,25 +2,27 @@ import { ControlGate, ControlGateInstruction } from "./controlGate"
 import { HadamardGate, HadamardGateInstruction } from "./hadamardGate"
 import { IGate, IGateInstruction } from "./iGate"
 import { InternalError } from "lib/error"
+import { MeasureGate, MeasureInstruction } from "./measureGate"
 import { NotGate, NotGateInstruction } from "./notGate"
 import { PhaseGate, PhaseGateInstruction } from "./phaseGate"
 import { QubitLabel, QubitLabelInstruction } from "./qubitLabel"
-import { MeasureGate, MeasureInstruction } from "./measureGate"
 import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
+import { RxGate } from "./rxGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
 export type CircuitElement =
-  | QubitLabel
-  | IGate
-  | NotGate
-  | HadamardGate
-  | PhaseGate
   | ControlGate
-  | RootNotGate
+  | HadamardGate
+  | IGate
   | MeasureGate
-  | WriteGate
+  | NotGate
+  | PhaseGate
+  | QubitLabel
+  | RootNotGate
+  | RxGate
   | SwapGate
+  | WriteGate
 
 export const CircuitElement = {
   create(element?: HTMLElement | Element | null): CircuitElement {
@@ -43,6 +45,8 @@ export const CircuitElement = {
       return ControlGate.create(element)
     } else if (classList.contains("swap-gate")) {
       return SwapGate.create(element)
+    } else if (classList.contains("rx-gate")) {
+      return RxGate.create(element)
     }
 
     throw new InternalError(`Unknown instruction: ${element.outerHTML}`)
@@ -50,13 +54,14 @@ export const CircuitElement = {
 }
 
 export type SeriarizedInstruction =
-  | QubitLabelInstruction
-  | IGateInstruction
-  | NotGateInstruction
-  | HadamardGateInstruction
-  | PhaseGateInstruction
   | ControlGateInstruction
-  | RootNotGateInstruction
+  | HadamardGateInstruction
+  | IGateInstruction
   | MeasureInstruction
-  | WriteInstruction
+  | NotGateInstruction
+  | PhaseGateInstruction
+  | QubitLabelInstruction
+  | RootNotGateInstruction
+  | RxGate
   | SwapGateInstruction
+  | WriteInstruction

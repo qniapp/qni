@@ -113,6 +113,15 @@ module Qni
       "<%= not_gate #{opts} %>\n"
     end
 
+    def rx_gate(opts = {})
+      opts = option_string(bit: opts.fetch(:bit),
+                           theta: opts.fetch(:theta),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
+      "<%= rx_gate #{opts} %>\n"
+    end
+
     def root_not_gate(opts = {})
       opts = option_string(bit: opts.fetch(:bit),
                            controls: opts.fetch(:controls, []),
@@ -165,6 +174,8 @@ module Qni
           h[:measure] = options[:measure] if options[:measure]
         when :phi
           h[:phi] = "'#{options[:phi]}'"
+        when :theta
+          h[:theta] = "'#{options[:theta]}'"
         end
       end
 

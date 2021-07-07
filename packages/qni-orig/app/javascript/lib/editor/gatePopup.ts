@@ -34,6 +34,7 @@ export class GatePopup {
   private get originalValue(): string | null {
     if (this.isSettable) return this.set
     if (this.isIfable) return this.if
+    if (this.isThetable) return this.theta
     if (this.isPhiable) return this.phi
 
     throw new Error("Should not reach here")
@@ -64,6 +65,7 @@ export class GatePopup {
       try {
         if (this.isSettable) this.set = value
         if (this.isIfable) this.if = value
+        if (this.isThetable) this.theta = value
         if (this.isPhiable) this.phi = value
         this.popup?.hide()
         this.onUpdate()
@@ -134,6 +136,28 @@ export class GatePopup {
     this.dataGateLabel = labelString
   }
 
+  private get isThetable(): boolean {
+    return this.popupReferenceEl.classList.contains(
+      classNameFor("gate:mixin:thetable"),
+    )
+  }
+
+  private get theta(): string | null {
+    return this.popupReferenceEl.getAttribute(
+      attributeNameFor("instruction:theta"),
+    )
+  }
+
+  private set theta(theta: string | null) {
+    const thetaString = this.validateThetaString(theta)
+
+    this.popupReferenceEl.setAttribute(
+      attributeNameFor("instruction:theta"),
+      thetaString,
+    )
+    this.dataGateLabel = thetaString.replace("pi", "π")
+  }
+
   private get isPhiable(): boolean {
     return this.popupReferenceEl.classList.contains(
       classNameFor("gate:mixin:phiable"),
@@ -158,6 +182,15 @@ export class GatePopup {
 
   private set dataGateLabel(label: string) {
     this.popupReferenceEl.dataset.gateLabel = label
+  }
+
+  private validateThetaString(theta: string | null): string {
+    if (!theta || theta.trim().length == 0) {
+      throw new InternalError("Theta not set")
+    }
+    parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+
+    return theta
   }
 
   private validatePhiString(phi: string | null): string {
