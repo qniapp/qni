@@ -131,6 +131,9 @@ export class Draggable extends Mixin(Dndable) {
 
   protected set grabbed(flag: boolean) {
     this.setClassName("draggable:state:grabbed", flag)
+    if (this.element.classList.contains(classNameFor("gate:type:measure"))) {
+      this.element.setAttribute("data-value", "")
+    }
   }
 
   isGrabbed(): boolean {

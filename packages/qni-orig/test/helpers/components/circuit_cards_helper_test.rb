@@ -14,7 +14,7 @@ class Components::CircuitCardsHelperTest < ActionView::TestCase
         circuit_step { qubit_label '0x1' } +
           circuit_step { dropzone { write 0 } } +
           circuit_step { dropzone { hadamard_gate } } +
-          circuit_step { dropzone { readout } } +
+          circuit_step { dropzone { measure } } +
           circuit_step(shadow_source: true) { dropzone }
       end
     assert_dom_equal beautify(expected), beautify(circuit_view(circuit: circuits(:random_bit)))

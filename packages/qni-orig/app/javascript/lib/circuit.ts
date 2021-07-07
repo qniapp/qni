@@ -2,7 +2,7 @@ import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
 import { DropEventHandlers } from "./editor/mixins"
 import { CircuitElement, QubitLabel } from "./editor/gates"
 import { InternalError } from "./error"
-import { classNameFor } from "./base"
+import { classNameFor, Util } from "./base"
 
 class CircuitWire {
   public elements: HTMLElement[]
@@ -88,6 +88,43 @@ export class Circuit {
       throw new Error("circuit element not found")
     }
     this.element = el
+  }
+
+  toJson(): string {
+    let circuitBlock: Element | null = null
+    const cols: string[] = []
+
+    this.steps
+      .filter((each) => {
+        return !(each.instructions[0] instanceof QubitLabel)
+      })
+      .filter((each) => {
+        return !each.element.classList.contains(
+          classNameFor("circuitStep:type:shadowSource"),
+        )
+      })
+      .forEach((each) => {
+        if (each.circuitBlock()) {
+          if (circuitBlock === null) {
+            circuitBlock = each.circuitBlock()
+            const circuitBlockLabel = circuitBlock
+              ?.getElementsByClassName("circuit-block__label")
+              .item(0)
+            Util.notNull(circuitBlockLabel)
+            const label = circuitBlockLabel.textContent?.trim()
+            Util.notNull(label)
+            cols.push(`["{${label}"]`)
+          }
+        } else {
+          if (circuitBlock !== null) {
+            circuitBlock = null
+            cols.push("[\"}\"]")
+          }
+        }
+        cols.push(each.toJson())
+      })
+    if (circuitBlock) cols.push("[\"}\"]")
+    return `{"cols":[${cols.join(",")}],"init":false}`
   }
 
   get steps(): CircuitStep[] {

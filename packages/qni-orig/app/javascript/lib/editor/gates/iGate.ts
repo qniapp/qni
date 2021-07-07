@@ -7,4 +7,8 @@ export class IGate extends Mixin(Instructionable) {
   serialize(): IGateInstruction {
     return { type: "i-gate" }
   }
+
+  toJson(): string {
+    return "1"
+  }
 }

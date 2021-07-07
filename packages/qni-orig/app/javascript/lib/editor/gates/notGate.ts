@@ -30,6 +30,14 @@ export class NotGate extends Mixin(
     return { type: "not-gate", controls: this.controls, if: this.if }
   }
 
+  toJson(): string {
+    if (this.if) {
+      return `"X<${this.if}"`
+    } else {
+      return "\"X\""
+    }
+  }
+
   assignElement(element: Element): void {
     this.element = this.validateElementClassName(element, "gate:type:not")
   }

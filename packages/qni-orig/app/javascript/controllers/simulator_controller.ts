@@ -5,7 +5,7 @@ import { Controller } from "stimulus"
 import {
   HadamardGate,
   NotGate,
-  ReadoutGate,
+  MeasureGate,
   RootNotGate,
 } from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
@@ -65,7 +65,7 @@ export default class SimulatorController extends Controller {
             const dropzones = step.dropzones
             for (const bit in bits) {
               const instruction = dropzones[bit].instruction
-              if (instruction instanceof ReadoutGate) {
+              if (instruction instanceof MeasureGate) {
                 instruction.value = bits[bit]
               }
             }
@@ -90,6 +90,11 @@ export default class SimulatorController extends Controller {
         } else if (data.type === "finish") {
           this.gotoCircuitBreakpoint(this.circuitBreakpoint || 0)
           this.runButton.running = false
+          document
+            .getElementById("editor")
+            .dispatchEvent(
+              new CustomEvent("simulationFinished", { bubbles: false }),
+            )
         }
       }).bind(this),
     )
@@ -155,7 +160,7 @@ export default class SimulatorController extends Controller {
       each.done = false
     })
     Array.from(
-      document.getElementsByClassName(classNameFor("gate:type:readout")),
+      document.getElementsByClassName(classNameFor("gate:type:measure")),
     ).forEach((each) => {
       each.classList.remove(classNameFor("gate:state:updated"))
     })

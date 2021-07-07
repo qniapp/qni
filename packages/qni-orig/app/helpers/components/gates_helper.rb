@@ -9,16 +9,16 @@ module Components::GatesHelper
     component 'gates/not_gate', *options, &block
   end
 
+  def root_not_gate(*options, &block)
+    component 'gates/root_not_gate', *options, &block
+  end
+
   def phase_gate(*options, &block)
     component 'gates/phase_gate', *options, &block
   end
 
   def control_gate(*options, &block)
     component 'gates/control_gate', *options, &block
-  end
-
-  def root_not_gate(*options, &block)
-    component 'gates/root_not_gate', *options, &block
   end
 
   def swap_gate(*options)
@@ -29,7 +29,7 @@ module Components::GatesHelper
     component 'gates/write_gate', (options[0] || {}).merge(value: value)
   end
 
-  def readout(*options)
-    component 'gates/readout_gate', *options
+  def measure(*options)
+    component 'gates/measure_gate', *options
   end
 end

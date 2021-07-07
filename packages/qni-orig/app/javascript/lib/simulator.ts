@@ -3,7 +3,7 @@ import {
   HadamardGateInstruction,
   NotGateInstruction,
   PhaseGateInstruction,
-  ReadoutInstruction,
+  MeasureInstruction,
   RootNotGateInstruction,
   SeriarizedInstruction,
   SwapGateInstruction,
@@ -43,8 +43,8 @@ export class Simulator {
         case "write":
           this.applyWriteGate(each, bit)
           break
-        case "readout":
-          this.applyReadoutGate(each, bit)
+        case "measure":
+          this.applyMeasureGate(each, bit)
           break
         case "not-gate":
           this.applyNotGate(each, bit)
@@ -304,7 +304,7 @@ export class Simulator {
     this.write(gate.value, bit)
   }
 
-  private applyReadoutGate(gate: ReadoutInstruction, bit: number): void {
+  private applyMeasureGate(gate: MeasureInstruction, bit: number): void {
     this.read(bit)
     if (gate.set) {
       this.flags[gate.set] = this.bits[bit] == 1
@@ -376,7 +376,7 @@ export class Simulator {
           return
         }
         this.cphase(gate.phi, targets[0], targets[1])
-        gatesDone.push(targets)
+        gatesDone.push(targets as [number, number])
       }
     } else {
       const controlBits = controls.reduce((result, each) => {

@@ -30,6 +30,14 @@ export class HadamardGate extends Mixin(
     return { type: "hadamard-gate", controls: this.controls, if: this.if }
   }
 
+  toJson(): string {
+    if (this.if) {
+      return `"H<${this.if}"`
+    } else {
+      return "\"H\""
+    }
+  }
+
   assignElement(element: Element): void {
     this.element = this.validateElementClassName(element, "gate:type:hadamard")
   }

@@ -15,6 +15,10 @@ export class WriteGate extends Mixin(Instructionable, Valueable) {
     return { type: "write", value: this.value }
   }
 
+  toJson(): string {
+    return `"|${this.value}>"`
+  }
+
   get value(): number {
     const value = this.dataValue
     Util.notNull(value)

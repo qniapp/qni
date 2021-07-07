@@ -12,6 +12,9 @@ class Gates::ControlGateComponent < Component
   include Targetable
   include Wireable
 
+  attribute :disabled, default: false
+  validates :disabled, inclusion: { in: [true, false] }
+
   def klass
     class_string('gate',
                  'control-gate',
@@ -20,7 +23,8 @@ class Gates::ControlGateComponent < Component
                  'draggable--circuit' => circuit?,
                  'instruction--wire-inactive' => !wire_active?,
                  'connectable--upper-bit' => connected_with_upper_bit?,
-                 'connectable--lower-bit' => connected_with_lower_bit?)
+                 'connectable--lower-bit' => connected_with_lower_bit?,
+                 'gate--disabled' => disabled?)
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -51,5 +55,9 @@ class Gates::ControlGateComponent < Component
     return false unless bit
 
     (targets + controls).any? { |each| each < bit }
+  end
+
+  def disabled?
+    disabled
   end
 end

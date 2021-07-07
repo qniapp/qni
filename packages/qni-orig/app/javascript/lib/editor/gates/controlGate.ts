@@ -22,6 +22,10 @@ export class ControlGate extends Mixin(
     return { type: "control-gate", targets: this.targets }
   }
 
+  toJson(): string {
+    return "\"•\""
+  }
+
   assignElement(element: Element): void {
     this.element = this.validateElementClassName(element, "gate:type:control")
   }

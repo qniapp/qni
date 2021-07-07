@@ -1,16 +1,9 @@
 <%= circuit nqubit: 3 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_group do %>
-      <%= register_label 'Input 1' %>
-      <%= register_label 'Input 2' %>
-      <%= register_label 'Output' %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= qubit_label '0x1' %>
-      <%= qubit_label '0x1' %>
-      <%= qubit_label '0x1' %>
+      <%= qubit_label '0x2' %>
+      <%= qubit_label '0x4' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'initialize' do %>
@@ -48,7 +41,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 2 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -66,7 +59,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 2 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -80,15 +73,8 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= readout %>
+        <%= measure %>
       <% end %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_step do %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone wire_active: false %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

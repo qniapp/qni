@@ -126,6 +126,7 @@ export type ArrayIsh =
   | Uint8Array
   | Uint16Array
   | Uint32Array
+  | Uint8ClampedArray
 
 export function isArrayIsh(value: unknown): value is ArrayIsh {
   return (
@@ -137,7 +138,8 @@ export function isArrayIsh(value: unknown): value is ArrayIsh {
     value instanceof Int32Array ||
     value instanceof Uint8Array ||
     value instanceof Uint16Array ||
-    value instanceof Uint32Array
+    value instanceof Uint32Array ||
+    value instanceof Uint8ClampedArray
   )
 }
 

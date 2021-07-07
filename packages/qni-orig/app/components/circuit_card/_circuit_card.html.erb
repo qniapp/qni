@@ -9,7 +9,7 @@
       </h3>
 
       <div class="flex flex-shrink-0 items-center ml-4">
-        <%= link_to 'Open', circuit, type: 'button', class: 'hidden md:inline button button--secondary' %>
+        <%= link_to 'Open', circuit_path(circuit.json), type: 'button', class: 'hidden md:inline button button--secondary' %>
       </div>
     </div>
   <% end %>
@@ -17,7 +17,7 @@
   <div class="border-b-2 border-swan mx-6 md:mx-4"></div>
 
   <%= component 'tailwind_ui/card/body' do %>
-    <%= link_to circuit_path(circuit), class: 'circuit-card__clickable' do %>
+    <%= link_to circuit_path(circuit.json), class: 'circuit-card__clickable' do %>
       <%= circuit_thumbnail circuit: circuit %>
     <% end %>
   <% end %>

@@ -1,3 +1,5 @@
+require 'qni/json_parser'
+
 class CircuitPreviewsController < ApplicationController
   before_action :set_circuit, only: [:show]
 
@@ -6,6 +8,7 @@ class CircuitPreviewsController < ApplicationController
   private
 
   def set_circuit
-    @circuit = Circuit.find(params[:id])
+    @circuit =
+      Qni::JsonParser.new(Circuit.find(params[:id]).json)
   end
 end

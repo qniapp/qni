@@ -1,0 +1,19 @@
+.qubit-circle-popup {
+  @apply text-wolf;
+
+  &__ket {
+    @apply text-base;
+    @apply mb-2;
+  }
+
+  &__ket-binary {
+    @apply font-mono;
+  }
+
+  &__probability,
+  &__phase {
+    @apply font-bold;
+    @apply font-mono;
+    @apply text-eel;
+  }
+}

@@ -1,8 +1,0 @@
-<% readout_gate = local_assigns.fetch(:readout_gate) %>
-
-<%= tag.div class: readout_gate.klass, data: readout_gate.data do %>
-  <div class="gate__body">
-    <%= ket_icon class: 'gate-icon' %>
-    <div class="gate-ket-label"></div>
-  </div>
-<% end %>

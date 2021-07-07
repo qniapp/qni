@@ -5,7 +5,7 @@ import { InternalError } from "lib/error"
 import { NotGate, NotGateInstruction } from "./notGate"
 import { PhaseGate, PhaseGateInstruction } from "./phaseGate"
 import { QubitLabel, QubitLabelInstruction } from "./qubitLabel"
-import { ReadoutGate, ReadoutInstruction } from "./readoutGate"
+import { MeasureGate, MeasureInstruction } from "./measureGate"
 import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
@@ -18,7 +18,7 @@ export type CircuitElement =
   | PhaseGate
   | ControlGate
   | RootNotGate
-  | ReadoutGate
+  | MeasureGate
   | WriteGate
   | SwapGate
 
@@ -33,8 +33,8 @@ export const CircuitElement = {
       return HadamardGate.create(element)
     } else if (classList.contains("not-gate")) {
       return NotGate.create(element)
-    } else if (classList.contains("readout-gate")) {
-      return ReadoutGate.create(element)
+    } else if (classList.contains("measure-gate")) {
+      return MeasureGate.create(element)
     } else if (classList.contains("phase-gate")) {
       return PhaseGate.create(element)
     } else if (classList.contains("root-not-gate")) {
@@ -57,6 +57,6 @@ export type SeriarizedInstruction =
   | PhaseGateInstruction
   | ControlGateInstruction
   | RootNotGateInstruction
-  | ReadoutInstruction
+  | MeasureInstruction
   | WriteInstruction
   | SwapGateInstruction

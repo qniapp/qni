@@ -1,14 +1,8 @@
 <%= circuit nqubit: 2 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_group do %>
-      <%= register_label 'a' %>
-      <%= register_label 'b' %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= qubit_label '0x1' %>
-      <%= qubit_label '0x1' %>
+      <%= qubit_label '0x2' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'entangle' do %>
@@ -22,7 +16,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
       <%= dropzone %>
     <% end %>
@@ -31,14 +25,14 @@
         <%= control_gate bit: 0, targets: [1], controls: [0] %>
       <% end %>
       <%= dropzone do %>
-        <%= not_gate bit: 1, controls: [0], targets: [1] %>
+        <%= not_gate bit: 1, controls: [0] %>
       <% end %>
     <% end %>
   <% end %>
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= readout %>
+        <%= measure %>
       <% end %>
       <%= dropzone %>
     <% end %>
@@ -47,7 +41,7 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= readout %>
+        <%= measure %>
       <% end %>
     <% end %>
   <% end %>

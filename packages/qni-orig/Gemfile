@@ -9,7 +9,6 @@ gem 'tzinfo-data'
 
 # Drivers
 gem 'pg'
-gem 'redis', '~> 4.0'
 
 gem 'puma', '~> 5.3'
 
@@ -22,9 +21,6 @@ gem 'webpacker'
 
 # Logging
 gem 'scout_apm'
-
-# Administration
-gem 'administrate'
 
 # Profiling/troubleshooting
 gem 'flamegraph'

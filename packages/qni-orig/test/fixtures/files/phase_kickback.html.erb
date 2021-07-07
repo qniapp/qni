@@ -1,12 +1,8 @@
 <%= circuit nqubit: 3 do %>
-  <%= circuit_register_group_span rows: 3 do %>
-    <%= register_label_span label: 'Register 1', span: 2, start: 2 %>
-    <%= register_label_span label: 'Register 2', span: 1, start: 1 %>
-  <% end %>
   <%= circuit_step do %>
     <%= qubit_label '0x1' %>
     <%= qubit_label '0x2' %>
-    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x4' %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
@@ -26,10 +22,10 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone %>
   <% end %>

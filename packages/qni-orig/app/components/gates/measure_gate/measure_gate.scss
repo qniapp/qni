@@ -1,0 +1,25 @@
+.measure-gate {
+  @include recutangular-gate;
+  @include transparent-gate;
+  @include rw-gate;
+
+  @apply text-superposition;
+
+  .gate-ket-label {
+    &::after {
+      content: "";
+    }
+  }
+
+  &[data-value="0"],
+  &[data-value="1"] {
+    @apply text-swan;
+  }
+
+  &[data-value="0"] .gate-ket-label,
+  &[data-value="1"] .gate-ket-label {
+    &::after {
+      @apply bg-snow;
+    }
+  }
+}

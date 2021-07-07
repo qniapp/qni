@@ -1,7 +1,4 @@
 <%= circuit nqubit: 4 do %>
-  <%= circuit_register_group_span rows: 4 do %>
-    <%= register_label_span label: 'register', span: 4, start: 1 %>
-  <% end %>
   <%= circuit_step do %>
     <%= qubit_label '0x1' %>
     <%= qubit_label '0x2' %>
@@ -24,204 +21,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -344,204 +153,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 1 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-    <%= dropzone do %>
-      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= not_gate bit: 0 %>
-    <% end %>
-    <%= dropzone %>
-    <%= dropzone do %>
-      <%= not_gate bit: 2 %>
-    <% end %>
-    <%= dropzone do %>
-      <%= not_gate bit: 3 %>
-    <% end %>
-  <% end %>
-  <%= circuit_step do %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
-    <% end %>
-    <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -588,16 +209,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -720,16 +341,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -776,16 +397,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -908,16 +529,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -964,16 +585,392 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= control_gate bit: 0, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 1, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 2, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+    <%= dropzone do %>
+      <%= control_gate bit: 3, targets: [0, 1, 2, 3], controls: [0, 1, 2, 3] %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= not_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= not_gate bit: 3 %>
+    <% end %>
+  <% end %>
+  <%= circuit_step do %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 0 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 1 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 2 %>
+    <% end %>
+    <%= dropzone do %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

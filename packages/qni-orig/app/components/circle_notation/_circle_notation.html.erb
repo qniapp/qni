@@ -1,8 +1,8 @@
 <% circle_notation = local_assigns.fetch(:circle_notation) %>
 
 <div class="w-screen h-screen fixed flex justify-center z-40">
-  <%= tag.div id: 'circle-notation', class: 'circle-notation', data: circle_notation.data %>
+  <%= tag.div id: 'circle-notation', class: 'circle-notation', data: circle_notation.data do %>
+    <%= qubit_circle id: 'qubit-circle-template', klass: 'hidden' %>
+    <%= qubit_circle_popup %>
+  <% end %>
 </div>
-
-<%= qubit_circle id: 'qubit-circle-template', klass: 'hidden' %>
-<div id="qubit-circle-popup" class="qubit-circle-popup hidden"></div>

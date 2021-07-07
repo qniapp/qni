@@ -15,11 +15,11 @@ const GENERIC_ARRAY_TYPES = [
 /**
  * Determines if two values are currently equivalent.
  *
- * Values that are equal according to === are currently equivalent.
- * NaN is currently equivalent to NaN.
- * Values with an `isEqualTo` method are currently equivalent to values that return true when passed to that method.
- * Collections of the same type that contain currently equivalent entries are currently equivalent.
- * Objects of the same type with equivalent same own properties and iterables are currently equivalent.
+ * - Values that are equal according to === are currently equivalent.
+ * - NaN is currently equivalent to NaN.
+ * - Values with an `isEqualTo` method are currently equivalent to values that return true when passed to that method.
+ * - Collections of the same type that contain currently equivalent entries are currently equivalent.
+ * - Objects of the same type with equivalent same own properties and iterables are currently equivalent.
  */
 export function equate(subject: unknown, other: unknown): boolean {
   if (subject === other || (isExactlyNaN(subject) && isExactlyNaN(other))) {
@@ -47,7 +47,7 @@ export function equate(subject: unknown, other: unknown): boolean {
   return equateObjects(subject, other)
 }
 
-function isIndexable(value: unknown): boolean {
+function isIndexable(value: unknown): value is ArrayIsh {
   return (
     Array.isArray(value) ||
     !GENERIC_ARRAY_TYPES.every((t) => !(value instanceof t))
@@ -62,13 +62,18 @@ function tryEquateCustom(
   subject: unknown,
   other: unknown,
 ): boolean | undefined {
-  // throw new Error(`isAtomic = ${isAtomic(subject)}`)
-  // throw new Error(`hasOwnProperty = ${hasOwnProperty(subject, "isEqualTo")}`)
-
-  if (!isAtomic(subject) && hasOwnProperty(subject, "isEqualTo")) {
+  if (
+    !isAtomic(subject) &&
+    hasOwnProperty(subject, "isEqualTo") &&
+    typeof subject.isEqualTo === "function"
+  ) {
     return subject.isEqualTo(other) as boolean
   }
-  if (!isAtomic(other) && hasOwnProperty(other, "isEqualTo")) {
+  if (
+    !isAtomic(other) &&
+    hasOwnProperty(other, "isEqualTo") &&
+    typeof other.isEqualTo === "function"
+  ) {
     return other.isEqualTo(subject) as boolean
   }
   return undefined
@@ -134,7 +139,7 @@ function equateIndexables(subject: ArrayIsh, other: ArrayIsh) {
 }
 
 function objectKeys(obj: unknown) {
-  const result = new Set()
+  const result = new Set<PropertyKey>()
   for (const k in obj as Record<PropertyKey, unknown>) {
     if (hasOwnProperty(obj, k)) {
       result.add(k)
@@ -164,7 +169,9 @@ function equateObjects(subject: unknown, other: unknown) {
     return false
   }
   if (hasSubjectIter && hasOtherIter) {
-    if (!equateIterables(subject, other)) {
+    if (
+      !equateIterables(subject as Iterable<unknown>, other as Iterable<unknown>)
+    ) {
       return false
     }
   }
