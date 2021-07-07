@@ -1,6 +1,7 @@
 require 'component'
 require 'concerns/connectable'
 require 'concerns/controllable'
+require 'concerns/disableable'
 require 'concerns/draggable'
 require 'concerns/ifable'
 require 'concerns/popuppable'
@@ -9,6 +10,7 @@ require 'concerns/targetable'
 class Gates::HadamardGateComponent < Component
   include Connectable
   include Controllable
+  include Disableable
   include Draggable
   include Ifable
   include Popuppable

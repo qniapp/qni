@@ -3,14 +3,8 @@ module Ifable
 
   included do
     attribute :if
-    attribute :disabled, default: false
 
     validate :validate_if
-    validates :disabled, inclusion: { in: [true, false] }
-  end
-
-  def disabled?
-    disabled
   end
 
   private

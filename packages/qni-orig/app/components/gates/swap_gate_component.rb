@@ -1,6 +1,7 @@
 require 'component'
 require 'concerns/connectable'
 require 'concerns/controllable'
+require 'concerns/disableable'
 require 'concerns/draggable'
 require 'concerns/targetable'
 require 'concerns/wireable'
@@ -8,18 +9,16 @@ require 'concerns/wireable'
 class Gates::SwapGateComponent < Component
   include Connectable
   include Controllable
+  include Disableable
   include Draggable
   include Targetable
   include Wireable
-
-  attribute :disabled, default: false
-  validates :disabled, inclusion: { in: [true, false] }
 
   def klass
     class_string('gate',
                  'swap-gate',
                  'draggable',
-                 'gate--disabled' => disabled,
+                 'gate--disabled' => disabled?,
                  'draggable--palette' => palette?,
                  'draggable--circuit' => circuit?,
                  'connectable--upper-bit' => connected_with_upper_bit?,
