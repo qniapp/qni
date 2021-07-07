@@ -23,6 +23,10 @@ module IconsHelper
     render 'components/icons/root_not', *options
   end
 
+  def rx_icon(*options)
+    render 'components/icons/rx', *options
+  end
+
   def ket_icon(*options)
     render 'components/icons/ket', *options
   end

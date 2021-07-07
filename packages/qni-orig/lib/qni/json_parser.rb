@@ -6,7 +6,7 @@ module Qni
     include CircuitErb
 
     VARIABLE_NAME_REGEXP = '[_[:lower:]][_[:alnum:]]*'.freeze
-    CONTROLLABLE_GATES = [/^X/, /^Z/, /^H/, 'Swap'].freeze
+    CONTROLLABLE_GATES = [/^X/, /^Rx/, /^Z/, /^H/, 'Swap'].freeze
 
     def initialize(json)
       @json = JSON.parse(json)
@@ -83,8 +83,10 @@ module Qni
           apply_x bit, controls: controls, gates: gates, if: Regexp.last_match(1)
         when 'X^½', /^X\^½<(#{VARIABLE_NAME_REGEXP})$/o
           apply_root_not bit, controls: controls, gates: gates, if: Regexp.last_match(1)
+        when /^Rx\((\S+)\)$/
+          apply_rx bit, Regexp.last_match(1), controls: controls, gates: gates
         when 'Z', /^Z\^(\S+)$/
-          apply_phase bit, controls: controls, gates: gates, phi_url: Regexp.last_match(1)
+          apply_phase bit, controls: controls, gates: gates, url_phi: Regexp.last_match(1)
         when 'Swap'
           apply_swap bit, controls, gates
         when 'Measure'
@@ -181,6 +183,19 @@ module Qni
       end
     end
 
+    def apply_rx(bit, theta, opts = {})
+      controls = opts.fetch(:controls)
+      targets = if controls.empty?
+                  []
+                else
+                  gate_bits(opts.fetch(:gates), *CONTROLLABLE_GATES) - [bit]
+                end
+
+      dropzone(wire_active: @wire_active[bit]) do
+        rx_gate bit: bit, theta: parse_radian(theta), controls: controls, targets: targets, if: opts[:if]
+      end
+    end
+
     def apply_root_not(bit, opts = {})
       controls = opts.fetch(:controls)
       targets = if controls.empty?
@@ -197,46 +212,13 @@ module Qni
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/PerceivedComplexity
-    # rubocop:disable Metrics/CyclomaticComplexity
-    def apply_phase(bit, controls:, gates:, phi_url:)
-      unicode_pi_fractions = {
-        '½' => 'π/2',
-        '¼' => 'π/4',
-        '¾' => '3π/4',
-        '⅓' => 'π/3',
-        '⅔' => '2π/3',
-        '⅕' => 'π/5',
-        '⅖' => '2π/5',
-        '⅗' => '3π/5',
-        '⅘' => '4π/5',
-        '⅙' => 'π/6',
-        '⅚' => '5π/6',
-        '⅐' => 'π/7',
-        '⅛' => 'π/8',
-        '⅜' => '3π/8',
-        '⅝' => '5π/8',
-        '⅞' => '7π/8',
-        '⅑' => 'π/9',
-        '⅒' => 'π/10'
-      }
-
-      phi = if phi_url.nil?
-              'π'
-            elsif /-(\S+)/=~ phi_url
-              if unicode_pi_fractions[Regexp.last_match(1)]
-                "-#{unicode_pi_fractions.fetch(Regexp.last_match(1))}"
-              else
-                "-#{Regexp.last_match(1).tr('_', '/')}"
-              end
-            else
-              unicode_pi_fractions[phi_url] ||
-                phi_url.tr('_', '/')
-            end
+    def apply_phase(bit, controls:, gates:, url_phi:)
+      phi = url_phi.nil? ? 'π' : parse_radian(url_phi)
 
       if controls.empty?
         targets = gates.each.with_index.inject([]) do |result, (each, index)|
-          if phi_url
-            "Z^#{phi_url}" == each ? result << index : result
+          if url_phi
+            "Z^#{url_phi}" == each ? result << index : result
           else
             ['Z', 'Z^π'].include?(each) ? result << index : result # rubocop:disable Performance/CollectionLiteralInLoop
           end
@@ -269,7 +251,42 @@ module Qni
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/PerceivedComplexity
-    # rubocop:enable Metrics/CyclomaticComplexity
+
+    # rubocop:disable Metrics/MethodLength
+    def parse_radian(str)
+      unicode_pi_fractions = {
+        '½' => 'π/2',
+        '¼' => 'π/4',
+        '¾' => '3π/4',
+        '⅓' => 'π/3',
+        '⅔' => '2π/3',
+        '⅕' => 'π/5',
+        '⅖' => '2π/5',
+        '⅗' => '3π/5',
+        '⅘' => '4π/5',
+        '⅙' => 'π/6',
+        '⅚' => '5π/6',
+        '⅐' => 'π/7',
+        '⅛' => 'π/8',
+        '⅜' => '3π/8',
+        '⅝' => '5π/8',
+        '⅞' => '7π/8',
+        '⅑' => 'π/9',
+        '⅒' => 'π/10'
+      }
+
+      if /-(\S+)/=~ str
+        if unicode_pi_fractions[Regexp.last_match(1)]
+          "-#{unicode_pi_fractions.fetch(Regexp.last_match(1))}"
+        else
+          "-#{Regexp.last_match(1).tr('_', '/')}"
+        end
+      else
+        unicode_pi_fractions[str] ||
+          str.tr('_', '/')
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize

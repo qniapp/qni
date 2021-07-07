@@ -19,8 +19,7 @@ export function setQubitCircleClasses(
     className += `qubit-circle qubit-circle--magnitude-${magRounded}`
 
     if (magRounded != 0) {
-      const phase = Math.round(phases[ket])
-      let phaseRounded = Math.round(phase / 10) * 10
+      let phaseRounded = Math.round(phases[ket] / 10) * 10
       if (phaseRounded < 0) phaseRounded = 360 + phaseRounded
       className += ` qubit-circle--phase-${phaseRounded.toString()}`
     }
