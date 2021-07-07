@@ -1,10 +1,5 @@
 <%= circuit nqubit: 4 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_group_span rows: 4 do %>
-      <%= register_label_span label: 'a', span: 4, start: 1 %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= qubit_label '0x1' %>
       <%= qubit_label '0x2' %>
@@ -31,7 +26,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 2 %>
       <% end %>
       <%= dropzone %>
     <% end %>
@@ -84,7 +79,7 @@
         <%= control_gate bit: 0, targets: [1], controls: [0] %>
       <% end %>
       <%= dropzone do %>
-        <%= not_gate bit: 1, controls: [0], targets: [1] %>
+        <%= not_gate bit: 1, controls: [0] %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
@@ -120,7 +115,7 @@
         <%= control_gate bit: 0, targets: [1], controls: [0] %>
       <% end %>
       <%= dropzone do %>
-        <%= not_gate bit: 1, controls: [0], targets: [1] %>
+        <%= not_gate bit: 1, controls: [0] %>
       <% end %>
       <%= dropzone %>
       <%= dropzone %>
@@ -150,14 +145,6 @@
       <%= dropzone do %>
         <%= not_gate bit: 3, controls: [0, 1, 2] %>
       <% end %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_step do %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

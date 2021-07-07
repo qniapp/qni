@@ -43,15 +43,16 @@
 @import "gate/gate";
 @import "gates/control_gate/control_gate";
 @import "gates/hadamard_gate/hadamard_gate";
+@import "gates/measure_gate/measure_gate";
 @import "gates/not_gate/not_gate";
 @import "gates/phase_gate/phase_gate";
 @import "gates/popup/popup";
-@import "gates/readout_gate/readout_gate";
 @import "gates/root_not_gate/root_not_gate";
 @import "gates/swap_gate/swap_gate";
 @import "gates/write_gate/write_gate";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";
+@import "qubit_circle_popup/qubit_circle_popup";
 @import "run_button/run_button";
 @import "simulator/simulator";
 @import "state_vector/state_vector";

@@ -1,3 +1,5 @@
+require 'qni/json_parser'
+
 class CircuitsController < ApplicationController
   before_action :set_circuit, only: [:show]
 
@@ -11,10 +13,6 @@ class CircuitsController < ApplicationController
 
   def set_circuit
     @circuit =
-      if params[:id]
-        Circuit.find(params[:id])
-      else
-        Circuit.find_by(name: 'Random bit')
-      end
+      Qni::JsonParser.new(params[:json] || '{"cols":[["|0>"],["H"],["Measure"]],"init":false}')
   end
 end

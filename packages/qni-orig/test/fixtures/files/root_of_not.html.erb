@@ -14,7 +14,7 @@
   <%= circuit_block label: 'RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -24,7 +24,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
     <% end %>
   <% end %>
@@ -36,7 +36,7 @@
   <%= circuit_block label: 'RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -46,7 +46,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
     <% end %>
   <% end %>
@@ -58,18 +58,13 @@
   <%= circuit_block label: 'Built-in RNOT' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= root_not_gate %>
+        <%= root_not_gate bit: 0 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= root_not_gate %>
+        <%= root_not_gate bit: 0 %>
       <% end %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_step do %>
-      <%= dropzone %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

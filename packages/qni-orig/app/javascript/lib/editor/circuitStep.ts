@@ -1,21 +1,20 @@
 import { CircuitDropzone } from "./circuitDropzone"
 import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
-import { CircuitElement, QubitLabel } from "./gates"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 import { Util, classNameFor } from "lib/base"
 import { Connectable, Controllable } from "./gates/mixins"
 import {
-  // CircuitElement,
+  CircuitElement,
   ControlGate,
   HadamardGate,
   IGate,
   NotGate,
   PhaseGate,
-  // ReadoutGate,
+  QubitLabel,
+  RootNotGate,
   SwapGate,
-  // WriteGate,
 } from "./gates"
 
 export class CircuitStep extends Mixin(Elementable) {
@@ -168,6 +167,11 @@ export class CircuitStep extends Mixin(Elementable) {
 
       this.updateControlledUConnections(
         this.gatesOf(NotGate),
+        controlGateBits,
+        controllableGateBits,
+      )
+      this.updateControlledUConnections(
+        this.gatesOf(RootNotGate),
         controlGateBits,
         controllableGateBits,
       )
@@ -355,5 +359,19 @@ export class CircuitStep extends Mixin(Elementable) {
     if (!el) throw new InternalError(`.${className} not found`)
 
     return el
+  }
+
+  circuitBlock(): Element | null {
+    return this.element.closest(".circuit-block")
+  }
+
+  toJson(): string {
+    const gates = this.instructions
+      .map((each) => {
+        return each.toJson()
+      })
+      .join(",")
+
+    return `[${gates}]`
   }
 }

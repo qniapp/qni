@@ -1,5 +1,5 @@
 import { Circuit } from "lib/circuit"
-import { ReadoutGate, SwapGate, WriteGate } from "./gates"
+import { MeasureGate, SwapGate, WriteGate } from "./gates"
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
 import { DraggableItem } from "./draggableItem"
@@ -24,6 +24,19 @@ export class Editor {
     this.circuit.dropzones.forEach((each) => {
       each.setInteract(this.circuitDropzoneHandlers())
     })
+  }
+
+  clear(): void {
+    history.pushState(
+      "",
+      "",
+      "{\"cols\":[[\"|0>\"],[\"H\"],[\"Measure\"]],\"init\":false}",
+    )
+    location.reload()
+  }
+
+  updateUrl(): void {
+    history.pushState("", "", this.circuit.toJson())
   }
 
   addNewQubit(): void {
@@ -178,7 +191,7 @@ export class Editor {
         if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
           wireActiveOrig[bit] = true
-        } else if (dz.instruction instanceof ReadoutGate) {
+        } else if (dz.instruction instanceof MeasureGate) {
           wireActive[bit] = false
           wireActiveOrig[bit] = false
         } else if (

@@ -37,54 +37,54 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 4 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 5 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 6 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 7 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

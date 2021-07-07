@@ -37,7 +37,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:hadamard": "hadamard-gate",
     "gate:type:not": "not-gate",
     "gate:type:phase": "phase-gate",
-    "gate:type:readout": "readout-gate",
+    "gate:type:measure": "measure-gate",
     "gate:type:rootNot": "root-not-gate",
     "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",

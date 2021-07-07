@@ -1,0 +1,8 @@
+<% measure_gate = local_assigns.fetch(:measure_gate) %>
+
+<%= tag.div class: measure_gate.klass, data: measure_gate.data do %>
+  <div class="gate__body">
+    <%= measure_icon class: 'gate-icon' %>
+    <div class="gate-ket-label"></div>
+  </div>
+<% end %>

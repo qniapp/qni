@@ -55,7 +55,7 @@
       @apply translate-x-0;
     }
 
-    .readout-gate ~ #{$parent} & {
+    .measure-gate ~ #{$parent} & {
       @apply text-wolf;
       @apply transform scale-x-75 -translate-x-1/4 origin-left;
 
@@ -65,7 +65,7 @@
       }
     }
 
-    .circuit-preview .readout-gate ~ #{$parent} & {
+    .circuit-preview .measure-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }
@@ -106,7 +106,7 @@
       @apply translate-x-0;
     }
 
-    .readout-gate ~ #{$parent} & {
+    .measure-gate ~ #{$parent} & {
       @apply text-swan;
       @apply transform scale-x-75 translate-x-1/4 origin-right;
 
@@ -116,7 +116,7 @@
       }
     }
 
-    .circuit-preview .readout-gate ~ #{$parent} & {
+    .circuit-preview .measure-gate ~ #{$parent} & {
       @apply scale-x-50;
       @apply translate-x-0;
     }

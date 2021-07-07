@@ -13,6 +13,10 @@
   // Disable double tap zoom
   touch-action: manipulation;
 
+  @screen md {
+    @apply mb-8;
+  }
+
   &:focus {
     @apply outline-none;
   }

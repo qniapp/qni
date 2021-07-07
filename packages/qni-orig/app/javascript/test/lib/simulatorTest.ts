@@ -385,7 +385,7 @@ QUnit.module("Simulator", () => {
     })
   })
 
-  QUnit.module(".readout", () => {
+  QUnit.module(".measure", () => {
     QUnit.test("|0>.read(0) should be |0>", (assert) => {
       const simulator = new Simulator("0")
       simulator.read(0)

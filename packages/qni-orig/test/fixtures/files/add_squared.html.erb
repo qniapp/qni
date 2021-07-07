@@ -1,18 +1,12 @@
 <%= circuit nqubit: 6 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_group_span rows: 6 do %>
-      <%= register_label_span label: 'a', span: 4, start: 3 %>
-      <%= register_label_span label: 'b', span: 2, start: 1 %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= qubit_label '0x1' %>
       <%= qubit_label '0x2' %>
       <%= qubit_label '0x4' %>
       <%= qubit_label '0x8' %>
-      <%= qubit_label '0x1' %>
-      <%= qubit_label '0x2' %>
+      <%= qubit_label '0x10' %>
+      <%= qubit_label '0x20' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'prepare' do %>
@@ -36,7 +30,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 2 %>
       <% end %>
       <%= dropzone %>
       <%= dropzone wire_active: false %>
@@ -71,7 +65,7 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 5 %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -146,7 +140,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= not_gate bit: 0, controls: [4], targets: [0] %>
+        <%= not_gate bit: 0, controls: [4] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
@@ -189,7 +183,7 @@
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= not_gate bit: 1, controls: [5], targets: [1] %>
+        <%= not_gate bit: 1, controls: [5] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
@@ -201,49 +195,43 @@
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= control_gate bit: 1, targets: [3], controls: [1, 2, 4, 5] %>
+        <%= control_gate bit: 1, targets: [3], controls: [1, 2, 5] %>
       <% end %>
       <%= dropzone do %>
-        <%= control_gate bit: 2, targets: [3], controls: [1, 2, 4, 5] %>
+        <%= control_gate bit: 2, targets: [3], controls: [1, 2, 5] %>
       <% end %>
       <%= dropzone do %>
-        <%= not_gate bit: 3, controls: [1, 2, 4, 5] %>
+        <%= not_gate bit: 3, controls: [1, 2, 5] %>
       <% end %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= control_gate bit: 4, targets: [3], controls: [1, 2, 4, 5] %>
-      <% end %>
-      <%= dropzone do %>
-        <%= control_gate bit: 5, targets: [3], controls: [1, 2, 4, 5] %>
+        <%= control_gate bit: 5, targets: [3], controls: [1, 2, 5] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= control_gate bit: 1, targets: [2], controls: [1, 4, 5] %>
+        <%= control_gate bit: 1, targets: [2], controls: [1, 5] %>
       <% end %>
       <%= dropzone do %>
-        <%= not_gate bit: 2, controls: [1, 4, 5] %>
+        <%= not_gate bit: 2, controls: [1, 5] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= control_gate bit: 4, targets: [2], controls: [1, 4, 5] %>
-      <% end %>
-      <%= dropzone do %>
-        <%= control_gate bit: 5, targets: [2], controls: [1, 4, 5] %>
+        <%= control_gate bit: 5, targets: [2], controls: [1, 5] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= not_gate bit: 1, controls: [4, 5] %>
+        <%= not_gate bit: 1, controls: [5] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
+      <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
-        <%= control_gate bit: 4, targets: [1], controls: [4, 5] %>
-      <% end %>
-      <%= dropzone do %>
-        <%= control_gate bit: 5, targets: [1], controls: [4, 5] %>
+        <%= control_gate bit: 5, targets: [1], controls: [5] %>
       <% end %>
     <% end %>
     <%= circuit_step do %>
@@ -264,23 +252,13 @@
       <%= dropzone %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= not_gate bit: 2, controls: [5], targets: [2] %>
+        <%= not_gate bit: 2, controls: [5] %>
       <% end %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone wire_top: true, wire_bottom: true %>
       <%= dropzone do %>
         <%= control_gate bit: 5, targets: [2], controls: [5] %>
       <% end %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_step do %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
-      <%= dropzone %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

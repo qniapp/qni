@@ -1,16 +1,9 @@
 <%= circuit nqubit: 3 do %>
   <%= circuit_block_divider do %>
-    <%= circuit_register_group do %>
-      <%= register_label '👩Alice' %>
-      <%= register_label '😈Eve' %>
-      <%= register_label '👦🏻Bob' %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= qubit_label '0x1' %>
-      <%= qubit_label '0x1' %>
-      <%= qubit_label '0x1' %>
+      <%= qubit_label '0x2' %>
+      <%= qubit_label '0x4' %>
     <% end %>
   <% end %>
   <%= circuit_block label: 'get two random bits' do %>
@@ -23,14 +16,14 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= readout set: 'alice_h' %>
+        <%= measure set: 'alice_h' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -44,14 +37,14 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 0 %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= readout set: 'alice_v' %>
+        <%= measure set: 'alice_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -85,7 +78,7 @@
   <%= circuit_block label: 'apply H' do %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= hadamard_gate if: 'alice_h' %>
+        <%= hadamard_gate bit: 0, if: 'alice_h' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -94,10 +87,10 @@
   <%= circuit_block_divider do %>
     <%= circuit_step do %>
       <%= dropzone output_wire_active: false do %>
-        <%= swap_gate bit: 0, targets: [0, 1] %>
+        <%= swap_gate bit: 0, targets: [0, 1], controls: [] %>
       <% end %>
       <%= dropzone input_wire_active: false do %>
-        <%= swap_gate bit: 1, targets: [0, 1] %>
+        <%= swap_gate bit: 1, targets: [0, 1], controls: [] %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -106,14 +99,14 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 1 %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= readout set: 'eve_v' %>
+        <%= measure set: 'eve_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -134,7 +127,7 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 1 %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -153,7 +146,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= hadamard_gate %>
+        <%= hadamard_gate bit: 2 %>
       <% end %>
     <% end %>
   <% end %>
@@ -162,7 +155,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= readout set: 'bob_h' %>
+        <%= measure set: 'bob_h' %>
       <% end %>
     <% end %>
   <% end %>
@@ -170,10 +163,10 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone output_wire_active: false do %>
-        <%= swap_gate bit: 1, targets: [1, 2] %>
+        <%= swap_gate bit: 1, targets: [1, 2], controls: [] %>
       <% end %>
       <%= dropzone input_wire_active: false do %>
-        <%= swap_gate bit: 2, targets: [1, 2] %>
+        <%= swap_gate bit: 2, targets: [1, 2], controls: [] %>
       <% end %>
     <% end %>
   <% end %>
@@ -182,7 +175,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= hadamard_gate if: 'bob_h' %>
+        <%= hadamard_gate bit: 2, if: 'bob_h' %>
       <% end %>
     <% end %>
   <% end %>
@@ -198,15 +191,8 @@
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= readout %>
+        <%= measure %>
       <% end %>
-    <% end %>
-  <% end %>
-  <%= circuit_block_divider do %>
-    <%= circuit_step do %>
-      <%= dropzone wire_active: false %>
-      <%= dropzone wire_active: false %>
-      <%= dropzone wire_active: false %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

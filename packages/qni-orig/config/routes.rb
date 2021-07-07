@@ -1,12 +1,8 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  root 'circuits#show'
-
-  resources :circuits, only: %i[index show]
+  resources :circuits, only: %i[index]
   resources :circuit_previews, only: :show
 
-  namespace :admin do
-    resources :circuits
-    root to: 'circuits#index'
-  end
+  get '/', to: 'circuits#show'
+  get '/:json', to: 'circuits#show', as: :circuit
 end

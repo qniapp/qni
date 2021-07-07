@@ -21,16 +21,16 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 1 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 2 %>
     <% end %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 3 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>

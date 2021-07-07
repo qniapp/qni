@@ -1,13 +1,8 @@
 <%= circuit nqubit: 3 do %>
-  <%= circuit_register_group do %>
-    <%= register_label 'a' %>
-    <%= register_label 'b' %>
-    <%= register_label 'c' %>
-  <% end %>
   <%= circuit_step do %>
     <%= qubit_label '0x1' %>
-    <%= qubit_label '0x1' %>
-    <%= qubit_label '0x1' %>
+    <%= qubit_label '0x2' %>
+    <%= qubit_label '0x4' %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
@@ -27,7 +22,7 @@
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -50,13 +45,13 @@
       <%= control_gate bit: 1, targets: [2], controls: [1] %>
     <% end %>
     <%= dropzone do %>
-      <%= not_gate bit: 2, controls: [1], targets: [2] %>
+      <%= not_gate bit: 2, controls: [1] %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone %>
   <% end %>
@@ -64,7 +59,7 @@
     <%= dropzone wire_active: false %>
     <%= dropzone wire_active: false %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
@@ -91,13 +86,13 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

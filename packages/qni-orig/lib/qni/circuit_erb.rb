@@ -2,9 +2,9 @@ module Qni
   # rubocop:disable Metrics/ModuleLength
   module CircuitErb
     def circuit_block_divider(&block)
-      erb = @dsl.block? ? "<%= circuit_block_divider do %>\n" : ''
+      erb = contains_circuit_block_divider? ? "<%= circuit_block_divider do %>\n" : ''
       erb += block.yield
-      erb += "<% end %>\n" if @dsl.block?
+      erb += "<% end %>\n" if contains_circuit_block_divider?
       erb
     end
 
@@ -69,8 +69,8 @@ module Qni
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/ParameterLists
 
-    def draggable(write: false, readout: false, &block)
-      opts = option_string(write: write, readout: readout)
+    def draggable(write: false, measure: false, &block)
+      opts = option_string(write: write, measure: measure)
       if opts
         <<~ERB
           <%= draggable #{opts} do %>
@@ -98,8 +98,11 @@ module Qni
     end
 
     def hadamard_gate(opts = {})
-      opts = option_string(disabled: opts.fetch(:disabled, false), if: opts.fetch(:if, nil))
-      opts ? "<%= hadamard_gate #{opts} %>\n" : "<%= hadamard_gate %>\n"
+      opts = option_string(bit: opts.fetch(:bit),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
+      "<%= hadamard_gate #{opts} %>\n"
     end
 
     def not_gate(opts = {})
@@ -110,19 +113,27 @@ module Qni
       "<%= not_gate #{opts} %>\n"
     end
 
+    def root_not_gate(opts = {})
+      opts = option_string(bit: opts.fetch(:bit),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
+      "<%= root_not_gate #{opts} %>\n"
+    end
+
     def phase_gate(bit:, phi:, controls: [], targets: [], wire_active: true)
       opts = option_string(bit: bit, phi: phi, controls: controls, targets: targets, wire_active: wire_active)
       "<%= phase_gate #{opts} %>\n"
     end
 
-    def control_gate(bit:, targets:, controls:, wire_active: true)
-      opts = option_string(bit: bit, targets: targets, controls: controls, wire_active: wire_active)
+    def control_gate(bit:, targets: [], controls: [], disabled: false, wire_active: true)
+      opts = option_string(bit: bit, targets: targets, controls: controls, disabled: disabled, wire_active: wire_active)
       "<%= control_gate #{opts} %>\n"
     end
 
-    def readout(set: nil)
+    def measure(set: nil)
       opts = option_string(set: set)
-      opts ? "<%= readout #{opts} %>\n" : "<%= readout %>\n"
+      opts ? "<%= measure #{opts} %>\n" : "<%= measure %>\n"
     end
 
     private
@@ -150,8 +161,8 @@ module Qni
           h[:set] = "'#{options[:set]}'" if options[:set]
         when :write
           h[:write] = options[:write] if options[:write]
-        when :readout
-          h[:readout] = options[:readout] if options[:readout]
+        when :measure
+          h[:measure] = options[:measure] if options[:measure]
         when :phi
           h[:phi] = "'#{options[:phi]}'"
         end

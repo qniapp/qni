@@ -77,7 +77,7 @@ export class GatePopup {
 
   private get isSettable(): boolean {
     return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:type:readout"),
+      classNameFor("gate:type:measure"),
     )
   }
 

@@ -2,8 +2,8 @@ module Ifable
   extend ActiveSupport::Concern
 
   included do
-    attribute :disabled, default: false
     attribute :if
+    attribute :disabled, default: false
 
     validate :validate_if
     validates :disabled, inclusion: { in: [true, false] }

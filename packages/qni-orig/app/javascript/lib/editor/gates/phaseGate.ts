@@ -39,6 +39,11 @@ export class PhaseGate extends Mixin(
     this.element = this.validateElementClassName(element, "gate:type:phase")
   }
 
+  toJson(): string {
+    const phi = this.element.getAttribute("data-gate-label").replace("/", "_")
+    return `"Z^${phi}"`
+  }
+
   get phi(): string | null {
     return this.element.getAttribute(attributeNameFor("instruction:phi"))
   }

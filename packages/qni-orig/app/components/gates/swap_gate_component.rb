@@ -12,10 +12,14 @@ class Gates::SwapGateComponent < Component
   include Targetable
   include Wireable
 
+  attribute :disabled, default: false
+  validates :disabled, inclusion: { in: [true, false] }
+
   def klass
     class_string('gate',
                  'swap-gate',
                  'draggable',
+                 'gate--disabled' => disabled,
                  'draggable--palette' => palette?,
                  'draggable--circuit' => circuit?,
                  'connectable--upper-bit' => connected_with_upper_bit?,

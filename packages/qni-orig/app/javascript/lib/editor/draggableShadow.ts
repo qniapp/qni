@@ -24,6 +24,10 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("gate:state:disabled"))
     el.classList.remove(classNameFor("connectable:lowerBit"))
     el.classList.remove(classNameFor("connectable:upperBit"))
+    if (el.classList.contains(classNameFor("gate:type:measure"))) {
+      el.setAttribute("data-value", "")
+    }
+
     this.disableAction(el)
 
     this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)

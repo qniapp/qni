@@ -1,14 +1,10 @@
-require 'qni/erb_generator'
+require 'qni/json_parser'
 
 class Circuit < ApplicationRecord
   validates :name, presence: true
-  validates :dsl, presence: true
+  validates :json, presence: true
 
   def erb
-    @erb ||= Qni::ErbGenerator.new(dsl).generate_erb
-  end
-
-  def nqubit
-    Qni::Dsl.load(dsl).nqubit
+    @erb ||= Qni::JsonParser.new(json).erb
   end
 end

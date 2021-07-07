@@ -1,30 +1,41 @@
 require 'component'
+require 'concerns/connectable'
+require 'concerns/controllable'
 require 'concerns/draggable'
 require 'concerns/ifable'
 require 'concerns/popuppable'
-require 'concerns/wireable'
+require 'concerns/targetable'
 
 class Gates::HadamardGateComponent < Component
+  include Connectable
+  include Controllable
   include Draggable
   include Ifable
   include Popuppable
-  include Wireable
+  include Targetable
+
+  include CssClassStringHelper
 
   def klass
-    class_string('gate',
-                 'gate--ifable',
-                 'hadamard-gate',
-                 'draggable',
-                 'draggable--palette' => palette?,
-                 'draggable--circuit' => circuit?,
-                 'instruction--wire-inactive' => !wire_active?,
-                 'gate--disabled' => disabled?)
+    sorted_class_string('gate',
+                        'hadamard-gate',
+                        'draggable',
+                        'gate--ifable' => self.class < Ifable,
+                        'gate--disabled' => disabled?,
+                        ['draggable--palette', 'draggable--circuit'] => on_palette?,
+                        'connectable--lower-bit' => connected_with_lower_bit?,
+                        'connectable--upper-bit' => connected_with_upper_bit?)
   end
 
   def data
-    { if: self.if,
-      'gate-label': label_text,
-      'gate-popup-type': 'if' }.merge(data_popup).merge(data_draggable)
+    [
+      data_controls,
+      data_draggable,
+      data_if,
+      data_popup
+    ].reduce({}) do |result, each|
+      result.merge(each)
+    end
   end
 
   def label_text
@@ -33,7 +44,25 @@ class Gates::HadamardGateComponent < Component
 
   private
 
+  def connected_with_upper_bit?
+    return false unless bit
+    return false if [controls].flatten.empty?
+
+    ([controls] + [targets]).flatten.any? { |each| each > bit }
+  end
+
+  def connected_with_lower_bit?
+    return false unless bit
+    return false if [controls].flatten.empty?
+
+    ([controls] + [targets]).flatten.any? { |each| each < bit }
+  end
+
   def popup_type
     :if
+  end
+
+  def data_if
+    { if: self.if, 'gate-label': label_text }
   end
 end

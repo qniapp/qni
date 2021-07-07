@@ -27,6 +27,10 @@ module IconsHelper
     render 'components/icons/ket', *options
   end
 
+  def measure_icon(*options)
+    render 'components/icons/measure', *options
+  end
+
   def reload_icon
     render 'components/icons/reload'
   end

@@ -14,8 +14,9 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <link rel="manifest" href="/manifest.json">
-    <%= favicon_pack_tag 'favicon-96x96.png' %>
-    <%= favicon_pack_tag 'favicon-96x96.png', rel: 'apple-touch-icon' %>
+    <%= favicon_pack_tag 'favicon.ico' %>
+    <%= favicon_pack_tag 'icon.svg', type: 'image/svg+xml' %>
+    <%= favicon_pack_tag 'apple-touch-icon.png', rel: 'apple-touch-icon' %>
 
     <%= yield :head %>
   </head>

@@ -15,6 +15,10 @@ export class QubitLabel extends Mixin(Instructionable, Valueable) {
     return { type: "qubit-label", value: this.value }
   }
 
+  toJson(): string {
+    return "XXX"
+  }
+
   assignElement(element: HTMLElement): void {
     this.element = this.validateElementClassName(
       element,

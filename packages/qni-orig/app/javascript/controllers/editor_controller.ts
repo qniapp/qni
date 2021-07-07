@@ -21,6 +21,14 @@ export default class EditorController extends Controller {
     })
   }
 
+  clear(): void {
+    this.editor.clear()
+  }
+
+  updateUrl(): void {
+    this.editor.updateUrl()
+  }
+
   runCircuit(): void {
     this.circleNotation.nqubit = this.simulator.nqubit
     this.simulator.run()

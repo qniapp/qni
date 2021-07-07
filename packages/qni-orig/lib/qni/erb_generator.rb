@@ -392,7 +392,7 @@ module Qni
               @wire_active[bit] = false
               @wire_active_orig[bit] = false
               dropzone do
-                readout set: opts.fetch(:set, nil)
+                measure set: opts.fetch(:set, nil)
               end
             else
               dropzone wire_active: @wire_active[bit]

@@ -9,12 +9,12 @@
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= hadamard_gate %>
+      <%= hadamard_gate bit: 0 %>
     <% end %>
   <% end %>
   <%= circuit_step do %>
     <%= dropzone do %>
-      <%= readout %>
+      <%= measure %>
     <% end %>
   <% end %>
   <%= circuit_step shadow_source: true do %>

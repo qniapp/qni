@@ -5,7 +5,6 @@ import {
   Instructionable,
   Targetable,
 } from "./mixins"
-import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 
 export type SwapGateInstruction = {
@@ -35,6 +34,10 @@ export class SwapGate extends Mixin(
     }
   }
 
+  toJson(): string {
+    return "\"Swap\""
+  }
+
   assignElement(element: Element): void {
     this.element = this.validateElementClassName(element, "gate:type:swap")
   }
@@ -42,13 +45,7 @@ export class SwapGate extends Mixin(
   private get swapTargets(): [number, number] | [] {
     const targets = this.targets
 
-    if (targets.length == 0) return []
-    if (targets.length != 2) {
-      throw new InternalError(
-        `SwapGate: invalid data-targets [${targets.toString()}]`,
-      )
-    }
-
+    if (targets.length != 2) return []
     return [targets[0], targets[1]]
   }
 }

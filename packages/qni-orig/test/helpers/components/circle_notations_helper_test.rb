@@ -9,10 +9,18 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
   test 'circle notation' do
     assert_dom_equal beautify(<<~ERB), beautify(component('circle_notation', nqubit: 1))
       <div class="w-screen h-screen fixed flex justify-center z-40">
-        <div id="circle-notation" class="circle-notation" data-controller="circle-notation" data-simulator-target="circleNotation" data-editor-target="circleNotation" data-circle-notation-nqubit="1" data-circle-notation-max-nqubit="10"></div>
+        <div id="circle-notation" class="circle-notation" data-controller="circle-notation" data-simulator-target="circleNotation" data-editor-target="circleNotation" data-circle-notation-nqubit="1" data-circle-notation-max-nqubit="10">
+          #{qubit_circle id: 'qubit-circle-template', klass: 'hidden'}
+
+          <div class="qubit-circle-popup hidden" data-circle-notation-target="popup">
+            <div class="qubit-circle-popup__ket">|<span class="qubit-circle-popup__ket-binary"></span>&#x27e9; (decimal <span class="qubit-circle-popup__ket-decimal"></span>)</div>
+            <ul class="list-none">
+              <li>Prob of |<span class="text-magnitude font-mono">1</span>&#x27e9;: <span class="qubit-circle-popup__probability"></span></li>
+              <li>Phase: <span class="qubit-circle-popup__phase"></span></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      #{qubit_circle id: 'qubit-circle-template', klass: 'hidden'}
-      <div id="qubit-circle-popup" class="qubit-circle-popup hidden"></div>
     ERB
   end
 
@@ -21,7 +29,7 @@ class Components::CircleNotationsHelperTest < ActionView::TestCase
       <div id="test"
            class="qubit-circle qubit-circle--magnitude-0"
            data-circle-notation-target="qubitCircle"
-           data-action="mouseenter->circle-notation#showPopup">
+           data-action="mouseenter->circle-notation#setPopupContent">
         <div class="qubit-circle__magnitude"></div>
         <div class="qubit-circle__phase"></div>
       </div>
