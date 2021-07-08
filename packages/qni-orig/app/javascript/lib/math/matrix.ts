@@ -1156,13 +1156,50 @@ export class Matrix {
     }
 
     // Density matrix from bloch vector equation: M = 1/2 (I + vσ)
-    //noinspection JSUnusedLocalSymbols
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ar, ai, br, bi, cr, ci, dr, di] = this.buffer
     const x = -cr - br
     const y = bi - ci
     const z = dr - ar
     return [x, y, z]
+  }
+
+  qubitDensityMatrix(bit: number): Matrix {
+    const traceBits = [...Array(this.height).keys()].filter(
+      (each) => each != bit,
+    )
+    const removeBits = (num: number, bits: number[]) => {
+      return bits.reduce((result, each) => {
+        let mask = result >> (each + 1)
+        mask = mask << each
+        const right = ((1 << each) - 1) & result
+
+        return mask | right
+      }, num)
+    }
+    let densityMatrix = Matrix.zero(2, 2)
+
+    for (let bra = 0; bra < this.height; bra++) {
+      for (let ket = 0; ket < this.height; ket++) {
+        const survived = traceBits.every((b) => {
+          return ((bra >> b) & 1) == ((ket >> b) & 1)
+        })
+        if (!survived) continue
+
+        const amp = this.cell(0, ket).times(this.cell(0, bra).conjugate())
+        if (amp.isEqualTo(0)) continue
+
+        const ketMat =
+          removeBits(ket, traceBits) == 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
+        const braMat =
+          removeBits(bra, traceBits) == 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
+        const ketBra = ketMat.times(braMat)
+
+        densityMatrix = densityMatrix.plus(ketBra.times(amp))
+      }
+    }
+
+    return densityMatrix
   }
 
   /**
