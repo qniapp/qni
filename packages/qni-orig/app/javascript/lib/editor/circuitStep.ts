@@ -16,6 +16,7 @@ import {
   RootNotGate,
   RxGate,
   RyGate,
+  RzGate,
   SwapGate,
 } from "./gates"
 
@@ -199,6 +200,11 @@ export class CircuitStep extends Mixin(Elementable) {
       )
       this.updateControlledUConnections(
         this.gatesOf(RyGate),
+        controlGateBits,
+        controllableGateBits,
+      )
+      this.updateControlledUConnections(
+        this.gatesOf(RzGate),
         controlGateBits,
         controllableGateBits,
       )

@@ -32,6 +32,9 @@
     <%= ry_gate theta: 'π/2', popup: false, palette: true %>
   <% end %>
   <%= dropzone palette: true, no_wire: true do %>
+    <%= rz_gate theta: 'π/2', popup: false, palette: true %>
+  <% end %>
+  <%= dropzone palette: true, no_wire: true do %>
     <%= measure popup: false, palette: true %>
   <% end %>
 </div>
