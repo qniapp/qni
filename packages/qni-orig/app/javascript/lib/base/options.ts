@@ -41,6 +41,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:phase": "phase-gate",
     "gate:type:rootNot": "root-not-gate",
     "gate:type:rx": "rx-gate",
+    "gate:type:ry": "ry-gate",
     "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",
     instruction: "instruction",

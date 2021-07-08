@@ -1,14 +1,15 @@
 import {
   ControlGateInstruction,
   HadamardGateInstruction,
+  MeasureInstruction,
   NotGateInstruction,
   PhaseGateInstruction,
-  MeasureInstruction,
   RootNotGateInstruction,
+  RxGateInstruction,
+  RyGateInstruction,
   SeriarizedInstruction,
   SwapGateInstruction,
   WriteInstruction,
-  RxGateInstruction,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
 import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
@@ -55,6 +56,9 @@ export class Simulator {
           break
         case "rx-gate":
           this.applyRxGate(each, bit)
+          break
+        case "ry-gate":
+          this.applyRyGate(each, bit)
           break
         case "phase-gate":
           this.applyPhaseGate(each, bit, doneCPhaseTargets)
@@ -157,6 +161,33 @@ export class Simulator {
           this.state.setAmplifier(
             a1,
             va1.times(costheta2).minus(va0.times(Complex.I).times(sintheta2)),
+          )
+        }
+      }
+    })
+    return this
+  }
+
+  ry(theta: string, ...targets: number[]): Simulator {
+    const numTheta = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const costheta2 = Math.cos(numTheta / 2)
+    const sintheta2 = Math.sin(numTheta / 2)
+
+    targets.forEach((t) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+        if ((bit & (1 << t)) == 0) {
+          const a0 = bit
+          const a1 = a0 ^ (1 << t)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va0.times(costheta2).minus(va1.times(sintheta2)),
+          )
+          this.state.setAmplifier(
+            a1,
+            va0.times(sintheta2).plus(va1.times(costheta2)),
           )
         }
       }
@@ -423,6 +454,50 @@ export class Simulator {
           this.state.setAmplifier(
             a1,
             va1.times(costheta2).minus(va0.times(Complex.I).times(sintheta2)),
+          )
+        }
+      }
+    }
+  }
+
+  private applyRyGate(gate: RyGateInstruction, bit: number): void {
+    const controls = gate.controls
+
+    if (controls.length == 0) {
+      if (gate.if) {
+        if (this.flags[gate.if]) {
+          this.ry(gate.theta, bit)
+        }
+      } else {
+        this.ry(gate.theta, bit)
+      }
+    } else {
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
+      const numTheta = parseFormula<number>(
+        gate.theta,
+        PARSE_COMPLEX_TOKEN_MAP_RAD,
+      )
+      const costheta2 = Math.cos(numTheta / 2)
+      const sintheta2 = Math.sin(numTheta / 2)
+
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        if ((b & controlBits) != controlBits) continue
+
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va0.times(costheta2).minus(va1.times(sintheta2)),
+          )
+          this.state.setAmplifier(
+            a1,
+            va0.times(sintheta2).plus(va1.times(costheta2)),
           )
         }
       }
