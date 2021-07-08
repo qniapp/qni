@@ -11,6 +11,7 @@ import {
   SeriarizedInstruction,
   SwapGateInstruction,
   WriteInstruction,
+  YGateInstruction,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
 import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
@@ -51,6 +52,9 @@ export class Simulator {
           break
         case "not-gate":
           this.applyNotGate(each, bit)
+          break
+        case "y-gate":
+          this.applyYGate(each, bit)
           break
         case "root-not-gate":
           this.applyRootNotGate(each, bit)
@@ -105,6 +109,26 @@ export class Simulator {
 
           this.state.setAmplifier(a0, va1)
           this.state.setAmplifier(a1, va0)
+        }
+      }
+    })
+    return this
+  }
+
+  y(...targets: number[]): Simulator {
+    targets.forEach((t) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+        if ((bit & (1 << t)) == 0) {
+          const a0 = bit
+          const a1 = a0 ^ (1 << t)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va1.times(new Complex(-1, 0)).times(Complex.I),
+          )
+          this.state.setAmplifier(a1, va0.times(Complex.I))
         }
       }
     })
@@ -434,6 +458,40 @@ export class Simulator {
 
           this.state.setAmplifier(a0, va1)
           this.state.setAmplifier(a1, va0)
+        }
+      }
+    }
+  }
+
+  private applyYGate(gate: YGateInstruction, bit: number): void {
+    const controls = gate.controls
+
+    if (controls.length == 0) {
+      if (gate.if) {
+        if (this.flags[gate.if]) {
+          this.y(bit)
+        }
+      } else {
+        this.y(bit)
+      }
+    } else {
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        if ((b & controlBits) != controlBits) continue
+
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va1.times(new Complex(-1, 0)).times(Complex.I),
+          )
+          this.state.setAmplifier(a1, va0.times(Complex.I))
         }
       }
     }

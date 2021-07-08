@@ -9,6 +9,10 @@ module Components::GatesHelper
     component 'gates/not_gate', *options, &block
   end
 
+  def y_gate(*options, &block)
+    component 'gates/y_gate', *options, &block
+  end
+
   def root_not_gate(*options, &block)
     component 'gates/root_not_gate', *options, &block
   end
