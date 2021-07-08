@@ -6,7 +6,7 @@ module Qni
     include CircuitErb
 
     VARIABLE_NAME_REGEXP = '[_[:lower:]][_[:alnum:]]*'.freeze
-    CONTROLLABLE_GATES = [/^H/, /^X/, /^Y/, /^Z/, /^Rx/, /^Ry/, /^Rz/, 'Swap'].freeze
+    CONTROLLABLE_GATES = [/^H/, /^X/, /^Y/, /^Z/, /^P/, /^Rx/, /^Ry/, /^Rz/, 'Swap'].freeze
 
     def initialize(json)
       @json = JSON.parse(json)
@@ -83,6 +83,8 @@ module Qni
           apply_x bit, controls: controls, gates: gates, if: Regexp.last_match(1)
         when 'Y', /^Y<(#{VARIABLE_NAME_REGEXP})$/o
           apply_y bit, controls: controls, gates: gates, if: Regexp.last_match(1)
+        when 'Z', /^Z<(#{VARIABLE_NAME_REGEXP})$/o
+          apply_z bit, controls: controls, gates: gates, if: Regexp.last_match(1)
         when 'X^½', /^X\^½<(#{VARIABLE_NAME_REGEXP})$/o
           apply_root_not bit, controls: controls, gates: gates, if: Regexp.last_match(1)
         when /^Rx\((\S+)\)$/
@@ -91,7 +93,7 @@ module Qni
           apply_ry bit, Regexp.last_match(1), controls: controls, gates: gates
         when /^Rz\((\S+)\)$/
           apply_rz bit, Regexp.last_match(1), controls: controls, gates: gates
-        when 'Z', /^Z\^(\S+)$/
+        when 'P', /^P\((\S+)\)$/
           apply_phase bit, controls: controls, gates: gates, url_phi: Regexp.last_match(1)
         when 'Swap'
           apply_swap bit, controls, gates
@@ -202,6 +204,19 @@ module Qni
       end
     end
 
+    def apply_z(bit, opts = {})
+      controls = opts.fetch(:controls)
+      targets = if controls.empty?
+                  []
+                else
+                  gate_bits(opts.fetch(:gates), *CONTROLLABLE_GATES) - [bit]
+                end
+
+      dropzone(wire_active: @wire_active[bit]) do
+        z_gate bit: bit, controls: controls, targets: targets, if: opts[:if]
+      end
+    end
+
     def apply_rx(bit, theta, opts = {})
       controls = opts.fetch(:controls)
       targets = if controls.empty?
@@ -263,9 +278,9 @@ module Qni
       if controls.empty?
         targets = gates.each.with_index.inject([]) do |result, (each, index)|
           if url_phi
-            "Z^#{url_phi}" == each ? result << index : result
+            "P(#{url_phi})" == each ? result << index : result
           else
-            ['Z', 'Z^π'].include?(each) ? result << index : result # rubocop:disable Performance/CollectionLiteralInLoop
+            ['P', 'P(π)'].include?(each) ? result << index : result # rubocop:disable Performance/CollectionLiteralInLoop
           end
         end.sort
 
@@ -281,7 +296,7 @@ module Qni
       else
         targets = gates.each.with_index.inject([]) do |result, (each, index)|
           case each
-          when 'H', 'X', 'Swap', '•', /^Z/
+          when 'H', 'X', 'Swap', '•', /^P/
             result << index
           else
             result
@@ -422,7 +437,7 @@ module Qni
 
       controllables = gates.each.with_index.inject([]) do |result, (each, index)|
         case each
-        when /^X/, /^Z/, /^H/, 'Swap'
+        when *CONTROLLABLE_GATES
           result << index
         else
           result
@@ -437,7 +452,7 @@ module Qni
 
       # CPHASE
       gates.select do |each|
-        each.is_a?(String) && each.match?(/^Z\^\S+$/)
+        each.is_a?(String) && each.match?(/^P\(\S+\)$/)
       end.group_by(&:itself).each_value do |each| # rubocop:disable Style/MultilineBlockChain
         if each.is_a?(Array) && each.length == 2
           connected_gates += gates.filter_map.with_index { |gate, i| i if gate == each.first }

@@ -11,6 +11,7 @@ import { RxGate, RxGateInstruction } from "./rxGate"
 import { RyGate, RyGateInstruction } from "./ryGate"
 import { RzGate, RzGateInstruction } from "./rzGate"
 import { YGate, YGateInstruction } from "./yGate"
+import { ZGate, ZGateInstruction } from "./zGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
@@ -29,6 +30,7 @@ export type CircuitElement =
   | SwapGate
   | WriteGate
   | YGate
+  | ZGate
 
 export const CircuitElement = {
   create(element?: HTMLElement | Element | null): CircuitElement {
@@ -43,6 +45,8 @@ export const CircuitElement = {
       return NotGate.create(element)
     } else if (classList.contains("y-gate")) {
       return YGate.create(element)
+    } else if (classList.contains("z-gate")) {
+      return ZGate.create(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
     } else if (classList.contains("phase-gate")) {
@@ -80,3 +84,4 @@ export type SeriarizedInstruction =
   | SwapGateInstruction
   | WriteInstruction
   | YGateInstruction
+  | ZGateInstruction

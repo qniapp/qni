@@ -46,6 +46,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",
     "gate:type:y": "y-gate",
+    "gate:type:z": "z-gate",
     instruction: "instruction",
     "instruction:type:qubitLabel": "qubit-label",
     runButton: "run-button",

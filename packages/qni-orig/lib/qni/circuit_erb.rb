@@ -121,6 +121,14 @@ module Qni
       "<%= y_gate #{opts} %>\n"
     end
 
+    def z_gate(opts = {})
+      opts = option_string(bit: opts.fetch(:bit),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
+      "<%= z_gate #{opts} %>\n"
+    end
+
     def rx_gate(opts = {})
       opts = option_string(bit: opts.fetch(:bit),
                            theta: opts.fetch(:theta),

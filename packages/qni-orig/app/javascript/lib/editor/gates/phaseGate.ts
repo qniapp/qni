@@ -41,7 +41,7 @@ export class PhaseGate extends Mixin(
 
   toJson(): string {
     const phi = this.element.getAttribute("data-gate-label").replace("/", "_")
-    return `"Z^${phi}"`
+    return `"P(${phi})"`
   }
 
   get phi(): string | null {
