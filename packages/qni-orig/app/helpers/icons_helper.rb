@@ -7,6 +7,10 @@ module IconsHelper
     render 'components/icons/plus', *options
   end
 
+  def y_icon(*options)
+    render 'components/icons/y', *options
+  end
+
   def phi_icon(*options)
     render 'components/icons/phi', *options
   end

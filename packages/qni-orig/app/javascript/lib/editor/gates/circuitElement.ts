@@ -7,9 +7,10 @@ import { NotGate, NotGateInstruction } from "./notGate"
 import { PhaseGate, PhaseGateInstruction } from "./phaseGate"
 import { QubitLabel, QubitLabelInstruction } from "./qubitLabel"
 import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
-import { RxGate } from "./rxGate"
-import { RyGate } from "./ryGate"
-import { RzGate } from "./rzGate"
+import { RxGate, RxGateInstruction } from "./rxGate"
+import { RyGate, RyGateInstruction } from "./ryGate"
+import { RzGate, RzGateInstruction } from "./rzGate"
+import { YGate, YGateInstruction } from "./yGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
@@ -27,6 +28,7 @@ export type CircuitElement =
   | RzGate
   | SwapGate
   | WriteGate
+  | YGate
 
 export const CircuitElement = {
   create(element?: HTMLElement | Element | null): CircuitElement {
@@ -39,6 +41,8 @@ export const CircuitElement = {
       return HadamardGate.create(element)
     } else if (classList.contains("not-gate")) {
       return NotGate.create(element)
+    } else if (classList.contains("y-gate")) {
+      return YGate.create(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
     } else if (classList.contains("phase-gate")) {
@@ -70,8 +74,9 @@ export type SeriarizedInstruction =
   | PhaseGateInstruction
   | QubitLabelInstruction
   | RootNotGateInstruction
-  | RxGate
-  | RyGate
-  | RzGate
+  | RxGateInstruction
+  | RyGateInstruction
+  | RzGateInstruction
   | SwapGateInstruction
   | WriteInstruction
+  | YGateInstruction
