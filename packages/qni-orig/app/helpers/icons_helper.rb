@@ -11,6 +11,10 @@ module IconsHelper
     render 'components/icons/y', *options
   end
 
+  def z_icon(*options)
+    render 'components/icons/z', *options
+  end
+
   def phi_icon(*options)
     render 'components/icons/phi', *options
   end
