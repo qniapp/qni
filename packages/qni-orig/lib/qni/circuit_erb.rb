@@ -131,6 +131,15 @@ module Qni
       "<%= ry_gate #{opts} %>\n"
     end
 
+    def rz_gate(opts = {})
+      opts = option_string(bit: opts.fetch(:bit),
+                           theta: opts.fetch(:theta),
+                           controls: opts.fetch(:controls, []),
+                           targets: opts.fetch(:targets, []),
+                           if: opts.fetch(:if, nil))
+      "<%= rz_gate #{opts} %>\n"
+    end
+
     def root_not_gate(opts = {})
       opts = option_string(bit: opts.fetch(:bit),
                            controls: opts.fetch(:controls, []),

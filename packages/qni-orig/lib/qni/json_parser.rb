@@ -6,7 +6,7 @@ module Qni
     include CircuitErb
 
     VARIABLE_NAME_REGEXP = '[_[:lower:]][_[:alnum:]]*'.freeze
-    CONTROLLABLE_GATES = [/^X/, /^Rx/, /^Ry/, /^Z/, /^H/, 'Swap'].freeze
+    CONTROLLABLE_GATES = [/^X/, /^Rx/, /^Ry/, /^Rz/, /^Z/, /^H/, 'Swap'].freeze
 
     def initialize(json)
       @json = JSON.parse(json)
@@ -87,6 +87,8 @@ module Qni
           apply_rx bit, Regexp.last_match(1), controls: controls, gates: gates
         when /^Ry\((\S+)\)$/
           apply_ry bit, Regexp.last_match(1), controls: controls, gates: gates
+        when /^Rz\((\S+)\)$/
+          apply_rz bit, Regexp.last_match(1), controls: controls, gates: gates
         when 'Z', /^Z\^(\S+)$/
           apply_phase bit, controls: controls, gates: gates, url_phi: Regexp.last_match(1)
         when 'Swap'
@@ -208,6 +210,19 @@ module Qni
 
       dropzone(wire_active: @wire_active[bit]) do
         ry_gate bit: bit, theta: parse_radian(theta), controls: controls, targets: targets, if: opts[:if]
+      end
+    end
+
+    def apply_rz(bit, theta, opts = {})
+      controls = opts.fetch(:controls)
+      targets = if controls.empty?
+                  []
+                else
+                  gate_bits(opts.fetch(:gates), *CONTROLLABLE_GATES) - [bit]
+                end
+
+      dropzone(wire_active: @wire_active[bit]) do
+        rz_gate bit: bit, theta: parse_radian(theta), controls: controls, targets: targets, if: opts[:if]
       end
     end
 

@@ -7,6 +7,7 @@ import {
   RootNotGateInstruction,
   RxGateInstruction,
   RyGateInstruction,
+  RzGateInstruction,
   SeriarizedInstruction,
   SwapGateInstruction,
   WriteInstruction,
@@ -59,6 +60,9 @@ export class Simulator {
           break
         case "ry-gate":
           this.applyRyGate(each, bit)
+          break
+        case "rz-gate":
+          this.applyRzGate(each, bit)
           break
         case "phase-gate":
           this.applyPhaseGate(each, bit, doneCPhaseTargets)
@@ -188,6 +192,35 @@ export class Simulator {
           this.state.setAmplifier(
             a1,
             va0.times(sintheta2).plus(va1.times(costheta2)),
+          )
+        }
+      }
+    })
+    return this
+  }
+
+  rz(theta: string, ...targets: number[]): Simulator {
+    const numTheta = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const i = Complex.I
+    const e = new Complex(Math.E, 0)
+
+    targets.forEach((t) => {
+      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
+        if ((bit & (1 << t)) == 0) {
+          const a0 = bit
+          const a1 = a0 ^ (1 << t)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va0.times(
+              e.raisedTo(new Complex(-1, 0).times(i).times(numTheta / 2)),
+            ),
+          )
+          this.state.setAmplifier(
+            a1,
+            va1.times(e.raisedTo(i.times(numTheta / 2))),
           )
         }
       }
@@ -498,6 +531,52 @@ export class Simulator {
           this.state.setAmplifier(
             a1,
             va0.times(sintheta2).plus(va1.times(costheta2)),
+          )
+        }
+      }
+    }
+  }
+
+  private applyRzGate(gate: RzGateInstruction, bit: number): void {
+    const controls = gate.controls
+
+    if (controls.length == 0) {
+      if (gate.if) {
+        if (this.flags[gate.if]) {
+          this.rz(gate.theta, bit)
+        }
+      } else {
+        this.rz(gate.theta, bit)
+      }
+    } else {
+      const controlBits = controls.reduce((result, each) => {
+        return result | (1 << each)
+      }, 0)
+      const numTheta = parseFormula<number>(
+        gate.theta,
+        PARSE_COMPLEX_TOKEN_MAP_RAD,
+      )
+      const i = Complex.I
+      const e = new Complex(Math.E, 0)
+
+      for (let b = 0; b < 1 << this.state.nqubit; b++) {
+        if ((b & controlBits) != controlBits) continue
+
+        if ((b & (1 << bit)) == 0) {
+          const a0 = b
+          const a1 = a0 ^ (1 << bit)
+          const va0 = this.state.amplifier(a0)
+          const va1 = this.state.amplifier(a1)
+
+          this.state.setAmplifier(
+            a0,
+            va0.times(
+              e.raisedTo(new Complex(-1, 0).times(i).times(numTheta / 2)),
+            ),
+          )
+          this.state.setAmplifier(
+            a1,
+            va1.times(e.raisedTo(i.times(numTheta / 2))),
           )
         }
       }

@@ -31,6 +31,10 @@ module IconsHelper
     render 'components/icons/ry', *options
   end
 
+  def rz_icon(*options)
+    render 'components/icons/rz', *options
+  end
+
   def ket_icon(*options)
     render 'components/icons/ket', *options
   end
