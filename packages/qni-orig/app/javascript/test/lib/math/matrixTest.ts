@@ -1129,6 +1129,14 @@ QUnit.module("Matrix", () => {
     )
   })
 
+  QUnit.test("qubitDensityMatrix", (assert) => {
+    const bellState = Matrix.col(Math.sqrt(0.5), 0, 0, Math.sqrt(0.5))
+    assert.approximatelyEquates(
+      bellState.qubitDensityMatrix(1),
+      Matrix.identity(2).times(0.5),
+    )
+  })
+
   QUnit.test("determinant", (assert) => {
     assert.throws(() => Matrix.col(1, 2).determinant())
     assert.throws(() => Matrix.row(1, 2).determinant())
