@@ -8,6 +8,7 @@ import { PhaseGate, PhaseGateInstruction } from "./phaseGate"
 import { QubitLabel, QubitLabelInstruction } from "./qubitLabel"
 import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
 import { RxGate } from "./rxGate"
+import { RyGate } from "./ryGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 
@@ -21,6 +22,7 @@ export type CircuitElement =
   | QubitLabel
   | RootNotGate
   | RxGate
+  | RyGate
   | SwapGate
   | WriteGate
 
@@ -47,6 +49,8 @@ export const CircuitElement = {
       return SwapGate.create(element)
     } else if (classList.contains("rx-gate")) {
       return RxGate.create(element)
+    } else if (classList.contains("ry-gate")) {
+      return RyGate.create(element)
     }
 
     throw new InternalError(`Unknown instruction: ${element.outerHTML}`)
@@ -63,5 +67,6 @@ export type SeriarizedInstruction =
   | QubitLabelInstruction
   | RootNotGateInstruction
   | RxGate
+  | RyGate
   | SwapGateInstruction
   | WriteInstruction

@@ -21,6 +21,10 @@ module Components::GatesHelper
     component 'gates/rx_gate', *options
   end
 
+  def ry_gate(*options)
+    component 'gates/ry_gate', *options
+  end
+
   def control_gate(*options, &block)
     component 'gates/control_gate', *options, &block
   end
