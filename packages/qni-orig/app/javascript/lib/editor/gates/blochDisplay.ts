@@ -30,7 +30,11 @@ export class BlochDisplay extends Mixin(Instructionable) {
 
     const rotateYDeg = (180 * ϕ) / Math.PI - 180
     const rotateXDeg = (180 * θ) / Math.PI
-    this.vectorEl().style.transform = `rotateY(${rotateYDeg}deg) rotateX(${rotateXDeg}deg)`
+    this.vectorLineEl().style.height = `calc(${(100 * d) / 2}% - 3px)`
+    this.vectorEndEl().style.bottom = `calc(50% + ${(100 * d) / 2}% + 2px)`
+    if (d != 0) {
+      this.vectorEl().style.transform = `rotateY(${rotateYDeg}deg) rotateX(${rotateXDeg}deg)`
+    }
 
     this.element.dispatchEvent(
       new CustomEvent("blochDisplayUpdated", { bubbles: false }),
@@ -104,6 +108,24 @@ export class BlochDisplay extends Mixin(Instructionable) {
   private vectorEl(): HTMLElement {
     const el = this.element
       .getElementsByClassName("bloch-display__vector")
+      .item(0) as HTMLElement
+    Util.notNull(el)
+
+    return el
+  }
+
+  private vectorLineEl(): HTMLElement {
+    const el = this.element
+      .getElementsByClassName("bloch-display__vector-line")
+      .item(0) as HTMLElement
+    Util.notNull(el)
+
+    return el
+  }
+
+  private vectorEndEl(): HTMLElement {
+    const el = this.element
+      .getElementsByClassName("bloch-display__vector-end")
       .item(0) as HTMLElement
     Util.notNull(el)
 

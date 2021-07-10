@@ -14,7 +14,8 @@ class Gates::BlochDisplayComponent < Component
 
   def data
     draggable_action = data_draggable[:action]
-    data_draggable.merge({ controller: 'bloch-display',
+    data_draggable.merge({ bloch_display_d: 0,
+                           controller: 'bloch-display',
                            action: "#{draggable_action} blochDisplayUpdated->bloch-display#updatePopup" })
   end
 end
