@@ -1144,7 +1144,7 @@ export class Matrix {
    * Returns the bloch sphere vector (as an x,y,z array) corresponding to this
    * density matrix.
    */
-  qubitDensityMatrixToBlochVector(): number[] {
+  qubitDensityMatrixToBlochVector(): [number, number, number] {
     if (this.width !== 2 || this.height !== 2) {
       throw new DetailedError("Need a 2x2 density matrix.", this)
     }
@@ -1165,18 +1165,22 @@ export class Matrix {
   }
 
   qubitDensityMatrix(bit: number): Matrix {
-    const traceBits = [...Array(this.height).keys()].filter(
+    const traceBits = [...Array(Math.log2(this.height)).keys()].filter(
       (each) => each != bit,
     )
     const removeBits = (num: number, bits: number[]) => {
-      return bits.reduce((result, each) => {
-        let mask = result >> (each + 1)
-        mask = mask << each
-        const right = ((1 << each) - 1) & result
+      return bits
+        .sort()
+        .reverse()
+        .reduce((result, each) => {
+          let mask = result >> (each + 1)
+          mask = mask << each
+          const right = ((1 << each) - 1) & result
 
-        return mask | right
-      }, num)
+          return mask | right
+        }, num)
     }
+
     let densityMatrix = Matrix.zero(2, 2)
 
     for (let bra = 0; bra < this.height; bra++) {

@@ -27,6 +27,9 @@ module.exports = {
       "./app/helpers/**/*.rb",
       "./app/javascript/**/*.js",
     ],
+    options: {
+      safelist: ["font-bold"],
+    }
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -103,6 +106,7 @@ module.exports = {
       "-20": "-20deg",
       "-10": "-10deg",
       0: "0",
+      45: "45deg",
       90: "90deg",
     },
     extend: {

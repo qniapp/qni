@@ -3,9 +3,10 @@ import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Controller } from "stimulus"
 import {
+  BlochDisplay,
   HadamardGate,
-  NotGate,
   MeasureGate,
+  NotGate,
   RootNotGate,
 } from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
@@ -13,6 +14,7 @@ import { Breakpoint, Util, classNameFor } from "lib/base"
 
 type MessageEventData = {
   type: "step" | "finish"
+  blochVectors: { [bit: number]: [number, number, number] }
   bits: { [bit: number]: number }
   step: number
   magnitudes: { [bit: number]: number }
@@ -59,6 +61,12 @@ export default class SimulatorController extends Controller {
 
         if (data.type === "step") {
           const step = this.circuit.steps[data.step]
+
+          for (const bit in data.blochVectors) {
+            const blochDisplay = step.dropzones[bit].instruction as BlochDisplay
+            const blochVector = data.blochVectors[bit]
+            blochDisplay.draw(...blochVector)
+          }
 
           if (data.bits) {
             const bits = data.bits

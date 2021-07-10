@@ -15,6 +15,7 @@ self.addEventListener(
       self.postMessage({
         type: "step",
         step: i,
+        blochVectors: simulator.blochVectors,
         bits: simulator.bits,
         magnitudes: simulator.magnitudes(),
         phases: simulator.phases(),
