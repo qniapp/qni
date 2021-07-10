@@ -6,8 +6,8 @@
   <%= editor do %>
     <%= component 'simulator', nqubit: @circuit.nqubit do %>
       <%= palette %>
-      <%= dropzone trash: true, klass: 'md:pt-40 md:pb-60 md:h-full md:overflow-x-auto', no_wire: true do %>
-        <div class="flex flex-row fixed z-50 top-0 right-0 mr-5 md:mr-4 mt-3 md:mt-8">
+      <%= dropzone trash: true, klass: 'md:pt-48 md:pb-60 md:h-full md:overflow-x-auto', no_wire: true do %>
+        <div class="flex flex-row fixed z-50 top-0 right-0 mr-5 md:mr-4 mt-3 md:mt-4">
           <button class="inline-flex flex-row items-center border-transparent px-2 text-eel bg-snow rounded opacity-75 hover:opacity-100 focus:outline-none"
                   data-controller="clipboard"
                   data-action="click->clipboard#copyCurrentUrlToClipboard">

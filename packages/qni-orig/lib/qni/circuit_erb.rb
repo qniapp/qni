@@ -174,6 +174,10 @@ module Qni
       "<%= control_gate #{opts} %>\n"
     end
 
+    def bloch(bit:)
+      "<%= bloch_display bit: #{bit} %>\n"
+    end
+
     def measure(set: nil)
       opts = option_string(set: set)
       opts ? "<%= measure #{opts} %>\n" : "<%= measure %>\n"

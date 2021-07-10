@@ -20,6 +20,7 @@ import { parseFormula } from "./math"
 
 export class Simulator {
   public state: StateVector
+  public blochVectors: { [bit: number]: [number, number, number] }
   public bits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
   private eiphiCache!: { [phi: string]: Complex }
@@ -36,6 +37,7 @@ export class Simulator {
   }
 
   runStep(instructions: SeriarizedInstruction[]): Simulator {
+    this.blochVectors = {}
     const doneSwapTargets: [number, number][] = []
     const doneCPhaseTargets: [number, number][] = []
     const doneControlTargets: number[][] = []
@@ -44,6 +46,9 @@ export class Simulator {
       switch (each.type) {
         case "qubit-label":
         case "i-gate":
+          break
+        case "bloch":
+          this.applyBlochDisplay(bit)
           break
         case "write":
           this.applyWriteGate(each, bit)
@@ -436,6 +441,12 @@ export class Simulator {
 
   private round(n: number, decimal: number): number {
     return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
+  }
+
+  private applyBlochDisplay(bit: number): void {
+    this.blochVectors[bit] = this.state.matrix
+      .qubitDensityMatrix(bit)
+      .qubitDensityMatrixToBlochVector()
   }
 
   private applyWriteGate(gate: WriteInstruction, bit: number): void {

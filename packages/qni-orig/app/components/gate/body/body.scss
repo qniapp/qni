@@ -25,4 +25,10 @@
     content: "";
     will-change: opacity;
   }
+
+  &:hover > &__body::after {
+    @screen md {
+      @apply opacity-100;
+    }
+  }
 }

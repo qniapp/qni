@@ -6,14 +6,6 @@
     }
   }
 
-  &.draggable:hover > .gate {
-    &__body::after {
-      @screen md {
-        @apply opacity-100;
-      }
-    }
-  }
-
   &.draggable--source > .gate {
     &__body {
       @screen md {

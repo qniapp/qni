@@ -1,3 +1,4 @@
+export * from "./blochDisplay"
 export * from "./circuitElement"
 export * from "./controlGate"
 export * from "./hadamardGate"

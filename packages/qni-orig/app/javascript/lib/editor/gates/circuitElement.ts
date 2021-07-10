@@ -1,3 +1,4 @@
+import { BlochDisplay, BlochDisplayInstruction } from "./blochDisplay"
 import { ControlGate, ControlGateInstruction } from "./controlGate"
 import { HadamardGate, HadamardGateInstruction } from "./hadamardGate"
 import { IGate, IGateInstruction } from "./iGate"
@@ -10,12 +11,13 @@ import { RootNotGate, RootNotGateInstruction } from "./rootNotGate"
 import { RxGate, RxGateInstruction } from "./rxGate"
 import { RyGate, RyGateInstruction } from "./ryGate"
 import { RzGate, RzGateInstruction } from "./rzGate"
-import { YGate, YGateInstruction } from "./yGate"
-import { ZGate, ZGateInstruction } from "./zGate"
 import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
+import { YGate, YGateInstruction } from "./yGate"
+import { ZGate, ZGateInstruction } from "./zGate"
 
 export type CircuitElement =
+  | BlochDisplay
   | ControlGate
   | HadamardGate
   | IGate
@@ -63,6 +65,8 @@ export const CircuitElement = {
       return RyGate.create(element)
     } else if (classList.contains("rz-gate")) {
       return RzGate.create(element)
+    } else if (classList.contains("bloch-display")) {
+      return BlochDisplay.create(element)
     }
 
     throw new InternalError(`Unknown instruction: ${element.outerHTML}`)
@@ -70,6 +74,7 @@ export const CircuitElement = {
 }
 
 export type SeriarizedInstruction =
+  | BlochDisplayInstruction
   | ControlGateInstruction
   | HadamardGateInstruction
   | IGateInstruction

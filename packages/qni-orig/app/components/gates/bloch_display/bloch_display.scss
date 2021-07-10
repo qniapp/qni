@@ -1,0 +1,50 @@
+.bloch-display {
+  @include circular-gate;
+
+  &__perspective {
+    @apply relative;
+    @apply w-full h-full;
+
+    perspective-origin: top right;
+
+    @each $nqubit in $nqubits {
+      .circuit[data-nqubit="#{$nqubit}"] & {
+        perspective: calc(0.25rem * #{map-get($instruction-size, $nqubit)} * 2);
+
+        @screen md {
+          perspective: calc(0.25rem * #{$instruction-size-screen-md} * 2);
+        }
+      }
+    }
+  }
+
+  &__vector {
+    @apply relative;
+    @apply w-full h-full;
+
+    transform-origin: center;
+    transform-style: preserve-3d;
+  }
+
+  &__vector-rect {
+    @apply absolute left-0 right-0;
+    @apply bg-eel;
+    @apply mx-auto;
+    @apply origin-bottom;
+
+    height: calc(50% - 3px);
+    top: 3px;
+    width: 2px;
+  }
+
+  &__vector-end {
+    @apply absolute left-0 right-0;
+    @apply bg-cardinal;
+    @apply mx-auto;
+    @apply rounded-full;
+
+    height: 6px;
+    top: -2px;
+    width: 6px;
+  }
+}
