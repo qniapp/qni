@@ -51,7 +51,7 @@
     "autoprefixer": "^9",
     "emergence.js": "^1.1.2",
     "magic-grid": "^3.2.4",
-    "postcss": "^7",
+    "postcss": "~7.0",
     "sass-loader": "^10",
     "stimulus": "~2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
