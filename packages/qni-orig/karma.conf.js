@@ -23,7 +23,7 @@ module.exports = function (config) {
       "app/javascript/test/**/*.ts": ["webpack", "sourcemap"],
     },
 
-    reporters: ["dots", "osx"],
+    reporters: ["dots"],
 
     autoWatch: false,
 
