@@ -1,4 +1,6 @@
 .bloch-display {
+  $parent: &;
+
   @include circular-gate;
 
   &__perspective {
@@ -26,25 +28,41 @@
     transform-style: preserve-3d;
   }
 
-  &__vector-rect {
+  &__vector-line {
+    @apply absolute;
+    @apply w-full h-0;
+
+    bottom: 50%;
+  }
+
+  &__vector-line-rect {
     @apply absolute left-0 right-0;
     @apply bg-eel;
     @apply mx-auto;
     @apply origin-bottom;
+    @apply h-full;
 
-    height: calc(50% - 3px);
-    top: 3px;
     width: 2px;
   }
 
   &__vector-end {
+    @apply absolute;
+    @apply w-full;
+
+    bottom: calc(50% + 2px);
+  }
+
+  &__vector-end-circle {
     @apply absolute left-0 right-0;
     @apply bg-cardinal;
     @apply mx-auto;
     @apply rounded-full;
 
     height: 6px;
-    top: -2px;
     width: 6px;
+
+    #{$parent}[data-bloch-display-d="0"] & {
+      @apply bg-magnitude;
+    }
   }
 }
