@@ -85,7 +85,7 @@
     "prettier": "^2.1.2",
     "qunit": "~2.15",
     "typedoc": "~0.21",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "~3.11"
   },
   "config": {
     "commitizen": {
