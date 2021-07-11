@@ -5,6 +5,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "display:bloch": "Bloch",
     "gate:hadamard": "H",
     "gate:not": "X",
+    "gate:y": "Y",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -18,6 +19,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
 
     "gate:hadamard": "hadamard-gate",
     "gate:not": "not-gate",
+    "gate:y": "y-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -56,7 +58,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:rz": "rz-gate",
     "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",
-    "gate:type:y": "y-gate",
     "gate:type:z": "z-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",

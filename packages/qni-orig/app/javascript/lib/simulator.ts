@@ -57,14 +57,14 @@ export class Simulator {
         case instructionNameFor("gate:not"):
           this.applyNotGate(each, bit)
           break
+        case instructionNameFor("gate:y"):
+          this.applyYGate(each, bit)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
         case "measure":
           this.applyMeasureGate(each, bit)
-          break
-        case "y-gate":
-          this.applyYGate(each, bit)
           break
         case "z-gate":
           this.applyZGate(each, bit)
