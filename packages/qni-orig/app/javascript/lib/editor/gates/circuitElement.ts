@@ -48,8 +48,8 @@ export const CircuitElement = {
       return new NotGate(element)
     } else if (classList.contains(classNameFor("gate:y"))) {
       return new YGate(element)
-    } else if (classList.contains("z-gate")) {
-      return ZGate.create(element)
+    } else if (classList.contains(classNameFor("gate:z"))) {
+      return new ZGate(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
     } else if (classList.contains("phase-gate")) {

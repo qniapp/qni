@@ -6,20 +6,22 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:hadamard": "H",
     "gate:not": "X",
     "gate:y": "Y",
+    "gate:z": "Z",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
   },
   classes: {
+    "gate:hadamard": "hadamard-gate",
+    "gate:not": "not-gate",
+    "gate:y": "y-gate",
+    "gate:z": "z-gate",
+
     "circuitStep:state:done": "circuit-step--done",
     "circuitStep:type:shadow": "circuit-step--shadow",
     "circuitStep:type:shadowSource": "circuit-step--shadow-source",
     "connectable:lowerBit": "connectable--lower-bit",
     "connectable:upperBit": "connectable--upper-bit",
-
-    "gate:hadamard": "hadamard-gate",
-    "gate:not": "not-gate",
-    "gate:y": "y-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -58,7 +60,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:rz": "rz-gate",
     "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",
-    "gate:type:z": "z-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",
     "runButton::running": "run-button--running",

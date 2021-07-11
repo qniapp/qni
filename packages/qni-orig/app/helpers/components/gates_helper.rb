@@ -13,8 +13,8 @@ module Components::GatesHelper
     component 'y_gate', *options
   end
 
-  def z_gate(*options, &block)
-    component 'gates/z_gate', *options, &block
+  def z_gate(*options)
+    component 'z_gate', *options
   end
 
   def root_not_gate(*options, &block)
