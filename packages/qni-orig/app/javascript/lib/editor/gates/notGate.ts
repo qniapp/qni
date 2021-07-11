@@ -6,9 +6,10 @@ import {
   Instructionable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
+import { instructionNameFor } from "lib/base"
 
 export type NotGateInstruction = {
-  type: "not-gate"
+  type: string
   controls: number[]
   if: string | null
 }
@@ -20,25 +21,24 @@ export class NotGate extends Mixin(
   Ifable,
   Disableable,
 ) {
-  static create(element: Element): NotGate {
-    const notGate = new NotGate()
-    notGate.assignElement(element)
-    return notGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:not")
   }
 
   serialize(): NotGateInstruction {
-    return { type: "not-gate", controls: this.controls, if: this.if }
+    return {
+      type: instructionNameFor("gate:not"),
+      controls: this.controls,
+      if: this.if,
+    }
   }
 
   toJson(): string {
     if (this.if) {
-      return `"X<${this.if}"`
+      return `"${instructionNameFor("gate:not")}<${this.if}"`
     } else {
-      return "\"X\""
+      return `"${instructionNameFor("gate:not")}"`
     }
-  }
-
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:not")
   }
 }

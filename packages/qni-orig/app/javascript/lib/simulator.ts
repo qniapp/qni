@@ -51,14 +51,17 @@ export class Simulator {
         case instructionNameFor("display:bloch"):
           this.applyBlochDisplay(bit)
           break
+        case instructionNameFor("gate:hadamard"):
+          this.applyHadamardGate(each, bit)
+          break
+        case instructionNameFor("gate:not"):
+          this.applyNotGate(each, bit)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
         case "measure":
           this.applyMeasureGate(each, bit)
-          break
-        case "not-gate":
-          this.applyNotGate(each, bit)
           break
         case "y-gate":
           this.applyYGate(each, bit)
@@ -80,9 +83,6 @@ export class Simulator {
           break
         case "phase-gate":
           this.applyPhaseGate(each, bit, doneCPhaseTargets)
-          break
-        case instructionNameFor("gate:hadamard"):
-          this.applyHadamardGate(each, bit)
           break
         case "control-gate":
           this.applyControlGate(each, instructions, doneControlTargets)

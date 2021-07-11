@@ -23,7 +23,6 @@
 @import "tailwind_ui/card/header/header";
 
 // Components
-@import "bloch_display/bloch_display";
 @import "circle_notation/circle_notation";
 @import "circuit/circuit";
 @import "circuit/circuit_block/circuit_block";
@@ -44,7 +43,6 @@
 @import "gate/gate";
 @import "gates/control_gate/control_gate";
 @import "gates/measure_gate/measure_gate";
-@import "gates/not_gate/not_gate";
 @import "gates/phase_gate/phase_gate";
 @import "gates/popup/popup";
 @import "gates/root_not_gate/root_not_gate";
@@ -55,7 +53,6 @@
 @import "gates/write_gate/write_gate";
 @import "gates/y_gate/y_gate";
 @import "gates/z_gate/z_gate";
-@import "hadamard_gate/hadamard_gate";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";
 @import "qubit_circle_popup/qubit_circle_popup";
@@ -64,5 +61,9 @@
 @import "state_vector/state_vector";
 @import "tippy/tippy";
 @import "wires/wires";
+
+@import "bloch_display/bloch_display";
+@import "hadamard_gate/hadamard_gate";
+@import "not_gate/not_gate";
 
 @import "tailwindcss/utilities";

@@ -4,6 +4,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
   instructions: {
     "display:bloch": "Bloch",
     "gate:hadamard": "H",
+    "gate:not": "X",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -16,6 +17,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "connectable:upperBit": "connectable--upper-bit",
 
     "gate:hadamard": "hadamard-gate",
+    "gate:not": "not-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -47,7 +49,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:state:updated": "gate--updated",
     "gate:type:control": "control-gate",
     "gate:type:measure": "measure-gate",
-    "gate:type:not": "not-gate",
     "gate:type:phase": "phase-gate",
     "gate:type:rootNot": "root-not-gate",
     "gate:type:rx": "rx-gate",

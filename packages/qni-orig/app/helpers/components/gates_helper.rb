@@ -6,7 +6,7 @@ module Components::GatesHelper
   end
 
   def not_gate(*options, &block)
-    component 'gates/not_gate', *options, &block
+    component 'not_gate', *options, &block
   end
 
   def y_gate(*options, &block)
