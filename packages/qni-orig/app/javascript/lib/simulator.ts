@@ -15,6 +15,7 @@ import {
   ZGateInstruction,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
+import { instructionNameFor } from "./base"
 import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
 import { parseFormula } from "./math"
 
@@ -47,7 +48,7 @@ export class Simulator {
         case "qubit-label":
         case "i-gate":
           break
-        case "bloch":
+        case instructionNameFor("display:bloch"):
           this.applyBlochDisplay(bit)
           break
         case "write":

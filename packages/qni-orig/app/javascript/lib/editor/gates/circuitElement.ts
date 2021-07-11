@@ -15,6 +15,7 @@ import { SwapGate, SwapGateInstruction } from "./swapGate"
 import { WriteGate, WriteInstruction } from "./writeGate"
 import { YGate, YGateInstruction } from "./yGate"
 import { ZGate, ZGateInstruction } from "./zGate"
+import { classNameFor } from "lib/base"
 
 export type CircuitElement =
   | BlochDisplay
@@ -65,8 +66,8 @@ export const CircuitElement = {
       return RyGate.create(element)
     } else if (classList.contains("rz-gate")) {
       return RzGate.create(element)
-    } else if (classList.contains("bloch-display")) {
-      return BlochDisplay.create(element)
+    } else if (classList.contains(classNameFor("display:bloch"))) {
+      return new BlochDisplay(element)
     }
 
     throw new InternalError(`Unknown instruction: ${element.outerHTML}`)

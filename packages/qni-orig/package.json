@@ -56,7 +56,7 @@
     "stimulus": "~2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "tippy.js": "^6.2.4",
-    "ts-mixer": "~5.4",
+    "ts-mixer": "~6.0",
     "turbolinks": "^5.2.0",
     "typescript": "~4.3",
     "vanilla-lazyload": "^17.1.0",
@@ -83,7 +83,7 @@
     "karma-webpack": "^4.0.2",
     "lint-staged": "~10.5",
     "prettier": "^2.1.2",
-    "qunit": "~2.15",
+    "qunit": "~2.16",
     "typedoc": "~0.21",
     "webpack-dev-server": "~3.11"
   },

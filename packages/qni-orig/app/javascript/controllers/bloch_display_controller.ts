@@ -1,4 +1,4 @@
-import { Util, classNameFor } from "lib/base"
+import { Util, classNameFor, idFor } from "lib/base"
 import { Controller } from "stimulus"
 import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
@@ -35,35 +35,80 @@ export default class BlochDisplayController extends Controller {
   }
 
   private popupContent(): string {
-    return `<div class="flex flex-col">
-<div class="mb-2">Local state</div>
-<div class="whitespace-nowrap">r: <span class="font-bold">${this.d}</span>, ϕ: <span class="font-bold">${this.phi}°</span>, θ: <span class="font-bold">${this.theta}°</span></div>
-<div class="whitespace-nowrap">x: <span class="font-bold">${this.x}</span>, y: <span class="font-bold">${this.y}</span>, z: <span class="font-bold">${this.z}</span></div>
-</div>`
+    const contentEl = document.getElementById(idFor("display:bloch:popup"))
+    Util.notNull(contentEl)
+
+    const dEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:d"))
+      .item(0)
+    Util.notNull(dEl)
+    const phiEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:phi"))
+      .item(0)
+    Util.notNull(phiEl)
+    const thetaEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:theta"))
+      .item(0)
+    Util.notNull(thetaEl)
+    const xEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:x"))
+      .item(0)
+    Util.notNull(xEl)
+    const yEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:y"))
+      .item(0)
+    Util.notNull(yEl)
+    const zEl = contentEl
+      .getElementsByClassName(classNameFor("display:bloch:popup:z"))
+      .item(0)
+    Util.notNull(zEl)
+
+    dEl.textContent = this.d
+    phiEl.textContent = this.phi + "°"
+    thetaEl.textContent = this.theta + "°"
+    xEl.textContent = this.x
+    yEl.textContent = this.y
+    zEl.textContent = this.z
+
+    return contentEl.innerHTML
   }
 
   private get d(): string {
-    return this.data.get("d") || "N/A"
+    const d = parseFloat(this.data.get("d") || "NaN")
+    return this.forceSignedValue(d).toString()
   }
 
   private get phi(): string {
-    return this.data.get("phi") || "N/A"
+    const phi = parseFloat(this.data.get("phi") || "NaN")
+    return this.forceSignedAngle(phi).toString()
   }
 
   private get theta(): string {
-    return this.data.get("theta") || "N/A"
+    const theta = parseFloat(this.data.get("theta") || "NaN")
+    return this.forceSignedAngle(theta).toString()
   }
 
   private get x(): string {
-    return this.data.get("x") || "N/A"
+    const x = parseFloat(this.data.get("x") || "NaN")
+    return this.forceSignedValue(x).toString()
   }
 
   private get y(): string {
-    return this.data.get("y") || "N/A"
+    const y = parseFloat(this.data.get("y") || "NaN")
+    return this.forceSignedValue(y).toString()
   }
 
   private get z(): string {
-    return this.data.get("z") || "N/A"
+    const z = parseFloat(this.data.get("z") || "NaN")
+    return this.forceSignedValue(z).toString()
+  }
+
+  private forceSignedValue(value: number): string {
+    return (value >= 0 ? "+" : "") + value.toFixed(4)
+  }
+
+  private forceSignedAngle(angle: number): string {
+    return (angle >= 0 ? "+" : "") + angle.toFixed(2)
   }
 
   private isCircuitDraggable(): boolean {

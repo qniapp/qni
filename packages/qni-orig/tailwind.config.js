@@ -27,9 +27,6 @@ module.exports = {
       "./app/helpers/**/*.rb",
       "./app/javascript/**/*.js",
     ],
-    options: {
-      safelist: ["font-bold"],
-    }
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
