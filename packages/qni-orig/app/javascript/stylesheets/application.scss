@@ -41,7 +41,6 @@
 @import "editor/palette/palette";
 @import "gate/body/body";
 @import "gate/gate";
-@import "gates/measure_gate/measure_gate";
 @import "gates/popup/popup";
 @import "gates/write_gate/write_gate";
 @import "qubit_circle/qubit_circle";
@@ -65,5 +64,6 @@
 @import "rx_gate/rx_gate";
 @import "ry_gate/ry_gate";
 @import "rz_gate/rz_gate";
+@import "measure_gate/measure_gate";
 
 @import "tailwindcss/utilities";

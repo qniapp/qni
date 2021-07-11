@@ -14,6 +14,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:rx": "Rx",
     "gate:ry": "Ry",
     "gate:rz": "Rz",
+    "gate:measure": "Measure",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -30,6 +31,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:rx": "rx-gate",
     "gate:ry": "ry-gate",
     "gate:rz": "rz-gate",
+    "gate:measure": "measure-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -65,7 +67,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
-    "gate:type:measure": "measure-gate",
     "gate:type:write": "write-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",

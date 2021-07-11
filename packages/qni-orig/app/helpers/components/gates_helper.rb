@@ -1,6 +1,10 @@
 module Components::GatesHelper
   include ComponentsHelper
 
+  def write(value, *options)
+    component 'gates/write_gate', (options[0] || {}).merge(value: value)
+  end
+
   def hadamard_gate(*options)
     component 'hadamard_gate', *options
   end
@@ -45,11 +49,7 @@ module Components::GatesHelper
     component 'rz_gate', *options
   end
 
-  def write(value, *options)
-    component 'gates/write_gate', (options[0] || {}).merge(value: value)
-  end
-
   def measure(*options)
-    component 'gates/measure_gate', *options
+    component 'measure_gate', *options
   end
 end
