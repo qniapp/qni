@@ -9,6 +9,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:z": "Z",
     "gate:phase": "P",
     "gate:control": "•",
+    "gate:swap": "Swap",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -20,6 +21,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:z": "z-gate",
     "gate:phase": "phase-gate",
     "gate:control": "control-gate",
+    "gate:swap": "swap-gate",
 
     "circuitStep:state:done": "circuit-step--done",
     "circuitStep:type:shadow": "circuit-step--shadow",
@@ -60,7 +62,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:type:rx": "rx-gate",
     "gate:type:ry": "ry-gate",
     "gate:type:rz": "rz-gate",
-    "gate:type:swap": "swap-gate",
     "gate:type:write": "write-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",

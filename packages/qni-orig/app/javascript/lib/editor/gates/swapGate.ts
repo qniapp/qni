@@ -6,9 +6,10 @@ import {
   Targetable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
+import { instructionNameFor } from "lib/base"
 
 export type SwapGateInstruction = {
-  type: "swap-gate"
+  type: string
   targets: [number, number] | []
   controls: number[]
 }
@@ -20,26 +21,21 @@ export class SwapGate extends Mixin(
   Connectable,
   Disableable,
 ) {
-  static create(element: Element): SwapGate {
-    const swapGate = new SwapGate()
-    swapGate.assignElement(element)
-    return swapGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:swap")
   }
 
   serialize(): SwapGateInstruction {
     return {
-      type: "swap-gate",
+      type: instructionNameFor("gate:swap"),
       targets: this.swapTargets,
       controls: this.controls,
     }
   }
 
   toJson(): string {
-    return "\"Swap\""
-  }
-
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:swap")
+    return `"${instructionNameFor("gate:swap")}"`
   }
 
   private get swapTargets(): [number, number] | [] {

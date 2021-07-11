@@ -6,7 +6,7 @@ require 'concerns/draggable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
-class Gates::SwapGateComponent < Component
+class SwapGateComponent < Component
   include Connectable
   include Controllable
   include Disableable
