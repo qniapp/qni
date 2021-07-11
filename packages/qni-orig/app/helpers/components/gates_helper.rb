@@ -21,6 +21,10 @@ module Components::GatesHelper
     component 'phase_gate', *options, &block
   end
 
+  def control_gate(*options, &block)
+    component 'control_gate', *options, &block
+  end
+
   def root_not_gate(*options, &block)
     component 'gates/root_not_gate', *options, &block
   end
@@ -35,10 +39,6 @@ module Components::GatesHelper
 
   def rz_gate(*options)
     component 'gates/rz_gate', *options
-  end
-
-  def control_gate(*options, &block)
-    component 'gates/control_gate', *options, &block
   end
 
   def swap_gate(*options)

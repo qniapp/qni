@@ -23,7 +23,7 @@ QUnit.module("ControlGate", (hooks) => {
 
   hooks.beforeEach(() => {
     controlGateEl = createControlGateElement()
-    controlGate = ControlGate.create(controlGateEl)
+    controlGate = new ControlGate(controlGateEl)
   })
 
   hooks.afterEach(() => {
@@ -33,7 +33,7 @@ QUnit.module("ControlGate", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(controlGate.serialize()),
-      "{\"type\": \"control-gate\", \"targets\": []}",
+      "{\"type\": \"•\", \"targets\": []}",
     )
   })
 })
@@ -44,7 +44,7 @@ QUnit.module("ControlGate (targets=1,2)", (hooks) => {
 
   hooks.beforeEach(() => {
     controlGateEl = createControlGateElement([1, 2])
-    controlGate = ControlGate.create(controlGateEl)
+    controlGate = new ControlGate(controlGateEl)
   })
 
   hooks.afterEach(() => {
@@ -54,7 +54,7 @@ QUnit.module("ControlGate (targets=1,2)", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(controlGate.serialize()),
-      "{\"type\": \"control-gate\", \"targets\": [1, 2]}",
+      "{\"type\": \"•\", \"targets\": [1, 2]}",
     )
   })
 })
