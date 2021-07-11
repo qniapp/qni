@@ -8,6 +8,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:y": "Y",
     "gate:z": "Z",
     "gate:phase": "P",
+    "gate:control": "•",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -18,6 +19,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:y": "y-gate",
     "gate:z": "z-gate",
     "gate:phase": "phase-gate",
+    "gate:control": "control-gate",
 
     "circuitStep:state:done": "circuit-step--done",
     "circuitStep:type:shadow": "circuit-step--shadow",
@@ -53,7 +55,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
-    "gate:type:control": "control-gate",
     "gate:type:measure": "measure-gate",
     "gate:type:rootNot": "root-not-gate",
     "gate:type:rx": "rx-gate",

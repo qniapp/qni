@@ -5,7 +5,7 @@ require 'concerns/draggable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
-class Gates::ControlGateComponent < Component
+class ControlGateComponent < Component
   include Connectable
   include Controllable
   include Draggable

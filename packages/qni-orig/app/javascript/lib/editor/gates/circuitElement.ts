@@ -52,12 +52,12 @@ export const CircuitElement = {
       return new ZGate(element)
     } else if (classList.contains(classNameFor("gate:phase"))) {
       return new PhaseGate(element)
+    } else if (classList.contains(classNameFor("gate:control"))) {
+      return new ControlGate(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
     } else if (classList.contains("root-not-gate")) {
       return RootNotGate.create(element)
-    } else if (classList.contains("control-gate")) {
-      return ControlGate.create(element)
     } else if (classList.contains("swap-gate")) {
       return SwapGate.create(element)
     } else if (classList.contains("rx-gate")) {
