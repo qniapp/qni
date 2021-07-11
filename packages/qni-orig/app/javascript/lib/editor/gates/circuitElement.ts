@@ -50,10 +50,10 @@ export const CircuitElement = {
       return new YGate(element)
     } else if (classList.contains(classNameFor("gate:z"))) {
       return new ZGate(element)
+    } else if (classList.contains(classNameFor("gate:phase"))) {
+      return new PhaseGate(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
-    } else if (classList.contains("phase-gate")) {
-      return PhaseGate.create(element)
     } else if (classList.contains("root-not-gate")) {
       return RootNotGate.create(element)
     } else if (classList.contains("control-gate")) {
