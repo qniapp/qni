@@ -44,8 +44,8 @@ export const CircuitElement = {
       return WriteGate.create(element)
     } else if (classList.contains(classNameFor("gate:hadamard"))) {
       return new HadamardGate(element)
-    } else if (classList.contains("not-gate")) {
-      return NotGate.create(element)
+    } else if (classList.contains(classNameFor("gate:not"))) {
+      return new NotGate(element)
     } else if (classList.contains("y-gate")) {
       return YGate.create(element)
     } else if (classList.contains("z-gate")) {
