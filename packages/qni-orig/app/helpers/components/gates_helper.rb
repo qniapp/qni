@@ -25,6 +25,10 @@ module Components::GatesHelper
     component 'control_gate', *options, &block
   end
 
+  def swap_gate(*options)
+    component 'swap_gate', *options
+  end
+
   def root_not_gate(*options, &block)
     component 'gates/root_not_gate', *options, &block
   end
@@ -39,10 +43,6 @@ module Components::GatesHelper
 
   def rz_gate(*options)
     component 'gates/rz_gate', *options
-  end
-
-  def swap_gate(*options)
-    component 'gates/swap_gate', *options
   end
 
   def write(value, *options)

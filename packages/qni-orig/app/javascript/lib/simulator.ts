@@ -69,6 +69,9 @@ export class Simulator {
         case instructionNameFor("gate:control"):
           this.applyControlGate(each, instructions, doneControlTargets)
           break
+        case instructionNameFor("gate:swap"):
+          this.applySwapGate(each, doneSwapTargets)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
@@ -86,9 +89,6 @@ export class Simulator {
           break
         case "rz-gate":
           this.applyRzGate(each, bit)
-          break
-        case "swap-gate":
-          this.applySwapGate(each, doneSwapTargets)
           break
         default:
           throw new Error("Unknown instruction")
