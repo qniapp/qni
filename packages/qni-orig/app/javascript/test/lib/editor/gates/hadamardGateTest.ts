@@ -23,7 +23,7 @@ QUnit.module("HadamardGate", (hooks) => {
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement()
-    hadamardGate = HadamardGate.create(hadamardGateEl)
+    hadamardGate = new HadamardGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {
@@ -33,7 +33,7 @@ QUnit.module("HadamardGate", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(hadamardGate.serialize()),
-      "{\"type\": \"hadamard-gate\", \"controls\": [], \"if\": null}",
+      "{\"type\": \"H\", \"controls\": [], \"if\": null}",
     )
   })
 })
@@ -44,7 +44,7 @@ QUnit.module("HadamardGate (if alice_h)", (hooks) => {
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement("alice_h")
-    hadamardGate = HadamardGate.create(hadamardGateEl)
+    hadamardGate = new HadamardGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {
@@ -54,7 +54,7 @@ QUnit.module("HadamardGate (if alice_h)", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(hadamardGate.serialize()),
-      "{\"type\": \"hadamard-gate\", \"controls\": [], \"if\": \"alice_h\"}",
+      "{\"type\": \"H\", \"controls\": [], \"if\": \"alice_h\"}",
     )
   })
 })

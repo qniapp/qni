@@ -81,7 +81,7 @@ export class Simulator {
         case "phase-gate":
           this.applyPhaseGate(each, bit, doneCPhaseTargets)
           break
-        case "hadamard-gate":
+        case instructionNameFor("gate:hadamard"):
           this.applyHadamardGate(each, bit)
           break
         case "control-gate":
