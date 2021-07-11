@@ -17,12 +17,12 @@ module Components::GatesHelper
     component 'z_gate', *options
   end
 
-  def root_not_gate(*options, &block)
-    component 'gates/root_not_gate', *options, &block
+  def phase_gate(*options, &block)
+    component 'phase_gate', *options, &block
   end
 
-  def phase_gate(*options, &block)
-    component 'gates/phase_gate', *options, &block
+  def root_not_gate(*options, &block)
+    component 'gates/root_not_gate', *options, &block
   end
 
   def rx_gate(*options)

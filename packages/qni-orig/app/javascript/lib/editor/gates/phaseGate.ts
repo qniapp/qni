@@ -5,11 +5,11 @@ import {
   Targetable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor } from "lib/base"
+import { attributeNameFor, instructionNameFor, Util } from "lib/base"
 
 export type PhaseGateInstruction = {
-  type: "phase-gate"
-  phi: string | null
+  type: string
+  phi: string
   controls: number[]
   targets: number[]
 }
@@ -20,31 +20,31 @@ export class PhaseGate extends Mixin(
   Connectable,
   Controllable,
 ) {
-  static create(element: Element): PhaseGate {
-    const phaseGate = new PhaseGate()
-    phaseGate.assignElement(element)
-    return phaseGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:phase")
   }
 
   serialize(): PhaseGateInstruction {
     return {
-      type: "phase-gate",
+      type: instructionNameFor("gate:phase"),
       phi: this.phi,
       controls: this.controls,
       targets: this.targets,
     }
   }
 
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:phase")
-  }
-
   toJson(): string {
-    const phi = this.element.getAttribute("data-gate-label").replace("/", "_")
-    return `"P(${phi})"`
+    return `"${instructionNameFor("gate:phase")}(${this.phi.replace(
+      "/",
+      "_",
+    )})"`
   }
 
-  get phi(): string | null {
-    return this.element.getAttribute(attributeNameFor("instruction:phi"))
+  get phi(): string {
+    const attr = this.element.getAttribute(attributeNameFor("instruction:phi"))
+    Util.notNull(attr)
+
+    return attr
   }
 }

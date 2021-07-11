@@ -63,6 +63,9 @@ export class Simulator {
         case instructionNameFor("gate:z"):
           this.applyZGate(each, bit)
           break
+        case instructionNameFor("gate:phase"):
+          this.applyPhaseGate(each, bit, doneCPhaseTargets)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
@@ -80,9 +83,6 @@ export class Simulator {
           break
         case "rz-gate":
           this.applyRzGate(each, bit)
-          break
-        case "phase-gate":
-          this.applyPhaseGate(each, bit, doneCPhaseTargets)
           break
         case "control-gate":
           this.applyControlGate(each, instructions, doneControlTargets)

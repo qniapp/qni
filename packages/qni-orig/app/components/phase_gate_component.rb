@@ -6,7 +6,7 @@ require 'concerns/popuppable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
-class Gates::PhaseGateComponent < Component
+class PhaseGateComponent < Component
   include Connectable
   include Controllable
   include Draggable
