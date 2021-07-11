@@ -6,9 +6,10 @@ import {
   Instructionable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
+import { instructionNameFor } from "lib/base"
 
 export type HadamardGateInstruction = {
-  type: "hadamard-gate"
+  type: string
   controls: number[]
   if: string | null
 }
@@ -20,25 +21,24 @@ export class HadamardGate extends Mixin(
   Ifable,
   Instructionable,
 ) {
-  static create(element: Element): HadamardGate {
-    const hadamardGate = new HadamardGate()
-    hadamardGate.assignElement(element)
-    return hadamardGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:hadamard")
   }
 
   serialize(): HadamardGateInstruction {
-    return { type: "hadamard-gate", controls: this.controls, if: this.if }
+    return {
+      type: instructionNameFor("gate:hadamard"),
+      controls: this.controls,
+      if: this.if,
+    }
   }
 
   toJson(): string {
     if (this.if) {
-      return `"H<${this.if}"`
+      return `"${instructionNameFor("gate:hadamard")}<${this.if}"`
     } else {
-      return "\"H\""
+      return `"${instructionNameFor("gate:hadamard")}"`
     }
-  }
-
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:hadamard")
   }
 }

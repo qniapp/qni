@@ -23,7 +23,7 @@ export class BlochDisplay extends Mixin(Instructionable) {
       Math.PI / 2 - Math.atan2(-z, Math.sqrt(y * y + x * x)),
     )
 
-    this.d = Math.sqrt(x * x + y * y + z * z)
+    this.d = parseFloat(Math.sqrt(x * x + y * y + z * z).toFixed(4))
     this.phi = (180 * Math.atan2(y, -x)) / Math.PI
     this.theta = (180 * θ) / Math.PI
     this.x = -x

@@ -3,6 +3,7 @@ import { InternalError } from "lib/error"
 export const Options: { [type: string]: { [name: string]: string } } = {
   instructions: {
     "display:bloch": "Bloch",
+    "gate:hadamard": "H",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -13,6 +14,8 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "circuitStep:type:shadowSource": "circuit-step--shadow-source",
     "connectable:lowerBit": "connectable--lower-bit",
     "connectable:upperBit": "connectable--upper-bit",
+
+    "gate:hadamard": "hadamard-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -43,7 +46,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
     "gate:type:control": "control-gate",
-    "gate:type:hadamard": "hadamard-gate",
     "gate:type:measure": "measure-gate",
     "gate:type:not": "not-gate",
     "gate:type:phase": "phase-gate",
@@ -91,8 +93,9 @@ export const Options: { [type: string]: { [name: string]: string } } = {
 
 export function instructionNameFor(name: string): string {
   const instructionName = Options.instructions[name]
-  if (!instructionName)
-    {throw new InternalError(`instructionName for ${name} not found`)}
+  if (!instructionName) {
+    throw new InternalError(`instructionName for ${name} not found`)
+  }
   return instructionName
 }
 
