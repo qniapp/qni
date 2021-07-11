@@ -11,6 +11,9 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:control": "•",
     "gate:swap": "Swap",
     "gate:rootNot": "X^½",
+    "gate:rx": "Rx",
+    "gate:ry": "Ry",
+    "gate:rz": "Rz",
   },
   ids: {
     "display:bloch:popup": "bloch-display-popup-content",
@@ -24,12 +27,9 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:control": "control-gate",
     "gate:swap": "swap-gate",
     "gate:rootNot": "root-not-gate",
-
-    "circuitStep:state:done": "circuit-step--done",
-    "circuitStep:type:shadow": "circuit-step--shadow",
-    "circuitStep:type:shadowSource": "circuit-step--shadow-source",
-    "connectable:lowerBit": "connectable--lower-bit",
-    "connectable:upperBit": "connectable--upper-bit",
+    "gate:rx": "rx-gate",
+    "gate:ry": "ry-gate",
+    "gate:rz": "rz-gate",
 
     "display:bloch": "bloch-display",
     "display:bloch:vector": "bloch-display__vector",
@@ -41,6 +41,12 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "display:bloch:popup:x": "bloch-display__popup-content-x",
     "display:bloch:popup:y": "bloch-display__popup-content-y",
     "display:bloch:popup:z": "bloch-display__popup-content-z",
+
+    "circuitStep:state:done": "circuit-step--done",
+    "circuitStep:type:shadow": "circuit-step--shadow",
+    "circuitStep:type:shadowSource": "circuit-step--shadow-source",
+    "connectable:lowerBit": "connectable--lower-bit",
+    "connectable:upperBit": "connectable--upper-bit",
 
     "draggable:state:dragging": "draggable--dragging",
     "draggable:state:dropped": "draggable--dropped",
@@ -60,9 +66,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
     "gate:type:measure": "measure-gate",
-    "gate:type:rx": "rx-gate",
-    "gate:type:ry": "ry-gate",
-    "gate:type:rz": "rz-gate",
     "gate:type:write": "write-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",

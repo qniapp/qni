@@ -7,11 +7,11 @@ import {
   Targetable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor } from "lib/base"
+import { attributeNameFor, instructionNameFor, Util } from "lib/base"
 
 export type RxGateInstruction = {
-  type: "rx-gate"
-  theta: string | null
+  type: string
+  theta: string
   controls: number[]
   targets: number[]
   if: string | null
@@ -25,15 +25,14 @@ export class RxGate extends Mixin(
   Instructionable,
   Targetable,
 ) {
-  static create(element: Element): RxGate {
-    const rxGate = new RxGate()
-    rxGate.assignElement(element)
-    return rxGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:rx")
   }
 
   serialize(): RxGateInstruction {
     return {
-      type: "rx-gate",
+      type: instructionNameFor("gate:rx"),
       theta: this.theta,
       controls: this.controls,
       targets: this.targets,
@@ -41,16 +40,17 @@ export class RxGate extends Mixin(
     }
   }
 
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:rx")
-  }
-
   toJson(): string {
-    const theta = this.element.getAttribute("data-gate-label").replace("/", "_")
-    return `"Rx(${theta})"`
+    const theta = this.theta.replace("pi", "π").replace("/", "_")
+    return `"${instructionNameFor("gate:rx")}(${theta})"`
   }
 
-  get theta(): string | null {
-    return this.element.getAttribute(attributeNameFor("instruction:theta"))
+  get theta(): string {
+    const attr = this.element.getAttribute(
+      attributeNameFor("instruction:theta"),
+    )
+    Util.notNull(attr)
+
+    return attr
   }
 }
