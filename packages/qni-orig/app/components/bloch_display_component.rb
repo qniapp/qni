@@ -1,8 +1,10 @@
 require 'component'
 require 'concerns/draggable'
 
-class Gates::BlochDisplayComponent < Component
+class BlochDisplayComponent < Component
   include Draggable
+
+  DEFAULT_D = 0
 
   def klass
     class_string('gate',
@@ -13,9 +15,9 @@ class Gates::BlochDisplayComponent < Component
   end
 
   def data
-    draggable_action = data_draggable[:action]
-    data_draggable.merge({ bloch_display_d: 0,
+    data_action = [data_draggable[:action], 'blochDisplayUpdated->bloch-display#updatePopup'].join(' ')
+    data_draggable.merge({ bloch_display_d: DEFAULT_D,
                            controller: 'bloch-display',
-                           action: "#{draggable_action} blochDisplayUpdated->bloch-display#updatePopup" })
+                           action: data_action })
   end
 end

@@ -65,4 +65,18 @@
       @apply bg-magnitude;
     }
   }
+
+  &__popup-content {
+    @apply flex flex-col;
+    @apply text-wolf;
+  }
+
+  &__popup-content-d,
+  &__popup-content-phi,
+  &__popup-content-theta,
+  &__popup-content-x,
+  &__popup-content-y,
+  &__popup-content-z {
+    @apply font-mono font-bold text-eel;
+  }
 }

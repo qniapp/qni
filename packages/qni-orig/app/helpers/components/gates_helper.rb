@@ -49,10 +49,6 @@ module Components::GatesHelper
     component 'gates/write_gate', (options[0] || {}).merge(value: value)
   end
 
-  def bloch_display(*options)
-    component 'gates/bloch_display', *options
-  end
-
   def measure(*options)
     component 'gates/measure_gate', *options
   end

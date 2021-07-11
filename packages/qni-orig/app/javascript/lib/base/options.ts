@@ -1,13 +1,30 @@
 import { InternalError } from "lib/error"
 
 export const Options: { [type: string]: { [name: string]: string } } = {
+  instructions: {
+    "display:bloch": "Bloch",
+  },
+  ids: {
+    "display:bloch:popup": "bloch-display-popup-content",
+  },
   classes: {
     "circuitStep:state:done": "circuit-step--done",
     "circuitStep:type:shadow": "circuit-step--shadow",
     "circuitStep:type:shadowSource": "circuit-step--shadow-source",
     "connectable:lowerBit": "connectable--lower-bit",
     "connectable:upperBit": "connectable--upper-bit",
-    "display:type:bloch": "bloch-display",
+
+    "display:bloch": "bloch-display",
+    "display:bloch:vector": "bloch-display__vector",
+    "display:bloch:vector:line": "bloch-display__vector-line",
+    "display:bloch:vector:end": "bloch-display__vector-end",
+    "display:bloch:popup:d": "bloch-display__popup-content-d",
+    "display:bloch:popup:phi": "bloch-display__popup-content-phi",
+    "display:bloch:popup:theta": "bloch-display__popup-content-theta",
+    "display:bloch:popup:x": "bloch-display__popup-content-x",
+    "display:bloch:popup:y": "bloch-display__popup-content-y",
+    "display:bloch:popup:z": "bloch-display__popup-content-z",
+
     "draggable:state:dragging": "draggable--dragging",
     "draggable:state:dropped": "draggable--dropped",
     "draggable:state:grabbed": "draggable--grabbed",
@@ -61,9 +78,28 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:theta": "data-theta",
     "instruction:phi": "data-phi",
     "instruction:set": "data-set",
-    "instruction:theta": "data-theta",
     "instruction:valueable:value": "data-value",
+
+    "instruction:bloch:d": "data-bloch-display-d",
+    "instruction:bloch:phi": "data-bloch-display-phi",
+    "instruction:bloch:theta": "data-bloch-display-theta",
+    "instruction:bloch:x": "data-bloch-display-x",
+    "instruction:bloch:y": "data-bloch-display-y",
+    "instruction:bloch:z": "data-bloch-display-z",
   },
+}
+
+export function instructionNameFor(name: string): string {
+  const instructionName = Options.instructions[name]
+  if (!instructionName)
+    {throw new InternalError(`instructionName for ${name} not found`)}
+  return instructionName
+}
+
+export function idFor(name: string): string {
+  const id = Options.ids[name]
+  if (!id) throw new InternalError(`id for ${name} not found`)
+  return id
 }
 
 export function classNameFor(name: string): string {

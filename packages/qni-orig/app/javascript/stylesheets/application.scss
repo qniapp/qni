@@ -23,6 +23,7 @@
 @import "tailwind_ui/card/header/header";
 
 // Components
+@import "bloch_display/bloch_display";
 @import "circle_notation/circle_notation";
 @import "circuit/circuit";
 @import "circuit/circuit_block/circuit_block";
@@ -41,7 +42,6 @@
 @import "editor/palette/palette";
 @import "gate/body/body";
 @import "gate/gate";
-@import "gates/bloch_display/bloch_display";
 @import "gates/control_gate/control_gate";
 @import "gates/hadamard_gate/hadamard_gate";
 @import "gates/measure_gate/measure_gate";
