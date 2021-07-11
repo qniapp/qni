@@ -7,7 +7,7 @@ require 'concerns/ifable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
 
-class Gates::YGateComponent < Component
+class YGateComponent < Component
   include Connectable
   include Controllable
   include Disableable

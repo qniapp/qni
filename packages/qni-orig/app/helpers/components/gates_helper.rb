@@ -1,16 +1,16 @@
 module Components::GatesHelper
   include ComponentsHelper
 
-  def hadamard_gate(*options, &block)
-    component 'hadamard_gate', *options, &block
+  def hadamard_gate(*options)
+    component 'hadamard_gate', *options
   end
 
-  def not_gate(*options, &block)
-    component 'not_gate', *options, &block
+  def not_gate(*options)
+    component 'not_gate', *options
   end
 
-  def y_gate(*options, &block)
-    component 'gates/y_gate', *options, &block
+  def y_gate(*options)
+    component 'y_gate', *options
   end
 
   def z_gate(*options, &block)
