@@ -72,14 +72,14 @@ export class Simulator {
         case instructionNameFor("gate:swap"):
           this.applySwapGate(each, doneSwapTargets)
           break
+        case instructionNameFor("gate:rootNot"):
+          this.applyRootNotGate(each, bit)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
         case "measure":
           this.applyMeasureGate(each, bit)
-          break
-        case "root-not-gate":
-          this.applyRootNotGate(each, bit)
           break
         case "rx-gate":
           this.applyRxGate(each, bit)
