@@ -30,7 +30,7 @@ module Components::GatesHelper
   end
 
   def root_not_gate(*options, &block)
-    component 'gates/root_not_gate', *options, &block
+    component 'root_not_gate', *options, &block
   end
 
   def rx_gate(*options)

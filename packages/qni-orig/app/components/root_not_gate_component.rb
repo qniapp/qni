@@ -7,7 +7,7 @@ require 'concerns/ifable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
 
-class Gates::RootNotGateComponent < Component
+class RootNotGateComponent < Component
   include Connectable
   include Controllable
   include Disableable

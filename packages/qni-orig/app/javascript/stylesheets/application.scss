@@ -43,7 +43,6 @@
 @import "gate/gate";
 @import "gates/measure_gate/measure_gate";
 @import "gates/popup/popup";
-@import "gates/root_not_gate/root_not_gate";
 @import "gates/rx_gate/rx_gate";
 @import "gates/ry_gate/ry_gate";
 @import "gates/rz_gate/rz_gate";
@@ -65,5 +64,6 @@
 @import "phase_gate/phase_gate";
 @import "control_gate/control_gate";
 @import "swap_gate/swap_gate";
+@import "root_not_gate/root_not_gate";
 
 @import "tailwindcss/utilities";
