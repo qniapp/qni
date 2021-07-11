@@ -7,7 +7,7 @@ require 'concerns/ifable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
 
-class Gates::HadamardGateComponent < Component
+class HadamardGateComponent < Component
   include Connectable
   include Controllable
   include Disableable
