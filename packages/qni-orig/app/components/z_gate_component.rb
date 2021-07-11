@@ -7,7 +7,7 @@ require 'concerns/ifable'
 require 'concerns/popuppable'
 require 'concerns/targetable'
 
-class Gates::ZGateComponent < Component
+class ZGateComponent < Component
   include Connectable
   include Controllable
   include Disableable
