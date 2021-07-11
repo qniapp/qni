@@ -168,7 +168,7 @@ export default class SimulatorController extends Controller {
       each.done = false
     })
     Array.from(
-      document.getElementsByClassName(classNameFor("gate:type:measure")),
+      document.getElementsByClassName(classNameFor("gate:measure")),
     ).forEach((each) => {
       each.classList.remove(classNameFor("gate:state:updated"))
     })

@@ -64,8 +64,8 @@ export const CircuitElement = {
       return new RyGate(element)
     } else if (classList.contains(classNameFor("gate:rz"))) {
       return new RzGate(element)
-    } else if (classList.contains("measure-gate")) {
-      return MeasureGate.create(element)
+    } else if (classList.contains(classNameFor("gate:measure"))) {
+      return new MeasureGate(element)
     } else if (classList.contains(classNameFor("display:bloch"))) {
       return new BlochDisplay(element)
     }

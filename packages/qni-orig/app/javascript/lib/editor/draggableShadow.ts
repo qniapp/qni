@@ -24,7 +24,7 @@ export class DraggableShadow {
     el.classList.remove(classNameFor("gate:state:disabled"))
     el.classList.remove(classNameFor("connectable:lowerBit"))
     el.classList.remove(classNameFor("connectable:upperBit"))
-    if (el.classList.contains(classNameFor("gate:type:measure"))) {
+    if (el.classList.contains(classNameFor("gate:measure"))) {
       el.setAttribute("data-value", "")
     }
 

@@ -48,6 +48,9 @@ export class Simulator {
         case "qubit-label":
         case "i-gate":
           break
+        case "write":
+          this.applyWriteGate(each, bit)
+          break
         case instructionNameFor("display:bloch"):
           this.applyBlochDisplay(bit)
           break
@@ -84,10 +87,7 @@ export class Simulator {
         case instructionNameFor("gate:rz"):
           this.applyRzGate(each, bit)
           break
-        case "write":
-          this.applyWriteGate(each, bit)
-          break
-        case "measure":
+        case instructionNameFor("gate:measure"):
           this.applyMeasureGate(each, bit)
           break
         default:

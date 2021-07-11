@@ -2,7 +2,7 @@ require 'component'
 require 'concerns/draggable'
 require 'concerns/popuppable'
 
-class Gates::MeasureGateComponent < Component
+class MeasureGateComponent < Component
   include Draggable
   include Popuppable
 

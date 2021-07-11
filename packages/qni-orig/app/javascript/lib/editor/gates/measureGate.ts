@@ -1,24 +1,23 @@
 import { Instructionable, Valueable } from "./mixins"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor, classNameFor } from "lib/base"
+import { attributeNameFor, classNameFor, instructionNameFor } from "lib/base"
 
 export type MeasureInstruction = {
-  type: "measure"
+  type: string
   value: number | null
   set: string | null
 }
 
 export class MeasureGate extends Mixin(Instructionable, Valueable) {
-  static create(element: Element): MeasureGate {
-    const measureGate = new MeasureGate()
-    measureGate.assignElement(element)
-    return measureGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:measure")
   }
 
   serialize(): MeasureInstruction {
     return {
-      type: "measure",
+      type: instructionNameFor("gate:measure"),
       value: this.value,
       set: this.set,
     }
@@ -26,14 +25,10 @@ export class MeasureGate extends Mixin(Instructionable, Valueable) {
 
   toJson(): string {
     if (this.set) {
-      return `"Measure>${this.set}"`
+      return `"${instructionNameFor("gate:measure")}>${this.set}"`
     } else {
-      return "\"Measure\""
+      return `"${instructionNameFor("gate:measure")}"`
     }
-  }
-
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:measure")
   }
 
   get value(): number | null {
