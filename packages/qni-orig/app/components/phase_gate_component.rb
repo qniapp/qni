@@ -32,12 +32,12 @@ class PhaseGateComponent < Component
   def data
     h = if targets.empty?
           if phi
-            { phi: phi_pi, 'gate-label': phi }
+            { phi: phi.gsub('π', 'pi'), 'gate-label': phi }
           else
             {}
           end
         elsif phi
-          { phi: phi_pi, 'gate-label': phi, targets: targets.join(',') }
+          { phi: phi.gsub('π', 'pi'), 'gate-label': phi, targets: targets.join(',') }
         else
           { targets: targets.join(',') }
         end
@@ -60,10 +60,6 @@ class PhaseGateComponent < Component
   end
 
   private
-
-  def phi_pi
-    phi.gsub 'π', 'pi'
-  end
 
   def popup_type
     :phi

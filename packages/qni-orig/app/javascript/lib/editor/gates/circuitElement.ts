@@ -58,14 +58,14 @@ export const CircuitElement = {
       return new SwapGate(element)
     } else if (classList.contains(classNameFor("gate:rootNot"))) {
       return new RootNotGate(element)
+    } else if (classList.contains(classNameFor("gate:rx"))) {
+      return new RxGate(element)
+    } else if (classList.contains(classNameFor("gate:ry"))) {
+      return new RyGate(element)
+    } else if (classList.contains(classNameFor("gate:rz"))) {
+      return new RzGate(element)
     } else if (classList.contains("measure-gate")) {
       return MeasureGate.create(element)
-    } else if (classList.contains("rx-gate")) {
-      return RxGate.create(element)
-    } else if (classList.contains("ry-gate")) {
-      return RyGate.create(element)
-    } else if (classList.contains("rz-gate")) {
-      return RzGate.create(element)
     } else if (classList.contains(classNameFor("display:bloch"))) {
       return new BlochDisplay(element)
     }

@@ -17,32 +17,32 @@ module Components::GatesHelper
     component 'z_gate', *options
   end
 
-  def phase_gate(*options, &block)
-    component 'phase_gate', *options, &block
+  def phase_gate(*options)
+    component 'phase_gate', *options
   end
 
-  def control_gate(*options, &block)
-    component 'control_gate', *options, &block
+  def control_gate(*options)
+    component 'control_gate', *options
   end
 
   def swap_gate(*options)
     component 'swap_gate', *options
   end
 
-  def root_not_gate(*options, &block)
-    component 'root_not_gate', *options, &block
+  def root_not_gate(*options)
+    component 'root_not_gate', *options
   end
 
   def rx_gate(*options)
-    component 'gates/rx_gate', *options
+    component 'rx_gate', *options
   end
 
   def ry_gate(*options)
-    component 'gates/ry_gate', *options
+    component 'ry_gate', *options
   end
 
   def rz_gate(*options)
-    component 'gates/rz_gate', *options
+    component 'rz_gate', *options
   end
 
   def write(value, *options)

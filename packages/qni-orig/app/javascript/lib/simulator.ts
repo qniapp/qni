@@ -75,20 +75,20 @@ export class Simulator {
         case instructionNameFor("gate:rootNot"):
           this.applyRootNotGate(each, bit)
           break
+        case instructionNameFor("gate:rx"):
+          this.applyRxGate(each, bit)
+          break
+        case instructionNameFor("gate:ry"):
+          this.applyRyGate(each, bit)
+          break
+        case instructionNameFor("gate:rz"):
+          this.applyRzGate(each, bit)
+          break
         case "write":
           this.applyWriteGate(each, bit)
           break
         case "measure":
           this.applyMeasureGate(each, bit)
-          break
-        case "rx-gate":
-          this.applyRxGate(each, bit)
-          break
-        case "ry-gate":
-          this.applyRyGate(each, bit)
-          break
-        case "rz-gate":
-          this.applyRzGate(each, bit)
           break
         default:
           throw new Error("Unknown instruction")

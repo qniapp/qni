@@ -6,7 +6,7 @@ require 'concerns/popuppable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
-class Gates::RyGateComponent < Component
+class RxGateComponent < Component
   include Connectable
   include Controllable
   include Draggable
@@ -19,7 +19,7 @@ class Gates::RyGateComponent < Component
   def klass
     class_string('gate',
                  'gate--thetable',
-                 'ry-gate',
+                 'rx-gate',
                  'draggable',
                  'draggable--palette' => palette?,
                  'draggable--circuit' => circuit?,
@@ -32,12 +32,12 @@ class Gates::RyGateComponent < Component
   def data
     h = if targets.empty?
           if theta
-            { theta: theta_pi, 'gate-label': theta }
+            { theta: theta.gsub('π', 'pi'), 'gate-label': theta }
           else
             {}
           end
         elsif theta
-          { theta: theta_pi, 'gate-label': theta, targets: targets.join(',') }
+          { theta: theta.gsub('π', 'pi'), 'gate-label': theta, targets: targets.join(',') }
         else
           { targets: targets.join(',') }
         end
@@ -60,10 +60,6 @@ class Gates::RyGateComponent < Component
   end
 
   private
-
-  def theta_pi
-    theta.gsub 'π', 'pi'
-  end
 
   def popup_type
     :theta

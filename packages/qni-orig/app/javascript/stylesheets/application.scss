@@ -43,9 +43,6 @@
 @import "gate/gate";
 @import "gates/measure_gate/measure_gate";
 @import "gates/popup/popup";
-@import "gates/rx_gate/rx_gate";
-@import "gates/ry_gate/ry_gate";
-@import "gates/rz_gate/rz_gate";
 @import "gates/write_gate/write_gate";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";
@@ -65,5 +62,8 @@
 @import "control_gate/control_gate";
 @import "swap_gate/swap_gate";
 @import "root_not_gate/root_not_gate";
+@import "rx_gate/rx_gate";
+@import "ry_gate/ry_gate";
+@import "rz_gate/rz_gate";
 
 @import "tailwindcss/utilities";

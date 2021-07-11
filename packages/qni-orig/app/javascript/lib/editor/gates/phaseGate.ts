@@ -35,10 +35,8 @@ export class PhaseGate extends Mixin(
   }
 
   toJson(): string {
-    return `"${instructionNameFor("gate:phase")}(${this.phi.replace(
-      "/",
-      "_",
-    )})"`
+    const phi = this.phi.replace("pi", "π").replace("/", "_")
+    return `"${instructionNameFor("gate:phase")}(${phi})"`
   }
 
   get phi(): string {
