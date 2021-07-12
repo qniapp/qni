@@ -6,7 +6,6 @@ class Components::CircuitCardsHelperTest < ActionView::TestCase
   include CircuitHelper
   include Components::GatesHelper
   include ComponentsHelper
-  include GatesHelper
 
   test 'circuit view' do
     expected =
