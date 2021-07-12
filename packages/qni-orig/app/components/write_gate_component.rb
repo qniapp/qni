@@ -1,11 +1,10 @@
 require 'component'
 require 'concerns/draggable'
 
-class Gates::WriteGateComponent < Component
+class WriteGateComponent < Component
   include Draggable
 
   attribute :value
-  attribute :set
 
   validates :value, inclusion: { in: [0, 1] }, if: :value
 

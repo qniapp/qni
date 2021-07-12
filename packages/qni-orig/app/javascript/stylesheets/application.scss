@@ -42,7 +42,6 @@
 @import "gate/body/body";
 @import "gate/gate";
 @import "gates/popup/popup";
-@import "gates/write_gate/write_gate";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";
 @import "qubit_circle_popup/qubit_circle_popup";
@@ -52,6 +51,7 @@
 @import "tippy/tippy";
 @import "wires/wires";
 
+@import "write_gate/write_gate";
 @import "bloch_display/bloch_display";
 @import "hadamard_gate/hadamard_gate";
 @import "not_gate/not_gate";

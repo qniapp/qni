@@ -2,7 +2,7 @@ module Components::GatesHelper
   include ComponentsHelper
 
   def write(value, *options)
-    component 'gates/write_gate', (options[0] || {}).merge(value: value)
+    component 'write_gate', { value: value }.merge(options[0] || {})
   end
 
   def hadamard_gate(*options)

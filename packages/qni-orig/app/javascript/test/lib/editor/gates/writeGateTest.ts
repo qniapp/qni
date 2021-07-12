@@ -19,7 +19,7 @@ QUnit.module("WriteGate0", (hooks) => {
 
   hooks.beforeEach(() => {
     writeGateEl = createWriteGateElement(0)
-    writeGate = WriteGate.create(writeGateEl)
+    writeGate = new WriteGate(writeGateEl)
   })
 
   hooks.afterEach(() => {
@@ -31,10 +31,7 @@ QUnit.module("WriteGate0", (hooks) => {
   })
 
   QUnit.test(".serialize()", (assert) => {
-    assert.equal(
-      describe(writeGate.serialize()),
-      "{\"type\": \"write\", \"value\": 0}",
-    )
+    assert.equal(describe(writeGate.serialize()), "{\"type\": \"|0>\", \"value\": 0}")
   })
 })
 
@@ -44,7 +41,7 @@ QUnit.module("WriteGate1", (hooks) => {
 
   hooks.beforeEach(() => {
     writeGateEl = createWriteGateElement(1)
-    writeGate = WriteGate.create(writeGateEl)
+    writeGate = new WriteGate(writeGateEl)
   })
 
   hooks.afterEach(() => {
@@ -56,9 +53,6 @@ QUnit.module("WriteGate1", (hooks) => {
   })
 
   QUnit.test(".serialize()", (assert) => {
-    assert.equal(
-      describe(writeGate.serialize()),
-      "{\"type\": \"write\", \"value\": 1}",
-    )
+    assert.equal(describe(writeGate.serialize()), "{\"type\": \"|1>\", \"value\": 1}")
   })
 })
