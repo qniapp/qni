@@ -6,10 +6,11 @@ import {
   Instructionable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { instructionNameFor } from "lib/base"
+
+export const ROOT_NOT_GATE_INSTRUCTION_TYPE = "X^½"
 
 export type RootNotGateInstruction = {
-  type: string
+  type: typeof ROOT_NOT_GATE_INSTRUCTION_TYPE
   controls: number[]
   if: string | null
 }
@@ -28,7 +29,7 @@ export class RootNotGate extends Mixin(
 
   serialize(): RootNotGateInstruction {
     return {
-      type: instructionNameFor("gate:rootNot"),
+      type: ROOT_NOT_GATE_INSTRUCTION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -36,9 +37,9 @@ export class RootNotGate extends Mixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${instructionNameFor("gate:rootNot")}<${this.if}"`
+      return `"${ROOT_NOT_GATE_INSTRUCTION_TYPE}<${this.if}"`
     } else {
-      return `"${instructionNameFor("gate:rootNot")}"`
+      return `"${ROOT_NOT_GATE_INSTRUCTION_TYPE}"`
     }
   }
 }

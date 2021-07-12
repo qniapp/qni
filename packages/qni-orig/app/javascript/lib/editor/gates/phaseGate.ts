@@ -5,10 +5,12 @@ import {
   Targetable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor, instructionNameFor, Util } from "lib/base"
+import { attributeNameFor, Util } from "lib/base"
+
+export const PHASE_GATE_INSTRUCTION_TYPE = "P"
 
 export type PhaseGateInstruction = {
-  type: string
+  type: typeof PHASE_GATE_INSTRUCTION_TYPE
   phi: string
   controls: number[]
   targets: number[]
@@ -27,7 +29,7 @@ export class PhaseGate extends Mixin(
 
   serialize(): PhaseGateInstruction {
     return {
-      type: instructionNameFor("gate:phase"),
+      type: PHASE_GATE_INSTRUCTION_TYPE,
       phi: this.phi,
       controls: this.controls,
       targets: this.targets,
@@ -36,7 +38,7 @@ export class PhaseGate extends Mixin(
 
   toJson(): string {
     const phi = this.phi.replace("pi", "π").replace("/", "_")
-    return `"${instructionNameFor("gate:phase")}(${phi})"`
+    return `"${PHASE_GATE_INSTRUCTION_TYPE}(${phi})"`
   }
 
   get phi(): string {

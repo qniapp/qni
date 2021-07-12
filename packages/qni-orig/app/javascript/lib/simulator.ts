@@ -1,21 +1,37 @@
 import {
+  BLOCH_DISPLAY_INSTRUCTION_TYPE,
+  CONTROL_GATE_INSTRUCTION_TYPE,
   ControlGateInstruction,
+  HADAMARD_GATE_INSTRUCTION_TYPE,
   HadamardGateInstruction,
+  I_GATE_INSTRUCTION_TYPE,
+  MEASURE_GATE_INSTRUCTION_TYPE,
   MeasureInstruction,
+  NOT_GATE_INSTRUCTION_TYPE,
   NotGateInstruction,
+  PHASE_GATE_INSTRUCTION_TYPE,
   PhaseGateInstruction,
+  QUBIT_LABEL_INSTRUCTION_TYPE,
+  ROOT_NOT_GATE_INSTRUCTION_TYPE,
+  RX_GATE_INSTRUCTION_TYPE,
+  RY_GATE_INSTRUCTION_TYPE,
+  RZ_GATE_INSTRUCTION_TYPE,
   RootNotGateInstruction,
   RxGateInstruction,
   RyGateInstruction,
   RzGateInstruction,
+  SWAP_GATE_INSTRUCTION_TYPE,
   SeriarizedInstruction,
   SwapGateInstruction,
+  WRITE0_GATE_INSTRUCTION,
+  WRITE1_GATE_INSTRUCTION,
   WriteInstruction,
   YGateInstruction,
+  Y_GATE_INSTRUCTION_TYPE,
   ZGateInstruction,
+  Z_GATE_INSTRUCTION_TYPE,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
-import { instructionNameFor } from "./base"
 import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
 import { parseFormula } from "./math"
 
@@ -45,50 +61,50 @@ export class Simulator {
 
     instructions.forEach((each, bit) => {
       switch (each.type) {
-        case "qubit-label":
-        case "i-gate":
+        case QUBIT_LABEL_INSTRUCTION_TYPE:
+        case I_GATE_INSTRUCTION_TYPE:
           break
-        case "|0>":
-        case "|1>":
+        case WRITE0_GATE_INSTRUCTION:
+        case WRITE1_GATE_INSTRUCTION:
           this.applyWriteGate(each, bit)
           break
-        case instructionNameFor("display:bloch"):
+        case BLOCH_DISPLAY_INSTRUCTION_TYPE:
           this.applyBlochDisplay(bit)
           break
-        case instructionNameFor("gate:hadamard"):
+        case HADAMARD_GATE_INSTRUCTION_TYPE:
           this.applyHadamardGate(each, bit)
           break
-        case instructionNameFor("gate:not"):
+        case NOT_GATE_INSTRUCTION_TYPE:
           this.applyNotGate(each, bit)
           break
-        case instructionNameFor("gate:y"):
+        case Y_GATE_INSTRUCTION_TYPE:
           this.applyYGate(each, bit)
           break
-        case instructionNameFor("gate:z"):
+        case Z_GATE_INSTRUCTION_TYPE:
           this.applyZGate(each, bit)
           break
-        case instructionNameFor("gate:phase"):
+        case PHASE_GATE_INSTRUCTION_TYPE:
           this.applyPhaseGate(each, bit, doneCPhaseTargets)
           break
-        case instructionNameFor("gate:control"):
+        case CONTROL_GATE_INSTRUCTION_TYPE:
           this.applyControlGate(each, instructions, doneControlTargets)
           break
-        case instructionNameFor("gate:swap"):
+        case SWAP_GATE_INSTRUCTION_TYPE:
           this.applySwapGate(each, doneSwapTargets)
           break
-        case instructionNameFor("gate:rootNot"):
+        case ROOT_NOT_GATE_INSTRUCTION_TYPE:
           this.applyRootNotGate(each, bit)
           break
-        case instructionNameFor("gate:rx"):
+        case RX_GATE_INSTRUCTION_TYPE:
           this.applyRxGate(each, bit)
           break
-        case instructionNameFor("gate:ry"):
+        case RY_GATE_INSTRUCTION_TYPE:
           this.applyRyGate(each, bit)
           break
-        case instructionNameFor("gate:rz"):
+        case RZ_GATE_INSTRUCTION_TYPE:
           this.applyRzGate(each, bit)
           break
-        case instructionNameFor("gate:measure"):
+        case MEASURE_GATE_INSTRUCTION_TYPE:
           this.applyMeasureGate(each, bit)
           break
         default:
@@ -794,7 +810,7 @@ export class Simulator {
     }
 
     const allControl = targets.every((each) => {
-      return instructions[each].type === "control-gate"
+      return instructions[each].type === "•"
     })
     if (!allControl) return
 

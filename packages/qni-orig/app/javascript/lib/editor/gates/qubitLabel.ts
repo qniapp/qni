@@ -2,7 +2,12 @@ import { Instructionable, Valueable } from "./mixins"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
 
-export type QubitLabelInstruction = { type: "qubit-label"; value: string }
+export const QUBIT_LABEL_INSTRUCTION_TYPE = "QubitLabel"
+
+export type QubitLabelInstruction = {
+  type: typeof QUBIT_LABEL_INSTRUCTION_TYPE
+  value: string
+}
 
 export class QubitLabel extends Mixin(Instructionable, Valueable) {
   static create(element: HTMLElement): QubitLabel {
@@ -12,7 +17,7 @@ export class QubitLabel extends Mixin(Instructionable, Valueable) {
   }
 
   serialize(): QubitLabelInstruction {
-    return { type: "qubit-label", value: this.value }
+    return { type: QUBIT_LABEL_INSTRUCTION_TYPE, value: this.value }
   }
 
   toJson(): string {
