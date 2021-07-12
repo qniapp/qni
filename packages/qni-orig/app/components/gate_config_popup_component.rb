@@ -1,6 +1,6 @@
 require 'component'
 
-class Gates::PopupComponent < Component
+class GateConfigPopupComponent < Component
   attribute :type
   attribute :label
   attribute :error_message

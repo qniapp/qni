@@ -3,7 +3,6 @@ require 'test_helper'
 class Components::RwHelperTest < ActionView::TestCase
   include Components::GatesHelper
   include ComponentsHelper
-  include GatesHelper
   include IconsHelper
 
   test 'write 0' do

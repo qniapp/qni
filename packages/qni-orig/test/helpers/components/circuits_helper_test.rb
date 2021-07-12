@@ -6,7 +6,6 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   include CircuitHelper
   include Components::GatesHelper
   include ComponentsHelper
-  include GatesHelper
 
   test 'circuit breakpoint' do
     assert_dom_equal beautify(<<~ERB), beautify(circuit_breakpoint)
