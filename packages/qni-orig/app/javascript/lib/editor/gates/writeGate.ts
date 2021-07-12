@@ -2,17 +2,20 @@ import { Instructionable, Valueable } from "./mixins"
 import { Mixin } from "ts-mixer"
 import { Util } from "lib/base"
 
-export type WriteInstruction = { type: "write"; value: number }
+export type WriteInstruction = { type: "|0>" | "|1>"; value: number }
 
 export class WriteGate extends Mixin(Instructionable, Valueable) {
-  static create(element: Element): WriteGate {
-    const writeGate = new WriteGate()
-    writeGate.assignElement(element)
-    return writeGate
+  constructor(element: HTMLElement | Element) {
+    super()
+    this.element = this.validateElementClassName(element, "gate:write")
   }
 
   serialize(): WriteInstruction {
-    return { type: "write", value: this.value }
+    if (this.value == 0) {
+      return { type: "|0>", value: this.value }
+    } else {
+      return { type: "|1>", value: this.value }
+    }
   }
 
   toJson(): string {
@@ -22,10 +25,8 @@ export class WriteGate extends Mixin(Instructionable, Valueable) {
   get value(): number {
     const value = this.dataValue
     Util.notNull(value)
-    return parseInt(value)
-  }
+    Util.need(value === "0" || value === "1", "Must be 0 or 1")
 
-  assignElement(element: Element): void {
-    this.element = this.validateElementClassName(element, "gate:type:write")
+    return parseInt(value)
   }
 }

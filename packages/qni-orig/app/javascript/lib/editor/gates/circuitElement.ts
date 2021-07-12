@@ -40,8 +40,8 @@ export const CircuitElement = {
     if (!element) return new IGate()
 
     const classList = element.classList
-    if (classList.contains("write-gate")) {
-      return WriteGate.create(element)
+    if (classList.contains(classNameFor("gate:write"))) {
+      return new WriteGate(element)
     } else if (classList.contains(classNameFor("gate:hadamard"))) {
       return new HadamardGate(element)
     } else if (classList.contains(classNameFor("gate:not"))) {

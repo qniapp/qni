@@ -20,6 +20,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "display:bloch:popup": "bloch-display-popup-content",
   },
   classes: {
+    "gate:write": "write-gate",
     "gate:hadamard": "hadamard-gate",
     "gate:not": "not-gate",
     "gate:y": "y-gate",
@@ -67,7 +68,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
-    "gate:type:write": "write-gate",
     "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",
     "runButton::running": "run-button--running",
