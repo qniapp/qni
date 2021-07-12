@@ -1,9 +1,10 @@
 import { Connectable, Disableable, Instructionable, Targetable } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { instructionNameFor } from "lib/base"
+
+export const CONTROL_GATE_INSTRUCTION_TYPE = "•"
 
 export type ControlGateInstruction = {
-  type: string
+  type: typeof CONTROL_GATE_INSTRUCTION_TYPE
   targets: number[]
 }
 
@@ -19,10 +20,10 @@ export class ControlGate extends Mixin(
   }
 
   serialize(): ControlGateInstruction {
-    return { type: instructionNameFor("gate:control"), targets: this.targets }
+    return { type: CONTROL_GATE_INSTRUCTION_TYPE, targets: this.targets }
   }
 
   toJson(): string {
-    return `"${instructionNameFor("gate:control")}"`
+    return `"${CONTROL_GATE_INSTRUCTION_TYPE}"`
   }
 }

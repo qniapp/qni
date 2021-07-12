@@ -6,10 +6,11 @@ import {
   Instructionable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { instructionNameFor } from "lib/base"
+
+export const HADAMARD_GATE_INSTRUCTION_TYPE = "H"
 
 export type HadamardGateInstruction = {
-  type: string
+  type: typeof HADAMARD_GATE_INSTRUCTION_TYPE
   controls: number[]
   if: string | null
 }
@@ -28,7 +29,7 @@ export class HadamardGate extends Mixin(
 
   serialize(): HadamardGateInstruction {
     return {
-      type: instructionNameFor("gate:hadamard"),
+      type: HADAMARD_GATE_INSTRUCTION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -36,9 +37,9 @@ export class HadamardGate extends Mixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${instructionNameFor("gate:hadamard")}<${this.if}"`
+      return `"${HADAMARD_GATE_INSTRUCTION_TYPE}<${this.if}"`
     } else {
-      return `"${instructionNameFor("gate:hadamard")}"`
+      return `"${HADAMARD_GATE_INSTRUCTION_TYPE}"`
     }
   }
 }

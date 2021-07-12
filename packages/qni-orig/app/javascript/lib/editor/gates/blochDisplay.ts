@@ -1,14 +1,11 @@
 import { Instructionable } from "./mixins"
 import { Mixin } from "ts-mixer"
-import {
-  Util,
-  instructionNameFor,
-  attributeNameFor,
-  classNameFor,
-} from "lib/base"
+import { Util, attributeNameFor, classNameFor } from "lib/base"
+
+export const BLOCH_DISPLAY_INSTRUCTION_TYPE = "Bloch"
 
 export type BlochDisplayInstruction = {
-  type: string
+  type: typeof BLOCH_DISPLAY_INSTRUCTION_TYPE
 }
 
 export class BlochDisplay extends Mixin(Instructionable) {
@@ -45,12 +42,12 @@ export class BlochDisplay extends Mixin(Instructionable) {
 
   serialize(): BlochDisplayInstruction {
     return {
-      type: instructionNameFor("display:bloch"),
+      type: BLOCH_DISPLAY_INSTRUCTION_TYPE,
     }
   }
 
   toJson(): string {
-    return `"${instructionNameFor("display:bloch")}"`
+    return `"${BLOCH_DISPLAY_INSTRUCTION_TYPE}"`
   }
 
   private get d(): number {

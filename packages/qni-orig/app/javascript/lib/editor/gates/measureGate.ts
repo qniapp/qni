@@ -1,10 +1,12 @@
 import { Instructionable, Valueable } from "./mixins"
 import { InternalError } from "lib/error"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor, classNameFor, instructionNameFor } from "lib/base"
+import { attributeNameFor, classNameFor } from "lib/base"
+
+export const MEASURE_GATE_INSTRUCTION_TYPE = "Measure"
 
 export type MeasureInstruction = {
-  type: string
+  type: typeof MEASURE_GATE_INSTRUCTION_TYPE
   value: number | null
   set: string | null
 }
@@ -17,7 +19,7 @@ export class MeasureGate extends Mixin(Instructionable, Valueable) {
 
   serialize(): MeasureInstruction {
     return {
-      type: instructionNameFor("gate:measure"),
+      type: MEASURE_GATE_INSTRUCTION_TYPE,
       value: this.value,
       set: this.set,
     }
@@ -25,9 +27,9 @@ export class MeasureGate extends Mixin(Instructionable, Valueable) {
 
   toJson(): string {
     if (this.set) {
-      return `"${instructionNameFor("gate:measure")}>${this.set}"`
+      return `"${MEASURE_GATE_INSTRUCTION_TYPE}>${this.set}"`
     } else {
-      return `"${instructionNameFor("gate:measure")}"`
+      return `"${MEASURE_GATE_INSTRUCTION_TYPE}"`
     }
   }
 

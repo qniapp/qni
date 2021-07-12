@@ -7,10 +7,12 @@ import {
   Targetable,
 } from "./mixins"
 import { Mixin } from "ts-mixer"
-import { attributeNameFor, instructionNameFor, Util } from "lib/base"
+import { attributeNameFor, Util } from "lib/base"
+
+export const RX_GATE_INSTRUCTION_TYPE = "Rx"
 
 export type RxGateInstruction = {
-  type: string
+  type: typeof RX_GATE_INSTRUCTION_TYPE
   theta: string
   controls: number[]
   targets: number[]
@@ -32,7 +34,7 @@ export class RxGate extends Mixin(
 
   serialize(): RxGateInstruction {
     return {
-      type: instructionNameFor("gate:rx"),
+      type: RX_GATE_INSTRUCTION_TYPE,
       theta: this.theta,
       controls: this.controls,
       targets: this.targets,
@@ -42,7 +44,7 @@ export class RxGate extends Mixin(
 
   toJson(): string {
     const theta = this.theta.replace("pi", "π").replace("/", "_")
-    return `"${instructionNameFor("gate:rx")}(${theta})"`
+    return `"${RX_GATE_INSTRUCTION_TYPE}(${theta})"`
   }
 
   get theta(): string {
