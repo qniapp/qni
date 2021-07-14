@@ -27,26 +27,34 @@
     @apply whitespace-nowrap;
     @apply z-10;
 
+    @apply h-full;
+    @apply top-0 left-0;
+
+    content: attr(data-gate-label) "";
+    writing-mode: vertical-lr;
+
+    @screen md {
+      @apply bottom-0;
+      @apply h-auto;
+      @apply mb-#{$instruction-size-small};
+      @apply ml-0;
+      @apply text-xs;
+      @apply transform rotate-0;
+      @apply w-full;
+
+      top: unset;
+      writing-mode: horizontal-tb;
+    }
+
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
-        @apply h-full;
-        @apply top-0 left-0;
         @apply ml-#{map-get($instruction-size, $nqubit)};
         @apply text-#{map-get($gate-label-font-size, $nqubit)};
 
-        writing-mode: vertical-lr;
-
         @screen md {
-          @apply bottom-0;
-          @apply h-auto;
           @apply mb-#{$instruction-size-base};
           @apply ml-0;
           @apply text-xs;
-          @apply transform rotate-0;
-          @apply w-full;
-
-          top: unset;
-          writing-mode: horizontal-tb;
         }
       }
 
@@ -63,8 +71,6 @@
         writing-mode: horizontal-tb;
       }
     }
-
-    content: attr(data-gate-label) "";
   }
 
   .draggable--palette &::after,

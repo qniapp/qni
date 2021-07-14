@@ -230,7 +230,7 @@ export class Seq<T> {
    * Returns a sequence iterating the results of applying a transformation to
    * the items of the receiving sequence.
    */
-  map<R>(projection: (e: T) => R): Seq<T> {
+  map<R>(projection: (e: T) => R): Seq<R> {
     const seq = this._iterable
     return Seq.fromGenerator(function* () {
       for (const e of seq) {

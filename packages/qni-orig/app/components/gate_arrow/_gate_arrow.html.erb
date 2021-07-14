@@ -1,0 +1,15 @@
+<% gate_arrow = local_assigns.fetch(:gate_arrow) %>
+
+<div class="relative h-6 w-12 mx-2">
+  <div class="absolute top-0 w-6 h-6 mt-1 mx-3">
+    <div class="relative w-full h-full">
+      <%= gate_arrow.content %>
+    </div>
+  </div>
+  <div class="absolute h-6 w-full">
+    <div class="relative w-full mt-4">
+      <div class="absolute inset-0 my-auto w-full bg-wolf" style="height: 2px"></div>
+      <div class="absolute w-2 h-2 border-t-2 border-r-2 border-wolf top-0 bottom-0 my-auto right-0 origin-center transform rotate-45"></div>
+    </div>
+  </div>
+</div>

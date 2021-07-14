@@ -38,13 +38,14 @@
 @import "circuit/register_label_span/register_label_span";
 @import "circuit_card/circuit_card";
 @import "circuit_thumbnail/circuit_thumbnail";
-@import "editor/palette/palette";
 @import "gate/body/body";
 @import "gate/gate";
 @import "gate_config_popup/gate_config_popup";
+@import "gate_description/gate_description";
+@import "palette/palette";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";
-@import "qubit_circle_popup/qubit_circle_popup";
+@import "qubit_circle_ket/qubit_circle_ket";
 @import "run_button/run_button";
 @import "simulator/simulator";
 @import "state_vector/state_vector";

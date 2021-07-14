@@ -9,7 +9,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate)
       <div class="draggable draggable--circuit gate gate--ifable root-not-gate"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -24,7 +24,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
            data-if="alice_h"
            data-gate-label="if alice_h"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -37,7 +37,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(disabled: true))
       <div class="draggable draggable--circuit gate gate--disabled gate--ifable root-not-gate"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -51,7 +51,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="connectable--lower-bit draggable draggable--circuit gate gate--ifable root-not-gate"
            data-controls="0"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -65,7 +65,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="connectable--upper-bit draggable draggable--circuit gate gate--ifable root-not-gate"
            data-controls="1"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -79,7 +79,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="connectable--upper-bit draggable draggable--circuit gate gate--ifable root-not-gate"
            data-controls="1,2,3"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -93,7 +93,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
       <div class="connectable--lower-bit connectable--upper-bit draggable draggable--circuit gate gate--ifable root-not-gate"
            data-controls="1,2"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}
@@ -106,7 +106,7 @@ class Components::RootNotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(root_not_gate(palette: true))
       <div class="draggable draggable--palette gate gate--ifable root-not-gate"
            data-gate-popup-type="if"
-           data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{root_not_icon class: 'gate-icon'}

@@ -1,5 +1,4 @@
 import { DetailedError, Format, Seq, seq, Util } from "lib/base"
-// import { Controls } from "lib/circuit"
 import { Complex } from "./complex"
 
 export class Matrix {
@@ -142,27 +141,6 @@ export class Matrix {
     return new Matrix(size, size, buf)
   }
 
-  static parse(text: string): Matrix {
-    text = text.replace(/\s/g, "")
-
-    if (
-      text.length < 4 ||
-      text.substr(0, 2) !== "{{" ||
-      text.substr(text.length - 2, 2) !== "}}"
-    ) {
-      throw new Error("Not surrounded by {{}}.")
-    }
-
-    // Some kind of recursive descent parser would be a better idea, but here we are.
-    return Matrix.fromRows(
-      text
-        .substr(2, text.length - 4)
-        .split("},{")
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        .map((row) => row.split(",").map(Complex.parse)),
-    )
-  }
-
   /**
    * Returns a diagonal matrix of the given size, using the given function to
    * generate the diagonal coefficients.
@@ -177,23 +155,6 @@ export class Matrix {
       const v = coefficientFunc(i)
       buf[k] = Complex.realPartOf(v)
       buf[k + 1] = Complex.imagPartOf(v)
-    }
-    return new Matrix(size, size, buf)
-  }
-
-  /**
-   * Returns a matrix of the given size, with each column being mapped to a row
-   * by the transition function.
-   */
-  static generateTransition(
-    size: number,
-    transitionFunc: (e: number) => number,
-  ): Matrix {
-    const buf = new Float64Array(size * size * 2)
-    for (let c = 0; c < size; c++) {
-      const r = transitionFunc(c)
-      const k = (r * size + c) * 2
-      buf[k] = 1
     }
     return new Matrix(size, size, buf)
   }
@@ -426,9 +387,9 @@ export class Matrix {
 
   rows(): Complex[][] {
     return Seq.range(this.height)
-      .map((row) =>
+      .map<Complex[]>((row: number) =>
         Seq.range(this.width)
-          .map((col) => this.cell(col, row))
+          .map<Complex>((col: number) => this.cell(col, row))
           .toArray(),
       )
       .toArray()
@@ -487,112 +448,6 @@ export class Matrix {
   }
 
   /**
-   * Determines if the matrix is an identity matrix.
-   */
-  isIdentity(epsilon = 0): boolean {
-    if (this.width !== this.height) {
-      return false
-    }
-    for (let c = 0; c < this.width; c++) {
-      for (let r = 0; r < this.height; r++) {
-        const i = (this.width * r + c) * 2
-        const dr = Math.abs(this.buffer[i] - (r === c ? 1 : 0))
-        const di = Math.abs(this.buffer[i + 1])
-        if (Math.max(dr, di) > epsilon) {
-          return false
-        }
-      }
-    }
-    return !this.hasNaN()
-  }
-
-  /**
-   * Determines if the matrix contains a NaN.
-   */
-  hasNaN(): boolean {
-    for (let i = 0; i < this.buffer.length; i++) {
-      if (isNaN(this.buffer[i])) {
-        return true
-      }
-    }
-    return false
-  }
-
-  /**
-   * Determines if the matrix is a scaled identity matrix.
-   */
-  isScaler(epsilon = 0): boolean {
-    if (this.width !== this.height) {
-      return false
-    }
-    const sr = this.buffer[0]
-    const si = this.buffer[1]
-    for (let c = 0; c < this.width; c++) {
-      for (let r = 0; r < this.height; r++) {
-        const i = (this.width * r + c) * 2
-        const dr = Math.abs(this.buffer[i] - (r === c ? sr : 0))
-        const di = Math.abs(this.buffer[i + 1] - (r === c ? si : 0))
-        if (Math.max(dr, di) > epsilon) {
-          return false
-        }
-      }
-    }
-    return !this.hasNaN()
-  }
-
-  /**
-   * Determines if the matrix can be factored into a permutation matrix times a
-   * diagonal matrix.
-   */
-  isPhasedPermutation(epsilon = 0): boolean {
-    if (this.width !== this.height) {
-      return false
-    }
-
-    const n = this.width
-    const colCounts = new Uint32Array(n)
-    const rowCounts = new Uint32Array(n)
-
-    // Count number of non-zero elements in each row and column.
-    for (let col = 0; col < n; col++) {
-      for (let row = 0; row < n; row++) {
-        const i = (row * n + col) * 2
-        const m = Math.max(
-          Math.abs(this.buffer[i]),
-          Math.abs(this.buffer[i + 1]),
-        )
-        if (isNaN(m) || m > epsilon) {
-          colCounts[col] += 1
-          rowCounts[row] += 1
-        }
-      }
-    }
-
-    // Phased permutations have at most one entry in each row and column.
-    return seq(colCounts)
-      .concat(rowCounts)
-      .every((e) => e <= 1)
-  }
-
-  /**
-   * @returns The transpose of the receiving matrix.
-   */
-  transpose(): Matrix {
-    const w = this.height
-    const h = this.width
-    const newBuf = new Float64Array(w * h * 2)
-    for (let r = 0; r < h; r++) {
-      for (let c = 0; c < w; c++) {
-        const kIn = (c * this.width + r) * 2
-        const kOut = (r * w + c) * 2
-        newBuf[kOut] = this.buffer[kIn]
-        newBuf[kOut + 1] = this.buffer[kIn + 1]
-      }
-    }
-    return new Matrix(w, h, newBuf)
-  }
-
-  /**
    * Returns the sum of the receiving matrix and the given matrix.
    */
   plus(other: Matrix): Matrix {
@@ -643,29 +498,6 @@ export class Matrix {
     return new Matrix(w, h, newBuffer)
   }
 
-  /**
-   * Returns the result of tensor-product-ing the receiving matrix with itself
-   * the given number of times.
-   *
-   * @param exponent The number of times the matrix is tensor-product-ed with
-   * itself.
-   */
-  tensorPower(exponent: number): Matrix {
-    if (!Number.isInteger(exponent) || exponent < 0) {
-      throw new DetailedError("Bad exponent", { exponent })
-    }
-    let t = Matrix.identity(1)
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let p = this
-    for (let m = 1; m <= exponent; m *= 2) {
-      if ((m & exponent) !== 0) {
-        t = t.tensorProduct(p)
-      }
-      p = p.tensorProduct(p)
-    }
-    return t
-  }
-
   timesQubitOperation(
     operation2x2: Matrix,
     qubitIndex: number,
@@ -711,91 +543,6 @@ export class Matrix {
       }
     }
     return new Matrix(w, h, buf)
-  }
-
-  /**
-   * Returns a single-qubit quantum operation corresponding to the given
-   * 3-dimensional rotation in some useful way.
-   *
-   * The mapping is chosen so that rotating around each axis runs through the
-   * respective pauli matrix, and so that cutting a rotation in half square
-   * roots the result, and a few other nice properties.
-   *
-   * The direction of the given x, y, z vector determines which axis to rotate
-   * around, and the length of the vector determines what fraction of an entire
-   * turn to rotate. For example, if [x, y, z] is [1/√8), 0, 1/√8], then the
-   * rotation is a half-turn around the X+Z axis and the resulting operation is
-   * the Hadamard operation {{1, 1}, {1, -1}}/√2.
-   *
-   * @param x  The x component of the rotation vector.
-   * @param y  The y component of the rotation vector.
-   * @param z  The z component of the rotation vector.
-   */
-  static fromPauliRotation(x: number, y: number, z: number): Matrix {
-    const sinc = (t) => {
-      if (Math.abs(t) < 0.0002) {
-        return 1 - (t * t) / 6.0
-      }
-      return Math.sin(t) / t
-    }
-
-    x = -x * Math.PI * 2
-    y = -y * Math.PI * 2
-    z = -z * Math.PI * 2
-
-    const s = -11 * x + -13 * y + -17 * z >= 0 ? 1 : -1 // phase correction discontinuity on an awkward plane
-    const theta = Math.sqrt(x * x + y * y + z * z)
-    const sigma_v = Matrix.PAULI_X.times(x)
-      .plus(Matrix.PAULI_Y.times(y))
-      .plus(Matrix.PAULI_Z.times(z))
-
-    /** @type {!Complex} */
-    const [cos, sin] = Util.snappedCosSin(s * theta)
-    const ci = new Complex(1 + cos, sin).times(0.5)
-    /** @type {!Complex} */
-    const cv = new Complex(
-      Math.sin(theta / 2) * sinc(theta / 2),
-      -s * sinc(theta),
-    ).times(s * 0.5)
-
-    //noinspection JSCheckFunctionSignatures
-    const m = Matrix.identity(2).times(ci).minus(sigma_v.times(cv))
-    const expectNiceValuesCorrection = (v) =>
-      Format.simplifyByRounding(v, 0.0000000000001)
-    return m.transformRealAndImagComponentsWith(expectNiceValuesCorrection)
-  }
-
-  private transformRealAndImagComponentsWith(
-    func: (e: number) => number,
-  ): Matrix {
-    const buf = this.buffer.slice()
-    for (let i = 0; i < buf.length; i++) {
-      buf[i] = func(buf[i])
-    }
-    return new Matrix(this.width, this.height, buf)
-  }
-
-  /**
-   * Returns a matrix for an n-wire circuit that swaps wires i and j.
-   */
-  static fromWireSwap(
-    numWires: number,
-    swapWire1: number,
-    swapWire2: number,
-  ): Matrix {
-    const bitSwap = (n) => {
-      const m1 = 1 << swapWire1
-      const m2 = 1 << swapWire2
-      let s = n & ~(m1 | m2)
-      if ((n & m1) !== 0) {
-        s |= m2
-      }
-      if ((n & m2) !== 0) {
-        s |= m1
-      }
-      return s
-    }
-    return Matrix.generateTransition(1 << numWires, bitSwap)
   }
 
   /**
@@ -1062,70 +809,6 @@ export class Matrix {
   }
 
   /**
-   * Returns the unitary matrix closest to the receiving matrix, "repairing" it
-   * into a unitary form.
-   */
-  closestUnitary(epsilon = 0, maxIterations = 100): Matrix {
-    const svd = this.singularValueDecomposition(epsilon, maxIterations)
-    return svd.U.times(svd.V)
-  }
-
-  /**
-   * Computes the eigenvalues and eigenvectors of a 2x2 matrix.
-   */
-  eigenDecomposition(): { val: Complex; vec: Matrix }[] {
-    if (this.width !== 2 || this.height !== 2) {
-      throw new Error("Not implemented: non-2x2 eigen decomposition")
-    }
-    const [a, b, c, d] = this._2x2Breakdown()
-    const vals = Complex.rootsOfQuadratic(
-      Complex.ONE,
-      a.plus(d).times(-1),
-      a.times(d).minus(b.times(c)),
-    )
-    if (vals.length === 0) {
-      throw new Error("Degenerate")
-    }
-    if (vals.length === 1) {
-      return [
-        { val: vals[0], vec: Matrix.col(1, 0) },
-        { val: vals[0], vec: Matrix.col(0, 1) },
-      ]
-    }
-    return vals.map((v) => {
-      // x*(a-L) + y*b = 0
-      let [x, y] = [b.times(-1), a.minus(v)]
-      if (x.isEqualTo(0) && y.isEqualTo(0)) {
-        [x, y] = [v.minus(d), c]
-      }
-      if (!x.isEqualTo(0)) {
-        y = y.dividedBy(x)
-        x = Complex.ONE
-      }
-      const m = Math.sqrt(x.norm2() + y.norm2())
-      if (m === 0) {
-        throw new Error("Unexpected degenerate")
-      }
-      return { val: v, vec: Matrix.col(x, y).times(1 / m) }
-    })
-  }
-
-  /**
-   * Lifts a numeric function so that it applies to matrices by using the
-   * eigendecomposition and applying the function
-   * to the eigenvalue coefficients.
-   */
-  liftApply(complexFunction: (e: Complex) => Complex): Matrix {
-    let t = this.times(0)
-    for (const { val, vec } of this.eigenDecomposition()) {
-      const fVal = complexFunction(val)
-      const part = vec.times(vec.adjoint())
-      t = t.plus(part.times(fVal))
-    }
-    return t
-  }
-
-  /**
    * Returns the matrix' trace (i.e. the sum of its diagonal elements, i.e. the
    * sum of its eigenvalues if it's square).
    */
@@ -1158,9 +841,9 @@ export class Matrix {
     // Density matrix from bloch vector equation: M = 1/2 (I + vσ)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ar, ai, br, bi, cr, ci, dr, di] = this.buffer
-    const x = -cr - br
-    const y = bi - ci
-    const z = dr - ar
+    const x = cr + br
+    const y = ci - bi
+    const z = ar - dr
     return [x, y, z]
   }
 
@@ -1204,29 +887,6 @@ export class Matrix {
     }
 
     return densityMatrix
-  }
-
-  /**
-   * Returns the square matrix' determinant (i.e. the product of its
-   * eigenvalues).
-   */
-  determinant(): Complex {
-    Util.need(this.width === this.height, "Must be square")
-    const n = this.width
-    if (n === 1) {
-      return this.cell(0, 0)
-    }
-    return Seq.range(n)
-      .map((k) => {
-        const cutColMatrix = Matrix.generate(n - 1, n - 1, (r, c) =>
-          this.cell(c + (c < k ? 0 : 1), r + 1),
-        )
-        return cutColMatrix
-          .determinant()
-          .times(this.cell(k, 0))
-          .times(Math.pow(-1, k))
-      })
-      .aggregate(Complex.ZERO, (a, e) => a.plus(e))
   }
 
   /**
@@ -1312,26 +972,6 @@ export class Matrix {
     return { axis: [x, y, z], angle: θ, phase: φ.phase() }
   }
 
-  /**
-   * Computes the cross product of two 3d column vectors.
-   */
-  cross3(other: Matrix): Matrix {
-    Util.need(
-      this.width === 1 && this.height === 3,
-      "This isn't a 3d column vector.",
-    )
-    Util.need(
-      other.width === 1 && other.height === 3,
-      "Other's not a 3d column vector.",
-    )
-    return Matrix.generate(1, 3, (r) => {
-      const [i, j] = [(r + 1) % 3, (r + 2) % 3]
-      const a = this.cell(0, i).times(other.cell(0, j))
-      const b = this.cell(0, j).times(other.cell(0, i))
-      return a.minus(b)
-    })
-  }
-
   isUpperTriangular(epsilon = 0): boolean {
     for (let r = 0; r < this.height; r++) {
       for (let c = 0; c < r && c < this.width; c++) {
@@ -1359,107 +999,4 @@ export class Matrix {
     }
     return true
   }
-
-  /**
-   * Computes the magnitudes of the eigenvalues of the matrix, using the QR
-   * algorithm.
-   */
-  eigenvalueMagnitudes(epsilon: number, maxIterations = 1000): Complex[] {
-    if (this.width !== this.height) {
-      throw new DetailedError("Expected a square matrix.", this)
-    }
-    let iteration = 0
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let m = this
-    while (!m.isUpperTriangular(epsilon) && iteration < maxIterations) {
-      const { Q, R } = m.qrDecomposition()
-      if (R.isIdentity(epsilon)) {
-        return Seq.repeat(1, this.width).toArray()
-      }
-      m = R.times(Q)
-      iteration++
-    }
-    return Seq.range(this.width)
-      .map((i) => m.cell(i, i).abs())
-      .sortedBy((e) => -e)
-      .toArray()
-  }
-
-  /**
-   * Expands a qubit operation so that it applies to a larger register of
-   * qubits, with optional controls.
-   */
-  // expandedForQubitInRegister(
-  //   targetQubitOffset: number,
-  //   registerSize: number,
-  //   controls: Controls,
-  // ): Matrix {
-  //   const used = Math.round(Math.log2(this.width))
-  //   const result = Matrix.identity(
-  //     1 << (registerSize - targetQubitOffset - used),
-  //   )
-  //     .tensorProduct(this)
-  //     .tensorProduct(Matrix.identity(1 << targetQubitOffset))
-  //     ._clone()
-
-  //   for (let c = 0; c < result.width; c++) {
-  //     for (let r = 0; r < result.height; r++) {
-  //       if (!controls.allowsState(c) || !controls.allowsState(r)) {
-  //         const k = 2 * (c + r * result.width)
-  //         result.buffer[k] = c === r ? 1 : 0
-  //         result.buffer[k + 1] = 0
-  //       }
-  //     }
-  //   }
-
-  //   return result
-  // }
-
-  // applyToStateVectorAtQubitWithControls(
-  //   stateVector: Matrix,
-  //   qubitIndex: number,
-  //   controls: Controls,
-  // ): Matrix {
-  //   const chunkSize = this.width * 2
-  //   const chunkBuf = stateVector.buffer.slice(0, chunkSize)
-  //   const strideLength = 2 << qubitIndex
-  //   const strideChunkSize = (strideLength * chunkSize) >> 1
-  //   const resultBuf = stateVector.buffer.slice()
-  //   for (
-  //     let strideChunkStart = 0;
-  //     strideChunkStart < resultBuf.length;
-  //     strideChunkStart += strideChunkSize
-  //   ) {
-  //     for (
-  //       let strideOffset = 0;
-  //       strideOffset < strideLength;
-  //       strideOffset += 2
-  //     ) {
-  //       if (!controls.allowsState((strideChunkStart | strideOffset) >> 1)) {
-  //         continue
-  //       }
-
-  //       // Collect inputs into a small contiguous vector.
-  //       let k = strideChunkStart + strideOffset
-  //       for (let i = 0; i < chunkBuf.length; i += 2) {
-  //         chunkBuf[i] = stateVector.buffer[k]
-  //         chunkBuf[i + 1] = stateVector.buffer[k + 1]
-  //         k += strideLength
-  //       }
-
-  //       const transformedChunk = this.times(
-  //         new Matrix(1, chunkBuf.length >> 1, chunkBuf),
-  //       )
-
-  //       // Scatter outputs.
-  //       k = strideChunkStart + strideOffset
-  //       for (let i = 0; i < chunkBuf.length; i += 2) {
-  //         resultBuf[k] = transformedChunk.buffer[i]
-  //         resultBuf[k + 1] = transformedChunk.buffer[i + 1]
-  //         k += strideLength
-  //       }
-  //     }
-  //   }
-  //   return new Matrix(1, stateVector.height, resultBuf)
-  // }
 }

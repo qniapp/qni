@@ -7,38 +7,30 @@
   @screen md {
     @apply text-sm;
   }
-}
 
-// The border
-.tippy-box[data-theme~="qni"] > .tippy-svg-arrow > svg:first-child {
-  fill: theme("colors.eel");
-}
+  // The border
+  .tippy-svg-arrow > svg:first-child {
+    fill: theme("colors.eel");
+  }
 
-// The fill
-.tippy-box[data-theme~="qni"] > .tippy-svg-arrow > svg:last-child {
-  fill: theme("colors.snow");
-}
+  // The fill
+  .tippy-svg-arrow > svg:last-child {
+    fill: theme("colors.snow");
+  }
 
-.tippy-box[data-theme~="qni"][data-placement^="top"]
-  > .tippy-svg-arrow
-  svg:first-child {
-  top: 18px;
-}
+  &[data-placement^="top"] > .tippy-svg-arrow svg:first-child {
+    top: 18px;
+  }
 
-.tippy-box[data-theme~="qni"][data-placement^="bottom"]
-  > .tippy-svg-arrow
-  svg:first-child {
-  bottom: 18px;
-}
+  &[data-placement^="bottom"] > .tippy-svg-arrow svg:first-child {
+    bottom: 18px;
+  }
 
-.tippy-box[data-theme~="qni"][data-placement^="left"]
-  > .tippy-svg-arrow
-  svg:first-child {
-  left: 18px;
-}
+  &[data-placement^="left"] > .tippy-svg-arrow svg:first-child {
+    left: 18px;
+  }
 
-.tippy-box[data-theme~="qni"][data-placement^="right"]
-  > .tippy-svg-arrow
-  svg:first-child {
-  right: 18px;
+  &[data-placement^="right"] > .tippy-svg-arrow svg:first-child {
+    right: 13px;
+  }
 }

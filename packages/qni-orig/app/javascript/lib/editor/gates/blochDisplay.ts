@@ -15,24 +15,20 @@ export class BlochDisplay extends Mixin(Instructionable) {
   }
 
   draw(x: number, y: number, z: number): void {
-    const θ = Math.max(
-      0,
-      Math.PI / 2 - Math.atan2(-z, Math.sqrt(y * y + x * x)),
-    )
+    const θ = Math.max(0, Math.PI / 2 - Math.atan2(z, Math.sqrt(y * y + x * x)))
 
     this.d = parseFloat(Math.sqrt(x * x + y * y + z * z).toFixed(4))
-    this.phi = (180 * Math.atan2(y, -x)) / Math.PI
+    this.phi = (Math.atan2(y, x) * 180) / Math.PI
     this.theta = (180 * θ) / Math.PI
-    this.x = -x
+    this.x = x
     this.y = y
-    this.z = -z
+    this.z = z
 
     this.vectorLineEl().style.height = `calc(${(100 * this.d) / 2}% - 3px)`
     this.vectorEndEl().style.bottom = `calc(50% + ${(100 * this.d) / 2}% + 2px)`
     if (this.d != 0) {
-      this.vectorEl().style.transform = `rotateY(${
-        this.phi - 180
-      }deg) rotateX(${this.theta}deg)`
+      this.vectorEl().style.transform = `rotateY(${this.phi}deg) rotateX(${-this
+        .theta}deg)`
     }
 
     this.element.dispatchEvent(

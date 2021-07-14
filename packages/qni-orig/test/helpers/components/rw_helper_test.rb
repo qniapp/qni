@@ -7,7 +7,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{ket_icon class: 'gate-icon'}
           <div class="gate-ket-label"></div>
@@ -18,7 +18,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{ket_icon class: 'gate-icon'}
           <div class="gate-ket-label"></div>
@@ -29,7 +29,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'measure' do
     assert_dom_equal beautify(<<~ERB), beautify(measure)
-      <div class="gate measure-gate draggable draggable--circuit" data-gate-popup-type="set" data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate measure-gate draggable draggable--circuit" data-gate-popup-type="set" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{measure_icon class: 'gate-icon'}
           <div class="gate-ket-label"></div>
@@ -40,7 +40,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'measure (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(measure(set: 'alice_v'))
-      <div class="gate measure-gate draggable draggable--circuit" data-set="alice_v" data-gate-label="alice_v" data-gate-popup-type="set" data-action="mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate measure-gate draggable draggable--circuit" data-set="alice_v" data-gate-label="alice_v" data-gate-popup-type="set" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{measure_icon class: 'gate-icon'}
           <div class="gate-ket-label"></div>
