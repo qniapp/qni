@@ -151,10 +151,7 @@ export class Simulator {
           const va0 = this.state.amplifier(a0)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(
-            a0,
-            va1.times(new Complex(-1, 0)).times(Complex.I),
-          )
+          this.state.setAmplifier(a0, va1.times(new Complex(0, -1)))
           this.state.setAmplifier(a1, va0.times(Complex.I))
         }
       }
@@ -230,7 +227,10 @@ export class Simulator {
           )
           this.state.setAmplifier(
             a1,
-            va1.times(costheta2).minus(va0.times(Complex.I).times(sintheta2)),
+            va0
+              .times(new Complex(0, -1))
+              .times(sintheta2)
+              .plus(va1.times(costheta2)),
           )
         }
       }
@@ -305,17 +305,17 @@ export class Simulator {
 
           this.state.setAmplifier(
             a0,
-            new Complex(0, -1)
-              .plus(1)
+            Complex.I.plus(1)
               .times(va0)
-              .plus(Complex.I.plus(1).times(va1))
+              .plus(new Complex(0, -1).plus(1).times(va1))
               .dividedBy(2),
           )
           this.state.setAmplifier(
             a1,
-            Complex.I.plus(1)
+            new Complex(0, -1)
+              .plus(1)
               .times(va0)
-              .plus(new Complex(0, -1).plus(1).times(va1))
+              .plus(Complex.I.plus(1).times(va1))
               .dividedBy(2),
           )
         }
@@ -432,19 +432,15 @@ export class Simulator {
   }
 
   magnitudes(): number[] {
-    const m = []
-    for (let r = 0; r < this.state.matrix.height; r++) {
-      m.push(this.state.matrix.cell(0, r).abs())
-    }
-    return m
+    return this.state.matrix.getColumn(0).map((each) => {
+      return each.abs()
+    })
   }
 
   phases(): number[] {
-    const p = []
-    for (let r = 0; r < this.state.matrix.height; r++) {
-      p.push((this.state.matrix.cell(0, r).phase() / Math.PI) * 180)
-    }
-    return p
+    return this.state.matrix.getColumn(0).map((each) => {
+      return (each.phase() / Math.PI) * 180
+    })
   }
 
   private pZero(target: number): number {
@@ -535,10 +531,7 @@ export class Simulator {
           const va0 = this.state.amplifier(a0)
           const va1 = this.state.amplifier(a1)
 
-          this.state.setAmplifier(
-            a0,
-            va1.times(new Complex(-1, 0)).times(Complex.I),
-          )
+          this.state.setAmplifier(a0, va1.times(new Complex(0, -1)))
           this.state.setAmplifier(a1, va0.times(Complex.I))
         }
       }
@@ -661,11 +654,14 @@ export class Simulator {
 
           this.state.setAmplifier(
             a0,
-            va0.times(costheta2).minus(va1.times(sintheta2)),
+            va0.times(costheta2).minus(va1.times(Complex.I).times(sintheta2)),
           )
           this.state.setAmplifier(
             a1,
-            va0.times(sintheta2).plus(va1.times(costheta2)),
+            va0
+              .times(new Complex(0, -1))
+              .times(sintheta2)
+              .plus(va1.times(costheta2)),
           )
         }
       }

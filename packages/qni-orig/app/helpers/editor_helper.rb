@@ -1,9 +1,9 @@
 module EditorHelper
-  def editor(*options, &block)
-    component 'editor', *options, &block
+  def palette
+    render 'palette/palette'
   end
 
-  def palette(*options, &block)
-    component 'editor/palette', *options, &block
+  def editor(*options, &block)
+    component 'editor', *options, &block
   end
 end

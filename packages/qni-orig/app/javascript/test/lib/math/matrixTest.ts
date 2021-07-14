@@ -135,19 +135,6 @@ QUnit.module("Matrix", () => {
     )
   })
 
-  QUnit.test("parse", (assert) => {
-    assert.equates(Matrix.parse("{{1}}"), Matrix.solo(1))
-    assert.equates(Matrix.parse("{{i}}"), Matrix.solo(Complex.I))
-    assert.equates(Matrix.parse("{{\u221A2}}"), Matrix.square(Math.sqrt(2)))
-
-    assert.equates(
-      Matrix.parse("{{½-½i, 5}, {-i, 0}}"),
-      Matrix.square(new Complex(0.5, -0.5), 5, new Complex(0, -1), 0),
-    )
-    assert.equates(Matrix.parse("{{1, 2, i}}"), Matrix.row(1, 2, Complex.I))
-    assert.equates(Matrix.parse("{{1}, {2}, {i}}"), Matrix.col(1, 2, Complex.I))
-  })
-
   QUnit.test("generate", (assert) => {
     assert.equates(
       Matrix.generate(3, 2, (r, c) => r + 10 * c).toString(),
@@ -164,18 +151,6 @@ QUnit.module("Matrix", () => {
         0, new Complex(1, 1), 0, 0,
         0, 0, new Complex(2, 1), 0,
         0, 0, 0, new Complex(3, 1)),
-    )
-  })
-
-  QUnit.test("generateTransition", (assert) => {
-    assert.equates(
-      Matrix.generateTransition(4, (e) => (e + 1) & 3),
-      // prettier-ignore
-      Matrix.square(
-        0, 0, 0, 1,
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0),
     )
   })
 
@@ -285,108 +260,6 @@ QUnit.module("Matrix", () => {
     )
   })
 
-  QUnit.test("isIdentity", (assert) => {
-    const i = Complex.I
-
-    assert.notOk(Matrix.solo(NaN).isIdentity())
-    assert.notOk(Matrix.solo(-1).isIdentity())
-    assert.notOk(Matrix.solo(0).isIdentity())
-    assert.ok(Matrix.solo(1).isIdentity())
-    assert.notOk(Matrix.solo(i).isIdentity())
-    assert.notOk(Matrix.solo(2).isIdentity())
-
-    assert.notOk(Matrix.row(1, 0).isIdentity())
-    assert.notOk(Matrix.row(1, 1).isIdentity())
-    assert.notOk(Matrix.col(1, 0).isIdentity())
-    assert.notOk(Matrix.col(1, 1).isIdentity())
-
-    assert.notOk(Matrix.PAULI_X.isIdentity())
-    assert.notOk(Matrix.PAULI_Y.isIdentity())
-    assert.notOk(Matrix.PAULI_Z.isIdentity())
-    assert.notOk(Matrix.HADAMARD.isIdentity())
-
-    assert.ok(Matrix.square(1, 0, 0, 1).isIdentity())
-    assert.notOk(Matrix.square(1, 1, 1, 1).isIdentity())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isIdentity())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isIdentity())
-    assert.notOk(Matrix.square(1, i, i, 1).isIdentity())
-    assert.notOk(Matrix.square(1, i, i.neg(), 1).isIdentity())
-
-    assert.ok(Matrix.square(1, 0, 0, 0, 1, 0, 0, 0, 1).isIdentity())
-  })
-
-  QUnit.test("isScaler", (assert) => {
-    const i = Complex.I
-
-    assert.notOk(Matrix.solo(NaN).isScaler())
-    assert.ok(Matrix.solo(-1).isScaler())
-    assert.ok(Matrix.solo(0).isScaler())
-    assert.ok(Matrix.solo(1).isScaler())
-    assert.ok(Matrix.solo(i).isScaler())
-    assert.ok(Matrix.solo(2).isScaler())
-
-    assert.notOk(Matrix.row(1, 0).isScaler())
-    assert.notOk(Matrix.row(1, 1).isScaler())
-    assert.notOk(Matrix.col(1, 0).isScaler())
-    assert.notOk(Matrix.col(1, 1).isScaler())
-
-    assert.notOk(Matrix.PAULI_X.isScaler())
-    assert.notOk(Matrix.PAULI_Y.isScaler())
-    assert.notOk(Matrix.PAULI_Z.isScaler())
-    assert.notOk(Matrix.HADAMARD.isScaler())
-
-    assert.ok(Matrix.square(1, 0, 0, 1).isScaler())
-    assert.ok(Matrix.square(-1, 0, 0, -1).isScaler())
-    assert.ok(Matrix.square(i, 0, 0, i).isScaler())
-    assert.notOk(Matrix.square(1, 1, 1, 1).isScaler())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isScaler())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isScaler())
-    assert.notOk(Matrix.square(1, i, i, 1).isScaler())
-    assert.notOk(Matrix.square(1, i, i.neg(), 1).isScaler())
-
-    assert.ok(Matrix.square(1, 0, 0, 0, 1, 0, 0, 0, 1).isScaler())
-    assert.ok(Matrix.square(i, 0, 0, 0, i, 0, 0, 0, i).isScaler())
-    assert.notOk(Matrix.square(i, 0, 0, 0, 1, 0, 0, 0, i).isScaler())
-  })
-
-  QUnit.test("isPhasedPermutation", (assert) => {
-    const i = Complex.I
-
-    assert.ok(Matrix.solo(-1).isPhasedPermutation())
-    assert.ok(Matrix.solo(0).isPhasedPermutation())
-    assert.ok(Matrix.solo(1).isPhasedPermutation())
-    assert.ok(Matrix.solo(i).isPhasedPermutation())
-    assert.ok(Matrix.solo(2).isPhasedPermutation())
-
-    assert.notOk(Matrix.row(1, 0).isPhasedPermutation())
-    assert.notOk(Matrix.row(1, 1).isPhasedPermutation())
-    assert.notOk(Matrix.col(1, 0).isPhasedPermutation())
-    assert.notOk(Matrix.col(1, 1).isPhasedPermutation())
-
-    assert.ok(Matrix.PAULI_X.isPhasedPermutation())
-    assert.ok(Matrix.PAULI_Y.isPhasedPermutation())
-    assert.ok(Matrix.PAULI_Z.isPhasedPermutation())
-    assert.notOk(Matrix.HADAMARD.isPhasedPermutation())
-
-    assert.ok(Matrix.square(1, 0, 0, 1).isPhasedPermutation())
-    assert.notOk(Matrix.square(1, 1, 1, 1).isPhasedPermutation())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isPhasedPermutation())
-    assert.notOk(Matrix.square(1, 1, 1.5, 1).isPhasedPermutation())
-    assert.notOk(Matrix.square(1, i, i, 1).isPhasedPermutation())
-    assert.notOk(Matrix.square(1, i, i.neg(), 1).isPhasedPermutation())
-
-    assert.ok(Matrix.square(1, 0, 0, 0, 1, 0, 0, 0, 1).isPhasedPermutation())
-    assert.ok(Matrix.square(1, 0, 0, 0, 0, i, 0, 1, 0).isPhasedPermutation())
-
-    assert.notOk(Matrix.square(1, 0.1, 0, 1).isPhasedPermutation(0))
-    assert.notOk(Matrix.square(1, 0.1, 0, 1).isPhasedPermutation(0.05))
-    assert.ok(Matrix.square(1, 0.1, 0, 1).isPhasedPermutation(0.2))
-
-    assert.ok(Matrix.solo(NaN).isPhasedPermutation())
-    assert.notOk(Matrix.square(NaN, NaN, NaN, NaN).isPhasedPermutation())
-    assert.ok(Matrix.square(NaN, 0, 0, NaN).isPhasedPermutation())
-  })
-
   QUnit.test("adjoint", (assert) => {
     const v = Matrix.square(
       new Complex(2, 3),
@@ -404,26 +277,6 @@ QUnit.module("Matrix", () => {
     assert.equates(
       Matrix.col(1, 2, Complex.I).adjoint(),
       Matrix.row(1, 2, Complex.I.neg()),
-    )
-  })
-
-  QUnit.test("transpose", (assert) => {
-    const v = Matrix.square(
-      new Complex(2, 3),
-      new Complex(5, 7),
-      new Complex(11, 13),
-      new Complex(17, 19),
-    )
-    const a = Matrix.square(
-      new Complex(2, 3),
-      new Complex(11, 13),
-      new Complex(5, 7),
-      new Complex(17, 19),
-    )
-    assert.equates(v.transpose(), a)
-    assert.equates(
-      Matrix.col(1, 2, Complex.I).transpose(),
-      Matrix.row(1, 2, Complex.I),
     )
   })
 
@@ -543,50 +396,6 @@ QUnit.module("Matrix", () => {
     )
   })
 
-  QUnit.test("tensorPower", (assert) => {
-    const i = Complex.I
-
-    assert.equates(Matrix.solo(i).tensorPower(0), Matrix.solo(1))
-    assert.equates(Matrix.solo(i).tensorPower(1), Matrix.solo(i))
-    assert.equates(Matrix.solo(i).tensorPower(2), Matrix.solo(-1))
-    assert.equates(Matrix.solo(i).tensorPower(3), Matrix.solo(i.neg()))
-    assert.equates(Matrix.solo(i).tensorPower(4), Matrix.solo(1))
-    assert.equates(Matrix.solo(i).tensorPower(5), Matrix.solo(i))
-    assert.equates(Matrix.solo(i).tensorPower(1 << 30), Matrix.solo(1))
-    assert.equates(Matrix.solo(i).tensorPower(5 + (1 << 30)), Matrix.solo(i))
-
-    const r = Matrix.row(1, i)
-    assert.equates(r.tensorPower(0), Matrix.solo(1))
-    assert.equates(r.tensorPower(1), Matrix.row(1, i))
-    assert.equates(r.tensorPower(2), Matrix.row(1, i, i, -1))
-    assert.equates(
-      r.tensorPower(3),
-      Matrix.row(1, i, i, -1, i, -1, -1, i.neg()),
-    )
-
-    const c = Matrix.col(1, i)
-    assert.equates(c.tensorPower(0), Matrix.solo(1))
-    assert.equates(c.tensorPower(1), Matrix.col(1, i))
-    assert.equates(c.tensorPower(2), Matrix.col(1, i, i, -1))
-    assert.equates(
-      c.tensorPower(3),
-      Matrix.col(1, i, i, -1, i, -1, -1, i.neg()),
-    )
-
-    const s = Matrix.square(1, 2, 3, 4)
-    assert.equates(s.tensorPower(0), Matrix.solo(1))
-    assert.equates(s.tensorPower(1), Matrix.square(1, 2, 3, 4))
-    assert.equates(
-      s.tensorPower(2),
-      // prettier-ignore
-      Matrix.square(
-                     1, 2, 2, 4,
-                     3, 4, 6, 8,
-                     3, 6, 4, 8,
-                     9, 12,12,16),
-    )
-  })
-
   QUnit.test("timesQubitOperation", (assert) => {
     const s = Math.sqrt(0.5)
 
@@ -647,128 +456,6 @@ QUnit.module("Matrix", () => {
 
     const t1 = performance.now()
     assert.lessThan(t1 - t0, 100)
-  })
-
-  QUnit.test("fromPauliRotation", (assert) => {
-    // No turn gives no-op
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, 0),
-      Matrix.identity(2),
-    )
-
-    // Whole turns are no-ops
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(1, 0, 0),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 1, 0),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, 1),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(-1, 0, 0),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, -1, 0),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, -1),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0.6, 0.8, 0),
-      Matrix.identity(2),
-    )
-
-    // Half turns along each axis is the corresponding Pauli operation
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0.5, 0, 0),
-      Matrix.PAULI_X,
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0.5, 0),
-      Matrix.PAULI_Y,
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, 0.5),
-      Matrix.PAULI_Z,
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(-0.5, 0, 0),
-      Matrix.PAULI_X,
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, -0.5, 0),
-      Matrix.PAULI_Y,
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, -0.5),
-      Matrix.PAULI_Z,
-    )
-
-    // Hadamard
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(Math.sqrt(0.125), 0, Math.sqrt(0.125)),
-      Matrix.HADAMARD,
-    )
-
-    // Opposites are inverses
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(-0.25, 0, 0).times(
-        Matrix.fromPauliRotation(0.25, 0, 0),
-      ),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, -0.25, 0).times(
-        Matrix.fromPauliRotation(0, 0.25, 0),
-      ),
-      Matrix.identity(2),
-    )
-    assert.approximatelyEquates(
-      Matrix.fromPauliRotation(0, 0, -0.25).times(
-        Matrix.fromPauliRotation(0, 0, 0.25),
-      ),
-      Matrix.identity(2),
-    )
-
-    // Doubling rotation is like squaring
-    const s1 = Matrix.fromPauliRotation(0.1, 0.15, 0.25)
-    const s2 = Matrix.fromPauliRotation(0.2, 0.3, 0.5)
-    assert.approximatelyEquates(s1.times(s1), s2)
-  })
-
-  QUnit.test("fromWireSwap", (assert) => {
-    assert.equates(
-      Matrix.fromWireSwap(2, 0, 1).toString(),
-      "{{1, 0, 0, 0}, {0, 0, 1, 0}, {0, 1, 0, 0}, {0, 0, 0, 1}}",
-    )
-    const _ = 0
-    // prettier-ignore
-    assert.equates(Matrix.square(
-      1, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, //____
-      _, 1, _, _, _, _, _, _, _, _, _, _, _, _, _, _, //___1
-      _, _, _, _, _, _, _, _, 1, _, _, _, _, _, _, _, //__1_
-      _, _, _, _, _, _, _, _, _, 1, _, _, _, _, _, _, //__11
-      _, _, _, _, 1, _, _, _, _, _, _, _, _, _, _, _, //_1__
-      _, _, _, _, _, 1, _, _, _, _, _, _, _, _, _, _, //_1_1
-      _, _, _, _, _, _, _, _, _, _, _, _, 1, _, _, _, //_11_
-      _, _, _, _, _, _, _, _, _, _, _, _, _, 1, _, _, //_111
-      _, _, 1, _, _, _, _, _, _, _, _, _, _, _, _, _, //1___
-      _, _, _, 1, _, _, _, _, _, _, _, _, _, _, _, _, //1__1
-      _, _, _, _, _, _, _, _, _, _, 1, _, _, _, _, _, //1_1_
-      _, _, _, _, _, _, _, _, _, _, _, 1, _, _, _, _, //1_11
-      _, _, _, _, _, _, 1, _, _, _, _, _, _, _, _, _, //11__
-      _, _, _, _, _, _, _, 1, _, _, _, _, _, _, _, _, //11_1
-      _, _, _, _, _, _, _, _, _, _, _, _, _, _, 1, _, //111_
-      _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 1 //1111
-    ), Matrix.fromWireSwap(4, 1, 3))
   })
 
   QUnit.test("identity", (assert) => {
@@ -914,146 +601,6 @@ QUnit.module("Matrix", () => {
     }
   })
 
-  QUnit.test("closestUnitary", (assert) => {
-    const i = Complex.I
-    const ni = i.neg()
-    assert.approximatelyEquates(
-      Matrix.square(0, 0, 0, 0).closestUnitary(),
-      Matrix.square(1, 0, 0, 1),
-    )
-    assert.approximatelyEquates(
-      Matrix.square(2, 0, 0, 0.0001).closestUnitary(),
-      Matrix.square(1, 0, 0, 1),
-    )
-    assert.approximatelyEquates(
-      Matrix.square(0, 0.5, 0.0001, 0).closestUnitary(),
-      Matrix.square(0, 1, 1, 0),
-    )
-    assert.approximatelyEquates(
-      Matrix.square(1.01, i, -1, ni).closestUnitary(),
-      Matrix.square(1, 0, 0, ni),
-    )
-
-    // prettier-ignore
-    const m = Matrix.square(
-      1,  1,  1,  1,
-      1,  i, -1, ni,
-      1, -1,  1, -1,
-      1, ni, -1,  i)
-    assert.approximatelyEquates(m.closestUnitary(0.001), m.times(0.5))
-
-    const m2 = Matrix.generateDiagonal(4, (k) =>
-      Complex.polar(1, ((Math.PI * 2) / 3) * k),
-    )
-    assert.approximatelyEquates(m2.closestUnitary(0.001), m2)
-  })
-
-  QUnit.test("eigenDecomposition", (assert) => {
-    const s = Math.sqrt(0.5)
-    const z = Math.sqrt(2)
-    assert.equates(Matrix.identity(2).eigenDecomposition(), [
-      { val: 1, vec: Matrix.col(1, 0) },
-      { val: 1, vec: Matrix.col(0, 1) },
-    ])
-    assert.approximatelyEquates(Matrix.PAULI_X.eigenDecomposition(), [
-      { val: -1, vec: Matrix.col(s, -s) },
-      { val: 1, vec: Matrix.col(s, s) },
-    ])
-    assert.approximatelyEquates(Matrix.PAULI_Y.eigenDecomposition(), [
-      { val: -1, vec: Matrix.col(s, new Complex(0, -s)) },
-      { val: 1, vec: Matrix.col(s, new Complex(0, s)) },
-    ])
-    assert.equates(Matrix.PAULI_Z.eigenDecomposition(), [
-      { val: -1, vec: Matrix.col(0, 1) },
-      { val: 1, vec: Matrix.col(1, 0) },
-    ])
-    assert.approximatelyEquates(
-      Matrix.square(1, 1, 1, -1).eigenDecomposition(),
-      [
-        { val: -z, vec: Matrix.col(1 - z, 1).times(-1 / Math.sqrt(4 - 2 * z)) },
-        { val: z, vec: Matrix.col(1 + z, 1).times(1 / Math.sqrt(4 + 2 * z)) },
-      ],
-    )
-    assert.approximatelyEquates(Matrix.HADAMARD.eigenDecomposition(), [
-      { val: -1, vec: Matrix.col(1 - z, 1).times(-1 / Math.sqrt(4 - 2 * z)) },
-      { val: 1, vec: Matrix.col(1 + z, 1).times(1 / Math.sqrt(4 + 2 * z)) },
-    ])
-  })
-
-  QUnit.test("liftApply", (assert) => {
-    const i = Complex.I
-    const mi = Complex.I.times(-1)
-    const s = Math.sqrt(0.5)
-    const tExpI = (t: number) => (c: Complex) => c.times(i).times(t).exp()
-    const tPow = (t: number) => (c: Complex) => c.raisedTo(t)
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_X.liftApply(tExpI(Math.PI)),
-      Matrix.square(-1, 0, 0, -1),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_X.liftApply(tExpI(Math.PI / 2)),
-      Matrix.square(0, i, i, 0),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_X.liftApply(tExpI(Math.PI / 4)),
-      Matrix.square(1, i, i, 1).times(s),
-    )
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_Y.liftApply(tExpI(Math.PI)),
-      Matrix.square(-1, 0, 0, -1),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Y.liftApply(tExpI(Math.PI / 2)),
-      Matrix.square(0, 1, -1, 0),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Y.liftApply(tExpI(Math.PI / 4)),
-      Matrix.square(s, s, -s, s),
-    )
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_Z.liftApply(tExpI(Math.PI)),
-      Matrix.square(-1, 0, 0, -1),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Z.liftApply(tExpI(Math.PI / 2)),
-      Matrix.square(i, 0, 0, mi),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Z.liftApply(tExpI(Math.PI / 4)),
-      Matrix.square(new Complex(s, s), 0, 0, new Complex(s, -s)),
-    )
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_X.liftApply(tPow(0.5)),
-      Matrix.square(i, 1, 1, i).times(new Complex(0.5, -0.5)),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_X.liftApply(tPow(-0.5)),
-      Matrix.square(mi, 1, 1, mi).times(new Complex(0.5, 0.5)),
-    )
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_Y.liftApply(tPow(0.5)),
-      Matrix.square(1, -1, 1, 1).times(new Complex(0.5, 0.5)),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Y.liftApply(tPow(-0.5)),
-      Matrix.square(1, 1, -1, 1).times(new Complex(0.5, -0.5)),
-    )
-
-    assert.approximatelyEquates(
-      Matrix.PAULI_Z.liftApply(tPow(0.5)),
-      Matrix.square(1, 0, 0, i),
-    )
-    assert.approximatelyEquates(
-      Matrix.PAULI_Z.liftApply(tPow(-0.5)),
-      Matrix.square(1, 0, 0, mi),
-    )
-  })
-
   QUnit.test("trace", (assert) => {
     assert.equates(Matrix.solo(NaN).trace().abs(), NaN)
     assert.equates(Matrix.identity(2).trace(), 2)
@@ -1109,23 +656,23 @@ QUnit.module("Matrix", () => {
     const f = (...m) => Matrix.col(...m).times(Matrix.col(...m).adjoint())
     const i = Complex.I
     const mi = i.times(-1)
-    assert.equates(f(1, 0).qubitDensityMatrixToBlochVector(), [0, 0, -1])
-    assert.equates(f(0, 1).qubitDensityMatrixToBlochVector(), [0, 0, 1])
+    assert.equates(f(1, 0).qubitDensityMatrixToBlochVector(), [0, 0, 1])
+    assert.equates(f(0, 1).qubitDensityMatrixToBlochVector(), [0, 0, -1])
     assert.equates(
       f(1, 1).times(0.5).qubitDensityMatrixToBlochVector(),
-      [-1, 0, 0],
-    )
-    assert.equates(
-      f(1, -1).times(0.5).qubitDensityMatrixToBlochVector(),
       [1, 0, 0],
     )
     assert.equates(
+      f(1, -1).times(0.5).qubitDensityMatrixToBlochVector(),
+      [-1, 0, 0],
+    )
+    assert.equates(
       f(1, i).times(0.5).qubitDensityMatrixToBlochVector(),
-      [0, -1, 0],
+      [0, 1, 0],
     )
     assert.equates(
       f(1, mi).times(0.5).qubitDensityMatrixToBlochVector(),
-      [0, 1, 0],
+      [0, -1, 0],
     )
   })
 
@@ -1134,23 +681,6 @@ QUnit.module("Matrix", () => {
     assert.approximatelyEquates(
       bellState.qubitDensityMatrix(1),
       Matrix.identity(2).times(0.5),
-    )
-  })
-
-  QUnit.test("determinant", (assert) => {
-    assert.throws(() => Matrix.col(1, 2).determinant())
-    assert.throws(() => Matrix.row(1, 2).determinant())
-
-    assert.equates(Matrix.solo(1).determinant(), 1)
-    assert.equates(Matrix.solo(2).determinant(), 2)
-
-    assert.equates(Matrix.square(1, 2, 3, 4).determinant(), -2)
-    assert.equates(Matrix.square(2, 3, 5, 7).determinant(), -1)
-
-    assert.equates(Matrix.square(1, 2, 3, 4, 5, 6, 7, 8, 9).determinant(), 0)
-    assert.equates(
-      Matrix.square(2, 3, 5, 7, 11, 13, 17, 19, 23).determinant(),
-      -78,
     )
   })
 
@@ -1380,31 +910,6 @@ QUnit.module("Matrix", () => {
     },
   )
 
-  QUnit.test("cross3", (assert) => {
-    const [x, y, z] = [
-      Matrix.col(1, 0, 0),
-      Matrix.col(0, 1, 0),
-      Matrix.col(0, 0, 1),
-    ]
-    const zero = Matrix.col(0, 0, 0)
-
-    assert.equates(zero.cross3(zero), zero)
-    assert.equates(x.cross3(zero), zero)
-    assert.equates(y.cross3(zero), zero)
-    assert.equates(z.cross3(zero), zero)
-
-    assert.equates(x.cross3(y), z)
-    assert.equates(y.cross3(z), x)
-    assert.equates(z.cross3(x), y)
-
-    assert.equates(y.cross3(x), z.times(-1))
-    assert.equates(z.cross3(y), x.times(-1))
-    assert.equates(x.cross3(z), y.times(-1))
-
-    assert.equates(x.times(2).cross3(y.times(3)), z.times(6))
-    assert.equates(x.plus(y).cross3(y), z)
-  })
-
   QUnit.test("isUpperTriangular", (assert) => {
     assert.ok(Matrix.solo(NaN).isUpperTriangular())
     assert.ok(Matrix.solo(0).isUpperTriangular())
@@ -1598,31 +1103,6 @@ QUnit.module("Matrix", () => {
     }
   })
 
-  QUnit.test("eigenvalueMagnitudes", (assert) => {
-    assert.equates(Matrix.HADAMARD.eigenvalueMagnitudes(0.001, 3), [1, 1])
-    assert.equates(Matrix.PAULI_X.eigenvalueMagnitudes(0.001), [1, 1])
-    assert.equates(Matrix.PAULI_Y.eigenvalueMagnitudes(0.001), [1, 1])
-    assert.equates(Matrix.PAULI_Z.eigenvalueMagnitudes(0.001), [1, 1])
-    assert.equates(
-      Matrix.identity(5).eigenvalueMagnitudes(0.001),
-      [1, 1, 1, 1, 1],
-    )
-
-    assert.approximatelyEquates(
-      Matrix.square(1, 1, 1, 1).eigenvalueMagnitudes(0.001),
-      [2, 0],
-    )
-    assert.approximatelyEquates(
-      Matrix.square(1, -1, -1, 1).eigenvalueMagnitudes(0.001),
-      [2, 0],
-    )
-
-    assert.approximatelyEquates(
-      Matrix.square(1, 1, 0, 1, 1, 0, 0, 0, 0).eigenvalueMagnitudes(0.001),
-      [2, 0, 0],
-    )
-  })
-
   QUnit.test("isDiagonal", (assert) => {
     assert.ok(Matrix.solo(NaN).isDiagonal())
     assert.ok(Matrix.solo(0).isDiagonal())
@@ -1657,187 +1137,4 @@ QUnit.module("Matrix", () => {
       0, Infinity, 0,
       0, 0, Complex.I).isDiagonal(0.2))
   })
-
-  QUnit.test("hasNaN", (assert) => {
-    assert.ok(Matrix.solo(NaN).hasNaN())
-    assert.notOk(Matrix.solo(0).hasNaN())
-
-    assert.ok(Matrix.solo(new Complex(0, NaN)).hasNaN())
-    assert.ok(Matrix.square(0, 0, NaN, 0).hasNaN())
-    assert.notOk(Matrix.square(0, 0, 0, 0).hasNaN())
-  })
-
-  // QUnit.test("expandedForQubitInRegister", (assert) => {
-  //   const _ = 0
-  //   // prettier-ignore
-  //   assert.equates(Matrix.square(2, 3, 5, 7).expandedForQubitInRegister(0, 3, Controls.NONE), Matrix.square(
-  //     2,3,_,_,_,_,_,_,
-  //     5,7,_,_,_,_,_,_,
-  //     _,_,2,3,_,_,_,_,
-  //     _,_,5,7,_,_,_,_,
-  //     _,_,_,_,2,3,_,_,
-  //     _,_,_,_,5,7,_,_,
-  //     _,_,_,_,_,_,2,3,
-  //     _,_,_,_,_,_,5,7
-  //   ))
-  //   // prettier-ignore
-  //   assert.equates(Matrix.square(2, 3, 5, 7).expandedForQubitInRegister(1, 3, Controls.NONE), Matrix.square(
-  //     2,_,3,_,_,_,_,_,
-  //     _,2,_,3,_,_,_,_,
-  //     5,_,7,_,_,_,_,_,
-  //     _,5,_,7,_,_,_,_,
-  //     _,_,_,_,2,_,3,_,
-  //     _,_,_,_,_,2,_,3,
-  //     _,_,_,_,5,_,7,_,
-  //     _,_,_,_,_,5,_,7
-  //   ))
-  //   // prettier-ignore
-  //   assert.equates(Matrix.square(2, 3, 5, 7).expandedForQubitInRegister(2, 3, Controls.NONE), Matrix.square(
-  //     2,_,_,_,3,_,_,_,
-  //     _,2,_,_,_,3,_,_,
-  //     _,_,2,_,_,_,3,_,
-  //     _,_,_,2,_,_,_,3,
-  //     5,_,_,_,7,_,_,_,
-  //     _,5,_,_,_,7,_,_,
-  //     _,_,5,_,_,_,7,_,
-  //     _,_,_,5,_,_,_,7
-  //   ))
-  //   // prettier-ignore
-  //   assert.equates(Matrix.square(2, 3, 5, 7).
-  //     expandedForQubitInRegister(0, 3, Controls.bit(1, true)), Matrix.square(
-  //       1,_,_,_,_,_,_,_,
-  //       _,1,_,_,_,_,_,_,
-  //       _,_,2,3,_,_,_,_,
-  //       _,_,5,7,_,_,_,_,
-  //       _,_,_,_,1,_,_,_,
-  //       _,_,_,_,_,1,_,_,
-  //       _,_,_,_,_,_,2,3,
-  //       _,_,_,_,_,_,5,7
-  //     ))
-  //   // prettier-ignore
-  //   assert.equates(Matrix.square(2, 3, 5, 7).
-  //     expandedForQubitInRegister(0, 3, Controls.bit(2, false)), Matrix.square(
-  //       2,3,_,_,_,_,_,_,
-  //       5,7,_,_,_,_,_,_,
-  //       _,_,2,3,_,_,_,_,
-  //       _,_,5,7,_,_,_,_,
-  //       _,_,_,_,1,_,_,_,
-  //       _,_,_,_,_,1,_,_,
-  //       _,_,_,_,_,_,1,_,
-  //       _,_,_,_,_,_,_,1
-  //     ))
-  // })
-
-  // QUnit.test("applyToStateVectorAtQubitWithControls", (assert) => {
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       0,
-  //       Controls.NONE,
-  //     ),
-  //     Matrix.col(2, 3, 2, 3, 2, 3, 2, 3),
-  //   )
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       1,
-  //       Controls.NONE,
-  //     ),
-  //     Matrix.col(2, 2, 3, 3, 2, 2, 3, 3),
-  //   )
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       2,
-  //       Controls.NONE,
-  //     ),
-  //     Matrix.col(2, 2, 2, 2, 3, 3, 3, 3),
-  //   )
-
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       2,
-  //       Controls.bit(0, false),
-  //     ),
-  //     Matrix.col(2, 1, 2, 1, 3, 1, 3, 1),
-  //   )
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       2,
-  //       Controls.bit(0, true),
-  //     ),
-  //     Matrix.col(1, 2, 1, 2, 1, 3, 1, 3),
-  //   )
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       2,
-  //       Controls.bit(1, false),
-  //     ),
-  //     Matrix.col(2, 2, 1, 1, 3, 3, 1, 1),
-  //   )
-
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       0,
-  //       Controls.bit(2, false),
-  //     ),
-  //     Matrix.col(2, 3, 2, 3, 1, 1, 1, 1),
-  //   )
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       0,
-  //       Controls.bit(2, true),
-  //     ),
-  //     Matrix.col(1, 1, 1, 1, 2, 3, 2, 3),
-  //   )
-
-  //   assert.equates(
-  //     Matrix.square(2, 0, 0, 3).applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(...new Array(8).fill(1)),
-  //       1,
-  //       Controls.bit(0, false).and(Controls.bit(2, true)),
-  //     ),
-  //     Matrix.col(1, 1, 1, 1, 2, 1, 3, 1),
-  //   )
-
-  //   const m = Matrix.square(
-  //     new Complex(2, 3),
-  //     new Complex(5, 7),
-  //     new Complex(11, 13),
-  //     new Complex(17, 19),
-  //   )
-  //   const v = Matrix.col(new Complex(108, 109), new Complex(112, 113))
-  //   const p = m.times(v)
-  //   assert.equates(
-  //     m.applyToStateVectorAtQubitWithControls(
-  //       Matrix.col(
-  //         new Complex(100, 101),
-  //         new Complex(102, 103),
-  //         new Complex(104, 105),
-  //         new Complex(106, 107),
-  //         new Complex(108, 109),
-  //         new Complex(110, 111),
-  //         new Complex(112, 113),
-  //         new Complex(114, 115),
-  //       ),
-  //       1,
-  //       Controls.bit(0, false).and(Controls.bit(2, true)),
-  //     ),
-  //     Matrix.col(
-  //       new Complex(100, 101),
-  //       new Complex(102, 103),
-  //       new Complex(104, 105),
-  //       new Complex(106, 107),
-  //       p.cell(0, 0),
-  //       new Complex(110, 111),
-  //       p.cell(0, 1),
-  //       new Complex(114, 115),
-  //     ),
-  //   )
-  // })
 })

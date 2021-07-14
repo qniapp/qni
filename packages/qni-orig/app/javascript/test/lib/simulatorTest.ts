@@ -251,21 +251,21 @@ QUnit.module("Simulator", () => {
 
   QUnit.module(".rnot", () => {
     QUnit.test(
-      "|0>.rnot(0) should be |0>.h(0).phase('-pi/2', 0).h(0)",
+      "|0>.rnot(0) should be |0>.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("0").rnot(0).state,
-          new Simulator("0").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("0").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
 
     QUnit.test(
-      "|1>.rnot(0) should be |1>.h(0).phase('-pi/2', 0).h(0)",
+      "|1>.rnot(0) should be |1>.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("1").rnot(0).state,
-          new Simulator("1").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("1").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
@@ -281,61 +281,61 @@ QUnit.module("Simulator", () => {
     )
 
     QUnit.test(
-      "|->.rnot(0) should be |->.h(0).phase('-pi/2', 0).h(0)",
+      "|->.rnot(0) should be |->.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("-").rnot(0).state,
-          new Simulator("-").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("-").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
 
     QUnit.test(
-      "|i>.rnot(0) should be |i>.h(0).phase('-pi/2', 0).h(0)",
+      "|i>.rnot(0) should be |i>.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("i").rnot(0).state,
-          new Simulator("i").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("i").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
 
     QUnit.test(
-      "|-i>.rnot(0) should be |-i>.h(0).phase('-pi/2', 0).h(0)",
+      "|-i>.rnot(0) should be |-i>.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("-i").rnot(0).state,
-          new Simulator("-i").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("-i").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
 
     QUnit.test(
-      "|00>.rnot(0) should be |00>.h(0).phase('-pi/2', 0).h(0)",
+      "|00>.rnot(0) should be |00>.h(0).phase('pi/2', 0).h(0)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("00").rnot(0).state,
-          new Simulator("00").h(0).phase("-pi/2", 0).h(0).state,
+          new Simulator("00").h(0).phase("pi/2", 0).h(0).state,
         )
       },
     )
 
     QUnit.test(
-      "|00>.rnot(1) should be |00>.h(1).phase('-pi/2', 1).h(1)",
+      "|00>.rnot(1) should be |00>.h(1).phase('pi/2', 1).h(1)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("00").rnot(1).state,
-          new Simulator("00").h(1).phase("-pi/2", 1).h(1).state,
+          new Simulator("00").h(1).phase("pi/2", 1).h(1).state,
         )
       },
     )
 
     QUnit.test(
-      "|00>.rnot(0, 1) should be |00>.h(0, 1).phase('-pi/2', 0, 1).h(0, 1)",
+      "|00>.rnot(0, 1) should be |00>.h(0, 1).phase('pi/2', 0, 1).h(0, 1)",
       (assert) => {
         assert.approximatelyEquates(
           new Simulator("00").rnot(0, 1).state,
-          new Simulator("00").h(0, 1).phase("-pi/2", 0, 1).h(0, 1).state,
+          new Simulator("00").h(0, 1).phase("pi/2", 0, 1).h(0, 1).state,
         )
       },
     )

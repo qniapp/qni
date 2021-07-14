@@ -104,6 +104,7 @@ module.exports = {
       "-10": "-10deg",
       0: "0",
       45: "45deg",
+      "-45": "-45deg",
       90: "90deg",
     },
     extend: {

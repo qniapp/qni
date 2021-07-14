@@ -1,0 +1,8 @@
+.qubit-circle-ket {
+  @apply text-xs;
+  @apply whitespace-nowrap;
+
+  &__value {
+    @apply font-mono;
+  }
+}

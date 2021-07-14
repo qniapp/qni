@@ -1,8 +1,0 @@
-.palette {
-  @apply hidden;
-
-  @screen md {
-    @apply flex flex-col;
-    @apply mx-6;
-  }
-}

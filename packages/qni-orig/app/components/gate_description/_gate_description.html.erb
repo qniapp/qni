@@ -1,0 +1,15 @@
+<% gate_description = local_assigns.fetch(:gate_description) %>
+
+<div class="gate-description">
+  <div class="gate-description__title"><%= gate_description.title %></div>
+  <ul class="gate-description__subtitles">
+    <% gate_description.subtitles.each do |each| %>
+      <li><%= each %></li>
+    <% end %>
+  </ul>
+  <% if gate_description.content %>
+    <div class="gate-description__body">
+      <%= gate_description.content %>
+    </div>
+  <% end %>
+</div>
