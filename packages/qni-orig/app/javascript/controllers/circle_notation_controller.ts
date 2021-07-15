@@ -17,6 +17,7 @@ import {
   cleanupPopup,
   setQubitCirclePopupContent,
 } from "qubit_circle_popup/qubitCirclePopup"
+import { Complex } from "lib/math"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle", "popup"]
@@ -24,8 +25,7 @@ export default class CircleNotationController extends Controller {
   private qubitCircleVisibilityChanged!: boolean
   private visibleQubitCirclesCache!: HTMLElement[]
 
-  private magnitudes!: { [bit: number]: number }
-  private phases!: { [bit: number]: number }
+  private amplitudes!: Complex[]
 
   declare initialized: boolean
   declare readonly qubitCircleTargets: HTMLElement[]
@@ -53,15 +53,13 @@ export default class CircleNotationController extends Controller {
     Util.notNull(qubitCircleEl)
 
     const ket = ketDecimal(qubitCircleEl)
-    const magnitude = this.magnitudes[ket]
-    const phase = this.phases[ket]
+    const amplitude = this.amplitudes[ket]
 
     setQubitCirclePopupContent(
       this.popupTarget,
       qubitCircleEl,
       ket,
-      magnitude,
-      phase,
+      amplitude,
       this.nqubit,
     )
   }
@@ -84,12 +82,8 @@ export default class CircleNotationController extends Controller {
     return parseInt(maxNqubit)
   }
 
-  update(
-    magnitudes: { [bit: number]: number },
-    phases: { [bit: number]: number },
-  ): void {
-    this.magnitudes = magnitudes
-    this.phases = phases
+  update(amplitudes: Complex[]): void {
+    this.amplitudes = amplitudes
 
     if (!this.initialized) {
       this.initQubitCircles()
@@ -118,11 +112,7 @@ export default class CircleNotationController extends Controller {
   }
 
   private updateQubitCircles(): void {
-    setQubitCircleClasses(
-      this.visibleQubitCircles(),
-      this.magnitudes,
-      this.phases,
-    )
+    setQubitCircleClasses(this.visibleQubitCircles(), this.amplitudes)
   }
 
   private visibleQubitCircles(): HTMLElement[] {

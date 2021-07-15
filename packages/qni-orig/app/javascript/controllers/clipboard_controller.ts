@@ -7,7 +7,7 @@ export default class ClipboardController extends Controller {
   connect(): void {
     this.popup = tippy(this.element, {
       arrow: roundArrow + roundArrow,
-      content: "Copied!",
+      content: "Copied to clipboard",
       duration: [0, 250],
       placement: "bottom",
       theme: "qni",

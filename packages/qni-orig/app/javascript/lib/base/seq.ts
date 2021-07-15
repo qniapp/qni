@@ -801,7 +801,7 @@ export class Seq<T> {
     return this.distinctBy((e: T) => e)
   }
 
-  segmentBy(keySelector: (e: T) => unknown): Seq<T> {
+  segmentBy(keySelector: (e: T) => unknown): Seq<T[]> {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const seq = this
     return Seq.fromGenerator(function* () {

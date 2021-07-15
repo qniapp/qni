@@ -1,4 +1,5 @@
 import { Util } from "lib/base"
+import { Complex } from "lib/math"
 import tippy, {
   CreateSingletonInstance,
   CreateSingletonProps,
@@ -36,34 +37,36 @@ export function setQubitCirclePopupContent(
   popupEl: HTMLElement,
   qubitCircleEl: HTMLElement,
   ket: number,
-  magnitude: number,
-  phase: number,
+  amplitude: Complex,
   nqubit: number,
 ): void {
   const tippy = (qubitCircleEl as ReferenceElement)._tippy as Instance
-  tippy.setContent(popupContent(popupEl, ket, magnitude, phase, nqubit))
+  tippy.setContent(popupContent(popupEl, ket, amplitude, nqubit))
 }
 
 function popupContent(
   popupEl: HTMLElement,
   ket: number,
-  magnitude: number,
-  phase: number,
+  amplitude: Complex,
   nqubit: number,
 ): string {
-  const probability = round(magnitude * magnitude * 100, 5)
-  const phaseRounded = round(phase, 2)
+  const magnitude = amplitude.abs()
+  const phase = (amplitude.phase() / Math.PI) * 180
 
   popupKetBinaryEl(popupEl).textContent = ket.toString(2).padStart(nqubit, "0")
   popupKetDecimalEl(popupEl).textContent = ket.toString()
-  popupProbabilityEl(popupEl).textContent = `${probability}%`
-  popupPhaseEl(popupEl).textContent = probability > 0 ? `${phaseRounded}°` : "-"
+  popupAmplitudeRealEl(popupEl).textContent = forceSigned(amplitude.real, 5)
+  popupAmplitudeImagEl(popupEl).textContent =
+    forceSigned(amplitude.imag, 5) + "i"
+  popupProbabilityEl(popupEl).textContent =
+    forceSigned(magnitude * magnitude * 100, 4) + "%"
+  popupPhaseEl(popupEl).textContent = forceSigned(phase, 2) + "°"
 
   return popupEl.innerHTML
 }
 
-function round(n: number, decimal: number): number {
-  return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
+function forceSigned(value: number, d: number): string {
+  return (value >= 0 ? "+" : "") + value.toFixed(d)
 }
 
 function popupKetBinaryEl(popupEl: HTMLElement): HTMLElement {
@@ -78,6 +81,24 @@ function popupKetBinaryEl(popupEl: HTMLElement): HTMLElement {
 function popupKetDecimalEl(popupEl: HTMLElement): HTMLElement {
   const el = popupEl
     .getElementsByClassName("qubit-circle-popup__ket-decimal")
+    .item(0) as HTMLElement
+  Util.notNull(el)
+
+  return el
+}
+
+function popupAmplitudeRealEl(popupEl: HTMLElement): HTMLElement {
+  const el = popupEl
+    .getElementsByClassName("qubit-circle-popup__amplitude-real")
+    .item(0) as HTMLElement
+  Util.notNull(el)
+
+  return el
+}
+
+function popupAmplitudeImagEl(popupEl: HTMLElement): HTMLElement {
+  const el = popupEl
+    .getElementsByClassName("qubit-circle-popup__amplitude-imag")
     .item(0) as HTMLElement
   Util.notNull(el)
 

@@ -1,16 +1,17 @@
 import { Util } from "lib/base"
+import { Complex } from "lib/math"
 
 export function setQubitCircleClasses(
   qubitCircles: HTMLElement[],
-  magnitudes: { [bit: number]: number },
-  phases: { [bit: number]: number },
+  amplitudes: Complex[],
 ): void {
   for (let i = 0; i < qubitCircles.length; i++) {
     const qc = qubitCircles[i]
     const ket = ketDecimal(qc)
-    const magnitude = magnitudes[ket]
+    const amp = amplitudes[ket]
 
-    if (magnitude === undefined) break
+    if (amp === undefined) break
+    const magnitude = amp.abs()
 
     let className = ""
     const magInt = Math.round(magnitude * 100)
@@ -19,7 +20,8 @@ export function setQubitCircleClasses(
     className += `qubit-circle qubit-circle--magnitude-${magRounded}`
 
     if (magRounded != 0) {
-      let phaseRounded = Math.round(phases[ket] / 10) * 10
+      const phase = (amp.phase() / Math.PI) * 180
+      let phaseRounded = Math.round(phase / 10) * 10
       if (phaseRounded < 0) phaseRounded = 360 + phaseRounded
       className += ` qubit-circle--phase-${phaseRounded.toString()}`
     }

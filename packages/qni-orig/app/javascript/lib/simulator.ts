@@ -1,46 +1,31 @@
 import {
   BLOCH_DISPLAY_INSTRUCTION_TYPE,
   CONTROL_GATE_INSTRUCTION_TYPE,
-  ControlGateInstruction,
   HADAMARD_GATE_INSTRUCTION_TYPE,
-  HadamardGateInstruction,
   I_GATE_INSTRUCTION_TYPE,
   MEASURE_GATE_INSTRUCTION_TYPE,
-  MeasureInstruction,
   NOT_GATE_INSTRUCTION_TYPE,
-  NotGateInstruction,
   PHASE_GATE_INSTRUCTION_TYPE,
-  PhaseGateInstruction,
   QUBIT_LABEL_INSTRUCTION_TYPE,
   ROOT_NOT_GATE_INSTRUCTION_TYPE,
   RX_GATE_INSTRUCTION_TYPE,
   RY_GATE_INSTRUCTION_TYPE,
   RZ_GATE_INSTRUCTION_TYPE,
-  RootNotGateInstruction,
-  RxGateInstruction,
-  RyGateInstruction,
-  RzGateInstruction,
   SWAP_GATE_INSTRUCTION_TYPE,
   SeriarizedInstruction,
-  SwapGateInstruction,
   WRITE0_GATE_INSTRUCTION,
   WRITE1_GATE_INSTRUCTION,
-  WriteInstruction,
-  YGateInstruction,
   Y_GATE_INSTRUCTION_TYPE,
-  ZGateInstruction,
   Z_GATE_INSTRUCTION_TYPE,
 } from "lib/editor/gates"
 import { StateVector } from "lib/simulator/stateVector"
-import { PARSE_COMPLEX_TOKEN_MAP_RAD, Complex } from "./math"
-import { parseFormula } from "./math"
+import { Complex, Matrix } from "./math"
 
 export class Simulator {
   public state: StateVector
   public blochVectors: { [bit: number]: [number, number, number] }
   public bits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
-  private eiphiCache!: { [phi: string]: Complex }
 
   constructor(bits: string | StateVector) {
     if ("string" === typeof bits) {
@@ -50,7 +35,6 @@ export class Simulator {
     }
     this.bits = {}
     this.flags = {}
-    this.eiphiCache = {}
   }
 
   runStep(instructions: SeriarizedInstruction[]): Simulator {
@@ -66,46 +50,113 @@ export class Simulator {
           break
         case WRITE0_GATE_INSTRUCTION:
         case WRITE1_GATE_INSTRUCTION:
-          this.applyWriteGate(each, bit)
+          this.write(each.value, bit)
           break
         case BLOCH_DISPLAY_INSTRUCTION_TYPE:
-          this.applyBlochDisplay(bit)
+          this.blochVectors[bit] = this.state.blochVector(bit)
           break
         case HADAMARD_GATE_INSTRUCTION_TYPE:
-          this.applyHadamardGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.ch(each.controls, bit)
           break
         case NOT_GATE_INSTRUCTION_TYPE:
-          this.applyNotGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.cnot(each.controls, bit)
           break
         case Y_GATE_INSTRUCTION_TYPE:
-          this.applyYGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.cy(each.controls, bit)
           break
         case Z_GATE_INSTRUCTION_TYPE:
-          this.applyZGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.cz(each.controls, bit)
           break
-        case PHASE_GATE_INSTRUCTION_TYPE:
-          this.applyPhaseGate(each, bit, doneCPhaseTargets)
+        case PHASE_GATE_INSTRUCTION_TYPE: {
+          const controls = each.controls
+          const targets = each.targets.sort()
+
+          if (controls.length == 0) {
+            if (targets.length == 0) {
+              if (each.phi) {
+                this.phase(each.phi, bit)
+              }
+            } else if (targets.length == 2) {
+              if (
+                doneCPhaseTargets.some((done) => {
+                  return done[0] === targets[0] && done[1] === targets[1]
+                })
+              ) {
+                break
+              }
+              this.cphase(targets[0], each.phi, targets[1])
+              doneCPhaseTargets.push(targets as [number, number])
+            }
+          } else {
+            this.cphase(controls, each.phi, bit)
+          }
           break
-        case CONTROL_GATE_INSTRUCTION_TYPE:
-          this.applyControlGate(each, instructions, doneControlTargets)
+        }
+        case CONTROL_GATE_INSTRUCTION_TYPE: {
+          const targets = each.targets.sort()
+
+          if (targets.length < 2) break
+          if (
+            doneControlTargets.some((done) => {
+              return String(done) === String(targets)
+            })
+          ) {
+            break
+          }
+          const allControl = targets.every((each) => {
+            return instructions[each].type === "•"
+          })
+          if (!allControl) break
+
+          this.cz(targets.slice(1), targets[0])
+          doneControlTargets.push(targets)
           break
-        case SWAP_GATE_INSTRUCTION_TYPE:
-          this.applySwapGate(each, doneSwapTargets)
+        }
+        case SWAP_GATE_INSTRUCTION_TYPE: {
+          const controls = each.controls
+          const targets = each.targets
+
+          if (targets.length != 2) break
+          if (
+            doneSwapTargets.some((done) => {
+              return done[0] === targets[0] && done[1] === targets[1]
+            })
+          ) {
+            break
+          }
+
+          if (controls.length == 0) {
+            this.swap(targets[0], targets[1])
+            doneSwapTargets.push(targets)
+          } else if (controls.length == 1) {
+            doneSwapTargets.push(targets)
+            this.cswap(controls[0], targets[0], targets[1])
+          }
           break
+        }
         case ROOT_NOT_GATE_INSTRUCTION_TYPE:
-          this.applyRootNotGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.crnot(each.controls, bit)
           break
         case RX_GATE_INSTRUCTION_TYPE:
-          this.applyRxGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.crx(each.controls, each.theta, bit)
           break
         case RY_GATE_INSTRUCTION_TYPE:
-          this.applyRyGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.cry(each.controls, each.theta, bit)
           break
         case RZ_GATE_INSTRUCTION_TYPE:
-          this.applyRzGate(each, bit)
+          if (each.if && !this.flags[each.if]) break
+          this.crz(each.controls, each.theta, bit)
           break
         case MEASURE_GATE_INSTRUCTION_TYPE:
-          this.applyMeasureGate(each, bit)
+          this.measure(bit)
+          if (each.set) this.flags[each.set] = this.bits[bit] == 1
           break
         default:
           throw new Error("Unknown instruction")
@@ -125,202 +176,57 @@ export class Simulator {
     return this
   }
 
-  x(...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
+  h(...targets: number[]): Simulator {
+    this.u(Matrix.HADAMARD, ...targets)
+    return this
+  }
 
-          this.state.setAmplifier(a0, va1)
-          this.state.setAmplifier(a1, va0)
-        }
-      }
-    })
+  ch(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.HADAMARD, ...targets)
+    return this
+  }
+
+  x(...targets: number[]): Simulator {
+    this.u(Matrix.PAULI_X, ...targets)
+    return this
+  }
+
+  cnot(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.PAULI_X, ...targets)
     return this
   }
 
   y(...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
+    this.u(Matrix.PAULI_Y, ...targets)
+    return this
+  }
 
-          this.state.setAmplifier(a0, va1.times(new Complex(0, -1)))
-          this.state.setAmplifier(a1, va0.times(Complex.I))
-        }
-      }
-    })
+  cy(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.PAULI_Y, ...targets)
     return this
   }
 
   z(...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, va1.times(new Complex(-1, 0)))
-        }
-      }
-    })
+    this.u(Matrix.PAULI_Z, ...targets)
     return this
   }
 
-  h(...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
-          this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
-        }
-      }
-    })
+  cz(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.PAULI_Z, ...targets)
     return this
   }
 
   phase(phi: string, ...targets: number[]): Simulator {
-    const u11 = this.eiphi(phi)
-
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, u11.times(va1))
-        }
-      }
-    })
+    this.u(Matrix.PHASE(phi), ...targets)
     return this
   }
 
-  rx(theta: string, ...targets: number[]): Simulator {
-    const numTheta = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const costheta2 = Math.cos(numTheta / 2)
-    const sintheta2 = Math.sin(numTheta / 2)
-
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(costheta2).minus(va1.times(Complex.I).times(sintheta2)),
-          )
-          this.state.setAmplifier(
-            a1,
-            va0
-              .times(new Complex(0, -1))
-              .times(sintheta2)
-              .plus(va1.times(costheta2)),
-          )
-        }
-      }
-    })
-    return this
-  }
-
-  ry(theta: string, ...targets: number[]): Simulator {
-    const numTheta = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const costheta2 = Math.cos(numTheta / 2)
-    const sintheta2 = Math.sin(numTheta / 2)
-
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(costheta2).minus(va1.times(sintheta2)),
-          )
-          this.state.setAmplifier(
-            a1,
-            va0.times(sintheta2).plus(va1.times(costheta2)),
-          )
-        }
-      }
-    })
-    return this
-  }
-
-  rz(theta: string, ...targets: number[]): Simulator {
-    const numTheta = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const i = Complex.I
-    const e = new Complex(Math.E, 0)
-
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(
-              e.raisedTo(new Complex(-1, 0).times(i).times(numTheta / 2)),
-            ),
-          )
-          this.state.setAmplifier(
-            a1,
-            va1.times(e.raisedTo(i.times(numTheta / 2))),
-          )
-        }
-      }
-    })
-    return this
-  }
-
-  rnot(...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            Complex.I.plus(1)
-              .times(va0)
-              .plus(new Complex(0, -1).plus(1).times(va1))
-              .dividedBy(2),
-          )
-          this.state.setAmplifier(
-            a1,
-            new Complex(0, -1)
-              .plus(1)
-              .times(va0)
-              .plus(Complex.I.plus(1).times(va1))
-              .dividedBy(2),
-          )
-        }
-      }
-    })
+  cphase(
+    controls: number | number[],
+    phi: string,
+    ...targets: number[]
+  ): Simulator {
+    this.cu(controls, Matrix.PHASE(phi), ...targets)
     return this
   }
 
@@ -330,80 +236,65 @@ export class Simulator {
   }
 
   cswap(control: number, target0: number, target1: number): Simulator {
-    this.ccnot(control, target0, target1)
-      .ccnot(control, target1, target0)
-      .ccnot(control, target0, target1)
+    this.cnot([control, target0], target1)
+      .cnot([control, target1], target0)
+      .cnot([control, target0], target1)
     return this
   }
 
-  cnot(control: number, ...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va1)
-          this.state.setAmplifier(a1, va0)
-        }
-      }
-    })
+  rnot(...targets: number[]): Simulator {
+    this.u(Matrix.RNOT, ...targets)
     return this
   }
 
-  ch(control: number, ...targets: number[]): Simulator {
-    targets.forEach((t) => {
-      for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-        if ((bit & (1 << t)) == 0 && (bit & (1 << control)) != 0) {
-          const a0 = bit
-          const a1 = a0 ^ (1 << t)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va0.plus(va1).times(Math.sqrt(0.5)))
-          this.state.setAmplifier(a1, va0.minus(va1).times(Math.sqrt(0.5)))
-        }
-      }
-    })
+  crnot(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.RNOT, ...targets)
     return this
   }
 
-  cphase(phi: string, target0: number, target1: number): Simulator {
-    const u11 = this.eiphi(phi)
-
-    for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-      if ((bit & (1 << target0)) == 0 && (bit & (1 << target1)) != 0) {
-        const a0 = bit
-        const a1 = a0 ^ (1 << target0)
-        const va1 = this.state.amplifier(a1)
-
-        this.state.setAmplifier(a1, u11.times(va1))
-      }
-    }
+  rx(theta: string, ...targets: number[]): Simulator {
+    this.u(Matrix.RX(theta), ...targets)
     return this
   }
 
-  ccz(control1: number, control2: number, target: number): Simulator {
-    for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-      if (
-        (bit & (1 << target)) != 0 &&
-        (bit & (1 << control1)) != 0 &&
-        (bit & (1 << control2)) != 0
-      ) {
-        this.state.setAmplifier(bit, this.state.amplifier(bit).times(-1))
-      }
-    }
+  crx(
+    controls: number | number[],
+    theta: string,
+    ...targets: number[]
+  ): Simulator {
+    this.cu(controls, Matrix.RX(theta), ...targets)
     return this
   }
 
-  ccnot(control1: number, control2: number, target: number): Simulator {
-    this.h(target).ccz(control1, control2, target).h(target)
+  ry(theta: string, ...targets: number[]): Simulator {
+    this.u(Matrix.RY(theta), ...targets)
     return this
   }
 
-  read(...targets: number[]): Simulator {
+  cry(
+    controls: number | number[],
+    theta: string,
+    ...targets: number[]
+  ): Simulator {
+    this.cu(controls, Matrix.RY(theta), ...targets)
+    return this
+  }
+
+  rz(theta: string, ...targets: number[]): Simulator {
+    this.u(Matrix.RZ(theta), ...targets)
+    return this
+  }
+
+  crz(
+    controls: number | number[],
+    theta: string,
+    ...targets: number[]
+  ): Simulator {
+    this.cu(controls, Matrix.RZ(theta), ...targets)
+    return this
+  }
+
+  measure(...targets: number[]): Simulator {
     targets.forEach((t) => {
       const pZero = this.pZero(t)
       const rand = Math.random()
@@ -431,15 +322,30 @@ export class Simulator {
     return this
   }
 
-  magnitudes(): number[] {
+  amplitudes(): [number, number][] {
     return this.state.matrix.getColumn(0).map((each) => {
-      return each.abs()
+      return [each.real, each.imag]
     })
   }
 
-  phases(): number[] {
-    return this.state.matrix.getColumn(0).map((each) => {
-      return (each.phase() / Math.PI) * 180
+  private u(u: Matrix, ...targets: number[]): void {
+    targets.forEach((t) => {
+      this.state.timesQubitOperation(u, t, 0)
+    })
+  }
+
+  private cu(
+    controls: number | number[],
+    u: Matrix,
+    ...targets: number[]
+  ): void {
+    const cs = typeof controls === "number" ? [controls] : controls
+    const controlMask = cs.reduce((result, each) => {
+      return result | (1 << each)
+    }, 0)
+
+    targets.forEach((t) => {
+      this.state.timesQubitOperation(u, t, controlMask)
     })
   }
 
@@ -450,422 +356,6 @@ export class Simulator {
         p += Math.pow(this.state.amplifier(bit).abs(), 2)
       }
     }
-    return this.round(p, 5)
-  }
-
-  private round(n: number, decimal: number): number {
-    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
-  }
-
-  private applyBlochDisplay(bit: number): void {
-    this.blochVectors[bit] = this.state.matrix
-      .qubitDensityMatrix(bit)
-      .qubitDensityMatrixToBlochVector()
-  }
-
-  private applyWriteGate(gate: WriteInstruction, bit: number): void {
-    this.write(gate.value, bit)
-  }
-
-  private applyMeasureGate(gate: MeasureInstruction, bit: number): void {
-    this.read(bit)
-    if (gate.set) {
-      this.flags[gate.set] = this.bits[bit] == 1
-    }
-  }
-
-  private applyNotGate(gate: NotGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.x(bit)
-        }
-      } else {
-        this.x(bit)
-      }
-    } else if (controls.length == 1) {
-      this.cnot(controls[0], bit)
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va1)
-          this.state.setAmplifier(a1, va0)
-        }
-      }
-    }
-  }
-
-  private applyYGate(gate: YGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.y(bit)
-        }
-      } else {
-        this.y(bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va1.times(new Complex(0, -1)))
-          this.state.setAmplifier(a1, va0.times(Complex.I))
-        }
-      }
-    }
-  }
-
-  private applyZGate(gate: ZGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.z(bit)
-        }
-      } else {
-        this.z(bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, va1.times(new Complex(-1, 0)))
-        }
-      }
-    }
-  }
-
-  private applyRootNotGate(gate: RootNotGateInstruction, bit: number): void {
-    if (gate.if) {
-      if (this.flags[gate.if]) {
-        this.rnot(bit)
-      }
-    } else {
-      this.rnot(bit)
-    }
-  }
-
-  private applyRxGate(gate: RxGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.rx(gate.theta, bit)
-        }
-      } else {
-        this.rx(gate.theta, bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      const numTheta = parseFormula<number>(
-        gate.theta,
-        PARSE_COMPLEX_TOKEN_MAP_RAD,
-      )
-      const costheta2 = Math.cos(numTheta / 2)
-      const sintheta2 = Math.sin(numTheta / 2)
-
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(costheta2).minus(va1.times(Complex.I).times(sintheta2)),
-          )
-          this.state.setAmplifier(
-            a1,
-            va1.times(costheta2).minus(va0.times(Complex.I).times(sintheta2)),
-          )
-        }
-      }
-    }
-  }
-
-  private applyRyGate(gate: RyGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.ry(gate.theta, bit)
-        }
-      } else {
-        this.ry(gate.theta, bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      const numTheta = parseFormula<number>(
-        gate.theta,
-        PARSE_COMPLEX_TOKEN_MAP_RAD,
-      )
-      const costheta2 = Math.cos(numTheta / 2)
-      const sintheta2 = Math.sin(numTheta / 2)
-
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(costheta2).minus(va1.times(Complex.I).times(sintheta2)),
-          )
-          this.state.setAmplifier(
-            a1,
-            va0
-              .times(new Complex(0, -1))
-              .times(sintheta2)
-              .plus(va1.times(costheta2)),
-          )
-        }
-      }
-    }
-  }
-
-  private applyRzGate(gate: RzGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.rz(gate.theta, bit)
-        }
-      } else {
-        this.rz(gate.theta, bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      const numTheta = parseFormula<number>(
-        gate.theta,
-        PARSE_COMPLEX_TOKEN_MAP_RAD,
-      )
-      const i = Complex.I
-      const e = new Complex(Math.E, 0)
-
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(
-            a0,
-            va0.times(
-              e.raisedTo(new Complex(-1, 0).times(i).times(numTheta / 2)),
-            ),
-          )
-          this.state.setAmplifier(
-            a1,
-            va1.times(e.raisedTo(i.times(numTheta / 2))),
-          )
-        }
-      }
-    }
-  }
-
-  private applyPhaseGate(
-    gate: PhaseGateInstruction,
-    bit: number,
-    gatesDone: [number, number][],
-  ): void {
-    const controls = gate.controls
-    const targets = gate.targets
-
-    if (controls.length == 0) {
-      if (targets.length == 0) {
-        if (gate.phi) {
-          this.phase(gate.phi, bit)
-        }
-      } else if (targets.length == 2) {
-        if (
-          gatesDone.some((done) => {
-            return done[0] === targets[0] && done[1] === targets[1]
-          })
-        ) {
-          return
-        }
-        this.cphase(gate.phi, targets[0], targets[1])
-        gatesDone.push(targets as [number, number])
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        const u11 = this.eiphi(gate.phi)
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a1, u11.times(va1))
-        }
-      }
-    }
-  }
-
-  private applyHadamardGate(gate: HadamardGateInstruction, bit: number): void {
-    const controls = gate.controls
-
-    if (controls.length == 0) {
-      if (gate.if) {
-        if (this.flags[gate.if]) {
-          this.h(bit)
-        }
-      } else {
-        this.h(bit)
-      }
-    } else {
-      const controlBits = controls.reduce((result, each) => {
-        return result | (1 << each)
-      }, 0)
-      for (let b = 0; b < 1 << this.state.nqubit; b++) {
-        if ((b & controlBits) != controlBits) continue
-
-        if ((b & (1 << bit)) == 0) {
-          const a0 = b
-          const a1 = a0 ^ (1 << bit)
-          const va0 = this.state.amplifier(a0)
-          const va1 = this.state.amplifier(a1)
-
-          this.state.setAmplifier(a0, va0.plus(va1).dividedBy(Math.sqrt(2)))
-          this.state.setAmplifier(a1, va0.minus(va1).dividedBy(Math.sqrt(2)))
-        }
-      }
-    }
-  }
-
-  private applyControlGate(
-    gate: ControlGateInstruction,
-    instructions: SeriarizedInstruction[],
-    gatesDone: number[][],
-  ): void {
-    const targets = gate.targets.sort()
-
-    if (targets.length < 2) return
-
-    if (
-      gatesDone.some((done) => {
-        return String(done) === String(targets)
-      })
-    ) {
-      return
-    }
-
-    const allControl = targets.every((each) => {
-      return instructions[each].type === "•"
-    })
-    if (!allControl) return
-
-    const controls = targets.slice(1)
-    const controlBits = controls.reduce((result, each) => {
-      return result | (1 << each)
-    }, 0)
-
-    const bit = targets[0]
-    for (let b = 0; b < 1 << this.state.nqubit; b++) {
-      if ((b & controlBits) != controlBits) continue
-
-      if ((b & (1 << bit)) == 0) {
-        const a0 = b
-        const a1 = a0 ^ (1 << bit)
-        const va1 = this.state.amplifier(a1)
-
-        this.state.setAmplifier(a1, va1.times(-1))
-      }
-    }
-
-    gatesDone.push(targets)
-  }
-
-  private applySwapGate(
-    gate: SwapGateInstruction,
-    gatesDone: [number, number][],
-  ): void {
-    const targets = gate.targets
-
-    if (targets.length != 2) return
-    if (
-      gatesDone.some((done) => {
-        return done[0] === targets[0] && done[1] === targets[1]
-      })
-    ) {
-      return
-    }
-
-    if (gate.controls.length == 0) {
-      this.swap(targets[0], targets[1])
-      gatesDone.push(targets)
-    } else if (gate.controls.length == 1) {
-      gatesDone.push(targets)
-      this.cswap(gate.controls[0], targets[0], targets[1])
-    }
-  }
-
-  // e^iφ
-  private eiphi(phi: string): Complex {
-    const cache = this.eiphiCache[phi]
-    if (cache) return cache
-
-    const numPhi = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
-    const i = Complex.I
-    const e = new Complex(Math.E, 0)
-    const eiphi = e.raisedTo(i.times(numPhi))
-    this.eiphiCache[phi] = eiphi
-
-    return eiphi
+    return p
   }
 }

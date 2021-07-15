@@ -1,5 +1,6 @@
 import { DetailedError, Format, Seq, seq, Util } from "lib/base"
-import { Complex } from "./complex"
+import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "./complex"
+import { parseFormula } from "./formulaParser"
 
 export class Matrix {
   /**
@@ -21,6 +22,69 @@ export class Matrix {
    * The 2x2 Hadamard matrix.
    */
   static HADAMARD = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
+
+  /**
+   * The 2x2 Root of NOT matrix.
+   */
+  static RNOT = Matrix.square(
+    Complex.I.plus(1),
+    Complex.I.neg().plus(1),
+    Complex.I.neg().plus(1),
+    Complex.I.plus(1),
+  ).times(0.5)
+
+  /**
+   * The 2x2 Phase shift matrix.
+   */
+  static PHASE(phi: string): Matrix {
+    const φ = parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const e = new Complex(Math.E, 0)
+
+    return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
+  }
+
+  /**
+   * The 2x2 Rx(θ) matrix.
+   */
+  static RX(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const cosθ2 = Math.cos(θ / 2)
+    const sinθ2 = Math.sin(θ / 2)
+
+    return Matrix.square(
+      cosθ2,
+      Complex.I.neg().times(sinθ2),
+      Complex.I.neg().times(sinθ2),
+      cosθ2,
+    )
+  }
+
+  /**
+   * The 2x2 Ry(θ) matrix.
+   */
+  static RY(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const cosθ2 = Math.cos(θ / 2)
+    const sinθ2 = Math.sin(θ / 2)
+
+    return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
+  }
+
+  /**
+   * The 2x2 Rz(θ) matrix.
+   */
+  static RZ(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const e = new Complex(Math.E, 0)
+    const i = Complex.I
+
+    return Matrix.square(
+      e.raisedTo(i.neg().times(θ / 2)),
+      0,
+      0,
+      e.raisedTo(i.times(θ / 2)),
+    )
+  }
 
   public width: number
   public height: number

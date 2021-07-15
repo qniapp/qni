@@ -11,20 +11,19 @@ import {
 } from "lib/editor/gates"
 import { RunButton } from "lib/simulator/runButton"
 import { Breakpoint, Util, classNameFor } from "lib/base"
+import { Complex } from "lib/math"
 
 type MessageEventData = {
   type: "step" | "finish"
   blochVectors: { [bit: number]: [number, number, number] }
   bits: { [bit: number]: number }
   step: number
-  magnitudes: { [bit: number]: number }
-  phases: { [bit: number]: number }
+  amplitudes: [number, number][]
   flags: { [key: string]: boolean }
 }
 
 export default class SimulatorController extends Controller {
-  private magnitudes: { [step: number]: { [bit: number]: number } } | undefined
-  private phases: { [step: number]: { [bit: number]: number } } | undefined
+  private amplitudes: Complex[][] | undefined
   private userDraggingGate!: boolean
 
   static targets = ["circuit", "runButton"]
@@ -56,8 +55,7 @@ export default class SimulatorController extends Controller {
         Util.notNull(e.data)
 
         const data = e.data as MessageEventData
-        this.magnitudes = this.magnitudes || {}
-        this.phases = this.phases || {}
+        this.amplitudes = this.amplitudes || []
 
         if (data.type === "step") {
           const step = this.circuit.steps[data.step]
@@ -91,8 +89,9 @@ export default class SimulatorController extends Controller {
             }
           })
 
-          this.magnitudes[data.step] = data.magnitudes
-          this.phases[data.step] = data.phases
+          this.amplitudes[data.step] = data.amplitudes.map((amp) => {
+            return new Complex(amp[0], amp[1])
+          })
 
           step.done = true
         } else if (data.type === "finish") {
@@ -186,15 +185,12 @@ export default class SimulatorController extends Controller {
   }
 
   private drawStateVector(circuitBreakpoint: number): void {
-    if (this.magnitudes === undefined) return
-    if (this.phases === undefined) return
+    if (this.amplitudes === undefined) return
 
-    const magnitudes = this.magnitudes[circuitBreakpoint]
-    const phases = this.phases[circuitBreakpoint]
-    if (!magnitudes) return
-    if (!phases) return
+    const amplitudes = this.amplitudes[circuitBreakpoint]
+    if (!amplitudes) return
 
-    this.circleNotationController.update(magnitudes, phases)
+    this.circleNotationController.update(amplitudes)
   }
 
   private get circuit(): Circuit {
