@@ -127,12 +127,12 @@ QUnit.module("Simulator", () => {
 
     QUnit.test("|+>.h(0) should be |0>", (assert) => {
       const simulator = new Simulator("+")
-      assert.equates(simulator.h(0).state, new StateVector("0"))
+      assert.approximatelyEquates(simulator.h(0).state, new StateVector("0"))
     })
 
     QUnit.test("|->.h(0) should be |1>", (assert) => {
       const simulator = new Simulator("-")
-      assert.equates(simulator.h(0).state, new StateVector("1"))
+      assert.approximatelyEquates(simulator.h(0).state, new StateVector("1"))
     })
 
     QUnit.test("|i>.h(0) should be e^{iπ/4}|-i>", (assert) => {
@@ -368,41 +368,57 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("11")
       assert.equates(simulator.cnot(1, 0).state, new StateVector("10"))
     })
+
+    QUnit.test("|010>.cnot([0, 1], 2) should be |010>", (assert) => {
+      const simulator = new Simulator("010")
+      assert.approximatelyEquates(
+        simulator.cnot([0, 1], 2).state,
+        new StateVector("010"),
+      )
+    })
+
+    QUnit.test("|011>.cnot([0, 1], 2) should be |111>", (assert) => {
+      const simulator = new Simulator("011")
+      assert.approximatelyEquates(
+        simulator.cnot([0, 1], 2).state,
+        new StateVector("111"),
+      )
+    })
   })
 
   QUnit.module(".cphase", () => {
-    QUnit.test("|00>.cphase('pi', 0, 1) should be |00>", (assert) => {
+    QUnit.test("|00>.cphase(0, 'pi', 1) should be |00>", (assert) => {
       const simulator = new Simulator("00")
-      assert.equates(simulator.cphase("pi", 0, 1).state, new StateVector("00"))
+      assert.equates(simulator.cphase(0, "pi", 1).state, new StateVector("00"))
     })
 
-    QUnit.test("|11>.cphase('pi', 0, 1) should be -|11>", (assert) => {
+    QUnit.test("|11>.cphase(0, 'pi', 1) should be -|11>", (assert) => {
       const simulator = new Simulator("11")
       assert.approximatelyEquates(
-        simulator.cphase("pi", 0, 1).state.matrix,
+        simulator.cphase(0, "pi", 1).state.matrix,
         new StateVector("11").matrix.times(-1),
       )
     })
   })
 
   QUnit.module(".measure", () => {
-    QUnit.test("|0>.read(0) should be |0>", (assert) => {
+    QUnit.test("|0>.measure(0) should be |0>", (assert) => {
       const simulator = new Simulator("0")
-      simulator.read(0)
+      simulator.measure(0)
       assert.equates(simulator.state, new StateVector("0"))
       assert.equates(simulator.bits, { 0: 0 })
     })
 
-    QUnit.test("|1>.read(0) should be |1>", (assert) => {
+    QUnit.test("|1>.measure(0) should be |1>", (assert) => {
       const simulator = new Simulator("1")
-      simulator.read(0)
+      simulator.measure(0)
       assert.equates(simulator.state, new StateVector("1"))
       assert.equates(simulator.bits, { 0: 1 })
     })
 
-    QUnit.test("|+>.read(0) should be |0> or |1>", (assert) => {
+    QUnit.test("|+>.measure(0) should be |0> or |1>", (assert) => {
       const simulator = new Simulator("+")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.ok(
         simulator.state.isApproximatelyEqualTo(
@@ -415,9 +431,9 @@ QUnit.module("Simulator", () => {
       assert.ok(simulator.bits[0] == 0 || simulator.bits[0] == 1)
     })
 
-    QUnit.test("|->.read(0) should be |0> or |1>", (assert) => {
+    QUnit.test("|->.measure(0) should be |0> or |1>", (assert) => {
       const simulator = new Simulator("-")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(
@@ -431,9 +447,9 @@ QUnit.module("Simulator", () => {
       )
     })
 
-    QUnit.test("|i>.read(0) should be |0> or |1>", (assert) => {
+    QUnit.test("|i>.measure(0) should be |0> or |1>", (assert) => {
       const simulator = new Simulator("i")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(
@@ -447,9 +463,9 @@ QUnit.module("Simulator", () => {
       )
     })
 
-    QUnit.test("|-i>.read(0) should be |0> or |1>", (assert) => {
+    QUnit.test("|-i>.measure(0) should be |0> or |1>", (assert) => {
       const simulator = new Simulator("-i")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.ok(
         simulator.state.matrix.isApproximatelyEqualTo(
@@ -463,70 +479,52 @@ QUnit.module("Simulator", () => {
       )
     })
 
-    QUnit.test("|00>.read(0) should be |00>", (assert) => {
+    QUnit.test("|00>.measure(0) should be |00>", (assert) => {
       const simulator = new Simulator("00")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.equates(simulator.state, new StateVector("00"))
       assert.equates(simulator.bits, { 0: 0 })
     })
 
-    QUnit.test("|00>.read(1) should be |00>", (assert) => {
+    QUnit.test("|00>.measure(1) should be |00>", (assert) => {
       const simulator = new Simulator("00")
-      simulator.read(1)
+      simulator.measure(1)
 
       assert.equates(simulator.state, new StateVector("00"))
       assert.equates(simulator.bits, { 1: 0 })
     })
 
-    QUnit.test("|00>.read(0, 1) should be |00>", (assert) => {
+    QUnit.test("|00>.measure(0, 1) should be |00>", (assert) => {
       const simulator = new Simulator("00")
-      simulator.read(0, 1)
+      simulator.measure(0, 1)
 
       assert.equates(simulator.state, new StateVector("00"))
       assert.equates(simulator.bits, { 0: 0, 1: 0 })
     })
 
-    QUnit.test("|11>.read(0) should be |11>", (assert) => {
+    QUnit.test("|11>.measure(0) should be |11>", (assert) => {
       const simulator = new Simulator("11")
-      simulator.read(0)
+      simulator.measure(0)
 
       assert.equates(simulator.state, new StateVector("11"))
       assert.equates(simulator.bits, { 0: 1 })
     })
 
-    QUnit.test("|11>.read(1) should be |11>", (assert) => {
+    QUnit.test("|11>.measure(1) should be |11>", (assert) => {
       const simulator = new Simulator("11")
-      simulator.read(1)
+      simulator.measure(1)
 
       assert.equates(simulator.state, new StateVector("11"))
       assert.equates(simulator.bits, { 1: 1 })
     })
 
-    QUnit.test("|11>.read(0, 1) should be |11>", (assert) => {
+    QUnit.test("|11>.measure(0, 1) should be |11>", (assert) => {
       const simulator = new Simulator("11")
-      simulator.read(0, 1)
+      simulator.measure(0, 1)
 
       assert.equates(simulator.state, new StateVector("11"))
       assert.equates(simulator.bits, { 0: 1, 1: 1 })
-    })
-  })
-
-  QUnit.module(".ccnot", () => {
-    QUnit.test("|010>.ccnot(0, 1, 2) should be |010>", (assert) => {
-      const simulator = new Simulator("010")
-      assert.approximatelyEquates(
-        simulator.ccnot(0, 1, 2).state,
-        new StateVector("010"),
-      )
-    })
-
-    QUnit.test("|011>.ccnot(0, 1, 2) should be |111>", (assert) => {
-      const simulator = new Simulator("011")
-      assert.approximatelyEquates(
-        simulator.ccnot(0, 1, 2).state,
-        new StateVector("111"),
-      )
     })
   })
 

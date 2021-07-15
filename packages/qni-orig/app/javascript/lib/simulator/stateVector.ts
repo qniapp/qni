@@ -17,6 +17,23 @@ export class StateVector {
     this.nqubit = Math.log2(this.size)
   }
 
+  timesQubitOperation(
+    operation2x2: Matrix,
+    qubitIndex: number,
+    controlMask: number,
+  ): void {
+    this.matrix = this.matrix.timesQubitOperation(
+      operation2x2,
+      qubitIndex,
+      controlMask,
+      controlMask,
+    )
+  }
+
+  blochVector(bit: number): [number, number, number] {
+    return this.matrix.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
+  }
+
   get bra(): Matrix {
     return this.matrix.adjoint()
   }

@@ -17,8 +17,7 @@ self.addEventListener(
         step: i,
         blochVectors: simulator.blochVectors,
         bits: simulator.bits,
-        magnitudes: simulator.magnitudes(),
-        phases: simulator.phases(),
+        amplitudes: simulator.amplitudes(),
         flags: simulator.flags,
       })
     })

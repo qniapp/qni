@@ -10,6 +10,8 @@
     @apply font-mono;
   }
 
+  &__amplitude-real,
+  &__amplitude-imag,
   &__probability,
   &__phase {
     @apply font-bold;
