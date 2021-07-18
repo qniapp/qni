@@ -39,7 +39,7 @@
     "printWidth": 80
   },
   "dependencies": {
-    "@babel/plugin-proposal-throw-expressions": "~7.12",
+    "@babel/plugin-proposal-throw-expressions": "~7.14",
     "@babel/preset-typescript": "~7.14",
     "@interactjs/actions": "^1.10.11",
     "@interactjs/auto-start": "^1.10.11",
@@ -70,7 +70,7 @@
     "@typescript-eslint/parser": "~4.28",
     "babel-eslint": "^10.1.0",
     "cz-conventional-changelog": "~3.3",
-    "eslint": "~7.30",
+    "eslint": "~7.31",
     "eslint-config-prettier": "~8.3",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": ">=6",

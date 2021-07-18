@@ -6,7 +6,7 @@ function hadamardGateFixture(dataIf: string | undefined) {
   if (dataIf) {
     return `<div id="hadamard-gate" class="hadamard-gate" data-if="${dataIf}"></div>`
   } else {
-    return "<div id=\"hadamard-gate\" class=\"hadamard-gate\"></div>"
+    return '<div id="hadamard-gate" class="hadamard-gate"></div>'
   }
 }
 
@@ -33,7 +33,7 @@ QUnit.module("HadamardGate", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(hadamardGate.serialize()),
-      "{\"type\": \"H\", \"controls\": [], \"if\": null}",
+      '{"type": "H", "controls": [], "if": null}',
     )
   })
 })
@@ -54,7 +54,7 @@ QUnit.module("HadamardGate (if alice_h)", (hooks) => {
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(hadamardGate.serialize()),
-      "{\"type\": \"H\", \"controls\": [], \"if\": \"alice_h\"}",
+      '{"type": "H", "controls": [], "if": "alice_h"}',
     )
   })
 })

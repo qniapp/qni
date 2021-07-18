@@ -36,7 +36,7 @@ QUnit.module(".describe", () => {
     assert.equal(describe(undefined), "undefined")
     assert.equal(describe(null), "null")
     assert.equal(describe(false), "false")
-    assert.equal(describe(""), "\"\"")
+    assert.equal(describe(""), '""')
     assert.equal(describe(0), "0")
     assert.equal(describe(Symbol()), "Symbol()")
 
@@ -51,7 +51,7 @@ QUnit.module(".describe", () => {
   QUnit.test(".describe(simple)", (assert) => {
     assert.equal(describe(true), "true")
     assert.equal(describe(1.5), "1.5")
-    assert.equal(describe("b"), "\"b\"")
+    assert.equal(describe("b"), '"b"')
     assert.equal(describe(Symbol("a")), "Symbol(a)")
     assert.equal(describe(Infinity), "Infinity")
     assert.equal(describe(-Infinity), "-Infinity")
@@ -61,13 +61,13 @@ QUnit.module(".describe", () => {
     assert.equal(describe(new Float32Array([1, 2, 3])), "Float32Array[1, 2, 3]")
     assert.equal(describe(new Int8Array([1, 2, 3])), "Int8Array[1, 2, 3]")
     assert.equal(describe(new Set([2])), "Set{2}")
-    assert.equal(describe(new Map([[2, "b"]])), "Map{2: \"b\"}")
-    assert.equal(describe({ 2: "b" }), "{\"2\": \"b\"}")
+    assert.equal(describe(new Map([[2, "b"]])), 'Map{2: "b"}')
+    assert.equal(describe({ 2: "b" }), '{"2": "b"}')
 
     assert.equal(describe(new DescribedClass()), "described")
     assert.equal(
       describe(new DescribableClass()),
-      "(Type: DescribableClass){\"x\": 1}",
+      '(Type: DescribableClass){"x": 1}',
     )
     assert.equal(describe(new SomeIterable()), "SomeIterable[1, 2, 3]")
   })
@@ -96,10 +96,10 @@ QUnit.module(".describe", () => {
 
     const o: { [key: number]: unknown } = {}
     o[2] = o
-    assert.equal(describe(o, 2), "{\"2\": {\"2\": !recursion-limit!}}")
+    assert.equal(describe(o, 2), '{"2": {"2": !recursion-limit!}}')
     assert.equal(
       describe(o, 10),
-      "{\"2\": {\"2\": {\"2\": {\"2\": {\"2\": {\"2\": {\"2\": {\"2\": {\"2\": {\"2\": !recursion-limit!}}}}}}}}}}",
+      '{"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": {"2": !recursion-limit!}}}}}}}}}}',
     )
 
     // Default terminates.
