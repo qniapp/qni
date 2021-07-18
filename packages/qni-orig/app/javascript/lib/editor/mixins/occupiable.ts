@@ -3,7 +3,8 @@ import { Elementable } from "lib/mixins"
 
 export declare class Occupiable {
   set occupied(flag: boolean)
-  isOccupied(): boolean
+  get occupied(): boolean
+  get empty(): boolean
 }
 
 export function OccupiableMixin<TBase extends Constructor<Elementable>>(
@@ -14,8 +15,12 @@ export function OccupiableMixin<TBase extends Constructor<Elementable>>(
       this.setClassName("dropzone:state:occupied", flag)
     }
 
-    isOccupied(): boolean {
+    get occupied(): boolean {
       return this.isClassNamed("dropzone:state:occupied")
+    }
+
+    get empty(): boolean {
+      return !this.occupied
     }
   }
 

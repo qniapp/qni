@@ -4,7 +4,7 @@ import { Instruction } from "lib/instruction"
 import { classNameFor } from "lib/base"
 
 export class CircuitDraggable extends Draggable {
-  static elementClassName = classNameFor("draggable:type:circuit")
+  static readonly elementClassName = classNameFor("draggable:type:circuit")
 
   grab(event: MouseEvent): void {
     this.simulatorElement.dispatchEvent(

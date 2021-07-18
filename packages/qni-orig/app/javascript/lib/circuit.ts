@@ -1,81 +1,14 @@
-import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
+import {
+  CircuitDraggable,
+  CircuitDropzone,
+  CircuitStep,
+  CircuitWire,
+} from "./editor"
 import { DropEventHandlers } from "./editor/mixins"
 import { Instruction } from "lib/instruction"
 import { InternalError } from "./error"
 import { QubitLabel } from "lib/instructions"
 import { classNameFor, Util } from "./base"
-
-class CircuitWire {
-  public elements: HTMLElement[]
-
-  constructor(elements: HTMLElement[]) {
-    this.elements = elements
-  }
-
-  clone(): CircuitWire {
-    const elements = this.elements.map((each) => {
-      return each.cloneNode(true) as HTMLElement
-    })
-    return new CircuitWire(elements)
-  }
-
-  clear(): CircuitWire {
-    this.elements.forEach((each) => {
-      if (each.classList.contains(classNameFor("dropzone"))) {
-        const circuitDropzone = new CircuitDropzone(each)
-        circuitDropzone.clear()
-        circuitDropzone.wireActive = false
-      }
-    })
-    return this
-  }
-
-  get isEmpty(): boolean {
-    return this.elements
-      .slice(2)
-      .filter((each) => {
-        return each.classList.contains(classNameFor("dropzone"))
-      })
-      .map((each) => {
-        return new CircuitDropzone(each)
-      })
-      .every((each) => {
-        return !each.isOccupied()
-      })
-  }
-
-  get dropzones(): CircuitDropzone[] {
-    return this.elements
-      .filter((each) => {
-        return each.classList.contains(classNameFor("dropzone"))
-      })
-      .map((each) => {
-        return new CircuitDropzone(each)
-      })
-  }
-
-  incrementQubitLabelValue(): CircuitWire {
-    this.elements.forEach((each) => {
-      if (each.classList.contains(classNameFor("display:qubitLabel"))) {
-        const qubitLabel = new QubitLabel(each)
-        if (/^0x/.exec(qubitLabel.value)) {
-          const labelValue = parseInt(qubitLabel.value)
-          qubitLabel.value = `0x${(labelValue * 2).toString(16)}`
-        }
-      }
-    })
-    return this
-  }
-
-  remove() {
-    this.elements.forEach((each) => {
-      if (each.classList.contains(classNameFor("dropzone"))) {
-        new CircuitDropzone(each).unsetInteract()
-      }
-      each.parentNode?.removeChild(each)
-    })
-  }
-}
 
 export class Circuit {
   private element: Element
@@ -137,7 +70,7 @@ export class Circuit {
   get emptySteps(): CircuitStep[] {
     return this.steps
       .filter((each) => {
-        return each.isEmpty
+        return each.empty
       })
       .slice(0, -1)
   }
@@ -182,9 +115,16 @@ export class Circuit {
   }
 
   removeEmptyWire(): void {
-    this.wires.forEach((each) => {
-      if (each.isEmpty) each.remove()
-    })
+    const numWire = this.wires.length
+    const wires = this.wires
+
+    for (let i = numWire - 1; i >= 0; --i) {
+      if (wires[i].removable) {
+        wires[i].remove()
+      } else {
+        break
+      }
+    }
     this.updateNqubit()
   }
 
@@ -202,10 +142,10 @@ export class Circuit {
   get wires(): CircuitWire[] {
     const wireElements: HTMLElement[][] = []
 
-    this.steps.map((step) => {
-      step.childElements.forEach((child, i) => {
+    this.steps.forEach((step) => {
+      step.childElements.forEach((each, i) => {
         if (!wireElements[i]) wireElements.push([])
-        wireElements[i].push(child as HTMLElement)
+        wireElements[i].push(each)
       })
     })
 
