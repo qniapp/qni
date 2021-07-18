@@ -4,7 +4,7 @@ module.exports = {
   extends: ["eslint:recommended"],
   rules: {
     semi: ["error", "never"],
-    quotes: ["error", "double"],
+    quotes: ["error", "double", { "avoidEscape": true }],
     "no-unused-vars": ["error", { vars: "all", args: "none" }],
     "no-trailing-spaces": ["error"],
     "no-multiple-empty-lines": ["error", { max: 2 }],

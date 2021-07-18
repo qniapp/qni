@@ -32,7 +32,7 @@ export class Editor {
     history.pushState(
       "",
       "",
-      "{\"cols\":[[\"|0>\"],[\"H\"],[\"Measure\"]],\"init\":false}",
+      '{"cols":[["|0>"],["H"],["Measure"]],"init":false}',
     )
     location.reload()
   }

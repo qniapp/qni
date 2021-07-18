@@ -50,12 +50,12 @@ export class Circuit {
         } else {
           if (circuitBlock !== null) {
             circuitBlock = null
-            cols.push("[\"}\"]")
+            cols.push('["}"]')
           }
         }
         cols.push(each.toJson())
       })
-    if (circuitBlock) cols.push("[\"}\"]")
+    if (circuitBlock) cols.push('["}"]')
     return `{"cols":[${cols.join(",")}],"init":false}`
   }
 
