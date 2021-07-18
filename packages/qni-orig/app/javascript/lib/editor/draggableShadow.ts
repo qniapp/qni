@@ -1,6 +1,6 @@
 import { DraggableItem } from "./draggableItem"
 import { Dropzonable } from "./mixins"
-import { CircuitElement } from "./gates"
+import { Instruction } from "lib/instruction"
 import { Util, classNameFor } from "lib/base"
 
 export class DraggableShadow {
@@ -55,8 +55,8 @@ export class DraggableShadow {
     return el as HTMLElement
   }
 
-  private instruction(draggableElement = this.element): CircuitElement {
-    return CircuitElement.create(draggableElement)
+  private instruction(draggableElement = this.element): Instruction {
+    return Instruction.create(draggableElement)
   }
 
   private disableAction(element: HTMLElement) {

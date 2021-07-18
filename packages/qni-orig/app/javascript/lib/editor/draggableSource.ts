@@ -1,23 +1,11 @@
-import { Elementable } from "lib/mixins"
 import { classNameFor } from "lib/base"
-import { Mixin } from "ts-mixer"
+import { Elementable } from "lib/mixins"
 
-export class DraggableSource extends Mixin(Elementable) {
-  static create(element: HTMLElement): DraggableSource {
-    const draggableSource = new DraggableSource()
-    draggableSource.assignElement(element)
-    return draggableSource
-  }
-
-  assignElement(element: HTMLElement): void {
-    this.element = this.validateElementClassName(
-      element,
-      "draggable:type:source",
-    )
-  }
+export class DraggableSource extends Elementable {
+  static elementClassName = classNameFor("draggable:type:source")
 
   remove(): void {
-    this.element.parentNode?.removeChild(this.element)
+    this.removeElement()
   }
 
   clonePlainDraggableElement(): HTMLElement {

@@ -1,129 +1,5 @@
 <div id="palette" class="palette" data-controller="gate-description">
   <%= dropzone palette: true, no_wire: true do %>
-    <%= write 0, palette: true %>
-    <% title = capture do %>
-      |<span class="font-mono">0</span>&#x27e9; Operation
-    <% end %>
-    <% subtitle = capture do %>
-      (Re)sets a qubit to state |<span class="font-mono">0</span>&#x27e9;.
-    <% end %>
-    <%= gate_description title: title, subtitles: [subtitle] do %>
-      <div class="gate-description__example">
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-        <%= gate_arrow do %>
-          <%= write 0 %>
-        <% end %>
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-      </div>
-      <div class="gate-description__example">
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-        <%= gate_arrow do %>
-          <%= write 0 %>
-        <% end %>
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
-  <%= dropzone palette: true, no_wire: true do %>
-    <%= write 1, palette: true %>
-    <% title = capture do %>
-      |<span class="font-mono">1</span>&#x27e9; Operation
-    <% end %>
-    <% subtitle = capture do %>
-      (Re)sets a qubit to state |<span class="font-mono">1</span>&#x27e9;.
-    <% end %>
-    <%= gate_description title: title, subtitles: [subtitle] do %>
-      <div class="gate-description__example">
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-        <%= gate_arrow do %>
-          <%= write 1 %>
-        <% end %>
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-      </div>
-      <div class="gate-description__example">
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-        <%= gate_arrow do %>
-          <%= write 1 %>
-        <% end %>
-        <div class="flex flex-row">
-          <div class="flex flex-col items-center">
-            <%= qubit_circle %>
-            <%= qubit_circle_ket 0 %>
-          </div>
-          <div class="flex flex-col items-center">
-            <%= qubit_circle magnitude: 100 %>
-            <%= qubit_circle_ket 1 %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-
-  <%= dropzone palette: true, no_wire: true do %>
     <%= hadamard_gate popup: false, palette: true %>
     <%= gate_description title: 'Hadamard Gate', subtitles: ['Creates simple superpositions.'] do %>
       <div class="gate-description__example">
@@ -510,16 +386,6 @@
   <% end %>
 
   <%= dropzone palette: true, no_wire: true do %>
-    <%= control_gate palette: true %>
-    <%= gate_description title: 'Control', subtitles: ['Conditions on a qubit being ON.', 'Gates in the same column only apply to states meeting the condition.'] %>
-  <% end %>
-
-  <%= dropzone palette: true, no_wire: true do %>
-    <%= swap_gate palette: true %>
-    <%= gate_description title: 'Swap Gate', subtitles: ['Swaps the values of two qubits.', '(Place two in the same column.)'] %>
-  <% end %>
-
-  <%= dropzone palette: true, no_wire: true do %>
     <%= root_not_gate popup: false, palette: true %>
     <%= gate_description title: 'Square Root of NOT Gate', subtitles: ['Rotates around the X-axis by π/2.'] do %>
       <div class="gate-description__example">
@@ -744,8 +610,142 @@
   <% end %>
 
   <%= dropzone palette: true, no_wire: true do %>
+    <%= swap_gate palette: true %>
+    <%= gate_description title: 'Swap Gate', subtitles: ['Swaps the values of two qubits.', '(Place two in the same column.)'] %>
+  <% end %>
+
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= control_gate palette: true %>
+    <%= gate_description title: 'Control', subtitles: ['Conditions on a qubit being ON.', 'Gates in the same column only apply to states meeting the condition.'] %>
+  <% end %>
+
+  <%= dropzone palette: true, no_wire: true do %>
     <%= bloch_display palette: true %>
     <%= gate_description title: 'Bloch Sphere Display', subtitles: ["Shows a wire's local state as a point on the Bloch sphere."] %>
+  <% end %>
+
+    <%= dropzone palette: true, no_wire: true do %>
+    <%= write 0, palette: true %>
+    <% title = capture do %>
+      |<span class="font-mono">0</span>&#x27e9; Operation
+    <% end %>
+    <% subtitle = capture do %>
+      (Re)sets a qubit to state |<span class="font-mono">0</span>&#x27e9;.
+    <% end %>
+    <%= gate_description title: title, subtitles: [subtitle] do %>
+      <div class="gate-description__example">
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+        <%= gate_arrow do %>
+          <%= write 0 %>
+        <% end %>
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+      </div>
+      <div class="gate-description__example">
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+        <%= gate_arrow do %>
+          <%= write 0 %>
+        <% end %>
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= dropzone palette: true, no_wire: true do %>
+    <%= write 1, palette: true %>
+    <% title = capture do %>
+      |<span class="font-mono">1</span>&#x27e9; Operation
+    <% end %>
+    <% subtitle = capture do %>
+      (Re)sets a qubit to state |<span class="font-mono">1</span>&#x27e9;.
+    <% end %>
+    <%= gate_description title: title, subtitles: [subtitle] do %>
+      <div class="gate-description__example">
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+        <%= gate_arrow do %>
+          <%= write 1 %>
+        <% end %>
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+      </div>
+      <div class="gate-description__example">
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+        <%= gate_arrow do %>
+          <%= write 1 %>
+        <% end %>
+        <div class="flex flex-row">
+          <div class="flex flex-col items-center">
+            <%= qubit_circle %>
+            <%= qubit_circle_ket 0 %>
+          </div>
+          <div class="flex flex-col items-center">
+            <%= qubit_circle magnitude: 100 %>
+            <%= qubit_circle_ket 1 %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <%= dropzone palette: true, no_wire: true do %>

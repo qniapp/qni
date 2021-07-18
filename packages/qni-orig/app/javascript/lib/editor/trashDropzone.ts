@@ -4,22 +4,20 @@ import "@interactjs/actions/drop"
 import "@interactjs/dev-tools"
 import interact from "@interactjs/interact"
 import { Interactable } from "@interactjs/types"
-import { DropEventHandlers, Dropzonable } from "./mixins"
+
+import {
+  DropEventHandlers,
+  DndableMixin,
+  DropzonableMixin,
+  OccupiableMixin,
+} from "./mixins"
+import { Elementable } from "lib/mixins"
 import { classNameFor } from "lib/base"
-import { Mixin } from "ts-mixer"
 
-export class TrashDropzone extends Mixin(Dropzonable) {
-  static create(
-    element: HTMLElement | Element | null | undefined,
-  ): TrashDropzone {
-    const trashDropzone = new TrashDropzone()
-    trashDropzone.assignElement(element)
-    return trashDropzone
-  }
-
-  assignElement(element: HTMLElement | Element | null | undefined): void {
-    this.element = this.validateElementClassName(element, "dropzone:type:trash")
-  }
+export class TrashDropzone extends DropzonableMixin(
+  OccupiableMixin(DndableMixin(Elementable)),
+) {
+  static elementClassName = classNameFor("dropzone:type:trash")
 
   setInteract(handlers: DropEventHandlers): void {
     this.unsetInteract()

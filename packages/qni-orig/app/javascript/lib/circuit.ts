@@ -1,7 +1,8 @@
 import { CircuitDraggable, CircuitDropzone, CircuitStep } from "./editor"
 import { DropEventHandlers } from "./editor/mixins"
-import { CircuitElement, QubitLabel } from "./editor/gates"
+import { Instruction } from "lib/instruction"
 import { InternalError } from "./error"
+import { QubitLabel } from "lib/instructions"
 import { classNameFor, Util } from "./base"
 
 class CircuitWire {
@@ -21,7 +22,7 @@ class CircuitWire {
   clear(): CircuitWire {
     this.elements.forEach((each) => {
       if (each.classList.contains(classNameFor("dropzone"))) {
-        const circuitDropzone = CircuitDropzone.create(each)
+        const circuitDropzone = new CircuitDropzone(each)
         circuitDropzone.clear()
         circuitDropzone.wireActive = false
       }
@@ -36,7 +37,7 @@ class CircuitWire {
         return each.classList.contains(classNameFor("dropzone"))
       })
       .map((each) => {
-        return CircuitDropzone.create(each)
+        return new CircuitDropzone(each)
       })
       .every((each) => {
         return !each.isOccupied()
@@ -49,16 +50,14 @@ class CircuitWire {
         return each.classList.contains(classNameFor("dropzone"))
       })
       .map((each) => {
-        return CircuitDropzone.create(each)
+        return new CircuitDropzone(each)
       })
   }
 
   incrementQubitLabelValue(): CircuitWire {
     this.elements.forEach((each) => {
-      if (
-        each.classList.contains(classNameFor("instruction:type:qubitLabel"))
-      ) {
-        const qubitLabel = QubitLabel.create(each)
+      if (each.classList.contains(classNameFor("display:qubitLabel"))) {
+        const qubitLabel = new QubitLabel(each)
         if (/^0x/.exec(qubitLabel.value)) {
           const labelValue = parseInt(qubitLabel.value)
           qubitLabel.value = `0x${(labelValue * 2).toString(16)}`
@@ -71,7 +70,7 @@ class CircuitWire {
   remove() {
     this.elements.forEach((each) => {
       if (each.classList.contains(classNameFor("dropzone"))) {
-        CircuitDropzone.create(each).unsetInteract()
+        new CircuitDropzone(each).unsetInteract()
       }
       each.parentNode?.removeChild(each)
     })
@@ -131,7 +130,7 @@ export class Circuit {
     return Array.from(
       this.element.getElementsByClassName(classNameFor("circuitStep")),
     ).map((each) => {
-      return CircuitStep.create(each)
+      return new CircuitStep(each)
     })
   }
 
@@ -159,11 +158,11 @@ export class Circuit {
         classNameFor("dropzone:type:circuit"),
       ),
     ).map((each) => {
-      return CircuitDropzone.create(each)
+      return new CircuitDropzone(each)
     })
   }
 
-  instructions(): CircuitElement[] {
+  instructions(): Instruction[] {
     return this.dropzones.map((each) => {
       return each.instruction
     })

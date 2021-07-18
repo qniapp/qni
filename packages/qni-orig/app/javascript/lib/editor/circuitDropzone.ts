@@ -4,33 +4,23 @@ import "@interactjs/actions/drop"
 import "@interactjs/dev-tools"
 import interact from "@interactjs/interact"
 import { Interactable } from "@interactjs/types"
+
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
-import { DropEventHandlers, Dropzonable, Occupiable } from "./mixins"
-import { CircuitElement } from "./gates"
+import { DropEventHandlers, DropzonableMixin, OccupiableMixin } from "./mixins"
+import { Instruction } from "lib/instruction"
 import { InternalError } from "lib/error"
-import { Mixin } from "ts-mixer"
 import { classNameFor } from "lib/base"
+import { Elementable } from "lib/mixins"
 
-export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
+export class CircuitDropzone extends DropzonableMixin(
+  OccupiableMixin(Elementable),
+) {
+  static elementClassName = classNameFor("dropzone:type:circuit")
+
   private _circuitStep: CircuitStep | undefined
-
-  static create(
-    element: HTMLElement | Element | null | undefined,
-  ): CircuitDropzone {
-    const circuitDropzone = new CircuitDropzone()
-    circuitDropzone.assignElement(element)
-    return circuitDropzone
-  }
-
-  assignElement(element: HTMLElement | Element | null | undefined): void {
-    this.element = this.validateElementClassName(
-      element,
-      "dropzone:type:circuit",
-    )
-  }
 
   setInteract(handlers: DropEventHandlers): void {
     this.unsetInteract()
@@ -101,7 +91,7 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     const el = this.element.closest(`.${className}`)
     if (!el) throw new InternalError(`.${className} not found`)
 
-    this._circuitStep = CircuitStep.create(el)
+    this._circuitStep = new CircuitStep(el)
     return this._circuitStep
   }
 
@@ -112,13 +102,13 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     return allDropzoneEls.indexOf(this.element)
   }
 
-  get instruction(): CircuitElement {
+  get instruction(): Instruction {
     const draggable = this.draggable
 
     if (draggable && !draggable.isGrabbed()) {
-      return draggable.circuitElement
+      return draggable.instruction
     }
-    return CircuitElement.create()
+    return Instruction.create()
   }
 
   clear(): void {
@@ -186,5 +176,11 @@ export class CircuitDropzone extends Mixin(Dropzonable, Occupiable) {
     return this.element === document.body
       ? false
       : document.body.contains(this.element)
+  }
+
+  unsetInteract(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const interactable = interact(this.element) as Interactable
+    interactable.unset()
   }
 }

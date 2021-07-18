@@ -1,3 +1,6 @@
+import { Complex, Matrix } from "./math"
+import { SeriarizedInstruction } from "lib/instruction"
+import { StateVector } from "lib/simulator/stateVector"
 import {
   BLOCH_DISPLAY_INSTRUCTION_TYPE,
   CONTROL_GATE_INSTRUCTION_TYPE,
@@ -12,14 +15,22 @@ import {
   RY_GATE_INSTRUCTION_TYPE,
   RZ_GATE_INSTRUCTION_TYPE,
   SWAP_GATE_INSTRUCTION_TYPE,
-  SeriarizedInstruction,
   WRITE0_GATE_INSTRUCTION,
   WRITE1_GATE_INSTRUCTION,
   Y_GATE_INSTRUCTION_TYPE,
   Z_GATE_INSTRUCTION_TYPE,
-} from "lib/editor/gates"
-import { StateVector } from "lib/simulator/stateVector"
-import { Complex, Matrix } from "./math"
+} from "lib/instructions"
+import {
+  HadamardGate,
+  NotGate,
+  PhaseGate,
+  RootNotGate,
+  RxGate,
+  RyGate,
+  RzGate,
+  YGate,
+  ZGate,
+} from "./instructions"
 
 export class Simulator {
   public state: StateVector
@@ -177,47 +188,47 @@ export class Simulator {
   }
 
   h(...targets: number[]): Simulator {
-    this.u(Matrix.HADAMARD, ...targets)
+    this.u(HadamardGate.MATRIX, ...targets)
     return this
   }
 
   ch(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.HADAMARD, ...targets)
+    this.cu(controls, HadamardGate.MATRIX, ...targets)
     return this
   }
 
   x(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_X, ...targets)
+    this.u(NotGate.MATRIX, ...targets)
     return this
   }
 
   cnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_X, ...targets)
+    this.cu(controls, NotGate.MATRIX, ...targets)
     return this
   }
 
   y(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_Y, ...targets)
+    this.u(YGate.MATRIX, ...targets)
     return this
   }
 
   cy(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_Y, ...targets)
+    this.cu(controls, YGate.MATRIX, ...targets)
     return this
   }
 
   z(...targets: number[]): Simulator {
-    this.u(Matrix.PAULI_Z, ...targets)
+    this.u(ZGate.MATRIX, ...targets)
     return this
   }
 
   cz(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.PAULI_Z, ...targets)
+    this.cu(controls, ZGate.MATRIX, ...targets)
     return this
   }
 
   phase(phi: string, ...targets: number[]): Simulator {
-    this.u(Matrix.PHASE(phi), ...targets)
+    this.u(PhaseGate.MATRIX(phi), ...targets)
     return this
   }
 
@@ -226,7 +237,7 @@ export class Simulator {
     phi: string,
     ...targets: number[]
   ): Simulator {
-    this.cu(controls, Matrix.PHASE(phi), ...targets)
+    this.cu(controls, PhaseGate.MATRIX(phi), ...targets)
     return this
   }
 
@@ -243,17 +254,17 @@ export class Simulator {
   }
 
   rnot(...targets: number[]): Simulator {
-    this.u(Matrix.RNOT, ...targets)
+    this.u(RootNotGate.MATRIX, ...targets)
     return this
   }
 
   crnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, Matrix.RNOT, ...targets)
+    this.cu(controls, RootNotGate.MATRIX, ...targets)
     return this
   }
 
   rx(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RX(theta), ...targets)
+    this.u(RxGate.MATRIX(theta), ...targets)
     return this
   }
 
@@ -262,12 +273,12 @@ export class Simulator {
     theta: string,
     ...targets: number[]
   ): Simulator {
-    this.cu(controls, Matrix.RX(theta), ...targets)
+    this.cu(controls, RxGate.MATRIX(theta), ...targets)
     return this
   }
 
   ry(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RY(theta), ...targets)
+    this.u(RyGate.MATRIX(theta), ...targets)
     return this
   }
 
@@ -276,12 +287,12 @@ export class Simulator {
     theta: string,
     ...targets: number[]
   ): Simulator {
-    this.cu(controls, Matrix.RY(theta), ...targets)
+    this.cu(controls, RyGate.MATRIX(theta), ...targets)
     return this
   }
 
   rz(theta: string, ...targets: number[]): Simulator {
-    this.u(Matrix.RZ(theta), ...targets)
+    this.u(RzGate.MATRIX(theta), ...targets)
     return this
   }
 
@@ -290,7 +301,7 @@ export class Simulator {
     theta: string,
     ...targets: number[]
   ): Simulator {
-    this.cu(controls, Matrix.RZ(theta), ...targets)
+    this.cu(controls, RzGate.MATRIX(theta), ...targets)
     return this
   }
 

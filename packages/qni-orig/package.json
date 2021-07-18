@@ -56,7 +56,6 @@
     "stimulus": "~2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "tippy.js": "^6.2.4",
-    "ts-mixer": "~6.0",
     "turbolinks": "^5.2.0",
     "typescript": "~4.3",
     "vanilla-lazyload": "^17.1.0",
