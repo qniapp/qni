@@ -1,33 +1,6 @@
-import { DetailedError, UNICODE_FRACTIONS } from "lib/base"
+import { DetailedError, Util, UNICODE_FRACTIONS } from "lib/base"
 import { Format } from "lib/base"
 import { parseFormula } from "./formulaParser"
-
-class Util {
-  /**
-   * Returns the cosine and sine of an angle, except that when the angle is the
-   * closest approximation to a multiple of π/4 the result is snapped to a nice
-   * vector by assuming the input was an exact multiple.
-   */
-  static snappedCosSin(radians: number) {
-    const unit = Math.PI / 4
-    const i = Math.round(radians / unit)
-    if (i * unit === radians) {
-      const s = Math.sqrt(0.5)
-      const snaps = [
-        [1, 0],
-        [s, s],
-        [0, 1],
-        [-s, s],
-        [-1, 0],
-        [-s, -s],
-        [0, -1],
-        [s, -s],
-      ]
-      return snaps[i & 7]
-    }
-    return [Math.cos(radians), Math.sin(radians)]
-  }
-}
 
 const PARSE_COMPLEX_TOKEN_MAP_ALL = new Map()
 export const PARSE_COMPLEX_TOKEN_MAP_RAD = new Map()

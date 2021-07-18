@@ -1,24 +1,9 @@
-import { Draggable } from "./mixins"
-import { Mixin } from "ts-mixer"
+import { classNameFor } from "lib/base"
+import { Draggable } from "./draggable"
 import { PaletteDropzone } from "./paletteDropzone"
-import { Util } from "lib/base"
 
-export class PaletteDraggable extends Mixin(Draggable) {
-  constructor(element: HTMLElement) {
-    super()
-    this.element = this.validateElementClassName(
-      element,
-      "draggable:type:palette",
-    )
-  }
-
-  enableDnd(): void {
-    this.setInteract({
-      onStart: this.startDragging.bind(this),
-      onMove: this.dragMove.bind(this),
-      onEnd: this.endDragging.bind(this),
-    })
-  }
+export class PaletteDraggable extends Draggable {
+  static elementClassName = classNameFor("draggable:type:palette")
 
   grab(event: MouseEvent): void {
     this.simulatorElement.dispatchEvent(
@@ -33,29 +18,22 @@ export class PaletteDraggable extends Mixin(Draggable) {
     return this.getDropzone() as PaletteDropzone
   }
 
-  private startDragging(event: Interact.DragEvent) {
-    const draggable = new PaletteDraggable(event.target as HTMLElement)
+  protected startDragging(event: Interact.DragEvent): void {
+    const draggable = new PaletteDraggable(event.target)
     draggable.dragging = true
   }
 
-  private dragMove(event: Interact.DragEvent) {
-    const draggable = new PaletteDraggable(event.target as HTMLElement)
+  protected dragMove(event: Interact.DragEvent): void {
+    const draggable = new PaletteDraggable(event.target)
     draggable.move(event.dx, event.dy)
   }
 
-  private endDragging(event: Interact.DragEvent) {
-    const draggable = new PaletteDraggable(event.target as HTMLElement)
+  protected endDragging(event: Interact.DragEvent): void {
+    const draggable = new PaletteDraggable(event.target)
     draggable.dragging = false
     draggable.moveTo(0, 0)
     this.simulatorElement.dispatchEvent(
       new CustomEvent("userReleasedGate", { bubbles: false }),
     )
-  }
-
-  private get simulatorElement(): HTMLElement {
-    const el = document.getElementById("simulator")
-    Util.notNull(el)
-
-    return el
   }
 }

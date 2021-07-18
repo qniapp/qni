@@ -1,25 +1,18 @@
-import { InternalError } from "lib/error"
-import { classNameFor } from "lib/base"
+import { Util, classNameFor } from "lib/base"
 
-export class Elementable {
-  public element!: HTMLElement
+export class Elementable<T extends typeof Elementable = typeof Elementable> {
+  static elementClassName: string
 
-  protected validateElementClassName(
-    element: HTMLElement | EventTarget | null | undefined,
-    name: string,
-  ): HTMLElement {
-    if (!element) throw new InternalError("element not set")
+  element: HTMLElement
 
-    const el = element as HTMLElement
-    const className = classNameFor(name)
-    const closest = el.closest(`.${className}`)
-    if (!closest) throw new Error(`.${className} not found`)
-    return closest as HTMLElement
+  constructor(element: HTMLElement | Element | EventTarget | null | undefined) {
+    this.element = this.validateInstructionElementClassName(
+      element,
+      (this.constructor as T).elementClassName,
+    )
   }
 
   protected get classList(): DOMTokenList {
-    if (!this.element) throw new Error("element is null")
-
     return this.element.classList
   }
 
@@ -37,11 +30,20 @@ export class Elementable {
     return this.element.classList.contains(classNameFor(name))
   }
 
-  protected fetchElement(name: string): HTMLElement {
-    const className = classNameFor(name)
-    const el = this.element.getElementsByClassName(className).item(0)
+  protected removeElement(): void {
+    this.element.parentNode?.removeChild(this.element)
+  }
 
-    if (!el) throw new Error(".${className} not found")
-    return el as HTMLElement
+  private validateInstructionElementClassName(
+    element: HTMLElement | EventTarget | null | undefined,
+    className: string,
+  ): HTMLElement {
+    Util.notNull(element)
+    Util.need(
+      (element as HTMLElement).classList.contains(className),
+      "invalid element",
+    )
+
+    return element as HTMLElement
   }
 }

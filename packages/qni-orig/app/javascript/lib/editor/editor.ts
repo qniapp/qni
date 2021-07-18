@@ -1,13 +1,15 @@
 import { Circuit } from "lib/circuit"
-import { MeasureGate, SwapGate, WriteGate } from "./gates"
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
 import { DraggableItem } from "./draggableItem"
 import { DropEventHandlers } from "./mixins"
 import { GatePopup } from "lib/editor"
+import { MeasureGate } from "lib/instructions"
 import { PaletteDraggable } from "./paletteDraggable"
+import { SwapGate } from "lib/instructions"
 import { TrashDropzone } from "./trashDropzone"
 import { Util } from "lib/base"
+import { WriteGate } from "lib/instructions"
 import { classNameFor } from "lib/base"
 
 export class Editor {
@@ -18,7 +20,7 @@ export class Editor {
     this.element = element
     this.circuit = new Circuit()
 
-    TrashDropzone.create(this.trashDropzoneElement).setInteract({
+    new TrashDropzone(this.trashDropzoneElement).setInteract({
       onDrop: this.trashGate.bind(this),
     })
     this.circuit.dropzones.forEach((each) => {
@@ -112,21 +114,21 @@ export class Editor {
   }
 
   private onCircuitDropzoneDragEnter(event: Interact.DropEvent) {
-    const dropzone = CircuitDropzone.create(event.target)
+    const dropzone = new CircuitDropzone(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
 
     dropzone.enter(draggable)
   }
 
   private onCircuitDropzoneDragLeave(event: Interact.DropEvent) {
-    const dropzone = CircuitDropzone.create(event.target)
+    const dropzone = new CircuitDropzone(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
 
     dropzone.leave(draggable)
   }
 
   private onCircuitDropzoneDrop(event: Interact.DropEvent) {
-    const dropzone = CircuitDropzone.create(event.target)
+    const dropzone = new CircuitDropzone(event.target)
     const draggable = DraggableItem.create(event.relatedTarget)
     const originalDropzone = draggable.dropzone
 

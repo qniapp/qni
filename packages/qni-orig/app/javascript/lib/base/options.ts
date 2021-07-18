@@ -30,6 +30,8 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "display:bloch:popup:y": "bloch-display__popup-content-y",
     "display:bloch:popup:z": "bloch-display__popup-content-z",
 
+    "display:qubitLabel": "qubit-label",
+
     "circuitStep:state:done": "circuit-step--done",
     "circuitStep:type:shadow": "circuit-step--shadow",
     "circuitStep:type:shadowSource": "circuit-step--shadow-source",
@@ -43,6 +45,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "draggable:type:palette": "draggable--palette",
     "draggable:type:shadow": "draggable--shadow",
     "draggable:type:source": "draggable--source",
+
     "dropzone:state:active": "dropzone--active",
     "dropzone:state:occupied": "dropzone--occupied",
     "dropzone:type:circuit": "dropzone--circuit",
@@ -53,7 +56,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",
     "gate:state:updated": "gate--updated",
-    "instruction:type:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",
     "runButton::running": "run-button--running",
     "wireable:inactive": "wireable--inactive",

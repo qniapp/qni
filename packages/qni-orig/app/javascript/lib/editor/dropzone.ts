@@ -11,11 +11,11 @@ export const Dropzone = {
     const classList = element.classList
 
     if (classList.contains(classNameFor("dropzone:type:palette"))) {
-      return PaletteDropzone.create(element)
+      return new PaletteDropzone(element)
     } else if (classList.contains(classNameFor("dropzone:type:circuit"))) {
-      return CircuitDropzone.create(element)
+      return new CircuitDropzone(element)
     } else if (classList.contains(classNameFor("dropzone:type:trash"))) {
-      return TrashDropzone.create(element)
+      return new TrashDropzone(element)
     }
 
     throw new InternalError(`Unknown dropzone: ${element.outerHTML}`)

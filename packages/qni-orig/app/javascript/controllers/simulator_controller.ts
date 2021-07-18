@@ -1,17 +1,17 @@
 import CircleNotationController from "./circle_notation_controller"
-import { Circuit } from "lib/circuit"
-import { CircuitStep } from "lib/editor/circuitStep"
-import { Controller } from "stimulus"
 import {
   BlochDisplay,
   HadamardGate,
   MeasureGate,
   NotGate,
   RootNotGate,
-} from "lib/editor/gates"
-import { RunButton } from "lib/simulator/runButton"
+} from "lib/instructions"
 import { Breakpoint, Util, classNameFor } from "lib/base"
+import { Circuit } from "lib/circuit"
+import { CircuitStep } from "lib/editor/circuitStep"
 import { Complex } from "lib/math"
+import { Controller } from "stimulus"
+import { RunButton } from "lib/simulator/runButton"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -130,7 +130,7 @@ export default class SimulatorController extends Controller {
     if (Breakpoint.isMobile()) return
     if (this.userDraggingGate) return
 
-    const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
+    const circuitStep = new CircuitStep(event.currentTarget)
     this.drawStateVector(circuitStep.index)
   }
 
@@ -143,7 +143,7 @@ export default class SimulatorController extends Controller {
   }
 
   activateBreakpoint(event: MouseEvent): void {
-    const circuitStep = CircuitStep.create(event.currentTarget as HTMLElement)
+    const circuitStep = new CircuitStep(event.currentTarget)
 
     if (!circuitStep.isDone) {
       return

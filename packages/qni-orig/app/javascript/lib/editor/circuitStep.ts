@@ -2,12 +2,12 @@ import { CircuitDropzone } from "./circuitDropzone"
 import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
 import { InternalError } from "lib/error"
-import { Mixin } from "ts-mixer"
 import { Util, classNameFor } from "lib/base"
-import { Connectable, Controllable } from "./gates/mixins"
+import { Instruction, InstructionWithElement } from "lib/instruction"
 import {
-  CircuitElement,
+  Connectable,
   ControlGate,
+  Controllable,
   HadamardGate,
   IGate,
   NotGate,
@@ -20,18 +20,13 @@ import {
   SwapGate,
   YGate,
   ZGate,
-} from "./gates"
+  isConnectable,
+  isControllable,
+  isTargetable,
+} from "lib/instructions"
 
-export class CircuitStep extends Mixin(Elementable) {
-  static create(element: Element | null): CircuitStep {
-    const circuitStep = new CircuitStep()
-    circuitStep.assignElement(element)
-    return circuitStep
-  }
-
-  assignElement(element: Element | null): void {
-    this.element = this.validateElementClassName(element, "circuitStep")
-  }
+export class CircuitStep extends Elementable {
+  static elementClassName = classNameFor("circuitStep")
 
   remove(): void {
     if (
@@ -41,7 +36,7 @@ export class CircuitStep extends Mixin(Elementable) {
       this.dropzones.forEach((each) => {
         each.unsetInteract()
       })
-      this.element.parentNode?.removeChild(this.element)
+      this.removeElement()
     }
   }
 
@@ -57,7 +52,7 @@ export class CircuitStep extends Mixin(Elementable) {
       classNameFor("circuitStep:type:shadowSource"),
     )
     shadowSourceElement.classList.add(classNameFor("circuitStep:type:shadow"))
-    const shadow = CircuitStep.create(shadowSourceElement)
+    const shadow = new CircuitStep(shadowSourceElement)
 
     this.element.parentNode?.insertBefore(shadow.element, this.element)
     shadow.dropzones.forEach((each) => {
@@ -78,12 +73,13 @@ export class CircuitStep extends Mixin(Elementable) {
         each.disconnectFromLowerBit()
         each.disconnectFromUpperBit()
       } else {
-        each.instruction.controls = []
-        each.instruction.targets = []
-        if (
-          "disconnectFromLowerBit" in each.instruction &&
-          "disconnectFromUpperBit" in each.instruction
-        ) {
+        if (isControllable(each.instruction)) {
+          each.instruction.controls = []
+        }
+        if (isTargetable(each.instruction)) {
+          each.instruction.targets = []
+        }
+        if (isConnectable(each.instruction)) {
           each.instruction.disconnectFromLowerBit()
           each.instruction.disconnectFromUpperBit()
         }
@@ -142,7 +138,7 @@ export class CircuitStep extends Mixin(Elementable) {
   private updateControls() {
     const controlGates = this.gatesOf(ControlGate)
     const controllableGates = this.controllableGates
-    const toBit = (gate: CircuitElement) => {
+    const toBit = (gate: InstructionWithElement) => {
       return gate.bit
     }
     const controlGateBits = controlGates.map(toBit)
@@ -319,7 +315,7 @@ export class CircuitStep extends Mixin(Elementable) {
     return this.isClassNamed("circuitStep:state:done")
   }
 
-  get instructions(): CircuitElement[] {
+  get instructions(): Instruction[] {
     const bodyEl = this.element
       .getElementsByClassName("circuit-step__body")
       .item(0)
@@ -329,25 +325,25 @@ export class CircuitStep extends Mixin(Elementable) {
 
     return Array.from(bodyEl.children).map((each) => {
       if (each.classList.contains(classNameFor("dropzone:type:circuit"))) {
-        return CircuitDropzone.create(each).instruction
+        return new CircuitDropzone(each).instruction
       } else if (each.classList.contains("instruction")) {
-        return QubitLabel.create(each as HTMLElement)
+        return new QubitLabel(each)
       } else {
         throw new Error("instruction not found")
       }
     })
   }
 
-  gatesOf<T extends CircuitElement>(gateClass: {
+  gatesOf<T extends Instruction>(gateClass: {
     new (arg: HTMLElement): T
   }): T[] {
-    const isGateClass = (obj: CircuitElement): obj is T => {
+    const isGateClass = (obj: Instruction): obj is T => {
       return obj instanceof gateClass
     }
     return this.instructions.filter(isGateClass)
   }
 
-  get controllableGates(): CircuitElement[] {
+  get controllableGates(): Instruction[] {
     return this.instructions.filter((each) => {
       return "controls" in each
     })
@@ -379,7 +375,7 @@ export class CircuitStep extends Mixin(Elementable) {
         classNameFor("dropzone:type:circuit"),
       ),
     ).map((each) => {
-      return CircuitDropzone.create(each)
+      return new CircuitDropzone(each)
     })
   }
 
