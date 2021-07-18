@@ -1,7 +1,6 @@
 import { CircuitDropzone } from "./circuitDropzone"
 import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
-import { InternalError } from "lib/error"
 import { Util, classNameFor } from "lib/base"
 import { Instruction, InstructionWithElement } from "lib/instruction"
 import {
@@ -26,11 +25,111 @@ import {
 } from "lib/instructions"
 
 export class CircuitStep extends Elementable {
-  static elementClassName = classNameFor("circuitStep")
+  static readonly elementClassName = classNameFor("circuitStep")
+
+  get index(): number {
+    const all = Array.from(
+      this.circuitEl.getElementsByClassName(CircuitStep.elementClassName),
+    )
+    return all.indexOf(this.element)
+  }
+
+  set active(value: boolean) {
+    const classList = this.circuitBreakpointEl.classList
+    const className = classNameFor("circuitBreakpoint:state:active")
+
+    if (value) {
+      classList.add(className)
+    } else {
+      classList.remove(className)
+    }
+  }
+
+  get active(): boolean {
+    return this.circuitBreakpointEl.classList.contains(
+      classNameFor("circuitBreakpoint:state:active"),
+    )
+  }
+
+  get empty(): boolean {
+    return (
+      this.dropzones.length != 0 &&
+      this.dropzones.filter((each) => {
+        return each.occupied
+      }).length == 0
+    )
+  }
+
+  set done(flag: boolean) {
+    this.setClassName("circuitStep:state:done", flag)
+  }
+
+  get done(): boolean {
+    return this.isClassNamed("circuitStep:state:done")
+  }
+
+  set shadow(flag: boolean) {
+    this.setClassName("circuitStep:type:shadow", flag)
+  }
+
+  get shadow(): boolean {
+    return this.isClassNamed("circuitStep:type:shadow")
+  }
+
+  get instructions(): Instruction[] {
+    return Array.from(this.bodyEl.children).map((each) => {
+      if (each.classList.contains(classNameFor("dropzone:type:circuit"))) {
+        return new CircuitDropzone(each).instruction
+      } else if (each.classList.contains(classNameFor("display:qubitLabel"))) {
+        return new QubitLabel(each)
+      } else {
+        throw new Error("unknown element")
+      }
+    })
+  }
+
+  get dropzones(): CircuitDropzone[] {
+    return Array.from(
+      this.element.getElementsByClassName(
+        classNameFor("dropzone:type:circuit"),
+      ),
+    ).map((each) => {
+      return new CircuitDropzone(each)
+    })
+  }
+
+  get childElements(): HTMLElement[] {
+    return Array.from(this.bodyEl.children) as HTMLElement[]
+  }
+
+  appendChild(element: Element): void {
+    this.bodyEl.appendChild(element)
+  }
+
+  circuitBlock(): Element | null {
+    return this.element.closest(`.${classNameFor("circuitBlock")}`)
+  }
+
+  toJson(): string {
+    const instructions = this.instructions
+      .map((each) => {
+        return each.toJson()
+      })
+      .join(",")
+
+    return `[${instructions}]`
+  }
+
+  updateGateConnections(): void {
+    this.resetGateConnections()
+    this.updateSwaps()
+    this.updateCphases()
+    this.updateControls()
+  }
 
   remove(): void {
     if (
-      (this.isInCircuitBlockDivider && this.isShadow) ||
+      (this.isInCircuitBlockDivider && this.shadow) ||
       !this.isInCircuitBlockDivider
     ) {
       this.dropzones.forEach((each) => {
@@ -38,10 +137,6 @@ export class CircuitStep extends Elementable {
       })
       this.removeElement()
     }
-  }
-
-  private get isInCircuitBlockDivider(): boolean {
-    return this.element.closest(".circuit-block-divider") ? true : false
   }
 
   prependShadow(dropzoneHandlers: DropEventHandlers): void {
@@ -60,11 +155,8 @@ export class CircuitStep extends Elementable {
     })
   }
 
-  updateGateConnections(): void {
-    this.resetGateConnections()
-    this.updateSwaps()
-    this.updateCphases()
-    this.updateControls()
+  private get isInCircuitBlockDivider(): boolean {
+    return this.element.closest(".circuit-block-divider") ? true : false
   }
 
   private resetGateConnections() {
@@ -225,6 +317,15 @@ export class CircuitStep extends Elementable {
     }
   }
 
+  private gatesOf<T extends Instruction>(gateClass: {
+    new (arg: HTMLElement): T
+  }): T[] {
+    const isGateClass = (obj: Instruction): obj is T => {
+      return obj instanceof gateClass
+    }
+    return this.instructions.filter(isGateClass)
+  }
+
   private updateControlledUConnections<T extends Controllable & Connectable>(
     gates: T[],
     controlGateBits: number[],
@@ -256,148 +357,45 @@ export class CircuitStep extends Elementable {
     })
   }
 
-  get index(): number {
-    const circuit = this.element.closest(".circuit")
-    if (!circuit) throw new Error("circuit element not found")
-
-    const all = Array.from(
-      circuit.getElementsByClassName(classNameFor("circuitStep")),
-    )
-    return all.indexOf(this.element)
-  }
-
-  set active(value: boolean) {
-    const className = "circuit-breakpoint--active"
-    const el = this.element.querySelector(".circuit-breakpoint")
-    Util.notNull(el)
-
-    if (value) {
-      el.classList.add(className)
-    } else {
-      el.classList.remove(className)
-    }
-  }
-
-  isActive(): boolean {
-    const className = "circuit-breakpoint--active"
-    const el = this.element.querySelector(".circuit-breakpoint")
-    Util.notNull(el)
-
-    return el.classList.contains(className)
-  }
-
-  set shadow(flag: boolean) {
-    this.setClassName("circuitStep:type:shadow", flag)
-  }
-
-  get isShadow(): boolean {
-    return this.isClassNamed("circuitStep:type:shadow")
-  }
-
-  get isEmpty(): boolean {
-    return (
-      this.dropzones.length != 0 &&
-      this.dropzones.filter((each) => {
-        return each.isOccupied()
-      }).length == 0
-    )
-  }
-
-  get isDivider(): boolean {
-    return this.element.closest(".circuit-block-divider") ? true : false
-  }
-
-  set done(flag: boolean) {
-    this.setClassName("circuitStep:state:done", flag)
-  }
-
-  get isDone(): boolean {
-    return this.isClassNamed("circuitStep:state:done")
-  }
-
-  get instructions(): Instruction[] {
-    const bodyEl = this.element
-      .getElementsByClassName("circuit-step__body")
-      .item(0)
-    if (!bodyEl) {
-      throw new Error("circuit-step body element not found")
-    }
-
-    return Array.from(bodyEl.children).map((each) => {
-      if (each.classList.contains(classNameFor("dropzone:type:circuit"))) {
-        return new CircuitDropzone(each).instruction
-      } else if (each.classList.contains("instruction")) {
-        return new QubitLabel(each)
-      } else {
-        throw new Error("instruction not found")
-      }
-    })
-  }
-
-  gatesOf<T extends Instruction>(gateClass: {
-    new (arg: HTMLElement): T
-  }): T[] {
-    const isGateClass = (obj: Instruction): obj is T => {
-      return obj instanceof gateClass
-    }
-    return this.instructions.filter(isGateClass)
-  }
-
-  get controllableGates(): Instruction[] {
+  private get controllableGates(): Instruction[] {
     return this.instructions.filter((each) => {
       return "controls" in each
     })
   }
 
-  get childElements(): Element[] {
-    return Array.from(this.bodyEl.children)
-  }
+  // Elements
 
-  get lastChildElement(): Element {
-    return this.childElements[this.childElements.length - 1]
-  }
+  private get circuitEl(): HTMLElement {
+    const el = document.getElementById("circuit")
+    Util.notNull(el)
 
-  appendChild(element: Element): void {
-    this.bodyEl.appendChild(element)
-  }
-
-  private get bodyEl(): Element {
-    const className = "circuit-step__body"
-    const el = this.element.getElementsByClassName(className).item(0)
-
-    if (!el) throw new Error(`.${className} not found`)
     return el
   }
 
-  get dropzones(): CircuitDropzone[] {
-    return Array.from(
-      this.element.getElementsByClassName(
-        classNameFor("dropzone:type:circuit"),
-      ),
-    ).map((each) => {
-      return new CircuitDropzone(each)
-    })
+  private get bodyEl(): HTMLElement {
+    const el = this.element.querySelector(
+      `.${classNameFor("circuitStep:body")}`,
+    ) as HTMLElement
+    Util.notNull(el)
+
+    return el
+  }
+
+  private get circuitBreakpointEl(): HTMLElement {
+    const el = this.element.querySelector(
+      `.${classNameFor("circuitBreakpoint")}`,
+    ) as HTMLElement
+    Util.notNull(el)
+
+    return el
   }
 
   private get shadowSourceElement(): Element {
-    const className = classNameFor("circuitStep:type:shadowSource")
-    const el = document.getElementsByClassName(className).item(0)
-    if (!el) throw new InternalError(`.${className} not found`)
+    const el = this.circuitEl.querySelector(
+      `.${classNameFor("circuitStep:type:shadowSource")}`,
+    ) as HTMLElement
+    Util.notNull(el)
 
     return el
-  }
-
-  circuitBlock(): Element | null {
-    return this.element.closest(".circuit-block")
-  }
-
-  toJson(): string {
-    const gates = this.instructions
-      .map((each) => {
-        return each.toJson()
-      })
-      .join(",")
-
-    return `[${gates}]`
   }
 }

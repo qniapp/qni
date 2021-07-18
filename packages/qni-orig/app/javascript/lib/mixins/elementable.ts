@@ -1,11 +1,13 @@
-import { Util, classNameFor } from "lib/base"
+import { Util, classNameFor, DetailedError } from "lib/base"
 
 export class Elementable<T extends typeof Elementable = typeof Elementable> {
   static elementClassName: string
 
   element: HTMLElement
 
-  constructor(element: HTMLElement | Element | EventTarget | null | undefined) {
+  constructor(
+    element: HTMLElement | Element | EventTarget | Node | null | undefined,
+  ) {
     this.element = this.validateInstructionElementClassName(
       element,
       (this.constructor as T).elementClassName,
@@ -35,14 +37,13 @@ export class Elementable<T extends typeof Elementable = typeof Elementable> {
   }
 
   private validateInstructionElementClassName(
-    element: HTMLElement | EventTarget | null | undefined,
+    element: HTMLElement | Element | EventTarget | Node | null | undefined,
     className: string,
   ): HTMLElement {
     Util.notNull(element)
-    Util.need(
-      (element as HTMLElement).classList.contains(className),
-      "invalid element",
-    )
+    if (!(element as HTMLElement).classList.contains(className)) {
+      throw new DetailedError("Invalid element", { element })
+    }
 
     return element as HTMLElement
   }

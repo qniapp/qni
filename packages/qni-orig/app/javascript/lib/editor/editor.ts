@@ -132,26 +132,17 @@ export class Editor {
     const draggable = DraggableItem.create(event.relatedTarget)
     const originalDropzone = draggable.dropzone
 
-    if (this.circuit.wires[dropzone.bit].isEmpty) {
-      const paletteElement = document.getElementById("palette")
-      const writeDraggable = paletteElement
-        ?.getElementsByClassName(classNameFor("draggable:type:palette"))
-        .item(0)
-      if (!writeDraggable) {
-        throw new Error(`.${classNameFor("draggable:type:palette")} not found`)
-      }
-
-      const newWriteDraggableEl = writeDraggable.cloneNode(true) as HTMLElement
-      newWriteDraggableEl.classList.remove(
-        classNameFor("draggable:type:palette"),
-      )
-      newWriteDraggableEl.classList.add(classNameFor("draggable:type:circuit"))
-      const newWriteDraggable = new CircuitDraggable(newWriteDraggableEl)
+    if (
+      this.circuit.wires[dropzone.bit].empty &&
+      !this.circuit.wires[dropzone.bit].dropzones[0].isEqualTo(dropzone) &&
+      !(draggable.instruction instanceof WriteGate)
+    ) {
+      const newWriteDraggable = this.newWriteDraggable()
 
       const writeStep = this.circuit.steps[1]
       const newWriteDropzone = writeStep.dropzones[dropzone.bit]
       newWriteDropzone.element.insertBefore(
-        newWriteDraggableEl,
+        newWriteDraggable.element,
         newWriteDropzone.element.firstChild,
       )
       newWriteDropzone.occupied = true
@@ -218,5 +209,33 @@ export class Editor {
       each.remove()
     })
     this.circuit.removeEmptyWire()
+  }
+
+  // Elements
+
+  private get paletteEl(): HTMLElement {
+    const el = document.getElementById("palette")
+    Util.notNull(el)
+
+    return el
+  }
+
+  private newWriteDraggable(): CircuitDraggable {
+    const newWriteDraggableEl = this.writableGateElOnPalette().cloneNode(
+      true,
+    ) as HTMLElement
+    newWriteDraggableEl.classList.remove(classNameFor("draggable:type:palette"))
+    newWriteDraggableEl.classList.add(classNameFor("draggable:type:circuit"))
+
+    return new CircuitDraggable(newWriteDraggableEl)
+  }
+
+  private writableGateElOnPalette(): HTMLElement {
+    const el = this.paletteEl
+      .getElementsByClassName(classNameFor("gate:write"))
+      .item(0) as HTMLElement
+    Util.notNull(el)
+
+    return el
   }
 }

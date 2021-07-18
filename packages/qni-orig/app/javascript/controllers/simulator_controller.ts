@@ -116,7 +116,7 @@ export default class SimulatorController extends Controller {
   }
 
   get circuitBreakpoint(): number | null {
-    const bp = this.circuit.steps.findIndex((each) => each.isActive())
+    const bp = this.circuit.steps.findIndex((each) => each.active)
     if (bp !== -1) return bp
     return null
   }
@@ -145,7 +145,7 @@ export default class SimulatorController extends Controller {
   activateBreakpoint(event: MouseEvent): void {
     const circuitStep = new CircuitStep(event.currentTarget)
 
-    if (!circuitStep.isDone) {
+    if (!circuitStep.done) {
       return
     }
     this.gotoCircuitBreakpoint(circuitStep.index)

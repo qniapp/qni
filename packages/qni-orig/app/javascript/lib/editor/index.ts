@@ -1,6 +1,7 @@
 export * from "./circuitDraggable"
 export * from "./circuitDropzone"
 export * from "./circuitStep"
+export * from "./circuitWire"
 export * from "./draggableItem"
 export * from "./draggableSource"
 export * from "./dropzone"
