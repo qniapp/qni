@@ -74,13 +74,13 @@ QUnit.assert.notApproximatelyEquates = function (
   })
 }
 
-QUnit.assert.iteratesAs = function (
+QUnit.assert.iteratesAs = function <T>(
   subject: unknown,
   items: unknown[],
   message = "",
 ) {
   const actualItems = []
-  for (const item of subject) {
+  for (const item of subject as string | Array<T> | Iterable<T>) {
     if (actualItems.length > items.length * 2 + 100) {
       actualItems.push("{...}")
       break
