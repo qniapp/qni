@@ -140,7 +140,7 @@ export abstract class Draggable extends Elementable {
     el.classList.add(classNameFor("draggable:type:source"))
     this.getDropzone().element.insertBefore(el, this.element)
 
-    new DraggableSource(el)
+    return new DraggableSource(el)
   }
 
   get source(): DraggableSource | null {
