@@ -81,6 +81,7 @@ export function parseFormula<T>(
   let tokens = _tokenize(text).map((e) => _translate_token(e, tokenMap))
 
   // Cut off trailing operation, so parse fails less often as users are typing.
+  // @ts-ignore
   if (tokens.length > 0 && tokens[tokens.length - 1].priority !== undefined) {
     tokens = tokens.slice(0, tokens.length - 1)
   }
@@ -145,9 +146,10 @@ export function parseFormula<T>(
     const mul = tokenMap.get("*")
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (couldBeBinary && token.binary_action === undefined && token !== ")") {
+      // @ts-ignore
       burnOps(mul.priority)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ops.push({ f: mul.binary_action, w: mul.priority })
+      // @ts-ignore
+      ops.push({ f: mul.binary_action, w: mul.priority }) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
