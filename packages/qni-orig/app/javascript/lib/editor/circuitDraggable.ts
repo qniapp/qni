@@ -2,6 +2,7 @@ import { CircuitDropzone } from "./circuitDropzone"
 import { Draggable } from "./draggable"
 import { Instruction } from "lib/instruction"
 import { classNameFor } from "lib/base"
+import { isConnectable } from "lib/instructions"
 
 export class CircuitDraggable extends Draggable {
   static readonly elementClassName = classNameFor("draggable:type:circuit")
@@ -15,12 +16,8 @@ export class CircuitDraggable extends Draggable {
     this.grabbed = true
 
     const instruction = this.instruction
-    if (
-      "disconnectFromLowerBit" in instruction &&
-      "disconnectFromUpperBit" in instruction
-    ) {
-      instruction.disconnectFromLowerBit()
-      instruction.disconnectFromUpperBit()
+    if (isConnectable(instruction)) {
+      instruction.disconnectFromAll()
     }
 
     this.moveToGrabbedPosition(event)

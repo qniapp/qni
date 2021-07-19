@@ -2,8 +2,8 @@ import { classNameFor } from "lib/base"
 import { Complex, Matrix } from "lib/math"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
-import { Disableable } from "./disableable"
-import { Ifable } from "./ifable"
+import { DisableableMixin } from "./disableable"
+import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
 
 export const ROOT_NOT_GATE_INSTRUCTION_TYPE = "X^½"
@@ -15,7 +15,7 @@ export type RootNotGateInstruction = {
 }
 
 export class RootNotGate extends ControllableMixin(
-  ConnectableMixin(Disableable(Ifable(InstructionWithElement))),
+  ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:rootNot")
   static get MATRIX(): Matrix {

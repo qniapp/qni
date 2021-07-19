@@ -2,13 +2,24 @@ import { Constructor } from "./constructor"
 import { InstructionWithElement } from "./instructionWithElement"
 import { classNameFor } from "lib/base"
 
-type InstructionWithElementable = Constructor<InstructionWithElement>
+export declare class Disableable {
+  get disabled(): boolean
+  set disabled(flag: boolean)
+}
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function Disableable<TBase extends InstructionWithElementable>(
-  Base: TBase,
-) {
-  return class Disableable extends Base {
+export const isDisableable = (arg: unknown): arg is Disableable =>
+  typeof arg === "object" &&
+  arg !== null &&
+  typeof (arg as Disableable).disabled === "boolean"
+
+export function DisableableMixin<
+  TBase extends Constructor<InstructionWithElement>,
+>(Base: TBase): Constructor<Disableable> & TBase {
+  class DisableableMixinClass extends Base {
+    get disabled(): boolean {
+      return this.classList.contains(classNameFor("gate:state:disabled"))
+    }
+
     set disabled(flag: boolean) {
       const className = classNameFor("gate:state:disabled")
 
@@ -18,9 +29,7 @@ export function Disableable<TBase extends InstructionWithElementable>(
         this.classList.remove(className)
       }
     }
-
-    get disabled(): boolean {
-      return this.classList.contains(classNameFor("gate:state:disabled"))
-    }
   }
+
+  return DisableableMixinClass as Constructor<Disableable> & TBase
 }

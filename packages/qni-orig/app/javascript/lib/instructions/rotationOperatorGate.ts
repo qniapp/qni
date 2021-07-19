@@ -1,7 +1,7 @@
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
-import { Disableable } from "./disableable"
-import { Ifable } from "./ifable"
+import { DisableableMixin } from "./disableable"
+import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
 import { Util, attributeNameFor } from "lib/base"
@@ -16,7 +16,7 @@ type RotationOperatorGateInstruction = {
 
 export abstract class RotationOperatorGate extends ControllableMixin(
   TargetableMixin(
-    ConnectableMixin(Disableable(Ifable(InstructionWithElement))),
+    ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
   ),
 ) {
   get theta(): string {

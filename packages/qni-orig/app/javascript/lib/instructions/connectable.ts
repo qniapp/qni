@@ -4,16 +4,14 @@ import { classNameFor } from "lib/base"
 
 export declare class Connectable {
   connectWith(bits: number[]): void
-  disconnectFromLowerBit(): void
-  disconnectFromUpperBit(): void
+  disconnectFromAll(): void
 }
 
 export const isConnectable = (arg: unknown): arg is Connectable =>
   typeof arg === "object" &&
   arg !== null &&
   typeof (arg as Connectable).connectWith === "function" &&
-  typeof (arg as Connectable).disconnectFromUpperBit === "function" &&
-  typeof (arg as Connectable).disconnectFromLowerBit === "function"
+  typeof (arg as Connectable).disconnectFromAll === "function"
 
 export function ConnectableMixin<
   TBase extends Constructor<InstructionWithElement>,
@@ -30,6 +28,11 @@ export function ConnectableMixin<
       } else {
         this.disconnectFromUpperBit()
       }
+    }
+
+    disconnectFromAll(): void {
+      this.disconnectFromLowerBit()
+      this.disconnectFromUpperBit()
     }
 
     private isConnectedWithLowerBit(bits: number[]): boolean {
@@ -52,11 +55,11 @@ export function ConnectableMixin<
       this.classList.add(classNameFor("connectable:upperBit"))
     }
 
-    disconnectFromLowerBit(): void {
+    private disconnectFromLowerBit(): void {
       this.classList.remove(classNameFor("connectable:lowerBit"))
     }
 
-    disconnectFromUpperBit(): void {
+    private disconnectFromUpperBit(): void {
       this.classList.remove(classNameFor("connectable:upperBit"))
     }
   }

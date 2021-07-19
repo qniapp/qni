@@ -1,10 +1,10 @@
-import { classNameFor } from "lib/base"
-import { Matrix } from "lib/math"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
-import { Disableable } from "./disableable"
-import { Ifable } from "./ifable"
+import { DisableableMixin } from "./disableable"
+import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
+import { Matrix } from "lib/math"
+import { classNameFor } from "lib/base"
 
 export const HADAMARD_GATE_INSTRUCTION_TYPE = "H"
 
@@ -14,8 +14,8 @@ export type HadamardGateInstruction = {
   if: string | null
 }
 
-export class HadamardGate extends ControllableMixin(
-  ConnectableMixin(Disableable(Ifable(InstructionWithElement))),
+export class HadamardGate extends ConnectableMixin(
+  ControllableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:hadamard")
   static readonly MATRIX = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))

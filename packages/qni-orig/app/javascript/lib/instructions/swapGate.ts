@@ -1,6 +1,6 @@
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
-import { Disableable } from "./disableable"
+import { DisableableMixin } from "./disableable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
 import { Util, attributeNameFor, classNameFor } from "lib/base"
@@ -14,7 +14,7 @@ export type SwapGateInstruction = {
 }
 
 export class SwapGate extends ControllableMixin(
-  TargetableMixin(ConnectableMixin(Disableable(InstructionWithElement))),
+  TargetableMixin(ConnectableMixin(DisableableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:swap")
 

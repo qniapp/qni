@@ -1,7 +1,7 @@
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
-import { Disableable } from "./disableable"
-import { Ifable } from "./ifable"
+import { DisableableMixin } from "./disableable"
+import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { Matrix } from "lib/math"
 import { classNameFor } from "lib/base"
@@ -15,7 +15,7 @@ export type YGateInstruction = {
 }
 
 export class YGate extends ControllableMixin(
-  ConnectableMixin(Disableable(Ifable(InstructionWithElement))),
+  ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:y")
   static readonly MATRIX = Matrix.PAULI_Y

@@ -17,6 +17,8 @@ export * from "./zGate"
 
 export * from "./connectable"
 export * from "./controllable"
+export * from "./disableable"
+export * from "./ifable"
 export * from "./targetable"
 export * from "./valueable"
 

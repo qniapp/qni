@@ -1,6 +1,6 @@
 import { classNameFor } from "lib/base"
 import { ConnectableMixin } from "./connectable"
-import { Disableable } from "./disableable"
+import { DisableableMixin } from "./disableable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
 
@@ -12,7 +12,7 @@ export type ControlGateInstruction = {
 }
 
 export class ControlGate extends TargetableMixin(
-  ConnectableMixin(Disableable(InstructionWithElement)),
+  ConnectableMixin(DisableableMixin(InstructionWithElement)),
 ) {
   static readonly elementClassName = classNameFor("gate:control")
 

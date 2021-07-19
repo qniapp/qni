@@ -1,8 +1,8 @@
 import { CircuitDropzone } from "./circuitDropzone"
 import { DropEventHandlers } from "./mixins"
 import { Elementable } from "lib/mixins"
-import { Util, classNameFor } from "lib/base"
 import { Instruction, InstructionWithElement } from "lib/instruction"
+import { Util, classNameFor } from "lib/base"
 import {
   Connectable,
   ControlGate,
@@ -172,8 +172,7 @@ export class CircuitStep extends Elementable {
           each.instruction.targets = []
         }
         if (isConnectable(each.instruction)) {
-          each.instruction.disconnectFromLowerBit()
-          each.instruction.disconnectFromUpperBit()
+          each.instruction.disconnectFromAll()
         }
       }
     })

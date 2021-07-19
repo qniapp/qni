@@ -105,11 +105,12 @@ function isApproximatelyEqualToHelperDestructured(
   )
 }
 
-export function hasOwnProperty<
-  X extends Record<string, unknown>,
-  Y extends PropertyKey,
->(obj: unknown, prop: Y): obj is X & Record<Y, unknown> {
-  return Object.prototype.hasOwnProperty.call(obj as X, prop)
+export function hasOwnProperty<K extends PropertyKey>(
+  obj: unknown,
+  key: K,
+): obj is Record<K, unknown> {
+  // @ts-ignore
+  return obj && key in obj
 }
 
 export type ArrayIsh =
