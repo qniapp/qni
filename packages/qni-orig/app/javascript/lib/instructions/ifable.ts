@@ -1,6 +1,7 @@
 import { Constructor } from "./constructor"
 import { InstructionWithElement } from "./instructionWithElement"
 import { attributeNameFor, Util } from "lib/base"
+import { VALID_FLAG_NAME_REGEX } from "./flaggable"
 
 export declare class Ifable {
   get if(): string | null
@@ -8,21 +9,20 @@ export declare class Ifable {
 }
 
 export const isIfable = (arg: unknown): arg is Ifable =>
-  typeof arg === "object" &&
-  arg !== null &&
+  (typeof arg === "object" &&
+    arg !== null &&
+    typeof (arg as Ifable).if === "object") ||
   typeof (arg as Ifable).if === "string"
 
 export function IfableMixin<TBase extends Constructor<InstructionWithElement>>(
   Base: TBase,
 ): Constructor<Ifable> & TBase {
   class IfableMixinClass extends Base {
-    static readonly validVariableNameRegex = /^[A-Z][0-9A-Z_]*$/i
-
     get if(): string | null {
       const attr = this.element.getAttribute(attributeNameFor("instruction:if"))
       if (attr) {
         Util.need(
-          IfableMixinClass.validVariableNameRegex.test(attr),
+          VALID_FLAG_NAME_REGEX.test(attr),
           `Invalid if variable name: "${attr}"`,
         )
       }
@@ -34,11 +34,13 @@ export function IfableMixin<TBase extends Constructor<InstructionWithElement>>(
 
       if (variableName === null) {
         this.element.removeAttribute(attrName)
+        this.element.dataset.gateLabel = ""
       } else {
-        if (!IfableMixinClass.validVariableNameRegex.test(variableName)) {
+        if (!VALID_FLAG_NAME_REGEX.test(variableName)) {
           throw new Error(`Invalid if variable name: "${variableName}"`)
         }
         this.element.setAttribute(attrName, variableName)
+        this.element.dataset.gateLabel = `if ${variableName}`
       }
     }
   }

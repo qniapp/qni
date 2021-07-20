@@ -4,7 +4,6 @@ require 'concerns/controllable'
 require 'concerns/disableable'
 require 'concerns/draggable'
 require 'concerns/ifable'
-require 'concerns/popuppable'
 require 'concerns/targetable'
 
 class ZGateComponent < Component
@@ -13,7 +12,6 @@ class ZGateComponent < Component
   include Disableable
   include Draggable
   include Ifable
-  include Popuppable
   include Targetable
 
   include CssClassStringHelper
@@ -33,8 +31,7 @@ class ZGateComponent < Component
     [
       data_controls,
       data_draggable,
-      data_if,
-      data_popup
+      data_if
     ].reduce({}) do |result, each|
       result.merge(each)
     end
@@ -58,10 +55,6 @@ class ZGateComponent < Component
     return false if [controls].flatten.empty?
 
     ([controls] + [targets]).flatten.any? { |each| each < bit }
-  end
-
-  def popup_type
-    :if
   end
 
   def data_if

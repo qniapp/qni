@@ -2,7 +2,6 @@ require 'component'
 require 'concerns/connectable'
 require 'concerns/controllable'
 require 'concerns/draggable'
-require 'concerns/popuppable'
 require 'concerns/targetable'
 require 'concerns/wireable'
 
@@ -10,7 +9,6 @@ class RxGateComponent < Component
   include Connectable
   include Controllable
   include Draggable
-  include Popuppable
   include Targetable
   include Wireable
 
@@ -42,7 +40,6 @@ class RxGateComponent < Component
           { targets: targets.join(',') }
         end
     h.merge(controls.empty? ? {} : { controls: controls.join(',') })
-     .merge(data_popup)
      .merge(data_draggable)
   end
   # rubocop:enable Metrics/AbcSize
@@ -57,11 +54,5 @@ class RxGateComponent < Component
     return false unless bit
 
     (controls + targets).any? { |each| each < bit }
-  end
-
-  private
-
-  def popup_type
-    :theta
   end
 end

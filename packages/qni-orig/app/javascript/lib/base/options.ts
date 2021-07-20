@@ -85,7 +85,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:if": "data-if",
     "instruction:theta": "data-theta",
     "instruction:phi": "data-phi",
-    "instruction:set": "data-set",
+    "instruction:flag": "data-flag",
     "instruction:valueable:value": "data-value",
 
     "instruction:bloch:d": "data-bloch-display-d",

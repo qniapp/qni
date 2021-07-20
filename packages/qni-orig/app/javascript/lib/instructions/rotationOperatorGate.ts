@@ -4,7 +4,7 @@ import { DisableableMixin } from "./disableable"
 import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
-import { Util, attributeNameFor } from "lib/base"
+import { ThetableMixin } from "./thetable"
 
 type RotationOperatorGateInstruction = {
   type: string
@@ -14,20 +14,13 @@ type RotationOperatorGateInstruction = {
   if: string | null
 }
 
-export abstract class RotationOperatorGate extends ControllableMixin(
-  TargetableMixin(
-    ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
+export abstract class RotationOperatorGate extends ThetableMixin(
+  ControllableMixin(
+    TargetableMixin(
+      ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
+    ),
   ),
 ) {
-  get theta(): string {
-    const attr = this.element.getAttribute(
-      attributeNameFor("instruction:theta"),
-    )
-    Util.notNull(attr)
-
-    return attr
-  }
-
   protected _serialize(
     instructionType: string,
   ): RotationOperatorGateInstruction {
@@ -41,7 +34,7 @@ export abstract class RotationOperatorGate extends ControllableMixin(
   }
 
   protected _toJson(instructionType: string): string {
-    const theta = this.theta.replace("pi", "π").replace("/", "_")
+    const theta = this.theta.replace(/pi/g, "π").replace(/\//g, "_")
 
     if (this.if) {
       return `"${instructionType}(${theta})<${this.if}"`

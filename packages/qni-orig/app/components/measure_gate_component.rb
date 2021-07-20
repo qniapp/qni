@@ -1,12 +1,10 @@
 require 'component'
 require 'concerns/draggable'
-require 'concerns/popuppable'
 
 class MeasureGateComponent < Component
   include Draggable
-  include Popuppable
 
-  attribute :set
+  attribute :flag
 
   def klass
     class_string('gate',
@@ -17,12 +15,6 @@ class MeasureGateComponent < Component
   end
 
   def data
-    { set: set, 'gate-label': set }.merge(data_popup).merge(data_draggable)
-  end
-
-  private
-
-  def popup_type
-    :set
+    { flag: flag, 'gate-label': flag }.merge(data_draggable)
   end
 end

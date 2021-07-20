@@ -1,7 +1,13 @@
 import tippy, { Instance, Props, roundArrow } from "tippy.js"
-import { InternalError } from "lib/error"
-import { attributeNameFor, classNameFor, Breakpoint, Util } from "lib/base"
-import { PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
+import { Breakpoint, Util } from "lib/base"
+import { Instruction } from "lib/instruction"
+import {
+  isDisableable,
+  isFlaggable,
+  isIfable,
+  isThetable,
+} from "lib/instructions"
+import { isPhible } from "lib/instructions/phiable"
 
 export class GatePopup {
   onUpdate!: () => void
@@ -9,42 +15,78 @@ export class GatePopup {
 
   show(element: HTMLElement, onUpdate: () => void): void {
     if (Breakpoint.isMobile()) return
-    if (element.dataset.gatePopupType === undefined) return
+    const instruction = Instruction.create(element)
+    if (
+      !(
+        isFlaggable(instruction) ||
+        isIfable(instruction) ||
+        isThetable(instruction) ||
+        isPhible(instruction)
+      )
+    ) {
+      return
+    }
+
     this.onUpdate = onUpdate
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this
     this.popup = tippy(element, {
       allowHTML: true,
+      animation: false,
       appendTo: document.body,
+      arrow: roundArrow + roundArrow,
       content: this.popupHtml(element),
-      duration: [0, 0],
+      delay: 0,
+      hideOnClick: false,
       interactive: true,
       theme: "qni",
-      arrow: roundArrow + roundArrow,
+      onShow() {
+        if (that.originalValue !== null) that.input.value = that.originalValue
+        that.input.addEventListener("keydown", that.inputKeydown.bind(that))
+      },
       onHidden(instance) {
         instance.destroy()
       },
     })
     this.popup.show()
-
-    if (this.originalValue !== null) this.input.value = this.originalValue
-    this.input.addEventListener("keydown", this.inputKeydown.bind(this))
-    this.input.focus()
   }
 
   private get originalValue(): string | null {
-    if (this.isSettable) return this.set
-    if (this.isIfable) return this.if
-    if (this.isThetable) return this.theta
-    if (this.isPhiable) return this.phi
+    const instruction = Instruction.create(this.popupReferenceEl)
+
+    if (isFlaggable(instruction)) return instruction.flag
+    if (
+      isIfable(instruction) &&
+      !isThetable(instruction) &&
+      !isPhible(instruction)
+    ) {
+      return instruction.if
+    }
+    if (isThetable(instruction)) return instruction.theta
+    if (isPhible(instruction)) return instruction.phi
 
     throw new Error("Should not reach here")
   }
 
   private popupHtml(el: HTMLElement): string {
-    const type = el.dataset.gatePopupType
-    if (type === undefined) throw new Error("gate popup type not set")
+    const instruction = Instruction.create(el)
+    let popupType = null
 
-    const popupEl = document.getElementById(`gate-popup--${type}`)
+    if (isFlaggable(instruction)) popupType = "flag"
+    if (
+      isIfable(instruction) &&
+      !isThetable(instruction) &&
+      !isPhible(instruction)
+    ) {
+      popupType = "if"
+    }
+    if (isThetable(instruction)) popupType = "theta"
+    if (isPhible(instruction)) popupType = "phi"
+
+    Util.notNull(popupType)
+
+    const popupEl = document.getElementById(`gate-popup--${popupType}`)
     Util.notNull(popupEl)
 
     return popupEl.innerHTML
@@ -63,10 +105,19 @@ export class GatePopup {
     if (event.key === "Enter") {
       const value = this.input.value
       try {
-        if (this.isSettable) this.set = value
-        if (this.isIfable) this.if = value
-        if (this.isThetable) this.theta = value
-        if (this.isPhiable) this.phi = value
+        const instruction = Instruction.create(this.popupReferenceEl)
+
+        if (isFlaggable(instruction)) this.flag = value
+        if (
+          isIfable(instruction) &&
+          !isThetable(instruction) &&
+          !isPhible(instruction)
+        ) {
+          this.if = value
+        }
+        if (isThetable(instruction)) this.theta = value
+        if (isPhible(instruction)) this.phi = value
+
         this.popup?.hide()
         this.onUpdate()
         this.runCircuit()
@@ -77,129 +128,46 @@ export class GatePopup {
     }
   }
 
-  private get isSettable(): boolean {
-    return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:measure"),
-    )
-  }
+  private set flag(flag: string | null) {
+    const instruction = Instruction.create(this.popupReferenceEl)
 
-  private get set(): string | null {
-    return this.popupReferenceEl.getAttribute(
-      attributeNameFor("instruction:set"),
-    )
-  }
-
-  private set set(set: string | null) {
-    let labelString
-
-    if (!set || set.trim().length == 0) {
-      this.popupReferenceEl.removeAttribute(attributeNameFor("instruction:set"))
-      labelString = ""
+    if (!flag || flag.trim().length == 0) {
+      if (isFlaggable(instruction)) instruction.flag = null
+      if (isDisableable(instruction)) instruction.disabled = false
     } else {
-      this.popupReferenceEl.setAttribute(
-        attributeNameFor("instruction:set"),
-        set,
-      )
-      labelString = set
+      if (isFlaggable(instruction)) instruction.flag = flag
     }
-    this.dataGateLabel = labelString
-  }
-
-  private get isIfable(): boolean {
-    return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:mixin:ifable"),
-    )
-  }
-
-  private get if(): string | null {
-    return this.popupReferenceEl.getAttribute(
-      attributeNameFor("instruction:if"),
-    )
   }
 
   private set if(ifValue: string | null) {
-    let labelString
+    const instruction = Instruction.create(this.popupReferenceEl)
 
     if (!ifValue || ifValue.trim().length == 0) {
-      this.popupReferenceEl.removeAttribute(attributeNameFor("instruction:if"))
-      this.popupReferenceEl.classList.remove(
-        classNameFor("gate:state:disabled"),
-      )
-      labelString = ""
+      if (isIfable(instruction)) instruction.if = null
+      if (isDisableable(instruction)) instruction.disabled = false
     } else {
-      this.popupReferenceEl.setAttribute(
-        attributeNameFor("instruction:if"),
-        ifValue,
-      )
-      labelString = `if ${ifValue}`
+      if (isIfable(instruction)) instruction.if = ifValue
     }
-    this.dataGateLabel = labelString
-  }
-
-  private get isThetable(): boolean {
-    return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:mixin:thetable"),
-    )
-  }
-
-  private get theta(): string | null {
-    return this.popupReferenceEl.getAttribute(
-      attributeNameFor("instruction:theta"),
-    )
   }
 
   private set theta(theta: string | null) {
-    const thetaString = this.validateThetaString(theta)
-
-    this.popupReferenceEl.setAttribute(
-      attributeNameFor("instruction:theta"),
-      thetaString,
-    )
-    this.dataGateLabel = thetaString.replace("pi", "π")
-  }
-
-  private get isPhiable(): boolean {
-    return this.popupReferenceEl.classList.contains(
-      classNameFor("gate:mixin:phiable"),
-    )
-  }
-
-  private get phi(): string | null {
-    return this.popupReferenceEl.getAttribute(
-      attributeNameFor("instruction:phi"),
-    )
+    const instruction = Instruction.create(this.popupReferenceEl)
+    if (isThetable(instruction)) {
+      Util.notNull(theta)
+      instruction.theta = theta
+    } else {
+      throw new Error("thetable")
+    }
   }
 
   private set phi(phi: string | null) {
-    const phiString = this.validatePhiString(phi)
-
-    this.popupReferenceEl.setAttribute(
-      attributeNameFor("instruction:phi"),
-      phiString,
-    )
-    this.dataGateLabel = phiString.replace("pi", "π")
-  }
-
-  private set dataGateLabel(label: string) {
-    this.popupReferenceEl.dataset.gateLabel = label
-  }
-
-  private validateThetaString(theta: string | null): string {
-    if (!theta || theta.trim().length == 0) {
-      throw new InternalError("Theta not set")
+    const instruction = Instruction.create(this.popupReferenceEl)
+    if (isPhible(instruction)) {
+      Util.notNull(phi)
+      instruction.phi = phi
+    } else {
+      throw new Error("phible")
     }
-    parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
-
-    return theta
-  }
-
-  private validatePhiString(phi: string | null): string {
-    if (!phi || phi.trim().length == 0) {
-      throw new InternalError("Phi not set")
-    }
-    parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
-
-    return phi
   }
 
   private runCircuit(): void {

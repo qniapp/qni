@@ -2,13 +2,14 @@ import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
-import { Util, attributeNameFor, classNameFor } from "lib/base"
+import { classNameFor } from "lib/base"
 import {
   Complex,
   Matrix,
   parseFormula,
   PARSE_COMPLEX_TOKEN_MAP_RAD,
 } from "lib/math"
+import { PhibleMixin } from "./phiable"
 
 export const PHASE_GATE_INSTRUCTION_TYPE = "P"
 
@@ -19,8 +20,8 @@ export type PhaseGateInstruction = {
   targets: number[]
 }
 
-export class PhaseGate extends ControllableMixin(
-  TargetableMixin(ConnectableMixin(InstructionWithElement)),
+export class PhaseGate extends PhibleMixin(
+  ControllableMixin(TargetableMixin(ConnectableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:phase")
   static MATRIX(phi: string): Matrix {
@@ -40,14 +41,7 @@ export class PhaseGate extends ControllableMixin(
   }
 
   toJson(): string {
-    const phi = this.phi.replace("pi", "π").replace("/", "_")
+    const phi = this.phi.replace(/pi/g, "π").replace(/\//g, "_")
     return `"${PHASE_GATE_INSTRUCTION_TYPE}(${phi})"`
-  }
-
-  get phi(): string {
-    const attr = this.element.getAttribute(attributeNameFor("instruction:phi"))
-    Util.notNull(attr)
-
-    return attr
   }
 }

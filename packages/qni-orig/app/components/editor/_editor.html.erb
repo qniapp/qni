@@ -6,10 +6,10 @@
      data-action="circuitUpdateEvent->editor#runCircuit simulationFinished->editor#updateUrl"
      data-editor-max-nqubit="<%= Qni::MAX_NQUBIT %>">
   <%= editor.content %>
-  <%= gate_config_popup type: 'theta', label: 'theta', error_message: 'theta の値が無効です' %>
-  <%= gate_config_popup type: 'phi', label: 'phi', error_message: 'phi の値が無効です' %>
-  <%= gate_config_popup type: 'if', label: 'if', error_message: 'if の値が無効です' %>
-  <%= gate_config_popup type: 'set', label: 'set', error_message: 'set の値が無効です' %>
+  <%= gate_config_popup type: 'theta', label: 'θ', error_message: 'Invalid θ value' %>
+  <%= gate_config_popup type: 'phi', label: 'φ', error_message: 'Invalid φ value' %>
+  <%= gate_config_popup type: 'if', label: 'if', error_message: 'Invalid `if` value' %>
+  <%= gate_config_popup type: 'flag', label: 'flag', error_message: 'Invalid flag' %>
 
   <%= render 'bloch_display/bloch_display_popup_content' %>
 </div>

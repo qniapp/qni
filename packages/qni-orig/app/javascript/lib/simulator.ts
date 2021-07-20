@@ -167,7 +167,7 @@ export class Simulator {
           break
         case MEASURE_GATE_INSTRUCTION_TYPE:
           this.measure(bit)
-          if (each.set) this.flags[each.set] = this.bits[bit] == 1
+          if (each.flag) this.flags[each.flag] = this.bits[bit] == 1
           break
         default:
           throw new Error("Unknown instruction")
