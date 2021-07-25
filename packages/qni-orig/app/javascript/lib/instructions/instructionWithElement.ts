@@ -6,7 +6,7 @@ export class InstructionWithElement extends Elementable {
     return this.circuitDropzone.bit
   }
 
-  private get circuitDropzone(): CircuitDropzone {
+  get circuitDropzone(): CircuitDropzone {
     return new CircuitDropzone(this.element.parentElement)
   }
 }

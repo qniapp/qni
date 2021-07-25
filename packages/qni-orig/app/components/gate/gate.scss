@@ -139,19 +139,4 @@
     @apply w-#{$instruction-size-base};
     @apply h-#{$instruction-size-base};
   }
-
-  @keyframes bg-fade {
-    from {
-      @apply bg-flash;
-    }
-
-    to {
-      @apply bg-transparent;
-    }
-  }
-
-  &--updated {
-    animation-duration: 1.5s;
-    animation-name: bg-fade;
-  }
 }

@@ -23,6 +23,7 @@
 @import "tailwind_ui/card/header/header";
 
 // Components
+@import "angle_slider/angle_slider";
 @import "circle_notation/circle_notation";
 @import "circuit/circuit";
 @import "circuit/circuit_block/circuit_block";
@@ -40,8 +41,8 @@
 @import "circuit_thumbnail/circuit_thumbnail";
 @import "gate/body/body";
 @import "gate/gate";
-@import "gate_config_popup/gate_config_popup";
 @import "gate_description/gate_description";
+@import "gate_popup/gate_popup";
 @import "palette/palette";
 @import "qubit_circle/qubit_circle";
 @import "qubit_circle_group/qubit_circle_group";

@@ -42,7 +42,7 @@ remote_controlled_randomness:
 
 basic_teleportation:
   name: Basic teleportation
-  json: '{"cols":[[1,"|0>","|0>"],["{entangle"],[1,"H",1],[1,"•","X"],["}"],["|0>",1,1],["{prep payload"],["H",1,1],["P(π_4)",1,1],["H",1,1],["}"],["{send"],["•","X",1],["H",1,1],["Measure",1,1],[1,"Measure",1],["}"],["{receive"],[1,"•","X"],["•",1,"•"],["}"],["{verify"],[1,1,"H"],[1,1,"P(-π_4)"],[1,1,"H"],[1,1,"Measure"],["}"]],"init":false}'
+  json: '{"cols":[[1,"|0>","|0>"],["{entangle"],[1,"H",1],[1,"•","X"],["}"],["|0>",1,1],["{prep payload"],["Rx(11π_8)",1,1],["Bloch",1,1],["}"],[1,1,1],["{send"],["•","X",1],["H",1,1],["Measure",1,1],[1,"Measure",1],["}"],[1,1,1],["{receive"],[1,"•","X"],["•",1,"•"],["}"],[1,1,1],["{verify"],[1,1,"Bloch"],[1,1,"Measure"],["}"],[1,1,1]],"init":false}'
 
 increment_and_decrement:
   name: Increment and decrement

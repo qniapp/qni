@@ -6,7 +6,7 @@ import {
   NotGate,
   RootNotGate,
 } from "lib/instructions"
-import { Breakpoint, Util, classNameFor } from "lib/base"
+import { Breakpoint, Util } from "lib/base"
 import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Complex } from "lib/math"
@@ -166,12 +166,6 @@ export default class SimulatorController extends Controller {
     this.circuit.steps.forEach((each) => {
       each.done = false
     })
-    Array.from(
-      document.getElementsByClassName(classNameFor("gate:measure")),
-    ).forEach((each) => {
-      each.classList.remove(classNameFor("gate:state:updated"))
-    })
-
     const steps = this.steps
     this.worker.postMessage({ nqubit: steps[0].length, steps: steps })
   }

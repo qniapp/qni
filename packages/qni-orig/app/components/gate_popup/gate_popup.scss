@@ -1,16 +1,30 @@
 .gate-popup {
+  &__input-wrapper {
+    @apply border-2 border-swan;
+    @apply px-3 py-2;
+    @apply relative;
+    @apply rounded-md;
+
+    &:focus-within {
+      @apply ring-1;
+      @apply ring-magnitude;
+      @apply border-magnitude;
+    }
+  }
+
   &__input {
     @apply block;
-    @apply border-2 border-swan;
-    @apply py-2 px-3;
-    @apply rounded-md;
-    @apply text-wolf;
     @apply w-full;
+    @apply border-0;
+    @apply p-0;
+    @apply text-eel;
+
+    @screen sm {
+      @apply text-sm;
+    }
 
     &:focus {
-      @apply border-magnitude;
-      @apply outline-none;
-      @apply ring-magnitude;
+      @apply ring-0;
     }
   }
 
@@ -20,16 +34,16 @@
 
   &__input-error {
     @apply invisible;
-    @apply mt-2;
     @apply text-sm;
     @apply text-wolf;
   }
 
-  &--error &__input {
+  &--error &__input-wrapper {
     @apply border-cardinal;
-    @apply text-cardinal;
 
-    &:focus {
+    &:focus-within {
+      @apply ring-1;
+      @apply border-cardinal;
       @apply ring-cardinal;
     }
   }

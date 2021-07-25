@@ -51,6 +51,7 @@ export class Seq<T> {
     if (obj instanceof Seq) {
       // Avoid double-wrapping.
       iterable = obj._iterable
+      // @ts-ignore
       iterator = obj[Symbol.iterator]
     } else if (isIteratorFunction) {
       iterable = { [Symbol.iterator]: obj } as unknown as Iterable<T>
@@ -64,6 +65,7 @@ export class Seq<T> {
     }
 
     this._iterable = iterable
+    // @ts-ignore
     this[Symbol.iterator] = iterator
   }
 
@@ -120,12 +122,14 @@ export class Seq<T> {
   toFloat32Array(): Float32Array {
     const n = this.tryPeekCount()
     if (n === undefined) {
+      // @ts-ignore
       return new Float32Array(this.toArray())
     }
 
     const buf = new Float32Array(n)
     let i = 0
     for (const item of this._iterable) {
+      // @ts-ignore
       buf[i++] = item
     }
     return buf
@@ -161,7 +165,7 @@ export class Seq<T> {
     if (!Number.isInteger(count) || count < 0) {
       throw new DetailedError("bad count", { count })
     }
-
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (let i = 0; i < count; i++) {
         yield i
@@ -174,6 +178,7 @@ export class Seq<T> {
    * without bound.
    */
   static naturals(): Seq<number> {
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let i = 0
       while (true) {
@@ -190,7 +195,7 @@ export class Seq<T> {
     if (repeatCount < 0) {
       throw new Error("needed repeatCount >= 0")
     }
-
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (let i = 0; i < repeatCount; i++) {
         yield item
@@ -232,6 +237,7 @@ export class Seq<T> {
    */
   map<R>(projection: (e: T) => R): Seq<R> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (const e of seq) {
         yield projection(e)
@@ -245,6 +251,7 @@ export class Seq<T> {
    */
   mapWithIndex(projection: (e: T, index: number) => unknown): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let i = 0
       for (const e of seq) {
@@ -260,6 +267,7 @@ export class Seq<T> {
    */
   flatMap<R>(sequenceProjection: (e: T) => Iterable<R>): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (const e of seq) {
         yield* sequenceProjection(e)
@@ -274,6 +282,7 @@ export class Seq<T> {
    */
   filter(predicate: (e: T) => boolean): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (const e of seq) {
         if (predicate(e)) {
@@ -290,6 +299,7 @@ export class Seq<T> {
    */
   filterWithIndex(predicate: (e: T, i: number) => boolean): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let i = 0
       for (const e of seq) {
@@ -311,12 +321,15 @@ export class Seq<T> {
    */
   fold<A>(
     combiner: (a: T, b: T) => T,
+    // @ts-ignore
     emptyErrorAlternative: A = THROW_IF_EMPTY,
   ): T | A {
     let accumulator = EMPTY_SYGIL
     for (const e of this._iterable) {
+      // @ts-ignore
       accumulator = accumulator === EMPTY_SYGIL ? e : combiner(accumulator, e)
     }
+    // @ts-ignore
     return emptyFallback(
       accumulator,
       emptyErrorAlternative,
@@ -350,6 +363,7 @@ export class Seq<T> {
     combiner: (a: T, b: T2) => R,
   ): Seq<R> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       const iter2 = other[Symbol.iterator]()
       for (const item1 of seq) {
@@ -370,6 +384,7 @@ export class Seq<T> {
    * @param emptyErrorAlternative The value to return if the sequence is empty.
    * If not provided, an error is thrown when the sequence is empty.
    */
+  // @ts-ignore
   max<A>(emptyErrorAlternative: A = THROW_IF_EMPTY): T | A {
     return this.fold((e1, e2) => (e1 < e2 ? e2 : e1), emptyErrorAlternative)
   }
@@ -382,6 +397,7 @@ export class Seq<T> {
    * @param emptyErrorAlternative The value to return if the sequence is empty.
    * If not provided, an error is thrown when the sequence is empty.
    */
+  // @ts-ignore
   min<A>(emptyErrorAlternative: A = THROW_IF_EMPTY): T | A {
     return this.fold((e1, e2) => (e1 < e2 ? e1 : e2), emptyErrorAlternative)
   }
@@ -397,6 +413,7 @@ export class Seq<T> {
    */
   maxBy<A>(
     projection: (e: T) => number,
+    // @ts-ignore
     emptyErrorAlternative: A = THROW_IF_EMPTY,
     isALessThanBComparator: (e1: A, e2: A) => boolean = (e1, e2) => e1 < e2,
   ): T | A {
@@ -406,20 +423,26 @@ export class Seq<T> {
       // Delay computing the score for the first item, so that singleton lists
       // never touch the score function.
       if (curMaxItem === EMPTY_SYGIL) {
+        // @ts-ignore
         curMaxItem = item
         continue
       }
       if (curMaxScore === EMPTY_SYGIL) {
+        // @ts-ignore
         curMaxScore = projection(curMaxItem)
       }
 
       const score = projection(item)
+      // @ts-ignore
       if (isALessThanBComparator(curMaxScore, score)) {
+        // @ts-ignore
         curMaxItem = item
+        // @ts-ignore
         curMaxScore = score
       }
     }
 
+    // @ts-ignore
     return emptyFallback(
       curMaxItem,
       emptyErrorAlternative,
@@ -438,6 +461,7 @@ export class Seq<T> {
    */
   minBy<A>(
     projection: (e: T) => number,
+    // @ts-ignore
     emptyErrorAlternative: A = THROW_IF_EMPTY,
     isALessThanBComparator: (e1: A, e2: A) => boolean = (e1, e2) => e1 < e2,
   ): T | A {
@@ -515,6 +539,7 @@ export class Seq<T> {
    * invariant that X.concat([s]).product() === X.product() * s.
    */
   product(): T | number | unknown {
+    // @ts-ignore
     return this.fold((a, e) => a * e, 1)
   }
 
@@ -527,6 +552,7 @@ export class Seq<T> {
   scan<A>(seed: A, aggregator: (a: A, e: T) => A): Seq<A> {
     const seq = this._iterable
 
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let accumulator = seed
       yield accumulator
@@ -549,8 +575,10 @@ export class Seq<T> {
    */
   flatten(): Seq<unknown> {
     const seqSeq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (const seq of seqSeq) {
+        // @ts-ignore
         yield* seq
       }
     })
@@ -562,8 +590,10 @@ export class Seq<T> {
    */
   concat<A>(other: unknown | A[] | Seq<A>): Seq<T | A> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       yield* seq
+      // @ts-ignore
       yield* other
     })
   }
@@ -579,6 +609,7 @@ export class Seq<T> {
     }
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       if (self.tryPeekCount() !== undefined && index >= self.tryPeekCount()) {
         throw new Error("needed index <= count")
@@ -611,6 +642,7 @@ export class Seq<T> {
     }
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       if (self.tryPeekCount() !== undefined && index >= self.tryPeekCount()) {
         throw new Error("needed index <= count")
@@ -642,6 +674,7 @@ export class Seq<T> {
     }
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       if (self.tryPeekCount() !== undefined && index > self.tryPeekCount()) {
         throw new Error("needed index <= count")
@@ -672,6 +705,7 @@ export class Seq<T> {
    */
   takeWhile(predicate: (e: T) => boolean): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       for (const e of seq) {
         if (!predicate(e)) {
@@ -689,6 +723,7 @@ export class Seq<T> {
    */
   skipTailWhile(predicate: (e: T) => boolean): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let tail = []
       for (const e of seq) {
@@ -709,6 +744,7 @@ export class Seq<T> {
    */
   skipWhile(predicate: (e: T) => boolean): Seq<T> {
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let matched = true
       for (const e of seq) {
@@ -732,6 +768,7 @@ export class Seq<T> {
       return new Seq([])
     }
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let i = 0
       for (const e of seq) {
@@ -757,6 +794,7 @@ export class Seq<T> {
     }
 
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let i = 0
       for (const e of seq) {
@@ -779,6 +817,7 @@ export class Seq<T> {
   distinctBy<K>(keySelector: (e: T) => K): Seq<T> {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const seq = this
+    // @ts-ignore
     return Seq.fromGenerator(function () {
       const keySet = new Set()
       const filtered = seq.filter((e) => {
@@ -804,6 +843,7 @@ export class Seq<T> {
   segmentBy(keySelector: (e: T) => unknown): Seq<T[]> {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const seq = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let group = []
       let lastKey = undefined
@@ -831,6 +871,7 @@ export class Seq<T> {
    * empty. If not provided, an error is thrown when the sequence is empty or
    * has more than one value.
    */
+  // @ts-ignore
   single<A>(emptyManyErrorAlternative: A = THROW_IF_EMPTY): T | A {
     const iter = this[Symbol.iterator]()
 
@@ -839,6 +880,7 @@ export class Seq<T> {
       return first.value
     }
 
+    // @ts-ignore
     if (emptyManyErrorAlternative === THROW_IF_EMPTY) {
       if (first.done) {
         throw new Error("Empty sequence doesn't contain a single item.")
@@ -856,6 +898,7 @@ export class Seq<T> {
    * @param emptyErrorAlternative The value to return if the sequence is empty.
    * If not provided, an error is thrown when the sequence is empty.
    */
+  // @ts-ignore
   first<A>(emptyErrorAlternative: A = THROW_IF_EMPTY): T | A {
     const iter = this[Symbol.iterator]()
 
@@ -864,6 +907,7 @@ export class Seq<T> {
       return first.value
     }
 
+    // @ts-ignore
     if (emptyErrorAlternative === THROW_IF_EMPTY) {
       throw new Error("Empty sequence has no first item.")
     }
@@ -877,11 +921,14 @@ export class Seq<T> {
    * @param emptyErrorAlternative The value to return if the sequence is empty.
    * If not provided, an error is thrown when the sequence is empty.
    */
+  // @ts-ignore
   last<A>(emptyErrorAlternative: A = THROW_IF_EMPTY): T | A {
     let result = EMPTY_SYGIL
     for (const e of this._iterable) {
+      // @ts-ignore
       result = e
     }
+    // @ts-ignore
     return emptyFallback(
       result,
       emptyErrorAlternative,
@@ -940,6 +987,7 @@ export class Seq<T> {
       throw new Error("needed minCount >= 0")
     }
     const seq = this._iterable
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let remaining = minCount
       for (const e of seq) {
@@ -1024,7 +1072,8 @@ export class Seq<T> {
    *
    * If any duplicate keys are generated, an exception is thrown.
    */
-  keyedBy<K>(keySelector: (e: T) => K): Map<K, V> {
+  keyedBy<K, V>(keySelector: (e: T) => K): Map<K, V> {
+    // @ts-ignore
     return this.toMap(keySelector, (e) => e)
   }
 
@@ -1056,6 +1105,7 @@ export class Seq<T> {
     }
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const seq = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       let buffer = []
       for (const item of seq) {
@@ -1089,6 +1139,7 @@ export class Seq<T> {
   ): Seq<T> {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const seq = this
+    // @ts-ignore
     return Seq.fromGenerator(function* () {
       const visited = new Set()
       const schedule = seq.toArray()

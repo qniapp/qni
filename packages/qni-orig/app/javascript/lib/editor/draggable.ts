@@ -136,7 +136,6 @@ export abstract class Draggable extends Elementable {
 
     interactable.unset()
     el.classList.remove(classNameFor("draggable:state:dragging"))
-    el.classList.remove(classNameFor("gate:state:updated"))
     el.classList.add(classNameFor("draggable:type:source"))
     this.getDropzone().element.insertBefore(el, this.element)
 

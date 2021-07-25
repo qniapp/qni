@@ -47,10 +47,5 @@ export class MeasureGate extends FlaggableMixin(
     if (value === null) throw new InternalError("Cannot set Measure value null")
 
     this.dataValue = value.toString()
-    this.updated()
-  }
-
-  private updated(): void {
-    this.classList.add(classNameFor("gate:state:updated"))
   }
 }

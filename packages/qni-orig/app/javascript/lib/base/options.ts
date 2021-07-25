@@ -49,6 +49,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     circuitBreakpoint: "circuit-breakpoint",
     "circuitBreakpoint:state:active": "circuit-breakpoint--active",
 
+    draggable: "draggable",
     "draggable:state:dragging": "draggable--dragging",
     "draggable:state:dropped": "draggable--dropped",
     "draggable:state:grabbed": "draggable--grabbed",
@@ -57,26 +58,26 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "draggable:type:shadow": "draggable--shadow",
     "draggable:type:source": "draggable--source",
 
+    dropzone: "dropzone",
     "dropzone:state:active": "dropzone--active",
     "dropzone:state:occupied": "dropzone--occupied",
     "dropzone:type:circuit": "dropzone--circuit",
     "dropzone:type:palette": "dropzone--palette",
     "dropzone:type:trash": "dropzone--trash",
+
     "gate:mixin:ifable": "gate--ifable",
     "gate:mixin:phiable": "gate--phiable",
     "gate:mixin:thetable": "gate--thetable",
     "gate:state:disabled": "gate--disabled",
-    "gate:state:updated": "gate--updated",
-    "runButton::running": "run-button--running",
+
     "wireable:inactive": "wireable--inactive",
     "wireable:inputInactive": "wireable--input-inactive",
     "wireable:outputInactive": "wireable--output-inactive",
 
-    draggable: "draggable",
-    dropzone: "dropzone",
-    instruction: "instruction",
-    runButton: "run-button",
-    wireable: "wireable",
+    angleSlider: "angle-slider",
+    "angleSlider:state:active": "angle-slider-active",
+
+    "runButton::running": "run-button--running",
   },
   attributes: {
     "draggable:x": "data-draggable-x",

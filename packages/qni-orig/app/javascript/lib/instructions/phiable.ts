@@ -1,35 +1,57 @@
 import { Constructor } from "./constructor"
 import { InstructionWithElement } from "./instructionWithElement"
 import { attributeNameFor, Util } from "lib/base"
-import { parseFormula, PARSE_COMPLEX_TOKEN_MAP_RAD } from "lib/math"
+import { parseAngle } from "lib/math"
 
-export declare class Phible {
+export declare class Phiable {
   get phi(): string
   set phi(value: string)
+  get angle(): string
+  set angle(value: string)
+  get radian(): number
 }
 
-export const isPhible = (arg: unknown): arg is Phible =>
+export const isPhiable = (arg: unknown): arg is Phiable =>
   typeof arg === "object" &&
   arg !== null &&
-  typeof (arg as Phible).phi === "string"
+  typeof (arg as Phiable).phi === "string" &&
+  typeof (arg as Phiable).angle === "string" &&
+  typeof (arg as Phiable).radian === "number"
 
-export function PhibleMixin<TBase extends Constructor<InstructionWithElement>>(
+export function PhiableMixin<TBase extends Constructor<InstructionWithElement>>(
   Base: TBase,
-): Constructor<Phible> & TBase {
-  class PhibleMixinClass extends Base {
+): Constructor<Phiable> & TBase {
+  class PhiableMixinClass extends Base {
     get phi(): string {
       const phi = this.element.getAttribute(attributeNameFor("instruction:phi"))
       Util.notNull(phi)
-      parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+      parseAngle(phi)
+
       return phi
     }
 
     set phi(phi: string) {
-      parseFormula<number>(phi, PARSE_COMPLEX_TOKEN_MAP_RAD)
+      parseAngle(phi)
+
       this.element.setAttribute(attributeNameFor("instruction:phi"), phi)
       this.element.dataset.gateLabel = phi.replace(/pi/g, "π")
     }
+
+    get angle(): string {
+      return this.phi
+    }
+
+    set angle(angle: string) {
+      this.phi = angle
+    }
+
+    get radian(): number {
+      const phi = this.element.getAttribute(attributeNameFor("instruction:phi"))
+      Util.notNull(phi)
+
+      return parseAngle(phi)
+    }
   }
 
-  return PhibleMixinClass as Constructor<Phible> & TBase
+  return PhiableMixinClass as Constructor<Phiable> & TBase
 }
