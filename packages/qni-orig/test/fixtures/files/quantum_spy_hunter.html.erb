@@ -23,7 +23,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= measure set: 'alice_h' %>
+        <%= measure flag: 'alice_h' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -44,7 +44,7 @@
     <% end %>
     <%= circuit_step do %>
       <%= dropzone do %>
-        <%= measure set: 'alice_v' %>
+        <%= measure flag: 'alice_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
       <%= dropzone wire_active: false %>
@@ -106,7 +106,7 @@
     <%= circuit_step do %>
       <%= dropzone wire_active: false %>
       <%= dropzone do %>
-        <%= measure set: 'eve_v' %>
+        <%= measure flag: 'eve_v' %>
       <% end %>
       <%= dropzone wire_active: false %>
     <% end %>
@@ -155,7 +155,7 @@
       <%= dropzone wire_active: false %>
       <%= dropzone %>
       <%= dropzone do %>
-        <%= measure set: 'bob_h' %>
+        <%= measure flag: 'bob_h' %>
       <% end %>
     <% end %>
   <% end %>

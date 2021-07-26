@@ -54,19 +54,19 @@
 @import "tippy/tippy";
 @import "wires/wires";
 
-@import "write_gate/write_gate";
 @import "bloch_display/bloch_display";
-@import "hadamard_gate/hadamard_gate";
-@import "not_gate/not_gate";
-@import "y_gate/y_gate";
-@import "z_gate/z_gate";
-@import "phase_gate/phase_gate";
 @import "control_gate/control_gate";
-@import "swap_gate/swap_gate";
+@import "hadamard_gate/hadamard_gate";
+@import "measure_gate_component/measure_gate_component";
+@import "not_gate/not_gate";
+@import "phase_gate/phase_gate";
 @import "root_not_gate/root_not_gate";
 @import "rx_gate/rx_gate";
 @import "ry_gate/ry_gate";
 @import "rz_gate/rz_gate";
-@import "measure_gate/measure_gate";
+@import "swap_gate/swap_gate";
+@import "write_gate/write_gate";
+@import "y_gate/y_gate";
+@import "z_gate/z_gate";
 
 @import "tailwindcss/utilities";

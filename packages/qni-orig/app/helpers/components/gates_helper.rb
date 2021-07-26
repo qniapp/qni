@@ -50,6 +50,7 @@ module Components::GatesHelper
   end
 
   def measure(*options)
-    component 'measure_gate', *options
+    opts = options[0] || {}
+    render(MeasureGateComponent.new(flag: opts[:flag], palette: opts[:palette]))
   end
 end

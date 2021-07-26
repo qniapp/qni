@@ -6,6 +6,7 @@ ruby '2.7.4'
 
 gem 'rails', '~> 6.1'
 gem 'tzinfo-data'
+gem 'view_component', require: 'view_component/engine'
 
 # Drivers
 gem 'pg'

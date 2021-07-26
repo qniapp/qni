@@ -100,7 +100,7 @@ module Qni
         when 'Measure'
           apply_measure bit
         when /^Measure>(#{VARIABLE_NAME_REGEXP})$/o
-          apply_measure bit, set: Regexp.last_match(1)
+          apply_measure bit, flag: Regexp.last_match(1)
         when 'Bloch'
           apply_bloch bit
         when '•'
@@ -375,12 +375,12 @@ module Qni
     # rubocop:enable Metrics/MethodLength
     # rubocop:enable Metrics/AbcSize
 
-    def apply_measure(bit, set: nil)
+    def apply_measure(bit, flag: nil)
       @wire_active[bit] = false
       @wire_active_orig[bit] = false
 
       dropzone do
-        measure set: set
+        measure flag: flag
       end
     end
 

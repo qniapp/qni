@@ -178,9 +178,12 @@ module Qni
       "<%= bloch_display bit: #{bit} %>\n"
     end
 
-    def measure(set: nil)
-      opts = option_string(set: set)
-      opts ? "<%= measure #{opts} %>\n" : "<%= measure %>\n"
+    def measure(flag: nil)
+      if flag
+        "<%= measure flag: '#{flag}' %>\n"
+      else
+        "<%= measure %>\n"
+      end
     end
 
     private
@@ -204,8 +207,6 @@ module Qni
           h[:if] = "'#{options[:if]}'" if options[:if]
         when :disabled
           h[:disabled] = options[:disabled] if options[:disabled]
-        when :set
-          h[:set] = "'#{options[:set]}'" if options[:set]
         when :write
           h[:write] = options[:write] if options[:write]
         when :measure

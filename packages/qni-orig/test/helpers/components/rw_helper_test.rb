@@ -32,7 +32,7 @@ class Components::RwHelperTest < ActionView::TestCase
       <div class="gate measure-gate draggable draggable--circuit"
            data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
-          #{measure_icon class: 'gate-icon'}
+          #{render Icons::MeasureComponent.new}
           <div class="gate-ket-label"></div>
         </div>
       </div>
@@ -46,7 +46,7 @@ class Components::RwHelperTest < ActionView::TestCase
            data-gate-label="alice_v"
            data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
-          #{measure_icon class: 'gate-icon'}
+          #{render Icons::MeasureComponent.new}
           <div class="gate-ket-label"></div>
         </div>
       </div>
