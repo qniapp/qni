@@ -1,22 +1,22 @@
-require 'component'
-require 'concerns/draggable'
+# frozen_string_literal: true
 
-class WriteGateComponent < Component
-  include Draggable
+class WriteGateComponent < ViewComponent::Base
+  def initialize(value:, palette: false)
+    raise ArgumentError if value && [0, 1].exclude?(value)
 
-  attribute :value
-
-  validates :value, inclusion: { in: [0, 1] }, if: :value
-
-  def klass
-    class_string('gate',
-                 'write-gate',
-                 'draggable',
-                 'draggable--palette' => palette?,
-                 'draggable--circuit' => circuit?)
+    @class = class_string('gate',
+                          'write-gate',
+                          'draggable',
+                          ['draggable--palette', 'draggable--circuit'] => palette)
+    @data = { value: value }.merge(data_draggable)
   end
 
-  def data
-    { value: value }.merge(data_draggable)
+  private
+
+  def data_draggable
+    { action: 'mouseenter->gate-description#initPopup:passive ' \
+              'mousedown->editor#grabDraggable:passive ' \
+              'mouseup->editor#releaseDraggable:passive ' \
+              'click->editor#ignoreDraggableClick:passive' }
   end
 end

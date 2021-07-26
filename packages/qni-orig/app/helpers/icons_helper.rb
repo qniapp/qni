@@ -43,10 +43,6 @@ module IconsHelper
     render 'components/icons/rz', *options
   end
 
-  def ket_icon(*options)
-    render 'components/icons/ket', *options
-  end
-
   def reload_icon
     render 'components/icons/reload'
   end

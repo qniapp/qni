@@ -1,8 +1,8 @@
 module Components::GatesHelper
   include ComponentsHelper
 
-  def write(value, *options)
-    component 'write_gate', { value: value }.merge(options[0] || {})
+  def write(value, palette: false)
+    render WriteGateComponent.new(value: value, palette: palette)
   end
 
   def hadamard_gate(*options)
@@ -49,8 +49,7 @@ module Components::GatesHelper
     component 'rz_gate', *options
   end
 
-  def measure(*options)
-    opts = options[0] || {}
-    render(MeasureGateComponent.new(flag: opts[:flag], palette: opts[:palette]))
+  def measure(value: nil, flag: nil, palette: false)
+    render MeasureGateComponent.new(value: value, flag: flag, palette: palette)
   end
 end

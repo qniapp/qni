@@ -3,13 +3,12 @@ require 'test_helper'
 class Components::RwHelperTest < ActionView::TestCase
   include Components::GatesHelper
   include ComponentsHelper
-  include IconsHelper
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
-          #{ket_icon class: 'gate-icon'}
+          #{render Icons::KetComponent.new}
           <div class="gate-ket-label"></div>
         </div>
       </div>
@@ -20,7 +19,7 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
       <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
-          #{ket_icon class: 'gate-icon'}
+          #{render Icons::KetComponent.new}
           <div class="gate-ket-label"></div>
         </div>
       </div>
