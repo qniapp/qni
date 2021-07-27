@@ -102,7 +102,7 @@ module Qni
         when /^Measure>(#{VARIABLE_NAME_REGEXP})$/o
           apply_measure bit, flag: Regexp.last_match(1)
         when 'Bloch'
-          apply_bloch bit
+          apply_bloch
         when '•'
           apply_control bit, controls, gates
         when 1
@@ -384,9 +384,9 @@ module Qni
       end
     end
 
-    def apply_bloch(bit)
+    def apply_bloch
       dropzone do
-        bloch bit: bit
+        bloch_display
       end
     end
 

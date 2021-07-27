@@ -1,7 +1,5 @@
 module Components::DisplaysHelper
-  include ComponentsHelper
-
-  def bloch_display(*options)
-    component 'bloch_display', *options
+  def bloch_display(palette: false)
+    render BlochDisplayComponent.new(palette: palette)
   end
 end

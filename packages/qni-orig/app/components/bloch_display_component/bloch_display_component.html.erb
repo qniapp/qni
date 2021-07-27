@@ -1,6 +1,4 @@
-<% bloch_display = local_assigns.fetch(:bloch_display) %>
-
-<%= tag.div class: bloch_display.klass, data: bloch_display.data do %>
+<%= tag.div class: @class, data: @data do %>
   <div class="gate__body">
     <div class="absolute inset-0 rounded-full bg-snow"></div>
     <div class="absolute inset-0 rounded-full border-2 border-hare bg-gate bg-opacity-10"></div>
