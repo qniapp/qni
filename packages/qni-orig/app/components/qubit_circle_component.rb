@@ -1,8 +1,10 @@
-require 'component'
+# frozen_string_literal: true
 
-class QubitCircleComponent < Component
-  attribute :id
-  attribute :klass
-  attribute :magnitude
-  attribute :phase
+class QubitCircleComponent < ViewComponent::Base
+  def initialize(options = {})
+    @magnitude = options.fetch(:magnitude, nil)
+    @phase = options.fetch(:phase, nil)
+    @id = options.fetch(:id, nil)
+    @class = options.fetch(:class, nil)
+  end
 end

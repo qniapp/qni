@@ -7,7 +7,10 @@ import { CreateSingletonInstance, CreateSingletonProps, Props } from "tippy.js"
 import { Controller } from "stimulus"
 import { Util } from "lib/base"
 import emergence from "emergence.js"
-import { ketDecimal, setQubitCircleClasses } from "qubit_circle/qubitCircle"
+import {
+  ketDecimal,
+  setQubitCircleClasses,
+} from "qubit_circle_component/qubitCircleComponent"
 import {
   createStateVector,
   visibleQubitCircles,
