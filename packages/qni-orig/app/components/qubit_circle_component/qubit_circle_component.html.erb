@@ -1,0 +1,10 @@
+<%= tag.div id: @id,
+            class: class_string('qubit-circle',
+                                @class,
+                                ["qubit-circle--magnitude-#{@magnitude}", 'qubit-circle--magnitude-0'] => @magnitude,
+                                "qubit-circle--phase-#{@phase}" => @phase),
+            data: { circle_notation_target: 'qubitCircle',
+                    action: 'mouseenter->circle-notation#setPopupContent' } do %>
+  <div class="qubit-circle__magnitude"></div>
+  <div class="qubit-circle__phase"></div>
+<% end %>

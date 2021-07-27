@@ -1,6 +1,6 @@
 module QubitCircleHelper
   def qubit_circle(*options)
-    component 'qubit_circle', *options
+    render QubitCircleComponent.new(*options)
   end
 
   def qubit_circle_popup
