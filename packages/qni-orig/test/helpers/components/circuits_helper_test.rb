@@ -7,14 +7,6 @@ class Components::CircuitsHelperTest < ActionView::TestCase
   include Components::GatesHelper
   include ComponentsHelper
 
-  test 'circuit breakpoint' do
-    assert_dom_equal beautify(<<~ERB), beautify(circuit_breakpoint)
-      <div class="circuit-breakpoint">
-        <div class="circuit-breakpoint__body"></div>
-      </div>
-    ERB
-  end
-
   test 'circuit block' do
     assert_dom_equal beautify(<<~ERB), beautify(circuit_block(label: 'set value') { not_gate })
       <div class="circuit-block">

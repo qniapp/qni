@@ -1,4 +1,4 @@
-require 'component'
+# frozen_string_literal: true
 
-class Circuit::CircuitBreakpointComponent < Component
+class Circuit::CircuitBreakpointComponent < ViewComponent::Base
 end

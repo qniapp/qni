@@ -23,12 +23,10 @@
 @import "tailwind_ui/card/header/header";
 
 // Components
-@import "angle_slider/angle_slider";
-@import "circle_notation/circle_notation";
 @import "circuit/circuit";
 @import "circuit/circuit_block/circuit_block";
 @import "circuit/circuit_block_divider/circuit_block_divider";
-@import "circuit/circuit_breakpoint/circuit_breakpoint";
+@import "circuit/circuit_breakpoint_component/circuit_breakpoint_component";
 @import "circuit/circuit_register_group/circuit_register_group";
 @import "circuit/circuit_register_group_span/circuit_register_group_span";
 @import "circuit/circuit_step/circuit_step";
@@ -37,6 +35,9 @@
 @import "circuit/qubit_label/qubit_label";
 @import "circuit/register_label/register_label";
 @import "circuit/register_label_span/register_label_span";
+
+@import "angle_slider/angle_slider";
+@import "circle_notation/circle_notation";
 @import "circuit_card/circuit_card";
 @import "circuit_thumbnail/circuit_thumbnail";
 @import "gate/body/body";

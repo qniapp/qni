@@ -31,10 +31,6 @@ module CircuitHelper
     component 'circuit/circuit_step', *options, &block
   end
 
-  def circuit_breakpoint(*options, &block)
-    component 'circuit/circuit_breakpoint', *options, &block
-  end
-
   def qubit_label(label)
     component 'circuit/qubit_label', label: label
   end
