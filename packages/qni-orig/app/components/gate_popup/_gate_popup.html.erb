@@ -5,7 +5,7 @@
     <div class="gate-popup__input-wrapper">  <!-- focus-within:ring-1 focus-within:ring-magnitude focus-within:border-magnitude"> -->
       <label for="<%= gate_popup.type %>" class="absolute -top-2 left-2 -mt-px inline-block px-1 bg-snow text-sm font-medium text-eel"><%= gate_popup.label %></label>
       <div class="relative">
-        <input type="text" name="<%= gate_popup.type %>" class="gate-popup__input">
+        <input type="text" name="<%= gate_popup.type %>" class="gate-popup__input" autocomplete="off">
         <div class="gate-popup__error-icon absolute inset-y-0 right-0 flex items-center pointer-events-none">
           <%= exclamation_circle_icon %>
         </div>

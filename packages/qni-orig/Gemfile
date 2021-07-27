@@ -42,7 +42,7 @@ group :development, :test do
   # Code critics
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'erb_lint', '~> 0.0.35', require: false
+  gem 'erb_lint', '~> 0.1', require: false
   gem 'rubocop', '~> 1.16', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
