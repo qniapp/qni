@@ -23,7 +23,7 @@ AllCops:
 # Lint
 Lint/MissingSuper:
   Exclude:
-    - 'app/components/*_component.rb'
+    - 'app/components/**/*_component.rb'
 
 # Layout
 Layout/SpaceInsideArrayLiteralBrackets:

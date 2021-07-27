@@ -1,17 +1,8 @@
-require 'component'
+# frozen_string_literal: true
 
-class Circuit::CircuitStepComponent < Component
-  attribute :shadow, default: false
-  attribute :shadow_source, default: false
-
-  validates :shadow, inclusion: { in: [true, false] }
-  validates :shadow_source, inclusion: { in: [true, false] }
-
-  def shadow?
-    shadow
-  end
-
-  def shadow_source?
-    shadow_source
+class Circuit::CircuitStepComponent < ViewComponent::Base
+  def initialize(shadow: false, shadow_source: false)
+    @shadow = shadow
+    @shadow_source = shadow_source
   end
 end

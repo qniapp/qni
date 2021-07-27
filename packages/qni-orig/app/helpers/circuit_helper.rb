@@ -27,10 +27,6 @@ module CircuitHelper
     component 'circuit/circuit_block_divider', *options, &block
   end
 
-  def circuit_step(*options, &block)
-    component 'circuit/circuit_step', *options, &block
-  end
-
   def qubit_label(label)
     component 'circuit/qubit_label', label: label
   end
