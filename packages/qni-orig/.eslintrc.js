@@ -17,7 +17,6 @@ module.exports = {
     node: true,
     es6: true,
   },
-  ignorePatterns: ["app/assets/javascripts/administrate/"],
   overrides: [
     {
       parser: "@typescript-eslint/parser",
@@ -25,15 +24,17 @@ module.exports = {
         project: "./tsconfig.json",
         sourceType: "module",
       },
-      plugins: ["@typescript-eslint"],
+      plugins: ["github", "custom-elements"],
       extends: [
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:github/recommended",
+        "plugin:github/browser",
+        "plugin:github/typescript",
+        "plugin:custom-elements/recommended"
       ],
       rules: {
-        "@typescript-eslint/ban-ts-comment": "off",
+        "custom-elements/define-tag-after-class-definition": "off",
+        "custom-elements/expose-class-on-global": "off",
       },
       files: ["*.ts"],
     },

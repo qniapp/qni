@@ -14,6 +14,7 @@
     "sourceMap": true,
     "target": "es5",
     "strict": true,
+    "strictPropertyInitialization": false,
     "noEmit": true
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],

@@ -1,6 +1,5 @@
 {
   "name": "qni",
-  "private": true,
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.ts": [
@@ -39,8 +38,11 @@
     "printWidth": 80
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.14.5",
     "@babel/plugin-proposal-throw-expressions": "~7.14",
     "@babel/preset-typescript": "~7.14",
+    "@github/catalyst": "^1.1.3",
+    "@github/jtml": "^0.4.0",
     "@interactjs/actions": "^1.10.11",
     "@interactjs/auto-start": "^1.10.11",
     "@interactjs/dev-tools": "^1.10.11",
@@ -65,7 +67,7 @@
     "webpack-cli": "3.3.12",
     "webpacker-pwa": "^0.1.2"
   },
-  "version": "0.1.0",
+  "version": "0.0.7",
   "devDependencies": {
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",
@@ -75,6 +77,8 @@
     "cz-conventional-changelog": "~3.3",
     "eslint": "~7.31",
     "eslint-config-prettier": "~8.3",
+    "eslint-plugin-custom-elements": "^0.0.2",
+    "eslint-plugin-github": "^4.1.5",
     "eslint-plugin-prettier": "^3.1.2",
     "husky": ">=6",
     "karma": "~6.3",
@@ -93,5 +97,34 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni.git"
+  },
+  "keywords": [
+    "quantum",
+    "simulator",
+    "circuit",
+    "components",
+    "quantum-computing",
+    "quantum-computer-simulator",
+    "quantum-algorithms"
+  ],
+  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "bugs": {
+    "url": "https://github.com/yasuhito/qni/issues"
+  },
+  "homepage": "https://github.com/yasuhito/qni"
 }

@@ -14,7 +14,7 @@
         <%= circuit_view circuit: @circuit %>
       <% end %>
       <%= circle_notation nqubit: @circuit.nqubit %>
-      <%= component 'run_button' %>
+      <%= render RunCircuitButtonComponent.new %>
     <% end %>
   <% end %>
 <% end %>

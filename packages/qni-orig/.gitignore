@@ -36,3 +36,4 @@
 /yarn-error.log
 doc/
 yarn-debug.log*
+dist/

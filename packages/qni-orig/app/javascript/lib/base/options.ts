@@ -76,8 +76,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
 
     angleSlider: "angle-slider",
     "angleSlider:state:active": "angle-slider-active",
-
-    "runButton::running": "run-button--running",
   },
   attributes: {
     "draggable:x": "data-draggable-x",

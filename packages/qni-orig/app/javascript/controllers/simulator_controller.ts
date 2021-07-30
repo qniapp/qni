@@ -11,14 +11,14 @@ import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Complex } from "lib/math"
 import { Controller } from "stimulus"
-import { RunButton } from "lib/simulator/runButton"
+import { RunCircuitButtonElement } from "run_circuit_button_component/runCircuitButtonElement"
 
 type MessageEventData = {
   type: "step" | "finish"
   blochVectors: { [bit: number]: [number, number, number] }
   bits: { [bit: number]: number }
   step: number
-  amplitudes: [number, number][]
+  amplitudes: Array<[number, number]>
   flags: { [key: string]: boolean }
 }
 
@@ -26,16 +26,13 @@ export default class SimulatorController extends Controller {
   private amplitudes: Complex[][] | undefined
   private userDraggingGate!: boolean
 
-  static targets = ["circuit", "runButton"]
+  static targets = ["circuit"]
 
-  declare runButton: RunButton
   declare worker: Worker
   declare readonly circuitTarget: HTMLElement
-  declare readonly runButtonTarget: HTMLElement
 
   connect(): void {
     this.toggleCircuitStepActive(0)
-    this.runButton = new RunButton(this.runButtonTarget as HTMLInputElement)
     this.userDraggingGate = false
 
     this.element.addEventListener("userGrabbingGate", (event) => {
@@ -77,7 +74,7 @@ export default class SimulatorController extends Controller {
             }
           }
 
-          step.instructions.forEach((each) => {
+          for (const each of step.instructions) {
             if (
               each instanceof NotGate ||
               each instanceof HadamardGate ||
@@ -87,7 +84,7 @@ export default class SimulatorController extends Controller {
                 each.disabled = !data.flags[each.if]
               }
             }
-          })
+          }
 
           this.amplitudes[data.step] = data.amplitudes.map((amp) => {
             return new Complex(amp[0], amp[1])
@@ -96,7 +93,7 @@ export default class SimulatorController extends Controller {
           step.done = true
         } else if (data.type === "finish") {
           this.gotoCircuitBreakpoint(this.circuitBreakpoint || 0)
-          this.runButton.running = false
+          this.runCircuitButton.enable()
           document
             .getElementById("editor")
             .dispatchEvent(
@@ -107,6 +104,13 @@ export default class SimulatorController extends Controller {
     )
 
     this.run()
+  }
+
+  private get runCircuitButton(): RunCircuitButtonElement {
+    const el = document.getElementById("run-circuit-button")
+    Util.notNull(el)
+
+    return el as RunCircuitButtonElement
   }
 
   get nqubit(): number {
@@ -152,22 +156,21 @@ export default class SimulatorController extends Controller {
   }
 
   private toggleCircuitStepActive(stepIndex: number): void {
-    this.circuit.steps.forEach((each, i) => {
-      if (i == stepIndex) {
+    for (const [i, each] of this.circuit.steps.entries()) {
+      if (i === stepIndex) {
         each.active = true
       } else {
         each.active = false
       }
-    })
+    }
   }
 
   run(): void {
-    this.runButton.running = true
-    this.circuit.steps.forEach((each) => {
+    for (const each of this.circuit.steps) {
       each.done = false
-    })
+    }
     const steps = this.steps
-    this.worker.postMessage({ nqubit: steps[0].length, steps: steps })
+    this.worker.postMessage({ nqubit: steps[0].length, steps })
   }
 
   private get steps() {
