@@ -1,3 +1,4 @@
+import "bloch_display_component/blochDisplayElement"
 import "measure_gate_component/measureGateElement"
 import "write_gate_component/writeGateElement"
 
