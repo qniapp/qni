@@ -1,3 +1,12 @@
+:root {
+  --colors-cardinal: theme("colors.cardinal");
+  --colors-fox: theme("colors.fox");
+  --colors-magnitude: theme("colors.magnitude");
+  --colors-snow: theme("colors.snow");
+  --colors-superposition: theme("colors.superposition");
+  --colors-swan: theme("colors.swan");
+}
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -58,7 +67,6 @@
 @import "bloch_display_component/bloch_display_component";
 @import "control_gate/control_gate";
 @import "hadamard_gate/hadamard_gate";
-@import "measure_gate_component/measure_gate_component";
 @import "not_gate/not_gate";
 @import "phase_gate/phase_gate";
 @import "root_not_gate/root_not_gate";

@@ -2,7 +2,7 @@
 
 directory 'dist'
 
-task npm: %i[environment dist] do
+task 'npm:build' => %i[environment dist] do
   desc 'build npm package'
 
   Rake::Task['webpacker:compile'].invoke
@@ -13,5 +13,8 @@ task npm: %i[environment dist] do
   latest_npm_pack = npm_packs.max_by { |a| a[1] }[0]
 
   cp latest_npm_pack, 'dist/index.js'
+end
+
+task 'npm:publish' => :environment do
   sh 'npm publish'
 end

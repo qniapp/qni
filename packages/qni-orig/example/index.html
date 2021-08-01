@@ -7,10 +7,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script crossorigin src="https://unpkg.com/qni/dist/index.js"></script>
+    <script crossorigin src="https://unpkg.com/qni@0.0.11/dist/index.js"></script>
+    <!-- <script src="../dist/index.js"></script> -->
   </head>
 
   <body>
+    <div style="display: flex; flex-direction: row;">
+      <measure-gate></measure-gate>
+      <measure-gate data-value="0"></measure-gate>
+      <measure-gate data-value="1"></measure-gate>
+    </div>
     <run-circuit-button></run-circuit-button>
   </body>
 </html>

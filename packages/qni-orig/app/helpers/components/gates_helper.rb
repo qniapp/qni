@@ -49,7 +49,7 @@ module Components::GatesHelper
     component 'rz_gate', *options
   end
 
-  def measure(value: nil, flag: nil, palette: false)
-    render MeasureGateComponent.new(value: value, flag: flag, palette: palette)
+  def measure(value: nil, flag: nil, draggable: true, palette: false)
+    render MeasureGateComponent.new(value: value, flag: flag, draggable: draggable, palette: palette)
   end
 end

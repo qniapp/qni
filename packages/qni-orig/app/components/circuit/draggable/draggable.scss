@@ -15,7 +15,7 @@
   @screen md {
     cursor: grab;
 
-    &--grabbed {
+    &[data-grabbed] {
       @apply z-50;
       cursor: grabbing;
     }

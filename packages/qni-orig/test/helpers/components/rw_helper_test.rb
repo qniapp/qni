@@ -28,27 +28,21 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'measure' do
     assert_dom_equal beautify(<<~ERB), beautify(measure)
-      <div class="gate measure-gate draggable draggable--circuit"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
-        <div class="gate__body">
-          #{render Icons::MeasureComponent.new}
-          <div class="gate-ket-label"></div>
-        </div>
-      </div>
+      <measure-gate class="gate measure-gate draggable draggable--circuit"
+                    data-draggable=""
+                    data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      </measure-gate>
     ERB
   end
 
   test 'measure (set)' do
     assert_dom_equal beautify(<<~ERB), beautify(measure(flag: 'alice_v'))
-      <div class="gate measure-gate draggable draggable--circuit"
-           data-flag="alice_v"
-           data-gate-label="alice_v"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
-        <div class="gate__body">
-          #{render Icons::MeasureComponent.new}
-          <div class="gate-ket-label"></div>
-        </div>
-      </div>
+      <measure-gate class="gate measure-gate draggable draggable--circuit"
+                    data-draggable=""
+                    data-flag="alice_v"
+                    data-gate-label="alice_v"
+                    data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      </measure-gate>
     ERB
   end
 end

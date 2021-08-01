@@ -3,7 +3,7 @@
 class MeasureGateComponent < ViewComponent::Base
   VARIABLE_NAME_REGEXP = /[[:lower:]][_[:alnum:]]*/.freeze
 
-  def initialize(value: nil, flag: nil, palette: false)
+  def initialize(value: nil, flag: nil, draggable: false, palette: false)
     raise ArgumentError if value && [0, 1].exclude?(value)
     raise ArgumentError if flag && !VARIABLE_NAME_REGEXP.match?(flag)
 
@@ -12,12 +12,13 @@ class MeasureGateComponent < ViewComponent::Base
                           'measure-gate',
                           'draggable',
                           ['draggable--palette', 'draggable--circuit'] => palette)
-    @data = { value: value, flag: flag, 'gate-label': flag }.merge(data_draggable)
+    @data = { draggable: draggable ? '' : nil, value: value, flag: flag, 'gate-label': flag }
+    @data = @data.merge(data_draggable_action) if draggable
   end
 
   private
 
-  def data_draggable
+  def data_draggable_action
     { action: 'mouseenter->gate-description#initPopup:passive ' \
               'mousedown->editor#grabDraggable:passive ' \
               'mouseup->editor#releaseDraggable:passive ' \

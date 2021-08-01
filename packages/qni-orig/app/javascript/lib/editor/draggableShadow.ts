@@ -19,18 +19,17 @@ export class DraggableShadow {
     Util.notNull(draggableSource)
 
     const el = draggableSource.clonePlainDraggableElement()
+    this.disableAction(el)
+    this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)
+
     el.classList.remove(classNameFor("draggable:type:palette"))
-    el.classList.add(classNameFor("draggable:type:shadow"))
+    el.setAttribute("data-draggable-shadow", "")
     el.classList.remove(classNameFor("gate:state:disabled"))
     el.classList.remove(classNameFor("connectable:lowerBit"))
     el.classList.remove(classNameFor("connectable:upperBit"))
     if (el.classList.contains(classNameFor("gate:measure"))) {
       el.setAttribute("data-value", "")
     }
-
-    this.disableAction(el)
-
-    this.dropzone.element.insertBefore(el, this.dropzone.element.firstChild)
   }
 
   remove(): void {
@@ -39,7 +38,7 @@ export class DraggableShadow {
 
   toPlainDraggableElement(): HTMLElement {
     const el = this.element
-    el.classList.remove(classNameFor("draggable:type:shadow"))
+    el.removeAttribute("data-draggable-shadow")
     el.classList.remove(classNameFor("draggable:type:palette"))
     el.classList.add(classNameFor("draggable:type:circuit"))
     this.enableAction(el)
@@ -60,12 +59,15 @@ export class DraggableShadow {
   }
 
   private disableAction(element: HTMLElement) {
-    const dataAction = element.dataset.action
-    element.dataset.actionDisabled = dataAction
-    element.dataset.action = ""
+    const dataAction = element.getAttribute("data-action")
+    element.setAttribute("data-action-disabled", dataAction || "")
+    element.setAttribute("data-action", "")
   }
 
   private enableAction(element: HTMLElement) {
-    element.dataset.action = element.dataset.actionDisabled
+    element.setAttribute(
+      "data-action",
+      element.getAttribute("data-action-disabled") || "",
+    )
   }
 }

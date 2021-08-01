@@ -28,9 +28,7 @@ export default class GateDescriptionController extends Controller {
       onShow(instance: Instance) {
         const draggableEl = instance.reference as HTMLElement
         if (
-          draggableEl.classList.contains(
-            classNameFor("draggable:state:grabbed"),
-          ) ||
+          draggableEl.hasAttribute("data-grabbed") ||
           draggableEl.classList.contains(
             classNameFor("draggable:state:dragging"),
           )

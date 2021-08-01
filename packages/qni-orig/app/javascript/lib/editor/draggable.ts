@@ -27,11 +27,9 @@ export abstract class Draggable extends Elementable {
   protected abstract endDragging(event: Interact.DragEvent): void
 
   setInteract(handlers: DragEventHandlers): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     if (interact.isSet(this.element)) return
     this.unsetInteract()
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const interactable = interact(this.element) as Interactable
     interactable
       .draggable({
@@ -43,7 +41,6 @@ export abstract class Draggable extends Elementable {
   }
 
   unsetInteract(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const interactable = interact(this.element) as Interactable
     interactable.unset()
   }
@@ -84,7 +81,6 @@ export abstract class Draggable extends Elementable {
   }
 
   remove(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const interactable = interact(this.element) as Interactable
     interactable.unset()
     this.getDropzone().element.removeChild(this.element)
@@ -131,13 +127,13 @@ export abstract class Draggable extends Elementable {
 
   createSource(): DraggableSource {
     const el = this.element.cloneNode(true) as HTMLElement
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const interactable = interact(el) as Interactable
-
-    interactable.unset()
-    el.classList.remove(classNameFor("draggable:state:dragging"))
-    el.classList.add(classNameFor("draggable:type:source"))
     this.getDropzone().element.insertBefore(el, this.element)
+
+    const interactable = interact(el) as Interactable
+    interactable.unset()
+
+    el.classList.remove(classNameFor("draggable:state:dragging"))
+    el.setAttribute("data-draggable-source", "")
 
     return new DraggableSource(el)
   }
@@ -149,14 +145,19 @@ export abstract class Draggable extends Elementable {
   // Status & types
 
   protected set grabbed(flag: boolean) {
-    this.setClassName("draggable:state:grabbed", flag)
+    if (flag) {
+      this.element.setAttribute("data-grabbed", "")
+    } else {
+      this.element.removeAttribute("data-grabbed")
+    }
+
     if (this.element.classList.contains(classNameFor("gate:measure"))) {
       this.element.setAttribute("data-value", "")
     }
   }
 
   isGrabbed(): boolean {
-    return this.isClassNamed("draggable:state:grabbed")
+    return this.element.hasAttribute("data-grabbed")
   }
 
   unGrab(): void {

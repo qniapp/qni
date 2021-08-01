@@ -2,7 +2,7 @@ import { classNameFor } from "lib/base"
 import { Elementable } from "lib/mixins"
 
 export class DraggableSource extends Elementable {
-  static elementClassName = classNameFor("draggable:type:source")
+  static elementClassName = classNameFor("draggable")
 
   remove(): void {
     this.removeElement()
@@ -10,7 +10,7 @@ export class DraggableSource extends Elementable {
 
   clonePlainDraggableElement(): HTMLElement {
     const element = this.element.cloneNode(true) as HTMLElement
-    element.classList.remove(classNameFor("draggable:type:source"))
+    element.removeAttribute("data-draggable-source")
     return element
   }
 }

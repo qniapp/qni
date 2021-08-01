@@ -6,7 +6,7 @@
     }
   }
 
-  &.draggable--source > .gate {
+  &.draggable[data-draggable-source] > .gate {
     &__body {
       @screen md {
         @apply bg-fox;
@@ -14,7 +14,7 @@
     }
   }
 
-  &.draggable--shadow > .gate {
+  &.draggable[data-draggable-shadow] > .gate {
     &__body {
       @screen md {
         @apply bg-superposition;
@@ -22,7 +22,7 @@
     }
   }
 
-  &.gate--disabled:not(.draggable--source) > .gate {
+  &.gate--disabled:not(.draggable[data-draggable-source]) > .gate {
     &__body {
       @apply bg-eel;
       @apply text-snow;

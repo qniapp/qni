@@ -24,8 +24,8 @@ export function DropzonableMixin<TBase extends Constructor<Elementable>>(
         this.element.getElementsByClassName(classNameFor("draggable")),
       ).filter((each) => {
         return (
-          !each.classList.contains(classNameFor("draggable:type:source")) &&
-          !each.classList.contains(classNameFor("draggable:type:shadow"))
+          !each.hasAttribute("data-draggable-source") &&
+          !each.hasAttribute("data-draggable-shadow")
         )
       })[0]
 
@@ -33,11 +33,7 @@ export function DropzonableMixin<TBase extends Constructor<Elementable>>(
     }
 
     get draggableSource(): DraggableSource | null {
-      const el = Array.from(
-        this.element.getElementsByClassName(
-          classNameFor("draggable:type:source"),
-        ),
-      )[0] as HTMLElement
+      const el = this.element.querySelector(".draggable[data-draggable-source]")
       return el ? new DraggableSource(el) : null
     }
 

@@ -5,7 +5,7 @@
     @apply w-full h-full;
 
     .gate-icon {
-      @apply absolute inset-0;
+      @apply absolute;
       @apply stroke-current;
 
       bottom: -2px;

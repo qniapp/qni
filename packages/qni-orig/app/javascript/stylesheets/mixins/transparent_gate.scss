@@ -12,20 +12,20 @@
       }
     }
 
-    &.draggable--grabbed > .gate {
+    &.draggable[data-grabbed] > .gate {
       &__body {
         @apply bg-snow;
       }
     }
 
-    &.draggable--source > .gate {
+    &.draggable[data-draggable-source] > .gate {
       &__body::after {
         @apply border-fox;
         @apply opacity-100;
       }
     }
 
-    &.draggable--shadow > .gate {
+    &.draggable[data-draggable-shadow] > .gate {
       &__body {
         @apply bg-snow;
       }

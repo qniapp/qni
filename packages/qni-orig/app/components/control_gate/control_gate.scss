@@ -5,15 +5,15 @@
   @apply text-gate;
 
   @screen md {
-    &.draggable--source {
+    &.draggable[data-draggable-source] {
       @apply text-fox;
     }
 
-    &.draggable--shadow {
+    &.draggable[data-draggable-shadow] {
       @apply text-superposition;
     }
 
-    &.gate--disabled:not(.draggable--source) {
+    &.gate--disabled:not(.draggable[data-draggable-source]) {
       @apply border-solid border-transparent;
       @apply text-eel;
     }
