@@ -5,7 +5,9 @@ import { html, render } from "@github/jtml"
 export class BlochDisplayElement extends HTMLElement {
   @target body: HTMLElement
 
-  @attr d = 0
+  @attr x = 0
+  @attr y = 0
+  @attr z = 1
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
@@ -132,8 +134,15 @@ export class BlochDisplayElement extends HTMLElement {
 
           <div class="absolute inset-0">
             <div id="perspective">
-              <div id="vector">
-                <div id="vector-line">
+              <div
+                id="vector"
+                style="transform: rotateY(${this.phi}deg) rotateX(${-this
+                  .theta}deg)"
+              >
+                <div
+                  id="vector-line"
+                  style="height: calc(${(100 * this.d) / 2}% - 3px)"
+                >
                   <div
                     class="vector-line-rect"
                     style="transform: rotateY(0deg)"
@@ -172,7 +181,10 @@ export class BlochDisplayElement extends HTMLElement {
                   ></div>
                 </div>
 
-                <div id="vector-end">
+                <div
+                  id="vector-end"
+                  style="bottom: calc(50% + ${(100 * this.d) / 2}% + 2px)"
+                >
                   <div
                     class="vector-end-circle"
                     style="transform: rotateY(0deg)"
@@ -221,5 +233,24 @@ export class BlochDisplayElement extends HTMLElement {
         </div>`,
       this.shadowRoot!,
     )
+  }
+
+  private get d(): number {
+    return parseFloat(
+      Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z).toFixed(4),
+    )
+  }
+
+  private get phi(): number {
+    return (Math.atan2(this.y, this.x) * 180) / Math.PI
+  }
+
+  private get theta(): number {
+    const θ = Math.max(
+      0,
+      Math.PI / 2 -
+        Math.atan2(this.z, Math.sqrt(this.y * this.y + this.x * this.x)),
+    )
+    return (180 * θ) / Math.PI
   }
 }
