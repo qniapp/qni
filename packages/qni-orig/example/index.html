@@ -7,16 +7,26 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script crossorigin src="https://unpkg.com/qni@0.0.11/dist/index.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <script crossorigin src="https://unpkg.com/qni/dist/index.js"></script>
     <!-- <script src="../dist/index.js"></script> -->
   </head>
 
   <body>
-    <div style="display: flex; flex-direction: row;">
-      <measure-gate></measure-gate>
-      <measure-gate data-value="0"></measure-gate>
-      <measure-gate data-value="1"></measure-gate>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="flex flex-row mb-2">
+        <measure-gate></measure-gate>
+        <measure-gate data-value="0"></measure-gate>
+        <measure-gate data-value="1"></measure-gate>
+      </div>
+
+      <div class="flex flex-row mb-2">
+        <write-gate data-value="0"></write-gate>
+        <write-gate data-value="1"></write-gate>
+      </div>
+
+      <run-circuit-button></run-circuit-button>
     </div>
-    <run-circuit-button></run-circuit-button>
   </body>
 </html>

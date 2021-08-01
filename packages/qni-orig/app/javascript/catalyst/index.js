@@ -1,2 +1,4 @@
 import "measure_gate_component/measureGateElement"
+import "write_gate_component/writeGateElement"
+
 import "run_circuit_button_component/runCircuitButtonElement"
