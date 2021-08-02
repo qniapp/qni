@@ -13,4 +13,6 @@ import "x_gate_component/xGateElement"
 import "y_gate_component/yGateElement"
 import "z_gate_component/zGateElement"
 
+import "circuit_dropzone_component/circuitDropzoneElement"
+
 import "run_circuit_button_component/runCircuitButtonElement"
