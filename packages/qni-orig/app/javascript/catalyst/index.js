@@ -8,5 +8,6 @@ import "ry_gate_component/ryGateElement"
 import "rz_gate_component/rzGateElement"
 import "swap_gate_component/swapGateElement"
 import "write_gate_component/writeGateElement"
+import "z_gate_component/zGateElement"
 
 import "run_circuit_button_component/runCircuitButtonElement"
