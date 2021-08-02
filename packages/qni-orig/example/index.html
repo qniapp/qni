@@ -9,12 +9,32 @@
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-    <!-- <script crossorigin src="https://unpkg.com/qni@0.0.24/dist/index.js"></script> -->
-    <script src="../dist/index.js"></script>
+    <script crossorigin src="https://unpkg.com/qni@0.0.25/dist/index.js"></script>
+    <!-- <script src="../dist/index.js"></script> -->
   </head>
 
   <body>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="flex flex-row sm:mt-6 lg:mt-8">
+        <circuit-step>
+          <circuit-dropzone>
+            <h-gate></h-gate>
+          </circuit-dropzone>
+
+          <circuit-dropzone>
+            <h-gate data-wire-top></h-gate>
+          </circuit-dropzone>
+
+          <circuit-dropzone>
+            <h-gate data-wire-bottom></h-gate>
+          </circuit-dropzone>
+
+          <circuit-dropzone>
+            <h-gate data-wire-top data-wire-bottom></h-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </div>
+
       <div class="flex flex-row sm:mt-6 lg:mt-8">
         <circuit-dropzone>
           <h-gate></h-gate>
