@@ -1,5 +1,6 @@
 import "bloch_display_component/blochDisplayElement"
 import "control_gate_component/controlGateElement"
+import "h_gate_component/hGateElement"
 import "measure_gate_component/measureGateElement"
 import "phase_gate_component/phaseGateElement"
 import "root_not_gate_component/rootNotGateElement"
