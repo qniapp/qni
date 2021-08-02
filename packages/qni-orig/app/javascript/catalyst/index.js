@@ -1,6 +1,7 @@
 import "bloch_display_component/blochDisplayElement"
 import "control_gate_component/controlGateElement"
 import "measure_gate_component/measureGateElement"
+import "swap_gate_component/swapGateElement"
 import "write_gate_component/writeGateElement"
 
 import "run_circuit_button_component/runCircuitButtonElement"
