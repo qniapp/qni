@@ -1,6 +1,9 @@
 import "bloch_display_component/blochDisplayElement"
 import "control_gate_component/controlGateElement"
 import "measure_gate_component/measureGateElement"
+import "rx_gate_component/rxGateElement"
+import "ry_gate_component/ryGateElement"
+import "rz_gate_component/rzGateElement"
 import "swap_gate_component/swapGateElement"
 import "write_gate_component/writeGateElement"
 
