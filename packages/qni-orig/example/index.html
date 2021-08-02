@@ -9,12 +9,19 @@
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-    <script crossorigin src="https://unpkg.com/qni@0.0.14/dist/index.js"></script>
+    <script crossorigin src="https://unpkg.com/qni@0.0.16/dist/index.js"></script>
     <!-- <script src="../dist/index.js"></script> -->
   </head>
 
   <body>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="flex flex-row sm:mt-6 lg:mt-8">
+        <control-gate></control-gate>
+        <control-gate data-wire-top></control-gate>
+        <control-gate data-wire-bottom></control-gate>
+        <control-gate data-wire-top data-wire-bottom></control-gate>
+      </div>
+
       <div class="flex flex-row sm:mt-6 lg:mt-8">
         <bloch-display></bloch-display>
         <bloch-display data-x="0" data-y="0" data-z="-1"></bloch-display>
