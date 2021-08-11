@@ -9,150 +9,2064 @@
 
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
-    <script crossorigin src="https://unpkg.com/qni@0.0.25/dist/index.js"></script>
-    <!-- <script src="../dist/index.js"></script> -->
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/atom-one-dark.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+     .hljs {
+         background-color: transparent;
+         padding: 0 !important;
+     }
+     .hljs-name {
+         color: #FF4B4B;
+     }
+     .hljs-attr, .hljs-variable {
+         color: #FFC800;
+     }
+     .hljs-string {
+         color: #43C000;
+     }
+     .hljs-title {
+         color: #1CB0F6;
+     }
+    </style>
+
+    <!-- <script crossorigin src="https://unpkg.com/qni/dist/index.js"></script> -->
+    <script src="../dist/index.js"></script>
   </head>
 
   <body>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <circuit-step>
-          <circuit-dropzone>
-            <h-gate></h-gate>
-          </circuit-dropzone>
+    <div class="h-screen flex overflow-hidden">
+      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+      <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
+        <!--
+             Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
-          <circuit-dropzone>
-            <h-gate data-wire-top></h-gate>
-          </circuit-dropzone>
+             Entering: "transition-opacity ease-linear duration-300"
+             From: "opacity-0"
+             To: "opacity-100"
+             Leaving: "transition-opacity ease-linear duration-300"
+             From: "opacity-100"
+             To: "opacity-0"
+        -->
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
 
-          <circuit-dropzone>
-            <h-gate data-wire-bottom></h-gate>
-          </circuit-dropzone>
+        <!--
+             Off-canvas menu, show/hide based on off-canvas menu state.
 
-          <circuit-dropzone>
-            <h-gate data-wire-top data-wire-bottom></h-gate>
-          </circuit-dropzone>
-        </circuit-step>
+             Entering: "transition ease-in-out duration-300 transform"
+             From: "-translate-x-full"
+             To: "translate-x-0"
+             Leaving: "transition ease-in-out duration-300 transform"
+             From: "translate-x-0"
+             To: "-translate-x-full"
+        -->
+        <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
+          <!--
+               Close button, show/hide based on off-canvas menu state.
+
+               Entering: "ease-in-out duration-300"
+               From: "opacity-0"
+               To: "opacity-100"
+               Leaving: "ease-in-out duration-300"
+               From: "opacity-100"
+               To: "opacity-0"
+          -->
+          <div class="absolute top-0 right-0 -mr-12 pt-2">
+            <button class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+              <span class="sr-only">Close sidebar</span>
+              <!-- Heroicon name: outline/x -->
+              <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- <div class="flex-shrink-0 flex items-center px-4">
+               <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow">
+               </div> -->
+          <div class="mt-5 flex-1 h-0 overflow-y-auto">
+            <nav class="px-2 space-y-1">
+              <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+              <a href="#" class="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                Dashboard
+              </a>
+
+              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                Team
+              </a>
+
+              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <!-- Heroicon name: outline/folder -->
+                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                </svg>
+                Projects
+              </a>
+
+              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <!-- Heroicon name: outline/calendar -->
+                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Calendar
+              </a>
+
+              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <!-- Heroicon name: outline/inbox -->
+                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+                Documents
+              </a>
+
+              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <!-- Heroicon name: outline/chart-bar -->
+                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Reports
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="flex-shrink-0 w-14" aria-hidden="true">
+          <!-- Dummy element to force sidebar to shrink to fit close icon -->
+        </div>
       </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
+      <!-- Static sidebar for desktop -->
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex flex-col w-64">
+          <!-- Sidebar component -->
+          <div class="flex flex-col flex-grow pt-5 pb-4 bg-white overflow-y-auto">
+            <div class="flex items-center flex-shrink-0 px-4">
+              <img class="h-8 w-8 mr-2" src="https://qni-quantum.herokuapp.com/icon-512.png" alt="Qni"></img>
+              <span class="text-xl text-gray-900 font-sans font-bold tracking-wider subpixel-antialiased">Qni</span>
+            </div>
+            <div class="mt-5 flex-grow flex flex-col">
+              <nav class="flex-1 px-2 bg-white space-y-1">
+                <div class="uppercase tracking-wide text-gray-900 px-2 py-2 text-sm font-bold">Getting Started</div>
 
-        <circuit-dropzone>
-          <h-gate data-wire-top></h-gate>
-        </circuit-dropzone>
+                <a href="#installation" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Installation
+                </a>
 
-        <circuit-dropzone>
-          <h-gate data-wire-bottom></h-gate>
-        </circuit-dropzone>
+                <div class="uppercase text-gray-900 px-2 py-2 text-sm font-bold">Qni Components</div>
 
-        <circuit-dropzone>
-          <h-gate data-wire-top data-wire-bottom></h-gate>
-        </circuit-dropzone>
+                <a href="#quantum-circuit" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Quantum Circuit
+                </a>
+
+                <a href="#circuit-step" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Circuit Step
+                </a>
+
+                <a href="#circuit-dropzone" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Circuit Dropzone
+                </a>
+
+                <a href="#h-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  H Gate
+                </a>
+
+                <a href="#x-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  X Gate
+                </a>
+
+                <a href="#y-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Y Gate
+                </a>
+
+                <a href="#z-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Z Gate
+                </a>
+
+                <a href="#phase-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Phase Gate
+                </a>
+
+                <a href="#root-not-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Square Root of NOT Gate
+                </a>
+
+                <a href="#rx-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Rx Gate
+                </a>
+
+                <a href="#ry-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Ry Gate
+                </a>
+
+                <a href="#rz-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Rz Gate
+                </a>
+
+                <a href="#control-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Control Gate
+                </a>
+
+                <a href="#swap-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Swap Gate
+                </a>
+
+                <a href="#bloch-display" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Bloch Display
+                </a>
+
+                <a href="#write-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Write Gate
+                </a>
+
+                <a href="#measure-gate" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Measure Gate
+                </a>
+
+                <a href="#run-button" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  Run Button
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <h-gate class="mr-2"></h-gate>
-        <h-gate class="mr-2" data-wire-top></h-gate>
-        <h-gate class="mr-2" data-wire-bottom></h-gate>
-        <h-gate class="mr-2" data-wire-top data-wire-bottom></h-gate>
-      </div>
+      <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <main class="flex-1 relative overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <x-gate class="mr-2"></x-gate>
-        <x-gate class="mr-2" data-wire-top></x-gate>
-        <x-gate class="mr-2" data-wire-bottom></x-gate>
-        <x-gate class="mr-2" data-wire-top data-wire-bottom></x-gate>
-      </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+              <div class="sm:mb-12 lg:mb-16 mt-5">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="installation" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Installation
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Learn how to get Qni up and running in your project.</p>
+                </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <y-gate class="mr-2"></y-gate>
-        <y-gate class="mr-2" data-wire-top></y-gate>
-        <y-gate class="mr-2" data-wire-bottom></y-gate>
-        <y-gate class="mr-2" data-wire-top data-wire-bottom></y-gate>
-      </div>
+                <h2 class="group flex whitespace-pre-wrap mb-4" id="install-qni-via-npm">
+                  <a href="#install-qni-via-npm" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                  <span class="text-2xl font-bold">Install Qni via npm</span>
+                </h2>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <z-gate class="mr-2"></z-gate>
-        <z-gate class="mr-2" data-wire-top></z-gate>
-        <z-gate class="mr-2" data-wire-bottom></z-gate>
-        <z-gate class="mr-2" data-wire-top data-wire-bottom></z-gate>
-      </div>
+                <p>For most projects, you’ll want to install Qni and its peer-dependencies via npm.</p>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <phase-gate class="mr-2"></phase-gate>
-        <phase-gate class="mr-2" data-wire-top></phase-gate>
-        <phase-gate class="mr-2" data-wire-bottom></phase-gate>
-        <phase-gate class="mr-2" data-wire-top data-wire-bottom></phase-gate>
-      </div>
+                <div class="my-6 rounded-xl overflow-hidden bg-gray-800">
+                  <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug"><code class="language-html">npm install qni@latest</code></pre>
+                </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <root-not-gate class="mr-2"></root-not-gate>
-        <root-not-gate class="mr-2" data-wire-top></root-not-gate>
-        <root-not-gate class="mr-2" data-wire-bottom></root-not-gate>
-        <root-not-gate class="mr-2" data-wire-top data-wire-bottom></root-not-gate>
-      </div>
+                <h2 class="group flex whitespace-pre-wrap mb-4" id="using-qni-via-cdn">
+                  <a href="#using-qni-via-cdn" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                  <span class="text-2xl font-bold">Using Qni via CDN</span>
+                </h2>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <rx-gate class="mr-2"></rx-gate>
-        <rx-gate class="mr-2" data-wire-top></rx-gate>
-        <rx-gate class="mr-2" data-wire-bottom></rx-gate>
-        <rx-gate class="mr-2" data-wire-top data-wire-bottom></rx-gate>
-      </div>
+                <p>To pull in Qni for quick demos or just giving the framework a spin, grab the latest default configuration build via CDN:</p>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <ry-gate class="mr-2"></ry-gate>
-        <ry-gate class="mr-2" data-wire-top></ry-gate>
-        <ry-gate class="mr-2" data-wire-bottom></ry-gate>
-        <ry-gate class="mr-2" data-wire-top data-wire-bottom></ry-gate>
-      </div>
+                <div class="my-6 rounded-xl overflow-hidden bg-gray-800">
+                  <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug"><code class="language-html">&lt;script crossorigin src="https://unpkg.com/qni/dist/index.js"&gt;&lt;script&gt;</code></pre>
+                </div>
+              </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <rz-gate class="mr-2"></rz-gate>
-        <rz-gate class="mr-2" data-wire-top></rz-gate>
-        <rz-gate class="mr-2" data-wire-bottom></rz-gate>
-        <rz-gate class="mr-2" data-wire-top data-wire-bottom></rz-gate>
-      </div>
+              <div class="sm:mb-12 lg:mb-16 sm:mt-6 lg:mt-8">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="quantum-circuit" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Quantum Circuit
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">A component for displaying quantum circuits consisting of quantum gates and wires.</p>
+                </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <swap-gate class="mr-2"></swap-gate>
-        <swap-gate class="mr-2" data-wire-top></swap-gate>
-        <swap-gate class="mr-2" data-wire-bottom></swap-gate>
-        <swap-gate class="mr-2" data-wire-top data-wire-bottom></swap-gate>
-      </div>
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">JSON</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">Operation</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">"|0>"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">(Re)set a qubit to state <code>|0&#x27e9;</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"|1>"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">(Re)set a qubit to state <code>|1&#x27e9;</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">1</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Identity gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"H"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Hadamard gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"X"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Pauli X gate (NOT gate)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Y"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Pauli Y gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Z"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Pauli Z gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"P"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Phase shift gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"P(&phi;)"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Phase shift gate rotates by &phi;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"X^½"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Square root of NOT gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Rx"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Rx gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Rx(&theta;)"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Rx gate rotates by &theta;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Ry"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Ry gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Ry(&theta;)"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Ry gate rotates by &theta;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Rz"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Rz gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Rz(&theta;)"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Rz gate rotates by &theta;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Swap"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Swap gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"•"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Control gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Bloch"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Bloch sphere display</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">"Measure"</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Measurement gate</td>
+                    </tr>
+                  </tbody>
+                </table>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <control-gate class="mr-2"></control-gate>
-        <control-gate class="mr-2" data-wire-top></control-gate>
-        <control-gate class="mr-2" data-wire-bottom></control-gate>
-        <control-gate class="mr-2" data-wire-top data-wire-bottom></control-gate>
-      </div>
+                <h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+                  <span class="text-2xl font-bold">Usage</span>
+                </h2>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <bloch-display class="mr-2"></bloch-display>
-        <bloch-display class="mr-2" data-x="0" data-y="0" data-z="-1"></bloch-display>
-        <bloch-display class="mr-2" data-x="1" data-y="0" data-z="0"></bloch-display>
-        <bloch-display class="mr-2" data-x="-1" data-y="0" data-z="0"></bloch-display>
-        <bloch-display class="mr-2" data-x="0" data-y="1" data-z="0"></bloch-display>
-        <bloch-display class="mr-2" data-x="0" data-y="-1" data-z="0"></bloch-display>
-        <bloch-display class="mr-2" data-x="0" data-y="0" data-z="0"></bloch-display>
-      </div>
+                <p class="mb-4">
+                  The <code>&lt;quantum-circuit&gt;</code> component is a custom web component to display a quantum circuit defined in JSON.
+                  To pass quantum circuit JSON data to the <code>&lt;quantum-circuit&gt;</code> component, you can either specify it directly in the HTML as a <code>data-json</code> attribute, or you can set the <code>data-json</code> attribute with JavaScript.
+                </p>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <write-gate class="mr-2" data-value="0"></write-gate>
-        <write-gate class="mr-2" data-value="1"></write-gate>
-      </div>
+                <p>
+                  The Qni quantum circuit JSON format is a representation of each step in the circuit as an array. For example, in a three-qubit circuit, the step to apply Hadamard gates to each qubit is represented as <code>["H","H","H"]</code>.
+                  By concatenating multiple steps defined in this way, an array defining the quantum circuit can be created. The Qni quantum circuit JSON format holds this array as the value of the JSON key <code>"cols"</code>.
+                </p>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <measure-gate class="mr-2"></measure-gate>
-        <measure-gate class="mr-2" data-value="0"></measure-gate>
-        <measure-gate class="mr-2" data-value="1"></measure-gate>
-      </div>
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Embedding JSON</h2>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div>
+                      <quantum-circuit class="inline-block" data-json="{&quot;cols&quot;:[[&quot;|0>&quot;,&quot;|0>&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;X&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]]}">
+                      </quantum-circuit>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&ltquantum-circuit data-json="{&amp;quot;cols&amp;quot;:[[&amp;quot;|0&gt;&amp;quot;,&amp;quot;|0&gt;&amp;quot;],[&amp;quot;H&amp;quot;,1],[&amp;quot;•&amp;quot;,&amp;quot;X&amp;quot;],[&amp;quot;Measure&amp;quot;,1],[1,&amp;quot;Measure&amp;quot;]]}"&gt;&lt;/quantum-circuit&gt;</code></pre>
+                  </div>
+                </div>
 
-      <div class="flex flex-row sm:mt-6 lg:mt-8">
-        <run-circuit-button></run-circuit-button>
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Set JSON with JavaScript</h2>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div>
+                      <quantum-circuit id="quantum-circuit-entangle" class="inline-block"></quantum-circuit>
+                      <script>
+                        document.getElementById("quantum-circuit-entangle").setAttribute("data-json", '{"cols":[["|0>","|0>"],["H",1],["•","H"],["Measure",1],[1,"Measure"]]}')
+                      </script>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id="quantum-circuit"&gt;&lt;/quantum-circuit&gt;
+
+&lt;script&gt;
+  document.getElementById(&quot;quantum-circuit&quot;).setAttribute(&quot;data-json&quot;, '{&quot;cols&quot;:[[&quot;|0&gt;&quot;,&quot;|0&gt;&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;H&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]]}')
+&lt;/script&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="circuit-step" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Circuit Step
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">A column representing a single step in a quantum circuit.</p>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row">
+                      <circuit-step>
+                        <circuit-dropzone>
+                        </circuit-dropzone>
+                        <circuit-dropzone>
+                          <h-gate></h-gate>
+                        </circuit-dropzone>
+                        <circuit-dropzone>
+                          <x-gate></x-gate>
+                        </circuit-dropzone>
+                        <circuit-dropzone>
+                          <y-gate></y-gate>
+                        </circuit-dropzone>
+                        <circuit-dropzone>
+                          <z-gate></z-gate>
+                        </circuit-dropzone>
+                      </circuit-step>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;h-gate&gt;&lt;/h-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;x-gate&gt;&lt;/x-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;y-gate&gt;&lt;/y-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;z-gate&gt;&lt;/z-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="circuit-dropzone" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Circuit Dropzone
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Placeholder to drop gates etc.</p>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <circuit-dropzone>
+                      </circuit-dropzone>
+                      <circuit-dropzone>
+                        <h-gate></h-gate>
+                      </circuit-dropzone>
+                      <circuit-dropzone>
+                        <h-gate data-wire-top></h-gate>
+                      </circuit-dropzone>
+                      <circuit-dropzone>
+                        <h-gate data-wire-bottom></h-gate>
+                      </circuit-dropzone>
+                      <circuit-dropzone>
+                        <h-gate data-wire-top data-wire-bottom></h-gate>
+                      </circuit-dropzone>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone&gt;
+  &lt;h-gate&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone&gt;
+  &lt;h-gate data-wire-top&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone&gt;
+  &lt;h-gate data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone&gt;
+  &lt;h-gate data-wire-top data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="h-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      H Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Hadamard gate</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <h-gate></h-gate>
+                      <h-gate data-disabled></h-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;h-gate&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled&gt;&lt;/h-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <h-gate data-wire-top></h-gate>
+                      <h-gate data-wire-bottom></h-gate>
+                      <h-gate data-wire-top data-wire-bottom></h-gate>
+                      <h-gate data-wire-top-disabled></h-gate>
+                      <h-gate data-wire-bottom-disabled></h-gate>
+                      <h-gate data-wire-top-disabled data-wire-bottom-disabled></h-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;h-gate data-wire-top&gt;&lt;/h-gate&gt;
+&lt;h-gate data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;h-gate data-wire-top data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;h-gate data-wire-top-disabled&gt;&lt;/h-gate&gt;
+&lt;h-gate data-wire-bottom-disabled&gt;&lt;/h-gate&gt;
+&lt;h-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/h-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <h-gate data-disabled data-wire-top></h-gate>
+                      <h-gate data-disabled data-wire-bottom></h-gate>
+                      <h-gate data-disabled data-wire-top data-wire-bottom></h-gate>
+                      <h-gate data-disabled data-wire-top-disabled></h-gate>
+                      <h-gate data-disabled data-wire-bottom-disabled></h-gate>
+                      <h-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></h-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;h-gate data-disabled data-wire-top&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled data-wire-top-disabled&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled data-wire-bottom-disabled&gt;&lt;/h-gate&gt;
+&lt;h-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/h-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="x-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      X Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Negate phases when the qubit is ON.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <x-gate></x-gate>
+                      <x-gate data-disabled></x-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled&gt;&lt;/x-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <x-gate data-wire-top></x-gate>
+                      <x-gate data-wire-bottom></x-gate>
+                      <x-gate data-wire-top data-wire-bottom></x-gate>
+                      <x-gate data-wire-top-disabled></x-gate>
+                      <x-gate data-wire-bottom-disabled></x-gate>
+                      <x-gate data-wire-top-disabled data-wire-bottom-disabled></x-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;x-gate data-wire-top&gt;&lt;/x-gate&gt;
+&lt;x-gate data-wire-bottom&gt;&lt;/x-gate&gt;
+&lt;x-gate data-wire-top data-wire-bottom&gt;&lt;/x-gate&gt;
+&lt;x-gate data-wire-top-disabled&gt;&lt;/x-gate&gt;
+&lt;x-gate data-wire-bottom-disabled&gt;&lt;/x-gate&gt;
+&lt;x-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/x-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <x-gate data-disabled data-wire-top></x-gate>
+                      <x-gate data-disabled data-wire-bottom></x-gate>
+                      <x-gate data-disabled data-wire-top data-wire-bottom></x-gate>
+                      <x-gate data-disabled data-wire-top-disabled></x-gate>
+                      <x-gate data-disabled data-wire-bottom-disabled></x-gate>
+                      <x-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></x-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;x-gate data-disabled data-wire-top&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled data-wire-bottom&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled data-wire-top-disabled&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled data-wire-bottom-disabled&gt;&lt;/x-gate&gt;
+&lt;x-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/x-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="y-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Y Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">A combination of the X and Z gates.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <y-gate></y-gate>
+                      <y-gate data-disabled></y-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled&gt;&lt;/y-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <y-gate data-wire-top></y-gate>
+                      <y-gate data-wire-bottom></y-gate>
+                      <y-gate data-wire-top data-wire-bottom></y-gate>
+                      <y-gate data-wire-top-disabled></y-gate>
+                      <y-gate data-wire-bottom-disabled></y-gate>
+                      <y-gate data-wire-top-disabled data-wire-bottom-disabled></y-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <y-gate data-disabled data-wire-top></y-gate>
+                      <y-gate data-disabled data-wire-bottom></y-gate>
+                      <y-gate data-disabled data-wire-top data-wire-bottom></y-gate>
+                      <y-gate data-disabled data-wire-top-disabled></y-gate>
+                      <y-gate data-disabled data-wire-bottom-disabled></y-gate>
+                      <y-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></y-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-disabled data-wire-top&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="z-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Z Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Negate phases when the qubit is ON.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <z-gate></z-gate>
+                      <z-gate data-disabled></z-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled&gt;&lt;/z-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <z-gate data-wire-top></z-gate>
+                      <z-gate data-wire-bottom></z-gate>
+                      <z-gate data-wire-top data-wire-bottom></z-gate>
+                      <z-gate data-wire-top-disabled></z-gate>
+                      <z-gate data-wire-bottom-disabled></z-gate>
+                      <z-gate data-wire-top-disabled data-wire-bottom-disabled></z-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;z-gate data-wire-top&gt;&lt;/z-gate&gt;
+&lt;z-gate data-wire-bottom&gt;&lt;/z-gate&gt;
+&lt;z-gate data-wire-top data-wire-bottom&gt;&lt;/z-gate&gt;
+&lt;z-gate data-wire-top-disabled&gt;&lt;/z-gate&gt;
+&lt;z-gate data-wire-bottom-disabled&gt;&lt;/z-gate&gt;
+&lt;z-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/z-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <z-gate data-disabled data-wire-top></z-gate>
+                      <z-gate data-disabled data-wire-bottom></z-gate>
+                      <z-gate data-disabled data-wire-top data-wire-bottom></z-gate>
+                      <z-gate data-disabled data-wire-top-disabled></z-gate>
+                      <z-gate data-disabled data-wire-bottom-disabled></z-gate>
+                      <z-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></z-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;z-gate data-disabled data-wire-top&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled data-wire-bottom&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled data-wire-top-disabled&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled data-wire-bottom-disabled&gt;&lt;/z-gate&gt;
+&lt;z-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/z-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="phase-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Phase Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Applies a phase of <code>e<sup>i&phi;</sup></code> to the <code>|1&#x27e9;</code> state.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-phi=&quot;value&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">&phi; = value</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate></phase-gate>
+                      <phase-gate data-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate data-phi="0.123"></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate data-phi=&quot;0.123&quot;&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate data-wire-top></phase-gate>
+                      <phase-gate data-wire-bottom></phase-gate>
+                      <phase-gate data-wire-top data-wire-bottom></phase-gate>
+                      <phase-gate data-wire-top-disabled></phase-gate>
+                      <phase-gate data-wire-bottom-disabled></phase-gate>
+                      <phase-gate data-wire-top-disabled data-wire-bottom-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate data-wire-top&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-wire-top data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-wire-top-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate data-phi="0.123" data-wire-top></phase-gate>
+                      <phase-gate data-phi="0.123" data-wire-bottom></phase-gate>
+                      <phase-gate data-phi="0.123" data-wire-top data-wire-bottom></phase-gate>
+                      <phase-gate data-phi="0.123" data-wire-top-disabled></phase-gate>
+                      <phase-gate data-phi="0.123" data-wire-bottom-disabled></phase-gate>
+                      <phase-gate data-phi="0.123" data-wire-top-disabled data-wire-bottom-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-top&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-top data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-top-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate data-disabled data-wire-top></phase-gate>
+                      <phase-gate data-disabled data-wire-bottom></phase-gate>
+                      <phase-gate data-disabled data-wire-top data-wire-bottom></phase-gate>
+                      <phase-gate data-disabled data-wire-top-disabled></phase-gate>
+                      <phase-gate data-disabled data-wire-bottom-disabled></phase-gate>
+                      <phase-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate data-disabled data-wire-top&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled data-wire-top-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <phase-gate data-phi="0.123" data-disabled data-wire-top></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled data-wire-bottom></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled data-wire-top data-wire-bottom></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled data-wire-top-disabled></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled data-wire-bottom-disabled></phase-gate>
+                      <phase-gate data-phi="0.123" data-disabled data-wire-top-disabled data-wire-bottom-disabled></phase-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-top&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-top data-wire-bottom&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-top-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;
+&lt;phase-gate data-phi=&quot;0.123&quot; data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/phase-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="root-not-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Square Root of NOT Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Rotates around the X-axis by <code>&pi;/2</code>.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <root-not-gate></root-not-gate>
+                      <root-not-gate data-disabled></root-not-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled&gt;&lt;/root-not-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <root-not-gate data-wire-top></root-not-gate>
+                      <root-not-gate data-wire-bottom></root-not-gate>
+                      <root-not-gate data-wire-top data-wire-bottom></root-not-gate>
+                      <root-not-gate data-wire-top-disabled></root-not-gate>
+                      <root-not-gate data-wire-bottom-disabled></root-not-gate>
+                      <root-not-gate data-wire-top-disabled data-wire-bottom-disabled></root-not-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;root-not-gate data-wire-top&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-wire-bottom&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-wire-top data-wire-bottom&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-wire-top-disabled&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-wire-bottom-disabled&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/root-not-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <root-not-gate data-disabled data-wire-top></root-not-gate>
+                      <root-not-gate data-disabled data-wire-bottom></root-not-gate>
+                      <root-not-gate data-disabled data-wire-top data-wire-bottom></root-not-gate>
+                      <root-not-gate data-disabled data-wire-top-disabled></root-not-gate>
+                      <root-not-gate data-disabled data-wire-bottom-disabled></root-not-gate>
+                      <root-not-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></root-not-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;root-not-gate data-disabled data-wire-top&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled data-wire-bottom&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled data-wire-top-disabled&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled data-wire-bottom-disabled&gt;&lt;/root-not-gate&gt;
+&lt;root-not-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/root-not-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="rx-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Rx Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Rotates around the X-axis by the angle <code>&theta;</code>.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-theta=&quot;value&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">&theta; = value</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate></rx-gate>
+                      <rx-gate data-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate data-theta="0.123"></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;0.123&quot;&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate data-wire-top></rx-gate>
+                      <rx-gate data-wire-bottom></rx-gate>
+                      <rx-gate data-wire-top data-wire-bottom></rx-gate>
+                      <rx-gate data-wire-top-disabled></rx-gate>
+                      <rx-gate data-wire-bottom-disabled></rx-gate>
+                      <rx-gate data-wire-top-disabled data-wire-bottom-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-wire-top&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-wire-top data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-wire-top-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate data-theta="0.123" data-wire-top></rx-gate>
+                      <rx-gate data-theta="0.123" data-wire-bottom></rx-gate>
+                      <rx-gate data-theta="0.123" data-wire-top data-wire-bottom></rx-gate>
+                      <rx-gate data-theta="0.123" data-wire-top-disabled></rx-gate>
+                      <rx-gate data-theta="0.123" data-wire-bottom-disabled></rx-gate>
+                      <rx-gate data-theta="0.123" data-wire-top-disabled data-wire-bottom-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-top&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-top data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-top-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate data-disabled data-wire-top></rx-gate>
+                      <rx-gate data-disabled data-wire-bottom></rx-gate>
+                      <rx-gate data-disabled data-wire-top data-wire-bottom></rx-gate>
+                      <rx-gate data-disabled data-wire-top-disabled></rx-gate>
+                      <rx-gate data-disabled data-wire-bottom-disabled></rx-gate>
+                      <rx-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-disabled data-wire-top&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled data-wire-top-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+
+                  <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rx-gate data-theta="0.123" data-disabled data-wire-top></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled data-wire-bottom></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled data-wire-top data-wire-bottom></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled data-wire-top-disabled></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled data-wire-bottom-disabled></rx-gate>
+                      <rx-gate data-theta="0.123" data-disabled data-wire-top-disabled data-wire-bottom-disabled></rx-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top data-wire-bottom&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;
+&lt;rx-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rx-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="ry-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Ry Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Rotates around the Y-axis by the angle <code>&theta;</code>.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-theta=&quot;value&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">&theta; = value</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate></ry-gate>
+                      <ry-gate data-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate data-theta="0.123"></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate data-theta=&quot;0.123&quot;&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate data-wire-top></ry-gate>
+                      <ry-gate data-wire-bottom></ry-gate>
+                      <ry-gate data-wire-top data-wire-bottom></ry-gate>
+                      <ry-gate data-wire-top-disabled></ry-gate>
+                      <ry-gate data-wire-bottom-disabled></ry-gate>
+                      <ry-gate data-wire-top-disabled data-wire-bottom-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate data-wire-top&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-wire-top data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-wire-top-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate data-theta="0.123" data-wire-top></ry-gate>
+                      <ry-gate data-theta="0.123" data-wire-bottom></ry-gate>
+                      <ry-gate data-theta="0.123" data-wire-top data-wire-bottom></ry-gate>
+                      <ry-gate data-theta="0.123" data-wire-top-disabled></ry-gate>
+                      <ry-gate data-theta="0.123" data-wire-bottom-disabled></ry-gate>
+                      <ry-gate data-theta="0.123" data-wire-top-disabled data-wire-bottom-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-top&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-top data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-top-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate data-disabled data-wire-top></ry-gate>
+                      <ry-gate data-disabled data-wire-bottom></ry-gate>
+                      <ry-gate data-disabled data-wire-top data-wire-bottom></ry-gate>
+                      <ry-gate data-disabled data-wire-top-disabled></ry-gate>
+                      <ry-gate data-disabled data-wire-bottom-disabled></ry-gate>
+                      <ry-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate data-disabled data-wire-top&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled data-wire-top-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <ry-gate data-theta="0.123" data-disabled data-wire-top></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled data-wire-bottom></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled data-wire-top data-wire-bottom></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled data-wire-top-disabled></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled data-wire-bottom-disabled></ry-gate>
+                      <ry-gate data-theta="0.123" data-disabled data-wire-top-disabled data-wire-bottom-disabled></ry-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top data-wire-bottom&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;
+&lt;ry-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/ry-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="rz-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Rz Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Rotates around the Z-axis by the angle <code>&theta;</code>.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-theta=&quot;value&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">&theta; = value</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate></rz-gate>
+                      <rz-gate data-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate data-theta="0.123"></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate data-theta=&quot;0.123&quot;&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate data-wire-top></rz-gate>
+                      <rz-gate data-wire-bottom></rz-gate>
+                      <rz-gate data-wire-top data-wire-bottom></rz-gate>
+                      <rz-gate data-wire-top-disabled></rz-gate>
+                      <rz-gate data-wire-bottom-disabled></rz-gate>
+                      <rz-gate data-wire-top-disabled data-wire-bottom-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate data-wire-top&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-wire-top data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-wire-top-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate data-theta="0.123" data-wire-top></rz-gate>
+                      <rz-gate data-theta="0.123" data-wire-bottom></rz-gate>
+                      <rz-gate data-theta="0.123" data-wire-top data-wire-bottom></rz-gate>
+                      <rz-gate data-theta="0.123" data-wire-top-disabled></rz-gate>
+                      <rz-gate data-theta="0.123" data-wire-bottom-disabled></rz-gate>
+                      <rz-gate data-theta="0.123" data-wire-top-disabled data-wire-bottom-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-top&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-top data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-top-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate data-disabled data-wire-top></rz-gate>
+                      <rz-gate data-disabled data-wire-bottom></rz-gate>
+                      <rz-gate data-disabled data-wire-top data-wire-bottom></rz-gate>
+                      <rz-gate data-disabled data-wire-top-disabled></rz-gate>
+                      <rz-gate data-disabled data-wire-bottom-disabled></rz-gate>
+                      <rz-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate data-disabled data-wire-top&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled data-wire-top-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <rz-gate data-theta="0.123" data-disabled data-wire-top></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled data-wire-bottom></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled data-wire-top data-wire-bottom></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled data-wire-top-disabled></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled data-wire-bottom-disabled></rz-gate>
+                      <rz-gate data-theta="0.123" data-disabled data-wire-top-disabled data-wire-bottom-disabled></rz-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top data-wire-bottom&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;
+&lt;rz-gate data-theta=&quot;0.123&quot; data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/rz-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16 sm:mt-6 lg:mt-8">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="control-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Control Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Conditions on a qubit being ON.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <control-gate></control-gate>
+                      <control-gate data-disabled></control-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled&gt;&lt;/control-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <control-gate data-wire-top></control-gate>
+                      <control-gate data-wire-bottom></control-gate>
+                      <control-gate data-wire-top data-wire-bottom></control-gate>
+                      <control-gate data-wire-top-disabled></control-gate>
+                      <control-gate data-wire-bottom-disabled></control-gate>
+                      <control-gate data-wire-top-disabled data-wire-bottom-disabled></control-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;control-gate data-wire-top&gt;&lt;/control-gate&gt;
+&lt;control-gate data-wire-bottom&gt;&lt;/control-gate&gt;
+&lt;control-gate data-wire-top data-wire-bottom&gt;&lt;/control-gate&gt;
+&lt;control-gate data-wire-top-disabled&gt;&lt;/control-gate&gt;
+&lt;control-gate data-wire-bottom-disabled&gt;&lt;/control-gate&gt;
+&lt;control-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/control-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <control-gate data-disabled data-wire-top></control-gate>
+                      <control-gate data-disabled data-wire-bottom></control-gate>
+                      <control-gate data-disabled data-wire-top data-wire-bottom></control-gate>
+                      <control-gate data-disabled data-wire-top-disabled></control-gate>
+                      <control-gate data-disabled data-wire-bottom-disabled></control-gate>
+                      <control-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></control-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;control-gate data-disabled data-wire-top&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled data-wire-bottom&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled data-wire-top-disabled&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled data-wire-bottom-disabled&gt;&lt;/control-gate&gt;
+&lt;control-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/control-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="swap-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Swap Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Swaps the value of two qubits.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate></swap-gate>
+                      <swap-gate data-disabled></swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate data-wire-top></swap-gate>
+                      <swap-gate data-wire-bottom></swap-gate>
+                      <swap-gate data-wire-top data-wire-bottom></swap-gate>
+                      <swap-gate data-wire-top-disabled></swap-gate>
+                      <swap-gate data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-wire-top-disabled data-wire-bottom-disabled></swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-wire-top&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-bottom&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top data-wire-bottom&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate data-disabled data-wire-top></swap-gate>
+                      <swap-gate data-disabled data-wire-bottom></swap-gate>
+                      <swap-gate data-disabled data-wire-top data-wire-bottom></swap-gate>
+                      <swap-gate data-disabled data-wire-top-disabled></swap-gate>
+                      <swap-gate data-disabled data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-disabled data-wire-top&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled data-wire-bottom&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled data-wire-top-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="bloch-display" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Bloch Display
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Shows a wire's local state as a point on the Bloch sphere.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">Value</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-x</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">X coordinate</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-y</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Y coordinate</code></td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-z</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Z coordinate</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+                    <div class="flex flex-row space-x-4">
+                      <bloch-display></bloch-display>
+                      <bloch-display data-x="0" data-y="0" data-z="-1"></bloch-display>
+                      <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
+                      <bloch-display data-x="-1" data-y="0" data-z="0"></bloch-display>
+                      <bloch-display data-x="0" data-y="1" data-z="0"></bloch-display>
+                      <bloch-display data-x="0" data-y="-1" data-z="0"></bloch-display>
+                      <bloch-display data-x="0" data-y="0" data-z="0"></bloch-display>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="0" data-y="0" data-z="-1"&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="1" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="-1" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="0" data-y="1" data-z="0"&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="0" data-y="-1" data-z="0"&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x="0" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="write-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Write Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">(Re)sets a qubit to state <code>|0&#x27e9;</code> or <code>|1&#x27e9;</code>.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-value</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre"><code>|0&#x27e9;</code> or <code>|1&#x27e9;</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-red-50 to-red-100">
+                    <div class="flex flex-row space-x-4">
+                      <write-gate data-value="0"></write-gate>
+                      <write-gate data-value="1"></write-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-red-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;write-gate data-value="0"&gt;&lt;/write-gate&gt;
+&lt;write-gate data-value="1"&gt;&lt;/write-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="measure-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Measure Gate
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Measures whether a qubit is ON or OFF.</p>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                      </th>
+                      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="align-baseline">
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-value</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre"><code>0</code> or <code>1</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="relative overflow-hidden mt-8 mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+                    <div class="flex flex-row space-x-4">
+                      <measure-gate></measure-gate>
+                      <measure-gate data-value="0"></measure-gate>
+                      <measure-gate data-value="1"></measure-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measure-gate&gt;&lt;/measure-gate&gt;
+&lt;measure-gate data-value="0"&gt;&lt;/measure-gate&gt;
+&lt;measure-gate data-value="1"&gt;&lt;/measure-gate&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sm:mb-6 lg:mb-8">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="run-button" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      Run Button
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Runs a quantum circuit.</p>
+                </div>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+                    <div class="flex flex-row">
+                      <run-circuit-button></run-circuit-button>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;run-circuit-button&gt;&lt;/run-circuit-button&gt;</code></pre>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   </body>

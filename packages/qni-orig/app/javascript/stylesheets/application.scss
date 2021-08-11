@@ -6,6 +6,7 @@
   --colors-snow: theme("colors.snow");
   --colors-superposition: theme("colors.superposition");
   --colors-swan: theme("colors.swan");
+  --colors-wolf: theme("colors.wolf");
 }
 
 @import "tailwindcss/base";
@@ -66,7 +67,6 @@
 @import "wires/wires";
 
 @import "bloch_display_component/bloch_display_component";
-@import "control_gate/control_gate";
 @import "hadamard_gate/hadamard_gate";
 @import "not_gate/not_gate";
 @import "phase_gate/phase_gate";

@@ -24,8 +24,10 @@ export function DisableableMixin<
       const className = classNameFor("gate:state:disabled")
 
       if (flag) {
+        this.element.setAttribute("data-disabled", "")
         this.classList.add(className)
       } else {
+        this.element.removeAttribute("data-disabled")
         this.classList.remove(className)
       }
     }

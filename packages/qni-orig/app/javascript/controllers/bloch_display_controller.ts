@@ -64,8 +64,8 @@ export default class BlochDisplayController extends Controller {
     Util.notNull(zEl)
 
     dEl.textContent = this.d
-    phiEl.textContent = this.phi + "°"
-    thetaEl.textContent = this.theta + "°"
+    phiEl.textContent = `${this.phi}°`
+    thetaEl.textContent = `${this.theta}°`
     xEl.textContent = this.x
     yEl.textContent = this.y
     zEl.textContent = this.z
@@ -74,32 +74,32 @@ export default class BlochDisplayController extends Controller {
   }
 
   private get d(): string {
-    const d = parseFloat(this.data.get("d") || "NaN")
+    const d = parseFloat(this.element.getAttribute("data-d") || "NaN")
     return this.forceSignedValue(d).toString()
   }
 
   private get phi(): string {
-    const phi = parseFloat(this.data.get("phi") || "NaN")
+    const phi = parseFloat(this.element.getAttribute("data-phi") || "NaN")
     return this.forceSignedAngle(phi).toString()
   }
 
   private get theta(): string {
-    const theta = parseFloat(this.data.get("theta") || "NaN")
+    const theta = parseFloat(this.element.getAttribute("data-theta") || "NaN")
     return this.forceSignedAngle(theta).toString()
   }
 
   private get x(): string {
-    const x = parseFloat(this.data.get("x") || "NaN")
+    const x = parseFloat(this.element.getAttribute("data-x") || "NaN")
     return this.forceSignedValue(x).toString()
   }
 
   private get y(): string {
-    const y = parseFloat(this.data.get("y") || "NaN")
+    const y = parseFloat(this.element.getAttribute("data-y") || "NaN")
     return this.forceSignedValue(y).toString()
   }
 
   private get z(): string {
-    const z = parseFloat(this.data.get("z") || "NaN")
+    const z = parseFloat(this.element.getAttribute("data-z") || "NaN")
     return this.forceSignedValue(z).toString()
   }
 

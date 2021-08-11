@@ -15,5 +15,6 @@ import "z_gate_component/zGateElement"
 
 import "circuit_dropzone_component/circuitDropzoneElement"
 import "circuit_step_component/circuitStepElement"
+import "quantum_circuit_component/quantumCircuitElement"
 
 import "run_circuit_button_component/runCircuitButtonElement"

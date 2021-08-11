@@ -61,7 +61,7 @@
     height: 6px;
     width: 6px;
 
-    #{$parent}[data-bloch-display-d="0"] & {
+    #{$parent}[data-d="0"] & {
       @apply bg-magnitude;
     }
   }

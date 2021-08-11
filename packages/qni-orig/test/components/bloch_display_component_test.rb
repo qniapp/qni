@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class BlochDisplayComponentTest < ViewComponent::TestCase
-  def test_d
-    render_inline(BlochDisplayComponent.new)
-
-    assert_selector(".bloch-display[data-bloch-display-d='0']")
-  end
-
   def test_palette
     render_inline(BlochDisplayComponent.new(palette: true))
 

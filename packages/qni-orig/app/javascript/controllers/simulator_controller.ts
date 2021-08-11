@@ -1,6 +1,5 @@
 import CircleNotationController from "./circle_notation_controller"
 import {
-  BlochDisplay,
   HadamardGate,
   MeasureGate,
   NotGate,
@@ -12,6 +11,7 @@ import { CircuitStep } from "lib/editor/circuitStep"
 import { Complex } from "lib/math"
 import { Controller } from "stimulus"
 import { RunCircuitButtonElement } from "run_circuit_button_component/runCircuitButtonElement"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -58,9 +58,12 @@ export default class SimulatorController extends Controller {
           const step = this.circuit.steps[data.step]
 
           for (const bit in data.blochVectors) {
-            const blochDisplay = step.dropzones[bit].instruction as BlochDisplay
+            const blochDisplayElement = step.dropzones[bit].draggable
+              ?.element as BlochDisplayElement
             const blochVector = data.blochVectors[bit]
-            blochDisplay.draw(...blochVector)
+            blochDisplayElement.x = blochVector[0]
+            blochDisplayElement.y = blochVector[1]
+            blochDisplayElement.z = blochVector[2]
           }
 
           if (data.bits) {

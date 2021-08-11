@@ -1,8 +1,0 @@
-<% control_gate = local_assigns.fetch(:control_gate) %>
-
-<%= tag.div class: control_gate.klass, data: control_gate.data do %>
-  <%= wires wireable: false %>
-  <div class="gate__body">
-    <%= control_dot_icon class: 'gate-icon' %>
-  </div>
-<% end %>

@@ -13,7 +13,7 @@ class BlochDisplayComponent < ViewComponent::Base
 
   def data
     data_action = (data_action_draggable + ['blochDisplayUpdated->bloch-display#updatePopup']).join(' ')
-    { bloch_display_d: 0, controller: 'bloch-display', action: data_action }
+    { controller: 'bloch-display', action: data_action }
   end
 
   def data_action_draggable

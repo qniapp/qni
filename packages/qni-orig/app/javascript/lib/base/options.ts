@@ -84,12 +84,10 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:flag": "data-flag",
     "instruction:valueable:value": "data-value",
 
-    "instruction:bloch:d": "data-bloch-display-d",
-    "instruction:bloch:phi": "data-bloch-display-phi",
-    "instruction:bloch:theta": "data-bloch-display-theta",
-    "instruction:bloch:x": "data-bloch-display-x",
-    "instruction:bloch:y": "data-bloch-display-y",
-    "instruction:bloch:z": "data-bloch-display-z",
+    "instruction:bloch:d": "data-d",
+    "instruction:bloch:x": "data-x",
+    "instruction:bloch:y": "data-y",
+    "instruction:bloch:z": "data-z",
   },
 }
 

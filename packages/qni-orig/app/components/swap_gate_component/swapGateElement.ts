@@ -48,10 +48,35 @@ export class SwapGateElement extends HTMLElement {
 
   @attr wireTop = false
   @attr wireBottom = false
+  @attr disabled = false
+
+  disable(): void {
+    this.disabled = true
+  }
+
+  enable(): void {
+    this.disabled = false
+  }
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (name === "data-wire-top" && oldValue !== newValue && this.body) {
+      this.body.classList.add(this.wireTopClassString)
+    }
+    if (name === "data-wire-bottom" && oldValue !== newValue && this.body) {
+      this.body.classList.add(this.wireBottomClassString)
+    }
+    if (name === "data-disabled" && oldValue !== newValue && this.body) {
+      this.body.classList.add(this.disabledClassString)
+    }
   }
 
   update(): void {
@@ -107,11 +132,16 @@ export class SwapGateElement extends HTMLElement {
             color: var(--colors-gate, #43c000);
             stroke: currentColor;
           }
+
+          #body.disabled #icon {
+            color: var(--colors-eel, #4b4b4b);
+          }
         </style>
 
         <div
           id="body"
-          class="${this.wireTopClassString} ${this.wireBottomClassString}"
+          class="${this.wireTopClassString} ${this.wireBottomClassString} ${this
+            .disabledClassString}"
           data-target="swap-gate.body"
         >
           ${verticalWires} ${swapIcon}
@@ -126,5 +156,9 @@ export class SwapGateElement extends HTMLElement {
 
   private get wireBottomClassString(): string {
     return this.wireBottom ? "wire-bottom" : ""
+  }
+
+  private get disabledClassString(): string {
+    return this.disabled ? "disabled" : ""
   }
 }

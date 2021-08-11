@@ -4,17 +4,54 @@ import { html, render } from "@github/jtml"
 @controller
 export class BlochDisplayElement extends HTMLElement {
   @target body: HTMLElement
+  @target vectorLine: HTMLElement
+  @target vectorEnd: HTMLElement
+  @target vector: HTMLElement
 
   @attr x = 0
   @attr y = 0
-  @attr z = 1
+  @attr z = 0
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
   }
 
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (newValue === null) {
+      throw new Error(`${name} should not be null`)
+    }
+    if (!this.body) return
+    if (oldValue === newValue) return
+
+    if (name === "data-x") this.x = parseFloat(newValue)
+    if (name === "data-y") this.y = parseFloat(newValue)
+    if (name === "data-z") this.z = parseFloat(newValue)
+    this.d = this.vectorLength()
+    this.phi = this.calculatePhi()
+    this.theta = this.calculateTheta()
+
+    this.vectorLine.style.height = `calc(${(100 * this.d) / 2}% - 3px)`
+    this.vectorEnd.style.bottom = `calc(50% + ${(100 * this.d) / 2}% + 2px)`
+    if (this.d !== 0) {
+      this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this
+        .theta}deg)`
+    }
+
+    this.dispatchEvent(
+      new CustomEvent("blochDisplayUpdated", { bubbles: false }),
+    )
+  }
+
   update(): void {
+    this.d = this.vectorLength()
+    this.phi = this.calculatePhi()
+    this.theta = this.calculateTheta()
+
     render(
       html`<style>
           #body {
@@ -115,7 +152,7 @@ export class BlochDisplayElement extends HTMLElement {
           }
         </style>
 
-        <div id="body" data-d="${this.d}">
+        <div id="body" data-target="bloch-display.body" data-d="${this.d}">
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" class="absolute inset-0"></div>
           <svg
@@ -136,11 +173,13 @@ export class BlochDisplayElement extends HTMLElement {
             <div id="perspective">
               <div
                 id="vector"
+                data-target="bloch-display.vector"
                 style="transform: rotateY(${this.phi}deg) rotateX(${-this
                   .theta}deg)"
               >
                 <div
                   id="vector-line"
+                  data-target="bloch-display.vectorLine"
                   style="height: calc(${(100 * this.d) / 2}% - 3px)"
                 >
                   <div
@@ -183,7 +222,9 @@ export class BlochDisplayElement extends HTMLElement {
 
                 <div
                   id="vector-end"
-                  style="bottom: calc(50% + ${(100 * this.d) / 2}% + 2px)"
+                  data-target="bloch-display.vectorEnd"
+                  style="bottom: calc(50% + ${(100 * this.vectorLength()) /
+                  2}% + 2px)"
                 >
                   <div
                     class="vector-end-circle"
@@ -236,16 +277,50 @@ export class BlochDisplayElement extends HTMLElement {
   }
 
   private get d(): number {
+    const dataD = this.getAttribute("data-d")
+    if (dataD === null) throw new Error("data-d not set")
+
+    return parseFloat(dataD)
+  }
+
+  private set d(value: number) {
+    this.setAttribute("data-d", value.toString())
+    this.body?.setAttribute("data-d", value.toString())
+  }
+
+  private vectorLength(): number {
     return parseFloat(
       Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z).toFixed(4),
     )
   }
 
+  private set phi(value: number) {
+    this.setAttribute("data-phi", value.toString())
+  }
+
   private get phi(): number {
+    const dataPhi = this.getAttribute("data-phi")
+    if (dataPhi === null) throw new Error("data-phi not set")
+
+    return parseFloat(dataPhi)
+  }
+
+  private calculatePhi(): number {
     return (Math.atan2(this.y, this.x) * 180) / Math.PI
   }
 
+  private set theta(value: number) {
+    this.setAttribute("data-theta", value.toString())
+  }
+
   private get theta(): number {
+    const dataTheta = this.getAttribute("data-theta")
+    if (dataTheta === null) throw new Error("data-theta not set")
+
+    return parseFloat(dataTheta)
+  }
+
+  private calculateTheta(): number {
     const θ = Math.max(
       0,
       Math.PI / 2 -

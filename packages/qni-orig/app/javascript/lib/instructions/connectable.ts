@@ -48,18 +48,22 @@ export function ConnectableMixin<
     }
 
     private connectWithLowerBit(): void {
+      this.element.setAttribute("data-wire-top", "")
       this.classList.add(classNameFor("connectable:lowerBit"))
     }
 
     private connectWithUpperBit(): void {
+      this.element.setAttribute("data-wire-bottom", "")
       this.classList.add(classNameFor("connectable:upperBit"))
     }
 
     private disconnectFromLowerBit(): void {
+      this.element.removeAttribute("data-wire-top")
       this.classList.remove(classNameFor("connectable:lowerBit"))
     }
 
     private disconnectFromUpperBit(): void {
+      this.element.removeAttribute("data-wire-bottom")
       this.classList.remove(classNameFor("connectable:upperBit"))
     }
   }

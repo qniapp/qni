@@ -26,7 +26,7 @@ module Components::GatesHelper
   end
 
   def control_gate(*options)
-    component 'control_gate', *options
+    render ControlGateComponent.new(*options)
   end
 
   def swap_gate(*options)
