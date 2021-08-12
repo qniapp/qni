@@ -1,24 +1,6 @@
-# README
+# Qni
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Qni is an interactive quantum circuit simulator that runs in a web browser. It
+is useful for studying quantum computers and small experiments.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+For more see the [Qni Guide](https://yasuhito.github.io/qni/).
