@@ -1,5 +1,6 @@
 import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
+import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 const measureIcon = html`
   <svg
@@ -34,6 +35,30 @@ export class MeasureGateElement extends HTMLElement {
   @attr grabbed = false
   @attr draggableSource = false
   @attr draggableShadow = false
+
+  showGateDescription(): void {
+    if ((this as ReferenceElement)._tippy) return
+
+    const header = this.header
+    if (!header) return
+
+    const popup = tippy(this, {
+      allowHTML: true,
+      animation: false,
+      arrow: roundArrow + roundArrow,
+      delay: 0,
+      placement: "right",
+      theme: "qni",
+      onShow(instance: Instance) {
+        instance.setContent(header)
+      },
+    })
+    popup.show()
+  }
+
+  private get header(): HTMLElement | null {
+    return this.querySelector("header")
+  }
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
@@ -91,6 +116,10 @@ export class MeasureGateElement extends HTMLElement {
             background-color: var(--colors-snow, #ffffff);
           }
 
+          #body.draggable {
+            cursor: grab;
+          }
+
           #body.draggable::after {
             position: absolute;
             top: 0px;
@@ -122,12 +151,12 @@ export class MeasureGateElement extends HTMLElement {
 
           #icon {
             position: absolute;
-            bottom: -2px;
-            left: -2px;
-            right: -2px;
-            top: -2px;
-            height: calc(100% + 4px);
-            width: calc(100% + 4px);
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            height: 100%;
+            width: 100%;
             color: var(--colors-superposition, #ce82ff);
             stroke: currentColor;
             transform: rotate(90deg);
@@ -178,6 +207,7 @@ export class MeasureGateElement extends HTMLElement {
           id="body"
           class="${this.valueClassString} ${this.draggableClassString}"
           data-target="measure-gate.body"
+          data-action="mouseenter:measure-gate#showGateDescription"
         >
           ${measureIcon}
           <div id="ket-label"></div>

@@ -30,7 +30,7 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(measure)
       <measure-gate class="gate measure-gate draggable draggable--circuit"
                     data-draggable=""
-                    data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+                    data-action="mouseenter:measure-gate#showGateDescription mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
       </measure-gate>
     ERB
   end
@@ -41,7 +41,7 @@ class Components::RwHelperTest < ActionView::TestCase
                     data-draggable=""
                     data-flag="alice_v"
                     data-gate-label="alice_v"
-                    data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+                    data-action="mouseenter:measure-gate#showGateDescription mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
       </measure-gate>
     ERB
   end

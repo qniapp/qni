@@ -29,11 +29,12 @@
 /config/master.key
 
 # Other
+.DS_Store
 .yarn-integrity
 /node_modules
 /public/packs
 /public/packs-test
 /yarn-error.log
+dist/
 doc/
 yarn-debug.log*
-dist/

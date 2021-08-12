@@ -12,7 +12,7 @@
       "*": ["node_modules/*", "app/javascript/*", "app/components/*"]
     },
     "sourceMap": true,
-    "target": "es5",
+    "target": "es2015",
     "noEmit": true
   },
   "exclude": ["node_modules"]

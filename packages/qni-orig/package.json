@@ -29,7 +29,7 @@
   "scripts": {
     "test": "karma start",
     "test:watch": "yarn test --auto-watch --no-single-run",
-    "build:doc": "typedoc --out doc/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json app/javascript/",
+    "build:doc": "typedoc --out docs/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json app/javascript/",
     "prepare": "husky install"
   },
   "prettier": {
@@ -67,7 +67,7 @@
     "webpack-cli": "3.3.12",
     "webpacker-pwa": "^0.1.2"
   },
-  "version": "0.0.31",
+  "version": "0.0.32",
   "devDependencies": {
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",

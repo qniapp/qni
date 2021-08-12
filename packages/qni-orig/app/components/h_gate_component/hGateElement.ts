@@ -48,7 +48,9 @@ export class HGateElement extends HTMLElement {
 
   @attr disabled = false
   @attr wireTop = false
+  @attr wireTopDisabled = false
   @attr wireBottom = false
+  @attr wireBottomDisabled = false
 
   disable(): void {
     this.disabled = true

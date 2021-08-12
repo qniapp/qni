@@ -70,7 +70,7 @@ export class CircuitStepElement extends HTMLElement {
       | RzGateElement
       | SwapGateElement,
   ): number {
-    const dropzoneEl = gate.parentElement as CircuitDropzoneElement
+    const dropzoneEl = gate.parentElement as unknown as CircuitDropzoneElement
     if (dropzoneEl === null) {
       throw new Error("Dropzone not found")
     }

@@ -33,4 +33,11 @@
   &[data-placement^="right"] > .tippy-svg-arrow svg:first-child {
     right: 13px;
   }
+
+  // Description popup
+  header h1 {
+    @apply font-bold;
+    @apply text-eel;
+    @apply text-lg;
+  }
 }

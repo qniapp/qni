@@ -19,7 +19,7 @@ class MeasureGateComponent < ViewComponent::Base
   private
 
   def data_draggable_action
-    { action: 'mouseenter->gate-description#initPopup:passive ' \
+    { action: 'mouseenter:measure-gate#showGateDescription ' \
               'mousedown->editor#grabDraggable:passive ' \
               'mouseup->editor#releaseDraggable:passive ' \
               'click->editor#ignoreDraggableClick:passive' }

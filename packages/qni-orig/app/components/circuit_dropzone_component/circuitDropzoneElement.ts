@@ -61,12 +61,14 @@ const wires = html`<svg
   ></line>
 </svg> `
 
+// @ts-ignore
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
   @attr wireTop = false
   @attr wireBottom = false
 
   @target body: HTMLElement
+  // @ts-ignore
   @target draggable:
     | ControlGateElement
     | HGateElement
