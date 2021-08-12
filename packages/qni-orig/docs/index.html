@@ -150,6 +150,10 @@
               <nav class="flex-1 px-2 bg-white space-y-1">
                 <div class="uppercase tracking-wide text-gray-900 px-2 py-2 text-sm font-bold">Getting Started</div>
 
+                <a href="#you-will-need" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  You Will Need
+                </a>
+
                 <a href="#installation" class="text-gray-500 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                   Installation
                 </a>
@@ -243,6 +247,26 @@
                 <div class="pb-10 border-b border-gray-200 mb-10">
                   <div>
                     <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                      <a id="you-will-need" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                      You Will Need
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">Prerequisites.</p>
+                </div>
+
+                <ul class="list-disc mb-4">
+                  <li><a href="https://yarnpkg.com/" class="underline">Yarn</a> 1.x: please refer to their <a href="https://classic.yarnpkg.com/en/docs/install" class="underline">installation guide</a>.</li>
+                  <li><a href="https://www.ruby-lang.org/en/" class="underline">Ruby</a> 2.7.3: we recommend using <a href="https://github.com/rbenv/rbenv" class="underline">rbenv</a> to install the specified version of Ruby.</li>
+                  <li><a href="https://www.postgresql.org/" class="underline">PostgreSQL</a> 11 or higher.</li>
+                </ul>
+
+                <p>Note that PostgreSQL will no longer need to be installed in the next version.</p>
+              </div>
+
+              <div class="sm:mb-12 lg:mb-16 mt-5">
+                <div class="pb-10 border-b border-gray-200 mb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
                       <a id="installation" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
                       Installation
                     </h1>
@@ -270,6 +294,23 @@
 
                 <div class="my-6 rounded-xl overflow-hidden bg-gray-800">
                   <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug"><code class="language-html">&lt;script crossorigin src="https://unpkg.com/qni/dist/index.js"&gt;&lt;script&gt;</code></pre>
+                </div>
+
+                <h2 class="group flex whitespace-pre-wrap mb-4" id="install-qni-via-npm">
+                  <a href="#install-qni-server" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                  <span class="text-2xl font-bold">Install Qni simulator</span>
+                </h2>
+
+                <p>If you want to run the Qni simulator (<a href="https://qni-quantum.herokuapp.com/" class="underline">https://qni-quantum.herokuapp.com/</a>) locally, you will need to set up Rails in the following way:</p>
+
+                <div class="my-6 rounded-xl overflow-hidden bg-gray-800">
+                  <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug"><code class="language-shell">% gem install bundler
+% bundle
+% yarn
+% ./bin/rails db:create
+% ./bin/rails db:migrate
+% ./bin/rails db:fixtures:load
+% ./bin/rails s</code></pre>
                 </div>
               </div>
 
