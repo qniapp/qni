@@ -15,10 +15,12 @@ export default class EditorController extends Controller {
     this.editor = new Editor(this.element)
 
     if (Breakpoint.isMobile()) return
-    Array.from(document.getElementsByClassName("draggable")).forEach((each) => {
+    for (const each of Array.from(
+      document.getElementsByClassName("draggable"),
+    )) {
       const draggable = DraggableItem.create(each)
       draggable.enableDnd()
-    })
+    }
   }
 
   clear(): void {
@@ -34,7 +36,23 @@ export default class EditorController extends Controller {
     this.simulator.run()
   }
 
-  grabDraggable(event: MouseEvent): void {
+  grabDraggable(event: CustomEvent): void {
+    const mouseEvent = event.detail as MouseEvent
+
+    if (this.simulator.nqubit + 1 <= this.maxNqubit) {
+      this.circleNotation.incrementNqubit()
+      this.editor.addNewQubit()
+    }
+
+    const draggable = DraggableItem.create(mouseEvent.target)
+    this.editor.grabDraggable()
+
+    draggable.grab(mouseEvent)
+
+    return
+  }
+
+  grabDraggableOld(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
 
     if (this.isRightClickEvent(event)) {
@@ -49,11 +67,22 @@ export default class EditorController extends Controller {
     }
 
     const draggable = DraggableItem.create(event.target)
-    this.editor.grabDraggable(draggable, event)
+    this.editor.grabDraggableOld(draggable, event)
 
     return
   }
 
+  dropDraggable(event: CustomEvent): void {
+    if (Breakpoint.isMobile()) return
+
+    const mouseEvent = event.detail as MouseEvent
+    if (this.isRightClickEvent(mouseEvent)) return
+
+    this.editor.releaseDraggable(mouseEvent)
+    this.circleNotation.nqubit = this.simulator.nqubit
+  }
+
+  // FIXME: dropDraggable に移行してこのメソッドを消す
   releaseDraggable(event: MouseEvent): void {
     if (Breakpoint.isMobile()) return
     if (this.isRightClickEvent(event)) return
@@ -69,7 +98,7 @@ export default class EditorController extends Controller {
   }
 
   private isRightClickEvent(event: MouseEvent): boolean {
-    return event.button == 2 || event.ctrlKey
+    return event.button === 2 || event.ctrlKey
   }
 
   private get simulator(): SimulatorController {

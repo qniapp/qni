@@ -6,7 +6,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 0' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{render Icons::KetComponent.new}
           <div class="gate-ket-label"></div>
@@ -17,7 +17,7 @@ class Components::RwHelperTest < ActionView::TestCase
 
   test 'write 1' do
     assert_dom_equal beautify(<<~ERB), beautify(write(0))
-      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+      <div class="gate write-gate draggable draggable--circuit" data-value="0" data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         <div class="gate__body">
           #{render Icons::KetComponent.new}
           <div class="gate-ket-label"></div>
@@ -30,7 +30,7 @@ class Components::RwHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(measure)
       <measure-gate class="gate measure-gate draggable draggable--circuit"
                     data-draggable=""
-                    data-action="mouseenter:measure-gate#showGateDescription mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+                    data-action="mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
       </measure-gate>
     ERB
   end
@@ -41,7 +41,7 @@ class Components::RwHelperTest < ActionView::TestCase
                     data-draggable=""
                     data-flag="alice_v"
                     data-gate-label="alice_v"
-                    data-action="mouseenter:measure-gate#showGateDescription mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+                    data-action="mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
       </measure-gate>
     ERB
   end

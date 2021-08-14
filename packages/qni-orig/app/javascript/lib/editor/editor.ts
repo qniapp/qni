@@ -4,13 +4,11 @@ import { CircuitDropzone } from "./circuitDropzone"
 import { DraggableItem } from "./draggableItem"
 import { DropEventHandlers } from "./mixins"
 import { GatePopup } from "lib/editor"
-import { MeasureGate } from "lib/instructions"
+import { MeasureGate, SwapGate, WriteGate } from "lib/instructions"
 import { PaletteDraggable } from "./paletteDraggable"
-import { SwapGate } from "lib/instructions"
+
 import { TrashDropzone } from "./trashDropzone"
-import { Util } from "lib/base"
-import { WriteGate } from "lib/instructions"
-import { classNameFor } from "lib/base"
+import { Util, classNameFor } from "lib/base"
 
 export class Editor {
   private element: Element
@@ -23,9 +21,9 @@ export class Editor {
     new TrashDropzone(this.trashDropzoneElement).setInteract({
       onDrop: this.trashGate.bind(this),
     })
-    this.circuit.dropzones.forEach((each) => {
+    for (const each of this.circuit.dropzones) {
       each.setInteract(this.circuitDropzoneHandlers())
-    })
+    }
   }
 
   clear(): void {
@@ -45,13 +43,21 @@ export class Editor {
     this.circuit.appendNewWire(this.circuitDropzoneHandlers())
   }
 
-  grabDraggable(
+  // FIXME: 名前を適切なものに変える
+  grabDraggable(): void {
+    for (const step of this.circuit.steps.slice(2)) {
+      step.prependShadow(this.circuitDropzoneHandlers())
+    }
+  }
+
+  // FIXME: 上のメソッドに切り替えて消す
+  grabDraggableOld(
     draggable: PaletteDraggable | CircuitDraggable,
     event: MouseEvent,
   ): void {
-    this.circuit.steps.slice(2).forEach((step) => {
+    for (const step of this.circuit.steps.slice(2)) {
       step.prependShadow(this.circuitDropzoneHandlers())
-    })
+    }
 
     draggable.grab(event)
   }
@@ -179,8 +185,8 @@ export class Editor {
     const wireActive = Array<boolean>(this.circuit.nqubit).fill(false)
     const wireActiveOrig = Array<boolean>(this.circuit.nqubit).fill(false)
 
-    this.circuit.steps.forEach((each) => {
-      each.dropzones.forEach((dz, bit) => {
+    for (const each of this.circuit.steps) {
+      for (const [bit, dz] of each.dropzones.entries()) {
         if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
           wireActiveOrig[bit] = true
@@ -191,7 +197,7 @@ export class Editor {
           dz.instruction instanceof SwapGate &&
           !dz.instruction.disabled
         ) {
-          const otherTarget = dz.instruction.targets.find((t) => t != bit)
+          const otherTarget = dz.instruction.targets.find((t) => t !== bit)
           Util.notNull(otherTarget)
 
           dz.inputWireActive = wireActiveOrig[bit]
@@ -200,14 +206,14 @@ export class Editor {
         } else {
           dz.wireActive = wireActive[bit]
         }
-      })
-    })
+      }
+    }
   }
 
   private removeEmptySteps() {
-    this.circuit.emptySteps.forEach((each) => {
+    for (const each of this.circuit.emptySteps) {
       each.remove()
-    })
+    }
     this.circuit.removeEmptyWire()
   }
 

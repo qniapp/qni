@@ -39,7 +39,7 @@ class ControlGateComponent < ViewComponent::Base
 
   def data_draggable_action
     { action: 'mouseenter->gate-description#initPopup:passive ' \
-              'mousedown->editor#grabDraggable:passive ' \
+              'mousedown->editor#grabDraggableOld:passive ' \
               'mouseup->editor#releaseDraggable:passive ' \
               'click->editor#ignoreDraggableClick:passive' }
   end

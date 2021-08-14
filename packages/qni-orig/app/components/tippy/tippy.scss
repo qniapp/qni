@@ -40,4 +40,8 @@
     @apply text-eel;
     @apply text-lg;
   }
+
+  header p {
+    @apply leading-tight;
+  }
 }

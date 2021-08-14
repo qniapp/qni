@@ -620,11 +620,15 @@
   <% end %>
 
   <%= dropzone palette: true, no_wire: true do %>
-    <%= bloch_display palette: true %>
-    <%= gate_description title: 'Bloch Sphere Display', subtitles: ["Shows a wire's local state as a point on the Bloch sphere."] %>
+    <%= bloch_display palette: true do %>
+      <header>
+        <h1>Bloch Sphere Display</h1>
+        <p>Shows a wire's local state as a point on the Bloch sphere.</p>
+      </header>
+    <% end %>
   <% end %>
 
-    <%= dropzone palette: true, no_wire: true do %>
+  <%= dropzone palette: true, no_wire: true do %>
     <%= write 0, palette: true %>
     <% title = capture do %>
       |<span class="font-mono">0</span>&#x27e9; Operation

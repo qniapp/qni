@@ -1,9 +1,6 @@
 import { InternalError } from "lib/error"
 
 export const Options: { [type: string]: { [name: string]: string } } = {
-  ids: {
-    "display:bloch:popup": "bloch-display-popup-content",
-  },
   classes: {
     gate: "gate",
     "gate:write": "write-gate",
@@ -21,15 +18,6 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:measure": "measure-gate",
 
     "display:bloch": "bloch-display",
-    "display:bloch:vector": "bloch-display__vector",
-    "display:bloch:vector:line": "bloch-display__vector-line",
-    "display:bloch:vector:end": "bloch-display__vector-end",
-    "display:bloch:popup:d": "bloch-display__popup-content-d",
-    "display:bloch:popup:phi": "bloch-display__popup-content-phi",
-    "display:bloch:popup:theta": "bloch-display__popup-content-theta",
-    "display:bloch:popup:x": "bloch-display__popup-content-x",
-    "display:bloch:popup:y": "bloch-display__popup-content-y",
-    "display:bloch:popup:z": "bloch-display__popup-content-z",
 
     "display:qubitLabel": "qubit-label",
     "qubitLabel:value": "qubit-label__value",
@@ -83,18 +71,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "instruction:phi": "data-phi",
     "instruction:flag": "data-flag",
     "instruction:valueable:value": "data-value",
-
-    "instruction:bloch:d": "data-d",
-    "instruction:bloch:x": "data-x",
-    "instruction:bloch:y": "data-y",
-    "instruction:bloch:z": "data-z",
   },
-}
-
-export function idFor(name: string): string {
-  const id = Options.ids[name]
-  if (!id) throw new InternalError(`id for ${name} not found`)
-  return id
 }
 
 export function classNameFor(name: string): string {

@@ -1,6 +1,6 @@
+import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 const measureIcon = html`
   <svg

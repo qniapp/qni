@@ -3,13 +3,11 @@
 <div id="editor"
      class="editor relative h-full"
      data-controller="editor"
-     data-action="circuitUpdateEvent->editor#runCircuit simulationFinished->editor#updateUrl"
+     data-action="grabDraggable->editor#grabDraggable dropDraggable->editor#dropDraggable circuitUpdateEvent->editor#runCircuit simulationFinished->editor#updateUrl"
      data-editor-max-nqubit="<%= Qni::MAX_NQUBIT %>">
   <%= editor.content %>
   <%= gate_popup type: 'theta', label: 'θ', error_message: 'Invalid θ value' %>
   <%= gate_popup type: 'phi', label: 'φ', error_message: 'Invalid φ value' %>
   <%= gate_popup type: 'if', label: 'if', error_message: 'Invalid `if` value' %>
   <%= gate_popup type: 'flag', label: 'flag', error_message: 'Invalid flag' %>
-
-  <%= render 'bloch_display_component/bloch_display_popup_content' %>
 </div>

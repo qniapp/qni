@@ -38,105 +38,6 @@
 
   <body>
     <div class="h-screen flex overflow-hidden">
-      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-      <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
-        <!--
-             Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-             Entering: "transition-opacity ease-linear duration-300"
-             From: "opacity-0"
-             To: "opacity-100"
-             Leaving: "transition-opacity ease-linear duration-300"
-             From: "opacity-100"
-             To: "opacity-0"
-        -->
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-
-        <!--
-             Off-canvas menu, show/hide based on off-canvas menu state.
-
-             Entering: "transition ease-in-out duration-300 transform"
-             From: "-translate-x-full"
-             To: "translate-x-0"
-             Leaving: "transition ease-in-out duration-300 transform"
-             From: "translate-x-0"
-             To: "-translate-x-full"
-        -->
-        <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
-          <!--
-               Close button, show/hide based on off-canvas menu state.
-
-               Entering: "ease-in-out duration-300"
-               From: "opacity-0"
-               To: "opacity-100"
-               Leaving: "ease-in-out duration-300"
-               From: "opacity-100"
-               To: "opacity-0"
-          -->
-          <div class="absolute top-0 right-0 -mr-12 pt-2">
-            <button class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span class="sr-only">Close sidebar</span>
-              <!-- Heroicon name: outline/x -->
-              <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <!-- <div class="flex-shrink-0 flex items-center px-4">
-               <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow">
-               </div> -->
-          <div class="mt-5 flex-1 h-0 overflow-y-auto">
-            <nav class="px-2 space-y-1">
-              <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
-              <a href="#" class="bg-gray-100 text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                Dashboard
-              </a>
-
-              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                Team
-              </a>
-
-              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!-- Heroicon name: outline/folder -->
-                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                </svg>
-                Projects
-              </a>
-
-              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!-- Heroicon name: outline/calendar -->
-                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Calendar
-              </a>
-
-              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!-- Heroicon name: outline/inbox -->
-                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                </svg>
-                Documents
-              </a>
-
-              <a href="#" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!-- Heroicon name: outline/chart-bar -->
-                <svg class="text-gray-400 group-hover:text-gray-500 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                Reports
-              </a>
-            </nav>
-          </div>
-        </div>
-
-        <div class="flex-shrink-0 w-14" aria-hidden="true">
-          <!-- Dummy element to force sidebar to shrink to fit close icon -->
-        </div>
-      </div>
-
       <!-- Static sidebar for desktop -->
       <div class="hidden md:flex md:flex-shrink-0">
         <div class="flex flex-col w-64">
@@ -1948,30 +1849,82 @@
                         <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
                       </th>
                       <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                        <div class="pb-2 pl-2 border-b border-gray-200">Value</div>
+                        <div class="pb-2 pl-2 border-b border-gray-200">Display</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody class="align-baseline">
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-x</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">X coordinate</code></td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+width: 1rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-y</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Y coordinate</code></td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+width: 1.5rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-z</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Z coordinate</td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+width: 2rem;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+width: 2.5rem;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+width: 3rem;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-x=&quot;0.123&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">X = 0.123</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-y=&quot;0.123&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Y = 0.123</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-z=&quot;0.123&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Z = 0.123</td>
                     </tr>
                   </tbody>
                 </table>
 
-                <div class="relative overflow-hidden mt-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+                <p class="mb-5">Control the size of a bloch display using the
+                <code class="text-purple-500">data-size</code> attribute.</p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+                    <div class="flex flex-row space-x-4">
+                      <bloch-display data-size="xs"></bloch-display>
+                      <bloch-display data-size="sm"></bloch-display>
+                      <bloch-display data-size="base"></bloch-display>
+                      <bloch-display data-size="lg"></bloch-display>
+                      <bloch-display data-size="xl"></bloch-display>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-size=&quot;xs&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-size=&quot;sm&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-size=&quot;base&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-size=&quot;lg&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-size=&quot;xl&quot;&gt;&lt;/bloch-display&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Coordinates</h2>
+                <p class="mb-5">
+                  Control the coordinates that the Bloch vector points to using the <code class="text-purple-500">data-x</code>, <code class="text-purple-500">data-y</code>, and <code class="text-purple-500">data-z</code> attributes.
+                </p>
+                <div class="relative overflow-hidden mb-8">
                   <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
                     <div class="flex flex-row space-x-4">
                       <bloch-display></bloch-display>
+                      <bloch-display data-x="0" data-y="0" data-z="1"></bloch-display>
                       <bloch-display data-x="0" data-y="0" data-z="-1"></bloch-display>
                       <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
                       <bloch-display data-x="-1" data-y="0" data-z="0"></bloch-display>
@@ -1982,12 +1935,86 @@
                   </div>
                   <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
                     <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="0" data-y="0" data-z="-1"&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="1" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="-1" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="0" data-y="1" data-z="0"&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="0" data-y="-1" data-z="0"&gt;&lt;/bloch-display&gt;
-&lt;bloch-display data-x="0" data-y="0" data-z="0"&gt;&lt;/bloch-display&gt;</code></pre>
+&lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;1&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;-1&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;1&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;-1&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;0&quot; data-y=&quot;1&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;0&quot; data-y=&quot;-1&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
+&lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
+                <p class="mb-5">
+                  As a user help, you can display the description and usage of
+                  the Bloch display as a popup. The popup will show on the mouse
+                  hover event. The content to be displayed can be specified in
+                  the <code class="text-purple-500">&lt;bloch-display&gt;</code>
+                  tag as follows:
+                </p>
+
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+                    <div class="flex flex-row space-x-4">
+                      <bloch-display>
+                        <header>
+                          <h1>Bloch Sphere Display</h1>
+                          <p>Shows a wire's local state as a point on the Bloch sphere.</p>
+                        </header>
+                      </bloch-display>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Bloch Sphere Display&lt;/h1&gt;
+    &lt;p&gt;Shows a wire's local state as a point on the Bloch sphere.&lt;/p&gt;
+  &lt;/header&gt;
+&lt;/bloch-display&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Inspector Popup</h2>
+                <p class="mb-5">
+                  Bloch displays placed inside quantum circuits (i.e. <code
+                  class="text-purple-500">&lt;bloch-display&gt;</code> tags
+                  enclosed in <code
+                  class="text-purple-500">&lt;circuit-dropzone&gt;</code> tags)
+                  can be inspected by mouse-hovering. In the inspector, you can
+                  see the values of the 3D coordinates x, y, and z on the Bloch
+                  sphere and the two angles Φ and θ that determine the
+                  coordinates.
+                </p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+                    <div class="flex flex-row space-x-4">
+                      <circuit-dropzone>
+                        <bloch-display data-x="1" data-y="0" data-z="0">
+                        </bloch-display>
+                      </circuit-dropzone>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone&gt;
+  &lt;bloch-display data-x=&quot;1&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
+                <p class="mb-5">
+                  To make the Bloch display drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
+                </p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+                    <div class="flex flex-row space-x-4">
+                      <bloch-display data-draggable>
+                      </bloch-display>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-draggable&gt;&lt;bloch-display&gt;</code></pre>
                   </div>
                 </div>
               </div>
@@ -2081,7 +2108,7 @@
                   </div>
                 </div>
 
-                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Gate description</h2>
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Gate description popup</h2>
                 <div class="relative overflow-hidden mb-8">
                   <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
                     <div class="flex flex-row space-x-4">

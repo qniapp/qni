@@ -3,12 +3,6 @@
 
   @apply relative;
 
-  &--palette {
-    @apply w-#{$instruction-size-base};
-    @apply h-#{$instruction-size-base};
-    @apply mr-2;
-  }
-
   &--circuit {
     writing-mode: vertical-lr;
 

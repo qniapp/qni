@@ -4,7 +4,7 @@
   @screen md {
     @apply absolute top-0 left-0;
     @apply bg-snow;
-    @apply flex flex-row;
+    @apply flex flex-row space-x-2;
     @apply mt-14 mx-6;
     @apply px-4 py-5;
     @apply rounded-md border-2 border-b-4 border-swan;
@@ -12,8 +12,7 @@
   }
 
   .dropzone {
-    @apply w-#{$instruction-size-base};
     @apply h-#{$instruction-size-base};
-    @apply mr-2;
+    @apply w-#{$instruction-size-base};
   }
 }

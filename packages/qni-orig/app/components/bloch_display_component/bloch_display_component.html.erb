@@ -1,2 +1,3 @@
-<%= tag.bloch_display class: @class, data: @data do %>
+<%= tag.bloch_display class: @class, data: { draggable: @draggable ? '' : nil } do %>
+  <%= content %>
 <% end %>

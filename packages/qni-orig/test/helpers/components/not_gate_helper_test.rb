@@ -8,7 +8,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
   test 'not_gate' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate)
       <div class="draggable draggable--circuit gate gate--ifable not-gate"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -22,7 +22,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
       <div class="draggable draggable--circuit gate gate--ifable not-gate"
            data-if="alice_h"
            data-gate-label="if alice_h"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -34,7 +34,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
   test 'not_gate disabled: true' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(disabled: true))
       <div class="draggable draggable--circuit gate gate--disabled gate--ifable not-gate"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -47,7 +47,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(bit: 1, controls: [0]))
       <div class="connectable--lower-bit draggable draggable--circuit gate gate--ifable not-gate"
            data-controls="0"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -60,7 +60,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(bit: 0, controls: [1]))
       <div class="connectable--upper-bit draggable draggable--circuit gate gate--ifable not-gate"
            data-controls="1"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -73,7 +73,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(bit: 0, controls: [2, 1, 3]))
       <div class="connectable--upper-bit draggable draggable--circuit gate gate--ifable not-gate"
            data-controls="1,2,3"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -86,7 +86,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(bit: 3, controls: [1, 2], targets: [4]))
       <div class="connectable--lower-bit connectable--upper-bit draggable draggable--circuit gate gate--ifable not-gate"
            data-controls="1,2"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
@@ -98,7 +98,7 @@ class Components::NotGateHelperTest < ActionView::TestCase
   test 'not_gate palette: true' do
     assert_dom_equal beautify(<<~ERB), beautify(not_gate(palette: true))
       <div class="draggable draggable--palette gate gate--ifable not-gate"
-           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggable:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
+           data-action="mouseenter->gate-description#initPopup:passive mousedown->editor#grabDraggableOld:passive mouseup->editor#releaseDraggable:passive click->editor#ignoreDraggableClick:passive">
         #{wires wireable: false}
         <div class="gate__body">
           #{plus_icon class: 'gate-icon'}
