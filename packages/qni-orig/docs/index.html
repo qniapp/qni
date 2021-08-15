@@ -1757,50 +1757,105 @@
                   </thead>
                   <tbody class="align-baseline">
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</code></td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+width: 1rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</code></td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+width: 1.5rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+width: 2rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+width: 2.5rem;</td>
                     </tr>
                     <tr>
-                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
-                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+width: 3rem;</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit gate (disabled)</td>
+                    </tr>
+                    <tr>
+                      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate (disabled)</td>
                     </tr>
                   </tbody>
                 </table>
 
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+                <p class="mb-5">
+                  Control the size of a Swap gate using the <code class="text-purple-500">data-size</code> attribute.
+                </p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate data-size="xs"></swap-gate>
+                      <swap-gate data-size="sm"></swap-gate>
+                      <swap-gate data-size="base"></swap-gate>
+                      <swap-gate data-size="lg"></swap-gate>
+                      <swap-gate data-size="xl"></swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-size=&quot;xs&quot;&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-size=&quot;sm&quot;&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-size=&quot;base&quot;&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-size=&quot;lg&quot;&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-size=&quot;xl&quot;&gt;&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Disabled Gate</h2>
+                <p class="mb-5">
+                  To display the disabled Swap gate, set the <code class="text-purple-500">data-disabled</code> attribute.
+                </p>
                 <div class="relative overflow-hidden mt-8 mb-8">
                   <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                     <div class="flex flex-row space-x-4">
-                      <swap-gate></swap-gate>
                       <swap-gate data-disabled></swap-gate>
                     </div>
                   </div>
                   <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-disabled&gt;&lt;/swap-gate&gt;</code></pre>
                   </div>
                 </div>
 
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Connecting with Other Gates</h2>
+                <p class="mb-5">
+                  To connect the Swap gate to the quantum gate of the lower bit, set the <code class="text-purple-500">data-wire-top</code> attribute.
+                  Similarly, set <code class="text-purple-500">data-wire-bottom</code> for the upper bits.
+                </p>
                 <div class="relative overflow-hidden mb-8">
                   <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                     <div class="flex flex-row space-x-4">
                       <swap-gate data-wire-top></swap-gate>
                       <swap-gate data-wire-bottom></swap-gate>
                       <swap-gate data-wire-top data-wire-bottom></swap-gate>
-                      <swap-gate data-wire-top-disabled></swap-gate>
-                      <swap-gate data-wire-bottom-disabled></swap-gate>
-                      <swap-gate data-wire-top-disabled data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-wire-top data-disabled></swap-gate>
+                      <swap-gate data-wire-bottom data-disabled></swap-gate>
+                      <swap-gate data-wire-top data-wire-bottom data-disabled></swap-gate>
                     </div>
                   </div>
                   <div class="overflow-hidden rounded-b-xl bg-light-green-500">
@@ -1813,24 +1868,71 @@
                   </div>
                 </div>
 
+                <p class="mb-5">
+                  To show disabled connections, use the <code class="text-purple-500">data-wire-top-disabled</code> and <code class="text-purple-500">data-wire-bottom-disabled</code> attributes.
+                </p>
                 <div class="relative overflow-hidden mb-8">
                   <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                     <div class="flex flex-row space-x-4">
-                      <swap-gate data-disabled data-wire-top></swap-gate>
-                      <swap-gate data-disabled data-wire-bottom></swap-gate>
-                      <swap-gate data-disabled data-wire-top data-wire-bottom></swap-gate>
-                      <swap-gate data-disabled data-wire-top-disabled></swap-gate>
-                      <swap-gate data-disabled data-wire-bottom-disabled></swap-gate>
-                      <swap-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-wire-top-disabled></swap-gate>
+                      <swap-gate data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-wire-top-disabled data-wire-bottom-disabled></swap-gate>
+                      <swap-gate data-wire-top-disabled data-disabled></swap-gate>
+                      <swap-gate data-wire-bottom-disabled data-disabled></swap-gate>
+                      <swap-gate data-wire-top-disabled data-wire-bottom-disabled data-disabled></swap-gate>
                     </div>
                   </div>
                   <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-disabled data-wire-top&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled data-wire-bottom&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled data-wire-top-disabled&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;
-&lt;swap-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-wire-top-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top-disabled data-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-bottom-disabled data-disabled&gt;&lt;/swap-gate&gt;
+&lt;swap-gate data-wire-top-disabled data-wire-bottom-disabled data-disabled&gt;&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
+                <p class="mb-5">
+                  As a user help, you can display the description and usage of the Swap gate as a popup.
+                  The popup will show on the mouse hover event.
+                  The content to be displayed can be specified in the <code class="text-purple-500">&lt;swap-gate&gt;</code> tag as follows:
+                </p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate>
+                        <header>
+                          <h1>Swap Gate</h1>
+                          <p>Swap the values of two qubits.</p>
+                          <p>(Place two in the same column.)</p>
+                        </header>
+                      </swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Swap Gate&lt;/h1&gt;
+    &lt;p&gt;Swap the values of two qubits.&lt;/p&gt;
+    &lt;p&gt;(Place two in the same column.)&lt;/p&gt;
+  &lt;/header&gt;
+&lt;/swap-gate&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
+                <p class="mb-5">
+                  To make the Swap gate drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
+                </p>
+                <div class="relative overflow-hidden mb-8">
+                  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                    <div class="flex flex-row space-x-4">
+                      <swap-gate data-draggable></swap-gate>
+                    </div>
+                  </div>
+                  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;swap-gate data-draggable&gt;&lt;swap-gate&gt;</code></pre>
                   </div>
                 </div>
               </div>
