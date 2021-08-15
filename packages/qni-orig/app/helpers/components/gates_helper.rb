@@ -50,6 +50,6 @@ module Components::GatesHelper
   end
 
   def measure(value: nil, flag: nil, draggable: true, palette: false, &block)
-    render MeasureGateComponent.new(value: value, flag: flag, draggable: draggable, palette: palette), &block
+    render MeasurementGateComponent.new(value: value, flag: flag, draggable: draggable, palette: palette), &block
   end
 end

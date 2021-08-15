@@ -2,7 +2,7 @@ import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 
-const measureIcon = html`
+const measurementIcon = html`
   <svg
     id="icon"
     width="48"
@@ -26,9 +26,10 @@ const measureIcon = html`
 `
 
 @controller
-export class MeasureGateElement extends HTMLElement {
+export class MeasurementGateElement extends HTMLElement {
   @target body: HTMLElement
 
+  @attr size = "base"
   @attr value = ""
   @attr flag = ""
   @attr draggable = false
@@ -36,11 +37,27 @@ export class MeasureGateElement extends HTMLElement {
   @attr draggableSource = false
   @attr draggableShadow = false
 
+  grab(event: MouseEvent): void {
+    const customEvent = new CustomEvent("grabDraggable", {
+      detail: event,
+      bubbles: true,
+    })
+    this.parentElement?.dispatchEvent(customEvent)
+  }
+
+  drop(event: MouseEvent): void {
+    const customEvent = new CustomEvent("dropDraggable", {
+      detail: event,
+      bubbles: true,
+    })
+    this.parentElement?.dispatchEvent(customEvent)
+  }
+
   showGateDescription(): void {
     if ((this as ReferenceElement)._tippy) return
 
-    const header = this.header
-    if (!header) return
+    const content = this.descriptionHeader()
+    if (!content) return
 
     const popup = tippy(this, {
       allowHTML: true,
@@ -50,13 +67,13 @@ export class MeasureGateElement extends HTMLElement {
       placement: "right",
       theme: "qni",
       onShow(instance: Instance) {
-        instance.setContent(header)
+        instance.setContent(content)
       },
     })
     popup.show()
   }
 
-  private get header(): HTMLElement | null {
+  private descriptionHeader(): HTMLElement | null {
     return this.querySelector("header")
   }
 
@@ -99,6 +116,9 @@ export class MeasureGateElement extends HTMLElement {
   }
 
   update(): void {
+    this.addEventListener("mousedown", this.grab)
+    this.addEventListener("mouseup", this.drop)
+
     render(
       html`<style>
           #body {
@@ -106,8 +126,31 @@ export class MeasureGateElement extends HTMLElement {
             display: flex;
             justify-content: center;
             position: relative;
+          }
+
+          #body.size-xs {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          #body.size-sm {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          #body.size-base {
             height: 2rem;
             width: 2rem;
+          }
+
+          #body.size-lg {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          #body.size-xl {
+            height: 3rem;
+            width: 3rem;
           }
 
           #body.grabbed,
@@ -201,26 +244,47 @@ export class MeasureGateElement extends HTMLElement {
           #body.value-1 #ket-label::after {
             content: "1";
           }
+
+          #body::before {
+            bottom: 0;
+            color: var(--colors-wolf, #777777);
+            content: attr(data-flag) "";
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            margin-bottom: 2rem;
+            position: absolute;
+            writing-mode: horizontal-tb;
+            z-index: 10;
+          }
         </style>
 
         <div
           id="body"
-          class="${this.valueClassString} ${this.draggableClassString}"
-          data-target="measure-gate.body"
-          data-action="mouseenter:measure-gate#showGateDescription"
+          class="${this.classString}"
+          data-flag="${this.flag}"
+          data-target="measurement-gate.body"
+          data-action="mouseenter:measurement-gate#showGateDescription"
         >
-          ${measureIcon}
+          ${measurementIcon}
           <div id="ket-label"></div>
         </div>`,
       this.shadowRoot!,
     )
   }
 
-  private get valueClassString(): string {
-    return this.value !== "" ? `value-${this.value}` : ""
-  }
+  private get classString(): string {
+    const klass = []
 
-  private get draggableClassString(): string {
-    return this.draggable ? "draggable" : ""
+    if (this.value) klass.push(`value-${this.value}`)
+    if (this.draggable) klass.push("draggable")
+    if (this.size === "xs") klass.push("size-xs")
+    if (this.size === "sm") klass.push("size-sm")
+    if (this.size === "base") klass.push("size-base")
+    if (this.size === "lg") klass.push("size-lg")
+    if (this.size === "xl") klass.push("size-xl")
+
+    return klass.join(" ")
   }
 }

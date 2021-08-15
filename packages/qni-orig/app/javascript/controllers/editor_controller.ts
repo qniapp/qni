@@ -39,6 +39,12 @@ export default class EditorController extends Controller {
   grabDraggable(event: CustomEvent): void {
     const mouseEvent = event.detail as MouseEvent
 
+    if (this.isRightClickEvent(mouseEvent)) {
+      Util.notNull(mouseEvent.target)
+      this.editor.showGatePopup(mouseEvent.target as HTMLElement)
+      return
+    }
+
     if (this.simulator.nqubit + 1 <= this.maxNqubit) {
       this.circleNotation.incrementNqubit()
       this.editor.addNewQubit()

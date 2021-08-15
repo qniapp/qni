@@ -224,7 +224,7 @@ export class QuantumCircuitElement extends HTMLElement {
             break
           }
           case /^Measure$/.test(instruction): {
-            const measureGate = document.createElement("measure-gate")
+            const measureGate = document.createElement("measurement-gate")
             dropzone.append(measureGate)
             break
           }
