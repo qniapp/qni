@@ -175,6 +175,10 @@ export class ControlGateElement extends HTMLElement {
             width: 3rem;
           }
 
+          #body.draggable {
+            cursor: grab;
+          }
+
           #body.grabbed {
             background-color: var(--colors-snow, #ffffff);
           }
