@@ -1,0 +1,70 @@
+---
+layout: default
+title: Circuit Step
+---
+<div class="h-screen flex overflow-hidden">
+  {% include sidebar.html %}
+
+  <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <main class="flex-1 relative overflow-y-auto focus:outline-none">
+      <div class="py-5">
+        <div class="h-8"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div class="sm:mb-12 lg:mb-16 mt-5">
+            <div class="pb-10 border-b border-gray-200 mb-10">
+              <div>
+                <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                  <a id="circuit-step" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                  Circuit Step
+                </h1>
+              </div>
+              <p class="mt-1 text-lg text-gray-500">A column representing a single step in a quantum circuit.</p>
+            </div>
+
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row">
+                  <circuit-step>
+                    <circuit-dropzone>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;h-gate&gt;&lt;/h-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;x-gate&gt;&lt;/x-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;y-gate&gt;&lt;/y-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;z-gate&gt;&lt;/z-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

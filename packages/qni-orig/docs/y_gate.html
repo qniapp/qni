@@ -1,0 +1,119 @@
+---
+layout: default
+title: Y Gate
+---
+<div class="h-screen flex overflow-hidden">
+  {% include sidebar.html %}
+
+  <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <main class="flex-1 relative overflow-y-auto focus:outline-none">
+      <div class="py-5">
+        <div class="h-8"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div class="sm:mb-12 lg:mb-16 mt-5">
+            <div class="pb-10 border-b border-gray-200 mb-10">
+              <div>
+                <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+                  <a id="y-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
+                  Y Gate
+                </h1>
+              </div>
+              <p class="mt-1 text-lg text-gray-500">A combination of the X and Z gates.</p>
+            </div>
+
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                    <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                  </th>
+                  <th class="y-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                    <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="align-baseline">
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap">data-disabled</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre">Disabled</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit (disabled)</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-violet-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-light-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit (disabled)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="relative overflow-hidden mt-8 mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <y-gate></y-gate>
+                  <y-gate data-disabled></y-gate>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled&gt;&lt;/y-gate&gt;</code></pre>
+              </div>
+            </div>
+
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <y-gate data-wire-top></y-gate>
+                  <y-gate data-wire-bottom></y-gate>
+                  <y-gate data-wire-top data-wire-bottom></y-gate>
+                  <y-gate data-wire-top-disabled></y-gate>
+                  <y-gate data-wire-bottom-disabled></y-gate>
+                  <y-gate data-wire-top-disabled data-wire-bottom-disabled></y-gate>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;</code></pre>
+              </div>
+            </div>
+
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <y-gate data-disabled data-wire-top></y-gate>
+                  <y-gate data-disabled data-wire-bottom></y-gate>
+                  <y-gate data-disabled data-wire-top data-wire-bottom></y-gate>
+                  <y-gate data-disabled data-wire-top-disabled></y-gate>
+                  <y-gate data-disabled data-wire-bottom-disabled></y-gate>
+                  <y-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled></y-gate>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-disabled data-wire-top&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top data-wire-bottom&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
+&lt;y-gate data-disabled data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

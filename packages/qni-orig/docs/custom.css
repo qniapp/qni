@@ -1,0 +1,16 @@
+.hljs {
+    background-color: transparent;
+    padding: 0 !important;
+}
+.hljs-name {
+    color: #FF4B4B;
+}
+.hljs-attr, .hljs-variable {
+    color: #FFC800;
+}
+.hljs-string {
+    color: #43C000;
+}
+.hljs-title {
+    color: #1CB0F6;
+}

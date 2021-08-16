@@ -29,7 +29,8 @@
   "scripts": {
     "test": "karma start",
     "test:watch": "yarn test --auto-watch --no-single-run",
-    "build:doc": "typedoc --out docs/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json app/javascript/ app/components/",
+    "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
+    "build:typedoc": "typedoc --out docs/api --name Qni --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json app/javascript/ app/components/",
     "prepare": "husky install"
   },
   "prettier": {

@@ -13,6 +13,7 @@ task 'npm:build' => %i[environment dist] do
   latest_npm_pack = npm_packs.max_by { |a| a[1] }[0]
 
   cp latest_npm_pack, 'dist/index.js'
+  cp latest_npm_pack, 'docs/index.js'
 end
 
 task 'npm:publish' => :environment do
