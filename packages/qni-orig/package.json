@@ -68,7 +68,7 @@
     "webpack-cli": "3.3.12",
     "webpacker-pwa": "^0.1.2"
   },
-  "version": "0.0.45",
+  "version": "0.0.47",
   "devDependencies": {
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",
