@@ -471,2313 +471,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 52:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-    return obj[key];
-  }
-  try {
-    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
-    define({}, "");
-  } catch (err) {
-    define = function(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunction.displayName = define(
-    GeneratorFunctionPrototype,
-    toStringTagSymbol,
-    "GeneratorFunction"
-  );
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      define(prototype, method, function(arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      define(genFun, toStringTagSymbol, "GeneratorFunction");
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  define(Gp, toStringTagSymbol, "Generator");
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : undefined
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
-}
-
-
-/***/ }),
-
-/***/ 54:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(3);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/bind.js
-
-
-var _marked = /*#__PURE__*/regenerator_default.a.mark(bindings);
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var controllers = new WeakSet();
-/*
- * Bind `[data-action]` elements from the DOM to their actions.
- *
- */
-
-function bind(controller) {
-  controllers.add(controller);
-  if (controller.shadowRoot) bindShadow(controller.shadowRoot);
-  bindElements(controller);
-  listenForBind(controller.ownerDocument);
-}
-function bindShadow(root) {
-  bindElements(root);
-  listenForBind(root);
-}
-var observers = new WeakMap();
-/**
- * Set up observer that will make sure any actions that are dynamically
- * injected into `el` will be bound to it's controller.
- *
- * This returns a Subscription object which you can call `unsubscribe()` on to
- * stop further live updates.
- */
-
-function listenForBind() {
-  var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
-  if (observers.has(el)) return observers.get(el);
-  var closed = false;
-  var observer = new MutationObserver(function (mutations) {
-    var _iterator = _createForOfIteratorHelper(mutations),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var mutation = _step.value;
-
-        if (mutation.type === 'attributes' && mutation.target instanceof Element) {
-          bindActions(mutation.target);
-        } else if (mutation.type === 'childList' && mutation.addedNodes.length) {
-          var _iterator2 = _createForOfIteratorHelper(mutation.addedNodes),
-              _step2;
-
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var node = _step2.value;
-
-              if (node instanceof Element) {
-                bindElements(node);
-              }
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
-          }
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  });
-  observer.observe(el, {
-    childList: true,
-    subtree: true,
-    attributeFilter: ['data-action']
-  });
-  var subscription = {
-    get closed() {
-      return closed;
-    },
-
-    unsubscribe: function unsubscribe() {
-      closed = true;
-      observers.delete(el);
-      observer.disconnect();
-    }
-  };
-  observers.set(el, subscription);
-  return subscription;
-}
-
-function bindElements(root) {
-  var _iterator3 = _createForOfIteratorHelper(root.querySelectorAll('[data-action]')),
-      _step3;
-
-  try {
-    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-      var el = _step3.value;
-      bindActions(el);
-    } // Also bind the controller to itself
-
-  } catch (err) {
-    _iterator3.e(err);
-  } finally {
-    _iterator3.f();
-  }
-
-  if (root instanceof Element && root.hasAttribute('data-action')) {
-    bindActions(root);
-  }
-} // Bind a single function to all events to avoid anonymous closure performance penalty.
-
-
-function handleEvent(event) {
-  var el = event.currentTarget;
-
-  var _iterator4 = _createForOfIteratorHelper(bindings(el)),
-      _step4;
-
-  try {
-    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-      var binding = _step4.value;
-
-      if (event.type === binding.type) {
-        var controller = el.closest(binding.tag);
-
-        if (controllers.has(controller) && typeof controller[binding.method] === 'function') {
-          controller[binding.method](event);
-        }
-
-        var root = el.getRootNode();
-
-        if (root instanceof ShadowRoot && controllers.has(root.host) && root.host.matches(binding.tag)) {
-          var shadowController = root.host;
-
-          if (typeof shadowController[binding.method] === 'function') {
-            shadowController[binding.method](event);
-          }
-        }
-      }
-    }
-  } catch (err) {
-    _iterator4.e(err);
-  } finally {
-    _iterator4.f();
-  }
-}
-
-function bindings(el) {
-  var _iterator5, _step5, action, eventSep, methodSep;
-
-  return regenerator_default.a.wrap(function bindings$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          _iterator5 = _createForOfIteratorHelper((el.getAttribute('data-action') || '').trim().split(/\s+/));
-          _context.prev = 1;
-
-          _iterator5.s();
-
-        case 3:
-          if ((_step5 = _iterator5.n()).done) {
-            _context.next = 11;
-            break;
-          }
-
-          action = _step5.value;
-          eventSep = action.lastIndexOf(':');
-          methodSep = action.lastIndexOf('#');
-          _context.next = 9;
-          return {
-            type: action.slice(0, eventSep),
-            tag: action.slice(eventSep + 1, methodSep),
-            method: action.slice(methodSep + 1)
-          };
-
-        case 9:
-          _context.next = 3;
-          break;
-
-        case 11:
-          _context.next = 16;
-          break;
-
-        case 13:
-          _context.prev = 13;
-          _context.t0 = _context["catch"](1);
-
-          _iterator5.e(_context.t0);
-
-        case 16:
-          _context.prev = 16;
-
-          _iterator5.f();
-
-          return _context.finish(16);
-
-        case 19:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, _marked, null, [[1, 13, 16, 19]]);
-}
-
-function bindActions(el) {
-  var _iterator6 = _createForOfIteratorHelper(bindings(el)),
-      _step6;
-
-  try {
-    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-      var binding = _step6.value;
-      el.addEventListener(binding.type, handleEvent);
-    }
-  } catch (err) {
-    _iterator6.e(err);
-  } finally {
-    _iterator6.f();
-  }
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/register.js
-/**
- * Register the controller as a custom element.
- *
- * The classname is converted to a approriate tag name.
- *
- * Example: HelloController => hello-controller
- */
-function register(classObject) {
-  var name = classObject.name.replace(/([A-Z]($|[a-z]))/g, '-$1').replace(/(^-|-Element$)/g, '').toLowerCase();
-
-  if (!window.customElements.get(name)) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    window[classObject.name] = classObject;
-    window.customElements.define(name, classObject);
-  }
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/findtarget.js
-function findtarget_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = findtarget_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function findtarget_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return findtarget_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return findtarget_arrayLikeToArray(o, minLen); }
-
-function findtarget_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-/**
- * findTarget will run `querySelectorAll` against the given controller, plus
- * its shadowRoot, returning any the first child that:
- *
- *  - Matches the selector of `[data-target~="tag.name"]` where tag is the
- *  tagName of the given HTMLElement, and `name` is the given `name` argument.
- *
- *  - Closest ascendant of the element, that matches the tagname of the
- *  controller, is the specific instance of the controller itself - in other
- *  words it is not nested in other controllers of the same type.
- *
- */
-function findTarget(controller, name) {
-  var tag = controller.tagName.toLowerCase();
-
-  if (controller.shadowRoot) {
-    var _iterator = findtarget_createForOfIteratorHelper(controller.shadowRoot.querySelectorAll("[data-target~=\"".concat(tag, ".").concat(name, "\"]"))),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var el = _step.value;
-        if (!el.closest(tag)) return el;
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  }
-
-  var _iterator2 = findtarget_createForOfIteratorHelper(controller.querySelectorAll("[data-target~=\"".concat(tag, ".").concat(name, "\"]"))),
-      _step2;
-
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var _el = _step2.value;
-      if (_el.closest(tag) === controller) return _el;
-    }
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
-  }
-}
-function findTargets(controller, name) {
-  var tag = controller.tagName.toLowerCase();
-  var targets = [];
-
-  if (controller.shadowRoot) {
-    var _iterator3 = findtarget_createForOfIteratorHelper(controller.shadowRoot.querySelectorAll("[data-targets~=\"".concat(tag, ".").concat(name, "\"]"))),
-        _step3;
-
-    try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var el = _step3.value;
-        if (!el.closest(tag)) targets.push(el);
-      }
-    } catch (err) {
-      _iterator3.e(err);
-    } finally {
-      _iterator3.f();
-    }
-  }
-
-  var _iterator4 = findtarget_createForOfIteratorHelper(controller.querySelectorAll("[data-targets~=\"".concat(tag, ".").concat(name, "\"]"))),
-      _step4;
-
-  try {
-    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-      var _el2 = _step4.value;
-      if (_el2.closest(tag) === controller) targets.push(_el2);
-    }
-  } catch (err) {
-    _iterator4.e(err);
-  } finally {
-    _iterator4.f();
-  }
-
-  return targets;
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/target.js
-
-/**
- * Target is a decorator which - when assigned to a property field on the
- * class - will override that class field, turning it into a Getter which
- * returns a call to `findTarget(this, key)` where `key` is the name of the
- * property field. In other words, `@target foo` becomes a getter for
- * `findTarget(this, 'foo')`.
- */
-
-function target(proto, key) {
-  return Object.defineProperty(proto, key, {
-    configurable: true,
-    get: function get() {
-      return findTarget(this, key);
-    }
-  });
-}
-/**
- * Targets is a decorator which - when assigned to a property field on the
- * class - will override that class field, turning it into a Getter which
- * returns a call to `findTargets(this, key)` where `key` is the name of the
- * property field. In other words, `@targets foo` becomes a getter for
- * `findTargets(this, 'foo')`.
- */
-
-function targets(proto, key) {
-  return Object.defineProperty(proto, key, {
-    configurable: true,
-    get: function get() {
-      return findTargets(this, key);
-    }
-  });
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/auto-shadow-root.js
-function auto_shadow_root_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = auto_shadow_root_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function auto_shadow_root_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return auto_shadow_root_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return auto_shadow_root_arrayLikeToArray(o, minLen); }
-
-function auto_shadow_root_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function autoShadowRoot(element) {
-  var _iterator = auto_shadow_root_createForOfIteratorHelper(element.querySelectorAll('template[data-shadowroot]')),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var template = _step.value;
-
-      if (template.parentElement === element) {
-        element.attachShadow({
-          mode: template.getAttribute('data-shadowroot') === 'closed' ? 'closed' : 'open'
-        }).append(template.content.cloneNode(true));
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/attr.js
-function attr_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = attr_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function attr_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return attr_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return attr_arrayLikeToArray(o, minLen); }
-
-function attr_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var attrs = new WeakMap();
-/**
- * Attr is a decorator which tags a property as one to be initialized via
- * `initializeAttrs`.
- *
- * The signature is typed such that the property must be one of a String,
- * Number or Boolean. This matches the behavior of `initializeAttrs`.
- */
-
-function attr_attr(proto, key) {
-  if (!attrs.has(proto)) attrs.set(proto, []);
-  attrs.get(proto).push(key);
-}
-/**
- * initializeAttrs is called with a set of class property names (if omitted, it
- * will look for any properties tagged with the `@attr` decorator). With this
- * list it defines property descriptors for each property that map to `data-*`
- * attributes on the HTMLElement instance.
- *
- * It works around Native Class Property semantics - which are equivalent to
- * calling `Object.defineProperty` on the instance upon creation, but before
- * `constructor()` is called.
- *
- * If a class property is assigned to the class body, it will infer the type
- * (using `typeof`) and define an appropriate getter/setter combo that aligns
- * to that type. This means class properties assigned to Numbers can only ever
- * be Numbers, assigned to Booleans can only ever be Booleans, and assigned to
- * Strings can only ever be Strings.
- *
- * This is automatically called as part of `@controller`. If a class uses the
- * `@controller` decorator it should not call this manually.
- */
-
-function initializeAttrs(instance, names) {
-  if (!names) names = attrs.get(Object.getPrototypeOf(instance)) || [];
-
-  var _iterator = attr_createForOfIteratorHelper(names),
-      _step;
-
-  try {
-    var _loop = function _loop() {
-      var key = _step.value;
-      var value = instance[key];
-      var name = attrToAttributeName(key);
-      var descriptor = {
-        get: function get() {
-          return this.getAttribute(name) || '';
-        },
-        set: function set(newValue) {
-          this.setAttribute(name, newValue || '');
-        }
-      };
-
-      if (typeof value === 'number') {
-        descriptor = {
-          get: function get() {
-            return Number(this.getAttribute(name) || 0);
-          },
-          set: function set(newValue) {
-            this.setAttribute(name, newValue);
-          }
-        };
-      } else if (typeof value === 'boolean') {
-        descriptor = {
-          get: function get() {
-            return this.hasAttribute(name);
-          },
-          set: function set(newValue) {
-            this.toggleAttribute(name, newValue);
-          }
-        };
-      }
-
-      Object.defineProperty(instance, key, descriptor);
-
-      if (key in instance && !instance.hasAttribute(name)) {
-        descriptor.set.call(instance, value);
-      }
-    };
-
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      _loop();
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-}
-
-function attrToAttributeName(name) {
-  return "data-".concat(name.replace(/([A-Z]($|[a-z]))/g, '-$1')).replace(/--/g, '-').toLowerCase();
-}
-
-function defineObservedAttributes(classObject) {
-  var observed = classObject.observedAttributes || [];
-  Object.defineProperty(classObject, 'observedAttributes', {
-    get: function get() {
-      var attrMap = attrs.get(classObject.prototype);
-      if (!attrMap) return observed;
-      return attrMap.map(attrToAttributeName).concat(observed);
-    },
-    set: function set(attributes) {
-      observed = attributes;
-    }
-  });
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/controller.js
-
-
-
-
-/**
- * Controller is a decorator to be used over a class that extends HTMLElement.
- * It will automatically `register()` the component in the customElement
- * registry, as well as ensuring `bind(this)` is called on `connectedCallback`,
- * wrapping the classes `connectedCallback` method if needed.
- */
-
-function controller(classObject) {
-  var connect = classObject.prototype.connectedCallback;
-
-  classObject.prototype.connectedCallback = function () {
-    this.toggleAttribute('data-catalyst', true);
-    autoShadowRoot(this);
-    initializeAttrs(this);
-    bind(this);
-    if (connect) connect.call(this);
-    if (this.shadowRoot) bindShadow(this.shadowRoot);
-  };
-
-  defineObservedAttributes(classObject);
-  register(classObject);
-}
-// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/index.js
-
-
-
-
-
-
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/template-string-parser.js
-
-
-var template_string_parser_marked = /*#__PURE__*/regenerator_default.a.mark(parse);
-
-function parse(text) {
-  var value, tokenStart, open, i;
-  return regenerator_default.a.wrap(function parse$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          value = '';
-          tokenStart = 0;
-          open = false;
-          i = 0;
-
-        case 4:
-          if (!(i < text.length)) {
-            _context.next = 26;
-            break;
-          }
-
-          if (!(text[i] === '{' && text[i + 1] === '{' && text[i - 1] !== '\\' && !open)) {
-            _context.next = 15;
-            break;
-          }
-
-          open = true;
-
-          if (!value) {
-            _context.next = 10;
-            break;
-          }
-
-          _context.next = 10;
-          return {
-            type: 'string',
-            start: tokenStart,
-            end: i,
-            value: value
-          };
-
-        case 10:
-          value = '{{';
-          tokenStart = i;
-          i += 2;
-          _context.next = 22;
-          break;
-
-        case 15:
-          if (!(text[i] === '}' && text[i + 1] === '}' && text[i - 1] !== '\\' && open)) {
-            _context.next = 22;
-            break;
-          }
-
-          open = false;
-          _context.next = 19;
-          return {
-            type: 'part',
-            start: tokenStart,
-            end: i + 2,
-            value: value.slice(2).trim()
-          };
-
-        case 19:
-          value = '';
-          i += 2;
-          tokenStart = i;
-
-        case 22:
-          value += text[i] || '';
-
-        case 23:
-          i += 1;
-          _context.next = 4;
-          break;
-
-        case 26:
-          if (!value) {
-            _context.next = 29;
-            break;
-          }
-
-          _context.next = 29;
-          return {
-            type: 'string',
-            start: tokenStart,
-            end: text.length,
-            value: value
-          };
-
-        case 29:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, template_string_parser_marked);
-}
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/attribute-template-part.js
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var __classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to set private field on non-instance");
-  }
-
-  privateMap.set(receiver, value);
-  return value;
-};
-
-var __classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to get private field on non-instance");
-  }
-
-  return privateMap.get(receiver);
-};
-
-var _setter, _value;
-
-var AttributeTemplatePart = /*#__PURE__*/function () {
-  function AttributeTemplatePart(setter, expression) {
-    _classCallCheck(this, AttributeTemplatePart);
-
-    this.expression = expression;
-
-    _setter.set(this, void 0);
-
-    _value.set(this, '');
-
-    __classPrivateFieldSet(this, _setter, setter);
-
-    __classPrivateFieldGet(this, _setter).updateParent('');
-  }
-
-  _createClass(AttributeTemplatePart, [{
-    key: "attributeName",
-    get: function get() {
-      return __classPrivateFieldGet(this, _setter).attr.name;
-    }
-  }, {
-    key: "attributeNamespace",
-    get: function get() {
-      return __classPrivateFieldGet(this, _setter).attr.namespaceURI;
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return __classPrivateFieldGet(this, _value);
-    },
-    set: function set(value) {
-      __classPrivateFieldSet(this, _value, value || '');
-
-      __classPrivateFieldGet(this, _setter).updateParent(value);
-    }
-  }, {
-    key: "element",
-    get: function get() {
-      return __classPrivateFieldGet(this, _setter).element;
-    }
-  }, {
-    key: "booleanValue",
-    get: function get() {
-      return __classPrivateFieldGet(this, _setter).booleanValue;
-    },
-    set: function set(value) {
-      __classPrivateFieldGet(this, _setter).booleanValue = value;
-    }
-  }]);
-
-  return AttributeTemplatePart;
-}();
-_setter = new WeakMap(), _value = new WeakMap();
-var AttributeValueSetter = /*#__PURE__*/function () {
-  function AttributeValueSetter(element, attr) {
-    _classCallCheck(this, AttributeValueSetter);
-
-    this.element = element;
-    this.attr = attr;
-    this.partList = [];
-  }
-
-  _createClass(AttributeValueSetter, [{
-    key: "booleanValue",
-    get: function get() {
-      return this.element.hasAttributeNS(this.attr.namespaceURI, this.attr.name);
-    },
-    set: function set(value) {
-      if (this.partList.length !== 1) {
-        throw new DOMException('Operation not supported', 'NotSupportedError');
-      }
-
-      ;
-      this.partList[0].value = value ? '' : null;
-    }
-  }, {
-    key: "append",
-    value: function append(part) {
-      this.partList.push(part);
-    }
-  }, {
-    key: "updateParent",
-    value: function updateParent(partValue) {
-      if (this.partList.length === 1 && partValue === null) {
-        this.element.removeAttributeNS(this.attr.namespaceURI, this.attr.name);
-      } else {
-        var str = this.partList.map(function (s) {
-          return typeof s === 'string' ? s : s.value;
-        }).join('');
-        this.element.setAttributeNS(this.attr.namespaceURI, this.attr.name, str);
-      }
-    }
-  }]);
-
-  return AttributeValueSetter;
-}();
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/node-template-part.js
-function node_template_part_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = node_template_part_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || node_template_part_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function node_template_part_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return node_template_part_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return node_template_part_arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return node_template_part_arrayLikeToArray(arr); }
-
-function node_template_part_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function node_template_part_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function node_template_part_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function node_template_part_createClass(Constructor, protoProps, staticProps) { if (protoProps) node_template_part_defineProperties(Constructor.prototype, protoProps); if (staticProps) node_template_part_defineProperties(Constructor, staticProps); return Constructor; }
-
-var node_template_part_classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to set private field on non-instance");
-  }
-
-  privateMap.set(receiver, value);
-  return value;
-};
-
-var node_template_part_classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to get private field on non-instance");
-  }
-
-  return privateMap.get(receiver);
-};
-
-var _parts;
-
-var NodeTemplatePart = /*#__PURE__*/function () {
-  function NodeTemplatePart(node, expression) {
-    node_template_part_classCallCheck(this, NodeTemplatePart);
-
-    this.expression = expression;
-
-    _parts.set(this, void 0);
-
-    node_template_part_classPrivateFieldSet(this, _parts, [node]);
-
-    node.textContent = '';
-  }
-
-  node_template_part_createClass(NodeTemplatePart, [{
-    key: "value",
-    get: function get() {
-      return node_template_part_classPrivateFieldGet(this, _parts).map(function (node) {
-        return node.textContent;
-      }).join('');
-    },
-    set: function set(string) {
-      this.replace(string);
-    }
-  }, {
-    key: "previousSibling",
-    get: function get() {
-      return node_template_part_classPrivateFieldGet(this, _parts)[0].previousSibling;
-    }
-  }, {
-    key: "nextSibling",
-    get: function get() {
-      return node_template_part_classPrivateFieldGet(this, _parts)[node_template_part_classPrivateFieldGet(this, _parts).length - 1].nextSibling;
-    }
-  }, {
-    key: "replace",
-    value: function replace() {
-      var _classPrivateFieldGe;
-
-      for (var _len = arguments.length, nodes = new Array(_len), _key = 0; _key < _len; _key++) {
-        nodes[_key] = arguments[_key];
-      }
-
-      var parts = nodes.map(function (node) {
-        if (typeof node === 'string') return new Text(node);
-        return node;
-      });
-      if (!parts.length) parts.push(new Text(''));
-
-      (_classPrivateFieldGe = node_template_part_classPrivateFieldGet(this, _parts)[0]).before.apply(_classPrivateFieldGe, _toConsumableArray(parts));
-
-      var _iterator = node_template_part_createForOfIteratorHelper(node_template_part_classPrivateFieldGet(this, _parts)),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var part = _step.value;
-          part.remove();
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
-      node_template_part_classPrivateFieldSet(this, _parts, parts);
-    }
-  }]);
-
-  return NodeTemplatePart;
-}();
-_parts = new WeakMap();
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/processors.js
-function processors_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = processors_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function processors_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return processors_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return processors_arrayLikeToArray(o, minLen); }
-
-function processors_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
-function createProcessor(processPart) {
-  return {
-    createCallback: function createCallback(instance, parts, params) {
-      this.processCallback(instance, parts, params);
-    },
-    processCallback: function processCallback(_, parts, params) {
-      var _a;
-
-      if (_typeof(params) !== 'object' || !params) return;
-
-      var _iterator = processors_createForOfIteratorHelper(parts),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var part = _step.value;
-
-          if (part.expression in params) {
-            var value = (_a = params[part.expression]) !== null && _a !== void 0 ? _a : '';
-            processPart(part, value);
-          }
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    }
-  };
-}
-function processPropertyIdentity(part, value) {
-  part.value = String(value);
-}
-function processBooleanAttribute(part, value) {
-  if (typeof value === 'boolean' && part instanceof AttributeTemplatePart && typeof part.element[part.attributeName] === 'boolean') {
-    part.booleanValue = value;
-    return true;
-  }
-
-  return false;
-}
-var propertyIdentity = createProcessor(processPropertyIdentity);
-var propertyIdentityOrBooleanAttribute = createProcessor(function (part, value) {
-  processBooleanAttribute(part, value) || processPropertyIdentity(part, value);
-});
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/template-instance.js
-function template_instance_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { template_instance_typeof = function _typeof(obj) { return typeof obj; }; } else { template_instance_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return template_instance_typeof(obj); }
-
-function template_instance_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function template_instance_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function template_instance_createClass(Constructor, protoProps, staticProps) { if (protoProps) template_instance_defineProperties(Constructor.prototype, protoProps); if (staticProps) template_instance_defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (template_instance_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-var template_instance_marked = /*#__PURE__*/regenerator_default.a.mark(collectParts);
-
-function template_instance_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = template_instance_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function template_instance_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return template_instance_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return template_instance_arrayLikeToArray(o, minLen); }
-
-function template_instance_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var template_instance_classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to set private field on non-instance");
-  }
-
-  privateMap.set(receiver, value);
-  return value;
-};
-
-var template_instance_classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to get private field on non-instance");
-  }
-
-  return privateMap.get(receiver);
-};
-
-var _processor, template_instance_parts;
-
-
-
-
-
-
-function collectParts(el) {
-  var walker, node, i, attr, valueSetter, _iterator, _step, token, part, _iterator2, _step2, _token;
-
-  return regenerator_default.a.wrap(function collectParts$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          walker = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, null, false);
-
-        case 1:
-          if (!(node = walker.nextNode())) {
-            _context.next = 59;
-            break;
-          }
-
-          if (!(node instanceof Element && node.hasAttributes())) {
-            _context.next = 36;
-            break;
-          }
-
-          i = 0;
-
-        case 4:
-          if (!(i < node.attributes.length)) {
-            _context.next = 34;
-            break;
-          }
-
-          attr = node.attributes.item(i);
-
-          if (!(attr && attr.value.includes('{{'))) {
-            _context.next = 31;
-            break;
-          }
-
-          valueSetter = new AttributeValueSetter(node, attr);
-          _iterator = template_instance_createForOfIteratorHelper(parse(attr.value));
-          _context.prev = 9;
-
-          _iterator.s();
-
-        case 11:
-          if ((_step = _iterator.n()).done) {
-            _context.next = 23;
-            break;
-          }
-
-          token = _step.value;
-
-          if (!(token.type === 'string')) {
-            _context.next = 17;
-            break;
-          }
-
-          valueSetter.append(token.value);
-          _context.next = 21;
-          break;
-
-        case 17:
-          part = new AttributeTemplatePart(valueSetter, token.value);
-          valueSetter.append(part);
-          _context.next = 21;
-          return part;
-
-        case 21:
-          _context.next = 11;
-          break;
-
-        case 23:
-          _context.next = 28;
-          break;
-
-        case 25:
-          _context.prev = 25;
-          _context.t0 = _context["catch"](9);
-
-          _iterator.e(_context.t0);
-
-        case 28:
-          _context.prev = 28;
-
-          _iterator.f();
-
-          return _context.finish(28);
-
-        case 31:
-          i += 1;
-          _context.next = 4;
-          break;
-
-        case 34:
-          _context.next = 57;
-          break;
-
-        case 36:
-          if (!(node instanceof Text && node.textContent && node.textContent.includes('{{'))) {
-            _context.next = 57;
-            break;
-          }
-
-          _iterator2 = template_instance_createForOfIteratorHelper(parse(node.textContent));
-          _context.prev = 38;
-
-          _iterator2.s();
-
-        case 40:
-          if ((_step2 = _iterator2.n()).done) {
-            _context.next = 49;
-            break;
-          }
-
-          _token = _step2.value;
-          if (_token.end < node.textContent.length) node.splitText(_token.end);
-
-          if (!(_token.type === 'part')) {
-            _context.next = 46;
-            break;
-          }
-
-          _context.next = 46;
-          return new NodeTemplatePart(node, _token.value);
-
-        case 46:
-          return _context.abrupt("break", 49);
-
-        case 47:
-          _context.next = 40;
-          break;
-
-        case 49:
-          _context.next = 54;
-          break;
-
-        case 51:
-          _context.prev = 51;
-          _context.t1 = _context["catch"](38);
-
-          _iterator2.e(_context.t1);
-
-        case 54:
-          _context.prev = 54;
-
-          _iterator2.f();
-
-          return _context.finish(54);
-
-        case 57:
-          _context.next = 1;
-          break;
-
-        case 59:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, template_instance_marked, null, [[9, 25, 28, 31], [38, 51, 54, 57]]);
-}
-
-var template_instance_TemplateInstance = /*#__PURE__*/function (_DocumentFragment) {
-  _inherits(TemplateInstance, _DocumentFragment);
-
-  var _super = _createSuper(TemplateInstance);
-
-  function TemplateInstance(template, params) {
-    var _this;
-
-    var processor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : propertyIdentity;
-
-    template_instance_classCallCheck(this, TemplateInstance);
-
-    var _a, _b;
-
-    _this = _super.call(this);
-
-    _processor.set(_assertThisInitialized(_this), void 0);
-
-    template_instance_parts.set(_assertThisInitialized(_this), void 0); // This is to fix an inconsistency in Safari which prevents us from
-    // correctly sub-classing DocumentFragment.
-    // https://bugs.webkit.org/show_bug.cgi?id=195556
-
-
-    if (Object.getPrototypeOf(_assertThisInitialized(_this) !== TemplateInstance.prototype)) {
-      Object.setPrototypeOf(_assertThisInitialized(_this), TemplateInstance.prototype);
-    }
-
-    _this.appendChild(template.content.cloneNode(true));
-
-    template_instance_classPrivateFieldSet(_assertThisInitialized(_this), template_instance_parts, Array.from(collectParts(_assertThisInitialized(_this))));
-
-    template_instance_classPrivateFieldSet(_assertThisInitialized(_this), _processor, processor);
-
-    (_b = (_a = template_instance_classPrivateFieldGet(_assertThisInitialized(_this), _processor)).createCallback) === null || _b === void 0 ? void 0 : _b.call(_a, _assertThisInitialized(_this), template_instance_classPrivateFieldGet(_assertThisInitialized(_this), template_instance_parts), params);
-    return _this;
-  }
-
-  template_instance_createClass(TemplateInstance, [{
-    key: "update",
-    value: function update(params) {
-      template_instance_classPrivateFieldGet(this, _processor).processCallback(this, template_instance_classPrivateFieldGet(this, template_instance_parts), params);
-    }
-  }]);
-
-  return TemplateInstance;
-}( /*#__PURE__*/_wrapNativeSuper(DocumentFragment));
-_processor = new WeakMap(), template_instance_parts = new WeakMap();
-// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/index.js
-
-
-
-
-
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/directive.js
-var directives = new WeakSet();
-function isDirective(directiveCallback) {
-  return directives.has(directiveCallback);
-}
-function processDirective(part, value) {
-  if (isDirective(value)) {
-    value(part);
-    return true;
-  }
-
-  return false;
-}
-function directive(directiveFactory) {
-  return function () {
-    var callback = directiveFactory.apply(void 0, arguments);
-    directives.add(callback);
-    return callback;
-  };
-}
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/events.js
-function events_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { events_typeof = function _typeof(obj) { return typeof obj; }; } else { events_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return events_typeof(obj); }
-
-function events_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function events_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function events_createClass(Constructor, protoProps, staticProps) { if (protoProps) events_defineProperties(Constructor.prototype, protoProps); if (staticProps) events_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-var eventListeners = new WeakMap();
-
-var EventHandler = /*#__PURE__*/function () {
-  function EventHandler(element, type) {
-    events_classCallCheck(this, EventHandler);
-
-    this.element = element;
-    this.type = type;
-    this.element.addEventListener(this.type, this);
-    eventListeners.get(this.element).set(this.type, this);
-  }
-
-  events_createClass(EventHandler, [{
-    key: "set",
-    value: function set(listener) {
-      if (typeof listener == 'function') {
-        this.handleEvent = listener.bind(this.element);
-      } else if (events_typeof(listener) === 'object' && typeof listener.handleEvent === 'function') {
-        this.handleEvent = listener.handleEvent.bind(listener);
-      } else {
-        this.element.removeEventListener(this.type, this);
-        eventListeners.get(this.element).delete(this.type);
-      }
-    }
-  }], [{
-    key: "for",
-    value: function _for(part) {
-      if (!eventListeners.has(part.element)) eventListeners.set(part.element, new Map());
-      var type = part.attributeName.slice(2);
-      var elementListeners = eventListeners.get(part.element);
-      if (elementListeners.has(type)) return elementListeners.get(type);
-      return new EventHandler(part.element, type);
-    }
-  }]);
-
-  return EventHandler;
-}();
-
-function processEvent(part, value) {
-  if (part instanceof AttributeTemplatePart && part.attributeName.startsWith('on')) {
-    EventHandler.for(part).set(value);
-    part.element.removeAttributeNS(part.attributeNamespace, part.attributeName);
-    return true;
-  }
-
-  return false;
-}
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/html.js
-function html_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function html_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function html_createClass(Constructor, protoProps, staticProps) { if (protoProps) html_defineProperties(Constructor.prototype, protoProps); if (staticProps) html_defineProperties(Constructor, staticProps); return Constructor; }
-
-function html_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = html_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function html_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { html_typeof = function _typeof(obj) { return typeof obj; }; } else { html_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return html_typeof(obj); }
-
-function html_toConsumableArray(arr) { return html_arrayWithoutHoles(arr) || html_iterableToArray(arr) || html_unsupportedIterableToArray(arr) || html_nonIterableSpread(); }
-
-function html_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function html_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return html_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return html_arrayLikeToArray(o, minLen); }
-
-function html_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function html_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return html_arrayLikeToArray(arr); }
-
-function html_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-
-
-function processSubTemplate(part, value) {
-  if (value instanceof html_TemplateResult && part instanceof NodeTemplatePart) {
-    value.renderInto(part);
-    return true;
-  }
-
-  return false;
-}
-
-function processDocumentFragment(part, value) {
-  if (value instanceof DocumentFragment && part instanceof NodeTemplatePart) {
-    if (value.childNodes.length) part.replace.apply(part, html_toConsumableArray(value.childNodes));
-    return true;
-  }
-
-  return false;
-}
-
-function isIterable(value) {
-  return html_typeof(value) === 'object' && Symbol.iterator in value;
-}
-
-function processIterable(part, value) {
-  if (!isIterable(value)) return false;
-
-  if (part instanceof NodeTemplatePart) {
-    var nodes = [];
-
-    var _iterator = html_createForOfIteratorHelper(value),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var item = _step.value;
-
-        if (item instanceof html_TemplateResult) {
-          var fragment = document.createDocumentFragment();
-          item.renderInto(fragment);
-          nodes.push.apply(nodes, html_toConsumableArray(fragment.childNodes));
-        } else if (item instanceof DocumentFragment) {
-          nodes.push.apply(nodes, html_toConsumableArray(item.childNodes));
-        } else {
-          nodes.push(String(item));
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    if (nodes.length) part.replace.apply(part, nodes);
-    return true;
-  } else {
-    part.value = Array.from(value).join(' ');
-    return true;
-  }
-}
-
-function processPart(part, value) {
-  processDirective(part, value) || processBooleanAttribute(part, value) || processEvent(part, value) || processSubTemplate(part, value) || processDocumentFragment(part, value) || processIterable(part, value) || processPropertyIdentity(part, value);
-}
-var templates = new WeakMap();
-var renderedTemplates = new WeakMap();
-var renderedTemplateInstances = new WeakMap();
-var html_TemplateResult = /*#__PURE__*/function () {
-  function TemplateResult(strings, values, processor) {
-    html_classCallCheck(this, TemplateResult);
-
-    this.strings = strings;
-    this.values = values;
-    this.processor = processor;
-  }
-
-  html_createClass(TemplateResult, [{
-    key: "template",
-    get: function get() {
-      if (templates.has(this.strings)) {
-        return templates.get(this.strings);
-      } else {
-        var template = document.createElement('template');
-        var end = this.strings.length - 1;
-        template.innerHTML = this.strings.reduce(function (str, cur, i) {
-          return str + cur + (i < end ? "{{ ".concat(i, " }}") : '');
-        }, '');
-        templates.set(this.strings, template);
-        return template;
-      }
-    }
-  }, {
-    key: "renderInto",
-    value: function renderInto(element) {
-      var template = this.template;
-
-      if (renderedTemplates.get(element) !== template) {
-        renderedTemplates.set(element, template);
-        var instance = new template_instance_TemplateInstance(template, this.values, this.processor);
-        renderedTemplateInstances.set(element, instance);
-
-        if (element instanceof NodeTemplatePart) {
-          element.replace.apply(element, html_toConsumableArray(instance.children));
-        } else {
-          element.appendChild(instance);
-        }
-
-        return;
-      }
-
-      renderedTemplateInstances.get(element).update(this.values);
-    }
-  }]);
-
-  return TemplateResult;
-}();
-var defaultProcessor = createProcessor(processPart);
-function html(strings) {
-  for (var _len = arguments.length, values = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    values[_key - 1] = arguments[_key];
-  }
-
-  return new html_TemplateResult(strings, values, defaultProcessor);
-}
-function render(result, element) {
-  result.renderInto(element);
-}
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/until.js
-
-
-var untils = new WeakMap();
-var until = directive(function () {
-  for (var _len = arguments.length, promises = new Array(_len), _key = 0; _key < _len; _key++) {
-    promises[_key] = arguments[_key];
-  }
-
-  return function (part) {
-    if (!untils.has(part)) untils.set(part, {
-      i: promises.length
-    });
-    var state = untils.get(part);
-
-    var _loop = function _loop(i) {
-      if (promises[i] instanceof Promise) {
-        // eslint-disable-next-line github/no-then
-        Promise.resolve(promises[i]).then(function (value) {
-          if (i < state.i) {
-            state.i = i;
-            processPart(part, value);
-          }
-        });
-      } else if (i <= state.i) {
-        state.i = i;
-        processPart(part, promises[i]);
-      }
-    };
-
-    for (var i = 0; i < promises.length; i += 1) {
-      _loop(i);
-    }
-  };
-});
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/unsafe-html.js
-function unsafe_html_toConsumableArray(arr) { return unsafe_html_arrayWithoutHoles(arr) || unsafe_html_iterableToArray(arr) || unsafe_html_unsupportedIterableToArray(arr) || unsafe_html_nonIterableSpread(); }
-
-function unsafe_html_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function unsafe_html_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return unsafe_html_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return unsafe_html_arrayLikeToArray(o, minLen); }
-
-function unsafe_html_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function unsafe_html_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return unsafe_html_arrayLikeToArray(arr); }
-
-function unsafe_html_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-var unsafeHTML = directive(function (value) {
-  return function (part) {
-    if (!(part instanceof NodeTemplatePart)) return;
-    var template = document.createElement('template');
-    template.innerHTML = value;
-    var fragment = document.importNode(template.content, true);
-    part.replace.apply(part, unsafe_html_toConsumableArray(fragment.childNodes));
-  };
-});
-// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/index.js
-
-
-
-
-// CONCATENATED MODULE: ./app/components/circuit_dropzone_component/circuitDropzoneElement.ts
-var _templateObject,_class,_class2,_descriptor,_descriptor2,_descriptor3,_descriptor4,_templateObject2;function _initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circuitDropzoneElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circuitDropzoneElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circuitDropzoneElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circuitDropzoneElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circuitDropzoneElement_defineProperties(Constructor,staticProps);return Constructor;}function circuitDropzoneElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circuitDropzoneElement_setPrototypeOf(subClass,superClass);}function circuitDropzoneElement_createSuper(Derived){var hasNativeReflectConstruct=circuitDropzoneElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circuitDropzoneElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circuitDropzoneElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circuitDropzoneElement_possibleConstructorReturn(this,result);};}function circuitDropzoneElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circuitDropzoneElement_assertThisInitialized(self);}function circuitDropzoneElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circuitDropzoneElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circuitDropzoneElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circuitDropzoneElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circuitDropzoneElement_construct(Class,arguments,circuitDropzoneElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circuitDropzoneElement_setPrototypeOf(Wrapper,Class);};return circuitDropzoneElement_wrapNativeSuper(Class);}function circuitDropzoneElement_construct(Parent,args,Class){if(circuitDropzoneElement_isNativeReflectConstruct()){circuitDropzoneElement_construct=Reflect.construct;}else{circuitDropzoneElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circuitDropzoneElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circuitDropzoneElement_construct.apply(null,arguments);}function circuitDropzoneElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circuitDropzoneElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circuitDropzoneElement_setPrototypeOf(o,p){circuitDropzoneElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circuitDropzoneElement_setPrototypeOf(o,p);}function circuitDropzoneElement_getPrototypeOf(o){circuitDropzoneElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circuitDropzoneElement_getPrototypeOf(o);}function _applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function _initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function _taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var wires=html(_templateObject||(_templateObject=_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-left\"\n    x1=\"0\"\n    y1=\"50\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-right\"\n    x1=\"50\"\n    y1=\"50\"\n    x2=\"100\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg> "])));// @ts-ignore
-var circuitDropzoneElement_CircuitDropzoneElement=controller(_class=(_class2=/*#__PURE__*/function(_HTMLElement){circuitDropzoneElement_inherits(CircuitDropzoneElement,_HTMLElement);var _super=circuitDropzoneElement_createSuper(CircuitDropzoneElement);function CircuitDropzoneElement(){var _this;circuitDropzoneElement_classCallCheck(this,CircuitDropzoneElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));_initializerDefineProperty(_this,"wireTop",_descriptor,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"wireBottom",_descriptor2,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"body",_descriptor3,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"draggable",_descriptor4,circuitDropzoneElement_assertThisInitialized(_this));return _this;}circuitDropzoneElement_createClass(CircuitDropzoneElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(_templateObject2||(_templateObject2=_taggedTemplateLiteral(["<style>\n          #body {\n            position: relative;\n            height: 2rem;\n            width: 3rem;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," ","\"\n          data-target=\"circuit-dropzone.body\"\n        >\n          ","\n          <slot></slot>\n        </div>"])),this.wireTopClassString,this.wireBottomClassString,wires),this.shadowRoot);}},{key:"wireTopClassString",get:function get(){return this.wireTop?"wire-top":"";}},{key:"wireBottomClassString",get:function get(){return this.wireBottom?"wire-bottom":"";}}]);return CircuitDropzoneElement;}(/*#__PURE__*/circuitDropzoneElement_wrapNativeSuper(HTMLElement)),(_descriptor=_applyDecoratedDescriptor(_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor2=_applyDecoratedDescriptor(_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor3=_applyDecoratedDescriptor(_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor4=_applyDecoratedDescriptor(_class2.prototype,"draggable",[target],{configurable:true,enumerable:true,writable:true,initializer:null})),_class2))||_class;
-// CONCATENATED MODULE: ./app/components/circuit_step_component/circuitStepElement.ts
-var circuitStepElement_class,circuitStepElement_class2,circuitStepElement_descriptor,circuitStepElement_descriptor2,circuitStepElement_descriptor3,circuitStepElement_descriptor4,circuitStepElement_templateObject;function circuitStepElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function circuitStepElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circuitStepElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circuitStepElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circuitStepElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circuitStepElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circuitStepElement_defineProperties(Constructor,staticProps);return Constructor;}function circuitStepElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circuitStepElement_setPrototypeOf(subClass,superClass);}function circuitStepElement_createSuper(Derived){var hasNativeReflectConstruct=circuitStepElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circuitStepElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circuitStepElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circuitStepElement_possibleConstructorReturn(this,result);};}function circuitStepElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circuitStepElement_assertThisInitialized(self);}function circuitStepElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circuitStepElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circuitStepElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circuitStepElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circuitStepElement_construct(Class,arguments,circuitStepElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circuitStepElement_setPrototypeOf(Wrapper,Class);};return circuitStepElement_wrapNativeSuper(Class);}function circuitStepElement_construct(Parent,args,Class){if(circuitStepElement_isNativeReflectConstruct()){circuitStepElement_construct=Reflect.construct;}else{circuitStepElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circuitStepElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circuitStepElement_construct.apply(null,arguments);}function circuitStepElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circuitStepElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circuitStepElement_setPrototypeOf(o,p){circuitStepElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circuitStepElement_setPrototypeOf(o,p);}function circuitStepElement_getPrototypeOf(o){circuitStepElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circuitStepElement_getPrototypeOf(o);}function circuitStepElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function circuitStepElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var circuitStepElement_CircuitStepElement=controller(circuitStepElement_class=(circuitStepElement_class2=/*#__PURE__*/function(_HTMLElement){circuitStepElement_inherits(CircuitStepElement,_HTMLElement);var _super=circuitStepElement_createSuper(CircuitStepElement);function CircuitStepElement(){var _this;circuitStepElement_classCallCheck(this,CircuitStepElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));circuitStepElement_initializerDefineProperty(_this,"dropzones",circuitStepElement_descriptor,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"controlGates",circuitStepElement_descriptor2,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"swapGates",circuitStepElement_descriptor3,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"controllableGates",circuitStepElement_descriptor4,circuitStepElement_assertThisInitialized(_this));return _this;}circuitStepElement_createClass(CircuitStepElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"update",value:function update(){render(html(circuitStepElement_templateObject||(circuitStepElement_templateObject=circuitStepElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: column;\n          }\n\n          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n            margin-top: 1rem;\n          }\n        </style>\n\n        <div id=\"body\">\n          <slot></slot>\n        </div>"]))),this.shadowRoot);}},{key:"bit",value:function bit(gate){var dropzoneEl=gate.parentElement;if(dropzoneEl===null){throw new Error("Dropzone not found");}return this.dropzones.indexOf(dropzoneEl);}}]);return CircuitStepElement;}(/*#__PURE__*/circuitStepElement_wrapNativeSuper(HTMLElement)),(circuitStepElement_descriptor=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"dropzones",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor2=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"controlGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor3=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"swapGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor4=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"controllableGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),circuitStepElement_class2))||circuitStepElement_class;
-// CONCATENATED MODULE: ./app/components/quantum_circuit_component/quantumCircuitElement.ts
-var quantumCircuitElement_class,quantumCircuitElement_class2,quantumCircuitElement_descriptor,quantumCircuitElement_descriptor2,quantumCircuitElement_descriptor3,quantumCircuitElement_templateObject;function quantumCircuitElement_createForOfIteratorHelper(o,allowArrayLike){var it=typeof Symbol!=="undefined"&&o[Symbol.iterator]||o["@@iterator"];if(!it){if(Array.isArray(o)||(it=quantumCircuitElement_unsupportedIterableToArray(o))||allowArrayLike&&o&&typeof o.length==="number"){if(it)o=it;var i=0;var F=function F(){};return{s:F,n:function n(){if(i>=o.length)return{done:true};return{done:false,value:o[i++]};},e:function e(_e){throw _e;},f:F};}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion=true,didErr=false,err;return{s:function s(){it=it.call(o);},n:function n(){var step=it.next();normalCompletion=step.done;return step;},e:function e(_e2){didErr=true;err=_e2;},f:function f(){try{if(!normalCompletion&&it["return"]!=null)it["return"]();}finally{if(didErr)throw err;}}};}function quantumCircuitElement_unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return quantumCircuitElement_arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(o);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return quantumCircuitElement_arrayLikeToArray(o,minLen);}function quantumCircuitElement_arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function quantumCircuitElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function quantumCircuitElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function quantumCircuitElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function quantumCircuitElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function quantumCircuitElement_createClass(Constructor,protoProps,staticProps){if(protoProps)quantumCircuitElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)quantumCircuitElement_defineProperties(Constructor,staticProps);return Constructor;}function quantumCircuitElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)quantumCircuitElement_setPrototypeOf(subClass,superClass);}function quantumCircuitElement_createSuper(Derived){var hasNativeReflectConstruct=quantumCircuitElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=quantumCircuitElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=quantumCircuitElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return quantumCircuitElement_possibleConstructorReturn(this,result);};}function quantumCircuitElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return quantumCircuitElement_assertThisInitialized(self);}function quantumCircuitElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function quantumCircuitElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;quantumCircuitElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!quantumCircuitElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return quantumCircuitElement_construct(Class,arguments,quantumCircuitElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return quantumCircuitElement_setPrototypeOf(Wrapper,Class);};return quantumCircuitElement_wrapNativeSuper(Class);}function quantumCircuitElement_construct(Parent,args,Class){if(quantumCircuitElement_isNativeReflectConstruct()){quantumCircuitElement_construct=Reflect.construct;}else{quantumCircuitElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)quantumCircuitElement_setPrototypeOf(instance,Class.prototype);return instance;};}return quantumCircuitElement_construct.apply(null,arguments);}function quantumCircuitElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function quantumCircuitElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function quantumCircuitElement_setPrototypeOf(o,p){quantumCircuitElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return quantumCircuitElement_setPrototypeOf(o,p);}function quantumCircuitElement_getPrototypeOf(o){quantumCircuitElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return quantumCircuitElement_getPrototypeOf(o);}function quantumCircuitElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function quantumCircuitElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var quantumCircuitElement_QuantumCircuitElement=controller(quantumCircuitElement_class=(quantumCircuitElement_class2=/*#__PURE__*/function(_HTMLElement){quantumCircuitElement_inherits(QuantumCircuitElement,_HTMLElement);var _super=quantumCircuitElement_createSuper(QuantumCircuitElement);function QuantumCircuitElement(){var _this;quantumCircuitElement_classCallCheck(this,QuantumCircuitElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));quantumCircuitElement_initializerDefineProperty(_this,"json",quantumCircuitElement_descriptor,quantumCircuitElement_assertThisInitialized(_this));quantumCircuitElement_initializerDefineProperty(_this,"body",quantumCircuitElement_descriptor2,quantumCircuitElement_assertThisInitialized(_this));quantumCircuitElement_initializerDefineProperty(_this,"circuitSteps",quantumCircuitElement_descriptor3,quantumCircuitElement_assertThisInitialized(_this));return _this;}quantumCircuitElement_createClass(QuantumCircuitElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-json"&&oldValue!==newValue&&this.body){this.body.innerHTML="";this.body.append(this.circuitStepFragment);this.updateConnections();}}},{key:"update",value:function update(){render(html(quantumCircuitElement_templateObject||(quantumCircuitElement_templateObject=quantumCircuitElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: row;\n          }\n        </style>\n\n        <div id=\"body\" data-target=\"quantum-circuit.body\">\n          <slot></slot>\n          ","\n        </div>"])),this.circuitStepFragment),this.shadowRoot);this.updateConnections();}},{key:"circuitStepFragment",get:function get(){var frag=document.createDocumentFragment();if(this.json==="")return frag;var jsonData=JSON.parse(this.json);var _iterator=quantumCircuitElement_createForOfIteratorHelper(jsonData.cols),_step;try{for(_iterator.s();!(_step=_iterator.n()).done;){var step=_step.value;var circuitStep=document.createElement("circuit-step");circuitStep.setAttribute("data-targets","quantum-circuit.circuitSteps");var _iterator2=quantumCircuitElement_createForOfIteratorHelper(step),_step2;try{for(_iterator2.s();!(_step2=_iterator2.n()).done;){var instruction=_step2.value;var dropzone=document.createElement("circuit-dropzone");dropzone.setAttribute("data-targets","circuit-step.dropzones");switch(true){case /^\|0>$/.test(instruction):{var writeGate=document.createElement("write-gate");writeGate.setAttribute("data-value","0");dropzone.append(writeGate);break;}case /^\|1>$/.test(instruction):{var _writeGate=document.createElement("write-gate");_writeGate.setAttribute("data-value","1");dropzone.append(_writeGate);break;}case /^H$/.test(instruction):{var hGate=document.createElement("h-gate");hGate.setAttribute("data-targets","circuit-step.controllableGates");hGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(hGate);break;}case /^X$/.test(instruction):{var xGate=document.createElement("x-gate");xGate.setAttribute("data-targets","circuit-step.controllableGates");xGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(xGate);break;}case /^Y$/.test(instruction):{var yGate=document.createElement("y-gate");yGate.setAttribute("data-targets","circuit-step.controllableGates");yGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(yGate);break;}case /^Z$/.test(instruction):{var zGate=document.createElement("z-gate");zGate.setAttribute("data-targets","circuit-step.controllableGates");zGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(zGate);break;}case /^P$/.test(instruction):{var phaseGate=document.createElement("phase-gate");phaseGate.setAttribute("data-targets","circuit-step.controllableGates");phaseGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(phaseGate);break;}case /^P\((.+)\)$/.test(instruction):{var _phaseGate=document.createElement("phase-gate");_phaseGate.setAttribute("data-targets","circuit-step.controllableGates");_phaseGate.setAttribute("data-target","circuit-dropzone.draggable");_phaseGate.setAttribute("data-phi",RegExp.$1);dropzone.append(_phaseGate);break;}case /^X\^½$/.test(instruction):{var rootNotGate=document.createElement("root-not-gate");rootNotGate.setAttribute("data-targets","circuit-step.controllableGates");rootNotGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rootNotGate);break;}case /^Rx$/.test(instruction):{var rxGate=document.createElement("rx-gate");rxGate.setAttribute("data-targets","circuit-step.controllableGates");rxGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rxGate);break;}case /^Rx\((.+)\)$/.test(instruction):{var _rxGate=document.createElement("rx-gate");_rxGate.setAttribute("data-targets","circuit-step.controllableGates");_rxGate.setAttribute("data-target","circuit-dropzone.draggable");_rxGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_rxGate);break;}case /^Ry$/.test(instruction):{var ryGate=document.createElement("ry-gate");ryGate.setAttribute("data-targets","circuit-step.controllableGates");ryGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(ryGate);break;}case /^Ry\((.+)\)$/.test(instruction):{var _ryGate=document.createElement("ry-gate");_ryGate.setAttribute("data-targets","circuit-step.controllableGates");_ryGate.setAttribute("data-target","circuit-dropzone.draggable");_ryGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_ryGate);break;}case /^Rz$/.test(instruction):{var rzGate=document.createElement("rz-gate");rzGate.setAttribute("data-targets","circuit-step.controllableGates");rzGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rzGate);break;}case /^Rz\((.+)\)$/.test(instruction):{var _rzGate=document.createElement("rz-gate");_rzGate.setAttribute("data-targets","circuit-step.controllableGates");_rzGate.setAttribute("data-target","circuit-dropzone.draggable");_rzGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_rzGate);break;}case /^Swap$/.test(instruction):{var swapGate=document.createElement("swap-gate");swapGate.setAttribute("data-targets","circuit-step.swapGates circuit-step.controllableGates");swapGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(swapGate);break;}case /^•$/.test(instruction):{var controlGate=document.createElement("control-gate");controlGate.setAttribute("data-targets","circuit-step.controlGates");controlGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(controlGate);break;}case /^Bloch$/.test(instruction):{var blochDisplay=document.createElement("bloch-display");dropzone.append(blochDisplay);break;}case /^Measure$/.test(instruction):{var measureGate=document.createElement("measurement-gate");dropzone.append(measureGate);break;}default:}circuitStep.append(dropzone);}}catch(err){_iterator2.e(err);}finally{_iterator2.f();}frag.append(circuitStep);}}catch(err){_iterator.e(err);}finally{_iterator.f();}return frag;}},{key:"updateConnections",value:function updateConnections(){var _iterator3=quantumCircuitElement_createForOfIteratorHelper(this.circuitSteps),_step3;try{var _loop=function _loop(){var circuitStep=_step3.value;if(circuitStep.controlGates.length===1&&circuitStep.controllableGates.length===0){circuitStep.controlGates[0].disable();}if(circuitStep.swapGates.length!==2){var _iterator4=quantumCircuitElement_createForOfIteratorHelper(circuitStep.swapGates),_step4;try{for(_iterator4.s();!(_step4=_iterator4.n()).done;){var swapGate=_step4.value;swapGate.disable();}}catch(err){_iterator4.e(err);}finally{_iterator4.f();}}if(circuitStep.controlGates.length===0)return"continue";var _iterator5=quantumCircuitElement_createForOfIteratorHelper(circuitStep.controllableGates),_step5;try{var _loop2=function _loop2(){var controllableGate=_step5.value;controllableGate.wireTop=circuitStep.controlGates.some(function(each){return circuitStep.bit(each)<circuitStep.bit(controllableGate);})||circuitStep.controllableGates.some(function(each){return circuitStep.bit(each)<circuitStep.bit(controllableGate);});controllableGate.wireBottom=circuitStep.controlGates.some(function(each){return circuitStep.bit(each)>circuitStep.bit(controllableGate);})||circuitStep.controllableGates.some(function(each){return circuitStep.bit(each)>circuitStep.bit(controllableGate);});};for(_iterator5.s();!(_step5=_iterator5.n()).done;){_loop2();}}catch(err){_iterator5.e(err);}finally{_iterator5.f();}var _iterator6=quantumCircuitElement_createForOfIteratorHelper(circuitStep.controlGates),_step6;try{var _loop3=function _loop3(){var controlGate=_step6.value;controlGate.wireTop=circuitStep.controllableGates.some(function(each){return circuitStep.bit(controlGate)>circuitStep.bit(each);})||circuitStep.controlGates.some(function(each){return circuitStep.bit(controlGate)>circuitStep.bit(each);});controlGate.wireBottom=circuitStep.controllableGates.some(function(each){return circuitStep.bit(controlGate)<circuitStep.bit(each);})||circuitStep.controlGates.some(function(each){return circuitStep.bit(controlGate)<circuitStep.bit(each);});};for(_iterator6.s();!(_step6=_iterator6.n()).done;){_loop3();}}catch(err){_iterator6.e(err);}finally{_iterator6.f();}var _iterator7=quantumCircuitElement_createForOfIteratorHelper(circuitStep.dropzones),_step7;try{for(_iterator7.s();!(_step7=_iterator7.n()).done;){var dropzone=_step7.value;if(dropzone.draggable)continue;var bits=circuitStep.controlGates.map(function(each){return circuitStep.bit(each);}).concat(circuitStep.controllableGates.map(function(each){return circuitStep.bit(each);}));var minBit=bits.sort()[0];var maxBit=bits.sort().slice(-1)[0];if(minBit<circuitStep.dropzones.indexOf(dropzone)&&circuitStep.dropzones.indexOf(dropzone)<maxBit){dropzone.wireTop=true;dropzone.wireBottom=true;}}}catch(err){_iterator7.e(err);}finally{_iterator7.f();}};for(_iterator3.s();!(_step3=_iterator3.n()).done;){var _ret=_loop();if(_ret==="continue")continue;}}catch(err){_iterator3.e(err);}finally{_iterator3.f();}}}]);return QuantumCircuitElement;}(/*#__PURE__*/quantumCircuitElement_wrapNativeSuper(HTMLElement)),(quantumCircuitElement_descriptor=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"json",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),quantumCircuitElement_descriptor2=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),quantumCircuitElement_descriptor3=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"circuitSteps",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),quantumCircuitElement_class2))||quantumCircuitElement_class;
-// EXTERNAL MODULE: ./node_modules/tippy.js/dist/tippy.esm.js + 52 modules
-var tippy_esm = __webpack_require__(6);
-
-// CONCATENATED MODULE: ./app/components/bloch_display_component/blochDisplayElement.ts
-var blochDisplayElement_class,blochDisplayElement_class2,blochDisplayElement_descriptor,blochDisplayElement_descriptor2,blochDisplayElement_descriptor3,blochDisplayElement_descriptor4,_descriptor5,_descriptor6,_descriptor7,_descriptor8,_descriptor9,_descriptor10,_descriptor11,_descriptor12,blochDisplayElement_templateObject,blochDisplayElement_templateObject2,_templateObject3,_templateObject4;function blochDisplayElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function blochDisplayElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function blochDisplayElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function blochDisplayElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function blochDisplayElement_createClass(Constructor,protoProps,staticProps){if(protoProps)blochDisplayElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)blochDisplayElement_defineProperties(Constructor,staticProps);return Constructor;}function blochDisplayElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)blochDisplayElement_setPrototypeOf(subClass,superClass);}function blochDisplayElement_createSuper(Derived){var hasNativeReflectConstruct=blochDisplayElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=blochDisplayElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=blochDisplayElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return blochDisplayElement_possibleConstructorReturn(this,result);};}function blochDisplayElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return blochDisplayElement_assertThisInitialized(self);}function blochDisplayElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function blochDisplayElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;blochDisplayElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!blochDisplayElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return blochDisplayElement_construct(Class,arguments,blochDisplayElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return blochDisplayElement_setPrototypeOf(Wrapper,Class);};return blochDisplayElement_wrapNativeSuper(Class);}function blochDisplayElement_construct(Parent,args,Class){if(blochDisplayElement_isNativeReflectConstruct()){blochDisplayElement_construct=Reflect.construct;}else{blochDisplayElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)blochDisplayElement_setPrototypeOf(instance,Class.prototype);return instance;};}return blochDisplayElement_construct.apply(null,arguments);}function blochDisplayElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function blochDisplayElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function blochDisplayElement_setPrototypeOf(o,p){blochDisplayElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return blochDisplayElement_setPrototypeOf(o,p);}function blochDisplayElement_getPrototypeOf(o){blochDisplayElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return blochDisplayElement_getPrototypeOf(o);}function blochDisplayElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function blochDisplayElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var blochDisplayElement_BlochDisplayElement=controller(blochDisplayElement_class=(blochDisplayElement_class2=/*#__PURE__*/function(_HTMLElement){blochDisplayElement_inherits(BlochDisplayElement,_HTMLElement);var _super=blochDisplayElement_createSuper(BlochDisplayElement);function BlochDisplayElement(){var _this;blochDisplayElement_classCallCheck(this,BlochDisplayElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));blochDisplayElement_initializerDefineProperty(_this,"body",blochDisplayElement_descriptor,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorLine",blochDisplayElement_descriptor2,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorEnd",blochDisplayElement_descriptor3,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vector",blochDisplayElement_descriptor4,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorEndCircles",_descriptor5,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"size",_descriptor6,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"x",_descriptor7,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"y",_descriptor8,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"z",_descriptor9,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggable",_descriptor10,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggableSource",_descriptor11,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggableShadow",_descriptor12,blochDisplayElement_assertThisInitialized(_this));return _this;}blochDisplayElement_createClass(BlochDisplayElement,[{key:"grab",value:function grab(event){var _this$parentElement;var customEvent=new CustomEvent("grabDraggable",{detail:event,bubbles:true});(_this$parentElement=this.parentElement)===null||_this$parentElement===void 0?void 0:_this$parentElement.dispatchEvent(customEvent);}},{key:"drop",value:function drop(event){var _this$parentElement2;var customEvent=new CustomEvent("dropDraggable",{detail:event,bubbles:true});(_this$parentElement2=this.parentElement)===null||_this$parentElement2===void 0?void 0:_this$parentElement2.dispatchEvent(customEvent);}},{key:"showPopup",value:function showPopup(){var content;var placement;if(this.isCircuitDraggable()){placement="auto";content=this.blochInspectorPopupContent();}else{placement="right";var descriptionHeader=this.descriptionHeader();if(descriptionHeader===null)return;content=descriptionHeader;}var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:placement,theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"blochInspectorPopupContent",value:function blochInspectorPopupContent(){var content=document.createDocumentFragment();render(html(blochDisplayElement_templateObject||(blochDisplayElement_templateObject=blochDisplayElement_taggedTemplateLiteral(["\n        <div class=\"bloch-display__inspector\">\n          <header>\n            <h1>Local State</h1>\n          </header>\n\n          <section>\n            r:\n            <span class=\"bloch-display__inspector-d\"\n              >","</span\n            >, \u03D5:\n            <span class=\"bloch-display__inspector-phi\"\n              >","</span\n            >, \u03B8:\n            <span class=\"bloch-display__inspector-theta\"\n              >","</span\n            >\n          </section>\n          <section>\n            x:\n            <span class=\"bloch-display__inspector-x\"\n              >","</span\n            >, y:\n            <span class=\"bloch-display__inspector-y\"\n              >","</span\n            >, z:\n            <span class=\"bloch-display__inspector-z\"\n              >","</span\n            >\n          </section>\n        </div>\n      "])),this.forceSigned(this.d),this.forceSigned(this.phi,2),this.forceSigned(this.theta,2),this.forceSigned(this.x),this.forceSigned(this.y),this.forceSigned(this.z)),content);return content;}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();this.updateBlochVector();}},{key:"disconnectedCallback",value:function disconnectedCallback(){var instance=this._tippy;instance===null||instance===void 0?void 0:instance.destroy();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(!this.body)return;if(oldValue===newValue)return;if(name==="data-draggable-source"){this.body.classList.toggle("draggable-source");return;}if(name==="data-draggable-shadow"){this.body.classList.toggle("draggable-shadow");return;}if(newValue===null)return;if(name==="data-x")this.x=parseFloat(newValue);if(name==="data-y")this.y=parseFloat(newValue);if(name==="data-z")this.z=parseFloat(newValue);this.d=this.vectorLength();this.phi=this.calculatePhi();this.theta=this.calculateTheta();this.updateBlochVector();}},{key:"update",value:function update(){this.addEventListener("mouseenter",this.showPopup);this.addEventListener("mousedown",this.grab);this.addEventListener("mouseup",this.drop);this.d=this.vectorLength();this.phi=this.calculatePhi();this.theta=this.calculateTheta();var vectorLineRect=function vectorLineRect(degree){return html(blochDisplayElement_templateObject2||(blochDisplayElement_templateObject2=blochDisplayElement_taggedTemplateLiteral(["<div\n        class=\"vector-line-rect\"\n        style=\"transform: rotateY(","deg)\"\n      ></div>"])),degree);};var vectorEndCircle=function vectorEndCircle(degree,axis){return html(_templateObject3||(_templateObject3=blochDisplayElement_taggedTemplateLiteral(["<div\n        class=\"vector-end-circle\"\n        style=\"transform: rotate","(","deg)\"\n        data-targets=\"bloch-display.vectorEndCircles\"\n      ></div>"])),axis,degree);};render(html(_templateObject4||(_templateObject4=blochDisplayElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #background {\n            border-radius: 9999px;\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #sphere-border {\n            box-sizing: border-box;\n            border-style: solid;\n            border-radius: 9999px;\n            border-width: 2px;\n            border-color: var(--colors-hare, #afafaf);\n            background-color: rgba(67, 192, 0, 0.1);\n          }\n\n          #body.size-xs #sphere-border {\n            border-width: 1px;\n          }\n\n          #sphere-lines {\n            width: 100%;\n            height: 100%;\n            stroke: currentColor;\n            color: var(--colors-hare, #afafaf);\n          }\n\n          #perspective {\n            position: relative;\n            width: 100%;\n            height: 100%;\n            perspective-origin: top right;\n          }\n\n          #body.size-xs #perspective {\n            perspective: 2rem;\n          }\n\n          #body.size-sm #perspective {\n            perspective: 3rem;\n          }\n\n          #body.size-base #perspective {\n            perspective: 4rem;\n          }\n\n          #body.size-lg #perspective {\n            perspective: 5rem;\n          }\n\n          #body.size-xl #perspective {\n            perspective: 6rem;\n          }\n\n          #vector {\n            position: relative;\n            width: 100%;\n            height: 100%;\n            transform-origin: center;\n            transform-style: preserve-3d;\n          }\n\n          #vector-line {\n            position: absolute;\n            width: 100%;\n            height: 0;\n            bottom: 50%;\n          }\n\n          .vector-line-rect {\n            position: absolute;\n            left: 0px;\n            right: 0px;\n            background-color: var(--colors-eel, #4b4b4b);\n            margin-left: auto;\n            margin-right: auto;\n            transform-origin: bottom;\n            height: 100%;\n            width: 2px;\n          }\n\n          #vector-end {\n            position: absolute;\n            width: 100%;\n          }\n\n          .vector-end-circle {\n            position: absolute;\n            left: 0px;\n            right: 0px;\n            background-color: var(--colors-cardinal, #ff4b4b);\n            margin-left: auto;\n            margin-right: auto;\n            border-radius: 9999px;\n            height: 6px;\n            width: 6px;\n          }\n\n          #body.size-xs .vector-end-circle {\n            height: 4px;\n            width: 4px;\n          }\n\n          #body.size-lg .vector-end-circle,\n          #body.size-xl .vector-end-circle {\n            height: 8px;\n            width: 8px;\n          }\n\n          #body[data-d=\"0\"] .vector-end-circle {\n            background-color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          .absolute {\n            position: absolute;\n          }\n\n          .inset-0 {\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"bloch-display.body\"\n          data-d=\"","\"\n        >\n          <div id=\"background\" class=\"absolute inset-0\"></div>\n          <div id=\"sphere-border\" class=\"absolute inset-0\">\n            <svg\n              id=\"sphere-lines\"\n              class=\"absolute inset-0\"\n              viewBox=\"0 0 48 48\"\n              fill=\"none\"\n              stroke-width=\"1\"\n            >\n              <line x1=\"0%\" y1=\"50%\" x2=\"100%\" y2=\"50%\" />\n              <line x1=\"50%\" y1=\"0%\" x2=\"50%\" y2=\"100%\" />\n              <line x1=\"32%\" y1=\"70%\" x2=\"68%\" y2=\"30%\" />\n              <ellipse cx=\"50%\" cy=\"50%\" rx=\"18%\" ry=\"50%\" />\n              <ellipse cx=\"50%\" cy=\"50%\" rx=\"50%\" ry=\"18%\" />\n            </svg>\n            <div class=\"absolute inset-0\">\n              <div id=\"perspective\">\n                <div id=\"vector\" data-target=\"bloch-display.vector\">\n                  <div id=\"vector-line\" data-target=\"bloch-display.vectorLine\">\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                    ","\n                  </div>\n\n                  <div id=\"vector-end\" data-target=\"bloch-display.vectorEnd\">\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>"])),this.classString,this.d,vectorLineRect(0),vectorLineRect(20),vectorLineRect(40),vectorLineRect(60),vectorLineRect(80),vectorLineRect(100),vectorLineRect(120),vectorLineRect(140),vectorLineRect(160),vectorEndCircle(0,"Y"),vectorEndCircle(20,"Y"),vectorEndCircle(40,"Y"),vectorEndCircle(60,"Y"),vectorEndCircle(80,"Y"),vectorEndCircle(100,"Y"),vectorEndCircle(120,"Y"),vectorEndCircle(140,"Y"),vectorEndCircle(160,"Y"),vectorEndCircle(90,"X")),this.shadowRoot);}},{key:"updateBlochVector",value:function updateBlochVector(){var vectorEndCircleWidth=this.vectorEndCircles[0].offsetWidth;this.vectorLine.style.height="calc(".concat(100*this.d/2,"% - ").concat(vectorEndCircleWidth/2,"px)");this.vectorEnd.style.bottom="calc(50% + ".concat(100*this.d/2,"% + ").concat(vectorEndCircleWidth/2,"px)");if(this.d!==0){this.vector.style.transform="rotateY(".concat(this.phi,"deg) rotateX(").concat(-this.theta,"deg)");}}},{key:"d",get:function get(){var dataD=this.getAttribute("data-d");if(dataD===null)throw new Error("data-d not set");return parseFloat(dataD);},set:function set(value){var _this$body;this.setAttribute("data-d",value.toString());(_this$body=this.body)===null||_this$body===void 0?void 0:_this$body.setAttribute("data-d",value.toString());}},{key:"vectorLength",value:function vectorLength(){return parseFloat(Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z).toFixed(4));}},{key:"phi",get:function get(){var dataPhi=this.getAttribute("data-phi");if(dataPhi===null)throw new Error("data-phi not set");return parseFloat(dataPhi);},set:function set(value){this.setAttribute("data-phi",value.toString());}},{key:"calculatePhi",value:function calculatePhi(){return Math.atan2(this.y,this.x)*180/Math.PI;}},{key:"theta",get:function get(){var dataTheta=this.getAttribute("data-theta");if(dataTheta===null)throw new Error("data-theta not set");return parseFloat(dataTheta);},set:function set(value){this.setAttribute("data-theta",value.toString());}},{key:"calculateTheta",value:function calculateTheta(){var θ=Math.max(0,Math.PI/2-Math.atan2(this.z,Math.sqrt(this.y*this.y+this.x*this.x)));return 180*θ/Math.PI;}},{key:"forceSigned",value:function forceSigned(value){var digits=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return(value>=0?"+":"")+value.toFixed(digits);}},{key:"classString",get:function get(){var klass=[];if(this.draggable)klass.push("draggable");if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}},{key:"isCircuitDraggable",value:function isCircuitDraggable(){if(this.parentElement===null)return false;return this.parentElement.tagName==="CIRCUIT-DROPZONE"||// FIXME: dropzone を web component 化した後に消す
-this.parentElement.classList.contains("dropzone");}}]);return BlochDisplayElement;}(/*#__PURE__*/blochDisplayElement_wrapNativeSuper(HTMLElement)),(blochDisplayElement_descriptor=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor2=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorLine",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor3=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorEnd",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor4=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vector",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor5=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorEndCircles",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor6=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),_descriptor7=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"x",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor8=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"y",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor9=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"z",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor10=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor11=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor12=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),blochDisplayElement_class2))||blochDisplayElement_class;
-// CONCATENATED MODULE: ./app/components/control_gate_component/controlGateElement.ts
-var controlGateElement_templateObject,controlGateElement_templateObject2,controlGateElement_class,controlGateElement_class2,controlGateElement_descriptor,controlGateElement_descriptor2,controlGateElement_descriptor3,controlGateElement_descriptor4,controlGateElement_descriptor5,controlGateElement_descriptor6,controlGateElement_descriptor7,controlGateElement_descriptor8,controlGateElement_descriptor9,controlGateElement_descriptor10,controlGateElement_descriptor11,controlGateElement_templateObject3;function controlGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function controlGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function controlGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function controlGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)controlGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)controlGateElement_defineProperties(Constructor,staticProps);return Constructor;}function controlGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)controlGateElement_setPrototypeOf(subClass,superClass);}function controlGateElement_createSuper(Derived){var hasNativeReflectConstruct=controlGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=controlGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=controlGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return controlGateElement_possibleConstructorReturn(this,result);};}function controlGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return controlGateElement_assertThisInitialized(self);}function controlGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function controlGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;controlGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!controlGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return controlGateElement_construct(Class,arguments,controlGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return controlGateElement_setPrototypeOf(Wrapper,Class);};return controlGateElement_wrapNativeSuper(Class);}function controlGateElement_construct(Parent,args,Class){if(controlGateElement_isNativeReflectConstruct()){controlGateElement_construct=Reflect.construct;}else{controlGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)controlGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return controlGateElement_construct.apply(null,arguments);}function controlGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function controlGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function controlGateElement_setPrototypeOf(o,p){controlGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return controlGateElement_setPrototypeOf(o,p);}function controlGateElement_getPrototypeOf(o){controlGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return controlGateElement_getPrototypeOf(o);}function controlGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function controlGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function controlGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var verticalWires=html(controlGateElement_templateObject||(controlGateElement_templateObject=controlGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var controlDotIcon=html(controlGateElement_templateObject2||(controlGateElement_templateObject2=controlGateElement_taggedTemplateLiteral(["\n  <svg\n    id=\"icon\"\n    width=\"48\"\n    height=\"48\"\n    viewBox=\"0 0 48 48\"\n    fill=\"none\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n  >\n    <circle cx=\"24\" cy=\"24\" r=\"8\" fill=\"currentColor\" />\n  </svg>\n"])));var controlGateElement_ControlGateElement=controller(controlGateElement_class=(controlGateElement_class2=/*#__PURE__*/function(_HTMLElement){controlGateElement_inherits(ControlGateElement,_HTMLElement);var _super=controlGateElement_createSuper(ControlGateElement);function ControlGateElement(){var _this;controlGateElement_classCallCheck(this,ControlGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));controlGateElement_initializerDefineProperty(_this,"body",controlGateElement_descriptor,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"size",controlGateElement_descriptor2,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggable",controlGateElement_descriptor3,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggableSource",controlGateElement_descriptor4,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggableShadow",controlGateElement_descriptor5,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"grabbed",controlGateElement_descriptor6,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"disabled",controlGateElement_descriptor7,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireTop",controlGateElement_descriptor8,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireTopDisabled",controlGateElement_descriptor9,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireBottom",controlGateElement_descriptor10,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireBottomDisabled",controlGateElement_descriptor11,controlGateElement_assertThisInitialized(_this));return _this;}controlGateElement_createClass(ControlGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-wire-top"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("wire-top");}else{this.body.classList.add("wire-top");}}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("wire-bottom");}else{this.body.classList.add("wire-bottom");}}if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-draggable-source"&&this.body){this.body.classList.toggle("draggable-source");}if(name==="data-draggable-shadow"&&this.body){this.body.classList.toggle("draggable-shadow");}if(name==="data-grabbed"){this.body.classList.toggle("grabbed");}}},{key:"update",value:function update(){render(html(controlGateElement_templateObject3||(controlGateElement_templateObject3=controlGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.grabbed {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #body.grabbed #wires,\n          #body.draggable-shadow #wires {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"control-gate.body\"\n          data-action=\"mouseenter:control-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,verticalWires,controlDotIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.disabled)klass.push("disabled");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return ControlGateElement;}(/*#__PURE__*/controlGateElement_wrapNativeSuper(HTMLElement)),(controlGateElement_descriptor=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),controlGateElement_descriptor2=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),controlGateElement_descriptor3=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor4=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor5=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor6=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"grabbed",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor7=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor8=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor9=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor10=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor11=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),controlGateElement_class2))||controlGateElement_class;
-// CONCATENATED MODULE: ./app/components/h_gate_component/hGateElement.ts
-var hGateElement_templateObject,hGateElement_templateObject2,hGateElement_class,hGateElement_class2,hGateElement_descriptor,hGateElement_descriptor2,hGateElement_descriptor3,hGateElement_descriptor4,hGateElement_descriptor5,hGateElement_descriptor6,hGateElement_descriptor7,hGateElement_descriptor8,hGateElement_templateObject3;function hGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function hGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function hGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function hGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)hGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)hGateElement_defineProperties(Constructor,staticProps);return Constructor;}function hGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)hGateElement_setPrototypeOf(subClass,superClass);}function hGateElement_createSuper(Derived){var hasNativeReflectConstruct=hGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=hGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=hGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return hGateElement_possibleConstructorReturn(this,result);};}function hGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return hGateElement_assertThisInitialized(self);}function hGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function hGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;hGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!hGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return hGateElement_construct(Class,arguments,hGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return hGateElement_setPrototypeOf(Wrapper,Class);};return hGateElement_wrapNativeSuper(Class);}function hGateElement_construct(Parent,args,Class){if(hGateElement_isNativeReflectConstruct()){hGateElement_construct=Reflect.construct;}else{hGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)hGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return hGateElement_construct.apply(null,arguments);}function hGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function hGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function hGateElement_setPrototypeOf(o,p){hGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return hGateElement_setPrototypeOf(o,p);}function hGateElement_getPrototypeOf(o){hGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return hGateElement_getPrototypeOf(o);}function hGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function hGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function hGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var hGateElement_verticalWires=html(hGateElement_templateObject||(hGateElement_templateObject=hGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var hIcon=html(hGateElement_templateObject2||(hGateElement_templateObject2=hGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L17 35M17 24L31 24M31 13L31 35\" />\n</svg>"])));var hGateElement_HGateElement=controller(hGateElement_class=(hGateElement_class2=/*#__PURE__*/function(_HTMLElement){hGateElement_inherits(HGateElement,_HTMLElement);var _super=hGateElement_createSuper(HGateElement);function HGateElement(){var _this;hGateElement_classCallCheck(this,HGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));hGateElement_initializerDefineProperty(_this,"body",hGateElement_descriptor,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"size",hGateElement_descriptor2,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"disabled",hGateElement_descriptor3,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireTop",hGateElement_descriptor4,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireTopDisabled",hGateElement_descriptor5,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireBottom",hGateElement_descriptor6,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireBottomDisabled",hGateElement_descriptor7,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"draggable",hGateElement_descriptor8,hGateElement_assertThisInitialized(_this));return _this;}hGateElement_createClass(HGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(hGateElement_templateObject3||(hGateElement_templateObject3=hGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"h-gate.body\"\n          data-action=\"mouseenter:h-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,hGateElement_verticalWires,hIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.disabled)klass.push("disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return HGateElement;}(/*#__PURE__*/hGateElement_wrapNativeSuper(HTMLElement)),(hGateElement_descriptor=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),hGateElement_descriptor2=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),hGateElement_descriptor3=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor4=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor5=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor6=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor7=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor8=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),hGateElement_class2))||hGateElement_class;
-// CONCATENATED MODULE: ./app/components/measurement_gate_component/measurementGateElement.ts
-var measurementGateElement_templateObject,measurementGateElement_class,measurementGateElement_class2,measurementGateElement_descriptor,measurementGateElement_descriptor2,measurementGateElement_descriptor3,measurementGateElement_descriptor4,measurementGateElement_descriptor5,measurementGateElement_descriptor6,measurementGateElement_descriptor7,measurementGateElement_descriptor8,measurementGateElement_templateObject2;function measurementGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function measurementGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function measurementGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function measurementGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)measurementGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)measurementGateElement_defineProperties(Constructor,staticProps);return Constructor;}function measurementGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)measurementGateElement_setPrototypeOf(subClass,superClass);}function measurementGateElement_createSuper(Derived){var hasNativeReflectConstruct=measurementGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=measurementGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=measurementGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return measurementGateElement_possibleConstructorReturn(this,result);};}function measurementGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return measurementGateElement_assertThisInitialized(self);}function measurementGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function measurementGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;measurementGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!measurementGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return measurementGateElement_construct(Class,arguments,measurementGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return measurementGateElement_setPrototypeOf(Wrapper,Class);};return measurementGateElement_wrapNativeSuper(Class);}function measurementGateElement_construct(Parent,args,Class){if(measurementGateElement_isNativeReflectConstruct()){measurementGateElement_construct=Reflect.construct;}else{measurementGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)measurementGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return measurementGateElement_construct.apply(null,arguments);}function measurementGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function measurementGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function measurementGateElement_setPrototypeOf(o,p){measurementGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return measurementGateElement_setPrototypeOf(o,p);}function measurementGateElement_getPrototypeOf(o){measurementGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return measurementGateElement_getPrototypeOf(o);}function measurementGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function measurementGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function measurementGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var measurementIcon=html(measurementGateElement_templateObject||(measurementGateElement_templateObject=measurementGateElement_taggedTemplateLiteral(["\n  <svg\n    id=\"icon\"\n    width=\"48\"\n    height=\"48\"\n    viewBox=\"0 0 48 48\"\n    fill=\"none\"\n    stroke-width=\"3\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  >\n    <path d=\"M8 35A16 16 0 0 1 40 35\" fill=\"none\" />\n    <path d=\"M24.5 33L35 15\" />\n    <circle\n      cx=\"24.5\"\n      cy=\"33\"\n      r=\"1.5\"\n      fill=\"currentColor\"\n      stroke=\"currentColor\"\n    />\n  </svg>\n"])));var measurementGateElement_MeasurementGateElement=controller(measurementGateElement_class=(measurementGateElement_class2=/*#__PURE__*/function(_HTMLElement){measurementGateElement_inherits(MeasurementGateElement,_HTMLElement);var _super=measurementGateElement_createSuper(MeasurementGateElement);function MeasurementGateElement(){var _this;measurementGateElement_classCallCheck(this,MeasurementGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));measurementGateElement_initializerDefineProperty(_this,"body",measurementGateElement_descriptor,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"size",measurementGateElement_descriptor2,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"value",measurementGateElement_descriptor3,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"flag",measurementGateElement_descriptor4,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggable",measurementGateElement_descriptor5,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"grabbed",measurementGateElement_descriptor6,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggableSource",measurementGateElement_descriptor7,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggableShadow",measurementGateElement_descriptor8,measurementGateElement_assertThisInitialized(_this));return _this;}measurementGateElement_createClass(MeasurementGateElement,[{key:"grab",value:function grab(event){var _this$parentElement;var customEvent=new CustomEvent("grabDraggable",{detail:event,bubbles:true});(_this$parentElement=this.parentElement)===null||_this$parentElement===void 0?void 0:_this$parentElement.dispatchEvent(customEvent);}},{key:"drop",value:function drop(event){var _this$parentElement2;var customEvent=new CustomEvent("dropDraggable",{detail:event,bubbles:true});(_this$parentElement2=this.parentElement)===null||_this$parentElement2===void 0?void 0:_this$parentElement2.dispatchEvent(customEvent);}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-grabbed"){this.body.classList.toggle("grabbed");}if(name==="data-draggable-source"&&this.body){this.body.classList.toggle("draggable-source");}if(name==="data-draggable-shadow"&&this.body){this.body.classList.toggle("draggable-shadow");}if(name==="data-value"&&this.body){this.body.classList.remove("value-0");this.body.classList.remove("value-1");switch(newValue){case"0":this.body.classList.add("value-0");break;case"1":this.body.classList.add("value-1");break;default:}}}},{key:"update",value:function update(){this.addEventListener("mousedown",this.grab);this.addEventListener("mouseup",this.drop);render(html(measurementGateElement_templateObject2||(measurementGateElement_templateObject2=measurementGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.grabbed,\n          #body.draggable-source,\n          #body.draggable-shadow {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            color: var(--colors-superposition, #ce82ff);\n            stroke: currentColor;\n            transform: rotate(90deg);\n          }\n\n          @media (min-width: 768px) {\n            #icon {\n              transform: rotate(0deg);\n            }\n          }\n\n          #body.value-0 #icon,\n          #body.value-1 #icon {\n            color: var(--colors-swan, #e5e5e5);\n          }\n\n          #ket-label {\n            position: relative;\n            font-size: 1rem;\n            line-height: 1.5rem;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n          }\n\n          #body.value-0 #ket-label,\n          #body.value-1 #ket-label {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.value-0 #ket-label {\n            color: var(--colors-cardinal, #ff4b4b);\n          }\n\n          #body.value-0 #ket-label::after {\n            content: \"0\";\n          }\n\n          #body.value-1 #ket-label {\n            color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          #body.value-1 #ket-label::after {\n            content: \"1\";\n          }\n\n          #body::before {\n            bottom: 0;\n            color: var(--colors-wolf, #777777);\n            content: attr(data-flag) \"\";\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            font-size: 0.75rem;\n            line-height: 1rem;\n            margin-bottom: 2rem;\n            position: absolute;\n            writing-mode: horizontal-tb;\n            z-index: 10;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-flag=\"","\"\n          data-target=\"measurement-gate.body\"\n          data-action=\"mouseenter:measurement-gate#showGateDescription\"\n        >\n          ","\n          <div id=\"ket-label\"></div>\n        </div>"])),this.classString,this.flag,measurementIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.value)klass.push("value-".concat(this.value));if(this.draggable)klass.push("draggable");if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}}]);return MeasurementGateElement;}(/*#__PURE__*/measurementGateElement_wrapNativeSuper(HTMLElement)),(measurementGateElement_descriptor=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),measurementGateElement_descriptor2=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),measurementGateElement_descriptor3=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"value",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),measurementGateElement_descriptor4=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"flag",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),measurementGateElement_descriptor5=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor6=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"grabbed",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor7=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor8=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),measurementGateElement_class2))||measurementGateElement_class;
-// CONCATENATED MODULE: ./app/components/phase_gate_component/phaseGateElement.ts
-var phaseGateElement_templateObject,phaseGateElement_templateObject2,phaseGateElement_class,phaseGateElement_class2,phaseGateElement_descriptor,phaseGateElement_descriptor2,phaseGateElement_descriptor3,phaseGateElement_descriptor4,phaseGateElement_descriptor5,phaseGateElement_descriptor6,phaseGateElement_descriptor7,phaseGateElement_templateObject3;function phaseGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function phaseGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function phaseGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function phaseGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)phaseGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)phaseGateElement_defineProperties(Constructor,staticProps);return Constructor;}function phaseGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)phaseGateElement_setPrototypeOf(subClass,superClass);}function phaseGateElement_createSuper(Derived){var hasNativeReflectConstruct=phaseGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=phaseGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=phaseGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return phaseGateElement_possibleConstructorReturn(this,result);};}function phaseGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return phaseGateElement_assertThisInitialized(self);}function phaseGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function phaseGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;phaseGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!phaseGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return phaseGateElement_construct(Class,arguments,phaseGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return phaseGateElement_setPrototypeOf(Wrapper,Class);};return phaseGateElement_wrapNativeSuper(Class);}function phaseGateElement_construct(Parent,args,Class){if(phaseGateElement_isNativeReflectConstruct()){phaseGateElement_construct=Reflect.construct;}else{phaseGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)phaseGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return phaseGateElement_construct.apply(null,arguments);}function phaseGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function phaseGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function phaseGateElement_setPrototypeOf(o,p){phaseGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return phaseGateElement_setPrototypeOf(o,p);}function phaseGateElement_getPrototypeOf(o){phaseGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return phaseGateElement_getPrototypeOf(o);}function phaseGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function phaseGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function phaseGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var phaseGateElement_verticalWires=html(phaseGateElement_templateObject||(phaseGateElement_templateObject=phaseGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var phaseIcon=html(phaseGateElement_templateObject2||(phaseGateElement_templateObject2=phaseGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 24A7 7 0 1 0 31 24A7 7 0 1 0 17 24M19 34L29 13\" />\n</svg>"])));var phaseGateElement_PhaseGateElement=controller(phaseGateElement_class=(phaseGateElement_class2=/*#__PURE__*/function(_HTMLElement){phaseGateElement_inherits(PhaseGateElement,_HTMLElement);var _super=phaseGateElement_createSuper(PhaseGateElement);function PhaseGateElement(){var _this;phaseGateElement_classCallCheck(this,PhaseGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));phaseGateElement_initializerDefineProperty(_this,"body",phaseGateElement_descriptor,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"phi",phaseGateElement_descriptor2,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"disabled",phaseGateElement_descriptor3,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireTop",phaseGateElement_descriptor4,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireTopDisabled",phaseGateElement_descriptor5,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireBottom",phaseGateElement_descriptor6,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireBottomDisabled",phaseGateElement_descriptor7,phaseGateElement_assertThisInitialized(_this));return _this;}phaseGateElement_createClass(PhaseGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(phaseGateElement_templateObject3||(phaseGateElement_templateObject3=phaseGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-phi) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-phi) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 9999px;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"phase-gate.body\"\n          data-phi=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.phi,phaseGateElement_verticalWires,phaseIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return PhaseGateElement;}(/*#__PURE__*/phaseGateElement_wrapNativeSuper(HTMLElement)),(phaseGateElement_descriptor=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),phaseGateElement_descriptor2=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"phi",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),phaseGateElement_descriptor3=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor4=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor5=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor6=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor7=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),phaseGateElement_class2))||phaseGateElement_class;
-// CONCATENATED MODULE: ./app/components/root_not_gate_component/rootNotGateElement.ts
-var rootNotGateElement_templateObject,rootNotGateElement_templateObject2,rootNotGateElement_class,rootNotGateElement_class2,rootNotGateElement_descriptor,rootNotGateElement_descriptor2,rootNotGateElement_descriptor3,rootNotGateElement_descriptor4,rootNotGateElement_descriptor5,rootNotGateElement_descriptor6,rootNotGateElement_templateObject3;function rootNotGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rootNotGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rootNotGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rootNotGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rootNotGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rootNotGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rootNotGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rootNotGateElement_setPrototypeOf(subClass,superClass);}function rootNotGateElement_createSuper(Derived){var hasNativeReflectConstruct=rootNotGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rootNotGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rootNotGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rootNotGateElement_possibleConstructorReturn(this,result);};}function rootNotGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rootNotGateElement_assertThisInitialized(self);}function rootNotGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rootNotGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rootNotGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rootNotGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rootNotGateElement_construct(Class,arguments,rootNotGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rootNotGateElement_setPrototypeOf(Wrapper,Class);};return rootNotGateElement_wrapNativeSuper(Class);}function rootNotGateElement_construct(Parent,args,Class){if(rootNotGateElement_isNativeReflectConstruct()){rootNotGateElement_construct=Reflect.construct;}else{rootNotGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rootNotGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rootNotGateElement_construct.apply(null,arguments);}function rootNotGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rootNotGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rootNotGateElement_setPrototypeOf(o,p){rootNotGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rootNotGateElement_setPrototypeOf(o,p);}function rootNotGateElement_getPrototypeOf(o){rootNotGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rootNotGateElement_getPrototypeOf(o);}function rootNotGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rootNotGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rootNotGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rootNotGateElement_verticalWires=html(rootNotGateElement_templateObject||(rootNotGateElement_templateObject=rootNotGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rootNotIcon=html(rootNotGateElement_templateObject2||(rootNotGateElement_templateObject2=rootNotGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 24L13 24L14 36L17 36L18 12L38 12\" />\n  <path d=\"M24 32L34 18M34 32L24 18\" />\n</svg>"])));var rootNotGateElement_RootNotGateElement=controller(rootNotGateElement_class=(rootNotGateElement_class2=/*#__PURE__*/function(_HTMLElement){rootNotGateElement_inherits(RootNotGateElement,_HTMLElement);var _super=rootNotGateElement_createSuper(RootNotGateElement);function RootNotGateElement(){var _this;rootNotGateElement_classCallCheck(this,RootNotGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rootNotGateElement_initializerDefineProperty(_this,"body",rootNotGateElement_descriptor,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"disabled",rootNotGateElement_descriptor2,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireTop",rootNotGateElement_descriptor3,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireTopDisabled",rootNotGateElement_descriptor4,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireBottom",rootNotGateElement_descriptor5,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rootNotGateElement_descriptor6,rootNotGateElement_assertThisInitialized(_this));return _this;}rootNotGateElement_createClass(RootNotGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rootNotGateElement_templateObject3||(rootNotGateElement_templateObject3=rootNotGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"root-not-gate.body\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,rootNotGateElement_verticalWires,rootNotIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RootNotGateElement;}(/*#__PURE__*/rootNotGateElement_wrapNativeSuper(HTMLElement)),(rootNotGateElement_descriptor=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rootNotGateElement_descriptor2=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor3=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor4=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor5=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor6=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rootNotGateElement_class2))||rootNotGateElement_class;
-// CONCATENATED MODULE: ./app/components/rx_gate_component/rxGateElement.ts
-var rxGateElement_templateObject,rxGateElement_templateObject2,rxGateElement_class,rxGateElement_class2,rxGateElement_descriptor,rxGateElement_descriptor2,rxGateElement_descriptor3,rxGateElement_descriptor4,rxGateElement_descriptor5,rxGateElement_descriptor6,rxGateElement_descriptor7,rxGateElement_templateObject3;function rxGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rxGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rxGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rxGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rxGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rxGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rxGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rxGateElement_setPrototypeOf(subClass,superClass);}function rxGateElement_createSuper(Derived){var hasNativeReflectConstruct=rxGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rxGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rxGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rxGateElement_possibleConstructorReturn(this,result);};}function rxGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rxGateElement_assertThisInitialized(self);}function rxGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rxGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rxGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rxGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rxGateElement_construct(Class,arguments,rxGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rxGateElement_setPrototypeOf(Wrapper,Class);};return rxGateElement_wrapNativeSuper(Class);}function rxGateElement_construct(Parent,args,Class){if(rxGateElement_isNativeReflectConstruct()){rxGateElement_construct=Reflect.construct;}else{rxGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rxGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rxGateElement_construct.apply(null,arguments);}function rxGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rxGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rxGateElement_setPrototypeOf(o,p){rxGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rxGateElement_setPrototypeOf(o,p);}function rxGateElement_getPrototypeOf(o){rxGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rxGateElement_getPrototypeOf(o);}function rxGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rxGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rxGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rxGateElement_verticalWires=html(rxGateElement_templateObject||(rxGateElement_templateObject=rxGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rxIcon=html(rxGateElement_templateObject2||(rxGateElement_templateObject2=rxGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002L24.746 35m.073-21.998L34.609 35\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var rxGateElement_RxGateElement=controller(rxGateElement_class=(rxGateElement_class2=/*#__PURE__*/function(_HTMLElement){rxGateElement_inherits(RxGateElement,_HTMLElement);var _super=rxGateElement_createSuper(RxGateElement);function RxGateElement(){var _this;rxGateElement_classCallCheck(this,RxGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rxGateElement_initializerDefineProperty(_this,"body",rxGateElement_descriptor,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"theta",rxGateElement_descriptor2,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"disabled",rxGateElement_descriptor3,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireTop",rxGateElement_descriptor4,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireTopDisabled",rxGateElement_descriptor5,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireBottom",rxGateElement_descriptor6,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rxGateElement_descriptor7,rxGateElement_assertThisInitialized(_this));return _this;}rxGateElement_createClass(RxGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rxGateElement_templateObject3||(rxGateElement_templateObject3=rxGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"rx-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,rxGateElement_verticalWires,rxIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RxGateElement;}(/*#__PURE__*/rxGateElement_wrapNativeSuper(HTMLElement)),(rxGateElement_descriptor=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rxGateElement_descriptor2=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),rxGateElement_descriptor3=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor4=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor5=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor6=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor7=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rxGateElement_class2))||rxGateElement_class;
-// CONCATENATED MODULE: ./app/components/ry_gate_component/ryGateElement.ts
-var ryGateElement_templateObject,ryGateElement_templateObject2,ryGateElement_class,ryGateElement_class2,ryGateElement_descriptor,ryGateElement_descriptor2,ryGateElement_descriptor3,ryGateElement_descriptor4,ryGateElement_descriptor5,ryGateElement_descriptor6,ryGateElement_descriptor7,ryGateElement_templateObject3;function ryGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function ryGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function ryGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function ryGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)ryGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)ryGateElement_defineProperties(Constructor,staticProps);return Constructor;}function ryGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)ryGateElement_setPrototypeOf(subClass,superClass);}function ryGateElement_createSuper(Derived){var hasNativeReflectConstruct=ryGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=ryGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=ryGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return ryGateElement_possibleConstructorReturn(this,result);};}function ryGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return ryGateElement_assertThisInitialized(self);}function ryGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function ryGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;ryGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!ryGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return ryGateElement_construct(Class,arguments,ryGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return ryGateElement_setPrototypeOf(Wrapper,Class);};return ryGateElement_wrapNativeSuper(Class);}function ryGateElement_construct(Parent,args,Class){if(ryGateElement_isNativeReflectConstruct()){ryGateElement_construct=Reflect.construct;}else{ryGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)ryGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return ryGateElement_construct.apply(null,arguments);}function ryGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function ryGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function ryGateElement_setPrototypeOf(o,p){ryGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return ryGateElement_setPrototypeOf(o,p);}function ryGateElement_getPrototypeOf(o){ryGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return ryGateElement_getPrototypeOf(o);}function ryGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function ryGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function ryGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var ryGateElement_verticalWires=html(ryGateElement_templateObject||(ryGateElement_templateObject=ryGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var ryIcon=html(ryGateElement_templateObject2||(ryGateElement_templateObject2=ryGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002l-4.967 10.927M25.03 13.002l4.613 10.927m0 0L29.676 35\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var ryGateElement_RyGateElement=controller(ryGateElement_class=(ryGateElement_class2=/*#__PURE__*/function(_HTMLElement){ryGateElement_inherits(RyGateElement,_HTMLElement);var _super=ryGateElement_createSuper(RyGateElement);function RyGateElement(){var _this;ryGateElement_classCallCheck(this,RyGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));ryGateElement_initializerDefineProperty(_this,"body",ryGateElement_descriptor,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"theta",ryGateElement_descriptor2,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"disabled",ryGateElement_descriptor3,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireTop",ryGateElement_descriptor4,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireTopDisabled",ryGateElement_descriptor5,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireBottom",ryGateElement_descriptor6,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireBottomDisabled",ryGateElement_descriptor7,ryGateElement_assertThisInitialized(_this));return _this;}ryGateElement_createClass(RyGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(ryGateElement_templateObject3||(ryGateElement_templateObject3=ryGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"ry-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,ryGateElement_verticalWires,ryIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RyGateElement;}(/*#__PURE__*/ryGateElement_wrapNativeSuper(HTMLElement)),(ryGateElement_descriptor=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),ryGateElement_descriptor2=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),ryGateElement_descriptor3=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor4=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor5=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor6=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor7=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),ryGateElement_class2))||ryGateElement_class;
-// CONCATENATED MODULE: ./app/components/rz_gate_component/rzGateElement.ts
-var rzGateElement_templateObject,rzGateElement_templateObject2,rzGateElement_class,rzGateElement_class2,rzGateElement_descriptor,rzGateElement_descriptor2,rzGateElement_descriptor3,rzGateElement_descriptor4,rzGateElement_descriptor5,rzGateElement_descriptor6,rzGateElement_descriptor7,rzGateElement_templateObject3;function rzGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rzGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rzGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rzGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rzGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rzGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rzGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rzGateElement_setPrototypeOf(subClass,superClass);}function rzGateElement_createSuper(Derived){var hasNativeReflectConstruct=rzGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rzGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rzGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rzGateElement_possibleConstructorReturn(this,result);};}function rzGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rzGateElement_assertThisInitialized(self);}function rzGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rzGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rzGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rzGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rzGateElement_construct(Class,arguments,rzGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rzGateElement_setPrototypeOf(Wrapper,Class);};return rzGateElement_wrapNativeSuper(Class);}function rzGateElement_construct(Parent,args,Class){if(rzGateElement_isNativeReflectConstruct()){rzGateElement_construct=Reflect.construct;}else{rzGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rzGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rzGateElement_construct.apply(null,arguments);}function rzGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rzGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rzGateElement_setPrototypeOf(o,p){rzGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rzGateElement_setPrototypeOf(o,p);}function rzGateElement_getPrototypeOf(o){rzGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rzGateElement_getPrototypeOf(o);}function rzGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rzGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rzGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rzGateElement_verticalWires=html(rzGateElement_templateObject||(rzGateElement_templateObject=rzGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rzIcon=html(rzGateElement_templateObject2||(rzGateElement_templateObject2=rzGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002L24.746 35m.073-21.998h9.79M24.747 35h10.074\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var rzGateElement_RzGateElement=controller(rzGateElement_class=(rzGateElement_class2=/*#__PURE__*/function(_HTMLElement){rzGateElement_inherits(RzGateElement,_HTMLElement);var _super=rzGateElement_createSuper(RzGateElement);function RzGateElement(){var _this;rzGateElement_classCallCheck(this,RzGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rzGateElement_initializerDefineProperty(_this,"body",rzGateElement_descriptor,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"theta",rzGateElement_descriptor2,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"disabled",rzGateElement_descriptor3,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireTop",rzGateElement_descriptor4,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireTopDisabled",rzGateElement_descriptor5,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireBottom",rzGateElement_descriptor6,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rzGateElement_descriptor7,rzGateElement_assertThisInitialized(_this));return _this;}rzGateElement_createClass(RzGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rzGateElement_templateObject3||(rzGateElement_templateObject3=rzGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"rz-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,rzGateElement_verticalWires,rzIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RzGateElement;}(/*#__PURE__*/rzGateElement_wrapNativeSuper(HTMLElement)),(rzGateElement_descriptor=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rzGateElement_descriptor2=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),rzGateElement_descriptor3=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor4=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor5=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor6=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor7=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rzGateElement_class2))||rzGateElement_class;
-// CONCATENATED MODULE: ./app/components/swap_gate_component/swapGateElement.ts
-var swapGateElement_templateObject,swapGateElement_templateObject2,swapGateElement_class,swapGateElement_class2,swapGateElement_descriptor,swapGateElement_descriptor2,swapGateElement_descriptor3,swapGateElement_descriptor4,swapGateElement_descriptor5,swapGateElement_descriptor6,swapGateElement_descriptor7,swapGateElement_descriptor8,swapGateElement_templateObject3;function swapGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function swapGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function swapGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function swapGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)swapGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)swapGateElement_defineProperties(Constructor,staticProps);return Constructor;}function swapGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)swapGateElement_setPrototypeOf(subClass,superClass);}function swapGateElement_createSuper(Derived){var hasNativeReflectConstruct=swapGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=swapGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=swapGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return swapGateElement_possibleConstructorReturn(this,result);};}function swapGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return swapGateElement_assertThisInitialized(self);}function swapGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function swapGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;swapGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!swapGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return swapGateElement_construct(Class,arguments,swapGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return swapGateElement_setPrototypeOf(Wrapper,Class);};return swapGateElement_wrapNativeSuper(Class);}function swapGateElement_construct(Parent,args,Class){if(swapGateElement_isNativeReflectConstruct()){swapGateElement_construct=Reflect.construct;}else{swapGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)swapGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return swapGateElement_construct.apply(null,arguments);}function swapGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function swapGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function swapGateElement_setPrototypeOf(o,p){swapGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return swapGateElement_setPrototypeOf(o,p);}function swapGateElement_getPrototypeOf(o){swapGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return swapGateElement_getPrototypeOf(o);}function swapGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function swapGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function swapGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var swapGateElement_verticalWires=html(swapGateElement_templateObject||(swapGateElement_templateObject=swapGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var swapIcon=html(swapGateElement_templateObject2||(swapGateElement_templateObject2=swapGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  viewBox=\"0 0 24 24\"\n>\n  <path d=\"M6 18L18 6M6 6l12 12\"></path>\n</svg>"])));var swapGateElement_SwapGateElement=controller(swapGateElement_class=(swapGateElement_class2=/*#__PURE__*/function(_HTMLElement){swapGateElement_inherits(SwapGateElement,_HTMLElement);var _super=swapGateElement_createSuper(SwapGateElement);function SwapGateElement(){var _this;swapGateElement_classCallCheck(this,SwapGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));swapGateElement_initializerDefineProperty(_this,"body",swapGateElement_descriptor,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"size",swapGateElement_descriptor2,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"disabled",swapGateElement_descriptor3,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireTop",swapGateElement_descriptor4,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireTopDisabled",swapGateElement_descriptor5,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireBottom",swapGateElement_descriptor6,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireBottomDisabled",swapGateElement_descriptor7,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"draggable",swapGateElement_descriptor8,swapGateElement_assertThisInitialized(_this));return _this;}swapGateElement_createClass(SwapGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(!this.body)return;if(oldValue===newValue)return;if(name==="data-disabled"){this.body.classList.toggle("disabled");}if(name==="data-wire-top"){this.body.classList.toggle("wire-top");}if(name==="data-wire-bottom"){this.body.classList.toggle("wire-bottom");}}},{key:"update",value:function update(){render(html(swapGateElement_templateObject3||(swapGateElement_templateObject3=swapGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"swap-gate.body\"\n          data-action=\"mouseenter:swap-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,swapGateElement_verticalWires,swapIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.disabled)klass.push("disabled");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return SwapGateElement;}(/*#__PURE__*/swapGateElement_wrapNativeSuper(HTMLElement)),(swapGateElement_descriptor=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),swapGateElement_descriptor2=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),swapGateElement_descriptor3=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor4=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor5=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor6=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor7=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor8=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),swapGateElement_class2))||swapGateElement_class;
-// CONCATENATED MODULE: ./app/components/write_gate_component/writeGateElement.ts
-var writeGateElement_templateObject,writeGateElement_class,writeGateElement_class2,writeGateElement_descriptor,writeGateElement_descriptor2,writeGateElement_descriptor3,writeGateElement_descriptor4,writeGateElement_templateObject2;function writeGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function writeGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function writeGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function writeGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)writeGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)writeGateElement_defineProperties(Constructor,staticProps);return Constructor;}function writeGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)writeGateElement_setPrototypeOf(subClass,superClass);}function writeGateElement_createSuper(Derived){var hasNativeReflectConstruct=writeGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=writeGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=writeGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return writeGateElement_possibleConstructorReturn(this,result);};}function writeGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return writeGateElement_assertThisInitialized(self);}function writeGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function writeGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;writeGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!writeGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return writeGateElement_construct(Class,arguments,writeGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return writeGateElement_setPrototypeOf(Wrapper,Class);};return writeGateElement_wrapNativeSuper(Class);}function writeGateElement_construct(Parent,args,Class){if(writeGateElement_isNativeReflectConstruct()){writeGateElement_construct=Reflect.construct;}else{writeGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)writeGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return writeGateElement_construct.apply(null,arguments);}function writeGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function writeGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function writeGateElement_setPrototypeOf(o,p){writeGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return writeGateElement_setPrototypeOf(o,p);}function writeGateElement_getPrototypeOf(o){writeGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return writeGateElement_getPrototypeOf(o);}function writeGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function writeGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function writeGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var ketIcon=html(writeGateElement_templateObject||(writeGateElement_templateObject=writeGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <polygon points=\"9 40, 9 10, 34 10, 40 24, 34 40\" stroke=\"#fff\" fill=\"#fff\" />\n  <path d=\"M9 10L9 40M34 10L40 24L34 40\" />\n</svg>"])));var writeGateElement_WriteGateElement=controller(writeGateElement_class=(writeGateElement_class2=/*#__PURE__*/function(_HTMLElement){writeGateElement_inherits(WriteGateElement,_HTMLElement);var _super=writeGateElement_createSuper(WriteGateElement);function WriteGateElement(){var _this;writeGateElement_classCallCheck(this,WriteGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));writeGateElement_initializerDefineProperty(_this,"body",writeGateElement_descriptor,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"size",writeGateElement_descriptor2,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"value",writeGateElement_descriptor3,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"draggable",writeGateElement_descriptor4,writeGateElement_assertThisInitialized(_this));return _this;}writeGateElement_createClass(WriteGateElement,[{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){try{this.attachShadow({mode:"open"});}catch(InvalidStateError){// NOP
-}this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-value"&&this.body){this.body.classList.remove("value-0");this.body.classList.remove("value-1");switch(newValue){case"0":this.body.classList.add("value-0");break;case"1":this.body.classList.add("value-1");break;default:}}}},{key:"update",value:function update(){render(html(writeGateElement_templateObject2||(writeGateElement_templateObject2=writeGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-eel, #4b4b4b);\n            stroke: currentColor;\n            transform: rotate(90deg);\n          }\n\n          @media (min-width: 768px) {\n            #icon {\n              transform: rotate(0deg);\n            }\n          }\n\n          #ket-label {\n            position: relative;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n          }\n\n          #body.size-xs #ket-label {\n            font-size: 0.75rem;\n            line-height: 1rem;\n          }\n\n          #body.size-sm #ket-label {\n            font-size: 0.875rem;\n            line-height: 1.25rem;\n          }\n\n          #body.size-base #ket-label {\n            font-size: 1rem;\n            line-height: 1.5rem;\n          }\n\n          #body.size-lg #ket-label {\n            font-size: 1.125rem;\n            line-height: 1.75rem;\n          }\n\n          #body.size-xl #ket-label {\n            font-size: 1.25rem;\n            line-height: 1.75rem;\n          }\n\n          #body.value-0 #ket-label,\n          #body.value-1 #ket-label {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.value-0 #ket-label {\n            color: var(--colors-cardinal, #ff4b4b);\n          }\n\n          #body.value-0 #ket-label::after {\n            content: \"0\";\n          }\n\n          #body.value-1 #ket-label {\n            color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          #body.value-1 #ket-label::after {\n            content: \"1\";\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"write-gate.body\"\n          data-action=\"mouseenter:write-gate#showGateDescription\"\n        >\n          ","\n          <div id=\"ket-label\"></div>\n        </div>"])),this.classString,ketIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.value)klass.push("value-".concat(this.value));if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return WriteGateElement;}(/*#__PURE__*/writeGateElement_wrapNativeSuper(HTMLElement)),(writeGateElement_descriptor=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),writeGateElement_descriptor2=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),writeGateElement_descriptor3=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"value",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"0";}}),writeGateElement_descriptor4=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),writeGateElement_class2))||writeGateElement_class;
-// CONCATENATED MODULE: ./app/components/x_gate_component/xGateElement.ts
-var xGateElement_templateObject,xGateElement_templateObject2,xGateElement_class,xGateElement_class2,xGateElement_descriptor,xGateElement_descriptor2,xGateElement_descriptor3,xGateElement_descriptor4,xGateElement_descriptor5,xGateElement_descriptor6,xGateElement_descriptor7,xGateElement_descriptor8,xGateElement_templateObject3;function xGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function xGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function xGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function xGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)xGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)xGateElement_defineProperties(Constructor,staticProps);return Constructor;}function xGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)xGateElement_setPrototypeOf(subClass,superClass);}function xGateElement_createSuper(Derived){var hasNativeReflectConstruct=xGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=xGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=xGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return xGateElement_possibleConstructorReturn(this,result);};}function xGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return xGateElement_assertThisInitialized(self);}function xGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function xGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;xGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!xGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return xGateElement_construct(Class,arguments,xGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return xGateElement_setPrototypeOf(Wrapper,Class);};return xGateElement_wrapNativeSuper(Class);}function xGateElement_construct(Parent,args,Class){if(xGateElement_isNativeReflectConstruct()){xGateElement_construct=Reflect.construct;}else{xGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)xGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return xGateElement_construct.apply(null,arguments);}function xGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function xGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function xGateElement_setPrototypeOf(o,p){xGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return xGateElement_setPrototypeOf(o,p);}function xGateElement_getPrototypeOf(o){xGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return xGateElement_getPrototypeOf(o);}function xGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function xGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function xGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var xGateElement_verticalWires=html(xGateElement_templateObject||(xGateElement_templateObject=xGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var xIcon=html(xGateElement_templateObject2||(xGateElement_templateObject2=xGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <line x1=\"50%\" y1=\"28%\" x2=\"50%\" y2=\"72%\" />\n  <line x1=\"28%\" y1=\"50%\" x2=\"72%\" y2=\"50%\" />\n</svg>"])));var xGateElement_XGateElement=controller(xGateElement_class=(xGateElement_class2=/*#__PURE__*/function(_HTMLElement){xGateElement_inherits(XGateElement,_HTMLElement);var _super=xGateElement_createSuper(XGateElement);function XGateElement(){var _this;xGateElement_classCallCheck(this,XGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));xGateElement_initializerDefineProperty(_this,"body",xGateElement_descriptor,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"size",xGateElement_descriptor2,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"disabled",xGateElement_descriptor3,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireTop",xGateElement_descriptor4,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireTopDisabled",xGateElement_descriptor5,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireBottom",xGateElement_descriptor6,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireBottomDisabled",xGateElement_descriptor7,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"draggable",xGateElement_descriptor8,xGateElement_assertThisInitialized(_this));return _this;}xGateElement_createClass(XGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(xGateElement_templateObject3||(xGateElement_templateObject3=xGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 9999px;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"x-gate.body\"\n          data-action=\"mouseenter:x-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,xGateElement_verticalWires,xIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.disabled)klass.push("disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return XGateElement;}(/*#__PURE__*/xGateElement_wrapNativeSuper(HTMLElement)),(xGateElement_descriptor=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),xGateElement_descriptor2=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),xGateElement_descriptor3=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor4=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor5=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor6=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor7=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor8=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),xGateElement_class2))||xGateElement_class;
-// CONCATENATED MODULE: ./app/components/y_gate_component/yGateElement.ts
-var yGateElement_templateObject,yGateElement_templateObject2,yGateElement_class,yGateElement_class2,yGateElement_descriptor,yGateElement_descriptor2,yGateElement_descriptor3,yGateElement_descriptor4,yGateElement_descriptor5,yGateElement_descriptor6,yGateElement_templateObject3;function yGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function yGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function yGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function yGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)yGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)yGateElement_defineProperties(Constructor,staticProps);return Constructor;}function yGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)yGateElement_setPrototypeOf(subClass,superClass);}function yGateElement_createSuper(Derived){var hasNativeReflectConstruct=yGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=yGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=yGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return yGateElement_possibleConstructorReturn(this,result);};}function yGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return yGateElement_assertThisInitialized(self);}function yGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function yGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;yGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!yGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return yGateElement_construct(Class,arguments,yGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return yGateElement_setPrototypeOf(Wrapper,Class);};return yGateElement_wrapNativeSuper(Class);}function yGateElement_construct(Parent,args,Class){if(yGateElement_isNativeReflectConstruct()){yGateElement_construct=Reflect.construct;}else{yGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)yGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return yGateElement_construct.apply(null,arguments);}function yGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function yGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function yGateElement_setPrototypeOf(o,p){yGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return yGateElement_setPrototypeOf(o,p);}function yGateElement_getPrototypeOf(o){yGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return yGateElement_getPrototypeOf(o);}function yGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function yGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function yGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var yGateElement_verticalWires=html(yGateElement_templateObject||(yGateElement_templateObject=yGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var yIcon=html(yGateElement_templateObject2||(yGateElement_templateObject2=yGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L24 24L31 13M24 24L24 35\" />\n</svg>"])));var yGateElement_YGateElement=controller(yGateElement_class=(yGateElement_class2=/*#__PURE__*/function(_HTMLElement){yGateElement_inherits(YGateElement,_HTMLElement);var _super=yGateElement_createSuper(YGateElement);function YGateElement(){var _this;yGateElement_classCallCheck(this,YGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));yGateElement_initializerDefineProperty(_this,"body",yGateElement_descriptor,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"disabled",yGateElement_descriptor2,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireTop",yGateElement_descriptor3,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireTopDisabled",yGateElement_descriptor4,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireBottom",yGateElement_descriptor5,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireBottomDisabled",yGateElement_descriptor6,yGateElement_assertThisInitialized(_this));return _this;}yGateElement_createClass(YGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(yGateElement_templateObject3||(yGateElement_templateObject3=yGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"y-gate.body\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,yGateElement_verticalWires,yIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return YGateElement;}(/*#__PURE__*/yGateElement_wrapNativeSuper(HTMLElement)),(yGateElement_descriptor=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),yGateElement_descriptor2=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor3=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor4=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor5=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor6=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),yGateElement_class2))||yGateElement_class;
-// CONCATENATED MODULE: ./app/components/z_gate_component/zGateElement.ts
-var zGateElement_templateObject,zGateElement_templateObject2,zGateElement_class,zGateElement_class2,zGateElement_descriptor,zGateElement_descriptor2,zGateElement_descriptor3,zGateElement_descriptor4,zGateElement_descriptor5,zGateElement_descriptor6,zGateElement_templateObject3;function zGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function zGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function zGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function zGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)zGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)zGateElement_defineProperties(Constructor,staticProps);return Constructor;}function zGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)zGateElement_setPrototypeOf(subClass,superClass);}function zGateElement_createSuper(Derived){var hasNativeReflectConstruct=zGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=zGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=zGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return zGateElement_possibleConstructorReturn(this,result);};}function zGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return zGateElement_assertThisInitialized(self);}function zGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function zGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;zGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!zGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return zGateElement_construct(Class,arguments,zGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return zGateElement_setPrototypeOf(Wrapper,Class);};return zGateElement_wrapNativeSuper(Class);}function zGateElement_construct(Parent,args,Class){if(zGateElement_isNativeReflectConstruct()){zGateElement_construct=Reflect.construct;}else{zGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)zGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return zGateElement_construct.apply(null,arguments);}function zGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function zGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function zGateElement_setPrototypeOf(o,p){zGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return zGateElement_setPrototypeOf(o,p);}function zGateElement_getPrototypeOf(o){zGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return zGateElement_getPrototypeOf(o);}function zGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function zGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function zGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var zGateElement_verticalWires=html(zGateElement_templateObject||(zGateElement_templateObject=zGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var zIcon=html(zGateElement_templateObject2||(zGateElement_templateObject2=zGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L31 13L17 35L31 35\" />\n</svg>"])));var zGateElement_ZGateElement=controller(zGateElement_class=(zGateElement_class2=/*#__PURE__*/function(_HTMLElement){zGateElement_inherits(ZGateElement,_HTMLElement);var _super=zGateElement_createSuper(ZGateElement);function ZGateElement(){var _this;zGateElement_classCallCheck(this,ZGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));zGateElement_initializerDefineProperty(_this,"body",zGateElement_descriptor,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"disabled",zGateElement_descriptor2,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireTop",zGateElement_descriptor3,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireTopDisabled",zGateElement_descriptor4,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireBottom",zGateElement_descriptor5,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireBottomDisabled",zGateElement_descriptor6,zGateElement_assertThisInitialized(_this));return _this;}zGateElement_createClass(ZGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(zGateElement_templateObject3||(zGateElement_templateObject3=zGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"z-gate.body\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,zGateElement_verticalWires,zIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return ZGateElement;}(/*#__PURE__*/zGateElement_wrapNativeSuper(HTMLElement)),(zGateElement_descriptor=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),zGateElement_descriptor2=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor3=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor4=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor5=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor6=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),zGateElement_class2))||zGateElement_class;
-// CONCATENATED MODULE: ./app/components/circle_notation_component/circleNotationElement.ts
-var circleNotationElement_class,circleNotationElement_class2,circleNotationElement_descriptor,circleNotationElement_descriptor2,circleNotationElement_descriptor3,circleNotationElement_descriptor4,circleNotationElement_descriptor5,circleNotationElement_templateObject;function circleNotationElement_createForOfIteratorHelper(o,allowArrayLike){var it=typeof Symbol!=="undefined"&&o[Symbol.iterator]||o["@@iterator"];if(!it){if(Array.isArray(o)||(it=circleNotationElement_unsupportedIterableToArray(o))||allowArrayLike&&o&&typeof o.length==="number"){if(it)o=it;var i=0;var F=function F(){};return{s:F,n:function n(){if(i>=o.length)return{done:true};return{done:false,value:o[i++]};},e:function e(_e2){throw _e2;},f:F};}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion=true,didErr=false,err;return{s:function s(){it=it.call(o);},n:function n(){var step=it.next();normalCompletion=step.done;return step;},e:function e(_e3){didErr=true;err=_e3;},f:function f(){try{if(!normalCompletion&&it["return"]!=null)it["return"]();}finally{if(didErr)throw err;}}};}function _slicedToArray(arr,i){return _arrayWithHoles(arr)||_iterableToArrayLimit(arr,i)||circleNotationElement_unsupportedIterableToArray(arr,i)||_nonIterableRest();}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function circleNotationElement_unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return circleNotationElement_arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(o);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return circleNotationElement_arrayLikeToArray(o,minLen);}function circleNotationElement_arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function _iterableToArrayLimit(arr,i){var _i=arr&&(typeof Symbol!=="undefined"&&arr[Symbol.iterator]||arr["@@iterator"]);if(_i==null)return;var _arr=[];var _n=true;var _d=false;var _s,_e;try{for(_i=_i.call(arr);!(_n=(_s=_i.next()).done);_n=true){_arr.push(_s.value);if(i&&_arr.length===i)break;}}catch(err){_d=true;_e=err;}finally{try{if(!_n&&_i["return"]!=null)_i["return"]();}finally{if(_d)throw _e;}}return _arr;}function _arrayWithHoles(arr){if(Array.isArray(arr))return arr;}function circleNotationElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function circleNotationElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circleNotationElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circleNotationElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circleNotationElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circleNotationElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circleNotationElement_defineProperties(Constructor,staticProps);return Constructor;}function circleNotationElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circleNotationElement_setPrototypeOf(subClass,superClass);}function circleNotationElement_createSuper(Derived){var hasNativeReflectConstruct=circleNotationElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circleNotationElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circleNotationElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circleNotationElement_possibleConstructorReturn(this,result);};}function circleNotationElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circleNotationElement_assertThisInitialized(self);}function circleNotationElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circleNotationElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circleNotationElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circleNotationElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circleNotationElement_construct(Class,arguments,circleNotationElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circleNotationElement_setPrototypeOf(Wrapper,Class);};return circleNotationElement_wrapNativeSuper(Class);}function circleNotationElement_construct(Parent,args,Class){if(circleNotationElement_isNativeReflectConstruct()){circleNotationElement_construct=Reflect.construct;}else{circleNotationElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circleNotationElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circleNotationElement_construct.apply(null,arguments);}function circleNotationElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circleNotationElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circleNotationElement_setPrototypeOf(o,p){circleNotationElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circleNotationElement_setPrototypeOf(o,p);}function circleNotationElement_getPrototypeOf(o){circleNotationElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circleNotationElement_getPrototypeOf(o);}function circleNotationElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function circleNotationElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var circleNotationElement_CircleNotationElement=controller(circleNotationElement_class=(circleNotationElement_class2=/*#__PURE__*/function(_HTMLElement){circleNotationElement_inherits(CircleNotationElement,_HTMLElement);var _super=circleNotationElement_createSuper(CircleNotationElement);function CircleNotationElement(){var _this;circleNotationElement_classCallCheck(this,CircleNotationElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));circleNotationElement_initializerDefineProperty(_this,"size",circleNotationElement_descriptor,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"magnitudes",circleNotationElement_descriptor2,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"phases",circleNotationElement_descriptor3,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"body",circleNotationElement_descriptor4,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"qubitCircles",circleNotationElement_descriptor5,circleNotationElement_assertThisInitialized(_this));return _this;}circleNotationElement_createClass(CircleNotationElement,[{key:"setMagnitude",value:function setMagnitude(qubitCircleIndex,magnitude){var magInt=Math.round(magnitude*100);var magRounded=magInt<10?magInt===0?0:10:Math.round(magInt/10)*10;this.qubitCircles[qubitCircleIndex].setAttribute("data-magnitude",magRounded.toString());}},{key:"setPhase",value:function setPhase(qubitCircleIndex,phase){var phaseRounded=Math.round(phase/10)*10;if(phaseRounded<0)phaseRounded=360+phaseRounded;this.qubitCircles[qubitCircleIndex].setAttribute("data-phase",phaseRounded.toString());}},{key:"connectedCallback",value:function connectedCallback(){try{this.attachShadow({mode:"open"});}catch(InvalidStateError){// NOP
-}this.update();}},{key:"update",value:function update(){render(html(circleNotationElement_templateObject||(circleNotationElement_templateObject=circleNotationElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: row;\n          }\n\n          .qubit-circle {\n            position: relative;\n            height: 32px;\n            width: 32px;\n          }\n\n          #body.size-xs .qubit-circle {\n            height: 17px;\n            width: 17px;\n          }\n\n          #body.size-sm .qubit-circle {\n            height: 25px;\n            width: 25px;\n          }\n\n          #body.size-base .qubit-circle {\n            height: 32px;\n            width: 32px;\n          }\n\n          #body.size-lg .qubit-circle {\n            height: 48px;\n            width: 48px;\n          }\n\n          #body.size-xl .qubit-circle {\n            height: 64px;\n            width: 64px;\n          }\n\n          .qubit-circle__magnitude {\n            position: absolute;\n            top: 1px;\n            right: 1px;\n            bottom: 1px;\n            left: 1px;\n            border-radius: 9999px;\n            border-color: #e5e5e5;\n            border-style: solid;\n          }\n\n          #body.size-xs .qubit-circle__magnitude,\n          #body.size-sm .qubit-circle__magnitude {\n            border-width: 1px;\n          }\n\n          #body.size-base .qubit-circle__magnitude,\n          #body.size-lg .qubit-circle__magnitude,\n          #body.size-xl .qubit-circle__magnitude {\n            border-width: 2px;\n          }\n\n          .qubit-circle__magnitude::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-radius: 9999px;\n            content: \"\";\n            background-color: #1cb0f6;\n            transform: scaleX(0) scaleY(0);\n            transform-origin: center;\n          }\n\n          .qubit-circle[data-magnitude=\"10\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.1) scaleY(0.1);\n          }\n\n          .qubit-circle[data-magnitude=\"20\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.2) scaleY(0.2);\n          }\n\n          .qubit-circle[data-magnitude=\"30\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.3) scaleY(0.3);\n          }\n\n          .qubit-circle[data-magnitude=\"40\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.4) scaleY(0.4);\n          }\n\n          .qubit-circle[data-magnitude=\"50\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.5) scaleY(0.5);\n          }\n\n          .qubit-circle[data-magnitude=\"60\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.6) scaleY(0.6);\n          }\n\n          .qubit-circle[data-magnitude=\"70\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.7) scaleY(0.7);\n          }\n\n          .qubit-circle[data-magnitude=\"80\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.8) scaleY(0.8);\n          }\n\n          .qubit-circle[data-magnitude=\"90\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.9) scaleY(0.9);\n          }\n\n          .qubit-circle[data-magnitude=\"100\"]\n            > .qubit-circle__magnitude::after {\n            transform: scaleX(1) scaleY(1);\n          }\n\n          .qubit-circle__phase {\n            position: absolute;\n            top: 1px;\n            right: 1px;\n            bottom: 1px;\n            left: 1px;\n            border-radius: 9999px;\n            border-color: #777777;\n            border-style: solid;\n            transform: rotate(0deg);\n            transform-origin: center;\n          }\n\n          #body.size-xs .qubit-circle__phase,\n          #body.size-sm .qubit-circle__phase {\n            border-width: 1px;\n          }\n\n          #body.size-base .qubit-circle__phase,\n          #body.size-lg .qubit-circle__phase,\n          #body.size-xl .qubit-circle__phase {\n            border-width: 2px;\n          }\n\n          .qubit-circle:not([data-magnitude]) > .qubit-circle__phase,\n          .qubit-circle[data-magnitude=\"0\"] > .qubit-circle__phase {\n            transform: scaleX(0) scaleY(0);\n          }\n\n          .qubit-circle[data-phase=\"10\"] > .qubit-circle__phase {\n            transform: rotate(-10deg);\n          }\n\n          .qubit-circle[data-phase=\"20\"] > .qubit-circle__phase {\n            transform: rotate(-20deg);\n          }\n\n          .qubit-circle[data-phase=\"30\"] > .qubit-circle__phase {\n            transform: rotate(-30deg);\n          }\n\n          .qubit-circle[data-phase=\"40\"] > .qubit-circle__phase {\n            transform: rotate(-40deg);\n          }\n\n          .qubit-circle[data-phase=\"50\"] > .qubit-circle__phase {\n            transform: rotate(-50deg);\n          }\n\n          .qubit-circle[data-phase=\"60\"] > .qubit-circle__phase {\n            transform: rotate(-60deg);\n          }\n\n          .qubit-circle[data-phase=\"70\"] > .qubit-circle__phase {\n            transform: rotate(-70deg);\n          }\n\n          .qubit-circle[data-phase=\"80\"] > .qubit-circle__phase {\n            transform: rotate(-80deg);\n          }\n\n          .qubit-circle[data-phase=\"90\"] > .qubit-circle__phase {\n            transform: rotate(-90deg);\n          }\n\n          .qubit-circle[data-phase=\"100\"] > .qubit-circle__phase {\n            transform: rotate(-100deg);\n          }\n\n          .qubit-circle[data-phase=\"110\"] > .qubit-circle__phase {\n            transform: rotate(-110deg);\n          }\n\n          .qubit-circle[data-phase=\"120\"] > .qubit-circle__phase {\n            transform: rotate(-120deg);\n          }\n\n          .qubit-circle[data-phase=\"130\"] > .qubit-circle__phase {\n            transform: rotate(-130deg);\n          }\n\n          .qubit-circle[data-phase=\"140\"] > .qubit-circle__phase {\n            transform: rotate(-140deg);\n          }\n\n          .qubit-circle[data-phase=\"150\"] > .qubit-circle__phase {\n            transform: rotate(-150deg);\n          }\n\n          .qubit-circle[data-phase=\"160\"] > .qubit-circle__phase {\n            transform: rotate(-160deg);\n          }\n\n          .qubit-circle[data-phase=\"170\"] > .qubit-circle__phase {\n            transform: rotate(-170deg);\n          }\n\n          .qubit-circle[data-phase=\"180\"] > .qubit-circle__phase {\n            transform: rotate(-180deg);\n          }\n\n          .qubit-circle[data-phase=\"190\"] > .qubit-circle__phase {\n            transform: rotate(-190deg);\n          }\n\n          .qubit-circle[data-phase=\"200\"] > .qubit-circle__phase {\n            transform: rotate(-200deg);\n          }\n\n          .qubit-circle[data-phase=\"210\"] > .qubit-circle__phase {\n            transform: rotate(-210deg);\n          }\n\n          .qubit-circle[data-phase=\"220\"] > .qubit-circle__phase {\n            transform: rotate(-220deg);\n          }\n\n          .qubit-circle[data-phase=\"230\"] > .qubit-circle__phase {\n            transform: rotate(-230deg);\n          }\n\n          .qubit-circle[data-phase=\"240\"] > .qubit-circle__phase {\n            transform: rotate(-240deg);\n          }\n\n          .qubit-circle[data-phase=\"250\"] > .qubit-circle__phase {\n            transform: rotate(-250deg);\n          }\n\n          .qubit-circle[data-phase=\"260\"] > .qubit-circle__phase {\n            transform: rotate(-260deg);\n          }\n\n          .qubit-circle[data-phase=\"270\"] > .qubit-circle__phase {\n            transform: rotate(-270deg);\n          }\n\n          .qubit-circle[data-phase=\"280\"] > .qubit-circle__phase {\n            transform: rotate(-280deg);\n          }\n\n          .qubit-circle[data-phase=\"290\"] > .qubit-circle__phase {\n            transform: rotate(-290deg);\n          }\n\n          .qubit-circle[data-phase=\"300\"] > .qubit-circle__phase {\n            transform: rotate(-300deg);\n          }\n\n          .qubit-circle[data-phase=\"310\"] > .qubit-circle__phase {\n            transform: rotate(-310deg);\n          }\n\n          .qubit-circle[data-phase=\"320\"] > .qubit-circle__phase {\n            transform: rotate(-320deg);\n          }\n\n          .qubit-circle[data-phase=\"330\"] > .qubit-circle__phase {\n            transform: rotate(-330deg);\n          }\n\n          .qubit-circle[data-phase=\"340\"] > .qubit-circle__phase {\n            transform: rotate(-340deg);\n          }\n\n          .qubit-circle[data-phase=\"350\"] > .qubit-circle__phase {\n            transform: rotate(-350deg);\n          }\n\n          .qubit-circle[data-phase=\"360\"] > .qubit-circle__phase {\n            transform: rotate(-360deg);\n          }\n\n          .qubit-circle__phase::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            left: 0px;\n            background-color: #4b4b4b;\n            height: 50%;\n            margin-left: auto;\n            margin-right: auto;\n            border-bottom-right-radius: 0.25rem;\n            border-bottom-left-radius: 0.25rem;\n            content: \"\";\n          }\n\n          #body.size-xs .qubit-circle__phase::after,\n          #body.size-sm .qubit-circle__phase::after {\n            width: 1px;\n          }\n\n          #body.size-base .qubit-circle__phase::after,\n          #body.size-lg .qubit-circle__phase::after,\n          #body.size-xl .qubit-circle__phase::after {\n            width: 2px;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"circle-notation.body\"\n        >\n          <div class=\"qubit-circle\" data-targets=\"circle-notation.qubitCircles\">\n            <div class=\"qubit-circle__magnitude\"></div>\n            <div class=\"qubit-circle__phase\"></div>\n          </div>\n          <div class=\"qubit-circle\" data-targets=\"circle-notation.qubitCircles\">\n            <div class=\"qubit-circle__magnitude\"></div>\n            <div class=\"qubit-circle__phase\"></div>\n          </div>\n        </div>"])),this.classString),this.shadowRoot);var _iterator=circleNotationElement_createForOfIteratorHelper(this.magnitudes.split(",").entries()),_step;try{for(_iterator.s();!(_step=_iterator.n()).done;){var _ref5=_step.value;var _ref2=_slicedToArray(_ref5,2);var i=_ref2[0];var each=_ref2[1];this.setMagnitude(i,parseFloat(each));}}catch(err){_iterator.e(err);}finally{_iterator.f();}var _iterator2=circleNotationElement_createForOfIteratorHelper(this.phases.split(",").entries()),_step2;try{for(_iterator2.s();!(_step2=_iterator2.n()).done;){var _ref6=_step2.value;var _ref4=_slicedToArray(_ref6,2);var _i2=_ref4[0];var _each=_ref4[1];this.setPhase(_i2,parseFloat(_each));}}catch(err){_iterator2.e(err);}finally{_iterator2.f();}}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}}]);return CircleNotationElement;}(/*#__PURE__*/circleNotationElement_wrapNativeSuper(HTMLElement)),(circleNotationElement_descriptor=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),circleNotationElement_descriptor2=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"magnitudes",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"1.0";}}),circleNotationElement_descriptor3=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"phases",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),circleNotationElement_descriptor4=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),circleNotationElement_descriptor5=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"qubitCircles",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),circleNotationElement_class2))||circleNotationElement_class;
-// CONCATENATED MODULE: ./app/components/run_circuit_button_component/runCircuitButtonElement.ts
-var runCircuitButtonElement_templateObject,runCircuitButtonElement_templateObject2,runCircuitButtonElement_class,runCircuitButtonElement_class2,runCircuitButtonElement_descriptor,runCircuitButtonElement_templateObject3;function runCircuitButtonElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function runCircuitButtonElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function runCircuitButtonElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function runCircuitButtonElement_createClass(Constructor,protoProps,staticProps){if(protoProps)runCircuitButtonElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)runCircuitButtonElement_defineProperties(Constructor,staticProps);return Constructor;}function runCircuitButtonElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)runCircuitButtonElement_setPrototypeOf(subClass,superClass);}function runCircuitButtonElement_createSuper(Derived){var hasNativeReflectConstruct=runCircuitButtonElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=runCircuitButtonElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=runCircuitButtonElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return runCircuitButtonElement_possibleConstructorReturn(this,result);};}function runCircuitButtonElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return runCircuitButtonElement_assertThisInitialized(self);}function runCircuitButtonElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function runCircuitButtonElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;runCircuitButtonElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!runCircuitButtonElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return runCircuitButtonElement_construct(Class,arguments,runCircuitButtonElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return runCircuitButtonElement_setPrototypeOf(Wrapper,Class);};return runCircuitButtonElement_wrapNativeSuper(Class);}function runCircuitButtonElement_construct(Parent,args,Class){if(runCircuitButtonElement_isNativeReflectConstruct()){runCircuitButtonElement_construct=Reflect.construct;}else{runCircuitButtonElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)runCircuitButtonElement_setPrototypeOf(instance,Class.prototype);return instance;};}return runCircuitButtonElement_construct.apply(null,arguments);}function runCircuitButtonElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function runCircuitButtonElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function runCircuitButtonElement_setPrototypeOf(o,p){runCircuitButtonElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return runCircuitButtonElement_setPrototypeOf(o,p);}function runCircuitButtonElement_getPrototypeOf(o){runCircuitButtonElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return runCircuitButtonElement_getPrototypeOf(o);}function runCircuitButtonElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function runCircuitButtonElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function runCircuitButtonElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var reloadIcon=html(runCircuitButtonElement_templateObject||(runCircuitButtonElement_templateObject=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n    .reload-icon {\n      fill: currentColor;\n      color: rgb(255, 255, 255);\n      height: 60%;\n      width: 60%;\n    }\n\n    #button:disabled > .reload-icon {\n      display: none;\n    }\n  </style>\n\n  <svg\n    xmlns=\"http://www.w3.org/2000/svg\"\n    viewBox=\"0 0 20 20\"\n    class=\"reload-icon\"\n  >\n    <path\n      d=\"M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z\"\n    />\n  </svg>"])));var ovalLoaderIcon=html(runCircuitButtonElement_templateObject2||(runCircuitButtonElement_templateObject2=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n    .oval-loader-icon {\n      display: none;\n      height: 60%;\n      width: 60%;\n    }\n\n    #button:disabled > .oval-loader-icon {\n      stroke: currentColor;\n      color: rgb(255, 255, 255);\n      display: block;\n    }\n  </style>\n\n  <svg\n    viewBox=\"0 0 38 38\"\n    xmlns=\"http://www.w3.org/2000/svg\"\n    class=\"oval-loader-icon\"\n  >\n    <g fill=\"none\" fill-rule=\"evenodd\">\n      <g transform=\"translate(1 1)\" stroke-width=\"2\">\n        <circle stroke-opacity=\".5\" cx=\"18\" cy=\"18\" r=\"18\" />\n        <path d=\"M36 18c0-9.94-8.06-18-18-18\">\n          <animateTransform\n            attributeName=\"transform\"\n            type=\"rotate\"\n            from=\"0 18 18\"\n            to=\"360 18 18\"\n            dur=\"1s\"\n            repeatCount=\"indefinite\"\n          />\n        </path>\n      </g>\n    </g>\n  </svg>"])));var runCircuitButtonElement_RunCircuitButtonElement=controller(runCircuitButtonElement_class=(runCircuitButtonElement_class2=/*#__PURE__*/function(_HTMLElement){runCircuitButtonElement_inherits(RunCircuitButtonElement,_HTMLElement);var _super=runCircuitButtonElement_createSuper(RunCircuitButtonElement);function RunCircuitButtonElement(){var _this;runCircuitButtonElement_classCallCheck(this,RunCircuitButtonElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));runCircuitButtonElement_initializerDefineProperty(_this,"button",runCircuitButtonElement_descriptor,runCircuitButtonElement_assertThisInitialized(_this));return _this;}runCircuitButtonElement_createClass(RunCircuitButtonElement,[{key:"runSimulator",value:function runSimulator(){var _this$simulator;(_this$simulator=this.simulator)===null||_this$simulator===void 0?void 0:_this$simulator.dispatchEvent(new CustomEvent("run",{bubbles:false}));this.disable();}},{key:"disable",value:function disable(){this.button.disabled=true;}},{key:"enable",value:function enable(){this.button.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"update",value:function update(){render(html(runCircuitButtonElement_templateObject3||(runCircuitButtonElement_templateObject3=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n          #button {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            background-color: rgb(206, 130, 255);\n            border-radius: 9999px;\n            border-width: 0px;\n            cursor: pointer;\n            width: 4rem;\n            height: 4rem;\n            box-shadow: 0 0 #0000, 0 0 #0000,\n              0 10px 15px -3px rgba(0, 0, 0, 0.1),\n              0 4px 6px -2px rgba(0, 0, 0, 0.05);\n          }\n\n          #button:disabled {\n            cursor: wait;\n          }\n\n          #button:focus {\n            outline: 2px solid transparent;\n            outline-offset: 2px;\n          }\n        </style>\n\n        <button\n          id=\"button\"\n          type=\"button\"\n          data-action=\"click:run-circuit-button#runSimulator\"\n          data-target=\"run-circuit-button.button\"\n          aria-label=\"Run circuit\"\n        >\n          "," ","\n        </button>"])),reloadIcon,ovalLoaderIcon),this.shadowRoot);}},{key:"simulator",get:function get(){return document.getElementById("simulator");}}]);return RunCircuitButtonElement;}(/*#__PURE__*/runCircuitButtonElement_wrapNativeSuper(HTMLElement)),(runCircuitButtonElement_descriptor=runCircuitButtonElement_applyDecoratedDescriptor(runCircuitButtonElement_class2.prototype,"button",[target],{configurable:true,enumerable:true,writable:true,initializer:null})),runCircuitButtonElement_class2))||runCircuitButtonElement_class;
-// CONCATENATED MODULE: ./app/javascript/catalyst/index.js
-
-
-/***/ }),
-
-/***/ 6:
+/***/ 5:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7123,6 +4817,2312 @@ tippy.setDefaultProps({
 
 /***/ }),
 
+/***/ 52:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function define(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+    return obj[key];
+  }
+  try {
+    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
+    define({}, "");
+  } catch (err) {
+    define = function(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.displayName = define(
+    GeneratorFunctionPrototype,
+    toStringTagSymbol,
+    "GeneratorFunction"
+  );
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      define(prototype, method, function(arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      define(genFun, toStringTagSymbol, "GeneratorFunction");
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return PromiseImpl.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return PromiseImpl.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList),
+      PromiseImpl
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  define(Gp, toStringTagSymbol, "Generator");
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
+/***/ 54:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
+var regenerator = __webpack_require__(3);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/bind.js
+
+
+var _marked = /*#__PURE__*/regenerator_default.a.mark(bindings);
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var controllers = new WeakSet();
+/*
+ * Bind `[data-action]` elements from the DOM to their actions.
+ *
+ */
+
+function bind(controller) {
+  controllers.add(controller);
+  if (controller.shadowRoot) bindShadow(controller.shadowRoot);
+  bindElements(controller);
+  listenForBind(controller.ownerDocument);
+}
+function bindShadow(root) {
+  bindElements(root);
+  listenForBind(root);
+}
+var observers = new WeakMap();
+/**
+ * Set up observer that will make sure any actions that are dynamically
+ * injected into `el` will be bound to it's controller.
+ *
+ * This returns a Subscription object which you can call `unsubscribe()` on to
+ * stop further live updates.
+ */
+
+function listenForBind() {
+  var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
+  if (observers.has(el)) return observers.get(el);
+  var closed = false;
+  var observer = new MutationObserver(function (mutations) {
+    var _iterator = _createForOfIteratorHelper(mutations),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var mutation = _step.value;
+
+        if (mutation.type === 'attributes' && mutation.target instanceof Element) {
+          bindActions(mutation.target);
+        } else if (mutation.type === 'childList' && mutation.addedNodes.length) {
+          var _iterator2 = _createForOfIteratorHelper(mutation.addedNodes),
+              _step2;
+
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var node = _step2.value;
+
+              if (node instanceof Element) {
+                bindElements(node);
+              }
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
+  observer.observe(el, {
+    childList: true,
+    subtree: true,
+    attributeFilter: ['data-action']
+  });
+  var subscription = {
+    get closed() {
+      return closed;
+    },
+
+    unsubscribe: function unsubscribe() {
+      closed = true;
+      observers.delete(el);
+      observer.disconnect();
+    }
+  };
+  observers.set(el, subscription);
+  return subscription;
+}
+
+function bindElements(root) {
+  var _iterator3 = _createForOfIteratorHelper(root.querySelectorAll('[data-action]')),
+      _step3;
+
+  try {
+    for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+      var el = _step3.value;
+      bindActions(el);
+    } // Also bind the controller to itself
+
+  } catch (err) {
+    _iterator3.e(err);
+  } finally {
+    _iterator3.f();
+  }
+
+  if (root instanceof Element && root.hasAttribute('data-action')) {
+    bindActions(root);
+  }
+} // Bind a single function to all events to avoid anonymous closure performance penalty.
+
+
+function handleEvent(event) {
+  var el = event.currentTarget;
+
+  var _iterator4 = _createForOfIteratorHelper(bindings(el)),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var binding = _step4.value;
+
+      if (event.type === binding.type) {
+        var controller = el.closest(binding.tag);
+
+        if (controllers.has(controller) && typeof controller[binding.method] === 'function') {
+          controller[binding.method](event);
+        }
+
+        var root = el.getRootNode();
+
+        if (root instanceof ShadowRoot && controllers.has(root.host) && root.host.matches(binding.tag)) {
+          var shadowController = root.host;
+
+          if (typeof shadowController[binding.method] === 'function') {
+            shadowController[binding.method](event);
+          }
+        }
+      }
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+}
+
+function bindings(el) {
+  var _iterator5, _step5, action, eventSep, methodSep;
+
+  return regenerator_default.a.wrap(function bindings$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _iterator5 = _createForOfIteratorHelper((el.getAttribute('data-action') || '').trim().split(/\s+/));
+          _context.prev = 1;
+
+          _iterator5.s();
+
+        case 3:
+          if ((_step5 = _iterator5.n()).done) {
+            _context.next = 11;
+            break;
+          }
+
+          action = _step5.value;
+          eventSep = action.lastIndexOf(':');
+          methodSep = action.lastIndexOf('#');
+          _context.next = 9;
+          return {
+            type: action.slice(0, eventSep),
+            tag: action.slice(eventSep + 1, methodSep),
+            method: action.slice(methodSep + 1)
+          };
+
+        case 9:
+          _context.next = 3;
+          break;
+
+        case 11:
+          _context.next = 16;
+          break;
+
+        case 13:
+          _context.prev = 13;
+          _context.t0 = _context["catch"](1);
+
+          _iterator5.e(_context.t0);
+
+        case 16:
+          _context.prev = 16;
+
+          _iterator5.f();
+
+          return _context.finish(16);
+
+        case 19:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked, null, [[1, 13, 16, 19]]);
+}
+
+function bindActions(el) {
+  var _iterator6 = _createForOfIteratorHelper(bindings(el)),
+      _step6;
+
+  try {
+    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+      var binding = _step6.value;
+      el.addEventListener(binding.type, handleEvent);
+    }
+  } catch (err) {
+    _iterator6.e(err);
+  } finally {
+    _iterator6.f();
+  }
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/register.js
+/**
+ * Register the controller as a custom element.
+ *
+ * The classname is converted to a approriate tag name.
+ *
+ * Example: HelloController => hello-controller
+ */
+function register(classObject) {
+  var name = classObject.name.replace(/([A-Z]($|[a-z]))/g, '-$1').replace(/(^-|-Element$)/g, '').toLowerCase();
+
+  if (!window.customElements.get(name)) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window[classObject.name] = classObject;
+    window.customElements.define(name, classObject);
+  }
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/findtarget.js
+function findtarget_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = findtarget_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function findtarget_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return findtarget_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return findtarget_arrayLikeToArray(o, minLen); }
+
+function findtarget_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/**
+ * findTarget will run `querySelectorAll` against the given controller, plus
+ * its shadowRoot, returning any the first child that:
+ *
+ *  - Matches the selector of `[data-target~="tag.name"]` where tag is the
+ *  tagName of the given HTMLElement, and `name` is the given `name` argument.
+ *
+ *  - Closest ascendant of the element, that matches the tagname of the
+ *  controller, is the specific instance of the controller itself - in other
+ *  words it is not nested in other controllers of the same type.
+ *
+ */
+function findTarget(controller, name) {
+  var tag = controller.tagName.toLowerCase();
+
+  if (controller.shadowRoot) {
+    var _iterator = findtarget_createForOfIteratorHelper(controller.shadowRoot.querySelectorAll("[data-target~=\"".concat(tag, ".").concat(name, "\"]"))),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var el = _step.value;
+        if (!el.closest(tag)) return el;
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }
+
+  var _iterator2 = findtarget_createForOfIteratorHelper(controller.querySelectorAll("[data-target~=\"".concat(tag, ".").concat(name, "\"]"))),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var _el = _step2.value;
+      if (_el.closest(tag) === controller) return _el;
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+}
+function findTargets(controller, name) {
+  var tag = controller.tagName.toLowerCase();
+  var targets = [];
+
+  if (controller.shadowRoot) {
+    var _iterator3 = findtarget_createForOfIteratorHelper(controller.shadowRoot.querySelectorAll("[data-targets~=\"".concat(tag, ".").concat(name, "\"]"))),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var el = _step3.value;
+        if (!el.closest(tag)) targets.push(el);
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+  }
+
+  var _iterator4 = findtarget_createForOfIteratorHelper(controller.querySelectorAll("[data-targets~=\"".concat(tag, ".").concat(name, "\"]"))),
+      _step4;
+
+  try {
+    for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+      var _el2 = _step4.value;
+      if (_el2.closest(tag) === controller) targets.push(_el2);
+    }
+  } catch (err) {
+    _iterator4.e(err);
+  } finally {
+    _iterator4.f();
+  }
+
+  return targets;
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/target.js
+
+/**
+ * Target is a decorator which - when assigned to a property field on the
+ * class - will override that class field, turning it into a Getter which
+ * returns a call to `findTarget(this, key)` where `key` is the name of the
+ * property field. In other words, `@target foo` becomes a getter for
+ * `findTarget(this, 'foo')`.
+ */
+
+function target(proto, key) {
+  return Object.defineProperty(proto, key, {
+    configurable: true,
+    get: function get() {
+      return findTarget(this, key);
+    }
+  });
+}
+/**
+ * Targets is a decorator which - when assigned to a property field on the
+ * class - will override that class field, turning it into a Getter which
+ * returns a call to `findTargets(this, key)` where `key` is the name of the
+ * property field. In other words, `@targets foo` becomes a getter for
+ * `findTargets(this, 'foo')`.
+ */
+
+function targets(proto, key) {
+  return Object.defineProperty(proto, key, {
+    configurable: true,
+    get: function get() {
+      return findTargets(this, key);
+    }
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/auto-shadow-root.js
+function auto_shadow_root_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = auto_shadow_root_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function auto_shadow_root_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return auto_shadow_root_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return auto_shadow_root_arrayLikeToArray(o, minLen); }
+
+function auto_shadow_root_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function autoShadowRoot(element) {
+  var _iterator = auto_shadow_root_createForOfIteratorHelper(element.querySelectorAll('template[data-shadowroot]')),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var template = _step.value;
+
+      if (template.parentElement === element) {
+        element.attachShadow({
+          mode: template.getAttribute('data-shadowroot') === 'closed' ? 'closed' : 'open'
+        }).append(template.content.cloneNode(true));
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/attr.js
+function attr_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = attr_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function attr_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return attr_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return attr_arrayLikeToArray(o, minLen); }
+
+function attr_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var attrs = new WeakMap();
+/**
+ * Attr is a decorator which tags a property as one to be initialized via
+ * `initializeAttrs`.
+ *
+ * The signature is typed such that the property must be one of a String,
+ * Number or Boolean. This matches the behavior of `initializeAttrs`.
+ */
+
+function attr_attr(proto, key) {
+  if (!attrs.has(proto)) attrs.set(proto, []);
+  attrs.get(proto).push(key);
+}
+/**
+ * initializeAttrs is called with a set of class property names (if omitted, it
+ * will look for any properties tagged with the `@attr` decorator). With this
+ * list it defines property descriptors for each property that map to `data-*`
+ * attributes on the HTMLElement instance.
+ *
+ * It works around Native Class Property semantics - which are equivalent to
+ * calling `Object.defineProperty` on the instance upon creation, but before
+ * `constructor()` is called.
+ *
+ * If a class property is assigned to the class body, it will infer the type
+ * (using `typeof`) and define an appropriate getter/setter combo that aligns
+ * to that type. This means class properties assigned to Numbers can only ever
+ * be Numbers, assigned to Booleans can only ever be Booleans, and assigned to
+ * Strings can only ever be Strings.
+ *
+ * This is automatically called as part of `@controller`. If a class uses the
+ * `@controller` decorator it should not call this manually.
+ */
+
+function initializeAttrs(instance, names) {
+  if (!names) names = attrs.get(Object.getPrototypeOf(instance)) || [];
+
+  var _iterator = attr_createForOfIteratorHelper(names),
+      _step;
+
+  try {
+    var _loop = function _loop() {
+      var key = _step.value;
+      var value = instance[key];
+      var name = attrToAttributeName(key);
+      var descriptor = {
+        get: function get() {
+          return this.getAttribute(name) || '';
+        },
+        set: function set(newValue) {
+          this.setAttribute(name, newValue || '');
+        }
+      };
+
+      if (typeof value === 'number') {
+        descriptor = {
+          get: function get() {
+            return Number(this.getAttribute(name) || 0);
+          },
+          set: function set(newValue) {
+            this.setAttribute(name, newValue);
+          }
+        };
+      } else if (typeof value === 'boolean') {
+        descriptor = {
+          get: function get() {
+            return this.hasAttribute(name);
+          },
+          set: function set(newValue) {
+            this.toggleAttribute(name, newValue);
+          }
+        };
+      }
+
+      Object.defineProperty(instance, key, descriptor);
+
+      if (key in instance && !instance.hasAttribute(name)) {
+        descriptor.set.call(instance, value);
+      }
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+}
+
+function attrToAttributeName(name) {
+  return "data-".concat(name.replace(/([A-Z]($|[a-z]))/g, '-$1')).replace(/--/g, '-').toLowerCase();
+}
+
+function defineObservedAttributes(classObject) {
+  var observed = classObject.observedAttributes || [];
+  Object.defineProperty(classObject, 'observedAttributes', {
+    get: function get() {
+      var attrMap = attrs.get(classObject.prototype);
+      if (!attrMap) return observed;
+      return attrMap.map(attrToAttributeName).concat(observed);
+    },
+    set: function set(attributes) {
+      observed = attributes;
+    }
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/controller.js
+
+
+
+
+/**
+ * Controller is a decorator to be used over a class that extends HTMLElement.
+ * It will automatically `register()` the component in the customElement
+ * registry, as well as ensuring `bind(this)` is called on `connectedCallback`,
+ * wrapping the classes `connectedCallback` method if needed.
+ */
+
+function controller(classObject) {
+  var connect = classObject.prototype.connectedCallback;
+
+  classObject.prototype.connectedCallback = function () {
+    this.toggleAttribute('data-catalyst', true);
+    autoShadowRoot(this);
+    initializeAttrs(this);
+    bind(this);
+    if (connect) connect.call(this);
+    if (this.shadowRoot) bindShadow(this.shadowRoot);
+  };
+
+  defineObservedAttributes(classObject);
+  register(classObject);
+}
+// CONCATENATED MODULE: ./node_modules/@github/catalyst/lib/index.js
+
+
+
+
+
+
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/template-string-parser.js
+
+
+var template_string_parser_marked = /*#__PURE__*/regenerator_default.a.mark(parse);
+
+function parse(text) {
+  var value, tokenStart, open, i;
+  return regenerator_default.a.wrap(function parse$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          value = '';
+          tokenStart = 0;
+          open = false;
+          i = 0;
+
+        case 4:
+          if (!(i < text.length)) {
+            _context.next = 26;
+            break;
+          }
+
+          if (!(text[i] === '{' && text[i + 1] === '{' && text[i - 1] !== '\\' && !open)) {
+            _context.next = 15;
+            break;
+          }
+
+          open = true;
+
+          if (!value) {
+            _context.next = 10;
+            break;
+          }
+
+          _context.next = 10;
+          return {
+            type: 'string',
+            start: tokenStart,
+            end: i,
+            value: value
+          };
+
+        case 10:
+          value = '{{';
+          tokenStart = i;
+          i += 2;
+          _context.next = 22;
+          break;
+
+        case 15:
+          if (!(text[i] === '}' && text[i + 1] === '}' && text[i - 1] !== '\\' && open)) {
+            _context.next = 22;
+            break;
+          }
+
+          open = false;
+          _context.next = 19;
+          return {
+            type: 'part',
+            start: tokenStart,
+            end: i + 2,
+            value: value.slice(2).trim()
+          };
+
+        case 19:
+          value = '';
+          i += 2;
+          tokenStart = i;
+
+        case 22:
+          value += text[i] || '';
+
+        case 23:
+          i += 1;
+          _context.next = 4;
+          break;
+
+        case 26:
+          if (!value) {
+            _context.next = 29;
+            break;
+          }
+
+          _context.next = 29;
+          return {
+            type: 'string',
+            start: tokenStart,
+            end: text.length,
+            value: value
+          };
+
+        case 29:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, template_string_parser_marked);
+}
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/attribute-template-part.js
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var __classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to set private field on non-instance");
+  }
+
+  privateMap.set(receiver, value);
+  return value;
+};
+
+var __classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to get private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+};
+
+var _setter, _value;
+
+var AttributeTemplatePart = /*#__PURE__*/function () {
+  function AttributeTemplatePart(setter, expression) {
+    _classCallCheck(this, AttributeTemplatePart);
+
+    this.expression = expression;
+
+    _setter.set(this, void 0);
+
+    _value.set(this, '');
+
+    __classPrivateFieldSet(this, _setter, setter);
+
+    __classPrivateFieldGet(this, _setter).updateParent('');
+  }
+
+  _createClass(AttributeTemplatePart, [{
+    key: "attributeName",
+    get: function get() {
+      return __classPrivateFieldGet(this, _setter).attr.name;
+    }
+  }, {
+    key: "attributeNamespace",
+    get: function get() {
+      return __classPrivateFieldGet(this, _setter).attr.namespaceURI;
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return __classPrivateFieldGet(this, _value);
+    },
+    set: function set(value) {
+      __classPrivateFieldSet(this, _value, value || '');
+
+      __classPrivateFieldGet(this, _setter).updateParent(value);
+    }
+  }, {
+    key: "element",
+    get: function get() {
+      return __classPrivateFieldGet(this, _setter).element;
+    }
+  }, {
+    key: "booleanValue",
+    get: function get() {
+      return __classPrivateFieldGet(this, _setter).booleanValue;
+    },
+    set: function set(value) {
+      __classPrivateFieldGet(this, _setter).booleanValue = value;
+    }
+  }]);
+
+  return AttributeTemplatePart;
+}();
+_setter = new WeakMap(), _value = new WeakMap();
+var AttributeValueSetter = /*#__PURE__*/function () {
+  function AttributeValueSetter(element, attr) {
+    _classCallCheck(this, AttributeValueSetter);
+
+    this.element = element;
+    this.attr = attr;
+    this.partList = [];
+  }
+
+  _createClass(AttributeValueSetter, [{
+    key: "booleanValue",
+    get: function get() {
+      return this.element.hasAttributeNS(this.attr.namespaceURI, this.attr.name);
+    },
+    set: function set(value) {
+      if (this.partList.length !== 1) {
+        throw new DOMException('Operation not supported', 'NotSupportedError');
+      }
+
+      ;
+      this.partList[0].value = value ? '' : null;
+    }
+  }, {
+    key: "append",
+    value: function append(part) {
+      this.partList.push(part);
+    }
+  }, {
+    key: "updateParent",
+    value: function updateParent(partValue) {
+      if (this.partList.length === 1 && partValue === null) {
+        this.element.removeAttributeNS(this.attr.namespaceURI, this.attr.name);
+      } else {
+        var str = this.partList.map(function (s) {
+          return typeof s === 'string' ? s : s.value;
+        }).join('');
+        this.element.setAttributeNS(this.attr.namespaceURI, this.attr.name, str);
+      }
+    }
+  }]);
+
+  return AttributeValueSetter;
+}();
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/node-template-part.js
+function node_template_part_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = node_template_part_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || node_template_part_unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function node_template_part_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return node_template_part_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return node_template_part_arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return node_template_part_arrayLikeToArray(arr); }
+
+function node_template_part_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function node_template_part_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function node_template_part_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function node_template_part_createClass(Constructor, protoProps, staticProps) { if (protoProps) node_template_part_defineProperties(Constructor.prototype, protoProps); if (staticProps) node_template_part_defineProperties(Constructor, staticProps); return Constructor; }
+
+var node_template_part_classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to set private field on non-instance");
+  }
+
+  privateMap.set(receiver, value);
+  return value;
+};
+
+var node_template_part_classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to get private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+};
+
+var _parts;
+
+var NodeTemplatePart = /*#__PURE__*/function () {
+  function NodeTemplatePart(node, expression) {
+    node_template_part_classCallCheck(this, NodeTemplatePart);
+
+    this.expression = expression;
+
+    _parts.set(this, void 0);
+
+    node_template_part_classPrivateFieldSet(this, _parts, [node]);
+
+    node.textContent = '';
+  }
+
+  node_template_part_createClass(NodeTemplatePart, [{
+    key: "value",
+    get: function get() {
+      return node_template_part_classPrivateFieldGet(this, _parts).map(function (node) {
+        return node.textContent;
+      }).join('');
+    },
+    set: function set(string) {
+      this.replace(string);
+    }
+  }, {
+    key: "previousSibling",
+    get: function get() {
+      return node_template_part_classPrivateFieldGet(this, _parts)[0].previousSibling;
+    }
+  }, {
+    key: "nextSibling",
+    get: function get() {
+      return node_template_part_classPrivateFieldGet(this, _parts)[node_template_part_classPrivateFieldGet(this, _parts).length - 1].nextSibling;
+    }
+  }, {
+    key: "replace",
+    value: function replace() {
+      var _classPrivateFieldGe;
+
+      for (var _len = arguments.length, nodes = new Array(_len), _key = 0; _key < _len; _key++) {
+        nodes[_key] = arguments[_key];
+      }
+
+      var parts = nodes.map(function (node) {
+        if (typeof node === 'string') return new Text(node);
+        return node;
+      });
+      if (!parts.length) parts.push(new Text(''));
+
+      (_classPrivateFieldGe = node_template_part_classPrivateFieldGet(this, _parts)[0]).before.apply(_classPrivateFieldGe, _toConsumableArray(parts));
+
+      var _iterator = node_template_part_createForOfIteratorHelper(node_template_part_classPrivateFieldGet(this, _parts)),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var part = _step.value;
+          part.remove();
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      node_template_part_classPrivateFieldSet(this, _parts, parts);
+    }
+  }]);
+
+  return NodeTemplatePart;
+}();
+_parts = new WeakMap();
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/processors.js
+function processors_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = processors_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function processors_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return processors_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return processors_arrayLikeToArray(o, minLen); }
+
+function processors_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+function createProcessor(processPart) {
+  return {
+    createCallback: function createCallback(instance, parts, params) {
+      this.processCallback(instance, parts, params);
+    },
+    processCallback: function processCallback(_, parts, params) {
+      var _a;
+
+      if (_typeof(params) !== 'object' || !params) return;
+
+      var _iterator = processors_createForOfIteratorHelper(parts),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var part = _step.value;
+
+          if (part.expression in params) {
+            var value = (_a = params[part.expression]) !== null && _a !== void 0 ? _a : '';
+            processPart(part, value);
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+  };
+}
+function processPropertyIdentity(part, value) {
+  part.value = String(value);
+}
+function processBooleanAttribute(part, value) {
+  if (typeof value === 'boolean' && part instanceof AttributeTemplatePart && typeof part.element[part.attributeName] === 'boolean') {
+    part.booleanValue = value;
+    return true;
+  }
+
+  return false;
+}
+var propertyIdentity = createProcessor(processPropertyIdentity);
+var propertyIdentityOrBooleanAttribute = createProcessor(function (part, value) {
+  processBooleanAttribute(part, value) || processPropertyIdentity(part, value);
+});
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/template-instance.js
+function template_instance_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { template_instance_typeof = function _typeof(obj) { return typeof obj; }; } else { template_instance_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return template_instance_typeof(obj); }
+
+function template_instance_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function template_instance_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function template_instance_createClass(Constructor, protoProps, staticProps) { if (protoProps) template_instance_defineProperties(Constructor.prototype, protoProps); if (staticProps) template_instance_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (template_instance_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var template_instance_marked = /*#__PURE__*/regenerator_default.a.mark(collectParts);
+
+function template_instance_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = template_instance_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function template_instance_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return template_instance_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return template_instance_arrayLikeToArray(o, minLen); }
+
+function template_instance_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var template_instance_classPrivateFieldSet = undefined && undefined.__classPrivateFieldSet || function (receiver, privateMap, value) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to set private field on non-instance");
+  }
+
+  privateMap.set(receiver, value);
+  return value;
+};
+
+var template_instance_classPrivateFieldGet = undefined && undefined.__classPrivateFieldGet || function (receiver, privateMap) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to get private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+};
+
+var _processor, template_instance_parts;
+
+
+
+
+
+
+function collectParts(el) {
+  var walker, node, i, attr, valueSetter, _iterator, _step, token, part, _iterator2, _step2, _token;
+
+  return regenerator_default.a.wrap(function collectParts$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          walker = el.ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, null, false);
+
+        case 1:
+          if (!(node = walker.nextNode())) {
+            _context.next = 59;
+            break;
+          }
+
+          if (!(node instanceof Element && node.hasAttributes())) {
+            _context.next = 36;
+            break;
+          }
+
+          i = 0;
+
+        case 4:
+          if (!(i < node.attributes.length)) {
+            _context.next = 34;
+            break;
+          }
+
+          attr = node.attributes.item(i);
+
+          if (!(attr && attr.value.includes('{{'))) {
+            _context.next = 31;
+            break;
+          }
+
+          valueSetter = new AttributeValueSetter(node, attr);
+          _iterator = template_instance_createForOfIteratorHelper(parse(attr.value));
+          _context.prev = 9;
+
+          _iterator.s();
+
+        case 11:
+          if ((_step = _iterator.n()).done) {
+            _context.next = 23;
+            break;
+          }
+
+          token = _step.value;
+
+          if (!(token.type === 'string')) {
+            _context.next = 17;
+            break;
+          }
+
+          valueSetter.append(token.value);
+          _context.next = 21;
+          break;
+
+        case 17:
+          part = new AttributeTemplatePart(valueSetter, token.value);
+          valueSetter.append(part);
+          _context.next = 21;
+          return part;
+
+        case 21:
+          _context.next = 11;
+          break;
+
+        case 23:
+          _context.next = 28;
+          break;
+
+        case 25:
+          _context.prev = 25;
+          _context.t0 = _context["catch"](9);
+
+          _iterator.e(_context.t0);
+
+        case 28:
+          _context.prev = 28;
+
+          _iterator.f();
+
+          return _context.finish(28);
+
+        case 31:
+          i += 1;
+          _context.next = 4;
+          break;
+
+        case 34:
+          _context.next = 57;
+          break;
+
+        case 36:
+          if (!(node instanceof Text && node.textContent && node.textContent.includes('{{'))) {
+            _context.next = 57;
+            break;
+          }
+
+          _iterator2 = template_instance_createForOfIteratorHelper(parse(node.textContent));
+          _context.prev = 38;
+
+          _iterator2.s();
+
+        case 40:
+          if ((_step2 = _iterator2.n()).done) {
+            _context.next = 49;
+            break;
+          }
+
+          _token = _step2.value;
+          if (_token.end < node.textContent.length) node.splitText(_token.end);
+
+          if (!(_token.type === 'part')) {
+            _context.next = 46;
+            break;
+          }
+
+          _context.next = 46;
+          return new NodeTemplatePart(node, _token.value);
+
+        case 46:
+          return _context.abrupt("break", 49);
+
+        case 47:
+          _context.next = 40;
+          break;
+
+        case 49:
+          _context.next = 54;
+          break;
+
+        case 51:
+          _context.prev = 51;
+          _context.t1 = _context["catch"](38);
+
+          _iterator2.e(_context.t1);
+
+        case 54:
+          _context.prev = 54;
+
+          _iterator2.f();
+
+          return _context.finish(54);
+
+        case 57:
+          _context.next = 1;
+          break;
+
+        case 59:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, template_instance_marked, null, [[9, 25, 28, 31], [38, 51, 54, 57]]);
+}
+
+var template_instance_TemplateInstance = /*#__PURE__*/function (_DocumentFragment) {
+  _inherits(TemplateInstance, _DocumentFragment);
+
+  var _super = _createSuper(TemplateInstance);
+
+  function TemplateInstance(template, params) {
+    var _this;
+
+    var processor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : propertyIdentity;
+
+    template_instance_classCallCheck(this, TemplateInstance);
+
+    var _a, _b;
+
+    _this = _super.call(this);
+
+    _processor.set(_assertThisInitialized(_this), void 0);
+
+    template_instance_parts.set(_assertThisInitialized(_this), void 0); // This is to fix an inconsistency in Safari which prevents us from
+    // correctly sub-classing DocumentFragment.
+    // https://bugs.webkit.org/show_bug.cgi?id=195556
+
+
+    if (Object.getPrototypeOf(_assertThisInitialized(_this) !== TemplateInstance.prototype)) {
+      Object.setPrototypeOf(_assertThisInitialized(_this), TemplateInstance.prototype);
+    }
+
+    _this.appendChild(template.content.cloneNode(true));
+
+    template_instance_classPrivateFieldSet(_assertThisInitialized(_this), template_instance_parts, Array.from(collectParts(_assertThisInitialized(_this))));
+
+    template_instance_classPrivateFieldSet(_assertThisInitialized(_this), _processor, processor);
+
+    (_b = (_a = template_instance_classPrivateFieldGet(_assertThisInitialized(_this), _processor)).createCallback) === null || _b === void 0 ? void 0 : _b.call(_a, _assertThisInitialized(_this), template_instance_classPrivateFieldGet(_assertThisInitialized(_this), template_instance_parts), params);
+    return _this;
+  }
+
+  template_instance_createClass(TemplateInstance, [{
+    key: "update",
+    value: function update(params) {
+      template_instance_classPrivateFieldGet(this, _processor).processCallback(this, template_instance_classPrivateFieldGet(this, template_instance_parts), params);
+    }
+  }]);
+
+  return TemplateInstance;
+}( /*#__PURE__*/_wrapNativeSuper(DocumentFragment));
+_processor = new WeakMap(), template_instance_parts = new WeakMap();
+// CONCATENATED MODULE: ./node_modules/@github/template-parts/lib/index.js
+
+
+
+
+
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/directive.js
+var directives = new WeakSet();
+function isDirective(directiveCallback) {
+  return directives.has(directiveCallback);
+}
+function processDirective(part, value) {
+  if (isDirective(value)) {
+    value(part);
+    return true;
+  }
+
+  return false;
+}
+function directive(directiveFactory) {
+  return function () {
+    var callback = directiveFactory.apply(void 0, arguments);
+    directives.add(callback);
+    return callback;
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/events.js
+function events_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { events_typeof = function _typeof(obj) { return typeof obj; }; } else { events_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return events_typeof(obj); }
+
+function events_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function events_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function events_createClass(Constructor, protoProps, staticProps) { if (protoProps) events_defineProperties(Constructor.prototype, protoProps); if (staticProps) events_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var eventListeners = new WeakMap();
+
+var EventHandler = /*#__PURE__*/function () {
+  function EventHandler(element, type) {
+    events_classCallCheck(this, EventHandler);
+
+    this.element = element;
+    this.type = type;
+    this.element.addEventListener(this.type, this);
+    eventListeners.get(this.element).set(this.type, this);
+  }
+
+  events_createClass(EventHandler, [{
+    key: "set",
+    value: function set(listener) {
+      if (typeof listener == 'function') {
+        this.handleEvent = listener.bind(this.element);
+      } else if (events_typeof(listener) === 'object' && typeof listener.handleEvent === 'function') {
+        this.handleEvent = listener.handleEvent.bind(listener);
+      } else {
+        this.element.removeEventListener(this.type, this);
+        eventListeners.get(this.element).delete(this.type);
+      }
+    }
+  }], [{
+    key: "for",
+    value: function _for(part) {
+      if (!eventListeners.has(part.element)) eventListeners.set(part.element, new Map());
+      var type = part.attributeName.slice(2);
+      var elementListeners = eventListeners.get(part.element);
+      if (elementListeners.has(type)) return elementListeners.get(type);
+      return new EventHandler(part.element, type);
+    }
+  }]);
+
+  return EventHandler;
+}();
+
+function processEvent(part, value) {
+  if (part instanceof AttributeTemplatePart && part.attributeName.startsWith('on')) {
+    EventHandler.for(part).set(value);
+    part.element.removeAttributeNS(part.attributeNamespace, part.attributeName);
+    return true;
+  }
+
+  return false;
+}
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/html.js
+function html_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function html_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function html_createClass(Constructor, protoProps, staticProps) { if (protoProps) html_defineProperties(Constructor.prototype, protoProps); if (staticProps) html_defineProperties(Constructor, staticProps); return Constructor; }
+
+function html_createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = html_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function html_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { html_typeof = function _typeof(obj) { return typeof obj; }; } else { html_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return html_typeof(obj); }
+
+function html_toConsumableArray(arr) { return html_arrayWithoutHoles(arr) || html_iterableToArray(arr) || html_unsupportedIterableToArray(arr) || html_nonIterableSpread(); }
+
+function html_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function html_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return html_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return html_arrayLikeToArray(o, minLen); }
+
+function html_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function html_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return html_arrayLikeToArray(arr); }
+
+function html_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+function processSubTemplate(part, value) {
+  if (value instanceof html_TemplateResult && part instanceof NodeTemplatePart) {
+    value.renderInto(part);
+    return true;
+  }
+
+  return false;
+}
+
+function processDocumentFragment(part, value) {
+  if (value instanceof DocumentFragment && part instanceof NodeTemplatePart) {
+    if (value.childNodes.length) part.replace.apply(part, html_toConsumableArray(value.childNodes));
+    return true;
+  }
+
+  return false;
+}
+
+function isIterable(value) {
+  return html_typeof(value) === 'object' && Symbol.iterator in value;
+}
+
+function processIterable(part, value) {
+  if (!isIterable(value)) return false;
+
+  if (part instanceof NodeTemplatePart) {
+    var nodes = [];
+
+    var _iterator = html_createForOfIteratorHelper(value),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var item = _step.value;
+
+        if (item instanceof html_TemplateResult) {
+          var fragment = document.createDocumentFragment();
+          item.renderInto(fragment);
+          nodes.push.apply(nodes, html_toConsumableArray(fragment.childNodes));
+        } else if (item instanceof DocumentFragment) {
+          nodes.push.apply(nodes, html_toConsumableArray(item.childNodes));
+        } else {
+          nodes.push(String(item));
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    if (nodes.length) part.replace.apply(part, nodes);
+    return true;
+  } else {
+    part.value = Array.from(value).join(' ');
+    return true;
+  }
+}
+
+function processPart(part, value) {
+  processDirective(part, value) || processBooleanAttribute(part, value) || processEvent(part, value) || processSubTemplate(part, value) || processDocumentFragment(part, value) || processIterable(part, value) || processPropertyIdentity(part, value);
+}
+var templates = new WeakMap();
+var renderedTemplates = new WeakMap();
+var renderedTemplateInstances = new WeakMap();
+var html_TemplateResult = /*#__PURE__*/function () {
+  function TemplateResult(strings, values, processor) {
+    html_classCallCheck(this, TemplateResult);
+
+    this.strings = strings;
+    this.values = values;
+    this.processor = processor;
+  }
+
+  html_createClass(TemplateResult, [{
+    key: "template",
+    get: function get() {
+      if (templates.has(this.strings)) {
+        return templates.get(this.strings);
+      } else {
+        var template = document.createElement('template');
+        var end = this.strings.length - 1;
+        template.innerHTML = this.strings.reduce(function (str, cur, i) {
+          return str + cur + (i < end ? "{{ ".concat(i, " }}") : '');
+        }, '');
+        templates.set(this.strings, template);
+        return template;
+      }
+    }
+  }, {
+    key: "renderInto",
+    value: function renderInto(element) {
+      var template = this.template;
+
+      if (renderedTemplates.get(element) !== template) {
+        renderedTemplates.set(element, template);
+        var instance = new template_instance_TemplateInstance(template, this.values, this.processor);
+        renderedTemplateInstances.set(element, instance);
+
+        if (element instanceof NodeTemplatePart) {
+          element.replace.apply(element, html_toConsumableArray(instance.children));
+        } else {
+          element.appendChild(instance);
+        }
+
+        return;
+      }
+
+      renderedTemplateInstances.get(element).update(this.values);
+    }
+  }]);
+
+  return TemplateResult;
+}();
+var defaultProcessor = createProcessor(processPart);
+function html(strings) {
+  for (var _len = arguments.length, values = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    values[_key - 1] = arguments[_key];
+  }
+
+  return new html_TemplateResult(strings, values, defaultProcessor);
+}
+function render(result, element) {
+  result.renderInto(element);
+}
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/until.js
+
+
+var untils = new WeakMap();
+var until = directive(function () {
+  for (var _len = arguments.length, promises = new Array(_len), _key = 0; _key < _len; _key++) {
+    promises[_key] = arguments[_key];
+  }
+
+  return function (part) {
+    if (!untils.has(part)) untils.set(part, {
+      i: promises.length
+    });
+    var state = untils.get(part);
+
+    var _loop = function _loop(i) {
+      if (promises[i] instanceof Promise) {
+        // eslint-disable-next-line github/no-then
+        Promise.resolve(promises[i]).then(function (value) {
+          if (i < state.i) {
+            state.i = i;
+            processPart(part, value);
+          }
+        });
+      } else if (i <= state.i) {
+        state.i = i;
+        processPart(part, promises[i]);
+      }
+    };
+
+    for (var i = 0; i < promises.length; i += 1) {
+      _loop(i);
+    }
+  };
+});
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/unsafe-html.js
+function unsafe_html_toConsumableArray(arr) { return unsafe_html_arrayWithoutHoles(arr) || unsafe_html_iterableToArray(arr) || unsafe_html_unsupportedIterableToArray(arr) || unsafe_html_nonIterableSpread(); }
+
+function unsafe_html_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function unsafe_html_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return unsafe_html_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return unsafe_html_arrayLikeToArray(o, minLen); }
+
+function unsafe_html_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function unsafe_html_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return unsafe_html_arrayLikeToArray(arr); }
+
+function unsafe_html_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+var unsafeHTML = directive(function (value) {
+  return function (part) {
+    if (!(part instanceof NodeTemplatePart)) return;
+    var template = document.createElement('template');
+    template.innerHTML = value;
+    var fragment = document.importNode(template.content, true);
+    part.replace.apply(part, unsafe_html_toConsumableArray(fragment.childNodes));
+  };
+});
+// CONCATENATED MODULE: ./node_modules/@github/jtml/lib/index.js
+
+
+
+
+// CONCATENATED MODULE: ./app/components/circuit_dropzone_component/circuitDropzoneElement.ts
+var _templateObject,_class,_class2,_descriptor,_descriptor2,_descriptor3,_descriptor4,_templateObject2;function _initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circuitDropzoneElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circuitDropzoneElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circuitDropzoneElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circuitDropzoneElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circuitDropzoneElement_defineProperties(Constructor,staticProps);return Constructor;}function circuitDropzoneElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circuitDropzoneElement_setPrototypeOf(subClass,superClass);}function circuitDropzoneElement_createSuper(Derived){var hasNativeReflectConstruct=circuitDropzoneElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circuitDropzoneElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circuitDropzoneElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circuitDropzoneElement_possibleConstructorReturn(this,result);};}function circuitDropzoneElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circuitDropzoneElement_assertThisInitialized(self);}function circuitDropzoneElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circuitDropzoneElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circuitDropzoneElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circuitDropzoneElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circuitDropzoneElement_construct(Class,arguments,circuitDropzoneElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circuitDropzoneElement_setPrototypeOf(Wrapper,Class);};return circuitDropzoneElement_wrapNativeSuper(Class);}function circuitDropzoneElement_construct(Parent,args,Class){if(circuitDropzoneElement_isNativeReflectConstruct()){circuitDropzoneElement_construct=Reflect.construct;}else{circuitDropzoneElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circuitDropzoneElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circuitDropzoneElement_construct.apply(null,arguments);}function circuitDropzoneElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circuitDropzoneElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circuitDropzoneElement_setPrototypeOf(o,p){circuitDropzoneElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circuitDropzoneElement_setPrototypeOf(o,p);}function circuitDropzoneElement_getPrototypeOf(o){circuitDropzoneElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circuitDropzoneElement_getPrototypeOf(o);}function _applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function _initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function _taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var wires=html(_templateObject||(_templateObject=_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-left\"\n    x1=\"0\"\n    y1=\"50\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-right\"\n    x1=\"50\"\n    y1=\"50\"\n    x2=\"100\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg> "])));// @ts-ignore
+var circuitDropzoneElement_CircuitDropzoneElement=controller(_class=(_class2=/*#__PURE__*/function(_HTMLElement){circuitDropzoneElement_inherits(CircuitDropzoneElement,_HTMLElement);var _super=circuitDropzoneElement_createSuper(CircuitDropzoneElement);function CircuitDropzoneElement(){var _this;circuitDropzoneElement_classCallCheck(this,CircuitDropzoneElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));_initializerDefineProperty(_this,"wireTop",_descriptor,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"wireBottom",_descriptor2,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"body",_descriptor3,circuitDropzoneElement_assertThisInitialized(_this));_initializerDefineProperty(_this,"draggable",_descriptor4,circuitDropzoneElement_assertThisInitialized(_this));return _this;}circuitDropzoneElement_createClass(CircuitDropzoneElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(_templateObject2||(_templateObject2=_taggedTemplateLiteral(["<style>\n          #body {\n            position: relative;\n            height: 2rem;\n            width: 3rem;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," ","\"\n          data-target=\"circuit-dropzone.body\"\n        >\n          ","\n          <slot></slot>\n        </div>"])),this.wireTopClassString,this.wireBottomClassString,wires),this.shadowRoot);}},{key:"wireTopClassString",get:function get(){return this.wireTop?"wire-top":"";}},{key:"wireBottomClassString",get:function get(){return this.wireBottom?"wire-bottom":"";}}]);return CircuitDropzoneElement;}(/*#__PURE__*/circuitDropzoneElement_wrapNativeSuper(HTMLElement)),(_descriptor=_applyDecoratedDescriptor(_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor2=_applyDecoratedDescriptor(_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor3=_applyDecoratedDescriptor(_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor4=_applyDecoratedDescriptor(_class2.prototype,"draggable",[target],{configurable:true,enumerable:true,writable:true,initializer:null})),_class2))||_class;
+// CONCATENATED MODULE: ./app/components/circuit_step_component/circuitStepElement.ts
+var circuitStepElement_class,circuitStepElement_class2,circuitStepElement_descriptor,circuitStepElement_descriptor2,circuitStepElement_descriptor3,circuitStepElement_descriptor4,circuitStepElement_templateObject;function circuitStepElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function circuitStepElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circuitStepElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circuitStepElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circuitStepElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circuitStepElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circuitStepElement_defineProperties(Constructor,staticProps);return Constructor;}function circuitStepElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circuitStepElement_setPrototypeOf(subClass,superClass);}function circuitStepElement_createSuper(Derived){var hasNativeReflectConstruct=circuitStepElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circuitStepElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circuitStepElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circuitStepElement_possibleConstructorReturn(this,result);};}function circuitStepElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circuitStepElement_assertThisInitialized(self);}function circuitStepElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circuitStepElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circuitStepElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circuitStepElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circuitStepElement_construct(Class,arguments,circuitStepElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circuitStepElement_setPrototypeOf(Wrapper,Class);};return circuitStepElement_wrapNativeSuper(Class);}function circuitStepElement_construct(Parent,args,Class){if(circuitStepElement_isNativeReflectConstruct()){circuitStepElement_construct=Reflect.construct;}else{circuitStepElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circuitStepElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circuitStepElement_construct.apply(null,arguments);}function circuitStepElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circuitStepElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circuitStepElement_setPrototypeOf(o,p){circuitStepElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circuitStepElement_setPrototypeOf(o,p);}function circuitStepElement_getPrototypeOf(o){circuitStepElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circuitStepElement_getPrototypeOf(o);}function circuitStepElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function circuitStepElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var circuitStepElement_CircuitStepElement=controller(circuitStepElement_class=(circuitStepElement_class2=/*#__PURE__*/function(_HTMLElement){circuitStepElement_inherits(CircuitStepElement,_HTMLElement);var _super=circuitStepElement_createSuper(CircuitStepElement);function CircuitStepElement(){var _this;circuitStepElement_classCallCheck(this,CircuitStepElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));circuitStepElement_initializerDefineProperty(_this,"dropzones",circuitStepElement_descriptor,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"controlGates",circuitStepElement_descriptor2,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"swapGates",circuitStepElement_descriptor3,circuitStepElement_assertThisInitialized(_this));circuitStepElement_initializerDefineProperty(_this,"controllableGates",circuitStepElement_descriptor4,circuitStepElement_assertThisInitialized(_this));return _this;}circuitStepElement_createClass(CircuitStepElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"update",value:function update(){render(html(circuitStepElement_templateObject||(circuitStepElement_templateObject=circuitStepElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: column;\n          }\n\n          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n            margin-top: 1rem;\n          }\n        </style>\n\n        <div id=\"body\">\n          <slot></slot>\n        </div>"]))),this.shadowRoot);}},{key:"bit",value:function bit(gate){var dropzoneEl=gate.parentElement;if(dropzoneEl===null){throw new Error("Dropzone not found");}return this.dropzones.indexOf(dropzoneEl);}}]);return CircuitStepElement;}(/*#__PURE__*/circuitStepElement_wrapNativeSuper(HTMLElement)),(circuitStepElement_descriptor=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"dropzones",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor2=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"controlGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor3=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"swapGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),circuitStepElement_descriptor4=circuitStepElement_applyDecoratedDescriptor(circuitStepElement_class2.prototype,"controllableGates",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),circuitStepElement_class2))||circuitStepElement_class;
+// CONCATENATED MODULE: ./app/components/quantum_circuit_component/quantumCircuitElement.ts
+var quantumCircuitElement_class,quantumCircuitElement_class2,quantumCircuitElement_descriptor,quantumCircuitElement_descriptor2,quantumCircuitElement_descriptor3,quantumCircuitElement_templateObject;function quantumCircuitElement_createForOfIteratorHelper(o,allowArrayLike){var it=typeof Symbol!=="undefined"&&o[Symbol.iterator]||o["@@iterator"];if(!it){if(Array.isArray(o)||(it=quantumCircuitElement_unsupportedIterableToArray(o))||allowArrayLike&&o&&typeof o.length==="number"){if(it)o=it;var i=0;var F=function F(){};return{s:F,n:function n(){if(i>=o.length)return{done:true};return{done:false,value:o[i++]};},e:function e(_e){throw _e;},f:F};}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion=true,didErr=false,err;return{s:function s(){it=it.call(o);},n:function n(){var step=it.next();normalCompletion=step.done;return step;},e:function e(_e2){didErr=true;err=_e2;},f:function f(){try{if(!normalCompletion&&it["return"]!=null)it["return"]();}finally{if(didErr)throw err;}}};}function quantumCircuitElement_unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return quantumCircuitElement_arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(o);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return quantumCircuitElement_arrayLikeToArray(o,minLen);}function quantumCircuitElement_arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function quantumCircuitElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function quantumCircuitElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function quantumCircuitElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function quantumCircuitElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function quantumCircuitElement_createClass(Constructor,protoProps,staticProps){if(protoProps)quantumCircuitElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)quantumCircuitElement_defineProperties(Constructor,staticProps);return Constructor;}function quantumCircuitElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)quantumCircuitElement_setPrototypeOf(subClass,superClass);}function quantumCircuitElement_createSuper(Derived){var hasNativeReflectConstruct=quantumCircuitElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=quantumCircuitElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=quantumCircuitElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return quantumCircuitElement_possibleConstructorReturn(this,result);};}function quantumCircuitElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return quantumCircuitElement_assertThisInitialized(self);}function quantumCircuitElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function quantumCircuitElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;quantumCircuitElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!quantumCircuitElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return quantumCircuitElement_construct(Class,arguments,quantumCircuitElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return quantumCircuitElement_setPrototypeOf(Wrapper,Class);};return quantumCircuitElement_wrapNativeSuper(Class);}function quantumCircuitElement_construct(Parent,args,Class){if(quantumCircuitElement_isNativeReflectConstruct()){quantumCircuitElement_construct=Reflect.construct;}else{quantumCircuitElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)quantumCircuitElement_setPrototypeOf(instance,Class.prototype);return instance;};}return quantumCircuitElement_construct.apply(null,arguments);}function quantumCircuitElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function quantumCircuitElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function quantumCircuitElement_setPrototypeOf(o,p){quantumCircuitElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return quantumCircuitElement_setPrototypeOf(o,p);}function quantumCircuitElement_getPrototypeOf(o){quantumCircuitElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return quantumCircuitElement_getPrototypeOf(o);}function quantumCircuitElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function quantumCircuitElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var quantumCircuitElement_QuantumCircuitElement=controller(quantumCircuitElement_class=(quantumCircuitElement_class2=/*#__PURE__*/function(_HTMLElement){quantumCircuitElement_inherits(QuantumCircuitElement,_HTMLElement);var _super=quantumCircuitElement_createSuper(QuantumCircuitElement);function QuantumCircuitElement(){var _this;quantumCircuitElement_classCallCheck(this,QuantumCircuitElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));quantumCircuitElement_initializerDefineProperty(_this,"json",quantumCircuitElement_descriptor,quantumCircuitElement_assertThisInitialized(_this));quantumCircuitElement_initializerDefineProperty(_this,"body",quantumCircuitElement_descriptor2,quantumCircuitElement_assertThisInitialized(_this));quantumCircuitElement_initializerDefineProperty(_this,"circuitSteps",quantumCircuitElement_descriptor3,quantumCircuitElement_assertThisInitialized(_this));return _this;}quantumCircuitElement_createClass(QuantumCircuitElement,[{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-json"&&oldValue!==newValue&&this.body){this.body.innerHTML="";this.body.append(this.circuitStepFragment);this.updateConnections();}}},{key:"update",value:function update(){render(html(quantumCircuitElement_templateObject||(quantumCircuitElement_templateObject=quantumCircuitElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: row;\n          }\n        </style>\n\n        <div id=\"body\" data-target=\"quantum-circuit.body\">\n          <slot></slot>\n          ","\n        </div>"])),this.circuitStepFragment),this.shadowRoot);this.updateConnections();}},{key:"circuitStepFragment",get:function get(){var frag=document.createDocumentFragment();if(this.json==="")return frag;var jsonData=JSON.parse(this.json);var _iterator=quantumCircuitElement_createForOfIteratorHelper(jsonData.cols),_step;try{for(_iterator.s();!(_step=_iterator.n()).done;){var step=_step.value;var circuitStep=document.createElement("circuit-step");circuitStep.setAttribute("data-targets","quantum-circuit.circuitSteps");var _iterator2=quantumCircuitElement_createForOfIteratorHelper(step),_step2;try{for(_iterator2.s();!(_step2=_iterator2.n()).done;){var instruction=_step2.value;var dropzone=document.createElement("circuit-dropzone");dropzone.setAttribute("data-targets","circuit-step.dropzones");switch(true){case /^\|0>$/.test(instruction):{var writeGate=document.createElement("write-gate");writeGate.setAttribute("data-value","0");dropzone.append(writeGate);break;}case /^\|1>$/.test(instruction):{var _writeGate=document.createElement("write-gate");_writeGate.setAttribute("data-value","1");dropzone.append(_writeGate);break;}case /^H$/.test(instruction):{var hGate=document.createElement("h-gate");hGate.setAttribute("data-targets","circuit-step.controllableGates");hGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(hGate);break;}case /^X$/.test(instruction):{var xGate=document.createElement("x-gate");xGate.setAttribute("data-targets","circuit-step.controllableGates");xGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(xGate);break;}case /^Y$/.test(instruction):{var yGate=document.createElement("y-gate");yGate.setAttribute("data-targets","circuit-step.controllableGates");yGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(yGate);break;}case /^Z$/.test(instruction):{var zGate=document.createElement("z-gate");zGate.setAttribute("data-targets","circuit-step.controllableGates");zGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(zGate);break;}case /^P$/.test(instruction):{var phaseGate=document.createElement("phase-gate");phaseGate.setAttribute("data-targets","circuit-step.controllableGates");phaseGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(phaseGate);break;}case /^P\((.+)\)$/.test(instruction):{var _phaseGate=document.createElement("phase-gate");_phaseGate.setAttribute("data-targets","circuit-step.controllableGates");_phaseGate.setAttribute("data-target","circuit-dropzone.draggable");_phaseGate.setAttribute("data-phi",RegExp.$1);dropzone.append(_phaseGate);break;}case /^X\^½$/.test(instruction):{var rootNotGate=document.createElement("root-not-gate");rootNotGate.setAttribute("data-targets","circuit-step.controllableGates");rootNotGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rootNotGate);break;}case /^Rx$/.test(instruction):{var rxGate=document.createElement("rx-gate");rxGate.setAttribute("data-targets","circuit-step.controllableGates");rxGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rxGate);break;}case /^Rx\((.+)\)$/.test(instruction):{var _rxGate=document.createElement("rx-gate");_rxGate.setAttribute("data-targets","circuit-step.controllableGates");_rxGate.setAttribute("data-target","circuit-dropzone.draggable");_rxGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_rxGate);break;}case /^Ry$/.test(instruction):{var ryGate=document.createElement("ry-gate");ryGate.setAttribute("data-targets","circuit-step.controllableGates");ryGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(ryGate);break;}case /^Ry\((.+)\)$/.test(instruction):{var _ryGate=document.createElement("ry-gate");_ryGate.setAttribute("data-targets","circuit-step.controllableGates");_ryGate.setAttribute("data-target","circuit-dropzone.draggable");_ryGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_ryGate);break;}case /^Rz$/.test(instruction):{var rzGate=document.createElement("rz-gate");rzGate.setAttribute("data-targets","circuit-step.controllableGates");rzGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(rzGate);break;}case /^Rz\((.+)\)$/.test(instruction):{var _rzGate=document.createElement("rz-gate");_rzGate.setAttribute("data-targets","circuit-step.controllableGates");_rzGate.setAttribute("data-target","circuit-dropzone.draggable");_rzGate.setAttribute("data-theta",RegExp.$1);dropzone.append(_rzGate);break;}case /^Swap$/.test(instruction):{var swapGate=document.createElement("swap-gate");swapGate.setAttribute("data-targets","circuit-step.swapGates circuit-step.controllableGates");swapGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(swapGate);break;}case /^•$/.test(instruction):{var controlGate=document.createElement("control-gate");controlGate.setAttribute("data-targets","circuit-step.controlGates");controlGate.setAttribute("data-target","circuit-dropzone.draggable");dropzone.append(controlGate);break;}case /^Bloch$/.test(instruction):{var blochDisplay=document.createElement("bloch-display");dropzone.append(blochDisplay);break;}case /^Measure$/.test(instruction):{var measureGate=document.createElement("measurement-gate");dropzone.append(measureGate);break;}default:}circuitStep.append(dropzone);}}catch(err){_iterator2.e(err);}finally{_iterator2.f();}frag.append(circuitStep);}}catch(err){_iterator.e(err);}finally{_iterator.f();}return frag;}},{key:"updateConnections",value:function updateConnections(){var _iterator3=quantumCircuitElement_createForOfIteratorHelper(this.circuitSteps),_step3;try{var _loop=function _loop(){var circuitStep=_step3.value;if(circuitStep.controlGates.length===1&&circuitStep.controllableGates.length===0){circuitStep.controlGates[0].disable();}if(circuitStep.swapGates.length!==2){var _iterator4=quantumCircuitElement_createForOfIteratorHelper(circuitStep.swapGates),_step4;try{for(_iterator4.s();!(_step4=_iterator4.n()).done;){var swapGate=_step4.value;swapGate.disable();}}catch(err){_iterator4.e(err);}finally{_iterator4.f();}}if(circuitStep.controlGates.length===0)return"continue";var _iterator5=quantumCircuitElement_createForOfIteratorHelper(circuitStep.controllableGates),_step5;try{var _loop2=function _loop2(){var controllableGate=_step5.value;controllableGate.wireTop=circuitStep.controlGates.some(function(each){return circuitStep.bit(each)<circuitStep.bit(controllableGate);})||circuitStep.controllableGates.some(function(each){return circuitStep.bit(each)<circuitStep.bit(controllableGate);});controllableGate.wireBottom=circuitStep.controlGates.some(function(each){return circuitStep.bit(each)>circuitStep.bit(controllableGate);})||circuitStep.controllableGates.some(function(each){return circuitStep.bit(each)>circuitStep.bit(controllableGate);});};for(_iterator5.s();!(_step5=_iterator5.n()).done;){_loop2();}}catch(err){_iterator5.e(err);}finally{_iterator5.f();}var _iterator6=quantumCircuitElement_createForOfIteratorHelper(circuitStep.controlGates),_step6;try{var _loop3=function _loop3(){var controlGate=_step6.value;controlGate.wireTop=circuitStep.controllableGates.some(function(each){return circuitStep.bit(controlGate)>circuitStep.bit(each);})||circuitStep.controlGates.some(function(each){return circuitStep.bit(controlGate)>circuitStep.bit(each);});controlGate.wireBottom=circuitStep.controllableGates.some(function(each){return circuitStep.bit(controlGate)<circuitStep.bit(each);})||circuitStep.controlGates.some(function(each){return circuitStep.bit(controlGate)<circuitStep.bit(each);});};for(_iterator6.s();!(_step6=_iterator6.n()).done;){_loop3();}}catch(err){_iterator6.e(err);}finally{_iterator6.f();}var _iterator7=quantumCircuitElement_createForOfIteratorHelper(circuitStep.dropzones),_step7;try{for(_iterator7.s();!(_step7=_iterator7.n()).done;){var dropzone=_step7.value;if(dropzone.draggable)continue;var bits=circuitStep.controlGates.map(function(each){return circuitStep.bit(each);}).concat(circuitStep.controllableGates.map(function(each){return circuitStep.bit(each);}));var minBit=bits.sort()[0];var maxBit=bits.sort().slice(-1)[0];if(minBit<circuitStep.dropzones.indexOf(dropzone)&&circuitStep.dropzones.indexOf(dropzone)<maxBit){dropzone.wireTop=true;dropzone.wireBottom=true;}}}catch(err){_iterator7.e(err);}finally{_iterator7.f();}};for(_iterator3.s();!(_step3=_iterator3.n()).done;){var _ret=_loop();if(_ret==="continue")continue;}}catch(err){_iterator3.e(err);}finally{_iterator3.f();}}}]);return QuantumCircuitElement;}(/*#__PURE__*/quantumCircuitElement_wrapNativeSuper(HTMLElement)),(quantumCircuitElement_descriptor=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"json",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),quantumCircuitElement_descriptor2=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),quantumCircuitElement_descriptor3=quantumCircuitElement_applyDecoratedDescriptor(quantumCircuitElement_class2.prototype,"circuitSteps",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),quantumCircuitElement_class2))||quantumCircuitElement_class;
+// EXTERNAL MODULE: ./node_modules/tippy.js/dist/tippy.esm.js + 52 modules
+var tippy_esm = __webpack_require__(5);
+
+// CONCATENATED MODULE: ./app/components/bloch_display_component/blochDisplayElement.ts
+var blochDisplayElement_class,blochDisplayElement_class2,blochDisplayElement_descriptor,blochDisplayElement_descriptor2,blochDisplayElement_descriptor3,blochDisplayElement_descriptor4,_descriptor5,_descriptor6,_descriptor7,_descriptor8,_descriptor9,_descriptor10,_descriptor11,_descriptor12,blochDisplayElement_templateObject,blochDisplayElement_templateObject2,_templateObject3,_templateObject4;function blochDisplayElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function blochDisplayElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function blochDisplayElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function blochDisplayElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function blochDisplayElement_createClass(Constructor,protoProps,staticProps){if(protoProps)blochDisplayElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)blochDisplayElement_defineProperties(Constructor,staticProps);return Constructor;}function blochDisplayElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)blochDisplayElement_setPrototypeOf(subClass,superClass);}function blochDisplayElement_createSuper(Derived){var hasNativeReflectConstruct=blochDisplayElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=blochDisplayElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=blochDisplayElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return blochDisplayElement_possibleConstructorReturn(this,result);};}function blochDisplayElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return blochDisplayElement_assertThisInitialized(self);}function blochDisplayElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function blochDisplayElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;blochDisplayElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!blochDisplayElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return blochDisplayElement_construct(Class,arguments,blochDisplayElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return blochDisplayElement_setPrototypeOf(Wrapper,Class);};return blochDisplayElement_wrapNativeSuper(Class);}function blochDisplayElement_construct(Parent,args,Class){if(blochDisplayElement_isNativeReflectConstruct()){blochDisplayElement_construct=Reflect.construct;}else{blochDisplayElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)blochDisplayElement_setPrototypeOf(instance,Class.prototype);return instance;};}return blochDisplayElement_construct.apply(null,arguments);}function blochDisplayElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function blochDisplayElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function blochDisplayElement_setPrototypeOf(o,p){blochDisplayElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return blochDisplayElement_setPrototypeOf(o,p);}function blochDisplayElement_getPrototypeOf(o){blochDisplayElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return blochDisplayElement_getPrototypeOf(o);}function blochDisplayElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function blochDisplayElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var blochDisplayElement_BlochDisplayElement=controller(blochDisplayElement_class=(blochDisplayElement_class2=/*#__PURE__*/function(_HTMLElement){blochDisplayElement_inherits(BlochDisplayElement,_HTMLElement);var _super=blochDisplayElement_createSuper(BlochDisplayElement);function BlochDisplayElement(){var _this;blochDisplayElement_classCallCheck(this,BlochDisplayElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));blochDisplayElement_initializerDefineProperty(_this,"body",blochDisplayElement_descriptor,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorLine",blochDisplayElement_descriptor2,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorEnd",blochDisplayElement_descriptor3,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vector",blochDisplayElement_descriptor4,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"vectorEndCircles",_descriptor5,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"size",_descriptor6,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"x",_descriptor7,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"y",_descriptor8,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"z",_descriptor9,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggable",_descriptor10,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggableSource",_descriptor11,blochDisplayElement_assertThisInitialized(_this));blochDisplayElement_initializerDefineProperty(_this,"draggableShadow",_descriptor12,blochDisplayElement_assertThisInitialized(_this));return _this;}blochDisplayElement_createClass(BlochDisplayElement,[{key:"grab",value:function grab(event){var _this$parentElement;var customEvent=new CustomEvent("grabDraggable",{detail:event,bubbles:true});(_this$parentElement=this.parentElement)===null||_this$parentElement===void 0?void 0:_this$parentElement.dispatchEvent(customEvent);}},{key:"drop",value:function drop(event){var _this$parentElement2;var customEvent=new CustomEvent("dropDraggable",{detail:event,bubbles:true});(_this$parentElement2=this.parentElement)===null||_this$parentElement2===void 0?void 0:_this$parentElement2.dispatchEvent(customEvent);}},{key:"showPopup",value:function showPopup(){var content;var placement;if(this.isCircuitDraggable()){placement="auto";content=this.blochInspectorPopupContent();}else{placement="right";var descriptionHeader=this.descriptionHeader();if(descriptionHeader===null)return;content=descriptionHeader;}var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:placement,theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"blochInspectorPopupContent",value:function blochInspectorPopupContent(){var content=document.createDocumentFragment();render(html(blochDisplayElement_templateObject||(blochDisplayElement_templateObject=blochDisplayElement_taggedTemplateLiteral(["\n        <div class=\"bloch-display__inspector\">\n          <header>\n            <h1>Local State</h1>\n          </header>\n\n          <section>\n            r:\n            <span class=\"bloch-display__inspector-d\"\n              >","</span\n            >, \u03D5:\n            <span class=\"bloch-display__inspector-phi\"\n              >","</span\n            >, \u03B8:\n            <span class=\"bloch-display__inspector-theta\"\n              >","</span\n            >\n          </section>\n          <section>\n            x:\n            <span class=\"bloch-display__inspector-x\"\n              >","</span\n            >, y:\n            <span class=\"bloch-display__inspector-y\"\n              >","</span\n            >, z:\n            <span class=\"bloch-display__inspector-z\"\n              >","</span\n            >\n          </section>\n        </div>\n      "])),this.forceSigned(this.d),this.forceSigned(this.phi,2),this.forceSigned(this.theta,2),this.forceSigned(this.x),this.forceSigned(this.y),this.forceSigned(this.z)),content);return content;}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();this.updateBlochVector();}},{key:"disconnectedCallback",value:function disconnectedCallback(){var instance=this._tippy;instance===null||instance===void 0?void 0:instance.destroy();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(!this.body)return;if(oldValue===newValue)return;if(name==="data-draggable-source"){this.body.classList.toggle("draggable-source");return;}if(name==="data-draggable-shadow"){this.body.classList.toggle("draggable-shadow");return;}if(newValue===null)return;if(name==="data-x")this.x=parseFloat(newValue);if(name==="data-y")this.y=parseFloat(newValue);if(name==="data-z")this.z=parseFloat(newValue);this.d=this.vectorLength();this.phi=this.calculatePhi();this.theta=this.calculateTheta();this.updateBlochVector();}},{key:"update",value:function update(){this.addEventListener("mouseenter",this.showPopup);this.addEventListener("mousedown",this.grab);this.addEventListener("mouseup",this.drop);this.d=this.vectorLength();this.phi=this.calculatePhi();this.theta=this.calculateTheta();var vectorLineRect=function vectorLineRect(degree){return html(blochDisplayElement_templateObject2||(blochDisplayElement_templateObject2=blochDisplayElement_taggedTemplateLiteral(["<div\n        class=\"vector-line-rect\"\n        style=\"transform: rotateY(","deg)\"\n      ></div>"])),degree);};var vectorEndCircle=function vectorEndCircle(degree,axis){return html(_templateObject3||(_templateObject3=blochDisplayElement_taggedTemplateLiteral(["<div\n        class=\"vector-end-circle\"\n        style=\"transform: rotate","(","deg)\"\n        data-targets=\"bloch-display.vectorEndCircles\"\n      ></div>"])),axis,degree);};render(html(_templateObject4||(_templateObject4=blochDisplayElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #background {\n            border-radius: 9999px;\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #sphere-border {\n            box-sizing: border-box;\n            border-style: solid;\n            border-radius: 9999px;\n            border-width: 2px;\n            border-color: var(--colors-hare, #afafaf);\n            background-color: rgba(67, 192, 0, 0.1);\n          }\n\n          #body.size-xs #sphere-border {\n            border-width: 1px;\n          }\n\n          #sphere-lines {\n            width: 100%;\n            height: 100%;\n            stroke: currentColor;\n            color: var(--colors-hare, #afafaf);\n          }\n\n          #perspective {\n            position: relative;\n            width: 100%;\n            height: 100%;\n            perspective-origin: top right;\n          }\n\n          #body.size-xs #perspective {\n            perspective: 2rem;\n          }\n\n          #body.size-sm #perspective {\n            perspective: 3rem;\n          }\n\n          #body.size-base #perspective {\n            perspective: 4rem;\n          }\n\n          #body.size-lg #perspective {\n            perspective: 5rem;\n          }\n\n          #body.size-xl #perspective {\n            perspective: 6rem;\n          }\n\n          #vector {\n            position: relative;\n            width: 100%;\n            height: 100%;\n            transform-origin: center;\n            transform-style: preserve-3d;\n          }\n\n          #vector-line {\n            position: absolute;\n            width: 100%;\n            height: 0;\n            bottom: 50%;\n          }\n\n          .vector-line-rect {\n            position: absolute;\n            left: 0px;\n            right: 0px;\n            background-color: var(--colors-eel, #4b4b4b);\n            margin-left: auto;\n            margin-right: auto;\n            transform-origin: bottom;\n            height: 100%;\n            width: 2px;\n          }\n\n          #vector-end {\n            position: absolute;\n            width: 100%;\n          }\n\n          .vector-end-circle {\n            position: absolute;\n            left: 0px;\n            right: 0px;\n            background-color: var(--colors-cardinal, #ff4b4b);\n            margin-left: auto;\n            margin-right: auto;\n            border-radius: 9999px;\n            height: 6px;\n            width: 6px;\n          }\n\n          #body.size-xs .vector-end-circle {\n            height: 4px;\n            width: 4px;\n          }\n\n          #body.size-lg .vector-end-circle,\n          #body.size-xl .vector-end-circle {\n            height: 8px;\n            width: 8px;\n          }\n\n          #body[data-d=\"0\"] .vector-end-circle {\n            background-color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          .absolute {\n            position: absolute;\n          }\n\n          .inset-0 {\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"bloch-display.body\"\n          data-d=\"","\"\n        >\n          <div id=\"background\" class=\"absolute inset-0\"></div>\n          <div id=\"sphere-border\" class=\"absolute inset-0\">\n            <svg\n              id=\"sphere-lines\"\n              class=\"absolute inset-0\"\n              viewBox=\"0 0 48 48\"\n              fill=\"none\"\n              stroke-width=\"1\"\n            >\n              <line x1=\"0%\" y1=\"50%\" x2=\"100%\" y2=\"50%\" />\n              <line x1=\"50%\" y1=\"0%\" x2=\"50%\" y2=\"100%\" />\n              <line x1=\"32%\" y1=\"70%\" x2=\"68%\" y2=\"30%\" />\n              <ellipse cx=\"50%\" cy=\"50%\" rx=\"18%\" ry=\"50%\" />\n              <ellipse cx=\"50%\" cy=\"50%\" rx=\"50%\" ry=\"18%\" />\n            </svg>\n            <div class=\"absolute inset-0\">\n              <div id=\"perspective\">\n                <div id=\"vector\" data-target=\"bloch-display.vector\">\n                  <div id=\"vector-line\" data-target=\"bloch-display.vectorLine\">\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                    ","\n                  </div>\n\n                  <div id=\"vector-end\" data-target=\"bloch-display.vectorEnd\">\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                    "," ","\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>"])),this.classString,this.d,vectorLineRect(0),vectorLineRect(20),vectorLineRect(40),vectorLineRect(60),vectorLineRect(80),vectorLineRect(100),vectorLineRect(120),vectorLineRect(140),vectorLineRect(160),vectorEndCircle(0,"Y"),vectorEndCircle(20,"Y"),vectorEndCircle(40,"Y"),vectorEndCircle(60,"Y"),vectorEndCircle(80,"Y"),vectorEndCircle(100,"Y"),vectorEndCircle(120,"Y"),vectorEndCircle(140,"Y"),vectorEndCircle(160,"Y"),vectorEndCircle(90,"X")),this.shadowRoot);}},{key:"updateBlochVector",value:function updateBlochVector(){var vectorEndCircleWidth=this.vectorEndCircles[0].offsetWidth;this.vectorLine.style.height="calc(".concat(100*this.d/2,"% - ").concat(vectorEndCircleWidth/2,"px)");this.vectorEnd.style.bottom="calc(50% + ".concat(100*this.d/2,"% + ").concat(vectorEndCircleWidth/2,"px)");if(this.d!==0){this.vector.style.transform="rotateY(".concat(this.phi,"deg) rotateX(").concat(-this.theta,"deg)");}}},{key:"d",get:function get(){var dataD=this.getAttribute("data-d");if(dataD===null)throw new Error("data-d not set");return parseFloat(dataD);},set:function set(value){var _this$body;this.setAttribute("data-d",value.toString());(_this$body=this.body)===null||_this$body===void 0?void 0:_this$body.setAttribute("data-d",value.toString());}},{key:"vectorLength",value:function vectorLength(){return parseFloat(Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z).toFixed(4));}},{key:"phi",get:function get(){var dataPhi=this.getAttribute("data-phi");if(dataPhi===null)throw new Error("data-phi not set");return parseFloat(dataPhi);},set:function set(value){this.setAttribute("data-phi",value.toString());}},{key:"calculatePhi",value:function calculatePhi(){return Math.atan2(this.y,this.x)*180/Math.PI;}},{key:"theta",get:function get(){var dataTheta=this.getAttribute("data-theta");if(dataTheta===null)throw new Error("data-theta not set");return parseFloat(dataTheta);},set:function set(value){this.setAttribute("data-theta",value.toString());}},{key:"calculateTheta",value:function calculateTheta(){var θ=Math.max(0,Math.PI/2-Math.atan2(this.z,Math.sqrt(this.y*this.y+this.x*this.x)));return 180*θ/Math.PI;}},{key:"forceSigned",value:function forceSigned(value){var digits=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return(value>=0?"+":"")+value.toFixed(digits);}},{key:"classString",get:function get(){var klass=[];if(this.draggable)klass.push("draggable");if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}},{key:"isCircuitDraggable",value:function isCircuitDraggable(){if(this.parentElement===null)return false;return this.parentElement.tagName==="CIRCUIT-DROPZONE"||// FIXME: dropzone を web component 化した後に消す
+this.parentElement.classList.contains("dropzone");}}]);return BlochDisplayElement;}(/*#__PURE__*/blochDisplayElement_wrapNativeSuper(HTMLElement)),(blochDisplayElement_descriptor=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor2=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorLine",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor3=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorEnd",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),blochDisplayElement_descriptor4=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vector",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor5=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"vectorEndCircles",[targets],{configurable:true,enumerable:true,writable:true,initializer:null}),_descriptor6=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),_descriptor7=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"x",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor8=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"y",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor9=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"z",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return 0;}}),_descriptor10=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor11=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),_descriptor12=blochDisplayElement_applyDecoratedDescriptor(blochDisplayElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),blochDisplayElement_class2))||blochDisplayElement_class;
+// CONCATENATED MODULE: ./app/components/control_gate_component/controlGateElement.ts
+var controlGateElement_templateObject,controlGateElement_templateObject2,controlGateElement_class,controlGateElement_class2,controlGateElement_descriptor,controlGateElement_descriptor2,controlGateElement_descriptor3,controlGateElement_descriptor4,controlGateElement_descriptor5,controlGateElement_descriptor6,controlGateElement_descriptor7,controlGateElement_descriptor8,controlGateElement_descriptor9,controlGateElement_descriptor10,controlGateElement_descriptor11,controlGateElement_templateObject3;function controlGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function controlGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function controlGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function controlGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)controlGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)controlGateElement_defineProperties(Constructor,staticProps);return Constructor;}function controlGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)controlGateElement_setPrototypeOf(subClass,superClass);}function controlGateElement_createSuper(Derived){var hasNativeReflectConstruct=controlGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=controlGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=controlGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return controlGateElement_possibleConstructorReturn(this,result);};}function controlGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return controlGateElement_assertThisInitialized(self);}function controlGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function controlGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;controlGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!controlGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return controlGateElement_construct(Class,arguments,controlGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return controlGateElement_setPrototypeOf(Wrapper,Class);};return controlGateElement_wrapNativeSuper(Class);}function controlGateElement_construct(Parent,args,Class){if(controlGateElement_isNativeReflectConstruct()){controlGateElement_construct=Reflect.construct;}else{controlGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)controlGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return controlGateElement_construct.apply(null,arguments);}function controlGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function controlGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function controlGateElement_setPrototypeOf(o,p){controlGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return controlGateElement_setPrototypeOf(o,p);}function controlGateElement_getPrototypeOf(o){controlGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return controlGateElement_getPrototypeOf(o);}function controlGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function controlGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function controlGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var verticalWires=html(controlGateElement_templateObject||(controlGateElement_templateObject=controlGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var controlDotIcon=html(controlGateElement_templateObject2||(controlGateElement_templateObject2=controlGateElement_taggedTemplateLiteral(["\n  <svg\n    id=\"icon\"\n    width=\"48\"\n    height=\"48\"\n    viewBox=\"0 0 48 48\"\n    fill=\"none\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n  >\n    <circle cx=\"24\" cy=\"24\" r=\"8\" fill=\"currentColor\" />\n  </svg>\n"])));var controlGateElement_ControlGateElement=controller(controlGateElement_class=(controlGateElement_class2=/*#__PURE__*/function(_HTMLElement){controlGateElement_inherits(ControlGateElement,_HTMLElement);var _super=controlGateElement_createSuper(ControlGateElement);function ControlGateElement(){var _this;controlGateElement_classCallCheck(this,ControlGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));controlGateElement_initializerDefineProperty(_this,"body",controlGateElement_descriptor,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"size",controlGateElement_descriptor2,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggable",controlGateElement_descriptor3,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggableSource",controlGateElement_descriptor4,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"draggableShadow",controlGateElement_descriptor5,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"grabbed",controlGateElement_descriptor6,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"disabled",controlGateElement_descriptor7,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireTop",controlGateElement_descriptor8,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireTopDisabled",controlGateElement_descriptor9,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireBottom",controlGateElement_descriptor10,controlGateElement_assertThisInitialized(_this));controlGateElement_initializerDefineProperty(_this,"wireBottomDisabled",controlGateElement_descriptor11,controlGateElement_assertThisInitialized(_this));return _this;}controlGateElement_createClass(ControlGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-wire-top"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("wire-top");}else{this.body.classList.add("wire-top");}}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("wire-bottom");}else{this.body.classList.add("wire-bottom");}}if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-draggable-source"&&this.body){this.body.classList.toggle("draggable-source");}if(name==="data-draggable-shadow"&&this.body){this.body.classList.toggle("draggable-shadow");}if(name==="data-grabbed"){this.body.classList.toggle("grabbed");}}},{key:"update",value:function update(){render(html(controlGateElement_templateObject3||(controlGateElement_templateObject3=controlGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.grabbed {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #body.grabbed #wires,\n          #body.draggable-shadow #wires {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"control-gate.body\"\n          data-action=\"mouseenter:control-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,verticalWires,controlDotIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.disabled)klass.push("disabled");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return ControlGateElement;}(/*#__PURE__*/controlGateElement_wrapNativeSuper(HTMLElement)),(controlGateElement_descriptor=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),controlGateElement_descriptor2=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),controlGateElement_descriptor3=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor4=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor5=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor6=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"grabbed",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor7=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor8=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor9=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor10=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),controlGateElement_descriptor11=controlGateElement_applyDecoratedDescriptor(controlGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),controlGateElement_class2))||controlGateElement_class;
+// CONCATENATED MODULE: ./app/components/h_gate_component/hGateElement.ts
+var hGateElement_templateObject,hGateElement_templateObject2,hGateElement_class,hGateElement_class2,hGateElement_descriptor,hGateElement_descriptor2,hGateElement_descriptor3,hGateElement_descriptor4,hGateElement_descriptor5,hGateElement_descriptor6,hGateElement_descriptor7,hGateElement_descriptor8,hGateElement_templateObject3;function hGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function hGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function hGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function hGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)hGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)hGateElement_defineProperties(Constructor,staticProps);return Constructor;}function hGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)hGateElement_setPrototypeOf(subClass,superClass);}function hGateElement_createSuper(Derived){var hasNativeReflectConstruct=hGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=hGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=hGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return hGateElement_possibleConstructorReturn(this,result);};}function hGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return hGateElement_assertThisInitialized(self);}function hGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function hGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;hGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!hGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return hGateElement_construct(Class,arguments,hGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return hGateElement_setPrototypeOf(Wrapper,Class);};return hGateElement_wrapNativeSuper(Class);}function hGateElement_construct(Parent,args,Class){if(hGateElement_isNativeReflectConstruct()){hGateElement_construct=Reflect.construct;}else{hGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)hGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return hGateElement_construct.apply(null,arguments);}function hGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function hGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function hGateElement_setPrototypeOf(o,p){hGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return hGateElement_setPrototypeOf(o,p);}function hGateElement_getPrototypeOf(o){hGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return hGateElement_getPrototypeOf(o);}function hGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function hGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function hGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var hGateElement_verticalWires=html(hGateElement_templateObject||(hGateElement_templateObject=hGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var hIcon=html(hGateElement_templateObject2||(hGateElement_templateObject2=hGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L17 35M17 24L31 24M31 13L31 35\" />\n</svg>"])));var hGateElement_HGateElement=controller(hGateElement_class=(hGateElement_class2=/*#__PURE__*/function(_HTMLElement){hGateElement_inherits(HGateElement,_HTMLElement);var _super=hGateElement_createSuper(HGateElement);function HGateElement(){var _this;hGateElement_classCallCheck(this,HGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));hGateElement_initializerDefineProperty(_this,"body",hGateElement_descriptor,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"size",hGateElement_descriptor2,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"disabled",hGateElement_descriptor3,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireTop",hGateElement_descriptor4,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireTopDisabled",hGateElement_descriptor5,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireBottom",hGateElement_descriptor6,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"wireBottomDisabled",hGateElement_descriptor7,hGateElement_assertThisInitialized(_this));hGateElement_initializerDefineProperty(_this,"draggable",hGateElement_descriptor8,hGateElement_assertThisInitialized(_this));return _this;}hGateElement_createClass(HGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(hGateElement_templateObject3||(hGateElement_templateObject3=hGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"h-gate.body\"\n          data-action=\"mouseenter:h-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,hGateElement_verticalWires,hIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.disabled)klass.push("disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return HGateElement;}(/*#__PURE__*/hGateElement_wrapNativeSuper(HTMLElement)),(hGateElement_descriptor=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),hGateElement_descriptor2=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),hGateElement_descriptor3=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor4=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor5=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor6=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor7=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),hGateElement_descriptor8=hGateElement_applyDecoratedDescriptor(hGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),hGateElement_class2))||hGateElement_class;
+// CONCATENATED MODULE: ./app/components/measurement_gate_component/measurementGateElement.ts
+var measurementGateElement_templateObject,measurementGateElement_class,measurementGateElement_class2,measurementGateElement_descriptor,measurementGateElement_descriptor2,measurementGateElement_descriptor3,measurementGateElement_descriptor4,measurementGateElement_descriptor5,measurementGateElement_descriptor6,measurementGateElement_descriptor7,measurementGateElement_descriptor8,measurementGateElement_templateObject2;function measurementGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function measurementGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function measurementGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function measurementGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)measurementGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)measurementGateElement_defineProperties(Constructor,staticProps);return Constructor;}function measurementGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)measurementGateElement_setPrototypeOf(subClass,superClass);}function measurementGateElement_createSuper(Derived){var hasNativeReflectConstruct=measurementGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=measurementGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=measurementGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return measurementGateElement_possibleConstructorReturn(this,result);};}function measurementGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return measurementGateElement_assertThisInitialized(self);}function measurementGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function measurementGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;measurementGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!measurementGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return measurementGateElement_construct(Class,arguments,measurementGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return measurementGateElement_setPrototypeOf(Wrapper,Class);};return measurementGateElement_wrapNativeSuper(Class);}function measurementGateElement_construct(Parent,args,Class){if(measurementGateElement_isNativeReflectConstruct()){measurementGateElement_construct=Reflect.construct;}else{measurementGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)measurementGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return measurementGateElement_construct.apply(null,arguments);}function measurementGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function measurementGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function measurementGateElement_setPrototypeOf(o,p){measurementGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return measurementGateElement_setPrototypeOf(o,p);}function measurementGateElement_getPrototypeOf(o){measurementGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return measurementGateElement_getPrototypeOf(o);}function measurementGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function measurementGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function measurementGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var measurementIcon=html(measurementGateElement_templateObject||(measurementGateElement_templateObject=measurementGateElement_taggedTemplateLiteral(["\n  <svg\n    id=\"icon\"\n    width=\"48\"\n    height=\"48\"\n    viewBox=\"0 0 48 48\"\n    fill=\"none\"\n    stroke-width=\"3\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  >\n    <path d=\"M8 35A16 16 0 0 1 40 35\" fill=\"none\" />\n    <path d=\"M24.5 33L35 15\" />\n    <circle\n      cx=\"24.5\"\n      cy=\"33\"\n      r=\"1.5\"\n      fill=\"currentColor\"\n      stroke=\"currentColor\"\n    />\n  </svg>\n"])));var measurementGateElement_MeasurementGateElement=controller(measurementGateElement_class=(measurementGateElement_class2=/*#__PURE__*/function(_HTMLElement){measurementGateElement_inherits(MeasurementGateElement,_HTMLElement);var _super=measurementGateElement_createSuper(MeasurementGateElement);function MeasurementGateElement(){var _this;measurementGateElement_classCallCheck(this,MeasurementGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));measurementGateElement_initializerDefineProperty(_this,"body",measurementGateElement_descriptor,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"size",measurementGateElement_descriptor2,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"value",measurementGateElement_descriptor3,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"flag",measurementGateElement_descriptor4,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggable",measurementGateElement_descriptor5,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"grabbed",measurementGateElement_descriptor6,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggableSource",measurementGateElement_descriptor7,measurementGateElement_assertThisInitialized(_this));measurementGateElement_initializerDefineProperty(_this,"draggableShadow",measurementGateElement_descriptor8,measurementGateElement_assertThisInitialized(_this));return _this;}measurementGateElement_createClass(MeasurementGateElement,[{key:"grab",value:function grab(event){var _this$parentElement;var customEvent=new CustomEvent("grabDraggable",{detail:event,bubbles:true});(_this$parentElement=this.parentElement)===null||_this$parentElement===void 0?void 0:_this$parentElement.dispatchEvent(customEvent);}},{key:"drop",value:function drop(event){var _this$parentElement2;var customEvent=new CustomEvent("dropDraggable",{detail:event,bubbles:true});(_this$parentElement2=this.parentElement)===null||_this$parentElement2===void 0?void 0:_this$parentElement2.dispatchEvent(customEvent);}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-grabbed"){this.body.classList.toggle("grabbed");}if(name==="data-draggable-source"&&this.body){this.body.classList.toggle("draggable-source");}if(name==="data-draggable-shadow"&&this.body){this.body.classList.toggle("draggable-shadow");}if(name==="data-value"&&this.body){this.body.classList.remove("value-0");this.body.classList.remove("value-1");switch(newValue){case"0":this.body.classList.add("value-0");break;case"1":this.body.classList.add("value-1");break;default:}}}},{key:"update",value:function update(){this.addEventListener("mousedown",this.grab);this.addEventListener("mouseup",this.drop);render(html(measurementGateElement_templateObject2||(measurementGateElement_templateObject2=measurementGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.grabbed,\n          #body.draggable-source,\n          #body.draggable-shadow {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #body.draggable-source::after {\n            opacity: 100;\n            border-color: var(--colors-fox, #ff9600);\n          }\n\n          #body.draggable-shadow::after {\n            opacity: 100;\n            border-color: var(--colors-superposition, #ce82ff);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            color: var(--colors-superposition, #ce82ff);\n            stroke: currentColor;\n            transform: rotate(90deg);\n          }\n\n          @media (min-width: 768px) {\n            #icon {\n              transform: rotate(0deg);\n            }\n          }\n\n          #body.value-0 #icon,\n          #body.value-1 #icon {\n            color: var(--colors-swan, #e5e5e5);\n          }\n\n          #ket-label {\n            position: relative;\n            font-size: 1rem;\n            line-height: 1.5rem;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n          }\n\n          #body.value-0 #ket-label,\n          #body.value-1 #ket-label {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.value-0 #ket-label {\n            color: var(--colors-cardinal, #ff4b4b);\n          }\n\n          #body.value-0 #ket-label::after {\n            content: \"0\";\n          }\n\n          #body.value-1 #ket-label {\n            color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          #body.value-1 #ket-label::after {\n            content: \"1\";\n          }\n\n          #body::before {\n            bottom: 0;\n            color: var(--colors-wolf, #777777);\n            content: attr(data-flag) \"\";\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            font-size: 0.75rem;\n            line-height: 1rem;\n            margin-bottom: 2rem;\n            position: absolute;\n            writing-mode: horizontal-tb;\n            z-index: 10;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-flag=\"","\"\n          data-target=\"measurement-gate.body\"\n          data-action=\"mouseenter:measurement-gate#showGateDescription\"\n        >\n          ","\n          <div id=\"ket-label\"></div>\n        </div>"])),this.classString,this.flag,measurementIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.value)klass.push("value-".concat(this.value));if(this.draggable)klass.push("draggable");if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}}]);return MeasurementGateElement;}(/*#__PURE__*/measurementGateElement_wrapNativeSuper(HTMLElement)),(measurementGateElement_descriptor=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),measurementGateElement_descriptor2=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),measurementGateElement_descriptor3=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"value",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),measurementGateElement_descriptor4=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"flag",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),measurementGateElement_descriptor5=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor6=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"grabbed",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor7=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggableSource",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),measurementGateElement_descriptor8=measurementGateElement_applyDecoratedDescriptor(measurementGateElement_class2.prototype,"draggableShadow",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),measurementGateElement_class2))||measurementGateElement_class;
+// CONCATENATED MODULE: ./app/components/phase_gate_component/phaseGateElement.ts
+var phaseGateElement_templateObject,phaseGateElement_templateObject2,phaseGateElement_class,phaseGateElement_class2,phaseGateElement_descriptor,phaseGateElement_descriptor2,phaseGateElement_descriptor3,phaseGateElement_descriptor4,phaseGateElement_descriptor5,phaseGateElement_descriptor6,phaseGateElement_descriptor7,phaseGateElement_templateObject3;function phaseGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function phaseGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function phaseGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function phaseGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)phaseGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)phaseGateElement_defineProperties(Constructor,staticProps);return Constructor;}function phaseGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)phaseGateElement_setPrototypeOf(subClass,superClass);}function phaseGateElement_createSuper(Derived){var hasNativeReflectConstruct=phaseGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=phaseGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=phaseGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return phaseGateElement_possibleConstructorReturn(this,result);};}function phaseGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return phaseGateElement_assertThisInitialized(self);}function phaseGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function phaseGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;phaseGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!phaseGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return phaseGateElement_construct(Class,arguments,phaseGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return phaseGateElement_setPrototypeOf(Wrapper,Class);};return phaseGateElement_wrapNativeSuper(Class);}function phaseGateElement_construct(Parent,args,Class){if(phaseGateElement_isNativeReflectConstruct()){phaseGateElement_construct=Reflect.construct;}else{phaseGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)phaseGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return phaseGateElement_construct.apply(null,arguments);}function phaseGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function phaseGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function phaseGateElement_setPrototypeOf(o,p){phaseGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return phaseGateElement_setPrototypeOf(o,p);}function phaseGateElement_getPrototypeOf(o){phaseGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return phaseGateElement_getPrototypeOf(o);}function phaseGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function phaseGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function phaseGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var phaseGateElement_verticalWires=html(phaseGateElement_templateObject||(phaseGateElement_templateObject=phaseGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var phaseIcon=html(phaseGateElement_templateObject2||(phaseGateElement_templateObject2=phaseGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 24A7 7 0 1 0 31 24A7 7 0 1 0 17 24M19 34L29 13\" />\n</svg>"])));var phaseGateElement_PhaseGateElement=controller(phaseGateElement_class=(phaseGateElement_class2=/*#__PURE__*/function(_HTMLElement){phaseGateElement_inherits(PhaseGateElement,_HTMLElement);var _super=phaseGateElement_createSuper(PhaseGateElement);function PhaseGateElement(){var _this;phaseGateElement_classCallCheck(this,PhaseGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));phaseGateElement_initializerDefineProperty(_this,"body",phaseGateElement_descriptor,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"phi",phaseGateElement_descriptor2,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"disabled",phaseGateElement_descriptor3,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireTop",phaseGateElement_descriptor4,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireTopDisabled",phaseGateElement_descriptor5,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireBottom",phaseGateElement_descriptor6,phaseGateElement_assertThisInitialized(_this));phaseGateElement_initializerDefineProperty(_this,"wireBottomDisabled",phaseGateElement_descriptor7,phaseGateElement_assertThisInitialized(_this));return _this;}phaseGateElement_createClass(PhaseGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(phaseGateElement_templateObject3||(phaseGateElement_templateObject3=phaseGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-phi) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-phi) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 9999px;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"phase-gate.body\"\n          data-phi=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.phi,phaseGateElement_verticalWires,phaseIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return PhaseGateElement;}(/*#__PURE__*/phaseGateElement_wrapNativeSuper(HTMLElement)),(phaseGateElement_descriptor=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),phaseGateElement_descriptor2=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"phi",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),phaseGateElement_descriptor3=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor4=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor5=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor6=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),phaseGateElement_descriptor7=phaseGateElement_applyDecoratedDescriptor(phaseGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),phaseGateElement_class2))||phaseGateElement_class;
+// CONCATENATED MODULE: ./app/components/root_not_gate_component/rootNotGateElement.ts
+var rootNotGateElement_templateObject,rootNotGateElement_templateObject2,rootNotGateElement_class,rootNotGateElement_class2,rootNotGateElement_descriptor,rootNotGateElement_descriptor2,rootNotGateElement_descriptor3,rootNotGateElement_descriptor4,rootNotGateElement_descriptor5,rootNotGateElement_descriptor6,rootNotGateElement_templateObject3;function rootNotGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rootNotGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rootNotGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rootNotGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rootNotGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rootNotGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rootNotGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rootNotGateElement_setPrototypeOf(subClass,superClass);}function rootNotGateElement_createSuper(Derived){var hasNativeReflectConstruct=rootNotGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rootNotGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rootNotGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rootNotGateElement_possibleConstructorReturn(this,result);};}function rootNotGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rootNotGateElement_assertThisInitialized(self);}function rootNotGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rootNotGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rootNotGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rootNotGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rootNotGateElement_construct(Class,arguments,rootNotGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rootNotGateElement_setPrototypeOf(Wrapper,Class);};return rootNotGateElement_wrapNativeSuper(Class);}function rootNotGateElement_construct(Parent,args,Class){if(rootNotGateElement_isNativeReflectConstruct()){rootNotGateElement_construct=Reflect.construct;}else{rootNotGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rootNotGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rootNotGateElement_construct.apply(null,arguments);}function rootNotGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rootNotGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rootNotGateElement_setPrototypeOf(o,p){rootNotGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rootNotGateElement_setPrototypeOf(o,p);}function rootNotGateElement_getPrototypeOf(o){rootNotGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rootNotGateElement_getPrototypeOf(o);}function rootNotGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rootNotGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rootNotGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rootNotGateElement_verticalWires=html(rootNotGateElement_templateObject||(rootNotGateElement_templateObject=rootNotGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rootNotIcon=html(rootNotGateElement_templateObject2||(rootNotGateElement_templateObject2=rootNotGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 24L13 24L14 36L17 36L18 12L38 12\" />\n  <path d=\"M24 32L34 18M34 32L24 18\" />\n</svg>"])));var rootNotGateElement_RootNotGateElement=controller(rootNotGateElement_class=(rootNotGateElement_class2=/*#__PURE__*/function(_HTMLElement){rootNotGateElement_inherits(RootNotGateElement,_HTMLElement);var _super=rootNotGateElement_createSuper(RootNotGateElement);function RootNotGateElement(){var _this;rootNotGateElement_classCallCheck(this,RootNotGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rootNotGateElement_initializerDefineProperty(_this,"body",rootNotGateElement_descriptor,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"disabled",rootNotGateElement_descriptor2,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireTop",rootNotGateElement_descriptor3,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireTopDisabled",rootNotGateElement_descriptor4,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireBottom",rootNotGateElement_descriptor5,rootNotGateElement_assertThisInitialized(_this));rootNotGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rootNotGateElement_descriptor6,rootNotGateElement_assertThisInitialized(_this));return _this;}rootNotGateElement_createClass(RootNotGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rootNotGateElement_templateObject3||(rootNotGateElement_templateObject3=rootNotGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"root-not-gate.body\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,rootNotGateElement_verticalWires,rootNotIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RootNotGateElement;}(/*#__PURE__*/rootNotGateElement_wrapNativeSuper(HTMLElement)),(rootNotGateElement_descriptor=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rootNotGateElement_descriptor2=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor3=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor4=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor5=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rootNotGateElement_descriptor6=rootNotGateElement_applyDecoratedDescriptor(rootNotGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rootNotGateElement_class2))||rootNotGateElement_class;
+// CONCATENATED MODULE: ./app/components/rx_gate_component/rxGateElement.ts
+var rxGateElement_templateObject,rxGateElement_templateObject2,rxGateElement_class,rxGateElement_class2,rxGateElement_descriptor,rxGateElement_descriptor2,rxGateElement_descriptor3,rxGateElement_descriptor4,rxGateElement_descriptor5,rxGateElement_descriptor6,rxGateElement_descriptor7,rxGateElement_templateObject3;function rxGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rxGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rxGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rxGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rxGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rxGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rxGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rxGateElement_setPrototypeOf(subClass,superClass);}function rxGateElement_createSuper(Derived){var hasNativeReflectConstruct=rxGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rxGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rxGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rxGateElement_possibleConstructorReturn(this,result);};}function rxGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rxGateElement_assertThisInitialized(self);}function rxGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rxGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rxGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rxGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rxGateElement_construct(Class,arguments,rxGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rxGateElement_setPrototypeOf(Wrapper,Class);};return rxGateElement_wrapNativeSuper(Class);}function rxGateElement_construct(Parent,args,Class){if(rxGateElement_isNativeReflectConstruct()){rxGateElement_construct=Reflect.construct;}else{rxGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rxGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rxGateElement_construct.apply(null,arguments);}function rxGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rxGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rxGateElement_setPrototypeOf(o,p){rxGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rxGateElement_setPrototypeOf(o,p);}function rxGateElement_getPrototypeOf(o){rxGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rxGateElement_getPrototypeOf(o);}function rxGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rxGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rxGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rxGateElement_verticalWires=html(rxGateElement_templateObject||(rxGateElement_templateObject=rxGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rxIcon=html(rxGateElement_templateObject2||(rxGateElement_templateObject2=rxGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002L24.746 35m.073-21.998L34.609 35\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var rxGateElement_RxGateElement=controller(rxGateElement_class=(rxGateElement_class2=/*#__PURE__*/function(_HTMLElement){rxGateElement_inherits(RxGateElement,_HTMLElement);var _super=rxGateElement_createSuper(RxGateElement);function RxGateElement(){var _this;rxGateElement_classCallCheck(this,RxGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rxGateElement_initializerDefineProperty(_this,"body",rxGateElement_descriptor,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"theta",rxGateElement_descriptor2,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"disabled",rxGateElement_descriptor3,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireTop",rxGateElement_descriptor4,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireTopDisabled",rxGateElement_descriptor5,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireBottom",rxGateElement_descriptor6,rxGateElement_assertThisInitialized(_this));rxGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rxGateElement_descriptor7,rxGateElement_assertThisInitialized(_this));return _this;}rxGateElement_createClass(RxGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rxGateElement_templateObject3||(rxGateElement_templateObject3=rxGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"rx-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,rxGateElement_verticalWires,rxIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RxGateElement;}(/*#__PURE__*/rxGateElement_wrapNativeSuper(HTMLElement)),(rxGateElement_descriptor=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rxGateElement_descriptor2=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),rxGateElement_descriptor3=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor4=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor5=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor6=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rxGateElement_descriptor7=rxGateElement_applyDecoratedDescriptor(rxGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rxGateElement_class2))||rxGateElement_class;
+// CONCATENATED MODULE: ./app/components/ry_gate_component/ryGateElement.ts
+var ryGateElement_templateObject,ryGateElement_templateObject2,ryGateElement_class,ryGateElement_class2,ryGateElement_descriptor,ryGateElement_descriptor2,ryGateElement_descriptor3,ryGateElement_descriptor4,ryGateElement_descriptor5,ryGateElement_descriptor6,ryGateElement_descriptor7,ryGateElement_templateObject3;function ryGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function ryGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function ryGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function ryGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)ryGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)ryGateElement_defineProperties(Constructor,staticProps);return Constructor;}function ryGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)ryGateElement_setPrototypeOf(subClass,superClass);}function ryGateElement_createSuper(Derived){var hasNativeReflectConstruct=ryGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=ryGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=ryGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return ryGateElement_possibleConstructorReturn(this,result);};}function ryGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return ryGateElement_assertThisInitialized(self);}function ryGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function ryGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;ryGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!ryGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return ryGateElement_construct(Class,arguments,ryGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return ryGateElement_setPrototypeOf(Wrapper,Class);};return ryGateElement_wrapNativeSuper(Class);}function ryGateElement_construct(Parent,args,Class){if(ryGateElement_isNativeReflectConstruct()){ryGateElement_construct=Reflect.construct;}else{ryGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)ryGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return ryGateElement_construct.apply(null,arguments);}function ryGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function ryGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function ryGateElement_setPrototypeOf(o,p){ryGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return ryGateElement_setPrototypeOf(o,p);}function ryGateElement_getPrototypeOf(o){ryGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return ryGateElement_getPrototypeOf(o);}function ryGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function ryGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function ryGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var ryGateElement_verticalWires=html(ryGateElement_templateObject||(ryGateElement_templateObject=ryGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var ryIcon=html(ryGateElement_templateObject2||(ryGateElement_templateObject2=ryGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002l-4.967 10.927M25.03 13.002l4.613 10.927m0 0L29.676 35\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var ryGateElement_RyGateElement=controller(ryGateElement_class=(ryGateElement_class2=/*#__PURE__*/function(_HTMLElement){ryGateElement_inherits(RyGateElement,_HTMLElement);var _super=ryGateElement_createSuper(RyGateElement);function RyGateElement(){var _this;ryGateElement_classCallCheck(this,RyGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));ryGateElement_initializerDefineProperty(_this,"body",ryGateElement_descriptor,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"theta",ryGateElement_descriptor2,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"disabled",ryGateElement_descriptor3,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireTop",ryGateElement_descriptor4,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireTopDisabled",ryGateElement_descriptor5,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireBottom",ryGateElement_descriptor6,ryGateElement_assertThisInitialized(_this));ryGateElement_initializerDefineProperty(_this,"wireBottomDisabled",ryGateElement_descriptor7,ryGateElement_assertThisInitialized(_this));return _this;}ryGateElement_createClass(RyGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(ryGateElement_templateObject3||(ryGateElement_templateObject3=ryGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"ry-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,ryGateElement_verticalWires,ryIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RyGateElement;}(/*#__PURE__*/ryGateElement_wrapNativeSuper(HTMLElement)),(ryGateElement_descriptor=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),ryGateElement_descriptor2=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),ryGateElement_descriptor3=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor4=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor5=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor6=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),ryGateElement_descriptor7=ryGateElement_applyDecoratedDescriptor(ryGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),ryGateElement_class2))||ryGateElement_class;
+// CONCATENATED MODULE: ./app/components/rz_gate_component/rzGateElement.ts
+var rzGateElement_templateObject,rzGateElement_templateObject2,rzGateElement_class,rzGateElement_class2,rzGateElement_descriptor,rzGateElement_descriptor2,rzGateElement_descriptor3,rzGateElement_descriptor4,rzGateElement_descriptor5,rzGateElement_descriptor6,rzGateElement_descriptor7,rzGateElement_templateObject3;function rzGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function rzGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function rzGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function rzGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)rzGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)rzGateElement_defineProperties(Constructor,staticProps);return Constructor;}function rzGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)rzGateElement_setPrototypeOf(subClass,superClass);}function rzGateElement_createSuper(Derived){var hasNativeReflectConstruct=rzGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=rzGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=rzGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return rzGateElement_possibleConstructorReturn(this,result);};}function rzGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return rzGateElement_assertThisInitialized(self);}function rzGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function rzGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;rzGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!rzGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return rzGateElement_construct(Class,arguments,rzGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return rzGateElement_setPrototypeOf(Wrapper,Class);};return rzGateElement_wrapNativeSuper(Class);}function rzGateElement_construct(Parent,args,Class){if(rzGateElement_isNativeReflectConstruct()){rzGateElement_construct=Reflect.construct;}else{rzGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)rzGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return rzGateElement_construct.apply(null,arguments);}function rzGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function rzGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function rzGateElement_setPrototypeOf(o,p){rzGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return rzGateElement_setPrototypeOf(o,p);}function rzGateElement_getPrototypeOf(o){rzGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return rzGateElement_getPrototypeOf(o);}function rzGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function rzGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function rzGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var rzGateElement_verticalWires=html(rzGateElement_templateObject||(rzGateElement_templateObject=rzGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var rzIcon=html(rzGateElement_templateObject2||(rzGateElement_templateObject2=rzGateElement_taggedTemplateLiteral(["<svg id=\"icon\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\">\n  <path\n    d=\"M12.321 13.002V35l.125-9.837c3.147.038 6.353-.042 8.024-1.255 3.393-2.465 2.536-7.83-.883-10.076-1.55-1.019-4.377-.83-7.266-.83zM18.236 25.6L21.73 35zM34.61 13.002L24.746 35m.073-21.998h9.79M24.747 35h10.074\"\n    fill=\"none\"\n    stroke=\"#FFF\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n  />\n</svg>"])));var rzGateElement_RzGateElement=controller(rzGateElement_class=(rzGateElement_class2=/*#__PURE__*/function(_HTMLElement){rzGateElement_inherits(RzGateElement,_HTMLElement);var _super=rzGateElement_createSuper(RzGateElement);function RzGateElement(){var _this;rzGateElement_classCallCheck(this,RzGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));rzGateElement_initializerDefineProperty(_this,"body",rzGateElement_descriptor,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"theta",rzGateElement_descriptor2,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"disabled",rzGateElement_descriptor3,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireTop",rzGateElement_descriptor4,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireTopDisabled",rzGateElement_descriptor5,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireBottom",rzGateElement_descriptor6,rzGateElement_assertThisInitialized(_this));rzGateElement_initializerDefineProperty(_this,"wireBottomDisabled",rzGateElement_descriptor7,rzGateElement_assertThisInitialized(_this));return _this;}rzGateElement_createClass(RzGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(rzGateElement_templateObject3||(rzGateElement_templateObject3=rzGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body::before {\n            position: absolute;\n            bottom: 0px;\n            margin-bottom: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-top:not(.wire-bottom)::before,\n          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {\n            display: none;\n          }\n\n          #body::after {\n            position: absolute;\n            top: 0px;\n            margin-top: 2rem;\n            color: var(--colors-wolf, #777777);\n            background-color: var(--colors-snow, #ffffff);\n            font-size: 0.75rem;\n            line-height: 0.75rem;\n            letter-spacing: -0.05em;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n            z-index: 10;\n            content: attr(data-theta) \"\";\n          }\n\n          #body.wire-bottom::after,\n          #body.wire-bottom-disabled::after,\n          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {\n            display: none;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-gate, #43c000);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"rz-gate.body\"\n          data-theta=\"","\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,this.theta,rzGateElement_verticalWires,rzIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return RzGateElement;}(/*#__PURE__*/rzGateElement_wrapNativeSuper(HTMLElement)),(rzGateElement_descriptor=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),rzGateElement_descriptor2=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"theta",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),rzGateElement_descriptor3=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor4=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor5=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor6=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),rzGateElement_descriptor7=rzGateElement_applyDecoratedDescriptor(rzGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),rzGateElement_class2))||rzGateElement_class;
+// CONCATENATED MODULE: ./app/components/swap_gate_component/swapGateElement.ts
+var swapGateElement_templateObject,swapGateElement_templateObject2,swapGateElement_class,swapGateElement_class2,swapGateElement_descriptor,swapGateElement_descriptor2,swapGateElement_descriptor3,swapGateElement_descriptor4,swapGateElement_descriptor5,swapGateElement_descriptor6,swapGateElement_descriptor7,swapGateElement_descriptor8,swapGateElement_templateObject3;function swapGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function swapGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function swapGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function swapGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)swapGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)swapGateElement_defineProperties(Constructor,staticProps);return Constructor;}function swapGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)swapGateElement_setPrototypeOf(subClass,superClass);}function swapGateElement_createSuper(Derived){var hasNativeReflectConstruct=swapGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=swapGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=swapGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return swapGateElement_possibleConstructorReturn(this,result);};}function swapGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return swapGateElement_assertThisInitialized(self);}function swapGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function swapGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;swapGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!swapGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return swapGateElement_construct(Class,arguments,swapGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return swapGateElement_setPrototypeOf(Wrapper,Class);};return swapGateElement_wrapNativeSuper(Class);}function swapGateElement_construct(Parent,args,Class){if(swapGateElement_isNativeReflectConstruct()){swapGateElement_construct=Reflect.construct;}else{swapGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)swapGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return swapGateElement_construct.apply(null,arguments);}function swapGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function swapGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function swapGateElement_setPrototypeOf(o,p){swapGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return swapGateElement_setPrototypeOf(o,p);}function swapGateElement_getPrototypeOf(o){swapGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return swapGateElement_getPrototypeOf(o);}function swapGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function swapGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function swapGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var swapGateElement_verticalWires=html(swapGateElement_templateObject||(swapGateElement_templateObject=swapGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var swapIcon=html(swapGateElement_templateObject2||(swapGateElement_templateObject2=swapGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  viewBox=\"0 0 24 24\"\n>\n  <path d=\"M6 18L18 6M6 6l12 12\"></path>\n</svg>"])));var swapGateElement_SwapGateElement=controller(swapGateElement_class=(swapGateElement_class2=/*#__PURE__*/function(_HTMLElement){swapGateElement_inherits(SwapGateElement,_HTMLElement);var _super=swapGateElement_createSuper(SwapGateElement);function SwapGateElement(){var _this;swapGateElement_classCallCheck(this,SwapGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));swapGateElement_initializerDefineProperty(_this,"body",swapGateElement_descriptor,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"size",swapGateElement_descriptor2,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"disabled",swapGateElement_descriptor3,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireTop",swapGateElement_descriptor4,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireTopDisabled",swapGateElement_descriptor5,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireBottom",swapGateElement_descriptor6,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"wireBottomDisabled",swapGateElement_descriptor7,swapGateElement_assertThisInitialized(_this));swapGateElement_initializerDefineProperty(_this,"draggable",swapGateElement_descriptor8,swapGateElement_assertThisInitialized(_this));return _this;}swapGateElement_createClass(SwapGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.descriptionHeader();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"descriptionHeader",value:function descriptionHeader(){return this.querySelector("header");}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(!this.body)return;if(oldValue===newValue)return;if(name==="data-disabled"){this.body.classList.toggle("disabled");}if(name==="data-wire-top"){this.body.classList.toggle("wire-top");}if(name==="data-wire-bottom"){this.body.classList.toggle("wire-bottom");}}},{key:"update",value:function update(){render(html(swapGateElement_templateObject3||(swapGateElement_templateObject3=swapGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"swap-gate.body\"\n          data-action=\"mouseenter:swap-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,swapGateElement_verticalWires,swapIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.disabled)klass.push("disabled");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return SwapGateElement;}(/*#__PURE__*/swapGateElement_wrapNativeSuper(HTMLElement)),(swapGateElement_descriptor=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),swapGateElement_descriptor2=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),swapGateElement_descriptor3=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor4=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor5=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor6=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor7=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),swapGateElement_descriptor8=swapGateElement_applyDecoratedDescriptor(swapGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),swapGateElement_class2))||swapGateElement_class;
+// CONCATENATED MODULE: ./app/components/write_gate_component/writeGateElement.ts
+var writeGateElement_templateObject,writeGateElement_class,writeGateElement_class2,writeGateElement_descriptor,writeGateElement_descriptor2,writeGateElement_descriptor3,writeGateElement_descriptor4,writeGateElement_templateObject2;function writeGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function writeGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function writeGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function writeGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)writeGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)writeGateElement_defineProperties(Constructor,staticProps);return Constructor;}function writeGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)writeGateElement_setPrototypeOf(subClass,superClass);}function writeGateElement_createSuper(Derived){var hasNativeReflectConstruct=writeGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=writeGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=writeGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return writeGateElement_possibleConstructorReturn(this,result);};}function writeGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return writeGateElement_assertThisInitialized(self);}function writeGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function writeGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;writeGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!writeGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return writeGateElement_construct(Class,arguments,writeGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return writeGateElement_setPrototypeOf(Wrapper,Class);};return writeGateElement_wrapNativeSuper(Class);}function writeGateElement_construct(Parent,args,Class){if(writeGateElement_isNativeReflectConstruct()){writeGateElement_construct=Reflect.construct;}else{writeGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)writeGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return writeGateElement_construct.apply(null,arguments);}function writeGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function writeGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function writeGateElement_setPrototypeOf(o,p){writeGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return writeGateElement_setPrototypeOf(o,p);}function writeGateElement_getPrototypeOf(o){writeGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return writeGateElement_getPrototypeOf(o);}function writeGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function writeGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function writeGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var ketIcon=html(writeGateElement_templateObject||(writeGateElement_templateObject=writeGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <polygon points=\"9 40, 9 10, 34 10, 40 24, 34 40\" stroke=\"#fff\" fill=\"#fff\" />\n  <path d=\"M9 10L9 40M34 10L40 24L34 40\" />\n</svg>"])));var writeGateElement_WriteGateElement=controller(writeGateElement_class=(writeGateElement_class2=/*#__PURE__*/function(_HTMLElement){writeGateElement_inherits(WriteGateElement,_HTMLElement);var _super=writeGateElement_createSuper(WriteGateElement);function WriteGateElement(){var _this;writeGateElement_classCallCheck(this,WriteGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));writeGateElement_initializerDefineProperty(_this,"body",writeGateElement_descriptor,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"size",writeGateElement_descriptor2,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"value",writeGateElement_descriptor3,writeGateElement_assertThisInitialized(_this));writeGateElement_initializerDefineProperty(_this,"draggable",writeGateElement_descriptor4,writeGateElement_assertThisInitialized(_this));return _this;}writeGateElement_createClass(WriteGateElement,[{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){try{this.attachShadow({mode:"open"});}catch(InvalidStateError){// NOP
+}this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-value"&&this.body){this.body.classList.remove("value-0");this.body.classList.remove("value-1");switch(newValue){case"0":this.body.classList.add("value-0");break;case"1":this.body.classList.add("value-1");break;default:}}}},{key:"update",value:function update(){render(html(writeGateElement_templateObject2||(writeGateElement_templateObject2=writeGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #icon {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            color: var(--colors-eel, #4b4b4b);\n            stroke: currentColor;\n            transform: rotate(90deg);\n          }\n\n          @media (min-width: 768px) {\n            #icon {\n              transform: rotate(0deg);\n            }\n          }\n\n          #ket-label {\n            position: relative;\n            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n              \"Liberation Mono\", \"Courier New\", monospace;\n          }\n\n          #body.size-xs #ket-label {\n            font-size: 0.75rem;\n            line-height: 1rem;\n          }\n\n          #body.size-sm #ket-label {\n            font-size: 0.875rem;\n            line-height: 1.25rem;\n          }\n\n          #body.size-base #ket-label {\n            font-size: 1rem;\n            line-height: 1.5rem;\n          }\n\n          #body.size-lg #ket-label {\n            font-size: 1.125rem;\n            line-height: 1.75rem;\n          }\n\n          #body.size-xl #ket-label {\n            font-size: 1.25rem;\n            line-height: 1.75rem;\n          }\n\n          #body.value-0 #ket-label,\n          #body.value-1 #ket-label {\n            background-color: var(--colors-snow, #ffffff);\n          }\n\n          #body.value-0 #ket-label {\n            color: var(--colors-cardinal, #ff4b4b);\n          }\n\n          #body.value-0 #ket-label::after {\n            content: \"0\";\n          }\n\n          #body.value-1 #ket-label {\n            color: var(--colors-magnitude, #1cb0f6);\n          }\n\n          #body.value-1 #ket-label::after {\n            content: \"1\";\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"write-gate.body\"\n          data-action=\"mouseenter:write-gate#showGateDescription\"\n        >\n          ","\n          <div id=\"ket-label\"></div>\n        </div>"])),this.classString,ketIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.value)klass.push("value-".concat(this.value));if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return WriteGateElement;}(/*#__PURE__*/writeGateElement_wrapNativeSuper(HTMLElement)),(writeGateElement_descriptor=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),writeGateElement_descriptor2=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),writeGateElement_descriptor3=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"value",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"0";}}),writeGateElement_descriptor4=writeGateElement_applyDecoratedDescriptor(writeGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),writeGateElement_class2))||writeGateElement_class;
+// CONCATENATED MODULE: ./app/components/x_gate_component/xGateElement.ts
+var xGateElement_templateObject,xGateElement_templateObject2,xGateElement_class,xGateElement_class2,xGateElement_descriptor,xGateElement_descriptor2,xGateElement_descriptor3,xGateElement_descriptor4,xGateElement_descriptor5,xGateElement_descriptor6,xGateElement_descriptor7,xGateElement_descriptor8,xGateElement_templateObject3;function xGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function xGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function xGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function xGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)xGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)xGateElement_defineProperties(Constructor,staticProps);return Constructor;}function xGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)xGateElement_setPrototypeOf(subClass,superClass);}function xGateElement_createSuper(Derived){var hasNativeReflectConstruct=xGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=xGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=xGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return xGateElement_possibleConstructorReturn(this,result);};}function xGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return xGateElement_assertThisInitialized(self);}function xGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function xGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;xGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!xGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return xGateElement_construct(Class,arguments,xGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return xGateElement_setPrototypeOf(Wrapper,Class);};return xGateElement_wrapNativeSuper(Class);}function xGateElement_construct(Parent,args,Class){if(xGateElement_isNativeReflectConstruct()){xGateElement_construct=Reflect.construct;}else{xGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)xGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return xGateElement_construct.apply(null,arguments);}function xGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function xGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function xGateElement_setPrototypeOf(o,p){xGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return xGateElement_setPrototypeOf(o,p);}function xGateElement_getPrototypeOf(o){xGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return xGateElement_getPrototypeOf(o);}function xGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function xGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function xGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var xGateElement_verticalWires=html(xGateElement_templateObject||(xGateElement_templateObject=xGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var xIcon=html(xGateElement_templateObject2||(xGateElement_templateObject2=xGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <line x1=\"50%\" y1=\"28%\" x2=\"50%\" y2=\"72%\" />\n  <line x1=\"28%\" y1=\"50%\" x2=\"72%\" y2=\"50%\" />\n</svg>"])));var xGateElement_XGateElement=controller(xGateElement_class=(xGateElement_class2=/*#__PURE__*/function(_HTMLElement){xGateElement_inherits(XGateElement,_HTMLElement);var _super=xGateElement_createSuper(XGateElement);function XGateElement(){var _this;xGateElement_classCallCheck(this,XGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));xGateElement_initializerDefineProperty(_this,"body",xGateElement_descriptor,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"size",xGateElement_descriptor2,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"disabled",xGateElement_descriptor3,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireTop",xGateElement_descriptor4,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireTopDisabled",xGateElement_descriptor5,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireBottom",xGateElement_descriptor6,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"wireBottomDisabled",xGateElement_descriptor7,xGateElement_assertThisInitialized(_this));xGateElement_initializerDefineProperty(_this,"draggable",xGateElement_descriptor8,xGateElement_assertThisInitialized(_this));return _this;}xGateElement_createClass(XGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.description();if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"description",value:function description(){return this.innerHTML;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(xGateElement_templateObject3||(xGateElement_templateObject3=xGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 9999px;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"x-gate.body\"\n          data-action=\"mouseenter:x-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,xGateElement_verticalWires,xIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.disabled)klass.push("disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return XGateElement;}(/*#__PURE__*/xGateElement_wrapNativeSuper(HTMLElement)),(xGateElement_descriptor=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),xGateElement_descriptor2=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),xGateElement_descriptor3=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor4=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor5=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor6=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor7=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),xGateElement_descriptor8=xGateElement_applyDecoratedDescriptor(xGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),xGateElement_class2))||xGateElement_class;
+// CONCATENATED MODULE: ./app/components/y_gate_component/yGateElement.ts
+var yGateElement_templateObject,yGateElement_templateObject2,yGateElement_class,yGateElement_class2,yGateElement_descriptor,yGateElement_descriptor2,yGateElement_descriptor3,yGateElement_descriptor4,yGateElement_descriptor5,yGateElement_descriptor6,yGateElement_descriptor7,yGateElement_descriptor8,yGateElement_templateObject3;function yGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function yGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function yGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function yGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)yGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)yGateElement_defineProperties(Constructor,staticProps);return Constructor;}function yGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)yGateElement_setPrototypeOf(subClass,superClass);}function yGateElement_createSuper(Derived){var hasNativeReflectConstruct=yGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=yGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=yGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return yGateElement_possibleConstructorReturn(this,result);};}function yGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return yGateElement_assertThisInitialized(self);}function yGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function yGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;yGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!yGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return yGateElement_construct(Class,arguments,yGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return yGateElement_setPrototypeOf(Wrapper,Class);};return yGateElement_wrapNativeSuper(Class);}function yGateElement_construct(Parent,args,Class){if(yGateElement_isNativeReflectConstruct()){yGateElement_construct=Reflect.construct;}else{yGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)yGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return yGateElement_construct.apply(null,arguments);}function yGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function yGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function yGateElement_setPrototypeOf(o,p){yGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return yGateElement_setPrototypeOf(o,p);}function yGateElement_getPrototypeOf(o){yGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return yGateElement_getPrototypeOf(o);}function yGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function yGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function yGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var yGateElement_verticalWires=html(yGateElement_templateObject||(yGateElement_templateObject=yGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var yIcon=html(yGateElement_templateObject2||(yGateElement_templateObject2=yGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L24 24L31 13M24 24L24 35\" />\n</svg>"])));var yGateElement_YGateElement=controller(yGateElement_class=(yGateElement_class2=/*#__PURE__*/function(_HTMLElement){yGateElement_inherits(YGateElement,_HTMLElement);var _super=yGateElement_createSuper(YGateElement);function YGateElement(){var _this;yGateElement_classCallCheck(this,YGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));yGateElement_initializerDefineProperty(_this,"body",yGateElement_descriptor,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"size",yGateElement_descriptor2,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"disabled",yGateElement_descriptor3,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireTop",yGateElement_descriptor4,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireTopDisabled",yGateElement_descriptor5,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireBottom",yGateElement_descriptor6,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"wireBottomDisabled",yGateElement_descriptor7,yGateElement_assertThisInitialized(_this));yGateElement_initializerDefineProperty(_this,"draggable",yGateElement_descriptor8,yGateElement_assertThisInitialized(_this));return _this;}yGateElement_createClass(YGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"showGateDescription",value:function showGateDescription(){if(this._tippy)return;var content=this.innerHTML;if(!content)return;var popup=Object(tippy_esm["b" /* default */])(this,{allowHTML:true,animation:false,arrow:tippy_esm["c" /* roundArrow */]+tippy_esm["c" /* roundArrow */],delay:0,placement:"right",theme:"qni",onShow:function onShow(instance){instance.setContent(content);}});popup.show();}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(yGateElement_templateObject3||(yGateElement_templateObject3=yGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-xs {\n            height: 1rem;\n            width: 1rem;\n          }\n\n          #body.size-sm {\n            height: 1.5rem;\n            width: 1.5rem;\n          }\n\n          #body.size-base {\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #body.size-lg {\n            height: 2.5rem;\n            width: 2.5rem;\n          }\n\n          #body.size-xl {\n            height: 3rem;\n            width: 3rem;\n          }\n\n          #body.draggable {\n            cursor: grab;\n          }\n\n          #body.draggable::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-color: var(--colors-cardinal, #ff4b4b);\n            border-radius: 0.25rem;\n            border-style: solid;\n            border-width: 2px;\n            box-sizing: border-box;\n            opacity: 0;\n            content: \"\";\n          }\n\n          #body:hover::after {\n            opacity: 100;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            color: var(--colors-gate, #43c000);\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"y-gate.body\"\n          data-action=\"mouseenter:y-gate#showGateDescription\"\n        >\n          "," ","\n        </div>"])),this.classString,yGateElement_verticalWires,yIcon),this.shadowRoot);}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");if(this.wireTop)klass.push("wire-top");if(this.wireTopDisabled)klass.push("wire-top-disabled");if(this.wireBottom)klass.push("wire-bottom");if(this.wireBottomDisabled)klass.push("wire-bottom-disabled");if(this.disabled)klass.push("disabled");if(this.draggable)klass.push("draggable");return klass.join(" ");}}]);return YGateElement;}(/*#__PURE__*/yGateElement_wrapNativeSuper(HTMLElement)),(yGateElement_descriptor=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),yGateElement_descriptor2=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),yGateElement_descriptor3=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor4=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor5=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor6=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor7=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),yGateElement_descriptor8=yGateElement_applyDecoratedDescriptor(yGateElement_class2.prototype,"draggable",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),yGateElement_class2))||yGateElement_class;
+// CONCATENATED MODULE: ./app/components/z_gate_component/zGateElement.ts
+var zGateElement_templateObject,zGateElement_templateObject2,zGateElement_class,zGateElement_class2,zGateElement_descriptor,zGateElement_descriptor2,zGateElement_descriptor3,zGateElement_descriptor4,zGateElement_descriptor5,zGateElement_descriptor6,zGateElement_templateObject3;function zGateElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function zGateElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function zGateElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function zGateElement_createClass(Constructor,protoProps,staticProps){if(protoProps)zGateElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)zGateElement_defineProperties(Constructor,staticProps);return Constructor;}function zGateElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)zGateElement_setPrototypeOf(subClass,superClass);}function zGateElement_createSuper(Derived){var hasNativeReflectConstruct=zGateElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=zGateElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=zGateElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return zGateElement_possibleConstructorReturn(this,result);};}function zGateElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return zGateElement_assertThisInitialized(self);}function zGateElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function zGateElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;zGateElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!zGateElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return zGateElement_construct(Class,arguments,zGateElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return zGateElement_setPrototypeOf(Wrapper,Class);};return zGateElement_wrapNativeSuper(Class);}function zGateElement_construct(Parent,args,Class){if(zGateElement_isNativeReflectConstruct()){zGateElement_construct=Reflect.construct;}else{zGateElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)zGateElement_setPrototypeOf(instance,Class.prototype);return instance;};}return zGateElement_construct.apply(null,arguments);}function zGateElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function zGateElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function zGateElement_setPrototypeOf(o,p){zGateElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return zGateElement_setPrototypeOf(o,p);}function zGateElement_getPrototypeOf(o){zGateElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return zGateElement_getPrototypeOf(o);}function zGateElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function zGateElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function zGateElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var zGateElement_verticalWires=html(zGateElement_templateObject||(zGateElement_templateObject=zGateElement_taggedTemplateLiteral(["<svg\n  id=\"wires\"\n  width=\"100\"\n  height=\"100\"\n  viewBox=\"0 0 100 100\"\n  preserveAspectRatio=\"none\"\n>\n  <line\n    id=\"wire-top\"\n    x1=\"50\"\n    y1=\"0\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n  <line\n    id=\"wire-bottom\"\n    x1=\"50\"\n    y1=\"100\"\n    x2=\"50\"\n    y2=\"50\"\n    stroke-width=\"2\"\n    stroke=\"currentColor\"\n    vector-effect=\"non-scaling-stroke\"\n  ></line>\n</svg>"])));var zIcon=html(zGateElement_templateObject2||(zGateElement_templateObject2=zGateElement_taggedTemplateLiteral(["<svg\n  id=\"icon\"\n  width=\"48\"\n  height=\"48\"\n  viewBox=\"0 0 48 48\"\n  fill=\"none\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n>\n  <path d=\"M17 13L31 13L17 35L31 35\" />\n</svg>"])));var zGateElement_ZGateElement=controller(zGateElement_class=(zGateElement_class2=/*#__PURE__*/function(_HTMLElement){zGateElement_inherits(ZGateElement,_HTMLElement);var _super=zGateElement_createSuper(ZGateElement);function ZGateElement(){var _this;zGateElement_classCallCheck(this,ZGateElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));zGateElement_initializerDefineProperty(_this,"body",zGateElement_descriptor,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"disabled",zGateElement_descriptor2,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireTop",zGateElement_descriptor3,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireTopDisabled",zGateElement_descriptor4,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireBottom",zGateElement_descriptor5,zGateElement_assertThisInitialized(_this));zGateElement_initializerDefineProperty(_this,"wireBottomDisabled",zGateElement_descriptor6,zGateElement_assertThisInitialized(_this));return _this;}zGateElement_createClass(ZGateElement,[{key:"disable",value:function disable(){this.disabled=true;}},{key:"enable",value:function enable(){this.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"attributeChangedCallback",value:function attributeChangedCallback(name,oldValue,newValue){if(name==="data-disabled"&&oldValue!==newValue&&this.body){if(newValue===null){this.body.classList.remove("disabled");}else{this.body.classList.add("disabled");}}if(name==="data-wire-top"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireTopClassString);}if(name==="data-wire-bottom"&&oldValue!==newValue&&this.body){this.body.classList.add(this.wireBottomClassString);}}},{key:"update",value:function update(){render(html(zGateElement_templateObject3||(zGateElement_templateObject3=zGateElement_taggedTemplateLiteral(["<style>\n          #body {\n            align-items: center;\n            display: flex;\n            justify-content: center;\n            position: relative;\n            height: 2rem;\n            width: 2rem;\n          }\n\n          #wires {\n            position: absolute;\n            bottom: -2px;\n            left: -2px;\n            right: -2px;\n            top: -2px;\n            height: calc(100% + 4px);\n            width: calc(100% + 4px);\n            overflow: visible;\n          }\n\n          #wire-top,\n          #wire-bottom {\n            stroke-width: 4;\n            display: none;\n          }\n\n          #body.wire-top #wire-top {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-top-disabled #wire-top {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: top;\n            transform: translateY(-25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom #wire-bottom {\n            display: block;\n            color: var(--colors-gate, #43c000);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #body.wire-bottom-disabled #wire-bottom {\n            display: block;\n            color: var(--colors-eel, #4b4b4b);\n            transform-origin: bottom;\n            transform: translateY(25%) scaleY(1.5);\n          }\n\n          #icon {\n            position: absolute;\n            bottom: 0px;\n            left: 0px;\n            right: 0px;\n            top: 0px;\n            height: 100%;\n            width: 100%;\n            border-radius: 0.25rem;\n            color: var(--colors-snow, #ffffff);\n            background-color: var(--colors-gate, #43c000);\n            stroke: currentColor;\n          }\n\n          #body.disabled #icon {\n            background-color: var(--colors-eel, #4b4b4b);\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\""," "," ","\"\n          data-target=\"z-gate.body\"\n        >\n          "," ","\n        </div>"])),this.disabledClassString,this.wireTopClassString,this.wireBottomClassString,zGateElement_verticalWires,zIcon),this.shadowRoot);}},{key:"disabledClassString",get:function get(){return this.disabled?"disabled":"";}},{key:"wireTopClassString",get:function get(){if(this.wireTop)return"wire-top";if(this.wireTopDisabled)return"wire-top-disabled";return"";}},{key:"wireBottomClassString",get:function get(){if(this.wireBottom)return"wire-bottom";if(this.wireBottomDisabled)return"wire-bottom-disabled";return"";}}]);return ZGateElement;}(/*#__PURE__*/zGateElement_wrapNativeSuper(HTMLElement)),(zGateElement_descriptor=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),zGateElement_descriptor2=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"disabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor3=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireTop",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor4=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireTopDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor5=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireBottom",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}}),zGateElement_descriptor6=zGateElement_applyDecoratedDescriptor(zGateElement_class2.prototype,"wireBottomDisabled",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return false;}})),zGateElement_class2))||zGateElement_class;
+// CONCATENATED MODULE: ./app/components/circle_notation_component/circleNotationElement.ts
+var circleNotationElement_class,circleNotationElement_class2,circleNotationElement_descriptor,circleNotationElement_descriptor2,circleNotationElement_descriptor3,circleNotationElement_descriptor4,circleNotationElement_descriptor5,circleNotationElement_templateObject;function circleNotationElement_createForOfIteratorHelper(o,allowArrayLike){var it=typeof Symbol!=="undefined"&&o[Symbol.iterator]||o["@@iterator"];if(!it){if(Array.isArray(o)||(it=circleNotationElement_unsupportedIterableToArray(o))||allowArrayLike&&o&&typeof o.length==="number"){if(it)o=it;var i=0;var F=function F(){};return{s:F,n:function n(){if(i>=o.length)return{done:true};return{done:false,value:o[i++]};},e:function e(_e2){throw _e2;},f:F};}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion=true,didErr=false,err;return{s:function s(){it=it.call(o);},n:function n(){var step=it.next();normalCompletion=step.done;return step;},e:function e(_e3){didErr=true;err=_e3;},f:function f(){try{if(!normalCompletion&&it["return"]!=null)it["return"]();}finally{if(didErr)throw err;}}};}function _slicedToArray(arr,i){return _arrayWithHoles(arr)||_iterableToArrayLimit(arr,i)||circleNotationElement_unsupportedIterableToArray(arr,i)||_nonIterableRest();}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function circleNotationElement_unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return circleNotationElement_arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(o);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return circleNotationElement_arrayLikeToArray(o,minLen);}function circleNotationElement_arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function _iterableToArrayLimit(arr,i){var _i=arr&&(typeof Symbol!=="undefined"&&arr[Symbol.iterator]||arr["@@iterator"]);if(_i==null)return;var _arr=[];var _n=true;var _d=false;var _s,_e;try{for(_i=_i.call(arr);!(_n=(_s=_i.next()).done);_n=true){_arr.push(_s.value);if(i&&_arr.length===i)break;}}catch(err){_d=true;_e=err;}finally{try{if(!_n&&_i["return"]!=null)_i["return"]();}finally{if(_d)throw _e;}}return _arr;}function _arrayWithHoles(arr){if(Array.isArray(arr))return arr;}function circleNotationElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function circleNotationElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function circleNotationElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function circleNotationElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function circleNotationElement_createClass(Constructor,protoProps,staticProps){if(protoProps)circleNotationElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)circleNotationElement_defineProperties(Constructor,staticProps);return Constructor;}function circleNotationElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)circleNotationElement_setPrototypeOf(subClass,superClass);}function circleNotationElement_createSuper(Derived){var hasNativeReflectConstruct=circleNotationElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=circleNotationElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=circleNotationElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return circleNotationElement_possibleConstructorReturn(this,result);};}function circleNotationElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return circleNotationElement_assertThisInitialized(self);}function circleNotationElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function circleNotationElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;circleNotationElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!circleNotationElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return circleNotationElement_construct(Class,arguments,circleNotationElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return circleNotationElement_setPrototypeOf(Wrapper,Class);};return circleNotationElement_wrapNativeSuper(Class);}function circleNotationElement_construct(Parent,args,Class){if(circleNotationElement_isNativeReflectConstruct()){circleNotationElement_construct=Reflect.construct;}else{circleNotationElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)circleNotationElement_setPrototypeOf(instance,Class.prototype);return instance;};}return circleNotationElement_construct.apply(null,arguments);}function circleNotationElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function circleNotationElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function circleNotationElement_setPrototypeOf(o,p){circleNotationElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return circleNotationElement_setPrototypeOf(o,p);}function circleNotationElement_getPrototypeOf(o){circleNotationElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return circleNotationElement_getPrototypeOf(o);}function circleNotationElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function circleNotationElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}var circleNotationElement_CircleNotationElement=controller(circleNotationElement_class=(circleNotationElement_class2=/*#__PURE__*/function(_HTMLElement){circleNotationElement_inherits(CircleNotationElement,_HTMLElement);var _super=circleNotationElement_createSuper(CircleNotationElement);function CircleNotationElement(){var _this;circleNotationElement_classCallCheck(this,CircleNotationElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));circleNotationElement_initializerDefineProperty(_this,"size",circleNotationElement_descriptor,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"magnitudes",circleNotationElement_descriptor2,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"phases",circleNotationElement_descriptor3,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"body",circleNotationElement_descriptor4,circleNotationElement_assertThisInitialized(_this));circleNotationElement_initializerDefineProperty(_this,"qubitCircles",circleNotationElement_descriptor5,circleNotationElement_assertThisInitialized(_this));return _this;}circleNotationElement_createClass(CircleNotationElement,[{key:"setMagnitude",value:function setMagnitude(qubitCircleIndex,magnitude){var magInt=Math.round(magnitude*100);var magRounded=magInt<10?magInt===0?0:10:Math.round(magInt/10)*10;this.qubitCircles[qubitCircleIndex].setAttribute("data-magnitude",magRounded.toString());}},{key:"setPhase",value:function setPhase(qubitCircleIndex,phase){var phaseRounded=Math.round(phase/10)*10;if(phaseRounded<0)phaseRounded=360+phaseRounded;this.qubitCircles[qubitCircleIndex].setAttribute("data-phase",phaseRounded.toString());}},{key:"connectedCallback",value:function connectedCallback(){try{this.attachShadow({mode:"open"});}catch(InvalidStateError){// NOP
+}this.update();}},{key:"update",value:function update(){render(html(circleNotationElement_templateObject||(circleNotationElement_templateObject=circleNotationElement_taggedTemplateLiteral(["<style>\n          #body {\n            display: flex;\n            flex-direction: row;\n          }\n\n          .qubit-circle {\n            position: relative;\n            height: 32px;\n            width: 32px;\n          }\n\n          #body.size-xs .qubit-circle {\n            height: 17px;\n            width: 17px;\n          }\n\n          #body.size-sm .qubit-circle {\n            height: 25px;\n            width: 25px;\n          }\n\n          #body.size-base .qubit-circle {\n            height: 32px;\n            width: 32px;\n          }\n\n          #body.size-lg .qubit-circle {\n            height: 48px;\n            width: 48px;\n          }\n\n          #body.size-xl .qubit-circle {\n            height: 64px;\n            width: 64px;\n          }\n\n          .qubit-circle__magnitude {\n            position: absolute;\n            top: 1px;\n            right: 1px;\n            bottom: 1px;\n            left: 1px;\n            border-radius: 9999px;\n            border-color: #e5e5e5;\n            border-style: solid;\n          }\n\n          #body.size-xs .qubit-circle__magnitude,\n          #body.size-sm .qubit-circle__magnitude {\n            border-width: 1px;\n          }\n\n          #body.size-base .qubit-circle__magnitude,\n          #body.size-lg .qubit-circle__magnitude,\n          #body.size-xl .qubit-circle__magnitude {\n            border-width: 2px;\n          }\n\n          .qubit-circle__magnitude::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            border-radius: 9999px;\n            content: \"\";\n            background-color: #1cb0f6;\n            transform: scaleX(0) scaleY(0);\n            transform-origin: center;\n          }\n\n          .qubit-circle[data-magnitude=\"10\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.1) scaleY(0.1);\n          }\n\n          .qubit-circle[data-magnitude=\"20\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.2) scaleY(0.2);\n          }\n\n          .qubit-circle[data-magnitude=\"30\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.3) scaleY(0.3);\n          }\n\n          .qubit-circle[data-magnitude=\"40\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.4) scaleY(0.4);\n          }\n\n          .qubit-circle[data-magnitude=\"50\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.5) scaleY(0.5);\n          }\n\n          .qubit-circle[data-magnitude=\"60\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.6) scaleY(0.6);\n          }\n\n          .qubit-circle[data-magnitude=\"70\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.7) scaleY(0.7);\n          }\n\n          .qubit-circle[data-magnitude=\"80\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.8) scaleY(0.8);\n          }\n\n          .qubit-circle[data-magnitude=\"90\"] > .qubit-circle__magnitude::after {\n            transform: scaleX(0.9) scaleY(0.9);\n          }\n\n          .qubit-circle[data-magnitude=\"100\"]\n            > .qubit-circle__magnitude::after {\n            transform: scaleX(1) scaleY(1);\n          }\n\n          .qubit-circle__phase {\n            position: absolute;\n            top: 1px;\n            right: 1px;\n            bottom: 1px;\n            left: 1px;\n            border-radius: 9999px;\n            border-color: #777777;\n            border-style: solid;\n            transform: rotate(0deg);\n            transform-origin: center;\n          }\n\n          #body.size-xs .qubit-circle__phase,\n          #body.size-sm .qubit-circle__phase {\n            border-width: 1px;\n          }\n\n          #body.size-base .qubit-circle__phase,\n          #body.size-lg .qubit-circle__phase,\n          #body.size-xl .qubit-circle__phase {\n            border-width: 2px;\n          }\n\n          .qubit-circle:not([data-magnitude]) > .qubit-circle__phase,\n          .qubit-circle[data-magnitude=\"0\"] > .qubit-circle__phase {\n            transform: scaleX(0) scaleY(0);\n          }\n\n          .qubit-circle[data-phase=\"10\"] > .qubit-circle__phase {\n            transform: rotate(-10deg);\n          }\n\n          .qubit-circle[data-phase=\"20\"] > .qubit-circle__phase {\n            transform: rotate(-20deg);\n          }\n\n          .qubit-circle[data-phase=\"30\"] > .qubit-circle__phase {\n            transform: rotate(-30deg);\n          }\n\n          .qubit-circle[data-phase=\"40\"] > .qubit-circle__phase {\n            transform: rotate(-40deg);\n          }\n\n          .qubit-circle[data-phase=\"50\"] > .qubit-circle__phase {\n            transform: rotate(-50deg);\n          }\n\n          .qubit-circle[data-phase=\"60\"] > .qubit-circle__phase {\n            transform: rotate(-60deg);\n          }\n\n          .qubit-circle[data-phase=\"70\"] > .qubit-circle__phase {\n            transform: rotate(-70deg);\n          }\n\n          .qubit-circle[data-phase=\"80\"] > .qubit-circle__phase {\n            transform: rotate(-80deg);\n          }\n\n          .qubit-circle[data-phase=\"90\"] > .qubit-circle__phase {\n            transform: rotate(-90deg);\n          }\n\n          .qubit-circle[data-phase=\"100\"] > .qubit-circle__phase {\n            transform: rotate(-100deg);\n          }\n\n          .qubit-circle[data-phase=\"110\"] > .qubit-circle__phase {\n            transform: rotate(-110deg);\n          }\n\n          .qubit-circle[data-phase=\"120\"] > .qubit-circle__phase {\n            transform: rotate(-120deg);\n          }\n\n          .qubit-circle[data-phase=\"130\"] > .qubit-circle__phase {\n            transform: rotate(-130deg);\n          }\n\n          .qubit-circle[data-phase=\"140\"] > .qubit-circle__phase {\n            transform: rotate(-140deg);\n          }\n\n          .qubit-circle[data-phase=\"150\"] > .qubit-circle__phase {\n            transform: rotate(-150deg);\n          }\n\n          .qubit-circle[data-phase=\"160\"] > .qubit-circle__phase {\n            transform: rotate(-160deg);\n          }\n\n          .qubit-circle[data-phase=\"170\"] > .qubit-circle__phase {\n            transform: rotate(-170deg);\n          }\n\n          .qubit-circle[data-phase=\"180\"] > .qubit-circle__phase {\n            transform: rotate(-180deg);\n          }\n\n          .qubit-circle[data-phase=\"190\"] > .qubit-circle__phase {\n            transform: rotate(-190deg);\n          }\n\n          .qubit-circle[data-phase=\"200\"] > .qubit-circle__phase {\n            transform: rotate(-200deg);\n          }\n\n          .qubit-circle[data-phase=\"210\"] > .qubit-circle__phase {\n            transform: rotate(-210deg);\n          }\n\n          .qubit-circle[data-phase=\"220\"] > .qubit-circle__phase {\n            transform: rotate(-220deg);\n          }\n\n          .qubit-circle[data-phase=\"230\"] > .qubit-circle__phase {\n            transform: rotate(-230deg);\n          }\n\n          .qubit-circle[data-phase=\"240\"] > .qubit-circle__phase {\n            transform: rotate(-240deg);\n          }\n\n          .qubit-circle[data-phase=\"250\"] > .qubit-circle__phase {\n            transform: rotate(-250deg);\n          }\n\n          .qubit-circle[data-phase=\"260\"] > .qubit-circle__phase {\n            transform: rotate(-260deg);\n          }\n\n          .qubit-circle[data-phase=\"270\"] > .qubit-circle__phase {\n            transform: rotate(-270deg);\n          }\n\n          .qubit-circle[data-phase=\"280\"] > .qubit-circle__phase {\n            transform: rotate(-280deg);\n          }\n\n          .qubit-circle[data-phase=\"290\"] > .qubit-circle__phase {\n            transform: rotate(-290deg);\n          }\n\n          .qubit-circle[data-phase=\"300\"] > .qubit-circle__phase {\n            transform: rotate(-300deg);\n          }\n\n          .qubit-circle[data-phase=\"310\"] > .qubit-circle__phase {\n            transform: rotate(-310deg);\n          }\n\n          .qubit-circle[data-phase=\"320\"] > .qubit-circle__phase {\n            transform: rotate(-320deg);\n          }\n\n          .qubit-circle[data-phase=\"330\"] > .qubit-circle__phase {\n            transform: rotate(-330deg);\n          }\n\n          .qubit-circle[data-phase=\"340\"] > .qubit-circle__phase {\n            transform: rotate(-340deg);\n          }\n\n          .qubit-circle[data-phase=\"350\"] > .qubit-circle__phase {\n            transform: rotate(-350deg);\n          }\n\n          .qubit-circle[data-phase=\"360\"] > .qubit-circle__phase {\n            transform: rotate(-360deg);\n          }\n\n          .qubit-circle__phase::after {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            left: 0px;\n            background-color: #4b4b4b;\n            height: 50%;\n            margin-left: auto;\n            margin-right: auto;\n            border-bottom-right-radius: 0.25rem;\n            border-bottom-left-radius: 0.25rem;\n            content: \"\";\n          }\n\n          #body.size-xs .qubit-circle__phase::after,\n          #body.size-sm .qubit-circle__phase::after {\n            width: 1px;\n          }\n\n          #body.size-base .qubit-circle__phase::after,\n          #body.size-lg .qubit-circle__phase::after,\n          #body.size-xl .qubit-circle__phase::after {\n            width: 2px;\n          }\n        </style>\n\n        <div\n          id=\"body\"\n          class=\"","\"\n          data-target=\"circle-notation.body\"\n        >\n          <div class=\"qubit-circle\" data-targets=\"circle-notation.qubitCircles\">\n            <div class=\"qubit-circle__magnitude\"></div>\n            <div class=\"qubit-circle__phase\"></div>\n          </div>\n          <div class=\"qubit-circle\" data-targets=\"circle-notation.qubitCircles\">\n            <div class=\"qubit-circle__magnitude\"></div>\n            <div class=\"qubit-circle__phase\"></div>\n          </div>\n        </div>"])),this.classString),this.shadowRoot);var _iterator=circleNotationElement_createForOfIteratorHelper(this.magnitudes.split(",").entries()),_step;try{for(_iterator.s();!(_step=_iterator.n()).done;){var _ref5=_step.value;var _ref2=_slicedToArray(_ref5,2);var i=_ref2[0];var each=_ref2[1];this.setMagnitude(i,parseFloat(each));}}catch(err){_iterator.e(err);}finally{_iterator.f();}var _iterator2=circleNotationElement_createForOfIteratorHelper(this.phases.split(",").entries()),_step2;try{for(_iterator2.s();!(_step2=_iterator2.n()).done;){var _ref6=_step2.value;var _ref4=_slicedToArray(_ref6,2);var _i2=_ref4[0];var _each=_ref4[1];this.setPhase(_i2,parseFloat(_each));}}catch(err){_iterator2.e(err);}finally{_iterator2.f();}}},{key:"classString",get:function get(){var klass=[];if(this.size==="xs")klass.push("size-xs");if(this.size==="sm")klass.push("size-sm");if(this.size==="base")klass.push("size-base");if(this.size==="lg")klass.push("size-lg");if(this.size==="xl")klass.push("size-xl");return klass.join(" ");}}]);return CircleNotationElement;}(/*#__PURE__*/circleNotationElement_wrapNativeSuper(HTMLElement)),(circleNotationElement_descriptor=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"size",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"base";}}),circleNotationElement_descriptor2=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"magnitudes",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"1.0";}}),circleNotationElement_descriptor3=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"phases",[attr_attr],{configurable:true,enumerable:true,writable:true,initializer:function initializer(){return"";}}),circleNotationElement_descriptor4=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"body",[target],{configurable:true,enumerable:true,writable:true,initializer:null}),circleNotationElement_descriptor5=circleNotationElement_applyDecoratedDescriptor(circleNotationElement_class2.prototype,"qubitCircles",[targets],{configurable:true,enumerable:true,writable:true,initializer:null})),circleNotationElement_class2))||circleNotationElement_class;
+// CONCATENATED MODULE: ./app/components/run_circuit_button_component/runCircuitButtonElement.ts
+var runCircuitButtonElement_templateObject,runCircuitButtonElement_templateObject2,runCircuitButtonElement_class,runCircuitButtonElement_class2,runCircuitButtonElement_descriptor,runCircuitButtonElement_templateObject3;function runCircuitButtonElement_initializerDefineProperty(target,property,descriptor,context){if(!descriptor)return;Object.defineProperty(target,property,{enumerable:descriptor.enumerable,configurable:descriptor.configurable,writable:descriptor.writable,value:descriptor.initializer?descriptor.initializer.call(context):void 0});}function runCircuitButtonElement_classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function runCircuitButtonElement_defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}function runCircuitButtonElement_createClass(Constructor,protoProps,staticProps){if(protoProps)runCircuitButtonElement_defineProperties(Constructor.prototype,protoProps);if(staticProps)runCircuitButtonElement_defineProperties(Constructor,staticProps);return Constructor;}function runCircuitButtonElement_inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function");}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,writable:true,configurable:true}});if(superClass)runCircuitButtonElement_setPrototypeOf(subClass,superClass);}function runCircuitButtonElement_createSuper(Derived){var hasNativeReflectConstruct=runCircuitButtonElement_isNativeReflectConstruct();return function _createSuperInternal(){var Super=runCircuitButtonElement_getPrototypeOf(Derived),result;if(hasNativeReflectConstruct){var NewTarget=runCircuitButtonElement_getPrototypeOf(this).constructor;result=Reflect.construct(Super,arguments,NewTarget);}else{result=Super.apply(this,arguments);}return runCircuitButtonElement_possibleConstructorReturn(this,result);};}function runCircuitButtonElement_possibleConstructorReturn(self,call){if(call&&(typeof call==="object"||typeof call==="function")){return call;}return runCircuitButtonElement_assertThisInitialized(self);}function runCircuitButtonElement_assertThisInitialized(self){if(self===void 0){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function runCircuitButtonElement_wrapNativeSuper(Class){var _cache=typeof Map==="function"?new Map():undefined;runCircuitButtonElement_wrapNativeSuper=function _wrapNativeSuper(Class){if(Class===null||!runCircuitButtonElement_isNativeFunction(Class))return Class;if(typeof Class!=="function"){throw new TypeError("Super expression must either be null or a function");}if(typeof _cache!=="undefined"){if(_cache.has(Class))return _cache.get(Class);_cache.set(Class,Wrapper);}function Wrapper(){return runCircuitButtonElement_construct(Class,arguments,runCircuitButtonElement_getPrototypeOf(this).constructor);}Wrapper.prototype=Object.create(Class.prototype,{constructor:{value:Wrapper,enumerable:false,writable:true,configurable:true}});return runCircuitButtonElement_setPrototypeOf(Wrapper,Class);};return runCircuitButtonElement_wrapNativeSuper(Class);}function runCircuitButtonElement_construct(Parent,args,Class){if(runCircuitButtonElement_isNativeReflectConstruct()){runCircuitButtonElement_construct=Reflect.construct;}else{runCircuitButtonElement_construct=function _construct(Parent,args,Class){var a=[null];a.push.apply(a,args);var Constructor=Function.bind.apply(Parent,a);var instance=new Constructor();if(Class)runCircuitButtonElement_setPrototypeOf(instance,Class.prototype);return instance;};}return runCircuitButtonElement_construct.apply(null,arguments);}function runCircuitButtonElement_isNativeReflectConstruct(){if(typeof Reflect==="undefined"||!Reflect.construct)return false;if(Reflect.construct.sham)return false;if(typeof Proxy==="function")return true;try{Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){}));return true;}catch(e){return false;}}function runCircuitButtonElement_isNativeFunction(fn){return Function.toString.call(fn).indexOf("[native code]")!==-1;}function runCircuitButtonElement_setPrototypeOf(o,p){runCircuitButtonElement_setPrototypeOf=Object.setPrototypeOf||function _setPrototypeOf(o,p){o.__proto__=p;return o;};return runCircuitButtonElement_setPrototypeOf(o,p);}function runCircuitButtonElement_getPrototypeOf(o){runCircuitButtonElement_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function _getPrototypeOf(o){return o.__proto__||Object.getPrototypeOf(o);};return runCircuitButtonElement_getPrototypeOf(o);}function runCircuitButtonElement_applyDecoratedDescriptor(target,property,decorators,descriptor,context){var desc={};Object.keys(descriptor).forEach(function(key){desc[key]=descriptor[key];});desc.enumerable=!!desc.enumerable;desc.configurable=!!desc.configurable;if('value'in desc||desc.initializer){desc.writable=true;}desc=decorators.slice().reverse().reduce(function(desc,decorator){return decorator(target,property,desc)||desc;},desc);if(context&&desc.initializer!==void 0){desc.value=desc.initializer?desc.initializer.call(context):void 0;desc.initializer=undefined;}if(desc.initializer===void 0){Object.defineProperty(target,property,desc);desc=null;}return desc;}function runCircuitButtonElement_initializerWarningHelper(descriptor,context){throw new Error('Decorating class property failed. Please ensure that '+'proposal-class-properties is enabled and runs after the decorators transform.');}function runCircuitButtonElement_taggedTemplateLiteral(strings,raw){if(!raw){raw=strings.slice(0);}return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var reloadIcon=html(runCircuitButtonElement_templateObject||(runCircuitButtonElement_templateObject=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n    .reload-icon {\n      fill: currentColor;\n      color: rgb(255, 255, 255);\n      height: 60%;\n      width: 60%;\n    }\n\n    #button:disabled > .reload-icon {\n      display: none;\n    }\n  </style>\n\n  <svg\n    xmlns=\"http://www.w3.org/2000/svg\"\n    viewBox=\"0 0 20 20\"\n    class=\"reload-icon\"\n  >\n    <path\n      d=\"M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z\"\n    />\n  </svg>"])));var ovalLoaderIcon=html(runCircuitButtonElement_templateObject2||(runCircuitButtonElement_templateObject2=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n    .oval-loader-icon {\n      display: none;\n      height: 60%;\n      width: 60%;\n    }\n\n    #button:disabled > .oval-loader-icon {\n      stroke: currentColor;\n      color: rgb(255, 255, 255);\n      display: block;\n    }\n  </style>\n\n  <svg\n    viewBox=\"0 0 38 38\"\n    xmlns=\"http://www.w3.org/2000/svg\"\n    class=\"oval-loader-icon\"\n  >\n    <g fill=\"none\" fill-rule=\"evenodd\">\n      <g transform=\"translate(1 1)\" stroke-width=\"2\">\n        <circle stroke-opacity=\".5\" cx=\"18\" cy=\"18\" r=\"18\" />\n        <path d=\"M36 18c0-9.94-8.06-18-18-18\">\n          <animateTransform\n            attributeName=\"transform\"\n            type=\"rotate\"\n            from=\"0 18 18\"\n            to=\"360 18 18\"\n            dur=\"1s\"\n            repeatCount=\"indefinite\"\n          />\n        </path>\n      </g>\n    </g>\n  </svg>"])));var runCircuitButtonElement_RunCircuitButtonElement=controller(runCircuitButtonElement_class=(runCircuitButtonElement_class2=/*#__PURE__*/function(_HTMLElement){runCircuitButtonElement_inherits(RunCircuitButtonElement,_HTMLElement);var _super=runCircuitButtonElement_createSuper(RunCircuitButtonElement);function RunCircuitButtonElement(){var _this;runCircuitButtonElement_classCallCheck(this,RunCircuitButtonElement);for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}_this=_super.call.apply(_super,[this].concat(args));runCircuitButtonElement_initializerDefineProperty(_this,"button",runCircuitButtonElement_descriptor,runCircuitButtonElement_assertThisInitialized(_this));return _this;}runCircuitButtonElement_createClass(RunCircuitButtonElement,[{key:"runSimulator",value:function runSimulator(){var _this$simulator;(_this$simulator=this.simulator)===null||_this$simulator===void 0?void 0:_this$simulator.dispatchEvent(new CustomEvent("run",{bubbles:false}));this.disable();}},{key:"disable",value:function disable(){this.button.disabled=true;}},{key:"enable",value:function enable(){this.button.disabled=false;}},{key:"connectedCallback",value:function connectedCallback(){this.attachShadow({mode:"open"});this.update();}},{key:"update",value:function update(){render(html(runCircuitButtonElement_templateObject3||(runCircuitButtonElement_templateObject3=runCircuitButtonElement_taggedTemplateLiteral(["<style>\n          #button {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            background-color: rgb(206, 130, 255);\n            border-radius: 9999px;\n            border-width: 0px;\n            cursor: pointer;\n            width: 4rem;\n            height: 4rem;\n            box-shadow: 0 0 #0000, 0 0 #0000,\n              0 10px 15px -3px rgba(0, 0, 0, 0.1),\n              0 4px 6px -2px rgba(0, 0, 0, 0.05);\n          }\n\n          #button:disabled {\n            cursor: wait;\n          }\n\n          #button:focus {\n            outline: 2px solid transparent;\n            outline-offset: 2px;\n          }\n        </style>\n\n        <button\n          id=\"button\"\n          type=\"button\"\n          data-action=\"click:run-circuit-button#runSimulator\"\n          data-target=\"run-circuit-button.button\"\n          aria-label=\"Run circuit\"\n        >\n          "," ","\n        </button>"])),reloadIcon,ovalLoaderIcon),this.shadowRoot);}},{key:"simulator",get:function get(){return document.getElementById("simulator");}}]);return RunCircuitButtonElement;}(/*#__PURE__*/runCircuitButtonElement_wrapNativeSuper(HTMLElement)),(runCircuitButtonElement_descriptor=runCircuitButtonElement_applyDecoratedDescriptor(runCircuitButtonElement_class2.prototype,"button",[target],{configurable:true,enumerable:true,writable:true,initializer:null})),runCircuitButtonElement_class2))||runCircuitButtonElement_class;
+// CONCATENATED MODULE: ./app/javascript/catalyst/index.js
+
+
+/***/ }),
+
 /***/ 76:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -7298,4 +7298,4 @@ module.exports = exports;
 /***/ })
 
 /******/ });
-//# sourceMappingURL=npm-33954d39d30c9053ef2f.js.map
+//# sourceMappingURL=npm-174c92d6ed830787bbaa.js.map
