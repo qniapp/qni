@@ -5,6 +5,7 @@ import { html, render } from "@github/jtml"
 export class CircleNotationElement extends HTMLElement {
   @attr size = "base"
   @attr magnitudes = "1.0"
+  @attr phases = ""
 
   @target body: HTMLElement
   @targets qubitCircles: HTMLElement[]
@@ -17,6 +18,16 @@ export class CircleNotationElement extends HTMLElement {
     this.qubitCircles[qubitCircleIndex].setAttribute(
       "data-magnitude",
       magRounded.toString(),
+    )
+  }
+
+  setPhase(qubitCircleIndex: number, phase: number): void {
+    let phaseRounded = Math.round(phase / 10) * 10
+    if (phaseRounded < 0) phaseRounded = 360 + phaseRounded
+
+    this.qubitCircles[qubitCircleIndex].setAttribute(
+      "data-phase",
+      phaseRounded.toString(),
     )
   }
 
@@ -153,6 +164,8 @@ export class CircleNotationElement extends HTMLElement {
             border-radius: 9999px;
             border-color: #777777;
             border-style: solid;
+            transform: rotate(0deg);
+            transform-origin: center;
           }
 
           #body.size-xs .qubit-circle__phase,
@@ -169,6 +182,150 @@ export class CircleNotationElement extends HTMLElement {
           .qubit-circle:not([data-magnitude]) > .qubit-circle__phase,
           .qubit-circle[data-magnitude="0"] > .qubit-circle__phase {
             transform: scaleX(0) scaleY(0);
+          }
+
+          .qubit-circle[data-phase="10"] > .qubit-circle__phase {
+            transform: rotate(-10deg);
+          }
+
+          .qubit-circle[data-phase="20"] > .qubit-circle__phase {
+            transform: rotate(-20deg);
+          }
+
+          .qubit-circle[data-phase="30"] > .qubit-circle__phase {
+            transform: rotate(-30deg);
+          }
+
+          .qubit-circle[data-phase="40"] > .qubit-circle__phase {
+            transform: rotate(-40deg);
+          }
+
+          .qubit-circle[data-phase="50"] > .qubit-circle__phase {
+            transform: rotate(-50deg);
+          }
+
+          .qubit-circle[data-phase="60"] > .qubit-circle__phase {
+            transform: rotate(-60deg);
+          }
+
+          .qubit-circle[data-phase="70"] > .qubit-circle__phase {
+            transform: rotate(-70deg);
+          }
+
+          .qubit-circle[data-phase="80"] > .qubit-circle__phase {
+            transform: rotate(-80deg);
+          }
+
+          .qubit-circle[data-phase="90"] > .qubit-circle__phase {
+            transform: rotate(-90deg);
+          }
+
+          .qubit-circle[data-phase="100"] > .qubit-circle__phase {
+            transform: rotate(-100deg);
+          }
+
+          .qubit-circle[data-phase="110"] > .qubit-circle__phase {
+            transform: rotate(-110deg);
+          }
+
+          .qubit-circle[data-phase="120"] > .qubit-circle__phase {
+            transform: rotate(-120deg);
+          }
+
+          .qubit-circle[data-phase="130"] > .qubit-circle__phase {
+            transform: rotate(-130deg);
+          }
+
+          .qubit-circle[data-phase="140"] > .qubit-circle__phase {
+            transform: rotate(-140deg);
+          }
+
+          .qubit-circle[data-phase="150"] > .qubit-circle__phase {
+            transform: rotate(-150deg);
+          }
+
+          .qubit-circle[data-phase="160"] > .qubit-circle__phase {
+            transform: rotate(-160deg);
+          }
+
+          .qubit-circle[data-phase="170"] > .qubit-circle__phase {
+            transform: rotate(-170deg);
+          }
+
+          .qubit-circle[data-phase="180"] > .qubit-circle__phase {
+            transform: rotate(-180deg);
+          }
+
+          .qubit-circle[data-phase="190"] > .qubit-circle__phase {
+            transform: rotate(-190deg);
+          }
+
+          .qubit-circle[data-phase="200"] > .qubit-circle__phase {
+            transform: rotate(-200deg);
+          }
+
+          .qubit-circle[data-phase="210"] > .qubit-circle__phase {
+            transform: rotate(-210deg);
+          }
+
+          .qubit-circle[data-phase="220"] > .qubit-circle__phase {
+            transform: rotate(-220deg);
+          }
+
+          .qubit-circle[data-phase="230"] > .qubit-circle__phase {
+            transform: rotate(-230deg);
+          }
+
+          .qubit-circle[data-phase="240"] > .qubit-circle__phase {
+            transform: rotate(-240deg);
+          }
+
+          .qubit-circle[data-phase="250"] > .qubit-circle__phase {
+            transform: rotate(-250deg);
+          }
+
+          .qubit-circle[data-phase="260"] > .qubit-circle__phase {
+            transform: rotate(-260deg);
+          }
+
+          .qubit-circle[data-phase="270"] > .qubit-circle__phase {
+            transform: rotate(-270deg);
+          }
+
+          .qubit-circle[data-phase="280"] > .qubit-circle__phase {
+            transform: rotate(-280deg);
+          }
+
+          .qubit-circle[data-phase="290"] > .qubit-circle__phase {
+            transform: rotate(-290deg);
+          }
+
+          .qubit-circle[data-phase="300"] > .qubit-circle__phase {
+            transform: rotate(-300deg);
+          }
+
+          .qubit-circle[data-phase="310"] > .qubit-circle__phase {
+            transform: rotate(-310deg);
+          }
+
+          .qubit-circle[data-phase="320"] > .qubit-circle__phase {
+            transform: rotate(-320deg);
+          }
+
+          .qubit-circle[data-phase="330"] > .qubit-circle__phase {
+            transform: rotate(-330deg);
+          }
+
+          .qubit-circle[data-phase="340"] > .qubit-circle__phase {
+            transform: rotate(-340deg);
+          }
+
+          .qubit-circle[data-phase="350"] > .qubit-circle__phase {
+            transform: rotate(-350deg);
+          }
+
+          .qubit-circle[data-phase="360"] > .qubit-circle__phase {
+            transform: rotate(-360deg);
           }
 
           .qubit-circle__phase::after {
@@ -216,6 +373,9 @@ export class CircleNotationElement extends HTMLElement {
 
     for (const [i, each] of this.magnitudes.split(",").entries()) {
       this.setMagnitude(i, parseFloat(each))
+    }
+    for (const [i, each] of this.phases.split(",").entries()) {
+      this.setPhase(i, parseFloat(each))
     }
   }
 

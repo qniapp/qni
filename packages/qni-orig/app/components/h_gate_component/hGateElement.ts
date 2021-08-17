@@ -1,3 +1,4 @@
+import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 
@@ -46,11 +47,13 @@ const hIcon = html`<svg
 export class HGateElement extends HTMLElement {
   @target body: HTMLElement
 
+  @attr size = "base"
   @attr disabled = false
   @attr wireTop = false
   @attr wireTopDisabled = false
   @attr wireBottom = false
   @attr wireBottomDisabled = false
+  @attr draggable = false
 
   disable(): void {
     this.disabled = true
@@ -58,6 +61,30 @@ export class HGateElement extends HTMLElement {
 
   enable(): void {
     this.disabled = false
+  }
+
+  showGateDescription(): void {
+    if ((this as ReferenceElement)._tippy) return
+
+    const content = this.description()
+    if (!content) return
+
+    const popup = tippy(this, {
+      allowHTML: true,
+      animation: false,
+      arrow: roundArrow + roundArrow,
+      delay: 0,
+      placement: "right",
+      theme: "qni",
+      onShow(instance: Instance) {
+        instance.setContent(content)
+      },
+    })
+    popup.show()
+  }
+
+  private description(): string {
+    return this.innerHTML
   }
 
   connectedCallback(): void {
@@ -96,6 +123,54 @@ export class HGateElement extends HTMLElement {
             position: relative;
             height: 2rem;
             width: 2rem;
+          }
+
+          #body.size-xs {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          #body.size-sm {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          #body.size-base {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          #body.size-lg {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          #body.size-xl {
+            height: 3rem;
+            width: 3rem;
+          }
+
+          #body.draggable {
+            cursor: grab;
+          }
+
+          #body.draggable::after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            border-color: var(--colors-cardinal, #ff4b4b);
+            border-radius: 0.25rem;
+            border-style: solid;
+            border-width: 2px;
+            box-sizing: border-box;
+            opacity: 0;
+            content: "";
+          }
+
+          #body:hover::after {
+            opacity: 100;
           }
 
           #wires {
@@ -163,9 +238,9 @@ export class HGateElement extends HTMLElement {
 
         <div
           id="body"
-          class="${this.disabledClassString} ${this.wireTopClassString} ${this
-            .wireBottomClassString}"
+          class="${this.classString}"
           data-target="h-gate.body"
+          data-action="mouseenter:h-gate#showGateDescription"
         >
           ${verticalWires} ${hIcon}
         </div>`,
@@ -173,19 +248,23 @@ export class HGateElement extends HTMLElement {
     )
   }
 
-  private get disabledClassString(): string {
-    return this.disabled ? "disabled" : ""
-  }
+  private get classString(): string {
+    const klass = []
 
-  private get wireTopClassString(): string {
-    if (this.wireTop) return "wire-top"
-    if (this.wireTopDisabled) return "wire-top-disabled"
-    return ""
-  }
+    if (this.size === "xs") klass.push("size-xs")
+    if (this.size === "sm") klass.push("size-sm")
+    if (this.size === "base") klass.push("size-base")
+    if (this.size === "lg") klass.push("size-lg")
+    if (this.size === "xl") klass.push("size-xl")
 
-  private get wireBottomClassString(): string {
-    if (this.wireBottom) return "wire-bottom"
-    if (this.wireBottomDisabled) return "wire-bottom-disabled"
-    return ""
+    if (this.wireTop) klass.push("wire-top")
+    if (this.wireTopDisabled) klass.push("wire-top-disabled")
+    if (this.wireBottom) klass.push("wire-bottom")
+    if (this.wireBottomDisabled) klass.push("wire-bottom-disabled")
+
+    if (this.disabled) klass.push("disabled")
+    if (this.draggable) klass.push("draggable")
+
+    return klass.join(" ")
   }
 }
