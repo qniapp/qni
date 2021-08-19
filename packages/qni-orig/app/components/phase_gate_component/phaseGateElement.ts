@@ -1,3 +1,4 @@
+import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 
@@ -46,12 +47,14 @@ const phaseIcon = html`<svg
 export class PhaseGateElement extends HTMLElement {
   @target body: HTMLElement
 
+  @attr size = "base"
   @attr phi = ""
   @attr disabled = false
   @attr wireTop = false
   @attr wireTopDisabled = false
   @attr wireBottom = false
   @attr wireBottomDisabled = false
+  @attr draggable = false
 
   disable(): void {
     this.disabled = true
@@ -59,6 +62,30 @@ export class PhaseGateElement extends HTMLElement {
 
   enable(): void {
     this.disabled = false
+  }
+
+  showGateDescription(): void {
+    if ((this as ReferenceElement)._tippy) return
+
+    const content = this.description()
+    if (!content) return
+
+    const popup = tippy(this, {
+      allowHTML: true,
+      animation: false,
+      arrow: roundArrow + roundArrow,
+      delay: 0,
+      placement: "right",
+      theme: "qni",
+      onShow(instance: Instance) {
+        instance.setContent(content)
+      },
+    })
+    popup.show()
+  }
+
+  private description(): string {
+    return this.innerHTML
   }
 
   connectedCallback(): void {
@@ -99,10 +126,38 @@ export class PhaseGateElement extends HTMLElement {
             width: 2rem;
           }
 
+          #body.size-xs {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          #body.size-sm {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          #body.size-base {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          #body.size-lg {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          #body.size-xl {
+            height: 3rem;
+            width: 3rem;
+          }
+
+          #body.draggable {
+            cursor: grab;
+          }
+
           #body::before {
             position: absolute;
             bottom: 0px;
-            margin-bottom: 2rem;
             color: var(--colors-wolf, #777777);
             background-color: var(--colors-snow, #ffffff);
             font-size: 0.75rem;
@@ -114,30 +169,43 @@ export class PhaseGateElement extends HTMLElement {
             content: attr(data-phi) "";
           }
 
-          #body.wire-top:not(.wire-bottom)::before,
-          #body.wire-top-disabled:not(.wire-bottom-disabled)::before {
-            display: none;
+          #body.size-xs::before {
+            margin-bottom: 1rem;
           }
 
-          #body::after {
+          #body.size-sm::before {
+            margin-bottom: 1.5rem;
+          }
+
+          #body.size-base::before {
+            margin-bottom: 2rem;
+          }
+
+          #body.size-lg::before {
+            margin-bottom: 2.5rem;
+          }
+
+          #body.size-xl::before {
+            margin-bottom: 3rem;
+          }
+
+          #body.draggable::after {
             position: absolute;
             top: 0px;
-            margin-top: 2rem;
-            color: var(--colors-wolf, #777777);
-            background-color: var(--colors-snow, #ffffff);
-            font-size: 0.75rem;
-            line-height: 0.75rem;
-            letter-spacing: -0.05em;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
-            z-index: 10;
-            content: attr(data-phi) "";
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            border-color: var(--colors-cardinal, #ff4b4b);
+            border-radius: 9999px;
+            border-style: solid;
+            border-width: 2px;
+            box-sizing: border-box;
+            opacity: 0;
+            content: "";
           }
 
-          #body.wire-bottom::after,
-          #body.wire-bottom-disabled::after,
-          #body:not(.wire-bottom):not(.wire-top):not(.wire-bottom-disabled):not(.wire-top-disabled)::after {
-            display: none;
+          #body:hover::after {
+            opacity: 100;
           }
 
           #wires {
@@ -153,13 +221,13 @@ export class PhaseGateElement extends HTMLElement {
 
           #wire-top,
           #wire-bottom {
+            color: var(--colors-gate, #43c000);
             stroke-width: 4;
             display: none;
           }
 
           #body.wire-top #wire-top {
             display: block;
-            color: var(--colors-gate, #43c000);
             transform-origin: top;
             transform: translateY(-25%) scaleY(1.5);
           }
@@ -173,7 +241,6 @@ export class PhaseGateElement extends HTMLElement {
 
           #body.wire-bottom #wire-bottom {
             display: block;
-            color: var(--colors-gate, #43c000);
             transform-origin: bottom;
             transform: translateY(25%) scaleY(1.5);
           }
@@ -206,10 +273,10 @@ export class PhaseGateElement extends HTMLElement {
 
         <div
           id="body"
-          class="${this.disabledClassString} ${this.wireTopClassString} ${this
-            .wireBottomClassString}"
+          class="${this.classString}"
           data-target="phase-gate.body"
           data-phi="${this.phi}"
+          data-action="mouseenter:phase-gate#showGateDescription"
         >
           ${verticalWires} ${phaseIcon}
         </div>`,
@@ -217,19 +284,23 @@ export class PhaseGateElement extends HTMLElement {
     )
   }
 
-  private get disabledClassString(): string {
-    return this.disabled ? "disabled" : ""
-  }
+  private get classString(): string {
+    const klass = []
 
-  private get wireTopClassString(): string {
-    if (this.wireTop) return "wire-top"
-    if (this.wireTopDisabled) return "wire-top-disabled"
-    return ""
-  }
+    if (this.size === "xs") klass.push("size-xs")
+    if (this.size === "sm") klass.push("size-sm")
+    if (this.size === "base") klass.push("size-base")
+    if (this.size === "lg") klass.push("size-lg")
+    if (this.size === "xl") klass.push("size-xl")
 
-  private get wireBottomClassString(): string {
-    if (this.wireBottom) return "wire-bottom"
-    if (this.wireBottomDisabled) return "wire-bottom-disabled"
-    return ""
+    if (this.wireTop) klass.push("wire-top")
+    if (this.wireTopDisabled) klass.push("wire-top-disabled")
+    if (this.wireBottom) klass.push("wire-bottom")
+    if (this.wireBottomDisabled) klass.push("wire-bottom-disabled")
+
+    if (this.disabled) klass.push("disabled")
+    if (this.draggable) klass.push("draggable")
+
+    return klass.join(" ")
   }
 }
