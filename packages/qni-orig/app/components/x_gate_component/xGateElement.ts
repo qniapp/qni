@@ -98,7 +98,10 @@ export class XGateElement extends HTMLElement {
     oldValue: string | null,
     newValue: string | null,
   ): void {
-    if (name === "data-disabled" && oldValue !== newValue && this.body) {
+    if (!this.body) return
+    if (oldValue !== newValue) return
+
+    if (name === "data-disabled") {
       if (newValue === null) {
         this.body.classList.remove("disabled")
       } else {
@@ -106,49 +109,59 @@ export class XGateElement extends HTMLElement {
       }
     }
 
-    if (name === "data-wire-top" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireTopClassString)
+    if (name === "data-wire-top") {
+      if (newValue === null) {
+        this.body.classList.remove("wire-top")
+      } else {
+        this.body.classList.add("wire-top")
+      }
     }
-    if (name === "data-wire-bottom" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireBottomClassString)
+
+    if (name === "data-wire-bottom") {
+      if (newValue === null) {
+        this.body.classList.remove("wire-bottom")
+      } else {
+        this.body.classList.add("wire-bottom")
+      }
     }
   }
 
   update(): void {
     render(
       html`<style>
+          :host([data-size="xs"]) {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          :host([data-size="sm"]) {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          :host,
+          :host([data-size="base"]) {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          :host([data-size="lg"]) {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          :host([data-size="xl"]) {
+            height: 3rem;
+            width: 3rem;
+          }
+
           #body {
             align-items: center;
             display: flex;
             justify-content: center;
             position: relative;
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-xs {
-            height: 1rem;
-            width: 1rem;
-          }
-
-          #body.size-sm {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          #body.size-base {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-lg {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          #body.size-xl {
-            height: 3rem;
-            width: 3rem;
+            height: 100%;
+            width: 100%;
           }
 
           #body.draggable {
@@ -251,12 +264,6 @@ export class XGateElement extends HTMLElement {
 
   private get classString(): string {
     const klass = []
-
-    if (this.size === "xs") klass.push("size-xs")
-    if (this.size === "sm") klass.push("size-sm")
-    if (this.size === "base") klass.push("size-base")
-    if (this.size === "lg") klass.push("size-lg")
-    if (this.size === "xl") klass.push("size-xl")
 
     if (this.wireTop) klass.push("wire-top")
     if (this.wireTopDisabled) klass.push("wire-top-disabled")

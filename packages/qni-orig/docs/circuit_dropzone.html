@@ -22,43 +22,697 @@ title: Circuit Dropzone
               <p class="mt-1 text-lg text-gray-500">Placeholder to drop gates etc.</p>
             </div>
 
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                    <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+                  </th>
+                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+                    <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="align-baseline">
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+width: 1rem;</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+width: 1.5rem;</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+width: 2rem;</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+width: 2.5rem;</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+width: 3rem;</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit gate</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit gate (disabled)</td>
+                </tr>
+                <tr>
+                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate (disabled)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+            <p class="mb-5">
+              Control the size of a circuit dropzone using the <code class="text-purple-500">data-size</code> attribute.
+            </p>
             <div class="relative overflow-hidden mb-8">
               <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                 <div class="flex flex-row space-x-4">
-                  <circuit-dropzone>
-                  </circuit-dropzone>
-                  <circuit-dropzone>
+                  <circuit-dropzone data-size="xs"></circuit-dropzone>
+                  <circuit-dropzone data-size="sm"></circuit-dropzone>
+                  <circuit-dropzone data-size="base"></circuit-dropzone>
+                  <circuit-dropzone data-size="lg"></circuit-dropzone>
+                  <circuit-dropzone data-size="xl"></circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;&lt;/circuit-dropzone&gt;
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;&lt;/circuit-dropzone&gt;
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;&lt;/circuit-dropzone&gt;
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;&lt;/circuit-dropzone&gt;
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">H Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
                     <h-gate></h-gate>
                   </circuit-dropzone>
-                  <circuit-dropzone>
-                    <h-gate data-wire-top></h-gate>
+                  <circuit-dropzone data-size="sm">
+                    <h-gate></h-gate>
                   </circuit-dropzone>
-                  <circuit-dropzone>
-                    <h-gate data-wire-bottom></h-gate>
+                  <circuit-dropzone data-size="base">
+                    <h-gate></h-gate>
                   </circuit-dropzone>
-                  <circuit-dropzone>
-                    <h-gate data-wire-top data-wire-bottom></h-gate>
+                  <circuit-dropzone data-size="lg">
+                    <h-gate></h-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <h-gate></h-gate>
                   </circuit-dropzone>
                 </div>
               </div>
               <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone&gt;
-&lt;/circuit-dropzone&gt;
-
-&lt;circuit-dropzone&gt;
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
   &lt;h-gate&gt;&lt;/h-gate&gt;
 &lt;/circuit-dropzone&gt;
 
-&lt;circuit-dropzone&gt;
-  &lt;h-gate data-wire-top&gt;&lt;/h-gate&gt;
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;h-gate&gt;&lt;/h-gate&gt;
 &lt;/circuit-dropzone&gt;
 
-&lt;circuit-dropzone&gt;
-  &lt;h-gate data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;h-gate&gt;&lt;/h-gate&gt;
 &lt;/circuit-dropzone&gt;
 
-&lt;circuit-dropzone&gt;
-  &lt;h-gate data-wire-top data-wire-bottom&gt;&lt;/h-gate&gt;
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;h-gate&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;h-gate&gt;&lt;/h-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">X Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <x-gate></x-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <x-gate></x-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <x-gate></x-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <x-gate></x-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <x-gate></x-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;x-gate&gt;&lt;/x-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Y Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <y-gate></y-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <y-gate></y-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <y-gate></y-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <y-gate></y-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <y-gate></y-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;y-gate&gt;&lt;/y-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Z Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <z-gate></z-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <z-gate></z-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <z-gate></z-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <z-gate></z-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <z-gate></z-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;z-gate&gt;&lt;/z-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Phase Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;phase-gate&gt;&lt;/phase-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4"><code>√X</code> Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <root-not-gate></root-not-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <root-not-gate></root-not-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <root-not-gate></root-not-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <root-not-gate></root-not-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <root-not-gate></root-not-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Rx Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <rx-gate></rx-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <rx-gate></rx-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <rx-gate></rx-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <rx-gate></rx-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <rx-gate></rx-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;rx-gate&gt;&lt;/rx-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Ry Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <ry-gate></ry-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <ry-gate></ry-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <ry-gate></ry-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <ry-gate></ry-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <ry-gate></ry-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;ry-gate&gt;&lt;/ry-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Rz Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <rz-gate></rz-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <rz-gate></rz-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <rz-gate></rz-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <rz-gate></rz-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <rz-gate></rz-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;rz-gate&gt;&lt;/rz-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Control Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;control-gate&gt;&lt;/control-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Swap Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <swap-gate></swap-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <swap-gate></swap-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <swap-gate></swap-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <swap-gate></swap-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <swap-gate></swap-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;swap-gate&gt;&lt;/swap-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Bloch Display</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <bloch-display></bloch-display>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <bloch-display></bloch-display>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <bloch-display></bloch-display>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <bloch-display></bloch-display>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <bloch-display></bloch-display>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;bloch-display&gt;&lt;/bloch-display&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Write Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <write-gate></write-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <write-gate></write-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <write-gate></write-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <write-gate></write-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <write-gate></write-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;write-gate&gt;&lt;/write-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;write-gate&gt;&lt;/write-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;write-gate&gt;&lt;/write-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;write-gate&gt;&lt;/write-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;write-gate&gt;&lt;/write-gate&gt;
+&lt;/circuit-dropzone&gt;</code></pre>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Measurement Gate</h3>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-dropzone data-size="xs">
+                    <measurement-gate></measurement-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="sm">
+                    <measurement-gate></measurement-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="base">
+                    <measurement-gate></measurement-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="lg">
+                    <measurement-gate></measurement-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone data-size="xl">
+                    <measurement-gate></measurement-gate>
+                  </circuit-dropzone>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone data-size=&quot;xs&quot;&gt;
+  &lt;measurement-gate&gt;&lt;/measurement-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;sm&quot;&gt;
+  &lt;measurement-gate&gt;&lt;/measurement-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;base&quot;&gt;
+  &lt;measurement-gate&gt;&lt;/measurement-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;lg&quot;&gt;
+  &lt;measurement-gate&gt;&lt;/measurement-gate&gt;
+&lt;/circuit-dropzone&gt;
+
+&lt;circuit-dropzone data-size=&quot;xl&quot;&gt;
+  &lt;measurement-gate&gt;&lt;/measurement-gate&gt;
 &lt;/circuit-dropzone&gt;</code></pre>
               </div>
             </div>

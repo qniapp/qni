@@ -12,7 +12,6 @@ const ketIcon = html`<svg
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <polygon points="9 40, 9 10, 34 10, 40 24, 34 40" stroke="#fff" fill="#fff" />
   <path d="M9 10L9 40M34 10L40 24L34 40" />
 </svg>`
 
@@ -81,38 +80,39 @@ export class WriteGateElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          :host([data-size="xs"]) {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          :host([data-size="sm"]) {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          :host,
+          :host([data-size="base"]) {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          :host([data-size="lg"]) {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          :host([data-size="xl"]) {
+            height: 3rem;
+            width: 3rem;
+          }
+
           #body {
             align-items: center;
             display: flex;
             justify-content: center;
             position: relative;
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-xs {
-            height: 1rem;
-            width: 1rem;
-          }
-
-          #body.size-sm {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          #body.size-base {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-lg {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          #body.size-xl {
-            height: 3rem;
-            width: 3rem;
+            height: 100%;
+            width: 100%;
           }
 
           #body.draggable {
@@ -161,36 +161,33 @@ export class WriteGateElement extends HTMLElement {
             position: relative;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
-          }
-
-          #body.size-xs #ket-label {
-            font-size: 0.75rem;
-            line-height: 1rem;
-          }
-
-          #body.size-sm #ket-label {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-          }
-
-          #body.size-base #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
           }
 
-          #body.size-lg #ket-label {
+          :host([data-size="xs"]) #ket-label {
+            font-size: 0.75rem;
+            line-height: 1rem;
+          }
+
+          :host([data-size="sm"]) #ket-label {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+          }
+
+          :host([data-size="base"]) #ket-label {
+            font-size: 1rem;
+            line-height: 1.5rem;
+          }
+
+          :host([data-size="lg"]) #ket-label {
             font-size: 1.125rem;
             line-height: 1.75rem;
           }
 
-          #body.size-xl #ket-label {
+          :host([data-size="xl"]) #ket-label {
             font-size: 1.25rem;
             line-height: 1.75rem;
-          }
-
-          #body.value-0 #ket-label,
-          #body.value-1 #ket-label {
-            background-color: var(--colors-snow, #ffffff);
           }
 
           #body.value-0 #ket-label {
@@ -227,11 +224,6 @@ export class WriteGateElement extends HTMLElement {
     const klass = []
 
     if (this.value) klass.push(`value-${this.value}`)
-    if (this.size === "xs") klass.push("size-xs")
-    if (this.size === "sm") klass.push("size-sm")
-    if (this.size === "base") klass.push("size-base")
-    if (this.size === "lg") klass.push("size-lg")
-    if (this.size === "xl") klass.push("size-xl")
     if (this.draggable) klass.push("draggable")
 
     return klass.join(" ")

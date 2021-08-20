@@ -180,36 +180,39 @@ export class BlochDisplayElement extends HTMLElement {
 
     render(
       html`<style>
+          :host([data-size="xs"]) {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          :host([data-size="sm"]) {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          :host,
+          :host([data-size="base"]) {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          :host([data-size="lg"]) {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          :host([data-size="xl"]) {
+            height: 3rem;
+            width: 3rem;
+          }
+
           #body {
             align-items: center;
             display: flex;
             justify-content: center;
             position: relative;
-          }
-
-          #body.size-xs {
-            height: 1rem;
-            width: 1rem;
-          }
-
-          #body.size-sm {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          #body.size-base {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-lg {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          #body.size-xl {
-            height: 3rem;
-            width: 3rem;
+            height: 100%;
+            width: 100%;
           }
 
           #body.draggable {
@@ -259,7 +262,7 @@ export class BlochDisplayElement extends HTMLElement {
             background-color: rgba(67, 192, 0, 0.1);
           }
 
-          #body.size-xs #sphere-border {
+          :host([data-size="xs"]) #sphere-border {
             border-width: 1px;
           }
 
@@ -277,23 +280,23 @@ export class BlochDisplayElement extends HTMLElement {
             perspective-origin: top right;
           }
 
-          #body.size-xs #perspective {
+          :host([data-size="xs"]) #perspective {
             perspective: 2rem;
           }
 
-          #body.size-sm #perspective {
+          :host([data-size="sm"]) #perspective {
             perspective: 3rem;
           }
 
-          #body.size-base #perspective {
+          :host([data-size="base"]) #perspective {
             perspective: 4rem;
           }
 
-          #body.size-lg #perspective {
+          :host([data-size="lg"]) #perspective {
             perspective: 5rem;
           }
 
-          #body.size-xl #perspective {
+          :host([data-size="xl"]) #perspective {
             perspective: 6rem;
           }
 
@@ -341,13 +344,13 @@ export class BlochDisplayElement extends HTMLElement {
             width: 6px;
           }
 
-          #body.size-xs .vector-end-circle {
+          :host([data-size="xs"]) .vector-end-circle {
             height: 4px;
             width: 4px;
           }
 
-          #body.size-lg .vector-end-circle,
-          #body.size-xl .vector-end-circle {
+          :host([data-size="lg"]) .vector-end-circle,
+          :host([data-size="xl"]) .vector-end-circle {
             height: 8px;
             width: 8px;
           }
@@ -493,11 +496,6 @@ export class BlochDisplayElement extends HTMLElement {
     const klass = []
 
     if (this.draggable) klass.push("draggable")
-    if (this.size === "xs") klass.push("size-xs")
-    if (this.size === "sm") klass.push("size-sm")
-    if (this.size === "base") klass.push("size-base")
-    if (this.size === "lg") klass.push("size-lg")
-    if (this.size === "xl") klass.push("size-xl")
 
     return klass.join(" ")
   }

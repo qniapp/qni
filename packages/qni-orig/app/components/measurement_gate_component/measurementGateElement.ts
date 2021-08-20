@@ -121,36 +121,39 @@ export class MeasurementGateElement extends HTMLElement {
 
     render(
       html`<style>
+          :host([data-size="xs"]) {
+            height: 1rem;
+            width: 1rem;
+          }
+
+          :host([data-size="sm"]) {
+            height: 1.5rem;
+            width: 1.5rem;
+          }
+
+          :host,
+          :host([data-size="base"]) {
+            height: 2rem;
+            width: 2rem;
+          }
+
+          :host([data-size="lg"]) {
+            height: 2.5rem;
+            width: 2.5rem;
+          }
+
+          :host([data-size="xl"]) {
+            height: 3rem;
+            width: 3rem;
+          }
+
           #body {
             align-items: center;
             display: flex;
             justify-content: center;
             position: relative;
-          }
-
-          #body.size-xs {
-            height: 1rem;
-            width: 1rem;
-          }
-
-          #body.size-sm {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          #body.size-base {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          #body.size-lg {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          #body.size-xl {
-            height: 3rem;
-            width: 3rem;
+            height: 100%;
+            width: 100%;
           }
 
           #body.grabbed,
@@ -224,11 +227,6 @@ export class MeasurementGateElement extends HTMLElement {
               "Liberation Mono", "Courier New", monospace;
           }
 
-          #body.value-0 #ket-label,
-          #body.value-1 #ket-label {
-            background-color: var(--colors-snow, #ffffff);
-          }
-
           #body.value-0 #ket-label {
             color: var(--colors-cardinal, #ff4b4b);
           }
@@ -279,11 +277,6 @@ export class MeasurementGateElement extends HTMLElement {
 
     if (this.value) klass.push(`value-${this.value}`)
     if (this.draggable) klass.push("draggable")
-    if (this.size === "xs") klass.push("size-xs")
-    if (this.size === "sm") klass.push("size-sm")
-    if (this.size === "base") klass.push("size-base")
-    if (this.size === "lg") klass.push("size-lg")
-    if (this.size === "xl") klass.push("size-xl")
 
     return klass.join(" ")
   }

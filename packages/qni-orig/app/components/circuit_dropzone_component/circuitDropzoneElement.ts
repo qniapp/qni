@@ -1,16 +1,5 @@
-import { controller, attr, target } from "@github/catalyst"
+import { controller, attr } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import { ControlGateElement } from "control_gate_component/controlGateElement"
-import { HGateElement } from "h_gate_component/hGateElement"
-import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RootNotGateElement } from "root_not_gate_component/rootNotGateElement"
-import { RxGateElement } from "rx_gate_component/rxGateElement"
-import { RyGateElement } from "ry_gate_component/ryGateElement"
-import { RzGateElement } from "rz_gate_component/rzGateElement"
-import { SwapGateElement } from "swap_gate_component/swapGateElement"
-import { XGateElement } from "x_gate_component/xGateElement"
-import { YGateElement } from "y_gate_component/yGateElement"
-import { ZGateElement } from "z_gate_component/zGateElement"
 
 const wires = html`<svg
   id="wires"
@@ -61,55 +50,65 @@ const wires = html`<svg
   ></line>
 </svg> `
 
-// @ts-ignore
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
+  @attr size = "base"
   @attr wireTop = false
   @attr wireBottom = false
-
-  @target body: HTMLElement
-  // @ts-ignore
-  @target draggable:
-    | ControlGateElement
-    | HGateElement
-    | XGateElement
-    | YGateElement
-    | ZGateElement
-    | PhaseGateElement
-    | RootNotGateElement
-    | RxGateElement
-    | RyGateElement
-    | RzGateElement
-    | SwapGateElement
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ): void {
-    if (name === "data-wire-top" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireTopClassString)
-    }
-    if (name === "data-wire-bottom" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireBottomClassString)
-    }
-  }
-
   update(): void {
     render(
       html`<style>
-          #body {
-            position: relative;
+          :host([data-size="xs"]) {
+            height: 1rem;
+            width: 1.5rem;
+          }
+
+          :host([data-size="sm"]) {
+            height: 1.5rem;
+            width: 2.25rem;
+          }
+
+          :host,
+          :host([data-size="base"]) {
             height: 2rem;
             width: 3rem;
+          }
+
+          :host([data-size="lg"]) {
+            height: 2.5rem;
+            width: 3.75rem;
+          }
+
+          :host([data-size="xl"]) {
+            height: 3rem;
+            width: 4.5rem;
+          }
+
+          :host([data-wire-top]) #wire-top {
+            display: block;
+            transform-origin: top;
+            transform: translateY(-25%) scaleY(1.5);
+          }
+
+          :host([data-wire-bottom]) #wire-bottom {
+            display: block;
+            transform-origin: bottom;
+            transform: translateY(25%) scaleY(1.5);
+          }
+
+          #body {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100%;
+            width: 100%;
           }
 
           #wires {
@@ -123,43 +122,51 @@ export class CircuitDropzoneElement extends HTMLElement {
             overflow: visible;
           }
 
+          ::slotted(*) {
+            position: absolute;
+            z-index: 10;
+          }
+
+          slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-left,
+          slot[data-circuit-operation-name="measurement-gate"]
+            ~ #wires
+            > #wire-left {
+            transform-origin: left;
+            transform: scaleX(0.5);
+          }
+
+          slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-right,
+          slot[data-circuit-operation-name="measurement-gate"]
+            ~ #wires
+            > #wire-right {
+            transform-origin: right;
+            transform: scaleX(0.5);
+          }
+
           #wire-top,
           #wire-bottom {
             color: var(--colors-gate, #43c000);
             stroke-width: 4;
             display: none;
           }
-
-          #body.wire-top #wire-top {
-            display: block;
-            transform-origin: top;
-            transform: translateY(-25%) scaleY(1.5);
-          }
-
-          #body.wire-bottom #wire-bottom {
-            display: block;
-            transform-origin: bottom;
-            transform: translateY(25%) scaleY(1.5);
-          }
         </style>
 
-        <div
-          id="body"
-          class="${this.wireTopClassString} ${this.wireBottomClassString}"
-          data-target="circuit-dropzone.body"
-        >
-          ${wires}
+        <div id="body" data-target="circuit-dropzone.body">
           <slot></slot>
+          ${wires}
         </div>`,
       this.shadowRoot!,
     )
-  }
 
-  private get wireTopClassString(): string {
-    return this.wireTop ? "wire-top" : ""
-  }
-
-  private get wireBottomClassString(): string {
-    return this.wireBottom ? "wire-bottom" : ""
+    const slot = this.shadowRoot!.querySelector("slot")
+    slot?.addEventListener("slotchange", () => {
+      for (const element of slot?.assignedElements()) {
+        slot.setAttribute(
+          "data-circuit-operation-name",
+          element.nodeName.toLowerCase(),
+        )
+        element.setAttribute("data-size", this.size)
+      }
+    })
   }
 }
