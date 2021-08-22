@@ -63,6 +63,10 @@ export class SwapGateElement extends HTMLElement {
     this.disabled = false
   }
 
+  get enabled(): boolean {
+    return !this.disabled
+  }
+
   showGateDescription(): void {
     if ((this as ReferenceElement)._tippy) return
 
@@ -85,6 +89,10 @@ export class SwapGateElement extends HTMLElement {
 
   private descriptionHeader(): HTMLElement | null {
     return this.querySelector("header")
+  }
+
+  toJson(): string {
+    return '"Swap"'
   }
 
   connectedCallback(): void {

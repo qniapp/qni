@@ -12,8 +12,18 @@ task 'npm:build' => %i[environment dist] do
   end
   latest_npm_pack = npm_packs.max_by { |a| a[1] }[0]
 
-  cp latest_npm_pack, 'dist/index.js'
-  cp latest_npm_pack, 'docs/index.js'
+  js = File.read(latest_npm_pack)
+  js_tmp = Tempfile.open('index.js') do |f|
+    f.print js.gsub(%r{//# sourceMappingURL=.+}, '//# sourceMappingURL=index.js.map')
+    f
+  end
+
+  cp js_tmp.path, 'dist/index.js'
+  cp js_tmp.path, 'docs/index.js'
+
+  latest_npm_pack_map = "#{latest_npm_pack}.map"
+  cp latest_npm_pack_map, 'dist/index.js.map'
+  cp latest_npm_pack_map, 'docs/index.js.map'
 end
 
 task 'npm:publish' => :environment do

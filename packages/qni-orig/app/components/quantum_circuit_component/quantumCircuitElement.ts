@@ -22,7 +22,6 @@ export class QuantumCircuitElement extends HTMLElement {
     if (name === "data-json" && oldValue !== newValue && this.body) {
       this.body.innerHTML = ""
       this.body.append(this.circuitStepFragment)
-      this.updateConnections()
     }
   }
 
@@ -41,7 +40,6 @@ export class QuantumCircuitElement extends HTMLElement {
         </div>`,
       this.shadowRoot!,
     )
-    this.updateConnections()
   }
 
   private get circuitStepFragment(): DocumentFragment {
@@ -235,78 +233,5 @@ export class QuantumCircuitElement extends HTMLElement {
       frag.append(circuitStep)
     }
     return frag
-  }
-
-  private updateConnections(): void {
-    for (const circuitStep of this.circuitSteps) {
-      if (
-        circuitStep.controlGates.length === 1 &&
-        circuitStep.controllableGates.length === 0
-      ) {
-        circuitStep.controlGates[0].disable()
-      }
-
-      if (circuitStep.swapGates.length !== 2) {
-        for (const swapGate of circuitStep.swapGates) {
-          swapGate.disable()
-        }
-      }
-
-      if (circuitStep.controlGates.length === 0) continue
-
-      for (const controllableGate of circuitStep.controllableGates) {
-        controllableGate.wireTop =
-          circuitStep.controlGates.some((each) => {
-            return circuitStep.bit(each) < circuitStep.bit(controllableGate)
-          }) ||
-          circuitStep.controllableGates.some((each) => {
-            return circuitStep.bit(each) < circuitStep.bit(controllableGate)
-          })
-        controllableGate.wireBottom =
-          circuitStep.controlGates.some((each) => {
-            return circuitStep.bit(each) > circuitStep.bit(controllableGate)
-          }) ||
-          circuitStep.controllableGates.some((each) => {
-            return circuitStep.bit(each) > circuitStep.bit(controllableGate)
-          })
-      }
-
-      for (const controlGate of circuitStep.controlGates) {
-        controlGate.wireTop =
-          circuitStep.controllableGates.some((each) => {
-            return circuitStep.bit(controlGate) > circuitStep.bit(each)
-          }) ||
-          circuitStep.controlGates.some((each) => {
-            return circuitStep.bit(controlGate) > circuitStep.bit(each)
-          })
-        controlGate.wireBottom =
-          circuitStep.controllableGates.some((each) => {
-            return circuitStep.bit(controlGate) < circuitStep.bit(each)
-          }) ||
-          circuitStep.controlGates.some((each) => {
-            return circuitStep.bit(controlGate) < circuitStep.bit(each)
-          })
-      }
-
-      for (const dropzone of circuitStep.dropzones) {
-        if (dropzone.draggable) continue
-
-        const bits = circuitStep.controlGates
-          .map((each) => circuitStep.bit(each))
-          .concat(
-            circuitStep.controllableGates.map((each) => circuitStep.bit(each)),
-          )
-        const minBit = bits.sort()[0]
-        const maxBit = bits.sort().slice(-1)[0]
-
-        if (
-          minBit < circuitStep.dropzones.indexOf(dropzone) &&
-          circuitStep.dropzones.indexOf(dropzone) < maxBit
-        ) {
-          dropzone.wireTop = true
-          dropzone.wireBottom = true
-        }
-      }
-    }
   }
 }

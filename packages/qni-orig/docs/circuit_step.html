@@ -22,23 +22,81 @@ title: Circuit Step
               <p class="mt-1 text-lg text-gray-500">A column representing a single step in a quantum circuit.</p>
             </div>
 
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-H Gate</h2>
             <div class="relative overflow-hidden mb-8">
               <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row">
+                <div class="flex flex-row space-x-4">
                   <circuit-step>
                     <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                  </circuit-step>                  
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
                     </circuit-dropzone>
                     <circuit-dropzone>
                       <h-gate></h-gate>
                     </circuit-dropzone>
                     <circuit-dropzone>
-                      <x-gate></x-gate>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <h-gate></h-gate>
                     </circuit-dropzone>
                     <circuit-dropzone>
-                      <y-gate></y-gate>
+                      <control-gate></control-gate>
                     </circuit-dropzone>
                     <circuit-dropzone>
-                      <z-gate></z-gate>
+                      <control-gate></control-gate>
                     </circuit-dropzone>
                   </circuit-step>
                 </div>
@@ -46,20 +104,1149 @@ title: Circuit Step
               <div class="overflow-hidden rounded-b-xl bg-light-green-500">
                 <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
   &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
   &lt;/circuit-dropzone&gt;
   &lt;circuit-dropzone&gt;
     &lt;h-gate&gt;&lt;/h-gate&gt;
   &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;h-gate&gt;&lt;/h-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;h-gate&gt;&lt;/h-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-X Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <x-gate></x-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;x-gate&gt;&lt;/x-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
   &lt;circuit-dropzone&gt;
     &lt;x-gate&gt;&lt;/x-gate&gt;
   &lt;/circuit-dropzone&gt;
   &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;x-gate&gt;&lt;/x-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Y Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <y-gate></y-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
     &lt;y-gate&gt;&lt;/y-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;y-gate&gt;&lt;/y-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;y-gate&gt;&lt;/y-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Z Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <z-gate></z-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
   &lt;/circuit-dropzone&gt;
   &lt;circuit-dropzone&gt;
     &lt;z-gate&gt;&lt;/z-gate&gt;
   &lt;/circuit-dropzone&gt;
-&lt;/circuit-step&gt;</code></pre>
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;z-gate&gt;&lt;/z-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;z-gate&gt;&lt;/z-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Phase Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <phase-gate></phase-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;phase-gate&gt;&lt;/phase-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;phase-gate&gt;&lt;/phase-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;phase-gate&gt;&lt;/phase-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-√X Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <root-not-gate></root-not-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;root-not-gate&gt;&lt;/root-not-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Rx Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rx-gate></rx-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rx-gate&gt;&lt;/rx-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rx-gate&gt;&lt;/rx-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rx-gate&gt;&lt;/rx-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Ry Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <ry-gate></ry-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;ry-gate&gt;&lt;/ry-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;ry-gate&gt;&lt;/ry-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;ry-gate&gt;&lt;/ry-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Rz Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <rz-gate></rz-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rz-gate&gt;&lt;/rz-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rz-gate&gt;&lt;/rz-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;rz-gate&gt;&lt;/rz-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">CZ Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
+              </div>
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-Swap Gate</h2>
+            <div class="relative overflow-hidden mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone></circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+
+                  <circuit-step>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <swap-gate></swap-gate>
+                    </circuit-dropzone>
+                    <circuit-dropzone>
+                      <control-gate></control-gate>
+                    </circuit-dropzone>
+                  </circuit-step>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;swap-gate&gt;&lt;/swap-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;swap-gate&gt;&lt;/swap-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+&lt;circuit-step&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;control-gate&gt;&lt;/control-gate&gt;
+  &lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;&lt;/circuit-dropzone&gt;
+  &lt;circuit-dropzone&gt;
+    &lt;swap-gate&gt;&lt;/swap-gate&gt;
+  &lt;/circuit-dropzone&gt;
+&lt;/circuit-step&gt;
+
+...</code></pre>
               </div>
             </div>
           </div>

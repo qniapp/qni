@@ -1,5 +1,35 @@
-import { controller, attr } from "@github/catalyst"
+import { controller, attr, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
+import { HGateElement } from "h_gate_component/hGateElement"
+import { XGateElement } from "x_gate_component/xGateElement"
+import { YGateElement } from "y_gate_component/yGateElement"
+import { ZGateElement } from "z_gate_component/zGateElement"
+import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
+import { RootNotGateElement } from "root_not_gate_component/rootNotGateElement"
+import { RxGateElement } from "rx_gate_component/rxGateElement"
+import { RyGateElement } from "ry_gate_component/ryGateElement"
+import { RzGateElement } from "rz_gate_component/rzGateElement"
+import { SwapGateElement } from "swap_gate_component/swapGateElement"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import { WriteGateElement } from "write_gate_component/writeGateElement"
+import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
+
+type CircuitOperation =
+  | HGateElement
+  | XGateElement
+  | YGateElement
+  | ZGateElement
+  | PhaseGateElement
+  | RootNotGateElement
+  | RxGateElement
+  | RyGateElement
+  | RzGateElement
+  | ControlGateElement
+  | SwapGateElement
+  | BlochDisplayElement
+  | WriteGateElement
+  | MeasurementGateElement
 
 const wires = html`<svg
   id="wires"
@@ -48,124 +78,147 @@ const wires = html`<svg
     stroke="currentColor"
     vector-effect="non-scaling-stroke"
   ></line>
-</svg> `
+</svg>`
+
+const css = html`<style>
+  :host([data-size="xs"]) {
+    height: 1rem;
+    width: 1.5rem;
+  }
+
+  :host([data-size="sm"]) {
+    height: 1.5rem;
+    width: 2.25rem;
+  }
+
+  :host,
+  :host([data-size="base"]) {
+    height: 2rem;
+    width: 3rem;
+  }
+
+  :host([data-size="lg"]) {
+    height: 2.5rem;
+    width: 3.75rem;
+  }
+
+  :host([data-size="xl"]) {
+    height: 3rem;
+    width: 4.5rem;
+  }
+
+  :host([data-wire-top]) #wire-top {
+    display: block;
+    transform-origin: top;
+    transform: translateY(-25%) scaleY(1.5);
+  }
+
+  :host([data-wire-bottom]) #wire-bottom {
+    display: block;
+    transform-origin: bottom;
+    transform: translateY(25%) scaleY(1.5);
+  }
+
+  #body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  #wires {
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    top: -2px;
+    height: calc(100% + 4px);
+    width: calc(100% + 4px);
+    overflow: visible;
+  }
+
+  ::slotted(*) {
+    position: absolute;
+    z-index: 10;
+  }
+
+  slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-left,
+  slot[data-circuit-operation-name="measurement-gate"] ~ #wires > #wire-left {
+    transform-origin: left;
+    transform: scaleX(0.5);
+  }
+
+  slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-right,
+  slot[data-circuit-operation-name="measurement-gate"] ~ #wires > #wire-right {
+    transform-origin: right;
+    transform: scaleX(0.5);
+  }
+
+  #wire-top,
+  #wire-bottom {
+    color: var(--colors-gate, #43c000);
+    stroke-width: 4;
+    display: none;
+  }
+</style>`
 
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
+  @target slotEl: HTMLSlotElement
+
   @attr size = "base"
   @attr wireTop = false
   @attr wireBottom = false
 
+  get operation(): CircuitOperation | null {
+    if (this.childElementCount === 0) {
+      return null
+    } else if (this.childElementCount === 1) {
+      return this.children[0] as CircuitOperation
+    } else {
+      throw new Error("A dropzone cannot hold multiple operations.")
+    }
+  }
+
+  toJson(): string | number {
+    const operation = this.operation
+
+    if (operation === null) {
+      return "1"
+    } else {
+      return operation.toJson()
+    }
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
+    this.addSlotChangeEventListener()
   }
 
   update(): void {
     render(
-      html`<style>
-          :host([data-size="xs"]) {
-            height: 1rem;
-            width: 1.5rem;
-          }
-
-          :host([data-size="sm"]) {
-            height: 1.5rem;
-            width: 2.25rem;
-          }
-
-          :host,
-          :host([data-size="base"]) {
-            height: 2rem;
-            width: 3rem;
-          }
-
-          :host([data-size="lg"]) {
-            height: 2.5rem;
-            width: 3.75rem;
-          }
-
-          :host([data-size="xl"]) {
-            height: 3rem;
-            width: 4.5rem;
-          }
-
-          :host([data-wire-top]) #wire-top {
-            display: block;
-            transform-origin: top;
-            transform: translateY(-25%) scaleY(1.5);
-          }
-
-          :host([data-wire-bottom]) #wire-bottom {
-            display: block;
-            transform-origin: bottom;
-            transform: translateY(25%) scaleY(1.5);
-          }
-
-          #body {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-          }
-
-          #wires {
-            position: absolute;
-            bottom: -2px;
-            left: -2px;
-            right: -2px;
-            top: -2px;
-            height: calc(100% + 4px);
-            width: calc(100% + 4px);
-            overflow: visible;
-          }
-
-          ::slotted(*) {
-            position: absolute;
-            z-index: 10;
-          }
-
-          slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-left,
-          slot[data-circuit-operation-name="measurement-gate"]
-            ~ #wires
-            > #wire-left {
-            transform-origin: left;
-            transform: scaleX(0.5);
-          }
-
-          slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-right,
-          slot[data-circuit-operation-name="measurement-gate"]
-            ~ #wires
-            > #wire-right {
-            transform-origin: right;
-            transform: scaleX(0.5);
-          }
-
-          #wire-top,
-          #wire-bottom {
-            color: var(--colors-gate, #43c000);
-            stroke-width: 4;
-            display: none;
-          }
-        </style>
+      html`${css}
 
         <div id="body" data-target="circuit-dropzone.body">
-          <slot></slot>
+          <slot data-target="circuit-dropzone.slotEl"></slot>
           ${wires}
         </div>`,
       this.shadowRoot!,
     )
+  }
 
-    const slot = this.shadowRoot!.querySelector("slot")
-    slot?.addEventListener("slotchange", () => {
-      for (const element of slot?.assignedElements()) {
-        slot.setAttribute(
+  addSlotChangeEventListener(): void {
+    this.slotEl.addEventListener("slotchange", () => {
+      const operation = this.operation
+      if (operation !== null) {
+        this.slotEl.setAttribute(
           "data-circuit-operation-name",
-          element.nodeName.toLowerCase(),
+          operation.nodeName.toLowerCase(),
         )
-        element.setAttribute("data-size", this.size)
+        operation.setAttribute("data-size", this.size)
       }
     })
   }

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MeasureGateComponentTest < ViewComponent::TestCase
+class ControlGateComponentTest < ViewComponent::TestCase
   def test_enabled
     render_inline(ControlGateComponent.new)
 

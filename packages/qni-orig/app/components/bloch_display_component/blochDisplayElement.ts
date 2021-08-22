@@ -114,6 +114,10 @@ export class BlochDisplayElement extends HTMLElement {
     return this.querySelector("header")
   }
 
+  toJson(): string {
+    return '"Bloch"'
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()

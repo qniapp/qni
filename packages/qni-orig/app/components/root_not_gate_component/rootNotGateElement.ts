@@ -89,6 +89,10 @@ export class RootNotGateElement extends HTMLElement {
     return this.innerHTML
   }
 
+  toJson(): string {
+    return '"X^½"'
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
@@ -99,19 +103,18 @@ export class RootNotGateElement extends HTMLElement {
     oldValue: string | null,
     newValue: string | null,
   ): void {
-    if (name === "data-disabled" && oldValue !== newValue && this.body) {
-      if (newValue === null) {
-        this.body.classList.remove("disabled")
-      } else {
-        this.body.classList.add("disabled")
-      }
+    if (!this.body) return
+    if (oldValue === newValue) return
+
+    if (name === "data-disabled") {
+      this.body.classList.toggle("disabled")
     }
 
-    if (name === "data-wire-top" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireTopClassString)
+    if (name === "data-wire-top") {
+      this.body.classList.toggle("wire-top")
     }
-    if (name === "data-wire-bottom" && oldValue !== newValue && this.body) {
-      this.body.classList.add(this.wireBottomClassString)
+    if (name === "data-wire-bottom") {
+      this.body.classList.toggle("wire-bottom")
     }
   }
 

@@ -88,6 +88,10 @@ export class XGateElement extends HTMLElement {
     return this.innerHTML
   }
 
+  toJson(): string {
+    return '"X"'
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
@@ -99,30 +103,17 @@ export class XGateElement extends HTMLElement {
     newValue: string | null,
   ): void {
     if (!this.body) return
-    if (oldValue !== newValue) return
+    if (oldValue === newValue) return
 
     if (name === "data-disabled") {
-      if (newValue === null) {
-        this.body.classList.remove("disabled")
-      } else {
-        this.body.classList.add("disabled")
-      }
+      this.body.classList.toggle("disabled")
     }
 
     if (name === "data-wire-top") {
-      if (newValue === null) {
-        this.body.classList.remove("wire-top")
-      } else {
-        this.body.classList.add("wire-top")
-      }
+      this.body.classList.toggle("wire-top")
     }
-
     if (name === "data-wire-bottom") {
-      if (newValue === null) {
-        this.body.classList.remove("wire-bottom")
-      } else {
-        this.body.classList.add("wire-bottom")
-      }
+      this.body.classList.toggle("wire-bottom")
     }
   }
 

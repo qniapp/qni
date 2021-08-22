@@ -47,6 +47,10 @@ export class WriteGateElement extends HTMLElement {
     return this.innerHTML
   }
 
+  toJson(): string {
+    return `"|${this.value}>"`
+  }
+
   connectedCallback(): void {
     try {
       this.attachShadow({ mode: "open" })

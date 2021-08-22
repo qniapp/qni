@@ -77,6 +77,10 @@ export class MeasurementGateElement extends HTMLElement {
     return this.querySelector("header")
   }
 
+  toJson(): string {
+    return '"Measure"'
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
