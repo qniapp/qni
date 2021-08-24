@@ -241,7 +241,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stackprof (0.2.17)
-    tailwindcss-rails (0.3.3)
+    tailwindcss-rails-webpacker (0.1.2)
       rails (>= 6.0.0)
     thor (1.1.0)
     tilt (2.0.10)
@@ -311,7 +311,7 @@ DEPENDENCIES
   sdoc
   spring
   stackprof
-  tailwindcss-rails (~> 0.3.3)
+  tailwindcss-rails-webpacker
   turbolinks (~> 5)
   tzinfo-data
   view_component

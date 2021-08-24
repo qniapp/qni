@@ -30,6 +30,7 @@
 
 # Other
 .DS_Store
+.eslintcache
 .yarn-integrity
 /node_modules
 /public/packs

@@ -20,6 +20,7 @@ const palette = {
 }
 
 module.exports = {
+  // Purge unused TailwindCSS styles
   purge: {
     enabled: ["production"].includes(process.env.NODE_ENV),
     content: [

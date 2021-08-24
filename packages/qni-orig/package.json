@@ -57,7 +57,7 @@
     "fraction.js": "^4.1.1",
     "magic-grid": "^3.2.4",
     "nouislider": "^15.2.0",
-    "postcss": "~7.0",
+    "postcss": "^7",
     "sass-loader": "^10",
     "stimulus": "~2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
