@@ -19,7 +19,6 @@
       "prettier --write"
     ],
     "*.scss": [
-      "bin/bundle exec scss-lint",
       "prettier --write"
     ],
     "*.md": [

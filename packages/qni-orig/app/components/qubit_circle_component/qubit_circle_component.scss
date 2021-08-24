@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .qubit-circle {
   $parent: &;
 
@@ -64,7 +66,8 @@
     // 1..100 (step = 10)
     @for $magnitude from 1 through 10 {
       #{$parent}--magnitude-#{$magnitude * 10} > & {
-        transform: scaleX(#{$magnitude / 10}) scaleY(#{$magnitude / 10});
+        transform: scaleX(#{math.div($magnitude, 10)})
+          scaleY(#{math.div($magnitude, 10)});
       }
     }
   }

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .dropzone {
   $parent: &;
 
@@ -17,21 +19,21 @@
     @each $nqubit in $nqubits {
       .circuit[data-nqubit="#{$nqubit}"] & {
         @apply w-#{map-get($instruction-size, $nqubit)};
-        @apply h-#{map-get($instruction-size, $nqubit) + map-get($instruction-size, $nqubit) / 2};
+        @apply h-#{map-get($instruction-size, $nqubit) + math.div(map-get($instruction-size, $nqubit), 2)};
 
         @screen md {
-          @apply w-#{$instruction-size-base + $instruction-size-base / 2};
+          @apply w-#{$instruction-size-base + math.div($instruction-size-base, 2)};
           @apply h-#{$instruction-size-base};
           @apply mx-0;
         }
       }
 
       .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
-        @apply mr-#{map-get($instruction-size, $nqubit) / 2};
+        @apply mr-#{math.div(map-get($instruction-size, $nqubit), 2)};
 
         @screen md {
           @apply mr-0;
-          @apply mt-#{$instruction-size-base / 2};
+          @apply mt-#{math.div($instruction-size-base, 2)};
         }
       }
 
@@ -42,7 +44,7 @@
 
     &:nth-of-type(n + 2) {
       @screen md {
-        @apply mt-#{$instruction-size-screen-md / 2};
+        @apply mt-#{math.div($instruction-size-screen-md, 2)};
       }
     }
 
@@ -53,7 +55,7 @@
     }
 
     .circuit-preview &:nth-of-type(n + 2) {
-      @apply mt-#{$instruction-size-screen-md / 2};
+      @apply mt-#{math.div($instruction-size-screen-md, 2)};
     }
   }
 }

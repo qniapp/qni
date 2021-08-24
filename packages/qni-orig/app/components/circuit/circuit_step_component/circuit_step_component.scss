@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .circuit-step {
   $parent: &;
 
@@ -8,7 +10,7 @@
 
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {
-      @apply -mx-#{map-get($instruction-size, $nqubit) / 2} px-#{map-get($instruction-size, $nqubit) / 2};
+      @apply -mx-#{math.div(map-get($instruction-size, $nqubit), 2)} px-#{math.div(map-get($instruction-size, $nqubit), 2)};
 
       @screen md {
         @apply mx-0 px-0;
@@ -18,7 +20,7 @@
 
   @screen md {
     @apply flex-row items-stretch;
-    @apply -my-#{$instruction-size-base / 2} py-#{$instruction-size-base / 2};
+    @apply -my-#{math.div($instruction-size-base, 2)} py-#{math.div($instruction-size-base, 2)};
   }
 
   .circuit-preview & {

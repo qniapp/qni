@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .register-label {
   $self: &;
 
@@ -26,11 +28,11 @@
     }
 
     .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
-      @apply mr-#{map-get($instruction-size, $nqubit) / 2};
+      @apply mr-#{math.div(map-get($instruction-size, $nqubit), 2)};
 
       @screen md {
         @apply mr-2;
-        @apply mt-#{$instruction-size-base / 2};
+        @apply mt-#{math.div($instruction-size-base, 2)};
       }
     }
 
@@ -45,7 +47,7 @@
 
   &:nth-of-type(n + 2) {
     .circuit-preview .circuit & {
-      @apply mt-#{$instruction-size-base / 2};
+      @apply mt-#{math.div($instruction-size-base, 2)};
     }
   }
 

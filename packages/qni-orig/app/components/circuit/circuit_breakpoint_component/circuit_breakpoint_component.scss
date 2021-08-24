@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .circuit-breakpoint {
   $parent: &;
 
@@ -8,7 +10,7 @@
 
   @each $nqubit in $nqubits {
     .circuit[data-nqubit="#{$nqubit}"] & {
-      @apply -mx-#{map-get($instruction-size, $nqubit) / 2};
+      @apply -mx-#{math.div(map-get($instruction-size, $nqubit), 2)};
 
       @screen md {
         @apply mx-0;
@@ -17,7 +19,7 @@
   }
 
   @screen md {
-    @apply -my-#{$instruction-size-base / 2};
+    @apply -my-#{math.div($instruction-size-base, 2)};
     @apply min-h-full;
     @apply min-w-0;
   }
@@ -32,13 +34,13 @@
     @apply opacity-0;
     @apply z-10;
 
-    margin-top: -#{$circuit-breakpoint-width-px / 2}px;
-    padding: #{$circuit-breakpoint-width-px / 2}px;
+    margin-top: -#{math.div($circuit-breakpoint-width-px, 2)}px;
+    padding: #{math.div($circuit-breakpoint-width-px, 2)}px;
     will-change: opacity;
 
     @screen md {
       @apply mt-0;
-      margin-left: -#{$circuit-breakpoint-width-px / 2}px;
+      margin-left: -#{math.div($circuit-breakpoint-width-px, 2)}px;
     }
 
     .circuit-step--done:hover & {

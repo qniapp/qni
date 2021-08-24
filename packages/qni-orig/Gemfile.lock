@@ -142,7 +142,7 @@ GEM
     rack (2.2.3)
     rack-mini-profiler (2.3.2)
       rack (>= 1.2.0)
-    rack-proxy (0.6.5)
+    rack-proxy (0.7.0)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -205,11 +205,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -222,9 +217,6 @@ GEM
       tilt
     scout_apm (4.0.4)
       parser
-    scss_lint (0.59.0)
-      sass (~> 3.5, >= 3.5.5)
-    scss_lint_reporter_checkstyle (0.2.0)
     sdoc (2.1.0)
       rdoc (>= 5.0)
     selenium-webdriver (3.142.7)
@@ -265,7 +257,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webpacker (5.4.0)
+    webpacker (5.4.2)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -306,8 +298,6 @@ DEPENDENCIES
   rubocop-rails
   sass-rails (>= 6)
   scout_apm
-  scss_lint
-  scss_lint_reporter_checkstyle
   sdoc
   spring
   stackprof

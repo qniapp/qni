@@ -1,7 +1,11 @@
+@use "sass:math";
+
 .qubit-label {
   $self: &;
-  $qubit-label-wire-length: ($instruction-size-base - $instruction-size-base) /
-    2;
+  $qubit-label-wire-length: math.div(
+    ($instruction-size-base - $instruction-size-base),
+    2
+  );
   $qubit-label-wire-length-mobile: 4;
 
   @apply flex justify-end;
@@ -27,11 +31,11 @@
     }
 
     .circuit[data-nqubit="#{$nqubit}"] &:nth-of-type(n + 2) {
-      @apply mr-#{map-get($instruction-size, $nqubit) / 2};
+      @apply mr-#{math.div(map-get($instruction-size, $nqubit), 2)};
 
       @screen md {
         @apply mr-0;
-        @apply mt-#{$instruction-size-base / 2};
+        @apply mt-#{math.div($instruction-size-base, 2)};
       }
     }
 
@@ -49,7 +53,7 @@
 
   &:nth-of-type(n + 2) {
     .circuit-preview .circuit & {
-      @apply mt-#{$instruction-size-base / 2};
+      @apply mt-#{math.div($instruction-size-base, 2)};
     }
   }
 
@@ -61,20 +65,20 @@
       @apply border-l-#{$wire-width};
       @apply bottom-0 left-0;
       @apply h-#{$qubit-label-wire-length-mobile};
-      @apply ml-#{$instruction-size-base / 2};
-      @apply ml-#{map-get($instruction-size, $nqubit) / 2};
-      left: -#{$wire-width / 2}px;
+      @apply ml-#{math.div($instruction-size-base, 2)};
+      @apply ml-#{math.div(map-get($instruction-size, $nqubit), 2)};
+      left: -#{math.div($wire-width, 2)}px;
     }
 
     @mixin wire-md {
       @apply border-l-0;
       @apply border-t-#{$wire-width};
-      @apply mt-#{$instruction-size-base / 2} ml-0;
+      @apply mt-#{math.div($instruction-size-base, 2)} ml-0;
       @apply right-0;
       @apply w-#{$qubit-label-wire-length};
       bottom: unset;
       left: unset;
-      top: -#{$wire-width / 2}px;
+      top: -#{math.div($wire-width, 2)}px;
     }
 
     @each $nqubit in $nqubits {
