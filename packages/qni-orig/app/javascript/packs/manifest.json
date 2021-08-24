@@ -1,0 +1,22 @@
+{
+  "name": "Qni: Quantum Circuit Simlator",
+  "short_name": "Qni",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1CB0F6",
+  "background_color": "#1CB0F6",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}

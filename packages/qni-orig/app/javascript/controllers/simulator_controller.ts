@@ -45,7 +45,7 @@ export default class SimulatorController extends Controller {
       event.stopPropagation()
     })
 
-    this.worker = new Worker("/service-worker.js")
+    this.worker = new Worker("/serviceworker.js")
     this.worker.addEventListener(
       "message",
       ((e: MessageEvent) => {

@@ -33,7 +33,7 @@ gem 'stackprof'
 gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'htmlbeautifier'
-gem 'webpacker-pwa'
+gem 'serviceworker-rails', github: 'ncs1/serviceworker-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

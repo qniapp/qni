@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/ncs1/serviceworker-rails.git
+  revision: baba03af00446db9dce7de45465ec929bc45ddd3
+  specs:
+    serviceworker-rails (0.6.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -262,9 +269,6 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    webpacker-pwa (0.1.0)
-      rack-proxy (>= 0.6.1)
-      webpacker (>= 4.0.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -299,6 +303,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   scout_apm
   sdoc
+  serviceworker-rails!
   spring
   stackprof
   tailwindcss-rails-webpacker
@@ -308,7 +313,6 @@ DEPENDENCIES
   web-console
   webdrivers
   webpacker
-  webpacker-pwa
 
 RUBY VERSION
    ruby 2.7.4p191
