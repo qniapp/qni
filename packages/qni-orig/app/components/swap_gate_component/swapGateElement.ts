@@ -1,6 +1,7 @@
 import {
   DisableableMixin,
   DraggableMixin,
+  HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
@@ -8,39 +9,16 @@ import {
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
-import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 @controller
 export class SwapGateElement extends DraggableMixin(
   WireableMixin(
-    DisableableMixin(IconableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    DisableableMixin(
+      IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    ),
   ),
 ) {
   @attr iconType = "transparent"
-
-  showGateDescription(): void {
-    if ((this as ReferenceElement)._tippy) return
-
-    const content = this.innerHTML.trim()
-    if (content === "") return
-
-    const popup = tippy(this, {
-      allowHTML: true,
-      animation: false,
-      arrow: roundArrow + roundArrow,
-      delay: 0,
-      placement: "right",
-      theme: "qni",
-      onShow(instance: Instance) {
-        instance.setContent(content)
-      },
-    })
-    popup.show()
-  }
-
-  toJson(): string {
-    return '"Swap"'
-  }
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
@@ -52,11 +30,15 @@ export class SwapGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle}
 
-        <div id="body" data-action="mouseenter:swap-gate#showGateDescription">
+        <div id="body" data-action="mouseenter:swap-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,
     )
+  }
+
+  toJson(): string {
+    return '"Swap"'
   }
 
   get iconSvg(): TemplateResult {

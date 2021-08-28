@@ -1,16 +1,16 @@
 import {
   DraggableMixin,
+  HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
-import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 @controller
 export class MeasurementGateElement extends DraggableMixin(
-  IconableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
 ) {
   @attr iconType = "transparent"
   @attr value = ""
@@ -33,30 +33,6 @@ export class MeasurementGateElement extends DraggableMixin(
       bubbles: true,
     })
     this.parentElement?.dispatchEvent(customEvent)
-  }
-
-  showGateDescription(): void {
-    if ((this as ReferenceElement)._tippy) return
-
-    const content = this.innerHTML.trim()
-    if (content === "") return
-
-    const popup = tippy(this, {
-      allowHTML: true,
-      animation: false,
-      arrow: roundArrow + roundArrow,
-      delay: 0,
-      placement: "right",
-      theme: "qni",
-      onShow(instance: Instance) {
-        instance.setContent(content)
-      },
-    })
-    popup.show()
-  }
-
-  toJson(): string {
-    return '"Measure"'
   }
 
   connectedCallback(): void {
@@ -172,13 +148,17 @@ export class MeasurementGateElement extends DraggableMixin(
         <div
           id="body"
           data-flag="${this.flag}"
-          data-action="mouseenter:measurement-gate#showGateDescription"
+          data-action="mouseenter:measurement-gate#showHelp"
         >
           ${this.iconSvg}
           <div id="ket-label"></div>
         </div>`,
       this.shadowRoot!,
     )
+  }
+
+  toJson(): string {
+    return '"Measure"'
   }
 
   get iconSvg(): TemplateResult {

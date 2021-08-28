@@ -1,6 +1,7 @@
 import {
   DisableableMixin,
   DraggableMixin,
+  HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
@@ -47,37 +48,15 @@ const css = html`<style>
 @controller
 export class ControlGateElement extends DraggableMixin(
   WireableMixin(
-    DisableableMixin(IconableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    DisableableMixin(
+      IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    ),
   ),
 ) {
   @attr iconType = "transparent"
   @attr draggableSource = false
   @attr draggableShadow = false
   @attr grabbed = false
-
-  showHelp(): void {
-    if ((this as ReferenceElement)._tippy) return
-
-    const content = this.innerHTML.trim()
-    if (content === "") return
-
-    const popup = tippy(this, {
-      allowHTML: true,
-      animation: false,
-      arrow: roundArrow + roundArrow,
-      delay: 0,
-      placement: "right",
-      theme: "qni",
-      onShow(instance: Instance) {
-        instance.setContent(content)
-      },
-    })
-    popup.show()
-  }
-
-  toJson(): string {
-    return '"•"'
-  }
 
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
@@ -94,6 +73,10 @@ export class ControlGateElement extends DraggableMixin(
         </div>`,
       this.shadowRoot!,
     )
+  }
+
+  toJson(): string {
+    return '"•"'
   }
 
   get iconSvg(): TemplateResult {

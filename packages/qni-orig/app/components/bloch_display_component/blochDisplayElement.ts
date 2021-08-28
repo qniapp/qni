@@ -1,17 +1,16 @@
-import { DraggableMixin, JsonableMixin, SizeableMixin } from "mixins"
+import {
+  DraggableMixin,
+  HelpableMixin,
+  JsonableMixin,
+  SizeableMixin,
+} from "mixins"
 import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import tippy, {
-  Content,
-  Instance,
-  Placement,
-  ReferenceElement,
-  roundArrow,
-} from "tippy.js"
+import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 @controller
 export class BlochDisplayElement extends DraggableMixin(
-  SizeableMixin(JsonableMixin(HTMLElement)),
+  HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
 ) {
   @target body: HTMLElement
   @target vectorLine: HTMLElement
@@ -43,31 +42,23 @@ export class BlochDisplayElement extends DraggableMixin(
   }
 
   showPopup(): void {
-    let content: Content
-    let placement: Placement
-
     if (this.isCircuitDraggable()) {
-      placement = "auto"
-      content = this.blochInspectorPopupContent()
+      const content = this.blochInspectorPopupContent()
+      const popup = tippy(this as Element, {
+        allowHTML: true,
+        animation: false,
+        arrow: roundArrow + roundArrow,
+        delay: 0,
+        placement: "auto",
+        theme: "qni",
+        onShow(instance: Instance) {
+          instance.setContent(content)
+        },
+      })
+      popup.show()
     } else {
-      placement = "right"
-      const descriptionHeader = this.innerHTML.trim()
-      if (descriptionHeader === "") return
-      content = descriptionHeader
+      this.showHelp()
     }
-
-    const popup = tippy(this as Element, {
-      allowHTML: true,
-      animation: false,
-      arrow: roundArrow + roundArrow,
-      delay: 0,
-      placement,
-      theme: "qni",
-      onShow(instance: Instance) {
-        instance.setContent(content)
-      },
-    })
-    popup.show()
   }
 
   private blochInspectorPopupContent() {
@@ -110,10 +101,6 @@ export class BlochDisplayElement extends DraggableMixin(
     )
 
     return content
-  }
-
-  toJson(): string {
-    return '"Bloch"'
   }
 
   connectedCallback(): void {
@@ -355,6 +342,10 @@ export class BlochDisplayElement extends DraggableMixin(
         </div>`,
       this.shadowRoot!,
     )
+  }
+
+  toJson(): string {
+    return '"Bloch"'
   }
 
   private updateBlochVector(): void {
