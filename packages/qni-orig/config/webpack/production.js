@@ -15,7 +15,7 @@ environment.config.set("optimization.minimizer", [
                    "HGateElement",
                    "XGateElement", "YGateElement", "ZGateElement",
                    "PhaseGateElement",
-                   "RootNotGateElement",
+                   "RnotGateElement",
                    "RxGateElement", "RyGateElement", "RzGateElement",
                    "ControlGateElement",
                    "SwapGateElement",

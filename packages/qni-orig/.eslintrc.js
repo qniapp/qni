@@ -4,7 +4,7 @@ module.exports = {
   extends: ["eslint:recommended"],
   rules: {
     semi: ["error", "never"],
-    quotes: ["error", "double", { "avoidEscape": true }],
+    quotes: ["error", "double", { avoidEscape: true }],
     "no-unused-vars": ["error", { vars: "all", args: "none" }],
     "no-trailing-spaces": ["error"],
     "no-multiple-empty-lines": ["error", { max: 2 }],
@@ -24,17 +24,24 @@ module.exports = {
         project: "./tsconfig.json",
         sourceType: "module",
       },
+      settings: {
+        "import/resolver": {
+          typescript: {},
+        },
+      },
       plugins: ["github", "custom-elements"],
       extends: [
         "eslint:recommended",
         "plugin:github/recommended",
         "plugin:github/browser",
         "plugin:github/typescript",
-        "plugin:custom-elements/recommended"
+        "plugin:custom-elements/recommended",
       ],
       rules: {
         "custom-elements/define-tag-after-class-definition": "off",
         "custom-elements/expose-class-on-global": "off",
+        "filenames/match-regex": "off",
+        "i18n-text/no-en": "off",
       },
       files: ["*.ts"],
     },

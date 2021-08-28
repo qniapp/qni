@@ -33,8 +33,8 @@ module Components::GatesHelper
     component 'swap_gate', *options
   end
 
-  def root_not_gate(*options)
-    component 'root_not_gate', *options
+  def rnot_gate(*options)
+    component 'rnot_gate', *options
   end
 
   def rx_gate(*options)

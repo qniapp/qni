@@ -98,7 +98,7 @@ QUnit.module("CircuitDropzone", (hooks) => {
   QUnit.test(".toJson() (√X gate)", (assert) => {
     container.innerHTML = `
       <circuit-dropzone>
-        <root-not-gate></root-not-gate>
+        <rnot-gate></rnot-gate>
       </circuit-dropzone>`
     document.body.append(container)
 

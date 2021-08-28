@@ -1,33 +1,25 @@
+import {
+  DraggableMixin,
+  IconableMixin,
+  JsonableMixin,
+  SizeableMixin,
+} from "mixins"
+import { TemplateResult, html, render } from "@github/jtml"
+import { attr, controller } from "@github/catalyst"
 import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
-import { controller, attr, target } from "@github/catalyst"
-import { html, render } from "@github/jtml"
-
-const ketIcon = html`<svg
-  id="icon"
-  width="48"
-  height="48"
-  viewBox="0 0 48 48"
-  fill="none"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M9 10L9 40M34 10L40 24L34 40" />
-</svg>`
 
 @controller
-export class WriteGateElement extends HTMLElement {
-  @target body: HTMLElement
-
-  @attr size = "base"
+export class WriteGateElement extends DraggableMixin(
+  IconableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+) {
+  @attr iconType = "transparent"
   @attr value = "0"
-  @attr draggable = false
 
-  showGateDescription(): void {
+  showPopup(): void {
     if ((this as ReferenceElement)._tippy) return
 
-    const content = this.description()
-    if (!content) return
+    const content = this.innerHTML.trim()
+    if (content === "") return
 
     const popup = tippy(this, {
       allowHTML: true,
@@ -43,10 +35,6 @@ export class WriteGateElement extends HTMLElement {
     popup.show()
   }
 
-  private description(): string {
-    return this.innerHTML
-  }
-
   toJson(): string {
     return `"|${this.value}>"`
   }
@@ -60,98 +48,13 @@ export class WriteGateElement extends HTMLElement {
     this.update()
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ): void {
-    if (name === "data-value" && this.body) {
-      this.body.classList.remove("value-0")
-      this.body.classList.remove("value-1")
-
-      switch (newValue) {
-        case "0":
-          this.body.classList.add("value-0")
-          break
-        case "1":
-          this.body.classList.add("value-1")
-          break
-        default:
-      }
-    }
-  }
-
   update(): void {
     render(
-      html`<style>
-          :host([data-size="xs"]) {
-            height: 1rem;
-            width: 1rem;
-          }
+      html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
 
-          :host([data-size="sm"]) {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          :host,
-          :host([data-size="base"]) {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          :host([data-size="lg"]) {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          :host([data-size="xl"]) {
-            height: 3rem;
-            width: 3rem;
-          }
-
-          #body {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            height: 100%;
-            width: 100%;
-          }
-
-          #body.draggable {
-            cursor: grab;
-          }
-
-          #body.draggable::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            border-color: var(--colors-cardinal, #ff4b4b);
-            border-radius: 0.25rem;
-            border-style: solid;
-            border-width: 2px;
-            box-sizing: border-box;
-            opacity: 0;
-            content: "";
-          }
-
-          #body:hover::after {
-            opacity: 100;
-          }
-
+        <style>
           #icon {
-            position: absolute;
-            bottom: -2px;
-            left: -2px;
-            right: -2px;
-            top: -2px;
-            height: calc(100% + 4px);
-            width: calc(100% + 4px);
             color: var(--colors-eel, #4b4b4b);
-            stroke: currentColor;
             transform: rotate(90deg);
           }
 
@@ -194,42 +97,43 @@ export class WriteGateElement extends HTMLElement {
             line-height: 1.75rem;
           }
 
-          #body.value-0 #ket-label {
+          :host([data-value="0"]) #ket-label {
             color: var(--colors-cardinal, #ff4b4b);
           }
 
-          #body.value-0 #ket-label::after {
+          :host([data-value="0"]) #ket-label::after {
             content: "0";
           }
 
-          #body.value-1 #ket-label {
+          :host([data-value="1"]) #ket-label {
             color: var(--colors-magnitude, #1cb0f6);
           }
 
-          #body.value-1 #ket-label::after {
+          :host([data-value="1"]) #ket-label::after {
             content: "1";
           }
         </style>
 
-        <div
-          id="body"
-          class="${this.classString}"
-          data-target="write-gate.body"
-          data-action="mouseenter:write-gate#showGateDescription"
-        >
-          ${ketIcon}
+        <div id="body" data-action="mouseenter:write-gate#showPopup">
+          ${this.iconSvg}
           <div id="ket-label"></div>
         </div>`,
       this.shadowRoot!,
     )
   }
 
-  private get classString(): string {
-    const klass = []
-
-    if (this.value) klass.push(`value-${this.value}`)
-    if (this.draggable) klass.push("draggable")
-
-    return klass.join(" ")
+  get iconSvg(): TemplateResult {
+    return html`<svg
+      id="icon"
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M9 10L9 40M34 10L40 24L34 40" />
+    </svg>`
   }
 }

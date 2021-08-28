@@ -156,12 +156,12 @@ module Qni
       "<%= rz_gate #{opts} %>\n"
     end
 
-    def root_not_gate(opts = {})
+    def rnot_gate(opts = {})
       opts = option_string(bit: opts.fetch(:bit),
                            controls: opts.fetch(:controls, []),
                            targets: opts.fetch(:targets, []),
                            if: opts.fetch(:if, nil))
-      "<%= root_not_gate #{opts} %>\n"
+      "<%= rnot_gate #{opts} %>\n"
     end
 
     def phase_gate(bit:, phi:, controls: [], targets: [], wire_active: true)

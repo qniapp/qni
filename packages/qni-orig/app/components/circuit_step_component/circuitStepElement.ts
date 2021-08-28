@@ -4,7 +4,7 @@ import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzo
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RootNotGateElement } from "root_not_gate_component/rootNotGateElement"
+import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
@@ -79,7 +79,7 @@ export class CircuitStepElement extends HTMLElement {
     | YGateElement
     | ZGateElement
     | PhaseGateElement
-    | RootNotGateElement
+    | RnotGateElement
     | RxGateElement
     | RyGateElement
     | RzGateElement
@@ -87,7 +87,7 @@ export class CircuitStepElement extends HTMLElement {
   > {
     return Array.from(
       this.querySelectorAll(
-        "h-gate,x-gate,y-gate,z-gate,phase-gate,root-not-gate,rx-gate,ry-gate,rz-gate,swap-gate",
+        "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate,swap-gate",
       ),
     )
   }
@@ -172,7 +172,7 @@ export class CircuitStepElement extends HTMLElement {
       | YGateElement
       | ZGateElement
       | PhaseGateElement
-      | RootNotGateElement
+      | RnotGateElement
       | RxGateElement
       | RyGateElement
       | RzGateElement

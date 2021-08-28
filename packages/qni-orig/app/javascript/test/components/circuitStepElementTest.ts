@@ -2,15 +2,15 @@ import "components"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
-import { XGateElement } from "x_gate_component/xGateElement"
-import { YGateElement } from "y_gate_component/yGateElement"
-import { ZGateElement } from "z_gate_component/zGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RootNotGateElement } from "root_not_gate_component/rootNotGateElement"
+import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
 import { SwapGateElement } from "swap_gate_component/swapGateElement"
+import { XGateElement } from "x_gate_component/xGateElement"
+import { YGateElement } from "y_gate_component/yGateElement"
+import { ZGateElement } from "z_gate_component/zGateElement"
 
 QUnit.module("CircuitStep JSON", (hooks) => {
   let container: HTMLDivElement
@@ -110,7 +110,7 @@ QUnit.module("CircuitStep JSON", (hooks) => {
     container.innerHTML = `
       <circuit-step>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
       </circuit-step>`
     document.body.append(container)
@@ -1178,14 +1178,14 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
           <control-gate></control-gate>
         </circuit-dropzone>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
       </circuit-step>`
     document.body.append(container)
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
     const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[1].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[1].operation as RnotGateElement
 
     assert.true(controlGate.wireBottom)
     assert.true(rootNotGate.wireTop)
@@ -1195,7 +1195,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     container.innerHTML = `
       <circuit-step>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
         <circuit-dropzone>
           <control-gate></control-gate>
@@ -1204,7 +1204,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     document.body.append(container)
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[0].operation as RnotGateElement
     const controlGate = el.dropzones[1].operation as ControlGateElement
 
     assert.true(rootNotGate.wireBottom)
@@ -1219,14 +1219,14 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
         </circuit-dropzone>
         <circuit-dropzone></circuit-dropzone>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
       </circuit-step>`
     document.body.append(container)
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
     const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[2].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[2].operation as RnotGateElement
 
     assert.true(controlGate.wireBottom)
     assert.true(el.dropzones[1].wireTop)
@@ -1238,7 +1238,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     container.innerHTML = `
       <circuit-step>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
         <circuit-dropzone></circuit-dropzone>
         <circuit-dropzone>
@@ -1248,7 +1248,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     document.body.append(container)
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[0].operation as RnotGateElement
     const controlGate = el.dropzones[2].operation as ControlGateElement
 
     assert.true(rootNotGate.wireBottom)
@@ -1267,7 +1267,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
           <control-gate></control-gate>
         </circuit-dropzone>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
       </circuit-step>`
     document.body.append(container)
@@ -1275,7 +1275,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     const el = document.querySelector("circuit-step") as CircuitStepElement
     const controlGate1 = el.dropzones[0].operation as ControlGateElement
     const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const rootNotGate = el.dropzones[2].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[2].operation as RnotGateElement
 
     assert.true(controlGate1.wireBottom)
     assert.true(controlGate2.wireTop)
@@ -1290,7 +1290,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
           <control-gate></control-gate>
         </circuit-dropzone>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
         <circuit-dropzone>
           <control-gate></control-gate>
@@ -1300,7 +1300,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
     const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[1].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[1].operation as RnotGateElement
     const controlGate2 = el.dropzones[2].operation as ControlGateElement
 
     assert.true(controlGate1.wireBottom)
@@ -1313,7 +1313,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     container.innerHTML = `
       <circuit-step>
         <circuit-dropzone>
-          <root-not-gate></root-not-gate>
+          <rnot-gate></rnot-gate>
         </circuit-dropzone>
         <circuit-dropzone>
           <control-gate></control-gate>
@@ -1325,7 +1325,7 @@ QUnit.module("CircuitStep Controlled-√X", (hooks) => {
     document.body.append(container)
 
     const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RootNotGateElement
+    const rootNotGate = el.dropzones[0].operation as RnotGateElement
     const controlGate1 = el.dropzones[1].operation as ControlGateElement
     const controlGate2 = el.dropzones[2].operation as ControlGateElement
 

@@ -6,7 +6,7 @@ require 'concerns/draggable'
 require 'concerns/ifable'
 require 'concerns/targetable'
 
-class RootNotGateComponent < Component
+class RnotGateComponent < Component
   include Connectable
   include Controllable
   include Disableable
@@ -18,7 +18,7 @@ class RootNotGateComponent < Component
 
   def klass
     sorted_class_string('gate',
-                        'root-not-gate',
+                        'rnot-gate',
                         'draggable',
                         'gate--ifable' => self.class < Ifable,
                         'gate--disabled' => disabled?,

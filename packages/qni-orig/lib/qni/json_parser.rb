@@ -267,7 +267,7 @@ module Qni
                 end
 
       dropzone(wire_active: @wire_active[bit]) do
-        root_not_gate bit: bit, controls: controls, targets: targets, if: opts[:if]
+        rnot_gate bit: bit, controls: controls, targets: targets, if: opts[:if]
       end
     end
 

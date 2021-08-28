@@ -1,4 +1,4 @@
-import { controller, attr, target, targets } from "@github/catalyst"
+import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 
@@ -118,7 +118,7 @@ export class QuantumCircuitElement extends HTMLElement {
             break
           }
           case /^X\^½$/.test(instruction): {
-            const rootNotGate = document.createElement("root-not-gate")
+            const rootNotGate = document.createElement("rnot-gate")
             rootNotGate.setAttribute(
               "data-targets",
               "circuit-step.controllableGates",

@@ -11,7 +11,7 @@ export const Options: { [type: string]: { [name: string]: string } } = {
     "gate:phase": "phase-gate",
     "gate:control": "control-gate",
     "gate:swap": "swap-gate",
-    "gate:rootNot": "root-not-gate",
+    "gate:rootNot": "rnot-gate",
     "gate:rx": "rx-gate",
     "gate:ry": "ry-gate",
     "gate:rz": "rz-gate",

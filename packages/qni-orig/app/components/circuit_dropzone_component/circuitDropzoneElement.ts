@@ -1,19 +1,19 @@
-import { controller, attr, target } from "@github/catalyst"
+import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import { HGateElement } from "h_gate_component/hGateElement"
-import { XGateElement } from "x_gate_component/xGateElement"
-import { YGateElement } from "y_gate_component/yGateElement"
-import { ZGateElement } from "z_gate_component/zGateElement"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { HGateElement } from "h_gate_component/hGateElement"
+import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RootNotGateElement } from "root_not_gate_component/rootNotGateElement"
+import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
 import { SwapGateElement } from "swap_gate_component/swapGateElement"
-import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { WriteGateElement } from "write_gate_component/writeGateElement"
-import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
+import { XGateElement } from "x_gate_component/xGateElement"
+import { YGateElement } from "y_gate_component/yGateElement"
+import { ZGateElement } from "z_gate_component/zGateElement"
 
 type CircuitOperation =
   | HGateElement
@@ -21,7 +21,7 @@ type CircuitOperation =
   | YGateElement
   | ZGateElement
   | PhaseGateElement
-  | RootNotGateElement
+  | RnotGateElement
   | RxGateElement
   | RyGateElement
   | RzGateElement

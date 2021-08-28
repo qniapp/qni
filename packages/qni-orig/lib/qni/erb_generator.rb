@@ -374,7 +374,7 @@ module Qni
         (0...@dsl.nqubit).map do |each|
           if targets.include?(each)
             dropzone do
-              "<%= root_not_gate %>\n"
+              "<%= rnot_gate %>\n"
             end
           else
             dropzone active: @wire_active[each]

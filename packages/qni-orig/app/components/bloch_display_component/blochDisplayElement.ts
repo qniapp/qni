@@ -1,3 +1,6 @@
+import { DraggableMixin, JsonableMixin, SizeableMixin } from "mixins"
+import { attr, controller, target, targets } from "@github/catalyst"
+import { html, render } from "@github/jtml"
 import tippy, {
   Content,
   Instance,
@@ -5,22 +8,21 @@ import tippy, {
   ReferenceElement,
   roundArrow,
 } from "tippy.js"
-import { controller, attr, target, targets } from "@github/catalyst"
-import { html, render } from "@github/jtml"
 
 @controller
-export class BlochDisplayElement extends HTMLElement {
+export class BlochDisplayElement extends DraggableMixin(
+  SizeableMixin(JsonableMixin(HTMLElement)),
+) {
   @target body: HTMLElement
   @target vectorLine: HTMLElement
   @target vectorEnd: HTMLElement
   @target vector: HTMLElement
   @targets vectorEndCircles: HTMLElement[]
 
-  @attr size = "base"
   @attr x = 0
   @attr y = 0
   @attr z = 0
-  @attr draggable = false
+
   @attr draggableSource = false
   @attr draggableShadow = false
 
@@ -49,8 +51,8 @@ export class BlochDisplayElement extends HTMLElement {
       content = this.blochInspectorPopupContent()
     } else {
       placement = "right"
-      const descriptionHeader = this.descriptionHeader()
-      if (descriptionHeader === null) return
+      const descriptionHeader = this.innerHTML.trim()
+      if (descriptionHeader === "") return
       content = descriptionHeader
     }
 
@@ -108,10 +110,6 @@ export class BlochDisplayElement extends HTMLElement {
     )
 
     return content
-  }
-
-  private descriptionHeader(): HTMLElement | null {
-    return this.querySelector("header")
   }
 
   toJson(): string {
@@ -183,65 +181,9 @@ export class BlochDisplayElement extends HTMLElement {
     }
 
     render(
-      html`<style>
-          :host([data-size="xs"]) {
-            height: 1rem;
-            width: 1rem;
-          }
+      html`${this.sizeableStyle} ${this.draggableStyle}
 
-          :host([data-size="sm"]) {
-            height: 1.5rem;
-            width: 1.5rem;
-          }
-
-          :host,
-          :host([data-size="base"]) {
-            height: 2rem;
-            width: 2rem;
-          }
-
-          :host([data-size="lg"]) {
-            height: 2.5rem;
-            width: 2.5rem;
-          }
-
-          :host([data-size="xl"]) {
-            height: 3rem;
-            width: 3rem;
-          }
-
-          #body {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            height: 100%;
-            width: 100%;
-          }
-
-          #body.draggable {
-            cursor: grab;
-          }
-
-          #body.draggable::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            border-color: var(--colors-cardinal, #ff4b4b);
-            border-radius: 0.25rem;
-            border-style: solid;
-            border-width: 2px;
-            box-sizing: border-box;
-            opacity: 0;
-            content: "";
-          }
-
-          #body:hover::after {
-            opacity: 100;
-          }
-
+        <style>
           #body.draggable-source::after {
             opacity: 100;
             border-color: var(--colors-fox, #ff9600);
@@ -266,10 +208,6 @@ export class BlochDisplayElement extends HTMLElement {
             background-color: rgba(67, 192, 0, 0.1);
           }
 
-          :host([data-size="xs"]) #sphere-border {
-            border-width: 1px;
-          }
-
           #sphere-lines {
             width: 100%;
             height: 100%;
@@ -278,9 +216,11 @@ export class BlochDisplayElement extends HTMLElement {
           }
 
           #perspective {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            left: -1px;
             perspective-origin: top right;
           }
 
@@ -292,6 +232,7 @@ export class BlochDisplayElement extends HTMLElement {
             perspective: 3rem;
           }
 
+          :host #perspective,
           :host([data-size="base"]) #perspective {
             perspective: 4rem;
           }
@@ -375,12 +316,7 @@ export class BlochDisplayElement extends HTMLElement {
           }
         </style>
 
-        <div
-          id="body"
-          class="${this.classString}"
-          data-target="bloch-display.body"
-          data-d="${this.d}"
-        >
+        <div id="body" data-target="bloch-display.body" data-d="${this.d}">
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" class="absolute inset-0">
             <svg
@@ -392,28 +328,26 @@ export class BlochDisplayElement extends HTMLElement {
             >
               <line x1="0%" y1="50%" x2="100%" y2="50%" />
               <line x1="50%" y1="0%" x2="50%" y2="100%" />
-              <line x1="32%" y1="70%" x2="68%" y2="30%" />
+              <line x1="35%" y1="65%" x2="65%" y2="35%" />
               <ellipse cx="50%" cy="50%" rx="18%" ry="50%" />
               <ellipse cx="50%" cy="50%" rx="50%" ry="18%" />
             </svg>
-            <div class="absolute inset-0">
-              <div id="perspective">
-                <div id="vector" data-target="bloch-display.vector">
-                  <div id="vector-line" data-target="bloch-display.vectorLine">
-                    ${vectorLineRect(0)} ${vectorLineRect(20)}
-                    ${vectorLineRect(40)} ${vectorLineRect(60)}
-                    ${vectorLineRect(80)} ${vectorLineRect(100)}
-                    ${vectorLineRect(120)} ${vectorLineRect(140)}
-                    ${vectorLineRect(160)}
-                  </div>
+            <div id="perspective">
+              <div id="vector" data-target="bloch-display.vector">
+                <div id="vector-line" data-target="bloch-display.vectorLine">
+                  ${vectorLineRect(0)} ${vectorLineRect(20)}
+                  ${vectorLineRect(40)} ${vectorLineRect(60)}
+                  ${vectorLineRect(80)} ${vectorLineRect(100)}
+                  ${vectorLineRect(120)} ${vectorLineRect(140)}
+                  ${vectorLineRect(160)}
+                </div>
 
-                  <div id="vector-end" data-target="bloch-display.vectorEnd">
-                    ${vectorEndCircle(0, "Y")} ${vectorEndCircle(20, "Y")}
-                    ${vectorEndCircle(40, "Y")} ${vectorEndCircle(60, "Y")}
-                    ${vectorEndCircle(80, "Y")} ${vectorEndCircle(100, "Y")}
-                    ${vectorEndCircle(120, "Y")} ${vectorEndCircle(140, "Y")}
-                    ${vectorEndCircle(160, "Y")} ${vectorEndCircle(90, "X")}
-                  </div>
+                <div id="vector-end" data-target="bloch-display.vectorEnd">
+                  ${vectorEndCircle(0, "Y")} ${vectorEndCircle(20, "Y")}
+                  ${vectorEndCircle(40, "Y")} ${vectorEndCircle(60, "Y")}
+                  ${vectorEndCircle(80, "Y")} ${vectorEndCircle(100, "Y")}
+                  ${vectorEndCircle(120, "Y")} ${vectorEndCircle(140, "Y")}
+                  ${vectorEndCircle(160, "Y")} ${vectorEndCircle(90, "X")}
                 </div>
               </div>
             </div>
@@ -494,14 +428,6 @@ export class BlochDisplayElement extends HTMLElement {
 
   private forceSigned(value: number, digits = 4): string {
     return (value >= 0 ? "+" : "") + value.toFixed(digits)
-  }
-
-  private get classString(): string {
-    const klass = []
-
-    if (this.draggable) klass.push("draggable")
-
-    return klass.join(" ")
   }
 
   private isCircuitDraggable(): boolean {
