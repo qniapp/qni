@@ -91,6 +91,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.append(circuitStep)
   }
 
+  rnot(...qubits: number[]): void {
+    this.applySingleGate("rnot-gate", ...qubits)
+  }
+
   private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
