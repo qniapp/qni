@@ -73,6 +73,37 @@ export class QuantumCircuitElement extends HTMLElement {
     this.append(circuitStep)
   }
 
+  x(...qubits: number[]): void {
+    if (qubits.some((each) => each < 0))
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (qubits.some((each) => each > 15))
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = qubits.sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    for (const each of qubits) {
+      const xGate = document.createElement("x-gate")
+      circuitStep.dropzones[each].append(xGate)
+    }
+
+    this.append(circuitStep)
+  }
+
   private get circuitStepFragment(): DocumentFragment {
     const frag = document.createDocumentFragment()
 
