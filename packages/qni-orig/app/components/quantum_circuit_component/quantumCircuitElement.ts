@@ -43,37 +43,18 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   h(...qubits: number[]): void {
-    if (qubits.some((each) => each < 0))
-      throw new Error(
-        "The index of the qubit must be greater than or equal to 0.",
-      )
-    if (qubits.some((each) => each > 15))
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
-
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
-
-    const nqubit = qubits.sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
-    }
-
-    for (const each of qubits) {
-      const hGate = document.createElement("h-gate")
-      circuitStep.dropzones[each].append(hGate)
-    }
-
-    this.append(circuitStep)
+    this.applySingleGate("h-gate", ...qubits)
   }
 
   x(...qubits: number[]): void {
+    this.applySingleGate("x-gate", ...qubits)
+  }
+
+  y(...qubits: number[]): void {
+    this.applySingleGate("y-gate", ...qubits)
+  }
+
+  private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
@@ -97,8 +78,8 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     for (const each of qubits) {
-      const xGate = document.createElement("x-gate")
-      circuitStep.dropzones[each].append(xGate)
+      const gate = document.createElement(elementName)
+      circuitStep.dropzones[each].append(gate)
     }
 
     this.append(circuitStep)
