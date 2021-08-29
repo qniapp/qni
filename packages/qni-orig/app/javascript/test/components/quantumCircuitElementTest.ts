@@ -260,3 +260,68 @@ QUnit.module("QuantumCircuitElement.z", (hooks) => {
     assert.throws(() => el.z(16))
   })
 })
+
+QUnit.module("QuantumCircuitElement.phase", (hooks) => {
+  let el: QuantumCircuitElement
+
+  hooks.beforeEach(() => {
+    el = document.createElement("quantum-circuit") as QuantumCircuitElement
+  })
+
+  hooks.afterEach(() => {
+    document.body.removeChild(el)
+  })
+
+  QUnit.test(".phase(0.123, 0)", (assert) => {
+    document.body.append(el)
+    el.phase(0.123, 0)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), '"P(0.123)"')
+  })
+
+  QUnit.test(".phase(0.123, 1)", (assert) => {
+    document.body.append(el)
+    el.phase(0.123, 1)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 2)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"P(0.123)"')
+  })
+
+  QUnit.test(".phase(0.123, 0, 1)", (assert) => {
+    document.body.append(el)
+    el.phase(0.123, 0, 1)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 2)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), '"P(0.123)"')
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"P(0.123)"')
+  })
+
+  QUnit.test(".phase(1, 3)", (assert) => {
+    document.body.append(el)
+    el.phase(0.123, 1, 3)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 4)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"P(0.123)"')
+    assert.equal(el.circuitSteps[0].dropzones[2].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[3].toJson(), '"P(0.123)"')
+  })
+
+  QUnit.test(".phase(0.123, -1)", (assert) => {
+    document.body.append(el)
+
+    assert.throws(() => el.phase(0.123, -1))
+  })
+
+  QUnit.test(".phase(0.123, 16)", (assert) => {
+    document.body.append(el)
+
+    assert.throws(() => el.phase(0.123, 16))
+  })
+})

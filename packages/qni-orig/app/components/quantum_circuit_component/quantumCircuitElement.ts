@@ -1,6 +1,7 @@
 import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
+import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -56,6 +57,38 @@ export class QuantumCircuitElement extends HTMLElement {
 
   z(...qubits: number[]): void {
     this.applySingleGate("z-gate", ...qubits)
+  }
+
+  phase(phi: number, ...qubits: number[]): void {
+    if (qubits.some((each) => each < 0))
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (qubits.some((each) => each > 15))
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = qubits.sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    for (const each of qubits) {
+      const phaseGate = document.createElement("phase-gate") as PhaseGateElement
+      phaseGate.phi = phi.toString()
+      circuitStep.dropzones[each].append(phaseGate)
+    }
+
+    this.append(circuitStep)
   }
 
   private applySingleGate(elementName: string, ...qubits: number[]): void {

@@ -83,7 +83,11 @@ export class PhaseGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"P"'
+    if (this.phi === "") {
+      return '"P"'
+    } else {
+      return `"P(${this.phi})"`
+    }
   }
 
   get iconSvg(): TemplateResult {
