@@ -195,3 +195,68 @@ QUnit.module("QuantumCircuitElement.y", (hooks) => {
     assert.throws(() => el.y(16))
   })
 })
+
+QUnit.module("QuantumCircuitElement.z", (hooks) => {
+  let el: QuantumCircuitElement
+
+  hooks.beforeEach(() => {
+    el = document.createElement("quantum-circuit") as QuantumCircuitElement
+  })
+
+  hooks.afterEach(() => {
+    document.body.removeChild(el)
+  })
+
+  QUnit.test(".z(0)", (assert) => {
+    document.body.append(el)
+    el.z(0)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), '"Z"')
+  })
+
+  QUnit.test(".z(1)", (assert) => {
+    document.body.append(el)
+    el.z(1)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 2)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"Z"')
+  })
+
+  QUnit.test(".z(0, 1)", (assert) => {
+    document.body.append(el)
+    el.z(0, 1)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 2)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), '"Z"')
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"Z"')
+  })
+
+  QUnit.test(".z(1, 3)", (assert) => {
+    document.body.append(el)
+    el.z(1, 3)
+
+    assert.equal(el.circuitSteps.length, 1)
+    assert.equal(el.circuitSteps[0].dropzones.length, 4)
+    assert.equal(el.circuitSteps[0].dropzones[0].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"Z"')
+    assert.equal(el.circuitSteps[0].dropzones[2].toJson(), 1)
+    assert.equal(el.circuitSteps[0].dropzones[3].toJson(), '"Z"')
+  })
+
+  QUnit.test(".z(-1)", (assert) => {
+    document.body.append(el)
+
+    assert.throws(() => el.z(-1))
+  })
+
+  QUnit.test(".z(16)", (assert) => {
+    document.body.append(el)
+
+    assert.throws(() => el.z(16))
+  })
+})
