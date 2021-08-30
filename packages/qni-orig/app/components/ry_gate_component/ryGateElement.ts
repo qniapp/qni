@@ -88,7 +88,11 @@ export class RyGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"Ry"'
+    if (this.theta === "") {
+      return '"Ry"'
+    } else {
+      return `"Ry(${this.theta})"`
+    }
   }
 
   get iconSvg(): TemplateResult {
