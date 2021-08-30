@@ -88,7 +88,11 @@ export class RxGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"Rx"'
+    if (this.theta === "") {
+      return '"Rx"'
+    } else {
+      return `"Rx(${this.theta})"`
+    }
   }
 
   get iconSvg(): TemplateResult {

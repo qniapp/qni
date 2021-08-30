@@ -2,6 +2,7 @@ import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
+import { RxGateElement } from "rx_gate_component/rxGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -60,39 +61,15 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   phase(phi: number, ...qubits: number[]): void {
-    if (qubits.some((each) => each < 0))
-      throw new Error(
-        "The index of the qubit must be greater than or equal to 0.",
-      )
-    if (qubits.some((each) => each > 15))
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
-
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
-
-    const nqubit = qubits.sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
-    }
-
-    for (const each of qubits) {
-      const phaseGate = document.createElement("phase-gate") as PhaseGateElement
-      phaseGate.phi = phi.toString()
-      circuitStep.dropzones[each].append(phaseGate)
-    }
-
-    this.append(circuitStep)
+    this.applyAngledSingleGate("phase-gate", phi, ...qubits)
   }
 
   rnot(...qubits: number[]): void {
     this.applySingleGate("rnot-gate", ...qubits)
+  }
+
+  rx(theta: number, ...qubits: number[]): void {
+    this.applyAngledSingleGate("rx-gate", theta, ...qubits)
   }
 
   private applySingleGate(elementName: string, ...qubits: number[]): void {
@@ -121,6 +98,48 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of qubits) {
       const gate = document.createElement(elementName)
       circuitStep.dropzones[each].append(gate)
+    }
+
+    this.append(circuitStep)
+  }
+
+  private applyAngledSingleGate(
+    elementName: string,
+    angle: number,
+    ...qubits: number[]
+  ): void {
+    if (qubits.some((each) => each < 0))
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (qubits.some((each) => each > 15))
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = qubits.sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    for (const each of qubits) {
+      if (elementName === "phase-gate") {
+        const gate = document.createElement(elementName) as PhaseGateElement
+        gate.phi = angle.toString()
+        circuitStep.dropzones[each].append(gate)
+      } else if (elementName === "rx-gate") {
+        const gate = document.createElement(elementName) as RxGateElement
+        gate.theta = angle.toString()
+        circuitStep.dropzones[each].append(gate)
+      }
     }
 
     this.append(circuitStep)
