@@ -4,6 +4,7 @@ import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
+import { RzGateElement } from "rz_gate_component/rzGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -77,6 +78,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.applyAngledSingleGate("ry-gate", theta, ...qubits)
   }
 
+  rz(theta: number, ...qubits: number[]): void {
+    this.applyAngledSingleGate("rz-gate", theta, ...qubits)
+  }
+
   private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
@@ -146,6 +151,10 @@ export class QuantumCircuitElement extends HTMLElement {
         circuitStep.dropzones[each].append(gate)
       } else if (elementName === "ry-gate") {
         const gate = document.createElement(elementName) as RyGateElement
+        gate.theta = angle.toString()
+        circuitStep.dropzones[each].append(gate)
+      } else if (elementName === "rz-gate") {
+        const gate = document.createElement(elementName) as RzGateElement
         gate.theta = angle.toString()
         circuitStep.dropzones[each].append(gate)
       }
