@@ -90,6 +90,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.applySingleGate("swap-gate", qubit0, qubit1)
   }
 
+  bloch(...qubits: number[]): void {
+    this.applySingleGate("bloch-display", ...qubits)
+  }
+
   private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
