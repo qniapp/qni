@@ -5,6 +5,7 @@ import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
+import { WriteGateElement } from "write_gate_component/writeGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -92,6 +93,38 @@ export class QuantumCircuitElement extends HTMLElement {
 
   bloch(...qubits: number[]): void {
     this.applySingleGate("bloch-display", ...qubits)
+  }
+
+  write(value: 0 | 1, ...qubits: number[]): void {
+    if (qubits.some((each) => each < 0))
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (qubits.some((each) => each > 15))
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = qubits.sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    for (const each of qubits) {
+      const writeGate = document.createElement("write-gate") as WriteGateElement
+      writeGate.value = value.toString()
+      circuitStep.dropzones[each].append(writeGate)
+    }
+
+    this.append(circuitStep)
   }
 
   private applySingleGate(elementName: string, ...qubits: number[]): void {
