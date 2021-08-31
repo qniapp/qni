@@ -561,4 +561,40 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
       assert.throws(() => el.control(16))
     })
   })
+
+  QUnit.module("swap", () => {
+    QUnit.test(".swap(0, 1)", (assert) => {
+      document.body.append(el)
+      el.swap(0, 1)
+
+      assert.equal(el.circuitSteps.length, 1)
+      assert.equal(el.circuitSteps[0].dropzones.length, 2)
+      assert.equal(el.circuitSteps[0].dropzones[0].toJson(), '"Swap"')
+      assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"Swap"')
+    })
+
+    QUnit.test(".swap(1, 3)", (assert) => {
+      document.body.append(el)
+      el.swap(1, 3)
+
+      assert.equal(el.circuitSteps.length, 1)
+      assert.equal(el.circuitSteps[0].dropzones.length, 4)
+      assert.equal(el.circuitSteps[0].dropzones[0].toJson(), 1)
+      assert.equal(el.circuitSteps[0].dropzones[1].toJson(), '"Swap"')
+      assert.equal(el.circuitSteps[0].dropzones[2].toJson(), 1)
+      assert.equal(el.circuitSteps[0].dropzones[3].toJson(), '"Swap"')
+    })
+
+    QUnit.test(".swap(-1, 0)", (assert) => {
+      document.body.append(el)
+
+      assert.throws(() => el.swap(-1, 0))
+    })
+
+    QUnit.test(".swap(0, 16)", (assert) => {
+      document.body.append(el)
+
+      assert.throws(() => el.swap(0, 16))
+    })
+  })
 })
