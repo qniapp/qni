@@ -82,6 +82,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.applyAngledSingleGate("rz-gate", theta, ...qubits)
   }
 
+  control(...qubits: number[]): void {
+    this.applySingleGate("control-gate", ...qubits)
+  }
+
   private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
