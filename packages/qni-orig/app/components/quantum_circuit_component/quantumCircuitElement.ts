@@ -127,6 +127,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.append(circuitStep)
   }
 
+  measure(...qubits: number[]): void {
+    this.applySingleGate("measurement-gate", ...qubits)
+  }
+
   private applySingleGate(elementName: string, ...qubits: number[]): void {
     if (qubits.some((each) => each < 0))
       throw new Error(
