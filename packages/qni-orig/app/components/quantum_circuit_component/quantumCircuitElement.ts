@@ -47,60 +47,78 @@ export class QuantumCircuitElement extends HTMLElement {
     )
   }
 
-  h(...qubits: number[]): void {
-    this.applySingleGate("h-gate", ...qubits)
+  h(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("h-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  x(...qubits: number[]): void {
-    this.applySingleGate("x-gate", ...qubits)
+  x(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("x-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  y(...qubits: number[]): void {
-    this.applySingleGate("y-gate", ...qubits)
+  y(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("y-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  z(...qubits: number[]): void {
-    this.applySingleGate("z-gate", ...qubits)
+  z(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("z-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  phase(phi: number, ...qubits: number[]): void {
-    this.applyAngledSingleGate("phase-gate", phi, ...qubits)
+  phase(phi: number, ...targetQubits: number[]): QuantumCircuitElement {
+    this.applyAngledSingleGate("phase-gate", phi, ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  rnot(...qubits: number[]): void {
-    this.applySingleGate("rnot-gate", ...qubits)
+  rnot(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("rnot-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  rx(theta: number, ...qubits: number[]): void {
-    this.applyAngledSingleGate("rx-gate", theta, ...qubits)
+  rx(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
+    this.applyAngledSingleGate("rx-gate", theta, ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  ry(theta: number, ...qubits: number[]): void {
-    this.applyAngledSingleGate("ry-gate", theta, ...qubits)
+  ry(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
+    this.applyAngledSingleGate("ry-gate", theta, ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  rz(theta: number, ...qubits: number[]): void {
-    this.applyAngledSingleGate("rz-gate", theta, ...qubits)
+  rz(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
+    this.applyAngledSingleGate("rz-gate", theta, ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  control(...qubits: number[]): void {
-    this.applySingleGate("control-gate", ...qubits)
+  control(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("control-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  swap(qubit0: number, qubit1: number): void {
-    this.applySingleGate("swap-gate", qubit0, qubit1)
+  swap(targetA: number, targetB: number): QuantumCircuitElement {
+    this.applySingleGate("swap-gate", targetA, targetB)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  bloch(...qubits: number[]): void {
-    this.applySingleGate("bloch-display", ...qubits)
-  }
-
-  write(value: 0 | 1, ...qubits: number[]): void {
-    if (qubits.some((each) => each < 0))
+  cnot(control: number, xTarget: number): QuantumCircuitElement {
+    if (control < 0 || xTarget < 0)
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (qubits.some((each) => each > 15))
+    if (control > 15 || xTarget > 15)
       throw new Error(
         "The index of the qubit must be less than or equal to 15.",
       )
@@ -110,7 +128,7 @@ export class QuantumCircuitElement extends HTMLElement {
     ) as CircuitStepElement
     circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
 
-    const nqubit = qubits.sort((a, b) => b - a)[0]
+    const nqubit = [control, xTarget].sort((a, b) => b - a)[0]
 
     for (let i = 0; i <= nqubit; i++) {
       const dropzone = document.createElement("circuit-dropzone")
@@ -118,25 +136,114 @@ export class QuantumCircuitElement extends HTMLElement {
       circuitStep.append(dropzone)
     }
 
-    for (const each of qubits) {
+    const controlGate = document.createElement("control-gate")
+    circuitStep.dropzones[control].append(controlGate)
+
+    const xGate = document.createElement("x-gate")
+    circuitStep.dropzones[xTarget].append(xGate)
+
+    this.append(circuitStep)
+    this.maybeAppendMissingDropzones()
+
+    return this
+  }
+
+  ccnot(
+    controlA: number,
+    controlB: number,
+    xTarget: number,
+  ): QuantumCircuitElement {
+    if (controlA < 0 || controlB < 0 || xTarget < 0)
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (controlA > 15 || controlB > 15 || xTarget > 15)
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = [controlA, controlB, xTarget].sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    const controlGateA = document.createElement("control-gate")
+    circuitStep.dropzones[controlA].append(controlGateA)
+
+    const controlGateB = document.createElement("control-gate")
+    circuitStep.dropzones[controlB].append(controlGateB)
+
+    const xGate = document.createElement("x-gate")
+    circuitStep.dropzones[xTarget].append(xGate)
+
+    this.append(circuitStep)
+    this.maybeAppendMissingDropzones()
+    return this
+  }
+
+  bloch(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("bloch-display", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
+  }
+
+  write(value: 0 | 1, ...targetQubits: number[]): QuantumCircuitElement {
+    if (targetQubits.some((each) => each < 0))
+      throw new Error(
+        "The index of the qubit must be greater than or equal to 0.",
+      )
+    if (targetQubits.some((each) => each > 15))
+      throw new Error(
+        "The index of the qubit must be less than or equal to 15.",
+      )
+
+    const circuitStep = document.createElement(
+      "circuit-step",
+    ) as CircuitStepElement
+    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+
+    const nqubit = targetQubits.sort((a, b) => b - a)[0]
+
+    for (let i = 0; i <= nqubit; i++) {
+      const dropzone = document.createElement("circuit-dropzone")
+      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      circuitStep.append(dropzone)
+    }
+
+    for (const each of targetQubits) {
       const writeGate = document.createElement("write-gate") as WriteGateElement
       writeGate.value = value.toString()
       circuitStep.dropzones[each].append(writeGate)
     }
 
     this.append(circuitStep)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  measure(...qubits: number[]): void {
-    this.applySingleGate("measurement-gate", ...qubits)
+  measure(...targetQubits: number[]): QuantumCircuitElement {
+    this.applySingleGate("measurement-gate", ...targetQubits)
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
-  private applySingleGate(elementName: string, ...qubits: number[]): void {
-    if (qubits.some((each) => each < 0))
+  private applySingleGate(
+    elementName: string,
+    ...targetQubits: number[]
+  ): void {
+    if (targetQubits.some((each) => each < 0))
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (qubits.some((each) => each > 15))
+    if (targetQubits.some((each) => each > 15))
       throw new Error(
         "The index of the qubit must be less than or equal to 15.",
       )
@@ -146,7 +253,7 @@ export class QuantumCircuitElement extends HTMLElement {
     ) as CircuitStepElement
     circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
 
-    const nqubit = qubits.sort((a, b) => b - a)[0]
+    const nqubit = targetQubits.sort((a, b) => b - a)[0]
 
     for (let i = 0; i <= nqubit; i++) {
       const dropzone = document.createElement("circuit-dropzone")
@@ -154,7 +261,7 @@ export class QuantumCircuitElement extends HTMLElement {
       circuitStep.append(dropzone)
     }
 
-    for (const each of qubits) {
+    for (const each of targetQubits) {
       const gate = document.createElement(elementName)
       circuitStep.dropzones[each].append(gate)
     }
@@ -165,13 +272,13 @@ export class QuantumCircuitElement extends HTMLElement {
   private applyAngledSingleGate(
     elementName: string,
     angle: number,
-    ...qubits: number[]
+    ...targetQubits: number[]
   ): void {
-    if (qubits.some((each) => each < 0))
+    if (targetQubits.some((each) => each < 0))
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (qubits.some((each) => each > 15))
+    if (targetQubits.some((each) => each > 15))
       throw new Error(
         "The index of the qubit must be less than or equal to 15.",
       )
@@ -181,7 +288,7 @@ export class QuantumCircuitElement extends HTMLElement {
     ) as CircuitStepElement
     circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
 
-    const nqubit = qubits.sort((a, b) => b - a)[0]
+    const nqubit = targetQubits.sort((a, b) => b - a)[0]
 
     for (let i = 0; i <= nqubit; i++) {
       const dropzone = document.createElement("circuit-dropzone")
@@ -189,7 +296,7 @@ export class QuantumCircuitElement extends HTMLElement {
       circuitStep.append(dropzone)
     }
 
-    for (const each of qubits) {
+    for (const each of targetQubits) {
       if (elementName === "phase-gate") {
         const gate = document.createElement(elementName) as PhaseGateElement
         gate.phi = angle.toString()
@@ -210,6 +317,25 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     this.append(circuitStep)
+  }
+
+  private maybeAppendMissingDropzones(): void {
+    const maxNqubit = this.circuitSteps
+      .map((each) => {
+        return each.nqubit
+      })
+      .sort((a, b) => b - a)[0]
+
+    for (const each of this.circuitSteps) {
+      const nqubit = each.nqubit
+      if (nqubit < maxNqubit) {
+        for (let i = 0; i < maxNqubit - nqubit; i++) {
+          const dropzone = document.createElement("circuit-dropzone")
+          dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+          each.append(dropzone)
+        }
+      }
+    }
   }
 
   private get circuitStepFragment(): DocumentFragment {
@@ -375,10 +501,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           case /^•$/.test(instruction): {
             const controlGate = document.createElement("control-gate")
-            controlGate.setAttribute(
-              "data-targets",
-              "circuit-step.controlGates",
-            )
+            controlGate.setAttribute("data-target", "circuit-step.controlGates")
             controlGate.setAttribute(
               "data-target",
               "circuit-dropzone.draggable",

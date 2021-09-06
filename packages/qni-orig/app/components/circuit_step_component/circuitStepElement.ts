@@ -61,6 +61,10 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
+  get nqubit(): number {
+    return this.dropzones.length
+  }
+
   get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll("circuit-dropzone"))
   }
