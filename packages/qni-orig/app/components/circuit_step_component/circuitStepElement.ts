@@ -30,8 +30,9 @@ export class CircuitStepElement extends HTMLElement {
     | RzGateElement
     | SwapGateElement
   >
-  @targets controlGates: ControlGateElement[]
+  @targets phaseGates: PhaseGateElement[]
   @targets swapGates: SwapGateElement[]
+  @targets controlGates: ControlGateElement[]
 
   get nqubit(): number {
     return this.dropzones.length
@@ -114,7 +115,6 @@ export class CircuitStepElement extends HTMLElement {
       operation.tagName === "X-GATE" ||
       operation.tagName === "Y-GATE" ||
       operation.tagName === "Z-GATE" ||
-      operation.tagName === "PHASE-GATE" ||
       operation.tagName === "RNOT-GATE" ||
       operation.tagName === "RX-GATE" ||
       operation.tagName === "RY-GATE" ||
@@ -126,6 +126,12 @@ export class CircuitStepElement extends HTMLElement {
       operation.setAttribute(
         "data-targets",
         "circuit-step.controllableGates circuit-step.swapGates",
+      )
+    }
+    if (operation.tagName === "PHASE-GATE") {
+      operation.setAttribute(
+        "data-targets",
+        "circuit-step.controllableGates circuit-step.phaseGates",
       )
     }
     if (operation.tagName === "CONTROL-GATE") {
@@ -190,10 +196,17 @@ export class CircuitStepElement extends HTMLElement {
 
     for (const each of Array.from(
       this.querySelectorAll(
-        "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate",
+        "h-gate,x-gate,y-gate,z-gate,rnot-gate,rx-gate,ry-gate,rz-gate",
       ),
     )) {
       each.setAttribute("data-targets", "circuit-step.controllableGates")
+    }
+
+    for (const each of Array.from(this.querySelectorAll("phase-gate"))) {
+      each.setAttribute(
+        "data-targets",
+        "circuit-step.controllableGates circuit-step.phaseGates",
+      )
     }
 
     for (const each of Array.from(this.querySelectorAll("control-gate"))) {
@@ -235,6 +248,39 @@ export class CircuitStepElement extends HTMLElement {
     } else {
       for (const swapGate of this.swapGates) {
         swapGate.enable()
+      }
+    }
+
+    // CPHASE
+    for (const phaseGate of this.phaseGates) {
+      if (phaseGate.phi === "") continue
+
+      const all = this.phaseGates.filter((each) => {
+        return each.phi === phaseGate.phi
+      })
+      for (const cp of all) {
+        cp.wireTop = all.some((each) => {
+          return this.bit(each) < this.bit(cp)
+        })
+        cp.wireBottom = all.some((each) => {
+          return this.bit(each) > this.bit(cp)
+        })
+      }
+
+      for (const dropzone of this.dropzones) {
+        if (dropzone.draggable) continue
+
+        const bits = all.map((each) => this.bit(each))
+        const minBit = Math.min(...bits)
+        const maxBit = Math.max(...bits)
+
+        if (
+          minBit < this.dropzones.indexOf(dropzone) &&
+          this.dropzones.indexOf(dropzone) < maxBit
+        ) {
+          dropzone.wireTop = true
+          dropzone.wireBottom = true
+        }
       }
     }
 

@@ -1149,6 +1149,58 @@ QUnit.module("CircuitStep", () => {
     })
   })
 
+  QUnit.module("CPHASE", (hooks) => {
+    let p1: PhaseGateElement
+    let p2: PhaseGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      p1 = document.createElement("phase-gate") as PhaseGateElement
+      p2 = document.createElement("phase-gate") as PhaseGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect P('π/2'),P('π/2')", (assert) => {
+      p1.phi = "π/2"
+      p2.phi = "π/2"
+      step.appendOperation(p1)
+      step.appendOperation(p2)
+
+      assert.true(p1.wireBottom)
+      assert.true(p2.wireTop)
+    })
+
+    QUnit.test("should connect P('π/2'),1,P('π/2')", (assert) => {
+      p1.phi = "π/2"
+      p2.phi = "π/2"
+      step.appendOperation(p1)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(p2)
+
+      assert.true(p1.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(p2.wireTop)
+    })
+
+    QUnit.test("should not connect P('π/2'),1,P('π/4')", (assert) => {
+      p1.phi = "π/2"
+      p2.phi = "π/4"
+      step.appendOperation(p1)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(p2)
+
+      assert.false(p1.wireBottom)
+      assert.false(dropzone.wireTop)
+      assert.false(dropzone.wireBottom)
+      assert.false(p2.wireTop)
+    })
+  })
+
   QUnit.module("Controlled-Swap", (hooks) => {
     let c: ControlGateElement
     let swap: SwapGateElement
