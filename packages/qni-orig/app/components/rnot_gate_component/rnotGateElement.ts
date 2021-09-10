@@ -5,6 +5,7 @@ import {
   IconableMixin,
   IfableMixin,
   JsonableMixin,
+  LabelableMixin,
   SizeableMixin,
   WireableMixin,
 } from "mixins"
@@ -14,9 +15,13 @@ import { attr, controller } from "@github/catalyst"
 @controller
 export class RnotGateElement extends DraggableMixin(
   WireableMixin(
-    IfableMixin(
-      DisableableMixin(
-        IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    LabelableMixin(
+      IfableMixin(
+        DisableableMixin(
+          IconableMixin(
+            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+          ),
+        ),
       ),
     ),
   ),
@@ -31,7 +36,7 @@ export class RnotGateElement extends DraggableMixin(
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.ifStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
         <div id="body" data-action="mouseenter:rnot-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}

@@ -3,6 +3,7 @@ import {
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
+  LabelableMixin,
   SizeableMixin,
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
@@ -10,7 +11,9 @@ import { attr, controller } from "@github/catalyst"
 
 @controller
 export class MeasurementGateElement extends DraggableMixin(
-  IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+  IconableMixin(
+    HelpableMixin(LabelableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+  ),
 ) {
   @attr iconType = "transparent"
   @attr value = ""
@@ -46,6 +49,7 @@ export class MeasurementGateElement extends DraggableMixin(
 
     render(
       html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
+        ${this.labelStyle}
 
         <style>
           :host([data-grabbed]),
@@ -86,6 +90,13 @@ export class MeasurementGateElement extends DraggableMixin(
             line-height: 1.5rem;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
+            writing-mode: vertical-lr;
+          }
+
+          @media (min-width: 768px) {
+            #ket-label {
+              writing-mode: horizontal-tb;
+            }
           }
 
           :host([data-value="0"]) #ket-label {
@@ -102,46 +113,6 @@ export class MeasurementGateElement extends DraggableMixin(
 
           :host([data-value="1"]) #ket-label::after {
             content: "1";
-          }
-
-          :host::before {
-            position: absolute;
-            color: var(--colors-wolf, #777777);
-            background-color: transparent;
-            font-size: 0.75rem;
-            line-height: 0.75rem;
-            letter-spacing: -0.05em;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
-            white-space: nowrap;
-            z-index: 10;
-            content: attr(data-flag) "";
-          }
-
-          :host([data-size="xs"])::before {
-            bottom: 0px;
-            margin-bottom: 1.125rem;
-          }
-
-          :host([data-size="sm"])::before {
-            bottom: 0px;
-            margin-bottom: 1.625rem;
-          }
-
-          :host::before,
-          :host([data-size="base"])::before {
-            bottom: 0px;
-            margin-bottom: 2.125rem;
-          }
-
-          :host([data-size="lg"])::before {
-            bottom: 0px;
-            margin-bottom: 2.625rem;
-          }
-
-          :host([data-size="xl"])::before {
-            bottom: 0px;
-            margin-bottom: 3.125rem;
           }
         </style>
 

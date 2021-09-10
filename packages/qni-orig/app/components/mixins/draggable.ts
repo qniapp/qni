@@ -1,9 +1,11 @@
 import { TemplateResult, html } from "@github/jtml"
+import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { Constructor } from "./constructor"
 import { attr } from "@github/catalyst"
 
 export declare class Draggable {
   get draggableStyle(): TemplateResult
+  dropzone(): CircuitDropzoneElement | null
 }
 
 export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
@@ -39,6 +41,14 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           opacity: 100;
         }
       </style>`
+    }
+
+    dropzone(): CircuitDropzoneElement | null {
+      const el = this.parentElement
+      if (el?.nodeName === "CIRCUIT-DROPZONE") {
+        return el as CircuitDropzoneElement
+      }
+      return null
     }
   }
 

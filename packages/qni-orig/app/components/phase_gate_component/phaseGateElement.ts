@@ -5,6 +5,7 @@ import {
   IconableMixin,
   IfableMixin,
   JsonableMixin,
+  LabelableMixin,
   SizeableMixin,
   WireableMixin,
 } from "mixins"
@@ -14,9 +15,13 @@ import { attr, controller } from "@github/catalyst"
 @controller
 export class PhaseGateElement extends DraggableMixin(
   WireableMixin(
-    IfableMixin(
-      DisableableMixin(
-        IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    LabelableMixin(
+      IfableMixin(
+        DisableableMixin(
+          IconableMixin(
+            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+          ),
+        ),
       ),
     ),
   ),
@@ -32,44 +37,7 @@ export class PhaseGateElement extends DraggableMixin(
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.draggableStyle} ${this.disabledStyle} ${this.ifStyle}
-
-        <style>
-          :host::before {
-            position: absolute;
-            bottom: 0px;
-            color: var(--colors-wolf, #777777);
-            background-color: transparent;
-            font-size: 0.75rem;
-            line-height: 0.75rem;
-            letter-spacing: -0.05em;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
-            z-index: 10;
-            content: attr(data-phi) "";
-          }
-
-          :host([data-size="xs"]) #body::before {
-            margin-bottom: 1.125rem;
-          }
-
-          :host([data-size="sm"]) #body::before {
-            margin-bottom: 1.625rem;
-          }
-
-          :host::before,
-          :host([data-size="base"]) #body::before {
-            margin-bottom: 2.125rem;
-          }
-
-          :host([data-size="lg"]) #body::before {
-            margin-bottom: 2.625rem;
-          }
-
-          :host([data-size="xl"]) #body::before {
-            margin-bottom: 3.125rem;
-          }
-        </style>
+        ${this.draggableStyle} ${this.disabledStyle} ${this.labelStyle}
 
         <div
           id="body"

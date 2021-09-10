@@ -12,6 +12,109 @@ QUnit.module("CircuitDropzone", (hooks) => {
     document.body.removeChild(container)
   })
 
+  QUnit.test(".operation", (assert) => {
+    container.innerHTML = `
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>`
+    document.body.append(container)
+
+    const el = document.querySelector(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
+    assert.equal(el.operation?.toJson(), '"H"')
+  })
+
+  QUnit.test(".operation returns null", (assert) => {
+    container.innerHTML = `
+      <circuit-dropzone>
+      </circuit-dropzone>`
+    document.body.append(container)
+
+    const el = document.querySelector(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
+    assert.equal(el.operation, null)
+  })
+
+  QUnit.test(".prev()", (assert) => {
+    container.innerHTML = `
+      <quantum-circuit>
+        <circuit-step>
+          <circuit-dropzone id="dropzoneA">
+          </circuit-dropzone>
+        </circuit-step>
+        <circuit-step>
+          <circuit-dropzone id="dropzoneB">
+          </circuit-dropzone>
+        </circuit-step>
+      </quantum-circuit>`
+    document.body.append(container)
+
+    const dropzoneA = document.getElementById(
+      "dropzoneA",
+    ) as CircuitDropzoneElement
+    const dropzoneB = document.getElementById(
+      "dropzoneB",
+    ) as CircuitDropzoneElement
+
+    assert.equal(dropzoneA.prev(), null)
+    assert.equal(dropzoneB.prev()?.id, "dropzoneA")
+  })
+
+  QUnit.test(".next()", (assert) => {
+    container.innerHTML = `
+      <quantum-circuit>
+        <circuit-step>
+          <circuit-dropzone id="dropzoneA">
+          </circuit-dropzone>
+        </circuit-step>
+        <circuit-step>
+          <circuit-dropzone id="dropzoneB">
+          </circuit-dropzone>
+        </circuit-step>
+      </quantum-circuit>`
+    document.body.append(container)
+
+    const dropzoneA = document.getElementById(
+      "dropzoneA",
+    ) as CircuitDropzoneElement
+    const dropzoneB = document.getElementById(
+      "dropzoneB",
+    ) as CircuitDropzoneElement
+
+    assert.equal(dropzoneA.next()?.id, "dropzoneB")
+    assert.equal(dropzoneB.next(), null)
+  })
+
+  QUnit.test(".circuitStep() returns a CircuitStepElement", (assert) => {
+    container.innerHTML = `
+      <circuit-step>
+        <circuit-dropzone>
+        </circuit-dropzone>
+      </circuit-step>`
+    document.body.append(container)
+
+    const el = document.querySelector(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
+
+    assert.equal(el.circuitStep?.nodeName, "CIRCUIT-STEP")
+  })
+
+  QUnit.test(".circuitStep() returns null", (assert) => {
+    container.innerHTML = `
+      <circuit-dropzone>
+      </circuit-dropzone>`
+    document.body.append(container)
+
+    const el = document.querySelector(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
+
+    assert.true(el.circuitStep === null)
+  })
+
   QUnit.test(".toJson() (Id gate)", (assert) => {
     container.innerHTML = `
       <circuit-dropzone>

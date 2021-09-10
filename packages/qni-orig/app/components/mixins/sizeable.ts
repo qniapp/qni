@@ -17,6 +17,7 @@ export function SizeableMixin<TBase extends Constructor<HTMLElement>>(
         :host {
           position: relative;
           display: flex;
+          flex-shrink: 0;
           align-items: center;
           justify-content: center;
         }

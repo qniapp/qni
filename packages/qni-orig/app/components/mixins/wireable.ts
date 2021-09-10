@@ -31,6 +31,14 @@ export function WireableMixin<TBase extends Constructor<HTMLElement>>(
           height: 100%;
           width: 100%;
           overflow: visible;
+          transform: rotate(90deg);
+          transform-origin: center;
+        }
+
+        @media (min-width: 768px) {
+          #wires {
+            transform: rotate(0);
+          }
         }
 
         #wire-top,

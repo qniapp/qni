@@ -46,6 +46,13 @@ export class WriteGateElement extends DraggableMixin(
               "Liberation Mono", "Courier New", monospace;
             font-size: 1rem;
             line-height: 1.5rem;
+            writing-mode: vertical-lr;
+          }
+
+          @media (min-width: 768px) {
+            #ket-label {
+              writing-mode: horizontal-tb;
+            }
           }
 
           :host([data-size="xs"]) #ket-label {

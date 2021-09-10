@@ -1,4 +1,4 @@
-import { controller, attr, target, targets } from "@github/catalyst"
+import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 
 @controller

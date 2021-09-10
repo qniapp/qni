@@ -116,11 +116,11 @@ width: 3rem;</td>
             <div class="relative overflow-hidden mb-8">
               <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                 <div class="flex flex-row space-x-4">
-                  <rx-gate data-theta="0.123"></rx-gate>
+                  <rx-gate data-theta="π/2"></rx-gate>
                 </div>
               </div>
               <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;0.123&quot;&gt;&lt;/rx-gate&gt;</code></pre>
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;π/2&quot;&gt;&lt;/rx-gate&gt;</code></pre>
               </div>
             </div>
 
@@ -197,11 +197,25 @@ width: 3rem;</td>
             <div class="relative overflow-hidden mt-8 mb-8">
               <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                 <div class="flex flex-row space-x-4">
-                  <rx-gate data-if="bob_rx"></rx-gate>
+                  <rx-gate data-if="rx"></rx-gate>
                 </div>
               </div>
               <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-if=&quot;bob_rx&quot;&gt;&lt;/rx-gate&gt;</code></pre>
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-if=&quot;rx&quot;&gt;&lt;/rx-gate&gt;</code></pre>
+              </div>
+            </div>
+
+            <p class="mb-5">
+              The <code class="text-purple-500">data-if</code> attribute can be specified together with the <code class="text-purple-500">data-theta</code> attribute.
+            </p>
+            <div class="relative overflow-hidden mt-8 mb-8">
+              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+                <div class="flex flex-row space-x-4">
+                  <rx-gate data-theta="π/2" data-if="rx"></rx-gate>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;rx-gate data-theta=&quot;π/2&quot; data-if=&quot;rx&quot;&gt;&lt;/rx-gate&gt;</code></pre>
               </div>
             </div>
 
@@ -211,12 +225,12 @@ width: 3rem;</td>
             <div class="relative overflow-hidden mb-8">
               <div class="rounded-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
                 <div class="flex flex-row space-x-8">
-                  <rx-gate data-wire-top data-if="bob_rx"></rx-gate>
-                  <rx-gate data-wire-bottom data-if="bob_rx"></rx-gate>
-                  <rx-gate data-wire-top data-wire-bottom data-if="bob_rx"></rx-gate>
-                  <rx-gate data-wire-top-disabled data-if="bob_rx"></rx-gate>
-                  <rx-gate data-wire-bottom-disabled data-if="bob_rx"></rx-gate>
-                  <rx-gate data-wire-top-disabled data-wire-bottom-disabled data-if="bob_rx"></rx-gate>
+                  <rx-gate data-wire-top data-if="rx"></rx-gate>
+                  <rx-gate data-wire-bottom data-if="rx"></rx-gate>
+                  <rx-gate data-wire-top data-wire-bottom data-if="rx"></rx-gate>
+                  <rx-gate data-wire-top-disabled data-if="rx"></rx-gate>
+                  <rx-gate data-wire-bottom-disabled data-if="rx"></rx-gate>
+                  <rx-gate data-wire-top-disabled data-wire-bottom-disabled data-if="rx"></rx-gate>
                 </div>
               </div>
             </div>

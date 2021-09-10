@@ -1,50 +1,40 @@
 import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
+import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { HGateElement } from "h_gate_component/hGateElement"
+import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
+import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
+import { SwapGateElement } from "swap_gate_component/swapGateElement"
 import { WriteGateElement } from "write_gate_component/writeGateElement"
+import { XGateElement } from "x_gate_component/xGateElement"
+import { YGateElement } from "y_gate_component/yGateElement"
+import { ZGateElement } from "z_gate_component/zGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
 
-  @target body: HTMLElement
-  @targets circuitSteps: CircuitStepElement[]
+  @target slotEl: HTMLSlotElement
+  @targets steps: CircuitStepElement[]
 
-  connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
-    this.update()
+  step(n: number): CircuitStepElement {
+    const el = this.steps[n]
+    if (el === undefined) throw new Error(`step ${n} does not exist.`)
+
+    return el
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ): void {
-    if (name === "data-json" && oldValue !== newValue && this.body) {
-      this.body.innerHTML = ""
-      this.body.append(this.circuitStepFragment)
-    }
-  }
-
-  update(): void {
-    render(
-      html`<style>
-          #body {
-            display: flex;
-            flex-direction: row;
-          }
-        </style>
-
-        <div id="body" data-target="quantum-circuit.body">
-          <slot></slot>
-          ${this.circuitStepFragment}
-        </div>`,
-      this.shadowRoot!,
-    )
+  appendStep(): CircuitStepElement {
+    const el = document.createElement("circuit-step") as CircuitStepElement
+    el.setAttribute("data-targets", "quantum-circuit.steps")
+    this.append(el)
+    return el
   }
 
   h(...targetQubits: number[]): QuantumCircuitElement {
@@ -107,42 +97,25 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  swap(targetA: number, targetB: number): QuantumCircuitElement {
-    this.applySingleGate("swap-gate", targetA, targetB)
-    this.maybeAppendMissingDropzones()
-    return this
-  }
-
   cnot(control: number, xTarget: number): QuantumCircuitElement {
     if (control < 0 || xTarget < 0)
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (control > 15 || xTarget > 15)
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
 
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+    const circuitStep = this.appendStep()
+    const nqubit = Math.max(control, xTarget) + 1
 
-    const nqubit = [control, xTarget].sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
+    for (let i = 0; i < nqubit; i++) {
+      circuitStep.appendDropzone()
     }
 
     const controlGate = document.createElement("control-gate")
-    circuitStep.dropzones[control].append(controlGate)
+    circuitStep.dropzones[control].assignOperationElement(controlGate)
 
     const xGate = document.createElement("x-gate")
-    circuitStep.dropzones[xTarget].append(xGate)
+    circuitStep.dropzones[xTarget].assignOperationElement(xGate)
 
-    this.append(circuitStep)
     this.maybeAppendMissingDropzones()
 
     return this
@@ -157,34 +130,30 @@ export class QuantumCircuitElement extends HTMLElement {
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (controlA > 15 || controlB > 15 || xTarget > 15)
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
 
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+    const circuitStep = this.appendStep()
+    const nqubit = Math.max(controlA, controlB, xTarget) + 1
 
-    const nqubit = [controlA, controlB, xTarget].sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
+    for (let i = 0; i < nqubit; i++) {
+      circuitStep.appendDropzone()
     }
 
     const controlGateA = document.createElement("control-gate")
-    circuitStep.dropzones[controlA].append(controlGateA)
+    circuitStep.dropzones[controlA].assignOperationElement(controlGateA)
 
     const controlGateB = document.createElement("control-gate")
-    circuitStep.dropzones[controlB].append(controlGateB)
+    circuitStep.dropzones[controlB].assignOperationElement(controlGateB)
 
     const xGate = document.createElement("x-gate")
-    circuitStep.dropzones[xTarget].append(xGate)
+    circuitStep.dropzones[xTarget].assignOperationElement(xGate)
 
-    this.append(circuitStep)
+    this.maybeAppendMissingDropzones()
+
+    return this
+  }
+
+  swap(targetA: number, targetB: number): QuantumCircuitElement {
+    this.applySingleGate("swap-gate", targetA, targetB)
     this.maybeAppendMissingDropzones()
     return this
   }
@@ -200,32 +169,22 @@ export class QuantumCircuitElement extends HTMLElement {
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (targetQubits.some((each) => each > 15))
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
 
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+    const circuitStep = this.appendStep()
+    const nqubit = Math.max(...targetQubits) + 1
 
-    const nqubit = targetQubits.sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
+    for (let i = 0; i < nqubit; i++) {
+      circuitStep.appendDropzone()
     }
 
     for (const each of targetQubits) {
       const writeGate = document.createElement("write-gate") as WriteGateElement
       writeGate.value = value.toString()
-      circuitStep.dropzones[each].append(writeGate)
+      circuitStep.dropzones[each].assignOperationElement(writeGate)
     }
 
-    this.append(circuitStep)
     this.maybeAppendMissingDropzones()
+
     return this
   }
 
@@ -235,42 +194,95 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  connectedCallback(): void {
+    this.attachShadow({ mode: "open" })
+    this.update()
+    this.setTargetAttributes()
+    this.appendJsonSteps()
+    this.listenCircuitStepsChange()
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (this.shadowRoot === null) return
+    if (oldValue === newValue) return
+
+    if (name === "data-json") {
+      this.update()
+      this.appendJsonSteps()
+    }
+  }
+
+  update(): void {
+    render(
+      html`<style>
+          #body {
+            display: flex;
+            flex-direction: column;
+          }
+
+          @media (min-width: 768px) {
+            #body {
+              flex-direction: row;
+            }
+          }
+        </style>
+
+        <div id="body">
+          <slot data-target="quantum-circuit.slotEl"></slot>
+        </div>`,
+      this.shadowRoot!,
+    )
+  }
+
+  private setTargetAttributes(): void {
+    for (const each of Array.from(this.querySelectorAll("circuit-step"))) {
+      each.setAttribute("data-targets", "quantum-circuit.steps")
+    }
+  }
+
+  private listenCircuitStepsChange(): void {
+    this.slotEl.addEventListener("slotchange", () => {
+      this.setTargetAttributes()
+    })
+  }
+
   private applySingleGate(
-    elementName: string,
+    elementName:
+      | "h-gate"
+      | "x-gate"
+      | "y-gate"
+      | "z-gate"
+      | "rnot-gate"
+      | "control-gate"
+      | "swap-gate"
+      | "bloch-display"
+      | "measurement-gate",
     ...targetQubits: number[]
   ): void {
     if (targetQubits.some((each) => each < 0))
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (targetQubits.some((each) => each > 15))
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
 
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+    const circuitStep = this.appendStep()
+    const nqubit = Math.max(...targetQubits) + 1
 
-    const nqubit = targetQubits.sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
+    for (let i = 0; i < nqubit; i++) {
+      circuitStep.appendDropzone()
     }
 
     for (const each of targetQubits) {
       const gate = document.createElement(elementName)
-      circuitStep.dropzones[each].append(gate)
+      circuitStep.dropzones[each].assignOperationElement(gate)
     }
-
-    this.append(circuitStep)
   }
 
   private applyAngledSingleGate(
-    elementName: string,
+    elementName: "phase-gate" | "rx-gate" | "ry-gate" | "rz-gate",
     angle: number,
     ...targetQubits: number[]
   ): void {
@@ -278,253 +290,176 @@ export class QuantumCircuitElement extends HTMLElement {
       throw new Error(
         "The index of the qubit must be greater than or equal to 0.",
       )
-    if (targetQubits.some((each) => each > 15))
-      throw new Error(
-        "The index of the qubit must be less than or equal to 15.",
-      )
 
-    const circuitStep = document.createElement(
-      "circuit-step",
-    ) as CircuitStepElement
-    circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
+    const circuitStep = this.appendStep()
+    const nqubit = Math.max(...targetQubits) + 1
 
-    const nqubit = targetQubits.sort((a, b) => b - a)[0]
-
-    for (let i = 0; i <= nqubit; i++) {
-      const dropzone = document.createElement("circuit-dropzone")
-      dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-      circuitStep.append(dropzone)
+    for (let i = 0; i < nqubit; i++) {
+      circuitStep.appendDropzone()
     }
 
     for (const each of targetQubits) {
       if (elementName === "phase-gate") {
         const gate = document.createElement(elementName) as PhaseGateElement
         gate.phi = angle.toString()
-        circuitStep.dropzones[each].append(gate)
+        circuitStep.dropzones[each].assignOperationElement(gate)
       } else if (elementName === "rx-gate") {
         const gate = document.createElement(elementName) as RxGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].append(gate)
+        circuitStep.dropzones[each].assignOperationElement(gate)
       } else if (elementName === "ry-gate") {
         const gate = document.createElement(elementName) as RyGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].append(gate)
+        circuitStep.dropzones[each].assignOperationElement(gate)
       } else if (elementName === "rz-gate") {
         const gate = document.createElement(elementName) as RzGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].append(gate)
+        circuitStep.dropzones[each].assignOperationElement(gate)
       }
     }
-
-    this.append(circuitStep)
   }
 
   private maybeAppendMissingDropzones(): void {
-    const maxNqubit = this.circuitSteps
-      .map((each) => {
+    const maxNqubit = Math.max(
+      ...this.steps.map((each) => {
         return each.nqubit
-      })
-      .sort((a, b) => b - a)[0]
+      }),
+    )
 
-    for (const each of this.circuitSteps) {
+    for (const each of this.steps) {
       const nqubit = each.nqubit
       if (nqubit < maxNqubit) {
         for (let i = 0; i < maxNqubit - nqubit; i++) {
-          const dropzone = document.createElement("circuit-dropzone")
-          dropzone.setAttribute("data-targets", "circuit-step.dropzones")
-          each.append(dropzone)
+          each.appendDropzone()
         }
       }
     }
   }
 
-  private get circuitStepFragment(): DocumentFragment {
-    const frag = document.createDocumentFragment()
-
-    if (this.json === "") return frag
+  private appendJsonSteps(): void {
+    if (this.json === "") return
 
     const jsonData = JSON.parse(this.json)
     for (const step of jsonData.cols) {
-      const circuitStep = document.createElement("circuit-step")
-      circuitStep.setAttribute("data-targets", "quantum-circuit.circuitSteps")
-      for (const instruction of step) {
-        const dropzone = document.createElement("circuit-dropzone")
-        dropzone.setAttribute("data-targets", "circuit-step.dropzones")
+      const circuitStep = this.appendStep()
 
+      for (const instruction of step) {
         switch (true) {
           case /^\|0>$/.test(instruction): {
-            const writeGate = document.createElement("write-gate")
-            writeGate.setAttribute("data-value", "0")
-            dropzone.append(writeGate)
+            const el = document.createElement("write-gate") as WriteGateElement
+            el.value = "0"
+            circuitStep.appendOperation(el)
             break
           }
           case /^\|1>$/.test(instruction): {
-            const writeGate = document.createElement("write-gate")
-            writeGate.setAttribute("data-value", "1")
-            dropzone.append(writeGate)
+            const el = document.createElement("write-gate") as WriteGateElement
+            el.value = "1"
+            circuitStep.appendOperation(el)
             break
           }
           case /^H$/.test(instruction): {
-            const hGate = document.createElement("h-gate")
-            hGate.setAttribute("data-targets", "circuit-step.controllableGates")
-            hGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(hGate)
+            const el = document.createElement("h-gate") as HGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^X$/.test(instruction): {
-            const xGate = document.createElement("x-gate")
-            xGate.setAttribute("data-targets", "circuit-step.controllableGates")
-            xGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(xGate)
+            const el = document.createElement("x-gate") as XGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Y$/.test(instruction): {
-            const yGate = document.createElement("y-gate")
-            yGate.setAttribute("data-targets", "circuit-step.controllableGates")
-            yGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(yGate)
+            const el = document.createElement("y-gate") as YGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Z$/.test(instruction): {
-            const zGate = document.createElement("z-gate")
-            zGate.setAttribute("data-targets", "circuit-step.controllableGates")
-            zGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(zGate)
+            const el = document.createElement("z-gate") as ZGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^P$/.test(instruction): {
-            const phaseGate = document.createElement("phase-gate")
-            phaseGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            phaseGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(phaseGate)
+            const el = document.createElement("phase-gate") as PhaseGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^P\((.+)\)$/.test(instruction): {
-            const phaseGate = document.createElement("phase-gate")
-            phaseGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            phaseGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            phaseGate.setAttribute("data-phi", RegExp.$1)
-            dropzone.append(phaseGate)
+            const el = document.createElement("phase-gate") as PhaseGateElement
+            el.phi = RegExp.$1
+            circuitStep.appendOperation(el)
             break
           }
           case /^X\^½$/.test(instruction): {
-            const rootNotGate = document.createElement("rnot-gate")
-            rootNotGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            rootNotGate.setAttribute(
-              "data-target",
-              "circuit-dropzone.draggable",
-            )
-            dropzone.append(rootNotGate)
+            const el = document.createElement("rnot-gate") as RnotGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Rx$/.test(instruction): {
-            const rxGate = document.createElement("rx-gate")
-            rxGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            rxGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(rxGate)
+            const el = document.createElement("rx-gate") as RxGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Rx\((.+)\)$/.test(instruction): {
-            const rxGate = document.createElement("rx-gate")
-            rxGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            rxGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            rxGate.setAttribute("data-theta", RegExp.$1)
-            dropzone.append(rxGate)
+            const el = document.createElement("rx-gate") as RxGateElement
+            el.theta = RegExp.$1
+            circuitStep.appendOperation(el)
             break
           }
           case /^Ry$/.test(instruction): {
-            const ryGate = document.createElement("ry-gate")
-            ryGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            ryGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(ryGate)
+            const el = document.createElement("ry-gate") as RyGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Ry\((.+)\)$/.test(instruction): {
-            const ryGate = document.createElement("ry-gate")
-            ryGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            ryGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            ryGate.setAttribute("data-theta", RegExp.$1)
-            dropzone.append(ryGate)
+            const el = document.createElement("ry-gate") as RzGateElement
+            el.theta = RegExp.$1
+            circuitStep.appendOperation(el)
             break
           }
           case /^Rz$/.test(instruction): {
-            const rzGate = document.createElement("rz-gate")
-            rzGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            rzGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(rzGate)
+            const el = document.createElement("rz-gate") as RzGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Rz\((.+)\)$/.test(instruction): {
-            const rzGate = document.createElement("rz-gate")
-            rzGate.setAttribute(
-              "data-targets",
-              "circuit-step.controllableGates",
-            )
-            rzGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            rzGate.setAttribute("data-theta", RegExp.$1)
-            dropzone.append(rzGate)
+            const el = document.createElement("rz-gate") as RzGateElement
+            el.theta = RegExp.$1
+            circuitStep.appendOperation(el)
             break
           }
           case /^Swap$/.test(instruction): {
-            const swapGate = document.createElement("swap-gate")
-            swapGate.setAttribute(
-              "data-targets",
-              "circuit-step.swapGates circuit-step.controllableGates",
-            )
-            swapGate.setAttribute("data-target", "circuit-dropzone.draggable")
-            dropzone.append(swapGate)
+            const el = document.createElement("swap-gate") as SwapGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^•$/.test(instruction): {
-            const controlGate = document.createElement("control-gate")
-            controlGate.setAttribute("data-target", "circuit-step.controlGates")
-            controlGate.setAttribute(
-              "data-target",
-              "circuit-dropzone.draggable",
-            )
-            dropzone.append(controlGate)
+            const el = document.createElement(
+              "control-gate",
+            ) as ControlGateElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Bloch$/.test(instruction): {
-            const blochDisplay = document.createElement("bloch-display")
-            dropzone.append(blochDisplay)
+            const el = document.createElement(
+              "bloch-display",
+            ) as BlochDisplayElement
+            circuitStep.appendOperation(el)
             break
           }
           case /^Measure$/.test(instruction): {
-            const measureGate = document.createElement("measurement-gate")
-            dropzone.append(measureGate)
+            const el = document.createElement(
+              "measurement-gate",
+            ) as MeasurementGateElement
+            circuitStep.appendOperation(el)
             break
           }
-          default:
+          default: {
+            if (instruction !== 1) {
+              throw new Error(`Unknown instruction: ${instruction}`)
+            }
+            circuitStep.appendDropzone()
+          }
         }
-        circuitStep.append(dropzone)
       }
-      frag.append(circuitStep)
     }
-    return frag
   }
 }

@@ -1,9 +1,10 @@
-import { controller, target } from "@github/catalyst"
+import { controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
+import { QuantumCircuitElement } from "quantum_circuit_component/quantumCircuitElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
@@ -16,68 +17,8 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 @controller
 export class CircuitStepElement extends HTMLElement {
   @target slotEl: HTMLSlotElement
-
-  toJson(): string {
-    const operations = []
-
-    for (const dropzone of this.dropzones) {
-      operations.push(dropzone.toJson())
-    }
-
-    return `[${operations.join(",")}]`
-  }
-
-  connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
-    this.update()
-    this.addSlotChangeEventListener()
-    this.updateConnections()
-  }
-
-  update(): void {
-    render(
-      html`<style>
-          #body {
-            display: flex;
-            flex-direction: column;
-          }
-
-          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
-            margin-top: 1rem;
-          }
-        </style>
-
-        <div id="body">
-          <slot data-target="circuit-step.slotEl"></slot>
-        </div>`,
-      this.shadowRoot!,
-    )
-  }
-
-  private addSlotChangeEventListener(): void {
-    this.slotEl.addEventListener(
-      "slotchange",
-      this.updateConnections.bind(this),
-    )
-  }
-
-  get nqubit(): number {
-    return this.dropzones.length
-  }
-
-  get dropzones(): CircuitDropzoneElement[] {
-    return Array.from(this.querySelectorAll("circuit-dropzone"))
-  }
-
-  get controlGates(): ControlGateElement[] {
-    return Array.from(this.querySelectorAll("control-gate"))
-  }
-
-  get swapGates(): SwapGateElement[] {
-    return Array.from(this.querySelectorAll("swap-gate"))
-  }
-
-  get controllableGates(): Array<
+  @targets dropzones: CircuitDropzoneElement[]
+  @targets controllableGates: Array<
     | HGateElement
     | XGateElement
     | YGateElement
@@ -88,12 +29,202 @@ export class CircuitStepElement extends HTMLElement {
     | RyGateElement
     | RzGateElement
     | SwapGateElement
-  > {
-    return Array.from(
-      this.querySelectorAll(
-        "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate,swap-gate",
-      ),
+  >
+  @targets controlGates: ControlGateElement[]
+  @targets swapGates: SwapGateElement[]
+
+  get nqubit(): number {
+    return this.dropzones.length
+  }
+
+  dropzone(n: number): CircuitDropzoneElement {
+    const el = this.dropzones[n]
+    if (el === undefined) throw new Error(`dropzone ${n} does not exist.`)
+
+    return el
+  }
+
+  bit(
+    gate:
+      | ControlGateElement
+      | HGateElement
+      | XGateElement
+      | YGateElement
+      | ZGateElement
+      | PhaseGateElement
+      | RnotGateElement
+      | RxGateElement
+      | RyGateElement
+      | RzGateElement
+      | SwapGateElement,
+  ): number {
+    const dropzoneEl = gate.parentElement as unknown as CircuitDropzoneElement
+    if (dropzoneEl === null) {
+      throw new Error("Dropzone not found")
+    }
+
+    return this.dropzones.indexOf(dropzoneEl)
+  }
+
+  index(): number | null {
+    const quantumCircuitEl = this.quantumCircuitElement()
+    if (quantumCircuitEl === null) return null
+
+    const all = quantumCircuitEl.steps
+    return all.indexOf(this)
+  }
+
+  prev(): CircuitStepElement | null {
+    const index = this.index()
+    if (index === null || index === 0) return null
+
+    const quantumCircuitEl = this.quantumCircuitElement()
+    if (quantumCircuitEl === null) return null
+
+    const all = quantumCircuitEl.steps
+    return all[index - 1] || null
+  }
+
+  next(): CircuitStepElement | null {
+    const index = this.index()
+    if (index === null) return null
+
+    const quantumCircuitEl = this.quantumCircuitElement()
+    if (quantumCircuitEl === null) return null
+
+    const all = quantumCircuitEl.steps
+    return all[index + 1] || null
+  }
+
+  appendDropzone(): CircuitDropzoneElement {
+    const el = document.createElement(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
+    el.setAttribute("data-targets", "circuit-step.dropzones")
+    this.append(el)
+    return el
+  }
+
+  appendOperation(operation: HTMLElement): void {
+    const dropzone = this.appendDropzone()
+    dropzone.assignOperationElement(operation)
+
+    if (
+      operation.tagName === "H-GATE" ||
+      operation.tagName === "X-GATE" ||
+      operation.tagName === "Y-GATE" ||
+      operation.tagName === "Z-GATE" ||
+      operation.tagName === "PHASE-GATE" ||
+      operation.tagName === "RNOT-GATE" ||
+      operation.tagName === "RX-GATE" ||
+      operation.tagName === "RY-GATE" ||
+      operation.tagName === "RZ-GATE"
+    ) {
+      operation.setAttribute("data-targets", "circuit-step.controllableGates")
+    }
+    if (operation.tagName === "SWAP-GATE") {
+      operation.setAttribute(
+        "data-targets",
+        "circuit-step.controllableGates circuit-step.swapGates",
+      )
+    }
+    if (operation.tagName === "CONTROL-GATE") {
+      operation.setAttribute("data-targets", "circuit-step.controlGates")
+    }
+
+    this.updateConnections()
+  }
+
+  private quantumCircuitElement(): QuantumCircuitElement | null {
+    return this.closest("quantum-circuit") as QuantumCircuitElement
+  }
+
+  toJson(): string {
+    const jsons = this.dropzones.map((each) => each.toJson())
+    return `[${jsons.join(",")}]`
+  }
+
+  connectedCallback(): void {
+    this.attachShadow({ mode: "open" })
+    this.update()
+    this.setTargetAttributes()
+    this.addSlotChangeEventListener()
+    this.updateConnections()
+  }
+
+  update(): void {
+    render(
+      html`<style>
+          #body {
+            display: flex;
+            flex-direction: row-reverse;
+          }
+
+          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
+            margin-right: 1rem;
+          }
+
+          @media (min-width: 768px) {
+            #body {
+              flex-direction: column;
+            }
+
+            ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
+              margin-top: 1rem;
+              margin-right: 0;
+            }
+          }
+        </style>
+
+        <div id="body">
+          <slot data-target="circuit-step.slotEl"></slot>
+        </div>`,
+      this.shadowRoot!,
     )
+  }
+
+  private setTargetAttributes(): void {
+    for (const each of Array.from(this.querySelectorAll("circuit-dropzone"))) {
+      each.setAttribute("data-targets", "circuit-step.dropzones")
+    }
+
+    for (const each of Array.from(
+      this.querySelectorAll(
+        "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate",
+      ),
+    )) {
+      each.setAttribute("data-targets", "circuit-step.controllableGates")
+    }
+
+    for (const each of Array.from(this.querySelectorAll("control-gate"))) {
+      each.setAttribute("data-targets", "circuit-step.controlGates")
+    }
+
+    for (const each of Array.from(this.querySelectorAll("swap-gate"))) {
+      each.setAttribute(
+        "data-targets",
+        "circuit-step.controllableGates circuit-step.swapGates",
+      )
+    }
+  }
+
+  private addSlotChangeEventListener(): void {
+    this.slotEl.addEventListener("slotchange", () => {
+      this.setTargetAttributes()
+
+      for (const dropzone of this.dropzones) {
+        const prevDropzone = dropzone.prev()
+        if (prevDropzone === null) {
+          dropzone.inputWireQuantum = false
+          dropzone.outputWireQuantum = false
+        } else {
+          dropzone.inputWireQuantum = prevDropzone.outputWireQuantum
+          dropzone.outputWireQuantum = prevDropzone.outputWireQuantum
+        }
+      }
+
+      this.updateConnections()
+    })
   }
 
   updateConnections(): void {
@@ -166,27 +297,5 @@ export class CircuitStepElement extends HTMLElement {
         dropzone.wireBottom = true
       }
     }
-  }
-
-  bit(
-    gate:
-      | ControlGateElement
-      | HGateElement
-      | XGateElement
-      | YGateElement
-      | ZGateElement
-      | PhaseGateElement
-      | RnotGateElement
-      | RxGateElement
-      | RyGateElement
-      | RzGateElement
-      | SwapGateElement,
-  ): number {
-    const dropzoneEl = gate.parentElement as unknown as CircuitDropzoneElement
-    if (dropzoneEl === null) {
-      throw new Error("Dropzone not found")
-    }
-
-    return this.dropzones.indexOf(dropzoneEl)
   }
 }

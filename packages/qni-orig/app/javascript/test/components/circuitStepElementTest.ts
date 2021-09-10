@@ -1,4 +1,3 @@
-import "components"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
@@ -8,2221 +7,1314 @@ import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
 import { SwapGateElement } from "swap_gate_component/swapGateElement"
+import { WriteGateElement } from "write_gate_component/writeGateElement"
 import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
 
-QUnit.module("CircuitStep JSON", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("Id", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), "[1]")
-  })
-
-  QUnit.test("H", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["H"]')
-  })
-
-  QUnit.test("X", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["X"]')
-  })
-
-  QUnit.test("Y", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Y"]')
-  })
-
-  QUnit.test("Z", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Z"]')
-  })
-
-  QUnit.test("Phase", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["P"]')
-  })
-
-  QUnit.test("√X", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["X^½"]')
-  })
-
-  QUnit.test("Rx", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Rx"]')
-  })
-
-  QUnit.test("Ry", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Ry"]')
-  })
-
-  QUnit.test("Rz", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Rz"]')
-  })
-
-  QUnit.test("Control", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["•"]')
-  })
-
-  QUnit.test("Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Swap"]')
-  })
-
-  QUnit.test("Bloch", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <bloch-display></bloch-display>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Bloch"]')
-  })
-
-  QUnit.test("Write (default = 0)", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <write-gate></write-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["|0>"]')
-  })
-
-  QUnit.test("Write 0", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <write-gate data-value="0"></write-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["|0>"]')
-  })
-
-  QUnit.test("Write 1", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <write-gate data-value="1"></write-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["|1>"]')
-  })
-
-  QUnit.test("Measurement", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <measurement-gate></measurement-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["Measure"]')
-  })
-
-  // With multiple dropzones
-
-  QUnit.test("•,H", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-
-    assert.equal(el.toJson(), '["•","H"]')
-  })
-})
-
-QUnit.module("CircuitStep Controlled-H", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,H", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const hGate = el.dropzones[1].operation as HGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(hGate.wireTop)
-  })
-
-  QUnit.test("H,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const hGate = el.dropzones[0].operation as HGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(hGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,H", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const hGate = el.dropzones[2].operation as HGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(hGate.wireTop)
-  })
-
-  QUnit.test("H,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const hGate = el.dropzones[0].operation as HGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(hGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,H", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const hGate = el.dropzones[2].operation as HGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(hGate.wireTop)
-  })
-
-  QUnit.test("•,H,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const hGate = el.dropzones[1].operation as HGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(hGate.wireTop)
-    assert.true(hGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("H,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <h-gate></h-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const hGate = el.dropzones[0].operation as HGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(hGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-X", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,X", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const xGate = el.dropzones[1].operation as XGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(xGate.wireTop)
-  })
-
-  QUnit.test("X,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const xGate = el.dropzones[0].operation as XGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(xGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,X", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const xGate = el.dropzones[2].operation as XGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(xGate.wireTop)
-  })
-
-  QUnit.test("X,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const xGate = el.dropzones[0].operation as XGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(xGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,X", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const xGate = el.dropzones[2].operation as XGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(xGate.wireTop)
-  })
-
-  QUnit.test("•,X,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const xGate = el.dropzones[1].operation as XGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(xGate.wireTop)
-    assert.true(xGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("X,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <x-gate></x-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const xGate = el.dropzones[0].operation as XGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(xGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Y", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,Y", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const yGate = el.dropzones[1].operation as YGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(yGate.wireTop)
-  })
-
-  QUnit.test("Y,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const yGate = el.dropzones[0].operation as YGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(yGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,Y", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const yGate = el.dropzones[2].operation as YGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(yGate.wireTop)
-  })
-
-  QUnit.test("Y,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const yGate = el.dropzones[0].operation as YGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(yGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,Y", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const yGate = el.dropzones[2].operation as YGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(yGate.wireTop)
-  })
-
-  QUnit.test("•,Y,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const yGate = el.dropzones[1].operation as YGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(yGate.wireTop)
-    assert.true(yGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("Y,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <y-gate></y-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const yGate = el.dropzones[0].operation as YGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(yGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Z", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,Z", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const zGate = el.dropzones[1].operation as ZGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(zGate.wireTop)
-  })
-
-  QUnit.test("Z,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const zGate = el.dropzones[0].operation as ZGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(zGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,Z", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const zGate = el.dropzones[2].operation as ZGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(zGate.wireTop)
-  })
+QUnit.module("CircuitStep", () => {
+  let step: CircuitStepElement
 
-  QUnit.test("Z,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const zGate = el.dropzones[0].operation as ZGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(zGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,Z", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const zGate = el.dropzones[2].operation as ZGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(zGate.wireTop)
-  })
-
-  QUnit.test("•,Z,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const zGate = el.dropzones[1].operation as ZGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(zGate.wireTop)
-    assert.true(zGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("Z,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <z-gate></z-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const zGate = el.dropzones[0].operation as ZGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(zGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Phase", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,P", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const phaseGate = el.dropzones[1].operation as PhaseGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(phaseGate.wireTop)
-  })
-
-  QUnit.test("P,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const phaseGate = el.dropzones[0].operation as PhaseGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(phaseGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,P", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const phaseGate = el.dropzones[2].operation as PhaseGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(phaseGate.wireTop)
-  })
-
-  QUnit.test("P,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const phaseGate = el.dropzones[0].operation as PhaseGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(phaseGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,P", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const phaseGate = el.dropzones[2].operation as PhaseGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(phaseGate.wireTop)
-  })
-
-  QUnit.test("•,P,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const phaseGate = el.dropzones[1].operation as PhaseGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(phaseGate.wireTop)
-    assert.true(phaseGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("P,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <phase-gate></phase-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const phaseGate = el.dropzones[0].operation as PhaseGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(phaseGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-√X", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,X^½", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[1].operation as RnotGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(rootNotGate.wireTop)
-  })
-
-  QUnit.test("X^½,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RnotGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(rootNotGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,X^½", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[2].operation as RnotGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(rootNotGate.wireTop)
-  })
-
-  QUnit.test("X^½,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RnotGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rootNotGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,X^½", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const rootNotGate = el.dropzones[2].operation as RnotGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(rootNotGate.wireTop)
-  })
-
-  QUnit.test("•,X^½,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const rootNotGate = el.dropzones[1].operation as RnotGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(rootNotGate.wireTop)
-    assert.true(rootNotGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("X^½,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rnot-gate></rnot-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rootNotGate = el.dropzones[0].operation as RnotGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rootNotGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Rx", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,Rx", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rxGate = el.dropzones[1].operation as RxGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(rxGate.wireTop)
-  })
-
-  QUnit.test("Rx,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rxGate = el.dropzones[0].operation as RxGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(rxGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,Rx", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rxGate = el.dropzones[2].operation as RxGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(rxGate.wireTop)
-  })
+  QUnit.module("toJson", (hooks) => {
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      document.body.append(step)
+    })
 
-  QUnit.test("Rx,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rxGate = el.dropzones[0].operation as RxGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rxGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,Rx", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const rxGate = el.dropzones[2].operation as RxGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(rxGate.wireTop)
-  })
-
-  QUnit.test("•,Rx,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const rxGate = el.dropzones[1].operation as RxGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(rxGate.wireTop)
-    assert.true(rxGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("Rx,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rx-gate></rx-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rxGate = el.dropzones[0].operation as RxGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rxGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Ry", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
-
-  QUnit.test("•,Ry", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const ryGate = el.dropzones[1].operation as RyGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(ryGate.wireTop)
-  })
-
-  QUnit.test("Ry,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const ryGate = el.dropzones[0].operation as RyGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(ryGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,1,Ry", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const ryGate = el.dropzones[2].operation as RyGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(ryGate.wireTop)
-  })
-
-  QUnit.test("Ry,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const ryGate = el.dropzones[0].operation as RyGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(ryGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
-
-  QUnit.test("•,•,Ry", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const ryGate = el.dropzones[2].operation as RyGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(ryGate.wireTop)
-  })
-
-  QUnit.test("•,Ry,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const ryGate = el.dropzones[1].operation as RyGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(ryGate.wireTop)
-    assert.true(ryGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-
-  QUnit.test("Ry,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <ry-gate></ry-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const ryGate = el.dropzones[0].operation as RyGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(ryGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
-
-QUnit.module("CircuitStep Controlled-Rz", (hooks) => {
-  let container: HTMLDivElement
-
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
-
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
 
-  QUnit.test("•,Rz", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rzGate = el.dropzones[1].operation as RzGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(rzGate.wireTop)
-  })
-
-  QUnit.test("Rz,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rzGate = el.dropzones[0].operation as RzGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(rzGate.wireBottom)
-    assert.true(controlGate.wireTop)
-  })
+    QUnit.test("should return an ID gate in JSON", (assert) => {
+      step.appendDropzone()
 
-  QUnit.test("•,1,Rz", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const rzGate = el.dropzones[2].operation as RzGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(rzGate.wireTop)
-  })
+      assert.equal(step.toJson(), "[1]")
+    })
 
-  QUnit.test("Rz,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rzGate = el.dropzones[0].operation as RzGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rzGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
+    QUnit.test("should return an H gate in JSON", (assert) => {
+      const h = document.createElement("h-gate")
+      step.appendOperation(h)
 
-  QUnit.test("•,•,Rz", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const rzGate = el.dropzones[2].operation as RzGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(rzGate.wireTop)
-  })
+      assert.equal(step.toJson(), '["H"]')
+    })
 
-  QUnit.test("•,Rz,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const rzGate = el.dropzones[1].operation as RzGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(rzGate.wireTop)
-    assert.true(rzGate.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
+    QUnit.test("should return an X gate in JSON", (assert) => {
+      const x = document.createElement("x-gate")
+      step.appendOperation(x)
 
-  QUnit.test("Rz,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <rz-gate></rz-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const rzGate = el.dropzones[0].operation as RzGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(rzGate.wireBottom)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
-})
+      assert.equal(step.toJson(), '["X"]')
+    })
 
-QUnit.module("CircuitStep CZ", (hooks) => {
-  let container: HTMLDivElement
+    QUnit.test("should return a Y gate in JSON", (assert) => {
+      const y = document.createElement("y-gate")
+      step.appendOperation(y)
 
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
+      assert.equal(step.toJson(), '["Y"]')
+    })
 
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
+    QUnit.test("should return a Z gate in JSON", (assert) => {
+      const z = document.createElement("z-gate")
+      step.appendOperation(z)
 
-  QUnit.test("•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-
-    assert.true(controlGate.disabled)
-  })
+      assert.equal(step.toJson(), '["Z"]')
+    })
 
-  QUnit.test("•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
+    QUnit.test("should return a phase shift gate in JSON", (assert) => {
+      const phase = document.createElement("phase-gate")
+      step.appendOperation(phase)
 
-  QUnit.test("•,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
+      assert.equal(step.toJson(), '["P"]')
+    })
 
-  QUnit.test("•,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const controlGate3 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(controlGate3.wireTop)
-  })
-})
+    QUnit.test("should return a √X gate in JSON", (assert) => {
+      const rnot = document.createElement("rnot-gate")
+      step.appendOperation(rnot)
 
-QUnit.module("CircuitStep Controlled-Swap", (hooks) => {
-  let container: HTMLDivElement
+      assert.equal(step.toJson(), '["X^½"]')
+    })
 
-  hooks.beforeEach(() => {
-    container = document.createElement("div")
-  })
+    QUnit.test("should return an Rx gate in JSON", (assert) => {
+      const rx = document.createElement("rx-gate")
+      step.appendOperation(rx)
 
-  hooks.afterEach(() => {
-    document.body.removeChild(container)
-  })
+      assert.equal(step.toJson(), '["Rx"]')
+    })
 
-  QUnit.test("•,Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const swapGate = el.dropzones[1].operation as SwapGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(swapGate.wireTop)
-    assert.true(swapGate.disabled)
-  })
+    QUnit.test("should return an Ry gate in JSON", (assert) => {
+      const ry = document.createElement("ry-gate")
+      step.appendOperation(ry)
 
-  QUnit.test("Swap,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const swapGate = el.dropzones[0].operation as SwapGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-
-    assert.true(swapGate.wireBottom)
-    assert.true(swapGate.disabled)
-    assert.true(controlGate.wireTop)
-  })
+      assert.equal(step.toJson(), '["Ry"]')
+    })
 
-  QUnit.test("•,1,Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const swapGate = el.dropzones[2].operation as SwapGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(swapGate.wireTop)
-  })
+    QUnit.test("should return an Rz gate in JSON", (assert) => {
+      const rz = document.createElement("rz-gate")
+      step.appendOperation(rz)
 
-  QUnit.test("Swap,1,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone></circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const swapGate = el.dropzones[0].operation as SwapGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(swapGate.wireBottom)
-    assert.true(swapGate.disabled)
-    assert.true(el.dropzones[1].wireTop)
-    assert.true(el.dropzones[1].wireBottom)
-    assert.true(controlGate.wireTop)
-  })
+      assert.equal(step.toJson(), '["Rz"]')
+    })
 
-  QUnit.test("•,•,Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const controlGate2 = el.dropzones[1].operation as ControlGateElement
-    const swapGate = el.dropzones[2].operation as SwapGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-    assert.true(controlGate2.wireBottom)
-    assert.true(swapGate.wireTop)
-    assert.true(swapGate.disabled)
-  })
+    QUnit.test("should return a control gate in JSON", (assert) => {
+      const control = document.createElement("control-gate")
+      step.appendOperation(control)
 
-  QUnit.test("•,Swap,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate1 = el.dropzones[0].operation as ControlGateElement
-    const swapGate = el.dropzones[1].operation as SwapGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(controlGate1.wireBottom)
-    assert.true(swapGate.wireTop)
-    assert.true(swapGate.wireBottom)
-    assert.true(swapGate.disabled)
-    assert.true(controlGate2.wireTop)
-  })
+      assert.equal(step.toJson(), '["•"]')
+    })
 
-  QUnit.test("Swap,•,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const swapGate = el.dropzones[0].operation as SwapGateElement
-    const controlGate1 = el.dropzones[1].operation as ControlGateElement
-    const controlGate2 = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(swapGate.wireBottom)
-    assert.true(swapGate.disabled)
-    assert.true(controlGate1.wireTop)
-    assert.true(controlGate1.wireBottom)
-    assert.true(controlGate2.wireTop)
-  })
+    QUnit.test("should return a swap gate in JSON", (assert) => {
+      const swap = document.createElement("swap-gate")
+      step.appendOperation(swap)
 
-  QUnit.test("•,Swap,Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const controlGate = el.dropzones[0].operation as ControlGateElement
-    const swapGate1 = el.dropzones[1].operation as SwapGateElement
-    const swapGate2 = el.dropzones[2].operation as SwapGateElement
-
-    assert.true(controlGate.wireBottom)
-    assert.true(swapGate1.wireTop)
-    assert.true(swapGate1.wireBottom)
-    assert.true(swapGate1.enabled)
-    assert.true(swapGate2.wireTop)
-    assert.true(swapGate2.enabled)
-  })
+      assert.equal(step.toJson(), '["Swap"]')
+    })
 
-  QUnit.test("Swap,•,Swap", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const swapGate1 = el.dropzones[0].operation as SwapGateElement
-    const controlGate = el.dropzones[1].operation as ControlGateElement
-    const swapGate2 = el.dropzones[2].operation as SwapGateElement
-
-    assert.true(swapGate1.wireBottom)
-    assert.true(swapGate1.enabled)
-    assert.true(controlGate.wireTop)
-    assert.true(controlGate.wireBottom)
-    assert.true(swapGate2.wireTop)
-    assert.true(swapGate2.enabled)
-  })
+    QUnit.test("should return a bloch display in JSON", (assert) => {
+      const bloch = document.createElement("bloch-display")
+      step.appendOperation(bloch)
 
-  QUnit.test("Swap,Swap,•", (assert) => {
-    container.innerHTML = `
-      <circuit-step>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <swap-gate></swap-gate>
-        </circuit-dropzone>
-        <circuit-dropzone>
-          <control-gate></control-gate>
-        </circuit-dropzone>
-      </circuit-step>`
-    document.body.append(container)
-
-    const el = document.querySelector("circuit-step") as CircuitStepElement
-    const swapGate1 = el.dropzones[0].operation as SwapGateElement
-    const swapGate2 = el.dropzones[1].operation as SwapGateElement
-    const controlGate = el.dropzones[2].operation as ControlGateElement
-
-    assert.true(swapGate1.wireBottom)
-    assert.true(swapGate1.enabled)
-    assert.true(swapGate2.wireTop)
-    assert.true(swapGate2.wireBottom)
-    assert.true(swapGate2.enabled)
-    assert.true(controlGate.wireTop)
+      assert.equal(step.toJson(), '["Bloch"]')
+    })
+
+    QUnit.test("should return a |0> gate in JSON", (assert) => {
+      const write = document.createElement("write-gate") as WriteGateElement
+      write.value = "0"
+      step.appendOperation(write)
+
+      assert.equal(step.toJson(), '["|0>"]')
+    })
+
+    QUnit.test("should return a |1> gate in JSON", (assert) => {
+      const write = document.createElement("write-gate") as WriteGateElement
+      write.value = "1"
+      step.appendOperation(write)
+
+      assert.equal(step.toJson(), '["|1>"]')
+    })
+
+    QUnit.test("should return a measurement gate in JSON", (assert) => {
+      const measurement = document.createElement("measurement-gate")
+      step.appendOperation(measurement)
+
+      assert.equal(step.toJson(), '["Measure"]')
+    })
+
+    QUnit.test("should return a Controlled-H gate in JSON", (assert) => {
+      const control = document.createElement("control-gate")
+      const h = document.createElement("h-gate")
+      step.appendOperation(control)
+      step.appendOperation(h)
+
+      assert.equal(step.toJson(), '["•","H"]')
+    })
+  })
+
+  QUnit.module("Controlled-H", (hooks) => {
+    let c: ControlGateElement
+    let h: HGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      h = document.createElement("h-gate") as HGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,H", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(h)
+
+      assert.true(c.wireBottom)
+      assert.true(h.wireTop)
+    })
+
+    QUnit.test("should connect H,•", (assert) => {
+      step.appendOperation(h)
+      step.appendOperation(c)
+
+      assert.true(h.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,H", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(h)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(h.wireTop)
+    })
+
+    QUnit.test("should connect H,1,•", (assert) => {
+      step.appendOperation(h)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(h.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-H", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let h: HGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      h = document.createElement("h-gate") as HGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,H", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(h)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(h.wireTop)
+    })
+
+    QUnit.test("should connect •,H,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(h)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(h.wireTop)
+      assert.true(h.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect H,•,•", (assert) => {
+      step.appendOperation(h)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(h.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-X", (hooks) => {
+    let c: ControlGateElement
+    let x: XGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      x = document.createElement("x-gate") as XGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,X", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(x)
+
+      assert.true(c.wireBottom)
+      assert.true(x.wireTop)
+    })
+
+    QUnit.test("should connect X,•", (assert) => {
+      step.appendOperation(x)
+      step.appendOperation(c)
+
+      assert.true(x.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,X", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(x)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(x.wireTop)
+    })
+
+    QUnit.test("should connect X,1,•", (assert) => {
+      step.appendOperation(x)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(x.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-X", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let x: XGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      x = document.createElement("x-gate") as XGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,X", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(x)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(x.wireTop)
+    })
+
+    QUnit.test("should connect •,X,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(x)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(x.wireTop)
+      assert.true(x.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect X,•,•", (assert) => {
+      step.appendOperation(x)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(x.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Y", (hooks) => {
+    let c: ControlGateElement
+    let y: YGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      y = document.createElement("y-gate") as YGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Y", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(y)
+
+      assert.true(c.wireBottom)
+      assert.true(y.wireTop)
+    })
+
+    QUnit.test("should connect Y,•", (assert) => {
+      step.appendOperation(y)
+      step.appendOperation(c)
+
+      assert.true(y.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Y", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(y)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(y.wireTop)
+    })
+
+    QUnit.test("should connect Y,1,•", (assert) => {
+      step.appendOperation(y)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(y.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Y", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let y: YGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      y = document.createElement("y-gate") as YGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Y", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(y)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(y.wireTop)
+    })
+
+    QUnit.test("should connect •,Y,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(y)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(y.wireTop)
+      assert.true(y.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Y,•,•", (assert) => {
+      step.appendOperation(y)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(y.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Z", (hooks) => {
+    let c: ControlGateElement
+    let z: ZGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      z = document.createElement("z-gate") as ZGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Z", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(z)
+
+      assert.true(c.wireBottom)
+      assert.true(z.wireTop)
+    })
+
+    QUnit.test("should connect Z,•", (assert) => {
+      step.appendOperation(z)
+      step.appendOperation(c)
+
+      assert.true(z.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Z", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(z)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(z.wireTop)
+    })
+
+    QUnit.test("should connect Z,1,•", (assert) => {
+      step.appendOperation(z)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(z.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Z", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let z: ZGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      z = document.createElement("z-gate") as ZGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Z", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(z)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(z.wireTop)
+    })
+
+    QUnit.test("should connect •,Z,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(z)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(z.wireTop)
+      assert.true(z.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Z,•,•", (assert) => {
+      step.appendOperation(z)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(z.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-PhaseShift", (hooks) => {
+    let c: ControlGateElement
+    let p: PhaseGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      p = document.createElement("phase-gate") as PhaseGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,P", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(p)
+
+      assert.true(c.wireBottom)
+      assert.true(p.wireTop)
+    })
+
+    QUnit.test("should connect P,•", (assert) => {
+      step.appendOperation(p)
+      step.appendOperation(c)
+
+      assert.true(p.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,P", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(p)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(p.wireTop)
+    })
+
+    QUnit.test("should connect P,1,•", (assert) => {
+      step.appendOperation(p)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(p.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-PhaseShift", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let p: PhaseGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      p = document.createElement("phase-gate") as PhaseGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,P", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(p)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(p.wireTop)
+    })
+
+    QUnit.test("should connect •,P,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(p)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(p.wireTop)
+      assert.true(p.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect P,•,•", (assert) => {
+      step.appendOperation(p)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(p.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-√X", (hooks) => {
+    let c: ControlGateElement
+    let rnot: RnotGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      rnot = document.createElement("rnot-gate") as RnotGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,X^½", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(rnot)
+
+      assert.true(c.wireBottom)
+      assert.true(rnot.wireTop)
+    })
+
+    QUnit.test("should connect X^½,•", (assert) => {
+      step.appendOperation(rnot)
+      step.appendOperation(c)
+
+      assert.true(rnot.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,X^½", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(rnot)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(rnot.wireTop)
+    })
+
+    QUnit.test("should connect X^½,1,•", (assert) => {
+      step.appendOperation(rnot)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(rnot.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-√X", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let rnot: RnotGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      rnot = document.createElement("rnot-gate") as RnotGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,X^½", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(rnot)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(rnot.wireTop)
+    })
+
+    QUnit.test("should connect •,X^½,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(rnot)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(rnot.wireTop)
+      assert.true(rnot.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect X^½,•,•", (assert) => {
+      step.appendOperation(rnot)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(rnot.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Rx", (hooks) => {
+    let c: ControlGateElement
+    let rx: RxGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      rx = document.createElement("rx-gate") as RxGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Rx", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(rx)
+
+      assert.true(c.wireBottom)
+      assert.true(rx.wireTop)
+    })
+
+    QUnit.test("should connect Rx,•", (assert) => {
+      step.appendOperation(rx)
+      step.appendOperation(c)
+
+      assert.true(rx.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Rx", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(rx)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(rx.wireTop)
+    })
+
+    QUnit.test("should connect Rx,1,•", (assert) => {
+      step.appendOperation(rx)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(rx.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Rx", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let rx: RxGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      rx = document.createElement("rx-gate") as RxGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Rx", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(rx)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(rx.wireTop)
+    })
+
+    QUnit.test("should connect •,Rx,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(rx)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(rx.wireTop)
+      assert.true(rx.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Rx,•,•", (assert) => {
+      step.appendOperation(rx)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(rx.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Ry", (hooks) => {
+    let c: ControlGateElement
+    let ry: RyGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      ry = document.createElement("ry-gate") as RyGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Ry", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(ry)
+
+      assert.true(c.wireBottom)
+      assert.true(ry.wireTop)
+    })
+
+    QUnit.test("should connect Ry,•", (assert) => {
+      step.appendOperation(ry)
+      step.appendOperation(c)
+
+      assert.true(ry.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Ry", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(ry)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(ry.wireTop)
+    })
+
+    QUnit.test("should connect Ry,1,•", (assert) => {
+      step.appendOperation(ry)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(ry.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Ry", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let ry: RyGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      ry = document.createElement("ry-gate") as RyGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Ry", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(ry)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(ry.wireTop)
+    })
+
+    QUnit.test("should connect •,Ry,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(ry)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(ry.wireTop)
+      assert.true(ry.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Ry,•,•", (assert) => {
+      step.appendOperation(ry)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(ry.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Rz", (hooks) => {
+    let c: ControlGateElement
+    let rz: RzGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      rz = document.createElement("rz-gate") as RzGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Rz", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(rz)
+
+      assert.true(c.wireBottom)
+      assert.true(rz.wireTop)
+    })
+
+    QUnit.test("should connect Rz,•", (assert) => {
+      step.appendOperation(rz)
+      step.appendOperation(c)
+
+      assert.true(rz.wireBottom)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Rz", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(rz)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(rz.wireTop)
+    })
+
+    QUnit.test("should connect Rz,1,•", (assert) => {
+      step.appendOperation(rz)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(rz.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Rz", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let rz: RzGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      rz = document.createElement("rz-gate") as RzGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Rz", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(rz)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(rz.wireTop)
+    })
+
+    QUnit.test("should connect •,Rz,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(rz)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(rz.wireTop)
+      assert.true(rz.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Rz,•,•", (assert) => {
+      step.appendOperation(rz)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(rz.wireBottom)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("CZ", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let c3: ControlGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      c3 = document.createElement("control-gate") as ControlGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should not connect •", (assert) => {
+      step.appendOperation(c1)
+
+      assert.false(c1.wireTop)
+      assert.false(c1.wireTop)
+      assert.true(c1.disabled)
+    })
+
+    QUnit.test("should connect •,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect •,1,•", (assert) => {
+      step.appendOperation(c1)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect •,1,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(c3)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(c3.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Swap", (hooks) => {
+    let c: ControlGateElement
+    let swap: SwapGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      swap = document.createElement("swap-gate") as SwapGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Swap", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(swap)
+
+      assert.true(c.wireBottom)
+      assert.true(swap.wireTop)
+      assert.true(swap.disabled)
+    })
+
+    QUnit.test("should connect Swap,•", (assert) => {
+      step.appendOperation(swap)
+      step.appendOperation(c)
+
+      assert.true(swap.wireBottom)
+      assert.true(swap.disabled)
+      assert.true(c.wireTop)
+    })
+
+    QUnit.test("should connect •,1,Swap", (assert) => {
+      step.appendOperation(c)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(swap)
+
+      assert.true(c.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(swap.wireTop)
+      assert.true(swap.disabled)
+    })
+
+    QUnit.test("should connect Swap,1,•", (assert) => {
+      step.appendOperation(swap)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(c)
+
+      assert.true(swap.wireBottom)
+      assert.true(swap.disabled)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(c.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Controlled-Swap", (hooks) => {
+    let c1: ControlGateElement
+    let c2: ControlGateElement
+    let swap: SwapGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c1 = document.createElement("control-gate") as ControlGateElement
+      c2 = document.createElement("control-gate") as ControlGateElement
+      swap = document.createElement("swap-gate") as SwapGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,•,Swap", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+      step.appendOperation(swap)
+
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+      assert.true(c2.wireBottom)
+      assert.true(swap.wireTop)
+      assert.true(swap.disabled)
+    })
+
+    QUnit.test("should connect •,Swap,•", (assert) => {
+      step.appendOperation(c1)
+      step.appendOperation(swap)
+      step.appendOperation(c2)
+
+      assert.true(c1.wireBottom)
+      assert.true(swap.wireTop)
+      assert.true(swap.wireBottom)
+      assert.true(swap.disabled)
+      assert.true(c2.wireTop)
+    })
+
+    QUnit.test("should connect Swap,•,•", (assert) => {
+      step.appendOperation(swap)
+      step.appendOperation(c1)
+      step.appendOperation(c2)
+
+      assert.true(swap.wireBottom)
+      assert.true(swap.disabled)
+      assert.true(c1.wireTop)
+      assert.true(c1.wireBottom)
+      assert.true(c2.wireTop)
+    })
+  })
+
+  QUnit.module("Controlled-Swap-Swap", (hooks) => {
+    let c: ControlGateElement
+    let swap1: SwapGateElement
+    let swap2: SwapGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      c = document.createElement("control-gate") as ControlGateElement
+      swap1 = document.createElement("swap-gate") as SwapGateElement
+      swap2 = document.createElement("swap-gate") as SwapGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect •,Swap,Swap", (assert) => {
+      step.appendOperation(c)
+      step.appendOperation(swap1)
+      step.appendOperation(swap2)
+
+      assert.true(c.wireBottom)
+      assert.true(swap1.wireTop)
+      assert.true(swap1.wireBottom)
+      assert.true(swap1.enabled)
+      assert.true(swap2.wireTop)
+      assert.true(swap2.enabled)
+    })
+
+    QUnit.test("should connect Swap,•,Swap", (assert) => {
+      step.appendOperation(swap1)
+      step.appendOperation(c)
+      step.appendOperation(swap2)
+
+      assert.true(swap1.wireBottom)
+      assert.true(swap1.enabled)
+      assert.true(c.wireTop)
+      assert.true(c.wireBottom)
+      assert.true(swap2.wireTop)
+      assert.true(swap2.enabled)
+    })
+
+    QUnit.test("should connect Swap,Swap,•", (assert) => {
+      step.appendOperation(swap1)
+      step.appendOperation(swap2)
+      step.appendOperation(c)
+
+      assert.true(swap1.wireBottom)
+      assert.true(swap1.enabled)
+      assert.true(swap2.wireTop)
+      assert.true(swap2.wireBottom)
+      assert.true(swap2.enabled)
+      assert.true(c.wireTop)
+    })
   })
 })
