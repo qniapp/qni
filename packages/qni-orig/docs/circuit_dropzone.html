@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Circuit Dropzone
+description: Placeholder to drop circuit operations.
 ---
 <div class="h-screen flex overflow-hidden">
   {% include sidebar.html %}
@@ -15,11 +16,12 @@ title: Circuit Dropzone
             <div class="pb-10 border-b border-gray-200 mb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  <a id="circuit-dropzone" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
-                  Circuit Dropzone
+                  {{ page.title }}
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">Placeholder to drop gates etc.</p>
+              <p class="mt-1 text-lg text-gray-500">
+                {{ page.description }}
+              </p>
             </div>
 
             <table class="w-full text-left border-collapse">

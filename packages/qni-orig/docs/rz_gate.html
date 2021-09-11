@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Rz Gate
+description: Rotates around the Z-axis.
 ---
 <div class="h-screen flex overflow-hidden">
   {% include sidebar.html %}
@@ -15,11 +16,12 @@ title: Rz Gate
             <div class="pb-10 border-b border-gray-200 mb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  <a id="rz-gate" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
-                  Rz Gate
+                  {{ page.title }}
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">Rotates around the Z-axis.</p>
+              <p class="mt-1 text-lg text-gray-500">
+                {{ page.description }}
+              </p>
             </div>
 
             <table class="w-full text-left border-collapse">

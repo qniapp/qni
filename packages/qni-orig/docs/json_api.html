@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Quantum Circuit JSON API
+description: A JSON API for displaying quantum circuits.
 ---
 <div class="h-screen flex overflow-hidden">
   {% include sidebar.html %}
@@ -15,10 +16,12 @@ title: Quantum Circuit JSON API
             <div class="pb-10 border-b border-gray-200 mb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  Quantum Circuit JSON API
+                  {{ page.title }}
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">A component for displaying quantum circuits.</p>
+              <p class="mt-1 text-lg text-gray-500">
+                {{ page.description }}
+              </p>
             </div>
 
             <table class="w-full text-left border-collapse">

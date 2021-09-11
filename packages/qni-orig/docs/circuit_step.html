@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Circuit Step
+description: A column representing a single step in a quantum circuit.
 ---
 <div class="h-screen flex overflow-hidden">
   {% include sidebar.html %}
@@ -16,10 +17,12 @@ title: Circuit Step
               <div>
                 <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
                   <a id="circuit-step" class="absolute after:hash opacity-0 group-hover:opacity-100" aria-label="Anchor" style="margin-left: -1em; padding-right: 0.5em; box-shadow: none; color: rgb(161, 161, 170);"></a>
-                  Circuit Step
+                  {{ page.title }}
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">A column representing a single step in a quantum circuit.</p>
+              <p class="mt-1 text-lg text-gray-500">
+                {{ page.description }}
+              </p>
             </div>
 
             <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Controlled-H Gate</h2>
