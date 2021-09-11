@@ -198,6 +198,7 @@ description: An API for displaying quantum circuits.
                           .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
                           .i()
                           .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
+                          .i()
                   </script>
                 </div>
               </div>
@@ -212,6 +213,7 @@ description: An API for displaying quantum circuits.
          .block(&quot;RNOT&quot;, (block) => { block.h(0).phase(&quot;-π/2&quot;, 0).h(0) })
          .i()
          .block(&quot;Built-in RNOT&quot;, (block) => { block.rnot(0).rnot(0) })
+         .i()
 &lt;/script&gt;</code></pre>
               </div>
             </div>

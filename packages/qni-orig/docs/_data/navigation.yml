@@ -1,54 +1,54 @@
 - name: Getting Started
   pages:
     - name: Installation
-      link: /installation.html
+      link: ./installation.html
 - name: Quantum Circuit
   pages:
     - name: JavaScript API
-      link: /javascript_api.html
+      link: ./javascript_api.html
     - name: JSON API
-      link: /json_api.html
+      link: ./json_api.html
 - name: Circuit Contents
   pages:
     - name: Circuit Step
-      link: /circuit_step.html
+      link: ./circuit_step.html
     - name: Circuit Dropzone
-      link: /circuit_dropzone.html
+      link: ./circuit_dropzone.html
 - name: Circuit Operations
   pages:
     - name: H Gate
-      link: /h_gate.html
+      link: ./h_gate.html
     - name: X Gate
-      link: /x_gate.html
+      link: ./x_gate.html
     - name: Y Gate
-      link: /y_gate.html
+      link: ./y_gate.html
     - name: Z Gate
-      link: /z_gate.html
+      link: ./z_gate.html
     - name: Phase Shift Gate
-      link: /phase_shift_gate.html
+      link: ./phase_shift_gate.html
     - name: √X Gate
-      link: /rnot_gate.html
+      link: ./rnot_gate.html
     - name: Rx Gate
-      link: /rx_gate.html
+      link: ./rx_gate.html
     - name: Ry Gate
-      link: /ry_gate.html
+      link: ./ry_gate.html
     - name: Rz Gate
-      link: /rz_gate.html
+      link: ./rz_gate.html
     - name: Control Gate
-      link: /control_gate.html
+      link: ./control_gate.html
     - name: Swap Gate
-      link: /swap_gate.html
+      link: ./swap_gate.html
     - name: Bloch Display
-      link: /bloch_display.html
+      link: ./bloch_display.html
     - name: Write Gate
-      link: /write_gate.html
+      link: ./write_gate.html
     - name: Measurement Gate
-      link: /measurement_gate.html
+      link: ./measurement_gate.html
 - name: State Vector
   pages:
     - name: Circle Notation
-      link: /circle_notation.html
+      link: ./circle_notation.html
 - name: Controls
   pages:
     - name: Run Button
-      link: /run_button.html
+      link: ./run_button.html

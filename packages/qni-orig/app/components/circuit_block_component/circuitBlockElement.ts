@@ -25,7 +25,8 @@ export class CircuitBlockElement extends HTMLElement {
           :host::before,
           :host::after {
             position: absolute;
-            text-align: center;
+            display: flex;
+            justify-content: center;
             color: var(--colors-magnitude, #1cb0f6);
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
