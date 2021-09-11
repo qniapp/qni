@@ -18,10 +18,6 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
-
 /public/assets
 .byebug_history
 

@@ -1,6 +1,7 @@
 import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import { CircuitBlockElement } from "circuit_block_component/circuitBlockElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
@@ -21,6 +22,7 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
 
   @target slotEl: HTMLSlotElement
+  @targets blocks: CircuitBlockElement[]
   @targets steps: CircuitStepElement[]
 
   step(n: number): CircuitStepElement {
@@ -33,8 +35,21 @@ export class QuantumCircuitElement extends HTMLElement {
   appendStep(): CircuitStepElement {
     const el = document.createElement("circuit-step") as CircuitStepElement
     el.setAttribute("data-targets", "quantum-circuit.steps")
-    this.append(el)
+
+    const lastBlock = this.blocks.slice(-1)[0] || null
+    if (lastBlock === null || lastBlock.finalized) {
+      this.append(el)
+    } else {
+      lastBlock.append(el)
+    }
+
     return el
+  }
+
+  i(): QuantumCircuitElement {
+    this.appendStep()
+    this.maybeAppendMissingDropzones()
+    return this
   }
 
   h(...targetQubits: number[]): QuantumCircuitElement {
@@ -194,6 +209,21 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  block(
+    comment: string,
+    blockDef: (c: QuantumCircuitElement) => void,
+  ): QuantumCircuitElement {
+    const block = document.createElement("circuit-block") as CircuitBlockElement
+    block.comment = comment
+    block.setAttribute("data-targets", "quantum-circuit.blocks")
+    this.append(block)
+
+    blockDef(this)
+    block.finalize()
+
+    return this
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
@@ -222,6 +252,7 @@ export class QuantumCircuitElement extends HTMLElement {
           #body {
             display: flex;
             flex-direction: column;
+            align-items: center;
           }
 
           @media (min-width: 768px) {
