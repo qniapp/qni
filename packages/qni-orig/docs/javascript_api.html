@@ -1,134 +1,113 @@
 ---
-layout: default
+layout: page
 title: Quantum Circuit JavaScript API
 description: An API for displaying quantum circuits.
 ---
-<div class="h-screen flex overflow-hidden">
-  {% include sidebar.html %}
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pr-2 border-b border-gray-200">Method</div>
+      </th>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pl-2 border-b border-gray-200">Description</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align-baseline">
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">.h(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">Put an H gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.x(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an X gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.y(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Y gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.z(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Z gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.phase(phi, ...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Phase Shift gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rnot(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a √X gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rx(theta, ...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Rx gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.ry(theta, ...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Ry gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rz(theta, ...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Rz gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.control(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Control gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.cnot(control, target)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Controlled-X gate.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.ccnot(controlA, controlB, target)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Controlled-controlled-X (Toffoli) gate.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.swap(targetA, targetB)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put Swap gates on targetA and targetB qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.bloch(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Bloch Display on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.write(value, ...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Write gate with value 0 or 1 on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.measure(...targets)</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Measurement gate on each target qubit.</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.block(comment, (block) => { ... })</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Define a commented code block.</td>
+    </tr>
+  </tbody>
+</table>
 
-  <div class="flex flex-col w-0 flex-1 overflow-hidden">
-    <main class="flex-1 relative overflow-y-auto focus:outline-none">
-      <div class="py-5">
-        <div class="h-8"></div>
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">Usage</span>
+</h2>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div class="sm:mb-12 lg:mb-16 mt-5">
-            <div class="pb-10 border-b border-gray-200 mb-10">
-              <div>
-                <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  {{ page.title }}
-                </h1>
-              </div>
-              <p class="mt-1 text-lg text-gray-500">
-                {{ page.description }}
-              </p>
-            </div>
+<p class="mb-4">
+  The <code class="text-purple-500">&lt;quantum-circuit&gt;</code> component is a custom web component for displaying a quantum circuit.
+  The API allows you to place various quantum gates and operations on the circuit.
+</p>
 
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pr-2 border-b border-gray-200">Method</div>
-                  </th>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pl-2 border-b border-gray-200">Description</div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="align-baseline">
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">.h(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">Put an H gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.x(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an X gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.y(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Y gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.z(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Z gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.phase(phi, ...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Phase Shift gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rnot(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a √X gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rx(theta, ...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Rx gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.ry(theta, ...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Ry gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.rz(theta, ...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put an Rz gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.control(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Control gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.cnot(control, target)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Controlled-X gate.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.ccnot(controlA, controlB, target)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Controlled-controlled-X (Toffoli) gate.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.swap(targetA, targetB)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put Swap gates on targetA and targetB qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.bloch(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Bloch Display on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.write(value, ...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Write gate with value 0 or 1 on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.measure(...targets)</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Put a Measurement gate on each target qubit.</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">.block(comment, (block) => { ... })</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Define a commented code block.</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
-              <span class="text-2xl font-bold">Usage</span>
-            </h2>
-
-            <p class="mb-4">
-              The <code class="text-purple-500">&lt;quantum-circuit&gt;</code> component is a custom web component for displaying a quantum circuit.
-              The API allows you to place various quantum gates and operations on the circuit.
-            </p>
-
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Quantum Circuit API</h2>
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="quantum-circuit" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("quantum-circuit")
-                   circuit.write(0, 0, 1).h(0).cnot(0, 1).measure(0).measure(1)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Quantum Circuit API</h2>
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="quantum-circuit" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("quantum-circuit")
+       circuit.write(0, 0, 1).h(0).cnot(0, 1).measure(0).measure(1)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -138,22 +117,22 @@ description: An API for displaying quantum circuits.
          .measure(0)
          .measure(1)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Examples</h2>
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="random-bit" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("random-bit")
-                   circuit.write(0, 0).h(0).measure(0)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Examples</h2>
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="random-bit" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("random-bit")
+       circuit.write(0, 0).h(0).measure(0)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -161,21 +140,21 @@ description: An API for displaying quantum circuits.
          .h(0)
          .measure(0)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="random-byte" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("random-byte")
-                   circuit.write(0, 0, 1, 2, 3, 4, 5, 6, 7).h(0, 1, 2, 3, 4, 5, 6, 7).measure(0, 1, 2, 3, 4, 5, 6, 7)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="random-byte" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("random-byte")
+       circuit.write(0, 0, 1, 2, 3, 4, 5, 6, 7).h(0, 1, 2, 3, 4, 5, 6, 7).measure(0, 1, 2, 3, 4, 5, 6, 7)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -183,27 +162,27 @@ description: An API for displaying quantum circuits.
          .h(0, 1, 2, 3, 4, 5, 6, 7)
          .measure(0, 1, 2, 3, 4, 5, 6, 7)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="root-of-not" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("root-of-not")
-                   circuit.write(0, 0)
-                          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
-                          .i()
-                          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
-                          .i()
-                          .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
-                          .i()
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="root-of-not" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("root-of-not")
+       circuit.write(0, 0)
+                         .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+                         .i()
+                         .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+                         .i()
+                         .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
+                         .i()
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -215,21 +194,21 @@ description: An API for displaying quantum circuits.
          .block(&quot;Built-in RNOT&quot;, (block) => { block.rnot(0).rnot(0) })
          .i()
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="phase-kickback" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("phase-kickback")
-                   circuit.write(0, 0, 1).write(1, 2).h(0, 1).phase('π/4', 0, 2).phase('π/2', 1, 2)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="phase-kickback" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("phase-kickback")
+       circuit.write(0, 0, 1).write(1, 2).h(0, 1).phase('π/4', 0, 2).phase('π/2', 1, 2)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -239,23 +218,23 @@ description: An API for displaying quantum circuits.
          .phase(&quot;π/4&quot;, 0, 2)
          .phase(&quot;π/2&quot;, 1, 2)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="entangled-qubits" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("entangled-qubits")
-                   circuit.write(0, 0, 1)
-                          .block("entangle", (block) => { block.h(0).cnot(0, 1) })
-                          .measure(0).measure(1)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="entangled-qubits" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("entangled-qubits")
+       circuit.write(0, 0, 1)
+                         .block("entangle", (block) => { block.h(0).cnot(0, 1) })
+                         .measure(0).measure(1)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -264,21 +243,21 @@ description: An API for displaying quantum circuits.
          .measure(0)
          .measure(1)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <div class="relative overflow-hidden mb-10">
-              <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div>
-                  <quantum-circuit id="custom-conditional-phase" class="inline-block"></quantum-circuit>
-                  <script>
-                   circuit = document.getElementById("custom-conditional-phase")
-                   circuit.write(0, 0, 1).h(0, 1).phase("π/4", 1).cnot(0, 1).phase("-π/4", 1).cnot(0, 1).phase("π/4", 0).phase("π/2", 0, 1)
-                  </script>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
+<div class="relative overflow-hidden mb-10">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="custom-conditional-phase" class="inline-block"></quantum-circuit>
+      <script>
+       circuit = document.getElementById("custom-conditional-phase")
+       circuit.write(0, 0, 1).h(0, 1).phase("π/4", 1).cnot(0, 1).phase("-π/4", 1).cnot(0, 1).phase("π/4", 0).phase("π/2", 0, 1)
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id=&quot;quantum-circuit&quot;&gt;&lt;/quantum-circuit&gt;
 
 &lt;script&gt;
   circuit = document.getElementById(&quot;quantum-circuit&quot;)
@@ -291,12 +270,5 @@ description: An API for displaying quantum circuits.
          .phase(&quot;π/4&quot;, 0)
          .phase(&quot;π/2&quot;, 0, 1)
 &lt;/script&gt;</code></pre>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </main>
   </div>
 </div>

@@ -1,122 +1,101 @@
 ---
-layout: default
+layout: page
 title: Bloch Display
 description: Shows a wire's local state as a point on the Bloch sphere.
 ---
-<div class="h-screen flex overflow-hidden">
-  {% include sidebar.html %}
-
-  <div class="flex flex-col w-0 flex-1 overflow-hidden">
-    <main class="flex-1 relative overflow-y-auto focus:outline-none">
-      <div class="py-5">
-        <div class="h-8"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div class="sm:mb-12 lg:mb-16 mt-5">
-            <div class="pb-10 border-b border-gray-200 mb-10">
-              <div>
-                <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  {{ page.title }}
-                </h1>
-              </div>
-              <p class="mt-1 text-lg text-gray-500">
-                {{ page.description }}
-              </p>
-            </div>
-
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
-                  </th>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pl-2 border-b border-gray-200">State</div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="align-baseline">
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+      </th>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align-baseline">
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
 width: 1rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
 width: 1.5rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
 width: 2rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
 width: 2.5rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
 width: 3rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-x=&quot;0.123&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">X = 0.123</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-y=&quot;0.123&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Y = 0.123</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-z=&quot;0.123&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Z = 0.123</td>
-                </tr>
-              </tbody>
-            </table>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-x=&quot;0.123&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">X = 0.123</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-y=&quot;0.123&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Y = 0.123</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-z=&quot;0.123&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Z = 0.123</td>
+    </tr>
+  </tbody>
+</table>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
-            <p class="mb-5">Control the size of a bloch display using the
-              <code class="text-purple-500">data-size</code> attribute.</p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
-                <div class="flex flex-row space-x-4">
-                  <bloch-display data-size="xs"></bloch-display>
-                  <bloch-display data-size="sm"></bloch-display>
-                  <bloch-display data-size="base"></bloch-display>
-                  <bloch-display data-size="lg"></bloch-display>
-                  <bloch-display data-size="xl"></bloch-display>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-size=&quot;xs&quot;&gt;&lt;/bloch-display&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+<p class="mb-5">Control the size of a bloch display using the
+  <code class="text-purple-500">data-size</code> attribute.</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <div class="flex flex-row space-x-4">
+      <bloch-display data-size="xs"></bloch-display>
+      <bloch-display data-size="sm"></bloch-display>
+      <bloch-display data-size="base"></bloch-display>
+      <bloch-display data-size="lg"></bloch-display>
+      <bloch-display data-size="xl"></bloch-display>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-size=&quot;xs&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-size=&quot;sm&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-size=&quot;base&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-size=&quot;lg&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-size=&quot;xl&quot;&gt;&lt;/bloch-display&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Coordinates</h2>
-            <p class="mb-5">
-              Control the coordinates that the Bloch vector points to using the <code class="text-purple-500">data-x</code>, <code class="text-purple-500">data-y</code>, and <code class="text-purple-500">data-z</code> attributes.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
-                <div class="flex flex-row space-x-4">
-                  <bloch-display></bloch-display>
-                  <bloch-display data-x="0" data-y="0" data-z="1"></bloch-display>
-                  <bloch-display data-x="0" data-y="0" data-z="-1"></bloch-display>
-                  <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
-                  <bloch-display data-x="-1" data-y="0" data-z="0"></bloch-display>
-                  <bloch-display data-x="0" data-y="1" data-z="0"></bloch-display>
-                  <bloch-display data-x="0" data-y="-1" data-z="0"></bloch-display>
-                  <bloch-display data-x="0" data-y="0" data-z="0"></bloch-display>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;&lt;/bloch-display&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Coordinates</h2>
+<p class="mb-5">
+  Control the coordinates that the Bloch vector points to using the <code class="text-purple-500">data-x</code>, <code class="text-purple-500">data-y</code>, and <code class="text-purple-500">data-z</code> attributes.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <div class="flex flex-row space-x-4">
+      <bloch-display></bloch-display>
+      <bloch-display data-x="0" data-y="0" data-z="1"></bloch-display>
+      <bloch-display data-x="0" data-y="0" data-z="-1"></bloch-display>
+      <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
+      <bloch-display data-x="-1" data-y="0" data-z="0"></bloch-display>
+      <bloch-display data-x="0" data-y="1" data-z="0"></bloch-display>
+      <bloch-display data-x="0" data-y="-1" data-z="0"></bloch-display>
+      <bloch-display data-x="0" data-y="0" data-z="0"></bloch-display>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;1&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;-1&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-x=&quot;1&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
@@ -124,83 +103,77 @@ width: 3rem;</td>
 &lt;bloch-display data-x=&quot;0&quot; data-y=&quot;1&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-x=&quot;0&quot; data-y=&quot;-1&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
 &lt;bloch-display data-x=&quot;0&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
-            <p class="mb-5">
-              As a user help, you can display the description and usage of
-              the Bloch display as a popup. The popup will show on the mouse
-              hover event. The content to be displayed can be specified in
-              the <code class="text-purple-500">&lt;bloch-display&gt;</code>
-              tag as follows:
-            </p>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
+<p class="mb-5">
+  As a user help, you can display the description and usage of
+  the Bloch display as a popup. The popup will show on the mouse
+  hover event. The content to be displayed can be specified in
+  the <code class="text-purple-500">&lt;bloch-display&gt;</code>
+  tag as follows:
+</p>
 
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
-                <div class="flex flex-row space-x-4">
-                  <bloch-display>
-                    <header>
-                      <h1>Bloch Sphere Display</h1>
-                      <p>Shows a wire's local state as a point on the Bloch sphere.</p>
-                    </header>
-                  </bloch-display>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <div class="flex flex-row space-x-4">
+      <bloch-display>
+        <header>
+          <h1>Bloch Sphere Display</h1>
+          <p>Shows a wire's local state as a point on the Bloch sphere.</p>
+        </header>
+      </bloch-display>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display&gt;
   &lt;header&gt;
     &lt;h1&gt;Bloch Sphere Display&lt;/h1&gt;
     &lt;p&gt;Shows a wire's local state as a point on the Bloch sphere.&lt;/p&gt;
   &lt;/header&gt;
 &lt;/bloch-display&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Inspector Popup</h2>
-            <p class="mb-5">
-              Bloch displays placed inside quantum circuits (i.e. <code
-                                                                      class="text-purple-500">&lt;bloch-display&gt;</code> tags
-              enclosed in <code
-                              class="text-purple-500">&lt;circuit-dropzone&gt;</code> tags)
-              can be inspected by mouse-hovering. In the inspector, you can
-              see the values of the 3D coordinates x, y, and z on the Bloch
-              sphere and the two angles Φ and θ that determine the
-              coordinates.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
-                <div class="flex flex-row space-x-4">
-                  <circuit-dropzone>
-                    <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
-                  </circuit-dropzone>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Inspector Popup</h2>
+<p class="mb-5">
+  Bloch displays placed inside quantum circuits (i.e. <code
+                                                          class="text-purple-500">&lt;bloch-display&gt;</code> tags
+  enclosed in <code
+                  class="text-purple-500">&lt;circuit-dropzone&gt;</code> tags)
+  can be inspected by mouse-hovering. In the inspector, you can
+  see the values of the 3D coordinates x, y, and z on the Bloch
+  sphere and the two angles Φ and θ that determine the
+  coordinates.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <div class="flex flex-row space-x-4">
+      <circuit-dropzone>
+        <bloch-display data-x="1" data-y="0" data-z="0"></bloch-display>
+      </circuit-dropzone>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;circuit-dropzone&gt;
   &lt;bloch-display data-x=&quot;1&quot; data-y=&quot;0&quot; data-z=&quot;0&quot;&gt;&lt;/bloch-display&gt;
 &lt;/circuit-dropzone&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
-            <p class="mb-5">
-              To make the Bloch display drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
-                <div class="flex flex-row space-x-4">
-                  <bloch-display data-draggable>
-                  </bloch-display>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-draggable&gt;&lt;bloch-display&gt;</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
+<p class="mb-5">
+  To make the Bloch display drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-yellow-50 to-yellow-100">
+    <div class="flex flex-row space-x-4">
+      <bloch-display data-draggable>
+      </bloch-display>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-yellow-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;bloch-display data-draggable&gt;&lt;bloch-display&gt;</code></pre>
   </div>
 </div>

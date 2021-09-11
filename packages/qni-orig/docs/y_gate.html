@@ -1,269 +1,248 @@
 ---
-layout: default
+layout: page
 title: Y Gate
 description: A combination of the X and Z gates.
 ---
-<div class="h-screen flex overflow-hidden">
-  {% include sidebar.html %}
-
-  <div class="flex flex-col w-0 flex-1 overflow-hidden">
-    <main class="flex-1 relative overflow-y-auto focus:outline-none">
-      <div class="py-5">
-        <div class="h-8"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div class="sm:mb-12 lg:mb-16 mt-5">
-            <div class="pb-10 border-b border-gray-200 mb-10">
-              <div>
-                <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-                  {{ page.title }}
-                </h1>
-              </div>
-              <p class="mt-1 text-lg text-gray-500">
-                {{ page.description }}
-              </p>
-            </div>
-
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
-                  </th>
-                  <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
-                    <div class="pb-2 pl-2 border-b border-gray-200">State</div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="align-baseline">
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+      </th>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align-baseline">
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
 width: 1rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
 width: 1.5rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
 width: 2rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
 width: 2.5rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
 width: 3rem;</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit gate</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit gate (disabled)</td>
-                </tr>
-                <tr>
-                  <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
-                  <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate (disabled)</td>
-                </tr>
-              </tbody>
-            </table>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-disabled</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Disabled</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connedted with lower bit gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-top-disabled</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with lower bit gate (disabled)</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-wire-bottom-disabled</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Connected with upper bit gate (disabled)</td>
+    </tr>
+  </tbody>
+</table>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
-            <p class="mb-5">
-              Control the size of a Y gate using the <code class="text-purple-500">data-size</code> attribute.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-size="xs"></y-gate>
-                  <y-gate data-size="sm"></y-gate>
-                  <y-gate data-size="base"></y-gate>
-                  <y-gate data-size="lg"></y-gate>
-                  <y-gate data-size="xl"></y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-size=&quot;xs&quot;&gt;&lt;/y-gate&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+<p class="mb-5">
+  Control the size of a Y gate using the <code class="text-purple-500">data-size</code> attribute.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-size="xs"></y-gate>
+      <y-gate data-size="sm"></y-gate>
+      <y-gate data-size="base"></y-gate>
+      <y-gate data-size="lg"></y-gate>
+      <y-gate data-size="xl"></y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-size=&quot;xs&quot;&gt;&lt;/y-gate&gt;
 &lt;y-gate data-size=&quot;sm&quot;&gt;&lt;/y-gate&gt;
 &lt;y-gate data-size=&quot;base&quot;&gt;&lt;/y-gate&gt;
 &lt;y-gate data-size=&quot;lg&quot;&gt;&lt;/y-gate&gt;
 &lt;y-gate data-size=&quot;xl&quot;&gt;&lt;/y-gate&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Disabled Gate</h2>
-            <p class="mb-5">
-              To display the disabled Y gate, set the <code class="text-purple-500">data-disabled</code> attribute.
-            </p>
-            <div class="relative overflow-hidden mt-8 mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-disabled></y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-disabled&gt;&lt;/y-gate&gt;</code></pre>
-              </div>
-            </div>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Disabled Gate</h2>
+<p class="mb-5">
+  To display the disabled Y gate, set the <code class="text-purple-500">data-disabled</code> attribute.
+</p>
+<div class="relative overflow-hidden mt-8 mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-disabled></y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-disabled&gt;&lt;/y-gate&gt;</code></pre>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Connecting with Other Gates</h2>
-            <p class="mb-5">
-              To connect the Y gate to the quantum gate of the lower bit, set the <code class="text-purple-500">data-wire-top</code> attribute.
-              Similarly, set <code class="text-purple-500">data-wire-bottom</code> for the upper bits.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-wire-top></y-gate>
-                  <y-gate data-wire-bottom></y-gate>
-                  <y-gate data-wire-top data-wire-bottom></y-gate>
-                  <y-gate data-wire-top data-disabled></y-gate>
-                  <y-gate data-wire-bottom data-disabled></y-gate>
-                  <y-gate data-wire-top data-wire-bottom data-disabled></y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top&gt;&lt;/y-gate&gt;
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Connecting with Other Gates</h2>
+<p class="mb-5">
+  To connect the Y gate to the quantum gate of the lower bit, set the <code class="text-purple-500">data-wire-top</code> attribute.
+  Similarly, set <code class="text-purple-500">data-wire-bottom</code> for the upper bits.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-wire-top></y-gate>
+      <y-gate data-wire-bottom></y-gate>
+      <y-gate data-wire-top data-wire-bottom></y-gate>
+      <y-gate data-wire-top data-disabled></y-gate>
+      <y-gate data-wire-bottom data-disabled></y-gate>
+      <y-gate data-wire-top data-wire-bottom data-disabled></y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-bottom&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top data-wire-bottom&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <p class="mb-5">
-              To show disabled connections, use the <code class="text-purple-500">data-wire-top-disabled</code> and <code class="text-purple-500">data-wire-bottom-disabled</code> attributes.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-wire-top-disabled></y-gate>
-                  <y-gate data-wire-bottom-disabled></y-gate>
-                  <y-gate data-wire-top-disabled data-wire-bottom-disabled></y-gate>
-                  <y-gate data-wire-top-disabled data-disabled></y-gate>
-                  <y-gate data-wire-bottom-disabled data-disabled></y-gate>
-                  <y-gate data-wire-top-disabled data-wire-bottom-disabled data-disabled></y-gate>
-                </div>
-              </div>
+<p class="mb-5">
+  To show disabled connections, use the <code class="text-purple-500">data-wire-top-disabled</code> and <code class="text-purple-500">data-wire-bottom-disabled</code> attributes.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-wire-top-disabled></y-gate>
+      <y-gate data-wire-bottom-disabled></y-gate>
+      <y-gate data-wire-top-disabled data-wire-bottom-disabled></y-gate>
+      <y-gate data-wire-top-disabled data-disabled></y-gate>
+      <y-gate data-wire-bottom-disabled data-disabled></y-gate>
+      <y-gate data-wire-top-disabled data-wire-bottom-disabled data-disabled></y-gate>
+    </div>
+  </div>
 
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top-disabled&gt;&lt;/y-gate&gt;
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-wire-top-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top-disabled data-wire-bottom-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top-disabled data-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-bottom-disabled data-disabled&gt;&lt;/y-gate&gt;
 &lt;y-gate data-wire-top-disabled data-wire-bottom-disabled data-disabled&gt;&lt;/y-gate&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">IF directive</h2>
-            <p class="mb-5">
-              To apply a Y gate conditionally, specify a <code class="text-purple-500">data-if</code> attribute; the condition (variable name) specified in the if directive can be set in the Measurement gate.
-            </p>
-            <div class="relative overflow-hidden mt-8 mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-if="y"></y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-if=&quot;y&quot;&gt;&lt;/y-gate&gt;</code></pre>
-              </div>
-            </div>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">IF directive</h2>
+<p class="mb-5">
+  To apply a Y gate conditionally, specify a <code class="text-purple-500">data-if</code> attribute; the condition (variable name) specified in the if directive can be set in the Measurement gate.
+</p>
+<div class="relative overflow-hidden mt-8 mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-if="y"></y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-if=&quot;y&quot;&gt;&lt;/y-gate&gt;</code></pre>
+  </div>
+</div>
 
-            <p class="mb-5">
-              If the gate is connected to another gates, the position of the if label will be adjusted automatically.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-8">
-                  <y-gate data-wire-top data-if="y"></y-gate>
-                  <y-gate data-wire-bottom data-if="y"></y-gate>
-                  <y-gate data-wire-top data-wire-bottom data-if="y"></y-gate>
-                  <y-gate data-wire-top-disabled data-if="y"></y-gate>
-                  <y-gate data-wire-bottom-disabled data-if="y"></y-gate>
-                  <y-gate data-wire-top-disabled data-wire-bottom-disabled data-if="y"></y-gate>
-                </div>
-              </div>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
-            <p class="mb-5">
-              As a user help, you can display the description and usage of the Y gate as a popup.
-              The popup will show on the mouse hover event.
-              The content to be displayed can be specified in the <code class="text-purple-500">&lt;y-gate&gt;</code> tag as follows:
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate>
-                    <header>
-                      <h1>Pauli Y Gate</h1>
-                      <p>A combination of the X and Z gates.</p>
-                    </header>
+<p class="mb-5">
+  If the gate is connected to another gates, the position of the if label will be adjusted automatically.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-8">
+      <y-gate data-wire-top data-if="y"></y-gate>
+      <y-gate data-wire-bottom data-if="y"></y-gate>
+      <y-gate data-wire-top data-wire-bottom data-if="y"></y-gate>
+      <y-gate data-wire-top-disabled data-if="y"></y-gate>
+      <y-gate data-wire-bottom-disabled data-if="y"></y-gate>
+      <y-gate data-wire-top-disabled data-wire-bottom-disabled data-if="y"></y-gate>
+    </div>
+  </div>
+</div>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
+<p class="mb-5">
+  As a user help, you can display the description and usage of the Y gate as a popup.
+  The popup will show on the mouse hover event.
+  The content to be displayed can be specified in the <code class="text-purple-500">&lt;y-gate&gt;</code> tag as follows:
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate>
+        <header>
+          <h1>Pauli Y Gate</h1>
+          <p>A combination of the X and Z gates.</p>
+        </header>
 
-                    <div class="mt-4 flex flex-row items-center space-x-1">
-                      <circle-notation></circle-notation>
-                      <div class="flex flex-row items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                        </svg>
-                        <y-gate data-size="sm"></y-gate>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </div>
-                      <circle-notation data-magnitudes="0,1" data-phases="0,90"></circle-notation>
-                    </div>
+        <div class="mt-4 flex flex-row items-center space-x-1">
+          <circle-notation></circle-notation>
+          <div class="flex flex-row items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+            <y-gate data-size="sm"></y-gate>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <circle-notation data-magnitudes="0,1" data-phases="0,90"></circle-notation>
+        </div>
 
-                    <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-                      <circle-notation data-magnitudes="0,1"></circle-notation>
-                      <div class="flex flex-row items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                        </svg>
-                        <y-gate data-size="sm"></y-gate>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </div>
-                      <circle-notation data-phases="-90,0"></circle-notation>
-                    </div>
+        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1"></circle-notation>
+          <div class="flex flex-row items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+            <y-gate data-size="sm"></y-gate>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <circle-notation data-phases="-90,0"></circle-notation>
+        </div>
 
-                    <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-                      <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
-                      <div class="flex flex-row items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                        </svg>
-                        <y-gate data-size="sm"></y-gate>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-                          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                      </div>
-                      <circle-notation data-magnitudes="0.4,0.9" data-phases="160,250"></circle-notation>
-                    </div>
-                  </y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate&gt;
+        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
+          <div class="flex flex-row items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+            <y-gate data-size="sm"></y-gate>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
+              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <circle-notation data-magnitudes="0.4,0.9" data-phases="160,250"></circle-notation>
+        </div>
+      </y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate&gt;
   &lt;header&gt;
     &lt;h1&gt;Pauli Y Gate&lt;/h1&gt;
     &lt;p&gt;A combination of the X and Z gates.&lt;/p&gt;
@@ -310,26 +289,20 @@ width: 3rem;</td>
     &lt;/div&gt;
     &lt;circle-notation data-magnitudes=&quot;0.4,0.9&quot; data-phases=&quot;160,250&quot;&gt;&lt;/circle-notation&gt;
   &lt;/div&gt;</code></pre>
-              </div>
-            </div>
+  </div>
+</div>
 
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
-            <p class="mb-5">
-              To make the Y gate drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
-            </p>
-            <div class="relative overflow-hidden mb-8">
-              <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
-                <div class="flex flex-row space-x-4">
-                  <y-gate data-draggable></y-gate>
-                </div>
-              </div>
-              <div class="overflow-hidden rounded-b-xl bg-light-green-500">
-                <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-draggable&gt;&lt;y-gate&gt;</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Draggable</h2>
+<p class="mb-5">
+  To make the Y gate drag-and-droppable, specify the <code class="text-purple-500">data-draggable</code> attribute.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div class="flex flex-row space-x-4">
+      <y-gate data-draggable></y-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;y-gate data-draggable&gt;&lt;y-gate&gt;</code></pre>
   </div>
 </div>
