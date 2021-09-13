@@ -25,11 +25,11 @@ description: Explaining the structure of a quantum circuit in comments.
 <script>
  circuit = document.getElementById("entangled-qubits")
  circuit.write(0, 0, 1)
-                   .block("entangle", (block) => { block.h(0).cnot(0, 1) })
-                   .measure(0).measure(1)
+        .block("entangle", (block) => { block.h(0).cnot(0, 1) })
+        .measure(0).measure(1)
 </script>
 {% endcapture %}
-{% include code_example.html code=code %}
+{% include circuit_example.html code=code %}
 
 <p class="mb-4">
   If you want to insert a space between circuit blocks, you can use the <code class="text-purple-500">i()</code> method to insert an empty step as follows:
@@ -48,7 +48,7 @@ description: Explaining the structure of a quantum circuit in comments.
         .i()
 </script>
 {% endcapture %}
-{% include code_example.html code=code %}
+{% include circuit_example.html code=code %}
 
 
 <h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
@@ -64,7 +64,7 @@ description: Explaining the structure of a quantum circuit in comments.
 <quantum-circuit data-json="{&quot;cols&quot;:[[&quot;|0>&quot;,&quot;|0>&quot;],[&quot;{entangle&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;X&quot;],[&quot;}&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]],&quot;init&quot;:false}">
 </quantum-circuit>
 {% endcapture %}
-{% include code_example.html code=code %}
+{% include circuit_example.html code=code %}
 
 <h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
   <span class="text-2xl font-bold">Raw HTML</span>
@@ -122,4 +122,4 @@ description: Explaining the structure of a quantum circuit in comments.
   </circuit-step>
 </quantum-circuit>
 {% endcapture %}
-{% include code_example.html code=code %}
+{% include circuit_example.html code=code %}
