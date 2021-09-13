@@ -72,7 +72,13 @@ export class CircuitStepElement extends HTMLElement {
     if (quantumCircuitEl === null) return null
 
     const all = quantumCircuitEl.steps
-    return all.indexOf(this)
+    const index = all.indexOf(this)
+
+    if (index === -1) {
+      throw new Error("circuitStep not found")
+    }
+
+    return index
   }
 
   prev(): CircuitStepElement | null {
@@ -141,6 +147,10 @@ export class CircuitStepElement extends HTMLElement {
     this.updateConnections()
   }
 
+  remove(): void {
+    this.parentElement?.removeChild(this)
+  }
+
   private quantumCircuitElement(): QuantumCircuitElement | null {
     return this.closest("quantum-circuit") as QuantumCircuitElement
   }
@@ -156,6 +166,7 @@ export class CircuitStepElement extends HTMLElement {
     this.setTargetAttributes()
     this.addSlotChangeEventListener()
     this.updateConnections()
+    this.updateWires()
   }
 
   update(): void {
@@ -224,19 +235,8 @@ export class CircuitStepElement extends HTMLElement {
   private addSlotChangeEventListener(): void {
     this.slotEl.addEventListener("slotchange", () => {
       this.setTargetAttributes()
-
-      for (const dropzone of this.dropzones) {
-        const prevDropzone = dropzone.prev()
-        if (prevDropzone === null) {
-          dropzone.inputWireQuantum = false
-          dropzone.outputWireQuantum = false
-        } else {
-          dropzone.inputWireQuantum = prevDropzone.outputWireQuantum
-          dropzone.outputWireQuantum = prevDropzone.outputWireQuantum
-        }
-      }
-
       this.updateConnections()
+      this.updateWires()
     })
   }
 
@@ -342,6 +342,12 @@ export class CircuitStepElement extends HTMLElement {
         dropzone.wireTop = true
         dropzone.wireBottom = true
       }
+    }
+  }
+
+  updateWires(): void {
+    for (const each of this.dropzones) {
+      each.updateWires()
     }
   }
 }

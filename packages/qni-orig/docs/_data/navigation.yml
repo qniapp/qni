@@ -12,6 +12,8 @@
   pages:
     - name: Circuit Step
       link: ./circuit_step.html
+    - name: Circuit Block
+      link: ./circuit_block.html
     - name: Circuit Dropzone
       link: ./circuit_dropzone.html
 - name: Circuit Operations

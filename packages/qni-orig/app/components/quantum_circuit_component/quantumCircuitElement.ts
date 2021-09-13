@@ -23,7 +23,12 @@ export class QuantumCircuitElement extends HTMLElement {
 
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
-  @targets steps: CircuitStepElement[]
+
+  get steps(): CircuitStepElement[] {
+    return Array.from(
+      this.querySelectorAll("circuit-step"),
+    ) as CircuitStepElement[]
+  }
 
   step(n: number): CircuitStepElement {
     const el = this.steps[n]
@@ -34,7 +39,6 @@ export class QuantumCircuitElement extends HTMLElement {
 
   appendStep(): CircuitStepElement {
     const el = document.createElement("circuit-step") as CircuitStepElement
-    el.setAttribute("data-targets", "quantum-circuit.steps")
 
     const lastBlock = this.blocks.slice(-1)[0] || null
     if (lastBlock === null || lastBlock.finalized) {
@@ -227,9 +231,8 @@ export class QuantumCircuitElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
-    this.setTargetAttributes()
     this.appendJsonSteps()
-    this.listenCircuitStepsChange()
+    this.updateWires()
   }
 
   attributeChangedCallback(
@@ -267,18 +270,6 @@ export class QuantumCircuitElement extends HTMLElement {
         </div>`,
       this.shadowRoot!,
     )
-  }
-
-  private setTargetAttributes(): void {
-    for (const each of Array.from(this.querySelectorAll("circuit-step"))) {
-      each.setAttribute("data-targets", "quantum-circuit.steps")
-    }
-  }
-
-  private listenCircuitStepsChange(): void {
-    this.slotEl.addEventListener("slotchange", () => {
-      this.setTargetAttributes()
-    })
   }
 
   private applySingleGate(
@@ -371,6 +362,8 @@ export class QuantumCircuitElement extends HTMLElement {
     if (this.json === "") return
 
     const jsonData = JSON.parse(this.json)
+    let circuitBlock = null
+
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
 
@@ -483,6 +476,21 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(el)
             break
           }
+          case /^\{(.+)$/.test(instruction): {
+            circuitStep.remove()
+            circuitBlock = document.createElement(
+              "circuit-block",
+            ) as CircuitBlockElement
+            circuitBlock.comment = RegExp.$1
+            circuitBlock.setAttribute("data-targets", "quantum-circuit.blocks")
+            this.append(circuitBlock)
+            break
+          }
+          case /^\}$/.test(instruction): {
+            circuitStep.remove()
+            circuitBlock.finalize()
+            break
+          }
           default: {
             if (instruction !== 1) {
               throw new Error(`Unknown instruction: ${instruction}`)
@@ -491,6 +499,12 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         }
       }
+    }
+  }
+
+  updateWires(): void {
+    for (const each of this.steps) {
+      each.updateWires()
     }
   }
 }

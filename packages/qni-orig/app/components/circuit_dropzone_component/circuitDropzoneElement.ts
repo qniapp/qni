@@ -365,30 +365,48 @@ export class CircuitDropzoneElement extends HTMLElement {
     })
   }
 
-  private updateWires(): void {
+  updateWires(): void {
     const operation = this.children[0]
+    const prevDropzone = this.prev()
+
+    if (operation === undefined) {
+      if (prevDropzone === null) {
+        this.inputWireQuantum = false
+        this.outputWireQuantum = false
+      } else {
+        this.inputWireQuantum = prevDropzone.outputWireQuantum
+        this.outputWireQuantum = prevDropzone.outputWireQuantum
+      }
+      return
+    }
+
     const nodeName = operation.nodeName
 
     if (nodeName === "WRITE-GATE") {
-      const prevDropzone = this.prev()
       if (prevDropzone === null) {
         this.inputWireQuantum = false
       } else {
         this.inputWireQuantum = prevDropzone.outputWireQuantum
       }
       this.outputWireQuantum = true
-    }
-
-    if (nodeName === "MEASUREMENT-GATE") {
-      const prevDropzone = this.prev()
+    } else if (nodeName === "MEASUREMENT-GATE") {
       if (prevDropzone === null) {
         this.inputWireQuantum = false
       } else {
         this.inputWireQuantum = prevDropzone.outputWireQuantum
       }
       this.outputWireQuantum = false
+    } else {
+      if (prevDropzone === null) {
+        this.inputWireQuantum = false
+        this.outputWireQuantum = false
+      } else {
+        this.inputWireQuantum = prevDropzone.outputWireQuantum
+        this.outputWireQuantum = prevDropzone.outputWireQuantum
+      }
     }
 
+    // FIXME: updateSize() ? に移動
     operation.setAttribute("data-size", this.size)
   }
 }
