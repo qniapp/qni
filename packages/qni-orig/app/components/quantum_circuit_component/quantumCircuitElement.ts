@@ -408,7 +408,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           case /^P\((.+)\)$/.test(instruction): {
             const el = document.createElement("phase-gate") as PhaseGateElement
-            el.phi = RegExp.$1
+            el.phi = RegExp.$1.replace("_", "/")
             circuitStep.appendOperation(el)
             break
           }
