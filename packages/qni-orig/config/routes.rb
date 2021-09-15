@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :circuits, only: %i[index]
   resources :circuit_previews, only: :show
 
+  get '/new/', to: 'new_circuits#show', as: :new_circuit
+
   get '/', to: 'circuits#show'
   get '/:json', to: 'circuits#show', as: :circuit
 end

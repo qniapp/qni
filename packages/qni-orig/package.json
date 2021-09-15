@@ -47,6 +47,7 @@
     "@interactjs/auto-start": "^1.10.11",
     "@interactjs/dev-tools": "^1.10.11",
     "@interactjs/interact": "^1.10.11",
+    "@interactjs/modifiers": "^1.10.11",
     "@interactjs/types": "^1.10.11",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.2",
@@ -68,7 +69,7 @@
     "webpack-cli": "^3.3.12",
     "webpacker-pwa": "^0.1.2"
   },
-  "version": "0.0.61",
+  "version": "0.0.62",
   "devDependencies": {
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",

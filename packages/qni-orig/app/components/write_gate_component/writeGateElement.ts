@@ -16,12 +16,10 @@ export class WriteGateElement extends DraggableMixin(
   @attr value = "0"
 
   connectedCallback(): void {
-    try {
-      this.attachShadow({ mode: "open" })
-    } catch (InvalidStateError) {
-      // NOP
-    }
+    if (this.shadowRoot !== null) return
+    this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -29,6 +27,10 @@ export class WriteGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
 
         <style>
+          :host([data-grabbed]) #body {
+            background-color: var(--colors-snow, #ffffff);
+          }
+
           #icon {
             color: var(--colors-eel, #4b4b4b);
             transform: rotate(90deg);
@@ -41,12 +43,24 @@ export class WriteGateElement extends DraggableMixin(
           }
 
           #ket-label {
-            position: relative;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
             font-size: 1rem;
             line-height: 1.5rem;
             writing-mode: vertical-lr;
+          }
+
+          #ket-label::after {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
           }
 
           @media (min-width: 768px) {
@@ -97,7 +111,10 @@ export class WriteGateElement extends DraggableMixin(
           }
         </style>
 
-        <div id="body" data-action="mouseenter:write-gate#showHelp">
+        <div
+          id="body"
+          data-action="mouseenter:write-gate#showHelp mousedown:write-gate#grab mouseup:write-gate#unGrab"
+        >
           ${this.iconSvg}
           <div id="ket-label"></div>
         </div>`,

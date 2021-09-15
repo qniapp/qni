@@ -21,8 +21,10 @@ export class SwapGateElement extends DraggableMixin(
   @attr iconType = "transparent"
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -30,7 +32,10 @@ export class SwapGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle}
 
-        <div id="body" data-action="mouseenter:swap-gate#showHelp">
+        <div
+          id="body"
+          data-action="mouseenter:swap-gate#showHelp mousedown:swap-gate#grab mouseup:swap-gate#unGrab"
+        >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

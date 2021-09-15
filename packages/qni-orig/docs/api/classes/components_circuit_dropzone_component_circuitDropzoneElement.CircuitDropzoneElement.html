@@ -132,6 +132,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#dataset" class="tsd-kind-icon">dataset</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#dir" class="tsd-kind-icon">dir</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#draggable" class="tsd-kind-icon">draggable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#draggableName" class="tsd-kind-icon">draggable<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#enterKeyHint" class="tsd-kind-icon">enter<wbr>Key<wbr>Hint</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#firstChild" class="tsd-kind-icon">first<wbr>Child</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#firstElementChild" class="tsd-kind-icon">first<wbr>Element<wbr>Child</a></li>
@@ -154,6 +155,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#nodeType" class="tsd-kind-icon">node<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#nodeValue" class="tsd-kind-icon">node<wbr>Value</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#nonce" class="tsd-kind-icon">nonce</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#occupied" class="tsd-kind-icon">occupied</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#offsetHeight" class="tsd-kind-icon">offset<wbr>Height</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#offsetLeft" class="tsd-kind-icon">offset<wbr>Left</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#offsetParent" class="tsd-kind-icon">offset<wbr>Parent</a></li>
@@ -287,6 +289,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#acceptDrop" class="tsd-kind-icon">accept<wbr>Drop</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#addEventListener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#addSlotChangeEventListener" class="tsd-kind-icon">add<wbr>Slot<wbr>Change<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#after" class="tsd-kind-icon">after</a></li>
@@ -901,6 +904,16 @@
 						</ul>
 					</aside>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="draggableName" class="tsd-anchor"></a>
+					<h3>draggable<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">draggable<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L275">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:275</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="enterKeyHint" class="tsd-anchor"></a>
 					<h3>enter<wbr>Key<wbr>Hint</h3>
@@ -1010,7 +1023,7 @@
 					<div class="tsd-signature tsd-kind-icon">input<wbr>Wire<wbr>Quantum<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L258">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:258</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L270">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:270</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1199,6 +1212,16 @@
 						<p>Inherited from HTMLElement.nonce</p>
 						<ul>
 							<li>Defined in node_modules/typescript/lib/lib.dom.d.ts:8008</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="occupied" class="tsd-anchor"></a>
+					<h3>occupied</h3>
+					<div class="tsd-signature tsd-kind-icon">occupied<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L274">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:274</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4572,7 +4595,7 @@
 					<div class="tsd-signature tsd-kind-icon">operation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CircuitOperation</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L254">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:254</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L266">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:266</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4593,7 +4616,7 @@
 					<div class="tsd-signature tsd-kind-icon">output<wbr>Wire<wbr>Quantum<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L259">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:259</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L271">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:271</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4754,7 +4777,7 @@
 					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;base&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L257">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:257</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L269">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:269</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4780,7 +4803,7 @@
 					<div class="tsd-signature tsd-kind-icon">slot<wbr>El<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLSlotElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L255">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:255</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L267">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:267</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4872,7 +4895,7 @@
 					<div class="tsd-signature tsd-kind-icon">wire<wbr>Bottom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L261">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:261</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L273">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:273</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4882,7 +4905,7 @@
 					<div class="tsd-signature tsd-kind-icon">wire<wbr>Top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L260">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:260</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L272">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:272</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4899,7 +4922,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L263">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:263</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L277">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:277</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitStepElement</a></h4>
@@ -4916,7 +4939,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L271">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L285">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:285</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4932,6 +4955,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="acceptDrop" class="tsd-anchor"></a>
+					<h3>accept<wbr>Drop</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">accept<wbr>Drop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L389">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:389</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 					<a name="addEventListener" class="tsd-anchor"></a>
 					<h3>add<wbr>Event<wbr>Listener</h3>
@@ -5018,7 +5058,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L346">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:346</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L365">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:365</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -5152,7 +5192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L276">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L290">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:290</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5407,7 +5447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L322">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:322</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L337">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:337</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -6017,7 +6057,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L282">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:282</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L297">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:297</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -6320,7 +6360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L301">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:301</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L316">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:316</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></h4>
@@ -6390,7 +6430,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L289">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:289</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L304">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:304</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></h4>
@@ -7206,7 +7246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L312">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L327">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:327</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h4>
@@ -7256,7 +7296,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L328">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:328</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L344">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:344</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7273,7 +7313,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/00d6837b/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L368">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/5dba658f/app/components/circuit_dropzone_component/circuitDropzoneElement.ts#L433">app/components/circuit_dropzone_component/circuitDropzoneElement.ts:433</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7441,6 +7481,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#draggable" class="tsd-kind-icon">draggable</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#draggableName" class="tsd-kind-icon">draggable<wbr>Name</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#enterKeyHint" class="tsd-kind-icon">enter<wbr>Key<wbr>Hint</a>
 							</li>
@@ -7506,6 +7549,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#nonce" class="tsd-kind-icon">nonce</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#occupied" class="tsd-kind-icon">occupied</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#offsetHeight" class="tsd-kind-icon">offset<wbr>Height</a>
@@ -7875,6 +7921,9 @@
 							</li>
 							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#wireQuantum" class="tsd-kind-icon">wire<wbr>Quantum</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#acceptDrop" class="tsd-kind-icon">accept<wbr>Drop</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html#addEventListener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a>

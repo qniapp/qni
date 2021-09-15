@@ -25,22 +25,6 @@ export class BlochDisplayElement extends DraggableMixin(
   @attr draggableSource = false
   @attr draggableShadow = false
 
-  grab(event: MouseEvent): void {
-    const customEvent = new CustomEvent("grabDraggable", {
-      detail: event,
-      bubbles: true,
-    })
-    this.parentElement?.dispatchEvent(customEvent)
-  }
-
-  drop(event: MouseEvent): void {
-    const customEvent = new CustomEvent("dropDraggable", {
-      detail: event,
-      bubbles: true,
-    })
-    this.parentElement?.dispatchEvent(customEvent)
-  }
-
   showPopup(): void {
     if (this.isCircuitDraggable()) {
       const content = this.blochInspectorPopupContent()
@@ -104,9 +88,11 @@ export class BlochDisplayElement extends DraggableMixin(
   }
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
     this.updateBlochVector()
+    this.initDraggable()
   }
 
   disconnectedCallback(): void {
@@ -144,10 +130,6 @@ export class BlochDisplayElement extends DraggableMixin(
   }
 
   update(): void {
-    this.addEventListener("mouseenter", this.showPopup)
-    this.addEventListener("mousedown", this.grab)
-    this.addEventListener("mouseup", this.drop)
-
     this.d = this.vectorLength()
     this.phi = this.calculatePhi()
     this.theta = this.calculateTheta()
@@ -303,7 +285,12 @@ export class BlochDisplayElement extends DraggableMixin(
           }
         </style>
 
-        <div id="body" data-target="bloch-display.body" data-d="${this.d}">
+        <div
+          id="body"
+          data-target="bloch-display.body"
+          data-action="mousedown:bloch-display#grab mouseup:bloch-display#unGrab"
+          data-d="${this.d}"
+        >
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" class="absolute inset-0">
             <svg

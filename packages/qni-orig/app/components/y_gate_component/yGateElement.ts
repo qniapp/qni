@@ -29,8 +29,10 @@ export class YGateElement extends DraggableMixin(
   @attr iconType = "square"
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -38,7 +40,10 @@ export class YGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div id="body" data-action="mouseenter:y-gate#showHelp">
+        <div
+          id="body"
+          data-action="mouseenter:y-gate#showHelp mousedown:y-gate#grab mouseup:y-gate#unGrab"
+        >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

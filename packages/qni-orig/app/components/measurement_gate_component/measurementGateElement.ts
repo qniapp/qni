@@ -22,50 +22,21 @@ export class MeasurementGateElement extends DraggableMixin(
   @attr draggableSource = false
   @attr draggableShadow = false
 
-  grab(event: MouseEvent): void {
-    const customEvent = new CustomEvent("grabDraggable", {
-      detail: event,
-      bubbles: true,
-    })
-    this.parentElement?.dispatchEvent(customEvent)
-  }
-
-  drop(event: MouseEvent): void {
-    const customEvent = new CustomEvent("dropDraggable", {
-      detail: event,
-      bubbles: true,
-    })
-    this.parentElement?.dispatchEvent(customEvent)
-  }
-
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
-    this.addEventListener("mousedown", this.grab)
-    this.addEventListener("mouseup", this.drop)
-
     render(
       html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
         ${this.labelStyle}
 
         <style>
-          :host([data-grabbed]),
-          :host([data-draggable-source]),
-          :host([data-draggable-shadow]) {
+          :host([data-grabbed]) #body {
             background-color: var(--colors-snow, #ffffff);
-          }
-
-          :host([data-draggable-source])::after {
-            opacity: 100;
-            border-color: var(--colors-fox, #ff9600);
-          }
-
-          :host([data-draggable-shadow])::after {
-            opacity: 100;
-            border-color: var(--colors-superposition, #ce82ff);
           }
 
           #icon {
@@ -119,7 +90,7 @@ export class MeasurementGateElement extends DraggableMixin(
         <div
           id="body"
           data-flag="${this.flag}"
-          data-action="mouseenter:measurement-gate#showHelp"
+          data-action="mouseenter:measurement-gate#showHelp mousedown:measurement-gate#grab mouseup:measurement-gate#unGrab"
         >
           ${this.iconSvg}
           <div id="ket-label"></div>

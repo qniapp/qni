@@ -2,6 +2,7 @@ import { attr, controller, target, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { CircuitBlockElement } from "circuit_block_component/circuitBlockElement"
+import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
@@ -28,6 +29,18 @@ export class QuantumCircuitElement extends HTMLElement {
     return Array.from(
       this.querySelectorAll("circuit-step"),
     ) as CircuitStepElement[]
+  }
+
+  get dropzones(): CircuitDropzoneElement[] {
+    return Array.from(
+      this.querySelectorAll("circuit-dropzone"),
+    ) as CircuitDropzoneElement[]
+  }
+
+  get freeDropzones(): CircuitDropzoneElement[] {
+    return this.dropzones.filter((each) => {
+      return !each.occupied
+    })
   }
 
   step(n: number): CircuitStepElement {
@@ -265,7 +278,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         </style>
 
-        <div id="body">
+        <div id="body" data-action="wirechange:quantum-circuit#updateWires">
           <slot data-target="quantum-circuit.slotEl"></slot>
         </div>`,
       this.shadowRoot!,
@@ -488,7 +501,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           case /^\}$/.test(instruction): {
             circuitStep.remove()
-            circuitBlock.finalize()
+            circuitBlock!.finalize()
             break
           }
           default: {

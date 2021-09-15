@@ -29,8 +29,10 @@ export class HGateElement extends DraggableMixin(
   @attr iconType = "square"
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -38,7 +40,10 @@ export class HGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div id="body" data-action="mouseenter:h-gate#showHelp">
+        <div
+          id="body"
+          data-action="mouseenter:h-gate#showHelp mousedown:h-gate#grab mouseup:h-gate#unGrab"
+        >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

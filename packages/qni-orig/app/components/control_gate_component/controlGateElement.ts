@@ -9,19 +9,8 @@ import {
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
-import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 const css = html`<style>
-  :host([data-draggable-source]) #body::after {
-    opacity: 100;
-    border-color: var(--colors-fox, #ff9600);
-  }
-
-  :host([data-draggable-shadow]) #body::after {
-    opacity: 100;
-    border-color: var(--colors-superposition, #ce82ff);
-  }
-
   #body {
     align-items: center;
     display: flex;
@@ -59,8 +48,10 @@ export class ControlGateElement extends DraggableMixin(
   @attr grabbed = false
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -68,7 +59,10 @@ export class ControlGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle} ${css}
 
-        <div id="body" data-action="mouseenter:control-gate#showHelp">
+        <div
+          id="body"
+          data-action="mouseenter:control-gate#showHelp mousedown:control-gate#grab mouseup:control-gate#unGrab"
+        >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

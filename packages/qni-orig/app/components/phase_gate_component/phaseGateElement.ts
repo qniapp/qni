@@ -30,8 +30,10 @@ export class PhaseGateElement extends DraggableMixin(
   @attr phi = ""
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -42,7 +44,7 @@ export class PhaseGateElement extends DraggableMixin(
         <div
           id="body"
           data-phi="${this.phi}"
-          data-action="mouseenter:phase-gate#showHelp"
+          data-action="mouseenter:phase-gate#showHelp mousedown:phase-gate#grab mouseup:phase-gate#unGrab"
         >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,

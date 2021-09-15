@@ -4,6 +4,7 @@ import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
+import { Interactable } from "@interactjs/types"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
@@ -15,6 +16,7 @@ import { WriteGateElement } from "write_gate_component/writeGateElement"
 import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
+import interact from "@interactjs/interact"
 
 type CircuitOperation =
   | HGateElement
@@ -213,29 +215,39 @@ const css = html`<style>
     }
   }
 
-  slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-input,
-  slot[data-circuit-operation-name="measurement-gate"] ~ #wires > #wire-input {
+  :host([data-draggable-name="write-gate"][data-occupied]) #wires > #wire-input,
+  :host([data-draggable-name="measurement-gate"][data-occupied])
+    #wires
+    > #wire-input {
     transform: scaleX(0.75) translateX(-25%);
   }
 
   @media (min-width: 768px) {
-    slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-input,
-    slot[data-circuit-operation-name="measurement-gate"]
-      ~ #wires
+    :host([data-draggable-name="write-gate"][data-occupied])
+      #wires
+      > #wire-input,
+    :host([data-draggable-name="measurement-gate"][data-occupied])
+      #wires
       > #wire-input {
       transform: scaleX(0.5) translateX(0);
     }
   }
 
-  slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-output,
-  slot[data-circuit-operation-name="measurement-gate"] ~ #wires > #wire-output {
+  :host([data-draggable-name="write-gate"][data-occupied])
+    #wires
+    > #wire-output,
+  :host([data-draggable-name="measurement-gate"][data-occupied])
+    #wires
+    > #wire-output {
     transform: scaleX(0.75) translateX(25%);
   }
 
   @media (min-width: 768px) {
-    slot[data-circuit-operation-name="write-gate"] ~ #wires > #wire-output,
-    slot[data-circuit-operation-name="measurement-gate"]
-      ~ #wires
+    :host([data-draggable-name="write-gate"][data-occupied])
+      #wires
+      > #wire-output,
+    :host([data-draggable-name="measurement-gate"][data-occupied])
+      #wires
       > #wire-output {
       transform: scaleX(0.5) translateX(0);
     }
@@ -259,6 +271,8 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr outputWireQuantum = false
   @attr wireTop = false
   @attr wireBottom = false
+  @attr occupied = false
+  @attr draggableName = ""
 
   get circuitStep(): CircuitStepElement | null {
     const el = this.parentElement
@@ -275,6 +289,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   assignOperationElement(element: HTMLElement): void {
     element.setAttribute("data-target", "circuit-dropzone.operation")
+    this.draggableName = element.tagName.toLowerCase()
     this.append(element)
     this.updateWires()
   }
@@ -323,6 +338,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.attachShadow({ mode: "open" })
     this.update()
     this.addSlotChangeEventListener()
+    this.acceptDrop()
   }
 
   update(): void {
@@ -337,7 +353,10 @@ export class CircuitDropzoneElement extends HTMLElement {
     )
 
     if (this.childElementCount === 1) {
-      this.children[0].setAttribute("data-target", "circuit-dropzone.operation")
+      const operation = this.children[0]
+      this.occupied = true
+      this.draggableName = operation.tagName.toLowerCase()
+      operation.setAttribute("data-target", "circuit-dropzone.operation")
     } else if (this.childElementCount > 1) {
       throw new Error("A dropzone cannot hold multiple operations.")
     }
@@ -345,7 +364,12 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   addSlotChangeEventListener(): void {
     this.slotEl.addEventListener("slotchange", () => {
-      if (this.childElementCount === 0) return
+      if (this.childElementCount === 0) {
+        this.occupied = false
+        this.draggableName = ""
+        return
+      }
+
       if (this.childElementCount > 1) {
         throw new Error("A dropzone cannot hold multiple operations.")
       }
@@ -356,20 +380,61 @@ export class CircuitDropzoneElement extends HTMLElement {
       operation.setAttribute("data-target", "circuit-dropzone.operation")
       operation.setAttribute("data-size", this.size)
 
-      this.slotEl.setAttribute(
-        "data-circuit-operation-name",
-        nodeName.toLowerCase(),
-      )
-
+      this.occupied = true
+      this.draggableName = nodeName.toLowerCase()
       this.updateWires()
     })
   }
 
+  acceptDrop(): void {
+    const interactable = interact(this) as Interactable
+    interactable.dropzone({
+      accept: "[data-draggable]",
+      overlap: "pointer",
+      ondragenter: this.dragEnter.bind(this),
+      ondragleave: this.dragLeave.bind(this),
+      ondrop: this.drop.bind(this),
+    })
+  }
+
+  private dragEnter(event: Interact.DropEvent) {
+    const dropzone = event.target
+    const draggable = event.relatedTarget
+
+    if (
+      dropzone.childElementCount === 0 ||
+      dropzone === draggable.parentElement
+    ) {
+      this.draggableName = draggable.tagName.toLowerCase()
+    }
+
+    this.dispatchEvent(new Event("wirechange", { bubbles: true }))
+  }
+
+  private dragLeave(event: Interact.DropEvent) {
+    const dropzone = event.target
+    const draggable = event.relatedTarget
+
+    if (dropzone === draggable.parentElement) {
+      this.occupied = false
+    }
+    if (!this.occupied) {
+      this.draggableName = ""
+    }
+    this.dispatchEvent(new Event("wirechange", { bubbles: true }))
+  }
+
+  private drop(event: Interact.DropEvent) {
+    this.occupied = true
+    const draggable = event.relatedTarget
+    this.append(draggable)
+  }
+
   updateWires(): void {
-    const operation = this.children[0]
+    const draggableName = this.draggableName
     const prevDropzone = this.prev()
 
-    if (operation === undefined) {
+    if (draggableName === "") {
       if (prevDropzone === null) {
         this.inputWireQuantum = false
         this.outputWireQuantum = false
@@ -380,16 +445,14 @@ export class CircuitDropzoneElement extends HTMLElement {
       return
     }
 
-    const nodeName = operation.nodeName
-
-    if (nodeName === "WRITE-GATE") {
+    if (draggableName === "write-gate") {
       if (prevDropzone === null) {
         this.inputWireQuantum = false
       } else {
         this.inputWireQuantum = prevDropzone.outputWireQuantum
       }
       this.outputWireQuantum = true
-    } else if (nodeName === "MEASUREMENT-GATE") {
+    } else if (draggableName === "measurement-gate") {
       if (prevDropzone === null) {
         this.inputWireQuantum = false
       } else {
@@ -405,8 +468,5 @@ export class CircuitDropzoneElement extends HTMLElement {
         this.outputWireQuantum = prevDropzone.outputWireQuantum
       }
     }
-
-    // FIXME: updateSize() ? に移動
-    operation.setAttribute("data-size", this.size)
   }
 }

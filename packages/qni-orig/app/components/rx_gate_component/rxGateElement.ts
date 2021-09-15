@@ -30,8 +30,10 @@ export class RxGateElement extends DraggableMixin(
   @attr theta = ""
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initDraggable()
   }
 
   update(): void {
@@ -42,7 +44,7 @@ export class RxGateElement extends DraggableMixin(
         <div
           id="body"
           data-theta="${this.theta}"
-          data-action="mouseenter:rx-gate#showHelp"
+          data-action="mouseenter:rx-gate#showHelp mousedown:rx-gate#grab mouseup:rx-gate#unGrab"
         >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
