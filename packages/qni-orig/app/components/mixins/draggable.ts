@@ -130,7 +130,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     private snapRange(): number {
-      return this.clientWidth / 2
+      return this.clientWidth
     }
 
     // interact.js handlers

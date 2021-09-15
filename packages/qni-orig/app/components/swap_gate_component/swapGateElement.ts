@@ -32,6 +32,12 @@ export class SwapGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle}
 
+        <style>
+          :host([data-grabbed]) #body {
+            background-color: var(--colors-snow, #ffffff);
+          }
+        </style>
+
         <div
           id="body"
           data-action="mouseenter:swap-gate#showHelp mousedown:swap-gate#grab mouseup:swap-gate#unGrab"
