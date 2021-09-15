@@ -1201,6 +1201,41 @@ QUnit.module("CircuitStep", () => {
     })
   })
 
+  QUnit.module("Swap,Swap", (hooks) => {
+    let s1: SwapGateElement
+    let s2: SwapGateElement
+
+    hooks.beforeEach(() => {
+      step = document.createElement("circuit-step") as CircuitStepElement
+      s1 = document.createElement("swap-gate") as SwapGateElement
+      s2 = document.createElement("swap-gate") as SwapGateElement
+      document.body.append(step)
+    })
+
+    hooks.afterEach(() => {
+      document.body.removeChild(step)
+    })
+
+    QUnit.test("should connect Swap,Swap", (assert) => {
+      step.appendOperation(s1)
+      step.appendOperation(s2)
+
+      assert.true(s1.wireBottom)
+      assert.true(s2.wireTop)
+    })
+
+    QUnit.test("should connect Swap,1,Swap", (assert) => {
+      step.appendOperation(s1)
+      const dropzone = step.appendDropzone()
+      step.appendOperation(s2)
+
+      assert.true(s1.wireBottom)
+      assert.true(dropzone.wireTop)
+      assert.true(dropzone.wireBottom)
+      assert.true(s2.wireTop)
+    })
+  })
+
   QUnit.module("Controlled-Swap", (hooks) => {
     let c: ControlGateElement
     let swap: SwapGateElement

@@ -241,13 +241,36 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   updateConnections(): void {
+    // Swap
     if (this.swapGates.length !== 2) {
-      for (const swapGate of this.swapGates) {
-        swapGate.disable()
+      for (const each of this.swapGates) {
+        each.disable()
       }
     } else {
-      for (const swapGate of this.swapGates) {
-        swapGate.enable()
+      const all = this.swapGates
+      for (const swap of all) {
+        swap.enable()
+        swap.wireTop = all.some((each) => {
+          return this.bit(each) < this.bit(swap)
+        })
+        swap.wireBottom = all.some((each) => {
+          return this.bit(each) > this.bit(swap)
+        })
+      }
+      for (const dropzone of this.dropzones) {
+        if (dropzone.draggable) continue
+
+        const bits = all.map((each) => this.bit(each))
+        const minBit = Math.min(...bits)
+        const maxBit = Math.max(...bits)
+
+        if (
+          minBit < this.dropzones.indexOf(dropzone) &&
+          this.dropzones.indexOf(dropzone) < maxBit
+        ) {
+          dropzone.wireTop = true
+          dropzone.wireBottom = true
+        }
       }
     }
 
