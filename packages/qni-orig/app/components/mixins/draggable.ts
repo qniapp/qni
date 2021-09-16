@@ -108,7 +108,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       interactable.draggable({
         modifiers: [
           interact.modifiers.snap({
-            targets: this.snapTargets(),
+            targets: this.quantumCircuit!.snapTargets(this),
             range: this.snapRange(),
             relativePoints: [{ x: 0.5, y: 0.5 }],
           }),
@@ -119,18 +119,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     unGrab(): void {
       this.grabbed = false
       this.moveTo(0, 0)
-    }
-
-    private snapTargets(): Array<{ x: number; y: number }> {
-      const dropzones = this.quantumCircuit!.freeDropzones
-      dropzones.push(this.dropzone!)
-
-      return dropzones.map((each) => {
-        return {
-          x: each.offsetLeft + each.clientWidth / 2,
-          y: each.offsetTop + each.clientHeight / 2,
-        }
-      })
     }
 
     private get quantumCircuit(): QuantumCircuitElement | null {

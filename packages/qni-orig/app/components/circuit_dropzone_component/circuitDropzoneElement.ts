@@ -308,6 +308,13 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.outputWireQuantum = value
   }
 
+  get snapTarget(): { x: number; y: number } {
+    return {
+      x: this.offsetLeft + this.clientWidth / 2,
+      y: this.offsetTop + this.clientHeight / 2,
+    }
+  }
+
   assignOperationElement(element: HTMLElement): void {
     element.setAttribute("data-target", "circuit-dropzone.operation")
     this.draggableName = element.tagName.toLowerCase()
