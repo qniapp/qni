@@ -14,6 +14,9 @@ import interact from "@interactjs/interact"
 export declare class Draggable {
   get draggableStyle(): TemplateResult
   get dropzone(): CircuitDropzoneElement | null
+  get grabbed(): boolean
+  get snapped(): boolean
+  set snapped(value: boolean)
   initDraggable(): void
   grab(event: MouseEvent): void
   unGrab(): void
@@ -30,6 +33,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     @attr draggable = false
     @attr grabbed = false
     @attr dragging = false
+    @attr snapped = true
     @attr draggableX = 0
     @attr draggableY = 0
 
@@ -50,6 +54,10 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
         :host([data-grabbed]) {
           z-index: 50 !important;
+        }
+
+        :host(:not([data-snapped])) #wires {
+          display: none;
         }
 
         #body {

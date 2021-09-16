@@ -9,7 +9,15 @@ export declare class Wireable {
   set wireBottom(value: boolean)
   get wiresStyle(): TemplateResult
   get wiresSvg(): TemplateResult
+  disconnectFromAll(): void
 }
+
+export const isWireable = (arg: unknown): arg is Wireable =>
+  typeof arg === "object" &&
+  arg !== null &&
+  typeof (arg as Wireable).wireTop === "boolean" &&
+  typeof (arg as Wireable).wireBottom === "boolean" &&
+  typeof (arg as Wireable).disconnectFromAll === "function"
 
 export function WireableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase,
@@ -19,6 +27,11 @@ export function WireableMixin<TBase extends Constructor<HTMLElement>>(
     @attr wireTopDisabled = false
     @attr wireBottom = false
     @attr wireBottomDisabled = false
+
+    disconnectFromAll(): void {
+      this.wireTop = false
+      this.wireBottom = false
+    }
 
     get wiresStyle(): TemplateResult {
       return html`<style>

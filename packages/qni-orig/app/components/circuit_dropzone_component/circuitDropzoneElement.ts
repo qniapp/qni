@@ -3,6 +3,7 @@ import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { Draggable } from "mixins"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { Interactable } from "@interactjs/types"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
@@ -17,22 +18,6 @@ import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
 import interact from "@interactjs/interact"
-
-type CircuitOperation =
-  | HGateElement
-  | XGateElement
-  | YGateElement
-  | ZGateElement
-  | PhaseGateElement
-  | RnotGateElement
-  | RxGateElement
-  | RyGateElement
-  | RzGateElement
-  | ControlGateElement
-  | SwapGateElement
-  | BlochDisplayElement
-  | WriteGateElement
-  | MeasurementGateElement
 
 const wires = html`<svg
   id="wires"
@@ -263,7 +248,6 @@ const css = html`<style>
 
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
-  @target operation: CircuitOperation
   @target slotEl: HTMLSlotElement
 
   @attr size = "base"
@@ -273,6 +257,43 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr wireBottom = false
   @attr occupied = false
   @attr draggableName = ""
+
+  get operation():
+    | HGateElement
+    | XGateElement
+    | YGateElement
+    | ZGateElement
+    | PhaseGateElement
+    | RnotGateElement
+    | RxGateElement
+    | RyGateElement
+    | RzGateElement
+    | ControlGateElement
+    | SwapGateElement
+    | BlochDisplayElement
+    | WriteGateElement
+    | MeasurementGateElement
+    | null {
+    const el = this.children[0] as HTMLElement
+    if (el === undefined) return null
+    if (!(el as unknown as Draggable).snapped) return null
+
+    return el as
+      | HGateElement
+      | XGateElement
+      | YGateElement
+      | ZGateElement
+      | PhaseGateElement
+      | RnotGateElement
+      | RxGateElement
+      | RyGateElement
+      | RzGateElement
+      | ControlGateElement
+      | SwapGateElement
+      | BlochDisplayElement
+      | WriteGateElement
+      | MeasurementGateElement
+  }
 
   get circuitStep(): CircuitStepElement | null {
     const el = this.parentElement
@@ -295,10 +316,10 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   index(): number | null {
-    const circuitStepEl = this.closest("circuit-step") as CircuitStepElement
-    if (circuitStepEl === null) return null
+    const circuitStep = this.closest("circuit-step") as CircuitStepElement
+    if (circuitStep === null) return null
 
-    return circuitStepEl.dropzones.indexOf(this)
+    return circuitStep.dropzoneIndex(this)
   }
 
   prev(): CircuitDropzoneElement | null {
@@ -310,7 +331,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     const prevStep = this.circuitStep.prev()
     if (prevStep === null) return null
 
-    return prevStep.dropzones[index] || null
+    return prevStep.dropzone(index)
   }
 
   next(): CircuitDropzoneElement | null {
@@ -321,7 +342,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     const nextStep = this.circuitStep.next()
     if (nextStep === null) return null
 
-    return nextStep.dropzones[index]
+    return nextStep.dropzone(index)
   }
 
   toJson(): string | number {
@@ -399,29 +420,39 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   private dragEnter(event: Interact.DropEvent) {
     const dropzone = event.target
-    const draggable = event.relatedTarget
+    const draggable = event.relatedTarget as unknown as Draggable
+    const operation = event.relatedTarget
 
     if (
-      dropzone.childElementCount === 0 ||
-      dropzone === draggable.parentElement
+      dropzone === operation.parentElement ||
+      (dropzone !== operation.parentElement && dropzone.childElementCount === 0)
     ) {
-      this.draggableName = draggable.tagName.toLowerCase()
+      draggable.snapped = true
     }
 
-    this.dispatchEvent(new Event("wirechange", { bubbles: true }))
+    if (dropzone.childElementCount === 0) {
+      draggable.moveTo(0, 0)
+      dropzone.append(operation)
+      this.draggableName = operation.tagName.toLowerCase()
+    }
+
+    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
   }
 
   private dragLeave(event: Interact.DropEvent) {
     const dropzone = event.target
-    const draggable = event.relatedTarget
+    const draggable = event.relatedTarget as unknown as Draggable
+    const operation = event.relatedTarget
 
-    if (dropzone === draggable.parentElement) {
+    draggable.snapped = false
+    if (dropzone === operation.parentElement) {
       this.occupied = false
     }
     if (!this.occupied) {
       this.draggableName = ""
     }
-    this.dispatchEvent(new Event("wirechange", { bubbles: true }))
+
+    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
   }
 
   private drop(event: Interact.DropEvent) {

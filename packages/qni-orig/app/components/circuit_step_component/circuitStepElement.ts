@@ -1,4 +1,5 @@
-import { controller, target, targets } from "@github/catalyst"
+import { Draggable, isWireable } from "mixins"
+import { controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
@@ -17,32 +18,26 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 @controller
 export class CircuitStepElement extends HTMLElement {
   @target slotEl: HTMLSlotElement
-  @targets dropzones: CircuitDropzoneElement[]
-  @targets controllableGates: Array<
-    | HGateElement
-    | XGateElement
-    | YGateElement
-    | ZGateElement
-    | PhaseGateElement
-    | RnotGateElement
-    | RxGateElement
-    | RyGateElement
-    | RzGateElement
-    | SwapGateElement
-  >
-  @targets phaseGates: PhaseGateElement[]
-  @targets swapGates: SwapGateElement[]
-  @targets controlGates: ControlGateElement[]
 
   get nqubit(): number {
     return this.dropzones.length
   }
 
-  dropzone(n: number): CircuitDropzoneElement {
+  get dropzones(): CircuitDropzoneElement[] {
+    return this.elements<CircuitDropzoneElement>("circuit-dropzone")
+  }
+
+  dropzone(n: number): CircuitDropzoneElement | null {
     const el = this.dropzones[n]
-    if (el === undefined) throw new Error(`dropzone ${n} does not exist.`)
+    if (el === undefined) return null
 
     return el
+  }
+
+  dropzoneIndex(dropzone: CircuitDropzoneElement): number | null {
+    const index = this.dropzones.indexOf(dropzone)
+    if (index === -1) return null
+    return index
   }
 
   bit(
@@ -107,7 +102,6 @@ export class CircuitStepElement extends HTMLElement {
     const el = document.createElement(
       "circuit-dropzone",
     ) as CircuitDropzoneElement
-    el.setAttribute("data-targets", "circuit-step.dropzones")
     this.append(el)
     return el
   }
@@ -115,34 +109,6 @@ export class CircuitStepElement extends HTMLElement {
   appendOperation(operation: HTMLElement): void {
     const dropzone = this.appendDropzone()
     dropzone.assignOperationElement(operation)
-
-    if (
-      operation.tagName === "H-GATE" ||
-      operation.tagName === "X-GATE" ||
-      operation.tagName === "Y-GATE" ||
-      operation.tagName === "Z-GATE" ||
-      operation.tagName === "RNOT-GATE" ||
-      operation.tagName === "RX-GATE" ||
-      operation.tagName === "RY-GATE" ||
-      operation.tagName === "RZ-GATE"
-    ) {
-      operation.setAttribute("data-targets", "circuit-step.controllableGates")
-    }
-    if (operation.tagName === "SWAP-GATE") {
-      operation.setAttribute(
-        "data-targets",
-        "circuit-step.controllableGates circuit-step.swapGates",
-      )
-    }
-    if (operation.tagName === "PHASE-GATE") {
-      operation.setAttribute(
-        "data-targets",
-        "circuit-step.controllableGates circuit-step.phaseGates",
-      )
-    }
-    if (operation.tagName === "CONTROL-GATE") {
-      operation.setAttribute("data-targets", "circuit-step.controlGates")
-    }
 
     this.updateConnections()
   }
@@ -163,7 +129,6 @@ export class CircuitStepElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
-    this.setTargetAttributes()
     this.addSlotChangeEventListener()
     this.updateConnections()
     this.updateWires()
@@ -200,47 +165,23 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
-  private setTargetAttributes(): void {
-    for (const each of Array.from(this.querySelectorAll("circuit-dropzone"))) {
-      each.setAttribute("data-targets", "circuit-step.dropzones")
-    }
-
-    for (const each of Array.from(
-      this.querySelectorAll(
-        "h-gate,x-gate,y-gate,z-gate,rnot-gate,rx-gate,ry-gate,rz-gate",
-      ),
-    )) {
-      each.setAttribute("data-targets", "circuit-step.controllableGates")
-    }
-
-    for (const each of Array.from(this.querySelectorAll("phase-gate"))) {
-      each.setAttribute(
-        "data-targets",
-        "circuit-step.controllableGates circuit-step.phaseGates",
-      )
-    }
-
-    for (const each of Array.from(this.querySelectorAll("control-gate"))) {
-      each.setAttribute("data-targets", "circuit-step.controlGates")
-    }
-
-    for (const each of Array.from(this.querySelectorAll("swap-gate"))) {
-      each.setAttribute(
-        "data-targets",
-        "circuit-step.controllableGates circuit-step.swapGates",
-      )
-    }
-  }
-
   private addSlotChangeEventListener(): void {
     this.slotEl.addEventListener("slotchange", () => {
-      this.setTargetAttributes()
       this.updateConnections()
       this.updateWires()
     })
   }
 
   updateConnections(): void {
+    for (const dropzone of this.dropzones) {
+      dropzone.wireTop = false
+      dropzone.wireBottom = false
+      const operation = dropzone.operation
+      if (isWireable(operation)) {
+        operation.disconnectFromAll()
+      }
+    }
+
     // Swap
     if (this.swapGates.length !== 2) {
       for (const each of this.swapGates) {
@@ -372,5 +313,55 @@ export class CircuitStepElement extends HTMLElement {
     for (const each of this.dropzones) {
       each.updateWires()
     }
+  }
+
+  private get controlGates(): ControlGateElement[] {
+    return this.snappedDraggables<ControlGateElement>("control-gate")
+  }
+
+  private get controllableGates(): Array<
+    | HGateElement
+    | XGateElement
+    | YGateElement
+    | ZGateElement
+    | PhaseGateElement
+    | RnotGateElement
+    | RxGateElement
+    | RyGateElement
+    | RzGateElement
+    | SwapGateElement
+  > {
+    return this.snappedDraggables<
+      | HGateElement
+      | XGateElement
+      | YGateElement
+      | ZGateElement
+      | PhaseGateElement
+      | RnotGateElement
+      | RxGateElement
+      | RyGateElement
+      | RzGateElement
+      | SwapGateElement
+    >(
+      "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate,swap-gate",
+    )
+  }
+
+  private get phaseGates(): PhaseGateElement[] {
+    return this.snappedDraggables<PhaseGateElement>("phase-gate")
+  }
+
+  private get swapGates(): SwapGateElement[] {
+    return this.snappedDraggables<SwapGateElement>("swap-gate")
+  }
+
+  private elements<T>(selectors: string): T[] {
+    return Array.from(this.querySelectorAll(selectors)) as unknown as T[]
+  }
+
+  private snappedDraggables<T>(selectors: string): T[] {
+    return this.elements<T>(selectors).filter((each) => {
+      return (each as unknown as Draggable).snapped
+    })
   }
 }

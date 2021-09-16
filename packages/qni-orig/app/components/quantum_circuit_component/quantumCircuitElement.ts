@@ -245,7 +245,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.attachShadow({ mode: "open" })
     this.update()
     this.appendJsonSteps()
-    this.updateWires()
+    this.updateAllSteps()
   }
 
   attributeChangedCallback(
@@ -278,7 +278,10 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         </style>
 
-        <div id="body" data-action="wirechange:quantum-circuit#updateWires">
+        <div
+          id="body"
+          data-action="circuitchange:quantum-circuit#updateAllSteps"
+        >
           <slot data-target="quantum-circuit.slotEl"></slot>
         </div>`,
       this.shadowRoot!,
@@ -515,9 +518,10 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  updateWires(): void {
+  updateAllSteps(): void {
     for (const each of this.steps) {
       each.updateWires()
+      each.updateConnections()
     }
   }
 }

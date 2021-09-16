@@ -18,9 +18,6 @@ export class MeasurementGateElement extends DraggableMixin(
   @attr iconType = "transparent"
   @attr value = ""
   @attr flag = ""
-  @attr grabbed = false
-  @attr draggableSource = false
-  @attr draggableShadow = false
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
