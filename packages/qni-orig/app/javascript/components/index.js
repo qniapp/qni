@@ -1,6 +1,7 @@
 import "circuit_block_component/circuitBlockElement"
 import "circuit_dropzone_component/circuitDropzoneElement"
 import "circuit_step_component/circuitStepElement"
+import "palette_dropzone_component/paletteDropzoneElement"
 import "quantum_circuit_component/quantumCircuitElement"
 
 import "bloch_display_component/blochDisplayElement"

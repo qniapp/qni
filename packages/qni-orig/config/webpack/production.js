@@ -11,7 +11,7 @@ environment.config.set("optimization.minimizer", [
     terserOptions: {
       mangle: {
         keep_classnames: true,
-        reserved: ["QuantumCircuitElement", "CircuitBlockElement", "CircuitStepElement", "CircuitDropzoneElement",
+        reserved: ["QuantumCircuitElement", "CircuitBlockElement", "CircuitStepElement", "CircuitDropzoneElement", "PaletteDropzoneElement",
                    "HGateElement",
                    "XGateElement", "YGateElement", "ZGateElement",
                    "PhaseGateElement",

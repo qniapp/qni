@@ -5,7 +5,6 @@ import { CircuitBlockElement } from "circuit_block_component/circuitBlockElement
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
-import { Draggable } from "mixins"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
@@ -42,13 +41,6 @@ export class QuantumCircuitElement extends HTMLElement {
     return this.dropzones.filter((each) => {
       return !each.occupied
     })
-  }
-
-  snapTargets(draggable: Draggable): Array<{ x: number; y: number }> {
-    const dropzones = this.freeDropzones
-    dropzones.push(draggable.dropzone!)
-
-    return dropzones.map((each) => each.snapTarget)
   }
 
   step(n: number): CircuitStepElement {

@@ -1,3 +1,8 @@
+import "@interactjs/actions/drag"
+import "@interactjs/actions/drop"
+import "@interactjs/auto-start"
+import "@interactjs/dev-tools"
+import "@interactjs/modifiers"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
@@ -5,7 +10,6 @@ import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { Draggable } from "mixins"
 import { HGateElement } from "h_gate_component/hGateElement"
-import { Interactable } from "@interactjs/types"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
@@ -366,7 +370,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.attachShadow({ mode: "open" })
     this.update()
     this.addSlotChangeEventListener()
-    this.acceptDrop()
+    this.initDropzone()
   }
 
   update(): void {
@@ -392,14 +396,15 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   addSlotChangeEventListener(): void {
     this.slotEl.addEventListener("slotchange", () => {
-      if (this.childElementCount === 0) {
-        this.occupied = false
-        this.draggableName = ""
-        return
-      }
-
       if (this.childElementCount > 1) {
         throw new Error("A dropzone cannot hold multiple operations.")
+      }
+
+      if (this.childElementCount === 0) {
+        this.draggableName = ""
+        this.enableDropzone()
+        this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+        return
       }
 
       const operation = this.children[0]
@@ -408,64 +413,37 @@ export class CircuitDropzoneElement extends HTMLElement {
       operation.setAttribute("data-target", "circuit-dropzone.operation")
       operation.setAttribute("data-size", this.size)
 
-      this.occupied = true
       this.draggableName = nodeName.toLowerCase()
-      this.updateWires()
+      this.disableDropzone()
+
+      this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
     })
   }
 
-  acceptDrop(): void {
-    const interactable = interact(this) as Interactable
-    interactable.dropzone({
+  private initDropzone(): void {
+    interact(this).dropzone({
       accept: "[data-draggable]",
-      overlap: "pointer",
-      ondragenter: this.dragEnter.bind(this),
-      ondragleave: this.dragLeave.bind(this),
-      ondrop: this.drop.bind(this),
+      overlap: "center",
     })
   }
 
-  private dragEnter(event: Interact.DropEvent) {
-    const dropzone = event.target
-    const draggable = event.relatedTarget as unknown as Draggable
-    const operation = event.relatedTarget
-
-    if (
-      dropzone === operation.parentElement ||
-      (dropzone !== operation.parentElement && dropzone.childElementCount === 0)
-    ) {
-      draggable.snapped = true
-    }
-
-    if (dropzone.childElementCount === 0) {
-      draggable.moveTo(0, 0)
-      dropzone.append(operation)
-      this.draggableName = operation.tagName.toLowerCase()
-    }
-
-    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+  enableDropzone(): void {
+    this.occupied = false
+    interact(this).dropzone(true)
   }
 
-  private dragLeave(event: Interact.DropEvent) {
-    const dropzone = event.target
-    const draggable = event.relatedTarget as unknown as Draggable
-    const operation = event.relatedTarget
-
-    draggable.snapped = false
-    if (dropzone === operation.parentElement) {
-      this.occupied = false
-    }
-    if (!this.occupied) {
-      this.draggableName = ""
-    }
-
-    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
-  }
-
-  private drop(event: Interact.DropEvent) {
+  disableDropzone(): void {
     this.occupied = true
-    const draggable = event.relatedTarget
+    interact(this).dropzone(false)
+  }
+
+  snap(draggable: HTMLElement): void {
     this.append(draggable)
+  }
+
+  unsnap(_draggable: HTMLElement): void {
+    this.draggableName = ""
+    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
   }
 
   updateWires(): void {
