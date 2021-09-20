@@ -2,12 +2,12 @@ require 'application_system_test_case'
 
 class WireTest < ApplicationSystemTestCase
   test 'add new wire on mousedown' do
-    visit new_circuit_path(json: '{"cols":[[1]]}')
+    visit new_circuit_path(json: '{"cols":[[]]}')
 
     page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
 
     within('quantum-circuit') do
-      assert_selector 'circuit-dropzone', count: 2
+      assert_selector 'circuit-dropzone', count: 3
     end
   end
 
@@ -22,7 +22,7 @@ class WireTest < ApplicationSystemTestCase
   end
 
   test 'write gate turns its classic wire into a quantum wire' do
-    visit new_circuit_path(json: '{"cols":[[1]]}')
+    visit new_circuit_path(json: '{"cols":[[]]}')
 
     palette('write-gate[data-value="0"]').drag_to(first('circuit-dropzone'), html5: false)
 
@@ -31,12 +31,12 @@ class WireTest < ApplicationSystemTestCase
   end
 
   test 'measurement gate turns its quantum wire into a classic wire' do
-    visit new_circuit_path(json: '{"cols":[[1],[1]]}')
+    visit new_circuit_path(json: '{"cols":[[],[]]}')
 
     palette('write-gate[data-value="0"]').drag_to(first('circuit-dropzone'), html5: false)
-    palette('measurement-gate').drag_to(second('circuit-dropzone'), html5: false)
+    palette('measurement-gate').drag_to(third('circuit-dropzone'), html5: false)
 
-    assert_equal '', second('circuit-dropzone')['data-input-wire-quantum']
-    assert_nil second('circuit-dropzone')['data-output-wire-quantum']
+    assert_equal '', third('circuit-dropzone')['data-input-wire-quantum']
+    assert_nil third('circuit-dropzone')['data-output-wire-quantum']
   end
 end

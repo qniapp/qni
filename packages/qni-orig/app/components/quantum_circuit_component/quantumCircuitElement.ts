@@ -22,6 +22,7 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
   @attr jsonFromUrl = false
+  @attr minWireCount = 1
 
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
@@ -390,6 +391,14 @@ export class QuantumCircuitElement extends HTMLElement {
     if (jsonString === "") return
     const jsonData = JSON.parse(jsonString)
 
+    const maxJsonStepLength = Math.max(
+      ...jsonData.cols.map((each: string[]) => each.length),
+    )
+    const minStepLength =
+      maxJsonStepLength > this.minWireCount
+        ? maxJsonStepLength
+        : this.minWireCount
+
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
 
@@ -541,6 +550,12 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         }
       }
+
+      if (circuitStep.nqubit < minStepLength) {
+        ;[...Array(minStepLength - circuitStep.nqubit)].map(() =>
+          circuitStep.appendDropzone(),
+        )
+      }
     }
   }
 
@@ -566,7 +581,10 @@ export class QuantumCircuitElement extends HTMLElement {
   private maybeRemoveLastWire(): void {
     while (
       this.steps.every((each) => {
-        return each.nqubit > 1 && !each.dropzones[each.nqubit - 1].occupied
+        return (
+          each.nqubit > this.minWireCount &&
+          !each.dropzones[each.nqubit - 1].occupied
+        )
       })
     ) {
       for (const each of this.steps) {

@@ -123,6 +123,9 @@ export class CircuitStepElement extends HTMLElement {
 
   toJson(): string {
     const jsons = this.dropzones.map((each) => each.toJson())
+    while (jsons.length > 0 && jsons[jsons.length - 1] === "1") {
+      jsons.pop()
+    }
     return `[${jsons.join(",")}]`
   }
 

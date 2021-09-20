@@ -111,18 +111,6 @@ description: A column representing a single step in a quantum circuit.
 {% endcapture %}
 {% include circuit_example.html code=code %}
 
-<p class="mb-4">
-  The size of each step must all be the same. If you forget to include the
-  Identity gate and the steps have different sizes, the rendering will be done,
-  but you will see a collapsed circuit, as shown below.
-</p>
-
-{% capture code %}
-<quantum-circuit data-json="{&quot;cols&quot;:[[&quot;|0>&quot;],[1,&quot;|0>&quot;],[1,1,&quot;|0>&quot;]]}">
-</quantum-circuit>
-{% endcapture %}
-{% include circuit_example.html code=code %}
-
 
 <h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
   <span class="text-2xl font-bold">Raw HTML</span>
@@ -130,9 +118,8 @@ description: A column representing a single step in a quantum circuit.
 
 <p class="mb-4">
   To describe a circuit step in raw HTML, sandwich the circuit dropzone
-  containing the gate between <code class="text-purple-500">&lt;circuit-step&gt; ...
-  &lt;/circuit-step&gt;</code>. As in the JSON API, the size of each step must
-  be the same.
+  containing the gate between <code class="text-purple-500">&lt;circuit-step&gt;
+  ... &lt;/circuit-step&gt;</code>.
 </p>
 
 {% capture code %}
