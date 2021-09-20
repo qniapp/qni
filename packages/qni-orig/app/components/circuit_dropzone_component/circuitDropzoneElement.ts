@@ -478,4 +478,8 @@ export class CircuitDropzoneElement extends HTMLElement {
       }
     }
   }
+
+  remove(): void {
+    this.parentElement?.removeChild(this)
+  }
 }

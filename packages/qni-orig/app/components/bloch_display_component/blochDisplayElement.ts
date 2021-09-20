@@ -293,12 +293,7 @@ export class BlochDisplayElement extends DraggableMixin(
           }
         </style>
 
-        <div
-          id="body"
-          data-target="bloch-display.body"
-          data-action="mousedown:bloch-display#grab mouseup:bloch-display#unGrab"
-          data-d="${this.d}"
-        >
+        <div id="body" data-target="bloch-display.body" data-d="${this.d}">
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" class="absolute inset-0">
             <svg

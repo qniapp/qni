@@ -48,10 +48,7 @@ export class HGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div
-          id="body"
-          data-action="mouseenter:h-gate#showHelp mousedown:h-gate#grab mouseup:h-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:h-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

@@ -247,6 +247,8 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
+    this.addEventListener("ungrabdraggable", this.maybeRemoveLastWire)
+    this.addEventListener("enddragging", this.maybeRemoveLastWire)
   }
 
   attributeChangedCallback(
@@ -551,9 +553,33 @@ export class QuantumCircuitElement extends HTMLElement {
       each.updateWires()
       each.updateConnections()
     }
-    if (this.jsonFromUrl) {
-      history.pushState("", "", this.toJson())
+    this.updateJsonUrl()
+  }
+
+  appendWire(): void {
+    for (const each of this.steps) {
+      each.appendDropzone()
     }
+    this.updateJsonUrl()
+  }
+
+  private maybeRemoveLastWire(): void {
+    while (
+      this.steps.every((each) => {
+        return each.nqubit > 1 && !each.dropzones[each.nqubit - 1].occupied
+      })
+    ) {
+      for (const each of this.steps) {
+        each.dropzones[each.nqubit - 1].remove()
+      }
+    }
+    this.updateJsonUrl()
+  }
+
+  private updateJsonUrl(): void {
+    if (!this.jsonFromUrl) return
+
+    history.pushState("", "", this.toJson())
   }
 
   toJson(): string {

@@ -46,10 +46,7 @@ export class SwapGateElement extends DraggableMixin(
           }
         </style>
 
-        <div
-          id="body"
-          data-action="mouseenter:swap-gate#showHelp mousedown:swap-gate#grab mouseup:swap-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:swap-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

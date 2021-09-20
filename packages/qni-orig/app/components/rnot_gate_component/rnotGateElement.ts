@@ -48,10 +48,7 @@ export class RnotGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div
-          id="body"
-          data-action="mouseenter:rnot-gate#showHelp mousedown:rnot-gate#grab mouseup:rnot-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:rnot-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

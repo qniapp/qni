@@ -48,10 +48,7 @@ export class ZGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div
-          id="body"
-          data-action="mouseenter:z-gate#showHelp mousedown:z-gate#grab mouseup:z-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:z-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

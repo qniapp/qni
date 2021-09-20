@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class TrashOperationTest < ApplicationSystemTestCase
   test 'drag and drop an operation on the palette to discard it' do
-    visit new_circuit_path(json: '{"cols":[]}')
+    visit new_circuit_path(json: '{"cols":[[1]]}')
 
     palette('h-gate').drag_to(find('body'), html5: false)
 

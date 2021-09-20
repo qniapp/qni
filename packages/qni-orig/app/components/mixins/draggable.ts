@@ -108,12 +108,24 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
         onmove: this.dragMove.bind(this),
         onend: this.endDragging.bind(this),
       })
+
+      this.addEventListener("mousedown", this.grab)
+      this.addEventListener("mouseup", this.unGrab)
     }
 
     // actions
 
     grab(event: MouseEvent): void {
       if (!this.draggable) return
+
+      if (isPaletteDropzone(this.dropzone)) {
+        this.moveToGrabbedPosition(event.offsetX, event.offsetY)
+      } else if (isCircuitDropzone(this.dropzone)) {
+        this.dropzone.enableDropzone()
+      }
+
+      this.quantumCircuit?.appendWire()
+      this.dispatchEvent(new Event("grabdraggable", { bubbles: true }))
 
       const snapTargets = this.snapTargets
 
@@ -144,14 +156,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           },
         },
       })
-
-      if (isCircuitDropzone(this.dropzone)) {
-        this.dropzone.enableDropzone()
-      }
-      if (isPaletteDropzone(this.dropzone)) {
-        this.moveToGrabbedPosition(event.offsetX, event.offsetY)
-      }
-      this.dispatchEvent(new Event("grabdraggable", { bubbles: true }))
     }
 
     private get snapTargets(): Array<{ x: number; y: number }> {
@@ -181,6 +185,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     unGrab(): void {
+      if (isPaletteDropzone(this.dropzone)) {
+        this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
+      } else if (isCircuitDropzone(this.dropzone)) {
+        this.dispatchEvent(new Event("ungrabdraggable", { bubbles: true }))
+      }
+
       if (!this.snapped) {
         this.trash()
         return
@@ -191,7 +201,10 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     private get quantumCircuit(): QuantumCircuitElement | null {
-      return document.querySelector("quantum-circuit")
+      return (
+        this.closest("quantum-circuit") ||
+        document.querySelector("quantum-circuit")
+      )
     }
 
     private snapRange(): number {
@@ -215,6 +228,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     endDragging(): void {
+      if (isPaletteDropzone(this.dropzone)) {
+        this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
+      } else if (isCircuitDropzone(this.dropzone)) {
+        this.dispatchEvent(new Event("enddragging", { bubbles: true }))
+      }
+
       if (!this.snapped) {
         this.trash()
         return

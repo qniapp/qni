@@ -54,7 +54,7 @@ export class PhaseGateElement extends DraggableMixin(
         <div
           id="body"
           data-phi="${this.phi}"
-          data-action="mouseenter:phase-gate#showHelp mousedown:phase-gate#grab mouseup:phase-gate#unGrab"
+          data-action="mouseenter:phase-gate#showHelp"
         >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,

@@ -48,10 +48,7 @@ export class YGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div
-          id="body"
-          data-action="mouseenter:y-gate#showHelp mousedown:y-gate#grab mouseup:y-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:y-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,

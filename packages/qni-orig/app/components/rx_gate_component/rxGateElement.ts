@@ -54,7 +54,7 @@ export class RxGateElement extends DraggableMixin(
         <div
           id="body"
           data-theta="${this.theta}"
-          data-action="mouseenter:rx-gate#showHelp mousedown:rx-gate#grab mouseup:rx-gate#unGrab"
+          data-action="mouseenter:rx-gate#showHelp"
         >
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,

@@ -97,7 +97,7 @@ export class MeasurementGateElement extends DraggableMixin(
         <div
           id="body"
           data-flag="${this.flag}"
-          data-action="mouseenter:measurement-gate#showHelp mousedown:measurement-gate#grab mouseup:measurement-gate#unGrab"
+          data-action="mouseenter:measurement-gate#showHelp"
         >
           ${this.iconSvg}
           <div id="ket-label"></div>

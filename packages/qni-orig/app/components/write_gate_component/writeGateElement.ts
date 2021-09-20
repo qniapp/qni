@@ -121,10 +121,7 @@ export class WriteGateElement extends DraggableMixin(
           }
         </style>
 
-        <div
-          id="body"
-          data-action="mouseenter:write-gate#showHelp mousedown:write-gate#grab mouseup:write-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:write-gate#showHelp">
           ${this.iconSvg}
           <div id="ket-label"></div>
         </div>`,

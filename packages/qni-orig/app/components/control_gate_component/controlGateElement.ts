@@ -46,10 +46,7 @@ export class ControlGateElement extends DraggableMixin(
           }
         </style>
 
-        <div
-          id="body"
-          data-action="mouseenter:control-gate#showHelp mousedown:control-gate#grab mouseup:control-gate#unGrab"
-        >
+        <div id="body" data-action="mouseenter:control-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}
         </div>`,
       this.shadowRoot!,
