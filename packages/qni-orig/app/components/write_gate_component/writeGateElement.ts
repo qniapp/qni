@@ -15,6 +15,16 @@ export class WriteGateElement extends DraggableMixin(
   @attr iconType = "transparent"
   @attr value = "0"
 
+  static create(
+    value: "0" | "1",
+    { draggable = false }: Partial<{ draggable: boolean }> = {},
+  ): WriteGateElement {
+    const el = document.createElement("write-gate") as WriteGateElement
+    el.value = value
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

@@ -319,13 +319,6 @@ export class CircuitDropzoneElement extends HTMLElement {
     }
   }
 
-  assignOperationElement(element: HTMLElement): void {
-    element.setAttribute("data-target", "circuit-dropzone.operation")
-    this.draggableName = element.tagName.toLowerCase()
-    this.append(element)
-    this.updateWires()
-  }
-
   index(): number | null {
     const circuitStep = this.closest("circuit-step") as CircuitStepElement
     if (circuitStep === null) return null

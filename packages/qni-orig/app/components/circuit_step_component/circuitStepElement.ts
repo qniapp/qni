@@ -108,7 +108,7 @@ export class CircuitStepElement extends HTMLElement {
 
   appendOperation(operation: HTMLElement): void {
     const dropzone = this.appendDropzone()
-    dropzone.assignOperationElement(operation)
+    dropzone.append(operation)
 
     this.updateConnections()
   }

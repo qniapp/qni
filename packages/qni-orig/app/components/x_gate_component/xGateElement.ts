@@ -28,6 +28,14 @@ export class XGateElement extends DraggableMixin(
 ) {
   @attr iconType = "circle"
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): XGateElement {
+    const el = document.createElement("x-gate") as XGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

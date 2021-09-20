@@ -21,6 +21,7 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 @controller
 export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
+  @attr jsonFromUrl = false
 
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
@@ -143,10 +144,10 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const controlGate = document.createElement("control-gate")
-    circuitStep.dropzones[control].assignOperationElement(controlGate)
+    circuitStep.dropzones[control].append(controlGate)
 
     const xGate = document.createElement("x-gate")
-    circuitStep.dropzones[xTarget].assignOperationElement(xGate)
+    circuitStep.dropzones[xTarget].append(xGate)
 
     this.maybeAppendMissingDropzones()
 
@@ -171,13 +172,13 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const controlGateA = document.createElement("control-gate")
-    circuitStep.dropzones[controlA].assignOperationElement(controlGateA)
+    circuitStep.dropzones[controlA].append(controlGateA)
 
     const controlGateB = document.createElement("control-gate")
-    circuitStep.dropzones[controlB].assignOperationElement(controlGateB)
+    circuitStep.dropzones[controlB].append(controlGateB)
 
     const xGate = document.createElement("x-gate")
-    circuitStep.dropzones[xTarget].assignOperationElement(xGate)
+    circuitStep.dropzones[xTarget].append(xGate)
 
     this.maybeAppendMissingDropzones()
 
@@ -212,7 +213,7 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of targetQubits) {
       const writeGate = document.createElement("write-gate") as WriteGateElement
       writeGate.value = value.toString()
-      circuitStep.dropzones[each].assignOperationElement(writeGate)
+      circuitStep.dropzones[each].append(writeGate)
     }
 
     this.maybeAppendMissingDropzones()
@@ -244,7 +245,7 @@ export class QuantumCircuitElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
-    this.appendJsonSteps()
+    this.loadFromJson()
     this.updateAllSteps()
   }
 
@@ -258,7 +259,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
     if (name === "data-json") {
       this.update()
-      this.appendJsonSteps()
+      this.loadFromJson()
     }
   }
 
@@ -315,7 +316,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
     for (const each of targetQubits) {
       const gate = document.createElement(elementName)
-      circuitStep.dropzones[each].assignOperationElement(gate)
+      circuitStep.dropzones[each].append(gate)
     }
   }
 
@@ -340,19 +341,19 @@ export class QuantumCircuitElement extends HTMLElement {
       if (elementName === "phase-gate") {
         const gate = document.createElement(elementName) as PhaseGateElement
         gate.phi = angle.toString()
-        circuitStep.dropzones[each].assignOperationElement(gate)
+        circuitStep.dropzones[each].append(gate)
       } else if (elementName === "rx-gate") {
         const gate = document.createElement(elementName) as RxGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].assignOperationElement(gate)
+        circuitStep.dropzones[each].append(gate)
       } else if (elementName === "ry-gate") {
         const gate = document.createElement(elementName) as RyGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].assignOperationElement(gate)
+        circuitStep.dropzones[each].append(gate)
       } else if (elementName === "rz-gate") {
         const gate = document.createElement(elementName) as RzGateElement
         gate.theta = angle.toString()
-        circuitStep.dropzones[each].assignOperationElement(gate)
+        circuitStep.dropzones[each].append(gate)
       }
     }
   }
@@ -374,11 +375,18 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private appendJsonSteps(): void {
-    if (this.json === "") return
-
-    const jsonData = JSON.parse(this.json)
+  private loadFromJson(): void {
+    let jsonString
     let circuitBlock = null
+
+    if (this.jsonFromUrl) {
+      jsonString = this.urlJson
+    } else {
+      jsonString = this.json
+    }
+
+    if (jsonString === "") return
+    const jsonData = JSON.parse(jsonString)
 
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
@@ -386,119 +394,135 @@ export class QuantumCircuitElement extends HTMLElement {
       for (const instruction of step) {
         switch (true) {
           case /^\|0>$/.test(instruction): {
-            const el = document.createElement("write-gate") as WriteGateElement
-            el.value = "0"
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              WriteGateElement.create("0", { draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^\|1>$/.test(instruction): {
-            const el = document.createElement("write-gate") as WriteGateElement
-            el.value = "1"
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              WriteGateElement.create("1", { draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^H$/.test(instruction): {
-            const el = document.createElement("h-gate") as HGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              HGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^X$/.test(instruction): {
-            const el = document.createElement("x-gate") as XGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              XGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Y$/.test(instruction): {
-            const el = document.createElement("y-gate") as YGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              YGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Z$/.test(instruction): {
-            const el = document.createElement("z-gate") as ZGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              ZGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^P$/.test(instruction): {
-            const el = document.createElement("phase-gate") as PhaseGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              PhaseGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^P\((.+)\)$/.test(instruction): {
-            const el = document.createElement("phase-gate") as PhaseGateElement
-            el.phi = RegExp.$1.replace("_", "/")
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              PhaseGateElement.create({
+                phi: RegExp.$1.replace("_", "/"),
+                draggable: this.jsonFromUrl,
+              }),
+            )
             break
           }
           case /^X\^½$/.test(instruction): {
-            const el = document.createElement("rnot-gate") as RnotGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RnotGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Rx$/.test(instruction): {
-            const el = document.createElement("rx-gate") as RxGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RxGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Rx\((.+)\)$/.test(instruction): {
-            const el = document.createElement("rx-gate") as RxGateElement
-            el.theta = RegExp.$1
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RxGateElement.create({
+                theta: RegExp.$1.replace("_", "/"),
+                draggable: this.jsonFromUrl,
+              }),
+            )
             break
           }
           case /^Ry$/.test(instruction): {
-            const el = document.createElement("ry-gate") as RyGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RyGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Ry\((.+)\)$/.test(instruction): {
-            const el = document.createElement("ry-gate") as RzGateElement
-            el.theta = RegExp.$1
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RyGateElement.create({
+                theta: RegExp.$1.replace("_", "/"),
+                draggable: this.jsonFromUrl,
+              }),
+            )
             break
           }
           case /^Rz$/.test(instruction): {
-            const el = document.createElement("rz-gate") as RzGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RzGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Rz\((.+)\)$/.test(instruction): {
-            const el = document.createElement("rz-gate") as RzGateElement
-            el.theta = RegExp.$1
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              RzGateElement.create({
+                theta: RegExp.$1.replace("_", "/"),
+                draggable: this.jsonFromUrl,
+              }),
+            )
             break
           }
           case /^Swap$/.test(instruction): {
-            const el = document.createElement("swap-gate") as SwapGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              SwapGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^•$/.test(instruction): {
-            const el = document.createElement(
-              "control-gate",
-            ) as ControlGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              ControlGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Bloch$/.test(instruction): {
-            const el = document.createElement(
-              "bloch-display",
-            ) as BlochDisplayElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              BlochDisplayElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^Measure$/.test(instruction): {
-            const el = document.createElement(
-              "measurement-gate",
-            ) as MeasurementGateElement
-            circuitStep.appendOperation(el)
+            circuitStep.appendOperation(
+              MeasurementGateElement.create({ draggable: this.jsonFromUrl }),
+            )
             break
           }
           case /^\{(.+)$/.test(instruction): {
+            const comment = RegExp.$1
             circuitStep.remove()
-            circuitBlock = document.createElement(
-              "circuit-block",
-            ) as CircuitBlockElement
-            circuitBlock.comment = RegExp.$1
-            circuitBlock.setAttribute("data-targets", "quantum-circuit.blocks")
+            circuitBlock = CircuitBlockElement.create(comment)
             this.append(circuitBlock)
             break
           }
@@ -518,10 +542,24 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
+  private get urlJson(): string {
+    return decodeURIComponent(location.pathname.split("/").pop() || "")
+  }
+
   updateAllSteps(): void {
     for (const each of this.steps) {
       each.updateWires()
       each.updateConnections()
     }
+    if (this.jsonFromUrl) {
+      history.pushState("", "", this.toJson())
+    }
+  }
+
+  toJson(): string {
+    const cols = this.steps.map((each) => {
+      return each.toJson()
+    })
+    return `{"cols":[${cols.join(",")}]}`
   }
 }

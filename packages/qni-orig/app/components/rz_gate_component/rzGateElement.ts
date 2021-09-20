@@ -29,6 +29,16 @@ export class RzGateElement extends DraggableMixin(
   @attr iconType = "square"
   @attr theta = ""
 
+  static create({
+    theta = "",
+    draggable = false,
+  }: Partial<{ theta: string; draggable: boolean }> = {}): RzGateElement {
+    const el = document.createElement("rz-gate") as RzGateElement
+    el.theta = theta
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

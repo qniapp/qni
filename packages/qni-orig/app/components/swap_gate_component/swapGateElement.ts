@@ -20,6 +20,14 @@ export class SwapGateElement extends DraggableMixin(
 ) {
   @attr iconType = "transparent"
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): SwapGateElement {
+    const el = document.createElement("swap-gate") as SwapGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

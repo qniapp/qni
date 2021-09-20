@@ -58,7 +58,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     get draggableStyle(): TemplateResult {
       return html`<style>
         :host([data-draggable]) {
-          cursor: grab;
           touch-action: none;
         }
 

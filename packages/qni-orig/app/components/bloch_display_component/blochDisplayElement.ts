@@ -25,6 +25,14 @@ export class BlochDisplayElement extends DraggableMixin(
   @attr draggableSource = false
   @attr draggableShadow = false
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): BlochDisplayElement {
+    const el = document.createElement("bloch-display") as BlochDisplayElement
+    el.draggable = draggable
+    return el
+  }
+
   showPopup(): void {
     if (this.isCircuitDraggable()) {
       const content = this.blochInspectorPopupContent()

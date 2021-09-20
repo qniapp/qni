@@ -28,6 +28,14 @@ export class HGateElement extends DraggableMixin(
 ) {
   @attr iconType = "square"
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): HGateElement {
+    const el = document.createElement("h-gate") as HGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

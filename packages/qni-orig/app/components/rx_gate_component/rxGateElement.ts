@@ -29,6 +29,16 @@ export class RxGateElement extends DraggableMixin(
   @attr iconType = "square"
   @attr theta = ""
 
+  static create({
+    theta = "",
+    draggable = false,
+  }: Partial<{ theta: string; draggable: boolean }> = {}): RxGateElement {
+    const el = document.createElement("rx-gate") as RxGateElement
+    el.theta = theta
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

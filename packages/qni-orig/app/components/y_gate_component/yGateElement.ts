@@ -28,6 +28,14 @@ export class YGateElement extends DraggableMixin(
 ) {
   @attr iconType = "square"
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): YGateElement {
+    const el = document.createElement("y-gate") as YGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

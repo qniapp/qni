@@ -19,6 +19,16 @@ export class MeasurementGateElement extends DraggableMixin(
   @attr value = ""
   @attr flag = ""
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): MeasurementGateElement {
+    const el = document.createElement(
+      "measurement-gate",
+    ) as MeasurementGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

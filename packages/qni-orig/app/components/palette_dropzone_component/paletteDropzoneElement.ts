@@ -1,4 +1,5 @@
 import { html, render } from "@github/jtml"
+import { Operation } from "mixins"
 import { controller } from "@github/catalyst"
 
 @controller
@@ -13,26 +14,30 @@ export class PaletteDropzoneElement extends HTMLElement {
       html`<style>
           :host {
             position: relative;
-            height: 2rem;
-            width: 2rem;
+            height: ${Operation.size.base.height};
+            width: ${Operation.size.base.width};
           }
 
+          /*
+           * Specify "position: absolute" to overlap the newly generated
+           * operation with the operation originally placed in
+           * <palette-dropzone> ... </palette-dropzone> (e.g. <h-gate>).
+           */
           ::slotted(*) {
             position: absolute;
           }
         </style>
 
-        <div data-action="grabdraggable:palette-dropzone#supplyNewOperation">
+        <div data-action="grabdraggable:palette-dropzone#newOperation">
           <slot></slot>
         </div>`,
       this.shadowRoot!,
     )
   }
 
-  supplyNewOperation(event: Event): void {
+  newOperation(event: Event): void {
     const operation = event.target as HTMLElement
-    const operationName = operation.tagName.toLowerCase()
-    const newOperation = document.createElement(operationName)
+    const newOperation = document.createElement(operation.tagName)
 
     this.append(newOperation)
   }

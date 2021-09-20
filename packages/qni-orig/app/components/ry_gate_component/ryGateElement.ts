@@ -29,6 +29,16 @@ export class RyGateElement extends DraggableMixin(
   @attr iconType = "square"
   @attr theta = ""
 
+  static create({
+    theta = "",
+    draggable = false,
+  }: Partial<{ theta: string; draggable: boolean }> = {}): RyGateElement {
+    const el = document.createElement("ry-gate") as RyGateElement
+    el.theta = theta
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

@@ -363,13 +363,6 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
       assert.equal(qc.step(0).dropzone(3).operation?.toJson(), '"|1>"')
     })
 
-    QUnit.test("should turn its classic wire into a quantum wire", (assert) => {
-      qc.write(0, 0)
-
-      assert.false(qc.step(0).dropzone(0).inputWireQuantum)
-      assert.true(qc.step(0).dropzone(0).outputWireQuantum)
-    })
-
     QUnit.test("should throw when the target qubit is negative", (assert) => {
       assert.throws(() => qc.write(0, -1))
       assert.throws(() => qc.write(1, -1))
@@ -400,13 +393,6 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
         qc.step(0).dropzone(3).operation?.tagName,
         "MEASUREMENT-GATE",
       )
-    })
-
-    QUnit.test("should turn its quantum wire into a classic wire", (assert) => {
-      qc.write(0, 0).measure(0)
-
-      assert.true(qc.step(1).dropzone(0).inputWireQuantum)
-      assert.false(qc.step(1).dropzone(0).outputWireQuantum)
     })
   })
 })

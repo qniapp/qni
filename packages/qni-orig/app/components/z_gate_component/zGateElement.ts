@@ -28,6 +28,14 @@ export class ZGateElement extends DraggableMixin(
 ) {
   @attr iconType = "square"
 
+  static create({
+    draggable = false,
+  }: Partial<{ draggable: boolean }> = {}): ZGateElement {
+    const el = document.createElement("z-gate") as ZGateElement
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })

@@ -29,6 +29,16 @@ export class PhaseGateElement extends DraggableMixin(
   @attr iconType = "circle"
   @attr phi = ""
 
+  static create({
+    phi = "",
+    draggable = false,
+  }: Partial<{ phi: string; draggable: boolean }> = {}): PhaseGateElement {
+    const el = document.createElement("phase-gate") as PhaseGateElement
+    el.phi = phi
+    el.draggable = draggable
+    return el
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
