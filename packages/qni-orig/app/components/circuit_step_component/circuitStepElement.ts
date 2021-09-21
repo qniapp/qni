@@ -17,6 +17,7 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 
 @controller
 export class CircuitStepElement extends HTMLElement {
+  @attr active = false
   @attr keep = false
 
   @target slotEl: HTMLSlotElement
@@ -109,6 +110,21 @@ export class CircuitStepElement extends HTMLElement {
     return all[index + 1] || null
   }
 
+  activate(): void {
+    const quantumCircuitEl = this.quantumCircuitElement()
+    if (quantumCircuitEl === null) return
+
+    for (const each of quantumCircuitEl.steps) {
+      each.deactivate()
+    }
+
+    this.active = true
+  }
+
+  deactivate(): void {
+    this.active = false
+  }
+
   appendDropzone(): CircuitDropzoneElement {
     const el = document.createElement(
       "circuit-dropzone",
@@ -154,13 +170,48 @@ export class CircuitStepElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          :host {
+            display: flex;
+            flex-direction: row;
+          }
+
           #body {
             display: flex;
             flex-direction: row-reverse;
+            cursor: pointer;
           }
 
           ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
             margin-right: 1rem;
+          }
+
+          #breakpoint {
+            position: relative;
+            margin-top: -1rem;
+            margin-bottom: -1rem;
+            min-height: 100%;
+            min-width: 0px;
+          }
+
+          #breakpoint-line {
+            position: absolute;
+            z-index: 10;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            padding: 2px;
+            margin-left: -2px;
+            background-color: var(--colors-cardinal, #ff4b4b);
+            opacity: 0;
+          }
+
+          :host(:hover) #breakpoint-line {
+            opacity: 0.3;
+          }
+
+          :host([data-active]:hover) #breakpoint-line {
+            opacity: 0.8;
           }
 
           @media (min-width: 768px) {
@@ -175,8 +226,11 @@ export class CircuitStepElement extends HTMLElement {
           }
         </style>
 
-        <div id="body">
+        <div id="body" data-action="click:circuit-step#activate">
           <slot data-target="circuit-step.slotEl"></slot>
+        </div>
+        <div id="breakpoint">
+          <div id="breakpoint-line"></div>
         </div>`,
       this.shadowRoot!,
     )
