@@ -349,6 +349,11 @@ export class CircuitDropzoneElement extends HTMLElement {
     return nextStep.dropzone(index)
   }
 
+  assign(operation: HTMLElement): void {
+    this.append(operation)
+    this.occupied = true
+  }
+
   toJson(): string | number {
     const operation = this.operation
 
@@ -395,6 +400,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
       if (this.childElementCount === 0) {
         this.draggableName = ""
+        this.occupied = false
         this.enableDropzone()
         this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
         return
@@ -407,6 +413,7 @@ export class CircuitDropzoneElement extends HTMLElement {
       operation.setAttribute("data-size", this.size)
 
       this.draggableName = nodeName.toLowerCase()
+      this.occupied = true
       this.disableDropzone()
 
       this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
@@ -421,16 +428,15 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   enableDropzone(): void {
-    this.occupied = false
     interact(this).dropzone(true)
   }
 
   disableDropzone(): void {
-    this.occupied = true
     interact(this).dropzone(false)
   }
 
   snap(draggable: HTMLElement): void {
+    this.occupied = true
     this.append(draggable)
   }
 

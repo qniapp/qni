@@ -37,56 +37,6 @@ QUnit.module("CircuitDropzone", (hooks) => {
     assert.equal(el.operation, null)
   })
 
-  QUnit.test(".prev()", (assert) => {
-    container.innerHTML = `
-      <quantum-circuit>
-        <circuit-step>
-          <circuit-dropzone id="dropzoneA">
-          </circuit-dropzone>
-        </circuit-step>
-        <circuit-step>
-          <circuit-dropzone id="dropzoneB">
-          </circuit-dropzone>
-        </circuit-step>
-      </quantum-circuit>`
-    document.body.append(container)
-
-    const dropzoneA = document.getElementById(
-      "dropzoneA",
-    ) as CircuitDropzoneElement
-    const dropzoneB = document.getElementById(
-      "dropzoneB",
-    ) as CircuitDropzoneElement
-
-    assert.equal(dropzoneA.prev(), null)
-    assert.equal(dropzoneB.prev()?.id, "dropzoneA")
-  })
-
-  QUnit.test(".next()", (assert) => {
-    container.innerHTML = `
-      <quantum-circuit>
-        <circuit-step>
-          <circuit-dropzone id="dropzoneA">
-          </circuit-dropzone>
-        </circuit-step>
-        <circuit-step>
-          <circuit-dropzone id="dropzoneB">
-          </circuit-dropzone>
-        </circuit-step>
-      </quantum-circuit>`
-    document.body.append(container)
-
-    const dropzoneA = document.getElementById(
-      "dropzoneA",
-    ) as CircuitDropzoneElement
-    const dropzoneB = document.getElementById(
-      "dropzoneB",
-    ) as CircuitDropzoneElement
-
-    assert.equal(dropzoneA.next()?.id, "dropzoneB")
-    assert.equal(dropzoneB.next(), null)
-  })
-
   QUnit.test(".circuitStep() returns a CircuitStepElement", (assert) => {
     container.innerHTML = `
       <circuit-step>

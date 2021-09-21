@@ -7,7 +7,7 @@ class WireTest < ApplicationSystemTestCase
     page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
 
     within('quantum-circuit') do
-      assert_selector 'circuit-dropzone', count: 3
+      assert_selector 'circuit-dropzone', count: 3 * 5
     end
   end
 
@@ -17,7 +17,7 @@ class WireTest < ApplicationSystemTestCase
     quantum_circuit('h-gate').drag_to(second('circuit-dropzone'), html5: false)
 
     within('quantum-circuit') do
-      assert_selector 'circuit-dropzone', count: 2
+      assert_selector 'circuit-dropzone', count: 2 * 5
     end
   end
 
@@ -31,9 +31,8 @@ class WireTest < ApplicationSystemTestCase
   end
 
   test 'measurement gate turns its quantum wire into a classic wire' do
-    visit new_circuit_path(json: '{"cols":[[],[]]}')
+    visit new_circuit_path(json: '{"cols":[["|0>"]]}')
 
-    palette('write-gate[data-value="0"]').drag_to(first('circuit-dropzone'), html5: false)
     palette('measurement-gate').drag_to(third('circuit-dropzone'), html5: false)
 
     assert_equal '', third('circuit-dropzone')['data-input-wire-quantum']

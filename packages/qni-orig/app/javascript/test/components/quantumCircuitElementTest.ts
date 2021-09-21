@@ -332,14 +332,14 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
 
   QUnit.module("write", () => {
     QUnit.test("should apply a |0> gate", (assert) => {
-      qc.write(0, 1)
+      qc.write("0", 1)
 
       assert.equal(qc.step(0).dropzone(0).operation, null)
       assert.equal(qc.step(0).dropzone(1).operation?.toJson(), '"|0>"')
     })
 
     QUnit.test("should apply multiple |0> gates", (assert) => {
-      qc.write(0, 1, 3)
+      qc.write("0", 1, 3)
 
       assert.equal(qc.step(0).dropzone(0).operation, null)
       assert.equal(qc.step(0).dropzone(1).operation?.toJson(), '"|0>"')
@@ -348,14 +348,14 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
     })
 
     QUnit.test("should apply a |1> gate", (assert) => {
-      qc.write(1, 1)
+      qc.write("1", 1)
 
       assert.equal(qc.step(0).dropzone(0).operation, null)
       assert.equal(qc.step(0).dropzone(1).operation?.toJson(), '"|1>"')
     })
 
     QUnit.test("should apply multiple |1> gates", (assert) => {
-      qc.write(1, 1, 3)
+      qc.write("1", 1, 3)
 
       assert.equal(qc.step(0).dropzone(0).operation, null)
       assert.equal(qc.step(0).dropzone(1).operation?.toJson(), '"|1>"')
@@ -364,8 +364,8 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
     })
 
     QUnit.test("should throw when the target qubit is negative", (assert) => {
-      assert.throws(() => qc.write(0, -1))
-      assert.throws(() => qc.write(1, -1))
+      assert.throws(() => qc.write("0", -1))
+      assert.throws(() => qc.write("1", -1))
     })
   })
 

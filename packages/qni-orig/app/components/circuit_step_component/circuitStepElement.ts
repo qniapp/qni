@@ -1,5 +1,5 @@
 import { Draggable, isWireable } from "mixins"
-import { controller, target } from "@github/catalyst"
+import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
@@ -17,6 +17,8 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 
 @controller
 export class CircuitStepElement extends HTMLElement {
+  @attr keep = false
+
   @target slotEl: HTMLSlotElement
 
   get nqubit(): number {
@@ -25,6 +27,15 @@ export class CircuitStepElement extends HTMLElement {
 
   get dropzones(): CircuitDropzoneElement[] {
     return this.elements<CircuitDropzoneElement>("circuit-dropzone")
+  }
+
+  get lastDropzone(): CircuitDropzoneElement {
+    return this.dropzones[this.nqubit - 1]
+  }
+
+  get isEmpty(): boolean {
+    if (this.keep) return false
+    return this.dropzones.every((each) => !each.occupied)
   }
 
   dropzone(n: number): CircuitDropzoneElement | null {
@@ -107,9 +118,12 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   appendOperation(operation: HTMLElement): void {
-    const dropzone = this.appendDropzone()
+    const dropzone = document.createElement(
+      "circuit-dropzone",
+    ) as CircuitDropzoneElement
     dropzone.append(operation)
-
+    dropzone.occupied = true
+    this.append(dropzone)
     this.updateConnections()
   }
 

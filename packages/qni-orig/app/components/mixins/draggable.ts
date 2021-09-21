@@ -185,19 +185,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     unGrab(): void {
-      if (isPaletteDropzone(this.dropzone)) {
-        this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
-      } else if (isCircuitDropzone(this.dropzone)) {
-        this.dispatchEvent(new Event("ungrabdraggable", { bubbles: true }))
-      }
-
       if (!this.snapped) {
         this.trash()
+        this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
         return
       }
 
       this.grabbed = false
       this.moveTo(0, 0)
+      this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
     }
 
     private get quantumCircuit(): QuantumCircuitElement | null {
@@ -228,20 +224,16 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     endDragging(): void {
-      if (isPaletteDropzone(this.dropzone)) {
-        this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
-      } else if (isCircuitDropzone(this.dropzone)) {
-        this.dispatchEvent(new Event("enddragging", { bubbles: true }))
-      }
-
       if (!this.snapped) {
         this.trash()
+        this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
         return
       }
 
       this.dragging = false
       this.grabbed = false
       this.moveTo(0, 0)
+      this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
     }
 
     moveToDropzone(dropzone: CircuitDropzoneElement): void {
@@ -251,6 +243,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
     private trash() {
       interact(this).unset()
+      if (isCircuitDropzone(this.dropzone)) {
+        this.dropzone.occupied = false
+      }
       this.parentElement?.removeChild(this)
     }
 

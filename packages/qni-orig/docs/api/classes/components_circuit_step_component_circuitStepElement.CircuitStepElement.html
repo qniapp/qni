@@ -142,6 +142,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#inputMode" class="tsd-kind-icon">input<wbr>Mode</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#isConnected" class="tsd-kind-icon">is<wbr>Connected</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#isContentEditable" class="tsd-kind-icon">is<wbr>Content<wbr>Editable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#keep" class="tsd-kind-icon">keep</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lang" class="tsd-kind-icon">lang</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lastChild" class="tsd-kind-icon">last<wbr>Child</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lastElementChild" class="tsd-kind-icon">last<wbr>Element<wbr>Child</a></li>
@@ -275,6 +276,8 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#dropzones" class="tsd-kind-icon">dropzones</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#isEmpty" class="tsd-kind-icon">is<wbr>Empty</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lastDropzone" class="tsd-kind-icon">last<wbr>Dropzone</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#nqubit" class="tsd-kind-icon">nqubit</a></li>
 							</ul>
 						</section>
@@ -1026,6 +1029,16 @@
 						<p>Inherited from HTMLElement.isContentEditable</p>
 						<ul>
 							<li>Defined in node_modules/typescript/lib/lib.dom.d.ts:5262</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="keep" class="tsd-anchor"></a>
+					<h3>keep</h3>
+					<div class="tsd-signature tsd-kind-icon">keep<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L20">app/components/circuit_step_component/circuitStepElement.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4738,7 +4751,7 @@
 					<div class="tsd-signature tsd-kind-icon">slot<wbr>El<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLSlotElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L20">app/components/circuit_step_component/circuitStepElement.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L22">app/components/circuit_step_component/circuitStepElement.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4837,10 +4850,44 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L26">app/components/circuit_step_component/circuitStepElement.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L28">app/components/circuit_step_component/circuitStepElement.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="isEmpty" class="tsd-anchor"></a>
+					<h3>is<wbr>Empty</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isEmpty<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L36">app/components/circuit_step_component/circuitStepElement.ts:36</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="lastDropzone" class="tsd-anchor"></a>
+					<h3>last<wbr>Dropzone</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> lastDropzone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L32">app/components/circuit_step_component/circuitStepElement.ts:32</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -4854,7 +4901,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L22">app/components/circuit_step_component/circuitStepElement.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L24">app/components/circuit_step_component/circuitStepElement.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -5067,7 +5114,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L101">app/components/circuit_step_component/circuitStepElement.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L112">app/components/circuit_step_component/circuitStepElement.ts:112</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></h4>
@@ -5084,7 +5131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L109">app/components/circuit_step_component/circuitStepElement.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L120">app/components/circuit_step_component/circuitStepElement.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5166,7 +5213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L43">app/components/circuit_step_component/circuitStepElement.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L54">app/components/circuit_step_component/circuitStepElement.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5362,7 +5409,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L132">app/components/circuit_step_component/circuitStepElement.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L146">app/components/circuit_step_component/circuitStepElement.ts:146</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -5437,7 +5484,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L30">app/components/circuit_step_component/circuitStepElement.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L41">app/components/circuit_step_component/circuitStepElement.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -5460,7 +5507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L37">app/components/circuit_step_component/circuitStepElement.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L48">app/components/circuit_step_component/circuitStepElement.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -6018,7 +6065,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L65">app/components/circuit_step_component/circuitStepElement.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L76">app/components/circuit_step_component/circuitStepElement.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -6321,7 +6368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L90">app/components/circuit_step_component/circuitStepElement.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L101">app/components/circuit_step_component/circuitStepElement.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitStepElement</a></h4>
@@ -6391,7 +6438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L79">app/components/circuit_step_component/circuitStepElement.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L90">app/components/circuit_step_component/circuitStepElement.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitStepElement</a></h4>
@@ -6591,7 +6638,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides HTMLElement.remove</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L116">app/components/circuit_step_component/circuitStepElement.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L130">app/components/circuit_step_component/circuitStepElement.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7202,7 +7249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L124">app/components/circuit_step_component/circuitStepElement.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L138">app/components/circuit_step_component/circuitStepElement.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -7252,7 +7299,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L140">app/components/circuit_step_component/circuitStepElement.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L154">app/components/circuit_step_component/circuitStepElement.ts:154</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7269,7 +7316,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L178">app/components/circuit_step_component/circuitStepElement.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L192">app/components/circuit_step_component/circuitStepElement.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7286,7 +7333,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/82178414/app/components/circuit_step_component/circuitStepElement.ts#L315">app/components/circuit_step_component/circuitStepElement.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/4e7faf06/app/components/circuit_step_component/circuitStepElement.ts#L329">app/components/circuit_step_component/circuitStepElement.ts:329</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7483,6 +7530,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#isContentEditable" class="tsd-kind-icon">is<wbr>Content<wbr>Editable</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#keep" class="tsd-kind-icon">keep</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lang" class="tsd-kind-icon">lang</a>
@@ -7867,6 +7917,12 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#dropzones" class="tsd-kind-icon">dropzones</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#isEmpty" class="tsd-kind-icon">is<wbr>Empty</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#lastDropzone" class="tsd-kind-icon">last<wbr>Dropzone</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="components_circuit_step_component_circuitStepElement.CircuitStepElement.html#nqubit" class="tsd-kind-icon">nqubit</a>

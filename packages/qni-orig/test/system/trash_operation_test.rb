@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class TrashOperationTest < ApplicationSystemTestCase
   test 'drag and drop an operation on the palette to discard it' do
-    visit new_circuit_path(json: '{"cols":[[1]]}')
+    visit new_circuit_path(json: '{"cols":[[]]}')
 
     palette('h-gate').drag_to(find('body'), html5: false)
 
@@ -17,7 +17,7 @@ class TrashOperationTest < ApplicationSystemTestCase
   test 'drag and drop an operation on the circuit to discard it' do
     visit new_circuit_path(json: '{"cols":["H"]}')
 
-    quantum_circuit('h-gate').drag_to(find('body'), html5: false)
+    quantum_circuit('h-gate').drag_to(find('#palette'), html5: false)
 
     within('quantum-circuit') do
       assert_no_selector 'h-gate'
