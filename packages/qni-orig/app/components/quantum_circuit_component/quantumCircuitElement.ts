@@ -9,6 +9,7 @@ import { HGateElement } from "h_gate_component/hGateElement"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
+import { RunCircuitButtonElement } from "run_circuit_button_component/runCircuitButtonElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
@@ -244,11 +245,18 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  run(event: Event): void {
+    const runButton = (event as CustomEvent).detail
+      .button as RunCircuitButtonElement
+    runButton.enable()
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
+    this.addEventListener("clickrun", this.run)
     this.addEventListener("grabdraggable", this.appendCircuitStepShadow)
     this.addEventListener("ungrabdraggable", this.resize)
     this.addEventListener("enddragging", this.resize)
