@@ -161,6 +161,10 @@ const css = html`<style>
     transform-origin: center;
   }
 
+  :host([data-shadow]) #wires {
+    display: none;
+  }
+
   @media (min-width: 768px) {
     #wires {
       transform: rotate(0);
@@ -261,6 +265,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr wireBottom = false
   @attr occupied = false
   @attr draggableName = ""
+  @attr shadow = false
 
   get operation():
     | HGateElement

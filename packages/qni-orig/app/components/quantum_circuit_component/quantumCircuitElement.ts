@@ -249,6 +249,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
+    this.addEventListener("grabdraggable", this.appendCircuitStepShadow)
     this.addEventListener("ungrabdraggable", this.resize)
     this.addEventListener("enddragging", this.resize)
   }
@@ -536,16 +537,39 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateJsonUrl()
   }
 
+  appendCircuitStepShadow(): void {
+    const largestStep = this.largestStep
+
+    for (const each of this.steps) {
+      const step = CircuitStepElement.createShadow(
+        largestStep!.dropzones.length,
+      )
+      this.insertBefore(step, each.nextSibling)
+    }
+
+    for (const each of this.steps) {
+      each.showBreakpoint = false
+      each.style.pointerEvents = "none"
+    }
+  }
+
   private resize(): void {
     this.removeEmptySteps()
     this.appendMinimumSteps()
     this.removeLastEmptyWires()
     this.updateJsonUrl()
+    for (const each of this.steps) {
+      each.showBreakpoint = true
+      each.style.pointerEvents = "auto"
+    }
   }
 
   private removeEmptySteps(): void {
     for (const each of this.emptySteps) {
       each.remove()
+    }
+    for (const each of this.steps) {
+      each.shadow = false
     }
   }
 

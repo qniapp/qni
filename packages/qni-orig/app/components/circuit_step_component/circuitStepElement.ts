@@ -19,8 +19,19 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 export class CircuitStepElement extends HTMLElement {
   @attr active = false
   @attr keep = false
+  @attr shadow = false
+  @attr showBreakpoint = true
 
   @target slotEl: HTMLSlotElement
+
+  static createShadow(nqubit: number): CircuitStepElement {
+    const el = document.createElement("circuit-step") as CircuitStepElement
+    el.shadow = true
+    for (let i = 0; i < nqubit; i++) {
+      el.appendDropzone()
+    }
+    return el
+  }
 
   get nqubit(): number {
     return this.dropzones.length
@@ -159,6 +170,22 @@ export class CircuitStepElement extends HTMLElement {
     return `[${jsons.join(",")}]`
   }
 
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (oldValue === newValue) return
+
+    if (name === "data-shadow") {
+      if (newValue === null) {
+        for (const each of this.dropzones) {
+          each.shadow = false
+        }
+      }
+    }
+  }
+
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
@@ -173,6 +200,11 @@ export class CircuitStepElement extends HTMLElement {
           :host {
             display: flex;
             flex-direction: row;
+            justify-content: center;
+          }
+
+          :host([data-shadow]) {
+            width: 0px;
           }
 
           #body {
@@ -206,11 +238,12 @@ export class CircuitStepElement extends HTMLElement {
             opacity: 0;
           }
 
-          :host(:hover) #breakpoint-line {
+          :host([data-show-breakpoint]:not([data-active]):hover)
+            #breakpoint-line {
             opacity: 0.3;
           }
 
-          :host([data-active]:hover) #breakpoint-line {
+          :host([data-active]) #breakpoint-line {
             opacity: 0.8;
           }
 
@@ -238,6 +271,11 @@ export class CircuitStepElement extends HTMLElement {
 
   private addSlotChangeEventListener(): void {
     this.slotEl.addEventListener("slotchange", () => {
+      if (this.shadow) {
+        for (const each of this.dropzones) {
+          each.shadow = true
+        }
+      }
       this.updateConnections()
       this.updateWires()
     })

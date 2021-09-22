@@ -120,12 +120,13 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
       if (isPaletteDropzone(this.dropzone)) {
         this.moveToGrabbedPosition(event.offsetX, event.offsetY)
+        this.dispatchEvent(new Event("grabdraggable", { bubbles: true }))
       } else if (isCircuitDropzone(this.dropzone)) {
         this.dropzone.enableDropzone()
       }
 
       this.quantumCircuit?.appendWire()
-      this.dispatchEvent(new Event("grabdraggable", { bubbles: true }))
+      this.quantumCircuit?.dispatchEvent(new Event("grabdraggable"))
 
       const snapTargets = this.snapTargets
 
