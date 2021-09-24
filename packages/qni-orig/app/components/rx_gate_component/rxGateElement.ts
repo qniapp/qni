@@ -1,4 +1,5 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -7,19 +8,25 @@ import {
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
+  TargetableMixin,
   WireableMixin,
 } from "mixins"
+import { RX_GATE_OPERATION_TYPE, RxGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class RxGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  TargetableMixin(
+    ControllableMixin(
+      WireableMixin(
+        LabelableMixin(
+          IfableMixin(
+            DisableableMixin(
+              IconableMixin(
+                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+              ),
+            ),
           ),
         ),
       ),
@@ -30,7 +37,7 @@ export class RxGateElement extends DraggableMixin(
   @attr theta = ""
 
   static create({
-    theta = "",
+    theta = "π/2",
     draggable = false,
   }: Partial<{ theta: string; draggable: boolean }> = {}): RxGateElement {
     const el = document.createElement("rx-gate") as RxGateElement
@@ -64,9 +71,19 @@ export class RxGateElement extends DraggableMixin(
 
   toJson(): string {
     if (this.theta === "") {
-      return '"Rx"'
+      return `"${RX_GATE_OPERATION_TYPE}"`
     } else {
-      return `"Rx(${this.theta})"`
+      return `"${RX_GATE_OPERATION_TYPE}(${this.theta.replace("/", "_")})"`
+    }
+  }
+
+  serialize(): RxGateOperation {
+    return {
+      type: RX_GATE_OPERATION_TYPE,
+      theta: this.theta.replace("π", "pi"),
+      controls: this.controls,
+      targets: this.targets,
+      if: this.if !== "" ? this.if : null,
     }
   }
 

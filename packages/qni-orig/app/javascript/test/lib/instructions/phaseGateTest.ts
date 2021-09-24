@@ -1,8 +1,13 @@
-import { describe, Util } from "lib/base"
-import { isPhiable, PhaseGate } from "lib/instructions"
+import { PhaseGate, isPhiable } from "lib/instructions"
+import { Util, describe } from "lib/base"
 
 function phaseGateFixture(options: { [key: string]: string }) {
-  return `<div id="phase-gate" class="phase-gate" data-phi="${options.phi}"></div>`
+  // eslint-disable-next-line github/unescaped-html-literal
+  return `<div
+    id="phase-gate"
+    class="phase-gate"
+    data-phi="${options.phi}"
+  ></div>`
 }
 
 function createPhaseGateElement(
@@ -60,14 +65,14 @@ QUnit.module("PhaseGate", (hooks) => {
     assert.equates(phaseGate.controls, [1, 2, 3])
     assert.equal(
       describe(phaseGate.serialize()),
-      '{"type": "P", "phi": "pi/2", "controls": [1, 2, 3], "targets": []}',
+      '{"type": "P", "phi": "pi/2", "controls": [1, 2, 3], "targets": [], "if": null}',
     )
   })
 
   QUnit.test(".serialize()", (assert) => {
     assert.equal(
       describe(phaseGate.serialize()),
-      '{"type": "P", "phi": "pi/2", "controls": [], "targets": []}',
+      '{"type": "P", "phi": "pi/2", "controls": [], "targets": [], "if": null}',
     )
   })
 

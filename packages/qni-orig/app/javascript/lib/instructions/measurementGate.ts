@@ -1,35 +1,30 @@
+import {
+  MEASUREMENT_GATE_OPERATION_TYPE,
+  MeasurementOperation,
+} from "lib/operation"
+import { FlaggableMixin } from "./flaggable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { InternalError } from "lib/error"
 import { ValueableMixin } from "./valueable"
 import { classNameFor } from "lib/base"
-import { FlaggableMixin } from "./flaggable"
 
-export const MEASURE_GATE_INSTRUCTION_TYPE = "Measure"
-
-export type MeasureInstruction = {
-  type: typeof MEASURE_GATE_INSTRUCTION_TYPE
-  value: number | null
-  flag: string | null
-}
-
-export class MeasureGate extends FlaggableMixin(
+export class MeasurementGate extends FlaggableMixin(
   ValueableMixin(InstructionWithElement),
 ) {
   static readonly elementClassName = classNameFor("gate:measure")
 
-  serialize(): MeasureInstruction {
+  serialize(): MeasurementOperation {
     return {
-      type: MEASURE_GATE_INSTRUCTION_TYPE,
-      value: this.value,
+      type: MEASUREMENT_GATE_OPERATION_TYPE,
       flag: this.flag,
     }
   }
 
   toJson(): string {
     if (this.flag) {
-      return `"${MEASURE_GATE_INSTRUCTION_TYPE}>${this.flag}"`
+      return `"${MEASUREMENT_GATE_OPERATION_TYPE}>${this.flag}"`
     } else {
-      return `"${MEASURE_GATE_INSTRUCTION_TYPE}"`
+      return `"${MEASUREMENT_GATE_OPERATION_TYPE}"`
     }
   }
 

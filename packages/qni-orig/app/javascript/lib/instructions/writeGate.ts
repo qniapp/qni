@@ -1,21 +1,14 @@
 import { Util, attributeNameFor, classNameFor } from "lib/base"
+import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "lib/operation"
 import { InstructionWithElement } from "./instructionWithElement"
-
-export const WRITE0_GATE_INSTRUCTION = "|0>"
-export const WRITE1_GATE_INSTRUCTION = "|1>"
-
-export type WriteInstruction = {
-  type: typeof WRITE0_GATE_INSTRUCTION | typeof WRITE1_GATE_INSTRUCTION
-  value: number
-}
 
 export class WriteGate extends InstructionWithElement {
   static readonly elementClassName = classNameFor("gate:write")
 
-  serialize(): WriteInstruction {
+  serialize(): WriteGateOperation {
     return {
-      type: this.value == 0 ? WRITE0_GATE_INSTRUCTION : WRITE1_GATE_INSTRUCTION,
-      value: this.value,
+      type: WRITE_GATE_OPERATION_TYPE,
+      value: this.value as 0 | 1,
     }
   }
 

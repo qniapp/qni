@@ -1,4 +1,5 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -7,19 +8,25 @@ import {
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
+  TargetableMixin,
   WireableMixin,
 } from "mixins"
+import { PHASE_GATE_OPERATION_TYPE, PhaseGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class PhaseGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  TargetableMixin(
+    ControllableMixin(
+      WireableMixin(
+        LabelableMixin(
+          IfableMixin(
+            DisableableMixin(
+              IconableMixin(
+                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+              ),
+            ),
           ),
         ),
       ),
@@ -30,7 +37,7 @@ export class PhaseGateElement extends DraggableMixin(
   @attr phi = ""
 
   static create({
-    phi = "",
+    phi = "π/2",
     draggable = false,
   }: Partial<{ phi: string; draggable: boolean }> = {}): PhaseGateElement {
     const el = document.createElement("phase-gate") as PhaseGateElement
@@ -64,9 +71,19 @@ export class PhaseGateElement extends DraggableMixin(
 
   toJson(): string {
     if (this.phi === "") {
-      return '"P"'
+      return `"${PHASE_GATE_OPERATION_TYPE}"`
     } else {
-      return `"P(${this.phi})"`
+      return `"${PHASE_GATE_OPERATION_TYPE}(${this.phi.replace("/", "_")})"`
+    }
+  }
+
+  serialize(): PhaseGateOperation {
+    return {
+      type: PHASE_GATE_OPERATION_TYPE,
+      phi: this.phi.replace("π", "pi"),
+      controls: this.controls,
+      targets: this.targets,
+      if: this.if !== "" ? this.if : null,
     }
   }
 

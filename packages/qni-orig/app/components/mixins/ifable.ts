@@ -1,7 +1,9 @@
 import { Constructor } from "./constructor"
 import { attr } from "@github/catalyst"
 
-export declare class Ifable {}
+export declare class Ifable {
+  get if(): string
+}
 
 export function IfableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase,

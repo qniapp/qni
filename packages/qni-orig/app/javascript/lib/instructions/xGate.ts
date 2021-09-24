@@ -1,3 +1,4 @@
+import { XGateOperation, X_GATE_OPERATION_TYPE } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
@@ -6,23 +7,15 @@ import { InstructionWithElement } from "./instructionWithElement"
 import { Matrix } from "lib/math"
 import { classNameFor } from "lib/base"
 
-export const NOT_GATE_INSTRUCTION_TYPE = "X"
-
-export type NotGateInstruction = {
-  type: typeof NOT_GATE_INSTRUCTION_TYPE
-  controls: number[]
-  if: string | null
-}
-
-export class NotGate extends ControllableMixin(
+export class XGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:not")
   static readonly MATRIX = Matrix.PAULI_X
 
-  serialize(): NotGateInstruction {
+  serialize(): XGateOperation {
     return {
-      type: NOT_GATE_INSTRUCTION_TYPE,
+      type: X_GATE_OPERATION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -30,9 +23,9 @@ export class NotGate extends ControllableMixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${NOT_GATE_INSTRUCTION_TYPE}<${this.if}"`
+      return `"${X_GATE_OPERATION_TYPE}<${this.if}"`
     } else {
-      return `"${NOT_GATE_INSTRUCTION_TYPE}"`
+      return `"${X_GATE_OPERATION_TYPE}"`
     }
   }
 }

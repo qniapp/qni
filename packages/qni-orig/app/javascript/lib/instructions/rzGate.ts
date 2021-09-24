@@ -1,21 +1,12 @@
-import { classNameFor } from "lib/base"
 import {
   Complex,
   Matrix,
-  parseFormula,
   PARSE_COMPLEX_TOKEN_MAP_RAD,
+  parseFormula,
 } from "lib/math"
+import { RZ_GATE_OPERATION_TYPE, RzGateOperation } from "lib/operation"
 import { RotationOperatorGate } from "./rotationOperatorGate"
-
-export const RZ_GATE_INSTRUCTION_TYPE = "Rz"
-
-export type RzGateInstruction = {
-  type: typeof RZ_GATE_INSTRUCTION_TYPE
-  theta: string
-  controls: number[]
-  targets: number[]
-  if: string | null
-}
+import { classNameFor } from "lib/base"
 
 export class RzGate extends RotationOperatorGate {
   static readonly elementClassName = classNameFor("gate:rz")
@@ -32,11 +23,11 @@ export class RzGate extends RotationOperatorGate {
     )
   }
 
-  serialize(): RzGateInstruction {
-    return this._serialize(RZ_GATE_INSTRUCTION_TYPE) as RzGateInstruction
+  serialize(): RzGateOperation {
+    return this._serialize(RZ_GATE_OPERATION_TYPE) as RzGateOperation
   }
 
   toJson(): string {
-    return this._toJson(RZ_GATE_INSTRUCTION_TYPE)
+    return this._toJson(RZ_GATE_OPERATION_TYPE)
   }
 }

@@ -6,6 +6,10 @@ import {
   LabelableMixin,
   SizeableMixin,
 } from "mixins"
+import {
+  MEASUREMENT_GATE_OPERATION_TYPE,
+  MeasurementOperation,
+} from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
@@ -107,7 +111,14 @@ export class MeasurementGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"Measure"'
+    return `"${MEASUREMENT_GATE_OPERATION_TYPE}"`
+  }
+
+  serialize(): MeasurementOperation {
+    return {
+      type: MEASUREMENT_GATE_OPERATION_TYPE,
+      flag: this.flag,
+    }
   }
 
   get iconSvg(): TemplateResult {

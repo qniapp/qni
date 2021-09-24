@@ -1,4 +1,8 @@
 import {
+  BLOCH_DISPLAY_OPERATION_TYPE,
+  BlochDisplayOperation,
+} from "lib/operation"
+import {
   DraggableMixin,
   HelpableMixin,
   JsonableMixin,
@@ -335,7 +339,13 @@ export class BlochDisplayElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"Bloch"'
+    return `"${BLOCH_DISPLAY_OPERATION_TYPE}"`
+  }
+
+  serialize(): BlochDisplayOperation {
+    return {
+      type: BLOCH_DISPLAY_OPERATION_TYPE,
+    }
   }
 
   private updateBlochVector(): void {
@@ -413,10 +423,6 @@ export class BlochDisplayElement extends DraggableMixin(
 
   private isCircuitDraggable(): boolean {
     if (this.parentElement === null) return false
-    return (
-      this.parentElement.tagName === "CIRCUIT-DROPZONE" ||
-      // FIXME: dropzone を web component 化した後に消す
-      this.parentElement.classList.contains("dropzone")
-    )
+    return this.parentElement.tagName === "CIRCUIT-DROPZONE"
   }
 }

@@ -1,13 +1,11 @@
-export const I_GATE_INSTRUCTION_TYPE = "1"
-
-export type IGateInstruction = { type: typeof I_GATE_INSTRUCTION_TYPE }
+import { IGateOperation, I_GATE_OPERATION_TYPE } from "lib/operation"
 
 export class IGate {
-  serialize(): IGateInstruction {
-    return { type: I_GATE_INSTRUCTION_TYPE }
+  serialize(): IGateOperation {
+    return { type: I_GATE_OPERATION_TYPE }
   }
 
   toJson(): string {
-    return I_GATE_INSTRUCTION_TYPE
+    return I_GATE_OPERATION_TYPE
   }
 }

@@ -6,6 +6,7 @@ import {
   SizeableMixin,
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
+import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "lib/operation"
 import { attr, controller } from "@github/catalyst"
 
 @controller
@@ -131,6 +132,18 @@ export class WriteGateElement extends DraggableMixin(
 
   toJson(): string {
     return `"|${this.value}>"`
+  }
+
+  serialize(): WriteGateOperation {
+    if (this.value !== "0" && this.value !== "1") {
+      throw new Error(`Invalid write value: ${this.value}`)
+    }
+    const value = parseInt(this.value) as 0 | 1
+
+    return {
+      type: WRITE_GATE_OPERATION_TYPE,
+      value,
+    }
   }
 
   get iconSvg(): TemplateResult {

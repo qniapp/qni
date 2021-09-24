@@ -1,4 +1,5 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -9,17 +10,20 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "mixins"
+import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class RnotGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  ControllableMixin(
+    WireableMixin(
+      LabelableMixin(
+        IfableMixin(
+          DisableableMixin(
+            IconableMixin(
+              HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+            ),
           ),
         ),
       ),
@@ -56,7 +60,15 @@ export class RnotGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"X^½"'
+    return `"${RNOT_GATE_OPERATION_TYPE}"`
+  }
+
+  serialize(): RnotGateOperation {
+    return {
+      type: RNOT_GATE_OPERATION_TYPE,
+      controls: this.controls,
+      if: this.if !== "" ? this.if : null,
+    }
   }
 
   get iconSvg(): TemplateResult {

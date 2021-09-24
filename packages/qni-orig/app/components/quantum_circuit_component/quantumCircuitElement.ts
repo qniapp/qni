@@ -19,6 +19,15 @@ import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
 
+type MessageEventData = {
+  type: "step" | "finish"
+  blochVectors: { [bit: number]: [number, number, number] }
+  bits: { [bit: number]: number }
+  step: number
+  amplitudes: Array<[number, number]>
+  flags: { [key: string]: boolean }
+}
+
 @controller
 export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
@@ -27,6 +36,8 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
 
   @targets blocks: CircuitBlockElement[]
+
+  declare worker: Worker
 
   get steps(): CircuitStepElement[] {
     return Array.from(
@@ -245,10 +256,13 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  run(event: Event): void {
-    const runButton = (event as CustomEvent).detail
-      .button as RunCircuitButtonElement
-    runButton.enable()
+  run(): void {
+    const serializedSteps = this.steps.map((each) => each.serialize())
+    // console.log(serializedSteps)
+    this.worker.postMessage({
+      nqubit: this.steps[0].nqubit,
+      steps: serializedSteps,
+    })
   }
 
   connectedCallback(): void {
@@ -256,10 +270,27 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
+
+    this.worker = new Worker("/serviceworker.js")
+    this.worker.addEventListener("message", (e: MessageEvent) => {
+      const data = e.data as MessageEventData
+      // console.log(e)
+
+      if (data.type === "finish") {
+        this.runButton.enable()
+      }
+    })
+
     this.addEventListener("clickrun", this.run)
     this.addEventListener("grabdraggable", this.appendCircuitStepShadow)
     this.addEventListener("ungrabdraggable", this.resize)
     this.addEventListener("enddragging", this.resize)
+  }
+
+  private get runButton(): RunCircuitButtonElement {
+    return document.getElementById(
+      "run-circuit-button",
+    ) as RunCircuitButtonElement
   }
 
   attributeChangedCallback(

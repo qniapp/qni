@@ -2,16 +2,15 @@ import "@interactjs/auto-start"
 import "@interactjs/actions/drag"
 import "@interactjs/actions/drop"
 import "@interactjs/dev-tools"
-import interact from "@interactjs/interact"
-import { Interactable } from "@interactjs/types"
-
+import { Util, attributeNameFor, classNameFor } from "lib/base"
 import { DragEventHandlers } from "lib/editor/mixins"
 import { DraggableSource } from "./draggableSource"
 import { Dropzone } from "./dropzone"
 import { Elementable } from "lib/mixins"
-import { Instruction } from "lib/instruction"
+import { Instruction } from "lib/operation"
+import { Interactable } from "@interactjs/types"
 import { InternalError } from "lib/error"
-import { Util, attributeNameFor, classNameFor } from "lib/base"
+import interact from "@interactjs/interact"
 
 export abstract class Draggable extends Elementable {
   enableDnd(): void {

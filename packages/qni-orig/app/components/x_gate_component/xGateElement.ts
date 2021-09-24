@@ -1,4 +1,5 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -10,16 +11,19 @@ import {
   WireableMixin,
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
+import { XGateOperation, X_GATE_OPERATION_TYPE } from "lib/operation"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class XGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  ControllableMixin(
+    WireableMixin(
+      LabelableMixin(
+        IfableMixin(
+          DisableableMixin(
+            IconableMixin(
+              HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+            ),
           ),
         ),
       ),
@@ -56,7 +60,15 @@ export class XGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"X"'
+    return `"${X_GATE_OPERATION_TYPE}"`
+  }
+
+  serialize(): XGateOperation {
+    return {
+      type: X_GATE_OPERATION_TYPE,
+      controls: this.controls,
+      if: this.if !== "" ? this.if : null,
+    }
   }
 
   get iconSvg(): TemplateResult {

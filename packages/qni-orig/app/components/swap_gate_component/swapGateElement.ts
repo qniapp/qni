@@ -1,20 +1,29 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
+  TargetableMixin,
   WireableMixin,
 } from "mixins"
+import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class SwapGateElement extends DraggableMixin(
-  WireableMixin(
-    DisableableMixin(
-      IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+  TargetableMixin(
+    ControllableMixin(
+      WireableMixin(
+        DisableableMixin(
+          IconableMixin(
+            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+          ),
+        ),
+      ),
     ),
   ),
 ) {
@@ -54,7 +63,20 @@ export class SwapGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"Swap"'
+    return `"${SWAP_GATE_OPERATION_TYPE}"`
+  }
+
+  serialize(): SwapGateOperation {
+    const targets = this.targets as [number, number] | []
+    if (targets.length !== 2 && targets.length !== 0) {
+      throw new Error(`Invalid swap targets: ${this.targets.toString()}`)
+    }
+
+    return {
+      type: SWAP_GATE_OPERATION_TYPE,
+      controls: this.controls,
+      targets,
+    }
   }
 
   get iconSvg(): TemplateResult {

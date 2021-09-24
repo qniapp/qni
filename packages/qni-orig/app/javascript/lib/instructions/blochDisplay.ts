@@ -1,22 +1,20 @@
-import { classNameFor } from "lib/base"
+import {
+  BLOCH_DISPLAY_OPERATION_TYPE,
+  BlochDisplayOperation,
+} from "lib/operation"
 import { InstructionWithElement } from "./instructionWithElement"
-
-export const BLOCH_DISPLAY_INSTRUCTION_TYPE = "Bloch"
-
-export type BlochDisplayInstruction = {
-  type: typeof BLOCH_DISPLAY_INSTRUCTION_TYPE
-}
+import { classNameFor } from "lib/base"
 
 export class BlochDisplay extends InstructionWithElement {
   static readonly elementClassName = classNameFor("display:bloch")
 
-  serialize(): BlochDisplayInstruction {
+  serialize(): BlochDisplayOperation {
     return {
-      type: BLOCH_DISPLAY_INSTRUCTION_TYPE,
+      type: BLOCH_DISPLAY_OPERATION_TYPE,
     }
   }
 
   toJson(): string {
-    return `"${BLOCH_DISPLAY_INSTRUCTION_TYPE}"`
+    return `"${BLOCH_DISPLAY_OPERATION_TYPE}"`
   }
 }

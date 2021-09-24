@@ -4,11 +4,11 @@ import {
   CircuitStep,
   CircuitWire,
 } from "./editor"
+import { Util, classNameFor } from "./base"
 import { DropEventHandlers } from "./editor/mixins"
-import { Instruction } from "lib/instruction"
+import { Instruction } from "lib/operation"
 import { InternalError } from "./error"
 import { QubitLabel } from "lib/instructions"
-import { classNameFor, Util } from "./base"
 
 export class Circuit {
   private element: Element
@@ -25,8 +25,7 @@ export class Circuit {
   toJson(): string {
     let circuitBlock: Element | null = null
     const cols: string[] = []
-
-    this.steps
+    const steps = this.steps
       .filter((each) => {
         return !(each.instructions[0] instanceof QubitLabel)
       })
@@ -35,26 +34,27 @@ export class Circuit {
           classNameFor("circuitStep:type:shadowSource"),
         )
       })
-      .forEach((each) => {
-        if (each.circuitBlock()) {
-          if (circuitBlock === null) {
-            circuitBlock = each.circuitBlock()
-            const circuitBlockLabel = circuitBlock
-              ?.getElementsByClassName("circuit-block__label")
-              .item(0)
-            Util.notNull(circuitBlockLabel)
-            const label = circuitBlockLabel.textContent?.trim()
-            Util.notNull(label)
-            cols.push(`["{${label}"]`)
-          }
-        } else {
-          if (circuitBlock !== null) {
-            circuitBlock = null
-            cols.push('["}"]')
-          }
+
+    for (const each of steps) {
+      if (each.circuitBlock()) {
+        if (circuitBlock === null) {
+          circuitBlock = each.circuitBlock()
+          const circuitBlockLabel = circuitBlock
+            ?.getElementsByClassName("circuit-block__label")
+            .item(0)
+          Util.notNull(circuitBlockLabel)
+          const label = circuitBlockLabel.textContent?.trim()
+          Util.notNull(label)
+          cols.push(`["{${label}"]`)
         }
-        cols.push(each.toJson())
-      })
+      } else {
+        if (circuitBlock !== null) {
+          circuitBlock = null
+          cols.push('["}"]')
+        }
+      }
+      cols.push(each.toJson())
+    }
     if (circuitBlock) cols.push('["}"]')
     return `{"cols":[${cols.join(",")}],"init":false}`
   }
@@ -108,9 +108,9 @@ export class Circuit {
       .clear()
       .incrementQubitLabelValue()
 
-    newWire.dropzones.forEach((each) => {
+    for (const each of newWire.dropzones) {
       each.setInteract(dropzoneHandlers)
-    })
+    }
     this.appendWire(newWire)
   }
 
@@ -142,12 +142,12 @@ export class Circuit {
   get wires(): CircuitWire[] {
     const wireElements: HTMLElement[][] = []
 
-    this.steps.forEach((step) => {
-      step.childElements.forEach((each, i) => {
+    for (const step of this.steps) {
+      for (const [i, each] of step.childElements.entries()) {
         if (!wireElements[i]) wireElements.push([])
         wireElements[i].push(each)
-      })
-    })
+      }
+    }
 
     return wireElements.map((each) => {
       return new CircuitWire(each)
@@ -155,8 +155,8 @@ export class Circuit {
   }
 
   private appendWire(wire: CircuitWire): void {
-    this.steps.forEach((each, i) => {
+    for (const [i, each] of this.steps.entries()) {
       each.appendChild(wire.elements[i])
-    })
+    }
   }
 }

@@ -1,19 +1,11 @@
+import { Complex, Matrix, parseAngle } from "lib/math"
+import { PHASE_GATE_OPERATION_TYPE, PhaseGateOperation } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { InstructionWithElement } from "./instructionWithElement"
+import { PhiableMixin } from "./phiable"
 import { TargetableMixin } from "./targetable"
 import { classNameFor } from "lib/base"
-import { Complex, Matrix, parseAngle } from "lib/math"
-import { PhiableMixin } from "./phiable"
-
-export const PHASE_GATE_INSTRUCTION_TYPE = "P"
-
-export type PhaseGateInstruction = {
-  type: typeof PHASE_GATE_INSTRUCTION_TYPE
-  phi: string
-  controls: number[]
-  targets: number[]
-}
 
 export class PhaseGate extends PhiableMixin(
   ControllableMixin(TargetableMixin(ConnectableMixin(InstructionWithElement))),
@@ -33,17 +25,18 @@ export class PhaseGate extends PhiableMixin(
     })
   }
 
-  serialize(): PhaseGateInstruction {
+  serialize(): PhaseGateOperation {
     return {
-      type: PHASE_GATE_INSTRUCTION_TYPE,
+      type: PHASE_GATE_OPERATION_TYPE,
       phi: this.phi,
       controls: this.controls,
       targets: this.targets,
+      if: null,
     }
   }
 
   toJson(): string {
     const phi = this.phi.replace(/pi/g, "π").replace(/\//g, "_")
-    return `"${PHASE_GATE_INSTRUCTION_TYPE}(${phi})"`
+    return `"${PHASE_GATE_OPERATION_TYPE}(${phi})"`
   }
 }

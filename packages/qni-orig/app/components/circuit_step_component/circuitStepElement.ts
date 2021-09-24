@@ -2,6 +2,7 @@ import { Draggable, isWireable } from "mixins"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
+import { CircuitOperation } from "lib/operation"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
@@ -160,6 +161,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private quantumCircuitElement(): QuantumCircuitElement | null {
     return this.closest("quantum-circuit") as QuantumCircuitElement
+  }
+
+  serialize(): CircuitOperation[] {
+    return this.dropzones.map((each) => each.serialize())
   }
 
   toJson(): string {
@@ -332,6 +337,8 @@ export class CircuitStepElement extends HTMLElement {
         return each.phi === phaseGate.phi
       })
       for (const cp of all) {
+        cp.targets = all.map((each) => this.bit(each))
+
         cp.wireTop = all.some((each) => {
           return this.bit(each) < this.bit(cp)
         })
@@ -363,40 +370,57 @@ export class CircuitStepElement extends HTMLElement {
       return
     }
 
-    for (const controllableGate of this.controllableGates) {
-      controllableGate.wireTop =
-        this.controlGates.some((each) => {
-          return this.bit(each) < this.bit(controllableGate)
-        }) ||
-        this.controllableGates.some((each) => {
-          return this.bit(each) < this.bit(controllableGate)
-        })
-      controllableGate.wireBottom =
-        this.controlGates.some((each) => {
-          return this.bit(each) > this.bit(controllableGate)
-        }) ||
-        this.controllableGates.some((each) => {
-          return this.bit(each) > this.bit(controllableGate)
-        })
-    }
+    if (this.controllableGates.length === 0) {
+      for (const controlGate of this.controlGates) {
+        controlGate.enable()
+        controlGate.targets = this.controlBits
 
-    for (const controlGate of this.controlGates) {
-      controlGate.enable()
-
-      controlGate.wireTop =
-        this.controllableGates.some((each) => {
-          return this.bit(controlGate) > this.bit(each)
-        }) ||
-        this.controlGates.some((each) => {
+        controlGate.wireTop = this.controlGates.some((each) => {
           return this.bit(controlGate) > this.bit(each)
         })
-      controlGate.wireBottom =
-        this.controllableGates.some((each) => {
-          return this.bit(controlGate) < this.bit(each)
-        }) ||
-        this.controlGates.some((each) => {
+        controlGate.wireBottom = this.controlGates.some((each) => {
           return this.bit(controlGate) < this.bit(each)
         })
+      }
+    } else {
+      for (const controllableGate of this.controllableGates) {
+        controllableGate.controls = this.controlBits
+
+        controllableGate.wireTop =
+          this.controlGates.some((each) => {
+            return this.bit(each) < this.bit(controllableGate)
+          }) ||
+          this.controllableGates.some((each) => {
+            return this.bit(each) < this.bit(controllableGate)
+          })
+        controllableGate.wireBottom =
+          this.controlGates.some((each) => {
+            return this.bit(each) > this.bit(controllableGate)
+          }) ||
+          this.controllableGates.some((each) => {
+            return this.bit(each) > this.bit(controllableGate)
+          })
+      }
+
+      for (const controlGate of this.controlGates) {
+        controlGate.enable()
+        controlGate.targets = this.controllableBits
+
+        controlGate.wireTop =
+          this.controllableGates.some((each) => {
+            return this.bit(controlGate) > this.bit(each)
+          }) ||
+          this.controlGates.some((each) => {
+            return this.bit(controlGate) > this.bit(each)
+          })
+        controlGate.wireBottom =
+          this.controllableGates.some((each) => {
+            return this.bit(controlGate) < this.bit(each)
+          }) ||
+          this.controlGates.some((each) => {
+            return this.bit(controlGate) < this.bit(each)
+          })
+      }
     }
 
     for (const dropzone of this.dropzones) {
@@ -428,6 +452,10 @@ export class CircuitStepElement extends HTMLElement {
     return this.snappedDraggables<ControlGateElement>("control-gate")
   }
 
+  private get controlBits(): number[] {
+    return this.controlGates.map((each) => this.bit(each))
+  }
+
   private get controllableGates(): Array<
     | HGateElement
     | XGateElement
@@ -454,6 +482,10 @@ export class CircuitStepElement extends HTMLElement {
     >(
       "h-gate,x-gate,y-gate,z-gate,phase-gate,rnot-gate,rx-gate,ry-gate,rz-gate,swap-gate",
     )
+  }
+
+  private get controllableBits(): number[] {
+    return this.controllableGates.map((each) => this.bit(each))
   }
 
   private get phaseGates(): PhaseGateElement[] {

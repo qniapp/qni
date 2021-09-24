@@ -1,36 +1,34 @@
+import {
+  BLOCH_DISPLAY_OPERATION_TYPE,
+  CONTROL_GATE_OPERATION_TYPE,
+  CircuitOperation,
+  H_GATE_OPERATION_TYPE,
+  I_GATE_OPERATION_TYPE,
+  MEASUREMENT_GATE_OPERATION_TYPE,
+  PHASE_GATE_OPERATION_TYPE,
+  RNOT_GATE_OPERATION_TYPE,
+  RX_GATE_OPERATION_TYPE,
+  RY_GATE_OPERATION_TYPE,
+  RZ_GATE_OPERATION_TYPE,
+  SWAP_GATE_OPERATION_TYPE,
+  WRITE_GATE_OPERATION_TYPE,
+  X_GATE_OPERATION_TYPE,
+  Y_GATE_OPERATION_TYPE,
+  Z_GATE_OPERATION_TYPE,
+} from "lib/operation"
 import { Complex, Matrix } from "./math"
-import { SeriarizedInstruction } from "lib/instruction"
-import { StateVector } from "lib/simulator/stateVector"
 import {
-  BLOCH_DISPLAY_INSTRUCTION_TYPE,
-  CONTROL_GATE_INSTRUCTION_TYPE,
-  HADAMARD_GATE_INSTRUCTION_TYPE,
-  I_GATE_INSTRUCTION_TYPE,
-  MEASURE_GATE_INSTRUCTION_TYPE,
-  NOT_GATE_INSTRUCTION_TYPE,
-  PHASE_GATE_INSTRUCTION_TYPE,
-  QUBIT_LABEL_INSTRUCTION_TYPE,
-  ROOT_NOT_GATE_INSTRUCTION_TYPE,
-  RX_GATE_INSTRUCTION_TYPE,
-  RY_GATE_INSTRUCTION_TYPE,
-  RZ_GATE_INSTRUCTION_TYPE,
-  SWAP_GATE_INSTRUCTION_TYPE,
-  WRITE0_GATE_INSTRUCTION,
-  WRITE1_GATE_INSTRUCTION,
-  Y_GATE_INSTRUCTION_TYPE,
-  Z_GATE_INSTRUCTION_TYPE,
-} from "lib/instructions"
-import {
-  HadamardGate,
-  NotGate,
+  HGate,
   PhaseGate,
-  RootNotGate,
+  RnotGate,
   RxGate,
   RyGate,
   RzGate,
+  XGate,
   YGate,
   ZGate,
-} from "./instructions"
+} from "lib/instructions"
+import { StateVector } from "lib/simulator/stateVector"
 
 export class Simulator {
   public state: StateVector
@@ -48,50 +46,48 @@ export class Simulator {
     this.flags = {}
   }
 
-  runStep(instructions: SeriarizedInstruction[]): Simulator {
+  runStep(instructions: CircuitOperation[]): Simulator {
     this.blochVectors = {}
-    const doneSwapTargets: [number, number][] = []
-    const doneCPhaseTargets: [number, number][] = []
+    const doneSwapTargets: Array<[number, number]> = []
+    const doneCPhaseTargets: Array<[number, number]> = []
     const doneControlTargets: number[][] = []
 
-    instructions.forEach((each, bit) => {
+    for (const [bit, each] of instructions.entries()) {
       switch (each.type) {
-        case QUBIT_LABEL_INSTRUCTION_TYPE:
-        case I_GATE_INSTRUCTION_TYPE:
+        case I_GATE_OPERATION_TYPE:
           break
-        case WRITE0_GATE_INSTRUCTION:
-        case WRITE1_GATE_INSTRUCTION:
+        case WRITE_GATE_OPERATION_TYPE:
           this.write(each.value, bit)
           break
-        case BLOCH_DISPLAY_INSTRUCTION_TYPE:
+        case BLOCH_DISPLAY_OPERATION_TYPE:
           this.blochVectors[bit] = this.state.blochVector(bit)
           break
-        case HADAMARD_GATE_INSTRUCTION_TYPE:
+        case H_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.ch(each.controls, bit)
           break
-        case NOT_GATE_INSTRUCTION_TYPE:
+        case X_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.cnot(each.controls, bit)
           break
-        case Y_GATE_INSTRUCTION_TYPE:
+        case Y_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.cy(each.controls, bit)
           break
-        case Z_GATE_INSTRUCTION_TYPE:
+        case Z_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.cz(each.controls, bit)
           break
-        case PHASE_GATE_INSTRUCTION_TYPE: {
+        case PHASE_GATE_OPERATION_TYPE: {
           const controls = each.controls
           const targets = each.targets.sort()
 
-          if (controls.length == 0) {
-            if (targets.length == 0) {
+          if (controls.length === 0) {
+            if (targets.length === 0) {
               if (each.phi) {
                 this.phase(each.phi, bit)
               }
-            } else if (targets.length == 2) {
+            } else if (targets.length === 2) {
               if (
                 doneCPhaseTargets.some((done) => {
                   return done[0] === targets[0] && done[1] === targets[1]
@@ -107,7 +103,7 @@ export class Simulator {
           }
           break
         }
-        case CONTROL_GATE_INSTRUCTION_TYPE: {
+        case CONTROL_GATE_OPERATION_TYPE: {
           const targets = each.targets.sort()
 
           if (targets.length < 2) break
@@ -118,8 +114,8 @@ export class Simulator {
           ) {
             break
           }
-          const allControl = targets.every((each) => {
-            return instructions[each].type === "•"
+          const allControl = targets.every((c) => {
+            return instructions[c].type === "•"
           })
           if (!allControl) break
 
@@ -127,11 +123,11 @@ export class Simulator {
           doneControlTargets.push(targets)
           break
         }
-        case SWAP_GATE_INSTRUCTION_TYPE: {
+        case SWAP_GATE_OPERATION_TYPE: {
           const controls = each.controls
           const targets = each.targets
 
-          if (targets.length != 2) break
+          if (targets.length !== 2) break
           if (
             doneSwapTargets.some((done) => {
               return done[0] === targets[0] && done[1] === targets[1]
@@ -140,70 +136,70 @@ export class Simulator {
             break
           }
 
-          if (controls.length == 0) {
+          if (controls.length === 0) {
             this.swap(targets[0], targets[1])
             doneSwapTargets.push(targets)
-          } else if (controls.length == 1) {
+          } else if (controls.length === 1) {
             doneSwapTargets.push(targets)
             this.cswap(controls[0], targets[0], targets[1])
           }
           break
         }
-        case ROOT_NOT_GATE_INSTRUCTION_TYPE:
+        case RNOT_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.crnot(each.controls, bit)
           break
-        case RX_GATE_INSTRUCTION_TYPE:
+        case RX_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.crx(each.controls, each.theta, bit)
           break
-        case RY_GATE_INSTRUCTION_TYPE:
+        case RY_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.cry(each.controls, each.theta, bit)
           break
-        case RZ_GATE_INSTRUCTION_TYPE:
+        case RZ_GATE_OPERATION_TYPE:
           if (each.if && !this.flags[each.if]) break
           this.crz(each.controls, each.theta, bit)
           break
-        case MEASURE_GATE_INSTRUCTION_TYPE:
+        case MEASUREMENT_GATE_OPERATION_TYPE:
           this.measure(bit)
-          if (each.flag) this.flags[each.flag] = this.bits[bit] == 1
+          if (each.flag) this.flags[each.flag] = this.bits[bit] === 1
           break
         default:
           throw new Error("Unknown instruction")
       }
-    })
+    }
 
     return this
   }
 
   write(value: number, ...targets: number[]): Simulator {
-    targets.forEach((t) => {
+    for (const t of targets) {
       const pZero = this.pZero(t)
-      if ((value == 0 && pZero == 0) || (value == 1 && pZero == 1)) {
+      if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
         this.x(t)
       }
-    })
+    }
     return this
   }
 
   h(...targets: number[]): Simulator {
-    this.u(HadamardGate.MATRIX, ...targets)
+    this.u(HGate.MATRIX, ...targets)
     return this
   }
 
   ch(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, HadamardGate.MATRIX, ...targets)
+    this.cu(controls, HGate.MATRIX, ...targets)
     return this
   }
 
   x(...targets: number[]): Simulator {
-    this.u(NotGate.MATRIX, ...targets)
+    this.u(XGate.MATRIX, ...targets)
     return this
   }
 
   cnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, NotGate.MATRIX, ...targets)
+    this.cu(controls, XGate.MATRIX, ...targets)
     return this
   }
 
@@ -254,12 +250,12 @@ export class Simulator {
   }
 
   rnot(...targets: number[]): Simulator {
-    this.u(RootNotGate.MATRIX, ...targets)
+    this.u(RnotGate.MATRIX, ...targets)
     return this
   }
 
   crnot(controls: number | number[], ...targets: number[]): Simulator {
-    this.cu(controls, RootNotGate.MATRIX, ...targets)
+    this.cu(controls, RnotGate.MATRIX, ...targets)
     return this
   }
 
@@ -306,13 +302,13 @@ export class Simulator {
   }
 
   measure(...targets: number[]): Simulator {
-    targets.forEach((t) => {
+    for (const t of targets) {
       const pZero = this.pZero(t)
       const rand = Math.random()
 
       if (rand <= pZero) {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-          if ((bit & (1 << t)) != 0) this.state.setAmplifier(bit, Complex.ZERO)
+          if ((bit & (1 << t)) !== 0) this.state.setAmplifier(bit, Complex.ZERO)
           this.state.setAmplifier(
             bit,
             this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)),
@@ -321,7 +317,7 @@ export class Simulator {
         this.bits[t] = 0
       } else {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-          if ((bit & (1 << t)) == 0) this.state.setAmplifier(bit, Complex.ZERO)
+          if ((bit & (1 << t)) === 0) this.state.setAmplifier(bit, Complex.ZERO)
           this.state.setAmplifier(
             bit,
             this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero)),
@@ -329,20 +325,20 @@ export class Simulator {
         }
         this.bits[t] = 1
       }
-    })
+    }
     return this
   }
 
-  amplitudes(): [number, number][] {
+  amplitudes(): Array<[number, number]> {
     return this.state.matrix.getColumn(0).map((each) => {
       return [each.real, each.imag]
     })
   }
 
   private u(u: Matrix, ...targets: number[]): void {
-    targets.forEach((t) => {
+    for (const t of targets) {
       this.state.timesQubitOperation(u, t, 0)
-    })
+    }
   }
 
   private cu(
@@ -355,15 +351,15 @@ export class Simulator {
       return result | (1 << each)
     }, 0)
 
-    targets.forEach((t) => {
+    for (const t of targets) {
       this.state.timesQubitOperation(u, t, controlMask)
-    })
+    }
   }
 
   private pZero(target: number): number {
     let p = 0
     for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
-      if ((bit & (1 << target)) == 0) {
+      if ((bit & (1 << target)) === 0) {
         p += Math.pow(this.state.amplifier(bit).abs(), 2)
       }
     }

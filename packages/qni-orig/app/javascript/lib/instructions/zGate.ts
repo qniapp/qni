@@ -1,3 +1,4 @@
+import { ZGateOperation, Z_GATE_OPERATION_TYPE } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
@@ -6,23 +7,15 @@ import { InstructionWithElement } from "./instructionWithElement"
 import { Matrix } from "lib/math"
 import { classNameFor } from "lib/base"
 
-export const Z_GATE_INSTRUCTION_TYPE = "Z"
-
-export type ZGateInstruction = {
-  type: typeof Z_GATE_INSTRUCTION_TYPE
-  controls: number[]
-  if: string | null
-}
-
 export class ZGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:z")
   static readonly MATRIX = Matrix.PAULI_Z
 
-  serialize(): ZGateInstruction {
+  serialize(): ZGateOperation {
     return {
-      type: Z_GATE_INSTRUCTION_TYPE,
+      type: Z_GATE_OPERATION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -30,9 +23,9 @@ export class ZGate extends ControllableMixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${Z_GATE_INSTRUCTION_TYPE}<${this.if}"`
+      return `"${Z_GATE_OPERATION_TYPE}<${this.if}"`
     } else {
-      return `"${Z_GATE_INSTRUCTION_TYPE}"`
+      return `"${Z_GATE_OPERATION_TYPE}"`
     }
   }
 }

@@ -1,28 +1,28 @@
-import { CircuitDropzone } from "./circuitDropzone"
-import { DropEventHandlers } from "./mixins"
-import { Elementable } from "lib/mixins"
-import { Instruction, InstructionWithElement } from "lib/instruction"
-import { Util, classNameFor } from "lib/base"
 import {
   Connectable,
   ControlGate,
   Controllable,
-  HadamardGate,
+  HGate,
   IGate,
-  NotGate,
   PhaseGate,
   QubitLabel,
-  RootNotGate,
+  RnotGate,
   RxGate,
   RyGate,
   RzGate,
   SwapGate,
+  XGate,
   YGate,
   ZGate,
   isConnectable,
   isControllable,
   isTargetable,
 } from "lib/instructions"
+import { Instruction, InstructionWithElement } from "lib/operation"
+import { Util, classNameFor } from "lib/base"
+import { CircuitDropzone } from "./circuitDropzone"
+import { DropEventHandlers } from "./mixins"
+import { Elementable } from "lib/mixins"
 
 export class CircuitStep extends Elementable {
   static readonly elementClassName = classNameFor("circuitStep")
@@ -53,10 +53,10 @@ export class CircuitStep extends Elementable {
 
   get empty(): boolean {
     return (
-      this.dropzones.length != 0 &&
+      this.dropzones.length !== 0 &&
       this.dropzones.filter((each) => {
         return each.occupied
-      }).length == 0
+      }).length === 0
     )
   }
 
@@ -132,9 +132,9 @@ export class CircuitStep extends Elementable {
       (this.isInCircuitBlockDivider && this.shadow) ||
       !this.isInCircuitBlockDivider
     ) {
-      this.dropzones.forEach((each) => {
+      for (const each of this.dropzones) {
         each.unsetInteract()
-      })
+      }
       this.removeElement()
     }
   }
@@ -150,9 +150,9 @@ export class CircuitStep extends Elementable {
     const shadow = new CircuitStep(shadowSourceElement)
 
     this.element.parentNode?.insertBefore(shadow.element, this.element)
-    shadow.dropzones.forEach((each) => {
+    for (const each of shadow.dropzones) {
       each.setInteract(dropzoneHandlers)
-    })
+    }
   }
 
   private get isInCircuitBlockDivider(): boolean {
@@ -160,7 +160,7 @@ export class CircuitStep extends Elementable {
   }
 
   private resetGateConnections() {
-    this.dropzones.forEach((each) => {
+    for (const each of this.dropzones) {
       if (each.instruction instanceof IGate) {
         each.disconnectFromLowerBit()
         each.disconnectFromUpperBit()
@@ -175,7 +175,7 @@ export class CircuitStep extends Elementable {
           each.instruction.disconnectFromAll()
         }
       }
-    })
+    }
   }
 
   private updateSwaps() {
@@ -188,9 +188,9 @@ export class CircuitStep extends Elementable {
       })
       .sort()
 
-    swapGates.forEach((each) => {
+    for (const each of swapGates) {
       each.connectWith(swapBits)
-      if (swapBits.length == 2) {
+      if (swapBits.length === 2) {
         each.targets = swapBits
         each.disabled = false
         this.updateIGateConnections(swapBits)
@@ -198,7 +198,7 @@ export class CircuitStep extends Elementable {
         each.targets = []
         each.disabled = true
       }
-    })
+    }
   }
 
   private updateCphases() {
@@ -206,7 +206,7 @@ export class CircuitStep extends Elementable {
       return each instanceof PhaseGate
     }) as PhaseGate[]
 
-    phaseGates.forEach((each) => {
+    for (const each of phaseGates) {
       const phaseBits = phaseGates
         .filter((other) => {
           return other.phi === each.phi
@@ -215,7 +215,7 @@ export class CircuitStep extends Elementable {
           return other.bit
         })
         .sort()
-      if (phaseBits.length == 2) {
+      if (phaseBits.length === 2) {
         each.connectWith(phaseBits)
         each.targets = phaseBits
         this.updateIGateConnections(phaseBits)
@@ -223,7 +223,7 @@ export class CircuitStep extends Elementable {
         each.connectWith([])
         each.targets = []
       }
-    })
+    }
   }
 
   private updateControls() {
@@ -235,30 +235,30 @@ export class CircuitStep extends Elementable {
     const controlGateBits = controlGates.map(toBit)
     const controllableGateBits = controllableGates.map(toBit)
 
-    if (controllableGates.length == 0) {
+    if (controllableGates.length === 0) {
       if (controlGates.length >= 2) {
-        controlGates.forEach((each) => {
+        for (const each of controlGates) {
           each.targets = controlGateBits
           each.connectWith(controlGateBits)
           each.disabled = false
-        })
+        }
         this.updateIGateConnections(controlGateBits)
       } else {
-        controlGates.forEach((each) => {
+        for (const each of controlGates) {
           each.targets = []
           each.connectWith([])
           each.disabled = true
-        })
+        }
       }
     } else {
-      controlGates.forEach((each) => {
+      for (const each of controlGates) {
         each.targets = controllableGateBits
         each.connectWith(controlGateBits.concat(controllableGateBits))
         each.disabled = false
-      })
+      }
 
       this.updateControlledUConnections(
-        this.gatesOf(NotGate),
+        this.gatesOf(XGate),
         controlGateBits,
         controllableGateBits,
       )
@@ -273,12 +273,12 @@ export class CircuitStep extends Elementable {
         controllableGateBits,
       )
       this.updateControlledUConnections(
-        this.gatesOf(RootNotGate),
+        this.gatesOf(RnotGate),
         controlGateBits,
         controllableGateBits,
       )
       this.updateControlledUConnections(
-        this.gatesOf(HadamardGate),
+        this.gatesOf(HGate),
         controlGateBits,
         controllableGateBits,
       )
@@ -330,18 +330,18 @@ export class CircuitStep extends Elementable {
     controlGateBits: number[],
     controllableGateBits: number[],
   ) {
-    if (controlGateBits.length == 0) return
+    if (controlGateBits.length === 0) return
 
-    gates.forEach((each) => {
+    for (const each of gates) {
       each.controls = controlGateBits
       each.connectWith(controlGateBits.concat(controllableGateBits))
-    })
+    }
   }
 
   private updateIGateConnections(targetBits: number[]) {
     const bits = targetBits.sort()
 
-    this.dropzones.forEach((dropzone, i) => {
+    for (const [i, dropzone] of this.dropzones.entries()) {
       if (
         dropzone.instruction instanceof IGate &&
         bits[0] < i &&
@@ -353,7 +353,7 @@ export class CircuitStep extends Elementable {
         dropzone.disconnectFromLowerBit()
         dropzone.disconnectFromUpperBit()
       }
-    })
+    }
   }
 
   private get controllableGates(): Instruction[] {

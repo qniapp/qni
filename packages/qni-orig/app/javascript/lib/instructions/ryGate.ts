@@ -1,16 +1,7 @@
-import { classNameFor } from "lib/base"
-import { Matrix, parseFormula, PARSE_COMPLEX_TOKEN_MAP_RAD } from "lib/math"
+import { Matrix, PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
+import { RY_GATE_OPERATION_TYPE, RyGateOperation } from "lib/operation"
 import { RotationOperatorGate } from "./rotationOperatorGate"
-
-export const RY_GATE_INSTRUCTION_TYPE = "Ry"
-
-export type RyGateInstruction = {
-  type: typeof RY_GATE_INSTRUCTION_TYPE
-  theta: string
-  controls: number[]
-  targets: number[]
-  if: string | null
-}
+import { classNameFor } from "lib/base"
 
 export class RyGate extends RotationOperatorGate {
   static readonly elementClassName = classNameFor("gate:ry")
@@ -22,11 +13,11 @@ export class RyGate extends RotationOperatorGate {
     return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
   }
 
-  serialize(): RyGateInstruction {
-    return this._serialize(RY_GATE_INSTRUCTION_TYPE) as RyGateInstruction
+  serialize(): RyGateOperation {
+    return this._serialize(RY_GATE_OPERATION_TYPE) as RyGateOperation
   }
 
   toJson(): string {
-    return this._toJson(RY_GATE_INSTRUCTION_TYPE)
+    return this._toJson(RY_GATE_OPERATION_TYPE)
   }
 }

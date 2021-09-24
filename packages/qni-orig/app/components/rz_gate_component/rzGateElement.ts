@@ -9,17 +9,24 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "mixins"
+import { RZ_GATE_OPERATION_TYPE, RzGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
+import { ControllableMixin } from "mixins/controllable"
+import { TargetableMixin } from "mixins/targetable"
 
 @controller
 export class RzGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  TargetableMixin(
+    ControllableMixin(
+      WireableMixin(
+        LabelableMixin(
+          IfableMixin(
+            DisableableMixin(
+              IconableMixin(
+                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+              ),
+            ),
           ),
         ),
       ),
@@ -30,7 +37,7 @@ export class RzGateElement extends DraggableMixin(
   @attr theta = ""
 
   static create({
-    theta = "",
+    theta = "π/2",
     draggable = false,
   }: Partial<{ theta: string; draggable: boolean }> = {}): RzGateElement {
     const el = document.createElement("rz-gate") as RzGateElement
@@ -64,9 +71,19 @@ export class RzGateElement extends DraggableMixin(
 
   toJson(): string {
     if (this.theta === "") {
-      return '"Rz"'
+      return `"${RZ_GATE_OPERATION_TYPE}"`
     } else {
-      return `"Rz(${this.theta})"`
+      return `"${RZ_GATE_OPERATION_TYPE}(${this.theta.replace("/", "_")})"`
+    }
+  }
+
+  serialize(): RzGateOperation {
+    return {
+      type: RZ_GATE_OPERATION_TYPE,
+      theta: this.theta.replace("π", "pi"),
+      controls: this.controls,
+      targets: this.targets,
+      if: this.if,
     }
   }
 

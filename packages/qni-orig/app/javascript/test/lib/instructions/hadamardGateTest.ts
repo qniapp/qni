@@ -1,29 +1,32 @@
 import {
-  HadamardGate,
+  HGate,
   isConnectable,
   isControllable,
   isDisableable,
   isIfable,
 } from "lib/instructions"
-import { Util } from "lib/base"
-import { describe } from "lib/base"
+import { Util, describe } from "lib/base"
 
 function hadamardGateFixture(options: {
   [key: string]: string | number[] | boolean | undefined
 }) {
   if (options.if && typeof options.if === "string") {
+    // eslint-disable-next-line github/unescaped-html-literal
     return `<div id="hadamard-gate" class="hadamard-gate" data-if="${options.if}"></div>`
   } else if (
     options.controls &&
     options.controls instanceof Array &&
     options.controls.length > 0
   ) {
+    // eslint-disable-next-line github/unescaped-html-literal
     return `<div id="hadamard-gate" class="hadamard-gate" data-controls="${options.controls.join(
       ",",
     )}"></div>`
   } else if (options.disabled) {
+    // eslint-disable-next-line github/unescaped-html-literal
     return '<div id="hadamard-gate" class="hadamard-gate gate--disabled"></div>'
   } else {
+    // eslint-disable-next-line github/unescaped-html-literal
     return '<div id="hadamard-gate" class="hadamard-gate"></div>'
   }
 }
@@ -39,11 +42,11 @@ function createHadamardGateElement(
 
 QUnit.module("HadamardGate", (hooks) => {
   let hadamardGateEl: HTMLElement
-  let hadamardGate: HadamardGate
+  let hadamardGate: HGate
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement()
-    hadamardGate = new HadamardGate(hadamardGateEl)
+    hadamardGate = new HGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {
@@ -111,11 +114,11 @@ QUnit.module("HadamardGate", (hooks) => {
 
 QUnit.module("HadamardGate (if alice_h)", (hooks) => {
   let hadamardGateEl: HTMLElement
-  let hadamardGate: HadamardGate
+  let hadamardGate: HGate
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement({ if: "alice_h" })
-    hadamardGate = new HadamardGate(hadamardGateEl)
+    hadamardGate = new HGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {
@@ -170,11 +173,11 @@ QUnit.module("HadamardGate (if alice_h)", (hooks) => {
 
 QUnit.module("HadamardGate (controls = 3,1,2)", (hooks) => {
   let hadamardGateEl: HTMLElement
-  let hadamardGate: HadamardGate
+  let hadamardGate: HGate
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement({ controls: [3, 1, 2] })
-    hadamardGate = new HadamardGate(hadamardGateEl)
+    hadamardGate = new HGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {
@@ -216,11 +219,11 @@ QUnit.module("HadamardGate (controls = 3,1,2)", (hooks) => {
 
 QUnit.module("HadamardGate (disabled)", (hooks) => {
   let hadamardGateEl: HTMLElement
-  let hadamardGate: HadamardGate
+  let hadamardGate: HGate
 
   hooks.beforeEach(() => {
     hadamardGateEl = createHadamardGateElement({ disabled: true })
-    hadamardGate = new HadamardGate(hadamardGateEl)
+    hadamardGate = new HGate(hadamardGateEl)
   })
 
   hooks.afterEach(() => {

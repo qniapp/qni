@@ -1,10 +1,15 @@
 import {
+  CONTROL_GATE_OPERATION_TYPE,
+  ControlGateOperation,
+} from "lib/operation"
+import {
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
+  TargetableMixin,
   WireableMixin,
 } from "mixins"
 import { TemplateResult, html, render } from "@github/jtml"
@@ -12,9 +17,11 @@ import { attr, controller } from "@github/catalyst"
 
 @controller
 export class ControlGateElement extends DraggableMixin(
-  WireableMixin(
-    DisableableMixin(
-      IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+  TargetableMixin(
+    WireableMixin(
+      DisableableMixin(
+        IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+      ),
     ),
   ),
 ) {
@@ -54,7 +61,11 @@ export class ControlGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return '"•"'
+    return `"${CONTROL_GATE_OPERATION_TYPE}"`
+  }
+
+  serialize(): ControlGateOperation {
+    return { type: CONTROL_GATE_OPERATION_TYPE, targets: this.targets }
   }
 
   get iconSvg(): TemplateResult {

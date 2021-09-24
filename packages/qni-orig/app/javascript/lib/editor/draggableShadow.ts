@@ -1,7 +1,7 @@
+import { Util, classNameFor } from "lib/base"
 import { DraggableItem } from "./draggableItem"
 import { Dropzonable } from "./mixins"
-import { Instruction } from "lib/instruction"
-import { Util, classNameFor } from "lib/base"
+import { Instruction } from "lib/operation"
 
 export class DraggableShadow {
   private draggable: DraggableItem

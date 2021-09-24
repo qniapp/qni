@@ -1,26 +1,23 @@
-import { classNameFor } from "lib/base"
+import {
+  CONTROL_GATE_OPERATION_TYPE,
+  ControlGateOperation,
+} from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { DisableableMixin } from "./disableable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
-
-export const CONTROL_GATE_INSTRUCTION_TYPE = "•"
-
-export type ControlGateInstruction = {
-  type: typeof CONTROL_GATE_INSTRUCTION_TYPE
-  targets: number[]
-}
+import { classNameFor } from "lib/base"
 
 export class ControlGate extends TargetableMixin(
   ConnectableMixin(DisableableMixin(InstructionWithElement)),
 ) {
   static readonly elementClassName = classNameFor("gate:control")
 
-  serialize(): ControlGateInstruction {
-    return { type: CONTROL_GATE_INSTRUCTION_TYPE, targets: this.targets }
+  serialize(): ControlGateOperation {
+    return { type: CONTROL_GATE_OPERATION_TYPE, targets: this.targets }
   }
 
   toJson(): string {
-    return `"${CONTROL_GATE_INSTRUCTION_TYPE}"`
+    return `"${CONTROL_GATE_OPERATION_TYPE}"`
   }
 }

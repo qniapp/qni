@@ -1,4 +1,5 @@
 import {
+  ControllableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -7,19 +8,25 @@ import {
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
+  TargetableMixin,
   WireableMixin,
 } from "mixins"
+import { RY_GATE_OPERATION_TYPE, RyGateOperation } from "lib/operation"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class RyGateElement extends DraggableMixin(
-  WireableMixin(
-    LabelableMixin(
-      IfableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+  TargetableMixin(
+    ControllableMixin(
+      WireableMixin(
+        LabelableMixin(
+          IfableMixin(
+            DisableableMixin(
+              IconableMixin(
+                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+              ),
+            ),
           ),
         ),
       ),
@@ -30,7 +37,7 @@ export class RyGateElement extends DraggableMixin(
   @attr theta = ""
 
   static create({
-    theta = "",
+    theta = "π/2",
     draggable = false,
   }: Partial<{ theta: string; draggable: boolean }> = {}): RyGateElement {
     const el = document.createElement("ry-gate") as RyGateElement
@@ -64,9 +71,19 @@ export class RyGateElement extends DraggableMixin(
 
   toJson(): string {
     if (this.theta === "") {
-      return '"Ry"'
+      return `"${RY_GATE_OPERATION_TYPE}"`
     } else {
-      return `"Ry(${this.theta})"`
+      return `"${RY_GATE_OPERATION_TYPE}(${this.theta.replace("/", "_")})"`
+    }
+  }
+
+  serialize(): RyGateOperation {
+    return {
+      type: RY_GATE_OPERATION_TYPE,
+      theta: this.theta.replace("π", "pi"),
+      controls: this.controls,
+      targets: this.targets,
+      if: this.if !== "" ? this.if : null,
     }
   }
 

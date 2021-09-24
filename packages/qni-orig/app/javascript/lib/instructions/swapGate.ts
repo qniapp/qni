@@ -1,33 +1,26 @@
+import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "lib/operation"
+import { Util, attributeNameFor, classNameFor } from "lib/base"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
 import { InstructionWithElement } from "./instructionWithElement"
 import { TargetableMixin } from "./targetable"
-import { Util, attributeNameFor, classNameFor } from "lib/base"
-
-export const SWAP_GATE_INSTRUCTION_TYPE = "Swap"
-
-export type SwapGateInstruction = {
-  type: typeof SWAP_GATE_INSTRUCTION_TYPE
-  targets: [number, number] | []
-  controls: number[]
-}
 
 export class SwapGate extends ControllableMixin(
   TargetableMixin(ConnectableMixin(DisableableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:swap")
 
-  serialize(): SwapGateInstruction {
+  serialize(): SwapGateOperation {
     return {
-      type: SWAP_GATE_INSTRUCTION_TYPE,
+      type: SWAP_GATE_OPERATION_TYPE,
       targets: this.swapTargets,
       controls: this.controls,
     }
   }
 
   toJson(): string {
-    return `"${SWAP_GATE_INSTRUCTION_TYPE}"`
+    return `"${SWAP_GATE_OPERATION_TYPE}"`
   }
 
   get phi(): string {
@@ -40,7 +33,7 @@ export class SwapGate extends ControllableMixin(
   private get swapTargets(): [number, number] | [] {
     const targets = this.targets
 
-    if (targets.length != 2) return []
+    if (targets.length !== 2) return []
     return [targets[0], targets[1]]
   }
 }

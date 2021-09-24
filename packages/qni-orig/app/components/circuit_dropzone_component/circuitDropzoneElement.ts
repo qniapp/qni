@@ -3,6 +3,24 @@ import "@interactjs/actions/drop"
 import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
+
+import {
+  BlochDisplayOperation,
+  ControlGateOperation,
+  HGateOperation,
+  IGateOperation,
+  MeasurementOperation,
+  PhaseGateOperation,
+  RnotGateOperation,
+  RxGateOperation,
+  RyGateOperation,
+  RzGateOperation,
+  SwapGateOperation,
+  WriteGateOperation,
+  XGateOperation,
+  YGateOperation,
+  ZGateOperation,
+} from "lib/operation"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
@@ -10,6 +28,7 @@ import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { Draggable } from "mixins"
 import { HGateElement } from "h_gate_component/hGateElement"
+import { IGate } from "lib/instructions"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
@@ -21,6 +40,7 @@ import { WriteGateElement } from "write_gate_component/writeGateElement"
 import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
+
 import interact from "@interactjs/interact"
 
 const wires = html`<svg
@@ -445,6 +465,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.append(draggable)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   unsnap(_draggable: HTMLElement): void {
     this.draggableName = ""
     this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
@@ -492,5 +513,27 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   remove(): void {
     this.parentElement?.removeChild(this)
+  }
+
+  serialize():
+    | IGateOperation
+    | HGateOperation
+    | XGateOperation
+    | YGateOperation
+    | ZGateOperation
+    | PhaseGateOperation
+    | RnotGateOperation
+    | RxGateOperation
+    | RyGateOperation
+    | RzGateOperation
+    | ControlGateOperation
+    | SwapGateOperation
+    | BlochDisplayOperation
+    | WriteGateOperation
+    | MeasurementOperation {
+    if (this.operation === null) {
+      return new IGate().serialize()
+    }
+    return this.operation.serialize()
   }
 }

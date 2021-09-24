@@ -1,14 +1,13 @@
+import { MeasurementGate, SwapGate, WriteGate } from "lib/instructions"
+import { Util, classNameFor } from "lib/base"
 import { Circuit } from "lib/circuit"
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitDropzone } from "./circuitDropzone"
 import { DraggableItem } from "./draggableItem"
 import { DropEventHandlers } from "./mixins"
 import { GatePopup } from "lib/editor"
-import { MeasureGate, SwapGate, WriteGate } from "lib/instructions"
 import { PaletteDraggable } from "./paletteDraggable"
-
 import { TrashDropzone } from "./trashDropzone"
-import { Util, classNameFor } from "lib/base"
 
 export class Editor {
   private element: Element
@@ -190,7 +189,7 @@ export class Editor {
         if (dz.instruction instanceof WriteGate) {
           wireActive[bit] = true
           wireActiveOrig[bit] = true
-        } else if (dz.instruction instanceof MeasureGate) {
+        } else if (dz.instruction instanceof MeasurementGate) {
           wireActive[bit] = false
           wireActiveOrig[bit] = false
         } else if (

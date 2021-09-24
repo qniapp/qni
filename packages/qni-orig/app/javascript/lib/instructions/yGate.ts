@@ -1,3 +1,4 @@
+import { YGateOperation, Y_GATE_OPERATION_TYPE } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
@@ -6,23 +7,15 @@ import { InstructionWithElement } from "./instructionWithElement"
 import { Matrix } from "lib/math"
 import { classNameFor } from "lib/base"
 
-export const Y_GATE_INSTRUCTION_TYPE = "Y"
-
-export type YGateInstruction = {
-  type: typeof Y_GATE_INSTRUCTION_TYPE
-  controls: number[]
-  if: string | null
-}
-
 export class YGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:y")
   static readonly MATRIX = Matrix.PAULI_Y
 
-  serialize(): YGateInstruction {
+  serialize(): YGateOperation {
     return {
-      type: Y_GATE_INSTRUCTION_TYPE,
+      type: Y_GATE_OPERATION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -30,9 +23,9 @@ export class YGate extends ControllableMixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${Y_GATE_INSTRUCTION_TYPE}<${this.if}"`
+      return `"${Y_GATE_OPERATION_TYPE}<${this.if}"`
     } else {
-      return `"${Y_GATE_INSTRUCTION_TYPE}"`
+      return `"${Y_GATE_OPERATION_TYPE}"`
     }
   }
 }

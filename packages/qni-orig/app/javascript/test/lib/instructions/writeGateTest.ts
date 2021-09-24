@@ -1,8 +1,8 @@
-import { Util } from "lib/base"
+import { Util, describe } from "lib/base"
 import { WriteGate } from "lib/instructions"
-import { describe } from "lib/base"
 
 function writeGateFixture(value: 0 | 1) {
+  // eslint-disable-next-line github/unescaped-html-literal
   return `<div id="write-gate" class="write-gate" data-value="${value}"></div>`
 }
 
@@ -31,7 +31,10 @@ QUnit.module("WriteGate0", (hooks) => {
   })
 
   QUnit.test(".serialize()", (assert) => {
-    assert.equal(describe(writeGate.serialize()), '{"type": "|0>", "value": 0}')
+    assert.equal(
+      describe(writeGate.serialize()),
+      '{"type": "Write", "value": 0}',
+    )
   })
 })
 
@@ -53,6 +56,9 @@ QUnit.module("WriteGate1", (hooks) => {
   })
 
   QUnit.test(".serialize()", (assert) => {
-    assert.equal(describe(writeGate.serialize()), '{"type": "|1>", "value": 1}')
+    assert.equal(
+      describe(writeGate.serialize()),
+      '{"type": "Write", "value": 1}',
+    )
   })
 })

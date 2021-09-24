@@ -2,18 +2,17 @@ import "@interactjs/auto-start"
 import "@interactjs/actions/drag"
 import "@interactjs/actions/drop"
 import "@interactjs/dev-tools"
-import interact from "@interactjs/interact"
-import { Interactable } from "@interactjs/types"
-
+import { DropEventHandlers, DropzonableMixin, OccupiableMixin } from "./mixins"
 import { CircuitDraggable } from "./circuitDraggable"
 import { CircuitStep } from "./circuitStep"
 import { DraggableItem } from "./draggableItem"
 import { DraggableShadow } from "./draggableShadow"
-import { DropEventHandlers, DropzonableMixin, OccupiableMixin } from "./mixins"
-import { Instruction } from "lib/instruction"
+import { Elementable } from "lib/mixins"
+import { Instruction } from "lib/operation"
+import { Interactable } from "@interactjs/types"
 import { InternalError } from "lib/error"
 import { classNameFor } from "lib/base"
-import { Elementable } from "lib/mixins"
+import interact from "@interactjs/interact"
 
 export class CircuitDropzone extends DropzonableMixin(
   OccupiableMixin(Elementable),
@@ -25,7 +24,6 @@ export class CircuitDropzone extends DropzonableMixin(
   setInteract(handlers: DropEventHandlers): void {
     this.unsetInteract()
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const interactable = interact(this.element) as Interactable
     interactable.dropzone({
       accept: `.${classNameFor("draggable")}`,
@@ -179,7 +177,6 @@ export class CircuitDropzone extends DropzonableMixin(
   }
 
   unsetInteract(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const interactable = interact(this.element) as Interactable
     interactable.unset()
   }

@@ -1,17 +1,12 @@
-import CircleNotationController from "./circle_notation_controller"
-import {
-  HadamardGate,
-  MeasureGate,
-  NotGate,
-  RootNotGate,
-} from "lib/instructions"
 import { Breakpoint, Util } from "lib/base"
+import { HGate, MeasurementGate, RnotGate, XGate } from "lib/instructions"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import CircleNotationController from "./circle_notation_controller"
 import { Circuit } from "lib/circuit"
 import { CircuitStep } from "lib/editor/circuitStep"
 import { Complex } from "lib/math"
 import { Controller } from "stimulus"
 import { RunCircuitButtonElement } from "run_circuit_button_component/runCircuitButtonElement"
-import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -71,7 +66,7 @@ export default class SimulatorController extends Controller {
             const dropzones = step.dropzones
             for (const bit in bits) {
               const instruction = dropzones[bit].instruction
-              if (instruction instanceof MeasureGate) {
+              if (instruction instanceof MeasurementGate) {
                 instruction.value = bits[bit]
               }
             }
@@ -79,9 +74,9 @@ export default class SimulatorController extends Controller {
 
           for (const each of step.instructions) {
             if (
-              each instanceof NotGate ||
-              each instanceof HadamardGate ||
-              each instanceof RootNotGate
+              each instanceof XGate ||
+              each instanceof HGate ||
+              each instanceof RnotGate
             ) {
               if (each.if) {
                 each.disabled = !data.flags[each.if]

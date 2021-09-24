@@ -1,20 +1,13 @@
-import { classNameFor } from "lib/base"
 import { Complex, Matrix } from "lib/math"
+import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
 import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
+import { classNameFor } from "lib/base"
 
-export const ROOT_NOT_GATE_INSTRUCTION_TYPE = "X^½"
-
-export type RootNotGateInstruction = {
-  type: typeof ROOT_NOT_GATE_INSTRUCTION_TYPE
-  controls: number[]
-  if: string | null
-}
-
-export class RootNotGate extends ControllableMixin(
+export class RnotGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:rootNot")
@@ -27,9 +20,9 @@ export class RootNotGate extends ControllableMixin(
     )
   }
 
-  serialize(): RootNotGateInstruction {
+  serialize(): RnotGateOperation {
     return {
-      type: ROOT_NOT_GATE_INSTRUCTION_TYPE,
+      type: RNOT_GATE_OPERATION_TYPE,
       controls: this.controls,
       if: this.if,
     }
@@ -37,9 +30,9 @@ export class RootNotGate extends ControllableMixin(
 
   toJson(): string {
     if (this.if) {
-      return `"${ROOT_NOT_GATE_INSTRUCTION_TYPE}<${this.if}"`
+      return `"${RNOT_GATE_OPERATION_TYPE}<${this.if}"`
     } else {
-      return `"${ROOT_NOT_GATE_INSTRUCTION_TYPE}"`
+      return `"${RNOT_GATE_OPERATION_TYPE}"`
     }
   }
 }

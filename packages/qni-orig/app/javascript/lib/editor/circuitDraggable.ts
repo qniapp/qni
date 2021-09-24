@@ -1,6 +1,6 @@
 import { CircuitDropzone } from "./circuitDropzone"
 import { Draggable } from "./draggable"
-import { Instruction } from "lib/instruction"
+import { Instruction } from "lib/operation"
 import { classNameFor } from "lib/base"
 import { isConnectable } from "lib/instructions"
 

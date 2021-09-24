@@ -1,13 +1,4 @@
-import Fraction from "fraction.js"
-import tippy, { Instance, Props, roundArrow } from "tippy.js"
-import noUiSlider, {
-  API as noUiSliderApi,
-  PipsMode,
-  target as noUiSliderTarget,
-} from "nouislider"
-
-import { Breakpoint, classNameFor, Util } from "lib/base"
-import { Instruction } from "lib/instruction"
+import { Breakpoint, Util, classNameFor } from "lib/base"
 import {
   Phiable,
   Thetable,
@@ -17,6 +8,14 @@ import {
   isPhiable,
   isThetable,
 } from "lib/instructions"
+import noUiSlider, {
+  PipsMode,
+  API as noUiSliderApi,
+  target as noUiSliderTarget,
+} from "nouislider"
+import tippy, { Instance, Props, roundArrow } from "tippy.js"
+import Fraction from "fraction.js"
+import { Instruction } from "lib/operation"
 
 export class GatePopup {
   onUpdate!: () => void
@@ -57,22 +56,20 @@ export class GatePopup {
         if (that.originalValue !== null) that.input.value = that.originalValue
         that.input.addEventListener("keydown", that.inputKeydown.bind(that))
 
-        const instruction = Instruction.create(instance.reference)
-        if (isPhiable(instruction) || isThetable(instruction)) {
-          that.currentAngleDenominator = that.angleDenominator(
-            instruction.angle,
-          )
-          that.currentAngle = that.snappedAngle(instruction.radian)
-          that.createAngleSlider(instruction)
+        const inst = Instruction.create(instance.reference)
+        if (isPhiable(inst) || isThetable(inst)) {
+          that.currentAngleDenominator = that.angleDenominator(inst.angle)
+          that.currentAngle = that.snappedAngle(inst.radian)
+          that.createAngleSlider(inst)
         }
       },
       onHide() {
         if (that.isAngleSliderActive()) return false
       },
       onHidden(instance) {
-        const instruction = Instruction.create(instance.reference)
-        if (isPhiable(instruction) || isThetable(instruction)) {
-          that.reduceInstructionAngle(instruction)
+        const inst = Instruction.create(instance.reference)
+        if (isPhiable(inst) || isThetable(inst)) {
+          that.reduceInstructionAngle(inst)
           that.runCircuit()
           that.destroyAngleSlider()
         }
@@ -91,9 +88,9 @@ export class GatePopup {
 
     if (isPhiable(instruction)) {
       if (instruction.targets.length > 2) {
-        instruction.cphaseTargetInstructions().forEach((each) => {
+        for (const each of instruction.cphaseTargetInstructions()) {
           each.phi = angle
-        })
+        }
       } else {
         instruction.phi = angle
         instruction.circuitDropzone.circuitStep.updateGateConnections()
@@ -110,9 +107,9 @@ export class GatePopup {
 
     if (isPhiable(instruction)) {
       if (instruction.targets.length > 0) {
-        instruction.cphaseTargetInstructions().forEach((each) => {
+        for (const each of instruction.cphaseTargetInstructions()) {
           each.phi = angle
-        })
+        }
       } else {
         instruction.phi = angle
       }
@@ -132,9 +129,7 @@ export class GatePopup {
 
   private beautifyFraction(angle: string, reduce = false): string {
     let newAngle: string
-
-    // @ts-ignore
-    Fraction.REDUCE = reduce
+    ;(Fraction as any).REDUCE = reduce
     const fraction = new Fraction(
       angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
     )
@@ -142,17 +137,17 @@ export class GatePopup {
     const coefficient = fraction.valueOf()
     const d = fraction.d
 
-    if (coefficient == 0) {
+    if (coefficient === 0) {
       newAngle = "0"
     } else if (coefficient > 2) {
-      newAngle = d == 1 ? "2pi" : `${2 * d}pi/${d}`
+      newAngle = d === 1 ? "2pi" : `${2 * d}pi/${d}`
     } else if (coefficient < -2) {
-      newAngle = d == 1 ? "-2pi" : `-${2 * d}pi/${d}`
+      newAngle = d === 1 ? "-2pi" : `-${2 * d}pi/${d}`
     } else {
       const n = fraction.n
-      const sign = fraction.s == -1 ? "-" : ""
-      const numerator = n == 1 ? `${sign}pi` : `${sign}${n}pi`
-      newAngle = d == 1 ? `${numerator}` : `${numerator}/${d}`
+      const sign = fraction.s === -1 ? "-" : ""
+      const numerator = n === 1 ? `${sign}pi` : `${sign}${n}pi`
+      newAngle = d === 1 ? `${numerator}` : `${numerator}/${d}`
     }
 
     return newAngle
@@ -233,9 +228,9 @@ export class GatePopup {
           let newAngle = inputValue
 
           if (
-            this.angleNumerator(this.currentAngle) ==
+            this.angleNumerator(this.currentAngle) ===
               this.angleNumerator(inputValue) &&
-            this.currentAngleDenominator != this.angleDenominator(inputValue)
+            this.currentAngleDenominator !== this.angleDenominator(inputValue)
           ) {
             const m =
               this.angleDenominator(inputValue) / this.currentAngleDenominator
@@ -261,7 +256,7 @@ export class GatePopup {
   private set flag(flag: string | null) {
     const instruction = Instruction.create(this.popupReferenceEl)
 
-    if (!flag || flag.trim().length == 0) {
+    if (!flag || flag.trim().length === 0) {
       if (isFlaggable(instruction)) instruction.flag = null
       if (isDisableable(instruction)) instruction.disabled = false
     } else {
@@ -272,7 +267,7 @@ export class GatePopup {
   private set if(ifValue: string | null) {
     const instruction = Instruction.create(this.popupReferenceEl)
 
-    if (!ifValue || ifValue.trim().length == 0) {
+    if (!ifValue || ifValue.trim().length === 0) {
       if (isIfable(instruction)) instruction.if = null
       if (isDisableable(instruction)) instruction.disabled = false
     } else {
@@ -327,9 +322,9 @@ export class GatePopup {
         format: {
           to: (value) => {
             const nPi = value / Math.PI
-            if (nPi == 0) return "0"
-            if (nPi == -1) return "-π"
-            if (nPi == 1) return "π"
+            if (nPi === 0) return "0"
+            if (nPi === -1) return "-π"
+            if (nPi === 1) return "π"
             return `${nPi}π`
           },
         },
@@ -338,8 +333,8 @@ export class GatePopup {
     })
     angleSliderEl.classList.remove("hidden")
 
-    const noUiSliderApi = angleSliderEl.noUiSlider as noUiSliderApi
-    noUiSliderApi.on("update", (values) => {
+    const slider = angleSliderEl.noUiSlider as noUiSliderApi
+    slider.on("update", (values) => {
       const snappedAngle = this.snappedAngle(values[0] as number)
       if (this.currentAngle !== snappedAngle) {
         this.currentAngle = snappedAngle
@@ -369,8 +364,7 @@ export class GatePopup {
   }
 
   private angleNumerator(angle: string): number {
-    // @ts-ignore
-    Fraction.REDUCE = false
+    ;(Fraction as any).REDUCE = false
 
     const fraction = new Fraction(
       angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
@@ -379,8 +373,7 @@ export class GatePopup {
   }
 
   private angleDenominator(angle: string): number {
-    // @ts-ignore
-    Fraction.REDUCE = false
+    ;(Fraction as any).REDUCE = false
 
     const fraction = new Fraction(
       angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
