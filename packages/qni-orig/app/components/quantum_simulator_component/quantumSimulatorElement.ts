@@ -45,10 +45,12 @@ export class QuantumSimulatorElement extends HTMLElement {
         for (const bit in data.blochVectors) {
           const blochDisplay = step.dropzones[bit]
             .operation as BlochDisplayElement
-          const blochVector = data.blochVectors[bit]
-          blochDisplay!.x = blochVector[0]
-          blochDisplay!.y = blochVector[1]
-          blochDisplay!.z = blochVector[2]
+          if (blochDisplay) {
+            const blochVector = data.blochVectors[bit]
+            blochDisplay!.x = blochVector[0]
+            blochDisplay!.y = blochVector[1]
+            blochDisplay!.z = blochVector[2]
+          }
         }
 
         if (data.bits) {
