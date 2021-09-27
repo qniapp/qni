@@ -3,6 +3,7 @@ import "circuit_dropzone_component/circuitDropzoneElement"
 import "circuit_step_component/circuitStepElement"
 import "palette_dropzone_component/paletteDropzoneElement"
 import "quantum_circuit_component/quantumCircuitElement"
+import "quantum_simulator_component/quantumSimulatorElement"
 
 import "bloch_display_component/blochDisplayElement"
 import "control_gate_component/controlGateElement"

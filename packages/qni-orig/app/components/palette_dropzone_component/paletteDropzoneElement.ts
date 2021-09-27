@@ -18,17 +18,12 @@ export class PaletteDropzoneElement extends HTMLElement {
             width: ${Operation.size.base.width};
           }
 
-          /*
-           * Specify "position: absolute" to overlap the newly generated
-           * operation with the operation originally placed in
-           * <palette-dropzone> ... </palette-dropzone> (e.g. <h-gate>).
-           */
           ::slotted(*) {
             position: absolute;
           }
         </style>
 
-        <div data-action="grabdraggable:palette-dropzone#newOperation">
+        <div data-action="draggable.grab:palette-dropzone#newOperation">
           <slot></slot>
         </div>`,
       this.shadowRoot!,

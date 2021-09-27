@@ -2,96 +2,96 @@ require 'application_system_test_case'
 
 class UrlBookmarkTest < ApplicationSystemTestCase
   setup do
-    visit new_circuit_path(json: '{"cols":[[1]]}')
+    visit new_circuit_path
   end
 
   test 'bookmark a single H gate circuit' do
-    palette('h-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('h-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["H"]]}', decoded_current_path
+    assert_equal '/{"cols":[["H"]]}', decoded_current_path
   end
 
   test 'bookmark a single X gate circuit' do
-    palette('x-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('x-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["X"]]}', decoded_current_path
+    assert_equal '/{"cols":[["X"]]}', decoded_current_path
   end
 
   test 'bookmark a single Y gate circuit' do
-    palette('y-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('y-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Y"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Y"]]}', decoded_current_path
   end
 
   test 'bookmark a single Z gate circuit' do
-    palette('z-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('z-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Z"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Z"]]}', decoded_current_path
   end
 
   test 'bookmark a single phase shift gate circuit' do
-    palette('phase-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('phase-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["P"]]}', decoded_current_path
+    assert_equal '/{"cols":[["P"]]}', decoded_current_path
   end
 
   test 'bookmark a single √X gate circuit' do
-    palette('rnot-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('rnot-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["X^½"]]}', decoded_current_path
+    assert_equal '/{"cols":[["X^½"]]}', decoded_current_path
   end
 
   test 'bookmark a single Rx gate circuit' do
-    palette('rx-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('rx-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Rx"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Rx"]]}', decoded_current_path
   end
 
   test 'bookmark a single Ry gate circuit' do
-    palette('ry-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('ry-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Ry"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Ry"]]}', decoded_current_path
   end
 
   test 'bookmark a single Rz gate circuit' do
-    palette('rz-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('rz-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Rz"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Rz"]]}', decoded_current_path
   end
 
   test 'bookmark a single control gate circuit' do
-    palette('control-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('control-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["•"]]}', decoded_current_path
+    assert_equal '/{"cols":[["•"]]}', decoded_current_path
   end
 
   test 'bookmark a single swap gate circuit' do
-    palette('swap-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('swap-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Swap"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Swap"]]}', decoded_current_path
   end
 
   test 'bookmark a single Bloch display circuit' do
-    palette('bloch-display').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('bloch-display'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Bloch"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Bloch"]]}', decoded_current_path
   end
 
   test 'bookmark a single |0> gate circuit' do
-    palette('write-gate[data-value="0"]').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('write-gate[data-value="0"]'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["|0>"]]}', decoded_current_path
+    assert_equal '/{"cols":[["|0>"]]}', decoded_current_path
   end
 
   test 'bookmark a single |1> gate circuit' do
-    palette('write-gate[data-value="1"]').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('write-gate[data-value="1"]'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["|1>"]]}', decoded_current_path
+    assert_equal '/{"cols":[["|1>"]]}', decoded_current_path
   end
 
   test 'bookmark a single measurement gate circuit' do
-    palette('measurement-gate').drag_to(first('circuit-dropzone'), html5: false)
+    drag_and_drop palette('measurement-gate'), to: dropzone(0, 0)
 
-    assert_equal '/new/{"cols":[["Measure"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Measure"]]}', decoded_current_path
   end
 end

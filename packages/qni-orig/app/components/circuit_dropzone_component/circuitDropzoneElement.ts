@@ -394,6 +394,25 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.update()
     this.addSlotChangeEventListener()
     this.initDropzone()
+
+    this.addEventListener("draggable.grab", this.enableDrop)
+    this.addEventListener(
+      "draggable.enddragging",
+      this.dispatchDropzoneDroppedEvent,
+    )
+    this.addEventListener("draggable.snap", this.snapDraggable)
+    this.addEventListener("draggable.unsnap", this.unsnapDraggable)
+    this.addEventListener("draggable.trash", this.setUnoccupied)
+  }
+
+  private dispatchDropzoneDroppedEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("dropzone.drop", { detail: this, bubbles: true }),
+    )
+  }
+
+  private setUnoccupied(): void {
+    this.occupied = false
   }
 
   update(): void {
@@ -426,7 +445,7 @@ export class CircuitDropzoneElement extends HTMLElement {
       if (this.childElementCount === 0) {
         this.draggableName = ""
         this.occupied = false
-        this.enableDropzone()
+        this.enableDrop()
         this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
         return
       }
@@ -439,7 +458,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
       this.draggableName = nodeName.toLowerCase()
       this.occupied = true
-      this.disableDropzone()
+      this.disableDrop()
 
       this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
     })
@@ -452,23 +471,30 @@ export class CircuitDropzoneElement extends HTMLElement {
     })
   }
 
-  enableDropzone(): void {
+  private enableDrop(): void {
     interact(this).dropzone(true)
   }
 
-  disableDropzone(): void {
+  private disableDrop(): void {
     interact(this).dropzone(false)
   }
 
-  snap(draggable: HTMLElement): void {
+  private snapDraggable(event: Event): void {
+    const draggable = (event as CustomEvent).detail as Draggable
+
     this.occupied = true
-    this.append(draggable)
+    this.append(draggable as unknown as Node)
+    draggable.moveTo(0, 0)
+    this.dispatchEvent(
+      new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
+    )
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  unsnap(_draggable: HTMLElement): void {
+  private unsnapDraggable(): void {
     this.draggableName = ""
-    this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+    this.dispatchEvent(
+      new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
+    )
   }
 
   updateWires(): void {

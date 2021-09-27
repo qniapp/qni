@@ -4,6 +4,7 @@ import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
 import { TemplateResult, html } from "@github/jtml"
+import { isCircuitDropzone, isPaletteDropzone } from "helpers"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { Constructor } from "./constructor"
 import { InteractEvent } from "@interactjs/types"
@@ -12,25 +13,11 @@ import { QuantumCircuitElement } from "quantum_circuit_component/quantumCircuitE
 import { attr } from "@github/catalyst"
 import interact from "@interactjs/interact"
 
-const isCircuitDropzone = (arg: unknown): arg is CircuitDropzoneElement =>
-  arg instanceof CircuitDropzoneElement
-
-const isPaletteDropzone = (arg: unknown): arg is PaletteDropzoneElement =>
-  arg instanceof PaletteDropzoneElement
-
 export declare class Draggable {
-  set draggable(value: boolean)
   get draggableStyle(): TemplateResult
-  get dropzone(): CircuitDropzoneElement | null
-  get grabbed(): boolean
   get snapped(): boolean
-  set snapped(value: boolean)
+  set hoverable(value: boolean)
   initDraggable(): void
-  grab(event: MouseEvent): void
-  unGrab(): void
-  startDragging(): void
-  dragMove(event: Interact.DragEvent): void
-  move(dx: number, dy: number): void
   moveTo(x: number, y: number): void
 }
 
@@ -44,12 +31,13 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
     @attr snapped = true
     @attr draggableX = 0
     @attr draggableY = 0
+    @attr hoverable = true
 
     get dropzone(): CircuitDropzoneElement | PaletteDropzoneElement | null {
       const el = this.parentElement
-      if (el?.nodeName === "CIRCUIT-DROPZONE") {
+      if (el?.tagName === "CIRCUIT-DROPZONE") {
         return el as CircuitDropzoneElement
-      } else if (el?.nodeName === "PALETTE-DROPZONE") {
+      } else if (el?.tagName === "PALETTE-DROPZONE") {
         return el as PaletteDropzoneElement
       }
       return null
@@ -72,13 +60,14 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
         #body {
           height: 100%;
           width: 100%;
+          border-radius: 0.25rem;
         }
 
         :host([data-draggable]) #body::after {
           position: absolute;
           height: 100%;
           width: 100%;
-          border-color: var(--colors-cardinal, #ff4b4b);
+          border-color: var(--colors-cardinal);
           border-radius: 0.25rem;
           border-style: solid;
           border-width: 2px;
@@ -87,7 +76,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           content: "";
         }
 
-        :host([data-draggable]) #body:hover::after,
+        :host([data-draggable][data-hoverable]) #body:hover::after,
         :host([data-draggable][data-grabbed]) #body::after {
           opacity: 100;
         }
@@ -115,22 +104,18 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
     // actions
 
-    grab(event: MouseEvent): void {
+    private grab(event: MouseEvent): void {
       if (!this.draggable) return
+
+      this.grabbed = true
+      this.dispatchEvent(new Event("draggable.grab", { bubbles: true }))
 
       if (isPaletteDropzone(this.dropzone)) {
         this.moveToGrabbedPosition(event.offsetX, event.offsetY)
-        this.dispatchEvent(new Event("grabdraggable", { bubbles: true }))
-      } else if (isCircuitDropzone(this.dropzone)) {
-        this.dropzone.enableDropzone()
       }
-
-      this.quantumCircuit?.appendWire()
-      this.quantumCircuit?.dispatchEvent(new Event("grabdraggable"))
 
       const snapTargets = this.snapTargets
 
-      this.grabbed = true
       interact(this).draggable({
         modifiers: [
           interact.modifiers.snap({
@@ -143,14 +128,22 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           move: (e: InteractEvent) => {
             const snapModifier = e.modifiers![0]
             if (snapModifier.inRange) {
-              this.snapped = true
               const snapTarget = snapModifier.target.source
               const dropzone = this.snappedDropzone(snapTarget)!
-              this.moveToDropzone(dropzone)
+
+              this.snapped = true
+              dropzone.dispatchEvent(
+                new CustomEvent("draggable.snap", {
+                  detail: this,
+                  bubbles: true,
+                }),
+              )
             } else {
               if (this.snapped && isCircuitDropzone(this.parentElement)) {
                 this.snapped = false
-                this.parentElement.unsnap(this as HTMLElement)
+                this.dispatchEvent(
+                  new Event("draggable.unsnap", { bubbles: true }),
+                )
               }
               this.snapped = false
             }
@@ -185,16 +178,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       return isPaletteDropzone(this.dropzone)
     }
 
-    unGrab(): void {
+    private unGrab(): void {
       if (!this.snapped) {
         this.trash()
-        this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
         return
       }
 
       this.grabbed = false
       this.moveTo(0, 0)
-      this.quantumCircuit?.dispatchEvent(new Event("ungrabdraggable"))
+      this.dispatchEvent(new Event("draggable.ungrab", { bubbles: true }))
     }
 
     private get quantumCircuit(): QuantumCircuitElement | null {
@@ -216,43 +208,36 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
     // interact.js handlers
 
-    startDragging(): void {
+    private startDragging(): void {
       this.dragging = true
     }
 
-    dragMove(event: Interact.DragEvent): void {
+    private dragMove(event: Interact.DragEvent): void {
       this.move(event.dx, event.dy)
     }
 
-    endDragging(): void {
+    private endDragging(): void {
       if (!this.snapped) {
         this.trash()
-        this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
+        this.quantumCircuit?.dispatchEvent(new Event("draggable.enddragging"))
         return
       }
 
       this.dragging = false
       this.grabbed = false
       this.moveTo(0, 0)
-      this.quantumCircuit?.dispatchEvent(new Event("enddragging"))
-    }
-
-    moveToDropzone(dropzone: CircuitDropzoneElement): void {
-      dropzone.snap(this as HTMLElement)
-      this.moveTo(0, 0)
+      this.dispatchEvent(new Event("draggable.enddragging", { bubbles: true }))
     }
 
     private trash() {
       interact(this).unset()
-      if (isCircuitDropzone(this.dropzone)) {
-        this.dropzone.occupied = false
-      }
+      this.dispatchEvent(new Event("draggable.trash", { bubbles: true }))
       this.parentElement?.removeChild(this)
     }
 
     // move element
 
-    move(dx: number, dy: number): void {
+    private move(dx: number, dy: number): void {
       const x = this.draggableX + dx
       const y = this.draggableY + dy
       this.moveTo(x, y)

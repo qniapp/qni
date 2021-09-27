@@ -1,66 +1,73 @@
-<div id="palette" class="hidden md:flex flex-row space-x-2 absolute top-0 let-0 mt-14 mx-6 px-4 py-5 bg-snow rounded-md border-2 border-b-4 border-swan">
-  <palette-dropzone>
-    <h-gate></h-gate>
-  </palette-dropzone>
+<quantum-simulator>
+  <div id="palette" class="hidden md:flex flex-row space-x-2 absolute top-0 let-0 mt-14 mx-6 px-4 py-5 bg-snow rounded-md border-2 border-b-4 border-swan">
+    <palette-dropzone>
+      <h-gate></h-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <x-gate></x-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <x-gate></x-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <y-gate></y-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <y-gate></y-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <z-gate></z-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <z-gate></z-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <phase-gate></phase-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <phase-gate></phase-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <rnot-gate></rnot-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <rnot-gate></rnot-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <rx-gate></rx-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <rx-gate></rx-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <ry-gate></ry-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <ry-gate></ry-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <rz-gate></rz-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <rz-gate></rz-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <swap-gate></swap-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <swap-gate></swap-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <control-gate></control-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <control-gate></control-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <bloch-display></bloch-display>
-  </palette-dropzone>
+    <palette-dropzone>
+      <bloch-display></bloch-display>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <write-gate data-value="0"></write-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <write-gate data-value="0"></write-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <write-gate data-value="1"></write-gate>
-  </palette-dropzone>
+    <palette-dropzone>
+      <write-gate data-value="1"></write-gate>
+    </palette-dropzone>
 
-  <palette-dropzone>
-    <measurement-gate></measurement-gate>
-  </palette-dropzone>
-</div>
+    <palette-dropzone>
+      <measurement-gate></measurement-gate>
+    </palette-dropzone>
+  </div>
 
-<quantum-circuit class="inline-block mt-6 md:mt-52 ml-6" data-json-from-url data-min-wire-count="2" data-min-step-count="5">
-</quantum-circuit>
+  <quantum-circuit class="block mt-56 md:mt-52 md:ml-6"
+                   data-json-from-url
+                   data-min-wire-count="2"
+                   data-min-step-count="5">
+  </quantum-circuit>
 
-<%= render RunCircuitButtonComponent.new %>
+  <%= circle_notation nqubit: 1 %>
+
+  <%= render RunCircuitButtonComponent.new %>
+</quantum-simulator>

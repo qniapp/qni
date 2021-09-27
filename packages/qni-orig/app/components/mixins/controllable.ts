@@ -17,6 +17,7 @@ export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
       const dataControls = this.getAttribute("data-controls")
 
       if (dataControls === null) return []
+      if (dataControls === "") return []
       return dataControls
         .split(",")
         .map((each) => {

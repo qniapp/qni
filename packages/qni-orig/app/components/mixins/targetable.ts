@@ -17,6 +17,7 @@ export function TargetableMixin<TBase extends Constructor<HTMLElement>>(
       const dataTargets = this.getAttribute("data-targets")
 
       if (dataTargets === null) return []
+      if (dataTargets === "") return []
       return dataTargets
         .split(",")
         .map((each) => {

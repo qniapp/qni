@@ -66,8 +66,7 @@ export class RunCircuitButtonElement extends HTMLElement {
 
   runSimulator(): void {
     this.disable()
-    const event = new CustomEvent("clickrun", { detail: { button: this } })
-    this.quantumCircuit?.dispatchEvent(event)
+    this.dispatchEvent(new Event("runCrcuitButton.click", { bubbles: true }))
   }
 
   disable(): void {
@@ -122,9 +121,5 @@ export class RunCircuitButtonElement extends HTMLElement {
         </button>`,
       this.shadowRoot!,
     )
-  }
-
-  private get quantumCircuit(): HTMLElement | null {
-    return document.querySelector("quantum-circuit")
   }
 }

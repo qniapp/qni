@@ -3,13 +3,14 @@ import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
 import { CircuitBlockElement } from "circuit_block_component/circuitBlockElement"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
+import { CircuitOperation } from "lib/operation"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { Draggable } from "mixins"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
-import { RunCircuitButtonElement } from "run_circuit_button_component/runCircuitButtonElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
@@ -18,15 +19,6 @@ import { WriteGateElement } from "write_gate_component/writeGateElement"
 import { XGateElement } from "x_gate_component/xGateElement"
 import { YGateElement } from "y_gate_component/yGateElement"
 import { ZGateElement } from "z_gate_component/zGateElement"
-
-type MessageEventData = {
-  type: "step" | "finish"
-  blochVectors: { [bit: number]: [number, number, number] }
-  bits: { [bit: number]: number }
-  step: number
-  amplitudes: Array<[number, number]>
-  flags: { [key: string]: boolean }
-}
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -37,12 +29,39 @@ export class QuantumCircuitElement extends HTMLElement {
 
   @targets blocks: CircuitBlockElement[]
 
-  declare worker: Worker
+  get nqubit(): number {
+    return this.steps[0].nqubit
+  }
 
   get steps(): CircuitStepElement[] {
     return Array.from(
       this.querySelectorAll("circuit-step"),
     ) as CircuitStepElement[]
+  }
+
+  get breakpoint(): CircuitStepElement | null {
+    for (const each of this.steps) {
+      if (each.breakpoint) return each
+    }
+    return null
+  }
+
+  get activeStep(): CircuitStepElement | null {
+    for (const each of this.steps) {
+      if (each.active) return each
+    }
+    return null
+  }
+
+  get snappedStep(): CircuitStepElement | null {
+    for (const each of this.steps) {
+      if (each.snap) return each
+    }
+    return null
+  }
+
+  get serializedSteps(): CircuitOperation[][] {
+    return this.steps.map((each) => each.serialize())
   }
 
   private get emptySteps(): CircuitStepElement[] {
@@ -256,41 +275,67 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  run(): void {
-    const serializedSteps = this.steps.map((each) => each.serialize())
-    // console.log(serializedSteps)
-    this.worker.postMessage({
-      nqubit: this.steps[0].nqubit,
-      steps: serializedSteps,
-    })
-  }
-
   connectedCallback(): void {
+    this.addEventListener("draggable.grab", this.prepareDraggableDrop)
+    this.addEventListener("draggable.ungrab", this.enableDraggablesHover)
+    this.addEventListener("draggable.enddragging", this.resize)
+    this.addEventListener("draggable.enddragging", this.enableDraggablesHover)
+    this.addEventListener("step.click", this.breakpointClickedStep)
+    this.addEventListener("step.hover", this.hoverStep)
+    this.addEventListener("step.snap", this.snapStep)
+    this.addEventListener("step.snap", this.updateAllSteps)
+    this.addEventListener("step.unsnap", this.updateAllSteps)
+    this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
+
     this.attachShadow({ mode: "open" })
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
 
-    this.worker = new Worker("/serviceworker.js")
-    this.worker.addEventListener("message", (e: MessageEvent) => {
-      const data = e.data as MessageEventData
-      // console.log(e)
-
-      if (data.type === "finish") {
-        this.runButton.enable()
-      }
-    })
-
-    this.addEventListener("clickrun", this.run)
-    this.addEventListener("grabdraggable", this.appendCircuitStepShadow)
-    this.addEventListener("ungrabdraggable", this.resize)
-    this.addEventListener("enddragging", this.resize)
+    this.dispatchEvent(new Event("circuit.loaded", { bubbles: true }))
   }
 
-  private get runButton(): RunCircuitButtonElement {
-    return document.getElementById(
-      "run-circuit-button",
-    ) as RunCircuitButtonElement
+  private dispatchCircuitMouseLeaveEvent(): void {
+    this.dispatchEvent(new Event("circuit.mouseleave", { bubbles: true }))
+  }
+
+  setBreakpoint(stepIndex: number): void {
+    const step = this.steps[stepIndex]
+
+    for (const each of this.steps) {
+      each.breakpoint = false
+    }
+    step!.breakpoint = true
+  }
+
+  private breakpointClickedStep(event: Event): void {
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    for (const each of this.steps) {
+      each.breakpoint = false
+    }
+    step!.breakpoint = true
+  }
+
+  private hoverStep(event: Event): void {
+    if (this.steps.some((each) => each.snap)) return
+
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    for (const each of this.steps) {
+      each.active = false
+    }
+    step!.active = true
+  }
+
+  private snapStep(event: Event): void {
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    for (const each of this.steps) {
+      each.active = false
+      each.snap = false
+    }
+    step!.snap = true
   }
 
   attributeChangedCallback(
@@ -398,7 +443,11 @@ export class QuantumCircuitElement extends HTMLElement {
       jsonString = this.json
     }
 
-    if (jsonString === "") return
+    if (jsonString === "" || jsonString === "new") {
+      this.resize()
+      return
+    }
+
     const jsonData = JSON.parse(jsonString)
 
     for (const step of jsonData.cols) {
@@ -569,14 +618,45 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateJsonUrl()
   }
 
-  appendWire(): void {
+  private prepareDraggableDrop(event: Event): void {
+    event.stopPropagation()
+
+    this.disableDraggablesOnCircuitHover()
+    this.appendWire()
+    this.appendCircuitStepShadow()
+  }
+
+  private disableDraggablesOnCircuitHover(): void {
+    for (const each of this.draggablesOnCircuit) {
+      each.hoverable = false
+    }
+  }
+
+  private enableDraggablesHover(): void {
+    for (const each of this.draggables) {
+      each.hoverable = true
+    }
+  }
+
+  private get draggables(): Draggable[] {
+    return Array.from(
+      this.querySelectorAll("[data-draggable]"),
+    ) as unknown as Draggable[]
+  }
+
+  private get draggablesOnCircuit(): Draggable[] {
+    return Array.from(
+      this.querySelectorAll("[data-draggable]:not([data-grabbed])"),
+    ) as unknown as Draggable[]
+  }
+
+  private appendWire(): void {
     for (const each of this.steps) {
       each.appendDropzone()
     }
-    this.updateJsonUrl()
   }
 
-  appendCircuitStepShadow(): void {
+  private appendCircuitStepShadow(): void {
     const largestStep = this.largestStep
 
     for (const each of this.steps) {
@@ -585,22 +665,13 @@ export class QuantumCircuitElement extends HTMLElement {
       )
       this.insertBefore(step, each.nextSibling)
     }
-
-    for (const each of this.steps) {
-      each.showBreakpoint = false
-      each.style.pointerEvents = "none"
-    }
   }
 
-  private resize(): void {
+  resize(): void {
     this.removeEmptySteps()
     this.appendMinimumSteps()
     this.removeLastEmptyWires()
     this.updateJsonUrl()
-    for (const each of this.steps) {
-      each.showBreakpoint = true
-      each.style.pointerEvents = "auto"
-    }
   }
 
   private removeEmptySteps(): void {

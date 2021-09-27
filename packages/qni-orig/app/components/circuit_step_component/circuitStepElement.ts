@@ -19,9 +19,10 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 @controller
 export class CircuitStepElement extends HTMLElement {
   @attr active = false
+  @attr snap = false
+  @attr breakpoint = false
   @attr keep = false
   @attr shadow = false
-  @attr showBreakpoint = true
 
   @target slotEl: HTMLSlotElement
 
@@ -123,18 +124,9 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   activate(): void {
-    const quantumCircuitEl = this.quantumCircuitElement()
-    if (quantumCircuitEl === null) return
-
-    for (const each of quantumCircuitEl.steps) {
-      each.deactivate()
-    }
-
-    this.active = true
-  }
-
-  deactivate(): void {
-    this.active = false
+    this.dispatchEvent(
+      new CustomEvent("step.click", { bubbles: true, detail: this }),
+    )
   }
 
   appendDropzone(): CircuitDropzoneElement {
@@ -197,6 +189,43 @@ export class CircuitStepElement extends HTMLElement {
     this.addSlotChangeEventListener()
     this.updateConnections()
     this.updateWires()
+
+    this.addEventListener("mouseenter", this.dispatchHoverStepEvent)
+    this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
+    this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent)
+    this.addEventListener("dropzone.drop", this.dispatchStepDropEvent)
+    this.addEventListener("draggable.grab", this.dispatchStepSnapEvent)
+    this.addEventListener("draggable.enddragging", this.unsnap)
+    this.addEventListener("click", this.activate)
+  }
+
+  private dispatchHoverStepEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("step.hover", { detail: this, bubbles: true }),
+    )
+  }
+
+  private dispatchStepSnapEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("step.snap", { detail: this, bubbles: true }),
+    )
+  }
+
+  private dispatchStepUnsnapEvent(): void {
+    this.unsnap()
+    this.dispatchEvent(
+      new CustomEvent("step.unsnap", { detail: this, bubbles: true }),
+    )
+  }
+
+  private dispatchStepDropEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("step.drop", { detail: this, bubbles: true }),
+    )
+  }
+
+  private unsnap(): void {
+    this.snap = false
   }
 
   update(): void {
@@ -204,57 +233,42 @@ export class CircuitStepElement extends HTMLElement {
       html`<style>
           :host {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: center;
+            cursor: pointer;
+          }
+
+          @media (min-width: 768px) {
+            :host {
+              flex-direction: row;
+            }
           }
 
           :host([data-shadow]) {
-            width: 0px;
+            height: 0px;
+          }
+
+          @media (min-width: 768px) {
+            :host([data-shadow]) {
+              height: auto;
+              width: 0px;
+            }
           }
 
           #body {
             display: flex;
             flex-direction: row-reverse;
-            cursor: pointer;
           }
 
           ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
             margin-right: 1rem;
           }
 
-          #breakpoint {
-            position: relative;
-            margin-top: -1rem;
-            margin-bottom: -1rem;
-            min-height: 100%;
-            min-width: 0px;
-          }
-
-          #breakpoint-line {
-            position: absolute;
-            z-index: 10;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            padding: 2px;
-            margin-left: -2px;
-            background-color: var(--colors-cardinal, #ff4b4b);
-            opacity: 0;
-          }
-
-          :host([data-show-breakpoint]:not([data-active]):hover)
-            #breakpoint-line {
-            opacity: 0.3;
-          }
-
-          :host([data-active]) #breakpoint-line {
-            opacity: 0.8;
-          }
-
           @media (min-width: 768px) {
             #body {
               flex-direction: column;
+              padding-top: 1rem;
+              padding-bottom: 1rem;
             }
 
             ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
@@ -262,9 +276,47 @@ export class CircuitStepElement extends HTMLElement {
               margin-right: 0;
             }
           }
+
+          :host([data-snap]) #body {
+            background-color: rgba(255, 75, 75, 0.1);
+          }
+
+          #breakpoint {
+            position: relative;
+            min-height: 0px;
+            min-width: 100%;
+          }
+
+          @media (min-width: 768px) {
+            #breakpoint {
+              min-height: 100%;
+              min-width: 0px;
+            }
+          }
+
+          #breakpoint-line {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            z-index: 10;
+            padding: 2px;
+            margin-left: -2px;
+            background-color: var(--colors-cardinal, #ff4b4b);
+            opacity: 0;
+          }
+
+          :host([data-active]:not([data-breakpoint])) #breakpoint-line {
+            opacity: 0.3;
+          }
+
+          :host([data-breakpoint]) #breakpoint-line {
+            opacity: 0.8;
+          }
         </style>
 
-        <div id="body" data-action="click:circuit-step#activate">
+        <div id="body">
           <slot data-target="circuit-step.slotEl"></slot>
         </div>
         <div id="breakpoint">
@@ -364,9 +416,17 @@ export class CircuitStepElement extends HTMLElement {
       }
     }
 
-    if (this.controlGates.length === 0) return
+    if (this.controlGates.length === 0) {
+      for (const controllableGate of this.controllableGates) {
+        controllableGate.controls = []
+      }
+      return
+    }
+
     if (this.controlGates.length === 1 && this.controllableGates.length === 0) {
-      this.controlGates[0].disable()
+      const controlGate = this.controlGates[0]
+      controlGate.disable()
+      controlGate.targets = []
       return
     }
 

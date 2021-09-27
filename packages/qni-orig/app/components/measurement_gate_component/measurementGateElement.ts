@@ -20,7 +20,7 @@ export class MeasurementGateElement extends DraggableMixin(
   ),
 ) {
   @attr iconType = "transparent"
-  @attr value = ""
+  @attr value = 0
   @attr flag = ""
 
   static create({
@@ -61,39 +61,56 @@ export class MeasurementGateElement extends DraggableMixin(
             }
           }
 
-          :host([data-value="0"]) #icon,
-          :host([data-value="1"]) #icon {
+          :host([data-snapped][data-value="0"]) #icon,
+          :host([data-snapped][data-value="1"]) #icon {
             color: var(--colors-swan, #e5e5e5);
           }
 
-          #ket-label {
-            position: relative;
-            font-size: 1rem;
-            line-height: 1.5rem;
+          #value {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
+            font-size: 1rem;
+            line-height: 1.5rem;
             writing-mode: vertical-lr;
           }
 
           @media (min-width: 768px) {
-            #ket-label {
+            #value {
               writing-mode: horizontal-tb;
             }
           }
 
-          :host([data-value="0"]) #ket-label {
+          :host([data-snapped]) #value {
+            display: block;
+          }
+
+          #value::after {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+          }
+
+          :host([data-value="0"]) #value {
             color: var(--colors-cardinal, #ff4b4b);
           }
 
-          :host([data-value="0"]) #ket-label::after {
+          :host([data-value="0"]) #value::after {
             content: "0";
           }
 
-          :host([data-value="1"]) #ket-label {
+          :host([data-value="1"]) #value {
             color: var(--colors-magnitude, #1cb0f6);
           }
 
-          :host([data-value="1"]) #ket-label::after {
+          :host([data-value="1"]) #value::after {
             content: "1";
           }
         </style>
@@ -104,7 +121,7 @@ export class MeasurementGateElement extends DraggableMixin(
           data-action="mouseenter:measurement-gate#showHelp"
         >
           ${this.iconSvg}
-          <div id="ket-label"></div>
+          <div id="value"></div>
         </div>`,
       this.shadowRoot!,
     )

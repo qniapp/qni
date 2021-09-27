@@ -89,23 +89,16 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#draggable" class="tsd-kind-icon">draggable</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#draggableStyle" class="tsd-kind-icon">draggable<wbr>Style</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#dropzone" class="tsd-kind-icon">dropzone</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#grabbed" class="tsd-kind-icon">grabbed</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#snapped" class="tsd-kind-icon">snapped</a></li>
+								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#hoverable" class="tsd-kind-icon">hoverable</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#snapped" class="tsd-kind-icon">snapped</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#dragMove" class="tsd-kind-icon">drag<wbr>Move</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#grab" class="tsd-kind-icon">grab</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#initDraggable" class="tsd-kind-icon">init<wbr>Draggable</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#move" class="tsd-kind-icon">move</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#moveTo" class="tsd-kind-icon">move<wbr>To</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#startDragging" class="tsd-kind-icon">start<wbr>Dragging</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_mixins_draggable.Draggable.html#unGrab" class="tsd-kind-icon">un<wbr>Grab</a></li>
 							</ul>
 						</section>
 					</div>
@@ -130,29 +123,6 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
-					<a name="draggable" class="tsd-anchor"></a>
-					<h3>draggable</h3>
-					<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> draggable<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L22">app/components/mixins/draggable.ts:22</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="draggableStyle" class="tsd-anchor"></a>
 					<h3>draggable<wbr>Style</h3>
@@ -163,67 +133,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L23">app/components/mixins/draggable.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/7814fe55/app/components/mixins/draggable.ts#L17">app/components/mixins/draggable.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TemplateResult</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="dropzone" class="tsd-anchor"></a>
-					<h3>dropzone</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> dropzone<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></li>
+				<section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+					<a name="hoverable" class="tsd-anchor"></a>
+					<h3>hoverable</h3>
+					<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> hoverable<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L24">app/components/mixins/draggable.ts:24</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="components_circuit_dropzone_component_circuitDropzoneElement.CircuitDropzoneElement.html" class="tsd-signature-type" data-tsd-kind="Class">CircuitDropzoneElement</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="grabbed" class="tsd-anchor"></a>
-					<h3>grabbed</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> grabbed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L25">app/components/mixins/draggable.ts:25</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="snapped" class="tsd-anchor"></a>
-					<h3>snapped</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> snapped<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> snapped<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L26">app/components/mixins/draggable.ts:26</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L27">app/components/mixins/draggable.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/7814fe55/app/components/mixins/draggable.ts#L19">app/components/mixins/draggable.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -236,55 +163,26 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="snapped" class="tsd-anchor"></a>
+					<h3>snapped</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> snapped<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/7814fe55/app/components/mixins/draggable.ts#L18">app/components/mixins/draggable.ts:18</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="dragMove" class="tsd-anchor"></a>
-					<h3>drag<wbr>Move</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">drag<wbr>Move<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DragEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L32">app/components/mixins/draggable.ts:32</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>event: <span class="tsd-signature-type">DragEvent</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="grab" class="tsd-anchor"></a>
-					<h3>grab</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">grab<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L29">app/components/mixins/draggable.ts:29</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>event: <span class="tsd-signature-type">MouseEvent</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="initDraggable" class="tsd-anchor"></a>
 					<h3>init<wbr>Draggable</h3>
@@ -295,35 +193,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L28">app/components/mixins/draggable.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/7814fe55/app/components/mixins/draggable.ts#L20">app/components/mixins/draggable.ts:20</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="move" class="tsd-anchor"></a>
-					<h3>move</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">move<span class="tsd-signature-symbol">(</span>dx<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, dy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L33">app/components/mixins/draggable.ts:33</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>dx: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>dy: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -338,7 +210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L34">app/components/mixins/draggable.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/7814fe55/app/components/mixins/draggable.ts#L21">app/components/mixins/draggable.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -350,40 +222,6 @@
 									<h5>y: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="startDragging" class="tsd-anchor"></a>
-					<h3>start<wbr>Dragging</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">start<wbr>Dragging<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L31">app/components/mixins/draggable.ts:31</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="unGrab" class="tsd-anchor"></a>
-					<h3>un<wbr>Grab</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">un<wbr>Grab<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/ea1ff5ee/app/components/mixins/draggable.ts#L30">app/components/mixins/draggable.ts:30</a></li>
-								</ul>
-							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -411,41 +249,20 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="components_mixins_draggable.Draggable.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#draggable" class="tsd-kind-icon">draggable</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="components_mixins_draggable.Draggable.html#draggableStyle" class="tsd-kind-icon">draggable<wbr>Style</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#dropzone" class="tsd-kind-icon">dropzone</a>
+							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+								<a href="components_mixins_draggable.Draggable.html#hoverable" class="tsd-kind-icon">hoverable</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#grabbed" class="tsd-kind-icon">grabbed</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="components_mixins_draggable.Draggable.html#snapped" class="tsd-kind-icon">snapped</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#dragMove" class="tsd-kind-icon">drag<wbr>Move</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#grab" class="tsd-kind-icon">grab</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="components_mixins_draggable.Draggable.html#initDraggable" class="tsd-kind-icon">init<wbr>Draggable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#move" class="tsd-kind-icon">move</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="components_mixins_draggable.Draggable.html#moveTo" class="tsd-kind-icon">move<wbr>To</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#startDragging" class="tsd-kind-icon">start<wbr>Dragging</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="components_mixins_draggable.Draggable.html#unGrab" class="tsd-kind-icon">un<wbr>Grab</a>
 							</li>
 						</ul>
 					</li>
@@ -475,7 +292,6 @@
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
 			</ul>
 		</div>
 	</div>

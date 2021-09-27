@@ -3,24 +3,23 @@ import "@interactjs/actions/drag"
 import "@interactjs/dev-tools"
 
 import { CreateSingletonInstance, CreateSingletonProps, Props } from "tippy.js"
-
-import { Controller } from "stimulus"
-import { Util } from "lib/base"
-import emergence from "emergence.js"
 import {
-  ketDecimal,
-  setQubitCircleClasses,
-} from "qubit_circle_component/qubitCircleComponent"
+  cleanupPopup,
+  initQubitCirclePopup,
+  setQubitCirclePopupContent,
+} from "qubit_circle_popup/qubitCirclePopup"
 import {
   createStateVector,
   visibleQubitCircles,
 } from "circle_notation/circleNotation"
 import {
-  initQubitCirclePopup,
-  cleanupPopup,
-  setQubitCirclePopupContent,
-} from "qubit_circle_popup/qubitCirclePopup"
+  ketDecimal,
+  setQubitCircleClasses,
+} from "qubit_circle_component/qubitCircleComponent"
 import { Complex } from "lib/math"
+import { Controller } from "stimulus"
+import { Util } from "lib/base"
+import emergence from "emergence.js"
 
 export default class CircleNotationController extends Controller {
   static targets = ["qubitCircle", "popup"]
@@ -47,7 +46,6 @@ export default class CircleNotationController extends Controller {
 
   incrementNqubit(): void {
     this.data.set("nqubit", (this.nqubit + 1).toString())
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     emergence.engage()
   }
 
@@ -85,6 +83,13 @@ export default class CircleNotationController extends Controller {
     return parseInt(maxNqubit)
   }
 
+  draw(event: CustomEvent): void {
+    const amplitudes = event.detail as Complex[]
+
+    this.nqubit = Math.log2(amplitudes.length)
+    this.update(amplitudes)
+  }
+
   update(amplitudes: Complex[]): void {
     this.amplitudes = amplitudes
 
@@ -100,7 +105,6 @@ export default class CircleNotationController extends Controller {
     const stateVector = createStateVector(this.maxNqubit)
 
     this.element.appendChild(stateVector)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     emergence.init({
       container: this.element,
       callback: (_element: unknown, state: string) => {
@@ -110,7 +114,6 @@ export default class CircleNotationController extends Controller {
         }
       },
     })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     emergence.engage()
   }
 
