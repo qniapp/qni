@@ -3804,12 +3804,12 @@ var PaletteDropzoneElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_2_
       if (operation.tagName === "WRITE-GATE") {
         var value = operation.getAttribute("data-value");
         newOperation.setAttribute("data-value", value);
-      }
-
-      if (operation.tagName === "RX-GATE" || operation.tagName === "RY-GATE" || operation.tagName === "RZ-GATE") {
-        var _value = operation.getAttribute("data-theta");
-
-        newOperation.setAttribute("data-theta", _value);
+      } else if (operation.tagName === "PHASE-GATE") {
+        var phi = operation.getAttribute("data-phi");
+        newOperation.setAttribute("data-phi", phi);
+      } else if (operation.tagName === "RX-GATE" || operation.tagName === "RY-GATE" || operation.tagName === "RZ-GATE") {
+        var theta = operation.getAttribute("data-theta");
+        newOperation.setAttribute("data-theta", theta);
       }
 
       this.append(newOperation);
@@ -5706,7 +5706,7 @@ var RxGateElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_3__["contro
   }, {
     key: "update",
     value: function update() {
-      Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["render"])(Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["html"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["", " ", " ", "\n        ", " ", " ", "\n\n        <div\n          id=\"body\"\n          data-theta=\"", "\"\n          data-action=\"mouseenter:rx-gate#showHelp\"\n        >\n          ", " ", "\n          <div id=\"label\"></div>\n        </div>"])), this.sizeableStyle, this.wiresStyle, this.iconStyle, this.draggableStyle, this.disabledStyle, this.labelStyle, this.theta, this.wiresSvg, this.iconSvg), this.shadowRoot);
+      Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["render"])(Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["html"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["", " ", " ", "\n        ", " ", " ", "\n\n        <div\n          id=\"body\"\n          data-theta=\"", "\"\n          data-action=\"mouseenter:rx-gate#showHelp\"\n        >\n          ", " ", "\n        </div>"])), this.sizeableStyle, this.wiresStyle, this.iconStyle, this.draggableStyle, this.disabledStyle, this.labelStyle, this.theta, this.wiresSvg, this.iconSvg), this.shadowRoot);
     }
   }, {
     key: "toJson",

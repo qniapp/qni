@@ -32,7 +32,7 @@ class UrlBookmarkTest < ApplicationSystemTestCase
   test 'bookmark a single phase shift gate circuit' do
     drag_and_drop palette('phase-gate'), to: dropzone(0, 0)
 
-    assert_equal '/{"cols":[["P"]]}', decoded_current_path
+    assert_equal '/{"cols":[["P(π_2)"]]}', decoded_current_path
   end
 
   test 'bookmark a single √X gate circuit' do

@@ -37,6 +37,9 @@ export class PaletteDropzoneElement extends HTMLElement {
     if (operation.tagName === "WRITE-GATE") {
       const value = operation.getAttribute("data-value")
       newOperation.setAttribute("data-value", value!)
+    } else if (operation.tagName === "PHASE-GATE") {
+      const phi = operation.getAttribute("data-phi")
+      newOperation.setAttribute("data-phi", phi!)
     } else if (
       operation.tagName === "RX-GATE" ||
       operation.tagName === "RY-GATE" ||

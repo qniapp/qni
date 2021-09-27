@@ -44,6 +44,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def assert_phi(phi, element)
+    assert_equal phi, element['data-phi']
+  end
+
   def assert_theta(theta, element)
     assert_equal theta, element['data-theta']
   end
