@@ -368,10 +368,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         </style>
 
-        <div
-          id="body"
-          data-action="circuitchange:quantum-circuit#updateAllSteps"
-        >
+        <div id="body">
           <slot></slot>
         </div>`,
       this.shadowRoot!,

@@ -430,7 +430,6 @@ export class CircuitDropzoneElement extends HTMLElement {
       const operation = this.children[0]
       this.occupied = true
       this.draggableName = operation.tagName.toLowerCase()
-      operation.setAttribute("data-target", "circuit-dropzone.operation")
     } else if (this.childElementCount > 1) {
       throw new Error("A dropzone cannot hold multiple operations.")
     }
@@ -446,21 +445,23 @@ export class CircuitDropzoneElement extends HTMLElement {
         this.draggableName = ""
         this.occupied = false
         this.enableDrop()
-        this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+        this.dispatchEvent(
+          new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
+        )
         return
       }
 
       const operation = this.children[0]
       const nodeName = operation.nodeName
 
-      operation.setAttribute("data-target", "circuit-dropzone.operation")
       operation.setAttribute("data-size", this.size)
 
       this.draggableName = nodeName.toLowerCase()
       this.occupied = true
       this.disableDrop()
-
-      this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+      this.dispatchEvent(
+        new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
+      )
     })
   }
 
