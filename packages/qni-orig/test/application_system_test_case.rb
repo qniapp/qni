@@ -44,6 +44,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def assert_theta(theta, element)
+    assert_equal theta, element['data-theta']
+  end
+
   def assert_input_wire_quantum(dropzone)
     assert_equal '', dropzone['data-input-wire-quantum']
   end

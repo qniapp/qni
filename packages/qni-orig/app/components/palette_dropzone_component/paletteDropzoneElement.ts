@@ -33,9 +33,17 @@ export class PaletteDropzoneElement extends HTMLElement {
   newOperation(event: Event): void {
     const operation = event.target as HTMLElement
     const newOperation = document.createElement(operation.tagName)
+
     if (operation.tagName === "WRITE-GATE") {
       const value = operation.getAttribute("data-value")
       newOperation.setAttribute("data-value", value!)
+    } else if (
+      operation.tagName === "RX-GATE" ||
+      operation.tagName === "RY-GATE" ||
+      operation.tagName === "RZ-GATE"
+    ) {
+      const theta = operation.getAttribute("data-theta")
+      newOperation.setAttribute("data-theta", theta!)
     }
 
     this.append(newOperation)

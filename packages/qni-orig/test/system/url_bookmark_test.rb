@@ -44,19 +44,19 @@ class UrlBookmarkTest < ApplicationSystemTestCase
   test 'bookmark a single Rx gate circuit' do
     drag_and_drop palette('rx-gate'), to: dropzone(0, 0)
 
-    assert_equal '/{"cols":[["Rx"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Rx(π_2)"]]}', decoded_current_path
   end
 
   test 'bookmark a single Ry gate circuit' do
     drag_and_drop palette('ry-gate'), to: dropzone(0, 0)
 
-    assert_equal '/{"cols":[["Ry"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Ry(π_2)"]]}', decoded_current_path
   end
 
   test 'bookmark a single Rz gate circuit' do
     drag_and_drop palette('rz-gate'), to: dropzone(0, 0)
 
-    assert_equal '/{"cols":[["Rz"]]}', decoded_current_path
+    assert_equal '/{"cols":[["Rz(π_2)"]]}', decoded_current_path
   end
 
   test 'bookmark a single control gate circuit' do

@@ -12,6 +12,7 @@ export function LabelableMixin<TBase extends Constructor<HTMLElement>>(
     get labelStyle(): TemplateResult {
       return html`<style>
         :host::before {
+          display: none;
           position: absolute;
           color: var(--colors-wolf, #777777);
           background-color: transparent;
@@ -23,6 +24,10 @@ export function LabelableMixin<TBase extends Constructor<HTMLElement>>(
           white-space: nowrap;
           z-index: 10;
           writing-mode: vertical-lr;
+        }
+
+        :host([data-snapped])::before {
+          display: block;
         }
 
         /* Ifable */
