@@ -15,7 +15,7 @@ class WireTest < ApplicationSystemTestCase
     page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
 
     within('quantum-circuit') do
-      assert_shadow_steps 5
+      assert_shadow_steps 6
     end
   end
 

@@ -294,10 +294,6 @@ export class QuantumCircuitElement extends HTMLElement {
     this.loadFromJson()
     this.updateAllSteps()
 
-    for (const each of this.steps) {
-      each.snap = false
-    }
-
     this.dispatchEvent(new Event("circuit.loaded", { bubbles: true }))
   }
 
@@ -669,13 +665,15 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private appendCircuitStepShadow(): void {
     const largestStep = this.largestStep
+    const stepLength = largestStep!.nqubit
 
     for (const each of this.steps) {
-      const step = CircuitStepElement.createShadow(
-        largestStep!.dropzones.length,
-      )
+      const step = CircuitStepElement.createShadow(stepLength)
       this.insertBefore(step, each.nextSibling)
     }
+
+    const step = CircuitStepElement.createShadow(stepLength)
+    this.prepend(step)
   }
 
   resize(): void {
