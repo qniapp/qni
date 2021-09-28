@@ -4,26 +4,10 @@ import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
 
-import {
-  BlochDisplayOperation,
-  ControlGateOperation,
-  HGateOperation,
-  IGateOperation,
-  MeasurementOperation,
-  PhaseGateOperation,
-  RnotGateOperation,
-  RxGateOperation,
-  RyGateOperation,
-  RzGateOperation,
-  SwapGateOperation,
-  WriteGateOperation,
-  XGateOperation,
-  YGateOperation,
-  ZGateOperation,
-} from "lib/operation"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import { CircuitOperation } from "lib/operation"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
 import { Draggable } from "mixins"
@@ -170,12 +154,12 @@ const css = html`<style>
 
   #wires {
     position: absolute;
-    bottom: -2px;
-    left: -2px;
-    right: -2px;
-    top: -2px;
-    height: calc(100% + 4px);
-    width: calc(100% + 4px);
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: calc(100%);
+    width: calc(100%);
     overflow: visible;
     transform: rotate(90deg);
     transform-origin: center;
@@ -242,7 +226,7 @@ const css = html`<style>
     :host([data-draggable-name="measurement-gate"][data-occupied])
       #wires
       > #wire-input {
-      transform: scaleX(0.5) translateX(0);
+      transform: scaleX(0.33) translateX(0);
     }
   }
 
@@ -262,7 +246,7 @@ const css = html`<style>
     :host([data-draggable-name="measurement-gate"][data-occupied])
       #wires
       > #wire-output {
-      transform: scaleX(0.5) translateX(0);
+      transform: scaleX(0.33) translateX(0);
     }
   }
 
@@ -273,6 +257,22 @@ const css = html`<style>
     display: none;
   }
 </style>`
+
+export type CircuitOperationElement =
+  | HGateElement
+  | XGateElement
+  | YGateElement
+  | ZGateElement
+  | PhaseGateElement
+  | RnotGateElement
+  | RxGateElement
+  | RyGateElement
+  | RzGateElement
+  | ControlGateElement
+  | SwapGateElement
+  | BlochDisplayElement
+  | WriteGateElement
+  | MeasurementGateElement
 
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
@@ -288,41 +288,13 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr shadow = false
   @attr childrenLoaded = true
 
-  get operation():
-    | HGateElement
-    | XGateElement
-    | YGateElement
-    | ZGateElement
-    | PhaseGateElement
-    | RnotGateElement
-    | RxGateElement
-    | RyGateElement
-    | RzGateElement
-    | ControlGateElement
-    | SwapGateElement
-    | BlochDisplayElement
-    | WriteGateElement
-    | MeasurementGateElement
-    | null {
+  get operation(): CircuitOperationElement | null {
     const el = this.children[0] as HTMLElement
+
     if (el === undefined) return null
     if (!(el as unknown as Draggable).snapped) return null
 
-    return el as
-      | HGateElement
-      | XGateElement
-      | YGateElement
-      | ZGateElement
-      | PhaseGateElement
-      | RnotGateElement
-      | RxGateElement
-      | RyGateElement
-      | RzGateElement
-      | ControlGateElement
-      | SwapGateElement
-      | BlochDisplayElement
-      | WriteGateElement
-      | MeasurementGateElement
+    return el as CircuitOperationElement
   }
 
   get circuitStep(): CircuitStepElement | null {
@@ -402,6 +374,7 @@ export class CircuitDropzoneElement extends HTMLElement {
       this.dispatchDropzoneDroppedEvent,
     )
     this.addEventListener("draggable.snap", this.snapDraggable)
+    this.addEventListener("draggable.unsnap", this.unsnapDraggable)
     this.addEventListener("draggable.trash", this.setUnoccupied)
   }
 
@@ -447,9 +420,6 @@ export class CircuitDropzoneElement extends HTMLElement {
         this.draggableName = ""
         this.occupied = false
         this.enableDrop()
-        this.dispatchEvent(
-          new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
-        )
         return
       }
 
@@ -493,6 +463,14 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     this.append(draggable as unknown as Node)
     draggable.moveTo(0, 0)
+  }
+
+  private unsnapDraggable(): void {
+    this.draggableName = ""
+    this.occupied = false
+    this.dispatchEvent(
+      new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
+    )
   }
 
   updateWires(): void {
@@ -539,22 +517,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.parentElement?.removeChild(this)
   }
 
-  serialize():
-    | IGateOperation
-    | HGateOperation
-    | XGateOperation
-    | YGateOperation
-    | ZGateOperation
-    | PhaseGateOperation
-    | RnotGateOperation
-    | RxGateOperation
-    | RyGateOperation
-    | RzGateOperation
-    | ControlGateOperation
-    | SwapGateOperation
-    | BlochDisplayOperation
-    | WriteGateOperation
-    | MeasurementOperation {
+  serialize(): CircuitOperation {
     if (this.operation === null) {
       return new IGate().serialize()
     }
