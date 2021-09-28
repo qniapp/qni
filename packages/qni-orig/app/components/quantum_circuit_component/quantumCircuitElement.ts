@@ -23,9 +23,10 @@ import { ZGateElement } from "z_gate_component/zGateElement"
 @controller
 export class QuantumCircuitElement extends HTMLElement {
   @attr json = ""
-  @attr jsonFromUrl = false
+  @attr updateUrl = false
   @attr minWireCount = 1
   @attr minStepCount = 1
+  @attr interactive = false
 
   @targets blocks: CircuitBlockElement[]
 
@@ -292,6 +293,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.loadFromJson()
     this.updateAllSteps()
 
+    for (const each of this.steps) {
+      each.snap = false
+    }
+
     this.dispatchEvent(new Event("circuit.loaded", { bubbles: true }))
   }
 
@@ -329,6 +334,8 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private snapStep(event: Event): void {
+    if (!this.interactive) return
+
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
@@ -368,7 +375,10 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         </style>
 
-        <div id="body">
+        <div
+          id="body"
+          data-action="circuitchange:quantum-circuit#updateAllSteps"
+        >
           <slot></slot>
         </div>`,
       this.shadowRoot!,
@@ -434,14 +444,16 @@ export class QuantumCircuitElement extends HTMLElement {
     let jsonString
     let circuitBlock = null
 
-    if (this.jsonFromUrl) {
+    if (this.updateUrl) {
       jsonString = this.urlJson
     } else {
       jsonString = this.json
     }
 
     if (jsonString === "" || jsonString === "new") {
-      this.resize()
+      if (this.updateUrl) {
+        this.resize()
+      }
       return
     }
 
@@ -454,43 +466,43 @@ export class QuantumCircuitElement extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(instruction): {
             circuitStep.appendOperation(
-              WriteGateElement.create("0", { draggable: this.jsonFromUrl }),
+              WriteGateElement.create("0", { draggable: this.updateUrl }),
             )
             break
           }
           case /^\|1>$/.test(instruction): {
             circuitStep.appendOperation(
-              WriteGateElement.create("1", { draggable: this.jsonFromUrl }),
+              WriteGateElement.create("1", { draggable: this.updateUrl }),
             )
             break
           }
           case /^H$/.test(instruction): {
             circuitStep.appendOperation(
-              HGateElement.create({ draggable: this.jsonFromUrl }),
+              HGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^X$/.test(instruction): {
             circuitStep.appendOperation(
-              XGateElement.create({ draggable: this.jsonFromUrl }),
+              XGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^Y$/.test(instruction): {
             circuitStep.appendOperation(
-              YGateElement.create({ draggable: this.jsonFromUrl }),
+              YGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^Z$/.test(instruction): {
             circuitStep.appendOperation(
-              ZGateElement.create({ draggable: this.jsonFromUrl }),
+              ZGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^P$/.test(instruction): {
             circuitStep.appendOperation(
-              PhaseGateElement.create({ draggable: this.jsonFromUrl }),
+              PhaseGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
@@ -498,20 +510,20 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               PhaseGateElement.create({
                 phi: RegExp.$1.replace("_", "/"),
-                draggable: this.jsonFromUrl,
+                draggable: this.updateUrl,
               }),
             )
             break
           }
           case /^X\^½$/.test(instruction): {
             circuitStep.appendOperation(
-              RnotGateElement.create({ draggable: this.jsonFromUrl }),
+              RnotGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^Rx$/.test(instruction): {
             circuitStep.appendOperation(
-              RxGateElement.create({ draggable: this.jsonFromUrl }),
+              RxGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
@@ -519,14 +531,14 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RxGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.jsonFromUrl,
+                draggable: this.updateUrl,
               }),
             )
             break
           }
           case /^Ry$/.test(instruction): {
             circuitStep.appendOperation(
-              RyGateElement.create({ draggable: this.jsonFromUrl }),
+              RyGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
@@ -534,14 +546,14 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RyGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.jsonFromUrl,
+                draggable: this.updateUrl,
               }),
             )
             break
           }
           case /^Rz$/.test(instruction): {
             circuitStep.appendOperation(
-              RzGateElement.create({ draggable: this.jsonFromUrl }),
+              RzGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
@@ -549,32 +561,32 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RzGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.jsonFromUrl,
+                draggable: this.updateUrl,
               }),
             )
             break
           }
           case /^Swap$/.test(instruction): {
             circuitStep.appendOperation(
-              SwapGateElement.create({ draggable: this.jsonFromUrl }),
+              SwapGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^•$/.test(instruction): {
             circuitStep.appendOperation(
-              ControlGateElement.create({ draggable: this.jsonFromUrl }),
+              ControlGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^Bloch$/.test(instruction): {
             circuitStep.appendOperation(
-              BlochDisplayElement.create({ draggable: this.jsonFromUrl }),
+              BlochDisplayElement.create({ draggable: this.updateUrl }),
             )
             break
           }
           case /^Measure$/.test(instruction): {
             circuitStep.appendOperation(
-              MeasurementGateElement.create({ draggable: this.jsonFromUrl }),
+              MeasurementGateElement.create({ draggable: this.updateUrl }),
             )
             break
           }
@@ -618,6 +630,7 @@ export class QuantumCircuitElement extends HTMLElement {
   private prepareDraggableDrop(event: Event): void {
     event.stopPropagation()
 
+    this.interactive = true
     this.disableDraggablesOnCircuitHover()
     this.appendWire()
     this.appendCircuitStepShadow()
@@ -712,7 +725,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private updateJsonUrl(): void {
-    if (!this.jsonFromUrl) return
+    if (!this.updateUrl) return
 
     history.pushState("", "", this.toJson())
   }

@@ -286,6 +286,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr occupied = false
   @attr draggableName = ""
   @attr shadow = false
+  @attr childrenLoaded = true
 
   get operation():
     | HGateElement
@@ -401,7 +402,6 @@ export class CircuitDropzoneElement extends HTMLElement {
       this.dispatchDropzoneDroppedEvent,
     )
     this.addEventListener("draggable.snap", this.snapDraggable)
-    this.addEventListener("draggable.unsnap", this.unsnapDraggable)
     this.addEventListener("draggable.trash", this.setUnoccupied)
   }
 
@@ -428,6 +428,8 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     if (this.childElementCount === 1) {
       const operation = this.children[0]
+
+      this.childrenLoaded = false
       this.occupied = true
       this.draggableName = operation.tagName.toLowerCase()
     } else if (this.childElementCount > 1) {
@@ -459,9 +461,15 @@ export class CircuitDropzoneElement extends HTMLElement {
       this.draggableName = nodeName.toLowerCase()
       this.occupied = true
       this.disableDrop()
-      this.dispatchEvent(
-        new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
-      )
+
+      if (this.childrenLoaded) {
+        this.dispatchEvent(
+          new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
+        )
+      } else {
+        this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
+        this.childrenLoaded = true
+      }
     })
   }
 
@@ -483,19 +491,8 @@ export class CircuitDropzoneElement extends HTMLElement {
   private snapDraggable(event: Event): void {
     const draggable = (event as CustomEvent).detail as Draggable
 
-    this.occupied = true
     this.append(draggable as unknown as Node)
     draggable.moveTo(0, 0)
-    this.dispatchEvent(
-      new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
-    )
-  }
-
-  private unsnapDraggable(): void {
-    this.draggableName = ""
-    this.dispatchEvent(
-      new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
-    )
   }
 
   updateWires(): void {
