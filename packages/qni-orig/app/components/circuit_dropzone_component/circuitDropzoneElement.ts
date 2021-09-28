@@ -377,17 +377,12 @@ export class CircuitDropzoneElement extends HTMLElement {
     )
     this.addEventListener("draggable.snap", this.snapDraggable)
     this.addEventListener("draggable.unsnap", this.unsnapDraggable)
-    this.addEventListener("draggable.trash", this.setUnoccupied)
   }
 
   private dispatchDropzoneDroppedEvent(): void {
     this.dispatchEvent(
       new CustomEvent("dropzone.drop", { detail: this, bubbles: true }),
     )
-  }
-
-  private setUnoccupied(): void {
-    this.occupied = false
   }
 
   update(): void {
@@ -478,17 +473,6 @@ export class CircuitDropzoneElement extends HTMLElement {
   updateWires(): void {
     const draggableTagName = this.draggableTagName
     const prevDropzone = this.prev()
-
-    if (draggableTagName === "") {
-      if (prevDropzone === null) {
-        this.inputWireQuantum = false
-        this.outputWireQuantum = false
-      } else {
-        this.inputWireQuantum = prevDropzone.outputWireQuantum
-        this.outputWireQuantum = prevDropzone.outputWireQuantum
-      }
-      return
-    }
 
     if (draggableTagName === "write-gate") {
       if (prevDropzone === null) {
