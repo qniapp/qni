@@ -342,7 +342,7 @@ export class CircuitStepElement extends HTMLElement {
     for (const dropzone of this.dropzones) {
       dropzone.wireTop = false
       dropzone.wireBottom = false
-      const operation = dropzone.operation
+      const operation = dropzone.draggableElement
       if (isWireable(operation)) {
         operation.disconnectFromAll()
       }

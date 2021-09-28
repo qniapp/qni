@@ -44,7 +44,7 @@ export class QuantumSimulatorElement extends HTMLElement {
 
         for (const bit in data.blochVectors) {
           const blochDisplay = step.dropzones[bit]
-            .operation as BlochDisplayElement
+            .draggableElement as BlochDisplayElement
           if (blochDisplay) {
             const blochVector = data.blochVectors[bit]
             blochDisplay!.x = blochVector[0]
@@ -57,7 +57,7 @@ export class QuantumSimulatorElement extends HTMLElement {
           const bits = data.bits
           const dropzones = step.dropzones
           for (const bit in bits) {
-            const operation = dropzones[bit].operation
+            const operation = dropzones[bit].draggableElement
             if (operation instanceof MeasurementGateElement) {
               operation.value = bits[bit]
             }

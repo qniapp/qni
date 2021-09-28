@@ -22,7 +22,7 @@ QUnit.module("CircuitDropzone", (hooks) => {
     const el = document.querySelector(
       "circuit-dropzone",
     ) as CircuitDropzoneElement
-    assert.equal(el.operation?.toJson(), '"H"')
+    assert.equal(el.draggableElement?.toJson(), '"H"')
   })
 
   QUnit.test(".operation returns null", (assert) => {
@@ -34,7 +34,7 @@ QUnit.module("CircuitDropzone", (hooks) => {
     const el = document.querySelector(
       "circuit-dropzone",
     ) as CircuitDropzoneElement
-    assert.equal(el.operation, null)
+    assert.equal(el.draggableElement, null)
   })
 
   QUnit.test(".circuitStep() returns a CircuitStepElement", (assert) => {
