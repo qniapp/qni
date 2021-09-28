@@ -178,7 +178,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       return isPaletteDropzone(this.dropzone)
     }
 
-    private unGrab(): void {
+    private unGrab(event: MouseEvent): void {
       if (!this.snapped) {
         this.trash()
         return
@@ -186,7 +186,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
 
       this.grabbed = false
       this.moveTo(0, 0)
-      this.dispatchEvent(new Event("draggable.ungrab", { bubbles: true }))
+      this.dispatchEvent(
+        new CustomEvent("draggable.ungrab", {
+          detail: { x: event.clientX, y: event.clientY },
+          bubbles: true,
+        }),
+      )
     }
 
     private get quantumCircuit(): QuantumCircuitElement | null {
@@ -216,17 +221,27 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       this.move(event.dx, event.dy)
     }
 
-    private endDragging(): void {
+    private endDragging(event: InteractEvent): void {
       if (!this.snapped) {
         this.trash()
-        this.quantumCircuit?.dispatchEvent(new Event("draggable.enddragging"))
+        this.quantumCircuit?.dispatchEvent(
+          new CustomEvent("draggable.enddragging", {
+            detail: { x: event.clientX, y: event.clientY },
+            bubbles: false,
+          }),
+        )
         return
       }
 
       this.dragging = false
       this.grabbed = false
       this.moveTo(0, 0)
-      this.dispatchEvent(new Event("draggable.enddragging", { bubbles: true }))
+      this.dispatchEvent(
+        new CustomEvent("draggable.enddragging", {
+          detail: { x: event.clientX, y: event.clientY },
+          bubbles: true,
+        }),
+      )
     }
 
     private trash() {

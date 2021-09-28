@@ -28,8 +28,10 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener("step.drop", this.resizeAndRunCircuit)
     this.addEventListener("step.click", this.gotoClickedStep)
     this.addEventListener("step.hover", this.showStateVectorOfHoveredStep)
-    this.addEventListener("step.snap", this.updateAndRunCircuit)
-    this.addEventListener("step.unsnap", this.updateAndRunCircuit)
+    this.addEventListener("step.snap", this.updateAllSteps)
+    this.addEventListener("step.snap", this.run)
+    this.addEventListener("step.unsnap", this.updateAllSteps)
+    this.addEventListener("step.unsnap", this.run)
     this.addEventListener("circuit.loaded", this.run)
     this.addEventListener("circuit.mouseleave", this.gotoBreakpoint)
     this.addEventListener("runCrcuitButton.click", this.run)
@@ -68,11 +70,11 @@ export class QuantumSimulatorElement extends HTMLElement {
           return new Complex(amp[0], amp[1])
         })
       } else if (data.type === "finish") {
-        const snappedStep = this.quantumCircuit!.snappedStep
+        const activeStep = this.quantumCircuit!.activeStep
         const breakpoint = this.quantumCircuit!.breakpoint
 
-        if (snappedStep) {
-          const stepIndex = this.fetchStepIndex(snappedStep)
+        if (activeStep) {
+          const stepIndex = this.fetchStepIndex(activeStep)
           this.drawStateVector(stepIndex)
         } else if (breakpoint) {
           this.gotoBreakpoint()
@@ -115,18 +117,14 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.run()
   }
 
-  private updateAndRunCircuit(): void {
+  private updateAllSteps(): void {
     this.quantumCircuit!.updateAllSteps()
-    this.run()
   }
 
   private gotoBreakpoint(): void {
     const breakpoint = this.quantumCircuit?.breakpoint
     const stepIndex = this.fetchStepIndex(breakpoint!)
 
-    for (const each of this.quantumCircuit?.steps) {
-      each.active = false
-    }
     this.drawStateVector(stepIndex)
   }
 
@@ -153,8 +151,13 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.quantumCircuit?.dispatchEvent(new Event("draggable.grab"))
   }
 
-  private proxyDraggableUngrabEvent(): void {
-    this.quantumCircuit?.dispatchEvent(new Event("draggable.ungrab"))
+  private proxyDraggableUngrabEvent(event: CustomEvent): void {
+    this.quantumCircuit?.dispatchEvent(
+      new CustomEvent("draggable.ungrab", {
+        detail: { x: event.detail.x, y: event.detail.y },
+        bubbles: false,
+      }),
+    )
   }
 
   private get quantumCircuit(): QuantumCircuitElement | null {

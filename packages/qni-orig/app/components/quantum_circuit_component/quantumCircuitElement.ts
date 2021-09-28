@@ -280,8 +280,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener("draggable.grab", this.prepareDraggableDrop)
     this.addEventListener("draggable.ungrab", this.resize)
     this.addEventListener("draggable.ungrab", this.enableDraggablesHover)
+    this.addEventListener("draggable.ungrab", this.dispatchStepHoverEvent)
     this.addEventListener("draggable.enddragging", this.resize)
     this.addEventListener("draggable.enddragging", this.enableDraggablesHover)
+    this.addEventListener("draggable.enddragging", this.dispatchStepHoverEvent)
     this.addEventListener("step.click", this.breakpointClickedStep)
     this.addEventListener("step.hover", this.hoverStep)
     this.addEventListener("step.snap", this.snapStep)
@@ -297,7 +299,19 @@ export class QuantumCircuitElement extends HTMLElement {
     this.dispatchEvent(new Event("circuit.loaded", { bubbles: true }))
   }
 
+  private dispatchStepHoverEvent(event: CustomEvent): void {
+    const x = event.detail.x
+    const y = event.detail.y
+    const el = document.elementFromPoint(x, y)
+    const step = el?.closest("circuit-step") as CircuitStepElement
+
+    step?.dispatchStepHoverEvent()
+  }
+
   private dispatchCircuitMouseLeaveEvent(): void {
+    for (const each of this.steps) {
+      each.active = false
+    }
     this.dispatchEvent(new Event("circuit.mouseleave", { bubbles: true }))
   }
 
@@ -320,8 +334,6 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private hoverStep(event: Event): void {
-    if (this.steps.some((each) => each.snap)) return
-
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
@@ -336,7 +348,6 @@ export class QuantumCircuitElement extends HTMLElement {
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
-      each.active = false
       each.snap = false
     }
     step!.snap = true

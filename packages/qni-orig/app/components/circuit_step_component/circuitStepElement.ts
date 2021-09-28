@@ -184,22 +184,23 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
-    this.update()
-    this.addSlotChangeEventListener()
-    this.updateConnections()
-    this.updateWires()
-
-    this.addEventListener("mouseenter", this.dispatchHoverStepEvent)
+    this.addEventListener("mouseenter", this.dispatchStepHoverEvent)
+    this.addEventListener("dropzone.snap", this.dispatchStepHoverEvent)
     this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
     this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent)
     this.addEventListener("dropzone.drop", this.dispatchStepDropEvent)
     this.addEventListener("draggable.grab", this.dispatchStepSnapEvent)
     this.addEventListener("draggable.enddragging", this.unsnap)
     this.addEventListener("click", this.activate)
+
+    this.attachShadow({ mode: "open" })
+    this.update()
+    this.addSlotChangeEventListener()
+    this.updateConnections()
+    this.updateWires()
   }
 
-  private dispatchHoverStepEvent(): void {
+  dispatchStepHoverEvent(): void {
     this.dispatchEvent(
       new CustomEvent("step.hover", { detail: this, bubbles: true }),
     )
@@ -275,10 +276,6 @@ export class CircuitStepElement extends HTMLElement {
               margin-top: 1rem;
               margin-right: 0;
             }
-          }
-
-          :host([data-snap]) #body {
-            background-color: rgba(255, 75, 75, 0.1);
           }
 
           #breakpoint {
