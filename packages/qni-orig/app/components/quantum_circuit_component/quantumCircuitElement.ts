@@ -278,6 +278,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
   connectedCallback(): void {
     this.addEventListener("draggable.grab", this.prepareDraggableDrop)
+    this.addEventListener("draggable.ungrab", this.resize)
     this.addEventListener("draggable.ungrab", this.enableDraggablesHover)
     this.addEventListener("draggable.enddragging", this.resize)
     this.addEventListener("draggable.enddragging", this.enableDraggablesHover)
