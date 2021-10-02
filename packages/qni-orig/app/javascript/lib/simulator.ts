@@ -83,7 +83,7 @@ export class Simulator {
           const targets = each.targets.sort()
 
           if (controls.length === 0) {
-            if (targets.length === 0) {
+            if (targets.length === 1) {
               if (each.phi) {
                 this.phase(each.phi, bit)
               }

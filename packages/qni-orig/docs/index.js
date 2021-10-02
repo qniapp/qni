@@ -1299,7 +1299,19 @@ var CircuitStepElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_1__["c
   }
 
   _createClass(CircuitStepElement, [{
-    key: "nqubit",
+    key: "length",
+    get: function get() {
+      var length = this.nWires;
+      var dropzones = this.dropzones;
+
+      for (var i = length - 1; i >= 0 && !dropzones[i].occupied; i--) {
+        length--;
+      }
+
+      return length;
+    }
+  }, {
+    key: "nWires",
     get: function get() {
       return this.dropzones.length;
     }
@@ -1311,7 +1323,7 @@ var CircuitStepElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_1__["c
   }, {
     key: "lastDropzone",
     get: function get() {
-      return this.dropzones[this.nqubit - 1];
+      return this.dropzones[this.nWires - 1];
     }
   }, {
     key: "isEmpty",
@@ -1462,6 +1474,14 @@ var CircuitStepElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_1__["c
   }, {
     key: "connectedCallback",
     value: function connectedCallback() {
+      this.addEventListener("mouseenter", this.dispatchStepHoverEvent);
+      this.addEventListener("dropzone.snap", this.dispatchStepHoverEvent);
+      this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent);
+      this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent);
+      this.addEventListener("dropzone.drop", this.dispatchStepDropEvent);
+      this.addEventListener("draggable.grab", this.dispatchStepSnapEvent);
+      this.addEventListener("draggable.enddragging", this.unsnap);
+      this.addEventListener("click", this.activate);
       this.attachShadow({
         mode: "open"
       });
@@ -1469,17 +1489,10 @@ var CircuitStepElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_1__["c
       this.addSlotChangeEventListener();
       this.updateConnections();
       this.updateWires();
-      this.addEventListener("mouseenter", this.dispatchHoverStepEvent);
-      this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent);
-      this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent);
-      this.addEventListener("dropzone.drop", this.dispatchStepDropEvent);
-      this.addEventListener("draggable.grab", this.dispatchStepSnapEvent);
-      this.addEventListener("draggable.enddragging", this.unsnap);
-      this.addEventListener("click", this.activate);
     }
   }, {
-    key: "dispatchHoverStepEvent",
-    value: function dispatchHoverStepEvent() {
+    key: "dispatchStepHoverEvent",
+    value: function dispatchStepHoverEvent() {
       this.dispatchEvent(new CustomEvent("step.hover", {
         detail: this,
         bubbles: true
@@ -1518,7 +1531,7 @@ var CircuitStepElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_1__["c
   }, {
     key: "update",
     value: function update() {
-      Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["render"])(Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["html"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["<style>\n          :host {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            cursor: pointer;\n          }\n\n          @media (min-width: 768px) {\n            :host {\n              flex-direction: row;\n            }\n          }\n\n          :host([data-shadow]) {\n            height: 0px;\n          }\n\n          @media (min-width: 768px) {\n            :host([data-shadow]) {\n              height: auto;\n              width: 0px;\n            }\n          }\n\n          #body {\n            display: flex;\n            flex-direction: row-reverse;\n          }\n\n          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n            margin-right: 1rem;\n          }\n\n          @media (min-width: 768px) {\n            #body {\n              flex-direction: column;\n              padding-top: 1rem;\n              padding-bottom: 1rem;\n            }\n\n            ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n              margin-top: 1rem;\n              margin-right: 0;\n            }\n          }\n\n          :host([data-snap]) #body {\n            background-color: rgba(255, 75, 75, 0.1);\n          }\n\n          #breakpoint {\n            position: relative;\n            min-height: 0px;\n            min-width: 100%;\n          }\n\n          @media (min-width: 768px) {\n            #breakpoint {\n              min-height: 100%;\n              min-width: 0px;\n            }\n          }\n\n          #breakpoint-line {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            z-index: 10;\n            padding: 2px;\n            margin-left: -2px;\n            background-color: var(--colors-cardinal, #ff4b4b);\n            opacity: 0;\n          }\n\n          :host([data-active]:not([data-breakpoint])) #breakpoint-line {\n            opacity: 0.3;\n          }\n\n          :host([data-breakpoint]) #breakpoint-line {\n            opacity: 0.8;\n          }\n        </style>\n\n        <div id=\"body\">\n          <slot data-target=\"circuit-step.slotEl\"></slot>\n        </div>\n        <div id=\"breakpoint\">\n          <div id=\"breakpoint-line\"></div>\n        </div>"]))), this.shadowRoot);
+      Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["render"])(Object(_github_jtml__WEBPACK_IMPORTED_MODULE_2__["html"])(_templateObject || (_templateObject = _taggedTemplateLiteral(["<style>\n          :host {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            cursor: pointer;\n          }\n\n          @media (min-width: 768px) {\n            :host {\n              flex-direction: row;\n            }\n          }\n\n          :host([data-shadow]) {\n            height: 0px;\n          }\n\n          @media (min-width: 768px) {\n            :host([data-shadow]) {\n              height: auto;\n              width: 0px;\n            }\n          }\n\n          #body {\n            display: flex;\n            flex-direction: row-reverse;\n          }\n\n          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n            margin-right: 1rem;\n          }\n\n          @media (min-width: 768px) {\n            #body {\n              flex-direction: column;\n              padding-top: 1rem;\n              padding-bottom: 1rem;\n            }\n\n            ::slotted(circuit-dropzone:nth-of-type(n + 2)) {\n              margin-top: 1rem;\n              margin-right: 0;\n            }\n          }\n\n          #breakpoint {\n            position: relative;\n            min-height: 0px;\n            min-width: 100%;\n          }\n\n          @media (min-width: 768px) {\n            #breakpoint {\n              min-height: 100%;\n              min-width: 0px;\n            }\n          }\n\n          #breakpoint-line {\n            position: absolute;\n            top: 0px;\n            right: 0px;\n            bottom: 0px;\n            left: 0px;\n            z-index: 10;\n            padding: 2px;\n            margin-left: -2px;\n            background-color: var(--colors-cardinal, #ff4b4b);\n            opacity: 0;\n          }\n\n          :host([data-active]:not([data-breakpoint])) #breakpoint-line {\n            opacity: 0.3;\n          }\n\n          :host([data-breakpoint]) #breakpoint-line {\n            opacity: 0.8;\n          }\n        </style>\n\n        <div id=\"body\">\n          <slot data-target=\"circuit-step.slotEl\"></slot>\n        </div>\n        <div id=\"breakpoint\">\n          <div id=\"breakpoint-line\"></div>\n        </div>"]))), this.shadowRoot);
     }
   }, {
     key: "addSlotChangeEventListener",
@@ -2829,7 +2842,7 @@ function DraggableMixin(Base) {
       }
     }, {
       key: "unGrab",
-      value: function unGrab() {
+      value: function unGrab(event) {
         if (!this.snapped) {
           this.trash();
           return;
@@ -2837,7 +2850,11 @@ function DraggableMixin(Base) {
 
         this.grabbed = false;
         this.moveTo(0, 0);
-        this.dispatchEvent(new Event("draggable.ungrab", {
+        this.dispatchEvent(new CustomEvent("draggable.ungrab", {
+          detail: {
+            x: event.clientX,
+            y: event.clientY
+          },
           bubbles: true
         }));
       }
@@ -2871,19 +2888,29 @@ function DraggableMixin(Base) {
       }
     }, {
       key: "endDragging",
-      value: function endDragging() {
+      value: function endDragging(event) {
         if (!this.snapped) {
           var _this$quantumCircuit;
 
           this.trash();
-          (_this$quantumCircuit = this.quantumCircuit) === null || _this$quantumCircuit === void 0 ? void 0 : _this$quantumCircuit.dispatchEvent(new Event("draggable.enddragging"));
+          (_this$quantumCircuit = this.quantumCircuit) === null || _this$quantumCircuit === void 0 ? void 0 : _this$quantumCircuit.dispatchEvent(new CustomEvent("draggable.enddragging", {
+            detail: {
+              x: event.clientX,
+              y: event.clientY
+            },
+            bubbles: false
+          }));
           return;
         }
 
         this.dragging = false;
         this.grabbed = false;
         this.moveTo(0, 0);
-        this.dispatchEvent(new Event("draggable.enddragging", {
+        this.dispatchEvent(new CustomEvent("draggable.enddragging", {
+          detail: {
+            x: event.clientX,
+            y: event.clientY
+          },
           bubbles: true
         }));
       }
@@ -3986,13 +4013,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var x_gate_component_xGateElement__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! x_gate_component/xGateElement */ "./app/components/x_gate_component/xGateElement.ts");
 /* harmony import */ var y_gate_component_yGateElement__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! y_gate_component/yGateElement */ "./app/components/y_gate_component/yGateElement.ts");
 /* harmony import */ var z_gate_component_zGateElement__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! z_gate_component/zGateElement */ "./app/components/z_gate_component/zGateElement.ts");
-var _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _templateObject;
+var _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -4072,7 +4107,9 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
 
     _initializerDefineProperty(_this, "interactive", _descriptor5, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "blocks", _descriptor6, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "editing", _descriptor6, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "blocks", _descriptor7, _assertThisInitialized(_this));
 
     return _this;
   }
@@ -4080,7 +4117,11 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   _createClass(QuantumCircuitElement, [{
     key: "nqubit",
     get: function get() {
-      return this.steps[0].nqubit;
+      var steps = this.steps;
+      if (steps.length === 0) return 1;
+      return Math.max.apply(Math, _toConsumableArray(steps.map(function (each) {
+        return each.length;
+      })));
     }
   }, {
     key: "steps",
@@ -4178,9 +4219,9 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
         for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
           var each = _step4.value;
 
-          if (each.nqubit > 0 && each.nqubit > max) {
+          if (each.nWires > 0 && each.nWires > max) {
             step = each;
-            max = each.nqubit;
+            max = each.nWires;
           }
         }
       } catch (err) {
@@ -4437,11 +4478,21 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   }, {
     key: "connectedCallback",
     value: function connectedCallback() {
+      var _this2 = this;
+
       this.addEventListener("draggable.grab", this.prepareDraggableDrop);
+      this.addEventListener("draggable.ungrab", function () {
+        _this2.editing = false;
+      });
       this.addEventListener("draggable.ungrab", this.resize);
       this.addEventListener("draggable.ungrab", this.enableDraggablesHover);
+      this.addEventListener("draggable.ungrab", this.dispatchStepHoverEvent);
+      this.addEventListener("draggable.enddragging", function () {
+        _this2.editing = false;
+      });
       this.addEventListener("draggable.enddragging", this.resize);
       this.addEventListener("draggable.enddragging", this.enableDraggablesHover);
+      this.addEventListener("draggable.enddragging", this.dispatchStepHoverEvent);
       this.addEventListener("step.click", this.breakpointClickedStep);
       this.addEventListener("step.hover", this.hoverStep);
       this.addEventListener("step.snap", this.snapStep);
@@ -4453,17 +4504,37 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
       });
       this.update();
       this.loadFromJson();
-      this.updateAllSteps(); // for (const each of this.steps) {
-      //   each.snap = false
-      // }
-
+      this.updateAllSteps();
       this.dispatchEvent(new Event("circuit.loaded", {
         bubbles: true
       }));
     }
   }, {
+    key: "dispatchStepHoverEvent",
+    value: function dispatchStepHoverEvent(event) {
+      var x = event.detail.x;
+      var y = event.detail.y;
+      var el = document.elementFromPoint(x, y);
+      var step = el === null || el === void 0 ? void 0 : el.closest("circuit-step");
+      step === null || step === void 0 ? void 0 : step.dispatchStepHoverEvent();
+    }
+  }, {
     key: "dispatchCircuitMouseLeaveEvent",
     value: function dispatchCircuitMouseLeaveEvent() {
+      var _iterator5 = _createForOfIteratorHelper(this.steps),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var each = _step5.value;
+          each.active = false;
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+
       this.dispatchEvent(new Event("circuit.mouseleave", {
         bubbles: true
       }));
@@ -4472,27 +4543,6 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
     key: "setBreakpoint",
     value: function setBreakpoint(stepIndex) {
       var step = this.steps[stepIndex];
-
-      var _iterator5 = _createForOfIteratorHelper(this.steps),
-          _step5;
-
-      try {
-        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-          var each = _step5.value;
-          each.breakpoint = false;
-        }
-      } catch (err) {
-        _iterator5.e(err);
-      } finally {
-        _iterator5.f();
-      }
-
-      step.breakpoint = true;
-    }
-  }, {
-    key: "breakpointClickedStep",
-    value: function breakpointClickedStep(event) {
-      var step = event.detail;
 
       var _iterator6 = _createForOfIteratorHelper(this.steps),
           _step6;
@@ -4511,11 +4561,8 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
       step.breakpoint = true;
     }
   }, {
-    key: "hoverStep",
-    value: function hoverStep(event) {
-      if (this.steps.some(function (each) {
-        return each.snap;
-      })) return;
+    key: "breakpointClickedStep",
+    value: function breakpointClickedStep(event) {
       var step = event.detail;
 
       var _iterator7 = _createForOfIteratorHelper(this.steps),
@@ -4524,12 +4571,34 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
       try {
         for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
           var each = _step7.value;
-          each.active = false;
+          each.breakpoint = false;
         }
       } catch (err) {
         _iterator7.e(err);
       } finally {
         _iterator7.f();
+      }
+
+      step.breakpoint = true;
+    }
+  }, {
+    key: "hoverStep",
+    value: function hoverStep(event) {
+      if (this.editing) return;
+      var step = event.detail;
+
+      var _iterator8 = _createForOfIteratorHelper(this.steps),
+          _step8;
+
+      try {
+        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+          var each = _step8.value;
+          each.active = false;
+        }
+      } catch (err) {
+        _iterator8.e(err);
+      } finally {
+        _iterator8.f();
       }
 
       step.active = true;
@@ -4540,21 +4609,22 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
       if (!this.interactive) return;
       var step = event.detail;
 
-      var _iterator8 = _createForOfIteratorHelper(this.steps),
-          _step8;
+      var _iterator9 = _createForOfIteratorHelper(this.steps),
+          _step9;
 
       try {
-        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-          var each = _step8.value;
-          each.active = false;
+        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+          var each = _step9.value;
+          if (this.editing) each.active = false;
           each.snap = false;
         }
       } catch (err) {
-        _iterator8.e(err);
+        _iterator9.e(err);
       } finally {
-        _iterator8.f();
+        _iterator9.f();
       }
 
+      if (this.editing) step.active = true;
       step.snap = true;
     }
   }, {
@@ -4650,20 +4720,20 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
 
       var jsonData = JSON.parse(jsonString);
 
-      var _iterator9 = _createForOfIteratorHelper(jsonData.cols),
-          _step9;
+      var _iterator10 = _createForOfIteratorHelper(jsonData.cols),
+          _step10;
 
       try {
-        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-          var step = _step9.value;
+        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+          var step = _step10.value;
           var circuitStep = this.appendStep();
 
-          var _iterator10 = _createForOfIteratorHelper(step),
-              _step10;
+          var _iterator11 = _createForOfIteratorHelper(step),
+              _step11;
 
           try {
-            for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-              var instruction = _step10.value;
+            for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+              var instruction = _step11.value;
 
               switch (true) {
                 case /^\|0>$/.test(instruction):
@@ -4849,15 +4919,15 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
               }
             }
           } catch (err) {
-            _iterator10.e(err);
+            _iterator11.e(err);
           } finally {
-            _iterator10.f();
+            _iterator11.f();
           }
         }
       } catch (err) {
-        _iterator9.e(err);
+        _iterator10.e(err);
       } finally {
-        _iterator9.f();
+        _iterator10.f();
       }
 
       this.resize();
@@ -4870,19 +4940,19 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   }, {
     key: "updateAllSteps",
     value: function updateAllSteps() {
-      var _iterator11 = _createForOfIteratorHelper(this.steps),
-          _step11;
+      var _iterator12 = _createForOfIteratorHelper(this.steps),
+          _step12;
 
       try {
-        for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-          var each = _step11.value;
+        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+          var each = _step12.value;
           each.updateWires();
           each.updateConnections();
         }
       } catch (err) {
-        _iterator11.e(err);
+        _iterator12.e(err);
       } finally {
-        _iterator11.f();
+        _iterator12.f();
       }
 
       this.updateJsonUrl();
@@ -4892,6 +4962,7 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
     value: function prepareDraggableDrop(event) {
       event.stopPropagation();
       this.interactive = true;
+      this.editing = true;
       this.disableDraggablesOnCircuitHover();
       this.appendWire();
       this.appendCircuitStepShadow();
@@ -4899,35 +4970,35 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   }, {
     key: "disableDraggablesOnCircuitHover",
     value: function disableDraggablesOnCircuitHover() {
-      var _iterator12 = _createForOfIteratorHelper(this.draggablesOnCircuit),
-          _step12;
-
-      try {
-        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-          var each = _step12.value;
-          each.hoverable = false;
-        }
-      } catch (err) {
-        _iterator12.e(err);
-      } finally {
-        _iterator12.f();
-      }
-    }
-  }, {
-    key: "enableDraggablesHover",
-    value: function enableDraggablesHover() {
-      var _iterator13 = _createForOfIteratorHelper(this.draggables),
+      var _iterator13 = _createForOfIteratorHelper(this.draggablesOnCircuit),
           _step13;
 
       try {
         for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
           var each = _step13.value;
-          each.hoverable = true;
+          each.hoverable = false;
         }
       } catch (err) {
         _iterator13.e(err);
       } finally {
         _iterator13.f();
+      }
+    }
+  }, {
+    key: "enableDraggablesHover",
+    value: function enableDraggablesHover() {
+      var _iterator14 = _createForOfIteratorHelper(this.draggables),
+          _step14;
+
+      try {
+        for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+          var each = _step14.value;
+          each.hoverable = true;
+        }
+      } catch (err) {
+        _iterator14.e(err);
+      } finally {
+        _iterator14.f();
       }
     }
   }, {
@@ -4943,39 +5014,45 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   }, {
     key: "appendWire",
     value: function appendWire() {
-      var _iterator14 = _createForOfIteratorHelper(this.steps),
-          _step14;
-
-      try {
-        for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
-          var each = _step14.value;
-          each.appendDropzone();
-        }
-      } catch (err) {
-        _iterator14.e(err);
-      } finally {
-        _iterator14.f();
-      }
-    }
-  }, {
-    key: "appendCircuitStepShadow",
-    value: function appendCircuitStepShadow() {
-      var largestStep = this.largestStep;
-
       var _iterator15 = _createForOfIteratorHelper(this.steps),
           _step15;
 
       try {
         for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
           var each = _step15.value;
-          var step = circuit_step_component_circuitStepElement__WEBPACK_IMPORTED_MODULE_4__["CircuitStepElement"].createShadow(largestStep.dropzones.length);
-          this.insertBefore(step, each.nextSibling);
+          each.appendDropzone();
         }
       } catch (err) {
         _iterator15.e(err);
       } finally {
         _iterator15.f();
       }
+    }
+  }, {
+    key: "appendCircuitStepShadow",
+    value: function appendCircuitStepShadow() {
+      var largestStep = this.largestStep;
+      var stepLength = largestStep.nWires;
+
+      var _iterator16 = _createForOfIteratorHelper(this.steps),
+          _step16;
+
+      try {
+        for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+          var each = _step16.value;
+
+          var _step17 = circuit_step_component_circuitStepElement__WEBPACK_IMPORTED_MODULE_4__["CircuitStepElement"].createShadow(stepLength);
+
+          this.insertBefore(_step17, each.nextSibling);
+        }
+      } catch (err) {
+        _iterator16.e(err);
+      } finally {
+        _iterator16.f();
+      }
+
+      var step = circuit_step_component_circuitStepElement__WEBPACK_IMPORTED_MODULE_4__["CircuitStepElement"].createShadow(stepLength);
+      this.prepend(step);
     }
   }, {
     key: "resize",
@@ -4988,32 +5065,32 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   }, {
     key: "removeEmptySteps",
     value: function removeEmptySteps() {
-      var _iterator16 = _createForOfIteratorHelper(this.emptySteps),
-          _step16;
+      var _iterator17 = _createForOfIteratorHelper(this.emptySteps),
+          _step18;
 
       try {
-        for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
-          var each = _step16.value;
+        for (_iterator17.s(); !(_step18 = _iterator17.n()).done;) {
+          var each = _step18.value;
           each.remove();
-        }
-      } catch (err) {
-        _iterator16.e(err);
-      } finally {
-        _iterator16.f();
-      }
-
-      var _iterator17 = _createForOfIteratorHelper(this.steps),
-          _step17;
-
-      try {
-        for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
-          var _each = _step17.value;
-          _each.shadow = false;
         }
       } catch (err) {
         _iterator17.e(err);
       } finally {
         _iterator17.f();
+      }
+
+      var _iterator18 = _createForOfIteratorHelper(this.steps),
+          _step19;
+
+      try {
+        for (_iterator18.s(); !(_step19 = _iterator18.n()).done;) {
+          var _each = _step19.value;
+          _each.shadow = false;
+        }
+      } catch (err) {
+        _iterator18.e(err);
+      } finally {
+        _iterator18.f();
       }
     }
   }, {
@@ -5025,46 +5102,46 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
         this.appendStep();
       }
 
-      var largestNqubit = this.largestStep && this.largestStep.nqubit > this.minWireCount ? this.largestStep.nqubit : this.minWireCount;
+      var largestNqubit = this.largestStep && this.largestStep.nWires > this.minWireCount ? this.largestStep.nWires : this.minWireCount;
 
-      var _iterator18 = _createForOfIteratorHelper(this.steps),
-          _step18;
+      var _iterator19 = _createForOfIteratorHelper(this.steps),
+          _step20;
 
       try {
-        for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
-          var each = _step18.value;
-          var nDropzone = largestNqubit - each.nqubit;
+        for (_iterator19.s(); !(_step20 = _iterator19.n()).done;) {
+          var each = _step20.value;
+          var nDropzone = largestNqubit - each.nWires;
 
           for (var j = 0; j < nDropzone; j++) {
             each.appendDropzone();
           }
         }
       } catch (err) {
-        _iterator18.e(err);
+        _iterator19.e(err);
       } finally {
-        _iterator18.f();
+        _iterator19.f();
       }
     }
   }, {
     key: "removeLastEmptyWires",
     value: function removeLastEmptyWires() {
-      var _this2 = this;
+      var _this3 = this;
 
       while (this.steps.every(function (each) {
-        return each.nqubit > _this2.minWireCount && !each.lastDropzone.occupied;
+        return each.nWires > _this3.minWireCount && !each.lastDropzone.occupied;
       })) {
-        var _iterator19 = _createForOfIteratorHelper(this.steps),
-            _step19;
+        var _iterator20 = _createForOfIteratorHelper(this.steps),
+            _step21;
 
         try {
-          for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
-            var each = _step19.value;
+          for (_iterator20.s(); !(_step21 = _iterator20.n()).done;) {
+            var each = _step21.value;
             each.lastDropzone.remove();
           }
         } catch (err) {
-          _iterator19.e(err);
+          _iterator20.e(err);
         } finally {
-          _iterator19.f();
+          _iterator20.f();
         }
       }
     }
@@ -5120,7 +5197,14 @@ var QuantumCircuitElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_0__
   initializer: function initializer() {
     return false;
   }
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "blocks", [_github_catalyst__WEBPACK_IMPORTED_MODULE_0__["targets"]], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "editing", [_github_catalyst__WEBPACK_IMPORTED_MODULE_0__["attr"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return false;
+  }
+}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "blocks", [_github_catalyst__WEBPACK_IMPORTED_MODULE_0__["targets"]], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -5143,12 +5227,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var measurement_gate_component_measurementGateElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! measurement_gate_component/measurementGateElement */ "./app/components/measurement_gate_component/measurementGateElement.ts");
 /* harmony import */ var _github_catalyst__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @github/catalyst */ "./node_modules/@github/catalyst/lib/index.js");
 var _class;
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5209,8 +5287,10 @@ var QuantumSimulatorElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_2
       this.addEventListener("step.drop", this.resizeAndRunCircuit);
       this.addEventListener("step.click", this.gotoClickedStep);
       this.addEventListener("step.hover", this.showStateVectorOfHoveredStep);
-      this.addEventListener("step.snap", this.updateAndRunCircuit);
-      this.addEventListener("step.unsnap", this.updateAndRunCircuit);
+      this.addEventListener("step.snap", this.updateAllSteps);
+      this.addEventListener("step.snap", this.run);
+      this.addEventListener("step.unsnap", this.updateAllSteps);
+      this.addEventListener("step.unsnap", this.run);
       this.addEventListener("circuit.loaded", this.run);
       this.addEventListener("circuit.mouseleave", this.gotoBreakpoint);
       this.addEventListener("runCrcuitButton.click", this.run);
@@ -5252,11 +5332,11 @@ var QuantumSimulatorElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_2
         } else if (data.type === "finish") {
           var _this2$runButton;
 
-          var snappedStep = _this2.quantumCircuit.snappedStep;
+          var activeStep = _this2.quantumCircuit.activeStep;
           var breakpoint = _this2.quantumCircuit.breakpoint;
 
-          if (snappedStep) {
-            var stepIndex = _this2.fetchStepIndex(snappedStep);
+          if (activeStep) {
+            var stepIndex = _this2.fetchStepIndex(activeStep);
 
             _this2.drawStateVector(stepIndex);
           } else if (breakpoint) {
@@ -5304,33 +5384,17 @@ var QuantumSimulatorElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_2
       this.run();
     }
   }, {
-    key: "updateAndRunCircuit",
-    value: function updateAndRunCircuit() {
+    key: "updateAllSteps",
+    value: function updateAllSteps() {
       this.quantumCircuit.updateAllSteps();
-      this.run();
     }
   }, {
     key: "gotoBreakpoint",
     value: function gotoBreakpoint() {
-      var _this$quantumCircuit, _this$quantumCircuit2;
+      var _this$quantumCircuit;
 
       var breakpoint = (_this$quantumCircuit = this.quantumCircuit) === null || _this$quantumCircuit === void 0 ? void 0 : _this$quantumCircuit.breakpoint;
       var stepIndex = this.fetchStepIndex(breakpoint);
-
-      var _iterator = _createForOfIteratorHelper((_this$quantumCircuit2 = this.quantumCircuit) === null || _this$quantumCircuit2 === void 0 ? void 0 : _this$quantumCircuit2.steps),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var each = _step.value;
-          each.active = false;
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-
       this.drawStateVector(stepIndex);
     }
   }, {
@@ -5357,16 +5421,22 @@ var QuantumSimulatorElement = Object(_github_catalyst__WEBPACK_IMPORTED_MODULE_2
   }, {
     key: "proxyDraggableGrabEvent",
     value: function proxyDraggableGrabEvent() {
-      var _this$quantumCircuit3;
+      var _this$quantumCircuit2;
 
-      (_this$quantumCircuit3 = this.quantumCircuit) === null || _this$quantumCircuit3 === void 0 ? void 0 : _this$quantumCircuit3.dispatchEvent(new Event("draggable.grab"));
+      (_this$quantumCircuit2 = this.quantumCircuit) === null || _this$quantumCircuit2 === void 0 ? void 0 : _this$quantumCircuit2.dispatchEvent(new Event("draggable.grab"));
     }
   }, {
     key: "proxyDraggableUngrabEvent",
-    value: function proxyDraggableUngrabEvent() {
-      var _this$quantumCircuit4;
+    value: function proxyDraggableUngrabEvent(event) {
+      var _this$quantumCircuit3;
 
-      (_this$quantumCircuit4 = this.quantumCircuit) === null || _this$quantumCircuit4 === void 0 ? void 0 : _this$quantumCircuit4.dispatchEvent(new Event("draggable.ungrab"));
+      (_this$quantumCircuit3 = this.quantumCircuit) === null || _this$quantumCircuit3 === void 0 ? void 0 : _this$quantumCircuit3.dispatchEvent(new CustomEvent("draggable.ungrab", {
+        detail: {
+          x: event.detail.x,
+          y: event.detail.y
+        },
+        bubbles: false
+      }));
     }
   }, {
     key: "quantumCircuit",

@@ -13,33 +13,29 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def assert_wires(number)
     all('circuit-step').each do |each|
-      within(each) do
+      within each do
         assert_selector 'circuit-dropzone', count: number
       end
     end
   end
 
-  def assert_value(value, element)
-    shadow_root = page.evaluate_script(<<~JS, element)
-      (function(root){
-        return root.shadowRoot;
-      })(arguments[0])
-    JS
+  def assert_enabled(operation)
+    assert_nil operation['data-disabled']
+  end
 
-    within(shadow_root) do
+  def assert_disabled(operation)
+    assert_not_nil operation['data-disabled']
+  end
+
+  def assert_value(value, element)
+    within shadow_root(element) do
       assert_selector '#value'
     end
     assert_equal value, element['data-value']
   end
 
   def assert_no_value(element)
-    shadow_root = page.evaluate_script(<<~JS, element)
-      (function(root){
-        return root.shadowRoot;
-      })(arguments[0])
-    JS
-
-    within(shadow_root) do
+    within shadow_root(element) do
       assert_no_selector '#value'
     end
   end
@@ -50,6 +46,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def assert_theta(theta, element)
     assert_equal theta, element['data-theta']
+  end
+
+  def assert_wire_bottom(operation)
+    assert_not_nil operation['data-wire-bottom']
+  end
+
+  def assert_wire_top(operation)
+    assert_not_nil operation['data-wire-top']
   end
 
   def assert_input_wire_quantum(dropzone)
@@ -68,9 +72,94 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_nil dropzone['data-output-wire-quantum']
   end
 
+  def assert_popup(text, element)
+    popup_id = element['aria-describedby']
+
+    assert_not_nil popup_id
+    within find("##{popup_id}") do
+      assert_text text
+    end
+  end
+
+  def assert_qubit_circles(number)
+    within shadow_root(find('#circle-notation')) do
+      assert_selector '.qubit-circle', count: number
+    end
+  end
+
+  def assert_magnitudes(*magnitudes)
+    within shadow_root(find('#circle-notation')) do
+      qubit_circles = all('.qubit-circle')
+      magnitudes.each_with_index do |each, index|
+        assert_in_delta each, qubit_circles[index]['data-magnitude'].to_f, 0.000001
+      end
+    end
+  end
+
+  def assert_phases(*phases)
+    within shadow_root(find('#circle-notation')) do
+      qubit_circles = all('.qubit-circle')
+      phases.each_with_index do |each, index|
+        assert_equal each, qubit_circles[index]['data-phase'].to_i
+      end
+    end
+  end
+
   def drag_and_drop(element, to:)
     element.drag_to(to, html5: false)
   end
+
+  def put_operation(name, col:, row:)
+    operation = palette(name)
+    locator = operation_name_to_locator(name)
+
+    page.execute_script "document.querySelector('#palette #{locator}').dispatchEvent(new Event('mousedown'))"
+
+    operation.drag_to dropzone(col, row), html5: false
+
+    operation
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def hover_operation(name, col:, row:)
+    dropzone = dropzone(col, row)
+
+    page.driver.browser.action
+        .move_to(palette(name).native, 0, 0)
+        .click_and_hold
+        .move_to(dropzone.native, client_width(dropzone) / 2, client_height(dropzone) / 2)
+        .perform
+
+    within dropzone do
+      return find(operation_name_to_locator(name))
+    end
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Metrics/MethodLength
+  def operation_name_to_locator(name)
+    {
+      'H' => 'h-gate',
+      'X' => 'x-gate',
+      'Y' => 'y-gate',
+      'Z' => 'z-gate',
+      'Phase' => 'phase-gate',
+      '√X' => 'rnot-gate',
+      'Rx' => 'rx-gate',
+      'Ry' => 'ry-gate',
+      'Rz' => 'rz-gate',
+      'Swap' => 'swap-gate',
+      'Control' => 'control-gate',
+      '•' => 'control-gate',
+      'Bloch' => 'bloch-display',
+      '|0>' => 'write-gate[data-value="0"]',
+      '|1>' => 'write-gate[data-value="1"]',
+      'Measure' => 'measurement-gate'
+    }.fetch(name)
+  rescue KeyError
+    raise "Operation '#{name}' not found"
+  end
+  # rubocop:enable Metrics/MethodLength
 
   def drag_and_hover(element, over:)
     page.driver.browser.action
@@ -80,8 +169,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
         .perform
   end
 
-  def palette(locator)
-    first("#palette #{locator}")
+  def palette(operation)
+    locator = operation_name_to_locator(operation)
+    first "#palette #{locator}"
   end
 
   def quantum_circuit(locator)
@@ -89,8 +179,17 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def dropzone(column, row)
-    within(all('circuit-step')[column]) do
+    steps = all('circuit-step:not([data-shadow])')
+    step = steps[column]
+
+    within step do
       return all('circuit-dropzone')[row]
+    end
+  end
+
+  def operation(locator, dropzone)
+    within dropzone do
+      return find(locator)
     end
   end
 
@@ -106,5 +205,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def client_height(element)
     page.evaluate_script("document.querySelector('#{element.tag_name}').clientHeight")
+  end
+
+  def shadow_root(element)
+    page.evaluate_script(<<~JS, element)
+      (function(root){
+        return root.shadowRoot;
+      })(arguments[0])
+    JS
   end
 end

@@ -1,10 +1,8 @@
-import { Util } from "lib/base"
-
 export function createStateVector(maxNqubit: number): HTMLElement {
   const stateVector = document.createElement("div")
   stateVector.classList.add("state-vector")
 
-  qubitCircleGroup(
+  const groups = qubitCircleGroup(
     [...Array(2 ** maxNqubit).keys()],
     (qc256: number[]) => {
       return qubitCircleGroup(qc256, (qc128: number[]) => {
@@ -20,9 +18,11 @@ export function createStateVector(maxNqubit: number): HTMLElement {
       })
     },
     256,
-  ).forEach((each) => {
+  )
+
+  for (const each of groups) {
     stateVector.appendChild(each)
-  })
+  }
 
   return stateVector
 }
@@ -40,12 +40,12 @@ function qubitCircleGroup(
   block?: (kets: number[]) => HTMLElement[],
   size: number = kets.length / 2,
 ): HTMLElement[] {
-  const arrayChunk = ([...array]: number[], chunkSize = 1): number[][] => {
-    return array.reduce(
-      (acc, _value, index) =>
+  const arrayChunk = (numbers: number[], chunkSize = 1): number[][] => {
+    return numbers.reduce(
+      (acc: number[][], _value: number, index: number) =>
         index % chunkSize
           ? acc
-          : [...acc, array.slice(index, index + chunkSize)],
+          : [...acc, numbers.slice(index, index + chunkSize)],
       [],
     )
   }
@@ -53,16 +53,16 @@ function qubitCircleGroup(
   return arrayChunk(kets, size).map((each) => {
     const group = document.createElement("div")
     group.classList.add(`qubit-circle-group--size${size}`)
-    if (size == 64) group.dataset.emergence = "hidden"
+    if (size === 64) group.setAttribute("data-emergence", "hidden")
 
     if (block) {
-      block(each).forEach((subGroup) => {
+      for (const subGroup of block(each)) {
         group.appendChild(subGroup)
-      })
+      }
     } else {
-      each.forEach((ket) => {
+      for (const ket of each) {
         group.appendChild(newQubitCircleEl(ket))
-      })
+      }
     }
 
     return group
@@ -71,9 +71,7 @@ function qubitCircleGroup(
 
 function newQubitCircleEl(ket: number): HTMLElement {
   const templateEl = document.getElementById("qubit-circle-template")
-  Util.notNull(templateEl)
-
-  const el = templateEl.cloneNode(true) as HTMLElement
+  const el = templateEl!.cloneNode(true) as HTMLElement
 
   el.removeAttribute("id")
   el.setAttribute("data-ket", ket.toString())

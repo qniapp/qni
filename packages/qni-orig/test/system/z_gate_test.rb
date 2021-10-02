@@ -1,19 +1,11 @@
 require 'application_system_test_case'
 
-class PhaseGateTest < ApplicationSystemTestCase
-  test 'the default angle' do
-    visit new_circuit_path
-
-    phase_gate = put_operation('Phase', col: 0, row: 0)
-
-    assert_phi 'π/2', phase_gate
-  end
-
+class ZGateTest < ApplicationSystemTestCase
   test 'apply to |0>' do
     visit new_circuit_path
     put_operation '|0>', col: 0, row: 0
 
-    put_operation 'Phase', col: 1, row: 0
+    put_operation 'Z', col: 1, row: 0
 
     assert_qubit_circles 2
     assert_magnitudes 1, 0
@@ -24,10 +16,10 @@ class PhaseGateTest < ApplicationSystemTestCase
     visit new_circuit_path
     put_operation '|1>', col: 0, row: 0
 
-    put_operation 'Phase', col: 1, row: 0
+    put_operation 'Z', col: 1, row: 0
 
     assert_qubit_circles 2
     assert_magnitudes 0, 1
-    assert_phases 0, 90
+    assert_phases 0, 180
   end
 end

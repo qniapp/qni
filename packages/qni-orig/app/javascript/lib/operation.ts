@@ -16,6 +16,20 @@ import {
   YGate,
   ZGate,
 } from "lib/instructions"
+import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { HGateElement } from "h_gate_component/hGateElement"
+import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
+import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
+import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
+import { RxGateElement } from "rx_gate_component/rxGateElement"
+import { RyGateElement } from "ry_gate_component/ryGateElement"
+import { RzGateElement } from "rz_gate_component/rzGateElement"
+import { SwapGateElement } from "swap_gate_component/swapGateElement"
+import { WriteGateElement } from "write_gate_component/writeGateElement"
+import { XGateElement } from "x_gate_component/xGateElement"
+import { YGateElement } from "y_gate_component/yGateElement"
+import { ZGateElement } from "z_gate_component/zGateElement"
 import { classNameFor } from "lib/base"
 
 export type Instruction =
@@ -161,6 +175,22 @@ export type CircuitOperation =
   | BlochDisplayOperation
   | WriteGateOperation
   | MeasurementOperation
+
+export type CircuitOperationElement =
+  | HGateElement
+  | XGateElement
+  | YGateElement
+  | ZGateElement
+  | PhaseGateElement
+  | RnotGateElement
+  | RxGateElement
+  | RyGateElement
+  | RzGateElement
+  | ControlGateElement
+  | SwapGateElement
+  | BlochDisplayElement
+  | WriteGateElement
+  | MeasurementGateElement
 
 export const Instruction = {
   create(element?: HTMLElement | Element | null): Instruction {

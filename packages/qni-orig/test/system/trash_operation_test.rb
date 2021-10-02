@@ -4,7 +4,7 @@ class TrashOperationTest < ApplicationSystemTestCase
   test 'drag and drop an operation on the palette to discard it' do
     visit new_circuit_path
 
-    drag_and_drop palette('h-gate'), to: find('body')
+    drag_and_drop palette('H'), to: find('body')
 
     within('#palette') do
       assert_selector 'h-gate'

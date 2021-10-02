@@ -17,6 +17,7 @@ export declare class Draggable {
   get draggableStyle(): TemplateResult
   get snapped(): boolean
   set hoverable(value: boolean)
+  set grabbed(value: boolean)
   initDraggable(): void
   moveTo(x: number, y: number): void
 }

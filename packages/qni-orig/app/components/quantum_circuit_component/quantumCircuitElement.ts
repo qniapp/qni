@@ -27,11 +27,18 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minWireCount = 1
   @attr minStepCount = 1
   @attr interactive = false
+  @attr editing = false
 
   @targets blocks: CircuitBlockElement[]
 
   get nqubit(): number {
-    return this.steps[0].nqubit
+    const json = this.toJson()
+    const steps = JSON.parse(json).cols as string[]
+
+    if (steps.length === 0) return 1
+    const maxLength = Math.max(...steps.map((each) => each.length))
+    if (maxLength === 0) return 1
+    return maxLength
   }
 
   get steps(): CircuitStepElement[] {
@@ -78,9 +85,9 @@ export class QuantumCircuitElement extends HTMLElement {
     let max = 0
 
     for (const each of this.steps) {
-      if (each.nqubit > 0 && each.nqubit > max) {
+      if (each.nWires > 0 && each.nWires > max) {
         step = each
-        max = each.nqubit
+        max = each.nWires
       }
     }
 
@@ -278,9 +285,15 @@ export class QuantumCircuitElement extends HTMLElement {
 
   connectedCallback(): void {
     this.addEventListener("draggable.grab", this.prepareDraggableDrop)
+    this.addEventListener("draggable.ungrab", () => {
+      this.editing = false
+    })
     this.addEventListener("draggable.ungrab", this.resize)
     this.addEventListener("draggable.ungrab", this.enableDraggablesHover)
     this.addEventListener("draggable.ungrab", this.dispatchStepHoverEvent)
+    this.addEventListener("draggable.enddragging", () => {
+      this.editing = false
+    })
     this.addEventListener("draggable.enddragging", this.resize)
     this.addEventListener("draggable.enddragging", this.enableDraggablesHover)
     this.addEventListener("draggable.enddragging", this.dispatchStepHoverEvent)
@@ -334,6 +347,8 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private hoverStep(event: Event): void {
+    if (this.editing) return
+
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
@@ -348,8 +363,10 @@ export class QuantumCircuitElement extends HTMLElement {
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
+      if (this.editing) each.active = false
       each.snap = false
     }
+    if (this.editing) step!.active = true
     step!.snap = true
   }
 
@@ -639,6 +656,7 @@ export class QuantumCircuitElement extends HTMLElement {
     event.stopPropagation()
 
     this.interactive = true
+    this.editing = true
     this.disableDraggablesOnCircuitHover()
     this.appendWire()
     this.appendCircuitStepShadow()
@@ -676,7 +694,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private appendCircuitStepShadow(): void {
     const largestStep = this.largestStep
-    const stepLength = largestStep!.nqubit
+    const stepLength = largestStep!.nWires
 
     for (const each of this.steps) {
       const step = CircuitStepElement.createShadow(stepLength)
@@ -711,11 +729,11 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const largestNqubit =
-      this.largestStep && this.largestStep.nqubit > this.minWireCount
-        ? this.largestStep.nqubit
+      this.largestStep && this.largestStep.nWires > this.minWireCount
+        ? this.largestStep.nWires
         : this.minWireCount
     for (const each of this.steps) {
-      const nDropzone = largestNqubit - each.nqubit
+      const nDropzone = largestNqubit - each.nWires
       for (let j = 0; j < nDropzone; j++) {
         each.appendDropzone()
       }
@@ -725,7 +743,7 @@ export class QuantumCircuitElement extends HTMLElement {
   private removeLastEmptyWires(): void {
     while (
       this.steps.every((each) => {
-        return each.nqubit > this.minWireCount && !each.lastDropzone.occupied
+        return each.nWires > this.minWireCount && !each.lastDropzone.occupied
       })
     ) {
       for (const each of this.steps) {

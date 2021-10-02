@@ -1,4 +1,5 @@
 import { html, render } from "@github/jtml"
+import { CircuitOperationElement } from "lib/operation"
 import { Operation } from "mixins"
 import { controller } from "@github/catalyst"
 
@@ -31,24 +32,13 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   newOperation(event: Event): void {
-    const operation = event.target as HTMLElement
-    const newOperation = document.createElement(operation.tagName)
+    const operation = event.target as CircuitOperationElement
+    const newOperation = operation.cloneNode(true) as CircuitOperationElement
 
-    if (operation.tagName === "WRITE-GATE") {
-      const value = operation.getAttribute("data-value")
-      newOperation.setAttribute("data-value", value!)
-    } else if (operation.tagName === "PHASE-GATE") {
-      const phi = operation.getAttribute("data-phi")
-      newOperation.setAttribute("data-phi", phi!)
-    } else if (
-      operation.tagName === "RX-GATE" ||
-      operation.tagName === "RY-GATE" ||
-      operation.tagName === "RZ-GATE"
-    ) {
-      const theta = operation.getAttribute("data-theta")
-      newOperation.setAttribute("data-theta", theta!)
-    }
+    operation.disableHelp()
+    // ???: newOperation.grabbed = false
+    newOperation.removeAttribute("data-grabbed")
 
-    this.append(newOperation)
+    this.prepend(newOperation)
   }
 }

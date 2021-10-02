@@ -1,4 +1,12 @@
 module IconsHelper
+  def minus_icon
+    render 'components/icons/minus'
+  end
+
+  def arrow_right_icon
+    render 'components/icons/arrow_right'
+  end
+
   def hadamard_icon(*options)
     render 'components/icons/hadamard', *options
   end

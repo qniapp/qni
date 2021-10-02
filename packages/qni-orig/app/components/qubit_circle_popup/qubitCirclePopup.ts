@@ -1,5 +1,3 @@
-import { Util } from "lib/base"
-import { Complex } from "lib/math"
 import tippy, {
   CreateSingletonInstance,
   CreateSingletonProps,
@@ -9,6 +7,8 @@ import tippy, {
   createSingleton,
   roundArrow,
 } from "tippy.js"
+import { Complex } from "lib/math"
+import { Util } from "lib/base"
 
 export function initQubitCirclePopup(
   qubitCircles: HTMLElement[],
@@ -27,9 +27,9 @@ export function cleanupPopup(
   qubitCircles: HTMLElement[],
   tippySingleton: CreateSingletonInstance<CreateSingletonProps<Props>>,
 ): void {
-  qubitCircles.forEach((each) => {
-    (each as ReferenceElement)._tippy?.destroy()
-  })
+  for (const each of qubitCircles) {
+    ;(each as ReferenceElement)._tippy?.destroy()
+  }
   tippySingleton.destroy()
 }
 
@@ -40,8 +40,8 @@ export function setQubitCirclePopupContent(
   amplitude: Complex,
   nqubit: number,
 ): void {
-  const tippy = (qubitCircleEl as ReferenceElement)._tippy as Instance
-  tippy.setContent(popupContent(popupEl, ket, amplitude, nqubit))
+  const popup = (qubitCircleEl as ReferenceElement)._tippy as Instance
+  popup.setContent(popupContent(popupEl, ket, amplitude, nqubit))
 }
 
 function popupContent(
@@ -56,11 +56,15 @@ function popupContent(
   popupKetBinaryEl(popupEl).textContent = ket.toString(2).padStart(nqubit, "0")
   popupKetDecimalEl(popupEl).textContent = ket.toString()
   popupAmplitudeRealEl(popupEl).textContent = forceSigned(amplitude.real, 5)
-  popupAmplitudeImagEl(popupEl).textContent =
-    forceSigned(amplitude.imag, 5) + "i"
-  popupProbabilityEl(popupEl).textContent =
-    forceSigned(magnitude * magnitude * 100, 4) + "%"
-  popupPhaseEl(popupEl).textContent = forceSigned(phase, 2) + "°"
+  popupAmplitudeImagEl(popupEl).textContent = `${forceSigned(
+    amplitude.imag,
+    5,
+  )}i`
+  popupProbabilityEl(popupEl).textContent = `${forceSigned(
+    magnitude * magnitude * 100,
+    4,
+  )}%`
+  popupPhaseEl(popupEl).textContent = `${forceSigned(phase, 2)}°`
 
   return popupEl.innerHTML
 }

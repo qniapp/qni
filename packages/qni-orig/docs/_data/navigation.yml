@@ -36,10 +36,10 @@
       link: ./ry_gate.html
     - name: Rz Gate
       link: ./rz_gate.html
-    - name: Control Gate
-      link: ./control_gate.html
     - name: Swap Gate
       link: ./swap_gate.html
+    - name: Control Gate
+      link: ./control_gate.html
     - name: Bloch Display
       link: ./bloch_display.html
     - name: Write Gate

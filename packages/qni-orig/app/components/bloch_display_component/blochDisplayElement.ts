@@ -39,22 +39,31 @@ export class BlochDisplayElement extends DraggableMixin(
 
   showPopup(): void {
     if (this.isCircuitDraggable()) {
-      const content = this.blochInspectorPopupContent()
-      const popup = tippy(this as Element, {
-        allowHTML: true,
-        animation: false,
-        arrow: roundArrow + roundArrow,
-        delay: 0,
-        placement: "auto",
-        theme: "qni",
-        onShow(instance: Instance) {
-          instance.setContent(content)
-        },
-      })
-      popup.show()
+      this.showInspector()
     } else {
       this.showHelp()
     }
+  }
+
+  private showInspector(): void {
+    if (this.grabbed) return
+
+    const popupInstance = (this as ReferenceElement)._tippy
+    if (popupInstance) return
+
+    const content = this.blochInspectorPopupContent()
+    const popup = tippy(this as Element, {
+      allowHTML: true,
+      animation: false,
+      arrow: roundArrow + roundArrow,
+      delay: 0,
+      placement: "auto",
+      theme: "qni",
+      onShow(instance: Instance) {
+        instance.setContent(content)
+      },
+    })
+    popup.show()
   }
 
   private blochInspectorPopupContent() {
@@ -297,7 +306,12 @@ export class BlochDisplayElement extends DraggableMixin(
           }
         </style>
 
-        <div id="body" data-target="bloch-display.body" data-d="${this.d}">
+        <div
+          id="body"
+          data-target="bloch-display.body"
+          data-d="${this.d}"
+          data-action="mouseenter:bloch-display#showPopup mouseup:bloch-display#showPopup"
+        >
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" class="absolute inset-0">
             <svg

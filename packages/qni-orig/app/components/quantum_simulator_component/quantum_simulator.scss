@@ -1,0 +1,10 @@
+quantum-simulator {
+  .circle-notation[data-nqubit="8"],
+  .circle-notation[data-nqubit="9"],
+  .circle-notation[data-nqubit="10"] {
+    @screen md {
+      @apply overflow-y-scroll;
+      @apply h-40;
+    }
+  }
+}

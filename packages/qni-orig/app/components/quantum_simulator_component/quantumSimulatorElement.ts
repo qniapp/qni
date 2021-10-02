@@ -1,4 +1,5 @@
 import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
+import { CircleNotationElement } from "circle_notation_component/circleNotationElement"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
 import { Complex } from "lib/math"
 import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
@@ -141,10 +142,13 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     const amplitudes = this.amplitudes[stepIndex]
     if (!amplitudes) return
+    const nqubit = Math.log2(amplitudes.length)
 
-    this.circleNotation!.dispatchEvent(
-      new CustomEvent("draw", { detail: amplitudes }),
-    )
+    const circleNotationElement = document.getElementById(
+      "circle-notation",
+    ) as CircleNotationElement
+    circleNotationElement.nqubit = nqubit
+    circleNotationElement.setAmplitudes(amplitudes)
   }
 
   private proxyDraggableGrabEvent(): void {
@@ -162,10 +166,6 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   private get quantumCircuit(): QuantumCircuitElement | null {
     return this.querySelector("quantum-circuit") as QuantumCircuitElement
-  }
-
-  private get circleNotation(): HTMLElement | null {
-    return this.querySelector(".circle-notation")
   }
 
   private get runButton(): RunCircuitButtonElement | null {

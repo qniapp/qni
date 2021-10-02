@@ -35,7 +35,18 @@ export class CircuitStepElement extends HTMLElement {
     return el
   }
 
-  get nqubit(): number {
+  get length(): number {
+    let length = this.nWires
+    const dropzones = this.dropzones
+
+    for (let i = length - 1; i >= 0 && !dropzones[i].occupied; i--) {
+      length--
+    }
+
+    return length
+  }
+
+  get nWires(): number {
     return this.dropzones.length
   }
 
@@ -44,7 +55,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   get lastDropzone(): CircuitDropzoneElement {
-    return this.dropzones[this.nqubit - 1]
+    return this.dropzones[this.nWires - 1]
   }
 
   get isEmpty(): boolean {
@@ -352,8 +363,11 @@ export class CircuitStepElement extends HTMLElement {
       }
     } else {
       const all = this.swapGates
+      const swapBits = all.map((each) => this.bit(each))
+
       for (const swap of all) {
         swap.enable()
+        swap.targets = swapBits
         swap.wireTop = all.some((each) => {
           return this.bit(each) < this.bit(swap)
         })
@@ -364,9 +378,8 @@ export class CircuitStepElement extends HTMLElement {
       for (const dropzone of this.dropzones) {
         if (dropzone.draggable) continue
 
-        const bits = all.map((each) => this.bit(each))
-        const minBit = Math.min(...bits)
-        const maxBit = Math.max(...bits)
+        const minBit = Math.min(...swapBits)
+        const maxBit = Math.max(...swapBits)
 
         if (
           minBit < this.dropzones.indexOf(dropzone) &&
