@@ -92,9 +92,16 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#buffer" class="tsd-kind-icon">buffer</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#height" class="tsd-kind-icon">height</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#width" class="tsd-kind-icon">width</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#H" class="tsd-kind-icon">H</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#PAULI_X" class="tsd-kind-icon">PAULI_<wbr>X</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#PAULI_Y" class="tsd-kind-icon">PAULI_<wbr>Y</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#PAULI_Z" class="tsd-kind-icon">PAULI_<wbr>Z</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#RNOT" class="tsd-kind-icon">RNOT</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -129,6 +136,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#timesQubitOperation" class="tsd-kind-icon">times<wbr>Qubit<wbr>Operation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="javascript_lib_math_matrix.Matrix.html#trace" class="tsd-kind-icon">trace</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#PHASE" class="tsd-kind-icon">PHASE</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#RX" class="tsd-kind-icon">RX</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#RY" class="tsd-kind-icon">RY</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#RZ" class="tsd-kind-icon">RZ</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#col" class="tsd-kind-icon">col</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#fromAngleAxisPhaseRotation" class="tsd-kind-icon">from<wbr>Angle<wbr>Axis<wbr>Phase<wbr>Rotation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="javascript_lib_math_matrix.Matrix.html#fromRows" class="tsd-kind-icon">from<wbr>Rows</a></li>
@@ -157,7 +168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L169">app/javascript/lib/math/matrix.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L205">app/javascript/lib/math/matrix.ts:205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -191,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">buffer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Float32Array</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Float64Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L11">app/javascript/lib/math/matrix.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L55">app/javascript/lib/math/matrix.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L10">app/javascript/lib/math/matrix.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L54">app/javascript/lib/math/matrix.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +222,17 @@
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L9">app/javascript/lib/math/matrix.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L53">app/javascript/lib/math/matrix.ts:53</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="H" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> H</h3>
+					<div class="tsd-signature tsd-kind-icon">H<span class="tsd-signature-symbol">:</span> <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L7">app/javascript/lib/math/matrix.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">PAULI_<wbr>X<span class="tsd-signature-symbol">:</span> <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L5">app/javascript/lib/math/matrix.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L8">app/javascript/lib/math/matrix.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">PAULI_<wbr>Y<span class="tsd-signature-symbol">:</span> <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L6">app/javascript/lib/math/matrix.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L9">app/javascript/lib/math/matrix.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,9 +262,29 @@
 					<div class="tsd-signature tsd-kind-icon">PAULI_<wbr>Z<span class="tsd-signature-symbol">:</span> <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L7">app/javascript/lib/math/matrix.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L10">app/javascript/lib/math/matrix.ts:10</a></li>
 						</ul>
 					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+					<a name="RNOT" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> RNOT</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> RNOT<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L17">app/javascript/lib/math/matrix.ts:17</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -258,7 +299,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L690">app/javascript/lib/math/matrix.ts:690</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L726">app/javascript/lib/math/matrix.ts:726</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -284,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L584">app/javascript/lib/math/matrix.ts:584</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L620">app/javascript/lib/math/matrix.ts:620</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>S<span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol">; </span>U<span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol">; </span>V<span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a><span class="tsd-signature-symbol"> }</span></h4>
@@ -312,7 +353,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L622">app/javascript/lib/math/matrix.ts:622</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L658">app/javascript/lib/math/matrix.ts:658</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -349,7 +390,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L206">app/javascript/lib/math/matrix.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L242">app/javascript/lib/math/matrix.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -372,7 +413,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L382">app/javascript/lib/math/matrix.ts:382</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L418">app/javascript/lib/math/matrix.ts:418</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -398,7 +439,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L153">app/javascript/lib/math/matrix.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L189">app/javascript/lib/math/matrix.ts:189</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -421,7 +462,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L321">app/javascript/lib/math/matrix.ts:321</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L357">app/javascript/lib/math/matrix.ts:357</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -456,7 +497,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L415">app/javascript/lib/math/matrix.ts:415</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L451">app/javascript/lib/math/matrix.ts:451</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,7 +529,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L777">app/javascript/lib/math/matrix.ts:777</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L813">app/javascript/lib/math/matrix.ts:813</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -517,7 +558,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L297">app/javascript/lib/math/matrix.ts:297</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L333">app/javascript/lib/math/matrix.ts:333</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -547,7 +588,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L973">app/javascript/lib/math/matrix.ts:973</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L1009">app/javascript/lib/math/matrix.ts:1009</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -570,7 +611,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L191">app/javascript/lib/math/matrix.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L227">app/javascript/lib/math/matrix.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -601,7 +642,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L959">app/javascript/lib/math/matrix.ts:959</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L995">app/javascript/lib/math/matrix.ts:995</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -624,7 +665,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L704">app/javascript/lib/math/matrix.ts:704</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L740">app/javascript/lib/math/matrix.ts:740</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -655,7 +696,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L333">app/javascript/lib/math/matrix.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L369">app/javascript/lib/math/matrix.ts:369</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -683,7 +724,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L351">app/javascript/lib/math/matrix.ts:351</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L387">app/javascript/lib/math/matrix.ts:387</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -705,7 +746,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L437">app/javascript/lib/math/matrix.ts:437</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L473">app/javascript/lib/math/matrix.ts:473</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -733,7 +774,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L713">app/javascript/lib/math/matrix.ts:713</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L749">app/javascript/lib/math/matrix.ts:749</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -764,7 +805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L834">app/javascript/lib/math/matrix.ts:834</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L870">app/javascript/lib/math/matrix.ts:870</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -787,7 +828,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L814">app/javascript/lib/math/matrix.ts:814</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L850">app/javascript/lib/math/matrix.ts:850</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -810,7 +851,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L904">app/javascript/lib/math/matrix.ts:904</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L940">app/javascript/lib/math/matrix.ts:940</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -844,7 +885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L372">app/javascript/lib/math/matrix.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L408">app/javascript/lib/math/matrix.ts:408</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_complex.Complex.html" class="tsd-signature-type" data-tsd-kind="Class">Complex</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -861,7 +902,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L395">app/javascript/lib/math/matrix.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L431">app/javascript/lib/math/matrix.ts:431</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -890,7 +931,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L536">app/javascript/lib/math/matrix.ts:536</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L572">app/javascript/lib/math/matrix.ts:572</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -933,7 +974,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L455">app/javascript/lib/math/matrix.ts:455</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L491">app/javascript/lib/math/matrix.ts:491</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -961,7 +1002,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L225">app/javascript/lib/math/matrix.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L261">app/javascript/lib/math/matrix.ts:261</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -992,7 +1033,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L485">app/javascript/lib/math/matrix.ts:485</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L521">app/javascript/lib/math/matrix.ts:521</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1024,7 +1065,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L363">app/javascript/lib/math/matrix.ts:363</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L399">app/javascript/lib/math/matrix.ts:399</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1053,7 +1094,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L799">app/javascript/lib/math/matrix.ts:799</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L835">app/javascript/lib/math/matrix.ts:835</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1067,6 +1108,98 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="PHASE" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> PHASE</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">PHASE<span class="tsd-signature-symbol">(</span>phi<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L11">app/javascript/lib/math/matrix.ts:11</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>phi: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="RX" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> RX</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">RX<span class="tsd-signature-symbol">(</span>theta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L25">app/javascript/lib/math/matrix.ts:25</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>theta: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="RY" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> RY</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">RY<span class="tsd-signature-symbol">(</span>theta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L33">app/javascript/lib/math/matrix.ts:33</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>theta: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="RZ" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> RZ</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">RZ<span class="tsd-signature-symbol">(</span>theta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L40">app/javascript/lib/math/matrix.ts:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>theta: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="col" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> col</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -1076,7 +1209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L98">app/javascript/lib/math/matrix.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L134">app/javascript/lib/math/matrix.ts:134</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1104,7 +1237,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L879">app/javascript/lib/math/matrix.ts:879</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L915">app/javascript/lib/math/matrix.ts:915</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1138,16 +1271,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L16">app/javascript/lib/math/matrix.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L57">app/javascript/lib/math/matrix.ts:57</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>rows: <a href="javascript_lib_math_complex.Complex.html" class="tsd-signature-type" data-tsd-kind="Class">Complex</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The rows of complex coefficients making up the matrix.</p>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="javascript_lib_math_matrix.Matrix.html" class="tsd-signature-type" data-tsd-kind="Class">Matrix</a></h4>
@@ -1164,7 +1294,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L50">app/javascript/lib/math/matrix.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L86">app/javascript/lib/math/matrix.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1220,7 +1350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L132">app/javascript/lib/math/matrix.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L168">app/javascript/lib/math/matrix.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1270,7 +1400,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L117">app/javascript/lib/math/matrix.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L153">app/javascript/lib/math/matrix.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1302,7 +1432,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L286">app/javascript/lib/math/matrix.ts:286</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L322">app/javascript/lib/math/matrix.ts:322</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1334,7 +1464,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L106">app/javascript/lib/math/matrix.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L142">app/javascript/lib/math/matrix.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1362,7 +1492,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L70">app/javascript/lib/math/matrix.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L106">app/javascript/lib/math/matrix.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1390,7 +1520,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L85">app/javascript/lib/math/matrix.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L121">app/javascript/lib/math/matrix.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1423,7 +1553,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/javascript/lib/math/matrix.ts#L149">app/javascript/lib/math/matrix.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/javascript/lib/math/matrix.ts#L185">app/javascript/lib/math/matrix.ts:185</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1477,6 +1607,9 @@
 								<a href="javascript_lib_math_matrix.Matrix.html#width" class="tsd-kind-icon">width</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#H" class="tsd-kind-icon">H</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="javascript_lib_math_matrix.Matrix.html#PAULI_X" class="tsd-kind-icon">PAULI_<wbr>X</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
@@ -1484,6 +1617,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
 								<a href="javascript_lib_math_matrix.Matrix.html#PAULI_Z" class="tsd-kind-icon">PAULI_<wbr>Z</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#RNOT" class="tsd-kind-icon">RNOT</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="javascript_lib_math_matrix.Matrix.html#_inline_colScale_postMultiply" class="tsd-kind-icon">_inline_<wbr>col<wbr>Scale_<wbr>post<wbr>Multiply</a>
@@ -1571,6 +1707,18 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="javascript_lib_math_matrix.Matrix.html#trace" class="tsd-kind-icon">trace</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#PHASE" class="tsd-kind-icon">PHASE</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#RX" class="tsd-kind-icon">RX</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#RY" class="tsd-kind-icon">RY</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="javascript_lib_math_matrix.Matrix.html#RZ" class="tsd-kind-icon">RZ</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="javascript_lib_math_matrix.Matrix.html#col" class="tsd-kind-icon">col</a>

@@ -1,24 +1,60 @@
-import { DetailedError, Format, Seq, seq, Util } from "lib/base"
-import { Complex } from "./complex"
+import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "./complex"
+import { DetailedError, Format, Seq, Util, seq } from "lib/base"
+import { parseAngle } from "./angleParser"
+import { parseFormula } from "./formulaParser"
 
 export class Matrix {
+  static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
+  static PHASE(phi: string): Matrix {
+    const φ = parseAngle(phi)
+    const e = Complex.from(Math.E)
+
+    return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
+  }
+  static get RNOT(): Matrix {
+    const i = Complex.I
+    const mi = i.neg()
+
+    return Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(
+      0.5,
+    )
+  }
+  static RX(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const mi = Complex.I.neg()
+    const cosθ2 = Math.cos(θ / 2)
+    const sinθ2 = Math.sin(θ / 2)
+
+    return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
+  }
+  static RY(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const cosθ2 = Math.cos(θ / 2)
+    const sinθ2 = Math.sin(θ / 2)
+
+    return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
+  }
+  static RZ(theta: string): Matrix {
+    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const e = Complex.from(Math.E)
+    const i = Complex.I
+
+    return Matrix.square(
+      e.raisedTo(i.neg().times(θ / 2)),
+      0,
+      0,
+      e.raisedTo(i.times(θ / 2)),
+    )
+  }
 
   public width: number
   public height: number
   public buffer: Float64Array | Float32Array
 
-  /**
-   * @param rows  The rows of complex coefficients making up the matrix.
-   */
   static fromRows(rows: Complex[][]): Matrix {
-    Util.need(
-      Array.isArray(rows) && rows.every(Array.isArray),
-      "array rows",
-      rows,
-    )
     Util.need(rows.length > 0, "non-zero height", rows)
 
     const seqRows = seq(rows)
@@ -82,7 +118,7 @@ export class Matrix {
    * square length with the coefficients (which can be numeric or complex) in
    * row order.
    */
-  static square(...coefs: (number | Complex)[]): Matrix {
+  static square(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     const n = Math.round(Math.sqrt(coefs.length))
     Util.need(
@@ -95,7 +131,7 @@ export class Matrix {
   /**
    * Converts the array of complex coefficients into a column vector.
    */
-  static col(...coefs: (number | Complex)[]): Matrix {
+  static col(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     return Matrix.generate(1, coefs.length, (r) => coefs[r])
   }
@@ -103,7 +139,7 @@ export class Matrix {
   /**
    * Converts the array of complex coefficients into a row vector.
    */
-  static row(...coefs: (number | Complex)[]): Matrix {
+  static row(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     return Matrix.generate(coefs.length, 1, (r, c) => coefs[c])
   }
@@ -365,8 +401,8 @@ export class Matrix {
       .map((row) =>
         row.map((e) => e.toString(format)).join(format.itemSeparator),
       )
-      .join("}" + format.itemSeparator + "{")
-    return "{{" + data + "}}"
+      .join(`}${format.itemSeparator}{`)
+    return `{{${data}}}`
   }
 
   rows(): Complex[][] {
@@ -833,7 +869,7 @@ export class Matrix {
 
   qubitDensityMatrix(bit: number): Matrix {
     const traceBits = [...Array(Math.log2(this.height)).keys()].filter(
-      (each) => each != bit,
+      (each) => each !== bit,
     )
     const removeBits = (num: number, bits: number[]) => {
       return bits
@@ -853,7 +889,7 @@ export class Matrix {
     for (let bra = 0; bra < this.height; bra++) {
       for (let ket = 0; ket < this.height; ket++) {
         const survived = traceBits.every((b) => {
-          return ((bra >> b) & 1) == ((ket >> b) & 1)
+          return ((bra >> b) & 1) === ((ket >> b) & 1)
         })
         if (!survived) continue
 
@@ -861,9 +897,9 @@ export class Matrix {
         if (amp.isEqualTo(0)) continue
 
         const ketMat =
-          removeBits(ket, traceBits) == 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
+          removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
         const braMat =
-          removeBits(bra, traceBits) == 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
+          removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
         const ketBra = ketMat.times(braMat)
 
         densityMatrix = densityMatrix.plus(ketBra.times(amp))

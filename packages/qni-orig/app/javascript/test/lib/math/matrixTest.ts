@@ -1,6 +1,5 @@
 import { Complex, Matrix } from "lib/math"
 import { Format, Seq } from "lib/base"
-import { HGate } from "lib/instructions"
 
 QUnit.module("Matrix", () => {
   QUnit.test("isEqualTo", (assert) => {
@@ -222,7 +221,7 @@ QUnit.module("Matrix", () => {
     assert.ok(Matrix.PAULI_X.isUnitary(0))
     assert.ok(Matrix.PAULI_Y.isUnitary(0))
     assert.ok(Matrix.PAULI_Z.isUnitary(0))
-    assert.ok(HGate.MATRIX.isUnitary(0.001))
+    assert.ok(Matrix.H.isUnitary(0.001))
   })
 
   QUnit.test("isApproximatelyHermitian", (assert) => {
@@ -242,7 +241,7 @@ QUnit.module("Matrix", () => {
     assert.ok(Matrix.PAULI_X.isApproximatelyHermitian(0))
     assert.ok(Matrix.PAULI_Y.isApproximatelyHermitian(0))
     assert.ok(Matrix.PAULI_Z.isApproximatelyHermitian(0))
-    assert.ok(HGate.MATRIX.isApproximatelyHermitian(0.001))
+    assert.ok(Matrix.H.isApproximatelyHermitian(0.001))
 
     assert.ok(Matrix.square(1, 0, 0, 1).isApproximatelyHermitian(0))
     assert.ok(Matrix.square(1, 1, 1, 1).isApproximatelyHermitian(0))
@@ -400,36 +399,36 @@ QUnit.module("Matrix", () => {
     const s = Math.sqrt(0.5)
 
     assert.equates(
-      Matrix.col(1, 0, 0, 0).timesQubitOperation(HGate.MATRIX, 0, 0, 0),
+      Matrix.col(1, 0, 0, 0).timesQubitOperation(Matrix.H, 0, 0, 0),
       Matrix.col(s, s, 0, 0),
     )
     assert.equates(
-      Matrix.col(0, 1, 0, 0).timesQubitOperation(HGate.MATRIX, 0, 0, 0),
+      Matrix.col(0, 1, 0, 0).timesQubitOperation(Matrix.H, 0, 0, 0),
       Matrix.col(s, -s, 0, 0),
     )
     assert.equates(
-      Matrix.col(0, 0, 1, 0).timesQubitOperation(HGate.MATRIX, 0, 0, 0),
+      Matrix.col(0, 0, 1, 0).timesQubitOperation(Matrix.H, 0, 0, 0),
       Matrix.col(0, 0, s, s),
     )
     assert.equates(
-      Matrix.col(0, 0, 0, 1).timesQubitOperation(HGate.MATRIX, 0, 0, 0),
+      Matrix.col(0, 0, 0, 1).timesQubitOperation(Matrix.H, 0, 0, 0),
       Matrix.col(0, 0, s, -s),
     )
 
     assert.equates(
-      Matrix.col(1, 0, 0, 0).timesQubitOperation(HGate.MATRIX, 1, 0, 0),
+      Matrix.col(1, 0, 0, 0).timesQubitOperation(Matrix.H, 1, 0, 0),
       Matrix.col(s, 0, s, 0),
     )
     assert.equates(
-      Matrix.col(0, 1, 0, 0).timesQubitOperation(HGate.MATRIX, 1, 0, 0),
+      Matrix.col(0, 1, 0, 0).timesQubitOperation(Matrix.H, 1, 0, 0),
       Matrix.col(0, s, 0, s),
     )
     assert.equates(
-      Matrix.col(0, 0, 1, 0).timesQubitOperation(HGate.MATRIX, 1, 0, 0),
+      Matrix.col(0, 0, 1, 0).timesQubitOperation(Matrix.H, 1, 0, 0),
       Matrix.col(s, 0, -s, 0),
     )
     assert.equates(
-      Matrix.col(0, 0, 0, 1).timesQubitOperation(HGate.MATRIX, 1, 0, 0),
+      Matrix.col(0, 0, 0, 1).timesQubitOperation(Matrix.H, 1, 0, 0),
       Matrix.col(0, s, 0, -s),
     )
 
@@ -451,7 +450,7 @@ QUnit.module("Matrix", () => {
     buf[0] = 1
     let state = new Matrix(1, 1 << numQubits, buf)
     for (let i = 0; i < numOps; i++) {
-      state = state.timesQubitOperation(HGate.MATRIX, 0, 6, 0)
+      state = state.timesQubitOperation(Matrix.H, 0, 6, 0)
     }
 
     const t1 = performance.now()
@@ -609,7 +608,7 @@ QUnit.module("Matrix", () => {
     assert.equates(Matrix.PAULI_X.trace(), 0)
     assert.equates(Matrix.PAULI_Y.trace(), 0)
     assert.equates(Matrix.PAULI_Z.trace(), 0)
-    assert.approximatelyEquates(HGate.MATRIX.trace(), 0)
+    assert.approximatelyEquates(Matrix.H.trace(), 0)
     assert.equates(Matrix.square(1, 2, 3, 4).trace(), 5)
 
     assert.equates(Matrix.square(0, 1, 2, 3, 4, 5, 6, 7, 8).trace(), 12)
@@ -865,7 +864,7 @@ QUnit.module("Matrix", () => {
       phase: 0,
     })
 
-    assert.equates(HGate.MATRIX.qubitOperationToAngleAxisRotation(), {
+    assert.equates(Matrix.H.qubitOperationToAngleAxisRotation(), {
       angle: π,
       axis: [s, 0, s],
       phase: π / 2,

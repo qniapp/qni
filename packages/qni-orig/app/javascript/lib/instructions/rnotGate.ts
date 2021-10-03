@@ -1,4 +1,3 @@
-import { Complex, Matrix } from "lib/math"
 import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib/operation"
 import { ConnectableMixin } from "./connectable"
 import { ControllableMixin } from "./controllable"
@@ -11,14 +10,6 @@ export class RnotGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:rootNot")
-  static get MATRIX(): Matrix {
-    const i = Complex.I
-    const mi = i.neg()
-
-    return Matrix.square(i.plus(1), mi.plus(1), mi.plus(1), i.plus(1)).times(
-      0.5,
-    )
-  }
 
   serialize(): RnotGateOperation {
     return {

@@ -276,6 +276,7 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#draggableStyle" class="tsd-kind-icon">draggable<wbr>Style</a></li>
+								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#grabbed" class="tsd-kind-icon">grabbed</a></li>
 								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#hoverable" class="tsd-kind-icon">hoverable</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#iconStyle" class="tsd-kind-icon">icon<wbr>Style</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#iconSvg" class="tsd-kind-icon">icon<wbr>Svg</a></li>
@@ -300,6 +301,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#compareDocumentPosition" class="tsd-kind-icon">compare<wbr>Document<wbr>Position</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#connectedCallback" class="tsd-kind-icon">connected<wbr>Callback</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#contains" class="tsd-kind-icon">contains</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#disableHelp" class="tsd-kind-icon">disable<wbr>Help</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#dispatchEvent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#focus" class="tsd-kind-icon">focus</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="components_write_gate_component_writeGateElement.WriteGateElement.html#getAnimations" class="tsd-kind-icon">get<wbr>Animations</a></li>
@@ -959,7 +961,7 @@
 					<div class="tsd-signature tsd-kind-icon">icon<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;transparent&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L16">app/components/write_gate_component/writeGateElement.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L16">app/components/write_gate_component/writeGateElement.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4830,7 +4832,7 @@
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;0&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L17">app/components/write_gate_component/writeGateElement.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L17">app/components/write_gate_component/writeGateElement.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -4847,10 +4849,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/draggable.ts#L17">app/components/mixins/draggable.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L17">app/components/mixins/draggable.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TemplateResult</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
+					<a name="grabbed" class="tsd-anchor"></a>
+					<h3>grabbed</h3>
+					<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> grabbed<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L20">app/components/mixins/draggable.ts:20</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -4864,7 +4889,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/draggable.ts#L19">app/components/mixins/draggable.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L19">app/components/mixins/draggable.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4887,7 +4912,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/iconable.ts#L7">app/components/mixins/iconable.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/iconable.ts#L7">app/components/mixins/iconable.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TemplateResult</span></h4>
@@ -4904,7 +4929,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L149">app/components/write_gate_component/writeGateElement.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L149">app/components/write_gate_component/writeGateElement.ts:149</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TemplateResult</span></h4>
@@ -4921,7 +4946,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/sizeable.ts#L16">app/components/mixins/sizeable.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/sizeable.ts#L16">app/components/mixins/sizeable.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TemplateResult</span></h4>
@@ -4938,7 +4963,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/draggable.ts#L18">app/components/mixins/draggable.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L18">app/components/mixins/draggable.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -5383,7 +5408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L29">app/components/write_gate_component/writeGateElement.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L29">app/components/write_gate_component/writeGateElement.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -5416,6 +5441,24 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="disableHelp" class="tsd-anchor"></a>
+					<h3>disable<wbr>Help</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Help<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from DraggableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),).disableHelp</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/helpable.ts#L7">app/components/mixins/helpable.ts:7</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -5994,7 +6037,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from DraggableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),).initDraggable</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/draggable.ts#L20">app/components/mixins/draggable.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L21">app/components/mixins/draggable.ts:21</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -6280,7 +6323,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from DraggableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),).moveTo</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/draggable.ts#L21">app/components/mixins/draggable.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/draggable.ts#L22">app/components/mixins/draggable.ts:22</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -7037,7 +7080,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L137">app/components/write_gate_component/writeGateElement.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L137">app/components/write_gate_component/writeGateElement.ts:137</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../modules/javascript_lib_operation.html#WriteGateOperation" class="tsd-signature-type" data-tsd-kind="Type alias">WriteGateOperation</a></h4>
@@ -7194,7 +7237,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from DraggableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),).showHelp</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/mixins/helpable.ts#L5">app/components/mixins/helpable.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/mixins/helpable.ts#L6">app/components/mixins/helpable.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7212,7 +7255,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides DraggableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),).toJson</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L133">app/components/write_gate_component/writeGateElement.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L133">app/components/write_gate_component/writeGateElement.ts:133</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -7262,7 +7305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L36">app/components/write_gate_component/writeGateElement.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L36">app/components/write_gate_component/writeGateElement.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -7303,7 +7346,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/f3793294/app/components/write_gate_component/writeGateElement.ts#L19">app/components/write_gate_component/writeGateElement.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/yasuhito/qni/blob/8c7b158c/app/components/write_gate_component/writeGateElement.ts#L19">app/components/write_gate_component/writeGateElement.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -7874,6 +7917,9 @@
 								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#draggableStyle" class="tsd-kind-icon">draggable<wbr>Style</a>
 							</li>
 							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
+								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#grabbed" class="tsd-kind-icon">grabbed</a>
+							</li>
+							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
 								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#hoverable" class="tsd-kind-icon">hoverable</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
@@ -7929,6 +7975,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#contains" class="tsd-kind-icon">contains</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#disableHelp" class="tsd-kind-icon">disable<wbr>Help</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="components_write_gate_component_writeGateElement.WriteGateElement.html#dispatchEvent" class="tsd-kind-icon">dispatch<wbr>Event</a>

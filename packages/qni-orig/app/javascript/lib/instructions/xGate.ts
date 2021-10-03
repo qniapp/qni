@@ -4,14 +4,12 @@ import { ControllableMixin } from "./controllable"
 import { DisableableMixin } from "./disableable"
 import { IfableMixin } from "./ifable"
 import { InstructionWithElement } from "./instructionWithElement"
-import { Matrix } from "lib/math"
 import { classNameFor } from "lib/base"
 
 export class XGate extends ControllableMixin(
   ConnectableMixin(DisableableMixin(IfableMixin(InstructionWithElement))),
 ) {
   static readonly elementClassName = classNameFor("gate:not")
-  static readonly MATRIX = Matrix.PAULI_X
 
   serialize(): XGateOperation {
     return {
