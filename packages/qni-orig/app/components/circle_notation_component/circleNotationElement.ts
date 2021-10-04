@@ -340,29 +340,29 @@ export class CircleNotationElement extends HTMLElement {
             width: 32px;
           }
 
-          #body.size-xs .qubit-circle {
-            height: 17px;
-            width: 17px;
+          :host([data-size="xs"]) .qubit-circle {
+            height: 17px !important;
+            width: 17px !important;
           }
 
-          #body.size-sm .qubit-circle {
-            height: 25px;
-            width: 25px;
+          :host([data-size="sm"]) .qubit-circle {
+            height: 25px !important;
+            width: 25px !important;
           }
 
-          #body.size-base .qubit-circle {
-            height: 32px;
-            width: 32px;
+          :host([data-size="base"]) .qubit-circle {
+            height: 32px !important;
+            width: 32px !important;
           }
 
-          #body.size-lg .qubit-circle {
-            height: 48px;
-            width: 48px;
+          :host([data-size="lg"]) .qubit-circle {
+            height: 48px !important;
+            width: 48px !important;
           }
 
-          #body.size-xl .qubit-circle {
-            height: 64px;
-            width: 64px;
+          :host([data-size="xl"]) .qubit-circle {
+            height: 64px !important;
+            width: 64px !important;
           }
 
           :host([data-nqubit="1"]:not([data-multiple-qubits])) .qubit-circle {
@@ -464,14 +464,13 @@ export class CircleNotationElement extends HTMLElement {
             border-style: solid;
           }
 
-          #body.size-xs .qubit-circle__magnitude,
-          #body.size-sm .qubit-circle__magnitude {
+          :host([data-size="xs"]) .qubit-circle__magnitude,
+          :host([data-size="sm"]) .qubit-circle__magnitude {
             border-width: 1px;
           }
-
-          #body.size-base .qubit-circle__magnitude,
-          #body.size-lg .qubit-circle__magnitude,
-          #body.size-xl .qubit-circle__magnitude {
+          :host([data-size="base"]) .qubit-circle__magnitude,
+          :host([data-size="lg"]) .qubit-circle__magnitude,
+          :host([data-size="xl"]) .qubit-circle__magnitude {
             border-width: 2px;
           }
 
@@ -567,14 +566,13 @@ export class CircleNotationElement extends HTMLElement {
             transform-origin: center;
           }
 
-          #body.size-xs .qubit-circle__phase,
-          #body.size-sm .qubit-circle__phase {
+          :host([data-size="xs"]) .qubit-circle__phase,
+          :host([data-size="sm"]) .qubit-circle__phase {
             border-width: 1px;
           }
-
-          #body.size-base .qubit-circle__phase,
-          #body.size-lg .qubit-circle__phase,
-          #body.size-xl .qubit-circle__phase {
+          :host([data-size="base"]) .qubit-circle__phase,
+          :host([data-size="lg"]) .qubit-circle__phase,
+          :host([data-size="xl"]) .qubit-circle__phase {
             border-width: 2px;
           }
 
@@ -772,14 +770,13 @@ export class CircleNotationElement extends HTMLElement {
             }
           }
 
-          #body.size-xs .qubit-circle__phase::after,
-          #body.size-sm .qubit-circle__phase::after {
+          :host([data-size="xs"]) .qubit-circle__phase::after,
+          :host([data-size="sm"]) .qubit-circle__phase::after {
             width: 1px;
           }
-
-          #body.size-base .qubit-circle__phase::after,
-          #body.size-lg .qubit-circle__phase::after,
-          #body.size-xl .qubit-circle__phase::after {
+          :host([data-size="base"]) .qubit-circle__phase::after,
+          :host([data-size="lg"]) .qubit-circle__phase::after,
+          :host([data-size="xl"]) .qubit-circle__phase::after {
             width: 2px;
           }
 
@@ -788,9 +785,7 @@ export class CircleNotationElement extends HTMLElement {
           }
         </style>
 
-        <div id="body" class="${this.classString}">
-          ${this.qubitCirclesHtml}
-        </div>
+        <div id="body">${this.qubitCirclesHtml}</div>
 
         <div
           id="popup"
@@ -855,18 +850,6 @@ export class CircleNotationElement extends HTMLElement {
 
     qubitCircle.setAttribute("data-phase", phase.toString())
     qubitCircle.setAttribute("data-rounded-phase", roundedPhase.toString())
-  }
-
-  private get classString(): string {
-    const klass = []
-
-    if (this.size === "xs") klass.push("size-xs")
-    if (this.size === "sm") klass.push("size-sm")
-    if (this.size === "base") klass.push("size-base")
-    if (this.size === "lg") klass.push("size-lg")
-    if (this.size === "xl") klass.push("size-xl")
-
-    return klass.join(" ")
   }
 
   private get qubitCirclesHtml(): TemplateResult {
