@@ -17,63 +17,33 @@ export class CircleNotationElement extends HTMLElement {
 
   @target popup: HTMLElement
   @targets qubitCircles: HTMLElement[]
+  @targets qubitCircleGroups: HTMLElement[]
+  @targets visibleQubitCircleGroups: HTMLElement[]
 
-  private amplitudes!: Complex[]
+  private amplitudes!: { [ket: number]: Complex }
 
-  setAmplitudes(amplitudes: Complex[]): void {
+  setAmplitudes(amplitudes: { [ket: number]: Complex }): void {
     const qubitCircles = this.qubitCircles
     this.amplitudes = amplitudes
 
-    for (const [i, each] of amplitudes.entries()) {
+    for (const [i, each] of Object.entries(amplitudes)) {
       const qubitCircle = qubitCircles[i]
 
       const magnitude = each.abs()
-      const roundedMag = this.roundedMagnitude(each.abs())
-      qubitCircle?.setAttribute("data-magnitude", magnitude.toString())
-      qubitCircle?.setAttribute("data-magnitude-rounded", roundedMag.toString())
+      this.setMagnitude(qubitCircle, magnitude)
       if (magnitude === 0) continue
 
       const phaseDeg = (each.phase() / Math.PI) * 180
-      const roundedPhase = this.roundedPhase(phaseDeg)
-      qubitCircle?.setAttribute("data-phase", phaseDeg.toString())
-      qubitCircle?.setAttribute("data-phase-rounded", roundedPhase.toString())
+      this.setPhase(qubitCircle, phaseDeg)
     }
-  }
-
-  setMagnitude(qubitCircleIndex: number, magnitude: number): void {
-    const roundedMag = this.roundedMagnitude(magnitude)
-    this.qubitCircles[qubitCircleIndex]?.setAttribute(
-      "data-magnitude-rounded",
-      roundedMag.toString(),
-    )
-  }
-
-  private roundedMagnitude(magnitude: number): number {
-    const magInt = Math.round(magnitude * 100)
-    const mag100 =
-      magInt < 10 ? (magInt === 0 ? 0 : 10) : Math.round(magInt / 10) * 10
-    return mag100 / 100
-  }
-
-  setPhase(qubitCircleIndex: number, phase: number): void {
-    const roundedPhase = this.roundedPhase(phase)
-    this.qubitCircles[qubitCircleIndex]?.setAttribute(
-      "data-phase-rounded",
-      roundedPhase.toString(),
-    )
-  }
-
-  private roundedPhase(phaseDeg: number): number {
-    let phaseRounded = Math.round(phaseDeg / 10) * 10
-    if (phaseRounded < 0) phaseRounded = 360 + phaseRounded
-
-    return phaseRounded
   }
 
   setPopupContent(event: MouseEvent): void {
     const qubitCircleEl = event.target as HTMLElement
     const ket = ketDecimal(qubitCircleEl)
     const amplitude = this.amplitudes[ket]
+
+    if (amplitude === undefined) return
 
     setQubitCirclePopupContent(
       this.popup,
@@ -88,7 +58,64 @@ export class CircleNotationElement extends HTMLElement {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.startQubitCircleVisibilityObserver()
     initQubitCirclePopup(this.qubitCircles)
+    if (this.multipleQubits) {
+      this.dispatchEvent(
+        new Event("circle-notation.loaded", {
+          bubbles: true,
+        }),
+      )
+    }
+  }
+
+  private startQubitCircleVisibilityObserver(): void {
+    if (!this.multipleQubits) return
+
+    const options = {
+      root: this,
+      threshold: [0, 0.2],
+    }
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      for (const each of entries) {
+        const group = each.target
+        if (each.intersectionRatio >= 0.2) {
+          group.setAttribute(
+            "data-targets",
+            "circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups",
+          )
+          this.dispatchEvent(
+            new CustomEvent("circle-notation.visibilityChanged", {
+              detail: this.visibleQubitCircleKets,
+              bubbles: true,
+            }),
+          )
+        } else if (each.intersectionRatio === 0) {
+          group.setAttribute(
+            "data-targets",
+            "circle-notation.qubitCircleGroups",
+          )
+        }
+      }
+    }
+    const observer = new IntersectionObserver(callback, options)
+    for (const each of this.qubitCircleGroups) {
+      observer.observe(each)
+    }
+  }
+
+  private get visibleQubitCircleKets(): number[] {
+    return this.visibleQubitCircles.map((each) =>
+      parseInt(each.getAttribute("data-ket")!),
+    )
+  }
+
+  private get visibleQubitCircles(): HTMLElement[] {
+    const groups = this.visibleQubitCircleGroups.map(
+      (each) =>
+        Array.from(each.querySelectorAll(".qubit-circle")) as HTMLElement[],
+    )
+    return ([] as HTMLElement[]).concat(...groups)
   }
 
   update(): void {
@@ -476,52 +503,52 @@ export class CircleNotationElement extends HTMLElement {
             transform-origin: center;
           }
 
-          .qubit-circle[data-magnitude-rounded="0.1"]
+          .qubit-circle[data-rounded-magnitude="0.1"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.1) scaleY(0.1);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.2"]
+          .qubit-circle[data-rounded-magnitude="0.2"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.2) scaleY(0.2);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.3"]
+          .qubit-circle[data-rounded-magnitude="0.3"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.3) scaleY(0.3);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.4"]
+          .qubit-circle[data-rounded-magnitude="0.4"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.4) scaleY(0.4);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.5"]
+          .qubit-circle[data-rounded-magnitude="0.5"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.5) scaleY(0.5);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.6"]
+          .qubit-circle[data-rounded-magnitude="0.6"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.6) scaleY(0.6);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.7"]
+          .qubit-circle[data-rounded-magnitude="0.7"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.7) scaleY(0.7);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.8"]
+          .qubit-circle[data-rounded-magnitude="0.8"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.8) scaleY(0.8);
           }
 
-          .qubit-circle[data-magnitude-rounded="0.9"]
+          .qubit-circle[data-rounded-magnitude="0.9"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(0.9) scaleY(0.9);
           }
 
-          .qubit-circle[data-magnitude-rounded="1"]
+          .qubit-circle[data-rounded-magnitude="1"]
             > .qubit-circle__magnitude::after {
             transform: scaleX(1) scaleY(1);
           }
@@ -566,152 +593,152 @@ export class CircleNotationElement extends HTMLElement {
             }
           }
 
-          .qubit-circle:not([data-magnitude-rounded]) > .qubit-circle__phase,
-          .qubit-circle[data-magnitude-rounded="0"] > .qubit-circle__phase {
+          .qubit-circle:not([data-rounded-magnitude]) > .qubit-circle__phase,
+          .qubit-circle[data-rounded-magnitude="0"] > .qubit-circle__phase {
             transform: scaleX(0) scaleY(0) !important;
           }
 
-          .qubit-circle[data-phase-rounded="10"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="10"] > .qubit-circle__phase {
             transform: rotate(-10deg);
           }
 
-          .qubit-circle[data-phase-rounded="20"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="20"] > .qubit-circle__phase {
             transform: rotate(-20deg);
           }
 
-          .qubit-circle[data-phase-rounded="30"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="30"] > .qubit-circle__phase {
             transform: rotate(-30deg);
           }
 
-          .qubit-circle[data-phase-rounded="40"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="40"] > .qubit-circle__phase {
             transform: rotate(-40deg);
           }
 
-          .qubit-circle[data-phase-rounded="50"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="50"] > .qubit-circle__phase {
             transform: rotate(-50deg);
           }
 
-          .qubit-circle[data-phase-rounded="60"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="60"] > .qubit-circle__phase {
             transform: rotate(-60deg);
           }
 
-          .qubit-circle[data-phase-rounded="70"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="70"] > .qubit-circle__phase {
             transform: rotate(-70deg);
           }
 
-          .qubit-circle[data-phase-rounded="80"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="80"] > .qubit-circle__phase {
             transform: rotate(-80deg);
           }
 
-          .qubit-circle[data-phase-rounded="90"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="90"] > .qubit-circle__phase {
             transform: rotate(-90deg);
           }
 
-          .qubit-circle[data-phase-rounded="100"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="100"] > .qubit-circle__phase {
             transform: rotate(-100deg);
           }
 
-          .qubit-circle[data-phase-rounded="110"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="110"] > .qubit-circle__phase {
             transform: rotate(-110deg);
           }
 
-          .qubit-circle[data-phase-rounded="120"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="120"] > .qubit-circle__phase {
             transform: rotate(-120deg);
           }
 
-          .qubit-circle[data-phase-rounded="130"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="130"] > .qubit-circle__phase {
             transform: rotate(-130deg);
           }
 
-          .qubit-circle[data-phase-rounded="140"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="140"] > .qubit-circle__phase {
             transform: rotate(-140deg);
           }
 
-          .qubit-circle[data-phase-rounded="150"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="150"] > .qubit-circle__phase {
             transform: rotate(-150deg);
           }
 
-          .qubit-circle[data-phase-rounded="160"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="160"] > .qubit-circle__phase {
             transform: rotate(-160deg);
           }
 
-          .qubit-circle[data-phase-rounded="170"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="170"] > .qubit-circle__phase {
             transform: rotate(-170deg);
           }
 
-          .qubit-circle[data-phase-rounded="180"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="180"] > .qubit-circle__phase {
             transform: rotate(-180deg);
           }
 
-          .qubit-circle[data-phase-rounded="190"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="190"] > .qubit-circle__phase {
             transform: rotate(-190deg);
           }
 
-          .qubit-circle[data-phase-rounded="200"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="200"] > .qubit-circle__phase {
             transform: rotate(-200deg);
           }
 
-          .qubit-circle[data-phase-rounded="210"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="210"] > .qubit-circle__phase {
             transform: rotate(-210deg);
           }
 
-          .qubit-circle[data-phase-rounded="220"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="220"] > .qubit-circle__phase {
             transform: rotate(-220deg);
           }
 
-          .qubit-circle[data-phase-rounded="230"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="230"] > .qubit-circle__phase {
             transform: rotate(-230deg);
           }
 
-          .qubit-circle[data-phase-rounded="240"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="240"] > .qubit-circle__phase {
             transform: rotate(-240deg);
           }
 
-          .qubit-circle[data-phase-rounded="250"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="250"] > .qubit-circle__phase {
             transform: rotate(-250deg);
           }
 
-          .qubit-circle[data-phase-rounded="260"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="260"] > .qubit-circle__phase {
             transform: rotate(-260deg);
           }
 
-          .qubit-circle[data-phase-rounded="270"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="270"] > .qubit-circle__phase {
             transform: rotate(-270deg);
           }
 
-          .qubit-circle[data-phase-rounded="280"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="280"] > .qubit-circle__phase {
             transform: rotate(-280deg);
           }
 
-          .qubit-circle[data-phase-rounded="290"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="290"] > .qubit-circle__phase {
             transform: rotate(-290deg);
           }
 
-          .qubit-circle[data-phase-rounded="300"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="300"] > .qubit-circle__phase {
             transform: rotate(-300deg);
           }
 
-          .qubit-circle[data-phase-rounded="310"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="310"] > .qubit-circle__phase {
             transform: rotate(-310deg);
           }
 
-          .qubit-circle[data-phase-rounded="320"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="320"] > .qubit-circle__phase {
             transform: rotate(-320deg);
           }
 
-          .qubit-circle[data-phase-rounded="330"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="330"] > .qubit-circle__phase {
             transform: rotate(-330deg);
           }
 
-          .qubit-circle[data-phase-rounded="340"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="340"] > .qubit-circle__phase {
             transform: rotate(-340deg);
           }
 
-          .qubit-circle[data-phase-rounded="350"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="350"] > .qubit-circle__phase {
             transform: rotate(-350deg);
           }
 
-          .qubit-circle[data-phase-rounded="360"] > .qubit-circle__phase {
+          .qubit-circle[data-rounded-phase="360"] > .qubit-circle__phase {
             transform: rotate(-360deg);
           }
 
@@ -789,11 +816,45 @@ export class CircleNotationElement extends HTMLElement {
     )
 
     for (const [i, each] of this.magnitudes.split(",").entries()) {
-      this.setMagnitude(i, parseFloat(each))
+      this.setMagnitude(this.qubitCircles[i], parseFloat(each))
     }
     for (const [i, each] of this.phases.split(",").entries()) {
-      this.setPhase(i, parseFloat(each))
+      this.setPhase(this.qubitCircles[i], parseFloat(each))
     }
+  }
+
+  private setMagnitude(
+    qubitCircle: HTMLElement | null | undefined,
+    magnitude: number,
+  ): void {
+    if (qubitCircle === null) return
+    if (qubitCircle === undefined) return
+
+    let roundedMag = Math.round(magnitude * 100)
+    roundedMag =
+      roundedMag < 10
+        ? roundedMag === 0
+          ? 0
+          : 10
+        : Math.round(roundedMag / 10) * 10
+    roundedMag = roundedMag / 100
+
+    qubitCircle.setAttribute("data-magnitude", magnitude.toString())
+    qubitCircle.setAttribute("data-rounded-magnitude", roundedMag.toString())
+  }
+
+  private setPhase(
+    qubitCircle: HTMLElement | null | undefined,
+    phase: number,
+  ): void {
+    if (qubitCircle === null) return
+    if (qubitCircle === undefined) return
+
+    let roundedPhase = Math.round(phase / 10) * 10
+    if (roundedPhase < 0) roundedPhase = 360 + roundedPhase
+
+    qubitCircle.setAttribute("data-phase", phase.toString())
+    qubitCircle.setAttribute("data-rounded-phase", roundedPhase.toString())
   }
 
   private get classString(): string {
@@ -885,7 +946,7 @@ export class CircleNotationElement extends HTMLElement {
       if (size === 64) {
         return html`<div
           class="qubit-circle-group--size${size}"
-          data-emergence="hidden"
+          data-targets="circle-notation.qubitCircleGroups"
         >
           ${group}
         </div>`

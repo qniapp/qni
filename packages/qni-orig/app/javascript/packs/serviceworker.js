@@ -5,7 +5,8 @@ self.addEventListener(
   function (e) {
     const nqubit = e.data.nqubit
     const steps = e.data.steps
-    var simulator = new Simulator("0".repeat(nqubit))
+    const kets = e.data.kets
+    var simulator = new Simulator("0".repeat(nqubit), kets)
 
     // const t0 = performance.now()
 

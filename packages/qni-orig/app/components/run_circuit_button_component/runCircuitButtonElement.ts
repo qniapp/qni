@@ -66,7 +66,7 @@ export class RunCircuitButtonElement extends HTMLElement {
 
   runSimulator(): void {
     this.disable()
-    this.dispatchEvent(new Event("runCrcuitButton.click", { bubbles: true }))
+    this.dispatchEvent(new Event("run-circuit-button.click", { bubbles: true }))
   }
 
   disable(): void {
@@ -80,6 +80,11 @@ export class RunCircuitButtonElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
+    this.dispatchEvent(
+      new Event("run-circuit-button.loaded", {
+        bubbles: true,
+      }),
+    )
   }
 
   update(): void {

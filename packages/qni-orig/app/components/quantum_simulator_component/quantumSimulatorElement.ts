@@ -18,11 +18,19 @@ type MessageEventData = {
 
 @controller
 export class QuantumSimulatorElement extends HTMLElement {
-  private amplitudes: Complex[][] | undefined
+  private amplitudes: Array<{ [ket: number]: Complex }> | undefined
 
   declare worker: Worker
 
+  private quantumCircuit: QuantumCircuitElement | null
+  private circleNotation: CircleNotationElement | null
+  private runCircuitButton: RunCircuitButtonElement | null
+  private visibleQubitCircleKets: number[]
+
   connectedCallback(): void {
+    this.circleNotation = null
+    this.visibleQubitCircleKets = []
+
     this.addEventListener("draggable.grab", this.proxyDraggableGrabEvent)
     this.addEventListener("draggable.ungrab", this.proxyDraggableUngrabEvent)
     this.addEventListener("draggable.trash", this.resizeAndRunCircuit)
@@ -33,9 +41,22 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener("step.snap", this.run)
     this.addEventListener("step.unsnap", this.updateAllSteps)
     this.addEventListener("step.unsnap", this.run)
+
+    this.addEventListener("circuit.loaded", this.registerQuantumCircuit)
     this.addEventListener("circuit.loaded", this.run)
     this.addEventListener("circuit.mouseleave", this.gotoBreakpoint)
-    this.addEventListener("runCrcuitButton.click", this.run)
+
+    this.addEventListener("circle-notation.loaded", this.registerCircleNotation)
+    this.addEventListener(
+      "circle-notation.visibilityChanged",
+      this.showVisibleQubitCircles,
+    )
+
+    this.addEventListener(
+      "run-circuit-button.loaded",
+      this.registerRunCircuitButton,
+    )
+    this.addEventListener("run-circuit-button.click", this.run)
 
     this.worker = new Worker("/serviceworker.js")
     this.worker.addEventListener("message", (e: MessageEvent) => {
@@ -67,9 +88,13 @@ export class QuantumSimulatorElement extends HTMLElement {
           }
         }
 
-        this.amplitudes[data.step] = data.amplitudes.map((amp) => {
-          return new Complex(amp[0], amp[1])
-        })
+        const complexAmplitudes: { [ket: number]: Complex } = {}
+        for (const ket in data.amplitudes) {
+          const c = data.amplitudes[ket]
+          complexAmplitudes[ket] = new Complex(c[0], c[1])
+        }
+
+        this.amplitudes[data.step] = complexAmplitudes
       } else if (data.type === "finish") {
         const activeStep = this.quantumCircuit!.activeStep
         const breakpoint = this.quantumCircuit!.breakpoint
@@ -82,15 +107,39 @@ export class QuantumSimulatorElement extends HTMLElement {
         } else {
           this.setBreakpointAndShowStateVector(0)
         }
-        this.runButton?.enable()
+        this.runCircuitButton?.enable()
       }
     })
   }
 
+  private registerCircleNotation(event: Event): void {
+    this.circleNotation = event.target as CircleNotationElement
+  }
+
+  private registerQuantumCircuit(event: Event): void {
+    this.quantumCircuit = event.target as QuantumCircuitElement
+  }
+
+  private registerRunCircuitButton(event: Event): void {
+    this.runCircuitButton = event.target as RunCircuitButtonElement
+  }
+
+  private showVisibleQubitCircles(event: CustomEvent): void {
+    this.visibleQubitCircleKets = event.detail as number[]
+    this.run()
+  }
+
   private run(): void {
+    if (this.quantumCircuit === null) return
+    if (this.circleNotation === null) return
+
+    const nqubit = this.quantumCircuit.nqubit
+    this.circleNotation.nqubit = nqubit
+
     this.worker.postMessage({
-      nqubit: this.quantumCircuit!.nqubit,
-      steps: this.quantumCircuit!.serializedSteps,
+      nqubit,
+      steps: this.quantumCircuit.serializedSteps,
+      kets: this.visibleQubitCircleKets,
     })
   }
 
@@ -139,16 +188,12 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   private drawStateVector(stepIndex: number): void {
     if (this.amplitudes === undefined) return
+    if (this.circleNotation === null) return
 
     const amplitudes = this.amplitudes[stepIndex]
     if (!amplitudes) return
-    const nqubit = Math.log2(amplitudes.length)
 
-    const circleNotationElement = document.getElementById(
-      "circle-notation",
-    ) as CircleNotationElement
-    circleNotationElement.nqubit = nqubit
-    circleNotationElement.setAmplitudes(amplitudes)
+    this.circleNotation.setAmplitudes(amplitudes)
   }
 
   private proxyDraggableGrabEvent(): void {
@@ -162,13 +207,5 @@ export class QuantumSimulatorElement extends HTMLElement {
         bubbles: false,
       }),
     )
-  }
-
-  private get quantumCircuit(): QuantumCircuitElement | null {
-    return this.querySelector("quantum-circuit") as QuantumCircuitElement
-  }
-
-  private get runButton(): RunCircuitButtonElement | null {
-    return this.querySelector("run-circuit-button") as RunCircuitButtonElement
   }
 }
