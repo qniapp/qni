@@ -204,7 +204,7 @@ const css = html`<style>
   :host([data-draggable-tag-name="measurement-gate"][data-occupied])
     #wires
     > #wire-input {
-    transform: scaleX(0.75) translateX(-25%);
+    transform: scaleX(0.75) translateX(-33.3%);
   }
 
   @media (min-width: 768px) {
@@ -224,7 +224,7 @@ const css = html`<style>
   :host([data-draggable-tag-name="measurement-gate"][data-occupied])
     #wires
     > #wire-output {
-    transform: scaleX(0.75) translateX(25%);
+    transform: scaleX(0.75) translateX(33.3%);
   }
 
   @media (min-width: 768px) {

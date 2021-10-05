@@ -206,7 +206,7 @@
             <rnot-gate data-size="sm"></rnot-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="45,-50"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="45,-45"></circle-notation>
         </div>
 
         <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
@@ -216,7 +216,7 @@
             <rnot-gate data-size="sm"></rnot-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="-50,45"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="-45,45"></circle-notation>
         </div>
       </rnot-gate>
     </palette-dropzone>
@@ -428,7 +428,24 @@
 
   <circle-notation id="circle-notation"
                    class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-snow border-2 border-b-4 border-swan rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
-                   data-multiple-qubits>
+                   data-multi-qubits>
+    <template id="circle-notation-popup">
+      <div class="text-base text-wolf mb-2">
+        |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal <span class="circle-notation-popup__ket-decimal"></span>)
+      </div>
+      <ul class="list-none">
+        <li>
+          Amplitude: <span class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"></span>
+          <span class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"></span>
+        </li>
+        <li>
+          Probability: <span class="circle-notation-popup__probability font-bold font-mono text-eel"></span>
+        </li>
+        <li>
+          Phase: <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
+        </li>
+      </ul>
+    </template>
   </circle-notation>
 
   <%= render RunCircuitButtonComponent.new %>

@@ -1,9 +1,11 @@
 import { TemplateResult, html, render } from "@github/jtml"
-import { attr, controller, target, targets } from "@github/catalyst"
-import {
-  initQubitCirclePopup,
-  setQubitCirclePopupContent,
-} from "qubit_circle_popup/qubitCirclePopup"
+import { attr, controller, targets } from "@github/catalyst"
+import tippy, {
+  Instance,
+  ReferenceElement,
+  createSingleton,
+  roundArrow,
+} from "tippy.js"
 import { Complex } from "lib/math"
 import { ketDecimal } from "qubit_circle_component/qubitCircleComponent"
 
@@ -13,65 +15,51 @@ export class CircleNotationElement extends HTMLElement {
   @attr size = ""
   @attr magnitudes = "1.0"
   @attr phases = ""
-  @attr multipleQubits = false
+  @attr multiQubits = false
 
-  @target popup: HTMLElement
   @targets qubitCircles: HTMLElement[]
   @targets qubitCircleGroups: HTMLElement[]
   @targets visibleQubitCircleGroups: HTMLElement[]
 
-  private amplitudes!: { [ket: number]: Complex }
-
   setAmplitudes(amplitudes: { [ket: number]: Complex }): void {
     const qubitCircles = this.qubitCircles
-    this.amplitudes = amplitudes
 
     for (const [i, each] of Object.entries(amplitudes)) {
-      const qubitCircle = qubitCircles[i]
+      const qubitCircle = qubitCircles[parseInt(i)]
+
+      qubitCircle.setAttribute("data-amplitude-real", each.real.toString())
+      qubitCircle.setAttribute("data-amplitude-imag", each.imag.toString())
 
       const magnitude = each.abs()
-      this.setMagnitude(qubitCircle, magnitude)
+      this.setRoundedMagnitude(qubitCircle, magnitude)
       if (magnitude === 0) continue
 
       const phaseDeg = (each.phase() / Math.PI) * 180
-      this.setPhase(qubitCircle, phaseDeg)
+      this.setRoundedPhase(qubitCircle, phaseDeg)
     }
-  }
-
-  setPopupContent(event: MouseEvent): void {
-    const qubitCircleEl = event.target as HTMLElement
-    const ket = ketDecimal(qubitCircleEl)
-    const amplitude = this.amplitudes[ket]
-
-    if (amplitude === undefined) return
-
-    setQubitCirclePopupContent(
-      this.popup,
-      qubitCircleEl,
-      ket,
-      amplitude,
-      this.nqubit,
-    )
   }
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.startQubitCircleVisibilityObserver()
-    initQubitCirclePopup(this.qubitCircles)
-    if (this.multipleQubits) {
-      this.dispatchEvent(
-        new Event("circle-notation.loaded", {
-          bubbles: true,
-        }),
-      )
+
+    if (this.multiQubits) {
+      this.startQubitCircleVisibilityObserver()
+      this.initQubitCirclePopup(this.qubitCircles)
+      this.dispatchLoadedEvent()
     }
   }
 
-  private startQubitCircleVisibilityObserver(): void {
-    if (!this.multipleQubits) return
+  private dispatchLoadedEvent(): void {
+    this.dispatchEvent(
+      new Event("circle-notation.loaded", {
+        bubbles: true,
+      }),
+    )
+  }
 
+  private startQubitCircleVisibilityObserver(): void {
     const options = {
       root: this,
       threshold: [0, 0.2],
@@ -316,7 +304,7 @@ export class CircleNotationElement extends HTMLElement {
             flex-direction: row;
           }
 
-          :host([data-multiple-qubits]) #body {
+          :host([data-multi-qubits]) #body {
             display: inline-block;
             margin-top: auto;
             margin-bottom: auto;
@@ -325,7 +313,7 @@ export class CircleNotationElement extends HTMLElement {
           }
 
           @media (min-width: 768px) {
-            :host([data-multiple-qubits]) #body {
+            :host([data-multi-qubits]) #body {
               display: inline-block;
               padding-left: 1rem;
               padding-right: 1rem;
@@ -365,7 +353,7 @@ export class CircleNotationElement extends HTMLElement {
             width: 64px !important;
           }
 
-          :host([data-nqubit="1"]:not([data-multiple-qubits])) .qubit-circle {
+          :host([data-nqubit="1"]:not([data-multi-qubits])) .qubit-circle {
             height: 32px;
             width: 32px;
           }
@@ -464,6 +452,10 @@ export class CircleNotationElement extends HTMLElement {
             border-style: solid;
           }
 
+          .qubit-circle:hover > .qubit-circle__magnitude {
+            border-color: var(--colors-cardinal, #ff4b4b);
+          }
+
           :host([data-size="xs"]) .qubit-circle__magnitude,
           :host([data-size="sm"]) .qubit-circle__magnitude {
             border-width: 1px;
@@ -500,6 +492,10 @@ export class CircleNotationElement extends HTMLElement {
             background-color: #1cb0f6;
             transform: scaleX(0) scaleY(0);
             transform-origin: center;
+          }
+
+          .qubit-circle:hover > .qubit-circle__magnitude::after {
+            background-color: var(--colors-fox, #ff9600);
           }
 
           .qubit-circle[data-rounded-magnitude="0.1"]
@@ -564,6 +560,10 @@ export class CircleNotationElement extends HTMLElement {
             border-style: solid;
             transform: rotate(0deg);
             transform-origin: center;
+          }
+
+          .qubit-circle:hover > .qubit-circle__phase {
+            border-color: var(--colors-cardinal, #ff4b4b);
           }
 
           :host([data-size="xs"]) .qubit-circle__phase,
@@ -779,46 +779,25 @@ export class CircleNotationElement extends HTMLElement {
           :host([data-size="xl"]) .qubit-circle__phase::after {
             width: 2px;
           }
-
-          #popup {
-            display: none;
-          }
         </style>
 
-        <div id="body">${this.qubitCirclesHtml}</div>
-
-        <div
-          id="popup"
-          class="qubit-circle-popup hidden"
-          data-target="circle-notation.popup"
-        >
-          <div class="qubit-circle-popup__ket">
-            |<span class="qubit-circle-popup__ket-binary"></span>⟩ (decimal
-            <span class="qubit-circle-popup__ket-decimal"></span>)
-          </div>
-          <ul class="list-none">
-            <li>
-              Amplitude: <span class="qubit-circle-popup__amplitude-real"></span
-              ><span class="qubit-circle-popup__amplitude-imag"></span>
-            </li>
-            <li>
-              Probability: <span class="qubit-circle-popup__probability"></span>
-            </li>
-            <li>Phase: <span class="qubit-circle-popup__phase"></span></li>
-          </ul>
-        </div>`,
+        <div id="body">${this.qubitCirclesHtml}</div>`,
       this.shadowRoot!,
     )
 
     for (const [i, each] of this.magnitudes.split(",").entries()) {
-      this.setMagnitude(this.qubitCircles[i], parseFloat(each))
+      this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
     }
     for (const [i, each] of this.phases.split(",").entries()) {
-      this.setPhase(this.qubitCircles[i], parseFloat(each))
+      const qubitCircle = this.qubitCircles[i]
+      const qubitCirclePhaseEl = qubitCircle!.querySelector(
+        ".qubit-circle__phase",
+      ) as HTMLElement
+      qubitCirclePhaseEl!.style.transform = `rotate(${-parseFloat(each)}deg)`
     }
   }
 
-  private setMagnitude(
+  private setRoundedMagnitude(
     qubitCircle: HTMLElement | null | undefined,
     magnitude: number,
   ): void {
@@ -838,7 +817,7 @@ export class CircleNotationElement extends HTMLElement {
     qubitCircle.setAttribute("data-rounded-magnitude", roundedMag.toString())
   }
 
-  private setPhase(
+  private setRoundedPhase(
     qubitCircle: HTMLElement | null | undefined,
     phase: number,
   ): void {
@@ -853,7 +832,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get qubitCirclesHtml(): TemplateResult {
-    if (this.multipleQubits) return this.stateVectorHtml(10)
+    if (this.multiQubits) return this.stateVectorHtml(10)
 
     return html`${this.qubitCircleHtml(0)} ${this.qubitCircleHtml(1)}`
   }
@@ -937,5 +916,123 @@ export class CircleNotationElement extends HTMLElement {
         return html`<div class="qubit-circle-group--size${size}">${group}</div>`
       }
     })
+  }
+
+  private initQubitCirclePopup(qubitCircles: HTMLElement[]): void {
+    const tippyInstances = tippy(qubitCircles)
+    createSingleton(tippyInstances, {
+      allowHTML: true,
+      animation: false,
+      arrow: roundArrow + roundArrow,
+      delay: 0,
+      theme: "qni",
+    })
+  }
+
+  setPopupContent(event: MouseEvent): void {
+    if (!this.multiQubits) return
+
+    const qubitCircleEl = event.target as HTMLElement
+    const ket = ketDecimal(qubitCircleEl)
+    const dataAmpReal = qubitCircleEl.getAttribute("data-amplitude-real")
+    const dataAmpImag = qubitCircleEl.getAttribute("data-amplitude-imag")
+    const dataMagnitude = qubitCircleEl.getAttribute("data-magnitude")
+    const dataPhase = qubitCircleEl.getAttribute("data-phase")
+
+    if (
+      dataAmpReal === null ||
+      dataAmpImag === null ||
+      dataMagnitude === null ||
+      dataPhase === null
+    ) {
+      this.setQubitCirclePopupContent(
+        this.popupEl!.content,
+        qubitCircleEl,
+        ket,
+        Complex.ZERO,
+        0,
+        0,
+        this.nqubit,
+      )
+    } else {
+      const amplitude = new Complex(
+        parseFloat(dataAmpReal),
+        parseFloat(dataAmpImag),
+      )
+
+      this.setQubitCirclePopupContent(
+        this.popupEl!.content,
+        qubitCircleEl,
+        ket,
+        amplitude,
+        parseFloat(dataMagnitude),
+        parseFloat(dataPhase),
+        this.nqubit,
+      )
+    }
+  }
+
+  private setQubitCirclePopupContent(
+    popupFrag: DocumentFragment,
+    qubitCircleEl: HTMLElement,
+    ket: number,
+    amplitude: Complex,
+    magnitude: number,
+    phase: number,
+    nqubit: number,
+  ): void {
+    const popup = (qubitCircleEl as ReferenceElement)._tippy as Instance
+    popup.setContent(
+      this.popupContent(popupFrag, ket, amplitude, magnitude, phase, nqubit),
+    )
+  }
+
+  private popupContent(
+    popupFrag: DocumentFragment,
+    ket: number,
+    amplitude: Complex,
+    magnitude: number,
+    phase: number,
+    nqubit: number,
+  ): string {
+    const ketBinaryEl = popupFrag.querySelector(
+      ".circle-notation-popup__ket-binary",
+    )
+    const ketDecimalEl = popupFrag.querySelector(
+      ".circle-notation-popup__ket-decimal",
+    )
+    const amplitudeRealEl = popupFrag.querySelector(
+      ".circle-notation-popup__amplitude-real",
+    )
+    const amplitudeImagEl = popupFrag.querySelector(
+      ".circle-notation-popup__amplitude-imag",
+    )
+    const probabilityEl = popupFrag.querySelector(
+      ".circle-notation-popup__probability",
+    )
+    const phaseEl = popupFrag.querySelector(".circle-notation-popup__phase")
+
+    ketBinaryEl!.textContent = ket.toString(2).padStart(nqubit, "0")
+    ketDecimalEl!.textContent = ket.toString()
+    amplitudeRealEl!.textContent = this.forceSigned(amplitude.real, 5)
+    amplitudeImagEl!.textContent = `${this.forceSigned(amplitude.imag, 5)}i`
+    probabilityEl!.textContent = `${this.forceSigned(
+      magnitude * magnitude * 100,
+      4,
+    )}%`
+    phaseEl!.textContent = `${this.forceSigned(phase, 2)}°`
+
+    const div = document.createElement("div")
+    div.appendChild(popupFrag.cloneNode(true))
+
+    return div.innerHTML
+  }
+
+  private get popupEl(): HTMLTemplateElement | null {
+    return this.querySelector("#circle-notation-popup") as HTMLTemplateElement
+  }
+
+  private forceSigned(value: number, d: number): string {
+    return (value >= 0 ? "+" : "") + value.toFixed(d)
   }
 }
