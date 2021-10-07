@@ -75,14 +75,14 @@ export class MeasurementGateElement extends DraggableMixin(
             left: 0;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
-            font-size: 1rem;
-            line-height: 1.5rem;
             writing-mode: vertical-lr;
           }
 
           @media (min-width: 768px) {
             #value {
               writing-mode: horizontal-tb;
+              font-size: 1.125rem !important;
+              line-height: 1.75rem !important;
             }
           }
 
@@ -96,6 +96,28 @@ export class MeasurementGateElement extends DraggableMixin(
             align-items: center;
             width: 100%;
             height: 100%;
+          }
+
+          :host([data-wire-count="1"]) #value,
+          :host([data-wire-count="2"]) #value,
+          :host([data-wire-count="3"]) #value {
+            font-size: 1.5rem;
+            line-height: 2rem;
+          }
+
+          :host([data-wire-count="4"]) #value,
+          :host([data-wire-count="5"]) #value,
+          :host([data-wire-count="6"]) #value {
+            font-size: 1rem;
+            line-height: 1.5rem;
+          }
+
+          :host([data-wire-count="7"]) #value,
+          :host([data-wire-count="8"]) #value,
+          :host([data-wire-count="9"]) #value,
+          :host([data-wire-count="10"]) #value {
+            font-size: 0.75rem;
+            line-height: 1rem;
           }
 
           :host([data-value="0"]) #value {

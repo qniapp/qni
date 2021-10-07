@@ -1,7 +1,6 @@
 import { Breakpoint, Util, classNameFor } from "lib/base"
+import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
 import {
-  Phiable,
-  Thetable,
   isDisableable,
   isFlaggable,
   isIfable,
@@ -16,6 +15,9 @@ import noUiSlider, {
 import tippy, { Instance, Props, roundArrow } from "tippy.js"
 import Fraction from "fraction.js"
 import { Instruction } from "lib/operation"
+import { RxGateElement } from "rx_gate_component/rxGateElement"
+import { RyGateElement } from "ry_gate_component/ryGateElement"
+import { RzGateElement } from "rz_gate_component/rzGateElement"
 
 export class GatePopup {
   onUpdate!: () => void
@@ -23,21 +25,20 @@ export class GatePopup {
   currentAngle!: string | null
   currentAngleDenominator!: number | null
 
-  show(element: HTMLElement, onUpdate: () => void): void {
+  show(element: HTMLElement): void {
     if (Breakpoint.isMobile()) return
-    const instruction = Instruction.create(element)
-    if (
-      !(
-        isFlaggable(instruction) ||
-        isIfable(instruction) ||
-        isThetable(instruction) ||
-        isPhiable(instruction)
-      )
-    ) {
-      return
-    }
 
-    this.onUpdate = onUpdate
+    // const instruction = Instruction.create(element)
+    // if (
+    //   !(
+    //     isFlaggable(instruction) ||
+    //     isIfable(instruction) ||
+    //     isThetable(instruction) ||
+    //     isPhiable(instruction)
+    //   )
+    // ) {
+    //   return
+    // }
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this
@@ -53,27 +54,54 @@ export class GatePopup {
       theme: "qni",
       // trigger: "manual", // debug
       onShow(instance) {
-        if (that.originalValue !== null) that.input.value = that.originalValue
+        const operation = instance.reference as
+          | RxGateElement
+          | RyGateElement
+          | RzGateElement
+        const originalValue = operation.getAttribute("data-theta")
+
+        that.input.value = originalValue!.replace(/π/g, "pi")
         that.input.addEventListener("keydown", that.inputKeydown.bind(that))
 
-        const inst = Instruction.create(instance.reference)
-        if (isPhiable(inst) || isThetable(inst)) {
-          that.currentAngleDenominator = that.angleDenominator(inst.angle)
-          that.currentAngle = that.snappedAngle(inst.radian)
-          that.createAngleSlider(inst)
-        }
+        const radian = Complex.from(
+          parseFormula<number>(
+            originalValue!.replace(/π/g, "pi"),
+            PARSE_COMPLEX_TOKEN_MAP_RAD,
+          ),
+        ).real
+
+        that.currentAngleDenominator = that.angleDenominator(originalValue!)
+        that.currentAngle = that.snappedAngle(radian)
+        that.createAngleSlider(operation)
+
+        // const inst = Instruction.create(instance.reference)
+        // if (isPhiable(inst) || isThetable(inst)) {
+        //   that.currentAngleDenominator = that.angleDenominator(inst.angle)
+        //   that.currentAngle = that.snappedAngle(inst.radian)
+        //   that.createAngleSlider(inst)
+        // }
       },
       onHide() {
         if (that.isAngleSliderActive()) return false
       },
       onHidden(instance) {
-        const inst = Instruction.create(instance.reference)
-        if (isPhiable(inst) || isThetable(inst)) {
-          that.reduceInstructionAngle(inst)
-          that.runCircuit()
-          that.destroyAngleSlider()
-        }
+        // const inst = Instruction.create(instance.reference)
+        // if (isPhiable(inst) || isThetable(inst)) {
+        //   that.reduceInstructionAngle(inst)
+        //   that.runCircuit()
+        //   that.destroyAngleSlider()
+        // }
 
+        const operation = instance.reference as
+          | RxGateElement
+          | RyGateElement
+          | RzGateElement
+
+        that.reduceInstructionAngle(operation)
+        that.destroyAngleSlider()
+        operation.dispatchEvent(
+          new Event("operation.update", { bubbles: true }),
+        )
         instance.destroy()
       },
     })
@@ -81,41 +109,47 @@ export class GatePopup {
   }
 
   private updateInstructionAngle(
-    instruction: Extract<Instruction, Phiable | Thetable>,
+    operation: RxGateElement | RyGateElement | RzGateElement,
     angle: string,
   ): void {
     this.input.value = angle
 
-    if (isPhiable(instruction)) {
-      if (instruction.targets.length > 2) {
-        for (const each of instruction.cphaseTargetInstructions()) {
-          each.phi = angle
-        }
-      } else {
-        instruction.phi = angle
-        instruction.circuitDropzone.circuitStep.updateGateConnections()
-      }
-    } else if (isThetable(instruction)) {
-      instruction.theta = angle
-    }
+    operation.theta = angle.replace(/pi/g, "π")
+    // if (isPhiable(instruction)) {
+    //   if (instruction.targets.length > 2) {
+    //     for (const each of instruction.cphaseTargetInstructions()) {
+    //       each.phi = angle
+    //     }
+    //   } else {
+    //     instruction.phi = angle
+    //     instruction.circuitDropzone.circuitStep.updateGateConnections()
+    //   }
+    // } else if (isThetable(instruction)) {
+    //   instruction.theta = angle
+    // }
   }
 
   private reduceInstructionAngle(
-    instruction: Extract<Instruction, Phiable | Thetable>,
+    operation: RxGateElement | RyGateElement | RzGateElement,
   ): void {
-    const angle = this.beautifyFraction(instruction.angle, true)
+    const angle = this.beautifyFraction(
+      operation.theta.replace(/π/g, "pi"),
+      true,
+    )
 
-    if (isPhiable(instruction)) {
-      if (instruction.targets.length > 0) {
-        for (const each of instruction.cphaseTargetInstructions()) {
-          each.phi = angle
-        }
-      } else {
-        instruction.phi = angle
-      }
-    } else if (isThetable(instruction)) {
-      instruction.theta = angle
-    }
+    operation.theta = angle.replace(/pi/g, "π")
+
+    // if (isPhiable(instruction)) {
+    //   if (instruction.targets.length > 0) {
+    //     for (const each of instruction.cphaseTargetInstructions()) {
+    //       each.phi = angle
+    //     }
+    //   } else {
+    //     instruction.phi = angle
+    //   }
+    // } else if (isThetable(instruction)) {
+    //   instruction.theta = angle
+    // }
   }
 
   private snappedAngle(angle: number): string {
@@ -171,19 +205,21 @@ export class GatePopup {
   }
 
   private popupHtml(el: HTMLElement): string {
-    const instruction = Instruction.create(el)
-    let popupType = null
+    // const instruction = Instruction.create(el)
+    // let popupType = null
 
-    if (isFlaggable(instruction)) popupType = "flag"
-    if (
-      isIfable(instruction) &&
-      !isThetable(instruction) &&
-      !isPhiable(instruction)
-    ) {
-      popupType = "if"
-    }
-    if (isThetable(instruction)) popupType = "theta"
-    if (isPhiable(instruction)) popupType = "phi"
+    // if (isFlaggable(instruction)) popupType = "flag"
+    // if (
+    //   isIfable(instruction) &&
+    //   !isThetable(instruction) &&
+    //   !isPhiable(instruction)
+    // ) {
+    //   popupType = "if"
+    // }
+    // if (isThetable(instruction)) popupType = "theta"
+    // if (isPhiable(instruction)) popupType = "phi"
+
+    const popupType = "phi"
 
     Util.notNull(popupType)
 
@@ -209,42 +245,69 @@ export class GatePopup {
       const inputValue = this.input.value
 
       try {
-        const instruction = Instruction.create(this.popupReferenceEl)
+        // const instruction = Instruction.create(this.popupReferenceEl)
+        const operation = this.popupReferenceEl as
+          | RxGateElement
+          | RyGateElement
+          | RzGateElement
 
-        if (isFlaggable(instruction)) this.flag = inputValue
+        // if (isFlaggable(operation)) this.flag = inputValue
+
+        // if (
+        //   isIfable(operation) &&
+        //   !isThetable(operation) &&
+        //   !isPhiable(operation)
+        // ) {
+        //   this.if = inputValue
+        // }
+
+        Util.notNull(this.currentAngle)
+        Util.notNull(this.currentAngleDenominator)
+
+        let newAngle = inputValue
 
         if (
-          isIfable(instruction) &&
-          !isThetable(instruction) &&
-          !isPhiable(instruction)
+          this.angleNumerator(this.currentAngle) ===
+            this.angleNumerator(inputValue) &&
+          this.currentAngleDenominator !== this.angleDenominator(inputValue)
         ) {
-          this.if = inputValue
+          const m =
+            this.angleDenominator(inputValue) / this.currentAngleDenominator
+          newAngle = `${Math.round(
+            m * this.angleNumerator(this.currentAngle),
+          )}pi/${this.angleDenominator(inputValue)}`
         }
 
-        if (isThetable(instruction) || isPhiable(instruction)) {
-          Util.notNull(this.currentAngle)
-          Util.notNull(this.currentAngleDenominator)
+        this.currentAngleDenominator = this.angleDenominator(inputValue)
+        this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
+        operation.theta = this.beautifyFraction(newAngle, false).replace(
+          /pi/g,
+          "π",
+        )
 
-          let newAngle = inputValue
+        // if (isThetable(operation) || isPhiable(operation)) {
+        //   Util.notNull(this.currentAngle)
+        //   Util.notNull(this.currentAngleDenominator)
 
-          if (
-            this.angleNumerator(this.currentAngle) ===
-              this.angleNumerator(inputValue) &&
-            this.currentAngleDenominator !== this.angleDenominator(inputValue)
-          ) {
-            const m =
-              this.angleDenominator(inputValue) / this.currentAngleDenominator
-            newAngle = `${Math.round(
-              m * this.angleNumerator(this.currentAngle),
-            )}pi/${this.angleDenominator(inputValue)}`
-          }
+        //   let newAngle = inputValue
 
-          this.currentAngleDenominator = this.angleDenominator(inputValue)
-          this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
-          instruction.angle = this.beautifyFraction(newAngle, false)
-        }
+        //   if (
+        //     this.angleNumerator(this.currentAngle) ===
+        //       this.angleNumerator(inputValue) &&
+        //     this.currentAngleDenominator !== this.angleDenominator(inputValue)
+        //   ) {
+        //     const m =
+        //       this.angleDenominator(inputValue) / this.currentAngleDenominator
+        //     newAngle = `${Math.round(
+        //       m * this.angleNumerator(this.currentAngle),
+        //     )}pi/${this.angleDenominator(inputValue)}`
+        //   }
 
-        this.onUpdate()
+        //   this.currentAngleDenominator = this.angleDenominator(inputValue)
+        //   this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
+        //   operation.angle = this.beautifyFraction(newAngle, false)
+        // }
+
         this.runCircuit()
       } catch (e) {
         Util.notNull(this.popup)
@@ -276,7 +339,8 @@ export class GatePopup {
   }
 
   private runCircuit(): void {
-    this.editorElement.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
+    // console.log("runCircuit")
+    // this.editorElement.dispatchEvent(new CustomEvent("circuitUpdateEvent"))
   }
 
   private get popupReferenceEl(): HTMLElement {
@@ -301,20 +365,26 @@ export class GatePopup {
   }
 
   private createAngleSlider(
-    instruction: Extract<Instruction, Phiable | Thetable>,
+    operation: RxGateElement | RyGateElement | RzGateElement,
   ): void {
     const angleSliderEl = this.angleSliderEl
     const filterPips = (value: number) => {
       if (value === 0) return 1
       return value % Math.PI ? -1 : 1
     }
+    const radian = Complex.from(
+      parseFormula<number>(
+        operation.theta.replace(/π/g, "pi"),
+        PARSE_COMPLEX_TOKEN_MAP_RAD,
+      ),
+    ).real
 
     noUiSlider.create(angleSliderEl, {
       range: {
         min: -2 * Math.PI,
         max: 2 * Math.PI,
       },
-      start: instruction.radian,
+      start: radian,
       pips: {
         mode: PipsMode.Positions,
         values: [0, 25, 50, 75, 100],
@@ -338,8 +408,10 @@ export class GatePopup {
       const snappedAngle = this.snappedAngle(values[0] as number)
       if (this.currentAngle !== snappedAngle) {
         this.currentAngle = snappedAngle
-        this.updateInstructionAngle(instruction, snappedAngle)
-        this.runCircuit()
+        this.updateInstructionAngle(operation, snappedAngle)
+        operation.dispatchEvent(
+          new Event("operation.change", { bubbles: true }),
+        )
       }
     })
   }
@@ -376,7 +448,10 @@ export class GatePopup {
     ;(Fraction as any).REDUCE = false
 
     const fraction = new Fraction(
-      angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
+      angle
+        .replace(/π/g, "pi")
+        .replace(/(\d+)pi/g, "$1")
+        .replace(/pi/g, "1"),
     )
     return fraction.d
   }

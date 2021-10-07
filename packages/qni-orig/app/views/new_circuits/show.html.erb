@@ -426,6 +426,11 @@
                    data-min-step-count="5">
   </quantum-circuit>
 
+  <%= gate_popup type: 'theta', label: 'θ', error_message: 'Invalid θ value' %>
+  <%= gate_popup type: 'phi', label: 'φ', error_message: 'Invalid φ value' %>
+  <%= gate_popup type: 'if', label: 'if', error_message: 'Invalid `if` value' %>
+  <%= gate_popup type: 'flag', label: 'flag', error_message: 'Invalid flag' %>
+
   <circle-notation id="circle-notation"
                    class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-snow border-2 border-b-4 border-swan rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
                    data-multi-qubits>

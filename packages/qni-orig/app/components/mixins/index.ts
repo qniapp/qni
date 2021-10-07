@@ -1,3 +1,4 @@
+export * from "./configurable"
 export * from "./constructor"
 export * from "./controllable"
 export * from "./disableable"

@@ -76,12 +76,10 @@ export class Editor {
 
   showGatePopup(element: HTMLElement): void {
     const gatePopup = new GatePopup()
-    const circuitDraggable = new CircuitDraggable(element)
-    const circuitStep = circuitDraggable.dropzone.circuitStep
+    // const circuitDraggable = new CircuitDraggable(element)
+    // const circuitStep = circuitDraggable.dropzone.circuitStep
 
-    gatePopup.show(element, () => {
-      circuitStep.updateGateConnections()
-    })
+    gatePopup.show(element)
   }
 
   // Trash dropzone handler

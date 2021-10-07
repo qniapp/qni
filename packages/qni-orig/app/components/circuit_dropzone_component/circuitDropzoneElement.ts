@@ -5,10 +5,10 @@ import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
 
 import { CircuitOperation, CircuitOperationElement } from "lib/operation"
+import { Draggable, Operation } from "mixins"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "circuit_step_component/circuitStepElement"
-import { Draggable } from "mixins"
 import { IGate } from "lib/instructions"
 
 import interact from "@interactjs/interact"
@@ -114,6 +114,52 @@ const css = html`<style>
     :host([data-size="xl"]) {
       height: 3rem;
       width: 4.5rem;
+    }
+  }
+
+  :host([data-wire-count="1"]),
+  :host([data-wire-count="2"]) {
+    height: ${Operation.size.xl * 1.5}rem;
+    width: ${Operation.size.xl}rem;
+  }
+
+  :host([data-wire-count="3"]) {
+    height: ${Operation.size.lg * 1.5}rem;
+    width: ${Operation.size.lg}rem;
+  }
+
+  :host([data-wire-count="4"]) {
+    height: ${Operation.size.base * 1.5}rem;
+    width: ${Operation.size.base}rem;
+  }
+
+  :host([data-wire-count="5"]),
+  :host([data-wire-count="6"]) {
+    height: ${Operation.size.sm * 1.5}rem;
+    width: ${Operation.size.sm}rem;
+  }
+
+  :host([data-wire-count="7"]),
+  :host([data-wire-count="8"]),
+  :host([data-wire-count="9"]),
+  :host([data-wire-count="10"]) {
+    height: ${Operation.size.xs * 1.5}rem;
+    width: ${Operation.size.xs}rem;
+  }
+
+  @media (min-width: 768px) {
+    :host([data-wire-count="1"]),
+    :host([data-wire-count="2"]),
+    :host([data-wire-count="3"]),
+    :host([data-wire-count="4"]),
+    :host([data-wire-count="5"]),
+    :host([data-wire-count="6"]),
+    :host([data-wire-count="7"]),
+    :host([data-wire-count="8"]),
+    :host([data-wire-count="9"]),
+    :host([data-wire-count="10"]) {
+      height: ${Operation.size.base}rem;
+      width: ${Operation.size.base * 1.5}rem;
     }
   }
 
@@ -250,7 +296,7 @@ const css = html`<style>
 export class CircuitDropzoneElement extends HTMLElement {
   @target slotEl: HTMLSlotElement
 
-  @attr size = "base"
+  @attr size = ""
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
   @attr wireTop = false
@@ -259,6 +305,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr draggableTagName = ""
   @attr shadow = false
   @attr childrenLoaded = true
+  @attr wireCount = 0
 
   get draggableElement(): CircuitOperationElement | null {
     const el = this.children[0] as HTMLElement
@@ -355,6 +402,20 @@ export class CircuitDropzoneElement extends HTMLElement {
     )
   }
 
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (oldValue === newValue) return
+    if (this.childElementCount === 0) return
+
+    if (name === "data-wire-count" && newValue !== null) {
+      const operation = this.children[0]
+      operation.setAttribute("data-wire-count", newValue)
+    }
+  }
+
   update(): void {
     render(
       html`${css}
@@ -393,7 +454,11 @@ export class CircuitDropzoneElement extends HTMLElement {
       const operation = this.children[0]
       const nodeName = operation.nodeName
 
-      operation.setAttribute("data-size", this.size)
+      operation.setAttribute("data-wire-count", this.wireCount.toString())
+
+      if (this.size !== "") {
+        operation.setAttribute("data-size", this.size)
+      }
 
       this.draggableTagName = nodeName.toLowerCase()
       this.occupied = true

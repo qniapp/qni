@@ -61,8 +61,6 @@ export class WriteGateElement extends DraggableMixin(
             left: 0;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
-            font-size: 1rem;
-            line-height: 1.5rem;
             writing-mode: vertical-lr;
           }
 
@@ -77,6 +75,8 @@ export class WriteGateElement extends DraggableMixin(
           @media (min-width: 768px) {
             #ket-label {
               writing-mode: horizontal-tb;
+              font-size: 1.125rem !important;
+              line-height: 1.75rem !important;
             }
           }
 
@@ -90,6 +90,7 @@ export class WriteGateElement extends DraggableMixin(
             line-height: 1.25rem;
           }
 
+          :host #ket-label,
           :host([data-size="base"]) #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
@@ -103,6 +104,28 @@ export class WriteGateElement extends DraggableMixin(
           :host([data-size="xl"]) #ket-label {
             font-size: 1.25rem;
             line-height: 1.75rem;
+          }
+
+          :host([data-wire-count="1"]) #ket-label,
+          :host([data-wire-count="2"]) #ket-label,
+          :host([data-wire-count="3"]) #ket-label {
+            font-size: 1.5rem;
+            line-height: 2rem;
+          }
+
+          :host([data-wire-count="4"]) #ket-label,
+          :host([data-wire-count="5"]) #ket-label,
+          :host([data-wire-count="6"]) #ket-label {
+            font-size: 1rem;
+            line-height: 1.5rem;
+          }
+
+          :host([data-wire-count="7"]) #ket-label,
+          :host([data-wire-count="8"]) #ket-label,
+          :host([data-wire-count="9"]) #ket-label,
+          :host([data-wire-count="10"]) #ket-label {
+            font-size: 0.75rem;
+            line-height: 1rem;
           }
 
           :host([data-value="0"]) #ket-label {

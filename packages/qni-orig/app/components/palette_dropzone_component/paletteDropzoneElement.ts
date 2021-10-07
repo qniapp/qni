@@ -15,8 +15,8 @@ export class PaletteDropzoneElement extends HTMLElement {
       html`<style>
           :host {
             position: relative;
-            height: ${Operation.size.base.height};
-            width: ${Operation.size.base.width};
+            height: ${Operation.size.base}rem;
+            width: ${Operation.size.base}rem;
           }
 
           ::slotted(*) {

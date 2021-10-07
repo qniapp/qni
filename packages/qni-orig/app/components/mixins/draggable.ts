@@ -5,6 +5,7 @@ import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
 import { TemplateResult, html } from "@github/jtml"
 import { isCircuitDropzone, isPaletteDropzone } from "helpers"
+import { Breakpoint } from "lib/base"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { Constructor } from "./constructor"
 import { InteractEvent } from "@interactjs/types"
@@ -64,22 +65,24 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           border-radius: 0.25rem;
         }
 
-        :host([data-draggable]) #body::after {
-          position: absolute;
-          height: 100%;
-          width: 100%;
-          border-color: var(--colors-cardinal);
-          border-radius: 0.25rem;
-          border-style: solid;
-          border-width: 2px;
-          box-sizing: border-box;
-          opacity: 0;
-          content: "";
-        }
+        @media (min-width: 768px) {
+          :host([data-draggable]) #body::after {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            border-color: var(--colors-cardinal, #ff4b4b);
+            border-radius: 0.25rem;
+            border-style: solid;
+            border-width: 2px;
+            box-sizing: border-box;
+            opacity: 0;
+            content: "";
+          }
 
-        :host([data-draggable][data-hoverable]) #body:hover::after,
-        :host([data-draggable][data-grabbed]) #body::after {
-          opacity: 100;
+          :host([data-draggable][data-hoverable]) #body:hover::after,
+          :host([data-draggable][data-grabbed]) #body::after {
+            opacity: 100;
+          }
         }
       </style>`
     }
@@ -91,6 +94,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       }
 
       if (!this.draggable) return
+      if (Breakpoint.isMobile()) return
       if (interact.isSet(this)) return
 
       interact(this).draggable({

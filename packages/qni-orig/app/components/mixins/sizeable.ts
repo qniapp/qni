@@ -4,11 +4,11 @@ import { attr } from "@github/catalyst"
 
 export class Operation {
   static size = {
-    xs: { height: "1rem", width: "1rem" },
-    sm: { height: "1.5rem", width: "1.5rem" },
-    base: { height: "2rem", width: "2rem" },
-    lg: { height: "2.5rem", width: "2.5rem" },
-    xl: { height: "3rem", width: "3rem" },
+    xs: 1,
+    sm: 1.5,
+    base: 2,
+    lg: 2.5,
+    xl: 3,
   }
 }
 
@@ -33,29 +33,76 @@ export function SizeableMixin<TBase extends Constructor<HTMLElement>>(
         }
 
         :host([data-size="xs"]) {
-          height: ${Operation.size.xs.height};
-          width: ${Operation.size.xs.width};
+          height: ${Operation.size.xs}rem;
+          width: ${Operation.size.xs}rem;
         }
 
         :host([data-size="sm"]) {
-          height: ${Operation.size.sm.height};
-          width: ${Operation.size.sm.width};
+          height: ${Operation.size.sm}rem;
+          width: ${Operation.size.sm}rem;
         }
 
         :host,
         :host([data-size="base"]) {
-          height: ${Operation.size.base.height};
-          width: ${Operation.size.base.width};
+          height: ${Operation.size.base}rem;
+          width: ${Operation.size.base}rem;
         }
 
         :host([data-size="lg"]) {
-          height: ${Operation.size.lg.height};
-          width: ${Operation.size.lg.width};
+          height: ${Operation.size.lg}rem;
+          width: ${Operation.size.lg}rem;
         }
 
         :host([data-size="xl"]) {
-          height: ${Operation.size.xl.height};
-          width: ${Operation.size.xl.width};
+          height: ${Operation.size.xl}rem;
+          width: ${Operation.size.xl}rem;
+        }
+
+        :host([data-wire-count="1"]),
+        :host([data-wire-count="2"]) {
+          height: ${Operation.size.xl}rem;
+          width: ${Operation.size.xl}rem;
+        }
+
+        :host([data-wire-count="3"]) {
+          height: ${Operation.size.lg}rem;
+          width: ${Operation.size.lg}rem;
+        }
+
+        :host([data-wire-count="4"]) {
+          height: ${Operation.size.base}rem;
+          width: ${Operation.size.base}rem;
+        }
+
+        :host([data-wire-count="5"]),
+        :host([data-wire-count="6"]) {
+          height: ${Operation.size.sm}rem;
+          width: ${Operation.size.sm}rem;
+        }
+
+        :host([data-wire-count="7"]),
+        :host([data-wire-count="8"]),
+        :host([data-wire-count="9"]),
+        :host([data-wire-count="10"]) {
+          height: ${Operation.size.xs}rem;
+          width: ${Operation.size.xs}rem;
+        }
+
+        @media (min-width: 768px) {
+          :host,
+          :host([data-wire-count="1"]),
+          :host([data-wire-count="2"]),
+          :host([data-wire-count="3"]),
+          :host([data-wire-count="4"]),
+          :host([data-wire-count="5"]),
+          :host([data-wire-count="6"]),
+          :host([data-wire-count="7"]),
+          :host([data-wire-count="8"]),
+          :host([data-wire-count="9"]),
+          :host([data-wire-count="10"]) {
+            height: ${Operation.size.base}rem;
+            width: ${Operation.size.base}rem;
+          }
         }
       </style>`
     }

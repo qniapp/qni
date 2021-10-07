@@ -1,4 +1,5 @@
 import {
+  ConfigurableMixin,
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
@@ -16,15 +17,17 @@ import { ControllableMixin } from "mixins/controllable"
 import { TargetableMixin } from "mixins/targetable"
 
 @controller
-export class RzGateElement extends DraggableMixin(
-  TargetableMixin(
-    ControllableMixin(
-      WireableMixin(
-        LabelableMixin(
-          IfableMixin(
-            DisableableMixin(
-              IconableMixin(
-                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+export class RzGateElement extends ConfigurableMixin(
+  DraggableMixin(
+    TargetableMixin(
+      ControllableMixin(
+        WireableMixin(
+          LabelableMixin(
+            IfableMixin(
+              DisableableMixin(
+                IconableMixin(
+                  HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+                ),
               ),
             ),
           ),
@@ -51,6 +54,8 @@ export class RzGateElement extends DraggableMixin(
     this.attachShadow({ mode: "open" })
     this.update()
     this.initDraggable()
+    this.addEventListener("mouseenter", this.showHelp)
+    this.addEventListener("mousedown", this.showRightClickPopup)
   }
 
   update(): void {
@@ -58,13 +63,7 @@ export class RzGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle} ${this.disabledStyle} ${this.labelStyle}
 
-        <div
-          id="body"
-          data-theta="${this.theta}"
-          data-action="mouseenter:rz-gate#showHelp"
-        >
-          ${this.wiresSvg} ${this.iconSvg}
-        </div>`,
+        <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,
     )
   }

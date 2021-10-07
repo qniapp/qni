@@ -248,6 +248,7 @@ export class BlochDisplayElement extends DraggableMixin(
             width: 100%;
             height: 0;
             bottom: 50%;
+            transform-style: preserve-3d;
           }
 
           .vector-line-rect {
@@ -260,11 +261,13 @@ export class BlochDisplayElement extends DraggableMixin(
             transform-origin: bottom;
             height: 100%;
             width: 2px;
+            transform-style: preserve-3d;
           }
 
           #vector-end {
             position: absolute;
             width: 100%;
+            transform-style: preserve-3d;
           }
 
           .vector-end-circle {

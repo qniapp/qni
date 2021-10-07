@@ -1,4 +1,4 @@
-import { Draggable, isWireable } from "mixins"
+import { Draggable, Operation, isWireable } from "mixins"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
@@ -35,19 +35,19 @@ export class CircuitStepElement extends HTMLElement {
     return el
   }
 
-  get length(): number {
-    let length = this.nWires
-    const dropzones = this.dropzones
-
-    for (let i = length - 1; i >= 0 && !dropzones[i].occupied; i--) {
-      length--
-    }
-
-    return length
+  get wireCount(): number {
+    return this.dropzones.length
   }
 
-  get nWires(): number {
-    return this.dropzones.length
+  get nqubit(): number {
+    let nqubit = this.wireCount
+    const dropzones = this.dropzones
+
+    for (let i = nqubit - 1; i >= 0 && !dropzones[i].occupied; i--) {
+      nqubit--
+    }
+
+    return nqubit
   }
 
   get dropzones(): CircuitDropzoneElement[] {
@@ -55,7 +55,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   get lastDropzone(): CircuitDropzoneElement {
-    return this.dropzones[this.nWires - 1]
+    return this.dropzones[this.wireCount - 1]
   }
 
   get isEmpty(): boolean {
@@ -272,8 +272,29 @@ export class CircuitStepElement extends HTMLElement {
             flex-direction: row-reverse;
           }
 
-          ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
-            margin-right: 1rem;
+          ::slotted(circuit-dropzone[data-wire-count="1"]:nth-of-type(n + 2)),
+          ::slotted(circuit-dropzone[data-wire-count="2"]:nth-of-type(n + 2)) {
+            margin-right: ${Operation.size.xl / 2}rem;
+          }
+
+          ::slotted(circuit-dropzone[data-wire-count="3"]:nth-of-type(n + 2)) {
+            margin-right: ${Operation.size.lg / 2}rem;
+          }
+
+          ::slotted(circuit-dropzone[data-wire-count="4"]:nth-of-type(n + 2)) {
+            margin-right: ${Operation.size.base / 2}rem;
+          }
+
+          ::slotted(circuit-dropzone[data-wire-count="5"]:nth-of-type(n + 2)),
+          ::slotted(circuit-dropzone[data-wire-count="6"]:nth-of-type(n + 2)) {
+            margin-right: ${Operation.size.sm / 2}rem;
+          }
+
+          ::slotted(circuit-dropzone[data-wire-count="7"]:nth-of-type(n + 2)),
+          ::slotted(circuit-dropzone[data-wire-count="8"]:nth-of-type(n + 2)),
+          ::slotted(circuit-dropzone[data-wire-count="9"]:nth-of-type(n + 2)),
+          ::slotted(circuit-dropzone[data-wire-count="10"]:nth-of-type(n + 2)) {
+            margin-right: ${Operation.size.xs / 2}rem;
           }
 
           @media (min-width: 768px) {
@@ -284,8 +305,8 @@ export class CircuitStepElement extends HTMLElement {
             }
 
             ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
-              margin-top: 1rem;
-              margin-right: 0;
+              margin-top: ${Operation.size.base / 2}rem !important;
+              margin-right: 0 !important;
             }
           }
 
@@ -310,9 +331,16 @@ export class CircuitStepElement extends HTMLElement {
             left: 0px;
             z-index: 10;
             padding: 2px;
-            margin-left: -2px;
+            margin-top: -2px;
             background-color: var(--colors-cardinal, #ff4b4b);
             opacity: 0;
+          }
+
+          @media (min-width: 768px) {
+            #breakpoint-line {
+              margin-top: 0;
+              margin-left: -2px;
+            }
           }
 
           :host([data-active]:not([data-breakpoint])) #breakpoint-line {
@@ -343,6 +371,9 @@ export class CircuitStepElement extends HTMLElement {
       }
       this.updateConnections()
       this.updateWires()
+      for (const each of this.dropzones) {
+        each.wireCount = this.wireCount
+      }
     })
   }
 
