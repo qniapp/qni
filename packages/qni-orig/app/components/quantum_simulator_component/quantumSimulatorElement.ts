@@ -27,6 +27,10 @@ export class QuantumSimulatorElement extends HTMLElement {
   private runCircuitButton: RunCircuitButtonElement | null
   private visibleQubitCircleKets: number[]
 
+  clearCircuit(): void {
+    this.quantumCircuit?.clear()
+  }
+
   connectedCallback(): void {
     this.circleNotation = null
     this.visibleQubitCircleKets = []

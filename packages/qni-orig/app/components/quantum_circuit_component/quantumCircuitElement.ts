@@ -782,6 +782,11 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
+  clear(): void {
+    history.pushState("", "", '{"cols":[]}')
+    location.reload()
+  }
+
   private updateJsonUrl(): void {
     if (!this.updateUrl) return
 
