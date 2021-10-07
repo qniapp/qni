@@ -535,9 +535,27 @@ export class QuantumCircuitElement extends HTMLElement {
             )
             break
           }
+          case /^H<(.+)$/.test(instruction): {
+            circuitStep.appendOperation(
+              HGateElement.create({
+                draggable: this.updateUrl,
+                ifVar: RegExp.$1.trim(),
+              }),
+            )
+            break
+          }
           case /^X$/.test(instruction): {
             circuitStep.appendOperation(
               XGateElement.create({ draggable: this.updateUrl }),
+            )
+            break
+          }
+          case /^X<(.+)$/.test(instruction): {
+            circuitStep.appendOperation(
+              XGateElement.create({
+                draggable: this.updateUrl,
+                ifVar: RegExp.$1.trim(),
+              }),
             )
             break
           }
@@ -571,6 +589,15 @@ export class QuantumCircuitElement extends HTMLElement {
           case /^X\^½$/.test(instruction): {
             circuitStep.appendOperation(
               RnotGateElement.create({ draggable: this.updateUrl }),
+            )
+            break
+          }
+          case /^X\^½<(.+)$/.test(instruction): {
+            circuitStep.appendOperation(
+              RnotGateElement.create({
+                draggable: this.updateUrl,
+                ifVar: RegExp.$1.trim(),
+              }),
             )
             break
           }

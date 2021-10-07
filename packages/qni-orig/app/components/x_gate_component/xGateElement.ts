@@ -1,4 +1,5 @@
 import {
+  ConfigurableMixin,
   ControllableMixin,
   DisableableMixin,
   DraggableMixin,
@@ -15,14 +16,16 @@ import { XGateOperation, X_GATE_OPERATION_TYPE } from "lib/operation"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class XGateElement extends DraggableMixin(
-  ControllableMixin(
-    WireableMixin(
-      LabelableMixin(
-        IfableMixin(
-          DisableableMixin(
-            IconableMixin(
-              HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+export class XGateElement extends ConfigurableMixin(
+  DraggableMixin(
+    ControllableMixin(
+      WireableMixin(
+        LabelableMixin(
+          IfableMixin(
+            DisableableMixin(
+              IconableMixin(
+                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+              ),
             ),
           ),
         ),
@@ -34,9 +37,11 @@ export class XGateElement extends DraggableMixin(
 
   static create({
     draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): XGateElement {
+    ifVar = "",
+  }: Partial<{ draggable: boolean; ifVar: string }> = {}): XGateElement {
     const el = document.createElement("x-gate") as XGateElement
     el.draggable = draggable
+    el.if = ifVar
     return el
   }
 
@@ -45,6 +50,8 @@ export class XGateElement extends DraggableMixin(
     this.attachShadow({ mode: "open" })
     this.update()
     this.initDraggable()
+    this.addEventListener("mouseenter", this.showHelp)
+    this.addEventListener("mousedown", this.showRightClickPopup)
   }
 
   update(): void {
@@ -52,15 +59,17 @@ export class XGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
 
-        <div id="body" data-action="mouseenter:x-gate#showHelp">
-          ${this.wiresSvg} ${this.iconSvg}
-        </div>`,
+        <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,
     )
   }
 
   toJson(): string {
-    return `"${X_GATE_OPERATION_TYPE}"`
+    if (this.if !== "") {
+      return `"${X_GATE_OPERATION_TYPE}<${this.if}"`
+    } else {
+      return `"${X_GATE_OPERATION_TYPE}"`
+    }
   }
 
   serialize(): XGateOperation {

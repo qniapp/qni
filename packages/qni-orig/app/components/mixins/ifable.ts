@@ -3,6 +3,7 @@ import { attr } from "@github/catalyst"
 
 export declare class Ifable {
   get if(): string
+  set if(value: string)
 }
 
 export function IfableMixin<TBase extends Constructor<HTMLElement>>(

@@ -585,6 +585,12 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
+  get ifableGates(): Array<HGateElement | XGateElement | RnotGateElement> {
+    return this.snappedDraggables<
+      HGateElement | XGateElement | RnotGateElement
+    >("h-gate,x-gate,rnot-gate")
+  }
+
   private get controllableBits(): number[] {
     return this.controllableGates.map((each) => this.bit(each))
   }

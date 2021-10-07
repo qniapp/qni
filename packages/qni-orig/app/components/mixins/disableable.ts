@@ -7,6 +7,7 @@ export declare class Disableable {
   enable(): void
   get enabled(): boolean
   get disabled(): boolean
+  set disabled(value: boolean)
   get disabledStyle(): TemplateResult
 }
 

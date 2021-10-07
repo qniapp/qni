@@ -92,6 +92,11 @@ export class QuantumSimulatorElement extends HTMLElement {
           }
         }
 
+        for (const each of step.ifableGates) {
+          if (each.if === "") continue
+          each.disabled = !data.flags[each.if]
+        }
+
         const complexAmplitudes: { [ket: number]: Complex } = {}
         for (const ket in data.amplitudes) {
           const c = data.amplitudes[ket]
