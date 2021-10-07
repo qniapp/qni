@@ -1,4 +1,5 @@
 import {
+  ConfigurableMixin,
   DraggableMixin,
   HelpableMixin,
   IconableMixin,
@@ -14,9 +15,11 @@ import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class MeasurementGateElement extends DraggableMixin(
-  IconableMixin(
-    HelpableMixin(LabelableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+export class MeasurementGateElement extends ConfigurableMixin(
+  DraggableMixin(
+    IconableMixin(
+      HelpableMixin(LabelableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+    ),
   ),
 ) {
   @attr iconType = "transparent"
@@ -25,11 +28,16 @@ export class MeasurementGateElement extends DraggableMixin(
 
   static create({
     draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): MeasurementGateElement {
+    flag = "",
+  }: Partial<{
+    draggable: boolean
+    flag: string
+  }> = {}): MeasurementGateElement {
     const el = document.createElement(
       "measurement-gate",
     ) as MeasurementGateElement
     el.draggable = draggable
+    el.flag = flag
     return el
   }
 
@@ -38,6 +46,8 @@ export class MeasurementGateElement extends DraggableMixin(
     this.attachShadow({ mode: "open" })
     this.update()
     this.initDraggable()
+    this.addEventListener("mouseenter", this.showHelp)
+    this.addEventListener("mousedown", this.showRightClickPopup)
   }
 
   update(): void {
@@ -137,11 +147,7 @@ export class MeasurementGateElement extends DraggableMixin(
           }
         </style>
 
-        <div
-          id="body"
-          data-flag="${this.flag}"
-          data-action="mouseenter:measurement-gate#showHelp"
-        >
+        <div id="body">
           ${this.iconSvg}
           <div id="value"></div>
         </div>`,
@@ -150,7 +156,11 @@ export class MeasurementGateElement extends DraggableMixin(
   }
 
   toJson(): string {
-    return `"${MEASUREMENT_GATE_OPERATION_TYPE}"`
+    if (this.flag === "") {
+      return `"${MEASUREMENT_GATE_OPERATION_TYPE}"`
+    } else {
+      return `"${MEASUREMENT_GATE_OPERATION_TYPE}>${this.flag}"`
+    }
   }
 
   serialize(): MeasurementOperation {

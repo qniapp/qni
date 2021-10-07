@@ -670,6 +670,15 @@ export class QuantumCircuitElement extends HTMLElement {
             )
             break
           }
+          case /^Measure>(.+)$/.test(instruction): {
+            circuitStep.appendOperation(
+              MeasurementGateElement.create({
+                draggable: this.updateUrl,
+                flag: RegExp.$1.trim(),
+              }),
+            )
+            break
+          }
           case /^\{(.+)$/.test(instruction): {
             const comment = RegExp.$1
             circuitStep.remove()

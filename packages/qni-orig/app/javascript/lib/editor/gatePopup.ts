@@ -1,6 +1,5 @@
 import { Breakpoint, Util, classNameFor } from "lib/base"
 import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
-import { isDisableable, isFlaggable, isPhiable } from "lib/instructions"
 import noUiSlider, {
   PipsMode,
   API as noUiSliderApi,
@@ -10,12 +9,14 @@ import tippy, { Instance, Props, roundArrow } from "tippy.js"
 import Fraction from "fraction.js"
 import { HGateElement } from "h_gate_component/hGateElement"
 import { Instruction } from "lib/operation"
+import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
 import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
 import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
 import { RxGateElement } from "rx_gate_component/rxGateElement"
 import { RyGateElement } from "ry_gate_component/ryGateElement"
 import { RzGateElement } from "rz_gate_component/rzGateElement"
 import { XGateElement } from "x_gate_component/xGateElement"
+import { isPhiable } from "lib/instructions"
 
 const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   typeof arg === "object" &&
@@ -39,6 +40,11 @@ const isIfable = (
   ((arg as HGateElement).tagName === "H-GATE" ||
     (arg as XGateElement).tagName === "X-GATE" ||
     (arg as RnotGateElement).tagName === "RNOT-GATE")
+
+const isFlaggable = (arg: unknown): arg is MeasurementGateElement =>
+  typeof arg === "object" &&
+  arg !== null &&
+  (arg as MeasurementGateElement).tagName === "MEASUREMENT-GATE"
 
 export class GatePopup {
   onUpdate!: () => void
@@ -66,11 +72,11 @@ export class GatePopup {
         let originalValue: string | null
         const operation = instance.reference
 
-        if (isIfable(operation)) {
+        if (isFlaggable(operation)) {
+          that.input.value = operation.flag
+        } else if (isIfable(operation)) {
           that.input.value = operation.if
-        }
-
-        if (isPhaseGateElement(operation) || isThetable(operation)) {
+        } else if (isPhaseGateElement(operation) || isThetable(operation)) {
           if (isPhaseGateElement(operation)) {
             originalValue = operation.phi
           } else if (isThetable(operation)) {
@@ -239,7 +245,9 @@ export class GatePopup {
     // if (isThetable(instruction)) popupType = "theta"
     // if (isPhiable(instruction)) popupType = "phi"
 
-    if (isPhaseGateElement(el)) {
+    if (isFlaggable(el)) {
+      popupType = "flag"
+    } else if (isPhaseGateElement(el)) {
       popupType = "phi"
     } else if (isThetable(el)) {
       popupType = "theta"
@@ -283,7 +291,9 @@ export class GatePopup {
         //   this.if = inputValue
         // }
 
-        if (isIfable(operation)) {
+        if (isFlaggable(operation)) {
+          this.flag = inputValue
+        } else if (isIfable(operation)) {
           this.if = inputValue
         } else {
           Util.notNull(this.currentAngle)
@@ -351,13 +361,13 @@ export class GatePopup {
   }
 
   private set flag(flag: string | null) {
-    const instruction = Instruction.create(this.popupReferenceEl)
+    const operation = this.popupReferenceEl as MeasurementGateElement
 
     if (!flag || flag.trim().length === 0) {
-      if (isFlaggable(instruction)) instruction.flag = null
-      if (isDisableable(instruction)) instruction.disabled = false
+      operation.flag = ""
+      // if (isDisableable(instruction)) instruction.disabled = false
     } else {
-      if (isFlaggable(instruction)) instruction.flag = flag
+      operation.flag = flag
     }
   }
 
