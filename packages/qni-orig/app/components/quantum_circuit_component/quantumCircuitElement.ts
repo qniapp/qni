@@ -30,7 +30,7 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr interactive = false
   @attr editing = false
-  @attr nqubit = 1
+  @attr qubitCount = 1
 
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
@@ -320,19 +320,19 @@ export class QuantumCircuitElement extends HTMLElement {
     const steps = this.steps
 
     if (steps.length === 0) {
-      this.nqubit = 1
+      this.qubitCount = 1
       this.wireCount = this.minWireCount
       return
     }
 
     const maxLength = Math.max(...steps.map((each) => each.nqubit))
     if (maxLength === 0) {
-      this.nqubit = 1
+      this.qubitCount = 1
       this.wireCount = this.minWireCount
       return
     }
 
-    this.nqubit = maxLength
+    this.qubitCount = maxLength
     if (maxLength > this.minWireCount) {
       this.wireCount = maxLength
     } else {
@@ -715,7 +715,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private appendWire(): void {
-    if (this.nqubit >= this.maxWireCount) return
+    if (this.qubitCount >= this.maxWireCount) return
 
     for (const each of this.steps) {
       each.appendDropzone()

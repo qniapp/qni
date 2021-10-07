@@ -11,7 +11,7 @@ import { ketDecimal } from "qubit_circle_component/qubitCircleComponent"
 
 @controller
 export class CircleNotationElement extends HTMLElement {
-  @attr nqubit = 1
+  @attr qubitCount = 1
   @attr size = ""
   @attr magnitudes = "1.0"
   @attr phases = ""
@@ -119,12 +119,12 @@ export class CircleNotationElement extends HTMLElement {
             flex-direction: row;
           }
 
-          :host([data-nqubit="3"]) .qubit-circle-group--size8 {
+          :host([data-qubit-count="3"]) .qubit-circle-group--size8 {
             flex-direction: column;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="3"]) .qubit-circle-group--size8 {
+            :host([data-qubit-count="3"]) .qubit-circle-group--size8 {
               flex-direction: row;
             }
           }
@@ -140,35 +140,35 @@ export class CircleNotationElement extends HTMLElement {
             }
           }
 
-          :host([data-nqubit="4"]) .qubit-circle-group--size16 {
+          :host([data-qubit-count="4"]) .qubit-circle-group--size16 {
             flex-direction: column;
           }
 
-          :host([data-nqubit="4"])
+          :host([data-qubit-count="4"])
             .qubit-circle-group--size16
             .qubit-circle-group--size8:last-child {
             margin-left: 0;
             margin-top: 0;
           }
 
-          :host([data-nqubit="5"]) .qubit-circle-group--size16 {
+          :host([data-qubit-count="5"]) .qubit-circle-group--size16 {
             flex-direction: column;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"]) .qubit-circle-group--size16 {
+            :host([data-qubit-count="5"]) .qubit-circle-group--size16 {
               flex-direction: row;
             }
           }
 
-          :host([data-nqubit="5"])
+          :host([data-qubit-count="5"])
             .qubit-circle-group--size16
             .qubit-circle-group--size8:nth-child(even) {
             margin-left: 0;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"])
+            :host([data-qubit-count="5"])
               .qubit-circle-group--size16
               .qubit-circle-group--size8:nth-child(even) {
               margin-left: 0;
@@ -176,125 +176,139 @@ export class CircleNotationElement extends HTMLElement {
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="6"]) .qubit-circle-group--size32 {
+            :host([data-qubit-count="6"]) .qubit-circle-group--size32 {
               display: flex;
               flex-direction: column;
             }
-            :host([data-nqubit="7"]) .qubit-circle-group--size32,
-            :host([data-nqubit="8"]) .qubit-circle-group--size32,
-            :host([data-nqubit="9"]) .qubit-circle-group--size32,
-            :host([data-nqubit="10"]) .qubit-circle-group--size32 {
+            :host([data-qubit-count="7"]) .qubit-circle-group--size32,
+            :host([data-qubit-count="8"]) .qubit-circle-group--size32,
+            :host([data-qubit-count="9"]) .qubit-circle-group--size32,
+            :host([data-qubit-count="10"]) .qubit-circle-group--size32 {
               display: flex;
               flex-direction: row;
             }
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="6"]) .qubit-circle-group--size64,
-            :host([data-nqubit="7"]) .qubit-circle-group--size64,
-            :host([data-nqubit="8"]) .qubit-circle-group--size64 {
+            :host([data-qubit-count="6"]) .qubit-circle-group--size64,
+            :host([data-qubit-count="7"]) .qubit-circle-group--size64,
+            :host([data-qubit-count="8"]) .qubit-circle-group--size64 {
               display: flex;
               flex-direction: column;
             }
 
-            :host([data-nqubit="9"]) .qubit-circle-group--size64 {
+            :host([data-qubit-count="9"]) .qubit-circle-group--size64 {
               display: flex;
               flex-direction: column;
             }
 
-            :host([data-nqubit="10"]) .qubit-circle-group--size64 {
+            :host([data-qubit-count="10"]) .qubit-circle-group--size64 {
               display: flex;
               flex-direction: column;
             }
           }
 
-          :host([data-nqubit="1"])
+          :host([data-qubit-count="1"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="1"])
+          :host([data-qubit-count="1"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="1"])
+          :host([data-qubit-count="1"])
             .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-nqubit="1"]) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-nqubit="1"]) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-nqubit="1"]) .qubit-circle-group--size8:nth-of-type(2),
-          :host([data-nqubit="1"]) .qubit-circle-group--size4:nth-of-type(2),
-          :host([data-nqubit="1"]) .qubit-circle:nth-of-type(n + 3) {
+          :host([data-qubit-count="1"])
+            .qubit-circle-group--size32:nth-of-type(2),
+          :host([data-qubit-count="1"])
+            .qubit-circle-group--size16:nth-of-type(2),
+          :host([data-qubit-count="1"])
+            .qubit-circle-group--size8:nth-of-type(2),
+          :host([data-qubit-count="1"])
+            .qubit-circle-group--size4:nth-of-type(2),
+          :host([data-qubit-count="1"]) .qubit-circle:nth-of-type(n + 3) {
             display: none;
           }
 
-          :host([data-nqubit="2"])
+          :host([data-qubit-count="2"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="2"])
+          :host([data-qubit-count="2"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="2"])
+          :host([data-qubit-count="2"])
             .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-nqubit="2"]) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-nqubit="2"]) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-nqubit="2"]) .qubit-circle-group--size8:nth-of-type(2),
-          :host([data-nqubit="2"]) .qubit-circle-group--size4:nth-of-type(2),
-          :host([data-nqubit="2"]) .qubit-circle:nth-of-type(n + 5) {
+          :host([data-qubit-count="2"])
+            .qubit-circle-group--size32:nth-of-type(2),
+          :host([data-qubit-count="2"])
+            .qubit-circle-group--size16:nth-of-type(2),
+          :host([data-qubit-count="2"])
+            .qubit-circle-group--size8:nth-of-type(2),
+          :host([data-qubit-count="2"])
+            .qubit-circle-group--size4:nth-of-type(2),
+          :host([data-qubit-count="2"]) .qubit-circle:nth-of-type(n + 5) {
             display: none;
           }
 
-          :host([data-nqubit="3"])
+          :host([data-qubit-count="3"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="3"])
+          :host([data-qubit-count="3"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="3"])
+          :host([data-qubit-count="3"])
             .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-nqubit="3"]) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-nqubit="3"]) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-nqubit="3"]) .qubit-circle-group--size8:nth-of-type(2) {
+          :host([data-qubit-count="3"])
+            .qubit-circle-group--size32:nth-of-type(2),
+          :host([data-qubit-count="3"])
+            .qubit-circle-group--size16:nth-of-type(2),
+          :host([data-qubit-count="3"])
+            .qubit-circle-group--size8:nth-of-type(2) {
             display: none;
           }
 
-          :host([data-nqubit="4"])
+          :host([data-qubit-count="4"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="4"])
+          :host([data-qubit-count="4"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="4"])
+          :host([data-qubit-count="4"])
             .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-nqubit="4"]) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-nqubit="4"]) .qubit-circle-group--size16:nth-of-type(2) {
+          :host([data-qubit-count="4"])
+            .qubit-circle-group--size32:nth-of-type(2),
+          :host([data-qubit-count="4"])
+            .qubit-circle-group--size16:nth-of-type(2) {
             display: none;
           }
 
-          :host([data-nqubit="5"])
+          :host([data-qubit-count="5"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="5"])
+          :host([data-qubit-count="5"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="5"])
+          :host([data-qubit-count="5"])
             .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-nqubit="5"]) .qubit-circle-group--size32:nth-of-type(2) {
+          :host([data-qubit-count="5"])
+            .qubit-circle-group--size32:nth-of-type(2) {
             display: none;
           }
 
-          :host([data-nqubit="6"])
+          :host([data-qubit-count="6"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="6"])
+          :host([data-qubit-count="6"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="6"])
+          :host([data-qubit-count="6"])
             .qubit-circle-group--size64:nth-of-type(n + 2) {
             display: none;
           }
 
-          :host([data-nqubit="7"])
+          :host([data-qubit-count="7"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="7"])
+          :host([data-qubit-count="7"])
             .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-nqubit="7"])
+          :host([data-qubit-count="7"])
             .qubit-circle-group--size64:nth-of-type(n + 3) {
             display: none;
           }
 
-          :host([data-nqubit="8"])
+          :host([data-qubit-count="8"])
             .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-nqubit="8"])
+          :host([data-qubit-count="8"])
             .qubit-circle-group--size128:nth-of-type(n + 3) {
             display: none;
           }
 
-          :host([data-nqubit="9"])
+          :host([data-qubit-count="9"])
             .qubit-circle-group--size256:nth-of-type(n + 3) {
             display: none;
           }
@@ -353,88 +367,88 @@ export class CircleNotationElement extends HTMLElement {
             width: 64px !important;
           }
 
-          :host([data-nqubit="1"]:not([data-multi-qubits])) .qubit-circle {
+          :host([data-qubit-count="1"]:not([data-multi-qubits])) .qubit-circle {
             height: 32px;
             width: 32px;
           }
 
-          :host([data-nqubit="1"]) .qubit-circle,
-          :host([data-nqubit="2"]) .qubit-circle {
+          :host([data-qubit-count="1"]) .qubit-circle,
+          :host([data-qubit-count="2"]) .qubit-circle {
             height: 64px;
             width: 64px;
           }
 
-          :host([data-nqubit="3"]) .qubit-circle {
+          :host([data-qubit-count="3"]) .qubit-circle {
             height: 48px;
             width: 48px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="3"]) .qubit-circle {
+            :host([data-qubit-count="3"]) .qubit-circle {
               height: 64px;
               width: 64px;
             }
           }
 
-          :host([data-nqubit="4"]) .qubit-circle {
+          :host([data-qubit-count="4"]) .qubit-circle {
             height: 32px;
             width: 32px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="4"]) .qubit-circle {
+            :host([data-qubit-count="4"]) .qubit-circle {
               height: 48px;
               width: 48px;
             }
           }
 
-          :host([data-nqubit="5"]) .qubit-circle {
+          :host([data-qubit-count="5"]) .qubit-circle {
             height: 23px;
             width: 23px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"]) .qubit-circle {
+            :host([data-qubit-count="5"]) .qubit-circle {
               height: 32px;
               width: 32px;
             }
           }
 
-          :host([data-nqubit="6"]) .qubit-circle {
+          :host([data-qubit-count="6"]) .qubit-circle {
             height: 15px;
             width: 15px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="6"]) .qubit-circle {
+            :host([data-qubit-count="6"]) .qubit-circle {
               height: 25px;
               width: 25px;
             }
           }
 
-          :host([data-nqubit="7"]) .qubit-circle {
+          :host([data-qubit-count="7"]) .qubit-circle {
             height: 15px;
             width: 15px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="7"]) .qubit-circle {
+            :host([data-qubit-count="7"]) .qubit-circle {
               height: 17px;
               width: 17px;
             }
           }
 
-          :host([data-nqubit="8"]) .qubit-circle,
-          :host([data-nqubit="9"]) .qubit-circle,
-          :host([data-nqubit="10"]) .qubit-circle {
+          :host([data-qubit-count="8"]) .qubit-circle,
+          :host([data-qubit-count="9"]) .qubit-circle,
+          :host([data-qubit-count="10"]) .qubit-circle {
             height: 15px;
             width: 15px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="8"]) .qubit-circle,
-            :host([data-nqubit="9"]) .qubit-circle,
-            :host([data-nqubit="10"]) .qubit-circle {
+            :host([data-qubit-count="8"]) .qubit-circle,
+            :host([data-qubit-count="9"]) .qubit-circle,
+            :host([data-qubit-count="10"]) .qubit-circle {
               height: 17px;
               width: 17px;
             }
@@ -466,17 +480,17 @@ export class CircleNotationElement extends HTMLElement {
             border-width: 2px;
           }
 
-          :host([data-nqubit="5"]) .qubit-circle__magnitude,
-          :host([data-nqubit="6"]) .qubit-circle__magnitude,
-          :host([data-nqubit="7"]) .qubit-circle__magnitude,
-          :host([data-nqubit="8"]) .qubit-circle__magnitude,
-          :host([data-nqubit="9"]) .qubit-circle__magnitude,
-          :host([data-nqubit="10"]) .qubit-circle__magnitude {
+          :host([data-qubit-count="5"]) .qubit-circle__magnitude,
+          :host([data-qubit-count="6"]) .qubit-circle__magnitude,
+          :host([data-qubit-count="7"]) .qubit-circle__magnitude,
+          :host([data-qubit-count="8"]) .qubit-circle__magnitude,
+          :host([data-qubit-count="9"]) .qubit-circle__magnitude,
+          :host([data-qubit-count="10"]) .qubit-circle__magnitude {
             border-width: 1px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"]) .qubit-circle__magnitude {
+            :host([data-qubit-count="5"]) .qubit-circle__magnitude {
               border-width: 2px;
             }
           }
@@ -576,17 +590,17 @@ export class CircleNotationElement extends HTMLElement {
             border-width: 2px;
           }
 
-          :host([data-nqubit="5"]) .qubit-circle__phase,
-          :host([data-nqubit="6"]) .qubit-circle__phase,
-          :host([data-nqubit="7"]) .qubit-circle__phase,
-          :host([data-nqubit="8"]) .qubit-circle__phase,
-          :host([data-nqubit="9"]) .qubit-circle__phase,
-          :host([data-nqubit="10"]) .qubit-circle__phase {
+          :host([data-qubit-count="5"]) .qubit-circle__phase,
+          :host([data-qubit-count="6"]) .qubit-circle__phase,
+          :host([data-qubit-count="7"]) .qubit-circle__phase,
+          :host([data-qubit-count="8"]) .qubit-circle__phase,
+          :host([data-qubit-count="9"]) .qubit-circle__phase,
+          :host([data-qubit-count="10"]) .qubit-circle__phase {
             border-width: 1px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"]) .qubit-circle__phase {
+            :host([data-qubit-count="5"]) .qubit-circle__phase {
               border-width: 2px;
             }
           }
@@ -755,17 +769,17 @@ export class CircleNotationElement extends HTMLElement {
             content: "";
           }
 
-          :host([data-nqubit="5"]) .qubit-circle__phase::after,
-          :host([data-nqubit="6"]) .qubit-circle__phase::after,
-          :host([data-nqubit="7"]) .qubit-circle__phase::after,
-          :host([data-nqubit="8"]) .qubit-circle__phase::after,
-          :host([data-nqubit="9"]) .qubit-circle__phase::after,
-          :host([data-nqubit="10"]) .qubit-circle__phase::after {
+          :host([data-qubit-count="5"]) .qubit-circle__phase::after,
+          :host([data-qubit-count="6"]) .qubit-circle__phase::after,
+          :host([data-qubit-count="7"]) .qubit-circle__phase::after,
+          :host([data-qubit-count="8"]) .qubit-circle__phase::after,
+          :host([data-qubit-count="9"]) .qubit-circle__phase::after,
+          :host([data-qubit-count="10"]) .qubit-circle__phase::after {
             width: 1px;
           }
 
           @media (min-width: 768px) {
-            :host([data-nqubit="5"]) .qubit-circle__phase::after {
+            :host([data-qubit-count="5"]) .qubit-circle__phase::after {
               width: 2px;
             }
           }
@@ -952,7 +966,7 @@ export class CircleNotationElement extends HTMLElement {
         Complex.ZERO,
         0,
         0,
-        this.nqubit,
+        this.qubitCount,
       )
     } else {
       const amplitude = new Complex(
@@ -967,7 +981,7 @@ export class CircleNotationElement extends HTMLElement {
         amplitude,
         parseFloat(dataMagnitude),
         parseFloat(dataPhase),
-        this.nqubit,
+        this.qubitCount,
       )
     }
   }

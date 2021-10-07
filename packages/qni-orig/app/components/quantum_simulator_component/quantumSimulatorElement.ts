@@ -137,8 +137,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     if (this.quantumCircuit === null) return
     if (this.circleNotation === null) return
 
-    const nqubit = this.quantumCircuit.nqubit
-    this.circleNotation.nqubit = nqubit
+    const nqubit = this.quantumCircuit.qubitCount
+    this.circleNotation.qubitCount = nqubit
 
     this.worker.postMessage({
       nqubit,
