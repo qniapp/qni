@@ -1,4 +1,5 @@
 import {
+  ConfigurableMixin,
   ControllableMixin,
   DisableableMixin,
   DraggableMixin,
@@ -16,15 +17,17 @@ import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class PhaseGateElement extends DraggableMixin(
-  TargetableMixin(
-    ControllableMixin(
-      WireableMixin(
-        LabelableMixin(
-          IfableMixin(
-            DisableableMixin(
-              IconableMixin(
-                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+export class PhaseGateElement extends ConfigurableMixin(
+  DraggableMixin(
+    TargetableMixin(
+      ControllableMixin(
+        WireableMixin(
+          LabelableMixin(
+            IfableMixin(
+              DisableableMixin(
+                IconableMixin(
+                  HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
+                ),
               ),
             ),
           ),
@@ -51,6 +54,8 @@ export class PhaseGateElement extends DraggableMixin(
     this.attachShadow({ mode: "open" })
     this.update()
     this.initDraggable()
+    this.addEventListener("mouseenter", this.showHelp)
+    this.addEventListener("mousedown", this.showRightClickPopup)
   }
 
   update(): void {
@@ -58,13 +63,7 @@ export class PhaseGateElement extends DraggableMixin(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
         ${this.draggableStyle} ${this.disabledStyle} ${this.labelStyle}
 
-        <div
-          id="body"
-          data-phi="${this.phi}"
-          data-action="mouseenter:phase-gate#showHelp"
-        >
-          ${this.wiresSvg} ${this.iconSvg}
-        </div>`,
+        <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,
     )
   }
