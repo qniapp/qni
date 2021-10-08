@@ -109,6 +109,14 @@ export class CircleNotationElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          @media (min-width: 768px) {
+            :host([data-qubit-count="8"]),
+            :host([data-qubit-count="9"]),
+            :host([data-qubit-count="10"]) {
+              height: 10rem !important;
+            }
+          }
+
           .qubit-circle-group--size4 {
             display: flex;
             flex-direction: row;

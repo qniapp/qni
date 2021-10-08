@@ -692,7 +692,13 @@ export class QuantumCircuitElement extends HTMLElement {
             break
           }
           default: {
-            if (instruction !== 1) {
+            if (instruction === 1) {
+              if (circuitStep.nqubit === 0) {
+                circuitStep.keep = true
+              } else {
+                circuitStep.keep = false
+              }
+            } else {
               throw new Error(`Unknown instruction: ${instruction}`)
             }
             circuitStep.appendDropzone()
@@ -830,7 +836,29 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   toJson(): string {
-    const cols = this.nonEmptySteps.map((each) => each.toJson())
+    let isInBlock = false
+    const cols = []
+
+    for (const each of this.nonEmptySteps) {
+      if (each.isInBlock) {
+        if (!isInBlock) {
+          const block = each.block
+          cols.push(`["{${block.comment}"]`)
+          isInBlock = true
+        }
+      } else {
+        if (isInBlock) {
+          cols.push('["}"]')
+          isInBlock = false
+        }
+      }
+      cols.push(each.toJson())
+    }
+
+    if (isInBlock) {
+      cols.push('["}"]')
+    }
+
     return `{"cols":[${cols.join(",")}]}`
   }
 }

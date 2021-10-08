@@ -1,6 +1,7 @@
 import { Draggable, Operation, isWireable } from "mixins"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
+import { CircuitBlockElement } from "circuit_block_component/circuitBlockElement"
 import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
 import { CircuitOperation } from "lib/operation"
 import { ControlGateElement } from "control_gate_component/controlGateElement"
@@ -33,6 +34,19 @@ export class CircuitStepElement extends HTMLElement {
       el.appendDropzone()
     }
     return el
+  }
+
+  get isInBlock(): boolean {
+    if (this.closest("circuit-block") === null) {
+      return false
+    }
+    return true
+  }
+
+  get block(): CircuitBlockElement {
+    const block = this.closest("circuit-block") as CircuitBlockElement
+
+    return block!
   }
 
   get wireCount(): number {
@@ -174,6 +188,9 @@ export class CircuitStepElement extends HTMLElement {
     const jsons = this.dropzones.map((each) => each.toJson())
     while (jsons.length > 0 && jsons[jsons.length - 1] === "1") {
       jsons.pop()
+    }
+    if (jsons.length === 0) {
+      return "[1]"
     }
     return `[${jsons.join(",")}]`
   }
