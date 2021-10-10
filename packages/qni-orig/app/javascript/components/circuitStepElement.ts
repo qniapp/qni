@@ -346,7 +346,7 @@ export class CircuitStepElement extends HTMLElement {
             right: 0px;
             bottom: 0px;
             left: 0px;
-            z-index: 10;
+            z-index: 20;
             padding: 2px;
             margin-top: -2px;
             background-color: var(--colors-cardinal, #ff4b4b);
