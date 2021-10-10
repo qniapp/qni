@@ -1,8 +1,4 @@
 export class Util {
-  /**
-   * Checks a precondition, throwing an exception containing the given message
-   * in the case of failure.
-   */
   static need(
     expression: boolean | unknown,
     message: string,
@@ -14,12 +10,7 @@ export class Util {
           ? "(not provided)"
           : `[${Array.prototype.slice.call(args).join(", ")}]`
       const msgDesc = message === undefined ? "(not provided)" : message
-      const msg =
-        "Precondition failed" +
-        "\n\nMessage: " +
-        msgDesc +
-        "\n\nArgs: " +
-        argDesc
+      const msg = `Precondition failed\n\nMessage: ${msgDesc}\n\nArgs: ${argDesc}`
       throw new Error(msg)
     }
   }
@@ -28,11 +19,10 @@ export class Util {
     Util.need(v !== null && v !== undefined, "notNull")
   }
 
-  /**
-   * Returns the cosine and sine of an angle, except that when the angle is the
-   * closest approximation to a multiple of π/4 the result is snapped to a nice
-   * vector by assuming the input was an exact multiple.
-   */
+  static round(n: number, decimal: number): number {
+    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
+  }
+
   static snappedCosSin(radians: number): number[] {
     const unit = Math.PI / 4
     const i = Math.round(radians / unit)

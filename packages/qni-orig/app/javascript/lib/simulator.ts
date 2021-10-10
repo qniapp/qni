@@ -18,6 +18,7 @@ import {
 } from "lib/operation"
 import { Complex, Matrix } from "./math"
 import { StateVector } from "lib/simulator/stateVector"
+import { Util } from "./base"
 
 export class Simulator {
   public state: StateVector
@@ -166,7 +167,8 @@ export class Simulator {
 
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
-      const pZero = this.round(this.pZero(t), 5)
+      const pZero = Util.round(this.pZero(t), 5)
+
       if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
         this.x(t)
       }
@@ -363,9 +365,5 @@ export class Simulator {
       }
     }
     return p
-  }
-
-  private round(n: number, decimal: number): number {
-    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
   }
 }
