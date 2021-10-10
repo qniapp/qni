@@ -166,7 +166,7 @@ export class Simulator {
 
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
-      const pZero = this.pZero(t)
+      const pZero = this.round(this.pZero(t), 5)
       if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
         this.x(t)
       }
@@ -363,5 +363,9 @@ export class Simulator {
       }
     }
     return p
+  }
+
+  private round(n: number, decimal: number): number {
+    return Math.round(n * Math.pow(10, decimal)) / Math.pow(10, decimal)
   }
 }

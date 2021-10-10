@@ -3,9 +3,9 @@ import "@interactjs/actions/drop"
 import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
+import { Breakpoint, Util } from "lib/base"
 import { TemplateResult, html } from "@github/jtml"
 import { isCircuitDropzone, isPaletteDropzone } from "helpers"
-import { Breakpoint } from "lib/base"
 import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
 import { Constructor } from "./constructor"
 import { InteractEvent } from "@interactjs/types"
@@ -20,6 +20,7 @@ export declare class Draggable {
   set hoverable(value: boolean)
   set grabbed(value: boolean)
   initDraggable(): void
+  setSnapTargets(dropzones: CircuitDropzoneElement[]): void
   moveTo(x: number, y: number): void
 }
 
@@ -117,13 +118,33 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
       if (!this.draggable) return
 
       this.grabbed = true
-      this.dispatchEvent(new Event("draggable.grab", { bubbles: true }))
+      this.dispatchEvent(
+        new CustomEvent("draggable.grab", { detail: this, bubbles: true }),
+      )
 
       if (isPaletteDropzone(this.dropzone)) {
         this.moveToGrabbedPosition(event.offsetX, event.offsetY)
       }
+    }
 
-      const snapTargets = this.snapTargets
+    setSnapTargets(dropzones: CircuitDropzoneElement[]) {
+      const myDropzone = this.dropzone
+      const freeDropzones = dropzones
+
+      Util.notNull(myDropzone)
+      if (isCircuitDropzone(myDropzone)) freeDropzones.push(myDropzone)
+
+      const snapTargets = freeDropzones.map((each) => each.snapTarget)
+      const snappedDropzone = (snapTarget: {
+        x: number
+        y: number
+      }): CircuitDropzoneElement | null => {
+        for (const each of freeDropzones) {
+          const d = each.snapTarget
+          if (d.x === snapTarget.x && d.y === snapTarget.y) return each
+        }
+        return null
+      }
 
       interact(this).draggable({
         modifiers: [
@@ -138,7 +159,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
             const snapModifier = e.modifiers![0]
             if (snapModifier.inRange) {
               const snapTarget = snapModifier.target.source
-              const dropzone = this.snappedDropzone(snapTarget)!
+              const dropzone = snappedDropzone(snapTarget)
+              Util.notNull(dropzone)
 
               this.snapped = true
               dropzone.dispatchEvent(
@@ -159,28 +181,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(
           },
         },
       })
-    }
-
-    private get snapTargets(): Array<{ x: number; y: number }> {
-      return this.snappableDropzones.map((each) => each.snapTarget)
-    }
-
-    private snappedDropzone(snapTarget: {
-      x: number
-      y: number
-    }): CircuitDropzoneElement | null {
-      for (const each of this.snappableDropzones) {
-        const d = each.snapTarget
-        if (d.x === snapTarget.x && d.y === snapTarget.y) return each
-      }
-      return null
-    }
-
-    private get snappableDropzones(): CircuitDropzoneElement[] {
-      const dropzones = this.quantumCircuit!.freeDropzones
-      if (isCircuitDropzone(this.dropzone)) dropzones.push(this.dropzone)
-
-      return dropzones
     }
 
     private get isPaletteDraggable(): boolean {

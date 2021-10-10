@@ -114,9 +114,11 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   get snapTarget(): { x: number; y: number } {
+    const rect = this.getBoundingClientRect()
+
     return {
-      x: this.offsetLeft + this.clientWidth / 2,
-      y: this.offsetTop + this.clientHeight / 2,
+      x: rect.left + this.clientWidth / 2,
+      y: rect.top + this.clientHeight / 2,
     }
   }
 

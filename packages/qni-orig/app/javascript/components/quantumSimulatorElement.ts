@@ -2,9 +2,11 @@ import { BlochDisplayElement } from "components/blochDisplayElement"
 import { CircleNotationElement } from "components/circleNotationElement"
 import { CircuitStepElement } from "components/circuitStepElement"
 import { Complex } from "lib/math"
+import { Draggable } from "./mixins"
 import { MeasurementGateElement } from "components/measurementGateElement"
 import { QuantumCircuitElement } from "components/quantumCircuitElement"
 import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
+import { Util } from "lib/base"
 import { controller } from "@github/catalyst"
 
 type MessageEventData = {
@@ -35,7 +37,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.circleNotation = null
     this.visibleQubitCircleKets = []
 
-    this.addEventListener("draggable.grab", this.proxyDraggableGrabEvent)
+    this.addEventListener("draggable.grab", this.prepareDraggableDrop)
     this.addEventListener("draggable.ungrab", this.proxyDraggableUngrabEvent)
     this.addEventListener("draggable.trash", this.resizeAndRunCircuit)
     this.addEventListener("step.drop", this.resizeAndRunCircuit)
@@ -133,8 +135,11 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.runCircuitButton = event.target as RunCircuitButtonElement
   }
 
-  private showVisibleQubitCircles(event: CustomEvent): void {
-    this.visibleQubitCircleKets = event.detail as number[]
+  private showVisibleQubitCircles(event: Event): void {
+    const ketNumbers = (event as CustomEvent).detail as number[]
+    Util.notNull(ketNumbers)
+
+    this.visibleQubitCircleKets = ketNumbers
     this.run()
   }
 
@@ -201,14 +206,26 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.circleNotation.setAmplitudes(amplitudes)
   }
 
-  private proxyDraggableGrabEvent(): void {
-    this.quantumCircuit?.dispatchEvent(new Event("draggable.grab"))
+  private prepareDraggableDrop(event: Event): void {
+    event.stopPropagation()
+
+    const draggable = (event as CustomEvent).detail as Draggable
+    Util.notNull(draggable)
+    Util.notNull(this.quantumCircuit)
+
+    this.quantumCircuit.prepareDraggableDrop()
+    draggable.setSnapTargets(this.quantumCircuit.freeDropzones)
   }
 
-  private proxyDraggableUngrabEvent(event: CustomEvent): void {
+  private proxyDraggableUngrabEvent(event: Event): void {
+    const coordinates = (event as CustomEvent).detail
+    Util.notNull(coordinates)
+    Util.notNull(coordinates.x)
+    Util.notNull(coordinates.y)
+
     this.quantumCircuit?.dispatchEvent(
       new CustomEvent("draggable.ungrab", {
-        detail: { x: event.detail.x, y: event.detail.y },
+        detail: { x: coordinates.x, y: coordinates.y },
         bubbles: false,
       }),
     )

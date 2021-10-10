@@ -80,7 +80,7 @@ export class CircuitBlockElement extends HTMLElement {
             display: flex;
             border-style: solid;
             border-color: var(--colors-magnitude, #1cb0f6);
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(229, 229, 229, 0.3);
 
             flex-direction: column;
 

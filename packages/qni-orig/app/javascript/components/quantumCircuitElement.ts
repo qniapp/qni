@@ -15,6 +15,7 @@ import { RxGateElement } from "components/rxGateElement"
 import { RyGateElement } from "components/ryGateElement"
 import { RzGateElement } from "components/rzGateElement"
 import { SwapGateElement } from "components/swapGateElement"
+import { Util } from "lib/base"
 import { WriteGateElement } from "components/writeGateElement"
 import { XGateElement } from "components/xGateElement"
 import { YGateElement } from "components/yGateElement"
@@ -278,7 +279,6 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.addEventListener("draggable.grab", this.prepareDraggableDrop)
     this.addEventListener("draggable.ungrab", () => {
       this.editing = false
     })
@@ -722,9 +722,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateJsonUrl()
   }
 
-  private prepareDraggableDrop(event: Event): void {
-    event.stopPropagation()
-
+  prepareDraggableDrop(): void {
     this.interactive = true
     this.editing = true
     this.disableDraggablesOnCircuitHover()
@@ -770,7 +768,12 @@ export class QuantumCircuitElement extends HTMLElement {
 
     for (const each of this.steps) {
       const step = CircuitStepElement.createShadow(stepLength)
-      this.insertBefore(step, each.nextSibling)
+      const stepParentEl = each.parentElement as
+        | QuantumCircuitElement
+        | CircuitBlockElement
+      Util.notNull(stepParentEl)
+
+      stepParentEl.insertBefore(step, each.nextSibling)
     }
 
     const step = CircuitStepElement.createShadow(stepLength)
