@@ -1,5 +1,3 @@
-import { InternalError } from "lib/error"
-
 export const Options: { [type: string]: { [name: string]: string } } = {
   classes: {
     gate: "gate",
@@ -76,12 +74,12 @@ export const Options: { [type: string]: { [name: string]: string } } = {
 
 export function classNameFor(name: string): string {
   const className = Options.classes[name]
-  if (!className) throw new InternalError(`className for ${name} not found`)
+  if (!className) throw new Error(`className for ${name} not found`)
   return className
 }
 
 export function attributeNameFor(name: string): string {
   const attrName = Options.attributes[name]
-  if (!attrName) throw new InternalError(`attrName for ${name} not found`)
+  if (!attrName) throw new Error(`attrName for ${name} not found`)
   return attrName
 }

@@ -13,7 +13,7 @@ module.exports = function (config) {
     frameworks: ["qunit"],
     files: [
       {
-        pattern: "app/components/**/*Element.ts",
+        pattern: "app/javascript/components/**/*Element.ts",
         type: "module",
         included: false,
       },

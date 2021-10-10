@@ -1,5 +1,5 @@
-import { CircuitDropzoneElement } from "circuit_dropzone_component/circuitDropzoneElement"
-import { PaletteDropzoneElement } from "palette_dropzone_component/paletteDropzoneElement"
+import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
+import { PaletteDropzoneElement } from "components/paletteDropzoneElement"
 
 export const isPaletteDropzone = (
   arg: unknown,

@@ -1,8 +1,0 @@
-<% phase_gate = local_assigns.fetch(:phase_gate) %>
-
-<%= tag.div class: phase_gate.klass, data: phase_gate.data do %>
-  <%= wires wireable: false %>
-  <div class="gate__body">
-    <%= phi_icon class: 'gate-icon' %>
-  </div>
-<% end %>

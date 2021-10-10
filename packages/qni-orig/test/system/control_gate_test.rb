@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class ControlGateTest < ApplicationSystemTestCase
   test 'apply to |0>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
     control_gate = put_operation('•', col: 1, row: 0)
@@ -14,7 +14,7 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'apply to |1>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     control_gate = put_operation('•', col: 1, row: 0)
@@ -26,7 +26,7 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'apply CZ to |++>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation 'H', col: 1, row: 0
@@ -47,7 +47,7 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'apply CZ (•1•) to |+++>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation '|0>', col: 0, row: 2
@@ -72,7 +72,7 @@ class ControlGateTest < ApplicationSystemTestCase
   end
 
   test 'apply CZ (•••) to |+++>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|0>', col: 0, row: 1
     put_operation '|0>', col: 0, row: 2

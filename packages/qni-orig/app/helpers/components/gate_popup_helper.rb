@@ -4,6 +4,6 @@ module Components::GatePopupHelper
   end
 
   def angle_slider
-    render 'angle_slider/angle_slider'
+    render 'components/angle_slider'
   end
 end

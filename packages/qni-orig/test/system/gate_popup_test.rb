@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class GatePopupTest < ApplicationSystemTestCase
   test 'H gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('H')
     operation.hover
@@ -14,7 +14,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'X gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('X')
     operation.hover
@@ -26,7 +26,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Y gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Y')
     operation.hover
@@ -38,7 +38,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Z gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Z')
     operation.hover
@@ -50,7 +50,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Phase gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Phase')
     operation.hover
@@ -63,7 +63,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test '√X gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('√X')
     operation.hover
@@ -75,7 +75,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Rx gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Rx')
     operation.hover
@@ -88,7 +88,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Ry gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Ry')
     operation.hover
@@ -101,7 +101,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Rz gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Rz')
     operation.hover
@@ -114,7 +114,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Swap gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Swap')
     operation.hover
@@ -127,7 +127,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Control gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Control')
     operation.hover
@@ -140,7 +140,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Bloch display popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Bloch')
     operation.hover
@@ -152,7 +152,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test '|0⟩ gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('|0>')
     operation.hover
@@ -164,7 +164,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test '|1⟩ gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('|1>')
     operation.hover
@@ -176,7 +176,7 @@ class GatePopupTest < ApplicationSystemTestCase
   end
 
   test 'Measurement gate popup' do
-    visit new_circuit_path
+    visit circuit_path
 
     operation = palette('Measure')
     operation.hover

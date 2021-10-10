@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class WriteGateTest < ApplicationSystemTestCase
   test 'input and output wire states change' do
-    visit new_circuit_path
+    visit circuit_path
 
     put_operation '|0>', col: 0, row: 0
 
@@ -11,7 +11,7 @@ class WriteGateTest < ApplicationSystemTestCase
   end
 
   test 'preview the change in input and output wire states' do
-    visit new_circuit_path
+    visit circuit_path
 
     hover_operation '|0>', col: 0, row: 0
 

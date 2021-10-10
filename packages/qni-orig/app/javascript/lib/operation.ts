@@ -1,56 +1,17 @@
-import {
-  BlochDisplay,
-  ControlGate,
-  HGate,
-  IGate,
-  MeasurementGate,
-  PhaseGate,
-  QubitLabel,
-  RnotGate,
-  RxGate,
-  RyGate,
-  RzGate,
-  SwapGate,
-  WriteGate,
-  XGate,
-  YGate,
-  ZGate,
-} from "lib/instructions"
-import { BlochDisplayElement } from "bloch_display_component/blochDisplayElement"
-import { ControlGateElement } from "control_gate_component/controlGateElement"
-import { HGateElement } from "h_gate_component/hGateElement"
-import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
-import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
-import { RxGateElement } from "rx_gate_component/rxGateElement"
-import { RyGateElement } from "ry_gate_component/ryGateElement"
-import { RzGateElement } from "rz_gate_component/rzGateElement"
-import { SwapGateElement } from "swap_gate_component/swapGateElement"
-import { WriteGateElement } from "write_gate_component/writeGateElement"
-import { XGateElement } from "x_gate_component/xGateElement"
-import { YGateElement } from "y_gate_component/yGateElement"
-import { ZGateElement } from "z_gate_component/zGateElement"
-import { classNameFor } from "lib/base"
-
-export type Instruction =
-  | IGate
-  | HGate
-  | BlochDisplay
-  | ControlGate
-  | MeasurementGate
-  | XGate
-  | YGate
-  | ZGate
-  | PhaseGate
-  | QubitLabel
-  | RnotGate
-  | RxGate
-  | RyGate
-  | RzGate
-  | SwapGate
-  | WriteGate
-
-export type InstructionWithElement = Exclude<Instruction, IGate>
+import { BlochDisplayElement } from "components/blochDisplayElement"
+import { ControlGateElement } from "components/controlGateElement"
+import { HGateElement } from "components/hGateElement"
+import { MeasurementGateElement } from "components/measurementGateElement"
+import { PhaseGateElement } from "components/phaseGateElement"
+import { RnotGateElement } from "components/rnotGateElement"
+import { RxGateElement } from "components/rxGateElement"
+import { RyGateElement } from "components/ryGateElement"
+import { RzGateElement } from "components/rzGateElement"
+import { SwapGateElement } from "components/swapGateElement"
+import { WriteGateElement } from "components/writeGateElement"
+import { XGateElement } from "components/xGateElement"
+import { YGateElement } from "components/yGateElement"
+import { ZGateElement } from "components/zGateElement"
 
 export const I_GATE_OPERATION_TYPE = "1"
 export const H_GATE_OPERATION_TYPE = "H"
@@ -191,42 +152,3 @@ export type CircuitOperationElement =
   | BlochDisplayElement
   | WriteGateElement
   | MeasurementGateElement
-
-export const Instruction = {
-  create(element?: HTMLElement | Element | null): Instruction {
-    if (!element) return new IGate()
-
-    const classList = element.classList
-    if (classList.contains(classNameFor("gate:write"))) {
-      return new WriteGate(element)
-    } else if (classList.contains(classNameFor("gate:hadamard"))) {
-      return new HGate(element)
-    } else if (classList.contains(classNameFor("gate:not"))) {
-      return new XGate(element)
-    } else if (classList.contains(classNameFor("gate:y"))) {
-      return new YGate(element)
-    } else if (classList.contains(classNameFor("gate:z"))) {
-      return new ZGate(element)
-    } else if (classList.contains(classNameFor("gate:phase"))) {
-      return new PhaseGate(element)
-    } else if (classList.contains(classNameFor("gate:control"))) {
-      return new ControlGate(element)
-    } else if (classList.contains(classNameFor("gate:swap"))) {
-      return new SwapGate(element)
-    } else if (classList.contains(classNameFor("gate:rootNot"))) {
-      return new RnotGate(element)
-    } else if (classList.contains(classNameFor("gate:rx"))) {
-      return new RxGate(element)
-    } else if (classList.contains(classNameFor("gate:ry"))) {
-      return new RyGate(element)
-    } else if (classList.contains(classNameFor("gate:rz"))) {
-      return new RzGate(element)
-    } else if (classList.contains(classNameFor("gate:measure"))) {
-      return new MeasurementGate(element)
-    } else if (classList.contains(classNameFor("display:bloch"))) {
-      return new BlochDisplay(element)
-    }
-
-    throw new Error(`Unknown instruction: ${element.outerHTML}`)
-  },
-}

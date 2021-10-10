@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class BlochDisplayTest < ApplicationSystemTestCase
   test 'bloch display inspector' do
-    visit new_circuit_path
+    visit circuit_path
 
     bloch_display = put_operation('Bloch', col: 0, row: 0)
     bloch_display.hover

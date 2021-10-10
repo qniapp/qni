@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class XGateTest < ApplicationSystemTestCase
   test 'apply to |0>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'X', col: 1, row: 0
@@ -13,7 +13,7 @@ class XGateTest < ApplicationSystemTestCase
   end
 
   test 'apply to |1>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'X', col: 1, row: 0

@@ -1,5 +1,5 @@
 import "components"
-import { HGateElement } from "h_gate_component/hGateElement"
+import { HGateElement } from "components/hGateElement"
 import { ReferenceElement } from "tippy.js"
 
 QUnit.module("HGate", (hooks) => {

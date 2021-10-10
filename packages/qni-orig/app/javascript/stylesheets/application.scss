@@ -1,3 +1,5 @@
+@import "variables";
+
 :root {
   --colors-cardinal: theme("colors.cardinal");
   --colors-eel: theme("colors.eel");
@@ -12,71 +14,15 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
-// Tippy
-@import "tippy.js/dist/tippy.css";
 @import "tippy.js/dist/border.css";
 @import "tippy.js/dist/svg-arrow.css";
+@import "tippy.js/dist/tippy.css";
 
-// Variables
-@import "variables";
-
-// Mixins
-@import "mixins/circular_gate";
-@import "mixins/color_filled_gate";
-@import "mixins/recutangular_gate";
-@import "mixins/rw_gate";
-@import "mixins/transparent_gate";
-
-// tailwind UI
-@import "tailwind_ui/button";
-@import "tailwind_ui/card/body/body";
-@import "tailwind_ui/card/card";
-@import "tailwind_ui/card/header/header";
+@import "angle_slider";
+@import "quantum_simulator";
+@import "tippy";
 
 // Components
-@import "quantum_simulator_component/quantum_simulator";
-
-@import "circuit/circuit";
-@import "circuit/circuit_block/circuit_block";
-@import "circuit/circuit_block_divider/circuit_block_divider";
-@import "circuit/circuit_breakpoint_component/circuit_breakpoint_component";
-@import "circuit/circuit_register_group/circuit_register_group";
-@import "circuit/circuit_register_group_span/circuit_register_group_span";
-@import "circuit/circuit_step_component/circuit_step_component";
-@import "circuit/draggable/draggable";
-@import "circuit/dropzone/dropzone";
-@import "circuit/qubit_label/qubit_label";
-@import "circuit/register_label/register_label";
-@import "circuit/register_label_span/register_label_span";
-
-@import "angle_slider/angle_slider";
-@import "circuit_card/circuit_card";
-@import "circuit_thumbnail/circuit_thumbnail";
-@import "gate/body/body";
-@import "gate/gate";
-@import "gate_description/gate_description";
 @import "gate_popup/gate_popup";
-@import "palette/palette";
-@import "qubit_circle_component/qubit_circle_component";
-@import "qubit_circle_group/qubit_circle_group";
-@import "qubit_circle_ket/qubit_circle_ket";
-@import "run_circuit_button_component/run_circuit_button_component";
-@import "simulator/simulator";
-@import "state_vector/state_vector";
-@import "tippy/tippy";
-@import "wires/wires";
-
-@import "bloch_display_component/bloch_display_component";
-@import "hadamard_gate/hadamard_gate";
-@import "not_gate/not_gate";
-@import "phase_gate/phase_gate";
-@import "rnot_gate/rnot_gate";
-@import "rx_gate/rx_gate";
-@import "ry_gate/ry_gate";
-@import "rz_gate/rz_gate";
-@import "swap_gate/swap_gate";
-@import "write_gate_component/write_gate_component";
-@import "y_gate/y_gate";
-@import "z_gate/z_gate";
 
 @import "tailwindcss/utilities";

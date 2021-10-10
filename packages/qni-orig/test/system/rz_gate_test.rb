@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class RzGateTest < ApplicationSystemTestCase
   test 'the default angle' do
-    visit new_circuit_path
+    visit circuit_path
 
     rz_gate = put_operation('Rz', col: 0, row: 0)
 
@@ -10,7 +10,7 @@ class RzGateTest < ApplicationSystemTestCase
   end
 
   test 'apply to |0>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
 
     put_operation 'Rz', col: 1, row: 0
@@ -21,7 +21,7 @@ class RzGateTest < ApplicationSystemTestCase
   end
 
   test 'apply to |1>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|1>', col: 0, row: 0
 
     put_operation 'Rz', col: 1, row: 0

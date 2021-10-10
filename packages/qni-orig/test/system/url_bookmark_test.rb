@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class UrlBookmarkTest < ApplicationSystemTestCase
   setup do
-    visit new_circuit_path
+    visit circuit_path
   end
 
   test 'bookmark a single H gate circuit' do

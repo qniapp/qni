@@ -1,5 +1,5 @@
 import "components"
-import { ControlGateElement } from "control_gate_component/controlGateElement"
+import { ControlGateElement } from "components/controlGateElement"
 
 QUnit.module("ControlGate", (hooks) => {
   let el: ControlGateElement

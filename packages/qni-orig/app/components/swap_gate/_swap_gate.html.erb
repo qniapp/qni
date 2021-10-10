@@ -1,8 +1,0 @@
-<% swap_gate = local_assigns.fetch(:swap_gate) %>
-
-<%= tag.div class: swap_gate.klass, data: swap_gate.data do %>
-  <%= wires wireable: false %>
-  <div class="gate__body">
-    <%= swap_icon class: 'gate-icon' %>
-  </div>
-<% end %>

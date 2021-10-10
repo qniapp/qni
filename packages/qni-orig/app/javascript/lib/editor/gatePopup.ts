@@ -7,16 +7,14 @@ import noUiSlider, {
 } from "nouislider"
 import tippy, { Instance, Props, roundArrow } from "tippy.js"
 import Fraction from "fraction.js"
-import { HGateElement } from "h_gate_component/hGateElement"
-import { Instruction } from "lib/operation"
-import { MeasurementGateElement } from "measurement_gate_component/measurementGateElement"
-import { PhaseGateElement } from "phase_gate_component/phaseGateElement"
-import { RnotGateElement } from "rnot_gate_component/rnotGateElement"
-import { RxGateElement } from "rx_gate_component/rxGateElement"
-import { RyGateElement } from "ry_gate_component/ryGateElement"
-import { RzGateElement } from "rz_gate_component/rzGateElement"
-import { XGateElement } from "x_gate_component/xGateElement"
-import { isPhiable } from "lib/instructions"
+import { HGateElement } from "components/hGateElement"
+import { MeasurementGateElement } from "components/measurementGateElement"
+import { PhaseGateElement } from "components/phaseGateElement"
+import { RnotGateElement } from "components/rnotGateElement"
+import { RxGateElement } from "components/rxGateElement"
+import { RyGateElement } from "components/ryGateElement"
+import { RzGateElement } from "components/rzGateElement"
+import { XGateElement } from "components/xGateElement"
 
 const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   typeof arg === "object" &&
@@ -130,7 +128,7 @@ export class GatePopup {
       operation.theta = πangle
     }
 
-    // if (isPhiable(instruction)) {
+    // if (isPhaseGateElement(instruction)) {
     //   if (instruction.targets.length > 2) {
     //     for (const each of instruction.cphaseTargetInstructions()) {
     //       each.phi = angle
@@ -163,7 +161,7 @@ export class GatePopup {
       operation.theta = angle.replace(/pi/g, "π")
     }
 
-    // if (isPhiable(instruction)) {
+    // if (isPhaseGateElement(instruction)) {
     //   if (instruction.targets.length > 0) {
     //     for (const each of instruction.cphaseTargetInstructions()) {
     //       each.phi = angle
@@ -211,23 +209,6 @@ export class GatePopup {
     return newAngle
   }
 
-  private get originalValue(): string | null {
-    const instruction = Instruction.create(this.popupReferenceEl)
-
-    if (isFlaggable(instruction)) return instruction.flag
-    if (
-      isIfable(instruction) &&
-      !isThetable(instruction) &&
-      !isPhiable(instruction)
-    ) {
-      return instruction.if
-    }
-    if (isThetable(instruction)) return instruction.theta
-    if (isPhiable(instruction)) return instruction.phi
-
-    throw new Error("Should not reach here")
-  }
-
   private popupHtml(el: HTMLElement): string {
     let popupType = null
 
@@ -238,12 +219,12 @@ export class GatePopup {
     // if (
     //   isIfable(instruction) &&
     //   !isThetable(instruction) &&
-    //   !isPhiable(instruction)
+    //   !isPhaseGateElement(instruction)
     // ) {
     //   popupType = "if"
     // }
     // if (isThetable(instruction)) popupType = "theta"
-    // if (isPhiable(instruction)) popupType = "phi"
+    // if (isPhaseGateElement(instruction)) popupType = "phi"
 
     if (isFlaggable(el)) {
       popupType = "flag"
@@ -286,7 +267,7 @@ export class GatePopup {
         // if (
         //   isIfable(operation) &&
         //   !isThetable(operation) &&
-        //   !isPhiable(operation)
+        //   !isPhaseGateElement(operation)
         // ) {
         //   this.if = inputValue
         // }
@@ -329,7 +310,7 @@ export class GatePopup {
           }
         }
 
-        // if (isThetable(operation) || isPhiable(operation)) {
+        // if (isThetable(operation) || isPhaseGateElement(operation)) {
         //   Util.notNull(this.currentAngle)
         //   Util.notNull(this.currentAngleDenominator)
 

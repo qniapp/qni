@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class TrashOperationTest < ApplicationSystemTestCase
   test 'drag and drop an operation on the palette to discard it' do
-    visit new_circuit_path
+    visit circuit_path
 
     drag_and_drop palette('H'), to: find('body')
 
@@ -15,7 +15,7 @@ class TrashOperationTest < ApplicationSystemTestCase
   end
 
   test 'drag and drop an operation on the circuit to discard it' do
-    visit new_circuit_path(json: '{"cols":["H"]}')
+    visit circuit_path(json: '{"cols":["H"]}')
 
     drag_and_drop quantum_circuit('h-gate'), to: find('#palette')
 

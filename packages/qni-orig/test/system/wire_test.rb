@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class WireTest < ApplicationSystemTestCase
   test 'the default data-min-wire-count = 2' do
-    visit new_circuit_path
+    visit circuit_path
 
     within('quantum-circuit') do
       assert_wires 2
@@ -10,7 +10,7 @@ class WireTest < ApplicationSystemTestCase
   end
 
   test 'add new wire on mousedown' do
-    visit new_circuit_path
+    visit circuit_path
 
     page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
 
@@ -20,7 +20,7 @@ class WireTest < ApplicationSystemTestCase
   end
 
   test 'remove last empty wires on mouseup' do
-    visit new_circuit_path(json: '{"cols":[[1,1,1,1,"H"]]}')
+    visit circuit_path(json: '{"cols":[[1,1,1,1,"H"]]}')
 
     within('quantum-circuit') do
       drag_and_drop quantum_circuit('h-gate'), to: dropzone(0, 0)

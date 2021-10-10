@@ -2,7 +2,7 @@ require 'application_system_test_case'
 
 class SwapGateTest < ApplicationSystemTestCase
   test 'apply Swap-Swap to |01>' do
-    visit new_circuit_path
+    visit circuit_path
     put_operation '|0>', col: 0, row: 0
     put_operation '|1>', col: 0, row: 1
 

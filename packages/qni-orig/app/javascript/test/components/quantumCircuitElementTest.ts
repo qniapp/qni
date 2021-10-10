@@ -1,5 +1,5 @@
 import "components"
-import { QuantumCircuitElement } from "quantum_circuit_component/quantumCircuitElement"
+import { QuantumCircuitElement } from "components/quantumCircuitElement"
 
 QUnit.module("QuantumCircuitElement", (hooks) => {
   let qc: QuantumCircuitElement
