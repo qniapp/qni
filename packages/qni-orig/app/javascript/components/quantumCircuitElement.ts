@@ -36,17 +36,20 @@ export class QuantumCircuitElement extends HTMLElement {
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
 
+  private breakpointStepIndex = 0
+
   get steps(): CircuitStepElement[] {
     return Array.from(
       this.querySelectorAll("circuit-step"),
     ) as CircuitStepElement[]
   }
 
-  get breakpoint(): CircuitStepElement | null {
+  get breakpoint(): CircuitStepElement {
     for (const each of this.steps) {
       if (each.breakpoint) return each
     }
-    return null
+    this.setBreakpoint(this.breakpointStepIndex)
+    return this.steps[this.breakpointStepIndex]
   }
 
   get activeStep(): CircuitStepElement | null {
@@ -340,9 +343,9 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private dispatchStepHoverEvent(event: CustomEvent): void {
-    const x = event.detail.x
-    const y = event.detail.y
+  private dispatchStepHoverEvent(event: Event): void {
+    const x = (event as CustomEvent).detail.x
+    const y = (event as CustomEvent).detail.y
     const el = document.elementFromPoint(x, y)
     const step = el?.closest("circuit-step") as CircuitStepElement
 
@@ -358,6 +361,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
   setBreakpoint(stepIndex: number): void {
     const step = this.steps[stepIndex]
+    this.breakpointStepIndex = stepIndex
 
     for (const each of this.steps) {
       each.breakpoint = false
