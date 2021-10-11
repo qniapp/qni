@@ -12,7 +12,7 @@ import { controller } from "@github/catalyst"
 type MessageEventData = {
   type: "step" | "finish"
   blochVectors: { [bit: number]: [number, number, number] }
-  bits: { [bit: number]: number }
+  measuredBits: { [bit: number]: number }
   step: number
   amplitudes: Array<[number, number]>
   flags: { [key: string]: boolean }
@@ -83,13 +83,13 @@ export class QuantumSimulatorElement extends HTMLElement {
           }
         }
 
-        if (data.bits) {
-          const bits = data.bits
+        if (data.measuredBits) {
+          const measuredBits = data.measuredBits
           const dropzones = step.dropzones
-          for (const bit in bits) {
+          for (const bit in measuredBits) {
             const operation = dropzones[bit].draggableElement
             if (operation instanceof MeasurementGateElement) {
-              operation.value = bits[bit]
+              operation.value = measuredBits[bit]
             }
           }
         }

@@ -406,14 +406,14 @@ QUnit.module("Simulator", () => {
       const simulator = new Simulator("0")
       simulator.measure(0)
       assert.equates(simulator.state, new StateVector("0"))
-      assert.equates(simulator.bits, { 0: 0 })
+      assert.equates(simulator.measuredBits, { 0: 0 })
     })
 
     QUnit.test("|1>.measure(0) should be |1>", (assert) => {
       const simulator = new Simulator("1")
       simulator.measure(0)
       assert.equates(simulator.state, new StateVector("1"))
-      assert.equates(simulator.bits, { 0: 1 })
+      assert.equates(simulator.measuredBits, { 0: 1 })
     })
 
     QUnit.test("|+>.measure(0) should be |0> or |1>", (assert) => {
@@ -427,8 +427,10 @@ QUnit.module("Simulator", () => {
         ) ||
           simulator.state.isApproximatelyEqualTo(new StateVector("1"), 0.00001),
       )
-      assert.equates(Object.keys(simulator.bits).length, 1)
-      assert.ok(simulator.bits[0] == 0 || simulator.bits[0] == 1)
+      assert.equates(Object.keys(simulator.measuredBits).length, 1)
+      assert.ok(
+        simulator.measuredBits[0] === 0 || simulator.measuredBits[0] === 1,
+      )
     })
 
     QUnit.test("|->.measure(0) should be |0> or |1>", (assert) => {
@@ -484,7 +486,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(0)
 
       assert.equates(simulator.state, new StateVector("00"))
-      assert.equates(simulator.bits, { 0: 0 })
+      assert.equates(simulator.measuredBits, { 0: 0 })
     })
 
     QUnit.test("|00>.measure(1) should be |00>", (assert) => {
@@ -492,7 +494,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(1)
 
       assert.equates(simulator.state, new StateVector("00"))
-      assert.equates(simulator.bits, { 1: 0 })
+      assert.equates(simulator.measuredBits, { 1: 0 })
     })
 
     QUnit.test("|00>.measure(0, 1) should be |00>", (assert) => {
@@ -500,7 +502,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(0, 1)
 
       assert.equates(simulator.state, new StateVector("00"))
-      assert.equates(simulator.bits, { 0: 0, 1: 0 })
+      assert.equates(simulator.measuredBits, { 0: 0, 1: 0 })
     })
 
     QUnit.test("|11>.measure(0) should be |11>", (assert) => {
@@ -508,7 +510,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(0)
 
       assert.equates(simulator.state, new StateVector("11"))
-      assert.equates(simulator.bits, { 0: 1 })
+      assert.equates(simulator.measuredBits, { 0: 1 })
     })
 
     QUnit.test("|11>.measure(1) should be |11>", (assert) => {
@@ -516,7 +518,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(1)
 
       assert.equates(simulator.state, new StateVector("11"))
-      assert.equates(simulator.bits, { 1: 1 })
+      assert.equates(simulator.measuredBits, { 1: 1 })
     })
 
     QUnit.test("|11>.measure(0, 1) should be |11>", (assert) => {
@@ -524,7 +526,7 @@ QUnit.module("Simulator", () => {
       simulator.measure(0, 1)
 
       assert.equates(simulator.state, new StateVector("11"))
-      assert.equates(simulator.bits, { 0: 1, 1: 1 })
+      assert.equates(simulator.measuredBits, { 0: 1, 1: 1 })
     })
   })
 

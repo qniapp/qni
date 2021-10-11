@@ -23,7 +23,7 @@ import { Util } from "./base"
 export class Simulator {
   public state: StateVector
   public blochVectors: { [bit: number]: [number, number, number] }
-  public bits: { [bit: number]: number }
+  public measuredBits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
   public kets: number[]
 
@@ -33,7 +33,7 @@ export class Simulator {
     } else {
       this.state = bits
     }
-    this.bits = {}
+    this.measuredBits = {}
     this.flags = {}
     this.kets = kets
   }
@@ -155,7 +155,7 @@ export class Simulator {
           break
         case MEASUREMENT_GATE_OPERATION_TYPE:
           this.measure(bit)
-          if (each.flag) this.flags[each.flag] = this.bits[bit] === 1
+          if (each.flag) this.flags[each.flag] = this.measuredBits[bit] === 1
           break
         default:
           throw new Error("Unknown instruction")
@@ -307,7 +307,7 @@ export class Simulator {
             this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)),
           )
         }
-        this.bits[t] = 0
+        this.measuredBits[t] = 0
       } else {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) === 0) this.state.setAmplifier(bit, Complex.ZERO)
@@ -316,13 +316,13 @@ export class Simulator {
             this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero)),
           )
         }
-        this.bits[t] = 1
+        this.measuredBits[t] = 1
       }
     }
     return this
   }
 
-  amplitudes(): { [ket: number]: [number, number] } {
+  get amplitudes(): { [ket: number]: [number, number] } {
     const column = this.state.matrix.getColumn(0)
 
     return this.kets.reduce((map: { [ket: number]: [number, number] }, ket) => {
