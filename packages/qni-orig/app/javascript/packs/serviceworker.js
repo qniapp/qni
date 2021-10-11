@@ -6,9 +6,7 @@ self.addEventListener(
     const nqubit = e.data.nqubit
     const steps = e.data.steps
     const kets = e.data.kets
-    var simulator = new Simulator("0".repeat(nqubit), kets)
-
-    // const t0 = performance.now()
+    const simulator = new Simulator("0".repeat(nqubit), kets)
 
     steps.forEach((instructions, i) => {
       simulator.runStep(instructions)
@@ -23,14 +21,7 @@ self.addEventListener(
       })
     })
 
-    // const t1 = performance.now()
-    // console.log("Simulation took " + Math.floor(t1 - t0) + " ms")
-
     self.postMessage({ type: "finish" })
   },
   false,
 )
-
-self.addEventListener("install", function (event) {})
-self.addEventListener("activate", function (event) {})
-self.addEventListener("fetch", function (event) {})
