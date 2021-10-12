@@ -1,3 +1,4 @@
+import { attr, controller } from "@github/catalyst"
 import { BlochDisplayElement } from "components/blochDisplayElement"
 import { CircleNotationElement } from "components/circleNotationElement"
 import { CircuitStepElement } from "components/circuitStepElement"
@@ -7,7 +8,6 @@ import { MeasurementGateElement } from "components/measurementGateElement"
 import { QuantumCircuitElement } from "components/quantumCircuitElement"
 import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
 import { Util } from "lib/base"
-import { controller } from "@github/catalyst"
 
 type MessageEventData = {
   type: "step" | "finish"
@@ -20,6 +20,8 @@ type MessageEventData = {
 
 @controller
 export class QuantumSimulatorElement extends HTMLElement {
+  @attr serviceWorker = "/serviceworker.js"
+
   private amplitudes: Array<{ [ket: number]: Complex }> | undefined
 
   declare worker: Worker
@@ -64,7 +66,7 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     this.addEventListener("operation.change", this.run)
 
-    this.worker = new Worker("/serviceworker.js")
+    this.worker = new Worker(this.serviceWorker)
     this.worker.addEventListener("message", (e: MessageEvent) => {
       const data = e.data as MessageEventData
       this.amplitudes = this.amplitudes || []
@@ -153,7 +155,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker.postMessage({
       nqubit,
       steps: this.quantumCircuit.serializedSteps,
-      kets: this.visibleQubitCircleKets,
+      targets: this.visibleQubitCircleKets,
     })
   }
 

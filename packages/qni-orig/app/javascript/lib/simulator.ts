@@ -25,9 +25,8 @@ export class Simulator {
   public blochVectors: { [bit: number]: [number, number, number] }
   public measuredBits: { [bit: number]: number }
   public flags: { [key: string]: boolean }
-  public kets: number[]
 
-  constructor(bits: string | StateVector, kets: number[] = []) {
+  constructor(bits: string | StateVector) {
     if ("string" === typeof bits) {
       this.state = new StateVector(bits)
     } else {
@@ -35,7 +34,6 @@ export class Simulator {
     }
     this.measuredBits = {}
     this.flags = {}
-    this.kets = kets
   }
 
   runStep(instructions: CircuitOperation[]): Simulator {
@@ -322,18 +320,27 @@ export class Simulator {
     return this
   }
 
-  get amplitudes(): { [ket: number]: [number, number] } {
-    const column = this.state.matrix.getColumn(0)
+  amplitudes(targets: number[] = []): { [ket: number]: [number, number] } {
+    const stateVector = this.state.matrix.getColumn(0)
 
-    return this.kets.reduce((map: { [ket: number]: [number, number] }, ket) => {
-      const c = column[ket]
-      if (c === undefined) {
-        map[ket] = [0, 0]
-      } else {
-        map[ket] = [c.real, c.imag]
-      }
-      return map
-    }, {})
+    if (targets.length > 0) {
+      return targets.reduce(
+        (map: { [ket: number]: [number, number] }, each) => {
+          const c = stateVector[each]
+          if (c === undefined) {
+            map[each] = [0, 0]
+          } else {
+            map[each] = [c.real, c.imag]
+          }
+          return map
+        },
+        {},
+      )
+    } else {
+      return stateVector.map((each) => {
+        return [each.real, each.imag]
+      })
+    }
   }
 
   private u(u: Matrix, ...targets: number[]): void {

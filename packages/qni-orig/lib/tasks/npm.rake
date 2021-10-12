@@ -8,6 +8,7 @@ task 'npm:build' => %i[environment dist] do
   Rake::Task['webpacker:compile'].invoke
 
   cp 'public/packs/npm.js', 'dist/index.js'
+  cp 'public/packs/simulator.js', 'dist/simulator.js'
   cp 'public/packs/npm.js', 'docs/index.js'
 end
 
