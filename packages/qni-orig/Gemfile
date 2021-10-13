@@ -11,7 +11,7 @@ gem 'view_component', require: 'view_component/engine'
 # Drivers
 gem 'pg'
 
-gem 'puma', '~> 5.3'
+gem 'puma', '~> 5.5'
 
 # JavaScript and assets
 gem 'css-class-string'
