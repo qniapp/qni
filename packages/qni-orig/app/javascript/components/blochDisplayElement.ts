@@ -1,9 +1,6 @@
+import { BLOCH_DISPLAY_OPERATION_TYPE, BlochDisplayOperation } from "lib"
 import {
-  BLOCH_DISPLAY_OPERATION_TYPE,
-  BlochDisplayOperation,
-} from "lib/operation"
-import {
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   JsonableMixin,
   SizeableMixin,
@@ -13,7 +10,7 @@ import { html, render } from "@github/jtml"
 import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
 
 @controller
-export class BlochDisplayElement extends DraggableMixin(
+export class BlochDisplayElement extends DragAndDroppableMixin(
   HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
 ) {
   @target body: HTMLElement
@@ -26,14 +23,11 @@ export class BlochDisplayElement extends DraggableMixin(
   @attr y = 0
   @attr z = 0
 
-  @attr draggableSource = false
-  @attr draggableShadow = false
-
   static create({
-    draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): BlochDisplayElement {
-    const el = document.createElement("bloch-display") as BlochDisplayElement
-    el.draggable = draggable
+    dragAndDrop = false,
+  }: Partial<{ dragAndDrop: boolean }> = {}): BlochDisplayElement {
+    const el = new BlochDisplayElement()
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -113,7 +107,7 @@ export class BlochDisplayElement extends DraggableMixin(
     this.attachShadow({ mode: "open" })
     this.update()
     this.updateBlochVector()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   disconnectedCallback(): void {
@@ -171,7 +165,7 @@ export class BlochDisplayElement extends DraggableMixin(
     }
 
     render(
-      html`${this.sizeableStyle} ${this.draggableStyle}
+      html`${this.sizeableStyle} ${this.dragAndDroppableStyle}
 
         <style>
           #body.draggable-source::after {

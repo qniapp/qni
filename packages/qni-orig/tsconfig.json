@@ -12,7 +12,7 @@
       "*": ["node_modules/*", "app/javascript/*", "app/components/*"]
     },
     "sourceMap": true,
-    "target": "es5",
+    "target": "es6",
     "strict": true,
     "strictPropertyInitialization": false,
     "noEmit": true

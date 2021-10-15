@@ -1,22 +1,19 @@
 import {
   ConfigurableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
 } from "./mixins"
-import {
-  MEASUREMENT_GATE_OPERATION_TYPE,
-  MeasurementOperation,
-} from "lib/operation"
+import { MEASUREMENT_GATE_OPERATION_TYPE, MeasurementOperation } from "lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class MeasurementGateElement extends ConfigurableMixin(
-  DraggableMixin(
+  DragAndDroppableMixin(
     IconableMixin(
       HelpableMixin(LabelableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
     ),
@@ -27,16 +24,14 @@ export class MeasurementGateElement extends ConfigurableMixin(
   @attr flag = ""
 
   static create({
-    draggable = false,
+    dragAndDrop = false,
     flag = "",
   }: Partial<{
-    draggable: boolean
+    dragAndDrop: boolean
     flag: string
   }> = {}): MeasurementGateElement {
-    const el = document.createElement(
-      "measurement-gate",
-    ) as MeasurementGateElement
-    el.draggable = draggable
+    const el = new MeasurementGateElement()
+    el.dragAndDrop = dragAndDrop
     el.flag = flag
     return el
   }
@@ -45,14 +40,14 @@ export class MeasurementGateElement extends ConfigurableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
     this.addEventListener("mouseenter", this.showHelp)
     this.addEventListener("mousedown", this.showRightClickPopup)
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
+      html`${this.sizeableStyle} ${this.iconStyle} ${this.dragAndDroppableStyle}
         ${this.labelStyle}
 
         <style>

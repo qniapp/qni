@@ -2,7 +2,7 @@ import "components"
 import { QuantumCircuitElement } from "components/quantumCircuitElement"
 
 QUnit.module("QuantumCircuitElement", (hooks) => {
-  let qc: QuantumCircuitElement
+  let qc!: QuantumCircuitElement
 
   hooks.beforeEach(() => {
     qc = document.createElement("quantum-circuit") as QuantumCircuitElement

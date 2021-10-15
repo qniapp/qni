@@ -3,10 +3,10 @@ import { html, render } from "@github/jtml"
 import { BlochDisplayElement } from "components/blochDisplayElement"
 import { CircuitBlockElement } from "components/circuitBlockElement"
 import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
-import { CircuitOperation } from "lib/operation"
+import { CircuitOperation } from "lib"
 import { CircuitStepElement } from "components/circuitStepElement"
 import { ControlGateElement } from "components/controlGateElement"
-import { Draggable } from "./mixins"
+import { DragAndDroppable } from "./mixins"
 import { HGateElement } from "components/hGateElement"
 import { MeasurementGateElement } from "components/measurementGateElement"
 import { PhaseGateElement } from "components/phaseGateElement"
@@ -112,7 +112,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private appendStep(): CircuitStepElement {
-    const el = document.createElement("circuit-step") as CircuitStepElement
+    const el = new CircuitStepElement()
 
     const lastBlock = this.blocks.slice(-1)[0] || null
     if (lastBlock === null || lastBlock.finalized) {
@@ -132,25 +132,25 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   h(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(HGateElement.create(), ...targetQubits)
+    this.applyOperation(new HGateElement(), ...targetQubits)
     this.resize()
     return this
   }
 
   x(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(XGateElement.create(), ...targetQubits)
+    this.applyOperation(new XGateElement(), ...targetQubits)
     this.resize()
     return this
   }
 
   y(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(YGateElement.create(), ...targetQubits)
+    this.applyOperation(new YGateElement(), ...targetQubits)
     this.resize()
     return this
   }
 
   z(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(ZGateElement.create(), ...targetQubits)
+    this.applyOperation(new ZGateElement(), ...targetQubits)
     this.resize()
     return this
   }
@@ -165,7 +165,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   rnot(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(RnotGateElement.create(), ...targetQubits)
+    this.applyOperation(new RnotGateElement(), ...targetQubits)
     this.resize()
     return this
   }
@@ -198,7 +198,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   control(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(ControlGateElement.create(), ...targetQubits)
+    this.applyOperation(new ControlGateElement(), ...targetQubits)
     this.resize()
     return this
   }
@@ -212,8 +212,8 @@ export class QuantumCircuitElement extends HTMLElement {
     for (let i = 0; i < nqubit; i++) {
       circuitStep.appendDropzone()
     }
-    circuitStep.dropzones[control].assign(ControlGateElement.create())
-    circuitStep.dropzones[xTarget].assign(XGateElement.create())
+    circuitStep.dropzones[control].assign(new ControlGateElement())
+    circuitStep.dropzones[xTarget].assign(new XGateElement())
 
     this.resize()
 
@@ -233,9 +233,9 @@ export class QuantumCircuitElement extends HTMLElement {
     for (let i = 0; i < nqubit; i++) {
       circuitStep.appendDropzone()
     }
-    circuitStep.dropzones[controlA].assign(ControlGateElement.create())
-    circuitStep.dropzones[controlB].assign(ControlGateElement.create())
-    circuitStep.dropzones[xTarget].assign(XGateElement.create())
+    circuitStep.dropzones[controlA].assign(new ControlGateElement())
+    circuitStep.dropzones[controlB].assign(new ControlGateElement())
+    circuitStep.dropzones[xTarget].assign(new XGateElement())
 
     this.resize()
 
@@ -243,13 +243,13 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   swap(targetA: number, targetB: number): QuantumCircuitElement {
-    this.applyOperation(SwapGateElement.create(), targetA, targetB)
+    this.applyOperation(new SwapGateElement(), targetA, targetB)
     this.resize()
     return this
   }
 
   bloch(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(BlochDisplayElement.create(), ...targetQubits)
+    this.applyOperation(new BlochDisplayElement(), ...targetQubits)
     this.resize()
     return this
   }
@@ -261,7 +261,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   measure(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(MeasurementGateElement.create(), ...targetQubits)
+    this.applyOperation(new MeasurementGateElement(), ...targetQubits)
     this.resize()
     return this
   }
@@ -270,7 +270,7 @@ export class QuantumCircuitElement extends HTMLElement {
     comment: string,
     blockDef: (c: QuantumCircuitElement) => void,
   ): QuantumCircuitElement {
-    const block = document.createElement("circuit-block") as CircuitBlockElement
+    const block = new CircuitBlockElement()
     block.comment = comment
     block.setAttribute("data-targets", "quantum-circuit.blocks")
     this.append(block)
@@ -282,19 +282,28 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.addEventListener("draggable.ungrab", () => {
+    this.addEventListener("dragAndDroppable.ungrab", () => {
       this.editing = false
     })
-    this.addEventListener("draggable.ungrab", this.resize)
-    this.addEventListener("draggable.ungrab", this.enableDraggablesHover)
-    this.addEventListener("draggable.ungrab", this.dispatchStepHoverEvent)
+    this.addEventListener("dragAndDroppable.ungrab", this.resize)
+    this.addEventListener("dragAndDroppable.ungrab", this.enableDraggablesHover)
+    this.addEventListener(
+      "dragAndDroppable.ungrab",
+      this.dispatchStepHoverEvent,
+    )
 
-    this.addEventListener("draggable.enddragging", () => {
+    this.addEventListener("dragAndDroppable.enddragging", () => {
       this.editing = false
     })
-    this.addEventListener("draggable.enddragging", this.resize)
-    this.addEventListener("draggable.enddragging", this.enableDraggablesHover)
-    this.addEventListener("draggable.enddragging", this.dispatchStepHoverEvent)
+    this.addEventListener("dragAndDroppable.enddragging", this.resize)
+    this.addEventListener(
+      "dragAndDroppable.enddragging",
+      this.enableDraggablesHover,
+    )
+    this.addEventListener(
+      "dragAndDroppable.enddragging",
+      this.dispatchStepHoverEvent,
+    )
 
     this.addEventListener("step.click", this.breakpointClickedStep)
     this.addEventListener("step.hover", this.hoverStep)
@@ -523,26 +532,26 @@ export class QuantumCircuitElement extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(instruction): {
             circuitStep.appendOperation(
-              WriteGateElement.create("0", { draggable: this.updateUrl }),
+              WriteGateElement.create("0", { dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^\|1>$/.test(instruction): {
             circuitStep.appendOperation(
-              WriteGateElement.create("1", { draggable: this.updateUrl }),
+              WriteGateElement.create("1", { dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^H$/.test(instruction): {
             circuitStep.appendOperation(
-              HGateElement.create({ draggable: this.updateUrl }),
+              HGateElement.create({ dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^H<(.+)$/.test(instruction): {
             circuitStep.appendOperation(
               HGateElement.create({
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
                 ifVar: RegExp.$1.trim(),
               }),
             )
@@ -550,14 +559,14 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           case /^X$/.test(instruction): {
             circuitStep.appendOperation(
-              XGateElement.create({ draggable: this.updateUrl }),
+              XGateElement.create({ dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^X<(.+)$/.test(instruction): {
             circuitStep.appendOperation(
               XGateElement.create({
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
                 ifVar: RegExp.$1.trim(),
               }),
             )
@@ -565,19 +574,21 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           case /^Y$/.test(instruction): {
             circuitStep.appendOperation(
-              YGateElement.create({ draggable: this.updateUrl }),
+              YGateElement.create({ dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^Z$/.test(instruction): {
             circuitStep.appendOperation(
-              ZGateElement.create({ draggable: this.updateUrl }),
+              ZGateElement.create({ dragAndDrop: this.updateUrl }),
             )
             break
           }
           case /^P$/.test(instruction): {
             circuitStep.appendOperation(
-              PhaseGateElement.create({ draggable: this.updateUrl }),
+              PhaseGateElement.create({
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
@@ -585,29 +596,30 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               PhaseGateElement.create({
                 phi: RegExp.$1.replace("_", "/"),
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
               }),
             )
             break
           }
           case /^X\^½$/.test(instruction): {
-            circuitStep.appendOperation(
-              RnotGateElement.create({ draggable: this.updateUrl }),
-            )
+            const rnotGate = new RnotGateElement()
+            rnotGate.dragAndDrop = this.updateUrl
+            circuitStep.appendOperation(rnotGate)
             break
           }
           case /^X\^½<(.+)$/.test(instruction): {
-            circuitStep.appendOperation(
-              RnotGateElement.create({
-                draggable: this.updateUrl,
-                ifVar: RegExp.$1.trim(),
-              }),
-            )
+            const rnotGate = new RnotGateElement()
+            rnotGate.dragAndDrop = this.updateUrl
+            rnotGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(rnotGate)
             break
           }
           case /^Rx$/.test(instruction): {
             circuitStep.appendOperation(
-              RxGateElement.create({ draggable: this.updateUrl }),
+              RxGateElement.create({
+                theta: "π/2",
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
@@ -615,14 +627,17 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RxGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
               }),
             )
             break
           }
           case /^Ry$/.test(instruction): {
             circuitStep.appendOperation(
-              RyGateElement.create({ draggable: this.updateUrl }),
+              RyGateElement.create({
+                theta: "π/2",
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
@@ -630,14 +645,17 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RyGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
               }),
             )
             break
           }
           case /^Rz$/.test(instruction): {
             circuitStep.appendOperation(
-              RzGateElement.create({ draggable: this.updateUrl }),
+              RzGateElement.create({
+                theta: "π/2",
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
@@ -645,39 +663,47 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               RzGateElement.create({
                 theta: RegExp.$1.replace("_", "/"),
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
               }),
             )
             break
           }
           case /^Swap$/.test(instruction): {
             circuitStep.appendOperation(
-              SwapGateElement.create({ draggable: this.updateUrl }),
+              SwapGateElement.create({
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
           case /^•$/.test(instruction): {
             circuitStep.appendOperation(
-              ControlGateElement.create({ draggable: this.updateUrl }),
+              ControlGateElement.create({
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
           case /^Bloch$/.test(instruction): {
             circuitStep.appendOperation(
-              BlochDisplayElement.create({ draggable: this.updateUrl }),
+              BlochDisplayElement.create({
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
           case /^Measure$/.test(instruction): {
             circuitStep.appendOperation(
-              MeasurementGateElement.create({ draggable: this.updateUrl }),
+              MeasurementGateElement.create({
+                dragAndDrop: this.updateUrl,
+              }),
             )
             break
           }
           case /^Measure>(.+)$/.test(instruction): {
             circuitStep.appendOperation(
               MeasurementGateElement.create({
-                draggable: this.updateUrl,
+                dragAndDrop: this.updateUrl,
                 flag: RegExp.$1.trim(),
               }),
             )
@@ -686,7 +712,9 @@ export class QuantumCircuitElement extends HTMLElement {
           case /^\{(.+)$/.test(instruction): {
             const comment = RegExp.$1
             circuitStep.remove()
-            circuitBlock = CircuitBlockElement.create(comment)
+            circuitBlock = new CircuitBlockElement()
+            circuitBlock.comment = comment
+            circuitBlock.setAttribute("data-targets", "quantum-circuit.blocks")
             this.append(circuitBlock)
             break
           }
@@ -746,16 +774,16 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private get draggables(): Draggable[] {
+  private get draggables(): DragAndDroppable[] {
     return Array.from(
-      this.querySelectorAll("[data-draggable]"),
-    ) as unknown as Draggable[]
+      this.querySelectorAll("[data-drag-and-drop]"),
+    ) as unknown as DragAndDroppable[]
   }
 
-  private get draggablesOnCircuit(): Draggable[] {
+  private get draggablesOnCircuit(): DragAndDroppable[] {
     return Array.from(
-      this.querySelectorAll("[data-draggable]:not([data-grabbed])"),
-    ) as unknown as Draggable[]
+      this.querySelectorAll("[data-drag-and-drop]:not([data-grabbed])"),
+    ) as unknown as DragAndDroppable[]
   }
 
   private appendWire(): void {
@@ -771,7 +799,12 @@ export class QuantumCircuitElement extends HTMLElement {
     const stepLength = largestStep!.wireCount
 
     for (const each of this.steps) {
-      const step = CircuitStepElement.createShadow(stepLength)
+      const step = new CircuitStepElement()
+      step.shadow = true
+      for (let i = 0; i < stepLength; i++) {
+        step.appendDropzone()
+      }
+
       const stepParentEl = each.parentElement as
         | QuantumCircuitElement
         | CircuitBlockElement
@@ -780,7 +813,12 @@ export class QuantumCircuitElement extends HTMLElement {
       stepParentEl.insertBefore(step, each.nextSibling)
     }
 
-    const step = CircuitStepElement.createShadow(stepLength)
+    const step = new CircuitStepElement()
+    step.shadow = true
+    for (let i = 0; i < stepLength; i++) {
+      step.appendDropzone()
+    }
+
     this.prepend(step)
   }
 

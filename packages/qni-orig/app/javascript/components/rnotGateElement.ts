@@ -2,7 +2,7 @@ import {
   ConfigurableMixin,
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   IfableMixin,
@@ -11,13 +11,13 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "./mixins"
-import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib/operation"
+import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class RnotGateElement extends ConfigurableMixin(
-  DraggableMixin(
+  DragAndDroppableMixin(
     ControllableMixin(
       WireableMixin(
         LabelableMixin(
@@ -36,11 +36,11 @@ export class RnotGateElement extends ConfigurableMixin(
   @attr iconType = "square"
 
   static create({
-    draggable = false,
+    dragAndDrop = false,
     ifVar = "",
-  }: Partial<{ draggable: boolean; ifVar: string }> = {}): RnotGateElement {
-    const el = document.createElement("rnot-gate") as RnotGateElement
-    el.draggable = draggable
+  }: Partial<{ dragAndDrop: boolean; ifVar: string }> = {}): RnotGateElement {
+    const el = new RnotGateElement()
+    el.dragAndDrop = dragAndDrop
     el.if = ifVar
     return el
   }
@@ -49,7 +49,7 @@ export class RnotGateElement extends ConfigurableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
     this.addEventListener("mouseenter", this.showHelp)
     this.addEventListener("mousedown", this.showRightClickPopup)
   }
@@ -57,7 +57,7 @@ export class RnotGateElement extends ConfigurableMixin(
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
 
         <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,

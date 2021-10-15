@@ -1,6 +1,6 @@
 import { html, render } from "@github/jtml"
-import { CircuitOperationElement } from "lib/operation"
-import { Operation } from "./mixins"
+import { CircuitOperationElement } from "lib"
+import { Operation } from "./mixins/sizeable"
 import { controller } from "@github/catalyst"
 
 @controller
@@ -24,7 +24,7 @@ export class PaletteDropzoneElement extends HTMLElement {
           }
         </style>
 
-        <div data-action="draggable.grab:palette-dropzone#newOperation">
+        <div data-action="dragAndDroppable.grab:palette-dropzone#newOperation">
           <slot></slot>
         </div>`,
       this.shadowRoot!,

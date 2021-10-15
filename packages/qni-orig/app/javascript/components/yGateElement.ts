@@ -1,7 +1,7 @@
 import {
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   IfableMixin,
@@ -11,11 +11,11 @@ import {
   WireableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { YGateOperation, Y_GATE_OPERATION_TYPE } from "lib/operation"
+import { YGateOperation, Y_GATE_OPERATION_TYPE } from "lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class YGateElement extends DraggableMixin(
+export class YGateElement extends DragAndDroppableMixin(
   ControllableMixin(
     WireableMixin(
       LabelableMixin(
@@ -33,10 +33,10 @@ export class YGateElement extends DraggableMixin(
   @attr iconType = "square"
 
   static create({
-    draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): YGateElement {
-    const el = document.createElement("y-gate") as YGateElement
-    el.draggable = draggable
+    dragAndDrop = false,
+  }: Partial<{ dragAndDrop: boolean }> = {}): YGateElement {
+    const el = new YGateElement()
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -44,13 +44,13 @@ export class YGateElement extends DraggableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
 
         <div id="body" data-action="mouseenter:y-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}

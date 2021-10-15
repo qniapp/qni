@@ -28,8 +28,12 @@
   "scripts": {
     "test": "karma start",
     "test:watch": "yarn test --auto-watch --no-single-run",
+    "build": "rollup -c",
     "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
     "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json",
+    "watch": "rollup -wc",
+    "prerelease": "yarn build && git --no-pager diff && echo && npm pack --dry-run",
+    "release": "npm publish",
     "prepare": "husky install"
   },
   "prettier": {
@@ -54,6 +58,7 @@
     "@tailwindcss/forms": "^0.3.3",
     "autoprefixer": "^9",
     "fraction.js": "^4.1.1",
+    "interactjs": "^1.10.11",
     "nouislider": "^15.2.0",
     "postcss": "^7",
     "sass-loader": "^10",
@@ -65,8 +70,10 @@
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
-  "version": "0.0.71",
+  "version": "0.0.76",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-typescript": "^8.2.5",
     "@types/qunit": "~2.11",
     "@types/typpy": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "~4.32",
@@ -92,6 +99,12 @@
     "lint-staged": "~11.1",
     "prettier": "~2.4",
     "qunit": "~2.16",
+    "rollup": "^2.58.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^7.0.2",
     "typedoc": "~0.22",
     "webpack-dev-server": "^4.0.0"
   },
@@ -101,7 +114,7 @@
     }
   },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
-  "main": "dist/index.js",
+  "main": "dist/qni.js",
   "directories": {
     "doc": "doc",
     "lib": "lib",

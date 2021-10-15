@@ -15,9 +15,9 @@ import {
   X_GATE_OPERATION_TYPE,
   Y_GATE_OPERATION_TYPE,
   Z_GATE_OPERATION_TYPE,
-} from "lib/operation"
+} from "./operation"
 import { Complex, Matrix } from "./math"
-import { StateVector } from "lib/simulator/stateVector"
+import { StateVector } from "./stateVector"
 import { Util } from "./base"
 
 export class Simulator {

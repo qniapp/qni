@@ -5,7 +5,7 @@ QUnit.module("ControlGate", (hooks) => {
   let el: ControlGateElement
 
   hooks.beforeEach(() => {
-    el = document.createElement("control-gate") as ControlGateElement
+    el = new ControlGateElement()
   })
 
   hooks.afterEach(() => {

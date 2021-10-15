@@ -1,16 +1,16 @@
 import {
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
   SizeableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "lib/operation"
+import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class WriteGateElement extends DraggableMixin(
+export class WriteGateElement extends DragAndDroppableMixin(
   IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
 ) {
   @attr iconType = "transparent"
@@ -18,11 +18,11 @@ export class WriteGateElement extends DraggableMixin(
 
   static create(
     value: "0" | "1",
-    { draggable = false }: Partial<{ draggable: boolean }> = {},
+    { dragAndDrop = false }: Partial<{ dragAndDrop: boolean }> = {},
   ): WriteGateElement {
-    const el = document.createElement("write-gate") as WriteGateElement
+    const el = new WriteGateElement()
     el.value = value
-    el.draggable = draggable
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -30,12 +30,12 @@ export class WriteGateElement extends DraggableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.iconStyle} ${this.draggableStyle}
+      html`${this.sizeableStyle} ${this.iconStyle} ${this.dragAndDroppableStyle}
 
         <style>
           #icon {

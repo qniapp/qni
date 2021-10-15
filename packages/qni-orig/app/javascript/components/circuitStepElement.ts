@@ -1,9 +1,9 @@
-import { Draggable, Operation, isWireable } from "./mixins"
+import { DragAndDroppable, Operation, isWireable } from "./mixins"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitBlockElement } from "components/circuitBlockElement"
 import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
-import { CircuitOperation } from "lib/operation"
+import { CircuitOperation } from "lib"
 import { ControlGateElement } from "components/controlGateElement"
 import { HGateElement } from "components/hGateElement"
 import { PhaseGateElement } from "components/phaseGateElement"
@@ -26,15 +26,6 @@ export class CircuitStepElement extends HTMLElement {
   @attr shadow = false
 
   @target slotEl: HTMLSlotElement
-
-  static createShadow(nqubit: number): CircuitStepElement {
-    const el = document.createElement("circuit-step") as CircuitStepElement
-    el.shadow = true
-    for (let i = 0; i < nqubit; i++) {
-      el.appendDropzone()
-    }
-    return el
-  }
 
   get isInBlock(): boolean {
     if (this.closest("circuit-block") === null) {
@@ -77,9 +68,11 @@ export class CircuitStepElement extends HTMLElement {
     return this.dropzones.every((each) => !each.occupied)
   }
 
-  dropzone(n: number): CircuitDropzoneElement | null {
+  dropzone(n: number): CircuitDropzoneElement {
     const el = this.dropzones[n]
-    if (el === undefined) return null
+    if (el === undefined) {
+      throw new Error("Dropzone not found")
+    }
 
     return el
   }
@@ -217,8 +210,8 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
     this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent)
     this.addEventListener("dropzone.drop", this.dispatchStepDropEvent)
-    this.addEventListener("draggable.grab", this.dispatchStepSnapEvent)
-    this.addEventListener("draggable.enddragging", this.unsnap)
+    this.addEventListener("dragAndDroppable.grab", this.dispatchStepSnapEvent)
+    this.addEventListener("dragAndDroppable.enddragging", this.unsnap)
     this.addEventListener("click", this.activate)
 
     this.attachShadow({ mode: "open" })
@@ -626,7 +619,7 @@ export class CircuitStepElement extends HTMLElement {
 
   private snappedDraggables<T>(selectors: string): T[] {
     return this.elements<T>(selectors).filter((each) => {
-      return (each as unknown as Draggable).snapped
+      return (each as unknown as DragAndDroppable).snapped
     })
   }
 }

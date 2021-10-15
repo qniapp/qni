@@ -1,10 +1,7 @@
-import {
-  CONTROL_GATE_OPERATION_TYPE,
-  ControlGateOperation,
-} from "lib/operation"
+import { CONTROL_GATE_OPERATION_TYPE, ControlGateOperation } from "lib"
 import {
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
@@ -16,7 +13,7 @@ import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class ControlGateElement extends DraggableMixin(
+export class ControlGateElement extends DragAndDroppableMixin(
   TargetableMixin(
     WireableMixin(
       DisableableMixin(
@@ -28,10 +25,10 @@ export class ControlGateElement extends DraggableMixin(
   @attr iconType = "transparent"
 
   static create({
-    draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): ControlGateElement {
-    const el = document.createElement("control-gate") as ControlGateElement
-    el.draggable = draggable
+    dragAndDrop = false,
+  }: Partial<{ dragAndDrop: boolean }> = {}): ControlGateElement {
+    const el = new ControlGateElement()
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -39,13 +36,13 @@ export class ControlGateElement extends DraggableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.draggableStyle}
+        ${this.dragAndDroppableStyle}
 
         <div id="body" data-action="mouseenter:control-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}

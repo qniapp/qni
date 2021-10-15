@@ -1,4 +1,22 @@
-import { ArrayIsh, hasOwnProperty } from "test"
+export function hasOwnProperty<K extends PropertyKey>(
+  obj: unknown,
+  key: K,
+): obj is Record<K, unknown> {
+  // @ts-ignore
+  return obj && key in obj
+}
+
+export type ArrayIsh =
+  | Array<unknown>
+  | Float32Array
+  | Float64Array
+  | Int8Array
+  | Int16Array
+  | Int32Array
+  | Uint8Array
+  | Uint16Array
+  | Uint32Array
+  | Uint8ClampedArray
 
 const GENERIC_ARRAY_TYPES = [
   Float32Array,
@@ -158,13 +176,13 @@ function equateObjects(subject: unknown, other: unknown) {
     if (k === Symbol.iterator) {
       continue
     }
-    if (!equate(subject[k], other[k])) {
+    if (!equate((subject as any)[k], (other as any)[k])) {
       return false
     }
   }
 
-  const hasSubjectIter = subject[Symbol.iterator] !== undefined
-  const hasOtherIter = other[Symbol.iterator] !== undefined
+  const hasSubjectIter = (subject as any)[Symbol.iterator] !== undefined
+  const hasOtherIter = (other as any)[Symbol.iterator] !== undefined
   if (hasSubjectIter !== hasOtherIter) {
     return false
   }

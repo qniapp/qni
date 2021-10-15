@@ -1,5 +1,5 @@
+import { ArrayIsh, describe, equate, hasOwnProperty } from "lib/base"
 import { Complex } from "lib/math/complex"
-import { describe, equate } from "lib/base"
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)
@@ -104,26 +104,6 @@ function isApproximatelyEqualToHelperDestructured(
       ),
   )
 }
-
-export function hasOwnProperty<K extends PropertyKey>(
-  obj: unknown,
-  key: K,
-): obj is Record<K, unknown> {
-  // @ts-ignore
-  return obj && key in obj
-}
-
-export type ArrayIsh =
-  | Array<unknown>
-  | Float32Array
-  | Float64Array
-  | Int8Array
-  | Int16Array
-  | Int32Array
-  | Uint8Array
-  | Uint16Array
-  | Uint32Array
-  | Uint8ClampedArray
 
 export function isArrayIsh(value: unknown): value is ArrayIsh {
   return (

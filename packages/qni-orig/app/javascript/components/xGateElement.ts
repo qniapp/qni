@@ -2,7 +2,7 @@ import {
   ConfigurableMixin,
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   IfableMixin,
@@ -12,12 +12,12 @@ import {
   WireableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { XGateOperation, X_GATE_OPERATION_TYPE } from "lib/operation"
+import { XGateOperation, X_GATE_OPERATION_TYPE } from "lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class XGateElement extends ConfigurableMixin(
-  DraggableMixin(
+  DragAndDroppableMixin(
     ControllableMixin(
       WireableMixin(
         LabelableMixin(
@@ -36,11 +36,11 @@ export class XGateElement extends ConfigurableMixin(
   @attr iconType = "circle"
 
   static create({
-    draggable = false,
+    dragAndDrop = false,
     ifVar = "",
-  }: Partial<{ draggable: boolean; ifVar: string }> = {}): XGateElement {
-    const el = document.createElement("x-gate") as XGateElement
-    el.draggable = draggable
+  }: Partial<{ dragAndDrop: boolean; ifVar: string }> = {}): XGateElement {
+    const el = new XGateElement()
+    el.dragAndDrop = dragAndDrop
     el.if = ifVar
     return el
   }
@@ -49,7 +49,7 @@ export class XGateElement extends ConfigurableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
     this.addEventListener("mouseenter", this.showHelp)
     this.addEventListener("mousedown", this.showRightClickPopup)
   }
@@ -57,7 +57,7 @@ export class XGateElement extends ConfigurableMixin(
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
 
         <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,

@@ -1,4 +1,4 @@
-import { Simulator } from "lib/simulator.ts"
+import { Simulator } from "lib"
 
 self.addEventListener(
   "message",

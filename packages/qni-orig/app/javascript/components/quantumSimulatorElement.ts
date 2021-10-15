@@ -3,7 +3,7 @@ import { BlochDisplayElement } from "components/blochDisplayElement"
 import { CircleNotationElement } from "components/circleNotationElement"
 import { CircuitStepElement } from "components/circuitStepElement"
 import { Complex } from "lib/math"
-import { Draggable } from "./mixins"
+import { DragAndDroppable } from "./mixins"
 import { MeasurementGateElement } from "components/measurementGateElement"
 import { QuantumCircuitElement } from "components/quantumCircuitElement"
 import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
@@ -39,9 +39,14 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.circleNotation = null
     this.visibleQubitCircleKets = []
 
-    this.addEventListener("draggable.grab", this.prepareDraggableDrop)
-    this.addEventListener("draggable.ungrab", this.proxyDraggableUngrabEvent)
-    this.addEventListener("draggable.trash", this.resizeAndRunCircuit)
+    this.addEventListener("dragAndDroppable.grab", this.prepareDraggableDrop)
+    this.addEventListener(
+      "dragAndDroppable.ungrab",
+      this.proxyDraggableUngrabEvent,
+    )
+    this.addEventListener("dragAndDroppable.enddragging", this.finishEditing)
+    this.addEventListener("dragAndDroppable.trash", this.resizeAndRunCircuit)
+
     this.addEventListener("step.drop", this.resizeAndRunCircuit)
     this.addEventListener("step.click", this.gotoClickedStep)
     this.addEventListener("step.hover", this.showStateVectorOfHoveredStep)
@@ -211,7 +216,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   private prepareDraggableDrop(event: Event): void {
     event.stopPropagation()
 
-    const draggable = (event as CustomEvent).detail as Draggable
+    const draggable = (event as CustomEvent).detail as DragAndDroppable
     Util.notNull(draggable)
     Util.notNull(this.quantumCircuit)
 
@@ -226,7 +231,21 @@ export class QuantumSimulatorElement extends HTMLElement {
     Util.notNull(coordinates.y)
 
     this.quantumCircuit?.dispatchEvent(
-      new CustomEvent("draggable.ungrab", {
+      new CustomEvent("dragAndDroppable.ungrab", {
+        detail: { x: coordinates.x, y: coordinates.y },
+        bubbles: false,
+      }),
+    )
+  }
+
+  private finishEditing(event: Event): void {
+    const coordinates = (event as CustomEvent).detail
+    Util.notNull(coordinates)
+    Util.notNull(coordinates.x)
+    Util.notNull(coordinates.y)
+
+    this.quantumCircuit?.dispatchEvent(
+      new CustomEvent("dragAndDroppable.enddragging", {
         detail: { x: coordinates.x, y: coordinates.y },
         bubbles: false,
       }),

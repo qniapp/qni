@@ -1,5 +1,5 @@
-import { Util } from "lib/base"
 import { Complex, Matrix } from "lib/math"
+import { Util } from "lib/base"
 
 export class StateVector {
   public matrix: Matrix

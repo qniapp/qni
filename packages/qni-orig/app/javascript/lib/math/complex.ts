@@ -340,47 +340,47 @@ for (const { character, value } of UNICODE_FRACTIONS) {
   PARSE_COMPLEX_TOKEN_MAP_ALL.set(character, value)
 }
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("sqrt", {
-  unary_action: (e) => Complex.from(e).raisedTo(0.5),
+  unary_action: (e: number | Complex) => Complex.from(e).raisedTo(0.5),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("exp", {
-  unary_action: (e) => Complex.from(e).exp(),
+  unary_action: (e: number | Complex) => Complex.from(e).exp(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("ln", {
-  unary_action: (e) => Complex.from(e).ln(),
+  unary_action: (e: number | Complex) => Complex.from(e).ln(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("^", {
-  binary_action: (a, b) => Complex.from(a).raisedTo(b),
+  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).raisedTo(b),
   priority: 3,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("*", {
-  binary_action: (a, b) => Complex.from(a).times(b),
+  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).times(b),
   priority: 2,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("/", {
-  binary_action: (a, b) => Complex.from(a).dividedBy(b),
+  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).dividedBy(b),
   priority: 2,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("-", {
-  unary_action: (e) => Complex.from(e).neg(),
-  binary_action: (a, b) => Complex.from(a).minus(b),
+  unary_action: (e: number | Complex) => Complex.from(e).neg(),
+  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).minus(b),
   priority: 1,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("+", {
   unary_action: (e: number | Complex) => e,
-  binary_action: (a: number | Complex, b) => Complex.from(a).plus(b),
+  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).plus(b),
   priority: 1,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("√", PARSE_COMPLEX_TOKEN_MAP_ALL.get("sqrt"))
 
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("cos", {
-  unary_action: (e) => new Complex(Math.PI / 180, 0).times(e).cos(),
+  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).cos(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("sin", {
-  unary_action: (e) => new Complex(Math.PI / 180, 0).times(e).sin(),
+  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).sin(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("asin", {
@@ -411,11 +411,11 @@ PARSE_COMPLEX_TOKEN_MAP_DEG.set(
 )
 
 PARSE_COMPLEX_TOKEN_MAP_RAD.set("cos", {
-  unary_action: (e) => Complex.from(e).cos(),
+  unary_action: (e: number | Complex) => Complex.from(e).cos(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_RAD.set("sin", {
-  unary_action: (e) => Complex.from(e).sin(),
+  unary_action: (e: number | Complex) => Complex.from(e).sin(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_RAD.set("tan", {

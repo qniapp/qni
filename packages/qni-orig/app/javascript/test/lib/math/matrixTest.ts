@@ -652,7 +652,8 @@ QUnit.module("Matrix", () => {
     )
 
     // Pure states as vectors along each axis.
-    const f = (...m) => Matrix.col(...m).times(Matrix.col(...m).adjoint())
+    const f = (...m: Array<number | Complex>) =>
+      Matrix.col(...m).times(Matrix.col(...m).adjoint())
     const i = Complex.I
     const mi = i.times(-1)
     assert.equates(f(1, 0).qubitDensityMatrixToBlochVector(), [0, 0, 1])

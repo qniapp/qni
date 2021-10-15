@@ -1,8 +1,7 @@
 /* eslint-env qunit */
 
 import { Complex, Matrix } from "lib/math"
-import { Simulator } from "lib/simulator"
-import { StateVector } from "lib/simulator/stateVector"
+import { Simulator, StateVector } from "lib"
 
 QUnit.module("Simulator", () => {
   QUnit.module(".write", () => {

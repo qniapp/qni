@@ -1,7 +1,7 @@
 import {
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   IfableMixin,
@@ -11,11 +11,11 @@ import {
   WireableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { ZGateOperation, Z_GATE_OPERATION_TYPE } from "lib/operation"
+import { ZGateOperation, Z_GATE_OPERATION_TYPE } from "lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class ZGateElement extends DraggableMixin(
+export class ZGateElement extends DragAndDroppableMixin(
   ControllableMixin(
     WireableMixin(
       LabelableMixin(
@@ -33,10 +33,10 @@ export class ZGateElement extends DraggableMixin(
   @attr iconType = "square"
 
   static create({
-    draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): ZGateElement {
-    const el = document.createElement("z-gate") as ZGateElement
-    el.draggable = draggable
+    dragAndDrop = false,
+  }: Partial<{ dragAndDrop: boolean }> = {}): ZGateElement {
+    const el = new ZGateElement()
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -44,13 +44,13 @@ export class ZGateElement extends DraggableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
 
         <div id="body" data-action="mouseenter:z-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}

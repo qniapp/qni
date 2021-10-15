@@ -1,3 +1,7 @@
+@import "tippy.js/dist/border.css";
+@import "tippy.js/dist/svg-arrow.css";
+@import "tippy.js/dist/tippy.css";
+
 .tippy-box[data-theme~="qni"] {
   @apply bg-snow;
   @apply border-2 border-solid border-eel;

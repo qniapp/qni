@@ -2,7 +2,7 @@ import {
   ConfigurableMixin,
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   IfableMixin,
@@ -11,13 +11,13 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "./mixins"
-import { HGateOperation, H_GATE_OPERATION_TYPE } from "lib/operation"
+import { HGateOperation, H_GATE_OPERATION_TYPE } from "lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
 export class HGateElement extends ConfigurableMixin(
-  DraggableMixin(
+  DragAndDroppableMixin(
     ControllableMixin(
       WireableMixin(
         LabelableMixin(
@@ -36,11 +36,11 @@ export class HGateElement extends ConfigurableMixin(
   @attr iconType = "square"
 
   static create({
-    draggable = false,
+    dragAndDrop = false,
     ifVar = "",
-  }: Partial<{ draggable: boolean; ifVar: string }> = {}): HGateElement {
-    const el = document.createElement("h-gate") as HGateElement
-    el.draggable = draggable
+  }: Partial<{ dragAndDrop: boolean; ifVar: string }> = {}): HGateElement {
+    const el = new HGateElement()
+    el.dragAndDrop = dragAndDrop
     el.if = ifVar
     return el
   }
@@ -49,7 +49,7 @@ export class HGateElement extends ConfigurableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
     this.addEventListener("mouseenter", this.showHelp)
     this.addEventListener("mousedown", this.showRightClickPopup)
   }
@@ -57,7 +57,7 @@ export class HGateElement extends ConfigurableMixin(
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.draggableStyle} ${this.disabledStyle}
+        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
 
         <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
       this.shadowRoot!,

@@ -1,7 +1,7 @@
 import {
   ControllableMixin,
   DisableableMixin,
-  DraggableMixin,
+  DragAndDroppableMixin,
   HelpableMixin,
   IconableMixin,
   JsonableMixin,
@@ -9,12 +9,12 @@ import {
   TargetableMixin,
   WireableMixin,
 } from "./mixins"
-import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "lib/operation"
+import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 
 @controller
-export class SwapGateElement extends DraggableMixin(
+export class SwapGateElement extends DragAndDroppableMixin(
   TargetableMixin(
     ControllableMixin(
       WireableMixin(
@@ -30,10 +30,10 @@ export class SwapGateElement extends DraggableMixin(
   @attr iconType = "transparent"
 
   static create({
-    draggable = false,
-  }: Partial<{ draggable: boolean }> = {}): SwapGateElement {
-    const el = document.createElement("swap-gate") as SwapGateElement
-    el.draggable = draggable
+    dragAndDrop = false,
+  }: Partial<{ dragAndDrop: boolean }> = {}): SwapGateElement {
+    const el = new SwapGateElement()
+    el.dragAndDrop = dragAndDrop
     return el
   }
 
@@ -41,13 +41,13 @@ export class SwapGateElement extends DraggableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
-    this.initDraggable()
+    this.initDragAndDrop()
   }
 
   update(): void {
     render(
       html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.draggableStyle}
+        ${this.dragAndDroppableStyle}
 
         <div id="body" data-action="mouseenter:swap-gate#showHelp">
           ${this.wiresSvg} ${this.iconSvg}

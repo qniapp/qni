@@ -1,7 +1,7 @@
 import { DetailedError } from "lib/base"
 import { seq } from "lib/base/seq"
 
-function _mergeScientificFloatTokens(tokens: Array<string>): Array<string> {
+function _mergeScientificFloatTokens(tokens: string[]): string[] {
   tokens = [...tokens]
   for (
     let i = tokens.indexOf("e", 1);
@@ -13,11 +13,11 @@ function _mergeScientificFloatTokens(tokens: Array<string>): Array<string> {
     if (!/[0-9]/.exec(tokens[s])) {
       continue
     }
-    if (/[+-]/.exec(tokens[e] + "")) {
+    if (/[+-]/.exec(`${tokens[e]}`)) {
       e += 1
     }
 
-    if (/[0-9]/.exec(tokens[e] + "")) {
+    if (/[0-9]/.exec(`${tokens[e]}`)) {
       e += 1
       tokens.splice(s, e - s, tokens.slice(s, e).join(""))
       i -= 1
@@ -26,7 +26,7 @@ function _mergeScientificFloatTokens(tokens: Array<string>): Array<string> {
   return tokens
 }
 
-function _tokenize(text: string): Array<string> {
+function _tokenize(text: string): string[] {
   const tokens = seq(text.toLowerCase().split(/\s/))
     .flatMap((part: string) =>
       seq(part)
@@ -86,28 +86,24 @@ export function parseFormula<T>(
     tokens = tokens.slice(0, tokens.length - 1)
   }
 
-  const ops = []
-  const vals = []
+  const ops: Array<string | { f: unknown; w: unknown }> = []
+  const vals: Array<string | undefined> = []
 
   // Hack: use the 'priority' field as a signal of 'is an operation'
-  const isValidEndToken = (token) =>
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    token !== "(" && token.priority === undefined
+  const isValidEndToken = (token: string) =>
+    token !== "(" && (token as any).priority === undefined
   const isValidEndState = () => vals.length === 1 && ops.length === 0
 
-  const apply = (op) => {
+  const apply = (op: string) => {
     if (op === "(") {
       throw new DetailedError("Bad expression: unmatched '('", { text })
     }
     if (vals.length < 2) {
       throw new DetailedError("Bad expression: operated on nothing", { text })
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const b = vals.pop()
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const a = vals.pop()
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-    vals.push(op.f(a, b))
+    vals.push((op as any).f(a, b))
   }
 
   const closeParen = () => {
@@ -116,73 +112,69 @@ export function parseFormula<T>(
       if (ops.length === 0) {
         throw new DetailedError("Bad expression: unmatched ')'", { text })
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const op = ops.pop()
       if (op === "(") {
         break
       }
-      apply(op)
+      apply(op as string)
     }
   }
 
-  const burnOps = (w) => {
+  const burnOps = (w: number) => {
     while (
       ops.length > 0 &&
       vals.length >= 2 &&
       vals[vals.length - 1] !== undefined
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const top = ops[ops.length - 1]
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (top.w === undefined || top.w < w) {
+      if ((top as any).w === undefined || (top as any).w < w) {
         break
       }
-      apply(ops.pop())
+      apply(ops.pop()! as string)
     }
   }
 
-  const feedOp = (couldBeBinary, token) => {
+  const feedOp = (couldBeBinary: boolean, token: string) => {
     // Implied multiplication?
     const mul = tokenMap.get("*")
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (couldBeBinary && token.binary_action === undefined && token !== ")") {
+    if (
+      couldBeBinary &&
+      (token as any).binary_action === undefined &&
+      token !== ")"
+    ) {
       // @ts-ignore
       burnOps(mul.priority)
       // @ts-ignore
-      ops.push({ f: mul.binary_action, w: mul.priority }) // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+      ops.push({ f: mul.binary_action, w: mul.priority })
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (couldBeBinary && token.binary_action !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      burnOps(token.priority)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      ops.push({ f: token.binary_action, w: token.priority })
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    } else if (token.unary_action !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      burnOps(token.priority)
+    if (couldBeBinary && (token as any).binary_action !== undefined) {
+      burnOps((token as any).priority)
+      ops.push({ f: (token as any).binary_action, w: (token as any).priority })
+    } else if ((token as any).unary_action !== undefined) {
+      burnOps((token as any).priority)
       vals.push(undefined)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      ops.push({ f: (a, b) => token.unary_action(b), w: Infinity })
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-    } else if (token.binary_action !== undefined) {
+      ops.push({
+        f: (_a: unknown, b: unknown) => (token as any).unary_action(b),
+        w: Infinity,
+      })
+    } else if ((token as any).binary_action !== undefined) {
       throw new DetailedError("Bad expression: binary op in bad spot", { text })
     }
   }
 
   let wasValidEndToken = false
   for (const token of tokens) {
-    feedOp(wasValidEndToken, token)
+    feedOp(wasValidEndToken, token as string)
 
-    wasValidEndToken = isValidEndToken(token)
+    wasValidEndToken = isValidEndToken(token as string)
 
     if (token === "(") {
       ops.push("(")
     } else if (token === ")") {
       closeParen()
     } else if (wasValidEndToken) {
-      vals.push(token)
+      vals.push(token as string)
     }
   }
   burnOps(-Infinity)
@@ -191,5 +183,5 @@ export function parseFormula<T>(
     throw new DetailedError("Incomplete expression", { text })
   }
 
-  return vals[0]
+  return vals[0] as unknown as T
 }

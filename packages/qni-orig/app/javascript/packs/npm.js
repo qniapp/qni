@@ -1,5 +1,0 @@
-import "components"
-import "stylesheets/tippy"
-import "tippy.js/dist/border.css"
-import "tippy.js/dist/svg-arrow.css"
-import "tippy.js/dist/tippy.css"

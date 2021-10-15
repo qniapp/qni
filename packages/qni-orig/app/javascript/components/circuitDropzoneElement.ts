@@ -9,13 +9,14 @@ import {
   CircuitOperationElement,
   IGateOperation,
   I_GATE_OPERATION_TYPE,
-} from "lib/operation"
-import { Draggable, Operation } from "./mixins"
+} from "lib"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "components/circuitStepElement"
+import { DragAndDroppable } from "./mixins/dragAndDroppable"
+import { Operation } from "./mixins/sizeable"
 
-import interact from "@interactjs/interact"
+import interact from "interactjs"
 
 class IGate {
   serialize(): IGateOperation {
@@ -95,7 +96,7 @@ export class CircuitDropzoneElement extends HTMLElement {
     const el = this.children[0] as HTMLElement
 
     if (el === undefined) return null
-    if (!(el as unknown as Draggable).snapped) return null
+    if (!(el as unknown as DragAndDroppable).snapped) return null
 
     return el as CircuitOperationElement
   }
@@ -117,8 +118,8 @@ export class CircuitDropzoneElement extends HTMLElement {
     const rect = this.getBoundingClientRect()
 
     return {
-      x: rect.left + this.clientWidth / 2,
-      y: rect.top + this.clientHeight / 2,
+      x: window.pageXOffset + rect.left + this.clientWidth / 2,
+      y: window.pageYOffset + rect.top + this.clientHeight / 2,
     }
   }
 
@@ -173,13 +174,13 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.addSlotChangeEventListener()
     this.initDropzone()
 
-    this.addEventListener("draggable.grab", this.enableDrop)
+    this.addEventListener("dragAndDroppable.grab", this.enableDrop)
     this.addEventListener(
-      "draggable.enddragging",
+      "dragAndDroppable.enddragging",
       this.dispatchDropzoneDroppedEvent,
     )
-    this.addEventListener("draggable.snap", this.snapDraggable)
-    this.addEventListener("draggable.unsnap", this.unsnapDraggable)
+    this.addEventListener("dragAndDroppable.snap", this.snapDraggable)
+    this.addEventListener("dragAndDroppable.unsnap", this.unsnapDraggable)
   }
 
   private dispatchDropzoneDroppedEvent(): void {
@@ -491,7 +492,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   private initDropzone(): void {
     interact(this).dropzone({
-      accept: "[data-draggable]",
+      accept: "[data-drag-and-drop]",
       overlap: "center",
     })
   }
@@ -505,7 +506,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private snapDraggable(event: Event): void {
-    const draggable = (event as CustomEvent).detail as Draggable
+    const draggable = (event as CustomEvent).detail as DragAndDroppable
 
     this.append(draggable as unknown as Node)
     draggable.moveTo(0, 0)

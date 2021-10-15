@@ -1,11 +1,12 @@
-import { Breakpoint, Util, classNameFor } from "lib/base"
 import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
+import { Util, classNameFor } from "lib/base"
 import noUiSlider, {
   PipsMode,
   API as noUiSliderApi,
   target as noUiSliderTarget,
 } from "nouislider"
 import tippy, { Instance, Props, roundArrow } from "tippy.js"
+import { DisplaySize } from "lib"
 import Fraction from "fraction.js"
 import { HGateElement } from "components/hGateElement"
 import { MeasurementGateElement } from "components/measurementGateElement"
@@ -51,7 +52,7 @@ export class GatePopup {
   currentAngleDenominator!: number | null
 
   show(element: HTMLElement): void {
-    if (Breakpoint.isMobile()) return
+    if (DisplaySize.isMobile()) return
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this

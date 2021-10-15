@@ -6,13 +6,6 @@ export class CircuitBlockElement extends HTMLElement {
   @attr comment = ""
   @attr finalized = false
 
-  static create(comment: string): CircuitBlockElement {
-    const el = document.createElement("circuit-block") as CircuitBlockElement
-    el.comment = comment
-    el.setAttribute("data-targets", "quantum-circuit.blocks")
-    return el
-  }
-
   finalize(): void {
     this.finalized = true
   }
