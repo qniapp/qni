@@ -15,6 +15,7 @@ export class CircleNotationElement extends HTMLElement {
   @attr magnitudes = "1.0"
   @attr phases = ""
   @attr multiQubits = false
+  @attr showKets = false
 
   @targets qubitCircles: HTMLElement[]
   @targets qubitCircleGroups: HTMLElement[]
@@ -459,6 +460,21 @@ export class CircleNotationElement extends HTMLElement {
               height: 17px;
               width: 17px;
             }
+          }
+
+          :host([data-show-kets]) .qubit-circle::before {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            white-space: nowrap;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+            color: var(--colors-wolf, #777777);
+            margin-bottom: -24px;
+            content: "|" attr(data-ket) "⟩";
           }
 
           .qubit-circle__magnitude {
