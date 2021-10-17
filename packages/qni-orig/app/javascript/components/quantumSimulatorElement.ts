@@ -47,6 +47,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener("dragAndDroppable.enddragging", this.finishEditing)
     this.addEventListener("dragAndDroppable.trash", this.resizeAndRunCircuit)
 
+    this.addEventListener("step.load", this.makeStepHoverable)
     this.addEventListener("step.drop", this.resizeAndRunCircuit)
     this.addEventListener("step.click", this.gotoClickedStep)
     this.addEventListener("step.hover", this.showStateVectorOfHoveredStep)
@@ -181,6 +182,12 @@ export class QuantumSimulatorElement extends HTMLElement {
     const stepIndex = this.fetchStepIndex(step)
 
     this.drawStateVector(stepIndex)
+  }
+
+  private makeStepHoverable(event: Event): void {
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    step.hoverable = true
   }
 
   private resizeAndRunCircuit(): void {

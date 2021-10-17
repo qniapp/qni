@@ -24,6 +24,7 @@ export class CircuitStepElement extends HTMLElement {
   @attr breakpoint = false
   @attr keep = false
   @attr shadow = false
+  @attr hoverable = false
 
   @target slotEl: HTMLSlotElement
 
@@ -205,6 +206,13 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.attachShadow({ mode: "open" })
+    this.update()
+    this.addSlotChangeEventListener()
+    this.updateConnections()
+    this.updateWires()
+    this.dispatchStepLoadEvent()
+
     this.addEventListener("mouseenter", this.dispatchStepHoverEvent)
     this.addEventListener("dropzone.snap", this.dispatchStepHoverEvent)
     this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
@@ -213,12 +221,12 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener("dragAndDroppable.grab", this.dispatchStepSnapEvent)
     this.addEventListener("dragAndDroppable.enddragging", this.unsnap)
     this.addEventListener("click", this.activate)
+  }
 
-    this.attachShadow({ mode: "open" })
-    this.update()
-    this.addSlotChangeEventListener()
-    this.updateConnections()
-    this.updateWires()
+  private dispatchStepLoadEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("step.load", { detail: this, bubbles: true }),
+    )
   }
 
   dispatchStepHoverEvent(): void {
@@ -257,6 +265,9 @@ export class CircuitStepElement extends HTMLElement {
             display: flex;
             flex-direction: column;
             justify-content: center;
+          }
+
+          :host([data-hoverable]) {
             cursor: pointer;
           }
 
