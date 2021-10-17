@@ -309,6 +309,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener("step.snap", this.updateAllSteps)
     this.addEventListener("step.snap", this.updateNqubit)
 
+    this.addEventListener("step.unsnap", this.unsnapStep)
     this.addEventListener("step.unsnap", this.updateAllSteps)
     this.addEventListener("step.unsnap", this.updateNqubit)
 
@@ -384,8 +385,17 @@ export class QuantumCircuitElement extends HTMLElement {
       if (this.editing) each.active = false
       each.snap = false
     }
-    if (this.editing) step!.active = true
-    step!.snap = true
+    if (this.editing) step.active = true
+    step.snap = true
+  }
+
+  private unsnapStep(event: Event): void {
+    if (!this.interactive) return
+
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    if (this.editing) step.active = false
+    step.snap = false
   }
 
   attributeChangedCallback(

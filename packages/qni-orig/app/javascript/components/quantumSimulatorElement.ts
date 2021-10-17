@@ -209,6 +209,8 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private makeStepHoverable(event: Event): void {
+    if (this.quantumCircuit?.editing) return
+
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     step.hoverable = true

@@ -133,13 +133,13 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       if (DisplaySize.isMobile()) return
 
       if (!this.snapped) {
-        this.trash()
         this.dispatchEvent(
           new CustomEvent("dragAndDroppable.enddragging", {
             detail: { x: event.clientX, y: event.clientY },
             bubbles: true,
           }),
         )
+        this.trash()
         return
       }
 
