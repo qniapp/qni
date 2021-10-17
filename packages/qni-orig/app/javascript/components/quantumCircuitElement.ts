@@ -305,8 +305,6 @@ export class QuantumCircuitElement extends HTMLElement {
       this.dispatchStepHoverEvent,
     )
 
-    this.addEventListener("step.click", this.breakpointClickedStep)
-
     this.addEventListener("step.snap", this.snapStep)
     this.addEventListener("step.snap", this.updateAllSteps)
     this.addEventListener("step.snap", this.updateNqubit)
@@ -370,15 +368,6 @@ export class QuantumCircuitElement extends HTMLElement {
   setBreakpoint(stepIndex: number): void {
     const step = this.steps[stepIndex]
     this.breakpointStepIndex = stepIndex
-
-    for (const each of this.steps) {
-      each.breakpoint = false
-    }
-    step!.breakpoint = true
-  }
-
-  private breakpointClickedStep(event: Event): void {
-    const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.steps) {
       each.breakpoint = false

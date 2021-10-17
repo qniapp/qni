@@ -49,7 +49,10 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     this.addEventListener("step.load", this.makeStepHoverable)
     this.addEventListener("step.drop", this.resizeAndRunCircuit)
+
+    this.addEventListener("step.click", this.breakpointClickedStep)
     this.addEventListener("step.click", this.gotoClickedStep)
+
     this.addEventListener("step.hover", this.activateHoveredStep)
     this.addEventListener("step.hover", this.showStateVectorOfHoveredStep)
     this.addEventListener("step.snap", this.run)
@@ -169,6 +172,15 @@ export class QuantumSimulatorElement extends HTMLElement {
   private setBreakpointAndShowStateVector(stepIndex: number): void {
     this.quantumCircuit!.setBreakpoint(stepIndex)
     this.drawStateVector(stepIndex)
+  }
+
+  private breakpointClickedStep(event: Event): void {
+    const step = (event as CustomEvent).detail as CircuitStepElement
+
+    for (const each of this.quantumCircuit!.steps) {
+      each.breakpoint = false
+    }
+    step!.breakpoint = true
   }
 
   private gotoClickedStep(event: Event): void {
