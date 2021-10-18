@@ -43,10 +43,10 @@ export class CircleNotationElement extends HTMLElement {
     if (this.shadowRoot !== null) return
     this.attachShadow({ mode: "open" })
     this.update()
+    this.initQubitCirclePopup(this.qubitCircles)
 
     if (this.multiQubits) {
       this.startQubitCircleVisibilityObserver()
-      this.initQubitCirclePopup(this.qubitCircles)
       this.dispatchLoadedEvent()
     }
   }
@@ -827,10 +827,12 @@ export class CircleNotationElement extends HTMLElement {
     }
     for (const [i, each] of this.phases.split(",").entries()) {
       const qubitCircle = this.qubitCircles[i]
+      const phase = each ? parseFloat(each) : 0
+      this.setRoundedPhase(qubitCircle, phase)
       const qubitCirclePhaseEl = qubitCircle!.querySelector(
         ".qubit-circle__phase",
       ) as HTMLElement
-      qubitCirclePhaseEl!.style.transform = `rotate(${-parseFloat(each)}deg)`
+      qubitCirclePhaseEl!.style.transform = `rotate(${-phase}deg)`
     }
   }
 
@@ -957,6 +959,7 @@ export class CircleNotationElement extends HTMLElement {
 
   private initQubitCirclePopup(qubitCircles: HTMLElement[]): void {
     const tippyInstances = tippy(qubitCircles)
+
     createSingleton(tippyInstances, {
       allowHTML: true,
       animation: false,
@@ -967,7 +970,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   setPopupContent(event: MouseEvent): void {
-    if (!this.multiQubits) return
+    if (this.popupEl === null) return
 
     const qubitCircleEl = event.target as HTMLElement
     const ket = this.ketDecimal(qubitCircleEl)
@@ -976,37 +979,31 @@ export class CircleNotationElement extends HTMLElement {
     const dataMagnitude = qubitCircleEl.getAttribute("data-magnitude")
     const dataPhase = qubitCircleEl.getAttribute("data-phase")
 
-    if (
-      dataAmpReal === null ||
-      dataAmpImag === null ||
-      dataMagnitude === null ||
-      dataPhase === null
-    ) {
-      this.setQubitCirclePopupContent(
-        this.popupEl!.content,
-        qubitCircleEl,
-        ket,
-        Complex.ZERO,
-        0,
-        0,
-        this.qubitCount,
-      )
-    } else {
-      const amplitude = new Complex(
-        parseFloat(dataAmpReal),
-        parseFloat(dataAmpImag),
-      )
+    let amplitude: Complex
 
-      this.setQubitCirclePopupContent(
-        this.popupEl!.content,
-        qubitCircleEl,
-        ket,
-        amplitude,
-        parseFloat(dataMagnitude),
-        parseFloat(dataPhase),
-        this.qubitCount,
-      )
+    if (dataAmpReal === null || dataAmpImag === null) {
+      amplitude = Complex.ZERO
+    } else {
+      amplitude = new Complex(parseFloat(dataAmpReal), parseFloat(dataAmpImag))
     }
+
+    let phase
+
+    if (dataMagnitude && parseFloat(dataMagnitude) === 0) {
+      phase = 0
+    } else {
+      phase = dataPhase ? parseFloat(dataPhase) : 0
+    }
+
+    this.setQubitCirclePopupContent(
+      this.popupEl!.content,
+      qubitCircleEl,
+      ket,
+      amplitude,
+      dataMagnitude ? parseFloat(dataMagnitude) : 0,
+      phase,
+      this.qubitCount,
+    )
   }
 
   private setQubitCirclePopupContent(
@@ -1049,15 +1046,32 @@ export class CircleNotationElement extends HTMLElement {
     )
     const phaseEl = popupFrag.querySelector(".circle-notation-popup__phase")
 
-    ketBinaryEl!.textContent = ket.toString(2).padStart(nqubit, "0")
-    ketDecimalEl!.textContent = ket.toString()
-    amplitudeRealEl!.textContent = this.forceSigned(amplitude.real, 5)
-    amplitudeImagEl!.textContent = `${this.forceSigned(amplitude.imag, 5)}i`
-    probabilityEl!.textContent = `${this.forceSigned(
-      magnitude * magnitude * 100,
-      4,
-    )}%`
-    phaseEl!.textContent = `${this.forceSigned(phase, 2)}°`
+    if (ketBinaryEl) {
+      ketBinaryEl.textContent = ket.toString(2).padStart(nqubit, "0")
+    }
+
+    if (ketDecimalEl) {
+      ketDecimalEl.textContent = ket.toString()
+    }
+
+    if (amplitudeRealEl) {
+      amplitudeRealEl.textContent = this.forceSigned(amplitude.real, 5)
+    }
+
+    if (amplitudeImagEl) {
+      amplitudeImagEl.textContent = `${this.forceSigned(amplitude.imag, 5)}i`
+    }
+
+    if (probabilityEl) {
+      probabilityEl.textContent = `${this.forceSigned(
+        magnitude * magnitude * 100,
+        4,
+      )}%`
+    }
+
+    if (phaseEl) {
+      phaseEl.textContent = `${this.forceSigned(phase, 2)}°`
+    }
 
     const div = document.createElement("div")
     div.appendChild(popupFrag.cloneNode(true))
@@ -1066,7 +1080,9 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get popupEl(): HTMLTemplateElement | null {
-    return this.querySelector("#circle-notation-popup") as HTMLTemplateElement
+    return document.getElementById(
+      "circle-notation-popup",
+    ) as HTMLTemplateElement
   }
 
   private forceSigned(value: number, d: number): string {
