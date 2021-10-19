@@ -81,7 +81,7 @@ export class RunCircuitButtonElement extends HTMLElement {
     this.attachShadow({ mode: "open" })
     this.update()
     this.dispatchEvent(
-      new Event("run-circuit-button.loaded", {
+      new Event("run-circuit-button.load", {
         bubbles: true,
       }),
     )

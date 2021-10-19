@@ -1,20 +1,38 @@
 import { Simulator } from "lib"
+import { Util } from "lib/base"
 
 self.addEventListener(
   "message",
   function (e) {
-    const nqubit = e.data.nqubit
+    const json = e.data.json
+    const qubitCount = e.data.qubitCount
+    const stepIndex = e.data.stepIndex
     const steps = e.data.steps
     const targets = e.data.targets
-    const simulator = new Simulator("0".repeat(nqubit))
+    const simulator = new Simulator("0".repeat(qubitCount))
+
+    Util.notNull(json)
+    Util.notNull(qubitCount)
+    Util.notNull(stepIndex)
+    Util.notNull(steps)
+    Util.notNull(targets)
+
+    // console.log(`[SW] json = '${json}'`)
+    // console.log(`[SW] qubitCount = ${qubitCount}`)
+    // console.log(`[SW] stepIndex = ${stepIndex}`)
+    // console.log(`[SW] steps = ${describe(steps)}`)
+    // console.log(`[SW] targets = ${describe(targets)}`)
 
     steps.forEach((operations, i) => {
+      Util.need(qubitCount === operations.length,
+                `qubitCount (${qubitCount}) === operations.length (${operations.length})`)
+
       simulator.runStep(operations)
 
       self.postMessage({
         type: "step",
         step: i,
-        amplitudes: simulator.amplitudes(targets),
+        amplitudes: i === stepIndex ? simulator.amplitudes(targets) : [],
         blochVectors: simulator.blochVectors,
         measuredBits: simulator.measuredBits,
         flags: simulator.flags,

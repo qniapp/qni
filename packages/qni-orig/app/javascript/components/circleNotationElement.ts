@@ -47,16 +47,29 @@ export class CircleNotationElement extends HTMLElement {
 
     if (this.multiQubits) {
       this.startQubitCircleVisibilityObserver()
-      this.dispatchLoadedEvent()
+      this.dispatchLoadEvent()
     }
   }
 
-  private dispatchLoadedEvent(): void {
+  private dispatchLoadEvent(): void {
     this.dispatchEvent(
-      new Event("circle-notation.loaded", {
+      new Event("circle-notation.load", {
         bubbles: true,
       }),
     )
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string | null,
+    newValue: string | null,
+  ): void {
+    if (this.shadowRoot === null) return
+    if (oldValue === newValue) return
+
+    if (name === "data-qubit-count") {
+      this.dispatchVisibilityChangedEvent()
+    }
   }
 
   private startQubitCircleVisibilityObserver(): void {
@@ -72,12 +85,7 @@ export class CircleNotationElement extends HTMLElement {
             "data-targets",
             "circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups",
           )
-          this.dispatchEvent(
-            new CustomEvent("circle-notation.visibilityChanged", {
-              detail: this.visibleQubitCircleKets,
-              bubbles: true,
-            }),
-          )
+          this.dispatchVisibilityChangedEvent()
         } else if (each.intersectionRatio === 0) {
           group.setAttribute(
             "data-targets",
@@ -92,13 +100,24 @@ export class CircleNotationElement extends HTMLElement {
     }
   }
 
-  private get visibleQubitCircleKets(): number[] {
-    return this.visibleQubitCircles.map((each) =>
-      parseInt(each.getAttribute("data-ket")!),
+  private dispatchVisibilityChangedEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("circle-notation.visibilityChanged", {
+        detail: this.visibleQubitCircleKets,
+        bubbles: true,
+      }),
     )
   }
 
-  private get visibleQubitCircles(): HTMLElement[] {
+  private get visibleQubitCircleKets(): number[] {
+    const maxKet = 2 ** this.qubitCount
+
+    return this.visibleQubitCircles
+      .map((each) => parseInt(each.getAttribute("data-ket")!))
+      .filter((each) => each < maxKet)
+  }
+
+  get visibleQubitCircles(): HTMLElement[] {
     const groups = this.visibleQubitCircleGroups.map(
       (each) =>
         Array.from(each.querySelectorAll(".qubit-circle")) as HTMLElement[],

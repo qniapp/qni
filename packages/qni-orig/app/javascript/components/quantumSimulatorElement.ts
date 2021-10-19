@@ -22,8 +22,6 @@ type MessageEventData = {
 export class QuantumSimulatorElement extends HTMLElement {
   @attr serviceWorker = "/serviceworker.js"
 
-  private amplitudes: Array<{ [ket: number]: Complex }> | undefined
-
   declare worker: Worker
 
   private quantumCircuit: QuantumCircuitElement | null
@@ -39,47 +37,61 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.circleNotation = null
     this.visibleQubitCircleKets = []
 
+    this.addEventListener("circuit.loaded", this.registerQuantumCircuit)
+
     this.addEventListener("dragAndDroppable.grab", this.prepareDraggableDrop)
     this.addEventListener(
       "dragAndDroppable.ungrab",
       this.proxyDraggableUngrabEvent,
     )
     this.addEventListener("dragAndDroppable.enddragging", this.finishEditing)
-    this.addEventListener("dragAndDroppable.trash", this.resizeAndRunCircuit)
+
+    this.addEventListener("dragAndDroppable.trash", this.resizeCircuit)
+    this.addEventListener("dragAndDroppable.trash", this.run)
 
     this.addEventListener("step.load", this.makeStepHoverable)
-    this.addEventListener("step.drop", this.resizeAndRunCircuit)
 
-    this.addEventListener("step.click", this.breakpointClickedStep)
-    this.addEventListener("step.click", this.gotoClickedStep)
+    this.addEventListener("step.drop", this.resizeCircuit)
+    this.addEventListener("step.drop", this.run)
 
     this.addEventListener("step.hover", this.activateHoveredStep)
-    this.addEventListener("step.hover", this.showStateVectorOfHoveredStep)
+    this.addEventListener("step.hover", this.run)
+
+    this.addEventListener("step.click", this.setBreakpoint)
+    this.addEventListener("step.click", this.run)
+
     this.addEventListener("step.snap", this.run)
+
     this.addEventListener("step.unsnap", this.run)
 
-    this.addEventListener("circuit.loaded", this.registerQuantumCircuit)
-    this.addEventListener("circuit.loaded", this.run)
-    this.addEventListener("circuit.mouseleave", this.gotoBreakpoint)
+    this.addEventListener("circuit.mouseleave", this.run)
 
-    this.addEventListener("circle-notation.loaded", this.registerCircleNotation)
+    this.addEventListener("circle-notation.load", this.registerCircleNotation)
     this.addEventListener(
       "circle-notation.visibilityChanged",
-      this.showVisibleQubitCircles,
+      this.updateVisibleQubitCircleKets,
     )
+    this.addEventListener("circle-notation.visibilityChanged", this.run)
 
     this.addEventListener(
-      "run-circuit-button.loaded",
+      "run-circuit-button.load",
       this.registerRunCircuitButton,
     )
     this.addEventListener("run-circuit-button.click", this.run)
 
-    this.addEventListener("operation.change", this.run)
+    this.addEventListener("operation.popup.change", this.run)
 
     this.worker = new Worker(this.serviceWorker)
     this.worker.addEventListener("message", (e: MessageEvent) => {
+      Util.notNull(this.quantumCircuit)
+
+      const activeStep = this.quantumCircuit.activeStep
+      const breakpoint = this.quantumCircuit.breakpoint
+      const currentStep = activeStep || breakpoint
+      Util.notNull(currentStep)
+
+      const stepIndex = this.fetchStepIndex(currentStep)
       const data = e.data as MessageEventData
-      this.amplitudes = this.amplitudes || []
 
       if (data.type === "step") {
         const step = this.quantumCircuit!.steps[data.step]
@@ -111,70 +123,68 @@ export class QuantumSimulatorElement extends HTMLElement {
           each.disabled = !data.flags[each.if]
         }
 
-        const complexAmplitudes: { [ket: number]: Complex } = {}
-        for (const ket in data.amplitudes) {
-          const c = data.amplitudes[ket]
-          complexAmplitudes[ket] = new Complex(c[0], c[1])
+        if (stepIndex === data.step) {
+          const complexAmplitudes: { [ket: number]: Complex } = {}
+          for (const ket in data.amplitudes) {
+            const c = data.amplitudes[ket]
+            complexAmplitudes[ket] = new Complex(c[0], c[1])
+          }
+          this.circleNotation?.setAmplitudes(complexAmplitudes)
         }
-
-        this.amplitudes[data.step] = complexAmplitudes
       } else if (data.type === "finish") {
-        const activeStep = this.quantumCircuit!.activeStep
-        const breakpoint = this.quantumCircuit!.breakpoint
-
-        if (activeStep) {
-          const stepIndex = this.fetchStepIndex(activeStep)
-          this.drawStateVector(stepIndex)
-        } else if (breakpoint) {
-          this.gotoBreakpoint()
-        } else {
-          this.setBreakpointAndShowStateVector(0)
-        }
         this.runCircuitButton?.enable()
       }
     })
+  }
+
+  // Register components
+
+  private registerQuantumCircuit(event: Event): void {
+    this.quantumCircuit = event.target as QuantumCircuitElement
   }
 
   private registerCircleNotation(event: Event): void {
     this.circleNotation = event.target as CircleNotationElement
   }
 
-  private registerQuantumCircuit(event: Event): void {
-    this.quantumCircuit = event.target as QuantumCircuitElement
-  }
-
   private registerRunCircuitButton(event: Event): void {
     this.runCircuitButton = event.target as RunCircuitButtonElement
   }
 
-  private showVisibleQubitCircles(event: Event): void {
+  private updateVisibleQubitCircleKets(event: Event): void {
     const ketNumbers = (event as CustomEvent).detail as number[]
     Util.notNull(ketNumbers)
 
     this.visibleQubitCircleKets = ketNumbers
-    this.run()
   }
 
   private run(): void {
-    if (this.quantumCircuit === null) return
-    if (this.circleNotation === null) return
+    Util.notNull(this.quantumCircuit)
+    Util.notNull(this.circleNotation)
 
-    const nqubit = this.quantumCircuit.qubitCount
-    this.circleNotation.qubitCount = nqubit
+    const activeStep = this.quantumCircuit.activeStep
+    const breakpoint = this.quantumCircuit.breakpoint
+    const step = activeStep || breakpoint
+    Util.notNull(step)
+
+    const stepIndex = this.fetchStepIndex(step)
+
+    const serializedSteps = this.quantumCircuit.serializedSteps
+    Util.need(serializedSteps.length > 0, "non-zero step length")
+
+    const qubitCount = this.quantumCircuit.qubitCount
+    this.circleNotation.qubitCount = qubitCount
 
     this.worker.postMessage({
-      nqubit,
+      json: this.quantumCircuit.toJson(),
+      qubitCount,
+      stepIndex,
       steps: this.quantumCircuit.serializedSteps,
       targets: this.visibleQubitCircleKets,
     })
   }
 
-  private setBreakpointAndShowStateVector(stepIndex: number): void {
-    this.quantumCircuit!.setBreakpoint(stepIndex)
-    this.drawStateVector(stepIndex)
-  }
-
-  private breakpointClickedStep(event: Event): void {
+  private setBreakpoint(event: Event): void {
     const step = (event as CustomEvent).detail as CircuitStepElement
 
     for (const each of this.quantumCircuit!.steps) {
@@ -183,29 +193,17 @@ export class QuantumSimulatorElement extends HTMLElement {
     step!.breakpoint = true
   }
 
-  private gotoClickedStep(event: Event): void {
-    const step = (event as CustomEvent).detail as CircuitStepElement
-    const stepIndex = this.fetchStepIndex(step)
-
-    this.setBreakpointAndShowStateVector(stepIndex)
-  }
-
   private activateHoveredStep(event: Event): void {
-    if (this.quantumCircuit!.editing) return
+    Util.notNull(this.quantumCircuit)
+
+    if (this.quantumCircuit.editing) return
 
     const step = (event as CustomEvent).detail as CircuitStepElement
 
-    for (const each of this.quantumCircuit!.steps) {
+    for (const each of this.quantumCircuit.steps) {
       each.active = false
     }
     step.active = true
-  }
-
-  private showStateVectorOfHoveredStep(event: Event): void {
-    const step = (event as CustomEvent).detail as CircuitStepElement
-    const stepIndex = this.fetchStepIndex(step)
-
-    this.drawStateVector(stepIndex)
   }
 
   private makeStepHoverable(event: Event): void {
@@ -216,16 +214,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     step.hoverable = true
   }
 
-  private resizeAndRunCircuit(): void {
+  private resizeCircuit(): void {
     this.quantumCircuit!.resize()
-    this.run()
-  }
-
-  private gotoBreakpoint(): void {
-    const breakpoint = this.quantumCircuit?.breakpoint
-    const stepIndex = this.fetchStepIndex(breakpoint!)
-
-    this.drawStateVector(stepIndex)
   }
 
   private fetchStepIndex(step: CircuitStepElement): number {
@@ -234,16 +224,6 @@ export class QuantumSimulatorElement extends HTMLElement {
       throw new Error("CircuitStep not found")
     }
     return index
-  }
-
-  private drawStateVector(stepIndex: number): void {
-    if (this.amplitudes === undefined) return
-    if (this.circleNotation === null) return
-
-    const amplitudes = this.amplitudes[stepIndex]
-    if (!amplitudes) return
-
-    this.circleNotation.setAmplitudes(amplitudes)
   }
 
   private prepareDraggableDrop(event: Event): void {

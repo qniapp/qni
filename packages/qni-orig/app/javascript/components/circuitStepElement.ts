@@ -106,7 +106,7 @@ export class CircuitStepElement extends HTMLElement {
     return this.dropzones.indexOf(dropzoneEl)
   }
 
-  index(): number | null {
+  get index(): number | null {
     const quantumCircuitEl = this.quantumCircuitElement()
     if (quantumCircuitEl === null) return null
 
@@ -121,7 +121,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   prev(): CircuitStepElement | null {
-    const index = this.index()
+    const index = this.index
     if (index === null || index === 0) return null
 
     const quantumCircuitEl = this.quantumCircuitElement()
@@ -132,7 +132,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   next(): CircuitStepElement | null {
-    const index = this.index()
+    const index = this.index
     if (index === null) return null
 
     const quantumCircuitEl = this.quantumCircuitElement()

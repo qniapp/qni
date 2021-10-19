@@ -67,7 +67,8 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   get serializedSteps(): CircuitOperation[][] {
-    return this.steps.map((each) => each.serialize())
+    const qubitCount = this.qubitCount
+    return this.steps.map((each) => each.serialize().slice(0, qubitCount))
   }
 
   private get emptySteps(): CircuitStepElement[] {

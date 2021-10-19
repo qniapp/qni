@@ -369,7 +369,7 @@ export class GatePopup {
 
   private runCircuit(): void {
     this.popupReferenceEl.dispatchEvent(
-      new Event("operation.change", { bubbles: true }),
+      new Event("operation.popup.change", { bubbles: true }),
     )
   }
 
@@ -448,7 +448,7 @@ export class GatePopup {
         this.currentAngle = snappedAngle
         this.updateInstructionAngle(operation, snappedAngle)
         operation.dispatchEvent(
-          new Event("operation.change", { bubbles: true }),
+          new Event("operation.popup.change", { bubbles: true }),
         )
       }
     })
