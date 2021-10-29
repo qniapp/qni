@@ -12,7 +12,7 @@ import { InteractEvent } from "@interactjs/types"
 import { PaletteDropzoneElement } from "components/paletteDropzoneElement"
 import { Util } from "lib/base"
 import { attr } from "@github/catalyst"
-import interact from "interactjs"
+import interact from "@interactjs/interact"
 
 const cssStyle = html`<style>
   :host([data-drag-and-drop]) {
@@ -107,6 +107,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       if (!this.dragAndDrop) return
       if (interact.isSet(this)) return
 
+      interact(this).styleCursor(false)
       interact(this).draggable({
         onstart: this.startDragging.bind(this),
         onmove: this.dragMove.bind(this),

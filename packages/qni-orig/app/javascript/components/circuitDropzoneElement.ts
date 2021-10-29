@@ -16,7 +16,7 @@ import { CircuitStepElement } from "components/circuitStepElement"
 import { DragAndDroppable } from "./mixins/dragAndDroppable"
 import { Operation } from "./mixins/sizeable"
 
-import interact from "interactjs"
+import interact from "@interactjs/interact"
 
 class IGate {
   serialize(): IGateOperation {
@@ -453,6 +453,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private initDropzone(): void {
+    interact(this).styleCursor(false)
     interact(this).dropzone({
       accept: "[data-drag-and-drop]",
       overlap: "center",
