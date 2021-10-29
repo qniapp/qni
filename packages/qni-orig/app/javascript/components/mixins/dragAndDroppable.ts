@@ -88,6 +88,8 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
     @attr positionY = 0
     @attr hoverable = true
 
+    private snappedDropzone: CircuitDropzoneElement | null
+
     get dropzone(): CircuitDropzoneElement | PaletteDropzoneElement | null {
       return this.parentElement as
         | CircuitDropzoneElement
@@ -103,6 +105,8 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         this.dragAndDrop = true
         this.snapped = false
       }
+
+      this.snappedDropzone = this.dropzone as CircuitDropzoneElement
 
       if (!this.dragAndDrop) return
       if (interact.isSet(this)) return
@@ -232,6 +236,14 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
               const dropzone = snappedDropzone(snapTarget)
               Util.notNull(dropzone)
 
+              if (this.snappedDropzone) {
+                this.snapped = false
+                this.snappedDropzone.dispatchEvent(
+                  new Event("dragAndDroppable.unsnap", { bubbles: true }),
+                )
+              }
+
+              this.snappedDropzone = dropzone
               this.snapped = true
               dropzone.dispatchEvent(
                 new CustomEvent("dragAndDroppable.snap", {

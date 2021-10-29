@@ -176,6 +176,10 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     this.addEventListener("dragAndDroppable.grab", this.enableDrop)
     this.addEventListener(
+      "dragAndDroppable.grab",
+      this.dispatchDropzoneGrabEvent,
+    )
+    this.addEventListener(
       "dragAndDroppable.enddragging",
       this.dispatchDropzoneDroppedEvent,
     )
@@ -450,6 +454,12 @@ export class CircuitDropzoneElement extends HTMLElement {
     } else {
       this.childrenLoaded = true
     }
+  }
+
+  private dispatchDropzoneGrabEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("dropzone.grab", { detail: this, bubbles: true }),
+    )
   }
 
   private initDropzone(): void {

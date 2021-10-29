@@ -13,6 +13,7 @@ import { RxGateElement } from "components/rxGateElement"
 import { RyGateElement } from "components/ryGateElement"
 import { RzGateElement } from "components/rzGateElement"
 import { SwapGateElement } from "components/swapGateElement"
+import { Util } from "lib/base"
 import { XGateElement } from "components/xGateElement"
 import { YGateElement } from "components/yGateElement"
 import { ZGateElement } from "components/zGateElement"
@@ -216,8 +217,8 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener("dropzone.snap", this.dispatchStepHoverEvent)
     this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
     this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent)
+    this.addEventListener("dropzone.grab", this.dispatchStepSnapEvent)
     this.addEventListener("dropzone.drop", this.dispatchStepDropEvent)
-    this.addEventListener("dragAndDroppable.grab", this.dispatchStepSnapEvent)
     this.addEventListener("dragAndDroppable.enddragging", this.unsnap)
     this.addEventListener("click", this.activate)
   }
@@ -234,16 +235,26 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
-  private dispatchStepSnapEvent(): void {
+  private dispatchStepSnapEvent(event: Event): void {
+    const dropzone = (event as CustomEvent).detail as CircuitDropzoneElement
+
     this.dispatchEvent(
-      new CustomEvent("step.snap", { detail: this, bubbles: true }),
+      new CustomEvent("step.snap", {
+        detail: { step: this, dropzone },
+        bubbles: true,
+      }),
     )
   }
 
-  private dispatchStepUnsnapEvent(): void {
+  private dispatchStepUnsnapEvent(event: Event): void {
+    const dropzone = (event as CustomEvent).detail as CircuitDropzoneElement
+
     this.unsnap()
     this.dispatchEvent(
-      new CustomEvent("step.unsnap", { detail: this, bubbles: true }),
+      new CustomEvent("step.unsnap", {
+        detail: { step: this, dropzone },
+        bubbles: true,
+      }),
     )
   }
 
@@ -542,6 +553,13 @@ export class CircuitStepElement extends HTMLElement {
         dropzone.wireBottom = true
       }
     }
+  }
+
+  updateWireOfDropzone(index: number): void {
+    const dropzone = this.dropzones[index]
+    Util.notNull(dropzone)
+
+    dropzone.updateWires()
   }
 
   updateWires(): void {

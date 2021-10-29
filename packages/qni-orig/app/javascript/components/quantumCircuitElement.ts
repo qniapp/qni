@@ -308,11 +308,15 @@ export class QuantumCircuitElement extends HTMLElement {
     )
 
     this.addEventListener("step.snap", this.snapStep)
-    this.addEventListener("step.snap", this.updateAllSteps)
+    this.addEventListener("step.snap", this.updateStepConnections)
+    this.addEventListener("step.snap", this.updateWires)
+    this.addEventListener("step.snap", this.updateJsonUrl)
     this.addEventListener("step.snap", this.updateNqubit)
 
     this.addEventListener("step.unsnap", this.unsnapStep)
-    this.addEventListener("step.unsnap", this.updateAllSteps)
+    this.addEventListener("step.unsnap", this.updateStepConnections)
+    this.addEventListener("step.unsnap", this.updateWires)
+    this.addEventListener("step.unsnap", this.updateJsonUrl)
     this.addEventListener("step.unsnap", this.updateNqubit)
 
     this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
@@ -323,6 +327,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
+    this.updateJsonUrl()
     this.updateNqubit()
 
     this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
@@ -381,7 +386,7 @@ export class QuantumCircuitElement extends HTMLElement {
   private snapStep(event: Event): void {
     if (!this.interactive) return
 
-    const step = (event as CustomEvent).detail as CircuitStepElement
+    const step = (event as CustomEvent).detail.step as CircuitStepElement
 
     for (const each of this.steps) {
       if (this.editing) each.active = false
@@ -394,7 +399,7 @@ export class QuantumCircuitElement extends HTMLElement {
   private unsnapStep(event: Event): void {
     if (!this.interactive) return
 
-    const step = (event as CustomEvent).detail as CircuitStepElement
+    const step = (event as CustomEvent).detail.step as CircuitStepElement
 
     if (this.editing) step.active = false
     step.snap = false
@@ -715,12 +720,28 @@ export class QuantumCircuitElement extends HTMLElement {
     this.resize()
   }
 
-  updateAllSteps(): void {
+  updateStepConnections(event: Event): void {
+    const step = (event as CustomEvent).detail.step as CircuitStepElement
+
+    step.updateConnections()
+  }
+
+  private updateWires(event: Event): void {
+    const dropzone = (event as CustomEvent).detail
+      .dropzone as CircuitDropzoneElement
+    const index = dropzone.index()
+    Util.notNull(index)
+
+    for (const each of this.steps) {
+      each.updateWireOfDropzone(index)
+    }
+  }
+
+  private updateAllSteps(): void {
     for (const each of this.steps) {
       each.updateWires()
       each.updateConnections()
     }
-    this.updateJsonUrl()
   }
 
   prepareDraggableDrop(): void {
