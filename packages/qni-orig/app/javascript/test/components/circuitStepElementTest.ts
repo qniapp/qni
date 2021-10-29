@@ -32,6 +32,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,H", (assert) => {
       step.appendOperation(c)
       step.appendOperation(h)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(h.wireTop)
@@ -40,6 +41,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect H,•", (assert) => {
       step.appendOperation(h)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(h.wireBottom)
       assert.true(c.wireTop)
@@ -49,6 +51,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(h)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -60,6 +63,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(h)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(h.wireBottom)
       assert.true(dropzone.wireTop)
@@ -89,6 +93,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(h)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -100,6 +105,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(h)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(h.wireTop)
@@ -111,6 +117,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(h)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(h.wireBottom)
       assert.true(c1.wireTop)
@@ -137,6 +144,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,X", (assert) => {
       step.appendOperation(c)
       step.appendOperation(x)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(x.wireTop)
@@ -145,6 +153,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect X,•", (assert) => {
       step.appendOperation(x)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(x.wireBottom)
       assert.true(c.wireTop)
@@ -154,6 +163,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(x)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -165,6 +175,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(x)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(x.wireBottom)
       assert.true(dropzone.wireTop)
@@ -194,6 +205,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(x)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -205,6 +217,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(x)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(x.wireTop)
@@ -216,6 +229,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(x)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(x.wireBottom)
       assert.true(c1.wireTop)
@@ -242,6 +256,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Y", (assert) => {
       step.appendOperation(c)
       step.appendOperation(y)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(y.wireTop)
@@ -250,6 +265,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Y,•", (assert) => {
       step.appendOperation(y)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(y.wireBottom)
       assert.true(c.wireTop)
@@ -259,6 +275,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(y)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -270,6 +287,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(y)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(y.wireBottom)
       assert.true(dropzone.wireTop)
@@ -299,6 +317,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(y)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -310,6 +329,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(y)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(y.wireTop)
@@ -321,6 +341,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(y)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(y.wireBottom)
       assert.true(c1.wireTop)
@@ -347,6 +368,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Z", (assert) => {
       step.appendOperation(c)
       step.appendOperation(z)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(z.wireTop)
@@ -355,6 +377,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Z,•", (assert) => {
       step.appendOperation(z)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(z.wireBottom)
       assert.true(c.wireTop)
@@ -364,6 +387,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(z)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -375,6 +399,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(z)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(z.wireBottom)
       assert.true(dropzone.wireTop)
@@ -404,6 +429,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(z)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -415,6 +441,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(z)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(z.wireTop)
@@ -426,6 +453,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(z)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(z.wireBottom)
       assert.true(c1.wireTop)
@@ -452,6 +480,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,P", (assert) => {
       step.appendOperation(c)
       step.appendOperation(p)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(p.wireTop)
@@ -460,6 +489,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect P,•", (assert) => {
       step.appendOperation(p)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(p.wireBottom)
       assert.true(c.wireTop)
@@ -469,6 +499,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(p)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -480,6 +511,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(p)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(p.wireBottom)
       assert.true(dropzone.wireTop)
@@ -509,6 +541,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(p)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -520,6 +553,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(p)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(p.wireTop)
@@ -531,6 +565,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(p)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(p.wireBottom)
       assert.true(c1.wireTop)
@@ -557,6 +592,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,X^½", (assert) => {
       step.appendOperation(c)
       step.appendOperation(rnot)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(rnot.wireTop)
@@ -565,6 +601,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect X^½,•", (assert) => {
       step.appendOperation(rnot)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rnot.wireBottom)
       assert.true(c.wireTop)
@@ -574,6 +611,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(rnot)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -585,6 +623,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rnot)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rnot.wireBottom)
       assert.true(dropzone.wireTop)
@@ -614,6 +653,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(rnot)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -625,6 +665,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(rnot)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(rnot.wireTop)
@@ -636,6 +677,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rnot)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(rnot.wireBottom)
       assert.true(c1.wireTop)
@@ -662,6 +704,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Rx", (assert) => {
       step.appendOperation(c)
       step.appendOperation(rx)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(rx.wireTop)
@@ -670,6 +713,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Rx,•", (assert) => {
       step.appendOperation(rx)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rx.wireBottom)
       assert.true(c.wireTop)
@@ -679,6 +723,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(rx)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -690,6 +735,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rx)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rx.wireBottom)
       assert.true(dropzone.wireTop)
@@ -719,6 +765,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(rx)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -730,6 +777,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(rx)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(rx.wireTop)
@@ -741,6 +789,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rx)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(rx.wireBottom)
       assert.true(c1.wireTop)
@@ -767,6 +816,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Ry", (assert) => {
       step.appendOperation(c)
       step.appendOperation(ry)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(ry.wireTop)
@@ -775,6 +825,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Ry,•", (assert) => {
       step.appendOperation(ry)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(ry.wireBottom)
       assert.true(c.wireTop)
@@ -784,6 +835,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(ry)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -795,6 +847,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(ry)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(ry.wireBottom)
       assert.true(dropzone.wireTop)
@@ -824,6 +877,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(ry)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -835,6 +889,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(ry)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(ry.wireTop)
@@ -846,6 +901,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(ry)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(ry.wireBottom)
       assert.true(c1.wireTop)
@@ -872,6 +928,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Rz", (assert) => {
       step.appendOperation(c)
       step.appendOperation(rz)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(rz.wireTop)
@@ -880,6 +937,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Rz,•", (assert) => {
       step.appendOperation(rz)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rz.wireBottom)
       assert.true(c.wireTop)
@@ -889,6 +947,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(rz)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -900,6 +959,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rz)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(rz.wireBottom)
       assert.true(dropzone.wireTop)
@@ -929,6 +989,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(rz)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -940,6 +1001,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(rz)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(rz.wireTop)
@@ -951,6 +1013,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(rz)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(rz.wireBottom)
       assert.true(c1.wireTop)
@@ -978,6 +1041,7 @@ QUnit.module("CircuitStep", () => {
 
     QUnit.test("should not connect •", (assert) => {
       step.appendOperation(c1)
+      step.updateConnections()
 
       assert.false(c1.wireTop)
       assert.false(c1.wireTop)
@@ -987,6 +1051,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,•", (assert) => {
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -996,6 +1061,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       const dropzone = step.appendDropzone()
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(dropzone.wireTop)
@@ -1007,6 +1073,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(c3)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -1035,6 +1102,7 @@ QUnit.module("CircuitStep", () => {
       p2.phi = "π/2"
       step.appendOperation(p1)
       step.appendOperation(p2)
+      step.updateConnections()
 
       assert.true(p1.wireBottom)
       assert.true(p2.wireTop)
@@ -1046,6 +1114,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(p1)
       const dropzone = step.appendDropzone()
       step.appendOperation(p2)
+      step.updateConnections()
 
       assert.true(p1.wireBottom)
       assert.true(dropzone.wireTop)
@@ -1059,6 +1128,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(p1)
       const dropzone = step.appendDropzone()
       step.appendOperation(p2)
+      step.updateConnections()
 
       assert.false(p1.wireBottom)
       assert.false(dropzone.wireTop)
@@ -1085,6 +1155,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Swap,Swap", (assert) => {
       step.appendOperation(s1)
       step.appendOperation(s2)
+      step.updateConnections()
 
       assert.true(s1.wireBottom)
       assert.true(s2.wireTop)
@@ -1094,6 +1165,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(s1)
       const dropzone = step.appendDropzone()
       step.appendOperation(s2)
+      step.updateConnections()
 
       assert.true(s1.wireBottom)
       assert.true(dropzone.wireTop)
@@ -1120,6 +1192,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect •,Swap", (assert) => {
       step.appendOperation(c)
       step.appendOperation(swap)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(swap.wireTop)
@@ -1129,6 +1202,7 @@ QUnit.module("CircuitStep", () => {
     QUnit.test("should connect Swap,•", (assert) => {
       step.appendOperation(swap)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(swap.wireBottom)
       assert.true(swap.disabled)
@@ -1139,6 +1213,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       const dropzone = step.appendDropzone()
       step.appendOperation(swap)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(dropzone.wireTop)
@@ -1151,6 +1226,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(swap)
       const dropzone = step.appendDropzone()
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(swap.wireBottom)
       assert.true(swap.disabled)
@@ -1181,6 +1257,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(c2)
       step.appendOperation(swap)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(c2.wireTop)
@@ -1193,6 +1270,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c1)
       step.appendOperation(swap)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(c1.wireBottom)
       assert.true(swap.wireTop)
@@ -1205,6 +1283,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(swap)
       step.appendOperation(c1)
       step.appendOperation(c2)
+      step.updateConnections()
 
       assert.true(swap.wireBottom)
       assert.true(swap.disabled)
@@ -1235,6 +1314,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(c)
       step.appendOperation(swap1)
       step.appendOperation(swap2)
+      step.updateConnections()
 
       assert.true(c.wireBottom)
       assert.true(swap1.wireTop)
@@ -1248,6 +1328,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(swap1)
       step.appendOperation(c)
       step.appendOperation(swap2)
+      step.updateConnections()
 
       assert.true(swap1.wireBottom)
       assert.true(swap1.enabled)
@@ -1261,6 +1342,7 @@ QUnit.module("CircuitStep", () => {
       step.appendOperation(swap1)
       step.appendOperation(swap2)
       step.appendOperation(c)
+      step.updateConnections()
 
       assert.true(swap1.wireBottom)
       assert.true(swap1.enabled)

@@ -32,6 +32,7 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr interactive = false
   @attr editing = false
   @attr qubitCount = 1
+  @attr title = ""
 
   @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
@@ -324,7 +325,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateAllSteps()
     this.updateNqubit()
 
-    this.dispatchEvent(new Event("circuit.loaded", { bubbles: true }))
+    this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
   }
 
   private updateNqubit(): void {
@@ -399,20 +400,6 @@ export class QuantumCircuitElement extends HTMLElement {
     step.snap = false
   }
 
-  attributeChangedCallback(
-    name: string,
-    oldValue: string | null,
-    newValue: string | null,
-  ): void {
-    if (this.shadowRoot === null) return
-    if (oldValue === newValue) return
-
-    if (name === "data-json") {
-      this.update()
-      this.loadFromJson()
-    }
-  }
-
   update(): void {
     render(
       html`<style>
@@ -421,7 +408,6 @@ export class QuantumCircuitElement extends HTMLElement {
             flex-direction: column;
             align-items: center;
           }
-
           @media (min-width: 768px) {
             #body {
               flex-direction: row;
@@ -429,10 +415,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
         </style>
 
-        <div
-          id="body"
-          data-action="circuitchange:quantum-circuit#updateAllSteps"
-        >
+        <div id="body">
           <slot data-target="quantum-circuit.slotEl"></slot>
         </div>`,
       this.shadowRoot!,
@@ -499,7 +482,7 @@ export class QuantumCircuitElement extends HTMLElement {
     let circuitBlock = null
 
     if (this.updateUrl) {
-      jsonString = this.urlJson
+      jsonString = Util.urlJson
     } else {
       jsonString = this.json
     }
@@ -512,6 +495,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const jsonData = JSON.parse(jsonString)
+    this.title = (jsonData.title || "").trim()
 
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
@@ -697,7 +681,7 @@ export class QuantumCircuitElement extends HTMLElement {
             )
             break
           }
-          case /^\{(.+)$/.test(instruction): {
+          case /^[[{](.+)$/.test(instruction): {
             const comment = RegExp.$1
             circuitStep.remove()
             circuitBlock = new CircuitBlockElement()
@@ -706,7 +690,7 @@ export class QuantumCircuitElement extends HTMLElement {
             this.append(circuitBlock)
             break
           }
-          case /^\}$/.test(instruction): {
+          case /^[\]}]$/.test(instruction): {
             circuitStep.remove()
             circuitBlock!.finalize()
             break
@@ -724,14 +708,11 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendDropzone()
           }
         }
+        circuitStep.updateConnections()
       }
     }
 
     this.resize()
-  }
-
-  private get urlJson(): string {
-    return decodeURIComponent(location.pathname.split("/").pop() || "")
   }
 
   updateAllSteps(): void {
@@ -858,14 +839,14 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   clear(): void {
-    history.pushState("", "", '{"cols":[]}')
+    Util.updateUrlJson('{"cols":[]}')
     location.reload()
   }
 
   private updateJsonUrl(): void {
     if (!this.updateUrl) return
 
-    history.pushState("", "", this.toJson())
+    Util.updateUrlJson(this.toJson())
   }
 
   toJson(): string {
@@ -876,12 +857,12 @@ export class QuantumCircuitElement extends HTMLElement {
       if (each.isInBlock) {
         if (!isInBlock) {
           const block = each.block
-          cols.push(`["{${block.comment}"]`)
+          cols.push(`["[${block.comment}"]`)
           isInBlock = true
         }
       } else {
         if (isInBlock) {
-          cols.push('["}"]')
+          cols.push('["]"]')
           isInBlock = false
         }
       }
@@ -889,9 +870,13 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     if (isInBlock) {
-      cols.push('["}"]')
+      cols.push('["]"]')
     }
 
-    return `{"cols":[${cols.join(",")}]}`
+    if (this.title !== "") {
+      return `{"cols":[${cols.join(",")}],"title":"${this.title}"}`
+    } else {
+      return `{"cols":[${cols.join(",")}]}`
+    }
   }
 }

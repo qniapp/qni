@@ -21,6 +21,8 @@ class Element
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.element(name, multiple: false, &config)
     plural_name = name.to_s.pluralize.to_sym if multiple
 
@@ -47,8 +49,9 @@ class Element
     end
   end
   # rubocop:enable Metrics/AbcSize
-
   # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def self.define_method_or_raise(method_name, &block)
     raise "Method '#{method_name}' already exists." if method_defined?(method_name.to_sym)

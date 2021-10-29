@@ -21,7 +21,6 @@ export class CircuitBlockElement extends HTMLElement {
           :host {
             position: relative;
           }
-
           :host::before,
           :host::after {
             position: absolute;
@@ -32,24 +31,20 @@ export class CircuitBlockElement extends HTMLElement {
               "Liberation Mono", "Courier New", monospace;
             white-space: nowrap;
             content: attr(data-comment) "";
-
             writing-mode: vertical-lr;
           }
-
           :host::before {
             top: 0;
             right: 0;
             bottom: 0;
             left: unset;
           }
-
           :host::after {
             top: 0;
             left: 0;
             bottom: 0;
             right: unset;
           }
-
           @media (min-width: 768px) {
             :host::before,
             :host::after {
@@ -57,46 +52,37 @@ export class CircuitBlockElement extends HTMLElement {
               left: 0;
               right: 0;
             }
-
             :host::before {
               top: 0;
               bottom: unset;
             }
-
             :host::after {
               bottom: 0;
               top: unset;
             }
           }
-
           #body {
             display: flex;
             border-style: solid;
             border-color: var(--colors-magnitude, #1cb0f6);
             background-color: rgba(229, 229, 229, 0.3);
-
             flex-direction: column;
-
             margin-left: 1.5rem;
             margin-right: 1.5rem;
             padding-left: 1.5rem;
             padding-right: 1.5rem;
-
             border-top-width: 0;
             border-right-width: 2px;
             border-bottom-width: 0;
             border-left-width: 2px;
           }
-
           @media (min-width: 768px) {
             #body {
               flex-direction: row;
-
               margin-top: 1.5rem;
               margin-bottom: 1.5rem;
               margin-left: 0;
               margin-right: 0;
-
               padding: 2rem 0;
               border-top-width: 2px;
               border-right-width: 0;

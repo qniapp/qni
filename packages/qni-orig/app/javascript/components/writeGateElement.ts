@@ -42,13 +42,11 @@ export class WriteGateElement extends DragAndDroppableMixin(
             color: var(--colors-eel, #4b4b4b);
             transform: rotate(90deg);
           }
-
           @media (min-width: 768px) {
             #icon {
               transform: rotate(0deg);
             }
           }
-
           #ket-label {
             position: absolute;
             top: 0;
@@ -59,7 +57,6 @@ export class WriteGateElement extends DragAndDroppableMixin(
               "Liberation Mono", "Courier New", monospace;
             writing-mode: vertical-lr;
           }
-
           #ket-label::after {
             display: flex;
             justify-content: center;
@@ -67,7 +64,6 @@ export class WriteGateElement extends DragAndDroppableMixin(
             width: 100%;
             height: 100%;
           }
-
           @media (min-width: 768px) {
             #ket-label {
               writing-mode: horizontal-tb;
@@ -75,47 +71,39 @@ export class WriteGateElement extends DragAndDroppableMixin(
               line-height: 1.75rem !important;
             }
           }
-
           :host([data-size="xs"]) #ket-label {
             font-size: 0.75rem;
             line-height: 1rem;
           }
-
           :host([data-size="sm"]) #ket-label {
             font-size: 0.875rem;
             line-height: 1.25rem;
           }
-
           :host #ket-label,
           :host([data-size="base"]) #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
           }
-
           :host([data-size="lg"]) #ket-label {
             font-size: 1.125rem;
             line-height: 1.75rem;
           }
-
           :host([data-size="xl"]) #ket-label {
             font-size: 1.25rem;
             line-height: 1.75rem;
           }
-
           :host([data-wire-count="1"]) #ket-label,
           :host([data-wire-count="2"]) #ket-label,
           :host([data-wire-count="3"]) #ket-label {
             font-size: 1.5rem;
             line-height: 2rem;
           }
-
           :host([data-wire-count="4"]) #ket-label,
           :host([data-wire-count="5"]) #ket-label,
           :host([data-wire-count="6"]) #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
           }
-
           :host([data-wire-count="7"]) #ket-label,
           :host([data-wire-count="8"]) #ket-label,
           :host([data-wire-count="9"]) #ket-label,
@@ -123,19 +111,15 @@ export class WriteGateElement extends DragAndDroppableMixin(
             font-size: 0.75rem;
             line-height: 1rem;
           }
-
           :host([data-value="0"]) #ket-label {
             color: var(--colors-cardinal, #ff4b4b);
           }
-
           :host([data-value="0"]) #ket-label::after {
             content: "0";
           }
-
           :host([data-value="1"]) #ket-label {
             color: var(--colors-magnitude, #1cb0f6);
           }
-
           :host([data-value="1"]) #ket-label::after {
             content: "1";
           }

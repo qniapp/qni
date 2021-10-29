@@ -37,7 +37,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.circleNotation = null
     this.visibleQubitCircleKets = []
 
-    this.addEventListener("circuit.loaded", this.registerQuantumCircuit)
+    this.addEventListener("circuit.load", this.registerQuantumCircuit)
 
     this.addEventListener("dragAndDroppable.grab", this.prepareDraggableDrop)
     this.addEventListener(

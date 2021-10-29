@@ -19,29 +19,32 @@ AllCops:
   TargetRubyVersion: 2.7
   TargetRailsVersion: 6.0
   NewCops: enable
+  Exclude:
+    - "bin/*"
+    - "db/**/*"
+    - "tmp/**/*"
 
 # Lint
 Lint/MissingSuper:
   Exclude:
     - 'app/components/**/*_component.rb'
 
-# Layout
-Layout/SpaceInsideArrayLiteralBrackets:
+Lint/UselessAccessModifier:
   Exclude:
-    - 'config/environments/production.rb'
+    - 'test/test_helper.rb'
 
+# Layout
 Layout/LineLength:
   Exclude:
     - 'test/**/*_test.rb'
 
 # Style
+Style/AsciiComments:
+  Enabled: false
+
 Style/Documentation:
   Exclude:
-    - 'app/components/**/*.rb'
-    - 'app/controllers/**/*_controller.rb'
-    - 'app/helpers/**/*_helper.rb'
-    - 'app/mailers/*_mailer.rb'
-    - 'app/models/**/*.rb'
+    - 'app/**/*.rb'
     - 'config/application.rb'
     - 'db/migrate/*.rb'
     - 'lib/**/*.rb'
@@ -54,12 +57,6 @@ Style/RedundantFetchBlock:
   Exclude:
     - 'config/puma.rb'
 
-Style/StringLiterals:
-  Exclude:
-    - 'config/environments/production.rb'
-    - 'config/puma.rb'
-    - 'config/spring.rb'
-
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/components/**/*_component.rb'
@@ -68,24 +65,7 @@ Style/ClassAndModuleChildren:
     - 'test/channels/application_cable/connection_test.rb'
     - 'test/test_helper.rb'
 
-Style/AsciiComments:
-  Enabled: false
-
-# Metrics
-Metrics/BlockLength:
+Style/FrozenStringLiteralComment:
   Exclude:
-    - 'test/fixtures/files/*.dsl.rb'
-
-Metrics/ClassLength:
-  Exclude:
-    - 'test/**/*.rb'
-
-# Rails
-Rails/FilePath:
-  Exclude:
-    - 'config/environments/development.rb'
-
-Rails/RenderInline:
-  Enabled: true
-  Exclude:
-    - 'app/views/components/circuit_cards/_circuit_view.html.erb'
+    - 'config.ru'
+    - 'config/**/*'

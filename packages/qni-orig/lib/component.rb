@@ -3,8 +3,6 @@
 require 'element'
 
 class Component < Element
-  include CssClassString::ViewHelpers
-
   def self.component_name
     name.chomp('Component').demodulize.underscore
   end

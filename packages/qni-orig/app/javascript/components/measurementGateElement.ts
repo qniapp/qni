@@ -20,7 +20,7 @@ export class MeasurementGateElement extends ConfigurableMixin(
   ),
 ) {
   @attr iconType = "transparent"
-  @attr value = 0
+  @attr value = -1
   @attr flag = ""
 
   static create({
@@ -55,18 +55,15 @@ export class MeasurementGateElement extends ConfigurableMixin(
             color: var(--colors-superposition, #ce82ff);
             transform: rotate(90deg);
           }
-
           @media (min-width: 768px) {
             #icon {
               transform: rotate(0deg);
             }
           }
-
           :host([data-snapped][data-value="0"]) #icon,
           :host([data-snapped][data-value="1"]) #icon {
             color: var(--colors-swan, #e5e5e5);
           }
-
           #value {
             display: none;
             position: absolute;
@@ -78,7 +75,6 @@ export class MeasurementGateElement extends ConfigurableMixin(
               "Liberation Mono", "Courier New", monospace;
             writing-mode: vertical-lr;
           }
-
           @media (min-width: 768px) {
             #value {
               writing-mode: horizontal-tb;
@@ -86,11 +82,9 @@ export class MeasurementGateElement extends ConfigurableMixin(
               line-height: 1.75rem !important;
             }
           }
-
           :host([data-snapped]) #value {
             display: block;
           }
-
           #value::after {
             display: flex;
             justify-content: center;
@@ -98,21 +92,18 @@ export class MeasurementGateElement extends ConfigurableMixin(
             width: 100%;
             height: 100%;
           }
-
           :host([data-wire-count="1"]) #value,
           :host([data-wire-count="2"]) #value,
           :host([data-wire-count="3"]) #value {
             font-size: 1.5rem;
             line-height: 2rem;
           }
-
           :host([data-wire-count="4"]) #value,
           :host([data-wire-count="5"]) #value,
           :host([data-wire-count="6"]) #value {
             font-size: 1rem;
             line-height: 1.5rem;
           }
-
           :host([data-wire-count="7"]) #value,
           :host([data-wire-count="8"]) #value,
           :host([data-wire-count="9"]) #value,
@@ -120,19 +111,15 @@ export class MeasurementGateElement extends ConfigurableMixin(
             font-size: 0.75rem;
             line-height: 1rem;
           }
-
           :host([data-value="0"]) #value {
             color: var(--colors-cardinal, #ff4b4b);
           }
-
           :host([data-value="0"]) #value::after {
             content: "0";
           }
-
           :host([data-value="1"]) #value {
             color: var(--colors-magnitude, #1cb0f6);
           }
-
           :host([data-value="1"]) #value::after {
             content: "1";
           }

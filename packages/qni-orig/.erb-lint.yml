@@ -9,6 +9,8 @@ linters:
     rubocop_config:
       inherit_from:
         - .rubocop.yml
+      Style/FrozenStringLiteralComment:
+        Enabled: false
       Layout/InitialIndentation:
         Enabled: false
       Layout/TrailingEmptyLines:

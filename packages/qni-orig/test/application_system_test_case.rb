@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
+# rubocop:disable Metrics/ClassLength
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium_chrome_headless
 
@@ -105,6 +108,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def assert_clipboard(expected)
+    assert_equal expected, clipboard
+  end
+
   def drag_and_drop(element, to:)
     element.drag_to(to, html5: false)
   end
@@ -197,7 +204,19 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     URI.decode_www_form_component(current_path)
   end
 
+  def current_session_base_url
+    host = Capybara.current_session.server.host
+    port = Capybara.current_session.server.port
+    "http://#{host}:#{port}"
+  end
+
   private
+
+  def clipboard
+    page.driver.browser.execute_cdp('Browser.grantPermissions', origin: page.server_url,
+                                                                permissions: ['clipboardReadWrite'])
+    page.evaluate_async_script('navigator.clipboard.readText().then(arguments[0])')
+  end
 
   def client_width(element)
     page.evaluate_script("document.querySelector('#{element.tag_name}').clientWidth")
@@ -215,3 +234,4 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     JS
   end
 end
+# rubocop:enable Metrics/ClassLength

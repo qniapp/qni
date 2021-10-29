@@ -1,9 +1,10 @@
 require_relative 'boot'
 
 require 'rails'
-require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_view/railtie'
+require 'active_record/railtie'
+require 'active_storage/engine'
 require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -22,5 +23,8 @@ module Qni
 
     # gzip
     config.middleware.insert_after ActionDispatch::Static, Rack::Deflater
+
+    # https://github.com/rails/rails/issues/31228#issuecomment-479631062
+    config.railties_order = %i[all main_app]
   end
 end

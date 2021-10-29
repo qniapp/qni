@@ -35,3 +35,4 @@
 dist/
 doc/
 yarn-debug.log*
+/storage/*

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
+# rubocop:disable Metrics/ClassLength
 class GatePopupTest < ApplicationSystemTestCase
   test 'H gate popup' do
     visit circuit_path
@@ -187,3 +190,4 @@ class GatePopupTest < ApplicationSystemTestCase
     TEXT
   end
 end
+# rubocop:enable Metrics/ClassLength

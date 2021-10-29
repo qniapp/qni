@@ -1,0 +1,87 @@
+<% json = local_assigns.fetch(:json) %>
+
+<svg viewBox="0 0 <%= Circuit::SOCIAL_IMAGE_WIDTH %> <%= Circuit::SOCIAL_IMAGE_HEIGHT %>"
+     xmlns="http://www.w3.org/2000/svg"
+     class="circuit-svg absolute inset-0"
+     data-controller="circuit-svg">
+  <style>
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
+
+   .circuit-svg {
+       width: 100%;
+       background: #f5f7fa;
+       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+       Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+       'Segoe UI Symbol';
+       line-height: 1;
+   }
+
+   .circuit-svg__html {
+       padding: 72px;
+   }
+
+   .circuit-svg__text {
+       max-width: 700px;
+   }
+
+   .circuit-svg__title {
+       color: var(--colors-eel, #4b4b4b);
+       font-size: 56px;
+       line-height: 68px;
+       font-weight: 800;
+       letter-spacing: -0.0125em;
+       outline: none;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+   }
+
+   .circuit-svg__description {
+       color: var(--colors-hare, #afafaf);
+       font-weight: 500;
+       font-size: 24px;
+       line-height: 36px;
+       outline: none;
+       letter-spacing: -0.0125em;
+   }
+
+   .circuit-svg__logo {
+       margin-right: 72px;
+       margin-bottom: 72px;
+   }
+  </style>
+
+  <foreignObject x="0" y="0"
+                 width="<%= Circuit::SOCIAL_IMAGE_WIDTH %>"
+                 height="<%= Circuit::SOCIAL_IMAGE_HEIGHT %>">
+    <div class="circuit-svg__html flex flex-col items-start justify-between h-full">
+      <div class="inline-block"
+           data-circuit-svg-target="circuitScaler">
+        <quantum-circuit xmlns="http://www.w3.org/1999/xhtml"
+                         class="inline-block"
+                         data-json="<%= json %>"
+                         data-circuit-svg-target="circuit">
+        </quantum-circuit>
+      </div>
+
+      <div class="circuit-svg__text">
+        <h1 xmlns="http://www.w3.org/1999/xhtml"
+            class="circuit-svg__title"
+            data-share-target="thumbnailTitle"
+            data-circuit-svg-target="title">
+          <%= json ? JSON.parse(json)['title'] : '' %>
+        </h1>
+      </div>
+    </div>
+
+    <div class="circuit-svg__logo fixed right-0 bottom-0 flex flex-row items-center"
+         data-circuit-svg-target="logo">
+      <img class="h-16 w-16 z-10 mr-2" src="https://qni-quantum.herokuapp.com/icon-512.png" alt="Qni"><img>
+      <span class="text-5xl text-eel font-sans font-bold tracking-wider subpixel-antialiased">Qni</span>
+    </div>
+  </foreignObject>
+</svg>

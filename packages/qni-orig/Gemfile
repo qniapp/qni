@@ -14,9 +14,7 @@ gem 'pg'
 gem 'puma', '~> 5.5'
 
 # JavaScript and assets
-gem 'css-class-string'
 gem 'jbuilder'
-gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker'
 
@@ -30,14 +28,15 @@ gem 'rbtrace'
 gem 'stackprof'
 
 # Other
+gem 'aws-sdk-s3', require: false
 gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
-gem 'htmlbeautifier'
+gem 'grover'
 gem 'serviceworker-rails', github: 'ncs1/serviceworker-rails'
+gem 'tailwindcss-rails-webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'spring'
 
   # Code critics
   gem 'brakeman', require: false
@@ -50,7 +49,6 @@ end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'sdoc'
   gem 'web-console'
 end
 
@@ -58,5 +56,3 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'webdrivers'
 end
-
-gem 'tailwindcss-rails-webpacker'

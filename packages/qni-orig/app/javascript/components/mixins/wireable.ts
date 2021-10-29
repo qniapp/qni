@@ -16,8 +16,7 @@ export const isWireable = (arg: unknown): arg is Wireable =>
   typeof arg === "object" &&
   arg !== null &&
   typeof (arg as Wireable).wireTop === "boolean" &&
-  typeof (arg as Wireable).wireBottom === "boolean" &&
-  typeof (arg as Wireable).disconnectFromAll === "function"
+  typeof (arg as Wireable).wireBottom === "boolean"
 
 export function WireableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase,
@@ -47,40 +46,34 @@ export function WireableMixin<TBase extends Constructor<HTMLElement>>(
           transform: rotate(90deg);
           transform-origin: center;
         }
-
         @media (min-width: 768px) {
           #wires {
             transform: rotate(0);
           }
         }
-
         #wire-top,
         #wire-bottom {
           display: none;
           stroke-width: 4;
         }
-
         :host([data-wire-top]) #wire-top {
           display: block;
           color: var(--colors-gate, #43c000);
           transform-origin: top;
           transform: translateY(-25%) scaleY(1.5);
         }
-
         :host([data-wire-top-disabled]) #wire-top {
           display: block;
           color: var(--colors-eel, #4b4b4b);
           transform-origin: top;
           transform: translateY(-25%) scaleY(1.5);
         }
-
         :host([data-wire-bottom]) #wire-bottom {
           display: block;
           color: var(--colors-gate, #43c000);
           transform-origin: bottom;
           transform: translateY(25%) scaleY(1.5);
         }
-
         :host([data-wire-bottom-disabled]) #wire-bottom {
           display: block;
           color: var(--colors-eel, #4b4b4b);

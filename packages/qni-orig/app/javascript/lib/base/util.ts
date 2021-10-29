@@ -42,4 +42,16 @@ export class Util {
     }
     return [Math.cos(radians), Math.sin(radians)]
   }
+
+  static updateUrlJson(json: string): void {
+    history.pushState("", "", encodeURIComponent(json))
+  }
+
+  static get urlJson(): string {
+    const json = window.location.href
+      .toString()
+      .split(window.location.host)[1]
+      .slice(1)
+    return decodeURIComponent(json)
+  }
 }

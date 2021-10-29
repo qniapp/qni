@@ -163,7 +163,6 @@ export class CircuitStepElement extends HTMLElement {
     dropzone.append(operation)
     dropzone.occupied = true
     this.append(dropzone)
-    this.updateConnections()
   }
 
   remove(): void {
@@ -208,7 +207,7 @@ export class CircuitStepElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
-    this.addSlotChangeEventListener()
+    this.slotEl.addEventListener("slotchange", this.handleSlotChange.bind(this))
     this.updateConnections()
     this.updateWires()
     this.dispatchStepLoadEvent()
@@ -266,84 +265,69 @@ export class CircuitStepElement extends HTMLElement {
             flex-direction: column;
             justify-content: center;
           }
-
           :host([data-hoverable]) {
             cursor: pointer;
           }
-
           @media (min-width: 768px) {
             :host {
               flex-direction: row;
             }
           }
-
           :host([data-shadow]) {
             height: 0px;
           }
-
           @media (min-width: 768px) {
             :host([data-shadow]) {
               height: auto;
               width: 0px;
             }
           }
-
           #body {
             display: flex;
             flex-direction: row-reverse;
           }
-
           ::slotted(circuit-dropzone[data-wire-count="1"]:nth-of-type(n + 2)),
           ::slotted(circuit-dropzone[data-wire-count="2"]:nth-of-type(n + 2)) {
             margin-right: ${Operation.size.xl / 2}rem;
           }
-
           ::slotted(circuit-dropzone[data-wire-count="3"]:nth-of-type(n + 2)) {
             margin-right: ${Operation.size.lg / 2}rem;
           }
-
           ::slotted(circuit-dropzone[data-wire-count="4"]:nth-of-type(n + 2)) {
             margin-right: ${Operation.size.base / 2}rem;
           }
-
           ::slotted(circuit-dropzone[data-wire-count="5"]:nth-of-type(n + 2)),
           ::slotted(circuit-dropzone[data-wire-count="6"]:nth-of-type(n + 2)) {
             margin-right: ${Operation.size.sm / 2}rem;
           }
-
           ::slotted(circuit-dropzone[data-wire-count="7"]:nth-of-type(n + 2)),
           ::slotted(circuit-dropzone[data-wire-count="8"]:nth-of-type(n + 2)),
           ::slotted(circuit-dropzone[data-wire-count="9"]:nth-of-type(n + 2)),
           ::slotted(circuit-dropzone[data-wire-count="10"]:nth-of-type(n + 2)) {
             margin-right: ${Operation.size.xs / 2}rem;
           }
-
           @media (min-width: 768px) {
             #body {
               flex-direction: column;
               padding-top: 1rem;
               padding-bottom: 1rem;
             }
-
             ::slotted(circuit-dropzone:nth-of-type(n + 2)) {
               margin-top: ${Operation.size.base / 2}rem !important;
               margin-right: 0 !important;
             }
           }
-
           #breakpoint {
             position: relative;
             min-height: 0px;
             min-width: 100%;
           }
-
           @media (min-width: 768px) {
             #breakpoint {
               min-height: 100%;
               min-width: 0px;
             }
           }
-
           #breakpoint-line {
             position: absolute;
             top: 0px;
@@ -356,18 +340,15 @@ export class CircuitStepElement extends HTMLElement {
             background-color: var(--colors-cardinal, #ff4b4b);
             opacity: 0;
           }
-
           @media (min-width: 768px) {
             #breakpoint-line {
               margin-top: 0;
               margin-left: -2px;
             }
           }
-
           :host([data-active]:not([data-breakpoint])) #breakpoint-line {
             opacity: 0.3;
           }
-
           :host([data-breakpoint]) #breakpoint-line {
             opacity: 0.8;
           }
@@ -383,19 +364,18 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
-  private addSlotChangeEventListener(): void {
-    this.slotEl.addEventListener("slotchange", () => {
-      if (this.shadow) {
-        for (const each of this.dropzones) {
-          each.shadow = true
-        }
-      }
-      this.updateConnections()
-      this.updateWires()
+  private handleSlotChange(): void {
+    if (this.shadow) {
       for (const each of this.dropzones) {
-        each.wireCount = this.wireCount
+        each.shadow = true
       }
-    })
+    }
+
+    this.updateConnections()
+    this.updateWires()
+    for (const each of this.dropzones) {
+      each.wireCount = this.wireCount
+    }
   }
 
   updateConnections(): void {

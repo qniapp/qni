@@ -171,7 +171,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({ mode: "open" })
     this.update()
-    this.addSlotChangeEventListener()
+    this.slotEl.addEventListener("slotchange", this.handleSlotChange.bind(this))
     this.initDropzone()
 
     this.addEventListener("dragAndDroppable.grab", this.enableDrop)
@@ -210,78 +210,64 @@ export class CircuitDropzoneElement extends HTMLElement {
             height: 1.5rem;
             width: 1rem;
           }
-
           :host([data-size="sm"]) {
             height: 2.25rem;
             width: 1.5rem;
           }
-
           :host,
           :host([data-size="base"]) {
             height: 3rem;
             width: 2rem;
           }
-
           :host([data-size="lg"]) {
             height: 3.75rem;
             width: 2.5rem;
           }
-
           :host([data-size="xl"]) {
             height: 4.5rem;
             width: 3rem;
           }
-
           @media (min-width: 768px) {
             :host([data-size="xs"]) {
               height: 1rem;
               width: 1.5rem;
             }
-
             :host([data-size="sm"]) {
               height: 1.5rem;
               width: 2.25rem;
             }
-
             :host,
             :host([data-size="base"]) {
               height: 2rem;
               width: 3rem;
             }
-
             :host([data-size="lg"]) {
               height: 2.5rem;
               width: 3.75rem;
             }
-
             :host([data-size="xl"]) {
               height: 3rem;
               width: 4.5rem;
             }
           }
-
           :host([data-wire-count="1"]),
           :host([data-wire-count="2"]) {
             height: ${Operation.size.xl * 1.5}rem;
             width: ${Operation.size.xl}rem;
           }
-
           :host([data-wire-count="3"]) {
             height: ${Operation.size.lg * 1.5}rem;
             width: ${Operation.size.lg}rem;
           }
-
           :host([data-wire-count="4"]) {
             height: ${Operation.size.base * 1.5}rem;
             width: ${Operation.size.base}rem;
           }
-
           :host([data-wire-count="5"]),
           :host([data-wire-count="6"]) {
             height: ${Operation.size.sm * 1.5}rem;
             width: ${Operation.size.sm}rem;
           }
-
           :host([data-wire-count="7"]),
           :host([data-wire-count="8"]),
           :host([data-wire-count="9"]),
@@ -289,7 +275,6 @@ export class CircuitDropzoneElement extends HTMLElement {
             height: ${Operation.size.xs * 1.5}rem;
             width: ${Operation.size.xs}rem;
           }
-
           @media (min-width: 768px) {
             :host([data-wire-count="1"]),
             :host([data-wire-count="2"]),
@@ -305,19 +290,16 @@ export class CircuitDropzoneElement extends HTMLElement {
               width: ${Operation.size.base * 1.5}rem;
             }
           }
-
           :host([data-wire-top]) #wire-top {
             display: block;
             transform-origin: top;
             transform: translateY(-25%) scaleY(1.5);
           }
-
           :host([data-wire-bottom]) #wire-bottom {
             display: block;
             transform-origin: bottom;
             transform: translateY(25%) scaleY(1.5);
           }
-
           #body {
             position: relative;
             display: flex;
@@ -326,7 +308,6 @@ export class CircuitDropzoneElement extends HTMLElement {
             height: 100%;
             width: 100%;
           }
-
           #wires {
             position: absolute;
             bottom: 0px;
@@ -339,54 +320,44 @@ export class CircuitDropzoneElement extends HTMLElement {
             transform: rotate(90deg);
             transform-origin: center;
           }
-
           :host([data-shadow]) #wires {
             display: none;
           }
-
           @media (min-width: 768px) {
             #wires {
               transform: rotate(0);
             }
           }
-
           ::slotted(*) {
             position: absolute;
             z-index: 10;
           }
-
           #wire-input,
           #wire-output {
             color: var(--colors-wolf, #777777);
           }
-
           :host(:not([data-input-wire-quantum])) #wire-input,
           :host([data-input-wire-quantum="false"]) #wire-input {
             color: var(--colors-swan, #e5e5e5);
           }
-
           :host(:not([data-output-wire-quantum])) #wire-output,
           :host([data-output-wire-quantum="false"]) #wire-output {
             color: var(--colors-swan, #e5e5e5);
           }
-
           #wire-input {
             transform: translateX(-25%) scaleX(1.5);
             transform-origin: left;
           }
-
           #wire-output {
             transform: translateX(25%) scaleX(1.5);
             transform-origin: right;
           }
-
           @media (min-width: 768px) {
             #wire-input,
             #wire-output {
               transform: none;
             }
           }
-
           :host([data-draggable-tag-name="write-gate"][data-occupied])
             #wires
             > #wire-input,
@@ -395,7 +366,6 @@ export class CircuitDropzoneElement extends HTMLElement {
             > #wire-input {
             transform: scaleX(0.75) translateX(-33.3%);
           }
-
           @media (min-width: 768px) {
             :host([data-draggable-tag-name="write-gate"][data-occupied])
               #wires
@@ -406,7 +376,6 @@ export class CircuitDropzoneElement extends HTMLElement {
               transform: scaleX(0.33) translateX(0);
             }
           }
-
           :host([data-draggable-tag-name="write-gate"][data-occupied])
             #wires
             > #wire-output,
@@ -415,7 +384,6 @@ export class CircuitDropzoneElement extends HTMLElement {
             > #wire-output {
             transform: scaleX(0.75) translateX(33.3%);
           }
-
           @media (min-width: 768px) {
             :host([data-draggable-tag-name="write-gate"][data-occupied])
               #wires
@@ -426,7 +394,6 @@ export class CircuitDropzoneElement extends HTMLElement {
               transform: scaleX(0.33) translateX(0);
             }
           }
-
           #wire-top,
           #wire-bottom {
             color: var(--colors-gate, #43c000);
@@ -453,41 +420,36 @@ export class CircuitDropzoneElement extends HTMLElement {
     }
   }
 
-  addSlotChangeEventListener(): void {
-    this.slotEl.addEventListener("slotchange", () => {
-      if (this.childElementCount > 1) {
-        throw new Error("A dropzone cannot hold multiple operations.")
-      }
+  private handleSlotChange(): void {
+    if (this.childElementCount > 1) {
+      throw new Error("A dropzone cannot hold multiple operations.")
+    } else if (this.childElementCount === 0) {
+      this.draggableTagName = ""
+      this.occupied = false
+      this.enableDrop()
+      return
+    }
 
-      if (this.childElementCount === 0) {
-        this.draggableTagName = ""
-        this.occupied = false
-        this.enableDrop()
-        return
-      }
+    const operation = this.children[0]
+    const nodeName = operation.nodeName
 
-      const operation = this.children[0]
-      const nodeName = operation.nodeName
+    operation.setAttribute("data-wire-count", this.wireCount.toString())
 
-      operation.setAttribute("data-wire-count", this.wireCount.toString())
+    if (this.size !== "") {
+      operation.setAttribute("data-size", this.size)
+    }
 
-      if (this.size !== "") {
-        operation.setAttribute("data-size", this.size)
-      }
+    this.draggableTagName = nodeName.toLowerCase()
+    this.occupied = true
+    this.disableDrop()
 
-      this.draggableTagName = nodeName.toLowerCase()
-      this.occupied = true
-      this.disableDrop()
-
-      if (this.childrenLoaded) {
-        this.dispatchEvent(
-          new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
-        )
-      } else {
-        this.dispatchEvent(new Event("circuitchange", { bubbles: true }))
-        this.childrenLoaded = true
-      }
-    })
+    if (this.childrenLoaded) {
+      this.dispatchEvent(
+        new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
+      )
+    } else {
+      this.childrenLoaded = true
+    }
   }
 
   private initDropzone(): void {
