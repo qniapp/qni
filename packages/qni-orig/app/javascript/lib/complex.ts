@@ -1,10 +1,5 @@
-import { DetailedError, Util, UNICODE_FRACTIONS } from "lib/base"
-import { Format } from "lib/base"
+import { DetailedError, Format, UNICODE_FRACTIONS, Util } from "lib/base"
 import { parseFormula } from "./formulaParser"
-
-const PARSE_COMPLEX_TOKEN_MAP_ALL = new Map()
-export const PARSE_COMPLEX_TOKEN_MAP_RAD = new Map()
-const PARSE_COMPLEX_TOKEN_MAP_DEG = new Map()
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -14,45 +9,6 @@ export class Complex {
   public real: number
   public imag: number
 
-  /**
-   * Determines if the receiving complex value is near the given complex,
-   * integer, or float value.
-   * This method returns false, instead of throwing, when given badly typed
-   * arguments.
-   */
-  isApproximatelyEqualTo(
-    other: number | Complex | unknown,
-    epsilon: number,
-  ): boolean {
-    if (other instanceof Complex || typeof other === "number") {
-      const d = this.minus(Complex.from(other))
-      return (
-        Math.abs(d.real) <= epsilon &&
-        Math.abs(d.imag) <= epsilon &&
-        d.abs() <= epsilon
-      )
-    }
-    return false
-  }
-
-  /**
-   * Returns the squared euclidean length of the receiving complex value.
-   */
-  norm2(): number {
-    return this.real * this.real + this.imag * this.imag
-  }
-
-  /**
-   * Returns the euclidean length of the receiving complex value.
-   */
-  abs(): number {
-    return Math.sqrt(this.norm2())
-  }
-
-  /**
-   * Wraps the given number into a Complex value (unless it's already a Complex
-   * value).
-   */
   static from(v: number | Complex): Complex {
     if (v instanceof Complex) {
       return v
@@ -63,24 +19,15 @@ export class Complex {
     throw new DetailedError("Unrecognized value type.", { v })
   }
 
-  /**
-   * Parses a complex number from an infix arithmetic expression.
-   */
   static parse(text: string): Complex {
     return Complex.from(parseFormula(text, PARSE_COMPLEX_TOKEN_MAP_DEG))
   }
 
-  /**
-   * Returns a complex number with the given magnitude and phase.
-   */
   static polar(magnitude: number, phase: number): Complex {
     const [cos, sin] = Util.snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
   }
 
-  /**
-   * Returns the real component of a Complex, integer, or float value.
-   */
   static realPartOf(v: number | Complex): number {
     if (v instanceof Complex) {
       return v.real
@@ -91,10 +38,6 @@ export class Complex {
     throw new DetailedError("Unrecognized value type.", { v })
   }
 
-  /**
-   * Returns the imaginary component of a Complex value, or else 0 for integer
-   * and float values.
-   */
   static imagPartOf(v: number | Complex): number {
     if (v instanceof Complex) {
       return v.imag
@@ -110,6 +53,31 @@ export class Complex {
     this.imag = imag
   }
 
+  static rootsOfQuadratic(
+    a: number | Complex,
+    b: number | Complex,
+    c: number | Complex,
+  ): Complex[] {
+    a = Complex.from(a)
+    b = Complex.from(b)
+    c = Complex.from(c)
+
+    if (a.isEqualTo(0)) {
+      if (!b.isEqualTo(0)) {
+        return [c.times(-1).dividedBy(b)]
+      }
+      if (!c.isEqualTo(0)) {
+        return []
+      }
+      throw Error("Degenerate")
+    }
+
+    const difs = b.times(b).minus(a.times(c).times(4)).sqrts()
+    const mid = b.times(-1)
+    const denom = a.times(2)
+    return difs.map((d) => mid.minus(d).dividedBy(denom))
+  }
+
   isEqualTo(other: unknown): boolean {
     if (other instanceof Complex) {
       return this.real === other.real && this.imag === other.imag
@@ -120,10 +88,29 @@ export class Complex {
     return false
   }
 
-  /**
-   * Returns a unit complex value parallel to the receiving complex value. Zero
-   * defaults to having the unit vector 1+0i.
-   */
+  isApproximatelyEqualTo(
+    other: number | Complex | unknown,
+    epsilon: number,
+  ): boolean {
+    if (other instanceof Complex || typeof other === "number") {
+      const d = this.minus(Complex.from(other))
+      return (
+        Math.abs(d.real) <= epsilon &&
+        Math.abs(d.imag) <= epsilon &&
+        d.abs() <= epsilon
+      )
+    }
+    return false
+  }
+
+  norm2(): number {
+    return this.real * this.real + this.imag * this.imag
+  }
+
+  abs(): number {
+    return Math.sqrt(this.norm2())
+  }
+
   unit(): Complex {
     const m = this.norm2()
     if (m < 0.00001) {
@@ -132,25 +119,16 @@ export class Complex {
     return this.dividedBy(Math.sqrt(m))
   }
 
-  /**
-   * Returns the sum of the receiving complex value plus the given value.
-   */
   plus(v: number | Complex): Complex {
     const c = Complex.from(v)
     return new Complex(this.real + c.real, this.imag + c.imag)
   }
 
-  /**
-   * Returns the difference from the receiving complex value to the given value.
-   */
   minus(v: number | Complex): Complex {
     const c = Complex.from(v)
     return new Complex(this.real - c.real, this.imag - c.imag)
   }
 
-  /**
-   * Returns the product of the receiving complex value times the given value.
-   */
   times(v: number | Complex): Complex {
     const c = Complex.from(v)
     return new Complex(
@@ -159,9 +137,6 @@ export class Complex {
     )
   }
 
-  /**
-   * Returns the ratio of the receiving complex value to the given value.
-   */
   dividedBy(v: number | Complex): Complex {
     const c = Complex.from(v)
     const d = c.norm2()
@@ -188,45 +163,10 @@ export class Complex {
     return [c, c.times(-1)]
   }
 
-  /**
-   * Returns the complex conjugate of the receiving complex value, with the same
-   * real part but a negated imaginary part.
-   */
   conjugate(): Complex {
     return new Complex(this.real, -this.imag)
   }
 
-  /**
-   * Returns the distinct roots of the quadratic, or linear, equation.
-   */
-  static rootsOfQuadratic(
-    a: number | Complex,
-    b: number | Complex,
-    c: number | Complex,
-  ): Complex[] {
-    a = Complex.from(a)
-    b = Complex.from(b)
-    c = Complex.from(c)
-
-    if (a.isEqualTo(0)) {
-      if (!b.isEqualTo(0)) {
-        return [c.times(-1).dividedBy(b)]
-      }
-      if (!c.isEqualTo(0)) {
-        return []
-      }
-      throw Error("Degenerate")
-    }
-
-    const difs = b.times(b).minus(a.times(c).times(4)).sqrts()
-    const mid = b.times(-1)
-    const denom = a.times(2)
-    return difs.map((d) => mid.minus(d).dividedBy(denom))
-  }
-
-  /**
-   * Returns a compact text representation of the receiving complex value.
-   */
   toString(format?: Format): string {
     format = format || Format.EXACT
 
@@ -235,17 +175,10 @@ export class Complex {
       : this.toStringBothValues(format)
   }
 
-  /**
-   * Returns the negation of this complex value.
-   */
   neg(): Complex {
     return new Complex(-this.real, -this.imag)
   }
 
-  /**
-   * Returns the result of raising the receiving complex value to the given
-   * complex exponent.
-   */
   raisedTo(exponent: number | Complex): Complex {
     if (exponent === 0.5 && this.imag === 0 && this.real >= 0) {
       return new Complex(Math.sqrt(this.real), 0)
@@ -259,10 +192,6 @@ export class Complex {
     return this.ln().times(Complex.from(exponent)).exp()
   }
 
-  /**
-   * Returns the result of raising Euler's constant to the receiving complex
-   * value.
-   */
   exp(): Complex {
     return Complex.polar(Math.exp(this.real), this.imag)
   }
@@ -281,18 +210,10 @@ export class Complex {
     return this.sin().dividedBy(this.cos())
   }
 
-  /**
-   * Returns the natural logarithm of the receiving complex value.
-   */
   ln(): Complex {
     return new Complex(Math.log(this.abs()), this.phase())
   }
 
-  /**
-   * Returns the angle, in radians, of the receiving complex value with 0 being
-   * +real-ward and τ/4 being +imag-ward.
-   * Zero defaults to having a phase of zero.
-   */
   phase(): number {
     return Math.atan2(this.imag, this.real)
   }
@@ -308,7 +229,7 @@ export class Complex {
       if (Math.abs(this.imag + 1) <= format.maxAbbreviationError) {
         return "-i"
       }
-      return format.formatFloat(this.imag) + "i"
+      return `${format.formatFloat(this.imag)}i`
     }
 
     return this.toStringBothValues(format)
@@ -327,9 +248,13 @@ export class Complex {
       this.real < 0
         ? ""
         : "+"
-    return prefix + format.formatFloat(this.real) + separator + imagFactor + "i"
+    return `${prefix + format.formatFloat(this.real) + separator + imagFactor}i`
   }
 }
+
+const PARSE_COMPLEX_TOKEN_MAP_ALL = new Map()
+export const PARSE_COMPLEX_TOKEN_MAP_RAD = new Map()
+const PARSE_COMPLEX_TOKEN_MAP_DEG = new Map()
 
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("i", Complex.I)
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("e", Complex.from(Math.E))
@@ -352,35 +277,42 @@ PARSE_COMPLEX_TOKEN_MAP_ALL.set("ln", {
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("^", {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).raisedTo(b),
+  binary_action: (a: number | Complex, b: number | Complex) =>
+    Complex.from(a).raisedTo(b),
   priority: 3,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("*", {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).times(b),
+  binary_action: (a: number | Complex, b: number | Complex) =>
+    Complex.from(a).times(b),
   priority: 2,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("/", {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).dividedBy(b),
+  binary_action: (a: number | Complex, b: number | Complex) =>
+    Complex.from(a).dividedBy(b),
   priority: 2,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("-", {
   unary_action: (e: number | Complex) => Complex.from(e).neg(),
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).minus(b),
+  binary_action: (a: number | Complex, b: number | Complex) =>
+    Complex.from(a).minus(b),
   priority: 1,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("+", {
   unary_action: (e: number | Complex) => e,
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).plus(b),
+  binary_action: (a: number | Complex, b: number | Complex) =>
+    Complex.from(a).plus(b),
   priority: 1,
 })
 PARSE_COMPLEX_TOKEN_MAP_ALL.set("√", PARSE_COMPLEX_TOKEN_MAP_ALL.get("sqrt"))
 
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("cos", {
-  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).cos(),
+  unary_action: (e: number | Complex) =>
+    new Complex(Math.PI / 180, 0).times(e).cos(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("sin", {
-  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).sin(),
+  unary_action: (e: number | Complex) =>
+    new Complex(Math.PI / 180, 0).times(e).sin(),
   priority: 4,
 })
 PARSE_COMPLEX_TOKEN_MAP_DEG.set("asin", {

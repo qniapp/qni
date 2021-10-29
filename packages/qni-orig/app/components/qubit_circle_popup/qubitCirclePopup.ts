@@ -7,7 +7,7 @@ import tippy, {
   createSingleton,
   roundArrow,
 } from "tippy.js"
-import { Complex } from "lib/math"
+import { Complex } from "lib/complex"
 import { Util } from "lib/base"
 
 export function initQubitCirclePopup(

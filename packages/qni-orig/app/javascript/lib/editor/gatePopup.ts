@@ -1,4 +1,4 @@
-import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD, parseFormula } from "lib/math"
+import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "lib/complex"
 import { Util, classNameFor } from "lib/base"
 import noUiSlider, {
   PipsMode,
@@ -16,6 +16,7 @@ import { RxGateElement } from "components/rxGateElement"
 import { RyGateElement } from "components/ryGateElement"
 import { RzGateElement } from "components/rzGateElement"
 import { XGateElement } from "components/xGateElement"
+import { parseFormula } from "lib/formulaParser"
 
 const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   typeof arg === "object" &&

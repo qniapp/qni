@@ -1,6 +1,6 @@
 /* eslint-env qunit */
 
-import { Complex } from "lib/math"
+import { Complex } from "lib/complex"
 import { Format } from "lib/base"
 
 QUnit.module("Complex", () => {

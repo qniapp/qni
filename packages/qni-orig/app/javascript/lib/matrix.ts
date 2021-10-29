@@ -8,12 +8,14 @@ export class Matrix {
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
+
   static PHASE(phi: string): Matrix {
     const φ = parseAngle(phi)
     const e = Complex.from(Math.E)
 
     return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
   }
+
   static get RNOT(): Matrix {
     const i = Complex.I
     const mi = i.neg()
@@ -22,6 +24,7 @@ export class Matrix {
       0.5,
     )
   }
+
   static RX(theta: string): Matrix {
     const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
     const mi = Complex.I.neg()
@@ -30,6 +33,7 @@ export class Matrix {
 
     return Matrix.square(cosθ2, mi.times(sinθ2), mi.times(sinθ2), cosθ2)
   }
+
   static RY(theta: string): Matrix {
     const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
     const cosθ2 = Math.cos(θ / 2)
@@ -37,6 +41,7 @@ export class Matrix {
 
     return Matrix.square(cosθ2, -sinθ2, sinθ2, cosθ2)
   }
+
   static RZ(theta: string): Matrix {
     const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
     const e = Complex.from(Math.E)
@@ -79,10 +84,6 @@ export class Matrix {
     return new Matrix(w, h, buffer)
   }
 
-  /**
-   * Returns a matrix of the given dimensions, using the given function to
-   * generate the coefficients.
-   */
   static generate(
     width: number,
     height: number,
@@ -100,9 +101,6 @@ export class Matrix {
     return new Matrix(width, height, buf)
   }
 
-  /**
-   * Returns a 1x1 matrix containing the given value.
-   */
   static solo(coef: number | Complex): Matrix {
     return new Matrix(
       1,
@@ -111,13 +109,6 @@ export class Matrix {
     )
   }
 
-  /**
-   * Converts the given square block of coefficients into a square complex matrix.
-   *
-   * @param coefs The coefficients of the matrix, arranged in a flat array of
-   * square length with the coefficients (which can be numeric or complex) in
-   * row order.
-   */
   static square(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     const n = Math.round(Math.sqrt(coefs.length))
@@ -128,28 +119,16 @@ export class Matrix {
     return Matrix.generate(n, n, (r, c) => coefs[r * n + c])
   }
 
-  /**
-   * Converts the array of complex coefficients into a column vector.
-   */
   static col(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     return Matrix.generate(1, coefs.length, (r) => coefs[r])
   }
 
-  /**
-   * Converts the array of complex coefficients into a row vector.
-   */
   static row(...coefs: Array<number | Complex>): Matrix {
     Util.need(Array.isArray(coefs), "Array.isArray(coefs)", coefs)
     return Matrix.generate(coefs.length, 1, (r, c) => coefs[c])
   }
 
-  /**
-   * Returns the identity matrix, with 1s on the main diagonal and all other
-   * entries zero.
-   *
-   * @param size  The dimension of the returned identity matrix.
-   */
   static identity(size: number): Matrix {
     if (!Number.isInteger(size) || size <= 0) {
       throw new DetailedError("Bad size", { size })
@@ -161,10 +140,6 @@ export class Matrix {
     return new Matrix(size, size, buf)
   }
 
-  /**
-   * Returns a diagonal matrix of the given size, using the given function to
-   * generate the diagonal coefficients.
-   */
   static generateDiagonal(
     size: number,
     coefficientFunc: (e: number) => number | Complex,
@@ -179,9 +154,6 @@ export class Matrix {
     return new Matrix(size, size, buf)
   }
 
-  /**
-   * Returns a zero matrix of the given size.
-   */
   static zero(width: number, height: number): Matrix {
     return new Matrix(width, height, new Float64Array(width * height * 2))
   }
@@ -198,10 +170,6 @@ export class Matrix {
     return col
   }
 
-  /**
-   * @param buffer  Complex value data, packed row-wise with real and imaginary
-   * coefficients interleaved.
-   */
   constructor(
     width: number,
     height: number,
@@ -219,11 +187,6 @@ export class Matrix {
     this.buffer = buffer
   }
 
-  /**
-   * Determines if the matrix is approximately unitary or not.
-   * @param {!number} epsilon Distance away from unitary the matrix is allowed to be. Defaults to 0.
-   * @returns {!boolean}
-   */
   isUnitary(epsilon: number): boolean {
     const n = this.width
     if (this.height !== n) {
@@ -235,10 +198,6 @@ export class Matrix {
     )
   }
 
-  /**
-   * Returns the conjugate transpose of the receiving operation (the adjoint is
-   * the inverse when the matrix is unitary).
-   */
   adjoint(): Matrix {
     const w = this.height
     const h = this.width
@@ -254,20 +213,12 @@ export class Matrix {
     return new Matrix(w, h, newBuf)
   }
 
-  /**
-   * Returns the product of the receiving matrix and the given matrix or scalar.
-   * @param other  A matrix or a scalar value.
-   */
   times(other: Matrix | number | Complex): Matrix {
     return other instanceof Matrix
       ? this.timesMatrix(other)
       : this.timesScalar(other)
   }
 
-  /**
-   * Returns the matrix product (i.e. the composition) of the receiving matrix
-   * and the given matrix.
-   */
   private timesMatrix(other: Matrix): Matrix {
     if (this.width !== other.height) {
       throw new DetailedError("Incompatible sizes.", { this: this, other })
@@ -296,10 +247,6 @@ export class Matrix {
     return new Matrix(w, h, newBuffer)
   }
 
-  /**
-   * Returns the result of scaling the receiving matrix by the given scalar
-   * factor.
-   */
   private timesScalar(v: number | Complex): Matrix {
     const newBuffer = new Float64Array(this.buffer.length)
     const sr = Complex.realPartOf(v)
@@ -313,23 +260,12 @@ export class Matrix {
     return new Matrix(this.width, this.height, newBuffer)
   }
 
-  /**
-   * Returns a rotation matrix that rotations by the given angle.
-   *
-   * @param theta  The angle the matrix should rotate by, in radians.
-   * @returns A real matrix.
-   */
   static rotation(theta: number): Matrix {
     const c = Math.cos(theta)
     const s = Math.sin(theta)
     return Matrix.square(c, -s, s, c)
   }
 
-  /**
-   * Determines if the receiving matrix is equal to the given matrix. This
-   * method returns false, instead of throwing, when given badly typed
-   * arguments.
-   */
   isEqualTo(obj: Matrix | unknown): boolean {
     if (this === obj) {
       return true
@@ -348,12 +284,6 @@ export class Matrix {
     )
   }
 
-  /**
-   * Determines if the receiving matrix is approximately equal to the given
-   * matrix.
-   *
-   * @param epsilon  Maximum distance between the two matrices.
-   */
   isApproximatelyEqualTo(other: Matrix | unknown, epsilon: number): boolean {
     return (
       other instanceof Matrix &&
@@ -363,9 +293,6 @@ export class Matrix {
     )
   }
 
-  /**
-   * Returns the difference from the receiving matrix to the given matrix.
-   */
   minus(other: Matrix): Matrix {
     const { width: w, height: h, buffer: b1 } = this
     const b2 = other.buffer
@@ -381,9 +308,6 @@ export class Matrix {
     return new Matrix(w, h, newBuffer)
   }
 
-  /**
-   * Returns the receiving matrix's squared euclidean length.
-   */
   norm2(): number {
     let t = 0
     for (const e of this.buffer) {
@@ -392,10 +316,6 @@ export class Matrix {
     return t
   }
 
-  /**
-   * Returns a text representation of the receiving matrix.
-   * (It uses curly braces so you can paste it into wolfram alpha.)
-   */
   toString(format = Format.EXACT): string {
     const data = this.rows()
       .map((row) =>
@@ -442,12 +362,6 @@ export class Matrix {
     this.buffer[i + 1] = value.imag
   }
 
-  /**
-   * Determines if the matrix is approximately equal to its own conjugate
-   * transpose or not.
-   *
-   * @param epsilon  Maximum error per entry.
-   */
   isApproximatelyHermitian(epsilon: number): boolean {
     if (this.width !== this.height) {
       return false
@@ -467,9 +381,6 @@ export class Matrix {
     return true
   }
 
-  /**
-   * Returns the sum of the receiving matrix and the given matrix.
-   */
   plus(other: Matrix): Matrix {
     const { width: w, height: h, buffer: b1 } = this
     const b2 = other.buffer
@@ -485,9 +396,6 @@ export class Matrix {
     return new Matrix(w, h, newBuffer)
   }
 
-  /**
-   * Returns the tensor product of the receiving matrix and the given matrix.
-   */
   tensorProduct(other: Matrix): Matrix {
     const w1 = this.width
     const h1 = this.height
@@ -565,10 +473,6 @@ export class Matrix {
     return new Matrix(w, h, buf)
   }
 
-  /**
-   * Factors the matrix int u*s*v parts, where u and v are unitary matrices and
-   * s is a real diagonal matrix.
-   */
   singularValueDecomposition(
     epsilon = 0,
     maxIterations = 100,
@@ -733,19 +637,11 @@ export class Matrix {
     }
   }
 
-  /**
-   * Factors the receiving square matrix into a lower diagonal matrix L times a
-   * unitary matrix Q.
-   */
   lqDecomposition(): { L: Matrix; Q: Matrix } {
     const { Q, R } = this.adjoint().qrDecomposition()
     return { L: R.adjoint(), Q: Q.adjoint() }
   }
 
-  /**
-   * Factors the receiving square matrix into a unitary matrix Q times an upper
-   * diagonal matrix R.
-   */
   qrDecomposition(): { Q: Matrix; R: Matrix } {
     if (this.width !== this.height) {
       throw new DetailedError("Expected a square matrix.", this)
@@ -806,10 +702,6 @@ export class Matrix {
     }
   }
 
-  /**
-   * Determines if the matrix is square and only has entries along its main
-   * diagonal.
-   */
   isDiagonal(epsilon = 0): boolean {
     for (let c = 0; c < this.width; c++) {
       for (let r = 0; r < this.height; r++) {
@@ -828,10 +720,6 @@ export class Matrix {
     return this.width === this.height
   }
 
-  /**
-   * Returns the matrix' trace (i.e. the sum of its diagonal elements, i.e. the
-   * sum of its eigenvalues if it's square).
-   */
   trace(): Complex {
     let total_r = 0
     let total_i = 0
@@ -843,10 +731,6 @@ export class Matrix {
     return new Complex(total_r, total_i)
   }
 
-  /**
-   * Returns the bloch sphere vector (as an x,y,z array) corresponding to this
-   * density matrix.
-   */
   qubitDensityMatrixToBlochVector(): [number, number, number] {
     if (this.width !== 2 || this.height !== 2) {
       throw new DetailedError("Need a 2x2 density matrix.", this)
@@ -909,9 +793,6 @@ export class Matrix {
     return densityMatrix
   }
 
-  /**
-   * Returns the matrix U = exp(i φ) (I cos(θ/2) - v σ i sin(θ/2)).
-   */
   static fromAngleAxisPhaseRotation(
     angle: number,
     axis: number[],
@@ -933,10 +814,6 @@ export class Matrix {
       .times(Complex.polar(1, phase))
   }
 
-  /**
-   * Given a single-qubit operation matrix U, finds φ, θ, and v=[x,y,z] that satisfy
-   * U = exp(i φ) (I cos(θ/2) - v σ i sin(θ/2))
-   */
   qubitOperationToAngleAxisRotation(): {
     axis: number[]
     angle: number

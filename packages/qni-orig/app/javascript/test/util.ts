@@ -1,5 +1,5 @@
 import { ArrayIsh, describe, equate, hasOwnProperty } from "lib/base"
-import { Complex } from "lib/math/complex"
+import { Complex } from "lib/complex"
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)

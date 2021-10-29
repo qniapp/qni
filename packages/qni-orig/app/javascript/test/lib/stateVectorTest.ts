@@ -1,6 +1,7 @@
 /* eslint-env qunit */
 
-import { Complex, Matrix } from "lib/math"
+import { Complex } from "lib/complex"
+import { Matrix } from "lib/matrix"
 import { StateVector } from "lib"
 
 QUnit.module("new StateVector('0')", (hooks) => {

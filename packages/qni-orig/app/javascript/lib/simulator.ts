@@ -16,7 +16,8 @@ import {
   Y_GATE_OPERATION_TYPE,
   Z_GATE_OPERATION_TYPE,
 } from "./operation"
-import { Complex, Matrix } from "./math"
+import { Complex } from "./complex"
+import { Matrix } from "./matrix"
 import { StateVector } from "./stateVector"
 import { Util } from "./base"
 
