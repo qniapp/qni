@@ -491,8 +491,9 @@ export class CircleNotationElement extends HTMLElement {
             white-space: nowrap;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
               "Liberation Mono", "Courier New", monospace;
+            font-size: 0.75rem;
             color: var(--colors-wolf, #777777);
-            margin-bottom: -24px;
+            margin-bottom: -18px;
             content: "|" attr(data-ket) "⟩";
           }
 

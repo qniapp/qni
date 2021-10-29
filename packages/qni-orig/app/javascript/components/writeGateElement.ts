@@ -76,8 +76,8 @@ export class WriteGateElement extends DragAndDroppableMixin(
             line-height: 1rem;
           }
           :host([data-size="sm"]) #ket-label {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
+            font-size: 0.875rem !important;
+            line-height: 1.25rem !important;
           }
           :host #ket-label,
           :host([data-size="base"]) #ket-label {

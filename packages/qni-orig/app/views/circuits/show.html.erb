@@ -25,23 +25,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <h-gate data-size="sm"></h-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <h-gate data-size="sm"></h-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,180"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,180" data-show-kets></circle-notation>
         </div>
       </h-gate>
     </palette-dropzone>
@@ -54,33 +54,33 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <x-gate data-size="sm"></x-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <x-gate data-size="sm"></x-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <x-gate data-size="sm"></x-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.4,0.9" data-phases="70,340"></circle-notation>
+          <circle-notation data-magnitudes="0.4,0.9" data-phases="70,340" data-show-kets></circle-notation>
         </div>
       </x-gate>
     </palette-dropzone>
@@ -93,35 +93,33 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
-          <div class="flex flex-row items-center">
-            <%= minus_icon %>
-            <y-gate data-size="sm"></y-gate>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#E5E5E5">
-              <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,90"></circle-notation>
-        </div>
-
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <y-gate data-size="sm"></y-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-phases="-90,0"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
+        <div class="mt-5 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <y-gate data-size="sm"></y-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.4,0.9" data-phases="160,250"></circle-notation>
+          <circle-notation data-phases="-90,0" data-show-kets></circle-notation>
+        </div>
+
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+          <div class="flex flex-row items-center">
+            <%= minus_icon %>
+            <y-gate data-size="sm"></y-gate>
+            <%= arrow_right_icon %>
+          </div>
+          <circle-notation data-magnitudes="0.4,0.9" data-phases="160,250" data-show-kets></circle-notation>
         </div>
       </y-gate>
     </palette-dropzone>
@@ -134,33 +132,33 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <z-gate data-size="sm"></z-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <z-gate data-size="sm"></z-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,180"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-phases="0,180" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <z-gate data-size="sm"></z-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,250"></circle-notation>
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,250" data-show-kets></circle-notation>
         </div>
       </z-gate>
     </palette-dropzone>
@@ -170,7 +168,7 @@
         <header>
           <h1>Phase Gate</h1>
           <p>
-            Applies a phase of e<sup>iφ</sup> to the |<span class="font-mono">1</span>⟩ state.
+            Applies a phase of e<sup>iφ</sup> to the <code>|1⟩</code> state.
           </p>
           <p>
             The default φ = π/2.
@@ -178,33 +176,33 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,90"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,160"></circle-notation>
+          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,160" data-show-kets></circle-notation>
         </div>
       </phase-gate>
     </palette-dropzone>
@@ -217,23 +215,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rnot-gate data-size="sm"></rnot-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="45,-45"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="45,-45" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rnot-gate data-size="sm"></rnot-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="-45,45"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="-45,45" data-show-kets></circle-notation>
         </div>
       </rnot-gate>
     </palette-dropzone>
@@ -251,23 +249,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rx-gate data-theta="π/2" data-size="sm"></rx-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,-90"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,-90" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rx-gate data-theta="π/2" data-size="sm"></rx-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="-90,0"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="-90,0" data-show-kets></circle-notation>
         </div>
       </rx-gate>
     </palette-dropzone>
@@ -284,24 +282,24 @@
           </p>
         </header>
 
-        <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+        <div class="mt-5 flex flex-row items-center space-x-1">
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <ry-gate data-theta="π/2" data-size="sm"></ry-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <ry-gate data-theta="π/2" data-size="sm"></ry-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="180,0"></circle-notation>
+          <circle-notation data-magnitudes="0.7,0.7" data-phases="180,0" data-show-kets></circle-notation>
         </div>
       </ry-gate>
     </palette-dropzone>
@@ -319,23 +317,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rz-gate data-theta="π/2" data-size="sm"></rz-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-phases="-45,0"></circle-notation>
+          <circle-notation data-phases="-45,0" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <rz-gate data-theta="π/2" data-size="sm"></rz-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,45"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-phases="0,45" data-show-kets></circle-notation>
         </div>
       </rz-gate>
     </palette-dropzone>
@@ -377,23 +375,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <write-gate data-value="0" data-size="sm"></write-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <write-gate data-value="0" data-size="sm"></write-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
         </div>
       </write-gate>
     </palette-dropzone>
@@ -406,23 +404,23 @@
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
-          <circle-notation></circle-notation>
+          <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <write-gate data-value="1" data-size="sm"></write-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
         </div>
 
-        <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+        <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= minus_icon %>
             <write-gate data-value="1" data-size="sm"></write-gate>
             <%= arrow_right_icon %>
           </div>
-          <circle-notation data-magnitudes="0,1"></circle-notation>
+          <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
         </div>
       </write-gate>
     </palette-dropzone>
