@@ -130,6 +130,7 @@ module.exports = {
       },
     },
   },
+
   variants: {
     extend: {},
   },

@@ -25,7 +25,6 @@ export class CircuitStepElement extends HTMLElement {
   @attr breakpoint = false
   @attr keep = false
   @attr shadow = false
-  @attr hoverable = false
 
   @target slotEl: HTMLSlotElement
 
@@ -145,7 +144,10 @@ export class CircuitStepElement extends HTMLElement {
 
   activate(): void {
     this.dispatchEvent(
-      new CustomEvent("step.click", { bubbles: true, detail: this }),
+      new CustomEvent("step.click", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
@@ -213,8 +215,9 @@ export class CircuitStepElement extends HTMLElement {
     this.updateWires()
     this.dispatchStepLoadEvent()
 
-    this.addEventListener("mouseenter", this.dispatchStepHoverEvent)
-    this.addEventListener("dropzone.snap", this.dispatchStepHoverEvent)
+    this.addEventListener("mouseenter", this.dispatchStepMouseenterEvent)
+    this.addEventListener("mouseleave", this.dispatchStepMouseleaveEvent)
+    this.addEventListener("dropzone.snap", this.dispatchStepMouseenterEvent)
     this.addEventListener("dropzone.snap", this.dispatchStepSnapEvent)
     this.addEventListener("dropzone.unsnap", this.dispatchStepUnsnapEvent)
     this.addEventListener("dropzone.grab", this.dispatchStepSnapEvent)
@@ -225,18 +228,34 @@ export class CircuitStepElement extends HTMLElement {
 
   private dispatchStepLoadEvent(): void {
     this.dispatchEvent(
-      new CustomEvent("step.load", { detail: this, bubbles: true }),
+      new CustomEvent("step.load", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
-  dispatchStepHoverEvent(): void {
+  dispatchStepMouseenterEvent(): void {
     this.dispatchEvent(
-      new CustomEvent("step.hover", { detail: this, bubbles: true }),
+      new CustomEvent("step.mouseenter", {
+        detail: { element: this },
+        bubbles: true,
+      }),
+    )
+  }
+
+  dispatchStepMouseleaveEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent("step.mouseleave", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
   private dispatchStepSnapEvent(event: Event): void {
-    const dropzone = (event as CustomEvent).detail as CircuitDropzoneElement
+    const dropzone = (event as CustomEvent).detail
+      .element as CircuitDropzoneElement
 
     this.dispatchEvent(
       new CustomEvent("step.snap", {
@@ -247,7 +266,8 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private dispatchStepUnsnapEvent(event: Event): void {
-    const dropzone = (event as CustomEvent).detail as CircuitDropzoneElement
+    const dropzone = (event as CustomEvent).detail
+      .element as CircuitDropzoneElement
 
     this.unsnap()
     this.dispatchEvent(
@@ -260,7 +280,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private dispatchStepDropEvent(): void {
     this.dispatchEvent(
-      new CustomEvent("step.drop", { detail: this, bubbles: true }),
+      new CustomEvent("step.drop", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
@@ -275,9 +298,6 @@ export class CircuitStepElement extends HTMLElement {
             display: flex;
             flex-direction: column;
             justify-content: center;
-          }
-          :host([data-hoverable]) {
-            cursor: pointer;
           }
           @media (min-width: 768px) {
             :host {

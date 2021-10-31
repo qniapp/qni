@@ -284,6 +284,12 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.attachShadow({ mode: "open" })
+    this.update()
+    this.loadFromJson()
+    this.updateAllSteps()
+    this.updateNqubit()
+
     this.addEventListener("dragAndDroppable.ungrab", () => {
       this.editing = false
     })
@@ -291,7 +297,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener("dragAndDroppable.ungrab", this.enableDraggablesHover)
     this.addEventListener(
       "dragAndDroppable.ungrab",
-      this.dispatchStepHoverEvent,
+      this.dispatchStepMouseenterEvent,
     )
 
     this.addEventListener("dragAndDroppable.enddragging", () => {
@@ -304,31 +310,24 @@ export class QuantumCircuitElement extends HTMLElement {
     )
     this.addEventListener(
       "dragAndDroppable.enddragging",
-      this.dispatchStepHoverEvent,
+      this.dispatchStepMouseenterEvent,
     )
+
+    this.addEventListener("dragAndDroppable.trash", () => {
+      this.editing = false
+    })
 
     this.addEventListener("step.snap", this.snapStep)
     this.addEventListener("step.snap", this.updateStepConnections)
     this.addEventListener("step.snap", this.updateWires)
-    this.addEventListener("step.snap", this.updateJsonUrl)
     this.addEventListener("step.snap", this.updateNqubit)
 
     this.addEventListener("step.unsnap", this.unsnapStep)
     this.addEventListener("step.unsnap", this.updateStepConnections)
     this.addEventListener("step.unsnap", this.updateWires)
-    this.addEventListener("step.unsnap", this.updateJsonUrl)
     this.addEventListener("step.unsnap", this.updateNqubit)
 
     this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
-
-    this.addEventListener("operation.update", this.updateJsonUrl)
-
-    this.attachShadow({ mode: "open" })
-    this.update()
-    this.loadFromJson()
-    this.updateAllSteps()
-    this.updateJsonUrl()
-    this.updateNqubit()
 
     this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
   }
@@ -357,13 +356,13 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private dispatchStepHoverEvent(event: Event): void {
+  private dispatchStepMouseenterEvent(event: Event): void {
     const x = (event as CustomEvent).detail.x
     const y = (event as CustomEvent).detail.y
     const el = document.elementFromPoint(x, y)
     const step = el?.closest("circuit-step") as CircuitStepElement
 
-    step?.dispatchStepHoverEvent()
+    step?.dispatchStepMouseenterEvent()
   }
 
   private dispatchCircuitMouseLeaveEvent(): void {
@@ -732,8 +731,24 @@ export class QuantumCircuitElement extends HTMLElement {
     const index = dropzone.index()
     Util.notNull(index)
 
-    for (const each of this.steps) {
-      each.updateWireOfDropzone(index)
+    let wireQuantum = false
+    for (const step of this.steps) {
+      const dz = step.dropzones[index] as CircuitDropzoneElement
+      Util.notNull(dz)
+
+      dz.inputWireQuantum = wireQuantum
+      if (dz.draggableTagName === "write-gate") {
+        dz.inputWireQuantum = wireQuantum
+        dz.outputWireQuantum = true
+        wireQuantum = true
+      } else if (dz.draggableTagName === "measurement-gate") {
+        dz.inputWireQuantum = wireQuantum
+        dz.outputWireQuantum = false
+        wireQuantum = false
+      } else {
+        dz.inputWireQuantum = wireQuantum
+        dz.outputWireQuantum = wireQuantum
+      }
     }
   }
 
@@ -816,7 +831,6 @@ export class QuantumCircuitElement extends HTMLElement {
     this.removeEmptySteps()
     this.appendMinimumSteps()
     this.removeLastEmptyWires()
-    this.updateJsonUrl()
   }
 
   private removeEmptySteps(): void {
@@ -862,12 +876,6 @@ export class QuantumCircuitElement extends HTMLElement {
   clear(): void {
     Util.updateUrlJson('{"cols":[]}')
     location.reload()
-  }
-
-  private updateJsonUrl(): void {
-    if (!this.updateUrl) return
-
-    Util.updateUrlJson(this.toJson())
   }
 
   toJson(): string {

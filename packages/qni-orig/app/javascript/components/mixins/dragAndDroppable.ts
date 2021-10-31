@@ -118,8 +118,28 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         onend: this.endDragging.bind(this),
       })
 
+      this.addEventListener("mouseenter", this.dispatchMouseenterEvent)
+      this.addEventListener("mouseleave", this.dispatchMouseleaveEvent)
       this.addEventListener("mousedown", this.grab)
       this.addEventListener("mouseup", this.unGrab)
+    }
+
+    private dispatchMouseenterEvent(): void {
+      this.dispatchEvent(
+        new CustomEvent("dragAndDroppable.mouseenter", {
+          detail: { element: this },
+          bubbles: true,
+        }),
+      )
+    }
+
+    private dispatchMouseleaveEvent(): void {
+      this.dispatchEvent(
+        new CustomEvent("dragAndDroppable.mouseleave", {
+          detail: { element: this },
+          bubbles: true,
+        }),
+      )
     }
 
     private startDragging(): void {
@@ -138,13 +158,16 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       if (DisplaySize.isMobile()) return
 
       if (!this.snapped) {
-        this.dispatchEvent(
+        const dropzone = this.dropzone
+        Util.notNull(dropzone)
+
+        this.trash()
+        dropzone.dispatchEvent(
           new CustomEvent("dragAndDroppable.enddragging", {
             detail: { x: event.clientX, y: event.clientY },
             bubbles: true,
           }),
         )
-        this.trash()
         return
       }
 
@@ -161,8 +184,12 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
 
     private trash() {
       interact(this).unset()
-      this.dispatchEvent(new Event("dragAndDroppable.trash", { bubbles: true }))
-      this.parentElement?.removeChild(this)
+      this.dispatchEvent(
+        new CustomEvent("dragAndDroppable.trash", {
+          detail: { element: this },
+          bubbles: true,
+        }),
+      )
     }
 
     // Mouse event handlers
@@ -173,7 +200,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       this.grabbed = true
       this.dispatchEvent(
         new CustomEvent("dragAndDroppable.grab", {
-          detail: this,
+          detail: { element: this },
           bubbles: true,
         }),
       )
@@ -195,7 +222,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       this.moveTo(0, 0)
       this.dispatchEvent(
         new CustomEvent("dragAndDroppable.ungrab", {
-          detail: { x: event.clientX, y: event.clientY },
+          detail: { element: this, x: event.clientX, y: event.clientY },
           bubbles: true,
         }),
       )
@@ -209,16 +236,6 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       if (isCircuitDropzone(myDropzone)) freeDropzones.push(myDropzone)
 
       const snapTargets = freeDropzones.map((each) => each.snapTarget)
-      const snappedDropzone = (snapTarget: {
-        x: number
-        y: number
-      }): CircuitDropzoneElement | null => {
-        for (const each of freeDropzones) {
-          const d = each.snapTarget
-          if (d.x === snapTarget.x && d.y === snapTarget.y) return each
-        }
-        return null
-      }
 
       interact(this).draggable({
         modifiers: [
@@ -229,40 +246,66 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
           }),
         ],
         listeners: {
-          move: (e: InteractEvent) => {
-            const snapModifier = e.modifiers![0]
-            if (snapModifier.inRange) {
-              const snapTarget = snapModifier.target.source
-              const dropzone = snappedDropzone(snapTarget)
-              Util.notNull(dropzone)
-
-              if (this.snappedDropzone) {
-                this.snapped = false
-                this.snappedDropzone.dispatchEvent(
-                  new Event("dragAndDroppable.unsnap", { bubbles: true }),
-                )
-              }
-
-              this.snappedDropzone = dropzone
-              this.snapped = true
-              dropzone.dispatchEvent(
-                new CustomEvent("dragAndDroppable.snap", {
-                  detail: this,
-                  bubbles: true,
-                }),
-              )
-            } else {
-              if (this.snapped && isCircuitDropzone(this.parentElement)) {
-                this.snapped = false
-                this.dispatchEvent(
-                  new Event("dragAndDroppable.unsnap", { bubbles: true }),
-                )
-              }
-              this.snapped = false
-            }
-          },
+          move: this.moveEventListener(freeDropzones),
         },
       })
+    }
+
+    private moveEventListener(freeDropzones: CircuitDropzoneElement[]) {
+      return (e: InteractEvent) => {
+        const snapModifier = e.modifiers![0]
+        if (snapModifier.inRange) {
+          const snapTarget = snapModifier.target.source
+          const dropzone = this.snappableDropzone(snapTarget, freeDropzones)
+          Util.notNull(dropzone)
+
+          if (this.snappedDropzone) {
+            this.snapped = false
+            this.snappedDropzone.dispatchEvent(
+              new Event("dragAndDroppable.unsnap", { bubbles: true }),
+            )
+          }
+
+          this.snappedDropzone = dropzone
+          this.snapped = true
+          dropzone.dispatchEvent(
+            new CustomEvent("dragAndDroppable.snap", {
+              detail: { element: this },
+              bubbles: true,
+            }),
+          )
+        } else {
+          if (this.isLeavingCircuit) {
+            this.snapped = false
+
+            this.dispatchEvent(
+              new Event("dragAndDroppable.unsnap", { bubbles: true }),
+            )
+            this.dispatchEvent(
+              new Event("dragAndDroppable.leave", { bubbles: true }),
+            )
+          }
+          this.snapped = false
+        }
+      }
+    }
+
+    private snappableDropzone(
+      snapTarget: {
+        x: number
+        y: number
+      },
+      freeDropzones: CircuitDropzoneElement[],
+    ): CircuitDropzoneElement | null {
+      for (const each of freeDropzones) {
+        const d = each.snapTarget
+        if (d.x === snapTarget.x && d.y === snapTarget.y) return each
+      }
+      return null
+    }
+
+    private get isLeavingCircuit(): boolean {
+      return this.snapped && isCircuitDropzone(this.parentElement)
     }
 
     private get isPaletteDraggable(): boolean {

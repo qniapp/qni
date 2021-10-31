@@ -185,11 +185,21 @@ export class CircuitDropzoneElement extends HTMLElement {
     )
     this.addEventListener("dragAndDroppable.snap", this.snapDraggable)
     this.addEventListener("dragAndDroppable.unsnap", this.unsnapDraggable)
+    this.addEventListener("dragAndDroppable.trash", this.clear)
+  }
+
+  private clear(event: Event): void {
+    const operationEl = (event as CustomEvent).detail.element as HTMLElement
+
+    this.removeChild(operationEl)
   }
 
   private dispatchDropzoneDroppedEvent(): void {
     this.dispatchEvent(
-      new CustomEvent("dropzone.drop", { detail: this, bubbles: true }),
+      new CustomEvent("dropzone.drop", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
@@ -449,7 +459,10 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     if (this.childrenLoaded) {
       this.dispatchEvent(
-        new CustomEvent("dropzone.snap", { detail: this, bubbles: true }),
+        new CustomEvent("dropzone.snap", {
+          detail: { element: this },
+          bubbles: true,
+        }),
       )
     } else {
       this.childrenLoaded = true
@@ -458,12 +471,14 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   private dispatchDropzoneGrabEvent(): void {
     this.dispatchEvent(
-      new CustomEvent("dropzone.grab", { detail: this, bubbles: true }),
+      new CustomEvent("dropzone.grab", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 
   private initDropzone(): void {
-    interact(this).styleCursor(false)
     interact(this).dropzone({
       accept: "[data-drag-and-drop]",
       overlap: "center",
@@ -479,7 +494,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private snapDraggable(event: Event): void {
-    const draggable = (event as CustomEvent).detail as DragAndDroppable
+    const draggable = (event as CustomEvent).detail.element as DragAndDroppable
 
     this.append(draggable as unknown as Node)
     draggable.moveTo(0, 0)
@@ -489,7 +504,10 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.draggableTagName = ""
     this.occupied = false
     this.dispatchEvent(
-      new CustomEvent("dropzone.unsnap", { detail: this, bubbles: true }),
+      new CustomEvent("dropzone.unsnap", {
+        detail: { element: this },
+        bubbles: true,
+      }),
     )
   }
 

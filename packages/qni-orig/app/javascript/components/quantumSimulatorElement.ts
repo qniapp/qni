@@ -38,31 +38,62 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.visibleQubitCircleKets = []
 
     this.addEventListener("circuit.load", this.registerQuantumCircuit)
+    this.addEventListener("circuit.load", this.updateJsonUrl)
 
+    this.addEventListener(
+      "dragAndDroppable.mouseenter",
+      this.setDragAndDroppableStyleCursorGrab,
+    )
+
+    this.addEventListener(
+      "dragAndDroppable.grab",
+      this.setDragAndDroppableStyleCursorGrabbing,
+    )
+    this.addEventListener("dragAndDroppable.grab", this.setStyleCursorGrabbing)
     this.addEventListener("dragAndDroppable.grab", this.prepareDraggableDrop)
+
+    this.addEventListener(
+      "dragAndDroppable.ungrab",
+      this.removeDragAndDroppableCursorStyle,
+    )
+    this.addEventListener("dragAndDroppable.ungrab", this.setStyleCursorAuto)
     this.addEventListener(
       "dragAndDroppable.ungrab",
       this.proxyDraggableUngrabEvent,
     )
+    this.addEventListener("dragAndDroppable.ungrab", this.updateJsonUrl)
+
+    this.addEventListener(
+      "dragAndDroppable.enddragging",
+      this.setStyleCursorAuto,
+    )
     this.addEventListener("dragAndDroppable.enddragging", this.finishEditing)
 
+    this.addEventListener("dragAndDroppable.trash", this.setStyleCursorAuto)
     this.addEventListener("dragAndDroppable.trash", this.resizeCircuit)
-    this.addEventListener("dragAndDroppable.trash", this.run)
+    this.addEventListener("dragAndDroppable.trash", this.updateJsonUrl)
 
-    this.addEventListener("step.load", this.makeStepHoverable)
+    this.addEventListener("dragAndDroppable.leave", this.run)
 
     this.addEventListener("step.drop", this.resizeCircuit)
     this.addEventListener("step.drop", this.run)
 
-    this.addEventListener("step.hover", this.activateHoveredStep)
-    this.addEventListener("step.hover", this.run)
+    this.addEventListener(
+      "step.mouseenter",
+      this.setStyleCursorPointerUnlessEditing,
+    )
+    this.addEventListener("step.mouseenter", this.activateHoveredStep)
+    this.addEventListener("step.mouseenter", this.runUnlessEditing)
+
+    this.addEventListener(
+      "step.mouseleave",
+      this.setStyleCursorAutoUnlessEditing,
+    )
 
     this.addEventListener("step.click", this.setBreakpoint)
     this.addEventListener("step.click", this.run)
 
     this.addEventListener("step.snap", this.run)
-
-    this.addEventListener("step.unsnap", this.run)
 
     this.addEventListener("circuit.mouseleave", this.run)
 
@@ -80,6 +111,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener("run-circuit-button.click", this.run)
 
     this.addEventListener("operation.popup.change", this.run)
+    this.addEventListener("operation.update", this.updateJsonUrl)
 
     this.worker = new Worker(this.serviceWorker)
     this.worker.addEventListener("message", (e: MessageEvent) => {
@@ -158,6 +190,12 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.visibleQubitCircleKets = ketNumbers
   }
 
+  private runUnlessEditing(): void {
+    Util.notNull(this.quantumCircuit)
+    if (this.quantumCircuit.editing) return
+    this.run()
+  }
+
   private run(): void {
     Util.notNull(this.quantumCircuit)
     Util.notNull(this.circleNotation)
@@ -185,7 +223,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private setBreakpoint(event: Event): void {
-    const step = (event as CustomEvent).detail as CircuitStepElement
+    const step = (event as CustomEvent).detail.element as CircuitStepElement
 
     for (const each of this.quantumCircuit!.steps) {
       each.breakpoint = false
@@ -198,20 +236,12 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     if (this.quantumCircuit.editing) return
 
-    const step = (event as CustomEvent).detail as CircuitStepElement
+    const step = (event as CustomEvent).detail.element as CircuitStepElement
 
     for (const each of this.quantumCircuit.steps) {
       each.active = false
     }
     step.active = true
-  }
-
-  private makeStepHoverable(event: Event): void {
-    if (this.quantumCircuit?.editing) return
-
-    const step = (event as CustomEvent).detail as CircuitStepElement
-
-    step.hoverable = true
   }
 
   private resizeCircuit(): void {
@@ -226,10 +256,54 @@ export class QuantumSimulatorElement extends HTMLElement {
     return index
   }
 
+  private setDragAndDroppableStyleCursorGrab(event: Event): void {
+    const operationEl = (event as CustomEvent).detail.element as HTMLElement
+
+    if (this.quantumCircuit?.editing) {
+      operationEl.style.cursor = "grabbing"
+    } else {
+      operationEl.style.cursor = "grab"
+    }
+  }
+
+  private setDragAndDroppableStyleCursorGrabbing(event: Event): void {
+    const operationEl = (event as CustomEvent).detail.element as HTMLElement
+
+    operationEl.style.cursor = "grabbing"
+  }
+
+  private setStyleCursorGrabbing(): void {
+    document.documentElement.style.cursor = "grabbing"
+  }
+
+  private removeDragAndDroppableCursorStyle(event: Event) {
+    const operationEl = (event as CustomEvent).detail.element as HTMLElement
+
+    operationEl.style.cursor = ""
+  }
+
+  private setStyleCursorAuto(): void {
+    document.documentElement.style.cursor = "auto"
+  }
+
+  private setStyleCursorAutoUnlessEditing(): void {
+    Util.notNull(this.quantumCircuit)
+    if (this.quantumCircuit.editing) return
+
+    document.documentElement.style.cursor = "auto"
+  }
+
+  private setStyleCursorPointerUnlessEditing(): void {
+    Util.notNull(this.quantumCircuit)
+    if (this.quantumCircuit.editing) return
+
+    document.documentElement.style.cursor = "pointer"
+  }
+
   private prepareDraggableDrop(event: Event): void {
     event.stopPropagation()
 
-    const draggable = (event as CustomEvent).detail as DragAndDroppable
+    const draggable = (event as CustomEvent).detail.element as DragAndDroppable
     Util.notNull(draggable)
     Util.notNull(this.quantumCircuit)
 
@@ -263,5 +337,10 @@ export class QuantumSimulatorElement extends HTMLElement {
         bubbles: false,
       }),
     )
+  }
+
+  private updateJsonUrl(): void {
+    Util.notNull(this.quantumCircuit)
+    Util.updateUrlJson(this.quantumCircuit.toJson())
   }
 }
