@@ -45,15 +45,15 @@ export class CircuitStepElement extends HTMLElement {
     return this.dropzones.length
   }
 
-  get nqubit(): number {
-    let nqubit = this.wireCount
+  get qubitCount(): number {
+    let qubitCount = this.wireCount
     const dropzones = this.dropzones
 
-    for (let i = nqubit - 1; i >= 0 && !dropzones[i].occupied; i--) {
-      nqubit--
+    for (let i = qubitCount - 1; i >= 0 && !dropzones[i].occupied; i--) {
+      qubitCount--
     }
 
-    return nqubit
+    return qubitCount
   }
 
   get dropzones(): CircuitDropzoneElement[] {

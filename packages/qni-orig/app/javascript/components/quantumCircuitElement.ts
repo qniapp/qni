@@ -288,7 +288,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
-    this.updateNqubit()
+    this.updateQubitAndWireCount()
 
     this.addEventListener("dragAndDroppable.ungrab", () => {
       this.editing = false
@@ -320,19 +320,19 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener("step.snap", this.snapStep)
     this.addEventListener("step.snap", this.updateStepConnections)
     this.addEventListener("step.snap", this.updateWires)
-    this.addEventListener("step.snap", this.updateNqubit)
+    this.addEventListener("step.snap", this.updateQubitAndWireCount)
 
     this.addEventListener("step.unsnap", this.unsnapStep)
     this.addEventListener("step.unsnap", this.updateStepConnections)
     this.addEventListener("step.unsnap", this.updateWires)
-    this.addEventListener("step.unsnap", this.updateNqubit)
+    this.addEventListener("step.unsnap", this.updateQubitAndWireCount)
 
     this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
 
     this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
   }
 
-  private updateNqubit(): void {
+  private updateQubitAndWireCount(): void {
     const steps = this.steps
 
     if (steps.length === 0) {
@@ -341,19 +341,20 @@ export class QuantumCircuitElement extends HTMLElement {
       return
     }
 
-    const maxLength = Math.max(...steps.map((each) => each.nqubit))
-    if (maxLength === 0) {
+    const maxStepQubitCount = Math.max(...steps.map((each) => each.qubitCount))
+    if (maxStepQubitCount === 0) {
       this.qubitCount = 1
       this.wireCount = this.minWireCount
       return
     }
 
-    this.qubitCount = maxLength
-    if (maxLength > this.minWireCount) {
-      this.wireCount = maxLength
-    } else {
-      this.wireCount = this.minWireCount
-    }
+    const firstStep = steps[0]
+    Util.notNull(firstStep)
+    const wireCount = firstStep.wireCount
+
+    this.qubitCount = maxStepQubitCount
+    this.wireCount =
+      wireCount > this.minWireCount ? wireCount : this.minWireCount
   }
 
   private dispatchStepMouseenterEvent(event: Event): void {
@@ -701,7 +702,7 @@ export class QuantumCircuitElement extends HTMLElement {
           }
           default: {
             if (instruction === 1) {
-              if (circuitStep.nqubit === 0) {
+              if (circuitStep.qubitCount === 0) {
                 circuitStep.keep = true
               } else {
                 circuitStep.keep = false
@@ -794,6 +795,8 @@ export class QuantumCircuitElement extends HTMLElement {
   private appendWire(): void {
     if (this.qubitCount >= this.maxWireCount) return
 
+    this.wireCount += 1
+
     for (const each of this.steps) {
       each.appendDropzone()
     }
@@ -871,6 +874,10 @@ export class QuantumCircuitElement extends HTMLElement {
         each.lastDropzone.remove()
       }
     }
+
+    const firstStep = this.steps[0]
+    Util.notNull(firstStep)
+    this.wireCount = firstStep.wireCount
   }
 
   clear(): void {
