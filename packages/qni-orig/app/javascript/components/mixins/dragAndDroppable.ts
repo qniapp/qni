@@ -72,7 +72,8 @@ export declare class DragAndDroppable {
   set hoverable(value: boolean)
   set grabbed(value: boolean)
   initDragAndDrop(): void
-  setSnapTargets(dropzones: CircuitDropzoneElement[]): void
+  setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number): void
+  updateSnapTargetInfo(dropzones: CircuitDropzoneElement[]): void
   moveTo(x: number, y: number): void
 }
 
@@ -88,6 +89,15 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
     @attr positionY = 0
     @attr hoverable = true
 
+    public snapTargetInfo: {
+      [x: number]: {
+        [y: number]: {
+          dropzone: CircuitDropzoneElement | null
+          stepIndex: number | null
+          wireIndex: number
+        }
+      }
+    }
     private snappedDropzone: CircuitDropzoneElement | null
 
     get dropzone(): CircuitDropzoneElement | PaletteDropzoneElement | null {
@@ -228,14 +238,57 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       )
     }
 
-    setSnapTargets(dropzones: CircuitDropzoneElement[]) {
+    setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number) {
       const myDropzone = this.dropzone
-      const freeDropzones = dropzones
+      const freeDropzones = dropzones.filter((each) => !each.occupied)
+      const snapTargets = []
+      this.snapTargetInfo = {}
 
       Util.notNull(myDropzone)
       if (isCircuitDropzone(myDropzone)) freeDropzones.push(myDropzone)
 
-      const snapTargets = freeDropzones.map((each) => each.snapTarget)
+      for (const [i, each] of Object.entries(dropzones)) {
+        const snapTarget = each.snapTarget
+        const x = snapTarget.x
+        const y = snapTarget.y
+        const leftX = x - this.snapRange() * 0.75
+        const rightX = x + this.snapRange() * 0.75
+        const wireIndex = parseInt(i) % wireCount
+
+        if (parseInt(i) < wireCount) {
+          snapTargets.push({ x: leftX, y })
+          if (this.snapTargetInfo[leftX] === undefined)
+            this.snapTargetInfo[leftX] = {}
+          if (this.snapTargetInfo[leftX][y] === undefined)
+            this.snapTargetInfo[leftX][y] = {
+              dropzone: null,
+              stepIndex: -1,
+              wireIndex,
+            }
+        }
+
+        snapTargets.push({ x: rightX, y })
+        if (this.snapTargetInfo[rightX] === undefined)
+          this.snapTargetInfo[rightX] = {}
+        if (this.snapTargetInfo[rightX][y] === undefined)
+          this.snapTargetInfo[rightX][y] = {
+            dropzone: null,
+            stepIndex: Math.floor(parseInt(i) / wireCount),
+            wireIndex,
+          }
+
+        if (!each.occupied || each === myDropzone) {
+          snapTargets.push(snapTarget)
+        }
+
+        if (this.snapTargetInfo[x] === undefined) this.snapTargetInfo[x] = {}
+        if (this.snapTargetInfo[x][y] === undefined)
+          this.snapTargetInfo[x][y] = {
+            dropzone: each,
+            stepIndex: null,
+            wireIndex,
+          }
+      }
 
       interact(this).draggable({
         modifiers: [
@@ -246,62 +299,89 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
           }),
         ],
         listeners: {
-          move: this.moveEventListener(freeDropzones),
+          move: this.moveEventListener.bind(this),
         },
       })
     }
 
-    private moveEventListener(freeDropzones: CircuitDropzoneElement[]) {
-      return (e: InteractEvent) => {
-        const snapModifier = e.modifiers![0]
-        if (snapModifier.inRange) {
-          const snapTarget = snapModifier.target.source
-          const dropzone = this.snappableDropzone(snapTarget, freeDropzones)
-          Util.notNull(dropzone)
+    updateSnapTargetInfo(dropzones: CircuitDropzoneElement[]): void {
+      const firstDropzone = dropzones[0]
+      const baseX = firstDropzone.snapTarget.x
 
-          if (this.snappedDropzone) {
-            this.snapped = false
-            this.snappedDropzone.dispatchEvent(
-              new Event("dragAndDroppable.unsnap", { bubbles: true }),
-            )
-          }
+      for (const [x, yv] of Object.entries(this.snapTargetInfo)) {
+        if (parseInt(x) <= baseX) continue
 
-          this.snappedDropzone = dropzone
-          this.snapped = true
-          dropzone.dispatchEvent(
-            new CustomEvent("dragAndDroppable.snap", {
-              detail: { element: this },
-              bubbles: true,
-            }),
-          )
-        } else {
-          if (this.isLeavingCircuit) {
-            this.snapped = false
+        for (const [_y, v] of Object.entries(yv)) {
+          if (v.stepIndex === null) continue
+          v.stepIndex += 1
+        }
+      }
 
-            this.dispatchEvent(
-              new Event("dragAndDroppable.unsnap", { bubbles: true }),
-            )
-            this.dispatchEvent(
-              new Event("dragAndDroppable.leave", { bubbles: true }),
-            )
-          }
-          this.snapped = false
+      for (const [i, each] of Object.entries(dropzones)) {
+        const snapTarget = each.snapTarget
+        const x = snapTarget.x
+        const y = snapTarget.y
+
+        this.snapTargetInfo[x][y] = {
+          dropzone: each,
+          stepIndex: null,
+          wireIndex: parseInt(i),
         }
       }
     }
 
-    private snappableDropzone(
-      snapTarget: {
-        x: number
-        y: number
-      },
-      freeDropzones: CircuitDropzoneElement[],
-    ): CircuitDropzoneElement | null {
-      for (const each of freeDropzones) {
-        const d = each.snapTarget
-        if (d.x === snapTarget.x && d.y === snapTarget.y) return each
+    private moveEventListener(e: InteractEvent) {
+      const snapModifier = e.modifiers![0]
+      if (snapModifier.inRange) {
+        const snapTarget = snapModifier.target.source
+        let dropzone = this.snapTargetInfo[snapTarget.x][snapTarget.y].dropzone
+
+        if (this.snappedDropzone) {
+          this.snapped = false
+          this.snappedDropzone.dispatchEvent(
+            new Event("dragAndDroppable.unsnap", { bubbles: true }),
+          )
+        }
+
+        if (dropzone === null) {
+          const snapTargetInfo = this.snapTargetInfo[snapTarget.x][snapTarget.y]
+
+          this.dispatchEvent(
+            new CustomEvent("dragAndDroppable.snapToNewDropzone", {
+              detail: {
+                element: this,
+                stepIndex: snapTargetInfo.stepIndex,
+                wireIndex: snapTargetInfo.wireIndex,
+              },
+              bubbles: true,
+            }),
+          )
+
+          Util.notNull(this.dropzone)
+          dropzone = this.dropzone as CircuitDropzoneElement
+        }
+
+        this.snappedDropzone = dropzone
+        this.snapped = true
+        dropzone.dispatchEvent(
+          new CustomEvent("dragAndDroppable.snap", {
+            detail: { element: this },
+            bubbles: true,
+          }),
+        )
+      } else {
+        if (this.isLeavingCircuit) {
+          this.snapped = false
+
+          this.dispatchEvent(
+            new Event("dragAndDroppable.unsnap", { bubbles: true }),
+          )
+          this.dispatchEvent(
+            new Event("dragAndDroppable.leave", { bubbles: true }),
+          )
+        }
+        this.snapped = false
       }
-      return null
     }
 
     private get isLeavingCircuit(): boolean {

@@ -765,7 +765,6 @@ export class QuantumCircuitElement extends HTMLElement {
     this.editing = true
     this.disableDraggablesOnCircuitHover()
     this.appendWire()
-    this.appendCircuitStepShadow()
   }
 
   private disableDraggablesOnCircuitHover(): void {
@@ -802,32 +801,25 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private appendCircuitStepShadow(): void {
-    const largestStep = this.largestStep
-    const stepLength = largestStep!.wireCount
+  appendCircuitStepAfter(stepIndex: number): CircuitStepElement {
+    const newStep = new CircuitStepElement()
+    newStep.shadow = true
+    for (let i = 0; i < this.wireCount; i++) {
+      newStep.appendDropzone()
+    }
 
-    for (const each of this.steps) {
-      const step = new CircuitStepElement()
-      step.shadow = true
-      for (let i = 0; i < stepLength; i++) {
-        step.appendDropzone()
-      }
-
-      const stepParentEl = each.parentElement as
+    if (stepIndex === -1) {
+      this.prepend(newStep)
+    } else {
+      const step = this.steps[stepIndex]
+      const stepParentEl = step.parentElement as
         | QuantumCircuitElement
         | CircuitBlockElement
       Util.notNull(stepParentEl)
-
-      stepParentEl.insertBefore(step, each.nextSibling)
+      stepParentEl.insertBefore(newStep, step.nextSibling)
     }
 
-    const step = new CircuitStepElement()
-    step.shadow = true
-    for (let i = 0; i < stepLength; i++) {
-      step.appendDropzone()
-    }
-
-    this.prepend(step)
+    return newStep
   }
 
   resize(): void {

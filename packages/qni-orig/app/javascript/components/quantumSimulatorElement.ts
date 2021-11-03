@@ -75,6 +75,8 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     this.addEventListener("dragAndDroppable.leave", this.run)
 
+    this.addEventListener("dragAndDroppable.snapToNewDropzone", this.addNewStep)
+
     this.addEventListener("step.drop", this.resizeCircuit)
     this.addEventListener("step.drop", this.run)
 
@@ -308,7 +310,10 @@ export class QuantumSimulatorElement extends HTMLElement {
     Util.notNull(this.quantumCircuit)
 
     this.quantumCircuit.prepareDraggableDrop()
-    draggable.setSnapTargets(this.quantumCircuit.freeDropzones)
+    draggable.setSnapTargets(
+      this.quantumCircuit.dropzones,
+      this.quantumCircuit.wireCount,
+    )
   }
 
   private proxyDraggableUngrabEvent(event: Event): void {
@@ -342,5 +347,20 @@ export class QuantumSimulatorElement extends HTMLElement {
   private updateJsonUrl(): void {
     Util.notNull(this.quantumCircuit)
     Util.updateUrlJson(this.quantumCircuit.toJson())
+  }
+
+  private addNewStep(event: Event): void {
+    const customEvent = event as CustomEvent
+    const operation = customEvent.detail.element as HTMLElement
+    const dragAndDroppable = customEvent.detail.element as DragAndDroppable
+    const stepIndex = customEvent.detail.stepIndex as number
+    const wireIndex = customEvent.detail.wireIndex as number
+    Util.notNull(this.quantumCircuit)
+
+    const newStep = this.quantumCircuit.appendCircuitStepAfter(stepIndex)
+    const dropzone = newStep.dropzones[wireIndex]
+
+    dropzone.assign(operation)
+    dragAndDroppable.updateSnapTargetInfo(newStep.dropzones)
   }
 }
