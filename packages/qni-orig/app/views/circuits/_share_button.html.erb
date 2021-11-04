@@ -5,14 +5,14 @@
           type="button"
           class="hidden md:inline-flex flex-row items-center border-transparent px-2 text-eel bg-snow rounded opacity-75 hover:opacity-100 focus:outline-none"
           data-action="click->share#openModal">
-    <%= share_icon %>
+    <%= icon :share %>
     <span class="pl-1">Share</span>
   </button>
 
   <button type="button"
           class="block md:hidden fixed bottom-0 right-0 mr-6 mb-28 w-16 h-16 flex items-center justify-center bg-magnitude rounded-full shadow-lg z-40"
           data-action="click->share#openModal">
-    <%= share_icon class: 'w-1/2 h-1/2 text-snow' %>
+    <%= icon :share, class: 'w-1/2 h-1/2 text-snow' %>
   </button>
 
   <div id="share-modal"
@@ -38,7 +38,7 @@
                   class="bg-white rounded-md text-hare hover:text-eel focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   data-action="click->share#closeModal">
             <span class="sr-only">Close</span>
-            <%= outline_x_icon %>
+            <%= icon :outline_x %>
           </button>
         </div>
 
@@ -81,7 +81,7 @@
                   type="button"
                   class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-magnitude text-base font-medium text-snow hover:bg-superposition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-superposition sm:text-sm"
                   data-action="click->share#tweet">
-            <%= twitter_icon %>
+            <%= icon :twitter %>
             <span class="pl-1">Tweet</span>
           </button>
         </div>
