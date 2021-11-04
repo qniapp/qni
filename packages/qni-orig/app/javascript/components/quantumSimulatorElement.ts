@@ -199,8 +199,9 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private run(): void {
+    if (this.circleNotation === null) return
+
     Util.notNull(this.quantumCircuit)
-    Util.notNull(this.circleNotation)
 
     const activeStep = this.quantumCircuit.activeStep
     const breakpoint = this.quantumCircuit.breakpoint
