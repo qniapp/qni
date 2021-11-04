@@ -1,6 +1,6 @@
 /* eslint-env qunit */
 
-import { DetailedError } from "lib/base"
+import { DetailedError } from "lib/detailedError"
 
 class ReentrantDescription {
   toString() {

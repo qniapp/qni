@@ -3,7 +3,6 @@ const BAD_TO_STRING_RESULT = Object.prototype.toString.call({})
 const RECURSE_LIMIT_DESCRIPTION = "!recursion-limit!"
 const DEFAULT_RECURSION_LIMIT = 10
 
-// Attempts to give a useful and unambiguous description of the given value.
 export function describe(
   value: unknown,
   recursionLimit = DEFAULT_RECURSION_LIMIT,
@@ -28,8 +27,8 @@ function tryDescribeCollection(value: unknown, recursionLimit: number) {
   if (recursionLimit === 0) return RECURSE_LIMIT_DESCRIPTION
   if (value instanceof Map) return describeMap(value, recursionLimit)
   if (value instanceof Set) return describeSet(value, recursionLimit)
-  const isIterable = (value: unknown): value is Iterable<unknown> => {
-    if ((value as Iterable<unknown>)[Symbol.iterator] !== undefined) {
+  const isIterable = (v: unknown): v is Iterable<unknown> => {
+    if ((v as Iterable<unknown>)[Symbol.iterator] !== undefined) {
       return true
     }
     return false

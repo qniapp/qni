@@ -11,16 +11,6 @@ class WireTest < ApplicationSystemTestCase
     end
   end
 
-  test 'append shadow steps on mousedown' do
-    visit circuit_path
-
-    page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
-
-    within('quantum-circuit') do
-      assert_shadow_steps 6
-    end
-  end
-
   test 'remove last empty steps on mouseup' do
     visit circuit_path(json: '{"cols":[["H"],["H"],["H"],["H"],["H"],["H"],["H"]]}')
 

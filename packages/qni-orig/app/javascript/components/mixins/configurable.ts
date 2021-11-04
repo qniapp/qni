@@ -1,5 +1,5 @@
 import { Constructor } from "./constructor"
-import { GatePopup } from "lib/editor"
+import { GatePopup } from "lib/gatePopup"
 
 export declare class Configurable {
   showRightClickPopup(event: MouseEvent): void

@@ -10,7 +10,7 @@ import { Constructor } from "./constructor"
 import { DisplaySize } from "lib"
 import { InteractEvent } from "@interactjs/types"
 import { PaletteDropzoneElement } from "components/paletteDropzoneElement"
-import { Util } from "lib/base"
+import { Util } from "lib/util"
 import { attr } from "@github/catalyst"
 import interact from "@interactjs/interact"
 

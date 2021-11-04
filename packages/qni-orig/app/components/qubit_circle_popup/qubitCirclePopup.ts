@@ -8,7 +8,7 @@ import tippy, {
   roundArrow,
 } from "tippy.js"
 import { Complex } from "lib/complex"
-import { Util } from "lib/base"
+import { Util } from "./util"
 
 export function initQubitCirclePopup(
   qubitCircles: HTMLElement[],

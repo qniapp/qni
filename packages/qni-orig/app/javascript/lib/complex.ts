@@ -1,4 +1,6 @@
-import { DetailedError, Format, UNICODE_FRACTIONS, Util } from "lib/base"
+import { Format, UNICODE_FRACTIONS } from "./format"
+import { DetailedError } from "lib/detailedError"
+import { Util } from "./util"
 import { parseFormula } from "./formulaParser"
 
 export class Complex {

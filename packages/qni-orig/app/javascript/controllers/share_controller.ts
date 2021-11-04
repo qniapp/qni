@@ -1,5 +1,5 @@
 import { Controller } from "stimulus"
-import { Util } from "lib/base"
+import { Util } from "lib/util"
 
 export default class ShareController extends Controller {
   static values = {

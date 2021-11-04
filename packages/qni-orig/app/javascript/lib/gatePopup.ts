@@ -1,5 +1,4 @@
 import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "lib/complex"
-import { Util, classNameFor } from "lib/base"
 import noUiSlider, {
   PipsMode,
   API as noUiSliderApi,
@@ -15,6 +14,7 @@ import { RnotGateElement } from "components/rnotGateElement"
 import { RxGateElement } from "components/rxGateElement"
 import { RyGateElement } from "components/ryGateElement"
 import { RzGateElement } from "components/rzGateElement"
+import { Util } from "./util"
 import { XGateElement } from "components/xGateElement"
 import { parseFormula } from "lib/formulaParser"
 
@@ -388,7 +388,7 @@ export class GatePopup {
 
   private get angleSliderEl(): noUiSliderTarget {
     const el = this.popup?.popper
-      .getElementsByClassName(classNameFor("angleSlider"))
+      .getElementsByClassName("angle-slider")
       .item(0) as HTMLElement
     Util.notNull(el)
 
@@ -438,7 +438,7 @@ export class GatePopup {
           },
         },
       },
-      cssPrefix: `${classNameFor("angleSlider")}-`,
+      cssPrefix: "angle-slider-",
     })
     angleSliderEl.classList.remove("hidden")
 
@@ -462,7 +462,7 @@ export class GatePopup {
   private isAngleSliderActive(): boolean {
     return (
       this.popup?.popper
-        .getElementsByClassName(classNameFor("angleSlider:state:active"))
+        .getElementsByClassName("angle-slider-active")
         .item(0) !== null
     )
   }

@@ -1,6 +1,6 @@
 /* eslint-env qunit */
 
-import { describe } from "lib/base"
+import { describe } from "lib/describe"
 
 QUnit.module(".describe", () => {
   class DescribableClass {

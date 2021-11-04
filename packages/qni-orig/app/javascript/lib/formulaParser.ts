@@ -1,5 +1,5 @@
-import { DetailedError } from "lib/base"
-import { seq } from "lib/base/seq"
+import { DetailedError } from "./detailedError"
+import { seq } from "./seq"
 
 function _mergeScientificFloatTokens(tokens: string[]): string[] {
   tokens = [...tokens]

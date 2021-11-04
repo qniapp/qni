@@ -7,7 +7,7 @@ import { DragAndDroppable } from "./mixins"
 import { MeasurementGateElement } from "components/measurementGateElement"
 import { QuantumCircuitElement } from "components/quantumCircuitElement"
 import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
-import { Util } from "lib/base"
+import { Util } from "lib/util"
 
 type MessageEventData = {
   type: "step" | "finish"

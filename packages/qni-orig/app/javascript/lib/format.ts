@@ -54,7 +54,7 @@ export class Format {
    */
   static parseFloat(text: string): number {
     if (text.length === 0) {
-      throw new Error("Not a number: '" + text + "'")
+      throw new Error(`Not a number: '${text}'`)
     }
     if (text[0] === "-") {
       return -Format.parseFloat(text.substr(1))
@@ -70,7 +70,7 @@ export class Format {
 
     const result = parseFloat(text)
     if (isNaN(result)) {
-      throw new Error("Not a number: '" + text + "'")
+      throw new Error(`Not a number: '${text}'`)
     }
     return result
   }
@@ -175,7 +175,7 @@ export class Format {
     digits: number | undefined = undefined,
   ): string {
     if (Math.abs(value) < epsilon) return "0"
-    if (value < 0) return "-" + this.abbreviateFloat(-value, epsilon, digits)
+    if (value < 0) return `-${this.abbreviateFloat(-value, epsilon, digits)}`
 
     const fraction = Format.matchUnicodeFraction(
       (e) => Math.abs(e.value - value) <= epsilon,
@@ -188,7 +188,7 @@ export class Format {
       (e) => Math.abs(Math.sqrt(e.value) - value) <= epsilon,
     )
     if (rootFraction !== undefined) {
-      return "\u221A" + rootFraction.character
+      return `\u221A${rootFraction.character}`
     }
 
     if (value % 1 !== 0 && digits !== undefined) {

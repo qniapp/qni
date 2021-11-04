@@ -2,12 +2,11 @@ export function hasOwnProperty<K extends PropertyKey>(
   obj: unknown,
   key: K,
 ): obj is Record<K, unknown> {
-  // @ts-ignore
-  return obj && key in obj
+  return obj !== null && obj !== undefined && key in obj
 }
 
 export type ArrayIsh =
-  | Array<unknown>
+  | unknown[]
   | Float32Array
   | Float64Array
   | Int8Array
@@ -30,15 +29,6 @@ const GENERIC_ARRAY_TYPES = [
   Uint8ClampedArray,
 ]
 
-/**
- * Determines if two values are currently equivalent.
- *
- * - Values that are equal according to === are currently equivalent.
- * - NaN is currently equivalent to NaN.
- * - Values with an `isEqualTo` method are currently equivalent to values that return true when passed to that method.
- * - Collections of the same type that contain currently equivalent entries are currently equivalent.
- * - Objects of the same type with equivalent same own properties and iterables are currently equivalent.
- */
 export function equate(subject: unknown, other: unknown): boolean {
   if (subject === other || (isExactlyNaN(subject) && isExactlyNaN(other))) {
     return true

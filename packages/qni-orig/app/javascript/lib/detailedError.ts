@@ -27,6 +27,7 @@ export class DetailedError extends Error {
           ? describe(this.detailsObj)
           : "(failed to describe detailsObj due to possibly re-entrancy)"
     } catch (ex) {
+      // eslint-disable-next-line no-console
       console.error(ex)
       this.details =
         "(failed to describe detailsObj, see the console for details)"

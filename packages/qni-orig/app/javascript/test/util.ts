@@ -1,5 +1,6 @@
-import { ArrayIsh, describe, equate, hasOwnProperty } from "lib/base"
+import { ArrayIsh, equate, hasOwnProperty } from "lib/equate"
 import { Complex } from "lib/complex"
+import { describe } from "lib/describe"
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)
@@ -60,11 +61,7 @@ export function isApproximatelyEqualToHelper(
     return true
   }
 
-  fail(
-    "Expected " +
-      describe(subject) +
-      " to have an isApproximatelyEqualTo method",
-  )
+  fail(`Expected ${describe(subject)} to have an isApproximatelyEqualTo method`)
 }
 
 function hasIsApproximatelyEqualTo(object: unknown): object is Complex {

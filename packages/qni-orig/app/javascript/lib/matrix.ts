@@ -1,5 +1,8 @@
 import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "./complex"
-import { DetailedError, Format, Seq, Util, seq } from "lib/base"
+import { Seq, seq } from "./seq"
+import { DetailedError } from "./detailedError"
+import { Format } from "./format"
+import { Util } from "./util"
 import { parseAngle } from "./angleParser"
 import { parseFormula } from "./formulaParser"
 

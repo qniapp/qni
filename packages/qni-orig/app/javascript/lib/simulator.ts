@@ -19,7 +19,7 @@ import {
 import { Complex } from "./complex"
 import { Matrix } from "./matrix"
 import { StateVector } from "./stateVector"
-import { Util } from "./base"
+import { Util } from "./util"
 
 export class Simulator {
   public state: StateVector

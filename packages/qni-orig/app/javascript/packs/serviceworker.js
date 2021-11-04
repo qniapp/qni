@@ -1,5 +1,4 @@
-import { Simulator } from "lib"
-import { Util } from "lib/base"
+import { Simulator, Util } from "lib"
 
 self.addEventListener(
   "message",
@@ -16,12 +15,6 @@ self.addEventListener(
     Util.notNull(stepIndex)
     Util.notNull(steps)
     Util.notNull(targets)
-
-    // console.log(`[SW] json = '${json}'`)
-    // console.log(`[SW] qubitCount = ${qubitCount}`)
-    // console.log(`[SW] stepIndex = ${stepIndex}`)
-    // console.log(`[SW] steps = ${describe(steps)}`)
-    // console.log(`[SW] targets = ${describe(targets)}`)
 
     steps.forEach((operations, i) => {
       Util.need(qubitCount === operations.length,

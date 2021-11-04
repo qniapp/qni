@@ -1,6 +1,7 @@
-import { Format, Seq } from "lib/base"
 import { Complex } from "lib/complex"
+import { Format } from "lib/format"
 import { Matrix } from "lib/matrix"
+import { Seq } from "lib/seq"
 
 QUnit.module("Matrix", () => {
   QUnit.test("isEqualTo", (assert) => {

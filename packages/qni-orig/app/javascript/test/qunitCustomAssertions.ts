@@ -1,4 +1,4 @@
-import { equate } from "lib/base"
+import { equate } from "lib/equate"
 import { isApproximatelyEqualToHelper } from "./util"
 
 declare global {
@@ -29,7 +29,7 @@ QUnit.assert.equates = function (
     result: equate(subject, other),
     actual: subject,
     expected: other,
-    message: message,
+    message,
   })
 }
 
@@ -42,7 +42,7 @@ QUnit.assert.notEquates = function (
     result: !equate(subject, other),
     actual: subject,
     expected: other,
-    message: message,
+    message,
   })
 }
 
@@ -56,7 +56,7 @@ QUnit.assert.approximatelyEquates = function (
     result: isApproximatelyEqualToHelper(subject, other, epsilon),
     actual: subject,
     expected: other,
-    message: message,
+    message,
   })
 }
 
@@ -70,7 +70,7 @@ QUnit.assert.notApproximatelyEquates = function (
     result: !isApproximatelyEqualToHelper(subject, other, epsilon),
     actual: subject,
     expected: other,
-    message: message,
+    message,
   })
 }
 
@@ -80,7 +80,7 @@ QUnit.assert.iteratesAs = function <T>(
   message = "",
 ) {
   const actualItems = []
-  for (const item of subject as string | Array<T> | Iterable<T>) {
+  for (const item of subject as string | T[] | Iterable<T>) {
     if (actualItems.length > items.length * 2 + 100) {
       actualItems.push("{...}")
       break
@@ -92,7 +92,7 @@ QUnit.assert.iteratesAs = function <T>(
     result: equate(actualItems, items),
     actual: actualItems,
     expected: items,
-    message: message,
+    message,
   })
 }
 
@@ -105,6 +105,6 @@ QUnit.assert.lessThan = function (
     result: subject < other,
     actual: subject,
     expected: other,
-    message: message,
+    message,
   })
 }
