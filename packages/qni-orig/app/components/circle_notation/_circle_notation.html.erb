@@ -1,6 +1,0 @@
-<% circle_notation = local_assigns.fetch(:circle_notation) %>
-
-<%= tag.div id: 'circle-notation', class: 'circle-notation z-40 md:left-1/2 md:transform md:-translate-x-1/2', data: circle_notation.data do %>
-  <%= qubit_circle id: 'qubit-circle-template', class: 'hidden' %>
-  <%= qubit_circle_popup %>
-<% end %>
