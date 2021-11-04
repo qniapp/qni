@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module IconsHelper
+module IconHelper
   def minus_icon
     render 'icons/minus'
   end

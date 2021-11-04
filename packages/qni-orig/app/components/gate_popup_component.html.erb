@@ -1,0 +1,15 @@
+<div id="gate-popup--<%= @type %>" class="gate-popup hidden">
+  <div class="flex flex-col px-2 py-4">
+    <div class="gate-popup__input-wrapper">  <!-- focus-within:ring-1 focus-within:ring-magnitude focus-within:border-magnitude"> -->
+      <label for="<%= @type %>" class="absolute -top-2 left-2 -mt-px inline-block px-1 bg-snow text-sm font-medium text-eel"><%= @label %></label>
+      <div class="relative">
+        <input type="text" name="<%= @type %>" class="gate-popup__input" autocomplete="off">
+        <div class="gate-popup__error-icon absolute inset-y-0 right-0 flex items-center pointer-events-none">
+          <%= exclamation_circle_icon %>
+        </div>
+      </div>
+    </div>
+    <p class="gate-popup__input-error"><%= @error_message %></p>
+    <%= angle_slider %>
+  </div>
+</div>
