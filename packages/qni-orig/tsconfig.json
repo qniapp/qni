@@ -15,7 +15,8 @@
     "target": "es6",
     "strict": true,
     "strictPropertyInitialization": false,
-    "noEmit": true
+    "noEmit": true,
+    "typeRoots": ["app/javascript/@types/"]
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false

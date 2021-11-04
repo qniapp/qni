@@ -3,7 +3,6 @@ import "@interactjs/actions/drop"
 import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
-
 import { TemplateResult, html } from "@github/jtml"
 import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
 import { Constructor } from "./constructor"

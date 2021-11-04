@@ -2,7 +2,9 @@ export function hasOwnProperty<K extends PropertyKey>(
   obj: unknown,
   key: K,
 ): obj is Record<K, unknown> {
-  return obj !== null && obj !== undefined && key in obj
+  return (
+    obj !== null && obj !== undefined && key in (obj as Record<string, unknown>)
+  )
 }
 
 export type ArrayIsh =
@@ -166,13 +168,18 @@ function equateObjects(subject: unknown, other: unknown) {
     if (k === Symbol.iterator) {
       continue
     }
-    if (!equate((subject as any)[k], (other as any)[k])) {
+    if (
+      !equate(
+        (subject as Record<string, unknown>)[k as string],
+        (other as Record<string, unknown>)[k as string],
+      )
+    ) {
       return false
     }
   }
 
-  const hasSubjectIter = (subject as any)[Symbol.iterator] !== undefined
-  const hasOtherIter = (other as any)[Symbol.iterator] !== undefined
+  const hasSubjectIter = hasOwnProperty(subject, Symbol.iterator)
+  const hasOtherIter = hasOwnProperty(other, Symbol.iterator)
   if (hasSubjectIter !== hasOtherIter) {
     return false
   }

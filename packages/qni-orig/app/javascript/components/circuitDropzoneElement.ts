@@ -3,7 +3,6 @@ import "@interactjs/actions/drop"
 import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
-
 import {
   CircuitOperation,
   CircuitOperationElement,
@@ -15,7 +14,6 @@ import { html, render } from "@github/jtml"
 import { CircuitStepElement } from "components/circuitStepElement"
 import { DragAndDroppable } from "./mixins/dragAndDroppable"
 import { Operation } from "./mixins/sizeable"
-
 import interact from "@interactjs/interact"
 
 class IGate {
