@@ -288,7 +288,8 @@ export class QuantumCircuitElement extends HTMLElement {
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
-    this.updateQubitAndWireCount()
+    this.updateQubitCount()
+    this.updateWireCount()
 
     this.addEventListener("dragAndDroppable.ungrab", () => {
       this.editing = false
@@ -320,30 +321,45 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener("step.snap", this.snapStep)
     this.addEventListener("step.snap", this.updateStepConnections)
     this.addEventListener("step.snap", this.updateWires)
-    this.addEventListener("step.snap", this.updateQubitAndWireCount)
+    this.addEventListener("step.snap", this.updateQubitCount)
 
     this.addEventListener("step.unsnap", this.unsnapStep)
     this.addEventListener("step.unsnap", this.updateStepConnections)
     this.addEventListener("step.unsnap", this.updateWires)
-    this.addEventListener("step.unsnap", this.updateQubitAndWireCount)
+    this.addEventListener("step.unsnap", this.updateQubitCount)
 
     this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
 
     this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
   }
 
-  private updateQubitAndWireCount(): void {
+  private updateQubitCount(): void {
     const steps = this.steps
 
     if (steps.length === 0) {
       this.qubitCount = 1
-      this.wireCount = this.minWireCount
       return
     }
 
     const maxStepQubitCount = Math.max(...steps.map((each) => each.qubitCount))
     if (maxStepQubitCount === 0) {
       this.qubitCount = 1
+      return
+    }
+
+    this.qubitCount = maxStepQubitCount
+  }
+
+  private updateWireCount(): void {
+    const steps = this.steps
+
+    if (steps.length === 0) {
+      this.wireCount = this.minWireCount
+      return
+    }
+
+    const maxStepQubitCount = Math.max(...steps.map((each) => each.qubitCount))
+    if (maxStepQubitCount === 0) {
       this.wireCount = this.minWireCount
       return
     }
@@ -352,7 +368,6 @@ export class QuantumCircuitElement extends HTMLElement {
     Util.notNull(firstStep)
     const wireCount = firstStep.wireCount
 
-    this.qubitCount = maxStepQubitCount
     this.wireCount =
       wireCount > this.minWireCount ? wireCount : this.minWireCount
   }
