@@ -5,7 +5,7 @@ QUnit.module("QuantumCircuitElement", (hooks) => {
   let qc!: QuantumCircuitElement
 
   hooks.beforeEach(() => {
-    qc = document.createElement("quantum-circuit") as QuantumCircuitElement
+    qc = new QuantumCircuitElement()
     document.body.append(qc)
   })
 

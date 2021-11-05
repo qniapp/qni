@@ -13,10 +13,12 @@ gem 'pg'
 
 gem 'puma', '~> 5.5'
 
-# JavaScript and assets
+# JavaScript, CSS and assets
+gem 'cssbundling-rails'
 gem 'jbuilder'
+gem 'jsbundling-rails'
+gem 'stimulus-rails'
 gem 'turbolinks', '~> 5'
-gem 'webpacker'
 
 # Logging
 gem 'scout_apm'
@@ -32,8 +34,7 @@ gem 'aws-sdk-s3', require: false
 gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'grover'
-gem 'serviceworker-rails', github: 'ncs1/serviceworker-rails'
-gem 'tailwindcss-rails-webpacker'
+gem 'serviceworker-rails'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

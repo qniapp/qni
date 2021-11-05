@@ -36,3 +36,6 @@ dist/
 doc/
 yarn-debug.log*
 /storage/*
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

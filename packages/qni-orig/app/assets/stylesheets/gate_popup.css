@@ -18,10 +18,7 @@
     @apply border-0;
     @apply p-0;
     @apply text-eel;
-
-    @screen sm {
-      @apply text-sm;
-    }
+    @apply sm:text-sm;
 
     &:focus {
       @apply ring-0;

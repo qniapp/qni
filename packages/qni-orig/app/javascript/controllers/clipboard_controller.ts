@@ -1,5 +1,5 @@
 import tippy, { Instance, roundArrow } from "tippy.js"
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 export default class ClipboardController extends Controller {
   private popup!: Instance

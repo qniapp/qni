@@ -23,16 +23,16 @@ self.addEventListener(
       simulator.runStep(operations)
 
       self.postMessage({
-        type: "step",
-        step: i,
-        amplitudes: i === stepIndex ? simulator.amplitudes(targets) : [],
-        blochVectors: simulator.blochVectors,
-        measuredBits: simulator.measuredBits,
-        flags: simulator.flags,
+          type: "step",
+          step: i,
+          amplitudes: i === stepIndex ? simulator.amplitudes(targets) : [],
+          blochVectors: simulator.blochVectors,
+          measuredBits: simulator.measuredBits,
+          flags: simulator.flags,
       })
     })
 
-    self.postMessage({ type: "finish" })
+      self.postMessage({ type: "finish" })
   },
-  false,
+    false,
 )

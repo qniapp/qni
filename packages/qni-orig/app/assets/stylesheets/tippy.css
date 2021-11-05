@@ -7,17 +7,14 @@
   @apply border-2 border-solid border-eel;
   @apply text-wolf;
   @apply text-xs;
+  @apply md:text-sm;
 
-  @screen md {
-    @apply text-sm;
-  }
-
-  // The border
+  /* The border */
   .tippy-svg-arrow > svg:first-child {
     fill: theme("colors.eel");
   }
 
-  // The fill
+  /* The fill */
   .tippy-svg-arrow > svg:last-child {
     fill: theme("colors.snow");
   }
@@ -38,7 +35,7 @@
     right: 13px;
   }
 
-  // Description popup
+  /* Description popup */
   header h1 {
     @apply font-bold;
     @apply text-eel;

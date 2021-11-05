@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import { Util } from "lib/util"
 
 export default class ShareController extends Controller {

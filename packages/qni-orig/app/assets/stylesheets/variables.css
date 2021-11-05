@@ -1,6 +1,6 @@
 $nqubits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
 
-// Instructions
+/* Instructions */
 $instruction-size-extralarge: 12;
 $instruction-size-large: 10;
 $instruction-size-base: 8;
@@ -40,7 +40,7 @@ $instruction-label-font-size: (
   10: $instruction-label-font-size-extrasmall,
 );
 
-// Gate label
+/* Gate label */
 $gate-label-font-size-extralarge: base;
 $gate-label-font-size-large: base;
 $gate-label-font-size-base: base;
@@ -61,7 +61,7 @@ $gate-label-font-size: (
   10: $gate-label-font-size-extraextrasmall,
 );
 
-// Wire
+/* Wire */
 $wire-width: 2;
 
 $connection-width-base: 4;
@@ -78,10 +78,10 @@ $connection-width: (
   10: 2,
 );
 
-// Circuit Breakpoint
+/* Circuit Breakpoint */
 $circuit-breakpoint-width-px: 4;
 
-// write & measure gate
+/* write & measure gate */
 $gate-ket-label-font-size: (
   1: $instruction-label-font-size-large,
   2: $instruction-label-font-size-large,
@@ -95,12 +95,12 @@ $gate-ket-label-font-size: (
   10: $instruction-label-font-size-extrasmall,
 );
 
-// Circle notation
+/* Circle notation */
 $circle-notation-height: 40;
 $circle-notation-height-mobile: 32;
 $circle-notation-margin-top: 12;
 
-// Qubit Circle
+/* Qubit Circle */
 $qubit-circle-size-2xl: 16;
 $qubit-circle-size-xl: 12;
 $qubit-circle-size-large: 8;
@@ -162,5 +162,5 @@ $qubit-circle-border-width-px-mobile: (
   10: $stroke-width-px-base,
 );
 
-// Run button
+/* Run button */
 $run-button-z: 40;

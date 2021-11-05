@@ -1,6 +1,6 @@
 import "@svgdotjs/svg.filter.js"
 import { G, SVG, Svg } from "@svgdotjs/svg.js"
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 export default class CircuitSvgController extends Controller {
   static targets = ["circuitScaler", "circuit", "title", "logo"]

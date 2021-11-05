@@ -35,7 +35,7 @@
   width: 100%;
 }
 
-// Slider size and handle placement;
+/* Slider size and handle placement; */
 .angle-slider-horizontal {
   @apply h-2;
   @apply mx-1;
@@ -46,7 +46,7 @@
   }
 }
 
-// Handles and cursors;
+/* Handles and cursors; */
 .angle-slider-draggable {
   cursor: ew-resize;
 }
@@ -64,7 +64,7 @@
   @apply bg-superposition;
 }
 
-// pips
+/* pips */
 .angle-slider-pips {
   @apply absolute;
   @apply text-hare;
@@ -82,12 +82,12 @@
   @apply hidden;
 }
 
-// Markings;
+/* Markings; */
 .angle-slider-marker {
   @apply hidden;
 }
 
-// Horizontal layout;
+/* Horizontal layout; */
 .angle-slider-pips-horizontal {
   @apply pt-3;
   @apply w-full;

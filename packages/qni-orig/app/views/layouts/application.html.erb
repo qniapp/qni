@@ -16,13 +16,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_pack_tag 'application', 'data-turbo-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
+    <%= stylesheet_link_tag 'application' %>
 
     <link rel="manifest" href="/manifest.json">
-    <%= favicon_pack_tag 'favicon.ico' %>
-    <%= favicon_pack_tag 'icon.svg', type: 'image/svg+xml' %>
-    <%= favicon_pack_tag 'apple-touch-icon.png', rel: 'apple-touch-icon' %>
+    <%= favicon_link_tag '/favicon.ico' %>
+    <%= favicon_link_tag '/icon.svg', type: 'image/svg+xml' %>
+    <%= favicon_link_tag '/apple-touch-icon.png', rel: 'apple-touch-icon' %>
   </head>
 
   <body oncontextmenu="return false;">
