@@ -21,7 +21,7 @@ module.exports = function (config) {
     preprocessors: {
       "app/javascript/test/**/*.ts": ["esbuild"],
     },
-    reporters: ["mocha", "notify"],
+    reporters: ["progress", "notify"],
     autoWatch: false,
     browsers: ["ChromeHeadless"],
     singleRun: true,
