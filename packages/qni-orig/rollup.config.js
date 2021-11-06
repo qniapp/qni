@@ -52,7 +52,7 @@ export default [
         config: {
           path: "./postcss.config.js",
         },
-        extensions: [".scss"],
+        extensions: [".css"],
         extract: true,
         minimize: false,
       }),

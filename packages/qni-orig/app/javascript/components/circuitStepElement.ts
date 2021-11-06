@@ -152,17 +152,13 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   appendDropzone(): CircuitDropzoneElement {
-    const el = document.createElement(
-      "circuit-dropzone",
-    ) as CircuitDropzoneElement
+    const el = new CircuitDropzoneElement()
     this.append(el)
     return el
   }
 
   appendOperation(operation: HTMLElement): void {
-    const dropzone = document.createElement(
-      "circuit-dropzone",
-    ) as CircuitDropzoneElement
+    const dropzone = new CircuitDropzoneElement()
     dropzone.append(operation)
     dropzone.occupied = true
     this.append(dropzone)

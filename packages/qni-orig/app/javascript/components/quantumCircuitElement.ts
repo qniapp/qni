@@ -32,9 +32,8 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr interactive = false
   @attr editing = false
   @attr qubitCount = 1
-  @attr title = ""
+  @attr circuitTitle = ""
 
-  @target slotEl: HTMLSlotElement
   @targets blocks: CircuitBlockElement[]
 
   private breakpointStepIndex = 0
@@ -436,7 +435,7 @@ export class QuantumCircuitElement extends HTMLElement {
         </style>
 
         <div id="body">
-          <slot data-target="quantum-circuit.slotEl"></slot>
+          <slot></slot>
         </div>`,
       this.shadowRoot!,
     )
@@ -515,7 +514,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const jsonData = JSON.parse(jsonString)
-    this.title = (jsonData.title || "").trim()
+    this.circuitTitle = (jsonData.title || "").trim()
 
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
@@ -916,8 +915,8 @@ export class QuantumCircuitElement extends HTMLElement {
       cols.push('["]"]')
     }
 
-    if (this.title !== "") {
-      return `{"cols":[${cols.join(",")}],"title":"${this.title}"}`
+    if (this.circuitTitle !== "") {
+      return `{"cols":[${cols.join(",")}],"title":"${this.circuitTitle}"}`
     } else {
       return `{"cols":[${cols.join(",")}]}`
     }

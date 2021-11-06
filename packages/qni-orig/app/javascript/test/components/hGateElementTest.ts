@@ -6,7 +6,7 @@ QUnit.module("HGate", (hooks) => {
   let el: HGateElement
 
   hooks.beforeEach(() => {
-    el = document.createElement("h-gate") as HGateElement
+    el = new HGateElement()
   })
 
   hooks.afterEach(() => {

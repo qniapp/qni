@@ -19,9 +19,9 @@ QUnit.module("CircuitStep", () => {
     let h: HGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      h = document.createElement("h-gate") as HGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      h = new HGateElement()
       document.body.append(step)
     })
 
@@ -78,10 +78,10 @@ QUnit.module("CircuitStep", () => {
     let h: HGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      h = document.createElement("h-gate") as HGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      h = new HGateElement()
       document.body.append(step)
     })
 
@@ -131,9 +131,9 @@ QUnit.module("CircuitStep", () => {
     let x: XGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      x = document.createElement("x-gate") as XGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      x = new XGateElement()
       document.body.append(step)
     })
 
@@ -190,10 +190,10 @@ QUnit.module("CircuitStep", () => {
     let x: XGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      x = document.createElement("x-gate") as XGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      x = new XGateElement()
       document.body.append(step)
     })
 
@@ -243,9 +243,9 @@ QUnit.module("CircuitStep", () => {
     let y: YGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      y = document.createElement("y-gate") as YGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      y = new YGateElement()
       document.body.append(step)
     })
 
@@ -302,10 +302,10 @@ QUnit.module("CircuitStep", () => {
     let y: YGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      y = document.createElement("y-gate") as YGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      y = new YGateElement()
       document.body.append(step)
     })
 
@@ -355,9 +355,9 @@ QUnit.module("CircuitStep", () => {
     let z: ZGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      z = document.createElement("z-gate") as ZGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      z = new ZGateElement()
       document.body.append(step)
     })
 
@@ -414,10 +414,10 @@ QUnit.module("CircuitStep", () => {
     let z: ZGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      z = document.createElement("z-gate") as ZGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      z = new ZGateElement()
       document.body.append(step)
     })
 
@@ -467,9 +467,9 @@ QUnit.module("CircuitStep", () => {
     let p: PhaseGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      p = document.createElement("phase-gate") as PhaseGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      p = new PhaseGateElement()
       document.body.append(step)
     })
 
@@ -526,10 +526,10 @@ QUnit.module("CircuitStep", () => {
     let p: PhaseGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      p = document.createElement("phase-gate") as PhaseGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      p = new PhaseGateElement()
       document.body.append(step)
     })
 
@@ -579,9 +579,9 @@ QUnit.module("CircuitStep", () => {
     let rnot: RnotGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      rnot = document.createElement("rnot-gate") as RnotGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      rnot = new RnotGateElement()
       document.body.append(step)
     })
 
@@ -638,10 +638,10 @@ QUnit.module("CircuitStep", () => {
     let rnot: RnotGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      rnot = document.createElement("rnot-gate") as RnotGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      rnot = new RnotGateElement()
       document.body.append(step)
     })
 
@@ -691,9 +691,9 @@ QUnit.module("CircuitStep", () => {
     let rx: RxGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      rx = document.createElement("rx-gate") as RxGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      rx = new RxGateElement()
       document.body.append(step)
     })
 
@@ -750,10 +750,10 @@ QUnit.module("CircuitStep", () => {
     let rx: RxGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      rx = document.createElement("rx-gate") as RxGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      rx = new RxGateElement()
       document.body.append(step)
     })
 
@@ -803,9 +803,9 @@ QUnit.module("CircuitStep", () => {
     let ry: RyGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      ry = document.createElement("ry-gate") as RyGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      ry = new RyGateElement()
       document.body.append(step)
     })
 
@@ -862,10 +862,10 @@ QUnit.module("CircuitStep", () => {
     let ry: RyGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      ry = document.createElement("ry-gate") as RyGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      ry = new RyGateElement()
       document.body.append(step)
     })
 
@@ -915,9 +915,9 @@ QUnit.module("CircuitStep", () => {
     let rz: RzGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      rz = document.createElement("rz-gate") as RzGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      rz = new RzGateElement()
       document.body.append(step)
     })
 
@@ -974,10 +974,10 @@ QUnit.module("CircuitStep", () => {
     let rz: RzGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      rz = document.createElement("rz-gate") as RzGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      rz = new RzGateElement()
       document.body.append(step)
     })
 
@@ -1028,10 +1028,10 @@ QUnit.module("CircuitStep", () => {
     let c3: ControlGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      c3 = document.createElement("control-gate") as ControlGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      c3 = new ControlGateElement()
       document.body.append(step)
     })
 
@@ -1087,9 +1087,9 @@ QUnit.module("CircuitStep", () => {
     let p2: PhaseGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      p1 = document.createElement("phase-gate") as PhaseGateElement
-      p2 = document.createElement("phase-gate") as PhaseGateElement
+      step = new CircuitStepElement()
+      p1 = new PhaseGateElement()
+      p2 = new PhaseGateElement()
       document.body.append(step)
     })
 
@@ -1142,9 +1142,9 @@ QUnit.module("CircuitStep", () => {
     let s2: SwapGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      s1 = document.createElement("swap-gate") as SwapGateElement
-      s2 = document.createElement("swap-gate") as SwapGateElement
+      step = new CircuitStepElement()
+      s1 = new SwapGateElement()
+      s2 = new SwapGateElement()
       document.body.append(step)
     })
 
@@ -1179,9 +1179,9 @@ QUnit.module("CircuitStep", () => {
     let swap: SwapGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      swap = document.createElement("swap-gate") as SwapGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      swap = new SwapGateElement()
       document.body.append(step)
     })
 
@@ -1242,10 +1242,10 @@ QUnit.module("CircuitStep", () => {
     let swap: SwapGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c1 = document.createElement("control-gate") as ControlGateElement
-      c2 = document.createElement("control-gate") as ControlGateElement
-      swap = document.createElement("swap-gate") as SwapGateElement
+      step = new CircuitStepElement()
+      c1 = new ControlGateElement()
+      c2 = new ControlGateElement()
+      swap = new SwapGateElement()
       document.body.append(step)
     })
 
@@ -1299,10 +1299,10 @@ QUnit.module("CircuitStep", () => {
     let swap2: SwapGateElement
 
     hooks.beforeEach(() => {
-      step = document.createElement("circuit-step") as CircuitStepElement
-      c = document.createElement("control-gate") as ControlGateElement
-      swap1 = document.createElement("swap-gate") as SwapGateElement
-      swap2 = document.createElement("swap-gate") as SwapGateElement
+      step = new CircuitStepElement()
+      c = new ControlGateElement()
+      swap1 = new SwapGateElement()
+      swap2 = new SwapGateElement()
       document.body.append(step)
     })
 
