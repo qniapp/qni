@@ -23,10 +23,12 @@ description: Explaining the structure of a quantum circuit in comments.
 <quantum-circuit id="entangled-qubits"></quantum-circuit>
 
 <script>
- circuit = document.getElementById("entangled-qubits")
- circuit.write(0, 0, 1)
-        .block("entangle", (block) => { block.h(0).cnot(0, 1) })
-        .measure(0).measure(1)
+ window.addEventListener('DOMContentLoaded', () => {
+   circuit = document.getElementById("entangled-qubits")
+   circuit.write(0, 0, 1)
+          .block("entangle", (block) => { block.h(0).cnot(0, 1) })
+          .measure(0).measure(1)
+ })
 </script>
 {% endcapture %}
 {% include circuit_example.html code=code %}
@@ -38,14 +40,16 @@ description: Explaining the structure of a quantum circuit in comments.
 {% capture code %}
 <quantum-circuit id="root-of-not" class="inline-block"></quantum-circuit>
 <script>
- circuit = document.getElementById("root-of-not")
- circuit.write(0, 0)
-        .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
-        .i()
-        .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
-        .i()
-        .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
-        .i()
+ window.addEventListener('DOMContentLoaded', () => {
+   circuit = document.getElementById("root-of-not")
+   circuit.write(0, 0)
+          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+          .i()
+          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+          .i()
+          .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
+          .i()
+ })
 </script>
 {% endcapture %}
 {% include circuit_example.html code=code %}

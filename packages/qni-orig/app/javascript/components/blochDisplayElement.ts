@@ -1,4 +1,4 @@
-import { BLOCH_DISPLAY_OPERATION_TYPE, BlochDisplayOperation } from "lib"
+import { BLOCH_DISPLAY_OPERATION_TYPE, BlochDisplayOperation } from "../lib"
 import {
   DragAndDroppableMixin,
   HelpableMixin,

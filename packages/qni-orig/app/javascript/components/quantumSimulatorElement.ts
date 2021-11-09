@@ -2,10 +2,9 @@ import { attr, controller } from "@github/catalyst"
 import { BlochDisplayElement } from "components/blochDisplayElement"
 import { CircleNotationElement } from "components/circleNotationElement"
 import { CircuitStepElement } from "components/circuitStepElement"
+import { CircuitableMixin } from "./mixins/circuitable"
 import { Complex } from "lib/complex"
-import { DragAndDroppable } from "./mixins"
 import { MeasurementGateElement } from "components/measurementGateElement"
-import { QuantumCircuitElement } from "components/quantumCircuitElement"
 import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
 import { Util } from "lib/util"
 
@@ -19,106 +18,59 @@ type MessageEventData = {
 }
 
 @controller
-export class QuantumSimulatorElement extends HTMLElement {
+export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   @attr serviceWorker = "/serviceworker.js"
 
   declare worker: Worker
 
-  private quantumCircuit: QuantumCircuitElement | null
   private circleNotation: CircleNotationElement | null
   private runCircuitButton: RunCircuitButtonElement | null
   private visibleQubitCircleKets: number[]
 
   clearCircuit(): void {
-    this.quantumCircuit?.clear()
+    this.quantumCircuit.clear()
   }
 
   connectedCallback(): void {
     this.circleNotation = null
     this.visibleQubitCircleKets = []
+    this.initCircuitable()
 
-    this.addEventListener("circuit.load", this.registerQuantumCircuit)
     this.addEventListener("circuit.load", this.updateJsonUrl)
-
-    this.addEventListener(
-      "dragAndDroppable.mouseenter",
-      this.setDragAndDroppableStyleCursorGrab,
-    )
-
-    this.addEventListener(
-      "dragAndDroppable.grab",
-      this.setDragAndDroppableStyleCursorGrabbing,
-    )
-    this.addEventListener("dragAndDroppable.grab", this.setStyleCursorGrabbing)
-    this.addEventListener("dragAndDroppable.grab", this.prepareDraggableDrop)
-
-    this.addEventListener(
-      "dragAndDroppable.ungrab",
-      this.removeDragAndDroppableCursorStyle,
-    )
-    this.addEventListener("dragAndDroppable.ungrab", this.setStyleCursorAuto)
-    this.addEventListener(
-      "dragAndDroppable.ungrab",
-      this.proxyDraggableUngrabEvent,
-    )
     this.addEventListener("dragAndDroppable.ungrab", this.updateJsonUrl)
-
-    this.addEventListener(
-      "dragAndDroppable.enddragging",
-      this.setStyleCursorAuto,
-    )
-    this.addEventListener("dragAndDroppable.enddragging", this.finishEditing)
-
-    this.addEventListener("dragAndDroppable.trash", this.setStyleCursorAuto)
-    this.addEventListener("dragAndDroppable.trash", this.resizeCircuit)
     this.addEventListener("dragAndDroppable.trash", this.updateJsonUrl)
-
     this.addEventListener("dragAndDroppable.leave", this.run)
-
-    this.addEventListener("dragAndDroppable.snapToNewDropzone", this.addNewStep)
-
-    this.addEventListener("step.drop", this.resizeCircuit)
     this.addEventListener("step.drop", this.run)
-
     this.addEventListener(
       "step.mouseenter",
       this.setStyleCursorPointerUnlessEditing,
     )
     this.addEventListener("step.mouseenter", this.activateHoveredStep)
     this.addEventListener("step.mouseenter", this.runUnlessEditing)
-
     this.addEventListener(
       "step.mouseleave",
       this.setStyleCursorAutoUnlessEditing,
     )
-
     this.addEventListener("step.click", this.setBreakpoint)
     this.addEventListener("step.click", this.run)
-
     this.addEventListener("step.snap", this.run)
-
     this.addEventListener("circuit.mouseleave", this.run)
-
     this.addEventListener("circle-notation.load", this.registerCircleNotation)
     this.addEventListener(
       "circle-notation.visibilityChanged",
       this.updateVisibleQubitCircleKets,
     )
     this.addEventListener("circle-notation.visibilityChanged", this.run)
-
     this.addEventListener(
       "run-circuit-button.load",
       this.registerRunCircuitButton,
     )
     this.addEventListener("run-circuit-button.click", this.run)
-
     this.addEventListener("operation.popup.change", this.run)
     this.addEventListener("operation.update", this.updateJsonUrl)
 
     this.worker = new Worker(this.serviceWorker)
     this.worker.addEventListener("message", (e: MessageEvent) => {
-      Util.notNull(this.quantumCircuit)
-
       const activeStep = this.quantumCircuit.activeStep
       const breakpoint = this.quantumCircuit.breakpoint
       const currentStep = activeStep || breakpoint
@@ -128,7 +80,7 @@ export class QuantumSimulatorElement extends HTMLElement {
       const data = e.data as MessageEventData
 
       if (data.type === "step") {
-        const step = this.quantumCircuit!.steps[data.step]
+        const step = this.quantumCircuit.steps[data.step]
 
         for (const bit in data.blochVectors) {
           const blochDisplay = step.dropzones[bit]
@@ -173,10 +125,6 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   // Register components
 
-  private registerQuantumCircuit(event: Event): void {
-    this.quantumCircuit = event.target as QuantumCircuitElement
-  }
-
   private registerCircleNotation(event: Event): void {
     this.circleNotation = event.target as CircleNotationElement
   }
@@ -193,15 +141,12 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private runUnlessEditing(): void {
-    Util.notNull(this.quantumCircuit)
     if (this.quantumCircuit.editing) return
     this.run()
   }
 
   private run(): void {
     if (this.circleNotation === null) return
-
-    Util.notNull(this.quantumCircuit)
 
     const activeStep = this.quantumCircuit.activeStep
     const breakpoint = this.quantumCircuit.breakpoint
@@ -228,15 +173,13 @@ export class QuantumSimulatorElement extends HTMLElement {
   private setBreakpoint(event: Event): void {
     const step = (event as CustomEvent).detail.element as CircuitStepElement
 
-    for (const each of this.quantumCircuit!.steps) {
+    for (const each of this.quantumCircuit.steps) {
       each.breakpoint = false
     }
     step!.breakpoint = true
   }
 
   private activateHoveredStep(event: Event): void {
-    Util.notNull(this.quantumCircuit)
-
     if (this.quantumCircuit.editing) return
 
     const step = (event as CustomEvent).detail.element as CircuitStepElement
@@ -247,121 +190,28 @@ export class QuantumSimulatorElement extends HTMLElement {
     step.active = true
   }
 
-  private resizeCircuit(): void {
-    this.quantumCircuit!.resize()
-  }
-
   private fetchStepIndex(step: CircuitStepElement): number {
-    const index = this.quantumCircuit!.steps.indexOf(step)
+    const index = this.quantumCircuit.steps.indexOf(step)
     if (index === -1) {
       throw new Error("CircuitStep not found")
     }
     return index
   }
 
-  private setDragAndDroppableStyleCursorGrab(event: Event): void {
-    const operationEl = (event as CustomEvent).detail.element as HTMLElement
-
-    if (this.quantumCircuit?.editing) {
-      operationEl.style.cursor = "grabbing"
-    } else {
-      operationEl.style.cursor = "grab"
-    }
-  }
-
-  private setDragAndDroppableStyleCursorGrabbing(event: Event): void {
-    const operationEl = (event as CustomEvent).detail.element as HTMLElement
-
-    operationEl.style.cursor = "grabbing"
-  }
-
-  private setStyleCursorGrabbing(): void {
-    document.documentElement.style.cursor = "grabbing"
-  }
-
-  private removeDragAndDroppableCursorStyle(event: Event) {
-    const operationEl = (event as CustomEvent).detail.element as HTMLElement
-
-    operationEl.style.cursor = ""
-  }
-
-  private setStyleCursorAuto(): void {
-    document.documentElement.style.cursor = "auto"
-  }
-
   private setStyleCursorAutoUnlessEditing(): void {
-    Util.notNull(this.quantumCircuit)
     if (this.quantumCircuit.editing) return
 
     document.documentElement.style.cursor = "auto"
   }
 
   private setStyleCursorPointerUnlessEditing(): void {
-    Util.notNull(this.quantumCircuit)
     if (this.quantumCircuit.editing) return
 
     document.documentElement.style.cursor = "pointer"
   }
 
-  private prepareDraggableDrop(event: Event): void {
-    event.stopPropagation()
-
-    const draggable = (event as CustomEvent).detail.element as DragAndDroppable
-    Util.notNull(draggable)
-    Util.notNull(this.quantumCircuit)
-
-    this.quantumCircuit.prepareDraggableDrop()
-    draggable.setSnapTargets(
-      this.quantumCircuit.dropzones,
-      this.quantumCircuit.wireCount,
-    )
-  }
-
-  private proxyDraggableUngrabEvent(event: Event): void {
-    const coordinates = (event as CustomEvent).detail
-    Util.notNull(coordinates)
-    Util.notNull(coordinates.x)
-    Util.notNull(coordinates.y)
-
-    this.quantumCircuit?.dispatchEvent(
-      new CustomEvent("dragAndDroppable.ungrab", {
-        detail: { x: coordinates.x, y: coordinates.y },
-        bubbles: false,
-      }),
-    )
-  }
-
-  private finishEditing(event: Event): void {
-    const coordinates = (event as CustomEvent).detail
-    Util.notNull(coordinates)
-    Util.notNull(coordinates.x)
-    Util.notNull(coordinates.y)
-
-    this.quantumCircuit?.dispatchEvent(
-      new CustomEvent("dragAndDroppable.enddragging", {
-        detail: { x: coordinates.x, y: coordinates.y },
-        bubbles: false,
-      }),
-    )
-  }
-
   private updateJsonUrl(): void {
     Util.notNull(this.quantumCircuit)
     Util.updateUrlJson(this.quantumCircuit.toJson())
-  }
-
-  private addNewStep(event: Event): void {
-    const customEvent = event as CustomEvent
-    const operation = customEvent.detail.element as HTMLElement
-    const dragAndDroppable = customEvent.detail.element as DragAndDroppable
-    const stepIndex = customEvent.detail.stepIndex as number
-    const wireIndex = customEvent.detail.wireIndex as number
-    Util.notNull(this.quantumCircuit)
-
-    const newStep = this.quantumCircuit.appendCircuitStepAfter(stepIndex)
-    const dropzone = newStep.dropzones[wireIndex]
-
-    dropzone.assign(operation)
-    dragAndDroppable.updateSnapTargetInfo(newStep.dropzones)
   }
 }

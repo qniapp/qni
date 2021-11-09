@@ -11,7 +11,7 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "./mixins"
-import { HGateOperation, H_GATE_OPERATION_TYPE } from "lib"
+import { HGateOperation, H_GATE_OPERATION_TYPE } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

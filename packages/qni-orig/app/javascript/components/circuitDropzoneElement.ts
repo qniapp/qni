@@ -8,10 +8,10 @@ import {
   CircuitOperationElement,
   IGateOperation,
   I_GATE_OPERATION_TYPE,
-} from "lib"
+} from "../lib"
 import { attr, controller, target } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import { CircuitStepElement } from "components/circuitStepElement"
+import { CircuitStepElement } from "./circuitStepElement"
 import { DragAndDroppable } from "./mixins/dragAndDroppable"
 import { Operation } from "./mixins/sizeable"
 import interact from "@interactjs/interact"
@@ -465,6 +465,13 @@ export class CircuitDropzoneElement extends HTMLElement {
     } else {
       this.childrenLoaded = true
     }
+
+    this.dispatchEvent(
+      new CustomEvent("dragAndDroppable.load", {
+        detail: { element: operation },
+        bubbles: true,
+      }),
+    )
   }
 
   private dispatchDropzoneGrabEvent(): void {

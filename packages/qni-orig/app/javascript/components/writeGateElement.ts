@@ -6,7 +6,7 @@ import {
   SizeableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "lib"
+import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "../lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller

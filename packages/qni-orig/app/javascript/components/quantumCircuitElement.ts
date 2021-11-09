@@ -1,25 +1,25 @@
-import { attr, controller, target, targets } from "@github/catalyst"
+import { attr, controller, targets } from "@github/catalyst"
 import { html, render } from "@github/jtml"
-import { BlochDisplayElement } from "components/blochDisplayElement"
-import { CircuitBlockElement } from "components/circuitBlockElement"
-import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
-import { CircuitOperation } from "lib"
-import { CircuitStepElement } from "components/circuitStepElement"
-import { ControlGateElement } from "components/controlGateElement"
+import { BlochDisplayElement } from "./blochDisplayElement"
+import { CircuitBlockElement } from "./circuitBlockElement"
+import { CircuitDropzoneElement } from "./circuitDropzoneElement"
+import { CircuitOperation } from "../lib/operation"
+import { CircuitStepElement } from "./circuitStepElement"
+import { ControlGateElement } from "./controlGateElement"
 import { DragAndDroppable } from "./mixins"
-import { HGateElement } from "components/hGateElement"
-import { MeasurementGateElement } from "components/measurementGateElement"
-import { PhaseGateElement } from "components/phaseGateElement"
-import { RnotGateElement } from "components/rnotGateElement"
-import { RxGateElement } from "components/rxGateElement"
-import { RyGateElement } from "components/ryGateElement"
-import { RzGateElement } from "components/rzGateElement"
-import { SwapGateElement } from "components/swapGateElement"
+import { HGateElement } from "./hGateElement"
+import { MeasurementGateElement } from "./measurementGateElement"
+import { PhaseGateElement } from "./phaseGateElement"
+import { RnotGateElement } from "./rnotGateElement"
+import { RxGateElement } from "./rxGateElement"
+import { RyGateElement } from "./ryGateElement"
+import { RzGateElement } from "./rzGateElement"
+import { SwapGateElement } from "./swapGateElement"
 import { Util } from "lib/util"
-import { WriteGateElement } from "components/writeGateElement"
-import { XGateElement } from "components/xGateElement"
-import { YGateElement } from "components/yGateElement"
-import { ZGateElement } from "components/zGateElement"
+import { WriteGateElement } from "./writeGateElement"
+import { XGateElement } from "./xGateElement"
+import { YGateElement } from "./yGateElement"
+import { ZGateElement } from "./zGateElement"
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -774,7 +774,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  prepareDraggableDrop(): void {
+  prepareForDrop(): void {
     this.interactive = true
     this.editing = true
     this.disableDraggablesOnCircuitHover()
@@ -815,7 +815,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  appendCircuitStepAfter(stepIndex: number): CircuitStepElement {
+  addCircuitStepAfter(stepIndex: number): CircuitStepElement {
     const newStep = new CircuitStepElement()
     newStep.shadow = true
     for (let i = 0; i < this.wireCount; i++) {

@@ -6,7 +6,7 @@ import tippy, {
   createSingleton,
   roundArrow,
 } from "tippy.js"
-import { Complex } from "lib/complex"
+import { Complex } from "../lib/complex"
 
 @controller
 export class CircleNotationElement extends HTMLElement {

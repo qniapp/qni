@@ -7,7 +7,7 @@ import {
   LabelableMixin,
   SizeableMixin,
 } from "./mixins"
-import { MEASUREMENT_GATE_OPERATION_TYPE, MeasurementOperation } from "lib"
+import { MEASUREMENT_GATE_OPERATION_TYPE, MeasurementOperation } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

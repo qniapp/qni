@@ -12,7 +12,7 @@ import {
   TargetableMixin,
   WireableMixin,
 } from "./mixins"
-import { PHASE_GATE_OPERATION_TYPE, PhaseGateOperation } from "lib"
+import { PHASE_GATE_OPERATION_TYPE, PhaseGateOperation } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

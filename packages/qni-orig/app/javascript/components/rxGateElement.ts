@@ -12,7 +12,7 @@ import {
   TargetableMixin,
   WireableMixin,
 } from "./mixins"
-import { RX_GATE_OPERATION_TYPE, RxGateOperation } from "lib"
+import { RX_GATE_OPERATION_TYPE, RxGateOperation } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

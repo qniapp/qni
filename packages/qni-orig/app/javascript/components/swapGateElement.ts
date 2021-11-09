@@ -9,7 +9,7 @@ import {
   TargetableMixin,
   WireableMixin,
 } from "./mixins"
-import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "lib"
+import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

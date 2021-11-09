@@ -1,5 +1,42 @@
 {
   "name": "qni",
+  "version": "0.0.92",
+  "description": "Quantum circuit simulator and components.",
+  "keywords": [
+    "quantum",
+    "simulator",
+    "circuit",
+    "components",
+    "quantum-computing",
+    "quantum-computer-simulator",
+    "quantum-algorithms"
+  ],
+  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
+  "license": "MIT",
+  "homepage": "https://github.com/yasuhito/qni",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yasuhito/qni/issues"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "karma start",
+    "test:watch": "yarn test --auto-watch --no-single-run",
+    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --outdir=app/assets/builds",
+    "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
+    "build:npm": "rollup -c && cp dist/index.js* ./docs/ && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css && cp ./app/assets/builds/application.css docs/qni.css",
+    "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
+    "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'",
+    "watch": "rollup -wc",
+    "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
+    "release": "npm publish",
+    "prepare": "husky install"
+  },
   "lint-staged": {
     "*.ts": [
       "prettier --write",
@@ -23,18 +60,6 @@
     "*.md": [
       "prettier --write --prose-wrap always"
     ]
-  },
-  "scripts": {
-    "test": "karma start",
-    "test:watch": "yarn test --auto-watch --no-single-run",
-    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --outdir=app/assets/builds",
-    "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
-    "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'",
-    "watch": "rollup -wc",
-    "prerelease": "yarn build && git --no-pager diff && echo && npm pack --dry-run",
-    "release": "npm publish",
-    "prepare": "husky install",
-    "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
   },
   "prettier": {
     "semi": false,
@@ -74,7 +99,6 @@
     "turbolinks": "^5.2.0",
     "typescript": "~4.4"
   },
-  "version": "0.0.86",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
@@ -103,10 +127,8 @@
     "qunit": "~2.16",
     "rollup": "~2.59",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-dts": "^4.0.1",
     "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-terser": "^7.0.2",
     "typedoc": "~0.22"
   },
   "config": {
@@ -114,33 +136,12 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
-  "main": "dist/qni.js",
   "directories": {
     "doc": "doc",
     "lib": "lib",
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yasuhito/qni.git"
-  },
-  "keywords": [
-    "quantum",
-    "simulator",
-    "circuit",
-    "components",
-    "quantum-computing",
-    "quantum-computer-simulator",
-    "quantum-algorithms"
-  ],
-  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
-  "license": "MIT",
   "files": [
     "dist"
-  ],
-  "bugs": {
-    "url": "https://github.com/yasuhito/qni/issues"
-  },
-  "homepage": "https://github.com/yasuhito/qni"
+  ]
 }

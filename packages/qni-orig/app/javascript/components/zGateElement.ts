@@ -11,7 +11,7 @@ import {
   WireableMixin,
 } from "./mixins"
 import { TemplateResult, html, render } from "@github/jtml"
-import { ZGateOperation, Z_GATE_OPERATION_TYPE } from "lib"
+import { ZGateOperation, Z_GATE_OPERATION_TYPE } from "../lib"
 import { attr, controller } from "@github/catalyst"
 
 @controller

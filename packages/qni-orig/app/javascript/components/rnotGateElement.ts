@@ -11,7 +11,7 @@ import {
   SizeableMixin,
   WireableMixin,
 } from "./mixins"
-import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "lib"
+import { RNOT_GATE_OPERATION_TYPE, RnotGateOperation } from "../lib"
 import { TemplateResult, html, render } from "@github/jtml"
 import { attr, controller } from "@github/catalyst"
 

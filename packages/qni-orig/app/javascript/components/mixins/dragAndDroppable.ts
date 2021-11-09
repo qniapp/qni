@@ -4,7 +4,7 @@ import "@interactjs/auto-start"
 import "@interactjs/dev-tools"
 import "@interactjs/modifiers"
 import { TemplateResult, html } from "@github/jtml"
-import { CircuitDropzoneElement } from "components/circuitDropzoneElement"
+import { CircuitDropzoneElement } from "../circuitDropzoneElement"
 import { Constructor } from "./constructor"
 import { DisplaySize } from "lib"
 import { InteractEvent } from "@interactjs/types"
@@ -72,7 +72,7 @@ export declare class DragAndDroppable {
   set grabbed(value: boolean)
   initDragAndDrop(): void
   setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number): void
-  updateSnapTargetInfo(dropzones: CircuitDropzoneElement[]): void
+  updateSnapTargets(dropzones: CircuitDropzoneElement[]): void
   moveTo(x: number, y: number): void
 }
 
@@ -88,7 +88,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
     @attr positionY = 0
     @attr hoverable = true
 
-    public snapTargetInfo: {
+    public snapTargets: {
       [x: number]: {
         [y: number]: {
           dropzone: CircuitDropzoneElement | null
@@ -241,7 +241,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       const myDropzone = this.dropzone
       const freeDropzones = dropzones.filter((each) => !each.occupied)
       const snapTargets = []
-      this.snapTargetInfo = {}
+      this.snapTargets = {}
 
       Util.notNull(myDropzone)
       if (isCircuitDropzone(myDropzone)) freeDropzones.push(myDropzone)
@@ -256,10 +256,10 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
 
         if (parseInt(i) < wireCount) {
           snapTargets.push({ x: leftX, y })
-          if (this.snapTargetInfo[leftX] === undefined)
-            this.snapTargetInfo[leftX] = {}
-          if (this.snapTargetInfo[leftX][y] === undefined)
-            this.snapTargetInfo[leftX][y] = {
+          if (this.snapTargets[leftX] === undefined)
+            this.snapTargets[leftX] = {}
+          if (this.snapTargets[leftX][y] === undefined)
+            this.snapTargets[leftX][y] = {
               dropzone: null,
               stepIndex: -1,
               wireIndex,
@@ -267,10 +267,10 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         }
 
         snapTargets.push({ x: rightX, y })
-        if (this.snapTargetInfo[rightX] === undefined)
-          this.snapTargetInfo[rightX] = {}
-        if (this.snapTargetInfo[rightX][y] === undefined)
-          this.snapTargetInfo[rightX][y] = {
+        if (this.snapTargets[rightX] === undefined)
+          this.snapTargets[rightX] = {}
+        if (this.snapTargets[rightX][y] === undefined)
+          this.snapTargets[rightX][y] = {
             dropzone: null,
             stepIndex: Math.floor(parseInt(i) / wireCount),
             wireIndex,
@@ -280,9 +280,9 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
           snapTargets.push(snapTarget)
         }
 
-        if (this.snapTargetInfo[x] === undefined) this.snapTargetInfo[x] = {}
-        if (this.snapTargetInfo[x][y] === undefined)
-          this.snapTargetInfo[x][y] = {
+        if (this.snapTargets[x] === undefined) this.snapTargets[x] = {}
+        if (this.snapTargets[x][y] === undefined)
+          this.snapTargets[x][y] = {
             dropzone: each,
             stepIndex: null,
             wireIndex,
@@ -303,25 +303,27 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       })
     }
 
-    updateSnapTargetInfo(dropzones: CircuitDropzoneElement[]): void {
-      const firstDropzone = dropzones[0]
+    updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
+      const firstDropzone = newDropzones[0]
+      Util.notNull(firstDropzone)
       const baseX = firstDropzone.snapTarget.x
 
-      for (const [x, yv] of Object.entries(this.snapTargetInfo)) {
+      for (const [x, yv] of Object.entries(this.snapTargets)) {
         if (parseInt(x) <= baseX) continue
 
-        for (const [_y, v] of Object.entries(yv)) {
-          if (v.stepIndex === null) continue
-          v.stepIndex += 1
+        for (const y in yv) {
+          const snapTarget = yv[y]
+          if (snapTarget.stepIndex === null) continue
+          snapTarget.stepIndex += 1
         }
       }
 
-      for (const [i, each] of Object.entries(dropzones)) {
+      for (const [i, each] of Object.entries(newDropzones)) {
         const snapTarget = each.snapTarget
         const x = snapTarget.x
         const y = snapTarget.y
 
-        this.snapTargetInfo[x][y] = {
+        this.snapTargets[x][y] = {
           dropzone: each,
           stepIndex: null,
           wireIndex: parseInt(i),
@@ -333,7 +335,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       const snapModifier = e.modifiers![0]
       if (snapModifier.inRange) {
         const snapTarget = snapModifier.target.source
-        let dropzone = this.snapTargetInfo[snapTarget.x][snapTarget.y].dropzone
+        let dropzone = this.snapTargets[snapTarget.x][snapTarget.y].dropzone
 
         if (this.snappedDropzone) {
           this.snapped = false
@@ -343,7 +345,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         }
 
         if (dropzone === null) {
-          const snapTargetInfo = this.snapTargetInfo[snapTarget.x][snapTarget.y]
+          const snapTargetInfo = this.snapTargets[snapTarget.x][snapTarget.y]
 
           this.dispatchEvent(
             new CustomEvent("dragAndDroppable.snapToNewDropzone", {

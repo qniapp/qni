@@ -1,4 +1,4 @@
-import { CONTROL_GATE_OPERATION_TYPE, ControlGateOperation } from "lib"
+import { CONTROL_GATE_OPERATION_TYPE, ControlGateOperation } from "../lib"
 import {
   DisableableMixin,
   DragAndDroppableMixin,

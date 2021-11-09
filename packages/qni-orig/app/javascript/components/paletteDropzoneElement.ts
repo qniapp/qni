@@ -1,5 +1,5 @@
 import { html, render } from "@github/jtml"
-import { CircuitOperationElement } from "lib"
+import { CircuitOperationElement } from "../lib"
 import { Operation } from "./mixins/sizeable"
 import { Util } from "lib/util"
 import { controller } from "@github/catalyst"

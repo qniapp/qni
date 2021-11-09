@@ -69,8 +69,10 @@ description: A column representing a single step in a quantum circuit.
 <quantum-circuit id="js-example"></quantum-circuit>
 
 <script>
- circuit = document.getElementById("js-example")
- circuit.write(0, 0).write(0, 1).write(0, 2)
+  window.addEventListener('DOMContentLoaded', () => {
+    circuit = document.getElementById("js-example")
+    circuit.write(0, 0).write(0, 1).write(0, 2)
+  })
 </script>
 {% endcapture %}
 {% include circuit_example.html code=code %}

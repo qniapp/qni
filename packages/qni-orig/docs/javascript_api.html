@@ -100,12 +100,14 @@ description: An API for displaying quantum circuits.
 {% capture code %}
 <quantum-circuit id="quantum-circuit"></quantum-circuit>
 <script>
-  circuit = document.getElementById("quantum-circuit")
-  circuit.write(0, 0, 1)
-         .h(0)
-         .cnot(0, 1)
-         .measure(0)
-         .measure(1)
+  window.addEventListener('DOMContentLoaded', () => {
+    circuit = document.getElementById("quantum-circuit")
+    circuit.write("0", 0, 1)
+           .h(0)
+           .cnot(0, 1)
+           .measure(0)
+           .measure(1)
+  })
 </script>
 {% endcapture %}
 {% include circuit_example.html code=code %}
