@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "plugin:github/recommended",
+    "plugin:github/browser",
+    "plugin:github/typescript"
+  ],
+  "globals": {
+    "HGateElement": "readonly"
+  },
+  "overrides": [
+    {
+      "files": "test/**/*.js",
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "assert": true
+      },
+      "rules": {
+        "github/no-inner-html": "off"
+      }
+    },
+    {
+      "files": "*.js",
+      "parser": "espree",
+      "parserOptions": {"ecmaVersion": 8}
+    }
+  ]
+}

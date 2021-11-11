@@ -1,0 +1,10 @@
+h-gate {
+  @apply inline-block;
+  @apply h-8 w-8;
+  @apply rounded;
+  @apply bg-green-500;
+
+  &[data-disabled] {
+    @apply bg-gray-500;
+  }
+}

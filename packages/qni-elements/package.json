@@ -1,0 +1,75 @@
+{
+  "name": "@qni/elements",
+  "version": "0.0.1",
+  "description": "Quantum circuit components.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni-elements.git"
+  },
+  "main": "dist/index.js",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist src/icon",
+    "prelint": "npm run build:icon",
+    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
+    "prebuild": "npm run clean && npm run lint && npm run build:css",
+    "build": "tsc && rollup -c",
+    "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
+    "watch:css": "yarn build:css --watch",
+    "build:icon": "svg-to-ts --config .svg-to-tsrc",
+    "pretest": "npm run build",
+    "test": "karma start test/karma.config.cjs"
+  },
+  "keywords": [
+    "quantum",
+    "circuit",
+    "components",
+    "quantum-computing"
+  ],
+  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "bugs": {
+    "url": "https://github.com/yasuhito/qni-elements/issues"
+  },
+  "homepage": "https://github.com/yasuhito/qni-elements#readme",
+  "prettier": "@github/prettier-config",
+  "dependencies": {
+    "@github/catalyst": "^1.1.4",
+    "@github/jtml": "^0.4.0"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "autoprefixer": "^10.4.0",
+    "chai": "^4.3.4",
+    "eslint": "^8.2.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-custom-elements": "^0.0.4",
+    "eslint-plugin-github": "^4.3.4",
+    "karma": "^6.3.8",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^9.1.3",
+    "postcss": "^8.3.11",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-preset-env": "^6.7.0",
+    "rollup": "^2.59.0",
+    "svg-to-ts": "^7.1.0",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.4.4"
+  },
+  "eslintIgnore": [
+    "dist/",
+    "icon/",
+    "rollup.config.js"
+  ]
+}
