@@ -1,3 +1,7 @@
 quantum-circuit {
-  @apply inline-block;
+  @apply flex;
+  @apply flex-col;
+  @apply sm:flex-col;
+  @apply md:flex-row;
+  @apply items-start;
 }

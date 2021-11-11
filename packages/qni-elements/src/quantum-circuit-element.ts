@@ -9,15 +9,6 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   update(): void {
-    render(
-      html`<style>
-          #body {
-            display: flex;
-          }
-        </style>
-
-        <div id="body"><slot></slot></div>`,
-      this.shadowRoot!
-    )
+    render(html`<slot></slot>`, this.shadowRoot!)
   }
 }
