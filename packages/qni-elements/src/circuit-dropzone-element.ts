@@ -9,17 +9,6 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   update(): void {
-    render(
-      html`<style>
-          #body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        </style>
-
-        <div id="body"><slot></slot></div>`,
-      this.shadowRoot!
-    )
+    render(html`<slot></slot>`, this.shadowRoot!)
   }
 }
