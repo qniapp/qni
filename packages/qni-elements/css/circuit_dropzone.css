@@ -8,6 +8,7 @@ circuit-dropzone {
   /* Layout */
   @apply flex;
   @apply justify-center items-center;
+  @apply flex-col;
   @apply sm:flex-col;
   @apply md:flex-row;
 }
