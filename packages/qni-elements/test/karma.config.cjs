@@ -8,7 +8,8 @@ module.exports = function (config) {
       },
       "h-gate-element.js",
       "circuit-dropzone-element.js",
-      "circuit-step-element.js"
+      "circuit-step-element.js",
+      "quantum-circuit-element.js"
     ],
     reporters: ["mocha"],
     autoWatch: false,

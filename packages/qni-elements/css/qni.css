@@ -4,5 +4,6 @@
 @import './h_gate';
 @import './circuit_dropzone';
 @import './circuit_step';
+@import './quantum_circuit';
 
 @import 'tailwindcss/utilities';

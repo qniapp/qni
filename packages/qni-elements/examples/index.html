@@ -10,8 +10,10 @@
       <div class="sm:mt-6 lg:mt-8">
         <h1 class="text-2xl font-mono font-bold mb-4">&lt;h-gate&gt;</h1>
         <div class="mb-8">
-          <h-gate></h-gate>
-          <h-gate data-disabled></h-gate>
+          <div class="flex space-x-4">
+            <h-gate></h-gate>
+            <h-gate data-disabled></h-gate>
+          </div>
         </div>
 
         <h1 class="text-2xl font-mono font-bold mb-4">&lt;circuit-dropzone&gt;</h1>
@@ -41,6 +43,37 @@
             </circuit-dropzone>
           </circuit-step>
         </div>
+
+        <h1 class="text-2xl font-mono font-bold mb-4">&lt;quantum-circuit&gt;</h1>
+        <quantum-circuit>
+          <circuit-step class="box-content border-2 border-purple-400 border-dashed">
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
+              <h-gate></h-gate>
+            </circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed"></circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
+              <h-gate></h-gate>
+            </circuit-dropzone>
+          </circuit-step>
+
+          <circuit-step class="box-content border-2 border-purple-400 border-dashed">
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed"></circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
+              <h-gate></h-gate>
+            </circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed"></circuit-dropzone>
+          </circuit-step>
+
+          <circuit-step class="box-content border-2 border-purple-400 border-dashed">
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
+              <h-gate></h-gate>
+            </circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed"></circuit-dropzone>
+            <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
+              <h-gate></h-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </quantum-circuit>
       </div>
     </div>
   </body>
