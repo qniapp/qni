@@ -3,5 +3,6 @@
 
 @import './h_gate';
 @import './circuit_dropzone';
+@import './circuit_step';
 
 @import 'tailwindcss/utilities';

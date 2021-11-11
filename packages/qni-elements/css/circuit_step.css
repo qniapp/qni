@@ -1,0 +1,5 @@
+circuit-step {
+  @apply flex;
+  @apply flex-col;
+  @apply space-y-4;
+}
