@@ -1,0 +1,4 @@
+circuit-dropzone {
+  @apply inline-block;
+  @apply h-8 w-12;
+}

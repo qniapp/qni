@@ -2,5 +2,6 @@
 @import 'tailwindcss/components';
 
 @import './h_gate';
+@import './circuit_dropzone';
 
 @import 'tailwindcss/utilities';

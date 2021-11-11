@@ -7,6 +7,7 @@ module.exports = function (config) {
         type: "module",
       },
       "h-gate-element.js",
+      "circuit-dropzone-element.js"
     ],
     reporters: ["mocha"],
     autoWatch: false,
