@@ -5,6 +5,8 @@ import {iconWires} from './icon'
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
   @attr occupied = false
+  @attr wireTop = false
+  @attr wireBottom = false
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
@@ -22,6 +24,11 @@ export class CircuitDropzoneElement extends HTMLElement {
             justify-content: center;
             height: 100%;
             width: 100%;
+          }
+
+          ::slotted(*) {
+            position: absolute;
+            z-index: 10;
           }
         </style>
 

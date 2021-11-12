@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 
 @import './h_gate';
+@import './control_gate';
 @import './circuit_dropzone';
 @import './circuit_step';
 @import './quantum_circuit';

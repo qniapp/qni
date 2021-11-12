@@ -1,0 +1,9 @@
+control-gate {
+  @apply inline-block;
+  @apply h-8 w-8;
+  @apply text-green-500;
+
+  &[data-disabled] {
+    @apply text-gray-500;
+  }
+}

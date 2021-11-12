@@ -4,17 +4,29 @@ circuit-dropzone {
   @apply sm:h-12 sm:w-8;
   @apply md:h-8 md:w-12;
 
+  /* Wires */
   &::part(wires) {
     @apply absolute;
     @apply inset-0;
     @apply h-full w-full;
+    @apply overflow-visible;
   }
 
-  &[data-occupied]::part(wire-input) {
-    @apply transform-gpu origin-left scale-1/3;
+  &::part(wire-top),
+  &::part(wire-bottom) {
+    @apply text-green-500;
+    @apply hidden;
   }
 
-  &[data-occupied]::part(wire-output) {
-    @apply transform-gpu origin-right scale-1/3;
+  &[data-wire-top]::part(wire-top) {
+    @apply block;
+    transform-origin: top;
+    transform: translateY(-25%) scaleY(1.5);
+  }
+
+  &[data-wire-bottom]::part(wire-bottom) {
+    @apply block;
+    transform-origin: bottom;
+    transform: translateY(25%) scaleY(1.5);
   }
 }

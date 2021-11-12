@@ -7,6 +7,7 @@ module.exports = function (config) {
         type: "module",
       },
       "h-gate-element.js",
+      "control-gate-element.js",
       "circuit-dropzone-element.js",
       "circuit-step-element.js",
       "quantum-circuit-element.js"

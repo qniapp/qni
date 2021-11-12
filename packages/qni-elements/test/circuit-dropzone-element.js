@@ -1,9 +1,5 @@
 describe('circuit-dropzone element', function () {
   describe('element creation', function () {
-    afterEach(function () {
-      document.body.textContent = ''
-    })
-
     it('creates from document.createElement', function () {
       const el = document.createElement('circuit-dropzone')
       assert.equal('CIRCUIT-DROPZONE', el.nodeName)
@@ -13,6 +9,32 @@ describe('circuit-dropzone element', function () {
     it('creates from constructor', function () {
       const el = new window.CircuitDropzoneElement()
       assert.equal('CIRCUIT-DROPZONE', el.nodeName)
+    })
+  })
+
+  describe('vertical wiring', function () {
+    afterEach(function () {
+      document.body.textContent = ''
+    })
+
+    it('connects to lower bit', function () {
+      const el = document.createElement('circuit-dropzone')
+      document.body.append(el)
+      el.setAttribute('data-wire-top', '')
+
+      const wireTopSvg = el.shadowRoot.querySelector('#wire-top')
+
+      assert.isNotNull(wireTopSvg)
+    })
+
+    it('connects to upper bit', function () {
+      const el = document.createElement('circuit-dropzone')
+      document.body.append(el)
+      el.setAttribute('data-wire-bottom', '')
+
+      const wireBottomSvg = el.shadowRoot.querySelector('#wire-bottom')
+
+      assert.isNotNull(wireBottomSvg)
     })
   })
 
