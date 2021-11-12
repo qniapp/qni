@@ -1,6 +1,6 @@
 {
   "name": "qni",
-  "version": "0.0.92",
+  "version": "0.0.93",
   "description": "Quantum circuit simulator and components.",
   "keywords": [
     "quantum",

@@ -8,6 +8,8 @@ export class CircuitEditorElement extends CircuitableMixin(HTMLElement) {
     this.initCircuitable()
     this.attachShadow({ mode: "open" })
     this.update()
+
+    this.addEventListener("circuit.load", this.resizeCircuit)
   }
 
   update(): void {
