@@ -1,5 +1,7 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {ControlGateElement} from './control-gate-element'
+import {HGateElement} from './h-gate-element'
 import {iconWires} from './icon'
 
 @controller
@@ -11,6 +13,8 @@ export class CircuitDropzoneElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+
+    this.updateVerticalWires()
     this.setAttributeIfOccupied()
   }
 
@@ -35,6 +39,28 @@ export class CircuitDropzoneElement extends HTMLElement {
         <div id="body"><slot></slot>${this.wireSvg}</div>`,
       this.shadowRoot!
     )
+  }
+
+  private get operation(): HGateElement | ControlGateElement | null {
+    if (this.childElementCount === 0) {
+      return null
+    } else if (this.childElementCount === 1) {
+      return this.children[0] as HGateElement | ControlGateElement
+    } else {
+      throw new Error('Circuit dropzone cannot hold multiple operations.')
+    }
+  }
+
+  private updateVerticalWires(): void {
+    const operation = this.operation
+    if (operation === null) return
+
+    if (operation.connectedToLowerBit) {
+      this.wireTop = true
+    }
+    if (operation.connectedToUpperBit) {
+      this.wireBottom = true
+    }
   }
 
   private setAttributeIfOccupied(): void {

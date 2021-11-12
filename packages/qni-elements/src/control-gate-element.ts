@@ -1,9 +1,10 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {WireableMixin} from './mixin/wireable'
 import {iconControlGate} from './icon'
 
 @controller
-export class ControlGateElement extends HTMLElement {
+export class ControlGateElement extends WireableMixin(HTMLElement) {
   @attr icon = ''
   @attr disabled = false
 
