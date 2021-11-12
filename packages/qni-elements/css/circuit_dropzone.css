@@ -1,14 +1,20 @@
 circuit-dropzone {
-  @apply inline-block;
-
   /* Size */
   @apply h-12 w-8;
+  @apply sm:h-12 sm:w-8;
   @apply md:h-8 md:w-12;
 
-  /* Layout */
-  @apply flex;
-  @apply justify-center items-center;
-  @apply flex-col;
-  @apply sm:flex-col;
-  @apply md:flex-row;
+  &::part(wires) {
+    @apply absolute;
+    @apply inset-0;
+    @apply h-full w-full;
+  }
+
+  &[data-occupied]::part(wire-input) {
+    @apply transform-gpu origin-left scale-1/3;
+  }
+
+  &[data-occupied]::part(wire-output) {
+    @apply transform-gpu origin-right scale-1/3;
+  }
 }

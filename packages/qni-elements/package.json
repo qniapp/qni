@@ -70,6 +70,7 @@
   "eslintIgnore": [
     "dist/",
     "icon/",
-    "rollup.config.js"
+    "rollup.config.js",
+    "tailwind.config.cjs"
   ]
 }
