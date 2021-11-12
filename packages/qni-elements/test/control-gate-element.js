@@ -1,3 +1,5 @@
+import {testDisableable} from './test-disableable'
+
 describe('control-gate element', function () {
   describe('element creation', function () {
     it('creates from document.createElement', function () {
@@ -12,33 +14,8 @@ describe('control-gate element', function () {
     })
   })
 
-  describe('element status', function () {
-    beforeEach(function () {
-      const el = new window.ControlGateElement()
-      document.body.append(el)
-    })
-
-    afterEach(function () {
-      document.body.textContent = ''
-    })
-
-    it('can be disabled', function () {
-      const controlGate = document.querySelector('control-gate')
-      controlGate.disable()
-
-      assert(controlGate.disabled)
-      assert(controlGate.hasAttribute('data-disabled'))
-    })
-
-    it('can be enabled', function () {
-      const controlGate = document.querySelector('control-gate')
-      controlGate.disable()
-
-      controlGate.enable()
-
-      assert(controlGate.enabled)
-      assert(!controlGate.hasAttribute('data-disabled'))
-    })
+  describe('disableable', function () {
+    testDisableable('control-gate')
   })
 
   describe('icon', function () {

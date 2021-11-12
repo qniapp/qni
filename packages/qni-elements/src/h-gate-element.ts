@@ -1,12 +1,12 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {DisableableMixin} from './mixin/disableable'
 import {WireableMixin} from './mixin/wireable'
 import {iconHGate} from './icon'
 
 @controller
-export class HGateElement extends WireableMixin(HTMLElement) {
+export class HGateElement extends WireableMixin(DisableableMixin(HTMLElement)) {
   @attr icon = ''
-  @attr disabled = false
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
@@ -15,18 +15,6 @@ export class HGateElement extends WireableMixin(HTMLElement) {
 
   update(): void {
     render(html`${this.iconHtml}`, this.shadowRoot!)
-  }
-
-  get enabled(): boolean {
-    return !this.disabled
-  }
-
-  enable(): void {
-    this.disabled = false
-  }
-
-  disable(): void {
-    this.disabled = true
   }
 
   toJson(): string {

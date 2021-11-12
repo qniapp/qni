@@ -6,11 +6,10 @@ module.exports = function (config) {
         pattern: "../dist/index.js",
         type: "module",
       },
-      "h-gate-element.js",
-      "control-gate-element.js",
-      "circuit-dropzone-element.js",
-      "circuit-step-element.js",
-      "quantum-circuit-element.js"
+      {
+        pattern: "../build/test.js",
+        type: "module",
+      }
     ],
     reporters: ["mocha"],
     autoWatch: false,

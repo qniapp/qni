@@ -1,3 +1,5 @@
+import {testDisableable} from './test-disableable'
+
 describe('h-gate element', function () {
   describe('element creation', function () {
     it('creates from document.createElement', function () {
@@ -28,33 +30,8 @@ describe('h-gate element', function () {
     })
   })
 
-  describe('element status', function () {
-    beforeEach(function () {
-      const el = new window.HGateElement()
-      document.body.append(el)
-    })
-
-    afterEach(function () {
-      document.body.textContent = ''
-    })
-
-    it('can be disabled', function () {
-      const hGate = document.querySelector('h-gate')
-      hGate.disable()
-
-      assert(hGate.disabled)
-      assert(hGate.hasAttribute('data-disabled'))
-    })
-
-    it('can be enabled', function () {
-      const hGate = document.querySelector('h-gate')
-      hGate.disable()
-
-      hGate.enable()
-
-      assert(hGate.enabled)
-      assert(!hGate.hasAttribute('data-disabled'))
-    })
+  describe('disableable', function () {
+    testDisableable('h-gate')
   })
 
   describe('icon', function () {
