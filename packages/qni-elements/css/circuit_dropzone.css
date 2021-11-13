@@ -6,26 +6,20 @@ circuit-dropzone {
 
   /* Wires */
   &::part(wires) {
-    @apply absolute;
-    @apply inset-0;
-    @apply h-full w-full;
     @apply overflow-visible;
   }
 
   &::part(wire-top),
   &::part(wire-bottom) {
     @apply text-green-500;
-    @apply hidden;
   }
 
   &[data-wire-top]::part(wire-top) {
-    @apply block;
     transform-origin: top;
     transform: translateY(-25%) scaleY(1.5);
   }
 
   &[data-wire-bottom]::part(wire-bottom) {
-    @apply block;
     transform-origin: bottom;
     transform: translateY(25%) scaleY(1.5);
   }

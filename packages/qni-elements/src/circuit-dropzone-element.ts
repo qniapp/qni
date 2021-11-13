@@ -2,13 +2,12 @@ import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
+import {WireableMixin} from './mixin/wireable'
 import {iconWires} from './icon'
 
 @controller
-export class CircuitDropzoneElement extends HTMLElement {
+export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
   @attr occupied = false
-  @attr wireTop = false
-  @attr wireBottom = false
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
@@ -28,6 +27,29 @@ export class CircuitDropzoneElement extends HTMLElement {
             justify-content: center;
             height: 100%;
             width: 100%;
+          }
+
+          #wires {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+          }
+
+          #wire-top,
+          #wire-bottom {
+            display: none;
+          }
+
+          :host([data-wire-top]) #wire-top {
+            display: block;
+          }
+
+          :host([data-wire-bottom]) #wire-bottom {
+            display: block;
           }
 
           ::slotted(*) {
@@ -55,10 +77,10 @@ export class CircuitDropzoneElement extends HTMLElement {
     const operation = this.operation
     if (operation === null) return
 
-    if (operation.connectedToLowerBit) {
+    if (operation.wireTop) {
       this.wireTop = true
     }
-    if (operation.connectedToUpperBit) {
+    if (operation.wireBottom) {
       this.wireBottom = true
     }
   }

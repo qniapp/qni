@@ -1,4 +1,5 @@
 import {testDisableable} from './test-disableable'
+import {testWireableOperation} from './test-wireable'
 
 describe('control-gate element', function () {
   describe('element creation', function () {
@@ -12,6 +13,10 @@ describe('control-gate element', function () {
       const el = new window.ControlGateElement()
       assert.equal('CONTROL-GATE', el.nodeName)
     })
+  })
+
+  describe('wireable', function () {
+    testWireableOperation('control-gate')
   })
 
   describe('disableable', function () {

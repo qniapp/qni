@@ -12,7 +12,7 @@ describe('circuit-dropzone element', function () {
     })
   })
 
-  describe('vertical wiring', function () {
+  describe('wireable', function () {
     afterEach(function () {
       document.body.textContent = ''
     })

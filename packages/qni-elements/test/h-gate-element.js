@@ -1,4 +1,5 @@
 import {testDisableable} from './test-disableable'
+import {testWireableOperation} from './test-wireable'
 
 describe('h-gate element', function () {
   describe('element creation', function () {
@@ -32,6 +33,10 @@ describe('h-gate element', function () {
 
   describe('disableable', function () {
     testDisableable('h-gate')
+  })
+
+  describe('wireable', function () {
+    testWireableOperation('control-gate')
   })
 
   describe('icon', function () {
