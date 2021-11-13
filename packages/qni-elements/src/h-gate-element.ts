@@ -12,6 +12,10 @@ export class HGateElement extends WireableMixin(DisableableMixin(IconableMixin(H
     this.update()
   }
 
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    this.dispatchWireTopBottomEvent(name, oldValue, newValue)
+  }
+
   update(): void {
     render(html`${this.iconHtml(iconHGate)}`, this.shadowRoot!)
   }

@@ -15,6 +15,13 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
 
     this.updateVerticalWires()
     this.setAttributeIfOccupied()
+
+    this.addEventListener('operation.wireTop', () => {
+      this.wireTop = true
+    })
+    this.addEventListener('operation.wireBottom', () => {
+      this.wireBottom = true
+    })
   }
 
   update(): void {
@@ -63,7 +70,7 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
     )
   }
 
-  private get operation(): HGateElement | ControlGateElement | null {
+  get operation(): HGateElement | ControlGateElement | null {
     if (this.childElementCount === 0) {
       return null
     } else if (this.childElementCount === 1) {
