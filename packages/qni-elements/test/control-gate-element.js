@@ -1,19 +1,11 @@
-import {testDisableable} from './test-disableable'
-import {testIconable} from './test-iconable'
-import {testWireableOperation} from './test-wireable'
+import {testDisableable} from './common/test-disableable'
+import {testElementCreation} from './common/test-element-creation'
+import {testIconable} from './common/test-iconable'
+import {testWireableOperation} from './common/test-wireable'
 
 describe('control-gate element', function () {
   describe('element creation', function () {
-    it('creates from document.createElement', function () {
-      const el = document.createElement('control-gate')
-      assert.equal('CONTROL-GATE', el.nodeName)
-      assert(el instanceof window.ControlGateElement)
-    })
-
-    it('creates from constructor', function () {
-      const el = new window.ControlGateElement()
-      assert.equal('CONTROL-GATE', el.nodeName)
-    })
+    testElementCreation(window.ControlGateElement, 'control-gate')
   })
 
   describe('iconable', function () {

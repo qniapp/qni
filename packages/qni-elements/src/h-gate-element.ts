@@ -15,8 +15,4 @@ export class HGateElement extends WireableMixin(DisableableMixin(IconableMixin(H
   update(): void {
     render(html`${this.iconHtml(iconHGate)}`, this.shadowRoot!)
   }
-
-  toJson(): string {
-    return '"H"'
-  }
 }
