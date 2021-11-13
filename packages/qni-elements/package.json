@@ -11,7 +11,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist src/icon",
+    "clean": "rm -rf build dist src/icon",
     "prelint": "npm run build:icon",
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run clean && npm run lint && npm run build:css",

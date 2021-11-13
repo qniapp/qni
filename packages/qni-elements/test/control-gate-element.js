@@ -1,4 +1,5 @@
 import {testDisableable} from './test-disableable'
+import {testIconable} from './test-iconable'
 import {testWireableOperation} from './test-wireable'
 
 describe('control-gate element', function () {
@@ -15,42 +16,15 @@ describe('control-gate element', function () {
     })
   })
 
-  describe('wireable', function () {
-    testWireableOperation('control-gate')
+  describe('iconable', function () {
+    testIconable('control-gate')
   })
 
   describe('disableable', function () {
     testDisableable('control-gate')
   })
 
-  describe('icon', function () {
-    afterEach(function () {
-      document.body.textContent = ''
-    })
-
-    it('default icon', function () {
-      const controlGate = document.createElement('control-gate')
-      document.body.append(controlGate)
-
-      const iconSvg = controlGate.shadowRoot.querySelector('#icon svg')
-      assert.isNotNull(iconSvg)
-    })
-
-    it('control-gate[data-icon]', function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-<template id="control-gate-icon">
-   <svg id="custom-icon"></svg>
-</template>
-
-<control-gate data-icon="control-gate-icon"></control-gate>`
-      document.body.append(container)
-      const controlGate = document.querySelector('control-gate')
-
-      const iconSvg = controlGate.shadowRoot.querySelector('#icon svg')
-
-      assert.isNotNull(iconSvg)
-      assert.equal('custom-icon', iconSvg.id)
-    })
+  describe('wireable', function () {
+    testWireableOperation('control-gate')
   })
 })

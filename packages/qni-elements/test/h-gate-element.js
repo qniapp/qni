@@ -1,4 +1,5 @@
 import {testDisableable} from './test-disableable'
+import {testIconable} from './test-iconable'
 import {testWireableOperation} from './test-wireable'
 
 describe('h-gate element', function () {
@@ -15,6 +16,18 @@ describe('h-gate element', function () {
     })
   })
 
+  describe('iconable', function () {
+    testIconable('h-gate')
+  })
+
+  describe('disableable', function () {
+    testDisableable('h-gate')
+  })
+
+  describe('wireable', function () {
+    testWireableOperation('h-gate')
+  })
+
   describe('element serialization', function () {
     beforeEach(function () {
       const el = new window.HGateElement()
@@ -28,45 +41,6 @@ describe('h-gate element', function () {
     it('converts to JSON', function () {
       const hGate = document.querySelector('h-gate')
       assert.equal('"H"', hGate.toJson())
-    })
-  })
-
-  describe('disableable', function () {
-    testDisableable('h-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('control-gate')
-  })
-
-  describe('icon', function () {
-    afterEach(function () {
-      document.body.textContent = ''
-    })
-
-    it('default icon', function () {
-      const hGate = document.createElement('h-gate')
-      document.body.append(hGate)
-
-      const iconSvg = hGate.shadowRoot.querySelector('#icon svg')
-      assert.isNotNull(iconSvg)
-    })
-
-    it('h-gate[data-icon]', function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-<template id="h-gate-icon">
-   <svg id="custom-icon"></svg>
-</template>
-
-<h-gate data-icon="h-gate-icon"></h-gate>`
-      document.body.append(container)
-      const hGate = document.querySelector('h-gate')
-
-      const iconSvg = hGate.shadowRoot.querySelector('#icon svg')
-
-      assert.isNotNull(iconSvg)
-      assert.equal('custom-icon', iconSvg.id)
     })
   })
 })
