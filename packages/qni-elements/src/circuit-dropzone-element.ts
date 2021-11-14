@@ -1,9 +1,11 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
-import {ControlGateElement} from './control-gate-element'
-import {HGateElement} from './h-gate-element'
+import {Operation} from './operation'
 import {WireableMixin} from './mixin/wireable'
 import {iconWires} from './icon'
+
+export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
+  arg !== null && arg instanceof CircuitDropzoneElement
 
 @controller
 export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
@@ -70,11 +72,11 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
     )
   }
 
-  get operation(): HGateElement | ControlGateElement | null {
+  get operation(): Operation | null {
     if (this.childElementCount === 0) {
       return null
     } else if (this.childElementCount === 1) {
-      return this.children[0] as HGateElement | ControlGateElement
+      return this.children[0] as Operation
     } else {
       throw new Error('Circuit dropzone cannot hold multiple operations.')
     }

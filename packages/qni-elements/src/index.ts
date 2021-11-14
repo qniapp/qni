@@ -1,4 +1,5 @@
 export * from './h-gate-element'
+export * from './x-gate-element'
 export * from './control-gate-element'
 export * from './circuit-dropzone-element'
 export * from './circuit-step-element'

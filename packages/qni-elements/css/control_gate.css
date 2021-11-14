@@ -1,9 +1,11 @@
 control-gate {
-  @apply inline-block;
-  @apply h-8 w-8;
-  @apply text-green-500;
+  @apply operation;
 
-  &[data-disabled] {
+  &::part(icon) {
+    @apply text-green-500;
+  }
+
+  &[data-disabled]::part(icon) {
     @apply text-gray-500;
   }
 }

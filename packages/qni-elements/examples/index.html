@@ -18,6 +18,14 @@
           </div>
         </div>
 
+        <h1 class="text-2xl font-mono font-bold mb-4">&lt;x-gate&gt;</h1>
+        <div class="mb-8">
+          <div class="flex space-x-4">
+            <x-gate></x-gate>
+            <x-gate data-disabled></x-gate>
+          </div>
+        </div>
+
         <h1 class="text-2xl font-mono font-bold mb-4">&lt;control-gate&gt;</h1>
         <div class="mb-8">
           <div class="flex space-x-4">
@@ -90,27 +98,14 @@
               <h-gate></h-gate>
             </circuit-dropzone>
             <circuit-dropzone></circuit-dropzone>
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step>
-            <circuit-dropzone></circuit-dropzone>
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-            <circuit-dropzone></circuit-dropzone>
           </circuit-step>
 
           <circuit-step>
             <circuit-dropzone>
-              <h-gate></h-gate>
+              <control-gate></control-gate>
             </circuit-dropzone>
             <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
+              <x-gate></x-gate>
             </circuit-dropzone>
           </circuit-step>
         </quantum-circuit>

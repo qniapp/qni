@@ -1,4 +1,5 @@
 import './h-gate-element'
+import './x-gate-element'
 import './control-gate-element'
 import './circuit-dropzone-element'
 import './circuit-step-element'

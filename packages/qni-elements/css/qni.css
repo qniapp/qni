@@ -2,9 +2,17 @@
 @import 'tailwindcss/components';
 
 @import './h_gate';
+@import './x_gate';
 @import './control_gate';
 @import './circuit_dropzone';
 @import './circuit_step';
 @import './quantum_circuit';
 
 @import 'tailwindcss/utilities';
+
+@layer components {
+  .operation {
+    @apply inline-block;
+    @apply h-8 w-8;
+  }
+}

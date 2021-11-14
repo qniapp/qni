@@ -1,7 +1,7 @@
+import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
+import {ControllableOperation, Operation, isControllableOperation} from './operation'
 import {html, render} from '@github/jtml'
-import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
-import {HGateElement} from './h-gate-element'
 import {controller} from '@github/catalyst'
 
 @controller
@@ -19,8 +19,8 @@ export class CircuitStepElement extends HTMLElement {
   private updateConnections(): void {
     const controlGates = this.controlGates
     const controlBits = controlGates.map(each => this.bit(each))
-    const controllableGates = this.controllableGates
-    const controllableBits = controllableGates.map(each => this.bit(each))
+    const controllableOperations = this.controllableOperations
+    const controllableBits = controllableOperations.map(each => this.bit(each))
 
     if (controlGates.length === 0) return
 
@@ -33,7 +33,7 @@ export class CircuitStepElement extends HTMLElement {
       })
     }
 
-    for (const each of controllableGates) {
+    for (const each of controllableOperations) {
       each.wireTop = controlBits.some(controlBit => {
         return this.bit(each) > controlBit
       })
@@ -55,11 +55,9 @@ export class CircuitStepElement extends HTMLElement {
     }
   }
 
-  bit(operation: HGateElement | ControlGateElement): number {
+  bit(operation: Operation): number {
     const dropzone = operation.parentElement
-    if (dropzone === null || !(dropzone instanceof CircuitDropzoneElement)) {
-      throw new Error('Dropzone not found')
-    }
+    if (!isCircuitDropzoneElement(dropzone)) throw new Error('Dropzone not found')
 
     return this.dropzones.indexOf(dropzone)
   }
@@ -68,25 +66,21 @@ export class CircuitStepElement extends HTMLElement {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 
-  private get controlGates(): ControlGateElement[] {
+  private get operations(): Operation[] {
     return this.dropzones
       .map(each => each.operation)
-      .filter<HGateElement | ControlGateElement>(
-        (each): each is NonNullable<HGateElement | ControlGateElement | null> => each !== null
-      )
-      .filter<ControlGateElement>(
-        (each: HGateElement | ControlGateElement): each is ControlGateElement => each instanceof ControlGateElement
-      )
+      .filter<Operation>((each): each is NonNullable<Operation> => each !== null)
   }
 
-  private get controllableGates(): HGateElement[] {
-    return this.dropzones
-      .map(each => each.operation)
-      .filter<HGateElement | ControlGateElement>(
-        (each): each is NonNullable<HGateElement | ControlGateElement | null> => each !== null
-      )
-      .filter<HGateElement>(
-        (each: HGateElement | ControlGateElement): each is HGateElement => each instanceof HGateElement
-      )
+  private get controlGates(): ControlGateElement[] {
+    return this.operations.filter<ControlGateElement>(
+      (each: Operation): each is ControlGateElement => each instanceof ControlGateElement
+    )
+  }
+
+  private get controllableOperations(): ControllableOperation[] {
+    return this.operations.filter<ControllableOperation>((each: Operation): each is ControllableOperation =>
+      isControllableOperation(each)
+    )
   }
 }

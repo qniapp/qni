@@ -1,7 +1,7 @@
-h-gate {
+x-gate {
   @apply operation;
 
-  @apply rounded;
+  @apply rounded-full;
   @apply bg-green-500;
 
   &[data-disabled] {

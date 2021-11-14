@@ -26,7 +26,7 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     iconHtml(defaultIcon: icon): TemplateResult {
       return html`${this.iconStyle}
-        <div id="icon">${this.iconSvg(defaultIcon)}</div>`
+        <div id="icon" part="icon">${this.iconSvg(defaultIcon)}</div>`
     }
 
     get iconStyle(): TemplateResult {
