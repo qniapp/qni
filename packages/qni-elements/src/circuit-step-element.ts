@@ -24,6 +24,11 @@ export class CircuitStepElement extends HTMLElement {
 
     if (controlGates.length === 0) return
 
+    if (controlGates.length === 1 && controllableOperations.length === 0) {
+      controlGates[0].disabled = true
+      return
+    }
+
     for (const each of controlGates) {
       each.wireTop = controllableBits.some(controllableBit => {
         return this.bit(each) > controllableBit
