@@ -1,0 +1,5 @@
+{
+  "name": "@qni/elements",
+  "entryPoints": ["src/index.ts"],
+  "out": "doc/"
+}
