@@ -26,40 +26,11 @@
           </div>
         </div>
 
-        <h1 class="text-2xl font-mono font-bold mb-4">&lt;control-gate&gt;</h1>
-        <div class="mb-8">
-          <div class="flex space-x-4">
-            <control-gate></control-gate>
-            <control-gate data-disabled></control-gate>
-          </div>
-        </div>
-
-        <h1 class="text-2xl font-mono font-bold mb-4">&lt;circuit-dropzone&gt;</h1>
-        <div class="flex space-x-4 mb-8">
-          <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed"></circuit-dropzone>
-          <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
-            <h-gate></h-gate>
-          </circuit-dropzone>
-          <circuit-dropzone class="box-content border-2 border-gray-200 border-dashed">
-            <control-gate></control-gate>
-          </circuit-dropzone>
-        </div>
-
         <h1 class="text-2xl font-mono font-bold mb-4">&lt;circuit-step&gt;</h1>
         <div class="flex items-start space-x-4 mb-8">
           <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone></circuit-dropzone>
             <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <h-gate></h-gate>
+              <control-gate></control-gate>
             </circuit-dropzone>
             <circuit-dropzone>
             </circuit-dropzone>
@@ -70,8 +41,7 @@
               <control-gate></control-gate>
             </circuit-dropzone>
             <circuit-dropzone>
-            </circuit-dropzone>
-            <circuit-dropzone>
+              <control-gate></control-gate>
             </circuit-dropzone>
           </circuit-step>
 

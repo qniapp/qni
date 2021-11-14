@@ -29,13 +29,23 @@ export class CircuitStepElement extends HTMLElement {
       return
     }
 
-    for (const each of controlGates) {
-      each.wireTop = controllableBits.some(controllableBit => {
-        return this.bit(each) > controllableBit
-      })
-      each.wireBottom = controllableBits.some(controllableBit => {
-        return this.bit(each) < controllableBit
-      })
+    if (controlGates.length > 1 && controllableOperations.length === 0) {
+      const minBit = controlBits.sort()[0]
+      const maxBit = controlBits.sort().slice(-1)[0]
+
+      for (const each of controlGates) {
+        each.wireTop = this.bit(each) > minBit
+        each.wireBottom = this.bit(each) < maxBit
+      }
+    } else {
+      for (const each of controlGates) {
+        each.wireTop = controllableBits.some(controllableBit => {
+          return this.bit(each) > controllableBit
+        })
+        each.wireBottom = controllableBits.some(controllableBit => {
+          return this.bit(each) < controllableBit
+        })
+      }
     }
 
     for (const each of controllableOperations) {
