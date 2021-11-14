@@ -18,6 +18,11 @@ circuit-dropzone {
     @apply text-green-500;
   }
 
+  &::part(wire-input),
+  &::part(wire-output) {
+    @apply text-gray-200;
+  }
+
   &[data-wire-top]::part(wire-top) {
     transform-origin: top;
     transform: translateY(-25%) scaleY(1.5);
@@ -26,6 +31,11 @@ circuit-dropzone {
   &[data-wire-bottom]::part(wire-bottom) {
     transform-origin: bottom;
     transform: translateY(25%) scaleY(1.5);
+  }
+
+  &[data-input-wire-quantum]::part(wire-input),
+  &[data-output-wire-quantum]::part(wire-output) {
+    @apply text-gray-900;
   }
 
   &[data-operation-name="write-gate"]::part(wire-input),

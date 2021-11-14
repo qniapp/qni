@@ -77,7 +77,7 @@ export class CircuitStepElement extends HTMLElement {
     return this.dropzones.indexOf(dropzone)
   }
 
-  private get dropzones(): CircuitDropzoneElement[] {
+  get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 

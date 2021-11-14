@@ -11,6 +11,8 @@ export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneEl
 export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
   @attr occupied = false
   @attr operationName = ''
+  @attr inputWireQuantum = false
+  @attr outputWireQuantum = false
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
