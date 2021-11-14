@@ -1,10 +1,15 @@
-write-gate {
+measurement-gate {
   @apply operation;
 
   @apply rounded;
 
   &::part(icon) {
-    @apply text-gray-500;
+    @apply text-purple-500;
+  }
+
+  &[data-value="0"]::part(icon),
+  &[data-value="1"]::part(icon) {
+    @apply text-gray-200;
   }
 
   &::part(value) {

@@ -1,10 +1,10 @@
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {IconableMixin} from './mixin/iconable'
-import {iconWriteGate} from './icon'
+import {iconMeasurementGate} from './icon'
 
 @controller
-export class WriteGateElement extends IconableMixin(HTMLElement) {
+export class MeasurementGateElement extends IconableMixin(HTMLElement) {
   @attr value = ''
 
   connectedCallback(): void {
@@ -14,7 +14,7 @@ export class WriteGateElement extends IconableMixin(HTMLElement) {
 
   update(): void {
     render(
-      html`${this.iconHtml(iconWriteGate)}
+      html`${this.iconHtml(iconMeasurementGate)}
         <div part="value"></div>`,
       this.shadowRoot!
     )
