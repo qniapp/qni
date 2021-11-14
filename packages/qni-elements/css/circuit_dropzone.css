@@ -27,4 +27,14 @@ circuit-dropzone {
     transform-origin: bottom;
     transform: translateY(25%) scaleY(1.5);
   }
+
+  &[data-operation-name="write-gate"]::part(wire-input) {
+    transform-origin: left;
+    transform: scaleX(0.5);
+  }
+
+  &[data-operation-name="write-gate"]::part(wire-output) {
+    transform-origin: right;
+    transform: scaleX(0.5);
+  }
 }

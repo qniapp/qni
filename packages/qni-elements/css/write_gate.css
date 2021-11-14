@@ -1,0 +1,32 @@
+write-gate {
+  @apply operation;
+
+  @apply rounded;
+
+  &::part(icon) {
+    @apply text-gray-500;
+  }
+
+  &::part(ket-label) {
+    @apply absolute;
+    @apply inset-0;
+  }
+
+  &::part(ket-label)::after {
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply h-full w-full;
+    @apply font-mono;
+  }
+
+  &[data-value="0"]::part(ket-label)::after {
+    @apply text-red-500;
+    content: "0";
+  }
+
+  &[data-value="1"]::part(ket-label)::after {
+    @apply text-blue-500;
+    content: "1";
+  }
+}

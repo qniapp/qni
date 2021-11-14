@@ -10,6 +10,7 @@ export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneEl
 @controller
 export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
   @attr occupied = false
+  @attr operationName = ''
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
@@ -99,6 +100,7 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
       this.occupied = false
     } else if (this.childElementCount === 1) {
       this.occupied = true
+      this.operationName = this.children[0].tagName.toLocaleLowerCase()
     } else {
       throw new Error('Circuit dropzone cannot hold multiple operations.')
     }
