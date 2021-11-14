@@ -5,6 +5,46 @@ describe('quantum-circuit element', function () {
     testElementCreation(window.QuantumCircuitElement, 'quantum-circuit')
   })
 
+  describe('circuit API', function () {
+    let circuit
+
+    beforeEach(function () {
+      circuit = new window.QuantumCircuitElement()
+      document.body.append(circuit)
+    })
+
+    afterEach(function () {
+      document.body.textContent = ''
+    })
+
+    it('x(0)', function () {
+      circuit.x(0)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.XGateElement)
+    })
+
+    it('x(1)', function () {
+      circuit.x(1)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.XGateElement)
+    })
+
+    it('x(0, 2)', function () {
+      circuit.x(0, 2)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.XGateElement)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
+    })
+  })
+
   describe('classical and quantum wires', function () {
     afterEach(function () {
       document.body.textContent = ''

@@ -77,6 +77,13 @@ export class CircuitStepElement extends HTMLElement {
     return this.dropzones.indexOf(dropzone)
   }
 
+  dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
+    const dropzone = this.dropzones[dropzoneIndex]
+    if (dropzone === undefined) throw new Error(`circuit-dropzone[${dropzoneIndex}] not found.`)
+
+    return dropzone
+  }
+
   get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
