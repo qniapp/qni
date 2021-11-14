@@ -7,6 +7,7 @@
 @import './write_gate';
 @import './measurement_gate';
 @import './circuit_dropzone';
+@import './palette_dropzone';
 @import './circuit_step';
 @import './quantum_circuit';
 
