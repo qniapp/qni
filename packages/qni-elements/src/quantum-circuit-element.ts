@@ -2,6 +2,7 @@ import {html, render} from '@github/jtml'
 import {isMeasurementGateElement, isWriteGateElement} from './operation'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement} from './circuit-step-element'
+import {HGateElement} from './h-gate-element'
 import {XGateElement} from './x-gate-element'
 import {controller} from '@github/catalyst'
 
@@ -17,7 +18,19 @@ export class QuantumCircuitElement extends HTMLElement {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
+  h(...targetQubits: number[]): QuantumCircuitElement {
+    this.applyOperation(HGateElement, ...targetQubits)
+
+    return this
+  }
+
   x(...targetQubits: number[]): QuantumCircuitElement {
+    this.applyOperation(XGateElement, ...targetQubits)
+
+    return this
+  }
+
+  private applyOperation(constructor: typeof HGateElement | typeof XGateElement, ...targetQubits: number[]): void {
     const step = new CircuitStepElement()
     this.append(step)
 
@@ -28,11 +41,9 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     for (const each of targetQubits) {
-      const xGate = new XGateElement()
-      step.dropzones[each].append(xGate)
+      const operation = new constructor()
+      step.dropzones[each].append(operation)
     }
-
-    return this
   }
 
   private updateAllWires(): void {
