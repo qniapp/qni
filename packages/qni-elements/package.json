@@ -15,12 +15,16 @@
     "prelint": "npm run build:icon",
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run clean && npm run lint && npm run doc && npm run build:css",
-    "build": "tsc && rollup -c",
+    "build": "npm run build:js",
+    "build:js": "tsc && rollup -c",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
-    "watch:css": "yarn build:css --watch",
-    "build:icon": "svg-to-ts --config .svg-to-tsrc",
+    "build:icon": "svg-to-ts --config icon/.svg-to-tsrc",
     "pretest": "npm run build && rollup -c rollup.config.test.js",
     "test": "karma start test/karma.config.cjs",
+    "watch": "yarn watch:js & yarn watch:test & yarn watch:css",
+    "watch:js": "tsc-watch --onSuccess 'rollup -c'",
+    "watch:test": "yarn test --auto-watch --no-single-run",
+    "watch:css": "yarn build:css --watch",
     "doc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [
@@ -67,6 +71,7 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "svg-to-ts": "^7.1.0",
     "tailwindcss": "^2.2.19",
+    "tsc-watch": "^4.5.0",
     "typedoc": "^0.22.8",
     "typescript": "^4.4.4"
   },
