@@ -71,6 +71,68 @@ describe('quantum-circuit element', function () {
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
     })
 
+    it('write("0", 0)', function () {
+      circuit.write('0', 0)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
+      assert.equal('0', circuit.stepAt(0).dropzoneAt(0).operation.value)
+    })
+
+    it('write("0", 1)', function () {
+      circuit.write('0', 1)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(1).operation, window.WriteGateElement)
+      assert.equal('0', circuit.stepAt(0).dropzoneAt(1).operation.value)
+    })
+
+    it('write("0", 0, 2)', function () {
+      circuit.write('0', 0, 2)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
+      assert.equal('0', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.WriteGateElement)
+      assert.equal('0', circuit.stepAt(0).dropzoneAt(2).operation.value)
+    })
+
+    it('write("1", 0)', function () {
+      circuit.write('1', 0)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
+      assert.equal('1', circuit.stepAt(0).dropzoneAt(0).operation.value)
+    })
+
+    it('write("1", 1)', function () {
+      circuit.write('1', 1)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(1).operation, window.WriteGateElement)
+      assert.equal('1', circuit.stepAt(0).dropzoneAt(1).operation.value)
+    })
+
+    it('write("1", 0, 2)', function () {
+      circuit.write('1', 0, 2)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
+      assert.equal('1', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.WriteGateElement)
+      assert.equal('1', circuit.stepAt(0).dropzoneAt(2).operation.value)
+    })
+
     it('measure(0)', function () {
       circuit.measure(0)
 

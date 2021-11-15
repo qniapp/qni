@@ -4,6 +4,7 @@ import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement} from './circuit-step-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
+import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {controller} from '@github/catalyst'
 
@@ -27,6 +28,29 @@ export class QuantumCircuitElement extends HTMLElement {
 
   x(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(XGateElement, ...targetQubits)
+
+    return this
+  }
+
+  write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
+    if (value !== '0' && value !== '1') {
+      throw new Error("value must be '0' or '1'")
+    }
+
+    const step = new CircuitStepElement()
+    this.append(step)
+
+    const nqubit = Math.max(...targetQubits) + 1
+    for (let i = 0; i < nqubit; i++) {
+      const dropzone = new CircuitDropzoneElement()
+      step.append(dropzone)
+    }
+
+    for (const each of targetQubits) {
+      const writeGate = new WriteGateElement()
+      writeGate.value = value
+      step.dropzones[each].append(writeGate)
+    }
 
     return this
   }
