@@ -17,5 +17,22 @@
   .operation {
     @apply inline-block;
     @apply h-8 w-8;
+    @apply border-2 border-red-500 border-opacity-0;
+  }
+
+  .draggable {
+    @apply cursor-grab;
+    touch-action: none;
+  }
+
+  .draggable:hover {
+    @apply border-opacity-100;
+  }
+
+  .draggable--grabbed {
+    @apply cursor-grabbing;
+    @apply border-opacity-100;
+    @apply bg-white;
+    @apply z-40;
   }
 }

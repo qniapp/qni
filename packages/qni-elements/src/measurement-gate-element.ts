@@ -1,10 +1,11 @@
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {DraggableMixin} from './mixin/draggable'
 import {IconableMixin} from './mixin/iconable'
 import {iconMeasurementGate} from './icon'
 
 @controller
-export class MeasurementGateElement extends IconableMixin(HTMLElement) {
+export class MeasurementGateElement extends DraggableMixin(IconableMixin(HTMLElement)) {
   @attr value = ''
 
   connectedCallback(): void {

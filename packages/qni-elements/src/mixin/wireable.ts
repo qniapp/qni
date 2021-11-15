@@ -19,13 +19,13 @@ export function WireableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
       if (name === 'data-wire-top') {
         if (newValue !== null) {
-          this.dispatchEvent(new Event('operation.wireTop', {bubbles: true}))
+          this.dispatchEvent(new Event('operation-wire-top', {bubbles: true}))
         }
       }
 
       if (name === 'data-wire-bottom') {
         if (newValue !== null) {
-          this.dispatchEvent(new Event('operation.wireBottom', {bubbles: true}))
+          this.dispatchEvent(new Event('operation-wire-bottom', {bubbles: true}))
         }
       }
     }

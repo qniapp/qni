@@ -2,14 +2,12 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2017",
-    "strict": true,
     "declaration": true,
+    "typeRoots": ["src/@types"],
     "outDir": "dist",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "removeComments": true
   },
-  "files": [
-    "src/index.ts"
-  ],
+  "files": ["src/index.ts"]
 }

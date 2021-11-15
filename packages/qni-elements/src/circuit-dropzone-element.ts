@@ -21,10 +21,10 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
     this.updateVerticalWires()
     this.setAttributeIfOccupied()
 
-    this.addEventListener('operation.wireTop', () => {
+    this.addEventListener('operation-wire-top', () => {
       this.wireTop = true
     })
-    this.addEventListener('operation.wireBottom', () => {
+    this.addEventListener('operation-wire-bottom', () => {
       this.wireBottom = true
     })
   }
@@ -81,7 +81,7 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
     } else if (this.childElementCount === 1) {
       return this.children[0] as Operation
     } else {
-      throw new Error('Circuit dropzone cannot hold multiple operations.')
+      throw new Error('circuit-dropzone cannot hold multiple operations.')
     }
   }
 
@@ -104,7 +104,7 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
       this.occupied = true
       this.operationName = this.children[0].tagName.toLocaleLowerCase()
     } else {
-      throw new Error('Circuit dropzone cannot hold multiple operations.')
+      throw new Error('circuit-dropzone cannot hold multiple operations.')
     }
   }
 

@@ -45,7 +45,12 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@github/catalyst": "^1.1.4",
-    "@github/jtml": "^0.4.0"
+    "@github/jtml": "^0.4.0",
+    "@interactjs/actions": "^1.10.11",
+    "@interactjs/auto-start": "^1.10.11",
+    "@interactjs/dev-tools": "^1.10.11",
+    "@interactjs/interact": "^1.10.11",
+    "@interactjs/modifiers": "^1.10.11"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",

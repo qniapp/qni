@@ -70,6 +70,33 @@ describe('quantum-circuit element', function () {
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
     })
+
+    it('measure(0)', function () {
+      circuit.measure(0)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.MeasurementGateElement)
+    })
+
+    it('measure(1)', function () {
+      circuit.measure(1)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.MeasurementGateElement)
+    })
+
+    it('measure(0, 2)', function () {
+      circuit.measure(0, 2)
+
+      assert.equal(1, circuit.steps.length)
+      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.MeasurementGateElement)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.MeasurementGateElement)
+    })
   })
 
   describe('classical and quantum wires', function () {

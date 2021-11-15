@@ -1,4 +1,5 @@
 import {testDisableable} from './common/test-disableable'
+import {testDraggableOperation} from './common/test-draggable'
 import {testElementCreation} from './common/test-element-creation'
 import {testIconable} from './common/test-iconable'
 import {testWireableOperation} from './common/test-wireable'
@@ -18,5 +19,9 @@ describe('control-gate element', function () {
 
   describe('wireable', function () {
     testWireableOperation('control-gate')
+  })
+
+  describe('draggable', function () {
+    testDraggableOperation('control-gate')
   })
 })

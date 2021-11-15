@@ -79,6 +79,67 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@interactjs/actions@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/actions/-/actions-1.10.11.tgz#ec68fd60bee751f80c650964b5ba299eb6afe78c"
+  integrity sha512-P39zeefr4hkmKx+5nZ+mrH1s0l2YJ3gIHrthXmE81n6MlMa42m0WtHcTms4C5JTTNBP2EEDY+KGgGxSnmJKvUw==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.11"
+
+"@interactjs/auto-start@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/auto-start/-/auto-start-1.10.11.tgz#5ce045740f35be36640ebad053db7b5652e18e70"
+  integrity sha512-cIg5CcalCPtC6AiGq6j/0hKUtL2MweEpvw12FuB19sz2Q9Dye0J4GliHKhOYvtumNinnvfVAZ4FZMqZEuX7YZA==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.11"
+
+"@interactjs/core@1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/core/-/core-1.10.11.tgz#8b0203492c1ba6f8432f20b718ae53707fcfc724"
+  integrity sha512-aJ50ccVeszpJt7wPH7Yfqm7f1aG1SA94qd90P0NaESh5/QUXn4CESO6igobo4DFHQ5z+1Rfdl8aphP4JxlH4gw==
+
+"@interactjs/dev-tools@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/dev-tools/-/dev-tools-1.10.11.tgz#8d4b5b650cf74e800909f52962008700143a4304"
+  integrity sha512-BP2FNfMbF7zLuOAUGMkDhCo1e1B0fnqyb9ih/Y8yAIJuoLrZxP/9htbsS1vZOIVZ4UgtrId4cYOwfcAZBMQtmw==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.11"
+
+"@interactjs/interact@1.10.11", "@interactjs/interact@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/interact/-/interact-1.10.11.tgz#d96e3f949ee4001a6a34dc363a232646f9dd2b1b"
+  integrity sha512-0iZJ9l547JuBA/lKxK4ARGYVmMqRSsAdA8gXL1zWe51qEIQq8PyWmMipoi8JbDaL7exC2THKwkXu5uq5ndT+iA==
+  dependencies:
+    "@interactjs/core" "1.10.11"
+    "@interactjs/types" "1.10.11"
+    "@interactjs/utils" "1.10.11"
+
+"@interactjs/modifiers@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/modifiers/-/modifiers-1.10.11.tgz#f40962a97fd3e110e66b79664796c24f3c4e6cd6"
+  integrity sha512-ltqX1RSqeAIikixlQBlyEUdclT5+rbfIGi3sIdLLYaIZQnltYkWqL9MHKx/w5b+hV+Mc0p5MLUFWJbTdkSCZ9g==
+  dependencies:
+    "@interactjs/snappers" "1.10.11"
+  optionalDependencies:
+    "@interactjs/interact" "1.10.11"
+
+"@interactjs/snappers@1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/snappers/-/snappers-1.10.11.tgz#3eb6e45ab8319c0dd4b60b284c55c87561aaadb1"
+  integrity sha512-yYtOMUZ7aFUZ1IYheq9Tj5hZ4J1r5dnaXhLF44WsI/awQ5L0DjZf07GPWof0B+7rZHEVudxyQNbPfFmb+1K94Q==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.11"
+
+"@interactjs/types@1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.11.tgz#29be25d503f9c7842df062fa3cda5b044a47cf2a"
+  integrity sha512-YRsVFWjL8Gkkvlx3qnjeaxW4fnibSJ9791g8BA7Pv5ANByI64WmtR1vU7A2rXcrOn8XvyCEfY0ss1s8NhZP+MA==
+
+"@interactjs/utils@1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@interactjs/utils/-/utils-1.10.11.tgz#939d0f128dfa96c673276cca3eb7f313d92daabf"
+  integrity sha512-410ZoxKF+r1roeSelL+WHXfdryUMg5iykC1XwQ3l6XqNw43IMACzyvTH6k6Pwxj7w7x42nce0Qdn1GQ3Y8xyCw==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"

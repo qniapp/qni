@@ -3,6 +3,7 @@ import {isMeasurementGateElement, isWriteGateElement} from './operation'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement} from './circuit-step-element'
 import {HGateElement} from './h-gate-element'
+import {MeasurementGateElement} from './measurement-gate-element'
 import {XGateElement} from './x-gate-element'
 import {controller} from '@github/catalyst'
 
@@ -30,7 +31,16 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  private applyOperation(constructor: typeof HGateElement | typeof XGateElement, ...targetQubits: number[]): void {
+  measure(...targetQubits: number[]): QuantumCircuitElement {
+    this.applyOperation(MeasurementGateElement, ...targetQubits)
+
+    return this
+  }
+
+  private applyOperation(
+    constructor: typeof HGateElement | typeof XGateElement | typeof MeasurementGateElement,
+    ...targetQubits: number[]
+  ): void {
     const step = new CircuitStepElement()
     this.append(step)
 

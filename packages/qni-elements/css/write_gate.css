@@ -29,4 +29,13 @@ write-gate {
     @apply text-blue-500;
     content: "1";
   }
+
+  &[data-draggable] {
+    @apply draggable;
+
+    &[data-grabbed] {
+      @apply draggable--grabbed;
+      @apply bg-white;
+    }
+  }
 }
