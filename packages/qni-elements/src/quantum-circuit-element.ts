@@ -2,6 +2,7 @@ import {html, render} from '@github/jtml'
 import {isMeasurementGateElement, isWriteGateElement} from './operation'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement} from './circuit-step-element'
+import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {WriteGateElement} from './write-gate-element'
@@ -32,6 +33,22 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  cnot(control: number, xTarget: number): QuantumCircuitElement {
+    const step = new CircuitStepElement()
+    this.append(step)
+
+    const nqubit = Math.max(control, xTarget) + 1
+    for (let i = 0; i < nqubit; i++) {
+      const dropzone = new CircuitDropzoneElement()
+      step.append(dropzone)
+    }
+
+    step.dropzoneAt(control).append(new ControlGateElement())
+    step.dropzoneAt(xTarget).append(new XGateElement())
+
+    return this
+  }
+
   write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
     if (value !== '0' && value !== '1') {
       throw new Error("value must be '0' or '1'")
@@ -49,7 +66,7 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of targetQubits) {
       const writeGate = new WriteGateElement()
       writeGate.value = value
-      step.dropzones[each].append(writeGate)
+      step.dropzoneAt(each).append(writeGate)
     }
 
     return this
@@ -76,7 +93,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
     for (const each of targetQubits) {
       const operation = new constructor()
-      step.dropzones[each].append(operation)
+      step.dropzoneAt(each).append(operation)
     }
   }
 
@@ -94,7 +111,7 @@ export class QuantumCircuitElement extends HTMLElement {
     let wireQuantum = false
 
     for (const step of this.steps) {
-      const dropzone = step.dropzones[wireIndex]
+      const dropzone = step.dropzoneAt(wireIndex)
       if (dropzone === undefined) throw new Error('dropzone not found.')
 
       dropzone.inputWireQuantum = wireQuantum
