@@ -4,7 +4,7 @@ import {MeasurementGateElement} from './measurement-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 
-export type Operation = HGateElement | XGateElement | ControlGateElement
+export type Operation = HGateElement | XGateElement | ControlGateElement | WriteGateElement | MeasurementGateElement
 export type ControllableOperation = HGateElement | XGateElement
 
 export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>

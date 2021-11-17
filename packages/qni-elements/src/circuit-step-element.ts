@@ -1,80 +1,120 @@
-import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
-import {ControllableOperation, Operation, isControllableOperation} from './operation'
 import {html, render} from '@github/jtml'
+import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {controller} from '@github/catalyst'
+import {isControllableOperation} from './operation'
 
 @controller
 export class CircuitStepElement extends HTMLElement {
+  get wireCount(): number {
+    return this.dropzones.length
+  }
+
+  get shadow(): boolean {
+    return this.hasAttribute('data-shadow')
+  }
+
+  set shadow(value: boolean) {
+    if (value) {
+      this.setAttribute('data-shadow', '')
+    } else {
+      this.removeAttribute('data-shadow')
+    }
+    for (const each of this.dropzones) {
+      each.shadow = value
+    }
+  }
+
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
     this.updateConnections()
+
+    this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
+    this.addEventListener('circuit-dropzone-snap', this.updateConnections)
+    this.addEventListener('circuit-dropzone-snap', this.dispatchSnapEvent)
+    this.addEventListener('circuit-dropzone-unsnap', this.updateConnections)
+    this.addEventListener('circuit-dropzone-unsnap', this.dispatchUnsnapEvent)
+    this.addEventListener('circuit-dropzone-drop', this.unshadow)
   }
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
-  private updateConnections(): void {
-    const controlGates = this.controlGates
-    const controlBits = controlGates.map(each => this.bit(each))
-    const controllableOperations = this.controllableOperations
-    const controllableBits = controllableOperations.map(each => this.bit(each))
+  updateConnections(): void {
+    const controlDropzones = this.controlGateDropzones
+    const controlBits = controlDropzones.map(dz => this.bit(dz))
+    const controllableDropzones = this.controllableDropzones
+    const controllableBits = controllableDropzones.map(dz => this.bit(dz))
+    const operationBits = controlBits.concat(controllableBits)
 
-    if (controlGates.length === 0) return
+    for (const each of this.dropzones) {
+      each.wireTop = false
+      each.wireBottom = false
+    }
 
-    if (controlGates.length === 1 && controllableOperations.length === 0) {
-      controlGates[0].disabled = true
+    if (controlDropzones.length === 0) return
+
+    if (controlDropzones.length === 1 && controllableDropzones.length === 0) {
+      const controlGate = controlDropzones[0].operation as ControlGateElement
+      controlGate.disable()
       return
     }
 
-    if (controlGates.length > 1 && controllableOperations.length === 0) {
-      const minBit = controlBits.sort()[0]
-      const maxBit = controlBits.sort().slice(-1)[0]
+    if (controllableDropzones.length === 0) {
+      for (const each of controlDropzones) {
+        const controlGate = each.operation as ControlGateElement
+        controlGate.enable()
 
-      for (const each of controlGates) {
-        each.wireTop = this.bit(each) > minBit
-        each.wireBottom = this.bit(each) < maxBit
+        each.wireTop = controlBits.some(other => {
+          return this.bit(each) > other
+        })
+        each.wireBottom = controlBits.some(other => {
+          return this.bit(each) < other
+        })
       }
     } else {
-      for (const each of controlGates) {
-        each.wireTop = controllableBits.some(controllableBit => {
-          return this.bit(each) > controllableBit
+      for (const each of controlDropzones) {
+        const controlGate = each.operation as ControlGateElement
+        controlGate.enable()
+        each.wireTop = operationBits.some(other => {
+          return this.bit(each) > other
         })
-        each.wireBottom = controllableBits.some(controllableBit => {
-          return this.bit(each) < controllableBit
+        each.wireBottom = operationBits.some(other => {
+          return this.bit(each) < other
+        })
+      }
+      for (const each of controllableDropzones) {
+        each.wireTop = operationBits.some(other => {
+          return other < this.bit(each)
+        })
+        each.wireBottom = operationBits.some(other => {
+          return other > this.bit(each)
         })
       }
     }
 
-    for (const each of controllableOperations) {
-      each.wireTop = controlBits.some(controlBit => {
-        return this.bit(each) > controlBit
-      })
-      each.wireBottom = controlBits.some(controlBit => {
-        return this.bit(each) < controlBit
-      })
-    }
+    for (const each of this.freeDropzones) {
+      const minBit = operationBits.sort()[0]
+      const maxBit = operationBits.sort().slice(-1)[0]
 
-    const dropzones = this.dropzones
-    for (const each of dropzones) {
-      const bits = controlBits.concat(controllableBits)
-      const minBit = bits.sort()[0]
-      const maxBit = bits.sort().slice(-1)[0]
-
-      if (minBit < dropzones.indexOf(each) && dropzones.indexOf(each) < maxBit) {
+      if (minBit < this.bit(each) && this.bit(each) < maxBit) {
         each.wireTop = true
         each.wireBottom = true
       }
     }
   }
 
-  bit(operation: Operation): number {
-    const dropzone = operation.parentElement
-    if (!isCircuitDropzoneElement(dropzone)) throw new Error('Dropzone not found')
+  bit(dropzone: CircuitDropzoneElement): number {
+    const bit = this.dropzones.indexOf(dropzone)
+    if (bit === -1) throw new Error('circuit-dropzone not found.')
 
-    return this.dropzones.indexOf(dropzone)
+    return bit
+  }
+
+  get isEmpty(): boolean {
+    return this.dropzones.every(each => !each.occupied)
   }
 
   dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
@@ -88,21 +128,57 @@ export class CircuitStepElement extends HTMLElement {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 
-  private get operations(): Operation[] {
-    return this.dropzones
-      .map(each => each.operation)
-      .filter<Operation>((each): each is NonNullable<Operation> => each !== null)
+  get freeDropzones(): CircuitDropzoneElement[] {
+    return this.dropzones.filter(each => !each.occupied)
   }
 
-  private get controlGates(): ControlGateElement[] {
-    return this.operations.filter<ControlGateElement>(
-      (each: Operation): each is ControlGateElement => each instanceof ControlGateElement
+  get lastDropzone(): CircuitDropzoneElement {
+    return this.dropzones[this.wireCount - 1]
+  }
+
+  appendDropzone(): CircuitDropzoneElement {
+    const dropzone = new CircuitDropzoneElement()
+    dropzone.shadow = this.shadow
+    this.append(dropzone)
+    return dropzone
+  }
+
+  private get controlGateDropzones(): CircuitDropzoneElement[] {
+    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'control-gate')
+  }
+
+  private get controllableDropzones(): CircuitDropzoneElement[] {
+    return this.dropzones.filter(each => each.occupied).filter(each => isControllableOperation(each.operation))
+  }
+
+  private dispatchOccupiedEvent(event: Event): void {
+    this.dispatchEvent(
+      new CustomEvent('circuit-step-occupied', {
+        detail: {dropzone: event.target},
+        bubbles: true
+      })
     )
   }
 
-  private get controllableOperations(): ControllableOperation[] {
-    return this.operations.filter<ControllableOperation>((each: Operation): each is ControllableOperation =>
-      isControllableOperation(each)
+  private dispatchSnapEvent(event: Event): void {
+    this.dispatchEvent(
+      new CustomEvent('circuit-step-snap', {
+        detail: {dropzone: event.target},
+        bubbles: true
+      })
     )
+  }
+
+  private dispatchUnsnapEvent(event: Event): void {
+    this.dispatchEvent(
+      new CustomEvent('circuit-step-unsnap', {
+        detail: {dropzone: event.target},
+        bubbles: true
+      })
+    )
+  }
+
+  private unshadow(): void {
+    this.shadow = false
   }
 }

@@ -1,32 +1,55 @@
+import '@interactjs/actions/drag'
+import '@interactjs/actions/drop'
+import '@interactjs/auto-start'
+import '@interactjs/dev-tools'
+import '@interactjs/modifiers'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
 import {Operation} from './operation'
-import {WireableMixin} from './mixin/wireable'
 import {iconWires} from './icon'
-
-export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
-  arg !== null && arg instanceof CircuitDropzoneElement
+import interact from '@interactjs/interact'
 
 @controller
-export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
+export class CircuitDropzoneElement extends HTMLElement {
   @attr occupied = false
   @attr operationName = ''
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
+  @attr wireTop = false
+  @attr wireBottom = false
+  @attr shadow = false
+
+  get operation(): Operation | null {
+    if (this.childElementCount === 0) {
+      return null
+    } else if (this.childElementCount === 1) {
+      return this.children[0] as Operation
+    } else {
+      throw new Error('circuit-dropzone cannot hold multiple operations.')
+    }
+  }
+
+  get snapTarget(): {x: number; y: number} {
+    const rect = this.getBoundingClientRect()
+
+    return {
+      x: window.pageXOffset + rect.left + this.clientWidth / 2,
+      y: window.pageYOffset + rect.top + this.clientHeight / 2
+    }
+  }
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+    this.setOperationAttributes()
+    this.initDropzone()
 
-    this.updateVerticalWires()
-    this.setAttributeIfOccupied()
-
-    this.addEventListener('operation-wire-top', () => {
-      this.wireTop = true
-    })
-    this.addEventListener('operation-wire-bottom', () => {
-      this.wireBottom = true
-    })
+    this.addEventListener('operation-wire-top', this.drawTopWire)
+    this.addEventListener('operation-wire-bottom', this.drawBottomWire)
+    this.addEventListener('operation-snap', this.snapOperation)
+    this.addEventListener('operation-unsnap', this.unsnapOperation)
+    this.addEventListener('operation-enddragging', this.dispatchDropEvent)
+    this.addEventListener('operation-trash', this.trashOperation)
   }
 
   update(): void {
@@ -75,37 +98,53 @@ export class CircuitDropzoneElement extends WireableMixin(HTMLElement) {
     )
   }
 
-  get operation(): Operation | null {
-    if (this.childElementCount === 0) {
-      return null
-    } else if (this.childElementCount === 1) {
-      return this.children[0] as Operation
-    } else {
-      throw new Error('circuit-dropzone cannot hold multiple operations.')
-    }
+  private initDropzone(): void {
+    interact(this).dropzone({
+      accept: '[data-draggable]',
+      overlap: 'center'
+    })
   }
 
-  private updateVerticalWires(): void {
+  private drawTopWire(): void {
+    this.wireTop = true
+  }
+
+  private drawBottomWire(): void {
+    this.wireBottom = true
+  }
+
+  private setOperationAttributes(): void {
     const operation = this.operation
-    if (operation === null) return
 
-    if (operation.wireTop) {
-      this.wireTop = true
-    }
-    if (operation.wireBottom) {
-      this.wireBottom = true
+    if (operation === null) {
+      this.occupied = false
+    } else {
+      const dispatchOccupiedEvent = !this.occupied
+      this.occupied = true
+      this.operationName = operation.tagName.toLocaleLowerCase()
+      operation.snapped = true
+      if (dispatchOccupiedEvent) this.dispatchEvent(new Event('circuit-dropzone-occupied', {bubbles: true}))
     }
   }
 
-  private setAttributeIfOccupied(): void {
-    if (this.childElementCount === 0) {
-      this.occupied = false
-    } else if (this.childElementCount === 1) {
-      this.occupied = true
-      this.operationName = this.children[0].tagName.toLocaleLowerCase()
-    } else {
-      throw new Error('circuit-dropzone cannot hold multiple operations.')
-    }
+  private snapOperation(): void {
+    this.occupied = true
+    this.operationName = this.operation.tagName.toLocaleLowerCase()
+    this.dispatchEvent(new Event('circuit-dropzone-snap', {bubbles: true}))
+  }
+
+  private unsnapOperation(): void {
+    this.occupied = false
+    this.operationName = ''
+    this.dispatchEvent(new Event('circuit-dropzone-unsnap', {bubbles: true}))
+  }
+
+  private dispatchDropEvent(): void {
+    this.dispatchEvent(new Event('circuit-dropzone-drop', {bubbles: true}))
+  }
+
+  private trashOperation(event: Event): void {
+    this.removeChild(event.target as Operation)
   }
 
   private get wireSvg(): TemplateResult {

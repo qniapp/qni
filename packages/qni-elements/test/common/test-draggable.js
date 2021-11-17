@@ -17,7 +17,7 @@ export function testDraggableOperation(operationName) {
     assert.isFalse(operation.hasAttribute('data-grabbed'))
   })
 
-  it(`mousedown ${operationName}[data-draggable]`, function (done) {
+  it(`${operationName}[data-draggable] dispatches operation-grab event on mousedown`, function (done) {
     const container = document.createElement('div')
     container.innerHTML = `
 <palette-dropzone>
@@ -32,7 +32,23 @@ export function testDraggableOperation(operationName) {
     assert.isTrue(operation.hasAttribute('data-grabbed'))
   })
 
-  it(`mouseup ${operationName}[data-draggable]`, function (done) {
+  it(`${operationName}[data-draggable] dispatches operation-ungrab event on mouseup`, function (done) {
+    const container = document.createElement('div')
+    container.innerHTML = `
+<palette-dropzone>
+  <${operationName}></${operationName}>
+</palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    mousedown(operation)
+
+    operation.addEventListener('operation-ungrab', () => done())
+    mouseup(operation)
+
+    assert.isFalse(operation.hasAttribute('data-grabbed'))
+  })
+
+  it(`${operationName}[data-draggable] dispatches operation-trash event when discarding`, function (done) {
     const container = document.createElement('div')
     container.innerHTML = `
 <palette-dropzone>

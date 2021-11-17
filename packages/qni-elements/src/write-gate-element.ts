@@ -9,6 +9,7 @@ export class WriteGateElement extends DraggableMixin(IconableMixin(HTMLElement))
   @attr value = ''
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})
     this.update()
   }

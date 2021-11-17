@@ -10,6 +10,7 @@ describe('quantum-circuit element', function () {
 
     beforeEach(function () {
       circuit = new window.QuantumCircuitElement()
+      circuit.minStepCount = 0
       document.body.append(circuit)
     })
 
@@ -20,16 +21,16 @@ describe('quantum-circuit element', function () {
     it('h(0)', function () {
       circuit.h(0)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.HGateElement)
     })
 
     it('h(1)', function () {
       circuit.h(1)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
       assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
       assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.HGateElement)
     })
@@ -37,8 +38,8 @@ describe('quantum-circuit element', function () {
     it('h(0, 2)', function () {
       circuit.h(0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.HGateElement)
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.HGateElement)
@@ -47,16 +48,16 @@ describe('quantum-circuit element', function () {
     it('x(0)', function () {
       circuit.x(0)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.XGateElement)
     })
 
     it('x(1)', function () {
       circuit.x(1)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
       assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
       assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.XGateElement)
     })
@@ -64,8 +65,8 @@ describe('quantum-circuit element', function () {
     it('x(0, 2)', function () {
       circuit.x(0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.XGateElement)
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
@@ -74,8 +75,8 @@ describe('quantum-circuit element', function () {
     it('cnot(0, 2)', function () {
       circuit.cnot(0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.ControlGateElement)
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
@@ -84,78 +85,78 @@ describe('quantum-circuit element', function () {
     it('write("0", 0)', function () {
       circuit.write('0', 0)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
-      assert.equal('0', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(0).operation.value, '0')
     })
 
     it('write("0", 1)', function () {
       circuit.write('0', 1)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
       assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(1).operation, window.WriteGateElement)
-      assert.equal('0', circuit.stepAt(0).dropzoneAt(1).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(1).operation.value, '0')
     })
 
     it('write("0", 0, 2)', function () {
       circuit.write('0', 0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
-      assert.equal('0', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(0).operation.value, '0')
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.WriteGateElement)
-      assert.equal('0', circuit.stepAt(0).dropzoneAt(2).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(2).operation.value, '0')
     })
 
     it('write("1", 0)', function () {
       circuit.write('1', 0)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
-      assert.equal('1', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(0).operation.value, '1')
     })
 
     it('write("1", 1)', function () {
       circuit.write('1', 1)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
       assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(1).operation, window.WriteGateElement)
-      assert.equal('1', circuit.stepAt(0).dropzoneAt(1).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(1).operation.value, '1')
     })
 
     it('write("1", 0, 2)', function () {
       circuit.write('1', 0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.WriteGateElement)
-      assert.equal('1', circuit.stepAt(0).dropzoneAt(0).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(0).operation.value, '1')
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.WriteGateElement)
-      assert.equal('1', circuit.stepAt(0).dropzoneAt(2).operation.value)
+      assert.equal(circuit.stepAt(0).dropzoneAt(2).operation.value, '1')
     })
 
     it('measure(0)', function () {
       circuit.measure(0)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(1, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.MeasurementGateElement)
     })
 
     it('measure(1)', function () {
       circuit.measure(1)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(2, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
       assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
       assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.MeasurementGateElement)
     })
@@ -163,8 +164,8 @@ describe('quantum-circuit element', function () {
     it('measure(0, 2)', function () {
       circuit.measure(0, 2)
 
-      assert.equal(1, circuit.steps.length)
-      assert.equal(3, circuit.stepAt(0).dropzones.length)
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.MeasurementGateElement)
       assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.MeasurementGateElement)
@@ -180,66 +181,30 @@ describe('quantum-circuit element', function () {
     //        |
     // -|0>---X-M-
     it('draws classical and quantum wires', function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-<quantum-circuit>
-  <circuit-step>
-    <circuit-dropzone>
-      <write-gate data-value="0"></write-gate>
-    </circuit-dropzone>
-    <circuit-dropzone>
-      <write-gate data-value="0"></write-gate>
-    </circuit-dropzone>
-  </circuit-step>
+      const circuit = new window.QuantumCircuitElement()
 
-  <circuit-step>
-    <circuit-dropzone>
-      <h-gate></h-gate>
-    </circuit-dropzone>
-    <circuit-dropzone></circuit-dropzone>
-  </circuit-step>
+      circuit.write('0', 0, 1).h(0).cnot(0, 1).measure(0, 1)
+      document.body.append(circuit)
 
-  <circuit-step>
-    <circuit-dropzone>
-      <control-gate></control-gate>
-    </circuit-dropzone>
-    <circuit-dropzone>
-      <x-gate></x-gate>
-    </circuit-dropzone>
-  </circuit-step>
+      assert.isFalse(circuit.stepAt(0).dropzoneAt(0).inputWireQuantum)
+      assert.isFalse(circuit.stepAt(0).dropzoneAt(1).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(0).dropzoneAt(0).outputWireQuantum)
+      assert.isTrue(circuit.stepAt(0).dropzoneAt(1).outputWireQuantum)
 
-  <circuit-step>
-    <circuit-dropzone>
-      <measurement-gate data-value="1"></measurement-gate>
-    </circuit-dropzone>
-    <circuit-dropzone>
-      <measurement-gate data-value="1"></measurement-gate>
-    </circuit-dropzone>
-  </circuit-step>
-</quantum-circuit>`
-      document.body.append(container)
+      assert.isTrue(circuit.stepAt(1).dropzoneAt(0).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(1).dropzoneAt(1).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(1).dropzoneAt(0).outputWireQuantum)
+      assert.isTrue(circuit.stepAt(1).dropzoneAt(1).outputWireQuantum)
 
-      const steps = document.querySelectorAll('circuit-step')
+      assert.isTrue(circuit.stepAt(2).dropzoneAt(0).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(2).dropzoneAt(1).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(2).dropzoneAt(0).outputWireQuantum)
+      assert.isTrue(circuit.stepAt(2).dropzoneAt(1).outputWireQuantum)
 
-      assert.isFalse(steps.item(0).dropzones[0].inputWireQuantum)
-      assert.isFalse(steps.item(0).dropzones[1].inputWireQuantum)
-      assert.isTrue(steps.item(0).dropzones[0].outputWireQuantum)
-      assert.isTrue(steps.item(0).dropzones[1].outputWireQuantum)
-
-      assert.isTrue(steps.item(1).dropzones[0].inputWireQuantum)
-      assert.isTrue(steps.item(1).dropzones[1].inputWireQuantum)
-      assert.isTrue(steps.item(1).dropzones[0].outputWireQuantum)
-      assert.isTrue(steps.item(1).dropzones[1].outputWireQuantum)
-
-      assert.isTrue(steps.item(2).dropzones[0].inputWireQuantum)
-      assert.isTrue(steps.item(2).dropzones[1].inputWireQuantum)
-      assert.isTrue(steps.item(2).dropzones[0].outputWireQuantum)
-      assert.isTrue(steps.item(2).dropzones[1].outputWireQuantum)
-
-      assert.isTrue(steps.item(3).dropzones[0].inputWireQuantum)
-      assert.isTrue(steps.item(3).dropzones[1].inputWireQuantum)
-      assert.isFalse(steps.item(3).dropzones[0].outputWireQuantum)
-      assert.isFalse(steps.item(3).dropzones[1].outputWireQuantum)
+      assert.isTrue(circuit.stepAt(3).dropzoneAt(0).inputWireQuantum)
+      assert.isTrue(circuit.stepAt(3).dropzoneAt(1).inputWireQuantum)
+      assert.isFalse(circuit.stepAt(3).dropzoneAt(0).outputWireQuantum)
+      assert.isFalse(circuit.stepAt(3).dropzoneAt(1).outputWireQuantum)
     })
   })
 })

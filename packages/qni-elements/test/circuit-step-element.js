@@ -20,6 +20,9 @@ describe('circuit-step element', function () {
 </circuit-step>`
       document.body.append(container)
 
+      const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
       const controlGate = document.querySelector('control-gate')
       assert.isTrue(controlGate.disabled)
     })
@@ -38,6 +41,8 @@ describe('circuit-step element', function () {
       document.body.append(container)
 
       const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
       const dropzones = step.dropzones
       assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
       assert.isTrue(dropzones[1].wireTop && !dropzones[1].wireBottom)
@@ -62,6 +67,8 @@ describe('circuit-step element', function () {
       document.body.append(container)
 
       const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
       const dropzones = step.dropzones
       assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
       assert.isTrue(dropzones[1].wireTop && dropzones[1].wireBottom)
@@ -88,6 +95,8 @@ describe('circuit-step element', function () {
       document.body.append(container)
 
       const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
       const dropzones = step.dropzones
       assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
       assert.isTrue(dropzones[1].wireTop && dropzones[1].wireBottom)

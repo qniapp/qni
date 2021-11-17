@@ -13,6 +13,10 @@ circuit-dropzone {
     @apply md:rotate-0;
   }
 
+  &[data-shadow]::part(wires) {
+    display: none;
+  }
+
   &::part(wire-top),
   &::part(wire-bottom) {
     @apply text-green-500;
@@ -41,12 +45,12 @@ circuit-dropzone {
   &[data-operation-name="write-gate"]::part(wire-input),
   &[data-operation-name="measurement-gate"]::part(wire-input) {
     transform-origin: left;
-    transform: scaleX(0.5);
+    transform: scaleX(0.33);
   }
 
   &[data-operation-name="write-gate"]::part(wire-output),
   &[data-operation-name="measurement-gate"]::part(wire-output) {
     transform-origin: right;
-    transform: scaleX(0.5);
+    transform: scaleX(0.33);
   }
 }

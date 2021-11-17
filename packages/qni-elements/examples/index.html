@@ -10,116 +10,33 @@
   <body>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="my-4 sm:my-6 lg:my-8">
-        <h1 class="text-2xl font-mono font-bold mb-4">&lt;palette-dropzone&gt;</h1>
-        <div class="flex space-x-2 px-4 py-4 rounded-md border-2 border-b-4 border-gray-200 mb-8">
-          <palette-dropzone>
-            <h-gate></h-gate>
-          </palette-dropzone>
-          <palette-dropzone>
-            <x-gate></x-gate>
-          </palette-dropzone>
-          <palette-dropzone>
-            <control-gate></control-gate>
-          </palette-dropzone>
-          <palette-dropzone>
-            <write-gate data-value="0"></write-gate>
-          </palette-dropzone>
-          <palette-dropzone>
-            <write-gate data-value="1"></write-gate>
-          </palette-dropzone>
-          <palette-dropzone>
-            <measurement-gate></measurement-gate>
-          </palette-dropzone>
-        </div>
-
-        <h1 class="text-2xl font-mono font-bold mb-4">&lt;circuit-step&gt;</h1>
-        <div class="flex items-start space-x-4 mb-8">
-          <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-            </circuit-dropzone>
-            <circuit-dropzone>
+        <circuit-editor>
+          <div class="flex space-x-1 w-1/2 px-4 py-4 rounded-md border-2 border-b-4 border-gray-200 mb-8">
+            <palette-dropzone>
               <h-gate></h-gate>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step class="box-content border-2 border-gray-200 border-dashed">
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </div>
-
-        <h1 class="text-2xl font-mono font-bold mb-4">&lt;quantum-circuit&gt;</h1>
-        <quantum-circuit class="box-content border-2 border-gray-200 border-dashed">
-          <circuit-step>
-            <circuit-dropzone>
-              <write-gate data-value="0"></write-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <write-gate data-value="0"></write-gate>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step>
-            <circuit-dropzone>
-              <h-gate></h-gate>
-            </circuit-dropzone>
-            <circuit-dropzone></circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step>
-            <circuit-dropzone>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
+            </palette-dropzone>
+            <palette-dropzone>
               <x-gate></x-gate>
-            </circuit-dropzone>
-          </circuit-step>
+            </palette-dropzone>
+            <palette-dropzone>
+              <control-gate></control-gate>
+            </palette-dropzone>
+            <palette-dropzone>
+              <write-gate data-value="0"></write-gate>
+            </palette-dropzone>
+            <palette-dropzone>
+              <write-gate data-value="1"></write-gate>
+            </palette-dropzone>
+            <palette-dropzone>
+              <measurement-gate></measurement-gate>
+            </palette-dropzone>
+          </div>
 
-          <circuit-step>
-            <circuit-dropzone>
-              <measurement-gate data-value="1"></measurement-gate>
-            </circuit-dropzone>
-            <circuit-dropzone>
-            </circuit-dropzone>
-          </circuit-step>
-
-          <circuit-step>
-            <circuit-dropzone>
-            </circuit-dropzone>
-            <circuit-dropzone>
-              <measurement-gate data-value="1"></measurement-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </quantum-circuit>
+          <quantum-circuit data-target="circuit-editor.circuit"
+                           data-min-step-count="5"
+                           data-min-wire-count="2">
+          </quantum-circuit>
+        </circuit-editor>
       </div>
     </div>
   </body>

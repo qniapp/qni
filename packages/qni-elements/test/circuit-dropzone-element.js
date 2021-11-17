@@ -39,7 +39,7 @@ describe('circuit-dropzone element', function () {
     it('no circuit-dropzone[data-occupied]', function () {
       const dropzone = document.createElement('circuit-dropzone')
 
-      assert(!dropzone.hasAttribute('data-occupied'))
+      assert.isFalse(dropzone.hasAttribute('data-occupied'))
     })
 
     it('circuit-dropzone[data-occupied]', function () {
@@ -51,7 +51,7 @@ describe('circuit-dropzone element', function () {
       document.body.append(container)
 
       const dropzone = document.querySelector('circuit-dropzone')
-      assert(dropzone.hasAttribute('data-occupied'))
+      assert.isTrue(dropzone.hasAttribute('data-occupied'))
     })
   })
 })

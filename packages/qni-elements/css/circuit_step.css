@@ -1,7 +1,11 @@
 circuit-step {
-  @apply flex;
+  @apply flex items-center;
   @apply flex-row-reverse sm:flex-row-reverse md:flex-col;
   @apply space-x-4 space-y-0 space-x-reverse;
   @apply sm:space-x-4 sm:space-y-0 sm:space-x-reverse;
   @apply md:space-x-0 md:space-y-4;
+
+  &[data-shadow] {
+    @apply w-0;
+  }
 }

@@ -9,6 +9,7 @@ export class MeasurementGateElement extends DraggableMixin(IconableMixin(HTMLEle
   @attr value = ''
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})
     this.update()
   }
