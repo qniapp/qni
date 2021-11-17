@@ -1,5 +1,6 @@
 export * from './h-gate-element'
 export * from './x-gate-element'
+export * from './y-gate-element'
 export * from './control-gate-element'
 export * from './write-gate-element'
 export * from './measurement-gate-element'

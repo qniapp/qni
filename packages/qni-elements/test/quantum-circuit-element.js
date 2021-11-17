@@ -72,6 +72,33 @@ describe('quantum-circuit element', function () {
       assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.XGateElement)
     })
 
+    it('y(0)', function () {
+      circuit.y(0)
+
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 1)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.YGateElement)
+    })
+
+    it('y(1)', function () {
+      circuit.y(1)
+
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 2)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(0).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzones[1].operation, window.YGateElement)
+    })
+
+    it('y(0, 2)', function () {
+      circuit.y(0, 2)
+
+      assert.equal(circuit.steps.length, 1)
+      assert.equal(circuit.stepAt(0).dropzones.length, 3)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(0).operation, window.YGateElement)
+      assert.isNull(circuit.stepAt(0).dropzoneAt(1).operation)
+      assert.instanceOf(circuit.stepAt(0).dropzoneAt(2).operation, window.YGateElement)
+    })
+
     it('cnot(0, 2)', function () {
       circuit.cnot(0, 2)
 

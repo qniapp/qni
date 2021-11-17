@@ -7,6 +7,7 @@ import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
+import {YGateElement} from './y-gate-element'
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -54,6 +55,12 @@ export class QuantumCircuitElement extends HTMLElement {
 
   x(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(XGateElement, ...targetQubits)
+
+    return this
+  }
+
+  y(...targetQubits: number[]): QuantumCircuitElement {
+    this.applyOperation(YGateElement, ...targetQubits)
 
     return this
   }

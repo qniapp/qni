@@ -4,6 +4,7 @@
 @import './html';
 @import './h_gate';
 @import './x_gate';
+@import './y_gate';
 @import './control_gate';
 @import './write_gate';
 @import './measurement_gate';

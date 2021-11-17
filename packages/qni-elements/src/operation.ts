@@ -3,12 +3,19 @@ import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
+import {YGateElement} from './y-gate-element'
 
-export type Operation = HGateElement | XGateElement | ControlGateElement | WriteGateElement | MeasurementGateElement
-export type ControllableOperation = HGateElement | XGateElement
+export type Operation =
+  | HGateElement
+  | XGateElement
+  | YGateElement
+  | ControlGateElement
+  | WriteGateElement
+  | MeasurementGateElement
+export type ControllableOperation = HGateElement | XGateElement | YGateElement
 
 export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>
-  arg instanceof HGateElement || arg instanceof XGateElement
+  arg instanceof HGateElement || arg instanceof XGateElement || arg instanceof YGateElement
 
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement

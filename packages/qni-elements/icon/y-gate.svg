@@ -7,5 +7,5 @@
   stroke-width="2"
   stroke-linecap="round"
 >
-  <path d="M17 13L17 35M17 24L31 24M31 13L31 35" />
+  <path d="M17 13L24 24L31 13M24 24L24 35" />
 </svg>
