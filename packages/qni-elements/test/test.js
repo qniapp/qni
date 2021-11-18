@@ -1,6 +1,7 @@
 import './h-gate-element'
 import './x-gate-element'
 import './y-gate-element'
+import './z-gate-element'
 import './control-gate-element'
 import './write-gate-element'
 import './measurement-gate-element'

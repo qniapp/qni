@@ -1,0 +1,27 @@
+z-gate {
+  @apply operation;
+
+  @apply rounded;
+
+  &::part(body) {
+    @apply h-full w-full;
+    @apply bg-green-500;
+    @apply rounded;
+  }
+
+  &[data-disabled]::part(body) {
+    @apply bg-gray-500;
+  }
+
+  &::part(icon) {
+    @apply text-white;
+  }
+
+  &[data-draggable] {
+    @apply draggable;
+
+    &[data-grabbed] {
+      @apply draggable--grabbed;
+    }
+  }
+}
