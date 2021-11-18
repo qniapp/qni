@@ -8,6 +8,9 @@ export default {
       format: 'es',
     }
   ],
+  watch: {
+    include: 'test/**/*.js'
+  },
   plugins: [
     resolve()
   ]

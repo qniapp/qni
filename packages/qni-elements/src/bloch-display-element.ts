@@ -93,23 +93,24 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
     if (name === 'data-y') this.y = parseFloat(newValue)
     if (name === 'data-z') this.z = parseFloat(newValue)
     this.d = this.vectorLength()
-    this.phi = this.calculatePhi()
-    this.theta = this.calculateTheta()
+    this.phi = this.phiRadian()
+    this.theta = this.thetaRadian()
 
     this.updateBlochVector()
   }
 
   update(): void {
     this.d = this.vectorLength()
-    this.phi = this.calculatePhi()
-    this.theta = this.calculateTheta()
+    this.phi = this.phiRadian()
+    this.theta = this.thetaRadian()
 
     const vectorLineRect = (degree: number) => {
-      return html`<div class="vector-line-rect" style="transform: rotateY(${degree}deg)"></div>`
+      return html`<div part="vector-line-rect" class="vector-line-rect" style="transform: rotateY(${degree}deg)"></div>`
     }
 
     const vectorEndCircle = (degree: number, axis: 'X' | 'Y') => {
       return html`<div
+        part="vector-end-circle"
         class="vector-end-circle"
         style="transform: rotate${axis}(${degree}deg)"
         data-targets="bloch-display.vectorEndCircles"
@@ -120,23 +121,19 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
       html`<style>
           #background {
             border-radius: 9999px;
-            background-color: var(--colors-snow, #ffffff);
+            background-color: #ffffff;
           }
 
           #sphere-border {
             box-sizing: border-box;
             border-style: solid;
             border-radius: 9999px;
-            border-width: 2px;
-            border-color: var(--colors-hare, #afafaf);
-            background-color: rgba(67, 192, 0, 0.1);
           }
 
           #sphere-lines {
             width: 100%;
             height: 100%;
             stroke: currentColor;
-            color: var(--colors-hare, #afafaf);
           }
 
           #perspective {
@@ -146,27 +143,6 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
             bottom: -1px;
             left: -1px;
             perspective-origin: top right;
-          }
-
-          :host([data-size='xs']) #perspective {
-            perspective: 2rem;
-          }
-
-          :host([data-size='sm']) #perspective {
-            perspective: 3rem;
-          }
-
-          :host #perspective,
-          :host([data-size='base']) #perspective {
-            perspective: 4rem;
-          }
-
-          :host([data-size='lg']) #perspective {
-            perspective: 5rem;
-          }
-
-          :host([data-size='xl']) #perspective {
-            perspective: 6rem;
           }
 
           #vector {
@@ -189,7 +165,6 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
             position: absolute;
             left: 0px;
             right: 0px;
-            background-color: var(--colors-eel, #4b4b4b);
             margin-left: auto;
             margin-right: auto;
             transform-origin: bottom;
@@ -208,27 +183,9 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
             position: absolute;
             left: 0px;
             right: 0px;
-            background-color: var(--colors-cardinal, #ff4b4b);
             margin-left: auto;
             margin-right: auto;
             border-radius: 9999px;
-            height: 6px;
-            width: 6px;
-          }
-
-          :host([data-size='xs']) .vector-end-circle {
-            height: 4px;
-            width: 4px;
-          }
-
-          :host([data-size='lg']) .vector-end-circle,
-          :host([data-size='xl']) .vector-end-circle {
-            height: 8px;
-            width: 8px;
-          }
-
-          #body[data-d='0'] .vector-end-circle {
-            background-color: var(--colors-magnitude, #1cb0f6);
           }
 
           .absolute {
@@ -243,22 +200,24 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
           }
         </style>
 
-        <div
-          id="body"
-          data-target="bloch-display.body"
-          data-d="${this.d}"
-          data-action="mouseenter:bloch-display#showPopup mouseup:bloch-display#showPopup"
-        >
+        <div data-target="bloch-display.body" data-d="${this.d}" data-action="mouseenter:bloch-display#showPopup">
           <div id="background" class="absolute inset-0"></div>
-          <div id="sphere-border" class="absolute inset-0">
-            <svg id="sphere-lines" class="absolute inset-0" viewBox="0 0 48 48" fill="none" stroke-width="1">
+          <div id="sphere-border" part="sphere-border" class="absolute inset-0">
+            <svg
+              id="sphere-lines"
+              part="sphere-lines"
+              class="absolute inset-0"
+              viewBox="0 0 48 48"
+              fill="none"
+              stroke-width="1"
+            >
               <line x1="0%" y1="50%" x2="100%" y2="50%" />
               <line x1="50%" y1="0%" x2="50%" y2="100%" />
               <line x1="35%" y1="65%" x2="65%" y2="35%" />
               <ellipse cx="50%" cy="50%" rx="18%" ry="50%" />
               <ellipse cx="50%" cy="50%" rx="50%" ry="18%" />
             </svg>
-            <div id="perspective">
+            <div id="perspective" part="perspective">
               <div id="vector" data-target="bloch-display.vector">
                 <div id="vector-line" data-target="bloch-display.vectorLine">
                   ${vectorLineRect(0)} ${vectorLineRect(20)} ${vectorLineRect(40)} ${vectorLineRect(60)}
@@ -293,14 +252,13 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
 
   private get d(): number {
     const dataD = this.getAttribute('data-d')
-    if (dataD === null) throw new Error('data-d not set')
+    if (dataD === null) throw new Error('data-d must not be null.')
 
     return parseFloat(dataD)
   }
 
   private set d(value: number) {
     this.setAttribute('data-d', value.toString())
-    this.body?.setAttribute('data-d', value.toString())
   }
 
   private vectorLength(): number {
@@ -313,12 +271,12 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
 
   private get phi(): number {
     const dataPhi = this.getAttribute('data-phi')
-    if (dataPhi === null) throw new Error('data-phi not set')
+    if (dataPhi === null) throw new Error('data-phi must not be null.')
 
     return parseFloat(dataPhi)
   }
 
-  private calculatePhi(): number {
+  private phiRadian(): number {
     return (Math.atan2(this.y, this.x) * 180) / Math.PI
   }
 
@@ -328,12 +286,12 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
 
   private get theta(): number {
     const dataTheta = this.getAttribute('data-theta')
-    if (dataTheta === null) throw new Error('data-theta not set')
+    if (dataTheta === null) throw new Error('data-theta must not be null.')
 
     return parseFloat(dataTheta)
   }
 
-  private calculateTheta(): number {
+  private thetaRadian(): number {
     const θ = Math.max(0, Math.PI / 2 - Math.atan2(this.z, Math.sqrt(this.y * this.y + this.x * this.x)))
     return (180 * θ) / Math.PI
   }
