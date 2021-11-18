@@ -9,6 +9,7 @@
 @import './phase_gate';
 @import './rnot_gate';
 @import './rx_gate';
+@import './ry_gate';
 @import './control_gate';
 @import './write_gate';
 @import './measurement_gate';
