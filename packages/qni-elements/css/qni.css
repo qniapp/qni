@@ -6,6 +6,7 @@
 @import './x_gate';
 @import './y_gate';
 @import './z_gate';
+@import './phase_gate';
 @import './rnot_gate';
 @import './control_gate';
 @import './write_gate';
