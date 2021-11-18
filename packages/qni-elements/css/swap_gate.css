@@ -1,0 +1,22 @@
+swap-gate {
+  @apply operation;
+
+  @apply rounded;
+
+  &::part(icon) {
+    @apply text-green-500;
+  }
+
+  &[data-disabled]::part(icon) {
+    @apply text-gray-500;
+  }
+
+  &[data-draggable] {
+    @apply draggable;
+
+    &[data-grabbed] {
+      @apply draggable--grabbed;
+      @apply bg-white;
+    }
+  }
+}
