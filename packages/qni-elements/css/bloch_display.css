@@ -1,0 +1,18 @@
+bloch-display {
+  @apply operation;
+
+  @apply rounded;
+
+  &::part(body) {
+    @apply h-full w-full;
+    @apply rounded;
+  }
+
+  &[data-draggable] {
+    @apply draggable;
+
+    &[data-grabbed] {
+      @apply draggable--grabbed;
+    }
+  }
+}

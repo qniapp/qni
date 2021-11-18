@@ -50,7 +50,8 @@
     "@interactjs/auto-start": "^1.10.11",
     "@interactjs/dev-tools": "^1.10.11",
     "@interactjs/interact": "^1.10.11",
-    "@interactjs/modifiers": "^1.10.11"
+    "@interactjs/modifiers": "^1.10.11",
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
@@ -74,6 +75,7 @@
     "postcss-preset-env": "^6.7.0",
     "rollup": "^2.59.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
     "svg-to-ts": "^7.1.0",
     "tailwindcss": "^2.2.19",
     "tsc-watch": "^4.5.0",

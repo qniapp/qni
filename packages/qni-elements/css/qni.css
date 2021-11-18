@@ -13,6 +13,7 @@
 @import './rz_gate';
 @import './swap_gate';
 @import './control_gate';
+@import './bloch_display';
 @import './write_gate';
 @import './measurement_gate';
 @import './circuit_dropzone';
@@ -20,6 +21,7 @@
 @import './circuit_step';
 @import './quantum_circuit';
 @import './circuit_editor';
+@import './tippy';
 
 @import 'tailwindcss/utilities';
 
@@ -45,7 +47,7 @@
     @apply border-opacity-100;
   }
 
-  quantum-circuit([data-editing]) .draggable:not([data-x="0"]):not([data-y="0"]):hover {
+  quantum-circuit([data-editing]) .draggable:not([data-operation-x="0"]):not([data-operation-y="0"]):hover {
     @apply border-opacity-100;
   }
 

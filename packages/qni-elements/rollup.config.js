@@ -1,4 +1,5 @@
 import pkg from './package.json'
+import replace from "rollup-plugin-replace"
 import resolve from '@rollup/plugin-node-resolve'
 
 export default {
@@ -10,5 +11,10 @@ export default {
     }
   ],
   context: 'window',
-  plugins: [resolve()]
+  plugins: [
+    replace({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    }),
+    resolve()
+  ]
 }

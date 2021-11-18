@@ -10,10 +10,10 @@ import {attr} from '@github/catalyst'
 import interact from '@interactjs/interact'
 
 export declare class Draggable {
-  get x(): number
-  set x(value: number)
-  get y(): number
-  set y(value: number)
+  get operationX(): number
+  set operationX(value: number)
+  get operationY(): number
+  set operationY(value: number)
   get draggable(): boolean
   set draggable(value: boolean)
   get grabbed(): boolean
@@ -39,8 +39,8 @@ export declare class Draggable {
 
 export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Draggable> & TBase {
   class DraggableMixinClass extends Base {
-    @attr x = 0
-    @attr y = 0
+    @attr operationX = 0
+    @attr operationY = 0
     @attr grabbed = false
     @attr dragging = false
     @attr snapped = false
@@ -276,14 +276,14 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     // move operation
 
     move(dx: number, dy: number): void {
-      const x = this.x + dx
-      const y = this.y + dy
+      const x = this.operationX + dx
+      const y = this.operationY + dy
       this.moveTo(x, y)
     }
 
     moveTo(x: number, y: number): void {
-      this.x = x
-      this.y = y
+      this.operationX = x
+      this.operationY = y
       this.style.transform = `translate(${x}px, ${y}px)`
     }
 
