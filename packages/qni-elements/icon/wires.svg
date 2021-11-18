@@ -5,8 +5,8 @@
     y1="24"
     x2="24"
     y2="24"
-    stroke-width="2"
     stroke="currentColor"
+    stroke-width="2"
     vector-effect="non-scaling-stroke"
   ></line>
   <line
@@ -15,8 +15,8 @@
     y1="24"
     x2="48"
     y2="24"
-    stroke-width="2"
     stroke="currentColor"
+    stroke-width="2"
     vector-effect="non-scaling-stroke"
   ></line>
   <line
@@ -26,8 +26,8 @@
     y1="0"
     x2="24"
     y2="24"
-    stroke-width="2"
     stroke="currentColor"
+    stroke-width="2"
     vector-effect="non-scaling-stroke"
   ></line>
   <line
@@ -37,8 +37,8 @@
     y1="48"
     x2="24"
     y2="24"
-    stroke-width="2"
     stroke="currentColor"
+    stroke-width="2"
     vector-effect="non-scaling-stroke"
   ></line>
 </svg>

@@ -7,7 +7,10 @@
   "delimiter": "KEBAB",
   "fileName": "index",
   "svgoConfig": {
-    "plugins": ["cleanupAttrs"]
+    "plugins": [
+      "cleanupAttrs",
+      "removeEditorsNSData"
+    ]
   },
   "compileSources": false
 }
