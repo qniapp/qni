@@ -1,6 +1,7 @@
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
+import {RnotGateElement} from './rnot-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -11,16 +12,18 @@ export type Operation =
   | XGateElement
   | YGateElement
   | ZGateElement
+  | RnotGateElement
   | ControlGateElement
   | WriteGateElement
   | MeasurementGateElement
-export type ControllableOperation = HGateElement | XGateElement | YGateElement | ZGateElement
+export type ControllableOperation = HGateElement | XGateElement | YGateElement | ZGateElement | RnotGateElement
 
 export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>
   arg instanceof HGateElement ||
   arg instanceof XGateElement ||
   arg instanceof YGateElement ||
-  arg instanceof ZGateElement
+  arg instanceof ZGateElement ||
+  arg instanceof RnotGateElement
 
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement

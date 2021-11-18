@@ -1,0 +1,13 @@
+<svg
+  width="48"
+  height="48"
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M10 24L13 24L14 36L17 36L18 12L38 12" />
+  <path d="M24 32L34 18M34 32L24 18" />
+</svg>
