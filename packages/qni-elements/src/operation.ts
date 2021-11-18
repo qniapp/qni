@@ -5,6 +5,7 @@ import {PhaseGateElement} from './phase-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
+import {RzGateElement} from './rz-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -19,6 +20,7 @@ export type Operation =
   | RnotGateElement
   | RxGateElement
   | RyGateElement
+  | RzGateElement
   | ControlGateElement
   | WriteGateElement
   | MeasurementGateElement
@@ -31,6 +33,7 @@ export type ControllableOperation =
   | RnotGateElement
   | RxGateElement
   | RyGateElement
+  | RzGateElement
 
 export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>
   arg instanceof HGateElement ||
@@ -40,7 +43,8 @@ export const isControllableOperation = (arg: unknown): arg is ControllableOperat
   arg instanceof PhaseGateElement ||
   arg instanceof RnotGateElement ||
   arg instanceof RxGateElement ||
-  arg instanceof RyGateElement
+  arg instanceof RyGateElement ||
+  arg instanceof RzGateElement
 
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement
