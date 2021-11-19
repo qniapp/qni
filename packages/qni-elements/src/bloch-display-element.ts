@@ -200,7 +200,12 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
           }
         </style>
 
-        <div data-target="bloch-display.body" data-d="${this.d}" data-action="mouseenter:bloch-display#showPopup">
+        <div
+          part="icon"
+          data-target="bloch-display.body"
+          data-d="${this.d}"
+          data-action="mouseenter:bloch-display#showPopup"
+        >
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" part="sphere-border" class="absolute inset-0">
             <svg
