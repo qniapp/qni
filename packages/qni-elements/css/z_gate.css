@@ -19,9 +19,5 @@ z-gate {
 
   &[data-draggable] {
     @apply draggable;
-
-    &[data-grabbed] {
-      @apply draggable--grabbed;
-    }
   }
 }

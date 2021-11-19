@@ -60,7 +60,7 @@
     @apply border-opacity-100;
   }
 
-  .draggable--grabbed {
+  .draggable[data-grabbed] {
     @apply border-opacity-100;
     @apply cursor-grabbing;
     @apply bg-white;
