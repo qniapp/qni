@@ -50,6 +50,9 @@ export const isControllableOperation = (arg: unknown): arg is ControllableOperat
   arg instanceof RzGateElement ||
   arg instanceof SwapGateElement
 
+export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
+  arg !== undefined && arg !== null && arg instanceof PhaseGateElement
+
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement
 

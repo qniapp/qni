@@ -1,6 +1,7 @@
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
+import {PhaseGateElement} from './phase-gate-element'
 import {SwapGateElement} from './swap-gate-element'
 import {controller} from '@github/catalyst'
 import {isControllableOperation} from './operation'
@@ -56,6 +57,7 @@ export class CircuitStepElement extends HTMLElement {
     }
 
     this.updateSwapConnections()
+    this.updateCphaseConnections()
 
     if (controlDropzones.length === 0) return
 
@@ -137,6 +139,35 @@ export class CircuitStepElement extends HTMLElement {
     }
   }
 
+  private updateCphaseConnections(): void {
+    const phaseDropzones = this.phaseGateDropzones
+
+    for (const phase of phaseDropzones) {
+      const phaseGate = phase.operation as PhaseGateElement
+      phaseGate.enable()
+      if (phaseGate.phi === '') continue
+
+      phase.wireTop = phaseDropzones.some(
+        each => phaseGate.phi === (each.operation as PhaseGateElement).phi && this.bit(each) < this.bit(phase)
+      )
+      phase.wireBottom = phaseDropzones.some(
+        each => phaseGate.phi === (each.operation as PhaseGateElement).phi && this.bit(each) > this.bit(phase)
+      )
+    }
+
+    for (const dropzone of this.freeDropzones) {
+      const controlledDropzones = this.phaseGateDropzones.filter(each => each.wireTop || each.wireBottom)
+      const controlledBits = controlledDropzones.map(each => this.bit(each))
+      const minBit = Math.min(...controlledBits)
+      const maxBit = Math.max(...controlledBits)
+
+      if (minBit < this.bit(dropzone) && this.bit(dropzone) < maxBit) {
+        dropzone.wireTop = true
+        dropzone.wireBottom = true
+      }
+    }
+  }
+
   bit(dropzone: CircuitDropzoneElement): number {
     const bit = this.dropzones.indexOf(dropzone)
     if (bit === -1) throw new Error('circuit-dropzone not found.')
@@ -176,6 +207,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private get swapGateDropzones(): CircuitDropzoneElement[] {
     return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'swap-gate')
+  }
+
+  private get phaseGateDropzones(): CircuitDropzoneElement[] {
+    return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'phase-gate')
   }
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {

@@ -20,4 +20,41 @@ phase-gate {
   &[data-draggable] {
     @apply draggable;
   }
+
+  /* data-phi */
+
+  &[data-phi]::before {
+    @apply hidden;
+    @apply font-mono;
+    @apply text-xs leading-3;
+    @apply absolute;
+
+    content: attr(data-phi) "";
+  }
+
+  circuit-dropzone &[data-phi]:not([data-phi=""])::before {
+    @apply flex justify-center;
+  }
+
+  /* top label */
+  circuit-dropzone:not([data-wire-top]) &[data-phi]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
+  /* top label over wire */
+  circuit-dropzone[data-wire-top][data-wire-bottom] &[data-phi]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+                 1px 0 0 #fff;
+  }
+
+  /* bottom label */
+  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) &[data-phi]::before {
+    @apply bottom-0 left-0 right-0;
+    @apply -mb-3.5;
+  }
 }

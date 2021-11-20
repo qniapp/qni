@@ -76,6 +76,48 @@ describe('circuit-step element', function () {
       assert.isTrue(dropzones[3].wireTop && !dropzones[3].wireBottom)
     })
 
+    it('P(π/2)-P(π/2)', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+<circuit-step>
+  <circuit-dropzone>
+    <phase-gate data-phi="π/2"></phase-gate>
+  </circuit-dropzone>
+  <circuit-dropzone>
+    <phase-gate data-phi="π/2"></phase-gate>
+  </circuit-dropzone>
+</circuit-step>`
+      document.body.append(container)
+
+      const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
+      const dropzones = step.dropzones
+      assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
+      assert.isTrue(dropzones[1].wireTop && !dropzones[1].wireBottom)
+    })
+
+    it('P(π/2)-P(π)', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+<circuit-step>
+  <circuit-dropzone>
+    <phase-gate data-phi="π/2"></phase-gate>
+  </circuit-dropzone>
+  <circuit-dropzone>
+    <phase-gate data-phi="π"></phase-gate>
+  </circuit-dropzone>
+</circuit-step>`
+      document.body.append(container)
+
+      const step = document.querySelector('circuit-step')
+      step.updateConnections()
+
+      const dropzones = step.dropzones
+      assert.isTrue(!dropzones[0].wireTop && !dropzones[0].wireBottom)
+      assert.isTrue(!dropzones[1].wireTop && !dropzones[1].wireBottom)
+    })
+
     it('H-•-1-H', function () {
       const container = document.createElement('div')
       container.innerHTML = `
