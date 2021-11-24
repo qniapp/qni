@@ -34,7 +34,7 @@ export declare class Draggable {
   move(dx: number, dy: number): void
   moveTo(x: number, y: number): void
   moveByOffset(offsetX: number, offsetY: number): void
-  trash(): void
+  delete(): void
 }
 
 export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Draggable> & TBase {
@@ -250,7 +250,10 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     endDragging(): void {
       this.dragging = false
       this.grabbed = false
-      if (this.snapped) this.moveTo(0, 0)
+      if (this.snapped) {
+        this.moveTo(0, 0)
+        this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
+      }
       this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
     }
 
@@ -270,7 +273,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.grabbed = false
       this.dragging = false
       this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
-      if (!this.snapped) this.trash()
+      if (!this.snapped) this.delete()
     }
 
     // move operation
@@ -293,11 +296,11 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.move(dx, dy)
     }
 
-    // trash operation
+    // delete operation
 
-    trash(): void {
+    delete(): void {
       interact(this).unset()
-      this.dispatchEvent(new Event('operation-trash', {bubbles: true}))
+      this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
     }
   }
 

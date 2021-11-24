@@ -1,4 +1,5 @@
 h-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;

@@ -1,3 +1,4 @@
+import {BlochDisplayElement} from './bloch-display-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
@@ -24,8 +25,10 @@ export type Operation =
   | RzGateElement
   | SwapGateElement
   | ControlGateElement
+  | BlochDisplayElement
   | WriteGateElement
   | MeasurementGateElement
+
 export type ControllableOperation =
   | HGateElement
   | XGateElement
@@ -37,6 +40,22 @@ export type ControllableOperation =
   | RyGateElement
   | RzGateElement
   | SwapGateElement
+
+export const isOperation = (arg: unknown): arg is Operation =>
+  arg instanceof HGateElement ||
+  arg instanceof XGateElement ||
+  arg instanceof YGateElement ||
+  arg instanceof ZGateElement ||
+  arg instanceof PhaseGateElement ||
+  arg instanceof RnotGateElement ||
+  arg instanceof RxGateElement ||
+  arg instanceof RyGateElement ||
+  arg instanceof RzGateElement ||
+  arg instanceof SwapGateElement ||
+  arg instanceof ControlGateElement ||
+  arg instanceof BlochDisplayElement ||
+  arg instanceof WriteGateElement ||
+  arg instanceof MeasurementGateElement
 
 export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>
   arg instanceof HGateElement ||

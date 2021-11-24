@@ -48,7 +48,7 @@ export function testDraggableOperation(operationName) {
     assert.isFalse(operation.hasAttribute('data-grabbed'))
   })
 
-  it(`${operationName}[data-draggable] dispatches operation-trash event when discarding`, function (done) {
+  it(`${operationName}[data-draggable] dispatches operation-delete event when discarding`, function (done) {
     const container = document.createElement('div')
     container.innerHTML = `
 <palette-dropzone>
@@ -58,7 +58,7 @@ export function testDraggableOperation(operationName) {
     const operation = document.querySelector(operationName)
     mousedown(operation)
 
-    operation.addEventListener('operation-trash', () => done())
+    operation.addEventListener('operation-delete', () => done())
     mouseup(operation)
 
     assert.isFalse(operation.hasAttribute('data-grabbed'))

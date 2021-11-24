@@ -1,4 +1,5 @@
 swap-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;

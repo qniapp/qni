@@ -1,3 +1,7 @@
+export * from './inspector-button-element'
+export * from './operation-inspector-element'
+export * from './angle-slider-element'
+
 export * from './h-gate-element'
 export * from './x-gate-element'
 export * from './y-gate-element'

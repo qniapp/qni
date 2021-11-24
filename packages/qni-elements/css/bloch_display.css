@@ -1,4 +1,5 @@
 bloch-display {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;

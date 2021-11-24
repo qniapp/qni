@@ -2,10 +2,11 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
+import {ActivateableMixin} from './mixin/activateable'
 import {DraggableMixin} from './mixin/draggable'
 
 @controller
-export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
+export class BlochDisplayElement extends DraggableMixin(ActivateableMixin(HTMLElement)) {
   @target body: HTMLElement
   @target vectorLine: HTMLElement
   @target vectorEnd: HTMLElement
@@ -77,6 +78,7 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
     this.attachShadow({mode: 'open'})
     this.update()
     this.updateBlochVector()
+    this.addEventListener('mouseenter', this.showPopup)
   }
 
   disconnectedCallback(): void {
@@ -200,12 +202,7 @@ export class BlochDisplayElement extends DraggableMixin(HTMLElement) {
           }
         </style>
 
-        <div
-          part="icon"
-          data-target="bloch-display.body"
-          data-d="${this.d}"
-          data-action="mouseenter:bloch-display#showPopup"
-        >
+        <div part="icon" data-target="bloch-display.body" data-d="${this.d}">
           <div id="background" class="absolute inset-0"></div>
           <div id="sphere-border" part="sphere-border" class="absolute inset-0">
             <svg

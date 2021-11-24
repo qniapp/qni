@@ -1,6 +1,13 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
+@import "tippy.js/dist/border.css";
+@import "tippy.js/dist/svg-arrow.css";
+@import "tippy.js/dist/tippy.css";
+@import './tippy';
+
+@import './angle_slider';
+
 @import './html';
 @import './h_gate';
 @import './x_gate';
@@ -21,7 +28,6 @@
 @import './circuit_step';
 @import './quantum_circuit';
 @import './circuit_editor';
-@import './tippy';
 
 @import 'tailwindcss/utilities';
 
@@ -33,7 +39,7 @@
 
   .operation::after {
     @apply absolute inset-0;
-    @apply border-2 border-red-500 border-opacity-0;
+    @apply border-2 border-yellow-500 border-opacity-0;
     @apply rounded;
 
     content: "";
@@ -41,6 +47,11 @@
 }
 
 @layer components {
+  .activateable[data-active]::after {
+    @apply border-opacity-100;
+    @apply border-3;
+  }
+
   .draggable {
     touch-action: none;
   }
@@ -53,8 +64,12 @@
     @apply cursor-grab;
   }
 
-  palette-dropzone .draggable:hover::after  {
+  palette-dropzone .draggable:not([data-grabbed]):hover::after  {
     @apply border-opacity-100;
+  }
+
+  palette-dropzone &:not([data-grabbed]):hover::after  {
+    @apply bg-yellow-500 bg-opacity-10;
   }
 
   /* Show trash icon on top-right */
@@ -67,7 +82,7 @@
     background-image: url('data:image/svg+xml;utf8,<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
   }
 
-  quantum-circuit:not([data-editing]) .draggable:hover::after {
+  quantum-circuit:not([data-editing]) .draggable:not([data-active]):hover::after {
     @apply border-opacity-100;
   }
 
@@ -76,7 +91,6 @@
   }
 
   .draggable[data-grabbed] {
-    @apply border-opacity-100;
     @apply cursor-grabbing;
     @apply bg-white;
     @apply z-40;
@@ -84,5 +98,6 @@
 
   .draggable[data-grabbed]::after {
     @apply border-opacity-100;
+    @apply border-3;
   }
 }

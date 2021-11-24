@@ -3,9 +3,9 @@ import '@interactjs/actions/drop'
 import '@interactjs/auto-start'
 import '@interactjs/dev-tools'
 import '@interactjs/modifiers'
+import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
-import {Operation} from './operation'
 import {iconWires} from './icon'
 import interact from '@interactjs/interact'
 
@@ -23,9 +23,18 @@ export class CircuitDropzoneElement extends HTMLElement {
     if (this.childElementCount === 0) {
       return null
     } else if (this.childElementCount === 1) {
-      return this.children[0] as Operation
+      const child = this.children[0]
+      if (isOperation(child)) return child
     } else {
-      throw new Error('circuit-dropzone cannot hold multiple operations.')
+      const children = Array.from(this.children)
+      const operations = children.filter(each => isOperation(each)) as Operation[]
+      if (operations.length === 0) {
+        return null
+      } else if (operations.length === 1) {
+        return operations[0]
+      } else {
+        throw new Error('circuit-dropzone cannot hold multiple operations.')
+      }
     }
   }
 
@@ -44,12 +53,10 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.setOperationAttributes()
     this.initDropzone()
 
-    this.addEventListener('operation-wire-top', this.drawTopWire)
-    this.addEventListener('operation-wire-bottom', this.drawBottomWire)
     this.addEventListener('operation-snap', this.snapOperation)
     this.addEventListener('operation-unsnap', this.unsnapOperation)
     this.addEventListener('operation-enddragging', this.dispatchDropEvent)
-    this.addEventListener('operation-trash', this.trashOperation)
+    this.addEventListener('operation-delete', this.deleteOperation)
   }
 
   update(): void {
@@ -105,14 +112,6 @@ export class CircuitDropzoneElement extends HTMLElement {
     })
   }
 
-  private drawTopWire(): void {
-    this.wireTop = true
-  }
-
-  private drawBottomWire(): void {
-    this.wireBottom = true
-  }
-
   private setOperationAttributes(): void {
     const operation = this.operation
 
@@ -143,8 +142,13 @@ export class CircuitDropzoneElement extends HTMLElement {
     this.dispatchEvent(new Event('circuit-dropzone-drop', {bubbles: true}))
   }
 
-  private trashOperation(event: Event): void {
-    this.removeChild(event.target as Operation)
+  private deleteOperation(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} is not an operation`)
+
+    this.occupied = false
+    this.operationName = ''
+    this.removeChild(operation as Node)
   }
 
   private get wireSvg(): TemplateResult {

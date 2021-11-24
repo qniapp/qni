@@ -10,8 +10,9 @@ export class PaletteDropzoneElement extends HTMLElement {
 
     this.operation.draggable = true
     this.operation.snapped = true
+    this.addEventListener('operation-showmenu', this.stopEventPropagation)
     this.addEventListener('operation-grab', this.newOperation)
-    this.addEventListener('operation-trash', this.trashOperation)
+    this.addEventListener('operation-delete', this.deleteOperation)
   }
 
   update(): void {
@@ -37,6 +38,10 @@ export class PaletteDropzoneElement extends HTMLElement {
     }
   }
 
+  private stopEventPropagation(e: Event): void {
+    e.stopPropagation()
+  }
+
   private newOperation(event: MouseEvent): void {
     const operation = event.target as Operation
     const newOperation = document.createElement(operation.tagName) as Operation
@@ -52,7 +57,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.prepend(newOperation)
   }
 
-  private trashOperation(event: Event): void {
+  private deleteOperation(event: Event): void {
     this.removeChild(event.target as Operation)
   }
 }

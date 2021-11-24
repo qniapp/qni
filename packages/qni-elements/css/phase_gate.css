@@ -1,4 +1,5 @@
 phase-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;
@@ -25,15 +26,22 @@ phase-gate {
 
   &[data-phi]::before {
     @apply hidden;
-    @apply font-mono;
+    @apply font-mono tracking-tighter;
     @apply text-xs leading-3;
     @apply absolute;
-
-    content: attr(data-phi) "";
   }
 
   circuit-dropzone &[data-phi]:not([data-phi=""])::before {
     @apply flex justify-center;
+
+    content: attr(data-phi) "";
+  }
+
+  circuit-dropzone &[data-phi][data-if]:not([data-phi=""]):not([data-if=""])::before {
+    @apply flex justify-center;
+    @apply whitespace-nowrap;
+
+    content: attr(data-phi) " if " attr(data-if);
   }
 
   /* top label */

@@ -5,6 +5,14 @@ import {testIconable} from './common/test-iconable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('phase-gate element', function () {
+  beforeEach(function () {
+    const operationMenu = document.createElement('div')
+    operationMenu.id = 'operation-menu'
+    // eslint-disable-next-line github/unescaped-html-literal
+    operationMenu.innerHTML = `<div></div>`
+    document.body.append(operationMenu)
+  })
+
   describe('element creation', function () {
     testElementCreation(window.PhaseGateElement, 'phase-gate')
   })

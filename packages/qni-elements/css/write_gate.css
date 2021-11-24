@@ -1,4 +1,5 @@
 write-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;

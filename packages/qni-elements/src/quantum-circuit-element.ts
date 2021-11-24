@@ -5,6 +5,7 @@ import {CircuitStepElement} from './circuit-step-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
+import {Operation} from './operation'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -21,6 +22,12 @@ export class QuantumCircuitElement extends HTMLElement {
 
   get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
+  }
+
+  get operations(): Operation[] {
+    return this.dropzones
+      .map<Operation | null>(each => each.operation)
+      .filter((each: Operation | null) => each !== null)
   }
 
   connectedCallback(): void {

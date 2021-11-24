@@ -1,3 +1,4 @@
+import commonjs from "rollup-plugin-commonjs"
 import resolve from 'rollup-plugin-node-resolve'
 
 export default {
@@ -12,6 +13,11 @@ export default {
     include: 'test/**/*.js'
   },
   plugins: [
-    resolve()
+    resolve(),
+    commonjs({
+      namedExports: {
+        "fraction.js": ["Fraction"]
+      }
+    })
   ]
 }

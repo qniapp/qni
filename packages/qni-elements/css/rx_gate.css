@@ -1,4 +1,5 @@
 rx-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;

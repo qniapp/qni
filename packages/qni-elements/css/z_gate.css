@@ -1,4 +1,5 @@
 z-gate {
+  @apply activateable;
   @apply operation;
 
   @apply rounded;
