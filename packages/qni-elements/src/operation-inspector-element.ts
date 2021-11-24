@@ -7,12 +7,12 @@ import {isNumeric} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
-  @target phiInput: HTMLInputElement
-  @target angleSlider: AngleSliderElement
-  @target denominatorInput: HTMLInputElement
-  @target denominatorLabel: HTMLSpanElement
-  @target reduceFractionCheckbox: HTMLInputElement
-  @target ifInput: HTMLInputElement
+  @target phiInput!: HTMLInputElement
+  @target angleSlider!: AngleSliderElement
+  @target denominatorInput!: HTMLInputElement
+  @target denominatorLabel!: HTMLSpanElement
+  @target reduceFractionCheckbox!: HTMLInputElement
+  @target ifInput!: HTMLInputElement
 
   get angle(): string {
     const value = this.phiInput.value
@@ -71,7 +71,10 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private restoreOriginalPhi(): void {
-    this.phiInput.value = this.phiInput.getAttribute('data-original-value')
+    const value = this.phiInput.getAttribute('data-original-value')
+    if (value === null) throw new Error('[data-original-value] not found.')
+
+    this.phiInput.value = value
   }
 
   private changePhi(): void {
@@ -113,6 +116,7 @@ export class OperationInspectorElement extends HTMLElement {
 
   private restoreOriginalDenominator(): void {
     const value = this.denominatorInput.getAttribute('data-original-value')
+    if (value === null) throw new Error('[data-original-value] not found.')
 
     this.denominatorInput.value = value
     this.denominatorLabel.textContent = value

@@ -9,8 +9,8 @@ import {isPaletteDropzoneElement} from './util'
 
 @controller
 export class CircuitEditorElement extends HTMLElement {
-  @target circuit: QuantumCircuitElement
-  @target inspectorButton: InspectorButtonElement
+  @target circuit!: QuantumCircuitElement
+  @target inspectorButton!: InspectorButtonElement
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})

@@ -25,16 +25,17 @@ export class CircuitDropzoneElement extends HTMLElement {
     } else if (this.childElementCount === 1) {
       const child = this.children[0]
       if (isOperation(child)) return child
+    }
+
+    const children = Array.from(this.children)
+    const operations = children.filter(each => isOperation(each)) as Operation[]
+
+    if (operations.length === 0) {
+      return null
+    } else if (operations.length === 1) {
+      return operations[0]
     } else {
-      const children = Array.from(this.children)
-      const operations = children.filter(each => isOperation(each)) as Operation[]
-      if (operations.length === 0) {
-        return null
-      } else if (operations.length === 1) {
-        return operations[0]
-      } else {
-        throw new Error('circuit-dropzone cannot hold multiple operations.')
-      }
+      throw new Error('circuit-dropzone cannot hold multiple operations.')
     }
   }
 
@@ -127,6 +128,8 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private snapOperation(): void {
+    if (this.operation === null) throw new Error('circuit-dropzone: operation not found.')
+
     this.occupied = true
     this.operationName = this.operation.tagName.toLocaleLowerCase()
     this.dispatchEvent(new Event('circuit-dropzone-snap', {bubbles: true}))

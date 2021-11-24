@@ -28,9 +28,9 @@ export class PaletteDropzoneElement extends HTMLElement {
     )
   }
 
-  private get operation(): Operation | null {
+  private get operation(): Operation {
     if (this.childElementCount === 0) {
-      return null
+      throw new Error('palette-dropzone must have an operation.')
     } else if (this.childElementCount === 1) {
       return this.children[0] as Operation
     } else {
@@ -42,7 +42,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     e.stopPropagation()
   }
 
-  private newOperation(event: MouseEvent): void {
+  private newOperation(event: Event): void {
     const operation = event.target as Operation
     const newOperation = document.createElement(operation.tagName) as Operation
 

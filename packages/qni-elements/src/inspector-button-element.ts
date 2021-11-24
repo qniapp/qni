@@ -7,7 +7,7 @@ import {controller} from '@github/catalyst'
 
 @controller
 export class InspectorButtonElement extends HTMLElement {
-  public popup: TippyInstance
+  public popup!: TippyInstance
 
   get isInspectorShown(): boolean {
     return this.popup.state.isVisible
@@ -87,7 +87,7 @@ export class InspectorButtonElement extends HTMLElement {
     }
   }
 
-  private get popupContent(): DocumentFragment | null {
+  private get popupContent(): DocumentFragment {
     const template = document.querySelector('#operation-inspector') as HTMLTemplateElement
     if (template === null) throw new Error('template #operation-inspector not found.')
 

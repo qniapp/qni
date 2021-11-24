@@ -27,7 +27,7 @@ export class QuantumCircuitElement extends HTMLElement {
   get operations(): Operation[] {
     return this.dropzones
       .map<Operation | null>(each => each.operation)
-      .filter((each: Operation | null) => each !== null)
+      .filter((each: Operation | null) => each !== null) as Operation[]
   }
 
   connectedCallback(): void {
@@ -264,6 +264,7 @@ export class QuantumCircuitElement extends HTMLElement {
       this.prepend(newStep)
     } else {
       const step = this.steps[stepIndex]
+      if (step.parentElement === null) throw new Error("quantum-circuit's parent element not found.")
       step.parentElement.insertBefore(newStep, step.nextSibling)
     }
 

@@ -7,11 +7,11 @@ import {DraggableMixin} from './mixin/draggable'
 
 @controller
 export class BlochDisplayElement extends DraggableMixin(ActivateableMixin(HTMLElement)) {
-  @target body: HTMLElement
-  @target vectorLine: HTMLElement
-  @target vectorEnd: HTMLElement
-  @target vector: HTMLElement
-  @targets vectorEndCircles: HTMLElement[]
+  @target body!: HTMLElement
+  @target vectorLine!: HTMLElement
+  @target vectorEnd!: HTMLElement
+  @target vector!: HTMLElement
+  @targets vectorEndCircles!: HTMLElement[]
 
   @attr x = 0
   @attr y = 0
@@ -22,6 +22,7 @@ export class BlochDisplayElement extends DraggableMixin(ActivateableMixin(HTMLEl
   }
 
   private showInspector(): void {
+    if (this.parentElement === null) throw new Error("bloch-display's parent element not found.")
     if (this.parentElement.tagName === 'PALETTE-DROPZONE') return
     if (this.grabbed) return
 

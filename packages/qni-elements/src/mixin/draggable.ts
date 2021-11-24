@@ -45,7 +45,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr dragging = false
     @attr snapped = false
 
-    private snapTargetDropzones: {
+    private snapTargetDropzones!: {
       [x: number]: {
         [y: number]: {
           dropzone: CircuitDropzoneElement | null
@@ -54,7 +54,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         }
       }
     }
-    private lastSnappedDropzone: CircuitDropzoneElement | null
+    private lastSnappedDropzone!: CircuitDropzoneElement | null
 
     get draggable(): boolean {
       return this.hasAttribute('data-draggable')

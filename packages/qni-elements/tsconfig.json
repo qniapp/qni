@@ -2,13 +2,14 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2017",
+    "strict": true,
     "declaration": true,
-    "typeRoots": ["src/@types"],
     "outDir": "dist",
+    "removeComments": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "removeComments": true
+    "typeRoots": ["src/@types"],
+    "skipLibCheck": true
   },
-  "files": ["src/index.ts"],
-  "include": ["src/**/*.ts"]
+  "files": ["src/index.ts"]
 }

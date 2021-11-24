@@ -18,7 +18,10 @@ export class AngleSliderElement extends HTMLElement {
   private snapAngles: {[radian: number]: string} = {}
 
   get angle(): string {
-    return this.getAttribute('data-angle')
+    const value = this.getAttribute('data-angle')
+    if (value === null) throw new Error('[data-angle] not set.')
+
+    return value
   }
 
   set angle(value: string) {
@@ -27,7 +30,10 @@ export class AngleSliderElement extends HTMLElement {
   }
 
   get radian(): number {
-    return parseFloat(this.getAttribute('data-radian'))
+    const value = this.getAttribute('data-radian')
+    if (value === null) throw new Error('[data-radian] not set.')
+
+    return parseFloat(value)
   }
 
   set radian(value: number) {
@@ -131,6 +137,9 @@ export class AngleSliderElement extends HTMLElement {
         snapAngle = this.snapAngles[each]
       }
     }
+
+    if (snapRadian === null) throw new Error(`failed to find a snap radian for ${rad}.`)
+    if (snapAngle === null) throw new Error(`failed to find a snap angle for ${rad}.`)
 
     return [snapRadian, snapAngle]
   }

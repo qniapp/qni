@@ -13,7 +13,7 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
   @attr phi = ''
   @attr if = ''
 
-  private menu: TippyInstance
+  private menu!: TippyInstance
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
@@ -34,7 +34,7 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
       allowHTML: true,
       animation: false,
       arrow: false,
-      content: this.menuContent(),
+      content: this.menuContent,
       interactive: true,
       offset: [0, 16],
       placement: 'top',
@@ -46,7 +46,7 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
 
   destroyMenu(): void {
     const popupInstance = (this as TippyReferenceElement)._tippy
-    if (popupInstance === null) throw new Error('popup instance not found.')
+    if (popupInstance === null || popupInstance === undefined) throw new Error('popup instance not found.')
 
     popupInstance.destroy()
   }
@@ -59,7 +59,7 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
     this.menu.hide()
   }
 
-  private menuContent(): DocumentFragment | null {
+  private get menuContent(): DocumentFragment {
     const template = document.getElementById('operation-menu') as HTMLTemplateElement
     if (template === null) throw new Error('template #operation-menu not found.')
 
@@ -73,6 +73,8 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
 
   private initMenuItems(instance: TippyInstance) {
     const angleMenuItem = instance.popper.querySelector('[data-operation-menu-angle]')
+    if (angleMenuItem === null) throw new Error('[data-operation-menu-angle] not found.')
+
     const anglePopupuInstance = (angleMenuItem as TippyReferenceElement)._tippy
     if (anglePopupuInstance === undefined) {
       tippy(angleMenuItem, {
@@ -83,6 +85,8 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
     }
 
     const ifMenuItem = instance.popper.querySelector('[data-operation-menu-if]')
+    if (ifMenuItem === null) throw new Error('[data-operation-menu-if] not found.')
+
     const ifPopupuInstance = (ifMenuItem as TippyReferenceElement)._tippy
     if (ifPopupuInstance === undefined) {
       tippy(ifMenuItem, {
@@ -93,6 +97,8 @@ export class PhaseGateElement extends DraggableMixin(DisableableMixin(IconableMi
     }
 
     const deleteMenuItem = instance.popper.querySelector('[data-operation-menu-delete]')
+    if (deleteMenuItem === null) throw new Error('[data-operation-menu-delete] not found.')
+
     const deletePopupuInstance = (deleteMenuItem as TippyReferenceElement)._tippy
     if (deletePopupuInstance === undefined) {
       tippy(deleteMenuItem, {
