@@ -1,5 +1,8 @@
 phase-gate {
   @apply activateable;
+  @apply angleable;
+  @apply draggable;
+  @apply ifable;
   @apply operation;
 
   @apply rounded;
@@ -16,53 +19,5 @@ phase-gate {
 
   &::part(icon) {
     @apply text-white;
-  }
-
-  &[data-draggable] {
-    @apply draggable;
-  }
-
-  /* data-phi */
-
-  &[data-phi]::before {
-    @apply hidden;
-    @apply font-mono tracking-tighter;
-    @apply text-xs leading-3;
-    @apply absolute;
-  }
-
-  circuit-dropzone &[data-phi]:not([data-phi=""])::before {
-    @apply flex justify-center;
-
-    content: attr(data-phi) "";
-  }
-
-  circuit-dropzone &[data-phi][data-if]:not([data-phi=""]):not([data-if=""])::before {
-    @apply flex justify-center;
-    @apply whitespace-nowrap;
-
-    content: attr(data-phi) " if " attr(data-if);
-  }
-
-  /* top label */
-  circuit-dropzone:not([data-wire-top]) &[data-phi]::before {
-    @apply top-0 left-0 right-0;
-    @apply -mt-3.5;
-  }
-
-  /* top label over wire */
-  circuit-dropzone[data-wire-top][data-wire-bottom] &[data-phi]::before {
-    @apply top-0 left-0 right-0;
-    @apply -mt-3.5;
-
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-                 1px 0 0 #fff;
-  }
-
-  /* bottom label */
-  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) &[data-phi]::before {
-    @apply bottom-0 left-0 right-0;
-    @apply -mb-3.5;
   }
 }

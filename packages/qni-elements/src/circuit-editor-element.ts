@@ -1,10 +1,12 @@
-import {Operation, isOperation, isPhaseGateElement} from './operation'
+import {Operation, isOperation} from './operation'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {RxGateElement} from './rx-gate-element'
+import {isAngleable} from './mixin'
 import {isPaletteDropzoneElement} from './util'
 
 @controller
@@ -31,6 +33,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-enddragging', this.removeLastEmptyWires)
     this.addEventListener('operation-enddragging', this.removeDocumentCursorStyleGrabbing)
     this.addEventListener('operation-enddragging', this.endCircuitEdit)
+    this.addEventListener('operation-drop', this.initOperationMenu)
     this.addEventListener('operation-drop', this.setOperationActive)
     this.addEventListener('operation-snap-new', this.addShadowStep)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
@@ -44,25 +47,24 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private showOperationMenu(event: Event): void {
-    const operation = event.target as PhaseGateElement
+    const operation = event.target as PhaseGateElement | RxGateElement
 
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)
     } else {
-      operation.initMenu()
       operation.showMenu()
     }
   }
 
   private showOperationAngleInspector(event: Event): void {
-    const operation = event.target as Operation
+    const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} is not an operation.`)
 
     this.inspectorButton.showAngleInspector(operation)
   }
 
   private showOperationIfInspector(event: Event): void {
-    const operation = event.target as Operation
+    const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} is not an operation.`)
 
     const inspectorButton = document.querySelector('inspector-button') as InspectorButtonElement
@@ -77,6 +79,13 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuit.editing = false
   }
 
+  private initOperationMenu(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} is not an operation.`)
+
+    if (isAngleable(operation)) operation.initMenu()
+  }
+
   private setOperationActive(event: Event): void {
     for (const each of this.circuit.operations) {
       each.active = false
@@ -89,10 +98,8 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private makeOperationsDraggable(): void {
-    for (const step of this.circuit.steps) {
-      for (const dropzone of step.dropzones) {
-        if (dropzone.operation) dropzone.operation.draggable = true
-      }
+    for (const each of this.circuit.operations) {
+      each.draggable = true
     }
   }
 
@@ -148,8 +155,8 @@ export class CircuitEditorElement extends HTMLElement {
     const activeOperation = this.activeOperation
     if (activeOperation === null) throw new Error('[data-active] not found')
 
-    if (isPhaseGateElement(activeOperation)) {
-      activeOperation.phi = inspector.angle
+    if (isAngleable(activeOperation)) {
+      activeOperation.angle = inspector.angle
     }
   }
 
@@ -158,7 +165,7 @@ export class CircuitEditorElement extends HTMLElement {
     const activeOperation = this.activeOperation
     if (activeOperation === null) throw new Error('[data-active] not found')
 
-    if (isPhaseGateElement(activeOperation)) {
+    if (isAngleable(activeOperation)) {
       activeOperation.if = inspector.if
     }
   }

@@ -1,5 +1,6 @@
 swap-gate {
   @apply activateable;
+  @apply draggable;
   @apply operation;
 
   @apply rounded;
@@ -10,9 +11,5 @@ swap-gate {
 
   &[data-disabled]::part(icon) {
     @apply text-gray-500;
-  }
-
-  &[data-draggable] {
-    @apply draggable;
   }
 }

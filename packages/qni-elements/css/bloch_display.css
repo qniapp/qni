@@ -1,12 +1,9 @@
 bloch-display {
   @apply activateable;
+  @apply draggable;
   @apply operation;
 
   @apply rounded;
-
-  &[data-draggable] {
-    @apply draggable;
-  }
 
   /* 3D perspective */
 

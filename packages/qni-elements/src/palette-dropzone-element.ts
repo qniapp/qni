@@ -1,6 +1,7 @@
-import {Operation, isPhaseGateElement, isWriteGateElement} from './operation'
+import {Operation, isWriteGateElement} from './operation'
 import {html, render} from '@github/jtml'
 import {controller} from '@github/catalyst'
+import {isAngleable} from './mixin'
 
 @controller
 export class PaletteDropzoneElement extends HTMLElement {
@@ -48,8 +49,9 @@ export class PaletteDropzoneElement extends HTMLElement {
 
     newOperation.draggable = true
     newOperation.snapped = true
-    if (isPhaseGateElement(newOperation) && isPhaseGateElement(operation)) {
-      newOperation.phi = operation.phi
+
+    if (isAngleable(newOperation) && isAngleable(operation)) {
+      newOperation.angle = operation.angle
     }
     if (isWriteGateElement(newOperation) && isWriteGateElement(operation)) {
       newOperation.value = operation.value

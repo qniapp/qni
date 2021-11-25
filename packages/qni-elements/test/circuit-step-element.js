@@ -81,10 +81,10 @@ describe('circuit-step element', function () {
       container.innerHTML = `
 <circuit-step>
   <circuit-dropzone>
-    <phase-gate data-phi="π/2"></phase-gate>
+    <phase-gate data-angle="π/2"></phase-gate>
   </circuit-dropzone>
   <circuit-dropzone>
-    <phase-gate data-phi="π/2"></phase-gate>
+    <phase-gate data-angle="π/2"></phase-gate>
   </circuit-dropzone>
 </circuit-step>`
       document.body.append(container)
@@ -102,10 +102,10 @@ describe('circuit-step element', function () {
       container.innerHTML = `
 <circuit-step>
   <circuit-dropzone>
-    <phase-gate data-phi="π/2"></phase-gate>
+    <phase-gate data-angle="π/2"></phase-gate>
   </circuit-dropzone>
   <circuit-dropzone>
-    <phase-gate data-phi="π"></phase-gate>
+    <phase-gate data-angle="π"></phase-gate>
   </circuit-dropzone>
 </circuit-step>`
       document.body.append(container)

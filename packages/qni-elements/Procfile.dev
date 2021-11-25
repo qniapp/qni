@@ -1,5 +1,2 @@
 web: yarn web
-js: yarn watch:js
 css: yarn watch:css
-pretest: rollup -wc rollup.config.test.js
-test: yarn watch:test

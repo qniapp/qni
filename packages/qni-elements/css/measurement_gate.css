@@ -1,5 +1,6 @@
 measurement-gate {
   @apply activateable;
+  @apply draggable;
   @apply operation;
 
   @apply rounded;
@@ -34,9 +35,5 @@ measurement-gate {
   &[data-value="1"]::part(value)::after {
     @apply text-blue-500;
     content: "1";
-  }
-
-  &[data-draggable] {
-    @apply draggable;
   }
 }

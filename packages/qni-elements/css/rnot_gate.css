@@ -1,5 +1,6 @@
 rnot-gate {
   @apply activateable;
+  @apply draggable;
   @apply operation;
 
   @apply rounded;
@@ -16,9 +17,5 @@ rnot-gate {
 
   &::part(icon) {
     @apply text-white;
-  }
-
-  &[data-draggable] {
-    @apply draggable;
   }
 }

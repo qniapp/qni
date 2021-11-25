@@ -1,5 +1,8 @@
 rz-gate {
   @apply activateable;
+  @apply angleable;
+  @apply draggable;
+  @apply ifable;
   @apply operation;
 
   @apply rounded;
@@ -16,9 +19,5 @@ rz-gate {
 
   &::part(icon) {
     @apply text-white;
-  }
-
-  &[data-draggable] {
-    @apply draggable;
   }
 }

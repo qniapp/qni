@@ -1,5 +1,6 @@
 x-gate {
   @apply activateable;
+  @apply draggable;
   @apply operation;
 
   @apply rounded;
@@ -16,9 +17,5 @@ x-gate {
 
   &::part(icon) {
     @apply text-white;
-  }
-
-  &[data-draggable] {
-    @apply draggable;
   }
 }

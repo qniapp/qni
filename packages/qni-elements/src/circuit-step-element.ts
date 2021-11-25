@@ -145,13 +145,13 @@ export class CircuitStepElement extends HTMLElement {
     for (const phase of phaseDropzones) {
       const phaseGate = phase.operation as PhaseGateElement
       phaseGate.enable()
-      if (phaseGate.phi === '') continue
+      if (phaseGate.angle === '') continue
 
       phase.wireTop = phaseDropzones.some(
-        each => phaseGate.phi === (each.operation as PhaseGateElement).phi && this.bit(each) < this.bit(phase)
+        each => phaseGate.angle === (each.operation as PhaseGateElement).angle && this.bit(each) < this.bit(phase)
       )
       phase.wireBottom = phaseDropzones.some(
-        each => phaseGate.phi === (each.operation as PhaseGateElement).phi && this.bit(each) > this.bit(phase)
+        each => phaseGate.angle === (each.operation as PhaseGateElement).angle && this.bit(each) > this.bit(phase)
       )
     }
 

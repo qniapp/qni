@@ -1,8 +1,9 @@
 import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
-import {Operation, isPhaseGateElement} from './operation'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {Operation} from './operation'
+import {isAngleable} from './mixin'
 import {isNumeric} from './util'
 
 @controller
@@ -29,12 +30,12 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   set operation(operation: Operation) {
-    if (isPhaseGateElement(operation)) {
-      const denominator = angleDenominator(operation.phi)
+    if (isAngleable(operation)) {
+      const denominator = angleDenominator(operation.angle)
 
-      this.phiInput.value = operation.phi
+      this.phiInput.value = operation.angle
       this.backupCurrentPhi()
-      this.angleSlider.initWithAngle(operation.phi)
+      this.angleSlider.initWithAngle(operation.angle)
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
@@ -78,25 +79,25 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changePhi(): void {
-    const phi = this.phiInput.value
+    const angle = this.phiInput.value
 
-    if (isValidAngle(phi)) {
+    if (isValidAngle(angle)) {
       let newPhi: string
-      const denominator = angleDenominator(phi)
+      const denominator = angleDenominator(angle)
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
 
-      if (isAngleLessThan(phi, '-2π')) {
+      if (isAngleLessThan(angle, '-2π')) {
         const numerator = denominator * 2
         newPhi = `-${numerator}π/${denominator}`
         this.phiInput.value = newPhi
-      } else if (isAngleGreaterThan(phi, '2π')) {
+      } else if (isAngleGreaterThan(angle, '2π')) {
         const numerator = denominator * 2
         newPhi = `${numerator}π/${denominator}`
         this.phiInput.value = newPhi
       } else {
-        newPhi = phi
+        newPhi = angle
       }
       this.backupCurrentPhi()
       this.angleSlider.initWithAngle(newPhi)

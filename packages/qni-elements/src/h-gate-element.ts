@@ -1,8 +1,5 @@
+import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
-import {ActivateableMixin} from './mixin/activateable'
-import {DisableableMixin} from './mixin/disableable'
-import {DraggableMixin} from './mixin/draggable'
-import {IconableMixin} from './mixin/iconable'
 import {controller} from '@github/catalyst'
 import {iconHGate} from './icon'
 

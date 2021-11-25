@@ -51,7 +51,9 @@
     @apply border-opacity-100;
     @apply border-3;
   }
+}
 
+@layer components {
   .draggable {
     touch-action: none;
   }
@@ -68,11 +70,10 @@
     @apply border-opacity-100;
   }
 
-  palette-dropzone &:not([data-grabbed]):hover::after  {
+  palette-dropzone .draggable:not([data-grabbed]):hover::after  {
     @apply bg-yellow-500 bg-opacity-10;
   }
 
-  /* Show trash icon on top-right */
   circuit-dropzone .draggable:not([data-snapped])::part(icon)::before {
     @apply absolute -top-1/3 -right-1/3;
     @apply w-6 h-6;
@@ -99,5 +100,51 @@
   .draggable[data-grabbed]::after {
     @apply border-opacity-100;
     @apply border-3;
+  }
+}
+
+@layer components {
+  circuit-dropzone .ifable[data-angle][data-if]:not([data-angle=""]):not([data-if=""])::before {
+    @apply flex justify-center;
+    @apply whitespace-nowrap;
+
+    content: attr(data-angle) " if " attr(data-if);
+  }
+}
+
+@layer components {
+  .angleable[data-angle]::before {
+    @apply hidden;
+    @apply font-mono tracking-tighter;
+    @apply text-xs leading-3;
+    @apply absolute;
+  }
+
+  circuit-dropzone .angleable[data-angle]:not([data-angle=""])::before {
+    @apply flex justify-center;
+
+    content: attr(data-angle) "";
+  }
+
+  /* top label */
+  circuit-dropzone:not([data-wire-top]) .angleable[data-angle]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
+  /* top label over wire */
+  circuit-dropzone[data-wire-top][data-wire-bottom] .angleable[data-angle]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+                 1px 0 0 #fff;
+  }
+
+  /* bottom label */
+  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) .angleable[data-angle]::before {
+    @apply bottom-0 left-0 right-0;
+    @apply -mb-3.5;
   }
 }
