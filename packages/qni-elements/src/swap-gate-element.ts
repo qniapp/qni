@@ -1,10 +1,12 @@
-import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin} from './mixin/'
+import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
 import {controller} from '@github/catalyst'
 import {iconSwapGate} from './icon'
 
 @controller
-export class SwapGateElement extends DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))) {
+export class SwapGateElement extends MenuableMixin(
+  DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
+) {
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})

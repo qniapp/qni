@@ -1,10 +1,10 @@
-import {ActivateableMixin, DraggableMixin, IconableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {iconWriteGate} from './icon'
 
 @controller
-export class WriteGateElement extends DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement))) {
+export class WriteGateElement extends MenuableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement)))) {
   @attr value = ''
 
   connectedCallback(): void {

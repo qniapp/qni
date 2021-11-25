@@ -2,12 +2,9 @@ import {Operation, isOperation} from './operation'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isAngleable, isIfable, isMenuable} from './mixin'
-import {HGateElement} from './h-gate-element'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
-import {PhaseGateElement} from './phase-gate-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {RxGateElement} from './rx-gate-element'
 import {isPaletteDropzoneElement} from './util'
 
 @controller
@@ -48,7 +45,7 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private showOperationMenu(event: Event): void {
-    const operation = event.target as HGateElement | PhaseGateElement | RxGateElement
+    const operation = event.target as Operation
 
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)

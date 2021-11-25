@@ -1,11 +1,11 @@
-import {ActivateableMixin, DraggableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, MenuableMixin} from './mixin/'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
 
 @controller
-export class BlochDisplayElement extends DraggableMixin(ActivateableMixin(HTMLElement)) {
+export class BlochDisplayElement extends MenuableMixin(DraggableMixin(ActivateableMixin(HTMLElement))) {
   @target body!: HTMLElement
   @target vectorLine!: HTMLElement
   @target vectorEnd!: HTMLElement
