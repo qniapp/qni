@@ -122,7 +122,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private applyOperation(
-    constructor: typeof HGateElement | typeof XGateElement | typeof MeasurementGateElement,
+    constructor: typeof HGateElement | typeof XGateElement | typeof YGateElement | typeof MeasurementGateElement,
     ...targetQubits: number[]
   ): void {
     const step = new CircuitStepElement()
