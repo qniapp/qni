@@ -1,6 +1,7 @@
 y-gate {
   @apply activateable;
   @apply draggable;
+  @apply ifable;
   @apply operation;
 
   @apply rounded;
