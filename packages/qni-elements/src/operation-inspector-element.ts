@@ -2,8 +2,8 @@ import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {isAngleable, isIfable} from './mixin'
 import {Operation} from './operation'
-import {isAngleable} from './mixin'
 import {isNumeric} from './util'
 
 @controller
@@ -30,7 +30,19 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   set operation(operation: Operation) {
+    if (isIfable(operation)) {
+      this.ifInput.disabled = false
+      this.ifInput.value = operation.if
+    } else {
+      this.ifInput.disabled = true
+    }
+
     if (isAngleable(operation)) {
+      this.phiInput.disabled = false
+      this.angleSlider.disabled = false
+      this.denominatorInput.disabled = false
+      this.reduceFractionCheckbox.disabled = false
+
       const denominator = angleDenominator(operation.angle)
 
       this.phiInput.value = operation.angle
@@ -39,7 +51,16 @@ export class OperationInspectorElement extends HTMLElement {
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
-      this.ifInput.value = operation.if
+    } else {
+      this.phiInput.disabled = true
+      this.angleSlider.disabled = true
+      this.denominatorInput.disabled = true
+      this.reduceFractionCheckbox.disabled = true
+
+      this.phiInput.value = ''
+      this.angleSlider.radian = 0
+      this.denominatorInput.value = ''
+      this.reduceFractionCheckbox.checked = false
     }
   }
 

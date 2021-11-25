@@ -2,6 +2,8 @@ import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {Constructor} from './constructor'
+import {isAngleable} from './angleable'
+import {isIfable} from './ifable'
 
 export declare class Menuable {
   initMenu(): void
@@ -15,6 +17,9 @@ export declare class Menuable {
   showIfInspector(): void
   dispatchOperationDeleteEvent(): void
 }
+
+export const isMenuable = (arg: unknown): arg is Menuable =>
+  typeof arg === 'object' && arg !== null && typeof (arg as Menuable).initMenu === 'function'
 
 export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Menuable> & TBase {
   class MenuableMixinClass extends Base {
@@ -72,28 +77,34 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     initMenuItems(instance: TippyInstance): void {
-      const angleMenuItem = instance.popper.querySelector('[data-operation-menu-angle]')
-      if (angleMenuItem === null) throw new Error('[data-operation-menu-angle] not found.')
+      if (isIfable(instance.reference)) {
+        const ifButton = instance.popper.querySelector('button[data-operation-menu-if]') as HTMLButtonElement
+        if (ifButton === null) throw new Error('button[data-operation-menu-if] not found.')
+        ifButton.disabled = false
 
-      const anglePopupuInstance = (angleMenuItem as TippyReferenceElement)._tippy
-      if (anglePopupuInstance === undefined) {
-        tippy(angleMenuItem, {
-          animation: false,
-          content: 'Change Angle'
-        })
-        angleMenuItem.addEventListener('mousedown', this.showAngleInspector.bind(this))
+        const ifPopupuInstance = (ifButton as TippyReferenceElement)._tippy
+        if (ifPopupuInstance === undefined) {
+          tippy(ifButton, {
+            animation: false,
+            content: "Set `if' Conditional"
+          })
+          ifButton.addEventListener('mousedown', this.showIfInspector.bind(this))
+        }
       }
 
-      const ifMenuItem = instance.popper.querySelector('[data-operation-menu-if]')
-      if (ifMenuItem === null) throw new Error('[data-operation-menu-if] not found.')
+      if (isAngleable(instance.reference)) {
+        const angleButton = instance.popper.querySelector('button[data-operation-menu-angle]') as HTMLButtonElement
+        if (angleButton === null) throw new Error('button[data-operation-menu-angle] not found.')
+        angleButton.disabled = false
 
-      const ifPopupuInstance = (ifMenuItem as TippyReferenceElement)._tippy
-      if (ifPopupuInstance === undefined) {
-        tippy(ifMenuItem, {
-          animation: false,
-          content: "Set `if' Condition"
-        })
-        ifMenuItem.addEventListener('mousedown', this.showIfInspector.bind(this))
+        const anglePopupuInstance = (angleButton as TippyReferenceElement)._tippy
+        if (anglePopupuInstance === undefined) {
+          tippy(angleButton, {
+            animation: false,
+            content: 'Change Angle'
+          })
+          angleButton.addEventListener('mousedown', this.showAngleInspector.bind(this))
+        }
       }
 
       const deleteMenuItem = instance.popper.querySelector('[data-operation-menu-delete]')

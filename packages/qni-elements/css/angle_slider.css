@@ -1,4 +1,3 @@
-/* the slider bar */
 angle-slider {
   @apply relative;
   @apply w-full;
@@ -23,5 +22,9 @@ angle-slider {
 
   &:hover::before {
     @apply border-opacity-20;
+  }
+
+  &[data-disabled]::before {
+    @apply bg-gray-500;
   }
 }

@@ -1,12 +1,13 @@
 import {Operation, isOperation} from './operation'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {isAngleable, isIfable, isMenuable} from './mixin'
+import {HGateElement} from './h-gate-element'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RxGateElement} from './rx-gate-element'
-import {isAngleable} from './mixin'
 import {isPaletteDropzoneElement} from './util'
 
 @controller
@@ -47,7 +48,7 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private showOperationMenu(event: Event): void {
-    const operation = event.target as PhaseGateElement | RxGateElement
+    const operation = event.target as HGateElement | PhaseGateElement | RxGateElement
 
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)
@@ -81,9 +82,8 @@ export class CircuitEditorElement extends HTMLElement {
 
   private initOperationMenu(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} is not an operation.`)
 
-    if (isAngleable(operation)) operation.initMenu()
+    if (isMenuable(operation)) operation.initMenu()
   }
 
   private setOperationActive(event: Event): void {
@@ -165,7 +165,7 @@ export class CircuitEditorElement extends HTMLElement {
     const activeOperation = this.activeOperation
     if (activeOperation === null) throw new Error('[data-active] not found')
 
-    if (isAngleable(activeOperation)) {
+    if (isIfable(activeOperation)) {
       activeOperation.if = inspector.if
     }
   }

@@ -14,6 +14,7 @@ export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
 @controller
 export class AngleSliderElement extends HTMLElement {
   @attr denominator = 0
+  @attr disabled = false
 
   private snapAngles: {[radian: number]: string} = {}
 
