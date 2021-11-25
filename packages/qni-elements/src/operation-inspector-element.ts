@@ -1,19 +1,21 @@
 import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
+import {Angleable, Ifable, isAngleable, isIfable} from './mixin'
+import {Flaggable, isFlaggable} from './mixin/flaggable'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {isAngleable, isIfable} from './mixin'
 import {Operation} from './operation'
 import {isNumeric} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
+  @target ifInput!: HTMLInputElement
   @target phiInput!: HTMLInputElement
   @target angleSlider!: AngleSliderElement
   @target denominatorInput!: HTMLInputElement
   @target denominatorLabel!: HTMLSpanElement
   @target reduceFractionCheckbox!: HTMLInputElement
-  @target ifInput!: HTMLInputElement
+  @target flagInput!: HTMLInputElement
 
   get angle(): string {
     const value = this.phiInput.value
@@ -29,12 +31,17 @@ export class OperationInspectorElement extends HTMLElement {
     return this.ifInput.value
   }
 
-  set operation(operation: Operation) {
+  get flag(): string {
+    return this.flagInput.value
+  }
+
+  set operation(operation: Ifable | Angleable | Flaggable | Operation) {
+    this.clear()
+    this.disable()
+
     if (isIfable(operation)) {
       this.ifInput.disabled = false
       this.ifInput.value = operation.if
-    } else {
-      this.ifInput.disabled = true
     }
 
     if (isAngleable(operation)) {
@@ -51,17 +58,30 @@ export class OperationInspectorElement extends HTMLElement {
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
-    } else {
-      this.phiInput.disabled = true
-      this.angleSlider.disabled = true
-      this.denominatorInput.disabled = true
-      this.reduceFractionCheckbox.disabled = true
-
-      this.phiInput.value = ''
-      this.angleSlider.radian = 0
-      this.denominatorInput.value = ''
-      this.reduceFractionCheckbox.checked = false
     }
+
+    if (isFlaggable(operation)) {
+      this.flagInput.disabled = false
+      this.flagInput.value = operation.flag
+    }
+  }
+
+  private clear(): void {
+    this.ifInput.value = ''
+    this.phiInput.value = ''
+    this.angleSlider.radian = 0
+    this.denominatorInput.value = ''
+    this.reduceFractionCheckbox.checked = false
+    this.flagInput.value = ''
+  }
+
+  private disable(): void {
+    this.ifInput.disabled = true
+    this.phiInput.disabled = true
+    this.angleSlider.disabled = true
+    this.denominatorInput.disabled = true
+    this.reduceFractionCheckbox.disabled = true
+    this.flagInput.disabled = true
   }
 
   connectedCallback(): void {
@@ -70,10 +90,11 @@ export class OperationInspectorElement extends HTMLElement {
     this.update()
 
     this.addEventListener('angle-slider-update', this.updateAngle)
+    this.ifInput.addEventListener('change', this.changeIf.bind(this))
     this.phiInput.addEventListener('change', this.changePhi.bind(this))
     this.denominatorInput.addEventListener('change', this.changeDenominator.bind(this))
     this.reduceFractionCheckbox.addEventListener('change', this.changeReduceSetting.bind(this))
-    this.ifInput.addEventListener('change', this.changeIf.bind(this))
+    this.flagInput.addEventListener('change', this.changeFlag.bind(this))
   }
 
   update(): void {
@@ -97,6 +118,10 @@ export class OperationInspectorElement extends HTMLElement {
     if (value === null) throw new Error('[data-original-value] not found.')
 
     this.phiInput.value = value
+  }
+
+  private changeIf(): void {
+    this.dispatchEvent(new Event('operation-inspector-update-if', {bubbles: true}))
   }
 
   private changePhi(): void {
@@ -128,8 +153,8 @@ export class OperationInspectorElement extends HTMLElement {
     }
   }
 
-  private changeIf(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-if', {bubbles: true}))
+  private changeFlag(): void {
+    this.dispatchEvent(new Event('operation-inspector-update-flag', {bubbles: true}))
   }
 
   private backupCurrentDenominator(): void {

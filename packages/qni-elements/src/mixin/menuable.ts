@@ -3,6 +3,7 @@ import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {Constructor} from './constructor'
 import {isAngleable} from './angleable'
+import {isFlaggable} from './flaggable'
 import {isIfable} from './ifable'
 
 export declare class Menuable {
@@ -13,8 +14,9 @@ export declare class Menuable {
   dispatchShowmenuEvent(): void
   get menuContent(): DocumentFragment
   initMenuItems(instance: TippyInstance): void
-  showAngleInspector(): void
   showIfInspector(): void
+  showAngleInspector(): void
+  showFlagInspector(): void
   dispatchOperationDeleteEvent(): void
 }
 
@@ -55,9 +57,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     destroyMenu(): void {
       const popupInstance = (this as TippyReferenceElement)._tippy
-      if (popupInstance === null || popupInstance === undefined) throw new Error('popup instance not found.')
-
-      popupInstance.destroy()
+      popupInstance?.destroy()
     }
 
     dispatchShowmenuEvent(): void {
@@ -82,8 +82,8 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         if (ifButton === null) throw new Error('button[data-operation-menu-if] not found.')
         ifButton.disabled = false
 
-        const ifPopupuInstance = (ifButton as TippyReferenceElement)._tippy
-        if (ifPopupuInstance === undefined) {
+        const ifTooltip = (ifButton as TippyReferenceElement)._tippy
+        if (ifTooltip === undefined) {
           tippy(ifButton, {
             animation: false,
             content: "Set `if' Conditional"
@@ -97,13 +97,28 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         if (angleButton === null) throw new Error('button[data-operation-menu-angle] not found.')
         angleButton.disabled = false
 
-        const anglePopupuInstance = (angleButton as TippyReferenceElement)._tippy
-        if (anglePopupuInstance === undefined) {
+        const angleTooltip = (angleButton as TippyReferenceElement)._tippy
+        if (angleTooltip === undefined) {
           tippy(angleButton, {
             animation: false,
             content: 'Change Angle'
           })
           angleButton.addEventListener('mousedown', this.showAngleInspector.bind(this))
+        }
+      }
+
+      if (isFlaggable(instance.reference)) {
+        const flagButton = instance.popper.querySelector('button[data-operation-menu-flag]') as HTMLButtonElement
+        if (flagButton === null) throw new Error('button[data-operation-menu-flag] not found.')
+        flagButton.disabled = false
+
+        const flagTooltip = (flagButton as TippyReferenceElement)._tippy
+        if (flagTooltip === undefined) {
+          tippy(flagButton, {
+            animation: false,
+            content: 'Set Condifitonal Flag'
+          })
+          flagButton.addEventListener('mousedown', this.showFlagInspector.bind(this))
         }
       }
 
@@ -121,14 +136,19 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       deleteMenuItem.addEventListener('mousedown', this.dispatchOperationDeleteEvent.bind(this))
     }
 
+    showIfInspector(): void {
+      this.hideMenu()
+      this.dispatchEvent(new Event('operation-menu-if', {bubbles: true}))
+    }
+
     showAngleInspector(): void {
       this.hideMenu()
       this.dispatchEvent(new Event('operation-menu-angle', {bubbles: true}))
     }
 
-    showIfInspector(): void {
+    showFlagInspector(): void {
       this.hideMenu()
-      this.dispatchEvent(new Event('operation-menu-if', {bubbles: true}))
+      this.dispatchEvent(new Event('operation-menu-flag', {bubbles: true}))
     }
 
     dispatchOperationDeleteEvent(): void {

@@ -1,7 +1,9 @@
+import {Angleable, Ifable} from './mixin'
 import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance} from 'tippy.js'
+import {Flaggable} from './mixin/flaggable'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {controller} from '@github/catalyst'
 
@@ -31,8 +33,15 @@ export class InspectorButtonElement extends HTMLElement {
     this.inspector.operation = operation
   }
 
-  // FIXME: Operation → Angleable? Operation
-  showAngleInspector(operation: Operation): void {
+  showIfInspector(operation: Ifable): void {
+    this.showPopup()
+    this.inspector.operation = operation
+    window.setTimeout(() => {
+      this.inspector.ifInput.focus()
+    }, 0)
+  }
+
+  showAngleInspector(operation: Angleable): void {
     this.showPopup()
     this.inspector.operation = operation
     window.setTimeout(() => {
@@ -40,12 +49,11 @@ export class InspectorButtonElement extends HTMLElement {
     }, 0)
   }
 
-  // FIXME: Operation → IfableOperation
-  showIfInspector(operation: Operation): void {
+  showFlagInspector(operation: Flaggable): void {
     this.showPopup()
     this.inspector.operation = operation
     window.setTimeout(() => {
-      this.inspector.ifInput.focus()
+      this.inspector.flagInput.focus()
     }, 0)
   }
 

@@ -1,6 +1,7 @@
 measurement-gate {
   @apply activateable;
   @apply draggable;
+  @apply flaggable;
   @apply operation;
 
   @apply rounded;
