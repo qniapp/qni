@@ -250,6 +250,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     endDragging(): void {
       this.dragging = false
       this.grabbed = false
+
       if (this.snapped) {
         this.moveTo(0, 0)
         this.dispatchEvent(new Event('operation-drop', {bubbles: true}))

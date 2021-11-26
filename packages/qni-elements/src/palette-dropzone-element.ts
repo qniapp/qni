@@ -9,9 +9,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.operation.draggable = true
-    this.operation.snapped = true
-    this.addEventListener('operation-showmenu', this.stopEventPropagation)
+    this.initOperation(this.operation)
     this.addEventListener('operation-grab', this.newOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
   }
@@ -29,6 +27,11 @@ export class PaletteDropzoneElement extends HTMLElement {
     )
   }
 
+  private initOperation(operation: Operation): void {
+    operation.draggable = true
+    operation.snapped = true
+  }
+
   private get operation(): Operation {
     if (this.childElementCount === 0) {
       throw new Error('palette-dropzone must have an operation.')
@@ -39,23 +42,18 @@ export class PaletteDropzoneElement extends HTMLElement {
     }
   }
 
-  private stopEventPropagation(e: Event): void {
-    e.stopPropagation()
-  }
-
   private newOperation(event: Event): void {
     const operation = event.target as Operation
     const newOperation = document.createElement(operation.tagName) as Operation
 
-    newOperation.draggable = true
-    newOperation.snapped = true
-
+    this.initOperation(newOperation)
     if (isAngleable(newOperation) && isAngleable(operation)) {
       newOperation.angle = operation.angle
     }
     if (isWriteGateElement(newOperation) && isWriteGateElement(operation)) {
       newOperation.value = operation.value
     }
+
     this.prepend(newOperation)
   }
 

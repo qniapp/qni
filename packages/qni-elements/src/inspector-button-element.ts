@@ -57,7 +57,7 @@ export class InspectorButtonElement extends HTMLElement {
     }, 0)
   }
 
-  private get inspector(): OperationInspectorElement {
+  get inspector(): OperationInspectorElement {
     const el = this.popup.popper.querySelector('operation-inspector')
     if (el === null) throw new Error('operation-inspector element not found.')
 

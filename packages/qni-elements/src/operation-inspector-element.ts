@@ -85,7 +85,7 @@ export class OperationInspectorElement extends HTMLElement {
     this.flagInput.value = ''
   }
 
-  private disableAllPanes(): void {
+  disableAllPanes(): void {
     this.conditionalGatePaneDisabled = true
     this.anglePaneDisabled = true
     this.conditionalFlagPaneDisabled = true

@@ -6,7 +6,6 @@ import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {isFlaggable} from './mixin/flaggable'
-import {isPaletteDropzoneElement} from './util'
 
 @controller
 export class CircuitEditorElement extends HTMLElement {
@@ -18,10 +17,8 @@ export class CircuitEditorElement extends HTMLElement {
     this.update()
     this.makeOperationsDraggable()
 
+    this.addEventListener('operation-active', this.maybeUpdateOperationInspector)
     this.addEventListener('operation-showmenu', this.showOperationMenu)
-    this.addEventListener('operation-menu-if', this.showOperationIfInspector)
-    this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
-    this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
     this.addEventListener('operation-grab', this.startCircuitEdit)
     this.addEventListener('operation-grab', this.setOperationActive)
     this.addEventListener('operation-grab', this.setDocumentCursorStyleGrabbing)
@@ -33,10 +30,13 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-enddragging', this.removeLastEmptyWires)
     this.addEventListener('operation-enddragging', this.removeDocumentCursorStyleGrabbing)
     this.addEventListener('operation-enddragging', this.endCircuitEdit)
+    this.addEventListener('operation-enddragging', this.maybeDisableAllInspectorPanes)
     this.addEventListener('operation-drop', this.initOperationMenu)
-    this.addEventListener('operation-drop', this.setOperationActive)
     this.addEventListener('operation-snap-new', this.addShadowStep)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
+    this.addEventListener('operation-menu-if', this.showOperationIfInspector)
+    this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
+    this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
     this.addEventListener('operation-inspector-update-if', this.updateIf)
     this.addEventListener('operation-inspector-update-angle', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
@@ -47,14 +47,30 @@ export class CircuitEditorElement extends HTMLElement {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
-  private showOperationMenu(event: Event): void {
-    const operation = event.target as Operation
+  private maybeUpdateOperationInspector(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
 
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)
-    } else {
-      operation.showMenu()
     }
+  }
+
+  private maybeDisableAllInspectorPanes(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
+    if (operation.snapped) return
+    if (!this.inspectorButton.isInspectorShown) return
+
+    this.inspectorButton.inspector.disableAllPanes()
+  }
+
+  private showOperationMenu(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
+    if (this.inspectorButton.isInspectorShown) return
+
+    operation.showMenu()
   }
 
   private showOperationIfInspector(event: Event): void {
@@ -97,9 +113,8 @@ export class CircuitEditorElement extends HTMLElement {
     for (const each of this.circuit.operations) {
       each.active = false
     }
-
-    const operation = event.target as Operation
-    if (isPaletteDropzoneElement(operation.parentNode)) return
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
     operation.active = true
   }
@@ -190,12 +205,11 @@ export class CircuitEditorElement extends HTMLElement {
 
   private maybeDeactivateOperation(event: Event): void {
     const clickedEl = event.target as HTMLElement
-    const inspectorButton = document.querySelector('inspector-button') as InspectorButtonElement
 
     if (
       !isOperation(clickedEl) &&
-      !inspectorButton.popup.popper.contains(clickedEl) &&
-      !inspectorButton.popup.reference.contains(clickedEl) &&
+      !this.inspectorButton.popup.popper.contains(clickedEl) &&
+      !this.inspectorButton.popup.reference.contains(clickedEl) &&
       this.activeOperation !== null
     ) {
       this.activeOperation.active = false
