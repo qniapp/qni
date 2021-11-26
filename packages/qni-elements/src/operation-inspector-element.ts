@@ -1,24 +1,34 @@
 import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
 import {Angleable, Ifable, isAngleable, isIfable} from './mixin'
 import {Flaggable, isFlaggable} from './mixin/flaggable'
+import {Operation, isPhaseGateElement, isRxGateElement, isRyGateElement, isRzGateElement} from './operation'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
-import {controller, target} from '@github/catalyst'
+import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {Operation} from './operation'
 import {isNumeric} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
   @target ifInput!: HTMLInputElement
-  @target phiInput!: HTMLInputElement
+  @target angleInputLabel!: HTMLLabelElement
+  @target angleInput!: HTMLInputElement
   @target angleSlider!: AngleSliderElement
   @target denominatorInput!: HTMLInputElement
+  @target denominatorVariableLabel!: HTMLSpanElement
   @target denominatorLabel!: HTMLSpanElement
   @target reduceFractionCheckbox!: HTMLInputElement
   @target flagInput!: HTMLInputElement
 
+  @attr conditionalGatePaneDisabled = true
+  @attr anglePaneDisabled = true
+  @attr conditionalFlagPaneDisabled = true
+
+  get if(): string {
+    return this.ifInput.value
+  }
+
   get angle(): string {
-    const value = this.phiInput.value
+    const value = this.angleInput.value
 
     if (this.reduceFractionCheckbox.checked) {
       return reduceAngle(value)
@@ -27,32 +37,32 @@ export class OperationInspectorElement extends HTMLElement {
     }
   }
 
-  get if(): string {
-    return this.ifInput.value
-  }
-
   get flag(): string {
     return this.flagInput.value
   }
 
   set operation(operation: Ifable | Angleable | Flaggable | Operation) {
     this.clear()
-    this.disable()
+    this.disableAllPanes()
 
     if (isIfable(operation)) {
-      this.ifInput.disabled = false
+      this.conditionalGatePaneDisabled = false
       this.ifInput.value = operation.if
     }
 
     if (isAngleable(operation)) {
-      this.phiInput.disabled = false
-      this.angleSlider.disabled = false
-      this.denominatorInput.disabled = false
-      this.reduceFractionCheckbox.disabled = false
-
       const denominator = angleDenominator(operation.angle)
 
-      this.phiInput.value = operation.angle
+      if (isPhaseGateElement(operation)) {
+        this.angleInputLabel.textContent = '𝜑'
+        this.denominatorVariableLabel.textContent = '𝜑'
+      } else if (isRxGateElement(operation) || isRyGateElement(operation) || isRzGateElement(operation)) {
+        this.angleInputLabel.textContent = '𝛳'
+        this.denominatorVariableLabel.textContent = '𝛳'
+      }
+
+      this.anglePaneDisabled = false
+      this.angleInput.value = operation.angle
       this.backupCurrentPhi()
       this.angleSlider.initWithAngle(operation.angle)
       this.denominatorInput.value = denominator.toString()
@@ -61,27 +71,24 @@ export class OperationInspectorElement extends HTMLElement {
     }
 
     if (isFlaggable(operation)) {
-      this.flagInput.disabled = false
+      this.conditionalFlagPaneDisabled = false
       this.flagInput.value = operation.flag
     }
   }
 
   private clear(): void {
     this.ifInput.value = ''
-    this.phiInput.value = ''
+    this.angleInput.value = ''
     this.angleSlider.radian = 0
     this.denominatorInput.value = ''
     this.reduceFractionCheckbox.checked = false
     this.flagInput.value = ''
   }
 
-  private disable(): void {
-    this.ifInput.disabled = true
-    this.phiInput.disabled = true
-    this.angleSlider.disabled = true
-    this.denominatorInput.disabled = true
-    this.reduceFractionCheckbox.disabled = true
-    this.flagInput.disabled = true
+  private disableAllPanes(): void {
+    this.conditionalGatePaneDisabled = true
+    this.anglePaneDisabled = true
+    this.conditionalFlagPaneDisabled = true
   }
 
   connectedCallback(): void {
@@ -91,7 +98,7 @@ export class OperationInspectorElement extends HTMLElement {
 
     this.addEventListener('angle-slider-update', this.updateAngle)
     this.ifInput.addEventListener('change', this.changeIf.bind(this))
-    this.phiInput.addEventListener('change', this.changePhi.bind(this))
+    this.angleInput.addEventListener('change', this.changePhi.bind(this))
     this.denominatorInput.addEventListener('change', this.changeDenominator.bind(this))
     this.reduceFractionCheckbox.addEventListener('change', this.changeReduceSetting.bind(this))
     this.flagInput.addEventListener('change', this.changeFlag.bind(this))
@@ -105,19 +112,19 @@ export class OperationInspectorElement extends HTMLElement {
     const angleSlider = event.target
     if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} must be an angle-slider`)
 
-    this.phiInput.value = angleSlider.angle
+    this.angleInput.value = angleSlider.angle
     this.dispatchEvent(new Event('operation-inspector-update-angle', {bubbles: true}))
   }
 
   private backupCurrentPhi(): void {
-    this.phiInput.setAttribute('data-original-value', this.phiInput.value)
+    this.angleInput.setAttribute('data-original-value', this.angleInput.value)
   }
 
   private restoreOriginalPhi(): void {
-    const value = this.phiInput.getAttribute('data-original-value')
+    const value = this.angleInput.getAttribute('data-original-value')
     if (value === null) throw new Error('[data-original-value] not found.')
 
-    this.phiInput.value = value
+    this.angleInput.value = value
   }
 
   private changeIf(): void {
@@ -125,7 +132,7 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changePhi(): void {
-    const angle = this.phiInput.value
+    const angle = this.angleInput.value
 
     if (isValidAngle(angle)) {
       let newPhi: string
@@ -137,11 +144,11 @@ export class OperationInspectorElement extends HTMLElement {
       if (isAngleLessThan(angle, '-2π')) {
         const numerator = denominator * 2
         newPhi = `-${numerator}π/${denominator}`
-        this.phiInput.value = newPhi
+        this.angleInput.value = newPhi
       } else if (isAngleGreaterThan(angle, '2π')) {
         const numerator = denominator * 2
         newPhi = `${numerator}π/${denominator}`
-        this.phiInput.value = newPhi
+        this.angleInput.value = newPhi
       } else {
         newPhi = angle
       }
@@ -177,7 +184,7 @@ export class OperationInspectorElement extends HTMLElement {
       this.angleSlider.denominator = parseInt(denominator)
 
       const [radian, angle] = this.angleSlider.findSnapAngle(this.angleSlider.radian)
-      this.phiInput.value = angle
+      this.angleInput.value = angle
       this.angleSlider.radian = radian
       this.angleSlider.angle = angle
     } else {

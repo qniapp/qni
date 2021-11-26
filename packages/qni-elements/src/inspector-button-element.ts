@@ -45,7 +45,7 @@ export class InspectorButtonElement extends HTMLElement {
     this.showPopup()
     this.inspector.operation = operation
     window.setTimeout(() => {
-      this.inspector.phiInput.focus()
+      this.inspector.angleInput.focus()
     }, 0)
   }
 
@@ -96,7 +96,7 @@ export class InspectorButtonElement extends HTMLElement {
   }
 
   private get popupContent(): DocumentFragment {
-    const template = document.querySelector('#operation-inspector') as HTMLTemplateElement
+    const template = document.querySelector('#operation-inspector-template') as HTMLTemplateElement
     if (template === null) throw new Error('template #operation-inspector not found.')
 
     const node = template.content.cloneNode(true)

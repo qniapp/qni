@@ -111,62 +111,64 @@
       </div>
     </template>
 
-    <template id="operation-inspector">
-      <operation-inspector class="flex flex-col text-gray-900 p-2 w-60">
+    <template id="operation-inspector-template">
+      <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
         <div class="flex flex-col divide-y space-y-4 items-left">
-          <div class="flex flex-col items-left">
-            <div class="text-gray-900">
-              <div class="font-bold mb-4">
-                Conditional
-              </div>
-              <div class="grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4">
-                <label for="if" class="font-normal text-gray-700 select-none">If</label>
-                <input data-target="operation-inspector.ifInput"
-                       type="text" name="if" id="if" spellcheck="false"
-                       class="shadow-sm bg-gray-100 disabled:bg-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off" disabled>
-              </div>
+          <div id="conditional-gate-pane"
+               class="flex flex-col items-left">
+            <h1 class="font-bold text-gray-900">
+              If Conditional
+            </h1>
+
+            <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+              <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+              <input data-target="operation-inspector.ifInput"
+                     type="text" name="if" id="if-input" spellcheck="false"
+                     class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off">
             </div>
           </div>
 
-          <div class="flex flex-col items-left pt-4 mb-2">
-            <div class="font-bold mb-4">
+          <div id="angle-pane"
+               class="flex flex-col items-left pt-4 mb-2">
+            <h1 class="font-bold text-gray-900">
               Angle
-            </div>
-            <div class="grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2">
-              <label for="phi" class="font-normal text-gray-700 select-none">&#120659;</label>
-              <input data-target="operation-inspector.phiInput"
-                     type="text" name="phi" id="phi" spellcheck="false"
-                     class="shadow-sm bg-gray-100 disabled:bg-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
-                     autocomplete="off" disabled>
-              <angle-slider data-target="operation-inspector.angleSlider" class="inline-block ml-2" data-disabled></angle-slider>
+            </h1>
 
-              <label for="denominator" class="block text-sm font-normal text-gray-700">Denom</label>
+            <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+              <label for="angle-input" class="font-normal text-gray-700 select-none" data-target="operation-inspector.angleInputLabel">Angle</label>
+              <input data-target="operation-inspector.angleInput"
+                     type="text" name="angle" id="angle-input" spellcheck="false"
+                     class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+                     autocomplete="off">
+              <angle-slider data-target="operation-inspector.angleSlider" class="inline-block ml-2"></angle-slider>
+
+              <label for="denominator-input" class="block text-sm font-normal text-gray-700">Denom</label>
               <input data-target="operation-inspector.denominatorInput"
-                     type="number" min="2" name="denominator" id="denominator"
-                     class="shadow-sm bg-gray-100 disabled:bg-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off" disabled>
-              <div class="pl-2 text-sm whitespace-nowrap text-gray-500">&#120659; = nπ/<span data-target="operation-inspector.denominatorLabel" class="font-bold text-yellow-600">?</span></div>
+                     type="number" min="2" name="denominator" id="denominator-input"
+                     class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off">
+              <div class="pl-2 text-sm whitespace-nowrap text-gray-500"><span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span data-target="operation-inspector.denominatorLabel" class="font-bold text-yellow-600">?</span></div>
 
               <div class="min-w-0 flex-1 text-sm">
-                <label for="reduce-fraction" class="font-normal text-gray-700 select-none">Reduce</label>
+                <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none">Reduce</label>
               </div>
               <div class="flex items-center h-5">
                 <input data-target="operation-inspector.reduceFractionCheckbox"
-                       id="reduce-fraction" name="reduce-fraction" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded disabled:bg-gray-300" disabled>
+                       id="reduce-fraction-checkbox" name="reduce-fraction" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
               </div>
             </div>
           </div>
 
-          <div class="flex flex-col items-left pt-4 mb-2">
-            <div class="text-gray-900">
-              <div class="font-bold mb-4">
-                Conditional Flag
-              </div>
-              <div class="grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4">
-                <label for="flag" class="font-normal text-gray-700 select-none">Flag</label>
-                <input data-target="operation-inspector.flagInput"
-                       type="text" name="flag" id="flag" spellcheck="false"
-                       class="shadow-sm bg-gray-100 disabled:bg-gray-300 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off" disabled>
-              </div>
+          <div id="conditional-flag-pane"
+               class="flex flex-col items-left pt-4 mb-2">
+            <h1 class="font-bold text-gray-900">
+              Conditional Flag
+            </h1>
+
+            <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+              <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+              <input data-target="operation-inspector.flagInput"
+                     type="text" name="flag" id="flag-input" spellcheck="false"
+                     class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md" autocomplete="off">
             </div>
           </div>
         </div>
