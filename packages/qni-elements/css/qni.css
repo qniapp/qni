@@ -153,10 +153,16 @@
     @apply absolute;
   }
 
-  circuit-dropzone .angleable[data-angle]:not([data-angle=""])::before {
+  circuit-dropzone .angleable[data-reduced-angle=""]:not([data-angle=""])::before {
     @apply flex justify-center;
 
     content: attr(data-angle) "";
+  }
+
+  circuit-dropzone .angleable:not([data-reduced-angle=""])::before {
+    @apply flex justify-center;
+
+    content: attr(data-reduced-angle) "";
   }
 
   /* top label */

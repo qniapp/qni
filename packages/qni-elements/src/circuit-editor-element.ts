@@ -187,6 +187,7 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isAngleable(activeOperation)) throw new Error('[data-angle] not found.')
 
     activeOperation.angle = inspector.angle
+    activeOperation.reducedAngle = inspector.reduceAngleFraction ? inspector.reducedAngle : ''
   }
 
   private updateFlag(event: Event): void {

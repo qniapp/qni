@@ -16,7 +16,7 @@ export class OperationInspectorElement extends HTMLElement {
   @target denominatorInput!: HTMLInputElement
   @target denominatorVariableLabel!: HTMLSpanElement
   @target denominatorLabel!: HTMLSpanElement
-  @target reduceFractionCheckbox!: HTMLInputElement
+  @target reduceAngleFractionCheckbox!: HTMLInputElement
   @target flagInput!: HTMLInputElement
 
   @attr conditionalGatePaneDisabled = true
@@ -28,13 +28,15 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   get angle(): string {
-    const value = this.angleInput.value
+    return this.angleInput.value
+  }
 
-    if (this.reduceFractionCheckbox.checked) {
-      return reduceAngle(value)
-    } else {
-      return value
-    }
+  get reducedAngle(): string {
+    return reduceAngle(this.angleInput.value)
+  }
+
+  get reduceAngleFraction(): boolean {
+    return this.reduceAngleFractionCheckbox.checked
   }
 
   get flag(): string {
@@ -68,6 +70,7 @@ export class OperationInspectorElement extends HTMLElement {
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
+      this.reduceAngleFractionCheckbox.checked = operation.reducedAngle !== ''
     }
 
     if (isFlaggable(operation)) {
@@ -81,7 +84,7 @@ export class OperationInspectorElement extends HTMLElement {
     this.angleInput.value = ''
     this.angleSlider.radian = 0
     this.denominatorInput.value = ''
-    this.reduceFractionCheckbox.checked = false
+    this.reduceAngleFractionCheckbox.checked = false
     this.flagInput.value = ''
   }
 
@@ -100,7 +103,7 @@ export class OperationInspectorElement extends HTMLElement {
     this.ifInput.addEventListener('change', this.changeIf.bind(this))
     this.angleInput.addEventListener('change', this.changePhi.bind(this))
     this.denominatorInput.addEventListener('change', this.changeDenominator.bind(this))
-    this.reduceFractionCheckbox.addEventListener('change', this.changeReduceSetting.bind(this))
+    this.reduceAngleFractionCheckbox.addEventListener('change', this.changeReduceSetting.bind(this))
     this.flagInput.addEventListener('change', this.changeFlag.bind(this))
   }
 
