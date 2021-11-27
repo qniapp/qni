@@ -82,6 +82,7 @@ export class InspectorButtonElement extends HTMLElement {
 
   private showPopup(): void {
     this.popup.show()
+    this.inspector.disableAllPanes()
   }
 
   private maybeHidePopup(event: Event): void {
