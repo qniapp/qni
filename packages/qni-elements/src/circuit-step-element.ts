@@ -33,6 +33,7 @@ export class CircuitStepElement extends HTMLElement {
     this.update()
     this.updateConnections()
 
+    this.addEventListener('operation-delete', this.updateConnections)
     this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
     this.addEventListener('circuit-dropzone-snap', this.updateConnections)
     this.addEventListener('circuit-dropzone-snap', this.dispatchSnapEvent)
