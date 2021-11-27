@@ -6,6 +6,7 @@ import '@interactjs/modifiers'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
+import {Util} from '../util'
 import {attr} from '@github/catalyst'
 import interact from '@interactjs/interact'
 
@@ -167,7 +168,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
 
     updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
       const firstDropzone = newDropzones[0]
-      if (firstDropzone === null) throw new Error('circuit-dropzone not found.')
+      Util.notNull(firstDropzone)
       const baseX = firstDropzone.snapTarget.x
 
       for (const [x, yv] of Object.entries(this.snapTargetDropzones)) {
@@ -184,10 +185,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         const snapTarget = each.snapTarget
         const x = snapTarget.x
         const y = snapTarget.y
+        Util.notNull(this.snapTargetDropzones[x])
 
-        if (this.snapTargetDropzones[x] === undefined) {
-          throw new Error(`snapTargetDropzone[${x}] not found.`)
-        }
         this.snapTargetDropzones[x][y] = {
           dropzone: each,
           stepIndex: null,
@@ -217,7 +216,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             })
           )
           dropzone = this.parentElement as CircuitDropzoneElement
-          if (dropzone === null) throw new Error('circuit-dropzone not found')
+          Util.notNull(dropzone)
         }
 
         dropzone.append(this)

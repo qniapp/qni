@@ -3,6 +3,7 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
+import {Util} from './util'
 
 @controller
 export class BlochDisplayElement extends MenuableMixin(DraggableMixin(ActivateableMixin(HTMLElement))) {
@@ -21,7 +22,8 @@ export class BlochDisplayElement extends MenuableMixin(DraggableMixin(Activateab
   }
 
   private showInspector(): void {
-    if (this.parentElement === null) throw new Error("bloch-display's parent element not found.")
+    Util.notNull(this.parentElement)
+
     if (this.parentElement.tagName === 'PALETTE-DROPZONE') return
     if (this.grabbed) return
 
@@ -254,7 +256,7 @@ export class BlochDisplayElement extends MenuableMixin(DraggableMixin(Activateab
 
   private get d(): number {
     const dataD = this.getAttribute('data-d')
-    if (dataD === null) throw new Error('data-d must not be null.')
+    Util.notNull(dataD)
 
     return parseFloat(dataD)
   }
@@ -273,7 +275,7 @@ export class BlochDisplayElement extends MenuableMixin(DraggableMixin(Activateab
 
   private get phi(): number {
     const dataPhi = this.getAttribute('data-phi')
-    if (dataPhi === null) throw new Error('data-phi must not be null.')
+    Util.notNull(dataPhi)
 
     return parseFloat(dataPhi)
   }
@@ -288,7 +290,7 @@ export class BlochDisplayElement extends MenuableMixin(DraggableMixin(Activateab
 
   private get theta(): number {
     const dataTheta = this.getAttribute('data-theta')
-    if (dataTheta === null) throw new Error('data-theta must not be null.')
+    Util.notNull(dataTheta)
 
     return parseFloat(dataTheta)
   }

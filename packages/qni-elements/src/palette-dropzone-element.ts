@@ -1,5 +1,6 @@
 import {Operation, isWriteGateElement} from './operation'
 import {html, render} from '@github/jtml'
+import {Util} from './util'
 import {controller} from '@github/catalyst'
 import {isAngleable} from './mixin'
 
@@ -33,13 +34,10 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private get operation(): Operation {
-    if (this.childElementCount === 0) {
-      throw new Error('palette-dropzone must have an operation.')
-    } else if (this.childElementCount === 1) {
-      return this.children[0] as Operation
-    } else {
-      throw new Error('palette-dropzone cannot hold multiple operations.')
-    }
+    Util.need(this.childElementCount !== 0, 'palette-dropzone must have an operation.')
+    Util.need(this.childElementCount < 2, 'palette-dropzone cannot hold multiple operations.')
+
+    return this.children[0] as Operation
   }
 
   private newOperation(event: Event): void {

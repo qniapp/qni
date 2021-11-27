@@ -3,6 +3,7 @@ import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {Util} from './util'
 import {controller} from '@github/catalyst'
 import {isControllableOperation} from './operation'
 
@@ -170,7 +171,7 @@ export class CircuitStepElement extends HTMLElement {
 
   bit(dropzone: CircuitDropzoneElement): number {
     const bit = this.dropzones.indexOf(dropzone)
-    if (bit === -1) throw new Error('circuit-dropzone not found.')
+    Util.need(bit !== -1, 'circuit-dropzone not found.')
 
     return bit
   }
@@ -181,7 +182,7 @@ export class CircuitStepElement extends HTMLElement {
 
   dropzoneAt(dropzoneIndex: number): CircuitDropzoneElement {
     const dropzone = this.dropzones[dropzoneIndex]
-    if (dropzone === undefined) throw new Error(`circuit-dropzone[${dropzoneIndex}] not found.`)
+    Util.notNull(dropzone)
 
     return dropzone
   }

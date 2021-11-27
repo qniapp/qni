@@ -6,6 +6,7 @@ import '@interactjs/modifiers'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {Util} from './util'
 import {iconWires} from './icon'
 import interact from '@interactjs/interact'
 
@@ -128,7 +129,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private snapOperation(): void {
-    if (this.operation === null) throw new Error('circuit-dropzone: operation not found.')
+    Util.notNull(this.operation)
 
     this.occupied = true
     this.operationName = this.operation.tagName.toLocaleLowerCase()
@@ -147,7 +148,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   private deleteOperation(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} is not an operation`)
+    Util.need(isOperation(operation), `${operation} isn't an Operation.`)
 
     this.occupied = false
     this.operationName = ''

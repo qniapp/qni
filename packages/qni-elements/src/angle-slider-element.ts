@@ -6,6 +6,7 @@ import {angleDenominator, radian as radianOf} from './angle-parser'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
+import {Util} from './util'
 import interact from '@interactjs/interact'
 
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
@@ -20,7 +21,7 @@ export class AngleSliderElement extends HTMLElement {
 
   get angle(): string {
     const value = this.getAttribute('data-angle')
-    if (value === null) throw new Error('[data-angle] not set.')
+    Util.notNull(value)
 
     return value
   }
@@ -32,7 +33,7 @@ export class AngleSliderElement extends HTMLElement {
 
   get radian(): number {
     const value = this.getAttribute('data-radian')
-    if (value === null) throw new Error('[data-radian] not set.')
+    Util.notNull(value)
 
     return parseFloat(value)
   }
@@ -138,9 +139,8 @@ export class AngleSliderElement extends HTMLElement {
         snapAngle = this.snapAngles[each]
       }
     }
-
-    if (snapRadian === null) throw new Error(`failed to find a snap radian for ${rad}.`)
-    if (snapAngle === null) throw new Error(`failed to find a snap angle for ${rad}.`)
+    Util.notNull(snapRadian)
+    Util.notNull(snapAngle)
 
     return [snapRadian, snapAngle]
   }

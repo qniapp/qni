@@ -2,10 +2,10 @@ import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
 import {Angleable, Ifable, isAngleable, isIfable} from './mixin'
 import {Flaggable, isFlaggable} from './mixin/flaggable'
 import {Operation, isPhaseGateElement, isRxGateElement, isRyGateElement, isRzGateElement} from './operation'
+import {Util, isNumeric} from './util'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {isNumeric} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
@@ -110,7 +110,7 @@ export class OperationInspectorElement extends HTMLElement {
 
   private updateAngle(event: Event): void {
     const angleSlider = event.target
-    if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} must be an angle-slider`)
+    if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} isn't an angle-slider`)
 
     this.angleInput.value = angleSlider.angle
     this.dispatchEvent(new Event('operation-inspector-update-angle', {bubbles: true}))
@@ -122,7 +122,7 @@ export class OperationInspectorElement extends HTMLElement {
 
   private restoreOriginalPhi(): void {
     const value = this.angleInput.getAttribute('data-original-value')
-    if (value === null) throw new Error('[data-original-value] not found.')
+    Util.notNull(value)
 
     this.angleInput.value = value
   }
@@ -170,7 +170,7 @@ export class OperationInspectorElement extends HTMLElement {
 
   private restoreOriginalDenominator(): void {
     const value = this.denominatorInput.getAttribute('data-original-value')
-    if (value === null) throw new Error('[data-original-value] not found.')
+    Util.notNull(value)
 
     this.denominatorInput.value = value
     this.denominatorLabel.textContent = value

@@ -5,6 +5,7 @@ import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance} from 'tippy.js'
 import {Flaggable} from './mixin/flaggable'
 import {OperationInspectorElement} from './operation-inspector-element'
+import {Util} from './util'
 import {controller} from '@github/catalyst'
 
 @controller
@@ -59,7 +60,7 @@ export class InspectorButtonElement extends HTMLElement {
 
   get inspector(): OperationInspectorElement {
     const el = this.popup.popper.querySelector('operation-inspector')
-    if (el === null) throw new Error('operation-inspector element not found.')
+    Util.notNull(el)
 
     return el as OperationInspectorElement
   }
@@ -97,7 +98,7 @@ export class InspectorButtonElement extends HTMLElement {
 
   private get popupContent(): DocumentFragment {
     const template = document.querySelector('#operation-inspector-template') as HTMLTemplateElement
-    if (template === null) throw new Error('template #operation-inspector not found.')
+    Util.notNull(template)
 
     const node = template.content.cloneNode(true)
     const content = document.createDocumentFragment()

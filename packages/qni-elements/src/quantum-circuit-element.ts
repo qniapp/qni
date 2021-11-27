@@ -6,6 +6,7 @@ import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
+import {Util} from './util'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -91,10 +92,6 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
-    if (value !== '0' && value !== '1') {
-      throw new Error("value must be '0' or '1'")
-    }
-
     const step = new CircuitStepElement()
     this.append(step)
 
@@ -211,14 +208,14 @@ export class QuantumCircuitElement extends HTMLElement {
     const step = event.target as CircuitStepElement
     const dropzone = (event as CustomEvent).detail.dropzone as CircuitDropzoneElement
     const wireIndex = step.dropzones.indexOf(dropzone)
-    if (wireIndex === -1) throw new Error('circuit-dropzone not found.')
+    Util.need(wireIndex !== -1, 'circuit-dropzone not found.')
 
     this.updateWire(wireIndex)
   }
 
   stepAt(stepIndex: number): CircuitStepElement {
     const step = this.steps[stepIndex]
-    if (step === undefined) throw new Error(`circuit-step[${stepIndex}] not found.`)
+    Util.notNull(step)
 
     return step
   }
@@ -264,7 +261,8 @@ export class QuantumCircuitElement extends HTMLElement {
       this.prepend(newStep)
     } else {
       const step = this.steps[stepIndex]
-      if (step.parentElement === null) throw new Error("quantum-circuit's parent element not found.")
+      Util.notNull(step.parentElement)
+
       step.parentElement.insertBefore(newStep, step.nextSibling)
     }
 

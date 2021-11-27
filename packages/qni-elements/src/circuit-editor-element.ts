@@ -5,6 +5,7 @@ import {isAngleable, isIfable, isMenuable} from './mixin'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {Util} from './util'
 import {isFlaggable} from './mixin/flaggable'
 
 @controller
@@ -49,7 +50,7 @@ export class CircuitEditorElement extends HTMLElement {
 
   private maybeUpdateOperationInspector(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
+    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
 
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)
@@ -58,7 +59,7 @@ export class CircuitEditorElement extends HTMLElement {
 
   private maybeDisableAllInspectorPanes(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
+    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
     if (operation.snapped) return
     if (!this.inspectorButton.isInspectorShown) return
 
@@ -67,7 +68,7 @@ export class CircuitEditorElement extends HTMLElement {
 
   private showOperationMenu(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation`)
+    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
     if (this.inspectorButton.isInspectorShown) return
 
     operation.showMenu()
@@ -75,7 +76,7 @@ export class CircuitEditorElement extends HTMLElement {
 
   private showOperationIfInspector(event: Event): void {
     const operation = event.target
-    if (!isIfable(operation)) throw new Error(`${operation} is not an ifable operation.`)
+    if (!isIfable(operation)) throw new Error(`${operation} isn't an Ifable Operation.`)
 
     const inspectorButton = document.querySelector('inspector-button') as InspectorButtonElement
     inspectorButton.showIfInspector(operation)
@@ -83,14 +84,14 @@ export class CircuitEditorElement extends HTMLElement {
 
   private showOperationAngleInspector(event: Event): void {
     const operation = event.target
-    if (!isAngleable(operation)) throw new Error(`${operation} is not an angleable operation.`)
+    if (!isAngleable(operation)) throw new Error(`${operation} isn't an Angleable Operation.`)
 
     this.inspectorButton.showAngleInspector(operation)
   }
 
   private showOperationFlagInspector(event: Event): void {
     const operation = event.target
-    if (!isFlaggable(operation)) throw new Error(`${operation} must be a flaggable operation.`)
+    if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
 
     this.inspectorButton.showFlagInspector(operation)
   }
@@ -126,20 +127,20 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private appendWire(): void {
-    if (this.circuit === null) throw new Error('quantum-circuit element not found.')
+    Util.notNull(this.circuit)
 
     this.circuit.appendWire()
   }
 
   private prepareForOperationDrop(event: Event): void {
     const operation = event.target as Operation
-    if (this.circuit === null) throw new Error('quantum-circuit element not found.')
+    Util.notNull(this.circuit)
 
     operation.setSnapTargets(this.circuit.dropzones, this.circuit.wireCount)
   }
 
   private removeLastEmptyWires(): void {
-    if (this.circuit === null) throw new Error('quantum-circuit element not found.')
+    Util.notNull(this.circuit)
 
     this.circuit.removeLastEmptyWires()
   }
@@ -175,7 +176,6 @@ export class CircuitEditorElement extends HTMLElement {
   private updateIf(event: Event): void {
     const inspector = event.target as OperationInspectorElement
     const activeOperation = this.activeOperation
-    if (activeOperation === null) throw new Error('[data-active] not found.')
     if (!isIfable(activeOperation)) throw new Error('[data-if] not found.')
 
     activeOperation.if = inspector.if
@@ -184,7 +184,6 @@ export class CircuitEditorElement extends HTMLElement {
   private updateAngle(event: Event): void {
     const inspector = event.target as OperationInspectorElement
     const activeOperation = this.activeOperation
-    if (activeOperation === null) throw new Error('[data-active] not found.')
     if (!isAngleable(activeOperation)) throw new Error('[data-angle] not found.')
 
     activeOperation.angle = inspector.angle
@@ -193,7 +192,6 @@ export class CircuitEditorElement extends HTMLElement {
   private updateFlag(event: Event): void {
     const inspector = event.target as OperationInspectorElement
     const activeOperation = this.activeOperation
-    if (activeOperation === null) throw new Error('[data-active] not found.')
     if (!isFlaggable(activeOperation)) throw new Error('[data-flag] not found.')
 
     activeOperation.flag = inspector.flag

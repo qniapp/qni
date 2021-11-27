@@ -2,6 +2,7 @@ import {html, render} from '@github/jtml'
 // eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {Constructor} from './constructor'
+import {Util} from '../util'
 import {isAngleable} from './angleable'
 import {isFlaggable} from './flaggable'
 import {isIfable} from './ifable'
@@ -66,7 +67,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     get menuContent(): DocumentFragment {
       const template = document.getElementById('operation-menu') as HTMLTemplateElement
-      if (template === null) throw new Error('template #operation-menu not found.')
+      Util.notNull(template)
 
       const node = template.content.cloneNode(true)
       const content = document.createDocumentFragment()
@@ -79,7 +80,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     initMenuItems(instance: TippyInstance): void {
       if (isIfable(instance.reference)) {
         const ifButton = instance.popper.querySelector('button[data-operation-menu-if]') as HTMLButtonElement
-        if (ifButton === null) throw new Error('button[data-operation-menu-if] not found.')
+        Util.notNull(ifButton)
         ifButton.disabled = false
 
         const ifTooltip = (ifButton as TippyReferenceElement)._tippy
@@ -94,7 +95,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
       if (isAngleable(instance.reference)) {
         const angleButton = instance.popper.querySelector('button[data-operation-menu-angle]') as HTMLButtonElement
-        if (angleButton === null) throw new Error('button[data-operation-menu-angle] not found.')
+        Util.notNull(angleButton)
         angleButton.disabled = false
 
         const angleTooltip = (angleButton as TippyReferenceElement)._tippy
@@ -109,7 +110,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
       if (isFlaggable(instance.reference)) {
         const flagButton = instance.popper.querySelector('button[data-operation-menu-flag]') as HTMLButtonElement
-        if (flagButton === null) throw new Error('button[data-operation-menu-flag] not found.')
+        Util.notNull(flagButton)
         flagButton.disabled = false
 
         const flagTooltip = (flagButton as TippyReferenceElement)._tippy
@@ -123,7 +124,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       }
 
       const deleteMenuItem = instance.popper.querySelector('[data-operation-menu-delete]')
-      if (deleteMenuItem === null) throw new Error('[data-operation-menu-delete] not found.')
+      Util.notNull(deleteMenuItem)
 
       const deletePopupuInstance = (deleteMenuItem as TippyReferenceElement)._tippy
       if (deletePopupuInstance === undefined) {
