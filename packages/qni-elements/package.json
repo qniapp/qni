@@ -50,6 +50,7 @@
     "@interactjs/interact": "^1.10.11",
     "@interactjs/modifiers": "^1.10.11",
     "fraction.js": "^4.1.2",
+    "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {

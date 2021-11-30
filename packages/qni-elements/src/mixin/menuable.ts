@@ -11,14 +11,6 @@ export declare class Menuable {
   initMenu(): void
   showMenu(): void
   hideMenu(): void
-  destroyMenu(): void
-  dispatchShowmenuEvent(): void
-  get menuContent(): DocumentFragment
-  initMenuItems(instance: TippyInstance): void
-  showIfInspector(): void
-  showAngleInspector(): void
-  showFlagInspector(): void
-  dispatchOperationDeleteEvent(): void
 }
 
 export const isMenuable = (arg: unknown): arg is Menuable =>
@@ -56,16 +48,16 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       this.menu.hide()
     }
 
-    destroyMenu(): void {
+    private destroyMenu(): void {
       const popupInstance = (this as TippyReferenceElement)._tippy
       popupInstance?.destroy()
     }
 
-    dispatchShowmenuEvent(): void {
+    private dispatchShowmenuEvent(): void {
       this.dispatchEvent(new Event('operation-showmenu', {bubbles: true}))
     }
 
-    get menuContent(): DocumentFragment {
+    private get menuContent(): DocumentFragment {
       const template = document.getElementById('operation-menu') as HTMLTemplateElement
       Util.notNull(template)
 
@@ -77,7 +69,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       return content
     }
 
-    initMenuItems(instance: TippyInstance): void {
+    private initMenuItems(instance: TippyInstance): void {
       if (isIfable(instance.reference)) {
         const ifButton = instance.popper.querySelector('button[data-operation-menu-if]') as HTMLButtonElement
         Util.notNull(ifButton)
@@ -137,22 +129,22 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       deleteMenuItem.addEventListener('mousedown', this.dispatchOperationDeleteEvent.bind(this))
     }
 
-    showIfInspector(): void {
+    private showIfInspector(): void {
       this.hideMenu()
       this.dispatchEvent(new Event('operation-menu-if', {bubbles: true}))
     }
 
-    showAngleInspector(): void {
+    private showAngleInspector(): void {
       this.hideMenu()
       this.dispatchEvent(new Event('operation-menu-angle', {bubbles: true}))
     }
 
-    showFlagInspector(): void {
+    private showFlagInspector(): void {
       this.hideMenu()
       this.dispatchEvent(new Event('operation-menu-flag', {bubbles: true}))
     }
 
-    dispatchOperationDeleteEvent(): void {
+    private dispatchOperationDeleteEvent(): void {
       this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
     }
   }

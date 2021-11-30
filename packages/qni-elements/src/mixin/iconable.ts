@@ -6,16 +6,19 @@ import {icon} from '../icon'
 export declare class Iconable {
   get icon(): string
   set icon(value: string)
-  get iconStyle(): TemplateResult
   iconHtml(defaultIcon: icon): TemplateResult
-  iconSvg(defaultIcon: icon): Node | TemplateResult | null
 }
 
 export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Iconable> & TBase {
   class IconableMixinClass extends Base {
     @attr icon = ''
 
-    iconSvg(defaultIcon: icon): Node | TemplateResult | null {
+    iconHtml(defaultIcon: icon): TemplateResult {
+      return html`${this.iconStyle}
+        <div id="icon" part="icon">${this.iconSvg(defaultIcon)}</div>`
+    }
+
+    private iconSvg(defaultIcon: icon): Node | TemplateResult | null {
       if (this.icon === '') return html([defaultIcon.data] as unknown as TemplateStringsArray)
 
       const template = document.getElementById(this.icon) as HTMLTemplateElement
@@ -24,12 +27,7 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       return template.content.cloneNode(true)
     }
 
-    iconHtml(defaultIcon: icon): TemplateResult {
-      return html`${this.iconStyle}
-        <div id="icon" part="icon">${this.iconSvg(defaultIcon)}</div>`
-    }
-
-    get iconStyle(): TemplateResult {
+    private get iconStyle(): TemplateResult {
       return html`<style>
         #icon {
           position: relative;

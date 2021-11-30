@@ -24,7 +24,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-grab', this.setOperationActive)
     this.addEventListener('operation-grab', this.setDocumentCursorStyleGrabbing)
     this.addEventListener('operation-grab', this.appendWire)
-    this.addEventListener('operation-grab', this.prepareForOperationDrop)
+    this.addEventListener('operation-grab', this.setSnapTargets)
     this.addEventListener('operation-ungrab', this.removeLastEmptyWires)
     this.addEventListener('operation-ungrab', this.removeDocumentCursorStyleGrabbing)
     this.addEventListener('operation-ungrab', this.endCircuitEdit)
@@ -33,7 +33,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-enddragging', this.endCircuitEdit)
     this.addEventListener('operation-enddragging', this.maybeDisableAllInspectorPanes)
     this.addEventListener('operation-drop', this.initOperationMenu)
-    this.addEventListener('operation-snap-new', this.addShadowStep)
+    this.addEventListener('operation-in-snap-range', this.snapOperationIntoDropzone)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
     this.addEventListener('operation-menu-if', this.showOperationIfInspector)
     this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
@@ -111,19 +111,14 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private setOperationActive(event: Event): void {
-    for (const each of this.circuit.operations) {
-      each.active = false
-    }
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
-    operation.active = true
+    this.circuit.activateOperation(operation)
   }
 
   private makeOperationsDraggable(): void {
-    for (const each of this.circuit.operations) {
-      each.draggable = true
-    }
+    this.circuit.draggable = true
   }
 
   private appendWire(): void {
@@ -132,11 +127,12 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuit.appendWire()
   }
 
-  private prepareForOperationDrop(event: Event): void {
+  private setSnapTargets(event: Event): void {
     const operation = event.target as Operation
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
     Util.notNull(this.circuit)
 
-    operation.setSnapTargets(this.circuit.dropzones, this.circuit.wireCount)
+    this.circuit.setSnapTargets(operation)
   }
 
   private removeLastEmptyWires(): void {
@@ -153,20 +149,32 @@ export class CircuitEditorElement extends HTMLElement {
     document.documentElement.removeAttribute('data-grabbing')
   }
 
-  private addShadowStep(event: Event): void {
-    const customEvent = event as CustomEvent
+  private snapOperationIntoDropzone(event: Event) {
     const operation = event.target as Operation
-    const stepIndex = customEvent.detail.stepIndex as number
-    const wireIndex = customEvent.detail.wireIndex as number
+    const customEvent = event as CustomEvent
+    const snapTargetInfo = customEvent.detail.snapTargetInfo
+    const snapTarget = this.circuit.snapTargetAt(snapTargetInfo.x, snapTargetInfo.y)
 
-    const newStep = this.circuit.addShadowStepAfter(stepIndex)
-    const dropzone = newStep.dropzones[wireIndex]
+    operation.snapped = true
 
-    dropzone.append(operation)
-    dropzone.occupied = true
-    dropzone.operationName = operation.tagName.toLocaleLowerCase()
+    if (snapTarget.dropzone === null) {
+      const stepIndex = snapTarget.stepIndex
+      Util.notNull(stepIndex)
 
-    operation.updateSnapTargets(newStep.dropzones)
+      const newStep = this.circuit.addShadowStepAfter(stepIndex)
+      const newDropzone = newStep.dropzones[snapTarget.wireIndex]
+      Util.notNull(newDropzone)
+
+      // TODO: dropzone.occupied = true, dropzone.operationName = ... etc. を dropzone 側でやる
+      newDropzone.append(operation)
+      newDropzone.occupied = true
+      newDropzone.operationName = operation.tagName.toLocaleLowerCase()
+
+      // TODO: addShadowStepAfter の後で自動的に呼ぶ
+      this.circuit.updateSnapTargets(newStep.dropzones)
+    } else {
+      snapTarget.dropzone.append(operation)
+    }
   }
 
   private resizeCircuit(): void {

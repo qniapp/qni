@@ -11,26 +11,52 @@ import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 
+const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
+  arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
+
+type SnapTarget = {
+  dropzone: CircuitDropzoneElement | null
+  stepIndex: number | null
+  wireIndex: number
+}
+
 @controller
 export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr editing = false
 
-  get wireCount(): number {
+  private snapTargets!: {
+    [i: number]: {
+      [j: number]: SnapTarget
+    }
+  }
+
+  private get wireCount(): number {
     return this.stepAt(0).wireCount
   }
 
-  get dropzones(): CircuitDropzoneElement[] {
+  private get steps(): CircuitStepElement[] {
+    return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
+  }
+
+  private get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 
-  get operations(): Operation[] {
+  private get operations(): Operation[] {
     return this.dropzones
       .map<Operation | null>(each => each.operation)
       .filter((each: Operation | null) => each !== null) as Operation[]
   }
 
+  private get isVertical(): boolean {
+    return window.getComputedStyle(this).flexDirection === 'column'
+  }
+
+  /**
+   * @category Custom Elements
+   */
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
@@ -43,7 +69,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
   }
 
-  update(): void {
+  private update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
@@ -55,24 +81,36 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateAllWires()
   }
 
+  /**
+   * @category Circuit Operation
+   */
   h(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(HGateElement, ...targetQubits)
 
     return this
   }
 
+  /**
+   * @category Circuit Operation
+   */
   x(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(XGateElement, ...targetQubits)
 
     return this
   }
 
+  /**
+   * @category Circuit Operation
+   */
   y(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(YGateElement, ...targetQubits)
 
     return this
   }
 
+  /**
+   * @category Circuit Operation
+   */
   cnot(control: number, xTarget: number): QuantumCircuitElement {
     const step = new CircuitStepElement()
     this.append(step)
@@ -91,6 +129,9 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  /**
+   * @category Circuit Operation
+   */
   write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
     const step = new CircuitStepElement()
     this.append(step)
@@ -112,6 +153,9 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
+  /**
+   * @category Circuit Operation
+   */
   measure(...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(MeasurementGateElement, ...targetQubits)
 
@@ -149,9 +193,25 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
+  activateOperation(operation: Operation): void {
+    for (const each of this.operations) {
+      each.active = false
+    }
+
+    operation.active = true
+  }
+
   appendWire(): void {
     for (const each of this.steps) {
       each.appendDropzone()
+    }
+  }
+
+  removeLastEmptyWires(): void {
+    while (this.steps.every(each => each.wireCount > this.minWireCount && !each.lastDropzone.occupied)) {
+      for (const each of this.steps) {
+        each.lastDropzone.remove()
+      }
     }
   }
 
@@ -170,14 +230,6 @@ export class QuantumCircuitElement extends HTMLElement {
       const nDropzone = largestWireCount - each.wireCount
       for (let i = 0; i < nDropzone; i++) {
         each.appendDropzone()
-      }
-    }
-  }
-
-  removeLastEmptyWires(): void {
-    while (this.steps.every(each => each.wireCount > this.minWireCount && !each.lastDropzone.occupied)) {
-      for (const each of this.steps) {
-        each.lastDropzone.remove()
       }
     }
   }
@@ -218,10 +270,6 @@ export class QuantumCircuitElement extends HTMLElement {
     Util.notNull(step)
 
     return step
-  }
-
-  get steps(): CircuitStepElement[] {
-    return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
   private get emptySteps(): CircuitStepElement[] {
@@ -267,5 +315,123 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     return newStep
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  set draggable(value: boolean) {
+    for (const each of this.operations) {
+      each.draggable = value
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  snapTargetAt(x: number, y: number): SnapTarget {
+    if (this.isVertical) {
+      return this.snapTargets[y][x]
+    } else {
+      return this.snapTargets[x][y]
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  setSnapTargets(operation: Operation): void {
+    const freeDropzones = this.dropzones.filter(each => !each.occupied)
+    const snapTargets = []
+    this.snapTargets = {}
+
+    const myDropzone = operation.dropzone
+    if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
+
+    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      const snapTarget = each.snapTarget
+      const i = this.isVertical ? snapTarget.y : snapTarget.x
+      const j = this.isVertical ? snapTarget.x : snapTarget.y
+      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+
+      const prevI = i - operation.snapRange * 0.75
+      const nextI = i + operation.snapRange * 0.75
+
+      if (parseInt(dropzoneIndex) < this.wireCount) {
+        if (this.isVertical) {
+          snapTargets.push({x: j, y: prevI})
+        } else {
+          snapTargets.push({x: prevI, y: j})
+        }
+        if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
+        if (this.snapTargets[prevI][j] === undefined)
+          this.snapTargets[prevI][j] = {
+            dropzone: null,
+            stepIndex: -1,
+            wireIndex
+          }
+      }
+
+      if (this.isVertical) {
+        snapTargets.push({x: j, y: nextI})
+      } else {
+        snapTargets.push({x: nextI, y: j})
+      }
+      if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
+      if (this.snapTargets[nextI][j] === undefined)
+        this.snapTargets[nextI][j] = {
+          dropzone: null,
+          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
+          wireIndex
+        }
+
+      if (!each.occupied || each === myDropzone) {
+        snapTargets.push(snapTarget)
+      }
+
+      if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
+      if (this.snapTargets[i][j] === undefined)
+        this.snapTargets[i][j] = {
+          dropzone: each,
+          stepIndex: null,
+          wireIndex
+        }
+    }
+
+    operation.snapTargets = snapTargets
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
+    const firstDropzone = newDropzones[0]
+    Util.notNull(firstDropzone)
+
+    const baseI = this.isVertical ? firstDropzone.snapTarget.y : firstDropzone.snapTarget.x
+
+    for (const [i, jv] of Object.entries(this.snapTargets)) {
+      if (parseInt(i) <= baseI) continue
+
+      for (const j in jv) {
+        const snapTarget = jv[j]
+        if (snapTarget.stepIndex === null) continue
+        snapTarget.stepIndex += 1
+      }
+    }
+
+    for (const [wireIndex, each] of Object.entries(newDropzones)) {
+      const snapTarget = each.snapTarget
+      const i = this.isVertical ? snapTarget.y : snapTarget.x
+      const j = this.isVertical ? snapTarget.x : snapTarget.y
+
+      Util.notNull(this.snapTargets[i])
+
+      this.snapTargets[i][j] = {
+        dropzone: each,
+        stepIndex: null,
+        wireIndex: parseInt(wireIndex)
+      }
+    }
   }
 }

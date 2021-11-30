@@ -44,6 +44,8 @@ export class PaletteDropzoneElement extends HTMLElement {
     const operation = event.target as Operation
     const newOperation = document.createElement(operation.tagName) as Operation
 
+    this.prepend(newOperation)
+
     this.initOperation(newOperation)
     if (isAngleable(newOperation) && isAngleable(operation)) {
       newOperation.angle = operation.angle
@@ -51,8 +53,6 @@ export class PaletteDropzoneElement extends HTMLElement {
     if (isWriteGateElement(newOperation) && isWriteGateElement(operation)) {
       newOperation.value = operation.value
     }
-
-    this.prepend(newOperation)
   }
 
   private deleteOperation(event: Event): void {

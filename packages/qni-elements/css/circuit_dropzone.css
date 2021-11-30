@@ -1,7 +1,6 @@
 circuit-dropzone {
   /* Size */
   @apply h-12 w-8;
-  @apply sm:h-12 sm:w-8;
   @apply md:h-8 md:w-12;
 
   /* Wires */

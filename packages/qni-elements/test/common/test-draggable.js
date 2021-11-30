@@ -48,27 +48,11 @@ export function testDraggableOperation(operationName) {
     assert.isFalse(operation.hasAttribute('data-grabbed'))
   })
 
-  it(`${operationName}[data-draggable] dispatches operation-delete event when discarding`, function (done) {
-    const container = document.createElement('div')
-    container.innerHTML = `
-<palette-dropzone>
-  <${operationName}></${operationName}>
-</palette-dropzone>`
-    document.body.append(container)
-    const operation = document.querySelector(operationName)
-    mousedown(operation)
-
-    operation.addEventListener('operation-delete', () => done())
-    mouseup(operation)
-
-    assert.isFalse(operation.hasAttribute('data-grabbed'))
-  })
-
   function mousedown(operation) {
-    operation.dispatchEvent(new Event('mousedown'))
+    operation.dispatchEvent(new PointerEvent('pointerdown', {bubbles: true}))
   }
 
   function mouseup(operation) {
-    operation.dispatchEvent(new Event('mouseup'))
+    operation.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}))
   }
 }

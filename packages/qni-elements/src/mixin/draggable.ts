@@ -1,14 +1,15 @@
-import '@interactjs/actions/drag'
-import '@interactjs/actions/drop'
-import '@interactjs/auto-start'
-import '@interactjs/dev-tools'
-import '@interactjs/modifiers'
-import {CircuitDropzoneElement} from '../circuit-dropzone-element'
+import {CircuitDropzoneElement, PaletteDropzoneElement} from '..'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
 import {Util} from '../util'
 import {attr} from '@github/catalyst'
-import interact from '@interactjs/interact'
+import interact from 'interactjs'
+
+const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
+  arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
+
+const isPaletteDropzoneElement = (arg: unknown): arg is PaletteDropzoneElement =>
+  arg !== undefined && arg !== null && (arg as Element).tagName === 'PALETTE-DROPZONE'
 
 export declare class Draggable {
   get operationX(): number
@@ -23,18 +24,9 @@ export declare class Draggable {
   set dragging(value: boolean)
   get snapped(): boolean
   set snapped(value: boolean)
-  initDraggable(): void
-  deinitDraggable(): void
-  setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number): void
-  updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void
-  startDragging(): void
-  dragMove(event: InteractEvent): void
-  endDragging(): void
-  grab(event: MouseEvent): void
-  unGrab(): void
-  move(dx: number, dy: number): void
-  moveTo(x: number, y: number): void
-  moveByOffset(offsetX: number, offsetY: number): void
+  get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement
+  get snapRange(): number
+  set snapTargets(value: Array<{x: number; y: number}>)
   delete(): void
 }
 
@@ -46,16 +38,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr dragging = false
     @attr snapped = false
 
-    private snapTargetDropzones!: {
-      [x: number]: {
-        [y: number]: {
-          dropzone: CircuitDropzoneElement | null
-          stepIndex: number | null
-          wireIndex: number
-        }
-      }
-    }
-    private lastSnappedDropzone!: CircuitDropzoneElement | null
+    private snappedDropzone!: CircuitDropzoneElement | null
 
     get draggable(): boolean {
       return this.hasAttribute('data-draggable')
@@ -71,92 +54,53 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       }
     }
 
-    initDraggable(): void {
-      if (!this.draggable) return
+    get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement {
+      const el = this.parentElement
+      Util.notNull(el)
+      Util.need(
+        isPaletteDropzoneElement(el) || isCircuitDropzoneElement(el),
+        'Draggable.dropzone: not palette-dropzone or circuit-dropzone'
+      )
 
-      const parentElement = this.parentElement
-      if (parentElement?.tagName === 'CIRCUIT-DROPZONE') {
-        this.lastSnappedDropzone = parentElement as CircuitDropzoneElement
-      } else {
-        this.lastSnappedDropzone = null
-      }
+      return el as PaletteDropzoneElement | CircuitDropzoneElement
+    }
 
+    private initDraggable(): void {
       if (interact.isSet(this)) return
 
-      interact(this).styleCursor(false)
-      interact(this).draggable({
+      const dropzone = this.dropzone
+      if (isCircuitDropzoneElement(dropzone)) {
+        this.snappedDropzone = dropzone
+      } else {
+        this.snappedDropzone = null
+      }
+
+      const interactable = interact(this)
+      interactable.styleCursor(false)
+      interactable.on('down', this.grab.bind(this))
+      interactable.on('up', this.unGrab.bind(this))
+      interactable.draggable({
         onstart: this.startDragging.bind(this),
         onmove: this.dragMove.bind(this),
         onend: this.endDragging.bind(this)
       })
-
-      this.addEventListener('mousedown', this.grab)
-      this.addEventListener('mouseup', this.unGrab)
     }
 
-    deinitDraggable(): void {
+    private deinitDraggable(): void {
       interact(this).unset()
-
-      this.removeEventListener('mousedown', this.grab)
-      this.removeEventListener('mouseup', this.unGrab)
     }
 
-    setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number) {
-      const freeDropzones = dropzones.filter(each => !each.occupied)
-      const snapRange = this.offsetWidth
-      const snapTargets = []
-      this.snapTargetDropzones = {}
+    delete(): void {
+      this.deinitDraggable()
+      this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
+    }
 
-      const myDropzone = this.parentElement as CircuitDropzoneElement
-      if (myDropzone.tagName === 'CIRCUIT-DROPZONE') freeDropzones.push(myDropzone)
-
-      for (const [i, each] of Object.entries(dropzones)) {
-        const dropzoneIndex = parseInt(i)
-        const snapTarget = each.snapTarget
-        const x = snapTarget.x
-        const y = snapTarget.y
-        const leftX = x - snapRange * 0.75
-        const rightX = x + snapRange * 0.75
-        const wireIndex = dropzoneIndex % wireCount
-
-        if (dropzoneIndex < wireCount) {
-          snapTargets.push({x: leftX, y})
-          if (this.snapTargetDropzones[leftX] === undefined) this.snapTargetDropzones[leftX] = {}
-          if (this.snapTargetDropzones[leftX][y] === undefined)
-            this.snapTargetDropzones[leftX][y] = {
-              dropzone: null,
-              stepIndex: -1,
-              wireIndex
-            }
-        }
-
-        snapTargets.push({x: rightX, y})
-        if (this.snapTargetDropzones[rightX] === undefined) this.snapTargetDropzones[rightX] = {}
-        if (this.snapTargetDropzones[rightX][y] === undefined)
-          this.snapTargetDropzones[rightX][y] = {
-            dropzone: null,
-            stepIndex: Math.floor(dropzoneIndex / wireCount),
-            wireIndex
-          }
-
-        if (!each.occupied || each === myDropzone) {
-          snapTargets.push(snapTarget)
-        }
-
-        if (this.snapTargetDropzones[x] === undefined) this.snapTargetDropzones[x] = {}
-        if (this.snapTargetDropzones[x][y] === undefined)
-          this.snapTargetDropzones[x][y] = {
-            dropzone: each,
-            stepIndex: null,
-            wireIndex
-          }
-      }
-
+    set snapTargets(value: Array<{x: number; y: number}>) {
       interact(this).draggable({
         modifiers: [
           interact.modifiers.snap({
-            targets: snapTargets,
-            range: snapRange,
+            targets: value,
+            range: this.snapRange,
             relativePoints: [{x: 0.5, y: 0.5}]
           })
         ],
@@ -166,141 +110,86 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       })
     }
 
-    updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
-      const firstDropzone = newDropzones[0]
-      Util.notNull(firstDropzone)
-      const baseX = firstDropzone.snapTarget.x
-
-      for (const [x, yv] of Object.entries(this.snapTargetDropzones)) {
-        if (parseInt(x) <= baseX) continue
-
-        for (const y in yv) {
-          const snapTarget = yv[y]
-          if (snapTarget.stepIndex === null) continue
-          snapTarget.stepIndex += 1
-        }
-      }
-
-      for (const [i, each] of Object.entries(newDropzones)) {
-        const snapTarget = each.snapTarget
-        const x = snapTarget.x
-        const y = snapTarget.y
-        Util.notNull(this.snapTargetDropzones[x])
-
-        this.snapTargetDropzones[x][y] = {
-          dropzone: each,
-          stepIndex: null,
-          wireIndex: parseInt(i)
-        }
-      }
+    get snapRange(): number {
+      return this.offsetWidth
     }
 
     private moveEventListener(e: InteractEvent) {
       const snapModifier = e.modifiers![0]
+
       if (snapModifier.inRange) {
-        const snapTarget = snapModifier.target.source
-        let dropzone = this.snapTargetDropzones[snapTarget.x][snapTarget.y].dropzone
+        const snapTargetInfo = snapModifier.target.source
+        this.dispatchEvent(new CustomEvent('operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
 
-        this.snapped = true
-
-        if (dropzone === null) {
-          const snapTargetInfo = this.snapTargetDropzones[snapTarget.x][snapTarget.y]
-          this.dispatchEvent(
-            new CustomEvent('operation-snap-new', {
-              detail: {
-                element: this,
-                stepIndex: snapTargetInfo.stepIndex,
-                wireIndex: snapTargetInfo.wireIndex
-              },
-              bubbles: true
-            })
-          )
-          dropzone = this.parentElement as CircuitDropzoneElement
-          Util.notNull(dropzone)
-        }
-
-        dropzone.append(this)
         this.moveTo(0, 0)
 
-        if (this.lastSnappedDropzone) {
-          this.lastSnappedDropzone.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
+        if (this.snappedDropzone) {
+          this.snappedDropzone.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
         }
 
-        this.lastSnappedDropzone = dropzone
+        this.snappedDropzone = this.dropzone as CircuitDropzoneElement
         this.dispatchEvent(new Event('operation-snap', {bubbles: true}))
       } else {
         this.snapped = false
-        if (this.lastSnappedDropzone && this.lastSnappedDropzone.tagName === 'CIRCUIT-DROPZONE') {
+        if (this.snappedDropzone) {
           this.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
         }
       }
     }
 
-    // interactjs handlers
-
-    startDragging(): void {
-      this.dragging = true
-    }
-
-    dragMove(event: InteractEvent): void {
-      this.move(event.dx, event.dy)
-    }
-
-    endDragging(): void {
-      this.dragging = false
-      this.grabbed = false
-
-      if (this.snapped) {
-        this.moveTo(0, 0)
-        this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
-      }
-      this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
-    }
-
-    // Mouse event handlers
-
-    grab(event: MouseEvent): void {
+    private grab(event: MouseEvent): void {
       this.grabbed = true
       this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
 
-      if (this.parentElement?.tagName === 'PALETTE-DROPZONE') {
+      if (isPaletteDropzoneElement(this.dropzone)) {
         this.snapped = false
         this.moveByOffset(event.offsetX, event.offsetY)
       }
     }
 
-    unGrab(): void {
-      this.grabbed = false
-      this.dragging = false
-      this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
-      if (!this.snapped) this.delete()
+    private startDragging(): void {
+      this.dragging = true
     }
 
-    // move operation
+    private dragMove(event: InteractEvent): void {
+      this.move(event.dx, event.dy)
+    }
 
-    move(dx: number, dy: number): void {
+    private unGrab(): void {
+      this.grabbed = false
+      this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
+      if (!this.snapped && !this.dragging) this.delete()
+    }
+
+    private endDragging(): void {
+      this.grabbed = false
+      this.dragging = false
+
+      this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
+      if (this.snapped) {
+        this.moveTo(0, 0)
+        this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
+      } else {
+        this.delete()
+      }
+    }
+
+    private move(dx: number, dy: number): void {
       const x = this.operationX + dx
       const y = this.operationY + dy
       this.moveTo(x, y)
     }
 
-    moveTo(x: number, y: number): void {
+    private moveTo(x: number, y: number): void {
       this.operationX = x
       this.operationY = y
       this.style.transform = `translate(${x}px, ${y}px)`
     }
 
-    moveByOffset(offsetX: number, offsetY: number): void {
+    private moveByOffset(offsetX: number, offsetY: number): void {
       const dx = offsetX - this.clientWidth / 2
       const dy = offsetY - this.clientHeight / 2
       this.move(dx, dy)
-    }
-
-    // delete operation
-
-    delete(): void {
-      interact(this).unset()
-      this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
     }
   }
 
