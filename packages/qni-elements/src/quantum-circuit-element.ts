@@ -1,7 +1,7 @@
+import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
+import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {CircuitDropzoneElement} from './circuit-dropzone-element'
-import {CircuitStepElement} from './circuit-step-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
@@ -10,9 +10,6 @@ import {Util} from './util'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
-
-const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
-  arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
 
 type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -40,6 +37,91 @@ export class QuantumCircuitElement extends HTMLElement {
     return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
+  private get emptySteps(): CircuitStepElement[] {
+    return this.steps.filter(each => each.isEmpty)
+  }
+
+  private get largestStep(): CircuitStepElement | null {
+    let step = null
+    let max = 0
+
+    for (const each of this.steps) {
+      if (each.wireCount > 0 && each.wireCount > max) {
+        step = each
+        max = each.wireCount
+      }
+    }
+
+    return step
+  }
+
+  private appendMinimumSteps(): void {
+    const nsteps = this.minStepCount - this.steps.length
+
+    for (let i = 0; i < nsteps; i++) {
+      this.append(new CircuitStepElement())
+    }
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  stepAt(stepIndex: number): CircuitStepElement {
+    const step = this.steps[stepIndex]
+    Util.notNull(step)
+
+    return step
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  addShadowStepAfter(stepIndex: number): CircuitStepElement {
+    const newStep = new CircuitStepElement()
+    newStep.shadow = true
+    for (let i = 0; i < this.wireCount; i++) {
+      newStep.appendDropzone()
+    }
+
+    if (stepIndex === -1) {
+      this.prepend(newStep)
+    } else {
+      const step = this.steps[stepIndex]
+      Util.notNull(step.parentElement)
+
+      step.parentElement.insertBefore(newStep, step.nextSibling)
+    }
+
+    return newStep
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  activateStep(step: CircuitStepElement): void {
+    this.deactivateAllSteps()
+    step.active = true
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  deactivateAllSteps(): void {
+    for (const each of this.steps) {
+      each.active = false
+    }
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  setBreakpoint(step: CircuitStepElement): void {
+    for (const each of this.steps) {
+      each.breakpoint = false
+    }
+    step.breakpoint = true
+  }
+
   private get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
@@ -64,6 +146,7 @@ export class QuantumCircuitElement extends HTMLElement {
     this.appendMinimumWires()
     this.updateAllWires()
 
+    this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
     this.addEventListener('circuit-step-occupied', this.updateChangedWire)
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
@@ -71,6 +154,10 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  private dispatchMouseleaveEvent(): void {
+    this.dispatchEvent(new Event('quantum-circuit-mouseleave', {bubbles: true}))
   }
 
   resize(): void {
@@ -197,7 +284,6 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of this.operations) {
       each.active = false
     }
-
     operation.active = true
   }
 
@@ -257,64 +343,16 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private updateChangedWire(event: Event): void {
-    const step = event.target as CircuitStepElement
-    const dropzone = (event as CustomEvent).detail.dropzone as CircuitDropzoneElement
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    const dropzone = (event as CustomEvent).detail.dropzone
+    if (!isCircuitDropzoneElement(dropzone)) throw new Error(`${dropzone} isn't a circuit-dropzone.`)
+
     const wireIndex = step.dropzones.indexOf(dropzone)
     Util.need(wireIndex !== -1, 'circuit-dropzone not found.')
 
     this.updateWire(wireIndex)
-  }
-
-  stepAt(stepIndex: number): CircuitStepElement {
-    const step = this.steps[stepIndex]
-    Util.notNull(step)
-
-    return step
-  }
-
-  private get emptySteps(): CircuitStepElement[] {
-    return this.steps.filter(each => each.isEmpty)
-  }
-
-  private get largestStep(): CircuitStepElement | null {
-    let step = null
-    let max = 0
-
-    for (const each of this.steps) {
-      if (each.wireCount > 0 && each.wireCount > max) {
-        step = each
-        max = each.wireCount
-      }
-    }
-
-    return step
-  }
-
-  private appendMinimumSteps(): void {
-    const nsteps = this.minStepCount - this.steps.length
-
-    for (let i = 0; i < nsteps; i++) {
-      this.append(new CircuitStepElement())
-    }
-  }
-
-  addShadowStepAfter(stepIndex: number): CircuitStepElement {
-    const newStep = new CircuitStepElement()
-    newStep.shadow = true
-    for (let i = 0; i < this.wireCount; i++) {
-      newStep.appendDropzone()
-    }
-
-    if (stepIndex === -1) {
-      this.prepend(newStep)
-    } else {
-      const step = this.steps[stepIndex]
-      Util.notNull(step.parentElement)
-
-      step.parentElement.insertBefore(newStep, step.nextSibling)
-    }
-
-    return newStep
   }
 
   /**

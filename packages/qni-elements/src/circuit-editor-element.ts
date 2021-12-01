@@ -6,6 +6,7 @@ import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {Util} from './util'
+import {isCircuitStepElement} from './circuit-step-element'
 import {isFlaggable} from './mixin/flaggable'
 
 @controller
@@ -18,6 +19,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.update()
     this.makeOperationsDraggable()
 
+    this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
     this.addEventListener('operation-active', this.maybeUpdateOperationInspector)
     this.addEventListener('operation-showmenu', this.showOperationMenu)
     this.addEventListener('operation-grab', this.startCircuitEdit)
@@ -41,11 +43,21 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-update-if', this.updateIf)
     this.addEventListener('operation-inspector-update-angle', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
+    this.addEventListener('circuit-step-click', this.setBreakpoint)
+    this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
+    this.addEventListener('circuit-step-snap', this.activateStep)
+    this.addEventListener('circuit-step-unsnap', this.deactivateStep)
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
   }
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  private deactivateAllSteps(): void {
+    if (this.circuit.editing) return
+
+    this.circuit.deactivateAllSteps()
   }
 
   private maybeUpdateOperationInspector(event: Event): void {
@@ -128,7 +140,7 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private setSnapTargets(event: Event): void {
-    const operation = event.target as Operation
+    const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
     Util.notNull(this.circuit)
 
@@ -150,7 +162,9 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private snapOperationIntoDropzone(event: Event) {
-    const operation = event.target as Operation
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
     const customEvent = event as CustomEvent
     const snapTargetInfo = customEvent.detail.snapTargetInfo
     const snapTarget = this.circuit.snapTargetAt(snapTargetInfo.x, snapTargetInfo.y)
@@ -221,5 +235,36 @@ export class CircuitEditorElement extends HTMLElement {
     ) {
       this.activeOperation.active = false
     }
+  }
+
+  private setBreakpoint(event: Event): void {
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    this.circuit.setBreakpoint(step)
+  }
+
+  // TODO: activateStep と処理を共通化
+  private activateStepUnlessEditing(event: Event): void {
+    if (this.circuit.editing) return
+
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    this.circuit.activateStep(step)
+  }
+
+  private activateStep(event: Event): void {
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    this.circuit.activateStep(step)
+  }
+
+  private deactivateStep(event: Event): void {
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    step.active = false
   }
 }

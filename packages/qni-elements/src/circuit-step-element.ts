@@ -1,14 +1,20 @@
+import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {SwapGateElement} from './swap-gate-element'
 import {Util} from './util'
-import {controller} from '@github/catalyst'
 import {isControllableOperation} from './operation'
+
+export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
+  arg !== undefined && arg !== null && arg instanceof CircuitStepElement
 
 @controller
 export class CircuitStepElement extends HTMLElement {
+  @attr active = false
+  @attr breakpoint = false
+
   get wireCount(): number {
     return this.dropzones.length
   }
@@ -33,6 +39,8 @@ export class CircuitStepElement extends HTMLElement {
     this.update()
     this.updateConnections()
 
+    this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
+    this.addEventListener('click', this.dispatchClickEvent)
     this.addEventListener('operation-delete', this.updateConnections)
     this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
     this.addEventListener('circuit-dropzone-snap', this.updateConnections)
@@ -221,6 +229,14 @@ export class CircuitStepElement extends HTMLElement {
 
   private get controllableDropzones(): CircuitDropzoneElement[] {
     return this.dropzones.filter(each => each.occupied).filter(each => isControllableOperation(each.operation))
+  }
+
+  private dispatchMouseenterEvent(): void {
+    this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
+  }
+
+  private dispatchClickEvent(): void {
+    this.dispatchEvent(new Event('circuit-step-click', {bubbles: true}))
   }
 
   private dispatchOccupiedEvent(event: Event): void {

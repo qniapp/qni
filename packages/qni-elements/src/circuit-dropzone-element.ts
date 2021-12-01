@@ -10,6 +10,9 @@ import {Util} from './util'
 import {iconWires} from './icon'
 import interact from '@interactjs/interact'
 
+export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
+  arg !== undefined && arg !== null && arg instanceof CircuitDropzoneElement
+
 @controller
 export class CircuitDropzoneElement extends HTMLElement {
   @attr occupied = false
