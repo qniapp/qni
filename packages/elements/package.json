@@ -25,7 +25,7 @@
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "watch:css": "yarn css --watch",
     "icon": "svg-to-ts --config icon/.svg-to-tsrc",
-    "doc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [
     "quantum",

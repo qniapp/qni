@@ -16,7 +16,8 @@
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
-    "watch:css": "yarn css --watch"
+    "watch:css": "yarn css --watch",
+    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,8 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@github/catalyst": "^1.1.4",
-    "@qni/elements": "^0.0.1"
+    "@qni/elements": "^0.0.1",
+    "typedoc": "^0.22.10"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
