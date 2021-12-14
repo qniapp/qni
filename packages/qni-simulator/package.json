@@ -1,0 +1,68 @@
+{
+  "name": "@qni/simulator",
+  "version": "0.0.1",
+  "description": "Qni quantum simulator.",
+  "main": "index.js",
+  "type": "module",
+  "module": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "lint": "eslint .",
+    "prebuild": "npm run clean && npm run lint && npm run css && npm run compile",
+    "build": "rollup -c",
+    "pretest": "npm run build && rollup -c rollup.config.test.js",
+    "test": "karma start test/karma.config.cjs",
+    "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
+    "watch:css": "yarn css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni-simulator.git"
+  },
+  "keywords": [
+    "quantum",
+    "circuit",
+    "simulator",
+    "quantum-computing"
+  ],
+  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yasuhito/qni-simulator/issues"
+  },
+  "homepage": "https://github.com/yasuhito/qni-simulator#readme",
+  "prettier": "@github/prettier-config",
+  "dependencies": {
+    "@github/catalyst": "^1.1.4",
+    "@qni/elements": "link:../qni-elements"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "autoprefixer": "^10.4.0",
+    "chai": "^4.3.4",
+    "eslint": "^8.3.0",
+    "eslint-plugin-github": "^4.3.5",
+    "http-server": "^14.0.0",
+    "karma": "^6.3.9",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^9.1.3",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-preset-env": "^7.0.1",
+    "rollup": "^2.60.2",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.5.2"
+  },
+  "eslintIgnore": [
+    "build/",
+    "dist/",
+    "rollup.config.js",
+    "rollup.config.test.js"
+  ]
+}

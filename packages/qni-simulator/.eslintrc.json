@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "plugin:github/recommended",
+    "plugin:github/browser",
+    "plugin:github/typescript"
+  ],
+  "globals": {
+    "QuantumCircuitElement": "readonly"
+  },
+  "overrides": [
+    {
+      "files": "test/**/*.js",
+      "rules": {
+        "github/unescaped-html-literal": "off"
+      }
+    },
+    {
+      "files": "test/**/*.js",
+      "excludedFiles": "test/karma.config.js",
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "assert": true
+      }
+    }
+  ]
+}
