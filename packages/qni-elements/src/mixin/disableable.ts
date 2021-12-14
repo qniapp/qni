@@ -9,6 +9,9 @@ export declare class Disableable {
   disable(): void
 }
 
+export const isDisableable = (arg: unknown): arg is Disableable =>
+  typeof arg === 'object' && arg !== null && typeof (arg as Disableable).disabled === 'boolean'
+
 export function DisableableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Disableable> & TBase {

@@ -3,7 +3,6 @@ export class Util {
     if (expression !== true) {
       const argDesc = args === undefined ? '(not provided)' : `[${Array.prototype.slice.call(args).join(', ')}]`
       const msgDesc = message === undefined ? '(not provided)' : message
-      // eslint-disable-next-line i18n-text/no-en
       const msg = `Precondition failed\n\nMessage: ${msgDesc}\n\nArgs: ${argDesc}`
       throw new Error(msg)
     }

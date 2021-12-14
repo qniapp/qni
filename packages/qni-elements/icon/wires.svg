@@ -20,8 +20,8 @@
     vector-effect="non-scaling-stroke"
   ></line>
   <line
-    id="wire-top"
-    part="wire-top"
+    id="connect-top"
+    part="connect-top"
     x1="24"
     y1="0"
     x2="24"
@@ -31,8 +31,8 @@
     vector-effect="non-scaling-stroke"
   ></line>
   <line
-    id="wire-bottom"
-    part="wire-bottom"
+    id="connect-bottom"
+    part="connect-bottom"
     x1="24"
     y1="48"
     x2="24"

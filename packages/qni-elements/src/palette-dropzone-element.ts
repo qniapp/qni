@@ -1,6 +1,5 @@
-import {Operation, isWriteGateElement} from './operation'
+import {Operation, isOperation, isWriteGateElement} from './operation'
 import {html, render} from '@github/jtml'
-import {Util} from './util'
 import {controller} from '@github/catalyst'
 import {isAngleable} from './mixin'
 
@@ -34,19 +33,27 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private get operation(): Operation {
-    Util.need(this.childElementCount !== 0, 'palette-dropzone must have an operation.')
-    Util.need(this.childElementCount < 2, 'palette-dropzone cannot hold multiple operations.')
+    const children = Array.from(this.children)
+    const operations = children.filter((each): each is Operation => isOperation(each))
 
-    return this.children[0] as Operation
+    if (operations.length === 0) {
+      throw new Error('palette-dropzone must have an operation.')
+    } else if (operations.length === 1) {
+      return operations[0]
+    } else {
+      throw new Error('palette-dropzone cannot hold multiple operations.')
+    }
   }
 
   private newOperation(event: Event): void {
-    const operation = event.target as Operation
-    const newOperation = document.createElement(operation.tagName) as Operation
+    const operation = event.target
+    if (!isOperation(operation)) throw new TypeError(`${operation} isn't an operation.`)
+    const newOperation = document.createElement(operation.tagName)
+    if (!isOperation(newOperation)) throw new TypeError(`${newOperation} isn't an operation.`)
 
     this.prepend(newOperation)
-
     this.initOperation(newOperation)
+
     if (isAngleable(newOperation) && isAngleable(operation)) {
       newOperation.angle = operation.angle
     }
@@ -56,6 +63,9 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private deleteOperation(event: Event): void {
-    this.removeChild(event.target as Operation)
+    const operation = event.target
+    if (!isOperation(operation)) throw new TypeError(`${operation} isn't an operation.`)
+
+    this.removeChild(operation)
   }
 }

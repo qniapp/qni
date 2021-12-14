@@ -19,20 +19,17 @@ export class CircuitDropzoneElement extends HTMLElement {
   @attr operationName = ''
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
-  @attr wireTop = false
-  @attr wireBottom = false
+  @attr connectTop = false
+  @attr connectBottom = false
   @attr shadow = false
 
-  get operation(): Operation | null {
-    if (this.childElementCount === 0) {
-      return null
-    } else if (this.childElementCount === 1) {
-      const child = this.children[0]
-      if (isOperation(child)) return child
-    }
+  get noConnections(): boolean {
+    return !this.connectTop && !this.connectBottom
+  }
 
+  get operation(): Operation | null {
     const children = Array.from(this.children)
-    const operations = children.filter(each => isOperation(each)) as Operation[]
+    const operations = children.filter((each): each is Operation => isOperation(each))
 
     if (operations.length === 0) {
       return null
@@ -76,26 +73,16 @@ export class CircuitDropzoneElement extends HTMLElement {
             width: 100%;
           }
 
-          #wires {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-          }
-
-          #wire-top,
-          #wire-bottom {
+          #connect-top,
+          #connect-bottom {
             display: none;
           }
 
-          :host([data-wire-top]) #wire-top {
+          :host([data-connect-top]) #connect-top {
             display: block;
           }
 
-          :host([data-wire-bottom]) #wire-bottom {
+          :host([data-connect-bottom]) #connect-bottom {
             display: block;
           }
 
@@ -108,6 +95,11 @@ export class CircuitDropzoneElement extends HTMLElement {
         <div id="body"><slot></slot>${this.wireSvg}</div>`,
       this.shadowRoot!
     )
+  }
+
+  put(operation: Operation): void {
+    this.append(operation)
+    this.setOperationAttributes()
   }
 
   private initDropzone(): void {

@@ -78,7 +78,6 @@
     "postcss-preset-env": "^6.7.0",
     "rollup": "^2.59.0",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "svg-to-ts": "^7.1.0",
     "tailwindcss": "^2.2.19",

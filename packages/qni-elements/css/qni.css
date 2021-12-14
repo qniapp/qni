@@ -123,13 +123,13 @@
   }
 
   /* top label */
-  circuit-dropzone:not([data-wire-top]) .ifable[data-if]::before {
+  circuit-dropzone:not([data-connect-top]) .ifable[data-if]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
   }
 
   /* top label over wire */
-  circuit-dropzone[data-wire-top][data-wire-bottom] .ifable[data-if]::before {
+  circuit-dropzone[data-connect-top][data-connect-bottom] .ifable[data-if]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
@@ -139,7 +139,7 @@
   }
 
   /* bottom label */
-  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) .ifable[data-if]::before {
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .ifable[data-if]::before {
     @apply bottom-0 left-0 right-0;
     @apply -mb-3.5;
   }
@@ -166,13 +166,13 @@
   }
 
   /* top label */
-  circuit-dropzone:not([data-wire-top]) .angleable[data-angle]::before {
+  circuit-dropzone:not([data-connect-top]) .angleable[data-angle]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
   }
 
   /* top label over wire */
-  circuit-dropzone[data-wire-top][data-wire-bottom] .angleable[data-angle]::before {
+  circuit-dropzone[data-connect-top][data-connect-bottom] .angleable[data-angle]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
@@ -182,7 +182,7 @@
   }
 
   /* bottom label */
-  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) .angleable[data-angle]::before {
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .angleable[data-angle]::before {
     @apply bottom-0 left-0 right-0;
     @apply -mb-3.5;
   }
@@ -203,13 +203,13 @@
   }
 
   /* top label */
-  circuit-dropzone:not([data-wire-top]) .flaggable[data-flag]::before {
+  circuit-dropzone:not([data-connect-top]) .flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
   }
 
   /* top label over wire */
-  circuit-dropzone[data-wire-top][data-wire-bottom] .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top][data-connect-bottom] .flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
@@ -219,7 +219,7 @@
   }
 
   /* bottom label */
-  circuit-dropzone[data-wire-top]:not([data-wire-bottom]) .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .flaggable[data-flag]::before {
     @apply bottom-0 left-0 right-0;
     @apply -mb-3.5;
   }

@@ -44,8 +44,8 @@ describe('circuit-step element', function () {
       step.updateConnections()
 
       const dropzones = step.dropzones
-      assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
-      assert.isTrue(dropzones[1].wireTop && !dropzones[1].wireBottom)
+      assert.isTrue(!dropzones[0].connectTop && dropzones[0].connectBottom)
+      assert.isTrue(dropzones[1].connectTop && !dropzones[1].connectBottom)
     })
 
     it('•-•-1-•', function () {
@@ -70,10 +70,10 @@ describe('circuit-step element', function () {
       step.updateConnections()
 
       const dropzones = step.dropzones
-      assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
-      assert.isTrue(dropzones[1].wireTop && dropzones[1].wireBottom)
-      assert.isTrue(dropzones[2].wireTop && dropzones[2].wireBottom)
-      assert.isTrue(dropzones[3].wireTop && !dropzones[3].wireBottom)
+      assert.isTrue(!dropzones[0].connectTop && dropzones[0].connectBottom)
+      assert.isTrue(dropzones[1].connectTop && dropzones[1].connectBottom)
+      assert.isTrue(dropzones[2].connectTop && dropzones[2].connectBottom)
+      assert.isTrue(dropzones[3].connectTop && !dropzones[3].connectBottom)
     })
 
     it('P(π/2)-P(π/2)', function () {
@@ -92,9 +92,8 @@ describe('circuit-step element', function () {
       const step = document.querySelector('circuit-step')
       step.updateConnections()
 
-      const dropzones = step.dropzones
-      assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
-      assert.isTrue(dropzones[1].wireTop && !dropzones[1].wireBottom)
+      assert.isTrue(!step.dropzoneAt(0).connectTop && step.dropzoneAt(0).connectBottom)
+      assert.isTrue(step.dropzoneAt(1).connectTop && !step.dropzoneAt(1).connectBottom)
     })
 
     it('P(π/2)-P(π)', function () {
@@ -114,8 +113,8 @@ describe('circuit-step element', function () {
       step.updateConnections()
 
       const dropzones = step.dropzones
-      assert.isTrue(!dropzones[0].wireTop && !dropzones[0].wireBottom)
-      assert.isTrue(!dropzones[1].wireTop && !dropzones[1].wireBottom)
+      assert.isTrue(!dropzones[0].connectTop && !dropzones[0].connectBottom)
+      assert.isTrue(!dropzones[1].connectTop && !dropzones[1].connectBottom)
     })
 
     it('H-•-1-H', function () {
@@ -140,10 +139,10 @@ describe('circuit-step element', function () {
       step.updateConnections()
 
       const dropzones = step.dropzones
-      assert.isTrue(!dropzones[0].wireTop && dropzones[0].wireBottom)
-      assert.isTrue(dropzones[1].wireTop && dropzones[1].wireBottom)
-      assert.isTrue(dropzones[2].wireTop && dropzones[2].wireBottom)
-      assert.isTrue(dropzones[3].wireTop && !dropzones[3].wireBottom)
+      assert.isTrue(!dropzones[0].connectTop && dropzones[0].connectBottom)
+      assert.isTrue(dropzones[1].connectTop && dropzones[1].connectBottom)
+      assert.isTrue(dropzones[2].connectTop && dropzones[2].connectBottom)
+      assert.isTrue(dropzones[3].connectTop && !dropzones[3].connectBottom)
     })
   })
 })

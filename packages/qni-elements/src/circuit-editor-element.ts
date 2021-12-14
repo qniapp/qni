@@ -206,7 +206,8 @@ export class CircuitEditorElement extends HTMLElement {
   private updateAngle(event: Event): void {
     const inspector = event.target as OperationInspectorElement
     const activeOperation = this.activeOperation
-    if (!isAngleable(activeOperation)) throw new Error('[data-angle] not found.')
+    Util.notNull(activeOperation)
+    if (!isAngleable(activeOperation)) throw new Error(`${activeOperation.outerHTML}: [data-angle] not found.`)
 
     activeOperation.angle = inspector.angle
     activeOperation.reducedAngle = inspector.reduceAngleFraction ? inspector.reducedAngle : ''
@@ -221,7 +222,7 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private get activeOperation(): Operation | null {
-    return this.circuit.querySelector('[data-active]')
+    return this.circuit.querySelector('circuit-dropzone > [data-active]')
   }
 
   private maybeDeactivateOperation(event: Event): void {

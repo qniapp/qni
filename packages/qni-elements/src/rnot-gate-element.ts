@@ -1,12 +1,25 @@
 import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, IfableMixin, MenuableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
+import {ControllableMixin} from './mixin/controllable'
 import {controller} from '@github/catalyst'
 import {iconRnotGate} from './icon'
 
+export type RnotGateElementProps = {
+  targets: number[]
+  disabled?: boolean
+}
+
+export const RnotGateElementType = 'X^½'
+export type SerializedRnotGateElement = {type: typeof RnotGateElementType; targets: number[]; controls?: number[]}
+
 @controller
 export class RnotGateElement extends MenuableMixin(
-  IfableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
+  IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
+  get operationType(): typeof RnotGateElementType {
+    return RnotGateElementType
+  }
+
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})

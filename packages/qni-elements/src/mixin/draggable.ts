@@ -24,6 +24,8 @@ export declare class Draggable {
   set dragging(value: boolean)
   get snapped(): boolean
   set snapped(value: boolean)
+  get bit(): number
+  set bit(value: number)
   get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement
   get snapRange(): number
   set snapTargets(value: Array<{x: number; y: number}>)
@@ -37,6 +39,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr grabbed = false
     @attr dragging = false
     @attr snapped = false
+    @attr bit = -1
 
     private snappedDropzone!: CircuitDropzoneElement | null
 

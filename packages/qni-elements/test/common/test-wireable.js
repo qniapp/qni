@@ -7,17 +7,17 @@ export function testWireableOperation(operationName) {
     const container = document.createElement('div')
     container.innerHTML = `
 <circuit-dropzone>
-  <${operationName} data-wire-top></${operationName}>
+  <${operationName} data-connect-top></${operationName}>
 </circuit-dropzone>`
     document.body.append(container)
 
     const dropzone = document.querySelector('circuit-dropzone')
-    const wireTopSvg = dropzone.shadowRoot.querySelector('#wire-top')
+    const connectTopSvg = dropzone.shadowRoot.querySelector('#connect-top')
 
-    assert.isNotNull(wireTopSvg)
+    assert.isNotNull(connectTopSvg)
   })
 
-  it(`connects to lower bit by setting ${operationName}[data-wire-top]`, function () {
+  it(`connects to lower bit by setting ${operationName}[data-connect-top]`, function () {
     const container = document.createElement('div')
     container.innerHTML = `
 <circuit-dropzone>
@@ -26,28 +26,28 @@ export function testWireableOperation(operationName) {
     document.body.append(container)
 
     const operation = document.querySelector(operationName)
-    operation.setAttribute('data-wire-top', '')
+    operation.setAttribute('data-connect-top', '')
 
     const dropzone = document.querySelector('circuit-dropzone')
-    const wireTopSvg = dropzone.shadowRoot.querySelector('#wire-top')
-    assert.isNotNull(wireTopSvg)
+    const connectTopSvg = dropzone.shadowRoot.querySelector('#connect-top')
+    assert.isNotNull(connectTopSvg)
   })
 
   it('connects to upper bit', function () {
     const container = document.createElement('div')
     container.innerHTML = `
 <circuit-dropzone>
-  <${operationName} data-wire-bottom></${operationName}>
+  <${operationName} data-connect-bottom></${operationName}>
 </circuit-dropzone>`
     document.body.append(container)
 
     const dropzone = document.querySelector('circuit-dropzone')
-    const wireBottomSvg = dropzone.shadowRoot.querySelector('#wire-bottom')
+    const connectBottomSvg = dropzone.shadowRoot.querySelector('#connect-bottom')
 
-    assert.isNotNull(wireBottomSvg)
+    assert.isNotNull(connectBottomSvg)
   })
 
-  it(`connects to upper bit by setting ${operationName}[data-wire-bottom]`, function () {
+  it(`connects to upper bit by setting ${operationName}[data-connect-bottom]`, function () {
     const container = document.createElement('div')
     container.innerHTML = `
 <circuit-dropzone>
@@ -56,10 +56,10 @@ export function testWireableOperation(operationName) {
     document.body.append(container)
 
     const operation = document.querySelector(operationName)
-    operation.setAttribute('data-wire-bottom', '')
+    operation.setAttribute('data-connect-bottom', '')
 
     const dropzone = document.querySelector('circuit-dropzone')
-    const wireBottomSvg = dropzone.shadowRoot.querySelector('#wire-bottom')
-    assert.isNotNull(wireBottomSvg)
+    const connectBottomSvg = dropzone.shadowRoot.querySelector('#connect-bottom')
+    assert.isNotNull(connectBottomSvg)
   })
 }

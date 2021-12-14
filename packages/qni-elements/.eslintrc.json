@@ -4,8 +4,8 @@
     "plugin:github/browser",
     "plugin:github/typescript"
   ],
-  "globals": {
-    "HGateElement": "readonly"
+  "rules": {
+    "i18n-text/no-en": "off"
   },
   "overrides": [
     {

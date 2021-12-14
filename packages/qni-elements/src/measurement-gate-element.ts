@@ -4,11 +4,18 @@ import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
 import {iconMeasurementGate} from './icon'
 
+export const MeasurementGateElementType = 'Measure'
+export type SerializedMeasurementGateElement = {type: typeof MeasurementGateElementType; targets: number[]}
+
 @controller
 export class MeasurementGateElement extends MenuableMixin(
   FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
 ) {
   @attr value = ''
+
+  get operationType(): typeof MeasurementGateElementType {
+    return MeasurementGateElementType
+  }
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return

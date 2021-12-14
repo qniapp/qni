@@ -1,17 +1,25 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
-import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
+import {CircuitStepElement, SerializedStep, isCircuitStepElement} from './circuit-step-element'
+import {HGateElement, HGateElementProps} from './h-gate-element'
+import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
+import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
+import {RxGateElement, RxGateElementProps} from './rx-gate-element'
+import {RyGateElement, RyGateElementProps} from './ry-gate-element'
+import {RzGateElement, RzGateElementProps} from './rz-gate-element'
+import {XGateElement, XGateElementProps} from './x-gate-element'
+import {YGateElement, YGateElementProps} from './y-gate-element'
+import {ZGateElement, ZGateElementProps} from './z-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {BlochDisplayElement} from './bloch-display-element'
 import {ControlGateElement} from './control-gate-element'
-import {HGateElement} from './h-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
+import {SwapGateElement} from './swap-gate-element'
 import {Util} from './util'
 import {WriteGateElement} from './write-gate-element'
-import {XGateElement} from './x-gate-element'
-import {YGateElement} from './y-gate-element'
 
-type SnapTarget = {
+export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
   stepIndex: number | null
   wireIndex: number
@@ -23,6 +31,54 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minWireCount = 1
   @attr editing = false
 
+  // Controlled-H
+  @attr chDisabled = false
+  @attr chMaxControlGates = 0
+  @attr chMaxTargetGates = 0
+  // Controlled-NOT
+  @attr cnotDisabled = false
+  @attr cnotMaxControlGates = 0
+  @attr cnotMaxTargetGates = 0
+  // Controlled-Y
+  @attr cyDisabled = false
+  @attr cyMaxControlGates = 0
+  @attr cyMaxTargetGates = 0
+  // Controlled-Z
+  @attr czDisabled = false
+  @attr czMaxControlGates = 0
+  @attr czMaxTargetGates = 0
+  // Controlled-Phase
+  @attr cphaseDisabled = false
+  @attr cphaseMaxControlGates = 0
+  @attr cphaseMaxTargetGates = 0
+  // Controlled-√X
+  @attr crnotDisabled = false
+  @attr crnotMaxControlGates = 0
+  @attr crnotMaxTargetGates = 0
+  // Controlled-Rx
+  @attr crxDisabled = false
+  @attr crxMaxControlGates = 0
+  @attr crxMaxTargetGates = 0
+  // Controlled-Ry
+  @attr cryDisabled = false
+  @attr cryMaxControlGates = 0
+  @attr cryMaxTargetGates = 0
+  // Controlled-Rz
+  @attr crzDisabled = false
+  @attr crzMaxControlGates = 0
+  @attr crzMaxTargetGates = 0
+  // Controlled-Swap
+  @attr cswapDisabled = false
+  @attr cswapMaxControlGates = 0
+  // Swap
+  @attr swapDisabled = false
+  // CZ
+  @attr controlControlDisabled = false
+  @attr controlControlMaxTargetGates = 0
+  // CPHASE
+  @attr phasePhaseDisabled = false
+  @attr phasePhaseMaxTargetGates = 0
+
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
@@ -31,6 +87,22 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private get wireCount(): number {
     return this.stepAt(0).wireCount
+  }
+
+  get activeStepIndex(): number | null {
+    const step = this.activeStep
+    if (step === null) return null
+
+    const index = this.steps.indexOf(step)
+    Util.need(index !== -1, `circuit-step index of ${step} not found.`)
+
+    return index
+  }
+
+  private get activeStep(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.active)
+
+    return step || null
   }
 
   private get steps(): CircuitStepElement[] {
@@ -147,13 +219,74 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateAllWires()
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
+    this.addEventListener('operation-delete', this.updateConnections)
+    this.addEventListener('circuit-step-update', this.updateConnections)
     this.addEventListener('circuit-step-occupied', this.updateChangedWire)
+    this.addEventListener('circuit-step-snap', this.updateConnections)
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
+    this.addEventListener('circuit-step-unsnap', this.updateConnections)
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
   }
 
   private update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  private updateConnections(event: Event): void {
+    const step = event.target as CircuitStepElement
+    this.updateStepConnections(step)
+  }
+
+  private updateStepConnections(step: CircuitStepElement): void {
+    step.updateConnections({
+      // Controlled-H
+      disableCh: this.chDisabled,
+      maxChControlGates: this.chMaxControlGates,
+      maxChTargetGates: this.chMaxTargetGates,
+      // Controlled-NOT
+      disableCnot: this.cnotDisabled,
+      maxCnotControlGates: this.cnotMaxControlGates,
+      maxCnotTargetGates: this.cnotMaxTargetGates,
+      // Controlled-Y
+      disableCy: this.cyDisabled,
+      maxCyControlGates: this.cyMaxControlGates,
+      maxCyTargetGates: this.cyMaxTargetGates,
+      // Controlled-Z
+      disableCz: this.czDisabled,
+      maxCzControlGates: this.czMaxControlGates,
+      maxCzTargetGates: this.czMaxTargetGates,
+      // Controlled-Phase
+      disableCphase: this.cphaseDisabled,
+      maxCphaseControlGates: this.cphaseMaxControlGates,
+      maxCphaseTargetGates: this.cphaseMaxTargetGates,
+      // Controlled-√X
+      disableCrnot: this.crnotDisabled,
+      maxCrnotControlGates: this.crnotMaxControlGates,
+      maxCrnotTargetGates: this.crnotMaxTargetGates,
+      // Controlled-Rx
+      disableCrx: this.crxDisabled,
+      maxCrxControlGates: this.crxMaxControlGates,
+      maxCrxTargetGates: this.crxMaxTargetGates,
+      // Controlled-Rx
+      disableCry: this.cryDisabled,
+      maxCryControlGates: this.cryMaxControlGates,
+      maxCryTargetGates: this.cryMaxTargetGates,
+      // Controlled-Rx
+      disableCrz: this.crzDisabled,
+      maxCrzControlGates: this.crzMaxControlGates,
+      maxCrzTargetGates: this.crzMaxTargetGates,
+      // Controlled-Swap
+      disableCswap: this.cswapDisabled,
+      maxCswapControlGates: this.cswapMaxControlGates,
+      // Swap
+      disableSwap: this.swapDisabled,
+      // CZ
+      disableControlControl: this.controlControlDisabled,
+      maxControlControlTargetGates: this.controlControlMaxTargetGates,
+      // CPHASE
+      disablePhasePhase: this.phasePhaseDisabled,
+      maxPhasePhaseTargetGates: this.phasePhaseMaxTargetGates
+    })
   }
 
   private dispatchMouseleaveEvent(): void {
@@ -171,47 +304,23 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  h(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(HGateElement, ...targetQubits)
+  h(...args: number[] | [HGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
 
-    return this
-  }
-
-  /**
-   * @category Circuit Operation
-   */
-  x(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(XGateElement, ...targetQubits)
-
-    return this
-  }
-
-  /**
-   * @category Circuit Operation
-   */
-  y(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(YGateElement, ...targetQubits)
-
-    return this
-  }
-
-  /**
-   * @category Circuit Operation
-   */
-  cnot(control: number, xTarget: number): QuantumCircuitElement {
-    const step = new CircuitStepElement()
-    this.append(step)
-
-    const nqubit = Math.max(control, xTarget) + 1
-    for (let i = 0; i < nqubit; i++) {
-      const dropzone = new CircuitDropzoneElement()
-      step.append(dropzone)
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
     }
 
-    step.dropzoneAt(control).append(new ControlGateElement())
-    step.dropzoneAt(xTarget).append(new XGateElement())
-
-    this.appendMinimumWires()
+    this.applyOperationToTargets(() => {
+      const h = new HGateElement()
+      if (disabled) h.disable()
+      return h
+    }, ...targets)
 
     return this
   }
@@ -219,55 +328,402 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
-    const step = new CircuitStepElement()
-    this.append(step)
+  x(...args: number[] | [XGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
 
-    const nqubit = Math.max(...targetQubits) + 1
-    for (let i = 0; i < nqubit; i++) {
-      const dropzone = new CircuitDropzoneElement()
-      step.append(dropzone)
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
     }
 
-    for (const each of targetQubits) {
+    this.applyOperationToTargets(() => {
+      const x = new XGateElement()
+      if (disabled) x.disable()
+      return x
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  y(...args: number[] | [YGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const y = new YGateElement()
+      if (disabled) y.disable()
+      return y
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  z(...args: number[] | [ZGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const z = new ZGateElement()
+      if (disabled) z.disable()
+      return z
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  phase(...args: number[] | [string, ...number[]] | [PhaseGateElementProps]): QuantumCircuitElement {
+    let angle = ''
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else if (typeof args[0] === 'string') {
+      angle = args[0]
+      targets = args.slice(1) as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    const step = this.applyOperationToTargets(() => {
+      const phase = new PhaseGateElement()
+      phase.angle = angle
+      if (disabled) phase.disable()
+      return phase
+    }, ...targets)
+    if (targets.length > 1) this.updateStepConnections(step)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rnot(...args: number[] | [RnotGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rnot = new RnotGateElement()
+      if (disabled) rnot.disable()
+      return rnot
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rx(...args: number[] | [RxGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rx = new RxGateElement()
+      if (disabled) rx.disable()
+      return rx
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  ry(...args: number[] | [RyGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const ry = new RyGateElement()
+      if (disabled) ry.disable()
+      return ry
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rz(...args: number[] | [RzGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rz = new RzGateElement()
+      if (disabled) rz.disable()
+      return rz
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  swap(...targets: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targets)
+    this.updateStepConnections(step)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  control(...targets: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targets)
+    this.updateStepConnections(step)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  bloch(...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targets)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  write(value: '0' | '1', ...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => {
       const writeGate = new WriteGateElement()
       writeGate.value = value
-      step.dropzoneAt(each).append(writeGate)
-    }
-
-    this.appendMinimumWires()
-
+      return writeGate
+    }, ...targets)
     return this
   }
 
   /**
    * @category Circuit Operation
    */
-  measure(...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(MeasurementGateElement, ...targetQubits)
+  measure(...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targets)
+    return this
+  }
+
+  private applyOperationToTargets(constructor: () => Operation, ...targets: number[]): CircuitStepElement {
+    const nbit = Math.max(...targets) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of targets) {
+      const operation = constructor()
+      step.dropzoneAt(each).put(operation)
+    }
+
+    this.appendMinimumWires()
+
+    return step
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  ch(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(HGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(XGateElement, control, target)
+    return this
+  }
+  cx = this.cnot
+
+  /**
+   * @category Circuit Operation
+   */
+  cy(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(YGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cz(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(ZGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cphase(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(PhaseGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RnotGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crx(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RxGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cry(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RyGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crz(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RzGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cswap(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(SwapGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cc(...targets: number[]): QuantumCircuitElement {
+    const nbit = Math.max(...targets) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of targets) {
+      step.dropzoneAt(each).put(new ControlGateElement())
+    }
+
+    this.appendMinimumWires()
+    this.updateStepConnections(step)
 
     return this
   }
 
-  private applyOperation(
-    constructor: typeof HGateElement | typeof XGateElement | typeof YGateElement | typeof MeasurementGateElement,
-    ...targetQubits: number[]
+  private controlledU(
+    constructor:
+      | typeof HGateElement
+      | typeof XGateElement
+      | typeof YGateElement
+      | typeof ZGateElement
+      | typeof PhaseGateElement
+      | typeof RnotGateElement
+      | typeof RxGateElement
+      | typeof RyGateElement
+      | typeof RzGateElement
+      | typeof SwapGateElement,
+    control: number | number[],
+    target: number | number[]
   ): void {
+    const controls = ([] as number[]).concat(...[control])
+    const targets = ([] as number[]).concat(...[target])
+
+    const bits = controls.concat(targets)
+    const nbit = Math.max(...bits) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of controls) {
+      step.dropzoneAt(each).put(new ControlGateElement())
+    }
+    for (const each of targets) {
+      step.dropzoneAt(each).put(new constructor())
+    }
+
+    this.appendMinimumWires()
+    this.updateStepConnections(step)
+  }
+
+  private appendStepWithDropzones(nbit: number): CircuitStepElement {
     const step = new CircuitStepElement()
     this.append(step)
 
-    const nqubit = Math.max(...targetQubits) + 1
-    for (let i = 0; i < nqubit; i++) {
+    for (let i = 0; i < nbit; i++) {
       const dropzone = new CircuitDropzoneElement()
       step.append(dropzone)
     }
 
-    for (const each of targetQubits) {
-      const operation = new constructor()
-      step.dropzoneAt(each).append(operation)
-    }
-
-    this.appendMinimumWires()
+    return step
   }
 
   private updateAllWires(): void {
@@ -471,5 +927,9 @@ export class QuantumCircuitElement extends HTMLElement {
         wireIndex: parseInt(wireIndex)
       }
     }
+  }
+
+  serialize(): SerializedStep[] {
+    return this.steps.map(each => each.serialize())
   }
 }

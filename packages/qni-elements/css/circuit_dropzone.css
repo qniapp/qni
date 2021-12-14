@@ -5,6 +5,10 @@ circuit-dropzone {
 
   /* Wires */
   &::part(wires) {
+    @apply absolute;
+    @apply inset-0;
+    @apply w-full h-full;
+
     @apply overflow-visible;
     @apply transform-gpu origin-center;
     @apply rotate-90;
@@ -16,8 +20,8 @@ circuit-dropzone {
     display: none;
   }
 
-  &::part(wire-top),
-  &::part(wire-bottom) {
+  &::part(connect-top),
+  &::part(connect-bottom) {
     @apply text-green-500;
   }
 
@@ -26,14 +30,14 @@ circuit-dropzone {
     @apply text-gray-200;
   }
 
-  &[data-wire-top]::part(wire-top) {
-    transform-origin: top;
-    transform: translateY(-25%) scaleY(1.5);
+  &[data-connect-top]::part(connect-top) {
+    transform-origin: center;
+    transform: scaleY(1.8);
   }
 
-  &[data-wire-bottom]::part(wire-bottom) {
-    transform-origin: bottom;
-    transform: translateY(25%) scaleY(1.5);
+  &[data-connect-bottom]::part(connect-bottom) {
+    transform-origin: center;
+    transform: scaleY(1.8);
   }
 
   &[data-input-wire-quantum]::part(wire-input),

@@ -29,18 +29,6 @@ export type Operation =
   | WriteGateElement
   | MeasurementGateElement
 
-export type ControllableOperation =
-  | HGateElement
-  | XGateElement
-  | YGateElement
-  | ZGateElement
-  | PhaseGateElement
-  | RnotGateElement
-  | RxGateElement
-  | RyGateElement
-  | RzGateElement
-  | SwapGateElement
-
 export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof HGateElement ||
   arg instanceof XGateElement ||
@@ -57,20 +45,23 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof WriteGateElement ||
   arg instanceof MeasurementGateElement
 
-export const isControllableOperation = (arg: unknown): arg is ControllableOperation =>
-  arg instanceof HGateElement ||
-  arg instanceof XGateElement ||
-  arg instanceof YGateElement ||
-  arg instanceof ZGateElement ||
-  arg instanceof PhaseGateElement ||
-  arg instanceof RnotGateElement ||
-  arg instanceof RxGateElement ||
-  arg instanceof RyGateElement ||
-  arg instanceof RzGateElement ||
-  arg instanceof SwapGateElement
+export const isHGateElement = (arg: unknown): arg is HGateElement =>
+  arg !== undefined && arg !== null && arg instanceof HGateElement
+
+export const isXGateElement = (arg: unknown): arg is XGateElement =>
+  arg !== undefined && arg !== null && arg instanceof XGateElement
+
+export const isYGateElement = (arg: unknown): arg is YGateElement =>
+  arg !== undefined && arg !== null && arg instanceof YGateElement
+
+export const isZGateElement = (arg: unknown): arg is ZGateElement =>
+  arg !== undefined && arg !== null && arg instanceof ZGateElement
 
 export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   arg !== undefined && arg !== null && arg instanceof PhaseGateElement
+
+export const isRnotGateElement = (arg: unknown): arg is RnotGateElement =>
+  arg !== undefined && arg !== null && arg instanceof RnotGateElement
 
 export const isRxGateElement = (arg: unknown): arg is RxGateElement =>
   arg !== undefined && arg !== null && arg instanceof RxGateElement
@@ -80,6 +71,12 @@ export const isRyGateElement = (arg: unknown): arg is RyGateElement =>
 
 export const isRzGateElement = (arg: unknown): arg is RzGateElement =>
   arg !== undefined && arg !== null && arg instanceof RzGateElement
+
+export const isSwapGateElement = (arg: unknown): arg is SwapGateElement =>
+  arg !== undefined && arg !== null && arg instanceof SwapGateElement
+
+export const isControlGateElement = (arg: unknown): arg is ControlGateElement =>
+  arg !== undefined && arg !== null && arg instanceof ControlGateElement
 
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement

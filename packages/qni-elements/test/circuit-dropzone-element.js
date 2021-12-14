@@ -13,21 +13,21 @@ describe('circuit-dropzone element', function () {
     it('connects to lower bit', function () {
       const el = document.createElement('circuit-dropzone')
       document.body.append(el)
-      el.setAttribute('data-wire-top', '')
+      el.setAttribute('data-connect-top', '')
 
-      const wireTopSvg = el.shadowRoot.querySelector('#wire-top')
+      const connectTopSvg = el.shadowRoot.querySelector('#connect-top')
 
-      assert.isNotNull(wireTopSvg)
+      assert.isNotNull(connectTopSvg)
     })
 
     it('connects to upper bit', function () {
       const el = document.createElement('circuit-dropzone')
       document.body.append(el)
-      el.setAttribute('data-wire-bottom', '')
+      el.setAttribute('data-connect-bottom', '')
 
-      const wireBottomSvg = el.shadowRoot.querySelector('#wire-bottom')
+      const connectBottomSvg = el.shadowRoot.querySelector('#connect-bottom')
 
-      assert.isNotNull(wireBottomSvg)
+      assert.isNotNull(connectBottomSvg)
     })
   })
 

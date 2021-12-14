@@ -1,4 +1,12 @@
+export * from './operation'
 export * from './util'
+
+export * from './mixin/angleable'
+export * from './mixin/constructor'
+export * from './mixin/flaggable'
+export * from './mixin/ifable'
+
+export * from './icon'
 
 export * from './inspector-button-element'
 export * from './operation-inspector-element'

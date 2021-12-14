@@ -5,6 +5,9 @@ import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
 import {Util} from './util'
 
+export const BlochDisplayElementType = 'Bloch'
+export type SerializedBlochDisplayElement = {type: typeof BlochDisplayElementType; targets: number[]}
+
 @controller
 export class BlochDisplayElement extends MenuableMixin(DraggableMixin(ActivateableMixin(HTMLElement))) {
   @target body!: HTMLElement
@@ -16,6 +19,10 @@ export class BlochDisplayElement extends MenuableMixin(DraggableMixin(Activateab
   @attr x = 0
   @attr y = 0
   @attr z = 0
+
+  get operationType(): typeof BlochDisplayElementType {
+    return BlochDisplayElementType
+  }
 
   showPopup(): void {
     this.showInspector()
