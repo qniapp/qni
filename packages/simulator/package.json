@@ -11,8 +11,10 @@
     "lint": "eslint .",
     "prebuild": "npm run clean && npm run lint && npm run css && npm run compile",
     "build": "rollup -c",
+    "build:packages": "yarn build",
     "pretest": "npm run build && rollup -c rollup.config.test.js",
     "test": "karma start test/karma.config.cjs",
+    "test:ci": "yarn test",
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "watch:css": "yarn css --watch"
   },
@@ -35,7 +37,7 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@github/catalyst": "^1.1.4",
-    "@qni/elements": "link:../qni-elements"
+    "@qni/elements": "^0.0.1"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",

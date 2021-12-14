@@ -14,7 +14,8 @@
   },
   "license": "MIT",
   "workspaces": [
-    "packages/elements"
+    "packages/elements",
+    "packages/simulator"
   ],
   "scripts": {
     "build": "lerna run build --stream",
