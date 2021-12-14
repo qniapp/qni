@@ -18,7 +18,9 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "test": "lerna run test --stream"
+    "build:packages": "lerna run build:packages --stream",
+    "test": "lerna run test --stream",
+    "test:ci": "lerna run test:ci --stream"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
