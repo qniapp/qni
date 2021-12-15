@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn css && rollup -c",
-    "css": "esbuild src/application.css --bundle --outdir=dist",
+    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css",
     "start": "http-server"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.14.5",
-    "rollup": "^2.61.1"
+    "rollup": "^2.61.1",
+    "tailwindcss": "^3.0.2"
   }
 }
