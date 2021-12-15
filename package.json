@@ -22,7 +22,6 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "build:packages": "lerna run build:packages --stream",
     "test": "lerna run test --stream",
     "docs": "lerna run typedoc"
   },
