@@ -1,6 +1,7 @@
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {describe} from './describe'
 
 @controller
 export class QuantumSimulatorElement extends HTMLElement {
@@ -19,6 +20,6 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   private showActiveStepIndex(): void {
     // eslint-disable-next-line no-console
-    console.log(this.circuit.activeStepIndex)
+    console.log(describe(this.circuit.serialize()))
   }
 }

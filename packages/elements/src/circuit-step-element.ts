@@ -163,6 +163,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('click', this.dispatchClickEvent)
     this.addEventListener('circuit-dropzone-occupied', this.setOperationBit)
     this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
+    this.addEventListener('circuit-dropzone-snap', this.setOperationBit)
     this.addEventListener('circuit-dropzone-snap', this.dispatchSnapEvent)
     this.addEventListener('circuit-dropzone-unsnap', this.dispatchUnsnapEvent)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
