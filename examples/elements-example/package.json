@@ -1,0 +1,20 @@
+{
+  "name": "@qni/elements-example",
+  "version": "0.0.1",
+  "description": "An example project for @qni/elements.",
+  "author": "@yasuhito",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn css && rollup -c",
+    "css": "esbuild src/application.css --bundle --outdir=dist",
+    "start": "http-server"
+  },
+  "dependencies": {
+    "@qni/elements": "^0.0.1",
+    "http-server": "^14.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.5",
+    "rollup": "^2.61.1"
+  }
+}
