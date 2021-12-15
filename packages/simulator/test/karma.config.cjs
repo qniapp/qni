@@ -1,16 +1,16 @@
 module.exports = function (config) {
   config.set({
-    frameworks: ["mocha", "chai"],
+    frameworks: ["qunit"],
     files: [
       {
-        pattern: "../dist/index.js",
+        pattern: "**/*.ts",
         type: "module",
+        included: true,
       },
-      {
-        pattern: "../build/test.js",
-        type: "module",
-      }
     ],
+    preprocessors: {
+      "**/*.ts": ["esbuild"],
+    },
     reporters: ["mocha"],
     autoWatch: false,
     browsers: ["ChromeHeadless"],
