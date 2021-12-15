@@ -1,20 +1,20 @@
 module.exports = function (config) {
   config.set({
-    frameworks: ["qunit"],
+    frameworks: ['qunit'],
     files: [
       {
-        pattern: "**/*.ts",
-        type: "module",
-        included: true,
-      },
+        pattern: '**/*.ts',
+        type: 'module',
+        included: true
+      }
     ],
     preprocessors: {
-      "**/*.ts": ["esbuild"],
+      '**/*.ts': ['esbuild']
     },
-    reporters: ["mocha"],
+    reporters: ['mocha'],
     autoWatch: false,
-    browsers: ["ChromeHeadless"],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
-    logLevel: config.LOG_INFO,
-  });
-};
+    logLevel: config.LOG_INFO
+  })
+}

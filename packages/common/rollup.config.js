@@ -1,7 +1,9 @@
+import pkg from './package.json'
+
 export default {
   input: 'dist/index.js',
   output: {
-    file: 'dist/index.js',
+    file: pkg['module'],
     format: 'es'
   }
 }
