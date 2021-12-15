@@ -4,6 +4,9 @@
     "plugin:github/browser",
     "plugin:github/typescript"
   ],
+  "rules": {
+    "i18n-text/no-en": "off"
+  },
   "globals": {
     "QuantumCircuitElement": "readonly"
   },
