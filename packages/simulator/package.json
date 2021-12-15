@@ -8,13 +8,13 @@
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
-    "lint": "eslint .",
-    "prebuild": "npm run clean && npm run lint && npm run css && npm run compile",
+    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
+    "prebuild": "npm run lint && npm run css && npm run compile",
     "build": "rollup -c",
     "build:packages": "yarn build",
     "pretest": "npm run build && rollup -c rollup.config.test.js",
     "test": "karma start test/karma.config.cjs",
-    "test:ci": "yarn test",
+    "test:watch": "yarn test --auto-watch --no-single-run",
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "watch:css": "yarn css --watch",
     "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"

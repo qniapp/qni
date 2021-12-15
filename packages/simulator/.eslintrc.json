@@ -24,5 +24,6 @@
         "assert": true
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["/doc/"]
 }

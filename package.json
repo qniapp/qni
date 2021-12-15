@@ -21,7 +21,6 @@
     "build": "lerna run build --stream",
     "build:packages": "lerna run build:packages --stream",
     "test": "lerna run test --stream",
-    "test:ci": "lerna run test:ci --stream",
     "docs": "lerna run typedoc"
   },
   "devDependencies": {
