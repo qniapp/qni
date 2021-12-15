@@ -37,8 +37,6 @@
   "homepage": "https://github.com/yasuhito/qni-simulator#readme",
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@github/catalyst": "^1.1.4",
-    "@qni/elements": "^0.0.1",
     "typedoc": "^0.22.10"
   },
   "devDependencies": {
