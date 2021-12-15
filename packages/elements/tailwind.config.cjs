@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./examples/*.html'],
+  content: ['./examples/*.html'],
   theme: {
     extend: {
       borderWidth: {

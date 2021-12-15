@@ -58,7 +58,7 @@
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
     "@rollup/plugin-node-resolve": "^13.0.6",
-    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/forms": "^0.4.0",
     "autoprefixer": "^10.4.0",
     "chai": "^4.3.4",
     "eslint": "^8.2.0",
@@ -76,12 +76,12 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.0.1",
     "rollup": "^2.59.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-replace": "^2.2.0",
     "svg-to-ts": "^7.1.0",
-    "tailwindcss": "^2.2.19",
+    "tailwindcss": "^3.0.5",
     "typedoc": "^0.22.8",
     "typescript": "^4.4.4"
   },

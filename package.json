@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "workspaces": [
+    "packages/common",
     "packages/elements",
     "packages/simulator",
     "examples/elements-example"
