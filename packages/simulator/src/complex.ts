@@ -1,5 +1,5 @@
 import {Format, UNICODE_FRACTIONS} from './format'
-import {DetailedError} from './detailed-error'
+import {DetailedError} from '@qni/common'
 import {Util} from './util'
 
 export class Complex {

@@ -1,4 +1,4 @@
-import {describe} from '@qni/common'
+import {describe} from './describe'
 
 let CONSTRUCTOR_CALLS_NESTING = 0
 
