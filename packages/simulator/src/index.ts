@@ -1,5 +1,4 @@
 export * from './complex'
-export * from './describe'
 export * from './detailed-error'
 export * from './format'
 export * from './util'

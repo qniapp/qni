@@ -35,6 +35,7 @@
   "prettier": "@github/prettier-config",
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
+    "@qni/common": "^0.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "chai": "^4.3.4",
     "eslint": "^8.3.0",
@@ -58,5 +59,8 @@
     "dist/",
     "rollup.config.js",
     "rollup.config.test.js"
-  ]
+  ],
+  "dependencies": {
+    "@qni/common": "^0.0.1"
+  }
 }

@@ -1,7 +1,7 @@
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {describe} from './describe'
+import {describe} from '@qni/common'
 
 @controller
 export class QuantumSimulatorElement extends HTMLElement {

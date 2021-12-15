@@ -2159,7 +2159,7 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"qunit@^2.0.0":
+"qunit@^2.0.0", "qunit@^2.17.2":
   "integrity" "sha512-17isVvuOmALzsPjiV7wFg/6O5vJYXBrQZPwocfQSSh0I/rXvfX7bKMFJ4GMVW3U4P8r2mBeUy8EAngti4QD2Vw=="
   "resolved" "https://registry.npmjs.org/qunit/-/qunit-2.17.2.tgz"
   "version" "2.17.2"

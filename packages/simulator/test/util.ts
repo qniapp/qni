@@ -1,6 +1,6 @@
 import {ArrayIsh, equate, hasOwnProperty} from '../src/equate'
 import {Complex} from '../src/complex'
-import {describe} from '../src/describe'
+import {describe} from '@qni/common'
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)

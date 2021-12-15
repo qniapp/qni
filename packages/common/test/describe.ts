@@ -32,7 +32,7 @@ QUnit.module('.describe', () => {
     }
   }
 
-  QUnit.test('.describe(trivial)', assert => {
+  QUnit.test('.describe (trivial)', assert => {
     assert.equal(describe(undefined), 'undefined')
     assert.equal(describe(null), 'null')
     assert.equal(describe(false), 'false')
@@ -48,7 +48,7 @@ QUnit.module('.describe', () => {
     assert.equal(describe(new Set()), 'Set{}')
   })
 
-  QUnit.test('.describe(simple)', assert => {
+  QUnit.test('.describe (simple)', assert => {
     assert.equal(describe(true), 'true')
     assert.equal(describe(1.5), '1.5')
     assert.equal(describe('b'), '"b"')
@@ -69,7 +69,7 @@ QUnit.module('.describe', () => {
     assert.equal(describe(new SomeIterable()), 'SomeIterable[1, 2, 3]')
   })
 
-  QUnit.test('.describe(recursion)', assert => {
+  QUnit.test('.describe (recursion)', assert => {
     const a: unknown[] = []
     a.push(a)
     assert.equal(describe(a, 2), '[[!recursion-limit!]]')
