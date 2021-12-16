@@ -1,7 +1,7 @@
 {
   "name": "@qni/monorepo",
   "private": true,
-  "version": "0.0.93",
+  "version": "0.0.1",
   "type": "module",
   "description": "Toy quantum simulator app.",
   "author": "@yasuhito",

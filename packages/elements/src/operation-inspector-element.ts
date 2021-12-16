@@ -2,10 +2,10 @@ import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
 import {Angleable, Ifable, isAngleable, isIfable} from './mixin'
 import {Flaggable, isFlaggable} from './mixin/flaggable'
 import {Operation, isPhaseGateElement, isRxGateElement, isRyGateElement, isRzGateElement} from './operation'
-import {Util, isNumeric} from './util'
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {Util} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
@@ -182,7 +182,7 @@ export class OperationInspectorElement extends HTMLElement {
   private changeDenominator(): void {
     const denominator = this.denominatorInput.value
 
-    if (isNumeric(denominator) && parseInt(denominator) > 1) {
+    if (Util.isNumeric(denominator) && parseInt(denominator) > 1) {
       this.denominatorLabel.textContent = denominator
       this.angleSlider.denominator = parseInt(denominator)
 

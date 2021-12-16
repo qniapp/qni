@@ -2,6 +2,8 @@
   "name": "@qni/elements",
   "version": "0.0.1",
   "description": "Quantum circuit components.",
+  "author": "@yasuhito",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yasuhito/qni-elements.git"
@@ -31,14 +33,9 @@
     "components",
     "quantum-computing"
   ],
-  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
-  "license": "MIT",
   "files": [
     "dist"
   ],
-  "bugs": {
-    "url": "https://github.com/yasuhito/qni-elements/issues"
-  },
   "homepage": "https://github.com/yasuhito/qni-elements#readme",
   "prettier": "@github/prettier-config",
   "dependencies": {

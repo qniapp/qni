@@ -11,8 +11,8 @@ export class Util {
   static notNull<T>(v: T): asserts v is NonNullable<T> {
     Util.need(v !== null && v !== undefined, 'notNull')
   }
-}
 
-export function isNumeric(value: string) {
-  return /^-?\d+$/.test(value)
+  static isNumeric(value: string) {
+    return /^-?\d+$/.test(value)
+  }
 }

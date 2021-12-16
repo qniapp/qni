@@ -1,10 +1,17 @@
 {
   "name": "@qni/simulator",
   "version": "0.0.1",
-  "description": "Qni quantum simulator.",
+  "description": "Quantum simulator for @qni.",
+  "author": "@yasuhito",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni-simulator.git"
+  },
   "main": "index.js",
   "type": "module",
   "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
@@ -15,53 +22,35 @@
     "test:watch": "yarn test --auto-watch --no-single-run",
     "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yasuhito/qni-simulator.git"
-  },
   "keywords": [
     "quantum",
     "circuit",
     "simulator",
     "quantum-computing"
   ],
-  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/yasuhito/qni-simulator/issues"
-  },
-  "homepage": "https://github.com/yasuhito/qni-simulator#readme",
   "prettier": "@github/prettier-config",
+  "dependencies": {
+    "@qni/elements": "^0.0.1"
+  },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
-    "@qni/common": "^0.0.1",
-    "@qni/elements": "^0.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "chai": "^4.3.4",
     "eslint": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",
-    "http-server": "^14.0.0",
     "karma": "^6.3.9",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
-    "karma-esbuild": "^2.2.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-qunit": "^4.1.2",
     "mocha": "^9.1.3",
-    "qunit": "^2.17.2",
     "rollup": "^2.60.2",
-    "rollup-plugin-commonjs": "^10.1.0",
     "typedoc": "^0.22.10",
     "typescript": "^4.5.2"
   },
   "eslintIgnore": [
     "build/",
     "dist/",
-    "rollup.config.js",
-    "rollup.config.test.js"
-  ],
-  "dependencies": {
-    "@qni/common": "^0.0.1"
-  }
+    "rollup.config.js"
+  ]
 }
