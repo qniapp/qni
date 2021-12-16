@@ -10,7 +10,12 @@ export type YGateElementProps = {
 }
 
 export const YGateElementType = 'Y'
-export type SerializedYGateElement = {type: typeof YGateElementType; targets: number[]; controls?: number[]}
+export type SerializedYGateElement = {
+  type: typeof YGateElementType
+  targets: number[]
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class YGateElement extends MenuableMixin(

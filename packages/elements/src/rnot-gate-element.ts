@@ -10,7 +10,12 @@ export type RnotGateElementProps = {
 }
 
 export const RnotGateElementType = 'X^½'
-export type SerializedRnotGateElement = {type: typeof RnotGateElementType; targets: number[]; controls?: number[]}
+export type SerializedRnotGateElement = {
+  type: typeof RnotGateElementType
+  targets: number[]
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class RnotGateElement extends MenuableMixin(

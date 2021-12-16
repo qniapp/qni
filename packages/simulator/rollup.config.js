@@ -1,5 +1,7 @@
-const pkg = require('./package.json')
+import commonjs from "rollup-plugin-commonjs"
 import resolve from '@rollup/plugin-node-resolve'
+
+const pkg = require('./package.json')
 
 export default [
   {
@@ -10,7 +12,12 @@ export default [
     },
     context: 'window',
     plugins: [
-      resolve()
+      resolve(),
+      commonjs({
+        namedExports: {
+          "fraction.js": ["Fraction"]
+        }
+      })
     ]
   }
 ]

@@ -18,7 +18,13 @@ export type RxGateElementProps = {
 }
 
 export const RxGateElementType = 'Rx'
-export type SerializedRxGateElement = {type: typeof RxGateElementType; targets: number[]; controls?: number[]}
+export type SerializedRxGateElement = {
+  type: typeof RxGateElementType
+  targets: number[]
+  angle?: string
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class RxGateElement extends MenuableMixin(

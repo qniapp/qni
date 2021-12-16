@@ -18,7 +18,13 @@ export type RzGateElementProps = {
 }
 
 export const RzGateElementType = 'Rz'
-export type SerializedRzGateElement = {type: typeof RzGateElementType; targets: number[]; controls?: number[]}
+export type SerializedRzGateElement = {
+  type: typeof RzGateElementType
+  targets: number[]
+  angle?: string
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class RzGateElement extends MenuableMixin(

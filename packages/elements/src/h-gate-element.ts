@@ -10,7 +10,12 @@ export type HGateElementProps = {
 }
 
 export const HGateElementType = 'H'
-export type SerializedHGateElement = {type: typeof HGateElementType; targets: number[]; controls?: number[]}
+export type SerializedHGateElement = {
+  type: typeof HGateElementType
+  targets: number[]
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class HGateElement extends MenuableMixin(

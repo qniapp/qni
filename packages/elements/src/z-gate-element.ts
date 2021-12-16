@@ -10,7 +10,12 @@ export type ZGateElementProps = {
 }
 
 export const ZGateElementType = 'Z'
-export type SerializedZGateElement = {type: typeof ZGateElementType; targets: number[]; controls?: number[]}
+export type SerializedZGateElement = {
+  type: typeof ZGateElementType
+  targets: number[]
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class ZGateElement extends MenuableMixin(

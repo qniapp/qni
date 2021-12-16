@@ -5,7 +5,8 @@
     "plugin:github/typescript"
   ],
   "rules": {
-    "i18n-text/no-en": "off"
+    "i18n-text/no-en": "off",
+    "import/named": "off"
   },
   "ignorePatterns": ["/doc/"]
 }

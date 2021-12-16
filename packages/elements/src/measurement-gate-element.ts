@@ -5,7 +5,11 @@ import {FlaggableMixin} from './mixin/flaggable'
 import {iconMeasurementGate} from './icon'
 
 export const MeasurementGateElementType = 'Measure'
-export type SerializedMeasurementGateElement = {type: typeof MeasurementGateElementType; targets: number[]}
+export type SerializedMeasurementGateElement = {
+  type: typeof MeasurementGateElementType
+  targets: number[]
+  flag?: string
+}
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(

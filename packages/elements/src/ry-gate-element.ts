@@ -18,7 +18,13 @@ export type RyGateElementProps = {
 }
 
 export const RyGateElementType = 'Ry'
-export type SerializedRyGateElement = {type: typeof RyGateElementType; targets: number[]; controls?: number[]}
+export type SerializedRyGateElement = {
+  type: typeof RyGateElementType
+  targets: number[]
+  angle?: string
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class RyGateElement extends MenuableMixin(

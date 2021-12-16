@@ -10,7 +10,12 @@ export type XGateElementProps = {
 }
 
 export const XGateElementType = 'X'
-export type SerializedXGateElement = {type: typeof XGateElementType; targets: number[]; controls?: number[]}
+export type SerializedXGateElement = {
+  type: typeof XGateElementType
+  targets: number[]
+  controls?: number[]
+  if?: string
+}
 
 @controller
 export class XGateElement extends MenuableMixin(
