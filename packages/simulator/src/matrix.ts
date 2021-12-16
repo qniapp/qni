@@ -4,7 +4,6 @@ import {DetailedError} from '@qni/common'
 import {Format} from './format'
 import {Util} from './util'
 import {parseAngle} from './angle-parser'
-// import {parseFormula} from './formulaParser'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
@@ -27,7 +26,7 @@ export class Matrix {
   }
 
   static RX(theta: string): Matrix {
-    const θ = parseAngle(theta) // parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = parseAngle(theta)
     const mi = Complex.I.neg()
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
@@ -36,7 +35,7 @@ export class Matrix {
   }
 
   static RY(theta: string): Matrix {
-    const θ = parseAngle(theta) // parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = parseAngle(theta)
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
 
@@ -44,7 +43,7 @@ export class Matrix {
   }
 
   static RZ(theta: string): Matrix {
-    const θ = parseAngle(theta) // parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = parseAngle(theta)
     const e = Complex.from(Math.E)
     const i = Complex.I
 

@@ -7,26 +7,5 @@
   "rules": {
     "i18n-text/no-en": "off"
   },
-  "globals": {
-    "QuantumCircuitElement": "readonly"
-  },
-  "overrides": [
-    {
-      "files": "test/**/*.js",
-      "rules": {
-        "github/unescaped-html-literal": "off"
-      }
-    },
-    {
-      "files": "test/**/*.js",
-      "excludedFiles": "test/karma.config.js",
-      "env": {
-        "mocha": true
-      },
-      "globals": {
-        "assert": true
-      }
-    }
-  ],
   "ignorePatterns": ["/doc/"]
 }
