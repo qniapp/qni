@@ -16,7 +16,7 @@ import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {

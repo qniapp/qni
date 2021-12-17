@@ -29,7 +29,7 @@ import {SerializedZGateElement, ZGateElement} from './z-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
 

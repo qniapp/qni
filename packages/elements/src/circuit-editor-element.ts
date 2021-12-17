@@ -5,7 +5,7 @@ import {isAngleable, isIfable, isMenuable} from './mixin'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import {isCircuitStepElement} from './circuit-step-element'
 import {isFlaggable} from './mixin/flaggable'
 

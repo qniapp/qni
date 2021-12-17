@@ -6,7 +6,7 @@ import '@interactjs/modifiers'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import {iconWires} from './icon'
 import interact from '@interactjs/interact'
 

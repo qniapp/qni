@@ -5,7 +5,7 @@ import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance} from 'tippy.js'
 import {Flaggable} from './mixin/flaggable'
 import {OperationInspectorElement} from './operation-inspector-element'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import {controller} from '@github/catalyst'
 
 @controller

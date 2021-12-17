@@ -5,7 +5,8 @@ import {Operation, isPhaseGateElement, isRxGateElement, isRyGateElement, isRzGat
 import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
 import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {Util} from './util'
+import {Util} from '@qni/common'
+import {isNumeric} from './util'
 
 @controller
 export class OperationInspectorElement extends HTMLElement {
@@ -182,7 +183,7 @@ export class OperationInspectorElement extends HTMLElement {
   private changeDenominator(): void {
     const denominator = this.denominatorInput.value
 
-    if (Util.isNumeric(denominator) && parseInt(denominator) > 1) {
+    if (isNumeric(denominator) && parseInt(denominator) > 1) {
       this.denominatorLabel.textContent = denominator
       this.angleSlider.denominator = parseInt(denominator)
 

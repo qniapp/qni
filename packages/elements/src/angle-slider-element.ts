@@ -6,7 +6,7 @@ import {angleDenominator, radian as radianOf} from './angle-parser'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
-import {Util} from './util'
+import {Util} from '@qni/common'
 import interact from '@interactjs/interact'
 
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
