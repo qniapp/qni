@@ -1,5 +1,5 @@
-import {Format, UNICODE_FRACTIONS} from './format'
 import {DetailedError} from '@qni/common'
+import {Format} from './format'
 import {snappedCosSin} from './util'
 
 export class Complex {
@@ -152,7 +152,6 @@ export class Complex {
 
   toString(format?: Format): string {
     format = format || Format.EXACT
-
     return format.allowAbbreviation ? this.toStringAllowSingleValue(format) : this.toStringBothValues(format)
   }
 
@@ -225,126 +224,4 @@ export class Complex {
     const prefix = format.allowAbbreviation || format.fixedDigits === undefined || this.real < 0 ? '' : '+'
     return `${prefix + format.formatFloat(this.real) + separator + imagFactor}i`
   }
-}
-
-const PARSE_COMPLEX_TOKEN_MAP_ALL = new Map()
-export const PARSE_COMPLEX_TOKEN_MAP_RAD = new Map()
-const PARSE_COMPLEX_TOKEN_MAP_DEG = new Map()
-
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('i', Complex.I)
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('e', Complex.from(Math.E))
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('pi', Complex.from(Math.PI))
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('(', '(')
-PARSE_COMPLEX_TOKEN_MAP_ALL.set(')', ')')
-for (const {character, value} of UNICODE_FRACTIONS) {
-  PARSE_COMPLEX_TOKEN_MAP_ALL.set(character, value)
-}
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('sqrt', {
-  unary_action: (e: number | Complex) => Complex.from(e).raisedTo(0.5),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('exp', {
-  unary_action: (e: number | Complex) => Complex.from(e).exp(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('ln', {
-  unary_action: (e: number | Complex) => Complex.from(e).ln(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('^', {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).raisedTo(b),
-  priority: 3
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('*', {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).times(b),
-  priority: 2
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('/', {
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).dividedBy(b),
-  priority: 2
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('-', {
-  unary_action: (e: number | Complex) => Complex.from(e).neg(),
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).minus(b),
-  priority: 1
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('+', {
-  unary_action: (e: number | Complex) => e,
-  binary_action: (a: number | Complex, b: number | Complex) => Complex.from(a).plus(b),
-  priority: 1
-})
-PARSE_COMPLEX_TOKEN_MAP_ALL.set('√', PARSE_COMPLEX_TOKEN_MAP_ALL.get('sqrt'))
-
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('cos', {
-  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).cos(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('sin', {
-  unary_action: (e: number | Complex) => new Complex(Math.PI / 180, 0).times(e).sin(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('asin', {
-  unary_action: (e: number | Complex) => {
-    if (Complex.imagPartOf(e) !== 0) {
-      throw new DetailedError('asin input out of range', {e})
-    }
-    return Complex.from((Math.asin(Complex.realPartOf(e)) * 180) / Math.PI)
-  },
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('acos', {
-  unary_action: (e: number | Complex) => {
-    if (Complex.imagPartOf(e) !== 0) {
-      throw new DetailedError('acos input out of range', {e})
-    }
-    return Complex.from((Math.acos(Complex.realPartOf(e)) * 180) / Math.PI)
-  },
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('arccos', PARSE_COMPLEX_TOKEN_MAP_DEG.get('acos'))
-PARSE_COMPLEX_TOKEN_MAP_DEG.set('arcsin', PARSE_COMPLEX_TOKEN_MAP_DEG.get('asin'))
-
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('cos', {
-  unary_action: (e: number | Complex) => Complex.from(e).cos(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('sin', {
-  unary_action: (e: number | Complex) => Complex.from(e).sin(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('tan', {
-  unary_action: (e: number | Complex) => Complex.from(e).tan(),
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('asin', {
-  unary_action: (e: number | Complex) => {
-    if (Complex.imagPartOf(e) !== 0) {
-      throw new DetailedError('asin input out of range', {e})
-    }
-    return Complex.from(Math.asin(Complex.realPartOf(e)))
-  },
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('acos', {
-  unary_action: (e: number | Complex) => {
-    if (Complex.imagPartOf(e) !== 0) {
-      throw new DetailedError('acos input out of range', {e})
-    }
-    return Complex.from(Math.acos(Complex.realPartOf(e)))
-  },
-  priority: 4
-})
-PARSE_COMPLEX_TOKEN_MAP_RAD.set('atan', {
-  unary_action: (e: number | Complex) => {
-    if (Complex.imagPartOf(e) !== 0) {
-      throw new DetailedError('atan input out of range', {e})
-    }
-    return Complex.from(Math.atan(Complex.realPartOf(e)))
-  },
-  priority: 4
-})
-
-for (const [k, v] of PARSE_COMPLEX_TOKEN_MAP_ALL.entries()) {
-  PARSE_COMPLEX_TOKEN_MAP_DEG.set(k, v)
-  PARSE_COMPLEX_TOKEN_MAP_RAD.set(k, v)
 }
