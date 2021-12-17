@@ -1,7 +1,6 @@
 import {ActivateableMixin, DraggableMixin, MenuableMixin} from './mixin/'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-// eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
 import {Util} from '@qni/common'
 

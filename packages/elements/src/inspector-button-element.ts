@@ -1,7 +1,6 @@
 import {Angleable, Ifable} from './mixin'
 import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
-// eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance} from 'tippy.js'
 import {Flaggable} from './mixin/flaggable'
 import {OperationInspectorElement} from './operation-inspector-element'

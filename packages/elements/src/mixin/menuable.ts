@@ -1,5 +1,4 @@
 import {html, render} from '@github/jtml'
-// eslint-disable-next-line import/named
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {Constructor} from './constructor'
 import {Util} from '@qni/common'
