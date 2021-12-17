@@ -11,6 +11,7 @@ export * from './icon'
 export * from './inspector-button-element'
 export * from './operation-inspector-element'
 export * from './angle-slider-element'
+export * from './circle-notation-element'
 
 export * from './h-gate-element'
 export * from './x-gate-element'

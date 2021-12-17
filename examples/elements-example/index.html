@@ -82,6 +82,28 @@
               </inspector-button>
             </div>
           </circuit-editor>
+
+          <circle-notation id="circle-notation"
+                           class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-white border-2 border-b-4 border-slate-200 rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
+                           data-multi-qubits>
+            <template id="circle-notation-popup">
+              <div class="text-base text-wolf mb-2">
+                |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal <span class="circle-notation-popup__ket-decimal"></span>)
+              </div>
+              <ul class="list-none">
+                <li>
+                  Amplitude: <span class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"></span>
+                  <span class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"></span>
+                </li>
+                <li>
+                  Probability: <span class="circle-notation-popup__probability font-bold font-mono text-eel"></span>
+                </li>
+                <li>
+                  Phase: <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
+                </li>
+              </ul>
+            </template>
+          </circle-notation>
         </quantum-simulator>
       </div>
     </div>

@@ -12,9 +12,9 @@ export class CircleNotationElement extends HTMLElement {
   @attr multiQubits = false
   @attr showKets = false
 
-  @targets qubitCircles: HTMLElement[]
-  @targets qubitCircleGroups: HTMLElement[]
-  @targets visibleQubitCircleGroups: HTMLElement[]
+  @targets qubitCircles!: HTMLElement[]
+  @targets qubitCircleGroups!: HTMLElement[]
+  @targets visibleQubitCircleGroups!: HTMLElement[]
 
   setAmplitudes(amplitudes: {[ket: number]: Complex}): void {
     const qubitCircles = this.qubitCircles
