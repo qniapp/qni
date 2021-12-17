@@ -16,7 +16,7 @@ import {
   YGateElementType,
   ZGateElementType
 } from '@qni/elements'
-import {Complex} from './complex'
+import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'

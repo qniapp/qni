@@ -1,6 +1,6 @@
-import {DetailedError} from '@qni/common'
+import {DetailedError} from './detailed-error'
 import {Format} from './format'
-import {snappedCosSin} from './util'
+import {Util} from './util'
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -21,7 +21,7 @@ export class Complex {
   }
 
   static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = snappedCosSin(phase)
+    const [cos, sin] = Util.snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
   }
 

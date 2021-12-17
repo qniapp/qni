@@ -1,6 +1,5 @@
-import {Complex} from '../src/complex'
-import {Format} from '../src/format'
-import {Matrix} from '../src//matrix'
+import {Complex, Format} from '@qni/common'
+import {Matrix} from '../src/matrix'
 import {Seq} from '../src/seq'
 
 QUnit.module('Matrix', () => {

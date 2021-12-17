@@ -1,6 +1,7 @@
 /* eslint-env qunit */
 
-import {Complex, Matrix, Simulator, StateVector} from '../src'
+import {Matrix, Simulator, StateVector} from '../src'
+import {Complex} from '@qni/common'
 
 QUnit.module('Simulator', () => {
   QUnit.module('.write', () => {

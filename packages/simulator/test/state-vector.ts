@@ -1,6 +1,6 @@
 /* eslint-env qunit */
 
-import {Complex} from '../src/complex'
+import {Complex} from '@qni/common'
 import {Matrix} from '../src/matrix'
 import {StateVector} from '../src/state-vector'
 
