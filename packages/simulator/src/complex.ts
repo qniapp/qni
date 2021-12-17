@@ -1,6 +1,6 @@
 import {Format, UNICODE_FRACTIONS} from './format'
 import {DetailedError} from '@qni/common'
-import {Util} from './util'
+import {snappedCosSin} from './util'
 
 export class Complex {
   static readonly ZERO = new Complex(0, 0)
@@ -21,7 +21,7 @@ export class Complex {
   }
 
   static polar(magnitude: number, phase: number): Complex {
-    const [cos, sin] = Util.snappedCosSin(phase)
+    const [cos, sin] = snappedCosSin(phase)
     return new Complex(magnitude * cos, magnitude * sin)
   }
 

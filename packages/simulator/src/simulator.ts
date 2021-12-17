@@ -19,7 +19,7 @@ import {
 import {Complex} from './complex'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
-import {Util} from './util'
+import {round} from './util'
 
 export class Simulator {
   public state: StateVector
@@ -159,7 +159,7 @@ export class Simulator {
 
   write(value: number, ...targets: number[]): Simulator {
     for (const t of targets) {
-      const pZero = Util.round(this.pZero(t), 5)
+      const pZero = round(this.pZero(t), 5)
 
       if ((value === 0 && pZero === 0) || (value === 1 && pZero === 1)) {
         this.x(t)

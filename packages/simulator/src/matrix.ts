@@ -1,9 +1,9 @@
+import {DetailedError, Util} from '@qni/common'
 import {Seq, seq} from './seq'
 import {Complex} from './complex'
-import {DetailedError} from '@qni/common'
 import {Format} from './format'
-import {Util} from './util'
 import {parseAngle} from './angle-parser'
+import {snappedCosSin} from './util'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
@@ -718,7 +718,7 @@ export class Matrix {
     Util.need(Math.abs(x * x + y * y + z * z - 1) < 0.000001, 'Not a unit axis.')
 
     const vσ = Matrix.PAULI_X.times(x).plus(Matrix.PAULI_Y.times(y)).plus(Matrix.PAULI_Z.times(z))
-    const [cos, sin] = Util.snappedCosSin(-angle / 2)
+    const [cos, sin] = snappedCosSin(-angle / 2)
     return Matrix.identity(2)
       .times(cos)
       .plus(vσ.times(new Complex(0, sin)))

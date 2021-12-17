@@ -1,6 +1,6 @@
 import {Complex} from './complex'
 import {Matrix} from './matrix'
-import {Util} from './util'
+import {Util} from '@qni/common'
 
 export class StateVector {
   public matrix: Matrix
