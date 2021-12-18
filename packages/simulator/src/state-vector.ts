@@ -33,18 +33,14 @@ export class StateVector {
     return this.matrix
   }
 
-  amplifier(i: number): Complex {
-    return this.matrix.cell(0, i)
+  amplifier(index: number): Complex {
+    return this.matrix.cell(0, index)
   }
 
-  setAmplifier(i: number, value: Complex): void {
-    this.matrix.set(0, i, value)
+  setAmplifier(index: number, value: Complex): void {
+    this.matrix.set(0, index, value)
   }
 
-  /**
-   * Determines if the receiving state vector is approximately equal to the
-   * given state vector.
-   */
   isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
     return other instanceof StateVector && this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
   }
@@ -53,22 +49,18 @@ export class StateVector {
     return this.matrix.toString()
   }
 
-  private bitstringToMatrix(bits: string): Matrix {
-    if (/^[01+-]+$/.exec(bits)) {
-      return bits
+  private bitstringToMatrix(bitString: string): Matrix {
+    if (/^[01+-]+$/.exec(bitString)) {
+      return bitString
         .split('')
-        .map(each => {
-          return this.ketVector(each)
-        })
-        .reduce((result, each) => {
-          return result.tensorProduct(each)
-        })
+        .map(each => this.ketVector(each))
+        .reduce((result, each) => result.tensorProduct(each))
     } else {
-      return this.ketVector(bits)
+      return this.ketVector(bitString)
     }
   }
 
-  private ketVector(bit: string): Matrix {
+  private ketVector(bitChar: string): Matrix {
     const matrices: {[bit: string]: Matrix} = {
       '0': Matrix.col(1, 0),
       '1': Matrix.col(0, 1),
@@ -77,7 +69,7 @@ export class StateVector {
       i: Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)),
       '-i': Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5))
     }
-    const m = matrices[bit]
+    const m = matrices[bitChar]
     Util.notNull(m)
 
     return m
