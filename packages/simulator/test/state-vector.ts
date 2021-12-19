@@ -13,6 +13,11 @@ QUnit.module('StateVector', () => {
       assert.equates(stateVector.toString(), '{{1}, {0}}')
     })
 
+    QUnit.test('amplifier', assert => {
+      assert.equal(stateVector.amplifier(0), 1)
+      assert.equal(stateVector.amplifier(1), 0)
+    })
+
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 0))
     })
@@ -37,6 +42,11 @@ QUnit.module('StateVector', () => {
 
     QUnit.test('toString', assert => {
       assert.equates(stateVector.toString(), '{{0}, {1}}')
+    })
+
+    QUnit.test('amplifier', assert => {
+      assert.equal(stateVector.amplifier(0), 0)
+      assert.equal(stateVector.amplifier(1), 1)
     })
 
     QUnit.test('bra', assert => {
@@ -65,6 +75,11 @@ QUnit.module('StateVector', () => {
       assert.equates(stateVector.toString(), '{{√½}, {√½}}')
     })
 
+    QUnit.test('amplifier', assert => {
+      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
+      assert.equates(stateVector.amplifier(1), Math.sqrt(0.5))
+    })
+
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 1).times(Math.sqrt(0.5)))
     })
@@ -89,6 +104,11 @@ QUnit.module('StateVector', () => {
 
     QUnit.test('toString', assert => {
       assert.equates(stateVector.toString(), '{{√½}, {-√½}}')
+    })
+
+    QUnit.test('amplifier', assert => {
+      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
+      assert.equates(stateVector.amplifier(1), -Math.sqrt(0.5))
     })
 
     QUnit.test('bra', assert => {
@@ -117,6 +137,11 @@ QUnit.module('StateVector', () => {
       assert.equates(stateVector.toString(), '{{√½}, {√½i}}')
     })
 
+    QUnit.test('amplifier', assert => {
+      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
+      assert.equates(stateVector.amplifier(1), Complex.I.times(Math.sqrt(0.5)))
+    })
+
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, new Complex(0, -1)).times(Math.sqrt(0.5)))
     })
@@ -141,6 +166,11 @@ QUnit.module('StateVector', () => {
 
     QUnit.test('toString', assert => {
       assert.equates(stateVector.toString(), '{{√½}, {-√½i}}')
+    })
+
+    QUnit.test('amplifier', assert => {
+      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
+      assert.equates(stateVector.amplifier(1), Complex.I.times(-Math.sqrt(0.5)))
     })
 
     QUnit.test('bra', assert => {
@@ -169,6 +199,13 @@ QUnit.module('StateVector', () => {
       assert.equates(stateVector.toString(), '{{1}, {0}, {0}, {0}}')
     })
 
+    QUnit.test('amplifier', assert => {
+      assert.equal(stateVector.amplifier(0), 1)
+      assert.equal(stateVector.amplifier(1), 0)
+      assert.equal(stateVector.amplifier(2), 0)
+      assert.equal(stateVector.amplifier(3), 0)
+    })
+
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 0, 0, 0))
     })
@@ -193,6 +230,13 @@ QUnit.module('StateVector', () => {
 
     QUnit.test('toString', assert => {
       assert.equates(stateVector.toString(), '{{√½}, {-√½i}, {0}, {0}}')
+    })
+
+    QUnit.test('amplifier', assert => {
+      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
+      assert.equates(stateVector.amplifier(1), Complex.I.times(-Math.sqrt(0.5)))
+      assert.equal(stateVector.amplifier(2), 0)
+      assert.equal(stateVector.amplifier(3), 0)
     })
 
     QUnit.test('bra', assert => {
