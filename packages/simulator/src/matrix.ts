@@ -1,6 +1,9 @@
 import {Complex, DetailedError, Format, Util} from '@qni/common'
-import {Seq, seq} from './seq'
+import {Eq} from 'fp-ts/number'
+import {isNonEmpty} from 'fp-ts/lib/Array'
 import {parseAngle} from './angle-parser'
+import {range} from 'fp-ts/NonEmptyArray'
+import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
@@ -47,22 +50,14 @@ export class Matrix {
     return Matrix.square(e.raisedTo(i.neg().times(θ / 2)), 0, 0, e.raisedTo(i.times(θ / 2)))
   }
 
-  public width: number
-  public height: number
-  public buffer: Float64Array | Float32Array
-
   static fromRows(rows: Complex[][]): Matrix {
-    Util.need(rows.length > 0, 'non-zero height', rows)
-
-    const seqRows = seq(rows)
     const h = rows.length
-    const w = seqRows
-      .map((e: Complex[]) => e.length)
-      .distinct()
-      .single(null)
-    if (w === null) {
-      throw new DetailedError('Inconsistent row widths.', {rows})
-    }
+    const rowWidths = rows.map(e => e.length)
+    if (!isNonEmpty(rowWidths)) throw new DetailedError('Zero height', {rows})
+
+    const ws = uniq(Eq)(rowWidths)
+    if (ws.length !== 1) throw new DetailedError('Inconsistent row widths.', {rows})
+    const w = ws[0]
 
     const buffer = new Float64Array(w * h * 2)
     let i = 0
@@ -125,29 +120,13 @@ export class Matrix {
     return new Matrix(size, size, buf)
   }
 
-  static generateDiagonal(size: number, coefficientFunc: (e: number) => number | Complex): Matrix {
-    const buf = new Float64Array(size * size * 2)
-    for (let i = 0; i < size; i++) {
-      const k = i * (size + 1) * 2
-      const v = coefficientFunc(i)
-      buf[k] = Complex.realPartOf(v)
-      buf[k + 1] = Complex.imagPartOf(v)
-    }
-    return new Matrix(size, size, buf)
-  }
-
   static zero(width: number, height: number): Matrix {
     return new Matrix(width, height, new Float64Array(width * height * 2))
   }
 
-  getColumn(colIndex: number): Complex[] {
-    Util.need(colIndex >= 0 && colIndex <= this.width, 'colIndex >= 0 && colIndex <= this.width')
-    const col = []
-    for (let r = 0; r < this.height; r++) {
-      col.push(this.cell(colIndex, r))
-    }
-    return col
-  }
+  public width: number
+  public height: number
+  public buffer: Float64Array | Float32Array
 
   constructor(width: number, height: number, buffer: Float64Array | Float32Array) {
     if (width * height * 2 !== buffer.length) {
@@ -162,12 +141,13 @@ export class Matrix {
     this.buffer = buffer
   }
 
-  isUnitary(epsilon: number): boolean {
-    const n = this.width
-    if (this.height !== n) {
-      return false
+  columnAt(colIndex: number): Complex[] {
+    Util.need(colIndex >= 0 && colIndex <= this.width, 'colIndex >= 0 && colIndex <= this.width')
+    const col = []
+    for (let r = 0; r < this.height; r++) {
+      col.push(this.cell(colIndex, r))
     }
-    return this.times(this.adjoint()).isApproximatelyEqualTo(Matrix.identity(n), epsilon)
+    return col
   }
 
   adjoint(): Matrix {
@@ -230,25 +210,15 @@ export class Matrix {
     return new Matrix(this.width, this.height, newBuffer)
   }
 
-  static rotation(theta: number): Matrix {
-    const c = Math.cos(theta)
-    const s = Math.sin(theta)
-    return Matrix.square(c, -s, s, c)
-  }
-
   isEqualTo(obj: Matrix | unknown): boolean {
-    if (this === obj) {
-      return true
-    }
-    if (!(obj instanceof Matrix)) {
-      return false
-    }
+    if (this === obj) return true
+    if (!(obj instanceof Matrix)) return false
 
     const other = obj
     return (
       this.width === other.width &&
       this.height === other.height &&
-      Seq.range(this.buffer.length).every(i => this.buffer[i] === other.buffer[i])
+      range(0, this.buffer.length - 1).every(i => this.buffer[i] === other.buffer[i])
     )
   }
 
@@ -289,13 +259,9 @@ export class Matrix {
   }
 
   rows(): Complex[][] {
-    return Seq.range(this.height)
-      .map<Complex[]>((row: number) =>
-        Seq.range(this.width)
-          .map<Complex>((col: number) => this.cell(col, row))
-          .toArray()
-      )
-      .toArray()
+    return range(0, this.height - 1).map<Complex[]>(row =>
+      range(0, this.width - 1).map<Complex>(col => this.cell(col, row))
+    )
   }
 
   cell(col: number, row: number): Complex {
@@ -419,228 +385,6 @@ export class Matrix {
     return new Matrix(w, h, buf)
   }
 
-  singularValueDecomposition(epsilon = 0, maxIterations = 100): {U: Matrix; S: Matrix; V: Matrix} {
-    if (this.width !== this.height) {
-      throw new DetailedError('Expected a square matrix.', this)
-    }
-
-    // eslint-disable-next-line prefer-const
-    let {U, S, V} =
-      this.width === 2
-        ? this._unordered_singularValueDecomposition_2x2()
-        : this._unordered_singularValueDecomposition_iterative(epsilon, maxIterations)
-
-    // Fix ordering, so that the singular values are ascending.
-    const permutation = Seq.range(this.width)
-      .sortedBy(i => -S.cell(i, i).norm2())
-      .toArray()
-    for (let i = 0; i < S.width; i++) {
-      const j = permutation.indexOf(i)
-      if (i !== j) {
-        U._inline_colMix_postMultiply(i, j, Matrix.PAULI_X)
-        V._inline_rowMix_preMultiply(i, j, Matrix.PAULI_X)
-        const si = i * (S.width + 1) * 2
-        const sj = j * (S.width + 1) * 2
-        ;[S.buffer[si], S.buffer[sj]] = [S.buffer[sj], S.buffer[si]]
-        ;[S.buffer[si + 1], S.buffer[sj + 1]] = [S.buffer[sj + 1], S.buffer[si + 1]]
-        ;[permutation[j], permutation[i]] = [permutation[i], permutation[j]]
-      }
-    }
-
-    // Fix phases.
-    for (let i = 0; i < S.width; i++) {
-      U._inline_colScale_postMultiply(i, S.cell(i, i).unit())
-    }
-
-    // Discard off-diagonal elements.
-    S = Matrix.generateDiagonal(S.width, k => S.cell(k, k).abs())
-
-    return {U, S, V}
-  }
-
-  _unordered_singularValueDecomposition_2x2(): {
-    U: Matrix
-    S: Matrix
-    V: Matrix
-  } {
-    // Initial dirty work of clearing a corner is handled by the LQ decomposition.
-    const U = Matrix.identity(2)
-    // eslint-disable-next-line prefer-const
-    let {L: S, Q: V} = this.lqDecomposition()
-
-    // Cancel phase factors, leaving S with only real entries.
-    const au = S.cell(0, 0).unit()
-    const cu = S.cell(0, 1).unit()
-    U._inline_colScale_postMultiply(0, au)
-    U._inline_colScale_postMultiply(1, cu)
-    S._inline_rowScale_preMultiply(0, au.conjugate())
-    S._inline_rowScale_preMultiply(1, cu.conjugate())
-    const du = S.cell(1, 1).unit()
-    S._inline_colScale_postMultiply(1, du.conjugate())
-    V._inline_rowScale_preMultiply(1, du)
-
-    // Decompose the 2x2 real matrix.
-    const [a, , b, , c, , d] = S.buffer
-    const t = a + d
-    const x = b + c
-    const y = b - c
-    const z = a - d
-    const theta_0 = Math.atan2(x, t) / 2.0
-    const theta_d = Math.atan2(y, z) / 2.0
-    const s_0 = Math.sqrt(t * t + x * x) / 2.0
-    const s_d = Math.sqrt(z * z + y * y) / 2.0
-    U._inline_colMix_postMultiply(0, 1, Matrix.rotation(theta_0 - theta_d))
-    V._inline_rowMix_preMultiply(0, 1, Matrix.rotation(theta_0 + theta_d))
-    S = Matrix.square(s_0 + s_d, 0, 0, s_0 - s_d)
-
-    return {U, S, V}
-  }
-
-  _unordered_singularValueDecomposition_iterative(epsilon = 0, maxIterations = 100): {U: Matrix; S: Matrix; V: Matrix} {
-    let U = Matrix.identity(this.width)
-    let S = this._clone()
-    let V = Matrix.identity(this.width)
-    let iter = 0
-    while (!S.isDiagonal(epsilon) && iter++ < maxIterations) {
-      const {Q: Ql, R: Sl} = S.qrDecomposition()
-      const {L: Sr, Q: Qr} = Sl.lqDecomposition()
-      U = U.times(Ql)
-      S = Sr
-      V = Qr.times(V)
-    }
-
-    return {U, S, V}
-  }
-
-  private _inline_colMix_postMultiply(col1: number, col2: number, op: Matrix): void {
-    const [a, b, c, d] = op._2x2Breakdown()
-    for (let row = 0; row < this.width; row++) {
-      const x = this.cell(col1, row)
-      const y = this.cell(col2, row)
-      const v1 = x.times(a).plus(y.times(c))
-      const v2 = x.times(b).plus(y.times(d))
-      const k1 = (row * this.width + col1) * 2
-      const k2 = (row * this.width + col2) * 2
-      this.buffer[k1] = v1.real
-      this.buffer[k1 + 1] = v1.imag
-      this.buffer[k2] = v2.real
-      this.buffer[k2 + 1] = v2.imag
-    }
-  }
-
-  private _2x2Breakdown(): Complex[] {
-    return [
-      new Complex(this.buffer[0], this.buffer[1]),
-      new Complex(this.buffer[2], this.buffer[3]),
-      new Complex(this.buffer[4], this.buffer[5]),
-      new Complex(this.buffer[6], this.buffer[7])
-    ]
-  }
-
-  private _inline_rowMix_preMultiply(row1: number, row2: number, op: Matrix): void {
-    const [a, b, c, d] = op._2x2Breakdown()
-    for (let col = 0; col < this.width; col++) {
-      const x = this.cell(col, row1)
-      const y = this.cell(col, row2)
-      const v1 = x.times(a).plus(y.times(b))
-      const v2 = x.times(c).plus(y.times(d))
-      const k1 = (row1 * this.width + col) * 2
-      const k2 = (row2 * this.width + col) * 2
-      this.buffer[k1] = v1.real
-      this.buffer[k1 + 1] = v1.imag
-      this.buffer[k2] = v2.real
-      this.buffer[k2 + 1] = v2.imag
-    }
-  }
-
-  _inline_colScale_postMultiply(col: number, scale: Complex): void {
-    for (let row = 0; row < this.height; row++) {
-      const v1 = this.cell(col, row)
-      const v2 = v1.times(scale)
-      const k = (row * this.width + col) * 2
-      this.buffer[k] = v2.real
-      this.buffer[k + 1] = v2.imag
-    }
-  }
-
-  lqDecomposition(): {L: Matrix; Q: Matrix} {
-    const {Q, R} = this.adjoint().qrDecomposition()
-    return {L: R.adjoint(), Q: Q.adjoint()}
-  }
-
-  qrDecomposition(): {Q: Matrix; R: Matrix} {
-    if (this.width !== this.height) {
-      throw new DetailedError('Expected a square matrix.', this)
-    }
-    const Q = Matrix.identity(this.width)
-    const R = this._clone()
-    for (let row = 0; row < this.height; row++) {
-      for (let col = 0; col < row && col < this.width; col++) {
-        // We're going to cancel out the value below the diagonal with a Givens rotation.
-
-        const belowDiag = R.cell(col, row) // Zero this.
-        const onDiag = R.cell(col, col) // With this.
-
-        // Determine how much to rotate.
-        const mag1 = onDiag.abs()
-        const mag2 = belowDiag.abs()
-        if (mag2 === 0) {
-          continue // Already zero'd.
-        }
-        const theta = -Math.atan2(mag2, mag1)
-        const cos = Math.cos(theta)
-        const sin = Math.sin(theta)
-
-        // Need to cancel phases before rotating.
-        const phase1 = onDiag.unit().conjugate()
-        const phase2 = belowDiag.unit().conjugate()
-
-        // Apply the rotation to R (and cancel it with Q).
-        const op = Matrix.square(phase1.times(cos), phase2.times(-sin), phase1.times(sin), phase2.times(cos))
-        R._inline_rowMix_preMultiply(col, row, op)
-        Q._inline_colMix_postMultiply(col, row, op.adjoint())
-      }
-
-      // Cancel imaginary factors on diagonal.
-      const u = R.cell(row, row).unit()
-      R._inline_rowScale_preMultiply(row, u.conjugate())
-      Q._inline_colScale_postMultiply(row, u)
-    }
-    return {Q, R}
-  }
-
-  private _clone(): Matrix {
-    return new Matrix(this.width, this.height, this.buffer.slice())
-  }
-
-  private _inline_rowScale_preMultiply(row: number, scale: Complex): void {
-    for (let col = 0; col < this.width; col++) {
-      const v1 = this.cell(col, row)
-      const v2 = v1.times(scale)
-      const k = (row * this.width + col) * 2
-      this.buffer[k] = v2.real
-      this.buffer[k + 1] = v2.imag
-    }
-  }
-
-  isDiagonal(epsilon = 0): boolean {
-    for (let c = 0; c < this.width; c++) {
-      for (let r = 0; r < this.height; r++) {
-        if (r === c) {
-          continue
-        }
-        const k = (this.width * r + c) * 2
-        const dr = Math.abs(this.buffer[k])
-        const di = Math.abs(this.buffer[k + 1])
-        const d = Math.max(dr, di)
-        if (isNaN(d) || d > epsilon) {
-          return false
-        }
-      }
-    }
-    return this.width === this.height
-  }
-
   trace(): Complex {
     let total_r = 0
     let total_i = 0
@@ -670,100 +414,5 @@ export class Matrix {
     const y = ci - bi
     const z = ar - dr
     return [x, y, z]
-  }
-
-  static fromAngleAxisPhaseRotation(angle: number, axis: number[], phase: number): Matrix {
-    const [x, y, z] = axis
-    Util.need(Math.abs(x * x + y * y + z * z - 1) < 0.000001, 'Not a unit axis.')
-
-    const vσ = Matrix.PAULI_X.times(x).plus(Matrix.PAULI_Y.times(y)).plus(Matrix.PAULI_Z.times(z))
-    const [cos, sin] = Util.snappedCosSin(-angle / 2)
-    return Matrix.identity(2)
-      .times(cos)
-      .plus(vσ.times(new Complex(0, sin)))
-      .times(Complex.polar(1, phase))
-  }
-
-  qubitOperationToAngleAxisRotation(): {
-    axis: number[]
-    angle: number
-    phase: number
-  } {
-    Util.need(this.width === 2 && this.height === 2, 'Need a 2x2 matrix.')
-    Util.need(this.isUnitary(0.01), 'Need a unitary matrix.')
-
-    // Extract orthogonal components, adjusting for factors of i.
-    const [a, b, c, d] = this._2x2Breakdown()
-    const wφ = a.plus(d)
-    const xφ = b.plus(c).dividedBy(Complex.I)
-    const yφ = b.minus(c)
-    const zφ = a.minus(d).dividedBy(Complex.I)
-
-    // Cancel global phase factor, pushing all values onto the real line.
-    // let φ = seq([wφ, xφ, yφ, zφ]).maxBy(e => e.abs())
-    //   .unit()
-    //   .times(2) as Complex
-    const t: Complex = seq([wφ, xφ, yφ, zφ]).maxBy((e: Complex) => e.abs())
-    let φ = t.unit().times(2)
-
-    const w = Math.min(1, Math.max(-1, wφ.dividedBy(φ).real))
-    let x = xφ.dividedBy(φ).real
-    let y = yφ.dividedBy(φ).real
-    let z = zφ.dividedBy(φ).real
-    let θ = -2 * Math.acos(w)
-
-    // Normalize axis.
-    const n = Math.sqrt(x * x + y * y + z * z)
-    if (n < 0.0000001) {
-      // There's an axis singularity near θ=0. Just default to no rotation around the X axis.
-      return {axis: [1, 0, 0], angle: 0, phase: φ.phase()}
-    }
-    x /= n
-    y /= n
-    z /= n
-
-    // Prefer θ in [-π, π].
-    if (θ <= -Math.PI) {
-      θ += 2 * Math.PI
-      φ = φ.times(-1)
-    }
-
-    // Prefer axes that point positive-ward.
-    if (x + y + z < 0) {
-      x = -x
-      y = -y
-      z = -z
-      θ = -θ
-    }
-
-    return {axis: [x, y, z], angle: θ, phase: φ.phase()}
-  }
-
-  isUpperTriangular(epsilon = 0): boolean {
-    for (let r = 0; r < this.height; r++) {
-      for (let c = 0; c < r && c < this.width; c++) {
-        const k = (r * this.width + c) * 2
-        const v1 = this.buffer[k]
-        const v2 = this.buffer[k + 1]
-        if (isNaN(v1) || isNaN(v2) || v1 * v1 + v2 * v2 > epsilon * epsilon) {
-          return false
-        }
-      }
-    }
-    return true
-  }
-
-  isLowerTriangular(epsilon = 0): boolean {
-    for (let r = 0; r < this.height; r++) {
-      for (let c = r + 1; c < this.width; c++) {
-        const k = (r * this.width + c) * 2
-        const v1 = this.buffer[k]
-        const v2 = this.buffer[k + 1]
-        if (isNaN(v1) || isNaN(v2) || v1 * v1 + v2 * v2 > epsilon * epsilon) {
-          return false
-        }
-      }
-    }
-    return true
   }
 }

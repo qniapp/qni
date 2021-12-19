@@ -291,7 +291,7 @@ export class Simulator {
   }
 
   amplitudes(targets: number[] = []): {[ket: number]: [number, number]} {
-    const stateVector = this.state.matrix.getColumn(0)
+    const stateVector = this.state.matrix.columnAt(0)
 
     if (targets.length > 0) {
       return targets.reduce((map: {[ket: number]: [number, number]}, each) => {

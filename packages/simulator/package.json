@@ -30,7 +30,8 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@qni/elements": "^0.0.1"
+    "@qni/elements": "^0.0.1",
+    "fp-ts": "^2.11.5"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
