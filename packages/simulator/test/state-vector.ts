@@ -9,10 +9,6 @@ QUnit.module('StateVector', () => {
       stateVector = new StateVector('0')
     })
 
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{1}, {0}}')
-    })
-
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 0))
     })
@@ -33,10 +29,6 @@ QUnit.module('StateVector', () => {
   QUnit.module('|1>', hooks => {
     hooks.beforeEach(() => {
       stateVector = new StateVector('1')
-    })
-
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{0}, {1}}')
     })
 
     QUnit.test('bra', assert => {
@@ -61,10 +53,6 @@ QUnit.module('StateVector', () => {
       stateVector = new StateVector('+')
     })
 
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{√½}, {√½}}')
-    })
-
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 1).times(Math.sqrt(0.5)))
     })
@@ -85,10 +73,6 @@ QUnit.module('StateVector', () => {
   QUnit.module('|->', hooks => {
     hooks.beforeEach(() => {
       stateVector = new StateVector('-')
-    })
-
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{√½}, {-√½}}')
     })
 
     QUnit.test('bra', assert => {
@@ -113,10 +97,6 @@ QUnit.module('StateVector', () => {
       stateVector = new StateVector('i')
     })
 
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{√½}, {√½i}}')
-    })
-
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, new Complex(0, -1)).times(Math.sqrt(0.5)))
     })
@@ -137,10 +117,6 @@ QUnit.module('StateVector', () => {
   QUnit.module('|-i>', hooks => {
     hooks.beforeEach(() => {
       stateVector = new StateVector('(-i)')
-    })
-
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{√½}, {-√½i}}')
     })
 
     QUnit.test('bra', assert => {
@@ -165,17 +141,6 @@ QUnit.module('StateVector', () => {
       stateVector = new StateVector('00')
     })
 
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{1}, {0}, {0}, {0}}')
-    })
-
-    QUnit.test('amplifier', assert => {
-      assert.equal(stateVector.amplifier(0), 1)
-      assert.equal(stateVector.amplifier(1), 0)
-      assert.equal(stateVector.amplifier(2), 0)
-      assert.equal(stateVector.amplifier(3), 0)
-    })
-
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, 0, 0, 0))
     })
@@ -198,17 +163,6 @@ QUnit.module('StateVector', () => {
       stateVector = new StateVector('0(-i)')
     })
 
-    QUnit.test('toString', assert => {
-      assert.equates(stateVector.toString(), '{{√½}, {-√½i}, {0}, {0}}')
-    })
-
-    QUnit.test('amplifier', assert => {
-      assert.equates(stateVector.amplifier(0), Math.sqrt(0.5))
-      assert.equates(stateVector.amplifier(1), Complex.I.times(-Math.sqrt(0.5)))
-      assert.equal(stateVector.amplifier(2), 0)
-      assert.equal(stateVector.amplifier(3), 0)
-    })
-
     QUnit.test('bra', assert => {
       assert.equates(stateVector.bra, Matrix.row(1, new Complex(0, 1), 0, 0).times(Math.sqrt(0.5)))
     })
@@ -227,6 +181,46 @@ QUnit.module('StateVector', () => {
   })
 
   QUnit.module('creation', () => {
+    QUnit.test('|0>', assert => {
+      stateVector = new StateVector('0')
+      assert.equal(stateVector.toString(), '{{1}, {0}}')
+    })
+
+    QUnit.test('|1>', assert => {
+      stateVector = new StateVector('1')
+      assert.equal(stateVector.toString(), '{{0}, {1}}')
+    })
+
+    QUnit.test('|+>', assert => {
+      stateVector = new StateVector('+')
+      assert.equal(stateVector.toString(), '{{√½}, {√½}}')
+    })
+
+    QUnit.test('|->', assert => {
+      stateVector = new StateVector('-')
+      assert.equal(stateVector.toString(), '{{√½}, {-√½}}')
+    })
+
+    QUnit.test('|i>', assert => {
+      stateVector = new StateVector('i')
+      assert.equal(stateVector.toString(), '{{√½}, {√½i}}')
+    })
+
+    QUnit.test('|-i>', assert => {
+      stateVector = new StateVector('(-i)')
+      assert.equal(stateVector.toString(), '{{√½}, {-√½i}}')
+    })
+
+    QUnit.test('|00>', assert => {
+      stateVector = new StateVector('00')
+      assert.equal(stateVector.toString(), '{{1}, {0}, {0}, {0}}')
+    })
+
+    QUnit.test('|0(-i)>', assert => {
+      stateVector = new StateVector('0(-i)')
+      assert.equal(stateVector.toString(), '{{√½}, {-√½i}, {0}, {0}}')
+    })
+
     QUnit.test('create with an invalid bit string', assert => {
       assert.throws(() => new StateVector(''))
       assert.throws(() => new StateVector('?F*(*@RU#'))
