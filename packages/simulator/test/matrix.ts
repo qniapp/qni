@@ -482,11 +482,6 @@ QUnit.module('Matrix', () => {
     assert.equates(f(1, mi).times(0.5).qubitDensityMatrixToBlochVector(), [0, -1, 0])
   })
 
-  QUnit.test('qubitDensityMatrix', assert => {
-    const bellState = Matrix.col(Math.sqrt(0.5), 0, 0, Math.sqrt(0.5))
-    assert.approximatelyEquates(bellState.qubitDensityMatrix(1), Matrix.identity(2).times(0.5))
-  })
-
   QUnit.test('fromAngleAxisPhaseRotation', assert => {
     const π = Math.PI
     const i = Complex.I

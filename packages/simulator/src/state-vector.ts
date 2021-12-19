@@ -34,7 +34,7 @@ export class StateVector {
   }
 
   blochVector(bit: number): [number, number, number] {
-    return this.matrix.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
+    return this.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
   }
 
   isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
@@ -108,5 +108,47 @@ export class StateVector {
 
     if (kets.length === 0) throw invalidBitStringError
     return kets.reduce((result, each) => result.tensorProduct(each))
+  }
+
+  qubitDensityMatrix(qubitIndex: number): Matrix {
+    if (qubitIndex < 0 || qubitIndex >= this.nqubit) {
+      throw new DetailedError('Qubit index out of range', qubitIndex)
+    }
+
+    const traceBits = [...Array(Math.log2(this.matrix.height)).keys()].filter(each => each !== qubitIndex)
+    const removeBits = (num: number, bits: number[]) => {
+      return bits
+        .sort()
+        .reverse()
+        .reduce((result, each) => {
+          let mask = result >> (each + 1)
+          mask = mask << each
+          const right = ((1 << each) - 1) & result
+
+          return mask | right
+        }, num)
+    }
+
+    let densityMatrix = Matrix.zero(2, 2)
+
+    for (let bra = 0; bra < this.matrix.height; bra++) {
+      for (let ket = 0; ket < this.matrix.height; ket++) {
+        const survived = traceBits.every(b => {
+          return ((bra >> b) & 1) === ((ket >> b) & 1)
+        })
+        if (!survived) continue
+
+        const amp = this.matrix.cell(0, ket).times(this.matrix.cell(0, bra).conjugate())
+        if (amp.isEqualTo(0)) continue
+
+        const ketMat = removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
+        const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
+        const ketBra = ketMat.times(braMat)
+
+        densityMatrix = densityMatrix.plus(ketBra.times(amp))
+      }
+    }
+
+    return densityMatrix
   }
 }

@@ -672,44 +672,6 @@ export class Matrix {
     return [x, y, z]
   }
 
-  qubitDensityMatrix(bit: number): Matrix {
-    const traceBits = [...Array(Math.log2(this.height)).keys()].filter(each => each !== bit)
-    const removeBits = (num: number, bits: number[]) => {
-      return bits
-        .sort()
-        .reverse()
-        .reduce((result, each) => {
-          let mask = result >> (each + 1)
-          mask = mask << each
-          const right = ((1 << each) - 1) & result
-
-          return mask | right
-        }, num)
-    }
-
-    let densityMatrix = Matrix.zero(2, 2)
-
-    for (let bra = 0; bra < this.height; bra++) {
-      for (let ket = 0; ket < this.height; ket++) {
-        const survived = traceBits.every(b => {
-          return ((bra >> b) & 1) === ((ket >> b) & 1)
-        })
-        if (!survived) continue
-
-        const amp = this.cell(0, ket).times(this.cell(0, bra).conjugate())
-        if (amp.isEqualTo(0)) continue
-
-        const ketMat = removeBits(ket, traceBits) === 0 ? Matrix.col(1, 0) : Matrix.col(0, 1)
-        const braMat = removeBits(bra, traceBits) === 0 ? Matrix.row(1, 0) : Matrix.row(0, 1)
-        const ketBra = ketMat.times(braMat)
-
-        densityMatrix = densityMatrix.plus(ketBra.times(amp))
-      }
-    }
-
-    return densityMatrix
-  }
-
   static fromAngleAxisPhaseRotation(angle: number, axis: number[], phase: number): Matrix {
     const [x, y, z] = axis
     Util.need(Math.abs(x * x + y * y + z * z - 1) < 0.000001, 'Not a unit axis.')
