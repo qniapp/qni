@@ -5,6 +5,7 @@
     "plugin:github/typescript"
   ],
   "rules": {
+    "github/unescaped-html-literal": "off",
     "i18n-text/no-en": "off",
     "import/named": "off"
   },

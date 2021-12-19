@@ -33,16 +33,16 @@ export class StateVector {
     this.matrix.set(0, index, value)
   }
 
-  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {
-    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask, controlMask)
-  }
-
   blochVector(bit: number): [number, number, number] {
     return this.matrix.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
   }
 
   isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
     return other instanceof StateVector && this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
+  }
+
+  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {
+    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask, controlMask)
   }
 
   toString(): string {
