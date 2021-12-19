@@ -1,4 +1,4 @@
-import {Complex} from '@qni/common'
+import {Complex, DetailedError} from '@qni/common'
 import {Matrix} from './matrix'
 
 export class StateVector {
@@ -53,21 +53,22 @@ export class StateVector {
     let paren = false
     let parenToken = ''
     const kets = []
+    const invalidBitStringError = new DetailedError('Invalid StateVector bit string', bitString)
 
     for (const char of bitString.split('')) {
       switch (char) {
         case '0': {
-          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          if (paren) throw invalidBitStringError
           kets.push(Matrix.col(1, 0))
           break
         }
         case '1': {
-          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          if (paren) throw invalidBitStringError
           kets.push(Matrix.col(0, 1))
           break
         }
         case '+': {
-          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          if (paren) throw invalidBitStringError
           kets.push(Matrix.col(1, 1).times(Math.sqrt(0.5)))
           break
         }
@@ -88,21 +89,24 @@ export class StateVector {
           break
         }
         case '(': {
-          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          if (paren) throw invalidBitStringError
           paren = true
           parenToken = ''
           break
         }
         case ')': {
-          if (!paren) throw new Error(`Invalid bit string: ${bitString}`)
-          if (parenToken !== '-i') throw new Error(`Invalid bit string: ${bitString}`)
+          if (!paren) throw invalidBitStringError
+          if (parenToken !== '-i') throw invalidBitStringError
           kets.push(Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5)))
           paren = false
           break
         }
+        default:
+          throw invalidBitStringError
       }
     }
 
+    if (kets.length === 0) throw invalidBitStringError
     return kets.reduce((result, each) => result.tensorProduct(each))
   }
 }

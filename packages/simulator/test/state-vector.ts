@@ -211,4 +211,11 @@ QUnit.module('StateVector', () => {
       assert.equates(stateVector.size, 4)
     })
   })
+
+  QUnit.module('creation', () => {
+    QUnit.test('create with an invalid bit string', assert => {
+      assert.throws(() => new StateVector(''))
+      assert.throws(() => new StateVector('?F*(*@RU#'))
+    })
+  })
 })
