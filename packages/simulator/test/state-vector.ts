@@ -187,4 +187,46 @@ QUnit.module('StateVector', () => {
       assert.throws(() => stateVector.setAmplifier(2, Complex.ZERO))
     })
   })
+
+  QUnit.module('blochVector', () => {
+    QUnit.test('|0> (bit 0)', assert => {
+      stateVector = new StateVector('0')
+      assert.equates(stateVector.blochVector(0), [0, 0, 1])
+    })
+
+    QUnit.test('|1> (bit 0)', assert => {
+      stateVector = new StateVector('1')
+      assert.equates(stateVector.blochVector(0), [0, 0, -1])
+    })
+
+    QUnit.test('|+> (bit 0)', assert => {
+      stateVector = new StateVector('+')
+      assert.approximatelyEquates(stateVector.blochVector(0), [1, 0, 0])
+    })
+
+    QUnit.test('|-> (bit 0)', assert => {
+      stateVector = new StateVector('-')
+      assert.approximatelyEquates(stateVector.blochVector(0), [-1, 0, 0])
+    })
+
+    QUnit.test('|i> (bit 0)', assert => {
+      stateVector = new StateVector('i')
+      assert.approximatelyEquates(stateVector.blochVector(0), [0, 1, 0])
+    })
+
+    QUnit.test('|-i> (bit 0)', assert => {
+      stateVector = new StateVector('(-i)')
+      assert.approximatelyEquates(stateVector.blochVector(0), [0, -1, 0])
+    })
+
+    QUnit.test('|0(-i)> (bit 0)', assert => {
+      stateVector = new StateVector('0(-i)')
+      assert.approximatelyEquates(stateVector.blochVector(0), [0, -1, 0])
+    })
+
+    QUnit.test('|0(-i)> (bit 1)', assert => {
+      stateVector = new StateVector('0(-i)')
+      assert.approximatelyEquates(stateVector.blochVector(1), [0, 0, 1])
+    })
+  })
 })
