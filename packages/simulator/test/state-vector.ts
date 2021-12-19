@@ -136,7 +136,7 @@ QUnit.module('StateVector', () => {
 
   QUnit.module('|-i>', hooks => {
     hooks.beforeEach(() => {
-      stateVector = new StateVector('-i')
+      stateVector = new StateVector('(-i)')
     })
 
     QUnit.test('toString', assert => {
@@ -175,6 +175,32 @@ QUnit.module('StateVector', () => {
 
     QUnit.test('ket', assert => {
       assert.equates(stateVector.ket, Matrix.col(1, 0, 0, 0))
+    })
+
+    QUnit.test('nqubit', assert => {
+      assert.equates(stateVector.nqubit, 2)
+    })
+
+    QUnit.test('size', assert => {
+      assert.equates(stateVector.size, 4)
+    })
+  })
+
+  QUnit.module('|0(-i)>', hooks => {
+    hooks.beforeEach(() => {
+      stateVector = new StateVector('0(-i)')
+    })
+
+    QUnit.test('toString', assert => {
+      assert.equates(stateVector.toString(), '{{√½}, {-√½i}, {0}, {0}}')
+    })
+
+    QUnit.test('bra', assert => {
+      assert.equates(stateVector.bra, Matrix.row(1, new Complex(0, 1), 0, 0).times(Math.sqrt(0.5)))
+    })
+
+    QUnit.test('ket', assert => {
+      assert.equates(stateVector.ket, Matrix.col(1, new Complex(0, -1), 0, 0).times(Math.sqrt(0.5)))
     })
 
     QUnit.test('nqubit', assert => {

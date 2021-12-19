@@ -77,11 +77,11 @@ QUnit.module('Simulator', () => {
 
     QUnit.test('|i>.x(0) should be i|-i>', assert => {
       const simulator = new Simulator('i')
-      assert.equates(simulator.x(0).state.matrix, new StateVector('-i').matrix.times(new Complex(0, 1)))
+      assert.equates(simulator.x(0).state.matrix, new StateVector('(-i)').matrix.times(new Complex(0, 1)))
     })
 
     QUnit.test('|-i>.x(0) should be -i|i>', assert => {
-      const simulator = new Simulator('-i')
+      const simulator = new Simulator('(-i)')
 
       assert.equates(simulator.x(0).state.matrix, new StateVector('i').matrix.times(new Complex(0, -1)))
     })
@@ -131,7 +131,7 @@ QUnit.module('Simulator', () => {
       const simulator = new Simulator('i')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
-        new StateVector('-i').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
+        new StateVector('(-i)').matrix.times(e.raisedTo(i.times(π).dividedBy(4)))
       )
     })
 
@@ -140,7 +140,7 @@ QUnit.module('Simulator', () => {
       const i = Complex.I
       const e = new Complex(Math.E, 0)
 
-      const simulator = new Simulator('-i')
+      const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(
         simulator.h(0).state.matrix,
         new StateVector('i').matrix.times(e.raisedTo(i.times(π).dividedBy(-4)))
@@ -186,11 +186,11 @@ QUnit.module('Simulator', () => {
 
     QUnit.test("|i>.phase('pi', 0) should be |-i>", assert => {
       const simulator = new Simulator('i')
-      assert.approximatelyEquates(simulator.phase('pi', 0).state, new StateVector('-i'))
+      assert.approximatelyEquates(simulator.phase('pi', 0).state, new StateVector('(-i)'))
     })
 
     QUnit.test("|-i>.phase('pi', 0) should be |i>", assert => {
-      const simulator = new Simulator('-i')
+      const simulator = new Simulator('(-i)')
       assert.approximatelyEquates(simulator.phase('pi', 0).state, new StateVector('i'))
     })
 
@@ -236,8 +236,8 @@ QUnit.module('Simulator', () => {
 
     QUnit.test("|-i>.rnot(0) should be |-i>.h(0).phase('pi/2', 0).h(0)", assert => {
       assert.approximatelyEquates(
-        new Simulator('-i').rnot(0).state,
-        new Simulator('-i').h(0).phase('pi/2', 0).h(0).state
+        new Simulator('(-i)').rnot(0).state,
+        new Simulator('(-i)').h(0).phase('pi/2', 0).h(0).state
       )
     })
 
@@ -362,7 +362,7 @@ QUnit.module('Simulator', () => {
     })
 
     QUnit.test('|-i>.measure(0) should be |0> or |1>', assert => {
-      const simulator = new Simulator('-i')
+      const simulator = new Simulator('(-i)')
       simulator.measure(0)
 
       assert.ok(

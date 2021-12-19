@@ -1,10 +1,18 @@
-import {Complex, Util} from '@qni/common'
+import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 
 export class StateVector {
   public matrix: Matrix
   public size: number
   public nqubit: number
+
+  get bra(): Matrix {
+    return this.matrix.adjoint()
+  }
+
+  get ket(): Matrix {
+    return this.matrix
+  }
 
   constructor(bits: string | Matrix) {
     if ('string' === typeof bits) {
@@ -17,28 +25,20 @@ export class StateVector {
     this.nqubit = Math.log2(this.size)
   }
 
-  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {
-    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask, controlMask)
-  }
-
-  blochVector(bit: number): [number, number, number] {
-    return this.matrix.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
-  }
-
-  get bra(): Matrix {
-    return this.matrix.adjoint()
-  }
-
-  get ket(): Matrix {
-    return this.matrix
-  }
-
   amplifier(index: number): Complex {
     return this.matrix.cell(0, index)
   }
 
   setAmplifier(index: number, value: Complex): void {
     this.matrix.set(0, index, value)
+  }
+
+  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {
+    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask, controlMask)
+  }
+
+  blochVector(bit: number): [number, number, number] {
+    return this.matrix.qubitDensityMatrix(bit).qubitDensityMatrixToBlochVector()
   }
 
   isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
@@ -50,28 +50,59 @@ export class StateVector {
   }
 
   private bitstringToMatrix(bitString: string): Matrix {
-    if (/^[01+-]+$/.exec(bitString)) {
-      return bitString
-        .split('')
-        .map(each => this.ketVector(each))
-        .reduce((result, each) => result.tensorProduct(each))
-    } else {
-      return this.ketVector(bitString)
-    }
-  }
+    let paren = false
+    let parenToken = ''
+    const kets = []
 
-  private ketVector(bitChar: string): Matrix {
-    const matrices: {[bit: string]: Matrix} = {
-      '0': Matrix.col(1, 0),
-      '1': Matrix.col(0, 1),
-      '+': Matrix.col(1, 1).times(Math.sqrt(0.5)),
-      '-': Matrix.col(1, -1).times(Math.sqrt(0.5)),
-      i: Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)),
-      '-i': Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5))
+    for (const char of bitString.split('')) {
+      switch (char) {
+        case '0': {
+          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          kets.push(Matrix.col(1, 0))
+          break
+        }
+        case '1': {
+          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          kets.push(Matrix.col(0, 1))
+          break
+        }
+        case '+': {
+          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          kets.push(Matrix.col(1, 1).times(Math.sqrt(0.5)))
+          break
+        }
+        case '-': {
+          if (paren) {
+            parenToken += '-'
+          } else {
+            kets.push(Matrix.col(1, -1).times(Math.sqrt(0.5)))
+          }
+          break
+        }
+        case 'i': {
+          if (paren) {
+            parenToken += 'i'
+          } else {
+            kets.push(Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)))
+          }
+          break
+        }
+        case '(': {
+          if (paren) throw new Error(`Invalid bit string: ${bitString}`)
+          paren = true
+          parenToken = ''
+          break
+        }
+        case ')': {
+          if (!paren) throw new Error(`Invalid bit string: ${bitString}`)
+          if (parenToken !== '-i') throw new Error(`Invalid bit string: ${bitString}`)
+          kets.push(Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5)))
+          paren = false
+          break
+        }
+      }
     }
-    const m = matrices[bitChar]
-    Util.notNull(m)
 
-    return m
+    return kets.reduce((result, each) => result.tensorProduct(each))
   }
 }
