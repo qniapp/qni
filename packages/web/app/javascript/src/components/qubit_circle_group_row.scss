@@ -1,7 +1,0 @@
-.qubit-circle-group-row {
-  @apply flex flex-row;
-
-  &:nth-of-type(n+2) {
-    @apply mt-1;
-  }
-}

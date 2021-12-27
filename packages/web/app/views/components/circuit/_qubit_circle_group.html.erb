@@ -1,6 +1,0 @@
-<% body = yield.presence || raise('body is a mandatory') %>
-<% klass = local_assigns[:class] %>
-
-<%= tag.div class: class_string('flex flex-col', klass => klass), data: { target: 'simulator.qubitCircleGroup', drawn: 'false' } do %>
-  <%= body %>
-<% end %>

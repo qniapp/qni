@@ -1,7 +1,0 @@
-<% body = yield.presence || raise('body is a mandatory') %>
-<% active = local_assigns[:active] %>
-<% data = local_assigns[:data] %>
-
-<%= tag.button type: :button, class: class_string('pill', 'pill--active' => active), data: data do %>
-  <%= body %>
-<% end %>
