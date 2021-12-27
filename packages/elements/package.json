@@ -19,6 +19,7 @@
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run icon && npm run css && npm run compile && npm run lint",
     "build": "rollup -c",
+    "build:packages": "yarn build",
     "pretest": "npm run build && rollup -c rollup.config.test.js",
     "test": "karma start test/karma.config.cjs",
     "test:watch": "yarn test --auto-watch --no-single-run",

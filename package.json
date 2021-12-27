@@ -16,10 +16,13 @@
   "license": "MIT",
   "workspaces": [
     "packages/*",
+    "apps/*",
     "examples/elements-example"
   ],
   "scripts": {
     "build": "lerna run build --stream",
+    "build:packages": "lerna run build:packages --stream",
+    "start:www": "yarn build:packages && cd apps/www && ./bin/dev",
     "test": "lerna run test --stream",
     "docs": "lerna run typedoc"
   },
