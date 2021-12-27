@@ -1,7 +1,7 @@
 {
-  "name": "qni",
-  "version": "0.0.93",
-  "description": "Quantum circuit simulator and components.",
+  "name": "@qni/web",
+  "version": "0.0.1",
+  "description": "Web service for @qni.",
   "keywords": [
     "quantum",
     "simulator",
