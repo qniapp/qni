@@ -1,0 +1,5 @@
+build/
+dist/
+doc/
+node_modules/
+src/icon/

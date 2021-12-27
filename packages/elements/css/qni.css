@@ -1,0 +1,226 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+
+@import "tippy.js/dist/border.css";
+@import "tippy.js/dist/svg-arrow.css";
+@import "tippy.js/dist/tippy.css";
+@import './tippy';
+
+@import './angle_slider';
+@import './operation_menu';
+@import './operation_inspector';
+
+@import './html';
+@import './h_gate';
+@import './x_gate';
+@import './y_gate';
+@import './z_gate';
+@import './phase_gate';
+@import './rnot_gate';
+@import './rx_gate';
+@import './ry_gate';
+@import './rz_gate';
+@import './swap_gate';
+@import './control_gate';
+@import './bloch_display';
+@import './write_gate';
+@import './measurement_gate';
+@import './circuit_dropzone';
+@import './palette_dropzone';
+@import './circuit_step';
+@import './quantum_circuit';
+@import './circuit_editor';
+
+@import 'tailwindcss/utilities';
+
+@layer components {
+  .operation {
+    @apply inline-block;
+    @apply h-8 w-8;
+  }
+}
+
+@layer components {
+  .activateable[data-active]::after {
+    @apply border-opacity-100;
+    @apply border-3;
+  }
+
+  .activateable[data-active][data-grabbed]::after {
+    @apply bg-yellow-500 bg-opacity-10;
+  }
+}
+
+@layer components {
+  .draggable {
+    touch-action: none;
+  }
+
+  .draggable::after {
+    @apply absolute inset-0;
+    @apply border-2 border-yellow-500 border-opacity-0;
+    @apply rounded;
+
+    content: "";
+  }
+
+  .draggable[data-grabbed] {
+    @apply cursor-grabbing;
+    @apply bg-white;
+    @apply z-40;
+  }
+
+  palette-dropzone .draggable {
+    @apply cursor-grab;
+  }
+
+  quantum-circuit:not([data-editing]) .draggable {
+    @apply cursor-grab;
+  }
+
+  palette-dropzone .draggable:not([data-grabbed]):hover::after  {
+    @apply border-opacity-100;
+  }
+
+  quantum-circuit:not([data-editing]) .draggable:not([data-active]):hover::after {
+    @apply border-opacity-100;
+  }
+
+  quantum-circuit([data-editing]) .draggable:not([data-operation-x="0"]):not([data-operation-y="0"]):hover::after {
+    @apply border-opacity-100;
+  }
+
+  circuit-dropzone .draggable:not([data-snapped])::part(icon)::before {
+    @apply absolute -top-1/3 -right-1/3;
+    @apply w-6 h-6;
+    @apply z-10;
+
+    content: "";
+    background-image: url('data:image/svg+xml;utf8,<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+  }
+}
+
+@layer components {
+  .ifable[data-if]::before {
+    @apply hidden;
+    @apply font-mono tracking-tighter;
+    @apply text-xs leading-3;
+    @apply absolute;
+  }
+
+  circuit-dropzone .ifable[data-if]:not([data-if=""])::before {
+    @apply flex justify-center;
+    @apply whitespace-nowrap;
+
+    content: "if\2009" attr(data-if);
+  }
+
+  circuit-dropzone .ifable[data-angle][data-if]:not([data-angle=""]):not([data-if=""])::before {
+    @apply flex justify-center;
+    @apply whitespace-nowrap;
+
+    content: attr(data-angle) "\2009if\2009" attr(data-if);
+  }
+
+  /* top label */
+  circuit-dropzone:not([data-connect-top]) .ifable[data-if]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
+  /* top label over wire */
+  circuit-dropzone[data-connect-top][data-connect-bottom] .ifable[data-if]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+                 1px 0 0 #fff;
+  }
+
+  /* bottom label */
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .ifable[data-if]::before {
+    @apply bottom-0 left-0 right-0;
+    @apply -mb-3.5;
+  }
+}
+
+@layer components {
+  .angleable[data-angle]::before {
+    @apply hidden;
+    @apply font-mono tracking-tighter;
+    @apply text-xs leading-3;
+    @apply absolute;
+  }
+
+  circuit-dropzone .angleable[data-reduced-angle=""]:not([data-angle=""])::before {
+    @apply flex justify-center;
+
+    content: attr(data-angle) "";
+  }
+
+  circuit-dropzone .angleable:not([data-reduced-angle=""])::before {
+    @apply flex justify-center;
+
+    content: attr(data-reduced-angle) "";
+  }
+
+  /* top label */
+  circuit-dropzone:not([data-connect-top]) .angleable[data-angle]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
+  /* top label over wire */
+  circuit-dropzone[data-connect-top][data-connect-bottom] .angleable[data-angle]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+                 1px 0 0 #fff;
+  }
+
+  /* bottom label */
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .angleable[data-angle]::before {
+    @apply bottom-0 left-0 right-0;
+    @apply -mb-3.5;
+  }
+}
+
+@layer components {
+  .flaggable[data-flag]::before {
+    @apply hidden;
+    @apply font-mono tracking-tighter;
+    @apply text-xs leading-3;
+    @apply absolute;
+  }
+
+  circuit-dropzone .flaggable[data-flag]:not([data-flag=""])::before {
+    @apply flex justify-center;
+
+    content: attr(data-flag) "";
+  }
+
+  /* top label */
+  circuit-dropzone:not([data-connect-top]) .flaggable[data-flag]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
+  /* top label over wire */
+  circuit-dropzone[data-connect-top][data-connect-bottom] .flaggable[data-flag]::before {
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
+                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
+                 1px 0 0 #fff;
+  }
+
+  /* bottom label */
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .flaggable[data-flag]::before {
+    @apply bottom-0 left-0 right-0;
+    @apply -mb-3.5;
+  }
+}

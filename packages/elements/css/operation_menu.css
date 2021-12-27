@@ -1,0 +1,9 @@
+.operation-menu {
+  & button:disabled {
+    @apply text-gray-300;
+
+    &:hover {
+      @apply bg-transparent;
+    }
+  }
+}

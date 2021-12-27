@@ -1,0 +1,54 @@
+.tippy-box[data-theme~="qni"] {
+  @apply bg-white;
+  @apply border-2 border-solid border-gray-500;
+  @apply text-gray-700;
+  @apply text-xs;
+  @apply md:text-sm;
+
+  /* The border */
+  .tippy-svg-arrow > svg:first-child {
+    fill: theme("colors.gray.500");
+  }
+
+  /* The fill */
+  .tippy-svg-arrow > svg:last-child {
+    fill: theme("colors.white");
+  }
+
+  &[data-placement^="top"] > .tippy-svg-arrow svg:first-child {
+    top: 18px;
+  }
+
+  &[data-placement^="bottom"] > .tippy-svg-arrow svg:first-child {
+    bottom: 18px;
+  }
+
+  &[data-placement^="left"] > .tippy-svg-arrow svg:first-child {
+    left: 13px;
+  }
+
+  &[data-placement^="right"] > .tippy-svg-arrow svg:first-child {
+    right: 13px;
+  }
+
+  /* Description popup */
+  header h1 {
+    @apply font-bold;
+    @apply text-gray-900;
+    @apply text-lg;
+  }
+
+  header p {
+    @apply leading-tight;
+  }
+}
+
+.tippy-box[data-theme~="operation-menu"] {
+  @apply bg-transparent;
+}
+
+.tippy-box[data-theme~="operation-inspector"] {
+  @apply rounded-2xl;
+  @apply bg-white;
+  @apply drop-shadow-lg;
+}

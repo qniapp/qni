@@ -1,0 +1,5 @@
+{
+  "name": "@qni/simulator",
+  "entryPoints": ["src/index.ts"],
+  "out": "doc/"
+}

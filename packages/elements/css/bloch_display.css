@@ -1,0 +1,72 @@
+bloch-display {
+  @apply activateable;
+  @apply draggable;
+  @apply operation;
+
+  @apply rounded;
+
+  /* 3D perspective */
+
+  &[data-size="xs"]::part(perspective) {
+    perspective: 2rem;
+  }
+
+  &[data-size="sm"]::part(perspective) {
+    perspective: 3rem;
+  }
+
+  &::part(perspective),
+  &[data-size="base"]::part(perspective) {
+    perspective: 4rem;
+  }
+
+  &[data-size="lg"]::part(perspective) {
+    perspective: 5rem;
+  }
+
+  &[data-size="xl"]::part(perspective) {
+    perspective: 6rem;
+  }
+
+  /* Bloch sphere lines */
+
+  &::part(sphere-border) {
+    @apply border-2;
+    @apply border-gray-400;
+    @apply bg-green-50;
+  }
+
+  &::part(sphere-lines) {
+    @apply text-gray-400;
+  }
+
+  &::part(vector-line-rect) {
+    @apply bg-gray-900;
+  }
+
+  /* Bloch vector end */
+
+  &::part(vector-end-circle) {
+    @apply bg-red-500;
+  }
+
+  &[data-d="0"]::part(vector-end-circle) {
+    @apply bg-blue-500;
+  }
+
+  &::part(vector-end-circle) {
+    height: 6px;
+    width: 6px;
+  }
+
+  &[data-size='xs']::part(vector-end-circle) {
+    height: 4px;
+    width: 4px;
+  }
+
+  &[data-size='lg']::part(vector-end-circle),
+  &[data-size='xl']::part(vector-end-circle) {
+    height: 8px;
+    width: 8px;
+  }
+}

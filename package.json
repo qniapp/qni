@@ -1,0 +1,31 @@
+{
+  "name": "@qni/monorepo",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Toy quantum simulator app.",
+  "author": "@yasuhito",
+  "homepage": "https://github.com/qniapp/qni#readme",
+  "bugs": {
+    "url": "https://github.com/qniapp/qni/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qniapp/qni.git"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/common",
+    "packages/elements",
+    "packages/simulator",
+    "examples/elements-example"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream",
+    "docs": "lerna run typedoc"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "plugin:github/recommended",
+    "plugin:github/browser",
+    "plugin:github/typescript"
+  ],
+  "rules": {
+    "i18n-text/no-en": "off"
+  },
+  "ignorePatterns": ["/dist/", "/doc/", "rollup.config.js"]
+}

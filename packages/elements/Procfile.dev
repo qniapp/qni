@@ -1,0 +1,2 @@
+web: yarn web
+css: yarn watch:css

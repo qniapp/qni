@@ -1,0 +1,3 @@
+html[data-grabbing] {
+  @apply cursor-grabbing;
+}

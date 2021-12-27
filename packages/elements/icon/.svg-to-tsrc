@@ -1,0 +1,16 @@
+{
+  "conversionType": "constants",
+  "srcFiles": ["./icon/*.svg"],
+  "outputDirectory": "./src/icon",
+  "interfaceName": "icon",
+  "prefix": "icon",
+  "delimiter": "KEBAB",
+  "fileName": "index",
+  "svgoConfig": {
+    "plugins": [
+      "cleanupAttrs",
+      "removeEditorsNSData"
+    ]
+  },
+  "compileSources": false
+}

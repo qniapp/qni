@@ -1,0 +1,93 @@
+{
+  "name": "@qni/elements",
+  "version": "0.0.1",
+  "description": "Quantum circuit components.",
+  "author": "@yasuhito",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasuhito/qni-elements.git"
+  },
+  "main": "dist/index.js",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist build",
+    "compile": "tsc",
+    "prelint": "npm run icon && npm run compile",
+    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
+    "prebuild": "npm run icon && npm run css && npm run compile && npm run lint",
+    "build": "rollup -c",
+    "pretest": "npm run build && rollup -c rollup.config.test.js",
+    "test": "karma start test/karma.config.cjs",
+    "test:watch": "yarn test --auto-watch --no-single-run",
+    "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
+    "watch:css": "yarn css --watch",
+    "icon": "svg-to-ts --config icon/.svg-to-tsrc",
+    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+  },
+  "keywords": [
+    "quantum",
+    "circuit",
+    "components",
+    "quantum-computing"
+  ],
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/yasuhito/qni-elements#readme",
+  "prettier": "@github/prettier-config",
+  "dependencies": {
+    "@github/catalyst": "^1.1.4",
+    "@github/jtml": "^0.4.0",
+    "@interactjs/actions": "^1.10.11",
+    "@interactjs/auto-start": "^1.10.11",
+    "@interactjs/dev-tools": "^1.10.11",
+    "@interactjs/interact": "^1.10.11",
+    "@interactjs/modifiers": "^1.10.11",
+    "@qni/common": "^0.0.1",
+    "fraction.js": "^4.1.2",
+    "interactjs": "^1.10.11",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@tailwindcss/forms": "^0.4.0",
+    "autoprefixer": "^10.4.0",
+    "chai": "^4.3.4",
+    "eslint": "^8.2.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-custom-elements": "^0.0.4",
+    "eslint-plugin-github": "^4.3.4",
+    "foreman": "^3.0.1",
+    "karma": "^6.3.8",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^9.1.3",
+    "postcss": "^8.3.11",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^5.0.6",
+    "postcss-preset-env": "^7.0.1",
+    "rollup": "^2.59.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "svg-to-ts": "^7.1.0",
+    "tailwindcss": "^3.0.5",
+    "typedoc": "^0.22.8",
+    "typescript": "^4.4.4"
+  },
+  "eslintIgnore": [
+    "build/",
+    "dist/",
+    "doc/",
+    "icon/",
+    "rollup.config.js",
+    "rollup.config.test.js",
+    "tailwind.config.cjs"
+  ]
+}

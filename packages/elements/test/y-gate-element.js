@@ -1,0 +1,27 @@
+import {testDisableable} from './common/test-disableable'
+import {testDraggableOperation} from './common/test-draggable'
+import {testElementCreation} from './common/test-element-creation'
+import {testIconable} from './common/test-iconable'
+import {testWireableOperation} from './common/test-wireable'
+
+describe('y-gate element', function () {
+  describe('element creation', function () {
+    testElementCreation(window.YGateElement, 'y-gate')
+  })
+
+  describe('iconable', function () {
+    testIconable('y-gate')
+  })
+
+  describe('disableable', function () {
+    testDisableable('y-gate')
+  })
+
+  describe('wireable', function () {
+    testWireableOperation('y-gate')
+  })
+
+  describe('draggable', function () {
+    testDraggableOperation('y-gate')
+  })
+})

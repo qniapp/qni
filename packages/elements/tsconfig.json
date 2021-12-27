@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2017",
+    "strict": true,
+    "declaration": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "typeRoots": ["src/@types"],
+    "skipLibCheck": true
+  },
+  "files": ["src/index.ts"]
+}

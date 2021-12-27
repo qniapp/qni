@@ -1,0 +1,8 @@
+quantum-circuit {
+  @apply flex;
+  @apply flex-col;
+  @apply w-min;
+  @apply sm:flex-col;
+  @apply md:flex-row;
+  @apply items-start;
+}

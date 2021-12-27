@@ -1,0 +1,935 @@
+import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
+import {CircuitStepElement, SerializedStep, isCircuitStepElement} from './circuit-step-element'
+import {HGateElement, HGateElementProps} from './h-gate-element'
+import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
+import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
+import {RxGateElement, RxGateElementProps} from './rx-gate-element'
+import {RyGateElement, RyGateElementProps} from './ry-gate-element'
+import {RzGateElement, RzGateElementProps} from './rz-gate-element'
+import {XGateElement, XGateElementProps} from './x-gate-element'
+import {YGateElement, YGateElementProps} from './y-gate-element'
+import {ZGateElement, ZGateElementProps} from './z-gate-element'
+import {attr, controller} from '@github/catalyst'
+import {html, render} from '@github/jtml'
+import {BlochDisplayElement} from './bloch-display-element'
+import {ControlGateElement} from './control-gate-element'
+import {MeasurementGateElement} from './measurement-gate-element'
+import {Operation} from './operation'
+import {SwapGateElement} from './swap-gate-element'
+import {Util} from '@qni/common'
+import {WriteGateElement} from './write-gate-element'
+
+export type SnapTarget = {
+  dropzone: CircuitDropzoneElement | null
+  stepIndex: number | null
+  wireIndex: number
+}
+
+@controller
+export class QuantumCircuitElement extends HTMLElement {
+  @attr minStepCount = 1
+  @attr minWireCount = 1
+  @attr editing = false
+
+  // Controlled-H
+  @attr chDisabled = false
+  @attr chMaxControlGates = 0
+  @attr chMaxTargetGates = 0
+  // Controlled-NOT
+  @attr cnotDisabled = false
+  @attr cnotMaxControlGates = 0
+  @attr cnotMaxTargetGates = 0
+  // Controlled-Y
+  @attr cyDisabled = false
+  @attr cyMaxControlGates = 0
+  @attr cyMaxTargetGates = 0
+  // Controlled-Z
+  @attr czDisabled = false
+  @attr czMaxControlGates = 0
+  @attr czMaxTargetGates = 0
+  // Controlled-Phase
+  @attr cphaseDisabled = false
+  @attr cphaseMaxControlGates = 0
+  @attr cphaseMaxTargetGates = 0
+  // Controlled-√X
+  @attr crnotDisabled = false
+  @attr crnotMaxControlGates = 0
+  @attr crnotMaxTargetGates = 0
+  // Controlled-Rx
+  @attr crxDisabled = false
+  @attr crxMaxControlGates = 0
+  @attr crxMaxTargetGates = 0
+  // Controlled-Ry
+  @attr cryDisabled = false
+  @attr cryMaxControlGates = 0
+  @attr cryMaxTargetGates = 0
+  // Controlled-Rz
+  @attr crzDisabled = false
+  @attr crzMaxControlGates = 0
+  @attr crzMaxTargetGates = 0
+  // Controlled-Swap
+  @attr cswapDisabled = false
+  @attr cswapMaxControlGates = 0
+  // Swap
+  @attr swapDisabled = false
+  // CZ
+  @attr controlControlDisabled = false
+  @attr controlControlMaxTargetGates = 0
+  // CPHASE
+  @attr phasePhaseDisabled = false
+  @attr phasePhaseMaxTargetGates = 0
+
+  private snapTargets!: {
+    [i: number]: {
+      [j: number]: SnapTarget
+    }
+  }
+
+  private get wireCount(): number {
+    return this.stepAt(0).wireCount
+  }
+
+  get activeStepIndex(): number | null {
+    const step = this.activeStep
+    if (step === null) return null
+
+    const index = this.steps.indexOf(step)
+    Util.need(index !== -1, `circuit-step index of ${step} not found.`)
+
+    return index
+  }
+
+  private get activeStep(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.active)
+
+    return step || null
+  }
+
+  private get steps(): CircuitStepElement[] {
+    return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
+  }
+
+  private get emptySteps(): CircuitStepElement[] {
+    return this.steps.filter(each => each.isEmpty)
+  }
+
+  private get largestStep(): CircuitStepElement | null {
+    let step = null
+    let max = 0
+
+    for (const each of this.steps) {
+      if (each.wireCount > 0 && each.wireCount > max) {
+        step = each
+        max = each.wireCount
+      }
+    }
+
+    return step
+  }
+
+  private appendMinimumSteps(): void {
+    const nsteps = this.minStepCount - this.steps.length
+
+    for (let i = 0; i < nsteps; i++) {
+      this.append(new CircuitStepElement())
+    }
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  stepAt(stepIndex: number): CircuitStepElement {
+    const step = this.steps[stepIndex]
+    Util.notNull(step)
+
+    return step
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  addShadowStepAfter(stepIndex: number): CircuitStepElement {
+    const newStep = new CircuitStepElement()
+    newStep.shadow = true
+    for (let i = 0; i < this.wireCount; i++) {
+      newStep.appendDropzone()
+    }
+
+    if (stepIndex === -1) {
+      this.prepend(newStep)
+    } else {
+      const step = this.steps[stepIndex]
+      Util.notNull(step.parentElement)
+
+      step.parentElement.insertBefore(newStep, step.nextSibling)
+    }
+
+    return newStep
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  activateStep(step: CircuitStepElement): void {
+    this.deactivateAllSteps()
+    step.active = true
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  deactivateAllSteps(): void {
+    for (const each of this.steps) {
+      each.active = false
+    }
+  }
+
+  /**
+   * @category Circuit Step
+   */
+  setBreakpoint(step: CircuitStepElement): void {
+    for (const each of this.steps) {
+      each.breakpoint = false
+    }
+    step.breakpoint = true
+  }
+
+  private get dropzones(): CircuitDropzoneElement[] {
+    return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
+  }
+
+  private get operations(): Operation[] {
+    return this.dropzones
+      .map<Operation | null>(each => each.operation)
+      .filter((each: Operation | null) => each !== null) as Operation[]
+  }
+
+  private get isVertical(): boolean {
+    return window.getComputedStyle(this).flexDirection === 'column'
+  }
+
+  /**
+   * @category Custom Elements
+   */
+  connectedCallback(): void {
+    this.attachShadow({mode: 'open'})
+    this.update()
+    this.appendMinimumSteps()
+    this.appendMinimumWires()
+    this.updateAllWires()
+
+    this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
+    this.addEventListener('operation-delete', this.updateConnections)
+    this.addEventListener('circuit-step-update', this.updateConnections)
+    this.addEventListener('circuit-step-occupied', this.updateChangedWire)
+    this.addEventListener('circuit-step-snap', this.updateConnections)
+    this.addEventListener('circuit-step-snap', this.updateChangedWire)
+    this.addEventListener('circuit-step-unsnap', this.updateConnections)
+    this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
+  }
+
+  private update(): void {
+    render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  private updateConnections(event: Event): void {
+    const step = event.target as CircuitStepElement
+    this.updateStepConnections(step)
+  }
+
+  private updateStepConnections(step: CircuitStepElement): void {
+    step.updateConnections({
+      // Controlled-H
+      disableCh: this.chDisabled,
+      maxChControlGates: this.chMaxControlGates,
+      maxChTargetGates: this.chMaxTargetGates,
+      // Controlled-NOT
+      disableCnot: this.cnotDisabled,
+      maxCnotControlGates: this.cnotMaxControlGates,
+      maxCnotTargetGates: this.cnotMaxTargetGates,
+      // Controlled-Y
+      disableCy: this.cyDisabled,
+      maxCyControlGates: this.cyMaxControlGates,
+      maxCyTargetGates: this.cyMaxTargetGates,
+      // Controlled-Z
+      disableCz: this.czDisabled,
+      maxCzControlGates: this.czMaxControlGates,
+      maxCzTargetGates: this.czMaxTargetGates,
+      // Controlled-Phase
+      disableCphase: this.cphaseDisabled,
+      maxCphaseControlGates: this.cphaseMaxControlGates,
+      maxCphaseTargetGates: this.cphaseMaxTargetGates,
+      // Controlled-√X
+      disableCrnot: this.crnotDisabled,
+      maxCrnotControlGates: this.crnotMaxControlGates,
+      maxCrnotTargetGates: this.crnotMaxTargetGates,
+      // Controlled-Rx
+      disableCrx: this.crxDisabled,
+      maxCrxControlGates: this.crxMaxControlGates,
+      maxCrxTargetGates: this.crxMaxTargetGates,
+      // Controlled-Rx
+      disableCry: this.cryDisabled,
+      maxCryControlGates: this.cryMaxControlGates,
+      maxCryTargetGates: this.cryMaxTargetGates,
+      // Controlled-Rx
+      disableCrz: this.crzDisabled,
+      maxCrzControlGates: this.crzMaxControlGates,
+      maxCrzTargetGates: this.crzMaxTargetGates,
+      // Controlled-Swap
+      disableCswap: this.cswapDisabled,
+      maxCswapControlGates: this.cswapMaxControlGates,
+      // Swap
+      disableSwap: this.swapDisabled,
+      // CZ
+      disableControlControl: this.controlControlDisabled,
+      maxControlControlTargetGates: this.controlControlMaxTargetGates,
+      // CPHASE
+      disablePhasePhase: this.phasePhaseDisabled,
+      maxPhasePhaseTargetGates: this.phasePhaseMaxTargetGates
+    })
+  }
+
+  private dispatchMouseleaveEvent(): void {
+    this.dispatchEvent(new Event('quantum-circuit-mouseleave', {bubbles: true}))
+  }
+
+  resize(): void {
+    this.removeEmptySteps()
+    this.appendMinimumSteps()
+    this.appendMinimumWires()
+    this.removeLastEmptyWires()
+    this.updateAllWires()
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  h(...args: number[] | [HGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const h = new HGateElement()
+      if (disabled) h.disable()
+      return h
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  x(...args: number[] | [XGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const x = new XGateElement()
+      if (disabled) x.disable()
+      return x
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  y(...args: number[] | [YGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const y = new YGateElement()
+      if (disabled) y.disable()
+      return y
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  z(...args: number[] | [ZGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const z = new ZGateElement()
+      if (disabled) z.disable()
+      return z
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  phase(...args: number[] | [string, ...number[]] | [PhaseGateElementProps]): QuantumCircuitElement {
+    let angle = ''
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else if (typeof args[0] === 'string') {
+      angle = args[0]
+      targets = args.slice(1) as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    const step = this.applyOperationToTargets(() => {
+      const phase = new PhaseGateElement()
+      phase.angle = angle
+      if (disabled) phase.disable()
+      return phase
+    }, ...targets)
+    if (targets.length > 1) this.updateStepConnections(step)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rnot(...args: number[] | [RnotGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rnot = new RnotGateElement()
+      if (disabled) rnot.disable()
+      return rnot
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rx(...args: number[] | [RxGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rx = new RxGateElement()
+      if (disabled) rx.disable()
+      return rx
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  ry(...args: number[] | [RyGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const ry = new RyGateElement()
+      if (disabled) ry.disable()
+      return ry
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  rz(...args: number[] | [RzGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const rz = new RzGateElement()
+      if (disabled) rz.disable()
+      return rz
+    }, ...targets)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  swap(...targets: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targets)
+    this.updateStepConnections(step)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  control(...targets: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targets)
+    this.updateStepConnections(step)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  bloch(...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targets)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  write(value: '0' | '1', ...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => {
+      const writeGate = new WriteGateElement()
+      writeGate.value = value
+      return writeGate
+    }, ...targets)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  measure(...targets: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targets)
+    return this
+  }
+
+  private applyOperationToTargets(constructor: () => Operation, ...targets: number[]): CircuitStepElement {
+    const nbit = Math.max(...targets) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of targets) {
+      const operation = constructor()
+      step.dropzoneAt(each).put(operation)
+    }
+
+    this.appendMinimumWires()
+
+    return step
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  ch(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(HGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(XGateElement, control, target)
+    return this
+  }
+  cx = this.cnot
+
+  /**
+   * @category Circuit Operation
+   */
+  cy(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(YGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cz(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(ZGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cphase(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(PhaseGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RnotGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crx(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RxGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cry(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RyGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  crz(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(RzGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cswap(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(SwapGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  cc(...targets: number[]): QuantumCircuitElement {
+    const nbit = Math.max(...targets) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of targets) {
+      step.dropzoneAt(each).put(new ControlGateElement())
+    }
+
+    this.appendMinimumWires()
+    this.updateStepConnections(step)
+
+    return this
+  }
+
+  private controlledU(
+    constructor:
+      | typeof HGateElement
+      | typeof XGateElement
+      | typeof YGateElement
+      | typeof ZGateElement
+      | typeof PhaseGateElement
+      | typeof RnotGateElement
+      | typeof RxGateElement
+      | typeof RyGateElement
+      | typeof RzGateElement
+      | typeof SwapGateElement,
+    control: number | number[],
+    target: number | number[]
+  ): void {
+    const controls = ([] as number[]).concat(...[control])
+    const targets = ([] as number[]).concat(...[target])
+
+    const bits = controls.concat(targets)
+    const nbit = Math.max(...bits) + 1
+    const step = this.appendStepWithDropzones(nbit)
+
+    for (const each of controls) {
+      step.dropzoneAt(each).put(new ControlGateElement())
+    }
+    for (const each of targets) {
+      step.dropzoneAt(each).put(new constructor())
+    }
+
+    this.appendMinimumWires()
+    this.updateStepConnections(step)
+  }
+
+  private appendStepWithDropzones(nbit: number): CircuitStepElement {
+    const step = new CircuitStepElement()
+    this.append(step)
+
+    for (let i = 0; i < nbit; i++) {
+      const dropzone = new CircuitDropzoneElement()
+      step.append(dropzone)
+    }
+
+    return step
+  }
+
+  private updateAllWires(): void {
+    const firstStep = this.steps[0]
+    if (firstStep === undefined) return
+
+    const wireCount = firstStep.dropzones.length
+    for (let i = 0; i < wireCount; i++) {
+      this.updateWire(i)
+    }
+  }
+
+  activateOperation(operation: Operation): void {
+    for (const each of this.operations) {
+      each.active = false
+    }
+    operation.active = true
+  }
+
+  appendWire(): void {
+    for (const each of this.steps) {
+      each.appendDropzone()
+    }
+  }
+
+  removeLastEmptyWires(): void {
+    while (this.steps.every(each => each.wireCount > this.minWireCount && !each.lastDropzone.occupied)) {
+      for (const each of this.steps) {
+        each.lastDropzone.remove()
+      }
+    }
+  }
+
+  private removeEmptySteps(): void {
+    for (const each of this.emptySteps) {
+      each.remove()
+    }
+  }
+
+  private appendMinimumWires(): void {
+    const largestStep = this.largestStep
+    const largestWireCount =
+      largestStep && largestStep.wireCount > this.minWireCount ? largestStep.wireCount : this.minWireCount
+
+    for (const each of this.steps) {
+      const nDropzone = largestWireCount - each.wireCount
+      for (let i = 0; i < nDropzone; i++) {
+        each.appendDropzone()
+      }
+    }
+  }
+
+  private updateWire(wireIndex: number): void {
+    let wireQuantum = false
+
+    for (const step of this.steps) {
+      const dropzone = step.dropzoneAt(wireIndex)
+
+      dropzone.inputWireQuantum = wireQuantum
+      if (dropzone.operationName === 'write-gate') {
+        dropzone.inputWireQuantum = wireQuantum
+        dropzone.outputWireQuantum = true
+        wireQuantum = true
+      } else if (dropzone.operationName === 'measurement-gate') {
+        dropzone.inputWireQuantum = wireQuantum
+        dropzone.outputWireQuantum = false
+        wireQuantum = false
+      } else {
+        dropzone.inputWireQuantum = wireQuantum
+        dropzone.outputWireQuantum = wireQuantum
+      }
+    }
+  }
+
+  private updateChangedWire(event: Event): void {
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    const dropzone = (event as CustomEvent).detail.dropzone
+    if (!isCircuitDropzoneElement(dropzone)) throw new Error(`${dropzone} isn't a circuit-dropzone.`)
+
+    const wireIndex = step.dropzones.indexOf(dropzone)
+    Util.need(wireIndex !== -1, 'circuit-dropzone not found.')
+
+    this.updateWire(wireIndex)
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  set draggable(value: boolean) {
+    for (const each of this.operations) {
+      each.draggable = value
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  snapTargetAt(x: number, y: number): SnapTarget {
+    if (this.isVertical) {
+      return this.snapTargets[y][x]
+    } else {
+      return this.snapTargets[x][y]
+    }
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  setSnapTargets(operation: Operation): void {
+    const freeDropzones = this.dropzones.filter(each => !each.occupied)
+    const snapTargets = []
+    this.snapTargets = {}
+
+    const myDropzone = operation.dropzone
+    if (isCircuitDropzoneElement(myDropzone)) freeDropzones.push(myDropzone)
+
+    for (const [dropzoneIndex, each] of Object.entries(this.dropzones)) {
+      const snapTarget = each.snapTarget
+      const i = this.isVertical ? snapTarget.y : snapTarget.x
+      const j = this.isVertical ? snapTarget.x : snapTarget.y
+      const wireIndex = parseInt(dropzoneIndex) % this.wireCount
+
+      const prevI = i - operation.snapRange * 0.75
+      const nextI = i + operation.snapRange * 0.75
+
+      if (parseInt(dropzoneIndex) < this.wireCount) {
+        if (this.isVertical) {
+          snapTargets.push({x: j, y: prevI})
+        } else {
+          snapTargets.push({x: prevI, y: j})
+        }
+        if (this.snapTargets[prevI] === undefined) this.snapTargets[prevI] = {}
+        if (this.snapTargets[prevI][j] === undefined)
+          this.snapTargets[prevI][j] = {
+            dropzone: null,
+            stepIndex: -1,
+            wireIndex
+          }
+      }
+
+      if (this.isVertical) {
+        snapTargets.push({x: j, y: nextI})
+      } else {
+        snapTargets.push({x: nextI, y: j})
+      }
+      if (this.snapTargets[nextI] === undefined) this.snapTargets[nextI] = {}
+      if (this.snapTargets[nextI][j] === undefined)
+        this.snapTargets[nextI][j] = {
+          dropzone: null,
+          stepIndex: Math.floor(parseInt(dropzoneIndex) / this.wireCount),
+          wireIndex
+        }
+
+      if (!each.occupied || each === myDropzone) {
+        snapTargets.push(snapTarget)
+      }
+
+      if (this.snapTargets[i] === undefined) this.snapTargets[i] = {}
+      if (this.snapTargets[i][j] === undefined)
+        this.snapTargets[i][j] = {
+          dropzone: each,
+          stepIndex: null,
+          wireIndex
+        }
+    }
+
+    operation.snapTargets = snapTargets
+  }
+
+  /**
+   * @category Drag and Drop
+   */
+  updateSnapTargets(newDropzones: CircuitDropzoneElement[]): void {
+    const firstDropzone = newDropzones[0]
+    Util.notNull(firstDropzone)
+
+    const baseI = this.isVertical ? firstDropzone.snapTarget.y : firstDropzone.snapTarget.x
+
+    for (const [i, jv] of Object.entries(this.snapTargets)) {
+      if (parseInt(i) <= baseI) continue
+
+      for (const j in jv) {
+        const snapTarget = jv[j]
+        if (snapTarget.stepIndex === null) continue
+        snapTarget.stepIndex += 1
+      }
+    }
+
+    for (const [wireIndex, each] of Object.entries(newDropzones)) {
+      const snapTarget = each.snapTarget
+      const i = this.isVertical ? snapTarget.y : snapTarget.x
+      const j = this.isVertical ? snapTarget.x : snapTarget.y
+
+      Util.notNull(this.snapTargets[i])
+
+      this.snapTargets[i][j] = {
+        dropzone: each,
+        stepIndex: null,
+        wireIndex: parseInt(wireIndex)
+      }
+    }
+  }
+
+  serialize(): SerializedStep[] {
+    return this.steps.map(each => each.serialize())
+  }
+}

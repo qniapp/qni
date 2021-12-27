@@ -1,0 +1,59 @@
+circuit-dropzone {
+  /* Size */
+  @apply h-12 w-8;
+  @apply md:h-8 md:w-12;
+
+  /* Wires */
+  &::part(wires) {
+    @apply absolute;
+    @apply inset-0;
+    @apply w-full h-full;
+
+    @apply overflow-visible;
+    @apply transform-gpu origin-center;
+    @apply rotate-90;
+    @apply sm:rotate-90;
+    @apply md:rotate-0;
+  }
+
+  &[data-shadow]::part(wires) {
+    display: none;
+  }
+
+  &::part(connect-top),
+  &::part(connect-bottom) {
+    @apply text-green-500;
+  }
+
+  &::part(wire-input),
+  &::part(wire-output) {
+    @apply text-gray-200;
+  }
+
+  &[data-connect-top]::part(connect-top) {
+    transform-origin: center;
+    transform: scaleY(1.8);
+  }
+
+  &[data-connect-bottom]::part(connect-bottom) {
+    transform-origin: center;
+    transform: scaleY(1.8);
+  }
+
+  &[data-input-wire-quantum]::part(wire-input),
+  &[data-output-wire-quantum]::part(wire-output) {
+    @apply text-gray-900;
+  }
+
+  &[data-operation-name="write-gate"]::part(wire-input),
+  &[data-operation-name="measurement-gate"]::part(wire-input) {
+    transform-origin: left;
+    transform: scaleX(0.33);
+  }
+
+  &[data-operation-name="write-gate"]::part(wire-output),
+  &[data-operation-name="measurement-gate"]::part(wire-output) {
+    transform-origin: right;
+    transform: scaleX(0.33);
+  }
+}

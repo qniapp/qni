@@ -1,0 +1,22 @@
+x-gate {
+  @apply activateable;
+  @apply draggable;
+  @apply ifable;
+  @apply operation;
+
+  @apply rounded;
+
+  &::part(body) {
+    @apply h-full w-full;
+    @apply bg-green-500;
+    @apply rounded-full;
+  }
+
+  &[data-disabled]::part(body) {
+    @apply bg-gray-500;
+  }
+
+  &::part(icon) {
+    @apply text-white;
+  }
+}
