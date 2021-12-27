@@ -1,5 +1,0 @@
-@import "shape";
-
-.gate {
-  @include gate-shape("square", "rounded");
-}

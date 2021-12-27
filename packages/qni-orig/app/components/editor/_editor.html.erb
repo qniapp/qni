@@ -1,9 +1,0 @@
-<% editor = local_assigns.fetch(:editor) %>
-
-<div id="editor"
-     class="editor relative h-full"
-     data-controller="editor"
-     data-action="circuitUpdateEvent->editor#onCircuitUpdate"
-     data-editor-max-nqubit="<%= Qni::MAX_NQUBIT %>">
-  <%= editor.content %>
-</div>
