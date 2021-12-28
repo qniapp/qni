@@ -1,5 +1,8 @@
 {
   "version": "0.0.4",
+  "publishConfig": {
+    "access": "public"
+  },
   "npmClient": "yarn",
   "useWorkspaces": true
 }
