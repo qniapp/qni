@@ -28,7 +28,7 @@
     "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
     "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'",
     "pretest": "yarn build && yarn build:css",
-    "test": "karma start && ./bin/rails test:system test",
+    "test": "karma start && MINITEST_REPORTER=SpecReporter ./bin/rails test:system test",
     "test:ci": "karma start && bundle && ./bin/rails test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "watch": "rollup -wc",
