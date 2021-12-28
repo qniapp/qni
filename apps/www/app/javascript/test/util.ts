@@ -1,49 +1,34 @@
-import { ArrayIsh, equate, hasOwnProperty } from "lib/equate"
-import { Complex } from "lib/complex"
-import { describe } from "lib/describe"
+import {ArrayIsh, equate, hasOwnProperty} from 'lib/equate'
+import {Complex} from 'lib/complex'
+import {describe} from 'lib/describe'
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)
 }
 
-export function isApproximatelyEqualTo(
-  subject: unknown,
-  other: unknown,
-  epsilon = 0.000001,
-): boolean {
+export function isApproximatelyEqualTo(subject: unknown, other: unknown, epsilon = 0.000001): boolean {
   return isApproximatelyEqualToHelper(subject, other, epsilon)
 }
 
-export function isNotApproximatelyEqualTo(
-  subject: unknown,
-  other: unknown,
-  epsilon = 0.000001,
-): boolean {
+export function isNotApproximatelyEqualTo(subject: unknown, other: unknown, epsilon = 0.000001): boolean {
   return !isApproximatelyEqualToHelper(subject, other, epsilon)
 }
 
-export function isApproximatelyEqualToHelper(
-  subject: unknown,
-  other: unknown,
-  epsilon: number,
-): boolean {
+export function isApproximatelyEqualToHelper(subject: unknown, other: unknown, epsilon: number): boolean {
   if (subject === null) {
     return other === null
   } else if (subject === undefined) {
     return other === undefined
   } else if (hasIsApproximatelyEqualTo(subject)) {
     return subject.isApproximatelyEqualTo(other, epsilon)
-  } else if (typeof subject === "number") {
+  } else if (typeof subject === 'number') {
     return (
       subject === other ||
-      (typeof other === "number" && isNaN(subject) && isNaN(other)) ||
-      (typeof other === "number" && Math.abs(subject - other) < epsilon)
+      (typeof other === 'number' && isNaN(subject) && isNaN(other)) ||
+      (typeof other === 'number' && Math.abs(subject - other) < epsilon)
     )
   } else if (isArrayIsh(subject)) {
-    if (
-      !isArrayIsh(other) ||
-      (isArrayIsh(other) && other.length !== subject.length)
-    ) {
+    if (!isArrayIsh(other) || (isArrayIsh(other) && other.length !== subject.length)) {
       return false
     }
     for (let i = 0; i < subject.length; i++) {
@@ -52,10 +37,7 @@ export function isApproximatelyEqualToHelper(
       }
     }
     return true
-  } else if (
-    subject instanceof Object &&
-    subject.toString() === "[object Object]"
-  ) {
+  } else if (subject instanceof Object && subject.toString() === '[object Object]') {
     return isApproximatelyEqualToHelperDestructured(subject, other, epsilon)
   } else if (subject === other) {
     return true
@@ -67,15 +49,11 @@ export function isApproximatelyEqualToHelper(
 function hasIsApproximatelyEqualTo(object: unknown): object is Complex {
   return (
     (object as Complex).isApproximatelyEqualTo !== undefined &&
-    typeof (object as Complex).isApproximatelyEqualTo === "function"
+    typeof (object as Complex).isApproximatelyEqualTo === 'function'
   )
 }
 
-function isApproximatelyEqualToHelperDestructured(
-  subject: unknown,
-  other: unknown,
-  epsilon: number,
-): boolean {
+function isApproximatelyEqualToHelperDestructured(subject: unknown, other: unknown, epsilon: number): boolean {
   const keys = []
   for (const subjectKey in subject as Record<string, unknown>) {
     if (hasOwnProperty(subject as Record<string, unknown>, subjectKey)) {
@@ -92,13 +70,13 @@ function isApproximatelyEqualToHelperDestructured(
   }
 
   return keys.every(
-    (key) =>
+    key =>
       hasOwnProperty(other as Record<string, unknown>, key) &&
       isApproximatelyEqualToHelper(
         (subject as Record<string, unknown>)[key],
         (other as Record<string, unknown>)[key],
-        epsilon,
-      ),
+        epsilon
+      )
   )
 }
 

@@ -1,16 +1,16 @@
-import { html, render } from "@github/jtml"
-import { CircuitOperationElement } from "../lib"
-import { Operation } from "./mixins/sizeable"
-import { Util } from "lib/util"
-import { controller } from "@github/catalyst"
+import {html, render} from '@github/jtml'
+import {CircuitOperationElement} from '../lib'
+import {Operation} from './mixins/sizeable'
+import {Util} from 'lib/util'
+import {controller} from '@github/catalyst'
 
 @controller
 export class PaletteDropzoneElement extends HTMLElement {
   connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
 
-    this.addEventListener("dragAndDroppable.trash", this.removeOperation)
+    this.addEventListener('dragAndDroppable.trash', this.removeOperation)
   }
 
   update(): void {
@@ -30,7 +30,7 @@ export class PaletteDropzoneElement extends HTMLElement {
         <div data-action="dragAndDroppable.grab:palette-dropzone#newOperation">
           <slot></slot>
         </div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 
@@ -40,7 +40,7 @@ export class PaletteDropzoneElement extends HTMLElement {
 
     operation.disableHelp()
     // ???: newOperation.grabbed = false
-    newOperation.removeAttribute("data-grabbed")
+    newOperation.removeAttribute('data-grabbed')
 
     this.prepend(newOperation)
   }

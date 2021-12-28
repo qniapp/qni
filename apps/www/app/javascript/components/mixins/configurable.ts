@@ -1,12 +1,12 @@
-import { Constructor } from "./constructor"
-import { GatePopup } from "lib/gatePopup"
+import {Constructor} from './constructor'
+import {GatePopup} from 'lib/gatePopup'
 
 export declare class Configurable {
   showRightClickPopup(event: MouseEvent): void
 }
 
 export function ConfigurableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
+  Base: TBase
 ): Constructor<Configurable> & TBase {
   class ConfigurableMixinClass extends Base {
     showRightClickPopup(event: MouseEvent): void {

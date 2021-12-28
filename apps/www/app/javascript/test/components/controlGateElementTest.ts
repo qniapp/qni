@@ -1,7 +1,7 @@
-import "components"
-import { ControlGateElement } from "components/controlGateElement"
+import 'components'
+import {ControlGateElement} from 'components/controlGateElement'
 
-QUnit.module("ControlGate", (hooks) => {
+QUnit.module('ControlGate', hooks => {
   let el: ControlGateElement
 
   hooks.beforeEach(() => {
@@ -12,20 +12,20 @@ QUnit.module("ControlGate", (hooks) => {
     document.body.removeChild(el)
   })
 
-  QUnit.test(".disable()", (assert) => {
+  QUnit.test('.disable()', assert => {
     document.body.append(el)
     el.disable()
-    assert.true(el.hasAttribute("data-disabled"))
+    assert.true(el.hasAttribute('data-disabled'))
   })
 
-  QUnit.test(".enable()", (assert) => {
+  QUnit.test('.enable()', assert => {
     document.body.append(el)
     el.disable()
     el.enable()
-    assert.false(el.hasAttribute("data-disabled"))
+    assert.false(el.hasAttribute('data-disabled'))
   })
 
-  QUnit.test(".toJson()", (assert) => {
+  QUnit.test('.toJson()', assert => {
     document.body.append(el)
     assert.equal('"•"', el.toJson())
   })

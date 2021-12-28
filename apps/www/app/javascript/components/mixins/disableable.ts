@@ -1,6 +1,6 @@
-import { TemplateResult, html } from "@github/jtml"
-import { Constructor } from "./constructor"
-import { attr } from "@github/catalyst"
+import {TemplateResult, html} from '@github/jtml'
+import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Disableable {
   disable(): void
@@ -12,11 +12,11 @@ export declare class Disableable {
 }
 
 export function DisableableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
+  Base: TBase
 ): Constructor<Disableable> & TBase {
   class DisableableMixinClass extends Base {
     @attr disabled = false
-    @attr iconType = ""
+    @attr iconType = ''
 
     disable(): void {
       this.disabled = true

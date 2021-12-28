@@ -1,8 +1,8 @@
-import "components"
-import { HGateElement } from "components/hGateElement"
-import { ReferenceElement } from "tippy.js"
+import 'components'
+import {HGateElement} from 'components/hGateElement'
+import {ReferenceElement} from 'tippy.js'
 
-QUnit.module("HGate", (hooks) => {
+QUnit.module('HGate', hooks => {
   let el: HGateElement
 
   hooks.beforeEach(() => {
@@ -13,22 +13,22 @@ QUnit.module("HGate", (hooks) => {
     document.body.removeChild(el)
   })
 
-  QUnit.test(".disable()", (assert) => {
+  QUnit.test('.disable()', assert => {
     document.body.append(el)
     el.disable()
 
-    assert.true(el.hasAttribute("data-disabled"))
+    assert.true(el.hasAttribute('data-disabled'))
   })
 
-  QUnit.test(".enable()", (assert) => {
+  QUnit.test('.enable()', assert => {
     document.body.append(el)
     el.disable()
     el.enable()
 
-    assert.false(el.hasAttribute("data-disabled"))
+    assert.false(el.hasAttribute('data-disabled'))
   })
 
-  QUnit.test(".showHelp()", (assert) => {
+  QUnit.test('.showHelp()', assert => {
     document.body.append(el)
     el.showHelp()
 
@@ -36,16 +36,16 @@ QUnit.module("HGate", (hooks) => {
     assert.true(popup === undefined)
   })
 
-  QUnit.test(".showHelp() with content", (assert) => {
+  QUnit.test('.showHelp() with content', assert => {
     document.body.append(el)
-    el.textContent = "HELP"
+    el.textContent = 'HELP'
     el.showHelp()
 
     const popup = (el as ReferenceElement)._tippy
     assert.true(popup !== undefined)
   })
 
-  QUnit.test(".toJson()", (assert) => {
+  QUnit.test('.toJson()', assert => {
     document.body.append(el)
 
     assert.equal('"H"', el.toJson())

@@ -1,6 +1,6 @@
-import { TemplateResult, html } from "@github/jtml"
-import { Constructor } from "./constructor"
-import { attr } from "@github/catalyst"
+import {TemplateResult, html} from '@github/jtml'
+import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Wireable {
   get wireTop(): boolean
@@ -13,14 +13,12 @@ export declare class Wireable {
 }
 
 export const isWireable = (arg: unknown): arg is Wireable =>
-  typeof arg === "object" &&
+  typeof arg === 'object' &&
   arg !== null &&
-  typeof (arg as Wireable).wireTop === "boolean" &&
-  typeof (arg as Wireable).wireBottom === "boolean"
+  typeof (arg as Wireable).wireTop === 'boolean' &&
+  typeof (arg as Wireable).wireBottom === 'boolean'
 
-export function WireableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
-): Constructor<Wireable> & TBase {
+export function WireableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Wireable> & TBase {
   class WireableMixinClass extends Base {
     @attr wireTop = false
     @attr wireTopDisabled = false
@@ -84,13 +82,7 @@ export function WireableMixin<TBase extends Constructor<HTMLElement>>(
     }
 
     get wiresSvg(): TemplateResult {
-      return html`<svg
-        id="wires"
-        width="100"
-        height="100"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-      >
+      return html`<svg id="wires" width="100" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
         <line
           id="wire-top"
           x1="50"

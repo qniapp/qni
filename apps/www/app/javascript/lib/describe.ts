@@ -1,24 +1,19 @@
 const COLLECTION_CUTOFF = 1000
 const BAD_TO_STRING_RESULT = Object.prototype.toString.call({})
-const RECURSE_LIMIT_DESCRIPTION = "!recursion-limit!"
+const RECURSE_LIMIT_DESCRIPTION = '!recursion-limit!'
 const DEFAULT_RECURSION_LIMIT = 10
 
-export function describe(
-  value: unknown,
-  recursionLimit = DEFAULT_RECURSION_LIMIT,
-): string {
+export function describe(value: unknown, recursionLimit = DEFAULT_RECURSION_LIMIT): string {
   return (
-    tryDescribeAtomic(value) ||
-    tryDescribeCollection(value, recursionLimit) ||
-    describeFallback(value, recursionLimit)
+    tryDescribeAtomic(value) || tryDescribeCollection(value, recursionLimit) || describeFallback(value, recursionLimit)
   )
 }
 
 function tryDescribeAtomic(value: unknown) {
-  if (value === null) return "null"
-  if (value === undefined) return "undefined"
-  if (typeof value === "string") return `"${value}"`
-  if (typeof value === "number") return String(value)
+  if (value === null) return 'null'
+  if (value === undefined) return 'undefined'
+  if (typeof value === 'string') return `"${value}"`
+  if (typeof value === 'number') return String(value)
 
   return undefined
 }
@@ -49,39 +44,39 @@ function describeMap(map: Map<unknown, unknown>, limit: number) {
   const entries = []
   for (const [k, v] of map.entries()) {
     if (entries.length > COLLECTION_CUTOFF) {
-      entries.push("[...]")
+      entries.push('[...]')
       break
     }
     const keyDesc = describe(k, limit - 1)
     const valDesc = describe(v, limit - 1)
     entries.push(`${keyDesc}: ${valDesc}`)
   }
-  return `Map{${entries.join(", ")}}`
+  return `Map{${entries.join(', ')}}`
 }
 
 function describeSet(set: Set<unknown>, limit: number) {
   const entries = []
   for (const e of set) {
     if (entries.length > COLLECTION_CUTOFF) {
-      entries.push("[...]")
+      entries.push('[...]')
       break
     }
     entries.push(describe(e, limit - 1))
   }
-  return `Set{${entries.join(", ")}}`
+  return `Set{${entries.join(', ')}}`
 }
 
 function describeIterable(seq: Iterable<unknown>, limit: number): string {
   const entries = []
   for (const e of seq) {
     if (entries.length > COLLECTION_CUTOFF) {
-      entries.push("[...]")
+      entries.push('[...]')
       break
     }
     entries.push(describe(e, limit - 1))
   }
-  const prefix = Array.isArray(seq) ? "" : seq.constructor.name
-  return `${prefix}[${entries.join(", ")}]`
+  const prefix = Array.isArray(seq) ? '' : seq.constructor.name
+  return `${prefix}[${entries.join(', ')}]`
 }
 
 function describeObject(value: unknown, limit: number) {
@@ -91,7 +86,7 @@ function describeObject(value: unknown, limit: number) {
       continue
     }
     if (entries.length > COLLECTION_CUTOFF) {
-      entries.push("[...]")
+      entries.push('[...]')
       break
     }
     const v = (value as Record<string, unknown>)[k]
@@ -101,6 +96,6 @@ function describeObject(value: unknown, limit: number) {
   }
 
   const typeName = (value as Record<string, unknown>).constructor.name
-  const prefix = typeName === {}.constructor.name ? "" : `(Type: ${typeName})`
-  return `${prefix}{${entries.join(", ")}}`
+  const prefix = typeName === {}.constructor.name ? '' : `(Type: ${typeName})`
+  return `${prefix}{${entries.join(', ')}}`
 }

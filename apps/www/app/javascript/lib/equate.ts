@@ -1,10 +1,5 @@
-export function hasOwnProperty<K extends PropertyKey>(
-  obj: unknown,
-  key: K,
-): obj is Record<K, unknown> {
-  return (
-    obj !== null && obj !== undefined && key in (obj as Record<string, unknown>)
-  )
+export function hasOwnProperty<K extends PropertyKey>(obj: unknown, key: K): obj is Record<K, unknown> {
+  return obj !== null && obj !== undefined && key in (obj as Record<string, unknown>)
 }
 
 export type ArrayIsh =
@@ -28,7 +23,7 @@ const GENERIC_ARRAY_TYPES = [
   Uint8Array,
   Uint16Array,
   Uint32Array,
-  Uint8ClampedArray,
+  Uint8ClampedArray
 ]
 
 export function equate(subject: unknown, other: unknown): boolean {
@@ -58,32 +53,18 @@ export function equate(subject: unknown, other: unknown): boolean {
 }
 
 function isIndexable(value: unknown): value is ArrayIsh {
-  return (
-    Array.isArray(value) ||
-    !GENERIC_ARRAY_TYPES.every((t) => !(value instanceof t))
-  )
+  return Array.isArray(value) || !GENERIC_ARRAY_TYPES.every(t => !(value instanceof t))
 }
 
 function isExactlyNaN(v: unknown) {
-  return typeof v === "number" && isNaN(v)
+  return typeof v === 'number' && isNaN(v)
 }
 
-function tryEquateCustom(
-  subject: unknown,
-  other: unknown,
-): boolean | undefined {
-  if (
-    !isAtomic(subject) &&
-    hasOwnProperty(subject, "isEqualTo") &&
-    typeof subject.isEqualTo === "function"
-  ) {
+function tryEquateCustom(subject: unknown, other: unknown): boolean | undefined {
+  if (!isAtomic(subject) && hasOwnProperty(subject, 'isEqualTo') && typeof subject.isEqualTo === 'function') {
     return subject.isEqualTo(other) as boolean
   }
-  if (
-    !isAtomic(other) &&
-    hasOwnProperty(other, "isEqualTo") &&
-    typeof other.isEqualTo === "function"
-  ) {
+  if (!isAtomic(other) && hasOwnProperty(other, 'isEqualTo') && typeof other.isEqualTo === 'function') {
     return other.isEqualTo(subject) as boolean
   }
   return undefined
@@ -95,16 +76,13 @@ function isAtomic(value: unknown): value is Atomic {
   return (
     value === null ||
     value === undefined ||
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
   )
 }
 
-function equateMaps(
-  subject: Map<unknown, unknown>,
-  other: Map<unknown, unknown>,
-) {
+function equateMaps(subject: Map<unknown, unknown>, other: Map<unknown, unknown>) {
   if (subject.size !== other.size) {
     return false
   }
@@ -168,12 +146,7 @@ function equateObjects(subject: unknown, other: unknown) {
     if (k === Symbol.iterator) {
       continue
     }
-    if (
-      !equate(
-        (subject as Record<string, unknown>)[k as string],
-        (other as Record<string, unknown>)[k as string],
-      )
-    ) {
+    if (!equate((subject as Record<string, unknown>)[k as string], (other as Record<string, unknown>)[k as string])) {
       return false
     }
   }
@@ -184,9 +157,7 @@ function equateObjects(subject: unknown, other: unknown) {
     return false
   }
   if (hasSubjectIter && hasOtherIter) {
-    if (
-      !equateIterables(subject as Iterable<unknown>, other as Iterable<unknown>)
-    ) {
+    if (!equateIterables(subject as Iterable<unknown>, other as Iterable<unknown>)) {
       return false
     }
   }

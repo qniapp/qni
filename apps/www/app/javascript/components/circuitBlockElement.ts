@@ -1,9 +1,9 @@
-import { attr, controller } from "@github/catalyst"
-import { html, render } from "@github/jtml"
+import {attr, controller} from '@github/catalyst'
+import {html, render} from '@github/jtml'
 
 @controller
 export class CircuitBlockElement extends HTMLElement {
-  @attr comment = ""
+  @attr comment = ''
   @attr finalized = false
 
   finalize(): void {
@@ -11,7 +11,7 @@ export class CircuitBlockElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
   }
 
@@ -27,10 +27,10 @@ export class CircuitBlockElement extends HTMLElement {
             display: flex;
             justify-content: center;
             color: var(--colors-magnitude, #1cb0f6);
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+              monospace;
             white-space: nowrap;
-            content: attr(data-comment) "";
+            content: attr(data-comment) '';
             writing-mode: vertical-lr;
           }
           :host::before {
@@ -95,7 +95,7 @@ export class CircuitBlockElement extends HTMLElement {
         <div id="body">
           <slot></slot>
         </div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 }

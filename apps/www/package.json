@@ -35,14 +35,12 @@
     "test:ci": "karma start && bundle && ./bin/rails test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "watch": "rollup -wc",
+    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
     "release": "npm publish"
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@babel/plugin-proposal-decorators": "~7.16",
-    "@babel/plugin-proposal-throw-expressions": "~7.16",
-    "@babel/preset-typescript": "~7.16",
     "@github/catalyst": "^1.1.3",
     "@github/jtml": "^0.4.0",
     "@hotwired/stimulus": "^3.0.1",
@@ -82,8 +80,6 @@
     "@types/typpy": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "~5.3",
     "@typescript-eslint/parser": "~5.3",
-    "babel-eslint": "^10.1.0",
-    "cz-conventional-changelog": "~3.3",
     "eslint": "~8.1",
     "eslint-config-prettier": "~8.3",
     "eslint-import-resolver-typescript": "~2.5",
@@ -112,6 +108,11 @@
   },
   "files": [
     "dist"
+  ],
+  "eslintIgnore": [
+    "app/assets/builds",
+    "docs",
+    "public/assets/"
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

@@ -8,33 +8,25 @@ import {
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
-  WireableMixin,
-} from "./mixins"
-import { TemplateResult, html, render } from "@github/jtml"
-import { YGateOperation, Y_GATE_OPERATION_TYPE } from "../lib"
-import { attr, controller } from "@github/catalyst"
+  WireableMixin
+} from './mixins'
+import {TemplateResult, html, render} from '@github/jtml'
+import {YGateOperation, Y_GATE_OPERATION_TYPE} from '../lib'
+import {attr, controller} from '@github/catalyst'
 
 @controller
 export class YGateElement extends DragAndDroppableMixin(
   ControllableMixin(
     WireableMixin(
       LabelableMixin(
-        IfableMixin(
-          DisableableMixin(
-            IconableMixin(
-              HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
+        IfableMixin(DisableableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))))))
+      )
+    )
+  )
 ) {
-  @attr iconType = "square"
+  @attr iconType = 'square'
 
-  static create({
-    dragAndDrop = false,
-  }: Partial<{ dragAndDrop: boolean }> = {}): YGateElement {
+  static create({dragAndDrop = false}: Partial<{dragAndDrop: boolean}> = {}): YGateElement {
     const el = new YGateElement()
     el.dragAndDrop = dragAndDrop
     return el
@@ -42,20 +34,18 @@ export class YGateElement extends DragAndDroppableMixin(
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.initDragAndDrop()
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
+      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle} ${this.labelStyle} ${this.dragAndDroppableStyle}
+        ${this.disabledStyle}
 
-        <div id="body" data-action="mouseenter:y-gate#showHelp">
-          ${this.wiresSvg} ${this.iconSvg}
-        </div>`,
-      this.shadowRoot!,
+        <div id="body" data-action="mouseenter:y-gate#showHelp">${this.wiresSvg} ${this.iconSvg}</div>`,
+      this.shadowRoot!
     )
   }
 
@@ -67,7 +57,7 @@ export class YGateElement extends DragAndDroppableMixin(
     return {
       type: Y_GATE_OPERATION_TYPE,
       controls: this.controls,
-      if: this.if !== "" ? this.if : null,
+      if: this.if !== '' ? this.if : null
     }
   }
 

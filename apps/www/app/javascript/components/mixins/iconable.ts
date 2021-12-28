@@ -1,20 +1,18 @@
-import { TemplateResult, html } from "@github/jtml"
-import { Constructor } from "./constructor"
-import { attr } from "@github/catalyst"
+import {TemplateResult, html} from '@github/jtml'
+import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Iconable {
   get iconSvg(): TemplateResult
   get iconStyle(): TemplateResult
 }
 
-export function IconableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
-): Constructor<Iconable> & TBase {
+export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Iconable> & TBase {
   class IconableMixinClass extends Base {
-    @attr iconType = ""
+    @attr iconType = ''
 
     get iconSvg(): TemplateResult {
-      throw new Error("Not implemented yet")
+      throw new Error('Not implemented yet')
     }
 
     get iconStyle(): TemplateResult {
@@ -32,11 +30,11 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(
       </style>`
 
       let borderRadius
-      if (this.iconType === "square") {
-        borderRadius = "0.25rem"
-      } else if (this.iconType === "circle") {
-        borderRadius = "9999px"
-      } else if (this.iconType === "transparent") {
+      if (this.iconType === 'square') {
+        borderRadius = '0.25rem'
+      } else if (this.iconType === 'circle') {
+        borderRadius = '9999px'
+      } else if (this.iconType === 'transparent') {
         return html`${baseIconStyle}
 
           <style>
@@ -49,7 +47,7 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(
             }
           </style>`
       } else {
-        throw new Error("iconType not set")
+        throw new Error('iconType not set')
       }
 
       return html`${baseIconStyle}

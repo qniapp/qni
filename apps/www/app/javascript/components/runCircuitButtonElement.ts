@@ -1,5 +1,5 @@
-import { controller, target } from "@github/catalyst"
-import { html, render } from "@github/jtml"
+import {controller, target} from '@github/catalyst'
+import {html, render} from '@github/jtml'
 
 const reloadIcon = html`<style>
     .reload-icon {
@@ -14,14 +14,8 @@ const reloadIcon = html`<style>
     }
   </style>
 
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    class="reload-icon"
-  >
-    <path
-      d="M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="reload-icon">
+    <path d="M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z" />
   </svg>`
 
 const ovalLoaderIcon = html`<style>
@@ -38,11 +32,7 @@ const ovalLoaderIcon = html`<style>
     }
   </style>
 
-  <svg
-    viewBox="0 0 38 38"
-    xmlns="http://www.w3.org/2000/svg"
-    class="oval-loader-icon"
-  >
+  <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" class="oval-loader-icon">
     <g fill="none" fill-rule="evenodd">
       <g transform="translate(1 1)" stroke-width="2">
         <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
@@ -66,7 +56,7 @@ export class RunCircuitButtonElement extends HTMLElement {
 
   runSimulator(): void {
     this.disable()
-    this.dispatchEvent(new Event("run-circuit-button.click", { bubbles: true }))
+    this.dispatchEvent(new Event('run-circuit-button.click', {bubbles: true}))
   }
 
   disable(): void {
@@ -78,12 +68,12 @@ export class RunCircuitButtonElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.dispatchEvent(
-      new Event("run-circuit-button.load", {
-        bubbles: true,
-      }),
+      new Event('run-circuit-button.load', {
+        bubbles: true
+      })
     )
   }
 
@@ -100,9 +90,7 @@ export class RunCircuitButtonElement extends HTMLElement {
             cursor: pointer;
             width: 4rem;
             height: 4rem;
-            box-shadow: 0 0 #0000, 0 0 #0000,
-              0 10px 15px -3px rgba(0, 0, 0, 0.1),
-              0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
           }
 
           #button:disabled {
@@ -124,7 +112,7 @@ export class RunCircuitButtonElement extends HTMLElement {
         >
           ${reloadIcon} ${ovalLoaderIcon}
         </button>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 }

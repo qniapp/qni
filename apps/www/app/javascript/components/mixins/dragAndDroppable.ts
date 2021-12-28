@@ -1,17 +1,17 @@
-import "@interactjs/actions/drag"
-import "@interactjs/actions/drop"
-import "@interactjs/auto-start"
-import "@interactjs/dev-tools"
-import "@interactjs/modifiers"
-import { TemplateResult, html } from "@github/jtml"
-import { CircuitDropzoneElement } from "../circuitDropzoneElement"
-import { Constructor } from "./constructor"
-import { DisplaySize } from "lib"
-import { InteractEvent } from "@interactjs/types"
-import { PaletteDropzoneElement } from "components/paletteDropzoneElement"
-import { Util } from "lib/util"
-import { attr } from "@github/catalyst"
-import interact from "@interactjs/interact"
+import '@interactjs/actions/drag'
+import '@interactjs/actions/drop'
+import '@interactjs/auto-start'
+import '@interactjs/dev-tools'
+import '@interactjs/modifiers'
+import {TemplateResult, html} from '@github/jtml'
+import {CircuitDropzoneElement} from '../circuitDropzoneElement'
+import {Constructor} from './constructor'
+import {DisplaySize} from 'lib'
+import {InteractEvent} from '@interactjs/types'
+import {PaletteDropzoneElement} from 'components/paletteDropzoneElement'
+import {Util} from 'lib/util'
+import {attr} from '@github/catalyst'
+import interact from '@interactjs/interact'
 
 const cssStyle = html`<style>
   :host([data-drag-and-drop]) {
@@ -47,7 +47,7 @@ const cssStyle = html`<style>
       border-width: 2px;
       box-sizing: border-box;
       opacity: 0;
-      content: "";
+      content: '';
     }
 
     :host([data-drag-and-drop][data-hoverable]) #body:hover::after,
@@ -57,11 +57,9 @@ const cssStyle = html`<style>
   }
 </style>`
 
-const isPaletteDropzone = (arg: unknown): arg is PaletteDropzoneElement =>
-  arg instanceof PaletteDropzoneElement
+const isPaletteDropzone = (arg: unknown): arg is PaletteDropzoneElement => arg instanceof PaletteDropzoneElement
 
-const isCircuitDropzone = (arg: unknown): arg is CircuitDropzoneElement =>
-  arg instanceof CircuitDropzoneElement
+const isCircuitDropzone = (arg: unknown): arg is CircuitDropzoneElement => arg instanceof CircuitDropzoneElement
 
 export declare class DragAndDroppable {
   get dragAndDrop(): boolean
@@ -77,7 +75,7 @@ export declare class DragAndDroppable {
 }
 
 export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
+  Base: TBase
 ): Constructor<DragAndDroppable> & TBase {
   class DragAndDroppableMixinClass extends Base {
     @attr dragAndDrop = false
@@ -100,9 +98,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
     private snappedDropzone: CircuitDropzoneElement | null
 
     get dropzone(): CircuitDropzoneElement | PaletteDropzoneElement | null {
-      return this.parentElement as
-        | CircuitDropzoneElement
-        | PaletteDropzoneElement
+      return this.parentElement as CircuitDropzoneElement | PaletteDropzoneElement
     }
 
     get dragAndDroppableStyle(): TemplateResult {
@@ -124,30 +120,30 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       interact(this).draggable({
         onstart: this.startDragging.bind(this),
         onmove: this.dragMove.bind(this),
-        onend: this.endDragging.bind(this),
+        onend: this.endDragging.bind(this)
       })
 
-      this.addEventListener("mouseenter", this.dispatchMouseenterEvent)
-      this.addEventListener("mouseleave", this.dispatchMouseleaveEvent)
-      this.addEventListener("mousedown", this.grab)
-      this.addEventListener("mouseup", this.unGrab)
+      this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
+      this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
+      this.addEventListener('mousedown', this.grab)
+      this.addEventListener('mouseup', this.unGrab)
     }
 
     private dispatchMouseenterEvent(): void {
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.mouseenter", {
-          detail: { element: this },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.mouseenter', {
+          detail: {element: this},
+          bubbles: true
+        })
       )
     }
 
     private dispatchMouseleaveEvent(): void {
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.mouseleave", {
-          detail: { element: this },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.mouseleave', {
+          detail: {element: this},
+          bubbles: true
+        })
       )
     }
 
@@ -172,10 +168,10 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
 
         this.trash()
         dropzone.dispatchEvent(
-          new CustomEvent("dragAndDroppable.enddragging", {
-            detail: { x: event.clientX, y: event.clientY },
-            bubbles: true,
-          }),
+          new CustomEvent('dragAndDroppable.enddragging', {
+            detail: {x: event.clientX, y: event.clientY},
+            bubbles: true
+          })
         )
         return
       }
@@ -184,20 +180,20 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       this.grabbed = false
       this.moveTo(0, 0)
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.enddragging", {
-          detail: { x: event.clientX, y: event.clientY },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.enddragging', {
+          detail: {x: event.clientX, y: event.clientY},
+          bubbles: true
+        })
       )
     }
 
     private trash() {
       interact(this).unset()
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.trash", {
-          detail: { element: this },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.trash', {
+          detail: {element: this},
+          bubbles: true
+        })
       )
     }
 
@@ -208,10 +204,10 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
 
       this.grabbed = true
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.grab", {
-          detail: { element: this },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.grab', {
+          detail: {element: this},
+          bubbles: true
+        })
       )
 
       if (isPaletteDropzone(this.dropzone)) {
@@ -230,16 +226,16 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
       this.grabbed = false
       this.moveTo(0, 0)
       this.dispatchEvent(
-        new CustomEvent("dragAndDroppable.ungrab", {
-          detail: { element: this, x: event.clientX, y: event.clientY },
-          bubbles: true,
-        }),
+        new CustomEvent('dragAndDroppable.ungrab', {
+          detail: {element: this, x: event.clientX, y: event.clientY},
+          bubbles: true
+        })
       )
     }
 
     setSnapTargets(dropzones: CircuitDropzoneElement[], wireCount: number) {
       const myDropzone = this.dropzone
-      const freeDropzones = dropzones.filter((each) => !each.occupied)
+      const freeDropzones = dropzones.filter(each => !each.occupied)
       const snapTargets = []
       this.snapTargets = {}
 
@@ -255,25 +251,23 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         const wireIndex = parseInt(i) % wireCount
 
         if (parseInt(i) < wireCount) {
-          snapTargets.push({ x: leftX, y })
-          if (this.snapTargets[leftX] === undefined)
-            this.snapTargets[leftX] = {}
+          snapTargets.push({x: leftX, y})
+          if (this.snapTargets[leftX] === undefined) this.snapTargets[leftX] = {}
           if (this.snapTargets[leftX][y] === undefined)
             this.snapTargets[leftX][y] = {
               dropzone: null,
               stepIndex: -1,
-              wireIndex,
+              wireIndex
             }
         }
 
-        snapTargets.push({ x: rightX, y })
-        if (this.snapTargets[rightX] === undefined)
-          this.snapTargets[rightX] = {}
+        snapTargets.push({x: rightX, y})
+        if (this.snapTargets[rightX] === undefined) this.snapTargets[rightX] = {}
         if (this.snapTargets[rightX][y] === undefined)
           this.snapTargets[rightX][y] = {
             dropzone: null,
             stepIndex: Math.floor(parseInt(i) / wireCount),
-            wireIndex,
+            wireIndex
           }
 
         if (!each.occupied || each === myDropzone) {
@@ -285,7 +279,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
           this.snapTargets[x][y] = {
             dropzone: each,
             stepIndex: null,
-            wireIndex,
+            wireIndex
           }
       }
 
@@ -294,12 +288,12 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
           interact.modifiers.snap({
             targets: snapTargets,
             range: this.snapRange(),
-            relativePoints: [{ x: 0.5, y: 0.5 }],
-          }),
+            relativePoints: [{x: 0.5, y: 0.5}]
+          })
         ],
         listeners: {
-          move: this.moveEventListener.bind(this),
-        },
+          move: this.moveEventListener.bind(this)
+        }
       })
     }
 
@@ -326,7 +320,7 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         this.snapTargets[x][y] = {
           dropzone: each,
           stepIndex: null,
-          wireIndex: parseInt(i),
+          wireIndex: parseInt(i)
         }
       }
     }
@@ -339,23 +333,21 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
 
         if (this.snappedDropzone) {
           this.snapped = false
-          this.snappedDropzone.dispatchEvent(
-            new Event("dragAndDroppable.unsnap", { bubbles: true }),
-          )
+          this.snappedDropzone.dispatchEvent(new Event('dragAndDroppable.unsnap', {bubbles: true}))
         }
 
         if (dropzone === null) {
           const snapTargetInfo = this.snapTargets[snapTarget.x][snapTarget.y]
 
           this.dispatchEvent(
-            new CustomEvent("dragAndDroppable.snapToNewDropzone", {
+            new CustomEvent('dragAndDroppable.snapToNewDropzone', {
               detail: {
                 element: this,
                 stepIndex: snapTargetInfo.stepIndex,
-                wireIndex: snapTargetInfo.wireIndex,
+                wireIndex: snapTargetInfo.wireIndex
               },
-              bubbles: true,
-            }),
+              bubbles: true
+            })
           )
 
           Util.notNull(this.dropzone)
@@ -365,21 +357,17 @@ export function DragAndDroppableMixin<TBase extends Constructor<HTMLElement>>(
         this.snappedDropzone = dropzone
         this.snapped = true
         dropzone.dispatchEvent(
-          new CustomEvent("dragAndDroppable.snap", {
-            detail: { element: this },
-            bubbles: true,
-          }),
+          new CustomEvent('dragAndDroppable.snap', {
+            detail: {element: this},
+            bubbles: true
+          })
         )
       } else {
         if (this.isLeavingCircuit) {
           this.snapped = false
 
-          this.dispatchEvent(
-            new Event("dragAndDroppable.unsnap", { bubbles: true }),
-          )
-          this.dispatchEvent(
-            new Event("dragAndDroppable.leave", { bubbles: true }),
-          )
+          this.dispatchEvent(new Event('dragAndDroppable.unsnap', {bubbles: true}))
+          this.dispatchEvent(new Event('dragAndDroppable.leave', {bubbles: true}))
         }
         this.snapped = false
       }

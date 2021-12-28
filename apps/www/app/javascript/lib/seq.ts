@@ -1,14 +1,14 @@
-import { DetailedError } from "./detailedError"
-import { describe } from "./describe"
+import {DetailedError} from './detailedError'
+import {describe} from './describe'
 
-export const THROW_IF_EMPTY = { if_same_instance_as_this_then_throw: true }
+export const THROW_IF_EMPTY = {if_same_instance_as_this_then_throw: true}
 
-const EMPTY_SYGIL = { not_a_normal_value: true }
+const EMPTY_SYGIL = {not_a_normal_value: true}
 
 function emptyFallback<T>(
   result: T | typeof EMPTY_SYGIL,
   alternative: T | typeof THROW_IF_EMPTY,
-  errorMessage: string,
+  errorMessage: string
 ): T {
   if (result !== EMPTY_SYGIL) {
     return result as T
@@ -23,10 +23,7 @@ export class Seq<T> {
   public _iterable: T[] | Iterable<T>;
   declare [Symbol.iterator]: () => IterableIterator<T>
 
-  constructor(
-    obj: T[] | Seq<T> | Iterable<T> | unknown,
-    isIteratorFunction = false,
-  ) {
+  constructor(obj: T[] | Seq<T> | Iterable<T> | unknown, isIteratorFunction = false) {
     let iterable: T[] | Iterable<T>
     let iterator: () => IterableIterator<T>
 
@@ -35,7 +32,7 @@ export class Seq<T> {
       iterable = obj._iterable
       iterator = obj[Symbol.iterator]
     } else if (isIteratorFunction) {
-      iterable = { [Symbol.iterator]: obj } as unknown as Iterable<T>
+      iterable = {[Symbol.iterator]: obj} as unknown as Iterable<T>
       iterator = obj as () => IterableIterator<T>
     } else {
       if (!this.isIterable(obj)) {
@@ -50,16 +47,14 @@ export class Seq<T> {
   }
 
   private isIterable(obj: unknown): obj is Iterable<T> {
-    if (typeof obj === "string") return true
-    if (typeof obj === "object" && obj !== null && Symbol.iterator in obj) {
+    if (typeof obj === 'string') return true
+    if (typeof obj === 'object' && obj !== null && Symbol.iterator in obj) {
       return true
     }
     return false
   }
 
-  static fromGenerator<T>(
-    generatorFunction: () => Generator<T, unknown, unknown>,
-  ): Seq<T> {
+  static fromGenerator<T>(generatorFunction: () => Generator<T, unknown, unknown>): Seq<T> {
     return new Seq(generatorFunction, true)
   }
 
@@ -72,12 +67,12 @@ export class Seq<T> {
   }
 
   toString(): string {
-    return `Seq[${this.join(", ")}]`
+    return `Seq[${this.join(', ')}]`
   }
 
   static range(count: number): Seq<number> {
     if (!Number.isInteger(count) || count < 0) {
-      throw new DetailedError("bad count", { count })
+      throw new DetailedError('bad count', {count})
     }
     return Seq.fromGenerator(function* () {
       for (let i = 0; i < count; i++) {
@@ -118,8 +113,7 @@ export class Seq<T> {
   maxBy(
     projection: (e: T) => number,
     emptyErrorAlternative: T | typeof THROW_IF_EMPTY = THROW_IF_EMPTY,
-    isALessThanBComparator: (e1: number, e2: number) => boolean = (e1, e2) =>
-      e1 < e2,
+    isALessThanBComparator: (e1: number, e2: number) => boolean = (e1, e2) => e1 < e2
   ): T {
     let curMaxItem: T | typeof EMPTY_SYGIL = EMPTY_SYGIL
     let curMaxScore: number | typeof EMPTY_SYGIL = EMPTY_SYGIL
@@ -142,11 +136,7 @@ export class Seq<T> {
       }
     }
 
-    return emptyFallback<T>(
-      curMaxItem,
-      emptyErrorAlternative,
-      "Can't maxBy an empty sequence.",
-    )
+    return emptyFallback<T>(curMaxItem, emptyErrorAlternative, "Can't maxBy an empty sequence.")
   }
 
   any(predicate: (e: T) => boolean): boolean {
@@ -167,7 +157,7 @@ export class Seq<T> {
     const _seq = this
     return Seq.fromGenerator(function () {
       const keySet = new Set()
-      const filtered = _seq.filter((e) => {
+      const filtered = _seq.filter(e => {
         const key = keySelector(e)
         if (keySet.has(key)) {
           return false
@@ -204,9 +194,7 @@ export class Seq<T> {
     })
   }
 
-  single<A>(
-    emptyManyErrorAlternative: A | typeof THROW_IF_EMPTY = THROW_IF_EMPTY,
-  ): T | A {
+  single<A>(emptyManyErrorAlternative: A | typeof THROW_IF_EMPTY = THROW_IF_EMPTY): T | A {
     const iter = this[Symbol.iterator]()
 
     const first = iter.next()
@@ -218,7 +206,7 @@ export class Seq<T> {
       if (first.done) {
         throw new Error("Empty sequence doesn't contain a single item.")
       } else {
-        throw new Error("Sequence contains more than a single item.")
+        throw new Error('Sequence contains more than a single item.')
       }
     }
 
@@ -231,7 +219,7 @@ export class Seq<T> {
         const out1 = keySelector(e1)
         const out2 = keySelector(e2)
         return out1 < out2 ? -1 : out1 > out2 ? +1 : 0
-      }),
+      })
     )
   }
 }

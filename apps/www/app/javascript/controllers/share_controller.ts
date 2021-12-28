@@ -1,13 +1,13 @@
-import { Controller } from "@hotwired/stimulus"
-import { Util } from "lib/util"
+import {Controller} from '@hotwired/stimulus'
+import {Util} from 'lib/util'
 
 export default class ShareController extends Controller {
   static values = {
     defaultTitle: String,
-    circuitUrl: String,
+    circuitUrl: String
   }
 
-  static targets = ["modal", "circuitTitleInput", "urlText"]
+  static targets = ['modal', 'circuitTitleInput', 'urlText']
 
   declare defaultTitleValue: string
   declare circuitUrlValue: string
@@ -16,13 +16,13 @@ export default class ShareController extends Controller {
   declare urlTextTarget: HTMLElement
 
   openModal(): void {
-    this.modalTarget.classList.remove("hidden")
+    this.modalTarget.classList.remove('hidden')
     this.initCircuitTitleInput()
     this.updateUrlText()
   }
 
   closeModal(): void {
-    this.modalTarget.classList.add("hidden")
+    this.modalTarget.classList.add('hidden')
   }
 
   update(): void {
@@ -36,17 +36,17 @@ export default class ShareController extends Controller {
   }
 
   tweet(): void {
-    window.open(this.tweetUrl, "_blank")
+    window.open(this.tweetUrl, '_blank')
   }
 
   private initCircuitTitleInput(): void {
     const jsonData = JSON.parse(Util.urlJson)
-    this.circuitTitleInputTarget.value = jsonData.title || ""
+    this.circuitTitleInputTarget.value = jsonData.title || ''
     this.circuitTitleInputTarget.focus()
   }
 
   private updateDocumentTitle(title: string): void {
-    if (title === "") {
+    if (title === '') {
       document.title = this.defaultTitleValue
     } else {
       document.title = title
@@ -58,7 +58,7 @@ export default class ShareController extends Controller {
   }
 
   private get tweetUrl(): string {
-    const hashtagsParam = "hashtags=qni"
+    const hashtagsParam = 'hashtags=qni'
     const urlParam = `url=${encodeURIComponent(window.location.href)}`
     const params = [hashtagsParam, urlParam]
     const title = JSON.parse(Util.urlJson).title
@@ -68,6 +68,6 @@ export default class ShareController extends Controller {
       params.unshift(textParam)
     }
 
-    return `https://twitter.com/share?${params.join("&")}`
+    return `https://twitter.com/share?${params.join('&')}`
   }
 }

@@ -1,25 +1,25 @@
-import { attr, controller } from "@github/catalyst"
-import { BlochDisplayElement } from "components/blochDisplayElement"
-import { CircleNotationElement } from "components/circleNotationElement"
-import { CircuitStepElement } from "components/circuitStepElement"
-import { CircuitableMixin } from "./mixins/circuitable"
-import { Complex } from "lib/complex"
-import { MeasurementGateElement } from "components/measurementGateElement"
-import { RunCircuitButtonElement } from "components/runCircuitButtonElement"
-import { Util } from "lib/util"
+import {attr, controller} from '@github/catalyst'
+import {BlochDisplayElement} from 'components/blochDisplayElement'
+import {CircleNotationElement} from 'components/circleNotationElement'
+import {CircuitStepElement} from 'components/circuitStepElement'
+import {CircuitableMixin} from './mixins/circuitable'
+import {Complex} from 'lib/complex'
+import {MeasurementGateElement} from 'components/measurementGateElement'
+import {RunCircuitButtonElement} from 'components/runCircuitButtonElement'
+import {Util} from 'lib/util'
 
 type MessageEventData = {
-  type: "step" | "finish"
-  blochVectors: { [bit: number]: [number, number, number] }
-  measuredBits: { [bit: number]: number }
+  type: 'step' | 'finish'
+  blochVectors: {[bit: number]: [number, number, number]}
+  measuredBits: {[bit: number]: number}
   step: number
   amplitudes: Array<[number, number]>
-  flags: { [key: string]: boolean }
+  flags: {[key: string]: boolean}
 }
 
 @controller
 export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
-  @attr serviceWorker = "/serviceworker.js"
+  @attr serviceWorker = '/serviceworker.js'
 
   declare worker: Worker
 
@@ -36,41 +36,29 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
     this.visibleQubitCircleKets = []
     this.initCircuitable()
 
-    this.addEventListener("circuit.load", this.updateJsonUrl)
-    this.addEventListener("dragAndDroppable.ungrab", this.updateJsonUrl)
-    this.addEventListener("dragAndDroppable.trash", this.updateJsonUrl)
-    this.addEventListener("dragAndDroppable.leave", this.run)
-    this.addEventListener("step.drop", this.run)
-    this.addEventListener(
-      "step.mouseenter",
-      this.setStyleCursorPointerUnlessEditing,
-    )
-    this.addEventListener("step.mouseenter", this.activateHoveredStep)
-    this.addEventListener("step.mouseenter", this.runUnlessEditing)
-    this.addEventListener(
-      "step.mouseleave",
-      this.setStyleCursorAutoUnlessEditing,
-    )
-    this.addEventListener("step.click", this.setBreakpoint)
-    this.addEventListener("step.click", this.run)
-    this.addEventListener("step.snap", this.run)
-    this.addEventListener("circuit.mouseleave", this.run)
-    this.addEventListener("circle-notation.load", this.registerCircleNotation)
-    this.addEventListener(
-      "circle-notation.visibilityChanged",
-      this.updateVisibleQubitCircleKets,
-    )
-    this.addEventListener("circle-notation.visibilityChanged", this.run)
-    this.addEventListener(
-      "run-circuit-button.load",
-      this.registerRunCircuitButton,
-    )
-    this.addEventListener("run-circuit-button.click", this.run)
-    this.addEventListener("operation.popup.change", this.run)
-    this.addEventListener("operation.update", this.updateJsonUrl)
+    this.addEventListener('circuit.load', this.updateJsonUrl)
+    this.addEventListener('dragAndDroppable.ungrab', this.updateJsonUrl)
+    this.addEventListener('dragAndDroppable.trash', this.updateJsonUrl)
+    this.addEventListener('dragAndDroppable.leave', this.run)
+    this.addEventListener('step.drop', this.run)
+    this.addEventListener('step.mouseenter', this.setStyleCursorPointerUnlessEditing)
+    this.addEventListener('step.mouseenter', this.activateHoveredStep)
+    this.addEventListener('step.mouseenter', this.runUnlessEditing)
+    this.addEventListener('step.mouseleave', this.setStyleCursorAutoUnlessEditing)
+    this.addEventListener('step.click', this.setBreakpoint)
+    this.addEventListener('step.click', this.run)
+    this.addEventListener('step.snap', this.run)
+    this.addEventListener('circuit.mouseleave', this.run)
+    this.addEventListener('circle-notation.load', this.registerCircleNotation)
+    this.addEventListener('circle-notation.visibilityChanged', this.updateVisibleQubitCircleKets)
+    this.addEventListener('circle-notation.visibilityChanged', this.run)
+    this.addEventListener('run-circuit-button.load', this.registerRunCircuitButton)
+    this.addEventListener('run-circuit-button.click', this.run)
+    this.addEventListener('operation.popup.change', this.run)
+    this.addEventListener('operation.update', this.updateJsonUrl)
 
     this.worker = new Worker(this.serviceWorker)
-    this.worker.addEventListener("message", (e: MessageEvent) => {
+    this.worker.addEventListener('message', (e: MessageEvent) => {
       const activeStep = this.quantumCircuit.activeStep
       const breakpoint = this.quantumCircuit.breakpoint
       const currentStep = activeStep || breakpoint
@@ -79,12 +67,11 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
       const stepIndex = this.fetchStepIndex(currentStep)
       const data = e.data as MessageEventData
 
-      if (data.type === "step") {
+      if (data.type === 'step') {
         const step = this.quantumCircuit.steps[data.step]
 
         for (const bit in data.blochVectors) {
-          const blochDisplay = step.dropzones[bit]
-            .draggableElement as BlochDisplayElement
+          const blochDisplay = step.dropzones[bit].draggableElement as BlochDisplayElement
           if (blochDisplay) {
             const blochVector = data.blochVectors[bit]
             blochDisplay!.x = blochVector[0]
@@ -105,19 +92,19 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
         }
 
         for (const each of step.ifableGates) {
-          if (each.if === "") continue
+          if (each.if === '') continue
           each.disabled = !data.flags[each.if]
         }
 
         if (stepIndex === data.step) {
-          const complexAmplitudes: { [ket: number]: Complex } = {}
+          const complexAmplitudes: {[ket: number]: Complex} = {}
           for (const ket in data.amplitudes) {
             const c = data.amplitudes[ket]
             complexAmplitudes[ket] = new Complex(c[0], c[1])
           }
           this.circleNotation?.setAmplitudes(complexAmplitudes)
         }
-      } else if (data.type === "finish") {
+      } else if (data.type === 'finish') {
         this.runCircuitButton?.enable()
       }
     })
@@ -156,7 +143,7 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
     const stepIndex = this.fetchStepIndex(step)
 
     const serializedSteps = this.quantumCircuit.serializedSteps
-    Util.need(serializedSteps.length > 0, "non-zero step length")
+    Util.need(serializedSteps.length > 0, 'non-zero step length')
 
     const qubitCount = this.quantumCircuit.qubitCount
     this.circleNotation.qubitCount = qubitCount
@@ -166,7 +153,7 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
       qubitCount,
       stepIndex,
       steps: this.quantumCircuit.serializedSteps,
-      targets: this.visibleQubitCircleKets,
+      targets: this.visibleQubitCircleKets
     })
   }
 
@@ -193,7 +180,7 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   private fetchStepIndex(step: CircuitStepElement): number {
     const index = this.quantumCircuit.steps.indexOf(step)
     if (index === -1) {
-      throw new Error("CircuitStep not found")
+      throw new Error('CircuitStep not found')
     }
     return index
   }
@@ -201,13 +188,13 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   private setStyleCursorAutoUnlessEditing(): void {
     if (this.quantumCircuit.editing) return
 
-    document.documentElement.style.cursor = "auto"
+    document.documentElement.style.cursor = 'auto'
   }
 
   private setStyleCursorPointerUnlessEditing(): void {
     if (this.quantumCircuit.editing) return
 
-    document.documentElement.style.cursor = "pointer"
+    document.documentElement.style.cursor = 'pointer'
   }
 
   private updateJsonUrl(): void {

@@ -7,31 +7,23 @@ import {
   JsonableMixin,
   SizeableMixin,
   TargetableMixin,
-  WireableMixin,
-} from "./mixins"
-import { SWAP_GATE_OPERATION_TYPE, SwapGateOperation } from "../lib"
-import { TemplateResult, html, render } from "@github/jtml"
-import { attr, controller } from "@github/catalyst"
+  WireableMixin
+} from './mixins'
+import {SWAP_GATE_OPERATION_TYPE, SwapGateOperation} from '../lib'
+import {TemplateResult, html, render} from '@github/jtml'
+import {attr, controller} from '@github/catalyst'
 
 @controller
 export class SwapGateElement extends DragAndDroppableMixin(
   TargetableMixin(
     ControllableMixin(
-      WireableMixin(
-        DisableableMixin(
-          IconableMixin(
-            HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
-          ),
-        ),
-      ),
-    ),
-  ),
+      WireableMixin(DisableableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))))))
+    )
+  )
 ) {
-  @attr iconType = "transparent"
+  @attr iconType = 'transparent'
 
-  static create({
-    dragAndDrop = false,
-  }: Partial<{ dragAndDrop: boolean }> = {}): SwapGateElement {
+  static create({dragAndDrop = false}: Partial<{dragAndDrop: boolean}> = {}): SwapGateElement {
     const el = new SwapGateElement()
     el.dragAndDrop = dragAndDrop
     return el
@@ -39,20 +31,17 @@ export class SwapGateElement extends DragAndDroppableMixin(
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.initDragAndDrop()
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.dragAndDroppableStyle}
+      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle} ${this.dragAndDroppableStyle}
 
-        <div id="body" data-action="mouseenter:swap-gate#showHelp">
-          ${this.wiresSvg} ${this.iconSvg}
-        </div>`,
-      this.shadowRoot!,
+        <div id="body" data-action="mouseenter:swap-gate#showHelp">${this.wiresSvg} ${this.iconSvg}</div>`,
+      this.shadowRoot!
     )
   }
 
@@ -69,7 +58,7 @@ export class SwapGateElement extends DragAndDroppableMixin(
     return {
       type: SWAP_GATE_OPERATION_TYPE,
       controls: this.controls,
-      targets,
+      targets
     }
   }
 

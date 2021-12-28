@@ -14,21 +14,21 @@ import {
   WRITE_GATE_OPERATION_TYPE,
   X_GATE_OPERATION_TYPE,
   Y_GATE_OPERATION_TYPE,
-  Z_GATE_OPERATION_TYPE,
-} from "./operation"
-import { Complex } from "./complex"
-import { Matrix } from "./matrix"
-import { StateVector } from "./stateVector"
-import { Util } from "./util"
+  Z_GATE_OPERATION_TYPE
+} from './operation'
+import {Complex} from './complex'
+import {Matrix} from './matrix'
+import {StateVector} from './stateVector'
+import {Util} from './util'
 
 export class Simulator {
   public state: StateVector
-  public blochVectors: { [bit: number]: [number, number, number] }
-  public measuredBits: { [bit: number]: number }
-  public flags: { [key: string]: boolean }
+  public blochVectors: {[bit: number]: [number, number, number]}
+  public measuredBits: {[bit: number]: number}
+  public flags: {[key: string]: boolean}
 
   constructor(bits: string | StateVector) {
-    if ("string" === typeof bits) {
+    if ('string' === typeof bits) {
       this.state = new StateVector(bits)
     } else {
       this.state = bits
@@ -80,7 +80,7 @@ export class Simulator {
               }
             } else if (targets.length === 2) {
               if (
-                doneCPhaseTargets.some((done) => {
+                doneCPhaseTargets.some(done => {
                   return done[0] === targets[0] && done[1] === targets[1]
                 })
               ) {
@@ -99,14 +99,14 @@ export class Simulator {
 
           if (targets.length < 2) break
           if (
-            doneControlTargets.some((done) => {
+            doneControlTargets.some(done => {
               return String(done) === String(targets)
             })
           ) {
             break
           }
-          const allControl = targets.every((c) => {
-            return instructions[c].type === "•"
+          const allControl = targets.every(c => {
+            return instructions[c].type === '•'
           })
           if (!allControl) break
 
@@ -120,7 +120,7 @@ export class Simulator {
 
           if (targets.length !== 2) break
           if (
-            doneSwapTargets.some((done) => {
+            doneSwapTargets.some(done => {
               return done[0] === targets[0] && done[1] === targets[1]
             })
           ) {
@@ -157,7 +157,7 @@ export class Simulator {
           if (each.flag) this.flags[each.flag] = this.measuredBits[bit] === 1
           break
         default:
-          throw new Error("Unknown instruction")
+          throw new Error('Unknown instruction')
       }
     }
 
@@ -220,11 +220,7 @@ export class Simulator {
     return this
   }
 
-  cphase(
-    controls: number | number[],
-    phi: string,
-    ...targets: number[]
-  ): Simulator {
+  cphase(controls: number | number[], phi: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PHASE(phi), ...targets)
     return this
   }
@@ -235,9 +231,7 @@ export class Simulator {
   }
 
   cswap(control: number, target0: number, target1: number): Simulator {
-    this.cnot([control, target0], target1)
-      .cnot([control, target1], target0)
-      .cnot([control, target0], target1)
+    this.cnot([control, target0], target1).cnot([control, target1], target0).cnot([control, target0], target1)
     return this
   }
 
@@ -256,11 +250,7 @@ export class Simulator {
     return this
   }
 
-  crx(
-    controls: number | number[],
-    theta: string,
-    ...targets: number[]
-  ): Simulator {
+  crx(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RX(theta), ...targets)
     return this
   }
@@ -270,11 +260,7 @@ export class Simulator {
     return this
   }
 
-  cry(
-    controls: number | number[],
-    theta: string,
-    ...targets: number[]
-  ): Simulator {
+  cry(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RY(theta), ...targets)
     return this
   }
@@ -284,11 +270,7 @@ export class Simulator {
     return this
   }
 
-  crz(
-    controls: number | number[],
-    theta: string,
-    ...targets: number[]
-  ): Simulator {
+  crz(controls: number | number[], theta: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.RZ(theta), ...targets)
     return this
   }
@@ -301,19 +283,13 @@ export class Simulator {
       if (rand <= pZero) {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) !== 0) this.state.setAmplifier(bit, Complex.ZERO)
-          this.state.setAmplifier(
-            bit,
-            this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)),
-          )
+          this.state.setAmplifier(bit, this.state.amplifier(bit).dividedBy(Math.sqrt(pZero)))
         }
         this.measuredBits[t] = 0
       } else {
         for (let bit = 0; bit < 1 << this.state.nqubit; bit++) {
           if ((bit & (1 << t)) === 0) this.state.setAmplifier(bit, Complex.ZERO)
-          this.state.setAmplifier(
-            bit,
-            this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero)),
-          )
+          this.state.setAmplifier(bit, this.state.amplifier(bit).dividedBy(Math.sqrt(1 - pZero)))
         }
         this.measuredBits[t] = 1
       }
@@ -321,24 +297,21 @@ export class Simulator {
     return this
   }
 
-  amplitudes(targets: number[] = []): { [ket: number]: [number, number] } {
+  amplitudes(targets: number[] = []): {[ket: number]: [number, number]} {
     const stateVector = this.state.matrix.getColumn(0)
 
     if (targets.length > 0) {
-      return targets.reduce(
-        (map: { [ket: number]: [number, number] }, each) => {
-          const c = stateVector[each]
-          if (c === undefined) {
-            map[each] = [0, 0]
-          } else {
-            map[each] = [c.real, c.imag]
-          }
-          return map
-        },
-        {},
-      )
+      return targets.reduce((map: {[ket: number]: [number, number]}, each) => {
+        const c = stateVector[each]
+        if (c === undefined) {
+          map[each] = [0, 0]
+        } else {
+          map[each] = [c.real, c.imag]
+        }
+        return map
+      }, {})
     } else {
-      return stateVector.map((each) => {
+      return stateVector.map(each => {
         return [each.real, each.imag]
       })
     }
@@ -350,12 +323,8 @@ export class Simulator {
     }
   }
 
-  private cu(
-    controls: number | number[],
-    u: Matrix,
-    ...targets: number[]
-  ): void {
-    const cs = typeof controls === "number" ? [controls] : controls
+  private cu(controls: number | number[], u: Matrix, ...targets: number[]): void {
+    const cs = typeof controls === 'number' ? [controls] : controls
     const controlMask = cs.reduce((result, each) => {
       return result | (1 << each)
     }, 0)

@@ -1,15 +1,13 @@
-import tippy, { Instance, ReferenceElement, roundArrow } from "tippy.js"
-import { Constructor } from "./constructor"
-import { attr } from "@github/catalyst"
+import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Helpable {
   showHelp(): void
   disableHelp(): void
 }
 
-export function HelpableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
-): Constructor<Helpable> & TBase {
+export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Helpable> & TBase {
   class HelpableMixinClass extends Base {
     @attr help = true
 
@@ -20,18 +18,18 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(
       if (popupInstance) return
 
       const content = this.innerHTML.trim()
-      if (content === "") return
+      if (content === '') return
 
       const popup = tippy(this, {
         allowHTML: true,
         animation: false,
         arrow: roundArrow + roundArrow,
         delay: 0,
-        placement: "right",
-        theme: "qni",
+        placement: 'right',
+        theme: 'qni',
         onShow(instance: Instance) {
           instance.setContent(content)
-        },
+        }
       })
       popup.show()
     }
@@ -41,7 +39,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(
 
       this.help = false
       popupInstance?.destroy()
-      this.innerHTML = ""
+      this.innerHTML = ''
     }
   }
 

@@ -1,25 +1,16 @@
-import {
-  DragAndDroppableMixin,
-  HelpableMixin,
-  IconableMixin,
-  JsonableMixin,
-  SizeableMixin,
-} from "./mixins"
-import { TemplateResult, html, render } from "@github/jtml"
-import { WRITE_GATE_OPERATION_TYPE, WriteGateOperation } from "../lib"
-import { attr, controller } from "@github/catalyst"
+import {DragAndDroppableMixin, HelpableMixin, IconableMixin, JsonableMixin, SizeableMixin} from './mixins'
+import {TemplateResult, html, render} from '@github/jtml'
+import {WRITE_GATE_OPERATION_TYPE, WriteGateOperation} from '../lib'
+import {attr, controller} from '@github/catalyst'
 
 @controller
 export class WriteGateElement extends DragAndDroppableMixin(
-  IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement)))),
+  IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))))
 ) {
-  @attr iconType = "transparent"
-  @attr value = "0"
+  @attr iconType = 'transparent'
+  @attr value = '0'
 
-  static create(
-    value: "0" | "1",
-    { dragAndDrop = false }: Partial<{ dragAndDrop: boolean }> = {},
-  ): WriteGateElement {
+  static create(value: '0' | '1', {dragAndDrop = false}: Partial<{dragAndDrop: boolean}> = {}): WriteGateElement {
     const el = new WriteGateElement()
     el.value = value
     el.dragAndDrop = dragAndDrop
@@ -28,7 +19,7 @@ export class WriteGateElement extends DragAndDroppableMixin(
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.initDragAndDrop()
   }
@@ -53,8 +44,8 @@ export class WriteGateElement extends DragAndDroppableMixin(
             right: 0;
             bottom: 0;
             left: 0;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+              monospace;
             writing-mode: vertical-lr;
           }
           #ket-label::after {
@@ -71,57 +62,57 @@ export class WriteGateElement extends DragAndDroppableMixin(
               line-height: 1.75rem !important;
             }
           }
-          :host([data-size="xs"]) #ket-label {
+          :host([data-size='xs']) #ket-label {
             font-size: 0.75rem;
             line-height: 1rem;
           }
-          :host([data-size="sm"]) #ket-label {
+          :host([data-size='sm']) #ket-label {
             font-size: 0.875rem !important;
             line-height: 1.25rem !important;
           }
           :host #ket-label,
-          :host([data-size="base"]) #ket-label {
+          :host([data-size='base']) #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
           }
-          :host([data-size="lg"]) #ket-label {
+          :host([data-size='lg']) #ket-label {
             font-size: 1.125rem;
             line-height: 1.75rem;
           }
-          :host([data-size="xl"]) #ket-label {
+          :host([data-size='xl']) #ket-label {
             font-size: 1.25rem;
             line-height: 1.75rem;
           }
-          :host([data-wire-count="1"]) #ket-label,
-          :host([data-wire-count="2"]) #ket-label,
-          :host([data-wire-count="3"]) #ket-label {
+          :host([data-wire-count='1']) #ket-label,
+          :host([data-wire-count='2']) #ket-label,
+          :host([data-wire-count='3']) #ket-label {
             font-size: 1.5rem;
             line-height: 2rem;
           }
-          :host([data-wire-count="4"]) #ket-label,
-          :host([data-wire-count="5"]) #ket-label,
-          :host([data-wire-count="6"]) #ket-label {
+          :host([data-wire-count='4']) #ket-label,
+          :host([data-wire-count='5']) #ket-label,
+          :host([data-wire-count='6']) #ket-label {
             font-size: 1rem;
             line-height: 1.5rem;
           }
-          :host([data-wire-count="7"]) #ket-label,
-          :host([data-wire-count="8"]) #ket-label,
-          :host([data-wire-count="9"]) #ket-label,
-          :host([data-wire-count="10"]) #ket-label {
+          :host([data-wire-count='7']) #ket-label,
+          :host([data-wire-count='8']) #ket-label,
+          :host([data-wire-count='9']) #ket-label,
+          :host([data-wire-count='10']) #ket-label {
             font-size: 0.75rem;
             line-height: 1rem;
           }
-          :host([data-value="0"]) #ket-label {
+          :host([data-value='0']) #ket-label {
             color: var(--colors-cardinal, #ff4b4b);
           }
-          :host([data-value="0"]) #ket-label::after {
-            content: "0";
+          :host([data-value='0']) #ket-label::after {
+            content: '0';
           }
-          :host([data-value="1"]) #ket-label {
+          :host([data-value='1']) #ket-label {
             color: var(--colors-magnitude, #1cb0f6);
           }
-          :host([data-value="1"]) #ket-label::after {
-            content: "1";
+          :host([data-value='1']) #ket-label::after {
+            content: '1';
           }
         </style>
 
@@ -129,7 +120,7 @@ export class WriteGateElement extends DragAndDroppableMixin(
           ${this.iconSvg}
           <div id="ket-label"></div>
         </div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 
@@ -138,14 +129,14 @@ export class WriteGateElement extends DragAndDroppableMixin(
   }
 
   serialize(): WriteGateOperation {
-    if (this.value !== "0" && this.value !== "1") {
+    if (this.value !== '0' && this.value !== '1') {
       throw new Error(`Invalid write value: ${this.value}`)
     }
     const value = parseInt(this.value) as 0 | 1
 
     return {
       type: WRITE_GATE_OPERATION_TYPE,
-      value,
+      value
     }
   }
 

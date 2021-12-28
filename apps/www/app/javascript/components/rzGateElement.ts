@@ -10,11 +10,11 @@ import {
   LabelableMixin,
   SizeableMixin,
   TargetableMixin,
-  WireableMixin,
-} from "./mixins"
-import { RZ_GATE_OPERATION_TYPE, RzGateOperation } from "../lib"
-import { TemplateResult, html, render } from "@github/jtml"
-import { attr, controller } from "@github/catalyst"
+  WireableMixin
+} from './mixins'
+import {RZ_GATE_OPERATION_TYPE, RzGateOperation} from '../lib'
+import {TemplateResult, html, render} from '@github/jtml'
+import {attr, controller} from '@github/catalyst'
 
 @controller
 export class RzGateElement extends ConfigurableMixin(
@@ -23,26 +23,20 @@ export class RzGateElement extends ConfigurableMixin(
       ControllableMixin(
         WireableMixin(
           LabelableMixin(
-            IfableMixin(
-              DisableableMixin(
-                IconableMixin(
-                  HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
+            IfableMixin(DisableableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))))))
+          )
+        )
+      )
+    )
+  )
 ) {
-  @attr iconType = "square"
-  @attr theta = ""
+  @attr iconType = 'square'
+  @attr theta = ''
 
   static create({
-    theta = "π/2",
-    dragAndDrop = false,
-  }: Partial<{ theta: string; dragAndDrop: boolean }> = {}): RzGateElement {
+    theta = 'π/2',
+    dragAndDrop = false
+  }: Partial<{theta: string; dragAndDrop: boolean}> = {}): RzGateElement {
     const el = new RzGateElement()
     el.theta = theta
     el.dragAndDrop = dragAndDrop
@@ -51,38 +45,38 @@ export class RzGateElement extends ConfigurableMixin(
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.initDragAndDrop()
-    this.addEventListener("mouseenter", this.showHelp)
-    this.addEventListener("mousedown", this.showRightClickPopup)
+    this.addEventListener('mouseenter', this.showHelp)
+    this.addEventListener('mousedown', this.showRightClickPopup)
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.dragAndDroppableStyle} ${this.disabledStyle} ${this.labelStyle}
+      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle} ${this.dragAndDroppableStyle}
+        ${this.disabledStyle} ${this.labelStyle}
 
         <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 
   toJson(): string {
-    if (this.theta === "") {
+    if (this.theta === '') {
       return `"${RZ_GATE_OPERATION_TYPE}"`
     } else {
-      return `"${RZ_GATE_OPERATION_TYPE}(${this.theta.replace("/", "_")})"`
+      return `"${RZ_GATE_OPERATION_TYPE}(${this.theta.replace('/', '_')})"`
     }
   }
 
   serialize(): RzGateOperation {
     return {
       type: RZ_GATE_OPERATION_TYPE,
-      theta: this.theta.replace("π", "pi"),
+      theta: this.theta.replace('π', 'pi'),
       controls: this.controls,
       targets: this.targets,
-      if: this.if,
+      if: this.if
     }
   }
 

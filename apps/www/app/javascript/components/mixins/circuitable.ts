@@ -1,7 +1,7 @@
-import { Constructor } from "./constructor"
-import { DragAndDroppable } from "./dragAndDroppable"
-import { QuantumCircuitElement } from "../quantumCircuitElement"
-import { Util } from "lib"
+import {Constructor} from './constructor'
+import {DragAndDroppable} from './dragAndDroppable'
+import {QuantumCircuitElement} from '../quantumCircuitElement'
+import {Util} from 'lib'
 
 export declare class Circuitable {
   get quantumCircuit(): QuantumCircuitElement
@@ -18,58 +18,33 @@ export declare class Circuitable {
 }
 
 export function CircuitableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
+  Base: TBase
 ): Constructor<Circuitable> & TBase {
   class CircuitableMixinClass extends Base {
     get quantumCircuit(): QuantumCircuitElement {
-      const el = this.querySelector("quantum-circuit") as QuantumCircuitElement
+      const el = this.querySelector('quantum-circuit') as QuantumCircuitElement
       Util.notNull(el)
 
       return el
     }
 
     initCircuitable(): void {
-      this.addEventListener("dragAndDroppable.load", this.initDragAndDroppable)
-      this.addEventListener(
-        "dragAndDroppable.mouseenter",
-        this.setDragAndDroppableCursorStyleGrab,
-      )
-      this.addEventListener(
-        "dragAndDroppable.grab",
-        this.setDocumentCursorStyleGrabbing,
-      )
-      this.addEventListener(
-        "dragAndDroppable.grab",
-        this.setDragAndDroppableCursorStyleGrabbing,
-      )
-      this.addEventListener("dragAndDroppable.grab", this.prepareForDrop)
-      this.addEventListener(
-        "dragAndDroppable.ungrab",
-        this.removeDragAndDroppableCursorStyle,
-      )
-      this.addEventListener(
-        "dragAndDroppable.ungrab",
-        this.setDocumentCursorStyleAuto,
-      )
-      this.addEventListener(
-        "dragAndDroppable.enddragging",
-        this.setDocumentCursorStyleAuto,
-      )
-      this.addEventListener(
-        "dragAndDroppable.trash",
-        this.setDocumentCursorStyleAuto,
-      )
-      this.addEventListener("dragAndDroppable.trash", this.resizeCircuit)
-      this.addEventListener(
-        "dragAndDroppable.snapToNewDropzone",
-        this.addShadowStep,
-      )
-      this.addEventListener("step.drop", this.resizeCircuit)
+      this.addEventListener('dragAndDroppable.load', this.initDragAndDroppable)
+      this.addEventListener('dragAndDroppable.mouseenter', this.setDragAndDroppableCursorStyleGrab)
+      this.addEventListener('dragAndDroppable.grab', this.setDocumentCursorStyleGrabbing)
+      this.addEventListener('dragAndDroppable.grab', this.setDragAndDroppableCursorStyleGrabbing)
+      this.addEventListener('dragAndDroppable.grab', this.prepareForDrop)
+      this.addEventListener('dragAndDroppable.ungrab', this.removeDragAndDroppableCursorStyle)
+      this.addEventListener('dragAndDroppable.ungrab', this.setDocumentCursorStyleAuto)
+      this.addEventListener('dragAndDroppable.enddragging', this.setDocumentCursorStyleAuto)
+      this.addEventListener('dragAndDroppable.trash', this.setDocumentCursorStyleAuto)
+      this.addEventListener('dragAndDroppable.trash', this.resizeCircuit)
+      this.addEventListener('dragAndDroppable.snapToNewDropzone', this.addShadowStep)
+      this.addEventListener('step.drop', this.resizeCircuit)
     }
 
     initDragAndDroppable(event: Event): void {
-      const dragAndDroppable = (event as CustomEvent).detail
-        .element as DragAndDroppable
+      const dragAndDroppable = (event as CustomEvent).detail.element as DragAndDroppable
       Util.notNull(dragAndDroppable)
 
       dragAndDroppable.dragAndDrop = true
@@ -81,9 +56,9 @@ export function CircuitableMixin<TBase extends Constructor<HTMLElement>>(
       Util.notNull(operation)
 
       if (this.quantumCircuit.editing) {
-        operation.style.cursor = "grabbing"
+        operation.style.cursor = 'grabbing'
       } else {
-        operation.style.cursor = "grab"
+        operation.style.cursor = 'grab'
       }
     }
 
@@ -91,34 +66,30 @@ export function CircuitableMixin<TBase extends Constructor<HTMLElement>>(
       const operation = (event as CustomEvent).detail.element as HTMLElement
       Util.notNull(operation)
 
-      operation.style.cursor = "grabbing"
+      operation.style.cursor = 'grabbing'
     }
 
     prepareForDrop(event: Event): void {
-      const dragAndDroppable = (event as CustomEvent).detail
-        .element as DragAndDroppable
+      const dragAndDroppable = (event as CustomEvent).detail.element as DragAndDroppable
       Util.notNull(dragAndDroppable)
 
       this.quantumCircuit.prepareForDrop()
-      dragAndDroppable.setSnapTargets(
-        this.quantumCircuit.dropzones,
-        this.quantumCircuit.wireCount,
-      )
+      dragAndDroppable.setSnapTargets(this.quantumCircuit.dropzones, this.quantumCircuit.wireCount)
     }
 
     removeDragAndDroppableCursorStyle(event: Event) {
       const operation = (event as CustomEvent).detail.element as HTMLElement
       Util.notNull(operation)
 
-      operation.style.cursor = ""
+      operation.style.cursor = ''
     }
 
     setDocumentCursorStyleGrabbing(): void {
-      document.documentElement.style.cursor = "grabbing"
+      document.documentElement.style.cursor = 'grabbing'
     }
 
     setDocumentCursorStyleAuto(): void {
-      document.documentElement.style.cursor = "auto"
+      document.documentElement.style.cursor = 'auto'
     }
 
     resizeCircuit(): void {

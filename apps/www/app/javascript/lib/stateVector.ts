@@ -1,6 +1,6 @@
-import { Complex } from "./complex"
-import { Matrix } from "./matrix"
-import { Util } from "./util"
+import {Complex} from './complex'
+import {Matrix} from './matrix'
+import {Util} from './util'
 
 export class StateVector {
   public matrix: Matrix
@@ -8,7 +8,7 @@ export class StateVector {
   public nqubit: number
 
   constructor(bits: string | Matrix) {
-    if ("string" === typeof bits) {
+    if ('string' === typeof bits) {
       this.matrix = this.bitstringToMatrix(bits)
     } else {
       this.matrix = bits
@@ -18,17 +18,8 @@ export class StateVector {
     this.nqubit = Math.log2(this.size)
   }
 
-  timesQubitOperation(
-    operation2x2: Matrix,
-    qubitIndex: number,
-    controlMask: number,
-  ): void {
-    this.matrix = this.matrix.timesQubitOperation(
-      operation2x2,
-      qubitIndex,
-      controlMask,
-      controlMask,
-    )
+  timesQubitOperation(operation2x2: Matrix, qubitIndex: number, controlMask: number): void {
+    this.matrix = this.matrix.timesQubitOperation(operation2x2, qubitIndex, controlMask, controlMask)
   }
 
   blochVector(bit: number): [number, number, number] {
@@ -55,14 +46,8 @@ export class StateVector {
    * Determines if the receiving state vector is approximately equal to the
    * given state vector.
    */
-  isApproximatelyEqualTo(
-    other: StateVector | unknown,
-    epsilon: number,
-  ): boolean {
-    return (
-      other instanceof StateVector &&
-      this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
-    )
+  isApproximatelyEqualTo(other: StateVector | unknown, epsilon: number): boolean {
+    return other instanceof StateVector && this.matrix.isApproximatelyEqualTo(other.matrix, epsilon)
   }
 
   toString(): string {
@@ -72,8 +57,8 @@ export class StateVector {
   private bitstringToMatrix(bits: string): Matrix {
     if (/^[01+-]+$/.exec(bits)) {
       return bits
-        .split("")
-        .map((each) => {
+        .split('')
+        .map(each => {
           return this.ketVector(each)
         })
         .reduce((result, each) => {
@@ -85,13 +70,13 @@ export class StateVector {
   }
 
   private ketVector(bit: string): Matrix {
-    const matrices: { [bit: string]: Matrix } = {
-      "0": Matrix.col(1, 0),
-      "1": Matrix.col(0, 1),
-      "+": Matrix.col(1, 1).times(Math.sqrt(0.5)),
-      "-": Matrix.col(1, -1).times(Math.sqrt(0.5)),
+    const matrices: {[bit: string]: Matrix} = {
+      '0': Matrix.col(1, 0),
+      '1': Matrix.col(0, 1),
+      '+': Matrix.col(1, 1).times(Math.sqrt(0.5)),
+      '-': Matrix.col(1, -1).times(Math.sqrt(0.5)),
       i: Matrix.col(1, new Complex(0, 1)).times(Math.sqrt(0.5)),
-      "-i": Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5)),
+      '-i': Matrix.col(1, new Complex(0, -1)).times(Math.sqrt(0.5))
     }
     const m = matrices[bit]
     Util.notNull(m)

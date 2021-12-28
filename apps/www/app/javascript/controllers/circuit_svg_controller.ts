@@ -1,9 +1,9 @@
-import "@svgdotjs/svg.filter.js"
-import { G, SVG, Svg } from "@svgdotjs/svg.js"
-import { Controller } from "@hotwired/stimulus"
+import '@svgdotjs/svg.filter.js'
+import {G, SVG, Svg} from '@svgdotjs/svg.js'
+import {Controller} from '@hotwired/stimulus'
 
 export default class CircuitSvgController extends Controller {
-  static targets = ["circuitScaler", "circuit", "title", "logo"]
+  static targets = ['circuitScaler', 'circuit', 'title', 'logo']
 
   declare circuitScalerTarget: HTMLElement
   declare circuitTarget: HTMLElement
@@ -37,7 +37,7 @@ export default class CircuitSvgController extends Controller {
     this.circuitScalerTarget.style.width = `${width * scale}px`
     this.circuitScalerTarget.style.height = `${height * scale}px`
 
-    this.circuitTarget.style.transformOrigin = "top left"
+    this.circuitTarget.style.transformOrigin = 'top left'
     this.circuitTarget.style.transform = `scaleX(${scale}) scaleY(${scale})`
   }
 
@@ -47,7 +47,7 @@ export default class CircuitSvgController extends Controller {
     const htmlRects = [
       this.relativeBounds(this.element as SVGSVGElement, this.circuitTarget),
       this.relativeBounds(this.element as SVGSVGElement, this.titleTarget),
-      this.relativeBounds(this.element as SVGSVGElement, this.logoTarget),
+      this.relativeBounds(this.element as SVGSVGElement, this.logoTarget)
     ]
 
     const rects = this.generateRandomRects(htmlRects)
@@ -57,26 +57,17 @@ export default class CircuitSvgController extends Controller {
     }
   }
 
-  private drawRandomShape(rect: {
-    x: number
-    y: number
-    width: number
-    height: number
-  }) {
-    const shapeChoices = ["rect", "ellipse", "triangle"]
+  private drawRandomShape(rect: {x: number; y: number; width: number; height: number}) {
+    const shapeChoices = ['rect', 'ellipse', 'triangle']
     let shape
 
     switch (shapeChoices[~~this.random(0, shapeChoices.length)]) {
-      case "ellipse":
+      case 'ellipse':
         shape = this.shapes.ellipse(rect.width, rect.height).x(rect.x).y(rect.y)
         break
-      case "triangle":
+      case 'triangle':
         shape = this.shapes
-          .polygon(
-            `0 ${rect.height}, ${rect.width / 2} 0, ${rect.width} ${
-              rect.height
-            }`,
-          )
+          .polygon(`0 ${rect.height}, ${rect.width / 2} 0, ${rect.width} ${rect.height}`)
           .x(rect.x)
           .y(rect.y)
         break
@@ -92,17 +83,17 @@ export default class CircuitSvgController extends Controller {
       shape
         .stroke({
           color,
-          width: 16,
+          width: 16
         })
-        .fill("transparent")
+        .fill('transparent')
     }
 
-    shape.node.classList.add("shape")
+    shape.node.classList.add('shape')
     shape.rotate(this.random(0, 90)).scale(0.825)
     shape.opacity(this.random(0.5, 1))
-    shape.filterWith((filter) => {
+    shape.filterWith(filter => {
       filter.gaussianBlur(30, 30)
-      filter.size("200%", "200%").move("-50%", "-50%")
+      filter.size('200%', '200%').move('-50%', '-50%')
     })
   }
 
@@ -112,7 +103,7 @@ export default class CircuitSvgController extends Controller {
       y: number
       width: number
       height: number
-    }>,
+    }>
   ) {
     const rects = [...existing]
     const tries = 250
@@ -127,10 +118,10 @@ export default class CircuitSvgController extends Controller {
         x: this.random(-size, 1200),
         y: this.random(-size, 630),
         width: size,
-        height: size,
+        height: size
       }
 
-      if (!rects.some((r) => this.detectRectCollision(r, rect))) {
+      if (!rects.some(r => this.detectRectCollision(r, rect))) {
         rects.push(rect)
       }
     }
@@ -177,7 +168,7 @@ export default class CircuitSvgController extends Controller {
       width: number
       height: number
     },
-    padding = 32,
+    padding = 32
   ) {
     return (
       rect1.x < rect2.x + rect2.width + padding &&
@@ -189,14 +180,14 @@ export default class CircuitSvgController extends Controller {
 
   private relativeBounds(
     svg: SVGSVGElement,
-    element: HTMLElement,
+    element: HTMLElement
   ): {
     x: number
     y: number
     width: number
     height: number
   } {
-    const { x, y, width, height } = element.getBoundingClientRect()
+    const {x, y, width, height} = element.getBoundingClientRect()
 
     const startPoint = svg.createSVGPoint()
     startPoint.x = x
@@ -206,18 +197,14 @@ export default class CircuitSvgController extends Controller {
     endPoint.x = x + width
     endPoint.y = y + height
 
-    const startPointTransformed = startPoint.matrixTransform(
-      svg.getScreenCTM()!.inverse(),
-    )
-    const endPointTransformed = endPoint.matrixTransform(
-      svg.getScreenCTM()!.inverse(),
-    )
+    const startPointTransformed = startPoint.matrixTransform(svg.getScreenCTM()!.inverse())
+    const endPointTransformed = endPoint.matrixTransform(svg.getScreenCTM()!.inverse())
 
     return {
       x: startPointTransformed.x,
       y: startPointTransformed.y,
       width: endPointTransformed.x - startPointTransformed.x,
-      height: endPointTransformed.y - startPointTransformed.y,
+      height: endPointTransformed.y - startPointTransformed.y
     }
   }
 }

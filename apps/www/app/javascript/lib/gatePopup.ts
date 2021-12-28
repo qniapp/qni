@@ -1,50 +1,38 @@
-import { Complex, PARSE_COMPLEX_TOKEN_MAP_RAD } from "lib/complex"
-import noUiSlider, {
-  PipsMode,
-  API as noUiSliderApi,
-  target as noUiSliderTarget,
-} from "nouislider"
-import tippy, { Instance, Props, roundArrow } from "tippy.js"
-import { DisplaySize } from "lib"
-import Fraction from "fraction.js"
-import { HGateElement } from "components/hGateElement"
-import { MeasurementGateElement } from "components/measurementGateElement"
-import { PhaseGateElement } from "components/phaseGateElement"
-import { RnotGateElement } from "components/rnotGateElement"
-import { RxGateElement } from "components/rxGateElement"
-import { RyGateElement } from "components/ryGateElement"
-import { RzGateElement } from "components/rzGateElement"
-import { Util } from "./util"
-import { XGateElement } from "components/xGateElement"
-import { parseFormula } from "lib/formulaParser"
+import {Complex, PARSE_COMPLEX_TOKEN_MAP_RAD} from 'lib/complex'
+import noUiSlider, {PipsMode, API as noUiSliderApi, target as noUiSliderTarget} from 'nouislider'
+import tippy, {Instance, Props, roundArrow} from 'tippy.js'
+import {DisplaySize} from 'lib'
+import Fraction from 'fraction.js'
+import {HGateElement} from 'components/hGateElement'
+import {MeasurementGateElement} from 'components/measurementGateElement'
+import {PhaseGateElement} from 'components/phaseGateElement'
+import {RnotGateElement} from 'components/rnotGateElement'
+import {RxGateElement} from 'components/rxGateElement'
+import {RyGateElement} from 'components/ryGateElement'
+import {RzGateElement} from 'components/rzGateElement'
+import {Util} from './util'
+import {XGateElement} from 'components/xGateElement'
+import {parseFormula} from 'lib/formulaParser'
 
 const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
-  typeof arg === "object" &&
-  arg !== null &&
-  (arg as PhaseGateElement).tagName === "PHASE-GATE"
+  typeof arg === 'object' && arg !== null && (arg as PhaseGateElement).tagName === 'PHASE-GATE'
 
-const isThetable = (
-  arg: unknown,
-): arg is RxGateElement | RyGateElement | RzGateElement =>
-  typeof arg === "object" &&
+const isThetable = (arg: unknown): arg is RxGateElement | RyGateElement | RzGateElement =>
+  typeof arg === 'object' &&
   arg !== null &&
-  ((arg as RxGateElement).tagName === "RX-GATE" ||
-    (arg as RyGateElement).tagName === "RY-GATE" ||
-    (arg as RzGateElement).tagName === "RZ-GATE")
+  ((arg as RxGateElement).tagName === 'RX-GATE' ||
+    (arg as RyGateElement).tagName === 'RY-GATE' ||
+    (arg as RzGateElement).tagName === 'RZ-GATE')
 
-const isIfable = (
-  arg: unknown,
-): arg is HGateElement | XGateElement | RnotGateElement =>
-  typeof arg === "object" &&
+const isIfable = (arg: unknown): arg is HGateElement | XGateElement | RnotGateElement =>
+  typeof arg === 'object' &&
   arg !== null &&
-  ((arg as HGateElement).tagName === "H-GATE" ||
-    (arg as XGateElement).tagName === "X-GATE" ||
-    (arg as RnotGateElement).tagName === "RNOT-GATE")
+  ((arg as HGateElement).tagName === 'H-GATE' ||
+    (arg as XGateElement).tagName === 'X-GATE' ||
+    (arg as RnotGateElement).tagName === 'RNOT-GATE')
 
 const isFlaggable = (arg: unknown): arg is MeasurementGateElement =>
-  typeof arg === "object" &&
-  arg !== null &&
-  (arg as MeasurementGateElement).tagName === "MEASUREMENT-GATE"
+  typeof arg === 'object' && arg !== null && (arg as MeasurementGateElement).tagName === 'MEASUREMENT-GATE'
 
 export class GatePopup {
   onUpdate!: () => void
@@ -66,7 +54,7 @@ export class GatePopup {
       delay: 0,
       hideOnClick: false,
       interactive: true,
-      theme: "qni",
+      theme: 'qni',
       // trigger: "manual", // debug
       onShow(instance) {
         let originalValue: string | null
@@ -82,13 +70,10 @@ export class GatePopup {
           } else if (isThetable(operation)) {
             originalValue = operation.theta
           }
-          that.input.value = originalValue!.replace(/π/g, "pi")
+          that.input.value = originalValue!.replace(/π/g, 'pi')
 
           const radian = Complex.from(
-            parseFormula<number>(
-              originalValue!.replace(/π/g, "pi"),
-              PARSE_COMPLEX_TOKEN_MAP_RAD,
-            ),
+            parseFormula<number>(originalValue!.replace(/π/g, 'pi'), PARSE_COMPLEX_TOKEN_MAP_RAD)
           ).real
 
           that.currentAngleDenominator = that.angleDenominator(originalValue!)
@@ -96,7 +81,7 @@ export class GatePopup {
           that.createAngleSlider(operation)
         }
 
-        that.input.addEventListener("keydown", that.inputKeydown.bind(that))
+        that.input.addEventListener('keydown', that.inputKeydown.bind(that))
       },
       onHide() {
         if (that.isAngleSliderActive()) return false
@@ -108,20 +93,18 @@ export class GatePopup {
           that.reduceInstructionAngle(operation)
           that.destroyAngleSlider()
         }
-        operation.dispatchEvent(
-          new Event("operation.update", { bubbles: true }),
-        )
+        operation.dispatchEvent(new Event('operation.update', {bubbles: true}))
         instance.destroy()
-      },
+      }
     })
     this.popup.show()
   }
 
   private updateInstructionAngle(
     operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement,
-    angle: string,
+    angle: string
   ): void {
-    const πangle = angle.replace(/pi/g, "π")
+    const πangle = angle.replace(/pi/g, 'π')
 
     this.input.value = angle
     if (isPhaseGateElement(operation)) {
@@ -144,23 +127,15 @@ export class GatePopup {
     // }
   }
 
-  private reduceInstructionAngle(
-    operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement,
-  ): void {
+  private reduceInstructionAngle(operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement): void {
     if (isPhaseGateElement(operation)) {
-      const angle = this.beautifyFraction(
-        operation.phi.replace(/π/g, "pi"),
-        true,
-      )
+      const angle = this.beautifyFraction(operation.phi.replace(/π/g, 'pi'), true)
 
-      operation.phi = angle.replace(/pi/g, "π")
+      operation.phi = angle.replace(/pi/g, 'π')
     } else {
-      const angle = this.beautifyFraction(
-        operation.theta.replace(/π/g, "pi"),
-        true,
-      )
+      const angle = this.beautifyFraction(operation.theta.replace(/π/g, 'pi'), true)
 
-      operation.theta = angle.replace(/pi/g, "π")
+      operation.theta = angle.replace(/pi/g, 'π')
     }
 
     // if (isPhaseGateElement(instruction)) {
@@ -188,22 +163,20 @@ export class GatePopup {
   private beautifyFraction(angle: string, reduce = false): string {
     let newAngle: string
     ;(Fraction as any).REDUCE = reduce
-    const fraction = new Fraction(
-      angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
-    )
+    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
 
     const coefficient = fraction.valueOf()
     const d = fraction.d
 
     if (coefficient === 0) {
-      newAngle = "0"
+      newAngle = '0'
     } else if (coefficient > 2) {
-      newAngle = d === 1 ? "2pi" : `${2 * d}pi/${d}`
+      newAngle = d === 1 ? '2pi' : `${2 * d}pi/${d}`
     } else if (coefficient < -2) {
-      newAngle = d === 1 ? "-2pi" : `-${2 * d}pi/${d}`
+      newAngle = d === 1 ? '-2pi' : `-${2 * d}pi/${d}`
     } else {
       const n = fraction.n
-      const sign = fraction.s === -1 ? "-" : ""
+      const sign = fraction.s === -1 ? '-' : ''
       const numerator = n === 1 ? `${sign}pi` : `${sign}${n}pi`
       newAngle = d === 1 ? `${numerator}` : `${numerator}/${d}`
     }
@@ -229,13 +202,13 @@ export class GatePopup {
     // if (isPhaseGateElement(instruction)) popupType = "phi"
 
     if (isFlaggable(el)) {
-      popupType = "flag"
+      popupType = 'flag'
     } else if (isPhaseGateElement(el)) {
-      popupType = "phi"
+      popupType = 'phi'
     } else if (isThetable(el)) {
-      popupType = "theta"
+      popupType = 'theta'
     } else if (isIfable(el)) {
-      popupType = "if"
+      popupType = 'if'
     }
     Util.notNull(popupType)
 
@@ -248,16 +221,16 @@ export class GatePopup {
   private get input(): HTMLInputElement {
     Util.notNull(this.popup)
 
-    const el = this.popup.popper.getElementsByTagName("input").item(0)
+    const el = this.popup.popper.getElementsByTagName('input').item(0)
     Util.notNull(el)
 
     return el
   }
 
   private inputKeydown(event: KeyboardEvent): void {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       Util.notNull(this.popup)
-      this.popup.popper.classList.remove("gate-popup--error")
+      this.popup.popper.classList.remove('gate-popup--error')
       const inputValue = this.input.value
 
       try {
@@ -285,30 +258,22 @@ export class GatePopup {
           let newAngle = inputValue
 
           if (
-            this.angleNumerator(this.currentAngle) ===
-              this.angleNumerator(inputValue) &&
+            this.angleNumerator(this.currentAngle) === this.angleNumerator(inputValue) &&
             this.currentAngleDenominator !== this.angleDenominator(inputValue)
           ) {
-            const m =
-              this.angleDenominator(inputValue) / this.currentAngleDenominator
-            newAngle = `${Math.round(
-              m * this.angleNumerator(this.currentAngle),
-            )}pi/${this.angleDenominator(inputValue)}`
+            const m = this.angleDenominator(inputValue) / this.currentAngleDenominator
+            newAngle = `${Math.round(m * this.angleNumerator(this.currentAngle))}pi/${this.angleDenominator(
+              inputValue
+            )}`
           }
 
           this.currentAngleDenominator = this.angleDenominator(inputValue)
           this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
 
           if (isPhaseGateElement(operation)) {
-            operation.phi = this.beautifyFraction(newAngle, false).replace(
-              /pi/g,
-              "π",
-            )
+            operation.phi = this.beautifyFraction(newAngle, false).replace(/pi/g, 'π')
           } else if (isThetable(operation)) {
-            operation.theta = this.beautifyFraction(newAngle, false).replace(
-              /pi/g,
-              "π",
-            )
+            operation.theta = this.beautifyFraction(newAngle, false).replace(/pi/g, 'π')
           }
         }
 
@@ -338,7 +303,7 @@ export class GatePopup {
         this.runCircuit()
       } catch (e) {
         Util.notNull(this.popup)
-        this.popup.popper.classList.add("gate-popup--error")
+        this.popup.popper.classList.add('gate-popup--error')
       }
     }
   }
@@ -347,7 +312,7 @@ export class GatePopup {
     const operation = this.popupReferenceEl as MeasurementGateElement
 
     if (!flag || flag.trim().length === 0) {
-      operation.flag = ""
+      operation.flag = ''
       // if (isDisableable(instruction)) instruction.disabled = false
     } else {
       operation.flag = flag
@@ -360,7 +325,7 @@ export class GatePopup {
 
     if (!ifValue || ifValue.trim().length === 0) {
       if (isIfable(operation)) {
-        operation.if = ""
+        operation.if = ''
         operation.disabled = false
       }
     } else {
@@ -369,9 +334,7 @@ export class GatePopup {
   }
 
   private runCircuit(): void {
-    this.popupReferenceEl.dispatchEvent(
-      new Event("operation.popup.change", { bubbles: true }),
-    )
+    this.popupReferenceEl.dispatchEvent(new Event('operation.popup.change', {bubbles: true}))
   }
 
   private get popupReferenceEl(): HTMLElement {
@@ -381,23 +344,19 @@ export class GatePopup {
   }
 
   private get editorElement(): Element {
-    const el = this.popupReferenceEl.closest(".editor")
+    const el = this.popupReferenceEl.closest('.editor')
     Util.notNull(el)
     return el
   }
 
   private get angleSliderEl(): noUiSliderTarget {
-    const el = this.popup?.popper
-      .getElementsByClassName("angle-slider")
-      .item(0) as HTMLElement
+    const el = this.popup?.popper.getElementsByClassName('angle-slider').item(0) as HTMLElement
     Util.notNull(el)
 
     return el
   }
 
-  private createAngleSlider(
-    operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement,
-  ): void {
+  private createAngleSlider(operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement): void {
     const angleSliderEl = this.angleSliderEl
     const filterPips = (value: number) => {
       if (value === 0) return 1
@@ -411,17 +370,12 @@ export class GatePopup {
       angle = operation.theta
     }
 
-    const radian = Complex.from(
-      parseFormula<number>(
-        angle.replace(/π/g, "pi"),
-        PARSE_COMPLEX_TOKEN_MAP_RAD,
-      ),
-    ).real
+    const radian = Complex.from(parseFormula<number>(angle.replace(/π/g, 'pi'), PARSE_COMPLEX_TOKEN_MAP_RAD)).real
 
     noUiSlider.create(angleSliderEl, {
       range: {
         min: -2 * Math.PI,
-        max: 2 * Math.PI,
+        max: 2 * Math.PI
       },
       start: radian,
       pips: {
@@ -429,28 +383,26 @@ export class GatePopup {
         values: [0, 25, 50, 75, 100],
         filter: filterPips,
         format: {
-          to: (value) => {
+          to: value => {
             const nPi = value / Math.PI
-            if (nPi === 0) return "0"
-            if (nPi === -1) return "-π"
-            if (nPi === 1) return "π"
+            if (nPi === 0) return '0'
+            if (nPi === -1) return '-π'
+            if (nPi === 1) return 'π'
             return `${nPi}π`
-          },
-        },
+          }
+        }
       },
-      cssPrefix: "angle-slider-",
+      cssPrefix: 'angle-slider-'
     })
-    angleSliderEl.classList.remove("hidden")
+    angleSliderEl.classList.remove('hidden')
 
     const slider = angleSliderEl.noUiSlider as noUiSliderApi
-    slider.on("update", (values) => {
+    slider.on('update', values => {
       const snappedAngle = this.snappedAngle(values[0] as number)
       if (this.currentAngle !== snappedAngle) {
         this.currentAngle = snappedAngle
         this.updateInstructionAngle(operation, snappedAngle)
-        operation.dispatchEvent(
-          new Event("operation.popup.change", { bubbles: true }),
-        )
+        operation.dispatchEvent(new Event('operation.popup.change', {bubbles: true}))
       }
     })
   }
@@ -460,26 +412,18 @@ export class GatePopup {
   }
 
   private isAngleSliderActive(): boolean {
-    return (
-      this.popup?.popper
-        .getElementsByClassName("angle-slider-active")
-        .item(0) !== null
-    )
+    return this.popup?.popper.getElementsByClassName('angle-slider-active').item(0) !== null
   }
 
   private radian(angle: string): number {
-    const fraction = new Fraction(
-      angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
-    )
+    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
     return fraction.valueOf() * Math.PI
   }
 
   private angleNumerator(angle: string): number {
     ;(Fraction as any).REDUCE = false
 
-    const fraction = new Fraction(
-      angle.replace(/(\d+)pi/g, "$1").replace(/pi/g, "1"),
-    )
+    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
     return fraction.s * fraction.n
   }
 
@@ -488,9 +432,9 @@ export class GatePopup {
 
     const fraction = new Fraction(
       angle
-        .replace(/π/g, "pi")
-        .replace(/(\d+)pi/g, "$1")
-        .replace(/pi/g, "1"),
+        .replace(/π/g, 'pi')
+        .replace(/(\d+)pi/g, '$1')
+        .replace(/pi/g, '1')
     )
     return fraction.d
   }

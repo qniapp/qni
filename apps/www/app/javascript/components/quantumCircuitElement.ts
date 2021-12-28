@@ -1,29 +1,29 @@
-import { attr, controller, targets } from "@github/catalyst"
-import { html, render } from "@github/jtml"
-import { BlochDisplayElement } from "./blochDisplayElement"
-import { CircuitBlockElement } from "./circuitBlockElement"
-import { CircuitDropzoneElement } from "./circuitDropzoneElement"
-import { CircuitOperation } from "../lib/operation"
-import { CircuitStepElement } from "./circuitStepElement"
-import { ControlGateElement } from "./controlGateElement"
-import { DragAndDroppable } from "./mixins"
-import { HGateElement } from "./hGateElement"
-import { MeasurementGateElement } from "./measurementGateElement"
-import { PhaseGateElement } from "./phaseGateElement"
-import { RnotGateElement } from "./rnotGateElement"
-import { RxGateElement } from "./rxGateElement"
-import { RyGateElement } from "./ryGateElement"
-import { RzGateElement } from "./rzGateElement"
-import { SwapGateElement } from "./swapGateElement"
-import { Util } from "lib/util"
-import { WriteGateElement } from "./writeGateElement"
-import { XGateElement } from "./xGateElement"
-import { YGateElement } from "./yGateElement"
-import { ZGateElement } from "./zGateElement"
+import {attr, controller, targets} from '@github/catalyst'
+import {html, render} from '@github/jtml'
+import {BlochDisplayElement} from './blochDisplayElement'
+import {CircuitBlockElement} from './circuitBlockElement'
+import {CircuitDropzoneElement} from './circuitDropzoneElement'
+import {CircuitOperation} from '../lib/operation'
+import {CircuitStepElement} from './circuitStepElement'
+import {ControlGateElement} from './controlGateElement'
+import {DragAndDroppable} from './mixins'
+import {HGateElement} from './hGateElement'
+import {MeasurementGateElement} from './measurementGateElement'
+import {PhaseGateElement} from './phaseGateElement'
+import {RnotGateElement} from './rnotGateElement'
+import {RxGateElement} from './rxGateElement'
+import {RyGateElement} from './ryGateElement'
+import {RzGateElement} from './rzGateElement'
+import {SwapGateElement} from './swapGateElement'
+import {Util} from 'lib/util'
+import {WriteGateElement} from './writeGateElement'
+import {XGateElement} from './xGateElement'
+import {YGateElement} from './yGateElement'
+import {ZGateElement} from './zGateElement'
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
-  @attr json = ""
+  @attr json = ''
   @attr updateUrl = false
   @attr minWireCount = 1
   @attr maxWireCount = 10
@@ -32,16 +32,14 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr interactive = false
   @attr editing = false
   @attr qubitCount = 1
-  @attr circuitTitle = ""
+  @attr circuitTitle = ''
 
   @targets blocks: CircuitBlockElement[]
 
   private breakpointStepIndex = 0
 
   get steps(): CircuitStepElement[] {
-    return Array.from(
-      this.querySelectorAll("circuit-step"),
-    ) as CircuitStepElement[]
+    return Array.from(this.querySelectorAll('circuit-step')) as CircuitStepElement[]
   }
 
   get breakpoint(): CircuitStepElement {
@@ -68,15 +66,15 @@ export class QuantumCircuitElement extends HTMLElement {
 
   get serializedSteps(): CircuitOperation[][] {
     const qubitCount = this.qubitCount
-    return this.steps.map((each) => each.serialize().slice(0, qubitCount))
+    return this.steps.map(each => each.serialize().slice(0, qubitCount))
   }
 
   private get emptySteps(): CircuitStepElement[] {
-    return this.steps.filter((each) => each.isEmpty)
+    return this.steps.filter(each => each.isEmpty)
   }
 
   private get nonEmptySteps(): CircuitStepElement[] {
-    return this.steps.filter((each) => !each.isEmpty)
+    return this.steps.filter(each => !each.isEmpty)
   }
 
   private get largestStep(): CircuitStepElement | null {
@@ -94,13 +92,11 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   get dropzones(): CircuitDropzoneElement[] {
-    return Array.from(
-      this.querySelectorAll("circuit-dropzone"),
-    ) as CircuitDropzoneElement[]
+    return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 
   get freeDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter((each) => {
+    return this.dropzones.filter(each => {
       return !each.occupied
     })
   }
@@ -157,10 +153,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   phase(phi: number, ...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(
-      PhaseGateElement.create({ phi: phi.toString() }),
-      ...targetQubits,
-    )
+    this.applyOperation(PhaseGateElement.create({phi: phi.toString()}), ...targetQubits)
     this.resize()
     return this
   }
@@ -172,28 +165,19 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   rx(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(
-      RxGateElement.create({ theta: theta.toString() }),
-      ...targetQubits,
-    )
+    this.applyOperation(RxGateElement.create({theta: theta.toString()}), ...targetQubits)
     this.resize()
     return this
   }
 
   ry(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(
-      RyGateElement.create({ theta: theta.toString() }),
-      ...targetQubits,
-    )
+    this.applyOperation(RyGateElement.create({theta: theta.toString()}), ...targetQubits)
     this.resize()
     return this
   }
 
   rz(theta: number, ...targetQubits: number[]): QuantumCircuitElement {
-    this.applyOperation(
-      RzGateElement.create({ theta: theta.toString() }),
-      ...targetQubits,
-    )
+    this.applyOperation(RzGateElement.create({theta: theta.toString()}), ...targetQubits)
     this.resize()
     return this
   }
@@ -221,11 +205,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  ccnot(
-    controlA: number,
-    controlB: number,
-    xTarget: number,
-  ): QuantumCircuitElement {
+  ccnot(controlA: number, controlB: number, xTarget: number): QuantumCircuitElement {
     this.validateQubits(controlA, controlB, xTarget)
 
     const circuitStep = this.appendStep()
@@ -255,7 +235,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  write(value: "0" | "1", ...targetQubits: number[]): QuantumCircuitElement {
+  write(value: '0' | '1', ...targetQubits: number[]): QuantumCircuitElement {
     this.applyOperation(WriteGateElement.create(value), ...targetQubits)
     this.resize()
     return this
@@ -267,13 +247,10 @@ export class QuantumCircuitElement extends HTMLElement {
     return this
   }
 
-  block(
-    comment: string,
-    blockDef: (c: QuantumCircuitElement) => void,
-  ): QuantumCircuitElement {
+  block(comment: string, blockDef: (c: QuantumCircuitElement) => void): QuantumCircuitElement {
     const block = new CircuitBlockElement()
     block.comment = comment
-    block.setAttribute("data-targets", "quantum-circuit.blocks")
+    block.setAttribute('data-targets', 'quantum-circuit.blocks')
     this.append(block)
 
     blockDef(this)
@@ -283,53 +260,44 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.loadFromJson()
     this.updateAllSteps()
     this.updateQubitCount()
     this.updateWireCount()
 
-    this.addEventListener("dragAndDroppable.ungrab", () => {
+    this.addEventListener('dragAndDroppable.ungrab', () => {
       this.editing = false
     })
-    this.addEventListener("dragAndDroppable.ungrab", this.resize)
-    this.addEventListener("dragAndDroppable.ungrab", this.enableDraggablesHover)
-    this.addEventListener(
-      "dragAndDroppable.ungrab",
-      this.dispatchStepMouseenterEvent,
-    )
+    this.addEventListener('dragAndDroppable.ungrab', this.resize)
+    this.addEventListener('dragAndDroppable.ungrab', this.enableDraggablesHover)
+    this.addEventListener('dragAndDroppable.ungrab', this.dispatchStepMouseenterEvent)
 
-    this.addEventListener("dragAndDroppable.enddragging", () => {
+    this.addEventListener('dragAndDroppable.enddragging', () => {
       this.editing = false
     })
-    this.addEventListener("dragAndDroppable.enddragging", this.resize)
-    this.addEventListener(
-      "dragAndDroppable.enddragging",
-      this.enableDraggablesHover,
-    )
-    this.addEventListener(
-      "dragAndDroppable.enddragging",
-      this.dispatchStepMouseenterEvent,
-    )
+    this.addEventListener('dragAndDroppable.enddragging', this.resize)
+    this.addEventListener('dragAndDroppable.enddragging', this.enableDraggablesHover)
+    this.addEventListener('dragAndDroppable.enddragging', this.dispatchStepMouseenterEvent)
 
-    this.addEventListener("dragAndDroppable.trash", () => {
+    this.addEventListener('dragAndDroppable.trash', () => {
       this.editing = false
     })
 
-    this.addEventListener("step.snap", this.snapStep)
-    this.addEventListener("step.snap", this.updateStepConnections)
-    this.addEventListener("step.snap", this.updateWires)
-    this.addEventListener("step.snap", this.updateQubitCount)
+    this.addEventListener('step.snap', this.snapStep)
+    this.addEventListener('step.snap', this.updateStepConnections)
+    this.addEventListener('step.snap', this.updateWires)
+    this.addEventListener('step.snap', this.updateQubitCount)
 
-    this.addEventListener("step.unsnap", this.unsnapStep)
-    this.addEventListener("step.unsnap", this.updateStepConnections)
-    this.addEventListener("step.unsnap", this.updateWires)
-    this.addEventListener("step.unsnap", this.updateQubitCount)
+    this.addEventListener('step.unsnap', this.unsnapStep)
+    this.addEventListener('step.unsnap', this.updateStepConnections)
+    this.addEventListener('step.unsnap', this.updateWires)
+    this.addEventListener('step.unsnap', this.updateQubitCount)
 
-    this.addEventListener("mouseleave", this.dispatchCircuitMouseLeaveEvent)
+    this.addEventListener('mouseleave', this.dispatchCircuitMouseLeaveEvent)
 
-    this.dispatchEvent(new Event("circuit.load", { bubbles: true }))
+    this.dispatchEvent(new Event('circuit.load', {bubbles: true}))
   }
 
   private updateQubitCount(): void {
@@ -340,7 +308,7 @@ export class QuantumCircuitElement extends HTMLElement {
       return
     }
 
-    const maxStepQubitCount = Math.max(...steps.map((each) => each.qubitCount))
+    const maxStepQubitCount = Math.max(...steps.map(each => each.qubitCount))
     if (maxStepQubitCount === 0) {
       this.qubitCount = 1
       return
@@ -357,7 +325,7 @@ export class QuantumCircuitElement extends HTMLElement {
       return
     }
 
-    const maxStepQubitCount = Math.max(...steps.map((each) => each.qubitCount))
+    const maxStepQubitCount = Math.max(...steps.map(each => each.qubitCount))
     if (maxStepQubitCount === 0) {
       this.wireCount = this.minWireCount
       return
@@ -367,15 +335,14 @@ export class QuantumCircuitElement extends HTMLElement {
     Util.notNull(firstStep)
     const wireCount = firstStep.wireCount
 
-    this.wireCount =
-      wireCount > this.minWireCount ? wireCount : this.minWireCount
+    this.wireCount = wireCount > this.minWireCount ? wireCount : this.minWireCount
   }
 
   private dispatchStepMouseenterEvent(event: Event): void {
     const x = (event as CustomEvent).detail.x
     const y = (event as CustomEvent).detail.y
     const el = document.elementFromPoint(x, y)
-    const step = el?.closest("circuit-step") as CircuitStepElement
+    const step = el?.closest('circuit-step') as CircuitStepElement
 
     step?.dispatchStepMouseenterEvent()
   }
@@ -384,7 +351,7 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of this.steps) {
       each.active = false
     }
-    this.dispatchEvent(new Event("circuit.mouseleave", { bubbles: true }))
+    this.dispatchEvent(new Event('circuit.mouseleave', {bubbles: true}))
   }
 
   setBreakpoint(stepIndex: number): void {
@@ -437,7 +404,7 @@ export class QuantumCircuitElement extends HTMLElement {
         <div id="body">
           <slot></slot>
         </div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 
@@ -489,10 +456,8 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private validateQubits(...qubits: number[]): void {
-    if (qubits.some((each) => each < 0)) {
-      throw new Error(
-        "The index of the qubit must be greater than or equal to 0.",
-      )
+    if (qubits.some(each => each < 0)) {
+      throw new Error('The index of the qubit must be greater than or equal to 0.')
     }
   }
 
@@ -506,7 +471,7 @@ export class QuantumCircuitElement extends HTMLElement {
       jsonString = this.json
     }
 
-    if (jsonString === "" || jsonString === "new") {
+    if (jsonString === '' || jsonString === 'new') {
       if (this.updateUrl) {
         this.resize()
       }
@@ -514,7 +479,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     const jsonData = JSON.parse(jsonString)
-    this.circuitTitle = (jsonData.title || "").trim()
+    this.circuitTitle = (jsonData.title || '').trim()
 
     for (const step of jsonData.cols) {
       const circuitStep = this.appendStep()
@@ -522,73 +487,61 @@ export class QuantumCircuitElement extends HTMLElement {
       for (const instruction of step) {
         switch (true) {
           case /^\|0>$/.test(instruction): {
-            circuitStep.appendOperation(
-              WriteGateElement.create("0", { dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(WriteGateElement.create('0', {dragAndDrop: this.updateUrl}))
             break
           }
           case /^\|1>$/.test(instruction): {
-            circuitStep.appendOperation(
-              WriteGateElement.create("1", { dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(WriteGateElement.create('1', {dragAndDrop: this.updateUrl}))
             break
           }
           case /^H$/.test(instruction): {
-            circuitStep.appendOperation(
-              HGateElement.create({ dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(HGateElement.create({dragAndDrop: this.updateUrl}))
             break
           }
           case /^H<(.+)$/.test(instruction): {
             circuitStep.appendOperation(
               HGateElement.create({
                 dragAndDrop: this.updateUrl,
-                ifVar: RegExp.$1.trim(),
-              }),
+                ifVar: RegExp.$1.trim()
+              })
             )
             break
           }
           case /^X$/.test(instruction): {
-            circuitStep.appendOperation(
-              XGateElement.create({ dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(XGateElement.create({dragAndDrop: this.updateUrl}))
             break
           }
           case /^X<(.+)$/.test(instruction): {
             circuitStep.appendOperation(
               XGateElement.create({
                 dragAndDrop: this.updateUrl,
-                ifVar: RegExp.$1.trim(),
-              }),
+                ifVar: RegExp.$1.trim()
+              })
             )
             break
           }
           case /^Y$/.test(instruction): {
-            circuitStep.appendOperation(
-              YGateElement.create({ dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(YGateElement.create({dragAndDrop: this.updateUrl}))
             break
           }
           case /^Z$/.test(instruction): {
-            circuitStep.appendOperation(
-              ZGateElement.create({ dragAndDrop: this.updateUrl }),
-            )
+            circuitStep.appendOperation(ZGateElement.create({dragAndDrop: this.updateUrl}))
             break
           }
           case /^P$/.test(instruction): {
             circuitStep.appendOperation(
               PhaseGateElement.create({
-                dragAndDrop: this.updateUrl,
-              }),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^P\((.+)\)$/.test(instruction): {
             circuitStep.appendOperation(
               PhaseGateElement.create({
-                phi: RegExp.$1.replace("_", "/"),
-                dragAndDrop: this.updateUrl,
-              }),
+                phi: RegExp.$1.replace('_', '/'),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
@@ -608,86 +561,86 @@ export class QuantumCircuitElement extends HTMLElement {
           case /^Rx$/.test(instruction): {
             circuitStep.appendOperation(
               RxGateElement.create({
-                theta: "π/2",
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: 'π/2',
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Rx\((.+)\)$/.test(instruction): {
             circuitStep.appendOperation(
               RxGateElement.create({
-                theta: RegExp.$1.replace("_", "/"),
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: RegExp.$1.replace('_', '/'),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Ry$/.test(instruction): {
             circuitStep.appendOperation(
               RyGateElement.create({
-                theta: "π/2",
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: 'π/2',
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Ry\((.+)\)$/.test(instruction): {
             circuitStep.appendOperation(
               RyGateElement.create({
-                theta: RegExp.$1.replace("_", "/"),
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: RegExp.$1.replace('_', '/'),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Rz$/.test(instruction): {
             circuitStep.appendOperation(
               RzGateElement.create({
-                theta: "π/2",
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: 'π/2',
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Rz\((.+)\)$/.test(instruction): {
             circuitStep.appendOperation(
               RzGateElement.create({
-                theta: RegExp.$1.replace("_", "/"),
-                dragAndDrop: this.updateUrl,
-              }),
+                theta: RegExp.$1.replace('_', '/'),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Swap$/.test(instruction): {
             circuitStep.appendOperation(
               SwapGateElement.create({
-                dragAndDrop: this.updateUrl,
-              }),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^•$/.test(instruction): {
             circuitStep.appendOperation(
               ControlGateElement.create({
-                dragAndDrop: this.updateUrl,
-              }),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Bloch$/.test(instruction): {
             circuitStep.appendOperation(
               BlochDisplayElement.create({
-                dragAndDrop: this.updateUrl,
-              }),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
           case /^Measure$/.test(instruction): {
             circuitStep.appendOperation(
               MeasurementGateElement.create({
-                dragAndDrop: this.updateUrl,
-              }),
+                dragAndDrop: this.updateUrl
+              })
             )
             break
           }
@@ -695,8 +648,8 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(
               MeasurementGateElement.create({
                 dragAndDrop: this.updateUrl,
-                flag: RegExp.$1.trim(),
-              }),
+                flag: RegExp.$1.trim()
+              })
             )
             break
           }
@@ -705,7 +658,7 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.remove()
             circuitBlock = new CircuitBlockElement()
             circuitBlock.comment = comment
-            circuitBlock.setAttribute("data-targets", "quantum-circuit.blocks")
+            circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
             this.append(circuitBlock)
             break
           }
@@ -741,8 +694,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private updateWires(event: Event): void {
-    const dropzone = (event as CustomEvent).detail
-      .dropzone as CircuitDropzoneElement
+    const dropzone = (event as CustomEvent).detail.dropzone as CircuitDropzoneElement
     const index = dropzone.index()
     Util.notNull(index)
 
@@ -752,11 +704,11 @@ export class QuantumCircuitElement extends HTMLElement {
       Util.notNull(dz)
 
       dz.inputWireQuantum = wireQuantum
-      if (dz.draggableTagName === "write-gate") {
+      if (dz.draggableTagName === 'write-gate') {
         dz.inputWireQuantum = wireQuantum
         dz.outputWireQuantum = true
         wireQuantum = true
-      } else if (dz.draggableTagName === "measurement-gate") {
+      } else if (dz.draggableTagName === 'measurement-gate') {
         dz.inputWireQuantum = wireQuantum
         dz.outputWireQuantum = false
         wireQuantum = false
@@ -794,14 +746,12 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private get draggables(): DragAndDroppable[] {
-    return Array.from(
-      this.querySelectorAll("[data-drag-and-drop]"),
-    ) as unknown as DragAndDroppable[]
+    return Array.from(this.querySelectorAll('[data-drag-and-drop]')) as unknown as DragAndDroppable[]
   }
 
   private get draggablesOnCircuit(): DragAndDroppable[] {
     return Array.from(
-      this.querySelectorAll("[data-drag-and-drop]:not([data-grabbed])"),
+      this.querySelectorAll('[data-drag-and-drop]:not([data-grabbed])')
     ) as unknown as DragAndDroppable[]
   }
 
@@ -826,9 +776,7 @@ export class QuantumCircuitElement extends HTMLElement {
       this.prepend(newStep)
     } else {
       const step = this.steps[stepIndex]
-      const stepParentEl = step.parentElement as
-        | QuantumCircuitElement
-        | CircuitBlockElement
+      const stepParentEl = step.parentElement as QuantumCircuitElement | CircuitBlockElement
       Util.notNull(stepParentEl)
       stepParentEl.insertBefore(newStep, step.nextSibling)
     }
@@ -872,7 +820,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private removeLastEmptyWires(): void {
     while (
-      this.steps.every((each) => {
+      this.steps.every(each => {
         return each.wireCount > this.minWireCount && !each.lastDropzone.occupied
       })
     ) {
@@ -915,10 +863,10 @@ export class QuantumCircuitElement extends HTMLElement {
       cols.push('["]"]')
     }
 
-    if (this.circuitTitle !== "") {
-      return `{"cols":[${cols.join(",")}],"title":"${this.circuitTitle}"}`
+    if (this.circuitTitle !== '') {
+      return `{"cols":[${cols.join(',')}],"title":"${this.circuitTitle}"}`
     } else {
-      return `{"cols":[${cols.join(",")}]}`
+      return `{"cols":[${cols.join(',')}]}`
     }
   }
 }

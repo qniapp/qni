@@ -9,11 +9,11 @@ import {
   JsonableMixin,
   LabelableMixin,
   SizeableMixin,
-  WireableMixin,
-} from "./mixins"
-import { HGateOperation, H_GATE_OPERATION_TYPE } from "../lib"
-import { TemplateResult, html, render } from "@github/jtml"
-import { attr, controller } from "@github/catalyst"
+  WireableMixin
+} from './mixins'
+import {HGateOperation, H_GATE_OPERATION_TYPE} from '../lib'
+import {TemplateResult, html, render} from '@github/jtml'
+import {attr, controller} from '@github/catalyst'
 
 @controller
 export class HGateElement extends ConfigurableMixin(
@@ -21,24 +21,15 @@ export class HGateElement extends ConfigurableMixin(
     ControllableMixin(
       WireableMixin(
         LabelableMixin(
-          IfableMixin(
-            DisableableMixin(
-              IconableMixin(
-                HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
+          IfableMixin(DisableableMixin(IconableMixin(HelpableMixin(SizeableMixin(JsonableMixin(HTMLElement))))))
+        )
+      )
+    )
+  )
 ) {
-  @attr iconType = "square"
+  @attr iconType = 'square'
 
-  static create({
-    dragAndDrop = false,
-    ifVar = "",
-  }: Partial<{ dragAndDrop: boolean; ifVar: string }> = {}): HGateElement {
+  static create({dragAndDrop = false, ifVar = ''}: Partial<{dragAndDrop: boolean; ifVar: string}> = {}): HGateElement {
     const el = new HGateElement()
     el.dragAndDrop = dragAndDrop
     el.if = ifVar
@@ -47,25 +38,25 @@ export class HGateElement extends ConfigurableMixin(
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({mode: 'open'})
     this.update()
     this.initDragAndDrop()
-    this.addEventListener("mouseenter", this.showHelp)
-    this.addEventListener("mousedown", this.showRightClickPopup)
+    this.addEventListener('mouseenter', this.showHelp)
+    this.addEventListener('mousedown', this.showRightClickPopup)
   }
 
   update(): void {
     render(
-      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle}
-        ${this.labelStyle} ${this.dragAndDroppableStyle} ${this.disabledStyle}
+      html`${this.sizeableStyle} ${this.wiresStyle} ${this.iconStyle} ${this.labelStyle} ${this.dragAndDroppableStyle}
+        ${this.disabledStyle}
 
         <div id="body">${this.wiresSvg} ${this.iconSvg}</div>`,
-      this.shadowRoot!,
+      this.shadowRoot!
     )
   }
 
   toJson(): string {
-    if (this.if !== "") {
+    if (this.if !== '') {
       return `"${H_GATE_OPERATION_TYPE}<${this.if}"`
     } else {
       return `"${H_GATE_OPERATION_TYPE}"`
@@ -76,7 +67,7 @@ export class HGateElement extends ConfigurableMixin(
     return {
       type: H_GATE_OPERATION_TYPE,
       controls: this.controls,
-      if: this.if !== "" ? this.if : null,
+      if: this.if !== '' ? this.if : null
     }
   }
 

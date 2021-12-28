@@ -1,4 +1,4 @@
-import { Constructor } from "./constructor"
+import {Constructor} from './constructor'
 
 export declare class Controllable {
   set controls(value: number[])
@@ -6,21 +6,21 @@ export declare class Controllable {
 }
 
 export function ControllableMixin<TBase extends Constructor<HTMLElement>>(
-  Base: TBase,
+  Base: TBase
 ): Constructor<Controllable> & TBase {
   class ControllableMixinClass extends Base {
     set controls(controls: number[]) {
-      this.setAttribute("data-controls", controls.sort().join())
+      this.setAttribute('data-controls', controls.sort().join())
     }
 
     get controls(): number[] {
-      const dataControls = this.getAttribute("data-controls")
+      const dataControls = this.getAttribute('data-controls')
 
       if (dataControls === null) return []
-      if (dataControls === "") return []
+      if (dataControls === '') return []
       return dataControls
-        .split(",")
-        .map((each) => {
+        .split(',')
+        .map(each => {
           return parseInt(each)
         })
         .sort()
