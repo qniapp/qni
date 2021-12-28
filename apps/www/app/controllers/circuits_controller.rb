@@ -10,5 +10,6 @@ class CircuitsController < ApplicationController
 
     @json = params[:json]
     @circuit = Circuit.find_or_create_by(json: @json)
+    @circuit.attach_social_image(circuit_svg_url(json: @json))
   end
 end

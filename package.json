@@ -24,6 +24,7 @@
     "build:packages": "lerna run build:packages --stream",
     "start:www": "yarn build:packages && cd apps/www && ./bin/dev",
     "test": "lerna run test --stream",
+    "test:ci": "lerna run test:ci --stream",
     "docs": "lerna run typedoc"
   },
   "devDependencies": {

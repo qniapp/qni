@@ -6,6 +6,9 @@ require 'test_helper'
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium_chrome_headless
 
+  # https://github.com/SeleniumHQ/selenium/issues/10025
+  Webdrivers::Chromedriver.required_version = '95.0.4638.69'
+
   def assert_steps(number)
     assert_selector 'circuit-step:not([data-shadow])', count: number
   end
