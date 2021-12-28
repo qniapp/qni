@@ -14,11 +14,10 @@ module.exports = function (config) {
         included: true,
       },
     ],
-    exclude: [],
     preprocessors: {
       "app/javascript/test/**/*.ts": ["esbuild"],
     },
-    reporters: ["dots"],
+    reporters: ["mocha"],
     autoWatch: false,
     browsers: ["ChromeHeadless"],
     singleRun: true,
