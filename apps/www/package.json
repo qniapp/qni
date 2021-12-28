@@ -2,6 +2,9 @@
   "name": "@qni/www",
   "version": "0.0.1",
   "description": "Web service for @qni.",
+  "author": "@yasuhito",
+  "homepage": "https://github.com/qniapp/qni/tree/main/apps/www#readme",
+  "license": "MIT",
   "keywords": [
     "quantum",
     "simulator",
@@ -11,15 +14,9 @@
     "quantum-computer-simulator",
     "quantum-algorithms"
   ],
-  "author": "Yasuhito Takamiya <yasuhito@hey.com> (https://github.com/yasuhito)",
-  "license": "MIT",
-  "homepage": "https://github.com/yasuhito/qni",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yasuhito/qni.git"
-  },
-  "bugs": {
-    "url": "https://github.com/yasuhito/qni/issues"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -38,35 +35,7 @@
     "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
     "release": "npm publish"
   },
-  "lint-staged": {
-    "*.ts": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "{app,lib,test}/**/*.rb": [
-      "bundle exec rubocop --safe-auto-correct"
-    ],
-    "Gemfile": [
-      "bundle exec rubocop --safe-auto-correct"
-    ],
-    "app/**/*.html.erb": [
-      "bundle exec erblint"
-    ],
-    "*.json": [
-      "prettier --write"
-    ],
-    "*.scss": [
-      "prettier --write"
-    ],
-    "*.md": [
-      "prettier --write --prose-wrap always"
-    ]
-  },
-  "prettier": {
-    "semi": false,
-    "trailingComma": "all",
-    "printWidth": 80
-  },
+  "prettier": "@github/prettier-config",
   "dependencies": {
     "@babel/plugin-proposal-decorators": "~7.16",
     "@babel/plugin-proposal-throw-expressions": "~7.16",
@@ -132,11 +101,6 @@
     "rollup-plugin-dts": "^4.0.1",
     "rollup-plugin-replace": "^2.2.0",
     "typedoc": "~0.22"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "directories": {
     "doc": "doc",
