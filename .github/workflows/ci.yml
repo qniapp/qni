@@ -52,7 +52,8 @@ jobs:
     - name: Setup DB
       run: |-
         cp apps/www/config/database.yml.github-actions apps/www/config/database.yml
-        cd apps/www && bundle exec rails db:setup
+        cd apps/www
+        bundle exec rails db:setup
       env:
         RAILS_ENV: test
         POSTGRES_USER: postgres
@@ -60,3 +61,7 @@ jobs:
     - run: lerna bootstrap
     - run: yarn build
     - run: yarn test:ci
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
