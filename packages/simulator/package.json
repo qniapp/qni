@@ -1,6 +1,6 @@
 {
   "name": "@qni/simulator",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Quantum simulator for @qni.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -18,7 +18,9 @@
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run lint && npm run compile",
     "build": "rollup -c",
+    "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
+    "test:ci": "yarn test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
@@ -30,7 +32,7 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@qni/elements": "^0.0.1",
+    "@qni/elements": "^0.0.6",
     "fp-ts": "^2.11.5"
   },
   "devDependencies": {
@@ -54,5 +56,6 @@
     "build/",
     "dist/",
     "rollup.config.js"
-  ]
+  ],
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

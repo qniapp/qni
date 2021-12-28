@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*", "app/javascript/*", "app/components/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "downlevelIteration": true,
+  },
+  "exclude": ["node_modules", "vendor", "public"],
+}

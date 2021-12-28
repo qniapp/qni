@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -19,8 +19,10 @@
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run icon && npm run css && npm run compile && npm run lint",
     "build": "rollup -c",
+    "build:packages": "yarn build",
     "pretest": "npm run build && rollup -c rollup.config.test.js",
     "test": "karma start test/karma.config.cjs",
+    "test:ci": "yarn test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "watch:css": "yarn css --watch",
@@ -46,7 +48,7 @@
     "@interactjs/dev-tools": "^1.10.11",
     "@interactjs/interact": "^1.10.11",
     "@interactjs/modifiers": "^1.10.11",
-    "@qni/common": "^0.0.1",
+    "@qni/common": "^0.0.6",
     "fraction.js": "^4.1.2",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7"
@@ -89,5 +91,6 @@
     "rollup.config.js",
     "rollup.config.test.js",
     "tailwind.config.cjs"
-  ]
+  ],
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

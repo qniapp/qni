@@ -11,8 +11,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     strategy:
       matrix:
@@ -25,6 +38,25 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+    - run: sudo apt-get -y install libpq-dev
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.4
+        working-directory: apps/www
+        bundler-cache: true
+    - name: Setup DB
+      run: |-
+        cd apps/www
+        cp config/database.yml.github-actions config/database.yml
+        bundle exec rails db:setup
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
     - run: lerna bootstrap
     - run: yarn build
-    - run: yarn test
+    - run: yarn test:ci
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres

@@ -1,0 +1,56 @@
+.gate-popup {
+  &__input-wrapper {
+    @apply border-2 border-swan;
+    @apply px-3 py-2;
+    @apply relative;
+    @apply rounded-md;
+
+    &:focus-within {
+      @apply ring-1;
+      @apply ring-magnitude;
+      @apply border-magnitude;
+    }
+  }
+
+  &__input {
+    @apply block;
+    @apply w-full;
+    @apply border-0;
+    @apply p-0;
+    @apply text-eel;
+    @apply sm:text-sm;
+
+    &:focus {
+      @apply ring-0;
+    }
+  }
+
+  &__error-icon {
+    @apply invisible;
+  }
+
+  &__input-error {
+    @apply invisible;
+    @apply text-sm;
+    @apply text-wolf;
+  }
+
+  &--error &__input-wrapper {
+    @apply border-cardinal;
+
+    &:focus-within {
+      @apply ring-1;
+      @apply border-cardinal;
+      @apply ring-cardinal;
+    }
+  }
+
+  &--error &__error-icon {
+    @apply visible;
+  }
+
+  &--error &__input-error {
+    @apply text-cardinal;
+    @apply visible;
+  }
+}

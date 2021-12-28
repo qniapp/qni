@@ -1,21 +1,21 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
   "scripts": {
     "build": "yarn css && rollup -c",
-    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css",
-    "start": "http-server"
+    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.1",
+    "@qni/elements": "^0.0.6",
     "http-server": "^14.0.0"
   },
   "devDependencies": {
     "esbuild": "^0.14.5",
     "rollup": "^2.61.1",
     "tailwindcss": "^3.0.2"
-  }
+  },
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

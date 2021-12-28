@@ -1,0 +1,7 @@
+linters:
+  StringQuotes:
+    enabled: true
+    style: double_quotes
+
+  SelectorDepth:
+    max_depth: 4

@@ -1,0 +1,160 @@
+---
+layout: page
+title: Measurement Gate
+description: Measures whether a qubit is ON or OFF.
+---
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pr-2 border-b border-gray-200">Attribute</div>
+      </th>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pl-2 border-b border-gray-200">State</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align-baseline">
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">data-size=&quot;xs&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">height: 1rem;
+width: 1rem;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;sm&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 1.5rem;
+width: 1.5rem;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;base&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2rem;
+width: 2rem;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;lg&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 2.5rem;
+width: 2.5rem;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-size=&quot;xl&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">height: 3rem;
+width: 3rem;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-value=&quot;0&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200"><code>value = 0</code></td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-value=&quot;1&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200"><code>value = 1</code></td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">data-flag=&quot;foobar&quot;</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">flag = &quot;foobar&quot;</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Sizes</h2>
+<p class="mb-5">
+  Control the size of a measurement gate using the <code class="text-purple-500">data-size</code> attribute.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+    <div class="flex flex-row space-x-4">
+      <measurement-gate data-size="xs"></measurement-gate>
+      <measurement-gate data-size="sm"></measurement-gate>
+      <measurement-gate data-size="base"></measurement-gate>
+      <measurement-gate data-size="lg"></measurement-gate>
+      <measurement-gate data-size="xl"></measurement-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measurement-gate data-size=&quot;xs&quot;&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-size=&quot;sm&quot;&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-size=&quot;base&quot;&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-size=&quot;lg&quot;&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-size=&quot;xl&quot;&gt;&lt;/measurement-gate&gt;</code></pre>
+  </div>
+</div>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Measurement Result</h2>
+<p>
+  To display the value of the measurement result, specify <code class="text-purple-500">0</code> or <code class="text-purple-500">1</code> using the <code class="text-purple-500">data-value</code> attribute.
+</p>
+<div class="relative overflow-hidden mt-8 mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+    <div class="flex flex-row space-x-4">
+      <measurement-gate></measurement-gate>
+      <measurement-gate data-value="0"></measurement-gate>
+      <measurement-gate data-value="1"></measurement-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measurement-gate&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-value="0"&gt;&lt;/measurement-gate&gt;
+&lt;measurement-gate data-value="1"&gt;&lt;/measurement-gate&gt;</code></pre>
+  </div>
+</div>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Conditional Flag</h2>
+<p>
+  If you want to control the application of a quantum gate by a flag, you can create a flag with the <code class="text-purple-500">data-flag</code> attribute.
+  If the value of the measurement gate is <code class="text-purple-500">1</code>, this flag will be on; if it is <code class="text-purple-500">0</code>, it will be off.
+  The quantum gate with this flag will be applied only if the flag is on.
+</p>
+<div class="relative overflow-hidden mt-8 mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+    <div class="flex flex-row space-x-4">
+      <measurement-gate data-flag="foobar"></measurement-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measurement-gate data-flag="foobar"&gt;&lt;/measurement-gate&gt;</code></pre>
+  </div>
+</div>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">User Help Popup</h2>
+<p class="mb-5">
+  As a user help, you can display the description and usage of
+  the Measurement gate as a popup. The popup will show on the mouse
+  hover event. The content to be displayed can be specified in
+  the <code class="text-purple-500">&lt;measurement-gate&gt;</code>
+  tag as follows:
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+    <div class="flex flex-row space-x-4">
+      <measurement-gate>
+        <header>
+          <h1>Measurement Gate</h1>
+          <p>Measures whether a qubit is ON or OFF.</p>
+        </header>
+      </measurement-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measurement-gate&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Measurement Gate&lt;/h1&gt;
+    &lt;p&gt;Measures whether a qubit is ON or OFF.&lt;/p&gt;
+  &lt;/header&gt;
+&lt;/measurement-gate&gt;</code></pre>
+  </div>
+</div>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Drag and Drop</h2>
+<p class="mb-5">
+  To make the Measurement gate drag-and-droppable, specify the <code class="text-purple-500">data-drag-and-drop</code> attribute.
+</p>
+<div class="relative overflow-hidden mb-8">
+  <div class="rounded-t-xl p-6 bg-gradient-to-r from-purple-50 to-purple-100">
+    <div class="flex flex-row space-x-4">
+      <measurement-gate data-drag-and-drop>
+      </measurement-gate>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-purple-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;measurement-gate data-drag-and-drop&gt;&lt;measurement-gate&gt;</code></pre>
+  </div>
+</div>

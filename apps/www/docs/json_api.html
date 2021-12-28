@@ -1,0 +1,153 @@
+---
+layout: page
+title: Quantum Circuit JSON API
+description: A JSON API for displaying quantum circuits.
+---
+<table class="w-full text-left border-collapse">
+  <thead>
+    <tr>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pr-2 border-b border-gray-200">JSON</div>
+      </th>
+      <th class="z-20 sticky top-0 text-sm font-semibold text-gray-600 bg-white p-0">
+        <div class="pb-2 pl-2 border-b border-gray-200">Description</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align-baseline">
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap">"|0>"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre">(Re)set a qubit to state <code>|0&#x27e9;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"|1>"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">(Re)set a qubit to state <code>|1&#x27e9;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">1</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Identity gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"H"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Hadamard gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"X"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Pauli X gate (NOT gate)</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Y"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Pauli Y gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Z"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Pauli Z gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"P"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Phase shift gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"P(&phi;)"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Phase shift gate rotates by &phi;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"X^½"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Square root of NOT gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Rx"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Rx gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Rx(&theta;)"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Rx gate rotates by &theta;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Ry"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Ry gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Ry(&theta;)"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Ry gate rotates by &theta;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Rz"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Rz gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Rz(&theta;)"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Rz gate rotates by &theta;</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Swap"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Swap gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"•"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Control gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Bloch"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Bloch sphere display</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"Measure"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Measurement gate</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"{comment"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Start a block with comment</td>
+    </tr>
+    <tr>
+      <td translate="no" class="py-2 pr-2 font-mono text-xs text-purple-600 whitespace-nowrap border-t border-gray-200">"}"</td>
+      <td translate="no" class="py-2 pl-2 font-mono text-xs text-blue-600 whitespace-pre border-t border-gray-200">Finilize a block</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">Usage</span>
+</h2>
+
+<p class="mb-4">
+  The quantum circuit displayed by the <code class="text-purple-500">&lt;quantum-circuit&gt;</code> tag can also be embedded as JSON format data.
+  The Qni quantum circuit JSON format is a representation of each step in the circuit as an array.
+  For example, in a three-qubit circuit, the step to apply Hadamard gates to the first and the second qubit is represented as <code class="text-purple-500">["H","H",1]</code>.
+  By concatenating multiple steps defined in this way, an array defining the quantum circuit can be created.
+  The Qni quantum circuit JSON format holds this array as the JSON key <code class="text-purple-500">&quot;cols&quot;</code> value.
+</p>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Embedding JSON</h2>
+<div class="relative overflow-hidden mb-8">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit class="inline-block" data-json="{&quot;cols&quot;:[[&quot;|0>&quot;,&quot;|0>&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;X&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]]}">
+      </quantum-circuit>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&ltquantum-circuit data-json="{&amp;quot;cols&amp;quot;:[[&amp;quot;|0&gt;&amp;quot;,&amp;quot;|0&gt;&amp;quot;],[&amp;quot;H&amp;quot;,1],[&amp;quot;•&amp;quot;,&amp;quot;X&amp;quot;],[&amp;quot;Measure&amp;quot;,1],[1,&amp;quot;Measure&amp;quot;]]}"&gt;&lt;/quantum-circuit&gt;</code></pre>
+  </div>
+</div>
+
+<h2 class="text-2xl font-bold text-gray-900 tracking-tight mt-8 mb-4">Set JSON with JavaScript</h2>
+<div class="relative overflow-hidden mb-8">
+  <div class="overflow-x-auto rounded-t-xl p-6 bg-gradient-to-r from-green-50 to-green-100">
+    <div>
+      <quantum-circuit id="quantum-circuit-entangle" class="inline-block"></quantum-circuit>
+      <script>
+       document.getElementById("quantum-circuit-entangle")
+               .setAttribute("data-json", '{"cols":[["|0>","|0>"],["H",1],["•","X"],["Measure",1],[1,"Measure"]]}')
+      </script>
+    </div>
+  </div>
+  <div class="overflow-hidden rounded-b-xl bg-light-green-500">
+    <pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug text-white bg-black bg-opacity-75"><code class="language-html">&lt;quantum-circuit id="quantum-circuit"&gt;&lt;/quantum-circuit&gt;
+
+&lt;script&gt;
+  document.getElementById(&quot;quantum-circuit&quot;)
+          .setAttribute(&quot;data-json&quot;, '{&quot;cols&quot;:[[&quot;|0&gt;&quot;,&quot;|0&gt;&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;X&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]]}')
+&lt;/script&gt;</code></pre>
+  </div>
+</div>

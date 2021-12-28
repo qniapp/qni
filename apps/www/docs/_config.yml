@@ -1,0 +1,14 @@
+title: Qni
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - api
+
+repository: yasuhito/qni
+baseurl: "https://yasuhito.github.io/qni"
+
+plugins:
+  - 'jekyll-github-metadata'
+  - 'jekyll-gzip'

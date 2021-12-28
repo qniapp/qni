@@ -1,0 +1,166 @@
+$nqubits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+
+/* Instructions */
+$instruction-size-extralarge: 12;
+$instruction-size-large: 10;
+$instruction-size-base: 8;
+$instruction-size-small: 6;
+$instruction-size-extrasmall: 4;
+
+$instruction-size-screen-md: 8;
+
+$instruction-size: (
+  1: $instruction-size-extralarge,
+  2: $instruction-size-extralarge,
+  3: $instruction-size-large,
+  4: $instruction-size-base,
+  5: $instruction-size-small,
+  6: $instruction-size-small,
+  7: $instruction-size-extrasmall,
+  8: $instruction-size-extrasmall,
+  9: $instruction-size-extrasmall,
+  10: $instruction-size-extrasmall,
+);
+
+$instruction-label-font-size-large: 2xl;
+$instruction-label-font-size-base: base;
+$instruction-label-font-size-small: base;
+$instruction-label-font-size-extrasmall: xs;
+
+$instruction-label-font-size: (
+  1: $instruction-label-font-size-large,
+  2: $instruction-label-font-size-large,
+  3: $instruction-label-font-size-large,
+  4: $instruction-label-font-size-base,
+  5: $instruction-label-font-size-small,
+  6: $instruction-label-font-size-small,
+  7: $instruction-label-font-size-extrasmall,
+  8: $instruction-label-font-size-extrasmall,
+  9: $instruction-label-font-size-extrasmall,
+  10: $instruction-label-font-size-extrasmall,
+);
+
+/* Gate label */
+$gate-label-font-size-extralarge: base;
+$gate-label-font-size-large: base;
+$gate-label-font-size-base: base;
+$gate-label-font-size-small: sm;
+$gate-label-font-size-extrasmall: xs;
+$gate-label-font-size-extraextrasmall: xxs;
+
+$gate-label-font-size: (
+  1: $gate-label-font-size-extralarge,
+  2: $gate-label-font-size-large,
+  3: $gate-label-font-size-large,
+  4: $gate-label-font-size-base,
+  5: $gate-label-font-size-small,
+  6: $gate-label-font-size-small,
+  7: $gate-label-font-size-extrasmall,
+  8: $gate-label-font-size-extraextrasmall,
+  9: $gate-label-font-size-extraextrasmall,
+  10: $gate-label-font-size-extraextrasmall,
+);
+
+/* Wire */
+$wire-width: 2;
+
+$connection-width-base: 4;
+$connection-width: (
+  1: 4,
+  2: 4,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 4,
+  7: 4,
+  8: 2,
+  9: 2,
+  10: 2,
+);
+
+/* Circuit Breakpoint */
+$circuit-breakpoint-width-px: 4;
+
+/* write & measure gate */
+$gate-ket-label-font-size: (
+  1: $instruction-label-font-size-large,
+  2: $instruction-label-font-size-large,
+  3: $instruction-label-font-size-large,
+  4: $instruction-label-font-size-base,
+  5: $instruction-label-font-size-small,
+  6: $instruction-label-font-size-small,
+  7: $instruction-label-font-size-extrasmall,
+  8: $instruction-label-font-size-extrasmall,
+  9: $instruction-label-font-size-extrasmall,
+  10: $instruction-label-font-size-extrasmall,
+);
+
+/* Circle notation */
+$circle-notation-height: 40;
+$circle-notation-height-mobile: 32;
+$circle-notation-margin-top: 12;
+
+/* Qubit Circle */
+$qubit-circle-size-2xl: 16;
+$qubit-circle-size-xl: 12;
+$qubit-circle-size-large: 8;
+$qubit-circle-size-base: 6;
+$qubit-circle-size-sm: 4;
+
+$qubit-circle-size-px: (
+  1: $qubit-circle-size-2xl * 4,
+  2: $qubit-circle-size-2xl * 4,
+  3: $qubit-circle-size-2xl * 4,
+  4: $qubit-circle-size-xl * 4,
+  5: $qubit-circle-size-large * 4,
+  6: $qubit-circle-size-base * 4 + 1,
+  7: $qubit-circle-size-sm * 4 + 1,
+  8: $qubit-circle-size-sm * 4 + 1,
+  9: $qubit-circle-size-sm * 4 + 1,
+  10: $qubit-circle-size-sm * 4 + 1,
+);
+
+$qubit-circle-size-px-mobile: (
+  1: $qubit-circle-size-2xl * 4,
+  2: $qubit-circle-size-2xl * 4,
+  3: $qubit-circle-size-xl * 4,
+  4: $qubit-circle-size-large * 4,
+  5: $qubit-circle-size-base * 4 - 1,
+  6: $qubit-circle-size-sm * 4 - 1,
+  7: $qubit-circle-size-sm * 4 - 1,
+  8: $qubit-circle-size-sm * 4 - 1,
+  9: $qubit-circle-size-sm * 4 - 1,
+  10: $qubit-circle-size-sm * 4 - 1,
+);
+
+$stroke-width-px-bold: 2;
+$stroke-width-px-base: 1;
+
+$qubit-circle-border-width-px: (
+  1: $stroke-width-px-bold,
+  2: $stroke-width-px-bold,
+  3: $stroke-width-px-bold,
+  4: $stroke-width-px-bold,
+  5: $stroke-width-px-bold,
+  6: $stroke-width-px-base,
+  7: $stroke-width-px-base,
+  8: $stroke-width-px-base,
+  9: $stroke-width-px-base,
+  10: $stroke-width-px-base,
+);
+
+$qubit-circle-border-width-px-mobile: (
+  1: $stroke-width-px-bold,
+  2: $stroke-width-px-bold,
+  3: $stroke-width-px-bold,
+  4: $stroke-width-px-bold,
+  5: $stroke-width-px-base,
+  6: $stroke-width-px-base,
+  7: $stroke-width-px-base,
+  8: $stroke-width-px-base,
+  9: $stroke-width-px-base,
+  10: $stroke-width-px-base,
+);
+
+/* Run button */
+$run-button-z: 40;

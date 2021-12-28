@@ -15,14 +15,17 @@
   },
   "license": "MIT",
   "workspaces": [
-    "packages/common",
-    "packages/elements",
-    "packages/simulator",
+    "packages/*",
+    "apps/*",
     "examples/elements-example"
   ],
   "scripts": {
     "build": "lerna run build --stream",
+    "build:packages": "lerna run build:packages --stream",
+    "start:www": "yarn build:packages && cd apps/www && ./bin/dev",
     "test": "lerna run test --stream",
+    "test:ci": "lerna run test:ci --stream",
+    "publish:patch": "yarn build:packages && yarn test && lerna publish",
     "docs": "lerna run typedoc"
   },
   "devDependencies": {

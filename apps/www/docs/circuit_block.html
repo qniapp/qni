@@ -1,0 +1,129 @@
+---
+layout: page
+title: Circuit Block
+description: Explaining the structure of a quantum circuit in comments.
+---
+<p class="mb-4">
+  Circuit block is a feature that makes it easier to understand the structure of a quantum circuit by adding comments to parts of the circuit.
+  Circuit blocks are handy when a quantum circuit can be clearly and logically divided into several regions.
+  A circuit block can be defined as a block of several circuit steps.
+  The block can be commented on to explain how it works.
+</p>
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">JavaScript API</span>
+</h2>
+
+<p class="mb-4">
+  To add a circuit block to a quantum circuit, use the <code class="text-purple-500">block()</code> method.
+  The first argument is the comment string to be added to the block, and the second argument is the quantum circuit definition in the block, passed as a function.
+</p>
+
+{% capture code %}
+<quantum-circuit id="entangled-qubits"></quantum-circuit>
+
+<script>
+ window.addEventListener('DOMContentLoaded', () => {
+   circuit = document.getElementById("entangled-qubits")
+   circuit.write(0, 0, 1)
+          .block("entangle", (block) => { block.h(0).cnot(0, 1) })
+          .measure(0).measure(1)
+ })
+</script>
+{% endcapture %}
+{% include circuit_example.html code=code %}
+
+<p class="mb-4">
+  If you want to insert a space between circuit blocks, you can use the <code class="text-purple-500">i()</code> method to insert an empty step as follows:
+</p>
+
+{% capture code %}
+<quantum-circuit id="root-of-not" class="inline-block"></quantum-circuit>
+<script>
+ window.addEventListener('DOMContentLoaded', () => {
+   circuit = document.getElementById("root-of-not")
+   circuit.write(0, 0)
+          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+          .i()
+          .block("RNOT", (block) => { block.h(0).phase("-π/2", 0).h(0) })
+          .i()
+          .block("Built-in RNOT", (block) => { block.rnot(0).rnot(0) })
+          .i()
+ })
+</script>
+{% endcapture %}
+{% include circuit_example.html code=code %}
+
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">JSON API</span>
+</h2>
+
+<p class="mb-4">
+  In the JSON API, the step to specify the start of a circuit block is <code class="text-purple-500">[&quot;{comment&quot;]</code>, where <code class="text-purple-500">comment</code> can be any string.
+  To close the circuit block, specify the step <code class="text-purple-500">[&quot;}&quot;]</code>.
+</p>
+
+{% capture code %}
+<quantum-circuit data-json="{&quot;cols&quot;:[[&quot;|0>&quot;,&quot;|0>&quot;],[&quot;{entangle&quot;],[&quot;H&quot;,1],[&quot;•&quot;,&quot;X&quot;],[&quot;}&quot;],[&quot;Measure&quot;,1],[1,&quot;Measure&quot;]],&quot;init&quot;:false}">
+</quantum-circuit>
+{% endcapture %}
+{% include circuit_example.html code=code %}
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">Raw HTML</span>
+</h2>
+
+<p class="mb-4">
+  To specify a circuit block in raw HTML, place the part you want to display in a block between <code class="text-purple-500">&lt;circuit-block&gt; ... &lt;/circuit-block&gt;</code>.
+  The comment string can be specified with the <code class="text-purple-500">data-comment</code> attribute.
+</p>
+
+{% capture code %}
+<quantum-circuit>
+  <circuit-step>
+    <circuit-dropzone>
+      <write-gate></write-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+      <write-gate></write-gate>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-block data-comment="entangle">
+    <circuit-step>
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <circuit-step>
+      <circuit-dropzone>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </circuit-block>
+
+  <circuit-step>
+    <circuit-dropzone>
+      <measurement-gate></measurement-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-step>
+    <circuit-dropzone>
+    </circuit-dropzone>
+    <circuit-dropzone>
+      <measurement-gate></measurement-gate>
+    </circuit-dropzone>
+  </circuit-step>
+</quantum-circuit>
+{% endcapture %}
+{% include circuit_example.html code=code %}

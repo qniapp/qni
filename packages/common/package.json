@@ -1,6 +1,6 @@
 {
   "name": "@qni/common",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Common library for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/packages/common#readme",
@@ -18,7 +18,9 @@
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run lint && npm run compile",
     "build": "rollup -c",
+    "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
+    "test:ci": "yarn test",
     "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "bugs": {
@@ -28,6 +30,7 @@
   "devDependencies": {
     "eslint": "^8.4.1",
     "eslint-plugin-github": "^4.3.5",
+    "eslint-plugin-prettier": "^4.0.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-esbuild": "^2.2.0",
     "karma-mocha-reporter": "^2.2.5",
@@ -39,5 +42,6 @@
     "dist/",
     "doc/",
     "rollup.config.js"
-  ]
+  ],
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

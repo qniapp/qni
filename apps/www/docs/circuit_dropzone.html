@@ -1,0 +1,151 @@
+---
+layout: page
+title: Circuit Dropzone
+description: Placeholder to drop circuit operations.
+---
+<p class="mb-4">
+  The circuit dropzone is a placeholder for the placement of operations such as
+  quantum gates, etc. The circuit dropzone is aligned inside the circuit step,
+  and its number is equal to the number of qubits in the quantum circuit.
+</p>
+
+{% capture body %}
+<div class="flex flex-row space-x-2">
+  <div class="flex flex-col items-center justify-center bg-transparent rounded-md border-gray-400 border-4 border-dashed">
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-transparent rounded-md border-gray-400 border-4 border-dashed">
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-transparent rounded-md border-gray-400 border-4 border-dashed">
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-transparent rounded-md border-gray-400 border-4 border-dashed">
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-transparent rounded-md border-gray-400 border-4 border-dashed">
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+    <div class="w-10 h-10 bg-purple-500 rounded-md m-2"></div>
+  </div>
+</div>
+{% endcapture %}
+
+{% capture code %}
+<quantum-circuit>
+  <!-- STEP #0 -->
+  <circuit-step>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+  </circuit-step>
+
+  <!-- STEP #1 -->
+  <circuit-step>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+    <circuit-dropzone></circuit-dropzone>
+  </circuit-step>
+
+  <!-- STEP #2 -->
+  ...
+</quantum-circuit>
+{% endcapture %}
+
+{% include code_example.html body=body code=code color="purple" %}
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">JavaScript API</span>
+</h2>
+
+<p class="mb-4">
+  When drawing circuits with the JavaScript API, you don't need to be aware of
+  the placement of the <code
+  class="text-purple-500">&lt;circuit-dropzone&gt;</code> elements; each time
+  you call the JavaScript API's <code class="text-purple-500">.write()</code> or
+  <code class="text-purple-500">.h()</code>, the necessary <code
+  class="text-purple-500">&lt;circuit-dropzone&gt;</code> tags are automatically
+  inserted into the quantum circuit.
+</p>
+
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">JSON API</span>
+</h2>
+
+<p class="mb-4">
+  As in the case of the JavaScript API, there is no need to explicitly put the <code class="text-purple-500">&lt;circuit-dropzone&gt;</code> tag in the JSON API.
+  The <code class="text-purple-500">&lt;circuit-dropzone&gt;</code> tag will be automatically placed outside of the <code class="text-purple-500">&quot;H&quot;</code>, <code class="text-purple-500">&quot;X&quot;</code>, etc. gates and the Identity gate represented by 1.
+</p>
+
+
+<h2 class="group flex whitespace-pre-wrap mt-8 mb-4">
+  <span class="text-2xl font-bold">Raw HTML</span>
+</h2>
+
+<p class="mb-4">
+  To write a circuit dropzone in raw HTML, add a number of <code class="text-purple-500">&lt;circuit-dropzone&gt;</code> tags equal to the number of qubits inside the <code class="text-purple-500">&lt;circuit-step&gt;</code> tag.
+  Inside the <code class="text-purple-500">&lt;circuit-dropzone&gt; ... &lt;/circuit-dropzone&gt;</code>, you can include operations such as <code class="text-purple-500">&lt;h-gate&gt;</code>.
+</p>
+
+{% capture code %}
+<quantum-circuit>
+  <circuit-step>
+    <circuit-dropzone>
+      <write-gate></write-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+      <write-gate></write-gate>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-step>
+    <circuit-dropzone>
+      <h-gate></h-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-step>
+    <circuit-dropzone>
+      <control-gate></control-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+      <x-gate></x-gate>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-step>
+    <circuit-dropzone>
+      <measurement-gate></measurement-gate>
+    </circuit-dropzone>
+    <circuit-dropzone>
+    </circuit-dropzone>
+  </circuit-step>
+
+  <circuit-step>
+    <circuit-dropzone>
+    </circuit-dropzone>
+    <circuit-dropzone>
+      <measurement-gate></measurement-gate>
+    </circuit-dropzone>
+  </circuit-step>
+</quantum-circuit>
+{% endcapture %}
+{% include circuit_example.html code=code %}

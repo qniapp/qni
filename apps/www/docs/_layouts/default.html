@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{ page.title }}</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="An open-source drag-and-drop quantum circuit simulator for exploring and understanding small quantum circuits.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="module" src="{{ site.baseurl }}/index.js" defer></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="{{ site.baseurl }}/qni.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/custom.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ site.baseurl }}/images/favicon.ico">
+    <link rel="shortcut icon" type="image/svg+xml" href="{{ site.baseurl }}/images/icon.svg">
+    <link rel="apple-touch-icon" type="image/x-icon" href="{{ site.baseurl }}/images/apple-touch-icon.png">
+  </head>
+
+  <body>
+    {{ content }}
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

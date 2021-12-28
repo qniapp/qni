@@ -1,0 +1,6 @@
+{
+  "name": "Qni",
+  "entryPoints": ["app/javascript/index.ts"],
+  "entryPointStrategy": "Expand",
+  "out": "docs/api"
+}
