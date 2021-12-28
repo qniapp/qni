@@ -1,4 +1,5 @@
-import { Simulator, Util } from "lib"
+import {Simulator} from "lib"
+import {Util} from "@qni/common"
 
 self.addEventListener(
   "message",
