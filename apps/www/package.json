@@ -32,7 +32,7 @@
     "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'",
     "pretest": "yarn build && yarn build:css",
     "test": "karma start && ./bin/rails test:system test",
-    "test:ci": "karma start && ./bin/rails test",
+    "test:ci": "karma start && bundle && ./bin/rails test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "watch": "rollup -wc",
     "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
