@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.5",
+    "@qni/elements": "^0.0.6",
     "http-server": "^14.0.0"
   },
   "devDependencies": {
