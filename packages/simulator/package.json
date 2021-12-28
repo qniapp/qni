@@ -56,5 +56,6 @@
     "build/",
     "dist/",
     "rollup.config.js"
-  ]
+  ],
+  "gitHead": "fcdf2bdd2940c34a6c80645e377c94aea237f63f"
 }

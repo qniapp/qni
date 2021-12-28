@@ -91,5 +91,6 @@
     "rollup.config.js",
     "rollup.config.test.js",
     "tailwind.config.cjs"
-  ]
+  ],
+  "gitHead": "fcdf2bdd2940c34a6c80645e377c94aea237f63f"
 }
