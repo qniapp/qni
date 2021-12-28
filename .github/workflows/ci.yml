@@ -44,7 +44,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Setup DB
       run: |-
-        cp config/database.yml.github-actions apps/www/config/database.yml
+        cp apps/www/config/database.yml.github-actions apps/www/config/database.yml
         cd apps/www && bundle exec rails db:setup
       env:
         RAILS_ENV: test
