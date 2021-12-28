@@ -45,9 +45,10 @@ jobs:
     - name: Build
       run: |
         sudo apt-get -y install libpq-dev
-        cd apps/www && gem install bundler
-        cd apps/www && bundle install --jobs 4 --retry 3
-        cd apps/www && bundle exec rails yarn:install assets:precompile
+        cd apps/www
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        bundle exec rails yarn:install assets:precompile
     - name: Setup DB
       run: |-
         cp apps/www/config/database.yml.github-actions apps/www/config/database.yml
