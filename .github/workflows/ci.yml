@@ -42,6 +42,14 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Setup DB
+      run: |-
+        cp config/database.yml.github-actions apps/www/config/database.yml
+        cd apps/www && bundle exec rails db:setup
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
     - run: lerna bootstrap
     - run: yarn build
     - run: yarn test:ci
