@@ -44,10 +44,6 @@ jobs:
         ruby-version: 2.7.4
         working-directory: apps/www
         bundler-cache: true
-    - name: Build @qni/www
-      run: |
-        cd apps/www
-        bundle exec rails yarn:install assets:precompile
     - name: Setup DB
       run: |-
         cd apps/www

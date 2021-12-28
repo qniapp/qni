@@ -5,7 +5,6 @@ export * from './quantumCircuitElement'
 export * from './circuitBlockElement'
 export * from './circuitStepElement'
 export * from './circuitDropzoneElement'
-export * from './circleNotationElement'
 export * from './runCircuitButtonElement'
 
 export * from './hGateElement'

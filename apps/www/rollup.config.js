@@ -1,38 +1,38 @@
-import commonjs from "rollup-plugin-commonjs"
-import dts from "rollup-plugin-dts"
-import replace from "rollup-plugin-replace"
+import commonjs from 'rollup-plugin-commonjs'
+import dts from 'rollup-plugin-dts'
 import pkg from './package.json'
-import resolve from "@rollup/plugin-node-resolve"
-import typescript from "@rollup/plugin-typescript"
+import replace from 'rollup-plugin-replace'
+import resolve from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 
 export default [
   {
-    input: "./app/javascript/index.ts",
+    input: './app/javascript/index.ts',
     output: [
       {
-        file: pkg["module"],
-        format: "es",
-        sourcemap: true,
+        file: pkg['module'],
+        format: 'es',
+        sourcemap: true
       }
     ],
-    context: "window",
+    context: 'window',
     plugins: [
       replace({
-        "process.env.NODE_ENV": JSON.stringify("production")
+        'process.env.NODE_ENV': JSON.stringify('production')
       }),
       resolve(),
       commonjs({
         namedExports: {
-          "fraction.js": ["Fraction"],
-          "nouislider": ["PipsMode"],
+          'fraction.js': ['Fraction'],
+          nouislider: ['PipsMode']
         }
       }),
-      typescript({ tsconfig: './tsconfig.json' }),
-    ],
+      typescript({tsconfig: './tsconfig.json'})
+    ]
   },
   {
-    input: "./dist/types/index.d.ts",
-    output: [{ file: pkg["types"], format: "es" }],
-    plugins: [dts()],
-  },
+    input: './dist/types/index.d.ts',
+    output: [{file: pkg['types'], format: 'es'}],
+    plugins: [dts()]
+  }
 ]
