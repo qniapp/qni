@@ -1,6 +1,3 @@
-// Karma configuration
-// Generated on Thu Aug 27 2020 10:47:00 GMT+0900 (Japan Standard Time)
-
 module.exports = function (config) {
   config.set({
     basePath: ".",
@@ -21,7 +18,7 @@ module.exports = function (config) {
     preprocessors: {
       "app/javascript/test/**/*.ts": ["esbuild"],
     },
-    reporters: ["dots", "notify"],
+    reporters: ["dots"],
     autoWatch: false,
     browsers: ["ChromeHeadless"],
     singleRun: true,
