@@ -50,8 +50,8 @@ jobs:
         bundle exec rails yarn:install assets:precompile
     - name: Setup DB
       run: |-
-        cp apps/www/config/database.yml.github-actions apps/www/config/database.yml
         cd apps/www
+        cp config/database.yml.github-actions config/database.yml
         bundle exec rails db:setup
       env:
         RAILS_ENV: test
