@@ -7,3 +7,4 @@ export * from './util'
 
 export * from './h-gate'
 export * from './x-gate'
+export * from './y-gate'

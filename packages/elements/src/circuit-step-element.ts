@@ -20,23 +20,23 @@ import {RnotGateElement, SerializedRnotGateElement} from './rnot-gate-element'
 import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
 import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
 import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
-import {SerializedHGate, SerializedXGate, Util} from '@qni/common'
+import {SerializedHGate, SerializedXGate, SerializedYGate, Util} from '@qni/common'
 import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
-import {SerializedYGateElement, YGateElement} from './y-gate-element'
 import {SerializedZGateElement, ZGateElement} from './z-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {HGateElement} from './h-gate-element'
 import {XGateElement} from './x-gate-element'
+import {YGateElement} from './y-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
 
 export type SerializedStep = Array<
   | SerializedHGate
   | SerializedXGate
-  | SerializedYGateElement
+  | SerializedYGate
   | SerializedZGateElement
   | SerializedPhaseGateElement
   | SerializedRnotGateElement
