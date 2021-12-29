@@ -25,7 +25,6 @@
 /config/master.key
 
 # Other
-.DS_Store
 .eslintcache
 .yarn-integrity
 /public/packs
