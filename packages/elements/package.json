@@ -85,7 +85,7 @@
   "eslintIgnore": [
     "build/",
     "dist/",
-    "doc/",
+    "docs/",
     "icon/",
     "rollup.config.js",
     "rollup.config.test.js",

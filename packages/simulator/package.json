@@ -55,6 +55,7 @@
   "eslintIgnore": [
     "build/",
     "dist/",
+    "docs/",
     "rollup.config.js"
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
