@@ -15,7 +15,7 @@ import {
   YGateElementType,
   ZGateElementType
 } from '@qni/elements'
-import {Complex, HGateElementType} from '@qni/common'
+import {Complex, SerializedHGateType} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -52,7 +52,7 @@ export class Simulator {
             this.blochVectors[target] = this.state.blochVector(target)
           }
           break
-        case HGateElementType:
+        case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.ch(each.controls, ...each.targets)

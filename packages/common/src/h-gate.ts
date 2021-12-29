@@ -1,7 +1,7 @@
-export const HGateElementType = 'H'
+export const SerializedHGateType = 'H'
 
 export type SerializedHGate = {
-  type: typeof HGateElementType
+  type: typeof SerializedHGateType
   targets: number[]
   controls?: number[]
   if?: string
