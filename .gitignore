@@ -1,5 +1,6 @@
 *.tldr
 .DS_Store
+build/
 dist/
 docs/
 node_modules/
