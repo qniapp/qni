@@ -26,9 +26,13 @@
     "publish:patch": "yarn build:packages && yarn test && lerna publish",
     "docs": "lerna run typedoc",
     "prepare": "husky install",
+    "fix:style": "yarn run prettier ./packages/common/src --write && yarn run prettier ./packages/simulator/src --write && yarn run prettier ./packages/elements/src --write",
     "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "prettier": "^2.5.1",
