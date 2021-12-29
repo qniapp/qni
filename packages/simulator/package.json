@@ -22,7 +22,7 @@
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
     "test:watch": "yarn test --auto-watch --no-single-run",
-    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [
     "quantum",

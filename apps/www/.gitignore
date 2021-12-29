@@ -33,7 +33,6 @@
 /public/packs-test
 /yarn-error.log
 dist/
-doc/
 yarn-debug.log*
 /storage/*
 

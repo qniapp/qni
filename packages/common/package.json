@@ -21,7 +21,7 @@
     "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
-    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "bugs": {
     "url": "https://github.com/qniapp/qni/issues"
