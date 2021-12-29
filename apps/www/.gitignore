@@ -28,11 +28,9 @@
 .DS_Store
 .eslintcache
 .yarn-integrity
-/node_modules
 /public/packs
 /public/packs-test
 /yarn-error.log
-dist/
 yarn-debug.log*
 /storage/*
 
