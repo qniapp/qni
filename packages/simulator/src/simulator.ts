@@ -2,7 +2,6 @@ import {
   BlochDisplayElementType,
   ControlGateElementType,
   MeasurementGateElementType,
-  PhaseGateElementType,
   RnotGateElementType,
   RxGateElementType,
   RyGateElementType,
@@ -12,7 +11,14 @@ import {
   Write0GateElementType,
   Write1GateElementType
 } from '@qni/elements'
-import {Complex, SerializedHGateType, SerializedXGateType, SerializedYGateType, SerializedZGateType} from '@qni/common'
+import {
+  Complex,
+  SerializedHGateType,
+  SerializedPhaseGateType,
+  SerializedXGateType,
+  SerializedYGateType,
+  SerializedZGateType
+} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -81,7 +87,7 @@ export class Simulator {
             this.z(...each.targets)
           }
           break
-        case PhaseGateElementType: {
+        case SerializedPhaseGateType: {
           if (!each.angle) break
 
           if (each.controls && each.controls.length > 0) {

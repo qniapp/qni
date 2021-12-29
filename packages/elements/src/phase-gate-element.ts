@@ -9,6 +9,7 @@ import {
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
+import {SerializedPhaseGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconPhaseGate} from './icon'
 
@@ -17,22 +18,14 @@ export type PhaseGateElementProps = {
   disabled?: boolean
 }
 
-export const PhaseGateElementType = 'P'
-export type SerializedPhaseGateElement = {
-  type: typeof PhaseGateElementType
-  angle?: string
-  targets: number[]
-  controls?: number[]
-}
-
 @controller
 export class PhaseGateElement extends MenuableMixin(
   IfableMixin(
     ControllableMixin(AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
   )
 ) {
-  get operationType(): typeof PhaseGateElementType {
-    return PhaseGateElementType
+  get operationType(): typeof SerializedPhaseGateType {
+    return SerializedPhaseGateType
   }
 
   connectedCallback(): void {

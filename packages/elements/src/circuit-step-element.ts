@@ -15,18 +15,26 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {PhaseGateElement, PhaseGateElementType, SerializedPhaseGateElement} from './phase-gate-element'
 import {RnotGateElement, SerializedRnotGateElement} from './rnot-gate-element'
 import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
 import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
 import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
-import {SerializedHGate, SerializedXGate, SerializedYGate, SerializedZGate, Util} from '@qni/common'
+import {
+  SerializedHGate,
+  SerializedPhaseGate,
+  SerializedPhaseGateType,
+  SerializedXGate,
+  SerializedYGate,
+  SerializedZGate,
+  Util
+} from '@qni/common'
 import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {HGateElement} from './h-gate-element'
+import {PhaseGateElement} from './phase-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
@@ -38,7 +46,7 @@ export type SerializedStep = Array<
   | SerializedXGate
   | SerializedYGate
   | SerializedZGate
-  | SerializedPhaseGateElement
+  | SerializedPhaseGate
   | SerializedRnotGateElement
   | SerializedRxGateElement
   | SerializedRyGateElement
@@ -753,12 +761,12 @@ export class CircuitStepElement extends HTMLElement {
       const targets = group.map(each => each.bit)
       if (angle === '') {
         serializedStep.push({
-          type: PhaseGateElementType,
+          type: SerializedPhaseGateType,
           targets
         })
       } else {
         serializedStep.push({
-          type: PhaseGateElementType,
+          type: SerializedPhaseGateType,
           angle,
           targets
         })
