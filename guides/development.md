@@ -12,4 +12,4 @@ Other scripts:
 
 - Run `yarn test` to execute unit and system tests.
 
-- Run `yarn docs` to build the docs via [ts-doc](https://typedoc.org/).
+- Run `yarn docs` to build the docs via [TypeDoc](https://typedoc.org/).
