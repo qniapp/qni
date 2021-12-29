@@ -8,14 +8,13 @@ import {
   RyGateElementType,
   RzGateElementType,
   SerializedStep,
-  SerializedXGateType,
   SwapGateElementType,
   Write0GateElementType,
   Write1GateElementType,
   YGateElementType,
   ZGateElementType
 } from '@qni/elements'
-import {Complex, SerializedHGateType} from '@qni/common'
+import {Complex, SerializedHGateType, SerializedXGateType} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'

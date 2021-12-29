@@ -6,3 +6,4 @@ export * from './format'
 export * from './util'
 
 export * from './h-gate'
+export * from './x-gate'
