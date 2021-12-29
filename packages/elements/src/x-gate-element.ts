@@ -9,9 +9,9 @@ export type XGateElementProps = {
   disabled?: boolean
 }
 
-export const XGateElementType = 'X'
-export type SerializedXGateElement = {
-  type: typeof XGateElementType
+export const SerializedXGateType = 'X'
+export type SerializedXGate = {
+  type: typeof SerializedXGateType
   targets: number[]
   controls?: number[]
   if?: string
@@ -21,8 +21,8 @@ export type SerializedXGateElement = {
 export class XGateElement extends MenuableMixin(
   IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
-  get operationType(): typeof XGateElementType {
-    return XGateElementType
+  get operationType(): typeof SerializedXGateType {
+    return SerializedXGateType
   }
 
   connectedCallback(): void {

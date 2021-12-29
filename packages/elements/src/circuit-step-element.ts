@@ -23,7 +23,7 @@ import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
 import {SerializedHGate, Util} from '@qni/common'
 import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
-import {SerializedXGateElement, XGateElement} from './x-gate-element'
+import {SerializedXGate, XGateElement} from './x-gate-element'
 import {SerializedYGateElement, YGateElement} from './y-gate-element'
 import {SerializedZGateElement, ZGateElement} from './z-gate-element'
 import {attr, controller} from '@github/catalyst'
@@ -35,7 +35,7 @@ import {isDisableable} from './mixin'
 
 export type SerializedStep = Array<
   | SerializedHGate
-  | SerializedXGateElement
+  | SerializedXGate
   | SerializedYGateElement
   | SerializedZGateElement
   | SerializedPhaseGateElement

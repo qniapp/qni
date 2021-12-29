@@ -8,10 +8,10 @@ import {
   RyGateElementType,
   RzGateElementType,
   SerializedStep,
+  SerializedXGateType,
   SwapGateElementType,
   Write0GateElementType,
   Write1GateElementType,
-  XGateElementType,
   YGateElementType,
   ZGateElementType
 } from '@qni/elements'
@@ -60,7 +60,7 @@ export class Simulator {
             this.h(...each.targets)
           }
           break
-        case XGateElementType:
+        case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cnot(each.controls, ...each.targets)
