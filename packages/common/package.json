@@ -21,14 +21,13 @@
     "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
-    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "bugs": {
     "url": "https://github.com/qniapp/qni/issues"
   },
   "prettier": "@github/prettier-config",
   "devDependencies": {
-    "eslint": "^8.4.1",
     "eslint-plugin-github": "^4.3.5",
     "eslint-plugin-prettier": "^4.0.0",
     "karma-chrome-launcher": "^3.1.0",
@@ -40,7 +39,7 @@
   },
   "eslintIgnore": [
     "dist/",
-    "doc/",
+    "docs/",
     "rollup.config.js"
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"

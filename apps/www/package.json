@@ -29,7 +29,6 @@
     "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
     "build:npm": "rollup -c && cp dist/index.js* ./docs/ && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css && cp ./app/assets/builds/application.css docs/qni.css",
     "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
-    "build:typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'",
     "pretest": "yarn build && yarn build:css",
     "test": "karma start && MINITEST_REPORTER=SpecReporter ./bin/rails test:system test",
     "test:ci": "karma start && bundle && ./bin/rails test",
@@ -37,7 +36,8 @@
     "watch": "rollup -wc",
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
-    "release": "npm publish"
+    "release": "npm publish",
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'"
   },
   "prettier": "@github/prettier-config",
   "dependencies": {

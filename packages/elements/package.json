@@ -27,7 +27,7 @@
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "watch:css": "yarn css --watch",
     "icon": "svg-to-ts --config icon/.svg-to-tsrc",
-    "typedoc": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [
     "quantum",
@@ -59,7 +59,6 @@
     "@tailwindcss/forms": "^0.4.0",
     "autoprefixer": "^10.4.0",
     "chai": "^4.3.4",
-    "eslint": "^8.2.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-custom-elements": "^0.0.4",
     "eslint-plugin-github": "^4.3.4",
@@ -86,7 +85,7 @@
   "eslintIgnore": [
     "build/",
     "dist/",
-    "doc/",
+    "docs/",
     "icon/",
     "rollup.config.js",
     "rollup.config.test.js",
