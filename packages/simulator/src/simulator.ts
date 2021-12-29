@@ -1,7 +1,6 @@
 import {
   BlochDisplayElementType,
   ControlGateElementType,
-  HGateElementType,
   MeasurementGateElementType,
   PhaseGateElementType,
   RnotGateElementType,
@@ -16,7 +15,7 @@ import {
   YGateElementType,
   ZGateElementType
 } from '@qni/elements'
-import {Complex} from '@qni/common'
+import {Complex, HGateElementType} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'

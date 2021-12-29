@@ -1,20 +1,13 @@
 import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, IfableMixin, MenuableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
+import {HGateElementType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconHGate} from './icon'
 
 export type HGateElementProps = {
   targets: number[]
   disabled?: boolean
-}
-
-export const HGateElementType = 'H'
-export type SerializedHGateElement = {
-  type: typeof HGateElementType
-  targets: number[]
-  controls?: number[]
-  if?: string
 }
 
 @controller

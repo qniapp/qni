@@ -37,7 +37,7 @@
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prerelease": "yarn build:npm && git --no-pager diff && echo && npm pack --dry-run",
     "release": "npm publish",
-    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json --externalPattern 'node_modules/**/*.ts'"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected --hideGenerator --tsconfig tsconfig.typedoc.json"
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
@@ -71,7 +71,7 @@
     "tailwindcss": "^2.2.19",
     "tippy.js": "~6.3",
     "turbolinks": "^5.2.0",
-    "typescript": "~4.4"
+    "typescript": "~4.5"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",

@@ -1,6 +1,5 @@
 import {BlochDisplayElement, SerializedBlochDisplayElement} from './bloch-display-element'
 import {ControlGateElement, ControlGateElementType, SerializedControlGateElement} from './control-gate-element'
-import {HGateElement, SerializedHGateElement} from './h-gate-element'
 import {MeasurementGateElement, SerializedMeasurementGateElement} from './measurement-gate-element'
 import {
   Operation,
@@ -21,6 +20,7 @@ import {RnotGateElement, SerializedRnotGateElement} from './rnot-gate-element'
 import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
 import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
 import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
+import {SerializedHGate, Util} from '@qni/common'
 import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
 import {SerializedXGateElement, XGateElement} from './x-gate-element'
@@ -29,12 +29,12 @@ import {SerializedZGateElement, ZGateElement} from './z-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
-import {Util} from '@qni/common'
+import {HGateElement} from './h-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
 
 export type SerializedStep = Array<
-  | SerializedHGateElement
+  | SerializedHGate
   | SerializedXGateElement
   | SerializedYGateElement
   | SerializedZGateElement
