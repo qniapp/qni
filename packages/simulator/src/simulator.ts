@@ -10,10 +10,9 @@ import {
   SerializedStep,
   SwapGateElementType,
   Write0GateElementType,
-  Write1GateElementType,
-  ZGateElementType
+  Write1GateElementType
 } from '@qni/elements'
-import {Complex, SerializedHGateType, SerializedXGateType, SerializedYGateType} from '@qni/common'
+import {Complex, SerializedHGateType, SerializedXGateType, SerializedYGateType, SerializedZGateType} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -74,7 +73,7 @@ export class Simulator {
             this.y(...each.targets)
           }
           break
-        case ZGateElementType:
+        case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cz(each.controls, ...each.targets)
