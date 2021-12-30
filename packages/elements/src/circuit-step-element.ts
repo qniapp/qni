@@ -15,7 +15,6 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {RnotGateElement, SerializedRnotGateElement} from './rnot-gate-element'
 import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
 import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
 import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
@@ -23,6 +22,7 @@ import {
   SerializedHGate,
   SerializedPhaseGate,
   SerializedPhaseGateType,
+  SerializedRnotGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
@@ -35,19 +35,21 @@ import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {HGateElement} from './h-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
+import {RnotGateElement} from './rnot-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
 
+// TODO: @qni/common へ移動
 export type SerializedStep = Array<
   | SerializedHGate
   | SerializedXGate
   | SerializedYGate
   | SerializedZGate
   | SerializedPhaseGate
-  | SerializedRnotGateElement
+  | SerializedRnotGate
   | SerializedRxGateElement
   | SerializedRyGateElement
   | SerializedRzGateElement
