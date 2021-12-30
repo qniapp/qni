@@ -1,6 +1,5 @@
 import {
   BlochDisplayElementType,
-  ControlGateElementType,
   MeasurementGateElementType,
   SerializedStep,
   Write0GateElementType,
@@ -8,6 +7,7 @@ import {
 } from '@qni/elements'
 import {
   Complex,
+  SerializedControlGateType,
   SerializedHGateType,
   SerializedPhaseGateType,
   SerializedRnotGateType,
@@ -97,7 +97,7 @@ export class Simulator {
           }
           break
         }
-        case ControlGateElementType: {
+        case SerializedControlGateType: {
           this.cz(each.targets.slice(1), each.targets[0])
           break
         }

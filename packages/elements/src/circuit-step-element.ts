@@ -1,5 +1,4 @@
 import {BlochDisplayElement, SerializedBlochDisplayElement} from './bloch-display-element'
-import {ControlGateElement, ControlGateElementType, SerializedControlGateElement} from './control-gate-element'
 import {MeasurementGateElement, SerializedMeasurementGateElement} from './measurement-gate-element'
 import {
   Operation,
@@ -16,6 +15,8 @@ import {
   isZGateElement
 } from './operation'
 import {
+  SerializedControlGate,
+  SerializedControlGateType,
   SerializedHGate,
   SerializedPhaseGate,
   SerializedPhaseGateType,
@@ -34,6 +35,7 @@ import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
+import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
@@ -59,7 +61,7 @@ export type SerializedStep = Array<
   | SerializedRyGate
   | SerializedRzGate
   | SerializedSwapGate
-  | SerializedControlGateElement
+  | SerializedControlGate
   | SerializedBlochDisplayElement
   | SerializedWriteGateElement
   | SerializedMeasurementGateElement
@@ -749,13 +751,13 @@ export class CircuitStepElement extends HTMLElement {
     }
   }
 
-  groupControlGates(operations: Operation[]): {type: typeof ControlGateElementType; targets: number[]} | null {
+  groupControlGates(operations: Operation[]): {type: typeof SerializedControlGateType; targets: number[]} | null {
     const controlGates = operations.filter((each): each is ControlGateElement => isControlGateElement(each))
     if (controlGates.length < 2) return null
     if (operations.some(each => isControllable(each))) return null
 
     const targets = controlGates.map(each => each.bit)
-    return {type: ControlGateElementType, targets}
+    return {type: SerializedControlGateType, targets}
   }
 
   groupPhaseGates(operations: Operation[]): SerializedStep {
