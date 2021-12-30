@@ -2,7 +2,6 @@ import {
   BlochDisplayElementType,
   ControlGateElementType,
   MeasurementGateElementType,
-  RyGateElementType,
   RzGateElementType,
   SerializedStep,
   SwapGateElementType,
@@ -15,6 +14,7 @@ import {
   SerializedPhaseGateType,
   SerializedRnotGateType,
   SerializedRxGateType,
+  SerializedRyGateType,
   SerializedXGateType,
   SerializedYGateType,
   SerializedZGateType
@@ -127,7 +127,7 @@ export class Simulator {
             this.rx(each.angle, ...each.targets)
           }
           break
-        case RyGateElementType:
+        case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
           if (each.controls && each.controls.length > 0) {
