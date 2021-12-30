@@ -3,7 +3,6 @@ import {
   ControlGateElementType,
   MeasurementGateElementType,
   SerializedStep,
-  SwapGateElementType,
   Write0GateElementType,
   Write1GateElementType
 } from '@qni/elements'
@@ -15,6 +14,7 @@ import {
   SerializedRxGateType,
   SerializedRyGateType,
   SerializedRzGateType,
+  SerializedSwapGateType,
   SerializedXGateType,
   SerializedYGateType,
   SerializedZGateType
@@ -101,7 +101,7 @@ export class Simulator {
           this.cz(each.targets.slice(1), each.targets[0])
           break
         }
-        case SwapGateElementType: {
+        case SerializedSwapGateType: {
           // TODO: controls が複数の場合にも対応
           if (each.controls && each.controls.length === 1) {
             this.cswap(each.controls[0], each.targets[0], each.targets[1])

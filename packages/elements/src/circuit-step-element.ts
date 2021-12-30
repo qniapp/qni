@@ -23,12 +23,13 @@ import {
   SerializedRxGate,
   SerializedRyGate,
   SerializedRzGate,
+  SerializedSwapGate,
+  SerializedSwapGateType,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
   Util
 } from '@qni/common'
-import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
@@ -39,6 +40,7 @@ import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
+import {SwapGateElement} from './swap-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
@@ -56,7 +58,7 @@ export type SerializedStep = Array<
   | SerializedRxGate
   | SerializedRyGate
   | SerializedRzGate
-  | SerializedSwapGateElement
+  | SerializedSwapGate
   | SerializedControlGateElement
   | SerializedBlochDisplayElement
   | SerializedWriteGateElement
@@ -731,7 +733,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   groupSwapGatePair(operations: Operation[]): {
-    type: typeof SwapGateElementType
+    type: typeof SerializedSwapGateType
     targets: number[]
     controls?: number[]
   } | null {
@@ -741,9 +743,9 @@ export class CircuitStepElement extends HTMLElement {
     const targets = swapPair.map(each => each.bit)
     const controls = swapPair[0].controls
     if (controls !== undefined && controls.length > 0) {
-      return {type: SwapGateElementType, targets, controls}
+      return {type: SerializedSwapGateType, targets, controls}
     } else {
-      return {type: SwapGateElementType, targets}
+      return {type: SerializedSwapGateType, targets}
     }
   }
 
