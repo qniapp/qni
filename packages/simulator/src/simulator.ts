@@ -1,12 +1,6 @@
 import {
-  BlochDisplayElementType,
-  MeasurementGateElementType,
-  SerializedStep,
-  Write0GateElementType,
-  Write1GateElementType
-} from '@qni/elements'
-import {
   Complex,
+  SerializedBlochDisplayType,
   SerializedControlGateType,
   SerializedHGateType,
   SerializedPhaseGateType,
@@ -19,6 +13,7 @@ import {
   SerializedYGateType,
   SerializedZGateType
 } from '@qni/common'
+import {MeasurementGateElementType, SerializedStep, Write0GateElementType, Write1GateElementType} from '@qni/elements'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -50,7 +45,7 @@ export class Simulator {
         case Write1GateElementType:
           this.write(1, ...each.targets)
           break
-        case BlochDisplayElementType:
+        case SerializedBlochDisplayType:
           for (const target of each.targets) {
             this.blochVectors[target] = this.state.blochVector(target)
           }

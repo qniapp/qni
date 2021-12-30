@@ -1,4 +1,3 @@
-import {BlochDisplayElement, SerializedBlochDisplayElement} from './bloch-display-element'
 import {MeasurementGateElement, SerializedMeasurementGateElement} from './measurement-gate-element'
 import {
   Operation,
@@ -15,6 +14,7 @@ import {
   isZGateElement
 } from './operation'
 import {
+  SerializedBlochDisplay,
   SerializedControlGate,
   SerializedControlGateType,
   SerializedHGate,
@@ -34,6 +34,7 @@ import {
 import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
@@ -62,7 +63,7 @@ export type SerializedStep = Array<
   | SerializedRzGate
   | SerializedSwapGate
   | SerializedControlGate
-  | SerializedBlochDisplayElement
+  | SerializedBlochDisplay
   | SerializedWriteGateElement
   | SerializedMeasurementGateElement
 >
