@@ -15,7 +15,6 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
 import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
 import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
 import {
@@ -23,6 +22,7 @@ import {
   SerializedPhaseGate,
   SerializedPhaseGateType,
   SerializedRnotGate,
+  SerializedRxGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
@@ -36,6 +36,7 @@ import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {HGateElement} from './h-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
+import {RxGateElement} from './rx-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
@@ -50,7 +51,7 @@ export type SerializedStep = Array<
   | SerializedZGate
   | SerializedPhaseGate
   | SerializedRnotGate
-  | SerializedRxGateElement
+  | SerializedRxGate
   | SerializedRyGateElement
   | SerializedRzGateElement
   | SerializedSwapGateElement
