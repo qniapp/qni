@@ -1,6 +1,6 @@
-import commonjs from "rollup-plugin-commonjs"
+import commonjs from 'rollup-plugin-commonjs'
 import pkg from './package.json'
-import replace from "rollup-plugin-replace"
+import replace from 'rollup-plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 
 export default {
@@ -14,13 +14,9 @@ export default {
   context: 'window',
   plugins: [
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production")
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     resolve(),
-    commonjs({
-      namedExports: {
-        "fraction.js": ["Fraction"]
-      }
-    })
+    commonjs()
   ]
 }
