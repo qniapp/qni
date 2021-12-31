@@ -1,6 +1,7 @@
 import {
   Complex,
   SerializedBlochDisplayType,
+  SerializedCircuitStep,
   SerializedControlGateType,
   SerializedHGateType,
   SerializedMeasurementGateType,
@@ -17,7 +18,6 @@ import {
   SerializedZGateType
 } from '@qni/common'
 import {Matrix} from './matrix'
-import {SerializedStep} from '@qni/elements'
 import {StateVector} from './state-vector'
 import {round} from './util'
 
@@ -37,7 +37,7 @@ export class Simulator {
     this.flags = {}
   }
 
-  runStep(operations: SerializedStep): Simulator {
+  runStep(operations: SerializedCircuitStep): Simulator {
     this.blochVectors = {}
 
     for (const each of operations) {

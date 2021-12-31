@@ -13,23 +13,10 @@ import {
   isZGateElement
 } from './operation'
 import {
-  SerializedBlochDisplay,
-  SerializedControlGate,
+  SerializedCircuitStep,
   SerializedControlGateType,
-  SerializedHGate,
-  SerializedMeasurementGate,
-  SerializedPhaseGate,
   SerializedPhaseGateType,
-  SerializedRnotGate,
-  SerializedRxGate,
-  SerializedRyGate,
-  SerializedRzGate,
-  SerializedSwapGate,
   SerializedSwapGateType,
-  SerializedWriteGate,
-  SerializedXGate,
-  SerializedYGate,
-  SerializedZGate,
   Util
 } from '@qni/common'
 import {attr, controller} from '@github/catalyst'
@@ -51,24 +38,6 @@ import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
-
-// TODO: @qni/common へ移動
-export type SerializedStep = Array<
-  | SerializedHGate
-  | SerializedXGate
-  | SerializedYGate
-  | SerializedZGate
-  | SerializedPhaseGate
-  | SerializedRnotGate
-  | SerializedRxGate
-  | SerializedRyGate
-  | SerializedRzGate
-  | SerializedSwapGate
-  | SerializedControlGate
-  | SerializedBlochDisplay
-  | SerializedWriteGate
-  | SerializedMeasurementGate
->
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -667,8 +636,8 @@ export class CircuitStepElement extends HTMLElement {
       .filter((each): each is NonNullable<Operation> => each !== null)
   }
 
-  serialize(): SerializedStep {
-    let serializedStep: SerializedStep = []
+  serialize(): SerializedCircuitStep {
+    let serializedStep: SerializedCircuitStep = []
     let operations = this.operations
 
     if (this.containsControlledU) {
@@ -685,7 +654,7 @@ export class CircuitStepElement extends HTMLElement {
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
 
     for (const [klass, operationsGroup] of groupBy(operations, op => op.constructor)) {
-      let groupedOps: SerializedStep | null = null
+      let groupedOps: SerializedCircuitStep | null = null
 
       switch (klass) {
         case HGateElement:
@@ -763,8 +732,8 @@ export class CircuitStepElement extends HTMLElement {
     return {type: SerializedControlGateType, targets}
   }
 
-  groupPhaseGates(operations: Operation[]): SerializedStep {
-    const serializedStep: SerializedStep = []
+  groupPhaseGates(operations: Operation[]): SerializedCircuitStep {
+    const serializedStep: SerializedCircuitStep = []
     const phaseGates = operations.filter(
       (each): each is PhaseGateElement => isPhaseGateElement(each) && each.controls.length === 0
     )
@@ -788,8 +757,8 @@ export class CircuitStepElement extends HTMLElement {
     return serializedStep
   }
 
-  private groupOperationsByControls(operations: ControllableOperations[]): SerializedStep {
-    const serializedStep: SerializedStep = []
+  private groupOperationsByControls(operations: ControllableOperations[]): SerializedCircuitStep {
+    const serializedStep: SerializedCircuitStep = []
 
     for (const [controls, group] of groupBy(operations, op => op.controls.toString())) {
       const targets = group.map(each => each.bit)
