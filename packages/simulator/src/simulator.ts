@@ -3,18 +3,21 @@ import {
   SerializedBlochDisplayType,
   SerializedControlGateType,
   SerializedHGateType,
+  SerializedMeasurementGateType,
   SerializedPhaseGateType,
   SerializedRnotGateType,
   SerializedRxGateType,
   SerializedRyGateType,
   SerializedRzGateType,
   SerializedSwapGateType,
+  SerializedWrite0GateType,
+  SerializedWrite1GateType,
   SerializedXGateType,
   SerializedYGateType,
   SerializedZGateType
 } from '@qni/common'
-import {MeasurementGateElementType, SerializedStep, Write0GateElementType, Write1GateElementType} from '@qni/elements'
 import {Matrix} from './matrix'
+import {SerializedStep} from '@qni/elements'
 import {StateVector} from './state-vector'
 import {round} from './util'
 
@@ -39,10 +42,10 @@ export class Simulator {
 
     for (const each of operations) {
       switch (each.type) {
-        case Write0GateElementType:
+        case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
-        case Write1GateElementType:
+        case SerializedWrite1GateType:
           this.write(1, ...each.targets)
           break
         case SerializedBlochDisplayType:
@@ -140,7 +143,7 @@ export class Simulator {
             this.rz(each.angle, ...each.targets)
           }
           break
-        case MeasurementGateElementType:
+        case SerializedMeasurementGateType:
           for (const target of each.targets) {
             this.measure(target)
             if (each.flag) this.flags[each.flag] = this.measuredBits[target] === 1

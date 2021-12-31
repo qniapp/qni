@@ -2,14 +2,8 @@ import {ActivateableMixin, DraggableMixin, IconableMixin, MenuableMixin} from '.
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
+import {SerializedMeasurementGateType} from '@qni/common'
 import {iconMeasurementGate} from './icon'
-
-export const MeasurementGateElementType = 'Measure'
-export type SerializedMeasurementGateElement = {
-  type: typeof MeasurementGateElementType
-  targets: number[]
-  flag?: string
-}
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(
@@ -17,8 +11,8 @@ export class MeasurementGateElement extends MenuableMixin(
 ) {
   @attr value = ''
 
-  get operationType(): typeof MeasurementGateElementType {
-    return MeasurementGateElementType
+  get operationType(): typeof SerializedMeasurementGateType {
+    return SerializedMeasurementGateType
   }
 
   connectedCallback(): void {

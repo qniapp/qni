@@ -1,4 +1,3 @@
-import {MeasurementGateElement, SerializedMeasurementGateElement} from './measurement-gate-element'
 import {
   Operation,
   isControlGateElement,
@@ -18,6 +17,7 @@ import {
   SerializedControlGate,
   SerializedControlGateType,
   SerializedHGate,
+  SerializedMeasurementGate,
   SerializedPhaseGate,
   SerializedPhaseGateType,
   SerializedRnotGate,
@@ -26,24 +26,26 @@ import {
   SerializedRzGate,
   SerializedSwapGate,
   SerializedSwapGateType,
+  SerializedWriteGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
   Util
 } from '@qni/common'
-import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
+import {MeasurementGateElement} from './measurement-gate-element'
 import {PhaseGateElement} from './phase-gate-element'
 import {RnotGateElement} from './rnot-gate-element'
 import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
@@ -64,8 +66,8 @@ export type SerializedStep = Array<
   | SerializedSwapGate
   | SerializedControlGate
   | SerializedBlochDisplay
-  | SerializedWriteGateElement
-  | SerializedMeasurementGateElement
+  | SerializedWriteGate
+  | SerializedMeasurementGate
 >
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
