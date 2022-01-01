@@ -1,5 +1,4 @@
-import {DetailedError} from '@qni/common'
-import {describe} from './describe'
+import {DetailedError, describe} from '@qni/common'
 
 export const THROW_IF_EMPTY = {if_same_instance_as_this_then_throw: true}
 
