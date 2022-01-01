@@ -1,5 +1,5 @@
 import {Complex} from 'lib/complex'
-import {Format} from 'lib/format'
+import {Format} from '@qni/common'
 import {Matrix} from 'lib/matrix'
 import {Seq} from 'lib/seq'
 

@@ -1,5 +1,4 @@
-import {Format, UNICODE_FRACTIONS} from './format'
-import {DetailedError} from '@qni/common'
+import {DetailedError, Format, UNICODE_FRACTIONS} from '@qni/common'
 import {Util} from './util'
 import {parseFormula} from './formulaParser'
 

@@ -1,7 +1,7 @@
 /* eslint-env qunit */
 
 import {Complex} from 'lib/complex'
-import {Format} from 'lib/format'
+import {Format} from '@qni/common'
 
 QUnit.module('Complex', () => {
   QUnit.test('isEqualTo', assert => {
