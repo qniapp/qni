@@ -73,7 +73,7 @@ export class RzGateElement extends ConfigurableMixin(
   serialize(): RzGateOperation {
     return {
       type: RZ_GATE_OPERATION_TYPE,
-      theta: this.theta.replace('π', 'pi'),
+      theta: this.theta,
       controls: this.controls,
       targets: this.targets,
       if: this.if

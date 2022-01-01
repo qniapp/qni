@@ -73,7 +73,7 @@ export class RyGateElement extends ConfigurableMixin(
   serialize(): RyGateOperation {
     return {
       type: RY_GATE_OPERATION_TYPE,
-      theta: this.theta.replace('π', 'pi'),
+      theta: this.theta,
       controls: this.controls,
       targets: this.targets,
       if: this.if !== '' ? this.if : null

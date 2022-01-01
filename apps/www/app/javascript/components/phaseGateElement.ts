@@ -73,7 +73,7 @@ export class PhaseGateElement extends ConfigurableMixin(
   serialize(): PhaseGateOperation {
     return {
       type: PHASE_GATE_OPERATION_TYPE,
-      phi: this.phi.replace('π', 'pi'),
+      phi: this.phi,
       controls: this.controls,
       targets: this.targets,
       if: this.if !== '' ? this.if : null

@@ -1,4 +1,4 @@
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, target} from '@github/catalyst'
 import {BlochDisplayElement} from 'components/blochDisplayElement'
 import {CircleNotationElement} from '@qni/elements'
 import {CircuitStepElement} from 'components/circuitStepElement'
@@ -21,9 +21,10 @@ type MessageEventData = {
 export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   @attr serviceWorker = '/serviceworker.js'
 
+  @target circleNotation: CircleNotationElement
+
   declare worker: Worker
 
-  private circleNotation: CircleNotationElement | null
   private runCircuitButton: RunCircuitButtonElement | null
   private visibleQubitCircleKets: number[]
 
@@ -32,7 +33,6 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   }
 
   connectedCallback(): void {
-    this.circleNotation = null
     this.visibleQubitCircleKets = []
     this.initCircuitable()
 
@@ -49,7 +49,6 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
     this.addEventListener('step.click', this.run)
     this.addEventListener('step.snap', this.run)
     this.addEventListener('circuit.mouseleave', this.run)
-    this.addEventListener('circle-notation.load', this.registerCircleNotation)
     this.addEventListener('circle-notation.visibilityChanged', this.updateVisibleQubitCircleKets)
     this.addEventListener('circle-notation.visibilityChanged', this.run)
     this.addEventListener('run-circuit-button.load', this.registerRunCircuitButton)
@@ -111,10 +110,6 @@ export class QuantumSimulatorElement extends CircuitableMixin(HTMLElement) {
   }
 
   // Register components
-
-  private registerCircleNotation(event: Event): void {
-    this.circleNotation = event.target as CircleNotationElement
-  }
 
   private registerRunCircuitButton(event: Event): void {
     this.runCircuitButton = event.target as RunCircuitButtonElement

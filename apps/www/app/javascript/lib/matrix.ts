@@ -1,10 +1,9 @@
-import {Complex, PARSE_COMPLEX_TOKEN_MAP_RAD} from './complex'
+import {Complex} from './complex'
 import {Seq, seq} from './seq'
 import {DetailedError} from './detailedError'
 import {Format} from './format'
 import {Util} from './util'
-import {parseAngle} from './angleParser'
-import {parseFormula} from './formulaParser'
+import {radian} from '@qni/common'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
@@ -13,7 +12,7 @@ export class Matrix {
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
 
   static PHASE(phi: string): Matrix {
-    const φ = parseAngle(phi)
+    const φ = radian(phi)
     const e = Complex.from(Math.E)
 
     return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
@@ -27,7 +26,7 @@ export class Matrix {
   }
 
   static RX(theta: string): Matrix {
-    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = radian(theta)
     const mi = Complex.I.neg()
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
@@ -36,7 +35,7 @@ export class Matrix {
   }
 
   static RY(theta: string): Matrix {
-    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = radian(theta)
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
 
@@ -44,7 +43,7 @@ export class Matrix {
   }
 
   static RZ(theta: string): Matrix {
-    const θ = parseFormula<number>(theta, PARSE_COMPLEX_TOKEN_MAP_RAD)
+    const θ = radian(theta)
     const e = Complex.from(Math.E)
     const i = Complex.I
 

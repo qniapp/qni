@@ -62,7 +62,6 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    ansi (1.5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.519.0)
@@ -130,18 +129,18 @@ GEM
       combine_pdf (~> 1.0)
       nokogiri (~> 1.0)
     html_tokenizer (0.0.7)
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
-    jsbundling-rails (0.1.9)
+    jsbundling-rails (1.0.0)
       railties (>= 6.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.12.0)
+    loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -151,12 +150,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.1)
     mini_portile2 (2.6.1)
-    minitest (5.14.4)
-    minitest-reporters (1.4.3)
-      ansi
-      builder
-      minitest (>= 5.0)
-      ruby-progressbar
+    minitest (5.15.0)
     msgpack (1.4.2)
     nio4r (2.5.8)
     nokogiri (1.12.5)
@@ -279,7 +273,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.1)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby
@@ -299,7 +293,6 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   listen (>= 3.0.5, < 3.2)
-  minitest-reporters
   pg
   puma (~> 5.5)
   rack-mini-profiler
