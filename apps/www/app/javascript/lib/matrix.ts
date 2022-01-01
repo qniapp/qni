@@ -1,9 +1,8 @@
-import {Complex} from './complex'
+import {DetailedError, radian} from '@qni/common'
 import {Seq, seq} from './seq'
-import {DetailedError} from './detailedError'
+import {Complex} from './complex'
 import {Format} from './format'
 import {Util} from './util'
-import {radian} from '@qni/common'
 
 export class Matrix {
   static readonly H = Matrix.square(1, 1, 1, -1).times(Math.sqrt(0.5))
