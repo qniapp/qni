@@ -1,6 +1,5 @@
-import {DetailedError, Format, radian} from '@qni/common'
+import {Complex, DetailedError, Format, radian} from '@qni/common'
 import {Seq, seq} from './seq'
-import {Complex} from './complex'
 import {Util} from './util'
 
 export class Matrix {

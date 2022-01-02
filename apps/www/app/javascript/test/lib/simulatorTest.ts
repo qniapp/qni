@@ -1,7 +1,7 @@
 /* eslint-env qunit */
 
 import {Simulator, StateVector} from 'lib'
-import {Complex} from 'lib/complex'
+import {Complex} from '@qni/common'
 import {Matrix} from 'lib/matrix'
 
 QUnit.module('Simulator', () => {

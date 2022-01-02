@@ -16,7 +16,7 @@ import {
   Y_GATE_OPERATION_TYPE,
   Z_GATE_OPERATION_TYPE
 } from './operation'
-import {Complex} from './complex'
+import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './stateVector'
 import {Util} from './util'

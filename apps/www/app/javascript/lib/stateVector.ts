@@ -1,4 +1,4 @@
-import {Complex} from './complex'
+import {Complex} from '@qni/common'
 import {Matrix} from './matrix'
 import {Util} from './util'
 
