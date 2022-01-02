@@ -1,6 +1,7 @@
 import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, IfableMixin, MenuableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
+import {SerializedYGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconYGate} from './icon'
 
@@ -9,20 +10,12 @@ export type YGateElementProps = {
   disabled?: boolean
 }
 
-export const YGateElementType = 'Y'
-export type SerializedYGateElement = {
-  type: typeof YGateElementType
-  targets: number[]
-  controls?: number[]
-  if?: string
-}
-
 @controller
 export class YGateElement extends MenuableMixin(
   IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
-  get operationType(): typeof YGateElementType {
-    return YGateElementType
+  get operationType(): typeof SerializedYGateType {
+    return SerializedYGateType
   }
 
   connectedCallback(): void {

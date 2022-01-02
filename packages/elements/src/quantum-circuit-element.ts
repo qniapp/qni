@@ -1,11 +1,12 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
-import {CircuitStepElement, SerializedStep, isCircuitStepElement} from './circuit-step-element'
+import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
+import {SerializedCircuitStep, Util} from '@qni/common'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
@@ -16,7 +17,6 @@ import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
-import {Util} from '@qni/common'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
@@ -929,7 +929,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  serialize(): SerializedStep[] {
+  serialize(): SerializedCircuitStep[] {
     return this.steps.map(each => each.serialize())
   }
 }

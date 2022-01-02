@@ -1,6 +1,4 @@
-import {ArrayIsh, equate, hasOwnProperty} from 'lib/equate'
-import {Complex} from 'lib/complex'
-import {describe} from 'lib/describe'
+import {ArrayIsh, Complex, hasOwnProperty, describe, equate} from '@qni/common'
 
 export function isEqualTo(subject: unknown, other: unknown): boolean {
   return equate(subject, other)

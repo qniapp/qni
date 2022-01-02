@@ -1,22 +1,22 @@
 import {
-  BlochDisplayElementType,
-  ControlGateElementType,
-  HGateElementType,
-  MeasurementGateElementType,
-  PhaseGateElementType,
-  RnotGateElementType,
-  RxGateElementType,
-  RyGateElementType,
-  RzGateElementType,
-  SerializedStep,
-  SwapGateElementType,
-  Write0GateElementType,
-  Write1GateElementType,
-  XGateElementType,
-  YGateElementType,
-  ZGateElementType
-} from '@qni/elements'
-import {Complex} from '@qni/common'
+  Complex,
+  SerializedBlochDisplayType,
+  SerializedCircuitStep,
+  SerializedControlGateType,
+  SerializedHGateType,
+  SerializedMeasurementGateType,
+  SerializedPhaseGateType,
+  SerializedRnotGateType,
+  SerializedRxGateType,
+  SerializedRyGateType,
+  SerializedRzGateType,
+  SerializedSwapGateType,
+  SerializedWrite0GateType,
+  SerializedWrite1GateType,
+  SerializedXGateType,
+  SerializedYGateType,
+  SerializedZGateType
+} from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
 import {round} from './util'
@@ -37,23 +37,23 @@ export class Simulator {
     this.flags = {}
   }
 
-  runStep(operations: SerializedStep): Simulator {
+  runStep(operations: SerializedCircuitStep): Simulator {
     this.blochVectors = {}
 
     for (const each of operations) {
       switch (each.type) {
-        case Write0GateElementType:
+        case SerializedWrite0GateType:
           this.write(0, ...each.targets)
           break
-        case Write1GateElementType:
+        case SerializedWrite1GateType:
           this.write(1, ...each.targets)
           break
-        case BlochDisplayElementType:
+        case SerializedBlochDisplayType:
           for (const target of each.targets) {
             this.blochVectors[target] = this.state.blochVector(target)
           }
           break
-        case HGateElementType:
+        case SerializedHGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.ch(each.controls, ...each.targets)
@@ -61,7 +61,7 @@ export class Simulator {
             this.h(...each.targets)
           }
           break
-        case XGateElementType:
+        case SerializedXGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cnot(each.controls, ...each.targets)
@@ -69,7 +69,7 @@ export class Simulator {
             this.x(...each.targets)
           }
           break
-        case YGateElementType:
+        case SerializedYGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cy(each.controls, ...each.targets)
@@ -77,7 +77,7 @@ export class Simulator {
             this.y(...each.targets)
           }
           break
-        case ZGateElementType:
+        case SerializedZGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.cz(each.controls, ...each.targets)
@@ -85,7 +85,7 @@ export class Simulator {
             this.z(...each.targets)
           }
           break
-        case PhaseGateElementType: {
+        case SerializedPhaseGateType: {
           if (!each.angle) break
 
           if (each.controls && each.controls.length > 0) {
@@ -95,11 +95,11 @@ export class Simulator {
           }
           break
         }
-        case ControlGateElementType: {
+        case SerializedControlGateType: {
           this.cz(each.targets.slice(1), each.targets[0])
           break
         }
-        case SwapGateElementType: {
+        case SerializedSwapGateType: {
           // TODO: controls が複数の場合にも対応
           if (each.controls && each.controls.length === 1) {
             this.cswap(each.controls[0], each.targets[0], each.targets[1])
@@ -108,7 +108,7 @@ export class Simulator {
           }
           break
         }
-        case RnotGateElementType:
+        case SerializedRnotGateType:
           if (each.if && !this.flags[each.if]) break
           if (each.controls && each.controls.length > 0) {
             this.crnot(each.controls, ...each.targets)
@@ -116,7 +116,7 @@ export class Simulator {
             this.rnot(...each.targets)
           }
           break
-        case RxGateElementType:
+        case SerializedRxGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
           if (each.controls && each.controls.length > 0) {
@@ -125,7 +125,7 @@ export class Simulator {
             this.rx(each.angle, ...each.targets)
           }
           break
-        case RyGateElementType:
+        case SerializedRyGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
           if (each.controls && each.controls.length > 0) {
@@ -134,7 +134,7 @@ export class Simulator {
             this.ry(each.angle, ...each.targets)
           }
           break
-        case RzGateElementType:
+        case SerializedRzGateType:
           if (each.if && !this.flags[each.if]) break
           if (!each.angle) break
           if (each.controls && each.controls.length > 0) {
@@ -143,7 +143,7 @@ export class Simulator {
             this.rz(each.angle, ...each.targets)
           }
           break
-        case MeasurementGateElementType:
+        case SerializedMeasurementGateType:
           for (const target of each.targets) {
             this.measure(target)
             if (each.flag) this.flags[each.flag] = this.measuredBits[target] === 1

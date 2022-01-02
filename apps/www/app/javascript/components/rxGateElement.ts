@@ -73,7 +73,7 @@ export class RxGateElement extends ConfigurableMixin(
   serialize(): RxGateOperation {
     return {
       type: RX_GATE_OPERATION_TYPE,
-      theta: this.theta.replace('π', 'pi'),
+      theta: this.theta,
       controls: this.controls,
       targets: this.targets,
       if: this.if !== '' ? this.if : null

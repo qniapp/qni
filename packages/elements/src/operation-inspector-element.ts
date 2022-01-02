@@ -2,10 +2,9 @@ import {AngleSliderElement, isAngleSliderElement} from './angle-slider-element'
 import {Angleable, Ifable, isAngleable, isIfable} from './mixin'
 import {Flaggable, isFlaggable} from './mixin/flaggable'
 import {Operation, isPhaseGateElement, isRxGateElement, isRyGateElement, isRzGateElement} from './operation'
-import {angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from './angle-parser'
+import {Util, angleDenominator, isAngleGreaterThan, isAngleLessThan, isValidAngle, reduceAngle} from '@qni/common'
 import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {Util} from '@qni/common'
 import {isNumeric} from './util'
 
 @controller

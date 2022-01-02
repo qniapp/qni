@@ -1,4 +1,3 @@
-import './angle-parser'
 import './h-gate-element'
 import './x-gate-element'
 import './y-gate-element'

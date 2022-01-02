@@ -1,6 +1,7 @@
-import {CircuitDropzoneElement, PaletteDropzoneElement} from '..'
+import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
+import {PaletteDropzoneElement} from '../palette-dropzone-element'
 import {Util} from '@qni/common'
 import {attr} from '@github/catalyst'
 import interact from 'interactjs'

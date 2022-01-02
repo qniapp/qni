@@ -1,6 +1,6 @@
 {
   "name": "@qni/common",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Common library for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/packages/common#readme",
@@ -42,5 +42,10 @@
     "docs/",
     "rollup.config.js"
   ],
-  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779",
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "fraction.js": "^4.1.2",
+    "rollup-plugin-commonjs": "^10.1.0"
+  }
 }

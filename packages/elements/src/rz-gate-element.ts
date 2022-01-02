@@ -9,6 +9,7 @@ import {
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
+import {SerializedRzGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconRzGate} from './icon'
 
@@ -17,23 +18,14 @@ export type RzGateElementProps = {
   disabled?: boolean
 }
 
-export const RzGateElementType = 'Rz'
-export type SerializedRzGateElement = {
-  type: typeof RzGateElementType
-  targets: number[]
-  angle?: string
-  controls?: number[]
-  if?: string
-}
-
 @controller
 export class RzGateElement extends MenuableMixin(
   IfableMixin(
     ControllableMixin(AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
   )
 ) {
-  get operationType(): typeof RzGateElementType {
-    return RzGateElementType
+  get operationType(): typeof SerializedRzGateType {
+    return SerializedRzGateType
   }
 
   connectedCallback(): void {

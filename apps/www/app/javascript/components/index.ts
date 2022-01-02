@@ -1,3 +1,4 @@
+export * from './circleNotationElement'
 export * from './circuitEditorElement'
 export * from './quantumSimulatorElement'
 export * from './paletteDropzoneElement'

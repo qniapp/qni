@@ -1,7 +1,3 @@
-import {BlochDisplayElement, SerializedBlochDisplayElement} from './bloch-display-element'
-import {ControlGateElement, ControlGateElementType, SerializedControlGateElement} from './control-gate-element'
-import {HGateElement, SerializedHGateElement} from './h-gate-element'
-import {MeasurementGateElement, SerializedMeasurementGateElement} from './measurement-gate-element'
 import {
   Operation,
   isControlGateElement,
@@ -16,39 +12,32 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {PhaseGateElement, PhaseGateElementType, SerializedPhaseGateElement} from './phase-gate-element'
-import {RnotGateElement, SerializedRnotGateElement} from './rnot-gate-element'
-import {RxGateElement, SerializedRxGateElement} from './rx-gate-element'
-import {RyGateElement, SerializedRyGateElement} from './ry-gate-element'
-import {RzGateElement, SerializedRzGateElement} from './rz-gate-element'
-import {SerializedSwapGateElement, SwapGateElement, SwapGateElementType} from './swap-gate-element'
-import {SerializedWriteGateElement, WriteGateElement} from './write-gate-element'
-import {SerializedXGateElement, XGateElement} from './x-gate-element'
-import {SerializedYGateElement, YGateElement} from './y-gate-element'
-import {SerializedZGateElement, ZGateElement} from './z-gate-element'
+import {
+  SerializedCircuitStep,
+  SerializedControlGateType,
+  SerializedPhaseGateType,
+  SerializedSwapGateType,
+  Util
+} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
-import {Util} from '@qni/common'
+import {ControlGateElement} from './control-gate-element'
+import {HGateElement} from './h-gate-element'
+import {MeasurementGateElement} from './measurement-gate-element'
+import {PhaseGateElement} from './phase-gate-element'
+import {RnotGateElement} from './rnot-gate-element'
+import {RxGateElement} from './rx-gate-element'
+import {RyGateElement} from './ry-gate-element'
+import {RzGateElement} from './rz-gate-element'
+import {SwapGateElement} from './swap-gate-element'
+import {WriteGateElement} from './write-gate-element'
+import {XGateElement} from './x-gate-element'
+import {YGateElement} from './y-gate-element'
+import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
 import {isDisableable} from './mixin'
-
-export type SerializedStep = Array<
-  | SerializedHGateElement
-  | SerializedXGateElement
-  | SerializedYGateElement
-  | SerializedZGateElement
-  | SerializedPhaseGateElement
-  | SerializedRnotGateElement
-  | SerializedRxGateElement
-  | SerializedRyGateElement
-  | SerializedRzGateElement
-  | SerializedSwapGateElement
-  | SerializedControlGateElement
-  | SerializedBlochDisplayElement
-  | SerializedWriteGateElement
-  | SerializedMeasurementGateElement
->
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -647,8 +636,8 @@ export class CircuitStepElement extends HTMLElement {
       .filter((each): each is NonNullable<Operation> => each !== null)
   }
 
-  serialize(): SerializedStep {
-    let serializedStep: SerializedStep = []
+  serialize(): SerializedCircuitStep {
+    let serializedStep: SerializedCircuitStep = []
     let operations = this.operations
 
     if (this.containsControlledU) {
@@ -665,7 +654,7 @@ export class CircuitStepElement extends HTMLElement {
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
 
     for (const [klass, operationsGroup] of groupBy(operations, op => op.constructor)) {
-      let groupedOps: SerializedStep | null = null
+      let groupedOps: SerializedCircuitStep | null = null
 
       switch (klass) {
         case HGateElement:
@@ -718,7 +707,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   groupSwapGatePair(operations: Operation[]): {
-    type: typeof SwapGateElementType
+    type: typeof SerializedSwapGateType
     targets: number[]
     controls?: number[]
   } | null {
@@ -728,23 +717,23 @@ export class CircuitStepElement extends HTMLElement {
     const targets = swapPair.map(each => each.bit)
     const controls = swapPair[0].controls
     if (controls !== undefined && controls.length > 0) {
-      return {type: SwapGateElementType, targets, controls}
+      return {type: SerializedSwapGateType, targets, controls}
     } else {
-      return {type: SwapGateElementType, targets}
+      return {type: SerializedSwapGateType, targets}
     }
   }
 
-  groupControlGates(operations: Operation[]): {type: typeof ControlGateElementType; targets: number[]} | null {
+  groupControlGates(operations: Operation[]): {type: typeof SerializedControlGateType; targets: number[]} | null {
     const controlGates = operations.filter((each): each is ControlGateElement => isControlGateElement(each))
     if (controlGates.length < 2) return null
     if (operations.some(each => isControllable(each))) return null
 
     const targets = controlGates.map(each => each.bit)
-    return {type: ControlGateElementType, targets}
+    return {type: SerializedControlGateType, targets}
   }
 
-  groupPhaseGates(operations: Operation[]): SerializedStep {
-    const serializedStep: SerializedStep = []
+  groupPhaseGates(operations: Operation[]): SerializedCircuitStep {
+    const serializedStep: SerializedCircuitStep = []
     const phaseGates = operations.filter(
       (each): each is PhaseGateElement => isPhaseGateElement(each) && each.controls.length === 0
     )
@@ -753,12 +742,12 @@ export class CircuitStepElement extends HTMLElement {
       const targets = group.map(each => each.bit)
       if (angle === '') {
         serializedStep.push({
-          type: PhaseGateElementType,
+          type: SerializedPhaseGateType,
           targets
         })
       } else {
         serializedStep.push({
-          type: PhaseGateElementType,
+          type: SerializedPhaseGateType,
           angle,
           targets
         })
@@ -768,8 +757,8 @@ export class CircuitStepElement extends HTMLElement {
     return serializedStep
   }
 
-  private groupOperationsByControls(operations: ControllableOperations[]): SerializedStep {
-    const serializedStep: SerializedStep = []
+  private groupOperationsByControls(operations: ControllableOperations[]): SerializedCircuitStep {
+    const serializedStep: SerializedCircuitStep = []
 
     for (const [controls, group] of groupBy(operations, op => op.controls.toString())) {
       const targets = group.map(each => each.bit)

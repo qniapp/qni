@@ -1,6 +1,7 @@
 import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, IfableMixin, MenuableMixin} from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
+import {SerializedZGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconZGate} from './icon'
 
@@ -9,20 +10,12 @@ export type ZGateElementProps = {
   disabled?: boolean
 }
 
-export const ZGateElementType = 'Z'
-export type SerializedZGateElement = {
-  type: typeof ZGateElementType
-  targets: number[]
-  controls?: number[]
-  if?: string
-}
-
 @controller
 export class ZGateElement extends MenuableMixin(
   IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
-  get operationType(): typeof ZGateElementType {
-    return ZGateElementType
+  get operationType(): typeof SerializedZGateType {
+    return SerializedZGateType
   }
 
   connectedCallback(): void {

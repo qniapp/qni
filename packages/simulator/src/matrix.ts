@@ -1,7 +1,6 @@
-import {Complex, DetailedError, Format, Util} from '@qni/common'
+import {Complex, DetailedError, Format, Util, radian} from '@qni/common'
 import {Eq} from 'fp-ts/number'
 import {isNonEmpty} from 'fp-ts/lib/Array'
-import {parseAngle} from './angle-parser'
 import {range} from 'fp-ts/NonEmptyArray'
 import {uniq} from 'fp-ts/lib/ReadonlyNonEmptyArray'
 
@@ -12,7 +11,7 @@ export class Matrix {
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
 
   static PHASE(phi: string): Matrix {
-    const φ = parseAngle(phi)
+    const φ = radian(phi)
     const e = Complex.from(Math.E)
 
     return Matrix.square(1, 0, 0, e.raisedTo(Complex.I.times(φ)))
@@ -26,7 +25,7 @@ export class Matrix {
   }
 
   static RX(theta: string): Matrix {
-    const θ = parseAngle(theta)
+    const θ = radian(theta)
     const mi = Complex.I.neg()
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
@@ -35,7 +34,7 @@ export class Matrix {
   }
 
   static RY(theta: string): Matrix {
-    const θ = parseAngle(theta)
+    const θ = radian(theta)
     const cosθ2 = Math.cos(θ / 2)
     const sinθ2 = Math.sin(θ / 2)
 
@@ -43,7 +42,7 @@ export class Matrix {
   }
 
   static RZ(theta: string): Matrix {
-    const θ = parseAngle(theta)
+    const θ = radian(theta)
     const e = Complex.from(Math.E)
     const i = Complex.I
 

@@ -1,4 +1,4 @@
-import {DetailedError} from './detailedError'
+import {DetailedError} from '@qni/common'
 import {seq} from './seq'
 
 function _mergeScientificFloatTokens(tokens: string[]): string[] {

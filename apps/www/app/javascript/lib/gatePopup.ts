@@ -1,5 +1,5 @@
-import {Complex, PARSE_COMPLEX_TOKEN_MAP_RAD} from 'lib/complex'
-import noUiSlider, {PipsMode, API as noUiSliderApi, target as noUiSliderTarget} from 'nouislider'
+import noUiSlider, {PipsMode, target as noUiSliderTarget} from 'nouislider'
+import {angleDenominator, angleNumerator, piCoefficient, radian, reduceAngle} from '@qni/common'
 import tippy, {Instance, Props, roundArrow} from 'tippy.js'
 import {DisplaySize} from 'lib'
 import Fraction from 'fraction.js'
@@ -12,7 +12,6 @@ import {RyGateElement} from 'components/ryGateElement'
 import {RzGateElement} from 'components/rzGateElement'
 import {Util} from './util'
 import {XGateElement} from 'components/xGateElement'
-import {parseFormula} from 'lib/formulaParser'
 
 const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   typeof arg === 'object' && arg !== null && (arg as PhaseGateElement).tagName === 'PHASE-GATE'
@@ -70,14 +69,10 @@ export class GatePopup {
           } else if (isThetable(operation)) {
             originalValue = operation.theta
           }
-          that.input.value = originalValue!.replace(/π/g, 'pi')
+          that.input.value = originalValue!
+          that.currentAngleDenominator = angleDenominator(originalValue!)
+          that.currentAngle = that.snappedAngle(radian(originalValue!))
 
-          const radian = Complex.from(
-            parseFormula<number>(originalValue!.replace(/π/g, 'pi'), PARSE_COMPLEX_TOKEN_MAP_RAD)
-          ).real
-
-          that.currentAngleDenominator = that.angleDenominator(originalValue!)
-          that.currentAngle = that.snappedAngle(radian)
           that.createAngleSlider(operation)
         }
 
@@ -104,51 +99,20 @@ export class GatePopup {
     operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement,
     angle: string
   ): void {
-    const πangle = angle.replace(/pi/g, 'π')
-
     this.input.value = angle
     if (isPhaseGateElement(operation)) {
-      operation.phi = πangle
+      operation.phi = angle
     } else {
-      operation.theta = πangle
+      operation.theta = angle
     }
-
-    // if (isPhaseGateElement(instruction)) {
-    //   if (instruction.targets.length > 2) {
-    //     for (const each of instruction.cphaseTargetInstructions()) {
-    //       each.phi = angle
-    //     }
-    //   } else {
-    //     instruction.phi = angle
-    //     instruction.circuitDropzone.circuitStep.updateGateConnections()
-    //   }
-    // } else if (isThetable(instruction)) {
-    //   instruction.theta = angle
-    // }
   }
 
   private reduceInstructionAngle(operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement): void {
     if (isPhaseGateElement(operation)) {
-      const angle = this.beautifyFraction(operation.phi.replace(/π/g, 'pi'), true)
-
-      operation.phi = angle.replace(/pi/g, 'π')
+      operation.phi = reduceAngle(operation.phi)
     } else {
-      const angle = this.beautifyFraction(operation.theta.replace(/π/g, 'pi'), true)
-
-      operation.theta = angle.replace(/pi/g, 'π')
+      operation.theta = reduceAngle(operation.theta)
     }
-
-    // if (isPhaseGateElement(instruction)) {
-    //   if (instruction.targets.length > 0) {
-    //     for (const each of instruction.cphaseTargetInstructions()) {
-    //       each.phi = angle
-    //     }
-    //   } else {
-    //     instruction.phi = angle
-    //   }
-    // } else if (isThetable(instruction)) {
-    //   instruction.theta = angle
-    // }
   }
 
   private snappedAngle(angle: number): string {
@@ -157,13 +121,13 @@ export class GatePopup {
     const unit = Math.PI / this.currentAngleDenominator
     const i = Math.round(angle / unit)
 
-    return this.beautifyFraction(`${i}pi/${this.currentAngleDenominator}`)
+    return this.beautifyFraction(`${i}π/${this.currentAngleDenominator}`)
   }
 
   private beautifyFraction(angle: string, reduce = false): string {
     let newAngle: string
     ;(Fraction as any).REDUCE = reduce
-    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
+    const fraction = new Fraction(piCoefficient(angle))
 
     const coefficient = fraction.valueOf()
     const d = fraction.d
@@ -171,13 +135,13 @@ export class GatePopup {
     if (coefficient === 0) {
       newAngle = '0'
     } else if (coefficient > 2) {
-      newAngle = d === 1 ? '2pi' : `${2 * d}pi/${d}`
+      newAngle = d === 1 ? '2π' : `${2 * d}π/${d}`
     } else if (coefficient < -2) {
-      newAngle = d === 1 ? '-2pi' : `-${2 * d}pi/${d}`
+      newAngle = d === 1 ? '-2π' : `-${2 * d}π/${d}`
     } else {
       const n = fraction.n
       const sign = fraction.s === -1 ? '-' : ''
-      const numerator = n === 1 ? `${sign}pi` : `${sign}${n}pi`
+      const numerator = n === 1 ? `${sign}π` : `${sign}${n}π`
       newAngle = d === 1 ? `${numerator}` : `${numerator}/${d}`
     }
 
@@ -258,48 +222,25 @@ export class GatePopup {
           let newAngle = inputValue
 
           if (
-            this.angleNumerator(this.currentAngle) === this.angleNumerator(inputValue) &&
-            this.currentAngleDenominator !== this.angleDenominator(inputValue)
+            angleNumerator(this.currentAngle) === angleNumerator(inputValue) &&
+            this.currentAngleDenominator !== angleDenominator(inputValue)
           ) {
-            const m = this.angleDenominator(inputValue) / this.currentAngleDenominator
-            newAngle = `${Math.round(m * this.angleNumerator(this.currentAngle))}pi/${this.angleDenominator(
-              inputValue
-            )}`
+            const m = angleDenominator(inputValue) / this.currentAngleDenominator
+            newAngle = `${Math.round(m * angleNumerator(this.currentAngle))}π/${angleDenominator(inputValue)}`
           }
 
-          this.currentAngleDenominator = this.angleDenominator(inputValue)
-          this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
+          this.currentAngleDenominator = angleDenominator(inputValue)
+          const slider = this.angleSliderEl.noUiSlider
+          Util.notNull(slider)
+          console.log(`slider set ${radian(newAngle)}`)
+          slider.set(radian(newAngle))
 
           if (isPhaseGateElement(operation)) {
-            operation.phi = this.beautifyFraction(newAngle, false).replace(/pi/g, 'π')
+            operation.phi = reduceAngle(newAngle)
           } else if (isThetable(operation)) {
-            operation.theta = this.beautifyFraction(newAngle, false).replace(/pi/g, 'π')
+            operation.theta = reduceAngle(newAngle)
           }
         }
-
-        // if (isThetable(operation) || isPhaseGateElement(operation)) {
-        //   Util.notNull(this.currentAngle)
-        //   Util.notNull(this.currentAngleDenominator)
-
-        //   let newAngle = inputValue
-
-        //   if (
-        //     this.angleNumerator(this.currentAngle) ===
-        //       this.angleNumerator(inputValue) &&
-        //     this.currentAngleDenominator !== this.angleDenominator(inputValue)
-        //   ) {
-        //     const m =
-        //       this.angleDenominator(inputValue) / this.currentAngleDenominator
-        //     newAngle = `${Math.round(
-        //       m * this.angleNumerator(this.currentAngle),
-        //     )}pi/${this.angleDenominator(inputValue)}`
-        //   }
-
-        //   this.currentAngleDenominator = this.angleDenominator(inputValue)
-        //   this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
-        //   operation.angle = this.beautifyFraction(newAngle, false)
-        // }
-
         this.runCircuit()
       } catch (e) {
         Util.notNull(this.popup)
@@ -343,12 +284,6 @@ export class GatePopup {
     return this.popup.reference as HTMLElement
   }
 
-  private get editorElement(): Element {
-    const el = this.popupReferenceEl.closest('.editor')
-    Util.notNull(el)
-    return el
-  }
-
   private get angleSliderEl(): noUiSliderTarget {
     const el = this.popup?.popper.getElementsByClassName('angle-slider').item(0) as HTMLElement
     Util.notNull(el)
@@ -357,27 +292,24 @@ export class GatePopup {
   }
 
   private createAngleSlider(operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement): void {
-    const angleSliderEl = this.angleSliderEl
-    const filterPips = (value: number) => {
-      if (value === 0) return 1
-      return value % Math.PI ? -1 : 1
-    }
     let angle: string
-
     if (isPhaseGateElement(operation)) {
       angle = operation.phi
     } else {
       angle = operation.theta
     }
 
-    const radian = Complex.from(parseFormula<number>(angle.replace(/π/g, 'pi'), PARSE_COMPLEX_TOKEN_MAP_RAD)).real
-
+    const angleSliderEl = this.angleSliderEl
+    const filterPips = (value: number) => {
+      if (value === 0) return 1
+      return value % Math.PI ? -1 : 1
+    }
     noUiSlider.create(angleSliderEl, {
+      start: radian(angle),
       range: {
         min: -2 * Math.PI,
         max: 2 * Math.PI
       },
-      start: radian,
       pips: {
         mode: PipsMode.Positions,
         values: [0, 25, 50, 75, 100],
@@ -396,9 +328,10 @@ export class GatePopup {
     })
     angleSliderEl.classList.remove('hidden')
 
-    const slider = angleSliderEl.noUiSlider as noUiSliderApi
+    const slider = angleSliderEl.noUiSlider
+    Util.notNull(slider)
     slider.on('update', values => {
-      const snappedAngle = this.snappedAngle(values[0] as number)
+      const snappedAngle = this.snappedAngle(parseFloat(values[0] as string))
       if (this.currentAngle !== snappedAngle) {
         this.currentAngle = snappedAngle
         this.updateInstructionAngle(operation, snappedAngle)
@@ -413,29 +346,5 @@ export class GatePopup {
 
   private isAngleSliderActive(): boolean {
     return this.popup?.popper.getElementsByClassName('angle-slider-active').item(0) !== null
-  }
-
-  private radian(angle: string): number {
-    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
-    return fraction.valueOf() * Math.PI
-  }
-
-  private angleNumerator(angle: string): number {
-    ;(Fraction as any).REDUCE = false
-
-    const fraction = new Fraction(angle.replace(/(\d+)pi/g, '$1').replace(/pi/g, '1'))
-    return fraction.s * fraction.n
-  }
-
-  private angleDenominator(angle: string): number {
-    ;(Fraction as any).REDUCE = false
-
-    const fraction = new Fraction(
-      angle
-        .replace(/π/g, 'pi')
-        .replace(/(\d+)pi/g, '$1')
-        .replace(/pi/g, '1')
-    )
-    return fraction.d
   }
 }
