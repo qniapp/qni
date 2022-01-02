@@ -8,7 +8,7 @@ import {
   isValidAngle,
   radian,
   reduceAngle
-} from '../dist/angle-parser'
+} from '../src/angle-parser'
 
 QUnit.module('angle-parser', () => {
   QUnit.module('radian', () => {
