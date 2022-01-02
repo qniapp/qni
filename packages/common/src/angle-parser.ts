@@ -64,9 +64,11 @@ export function reduceAngle(angle: string): string {
     const coefficient = piCoefficient(angle)
     const reduced = new Fraction(coefficient).toFraction()
     const split = reduced.split('/')
-    let numerator: string
 
-    if (split[0] === '1') {
+    let numerator: string
+    if (split[0] === '0') {
+      numerator = '0'
+    } else if (split[0] === '1') {
       numerator = `π`
     } else if (split[0] === '-1') {
       numerator = `-π`

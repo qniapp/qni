@@ -21,7 +21,12 @@ const palette = {
 
 module.exports = {
   mode: 'jit',
-  purge: ['./app/views/**/*.html.erb', './app/helpers/**/*.rb', './app/javascript/**/*.js'],
+  purge: [
+    './app/components/**/*.html.erb',
+    './app/views/**/*.html.erb',
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js'
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {

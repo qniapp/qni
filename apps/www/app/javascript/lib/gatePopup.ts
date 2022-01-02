@@ -1,4 +1,4 @@
-import noUiSlider, {PipsMode, API as noUiSliderApi, target as noUiSliderTarget} from 'nouislider'
+import noUiSlider, {PipsMode, target as noUiSliderTarget} from 'nouislider'
 import {angleDenominator, angleNumerator, piCoefficient, radian, reduceAngle} from '@qni/common'
 import tippy, {Instance, Props, roundArrow} from 'tippy.js'
 import {DisplaySize} from 'lib'
@@ -230,7 +230,10 @@ export class GatePopup {
           }
 
           this.currentAngleDenominator = angleDenominator(inputValue)
-          this.angleSliderEl.noUiSlider?.set(radian(newAngle))
+          const slider = this.angleSliderEl.noUiSlider
+          Util.notNull(slider)
+          console.log(`slider set ${radian(newAngle)}`)
+          slider.set(radian(newAngle))
 
           if (isPhaseGateElement(operation)) {
             operation.phi = reduceAngle(newAngle)
@@ -238,30 +241,6 @@ export class GatePopup {
             operation.theta = reduceAngle(newAngle)
           }
         }
-
-        // if (isThetable(operation) || isPhaseGateElement(operation)) {
-        //   Util.notNull(this.currentAngle)
-        //   Util.notNull(this.currentAngleDenominator)
-
-        //   let newAngle = inputValue
-
-        //   if (
-        //     this.angleNumerator(this.currentAngle) ===
-        //       this.angleNumerator(inputValue) &&
-        //     this.currentAngleDenominator !== this.angleDenominator(inputValue)
-        //   ) {
-        //     const m =
-        //       this.angleDenominator(inputValue) / this.currentAngleDenominator
-        //     newAngle = `${Math.round(
-        //       m * this.angleNumerator(this.currentAngle),
-        //     )}pi/${this.angleDenominator(inputValue)}`
-        //   }
-
-        //   this.currentAngleDenominator = this.angleDenominator(inputValue)
-        //   this.angleSliderEl.noUiSlider?.set(this.radian(newAngle))
-        //   operation.angle = this.beautifyFraction(newAngle, false)
-        // }
-
         this.runCircuit()
       } catch (e) {
         Util.notNull(this.popup)
@@ -305,12 +284,6 @@ export class GatePopup {
     return this.popup.reference as HTMLElement
   }
 
-  private get editorElement(): Element {
-    const el = this.popupReferenceEl.closest('.editor')
-    Util.notNull(el)
-    return el
-  }
-
   private get angleSliderEl(): noUiSliderTarget {
     const el = this.popup?.popper.getElementsByClassName('angle-slider').item(0) as HTMLElement
     Util.notNull(el)
@@ -319,25 +292,24 @@ export class GatePopup {
   }
 
   private createAngleSlider(operation: PhaseGateElement | RxGateElement | RyGateElement | RzGateElement): void {
-    const angleSliderEl = this.angleSliderEl
-    const filterPips = (value: number) => {
-      if (value === 0) return 1
-      return value % Math.PI ? -1 : 1
-    }
     let angle: string
-
     if (isPhaseGateElement(operation)) {
       angle = operation.phi
     } else {
       angle = operation.theta
     }
 
+    const angleSliderEl = this.angleSliderEl
+    const filterPips = (value: number) => {
+      if (value === 0) return 1
+      return value % Math.PI ? -1 : 1
+    }
     noUiSlider.create(angleSliderEl, {
+      start: radian(angle),
       range: {
         min: -2 * Math.PI,
         max: 2 * Math.PI
       },
-      start: radian(angle),
       pips: {
         mode: PipsMode.Positions,
         values: [0, 25, 50, 75, 100],
@@ -356,9 +328,10 @@ export class GatePopup {
     })
     angleSliderEl.classList.remove('hidden')
 
-    const slider = angleSliderEl.noUiSlider as noUiSliderApi
+    const slider = angleSliderEl.noUiSlider
+    Util.notNull(slider)
     slider.on('update', values => {
-      const snappedAngle = this.snappedAngle(values[0] as number)
+      const snappedAngle = this.snappedAngle(parseFloat(values[0] as string))
       if (this.currentAngle !== snappedAngle) {
         this.currentAngle = snappedAngle
         this.updateInstructionAngle(operation, snappedAngle)
