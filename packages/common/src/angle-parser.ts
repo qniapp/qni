@@ -55,7 +55,7 @@ export function isValidAngle(angle: string): boolean {
   }
 }
 
-function piCoefficient(angle: string): string {
+export function piCoefficient(angle: string): string {
   return angle.replace(/(\d+)π/g, '$1').replace(/π/g, '1')
 }
 
