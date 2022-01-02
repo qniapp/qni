@@ -1,4 +1,4 @@
-import {equate} from 'lib/equate'
+import {equate} from '@qni/common'
 import {isApproximatelyEqualToHelper} from './util'
 
 declare global {
