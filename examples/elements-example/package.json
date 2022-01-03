@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn css && rollup -c",
-    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css"
+    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css",
+    "start": "http-server"
   },
   "dependencies": {
     "@qni/elements": "^0.0.7",
