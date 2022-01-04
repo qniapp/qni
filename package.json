@@ -19,7 +19,9 @@
   "scripts": {
     "build": "lerna run build --stream",
     "build:www": "yarn build:packages && cd apps/www && yarn build",
+    "build:common": "lerna run build:common",
     "build:packages": "lerna run build:packages --stream",
+    "build:apps": "lerna run build:apps",
     "start": "yarn build:packages && cd apps/www && ./bin/dev",
     "start:elements-example": "cd examples/elements-example && http-server",
     "test": "lerna run test --stream",
