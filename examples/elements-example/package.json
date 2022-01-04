@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "start": "http-server"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.7",
+    "@qni/elements": "^0.0.8",
     "http-server": "^14.0.0"
   },
   "devDependencies": {
