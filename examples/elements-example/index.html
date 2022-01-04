@@ -135,6 +135,117 @@
                   ></circle-notation>
                 </div>
               </template>
+
+              <template>
+                <header>
+                  <h1>NOT Gate (Pauli X Gate)</h1>
+                  <p>Swaps the qubit pair of <code>|0⟩</code> and <code>|1⟩</code>.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <x-gate data-size="sm"></x-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <x-gate data-size="sm"></x-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation
+                    data-magnitudes="0.9,0.4"
+                    data-phases="340,70"
+                    data-show-kets
+                  ></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <x-gate data-size="sm"></x-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0.4,0.9"
+                    data-phases="70,340"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+              </template>
             </div>
 
             <quantum-circuit
