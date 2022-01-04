@@ -18,7 +18,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     render(
       html`<style>
           ::slotted(*) {
-            position: absolute;
+            position: absolute !important;
           }
         </style>
 

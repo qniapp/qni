@@ -36,6 +36,7 @@
 @layer components {
   .operation {
     @apply inline-block;
+    @apply relative;
     @apply h-8 w-8;
   }
 
