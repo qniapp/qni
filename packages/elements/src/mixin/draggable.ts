@@ -56,6 +56,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         this.removeAttribute('data-draggable')
         this.deinitDraggable()
       }
+      this.removeAttribute('data-grabbed')
     }
 
     get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement {
