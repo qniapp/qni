@@ -439,7 +439,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get controlGateDropzones(): CircuitDropzoneElement[] {
-    return this.dropzones.filter(each => isControlGateElement(each.operation))
+    return this.dropzones.filter(each => each.occupied && isControlGateElement(each.operation))
   }
 
   private numControlGateDropzones(
