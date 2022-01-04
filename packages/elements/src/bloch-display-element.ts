@@ -1,11 +1,11 @@
-import {ActivateableMixin, DraggableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, MenuableMixin} from './mixin/'
 import {SerializedBlochDisplayType, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
 
 @controller
-export class BlochDisplayElement extends MenuableMixin(DraggableMixin(ActivateableMixin(HTMLElement))) {
+export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMixin(ActivateableMixin(HTMLElement)))) {
   @target body!: HTMLElement
   @target vectorLine!: HTMLElement
   @target vectorEnd!: HTMLElement

@@ -1,4 +1,11 @@
-import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {
+  ActivateableMixin,
+  DisableableMixin,
+  DraggableMixin,
+  HelpableMixin,
+  IconableMixin,
+  MenuableMixin
+} from './mixin/'
 import {html, render} from '@github/jtml'
 import {SerializedControlGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
@@ -6,7 +13,7 @@ import {iconControlGate} from './icon'
 
 @controller
 export class ControlGateElement extends MenuableMixin(
-  DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
+  HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
 ) {
   get operationType(): typeof SerializedControlGateType {
     return SerializedControlGateType

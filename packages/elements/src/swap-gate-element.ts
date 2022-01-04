@@ -1,4 +1,11 @@
-import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {
+  ActivateableMixin,
+  DisableableMixin,
+  DraggableMixin,
+  HelpableMixin,
+  IconableMixin,
+  MenuableMixin
+} from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedSwapGateType} from '@qni/common'
@@ -7,7 +14,7 @@ import {iconSwapGate} from './icon'
 
 @controller
 export class SwapGateElement extends MenuableMixin(
-  ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
+  HelpableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
   get operationType(): typeof SerializedSwapGateType {
     return SerializedSwapGateType

@@ -1,9 +1,9 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
-@import "tippy.js/dist/border.css";
-@import "tippy.js/dist/svg-arrow.css";
-@import "tippy.js/dist/tippy.css";
+@import 'tippy.js/dist/border.css';
+@import 'tippy.js/dist/svg-arrow.css';
+@import 'tippy.js/dist/tippy.css';
 @import './tippy';
 
 @import './angle_slider';
@@ -36,7 +36,12 @@
 @layer components {
   .operation {
     @apply inline-block;
+    @apply relative;
     @apply h-8 w-8;
+  }
+
+  .operation[data-size='sm'] {
+    @apply h-6 w-6;
   }
 }
 
@@ -61,7 +66,7 @@
     @apply border-2 border-yellow-500 border-opacity-0;
     @apply rounded;
 
-    content: "";
+    content: '';
   }
 
   .draggable[data-grabbed] {
@@ -78,7 +83,7 @@
     @apply cursor-grab;
   }
 
-  palette-dropzone .draggable:not([data-grabbed]):hover::after  {
+  palette-dropzone .draggable:not([data-grabbed]):hover::after {
     @apply border-opacity-100;
   }
 
@@ -86,7 +91,7 @@
     @apply border-opacity-100;
   }
 
-  quantum-circuit([data-editing]) .draggable:not([data-operation-x="0"]):not([data-operation-y="0"]):hover::after {
+  quantum-circuit([data-editing]) .draggable:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
     @apply border-opacity-100;
   }
 
@@ -95,7 +100,7 @@
     @apply w-6 h-6;
     @apply z-10;
 
-    content: "";
+    content: '';
     background-image: url('data:image/svg+xml;utf8,<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
   }
 }
@@ -108,18 +113,18 @@
     @apply absolute;
   }
 
-  circuit-dropzone .ifable[data-if]:not([data-if=""])::before {
+  circuit-dropzone .ifable[data-if]:not([data-if=''])::before {
     @apply flex justify-center;
     @apply whitespace-nowrap;
 
-    content: "if\2009" attr(data-if);
+    content: 'if\2009'attr(data-if);
   }
 
-  circuit-dropzone .ifable[data-angle][data-if]:not([data-angle=""]):not([data-if=""])::before {
+  circuit-dropzone .ifable[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
     @apply flex justify-center;
     @apply whitespace-nowrap;
 
-    content: attr(data-angle) "\2009if\2009" attr(data-if);
+    content: attr(data-angle) '\2009if\2009'attr(data-if);
   }
 
   /* top label */
@@ -133,9 +138,8 @@
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-                 1px 0 0 #fff;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+      -1px 0 0 #fff, 1px 0 0 #fff;
   }
 
   /* bottom label */
@@ -153,19 +157,29 @@
     @apply absolute;
   }
 
-  circuit-dropzone .angleable[data-reduced-angle=""]:not([data-angle=""])::before {
+  .angleable[data-reduced-angle='']:not([data-angle=''])::before {
     @apply flex justify-center;
 
-    content: attr(data-angle) "";
+    content: attr(data-angle) '';
   }
 
-  circuit-dropzone .angleable:not([data-reduced-angle=""])::before {
+  .angleable:not([data-reduced-angle=''])::before {
     @apply flex justify-center;
 
-    content: attr(data-reduced-angle) "";
+    content: attr(data-reduced-angle) '';
+  }
+
+  palette-dropzone .angleable::before {
+    @apply hidden !important;
   }
 
   /* top label */
+  .angleable[data-angle][data-size='sm']::before {
+    @apply flex justify-center;
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
   circuit-dropzone:not([data-connect-top]) .angleable[data-angle]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
@@ -176,9 +190,8 @@
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-                 1px 0 0 #fff;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+      -1px 0 0 #fff, 1px 0 0 #fff;
   }
 
   /* bottom label */
@@ -196,10 +209,10 @@
     @apply absolute;
   }
 
-  circuit-dropzone .flaggable[data-flag]:not([data-flag=""])::before {
+  circuit-dropzone .flaggable[data-flag]:not([data-flag=''])::before {
     @apply flex justify-center;
 
-    content: attr(data-flag) "";
+    content: attr(data-flag) '';
   }
 
   /* top label */
@@ -213,9 +226,8 @@
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff,
-                 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff, -1px 0 0 #fff,
-                 1px 0 0 #fff;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+      -1px 0 0 #fff, 1px 0 0 #fff;
   }
 
   /* bottom label */

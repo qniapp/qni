@@ -1,4 +1,12 @@
-import {ActivateableMixin, DisableableMixin, DraggableMixin, IconableMixin, IfableMixin, MenuableMixin} from './mixin/'
+import {
+  ActivateableMixin,
+  DisableableMixin,
+  DraggableMixin,
+  HelpableMixin,
+  IconableMixin,
+  IfableMixin,
+  MenuableMixin
+} from './mixin/'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRnotGateType} from '@qni/common'
@@ -12,7 +20,9 @@ export type RnotGateElementProps = {
 
 @controller
 export class RnotGateElement extends MenuableMixin(
-  IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+  HelpableMixin(
+    IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+  )
 ) {
   get operationType(): typeof SerializedRnotGateType {
     return SerializedRnotGateType

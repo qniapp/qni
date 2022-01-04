@@ -3,6 +3,7 @@ import {
   AngleableMixin,
   DisableableMixin,
   DraggableMixin,
+  HelpableMixin,
   IconableMixin,
   IfableMixin,
   MenuableMixin
@@ -20,8 +21,10 @@ export type PhaseGateElementProps = {
 
 @controller
 export class PhaseGateElement extends MenuableMixin(
-  IfableMixin(
-    ControllableMixin(AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+  HelpableMixin(
+    IfableMixin(
+      ControllableMixin(AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+    )
   )
 ) {
   get operationType(): typeof SerializedPhaseGateType {

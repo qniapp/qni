@@ -1,7 +1,7 @@
-import {Operation, isOperation, isWriteGateElement} from './operation'
+import {Operation, isOperation} from './operation'
 import {html, render} from '@github/jtml'
 import {controller} from '@github/catalyst'
-import {isAngleable} from './mixin'
+import {isHelpable} from './mixin'
 
 @controller
 export class PaletteDropzoneElement extends HTMLElement {
@@ -18,7 +18,7 @@ export class PaletteDropzoneElement extends HTMLElement {
     render(
       html`<style>
           ::slotted(*) {
-            position: absolute;
+            position: absolute !important;
           }
         </style>
 
@@ -30,6 +30,7 @@ export class PaletteDropzoneElement extends HTMLElement {
   private initOperation(operation: Operation): void {
     operation.draggable = true
     operation.snapped = true
+    if (isHelpable(operation)) operation.initHelp()
   }
 
   private get operation(): Operation {
@@ -48,18 +49,12 @@ export class PaletteDropzoneElement extends HTMLElement {
   private newOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new TypeError(`${operation} isn't an operation.`)
-    const newOperation = document.createElement(operation.tagName)
+    const newOperation = operation.cloneNode(false)
     if (!isOperation(newOperation)) throw new TypeError(`${newOperation} isn't an operation.`)
 
+    if (isHelpable(operation)) operation.disableHelp()
     this.prepend(newOperation)
     this.initOperation(newOperation)
-
-    if (isAngleable(newOperation) && isAngleable(operation)) {
-      newOperation.angle = operation.angle
-    }
-    if (isWriteGateElement(newOperation) && isWriteGateElement(operation)) {
-      newOperation.value = operation.value
-    }
   }
 
   private deleteOperation(event: Event): void {

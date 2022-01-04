@@ -1,11 +1,13 @@
-import {ActivateableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, IconableMixin, MenuableMixin} from './mixin/'
 import {SerializedWrite0GateType, SerializedWrite1GateType} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {iconWriteGate} from './icon'
 
 @controller
-export class WriteGateElement extends MenuableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement)))) {
+export class WriteGateElement extends MenuableMixin(
+  HelpableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
+) {
   @attr value = ''
 
   get operationType(): typeof SerializedWrite0GateType | typeof SerializedWrite1GateType {
