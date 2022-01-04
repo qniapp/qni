@@ -361,6 +361,316 @@
                   ></circle-notation>
                 </div>
               </template>
+
+              <template id="z-gate-help">
+                <header>
+                  <h1>Pauli Z Gate</h1>
+                  <p>Negate phases when the qubit is ON.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <z-gate data-size="sm"></z-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <z-gate data-size="sm"></z-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0,1"
+                    data-phases="0,180"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation
+                    data-magnitudes="0.9,0.4"
+                    data-phases="340,70"
+                    data-show-kets
+                  ></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <z-gate data-size="sm"></z-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0.9,0.4"
+                    data-phases="340,250"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+              </template>
+
+              <template id="phase-gate-help">
+                <header>
+                  <h1>Phase Gate</h1>
+                  <p>Applies a phase of e<sup>iφ</sup> to the <code>|1⟩</code> state.</p>
+                  <p>The default φ = π/2.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0,1"
+                    data-phases="0,90"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation
+                    data-magnitudes="0.9,0.4"
+                    data-phases="340,70"
+                    data-show-kets
+                  ></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0.9,0.4"
+                    data-phases="340,160"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+              </template>
+
+              <template id="rnot-gate-help">
+                <header>
+                  <h1>Square Root of NOT Gate</h1>
+                  <p>Rotates around the X-axis by <code>π/2</code>.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <rnot-gate data-size="sm"></rnot-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0.7,0.7"
+                    data-phases="45,-45"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <rnot-gate data-size="sm"></rnot-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation
+                    data-magnitudes="0.7,0.7"
+                    data-phases="-45,45"
+                    data-show-kets
+                  ></circle-notation>
+                </div>
+              </template>
             </div>
 
             <quantum-circuit

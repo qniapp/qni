@@ -156,19 +156,29 @@
     @apply absolute;
   }
 
-  circuit-dropzone .angleable[data-reduced-angle='']:not([data-angle=''])::before {
+  .angleable[data-reduced-angle='']:not([data-angle=''])::before {
     @apply flex justify-center;
 
     content: attr(data-angle) '';
   }
 
-  circuit-dropzone .angleable:not([data-reduced-angle=''])::before {
+  .angleable:not([data-reduced-angle=''])::before {
     @apply flex justify-center;
 
     content: attr(data-reduced-angle) '';
   }
 
+  palette-dropzone .angleable::before {
+    @apply hidden !important;
+  }
+
   /* top label */
+  .angleable[data-angle][data-size='sm']::before {
+    @apply flex justify-center;
+    @apply top-0 left-0 right-0;
+    @apply -mt-3.5;
+  }
+
   circuit-dropzone:not([data-connect-top]) .angleable[data-angle]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
