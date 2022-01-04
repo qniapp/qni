@@ -16,6 +16,7 @@ export const isHelpable = (arg: unknown): arg is Helpable =>
 export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Helpable> & TBase {
   class HelpableMixinClass extends Base {
     @attr help = true
+    @attr helpId = ''
 
     initHelp(): void {
       this.addEventListener('mouseenter', this.showHelp)
@@ -54,7 +55,13 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     }
 
     get helpContent(): DocumentFragment | null {
-      const id = `${this.tagName.toLowerCase()}-help`
+      let id: string
+
+      if (this.helpId !== '') {
+        id = this.helpId
+      } else {
+        id = `${this.tagName.toLowerCase()}-help`
+      }
       const template = document.getElementById(id) as HTMLTemplateElement
       if (template === null) return null
 

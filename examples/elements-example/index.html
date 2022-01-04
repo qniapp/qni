@@ -52,10 +52,10 @@
                 <bloch-display></bloch-display>
               </palette-dropzone>
               <palette-dropzone>
-                <write-gate data-value="0"></write-gate>
+                <write-gate data-value="0" data-help-id="write0-gate-help"></write-gate>
               </palette-dropzone>
               <palette-dropzone>
-                <write-gate data-value="1"></write-gate>
+                <write-gate data-value="1" data-help-id="write1-gate-help"></write-gate>
               </palette-dropzone>
               <palette-dropzone>
                 <measurement-gate></measurement-gate>
@@ -925,6 +925,148 @@
                   <h1>Bloch Sphere Display</h1>
                   <p>Shows a wire's local state as a point on the Bloch sphere.</p>
                 </header>
+              </template>
+
+              <template id="write0-gate-help">
+                <header>
+                  <h1><code>|0⟩</code> Operation</h1>
+                  <p>(Re)sets a qubit to state <code>|0⟩</code>.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <write-gate data-value="0" data-size="sm"></write-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <write-gate data-value="0" data-size="sm"></write-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-show-kets></circle-notation>
+                </div>
+              </template>
+
+              <template id="write1-gate-help">
+                <header>
+                  <h1><code>|1⟩</code> Operation</h1>
+                  <p>(Re)sets a qubit to state <code>|1⟩</code>.</p>
+                </header>
+
+                <div class="mt-4 flex flex-row items-center space-x-1">
+                  <circle-notation data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <write-gate data-value="1" data-size="sm"></write-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                </div>
+
+                <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                  <div class="flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <write-gate data-value="1" data-size="sm"></write-gate>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="#E5E5E5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+                </div>
               </template>
             </div>
 
