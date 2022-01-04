@@ -1,4 +1,4 @@
-import {ActivateableMixin, DraggableMixin, IconableMixin, MenuableMixin} from './mixin/'
+import {ActivateableMixin, DraggableMixin, HelpableMixin, IconableMixin, MenuableMixin} from './mixin/'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
@@ -7,7 +7,7 @@ import {iconMeasurementGate} from './icon'
 
 @controller
 export class MeasurementGateElement extends MenuableMixin(
-  FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
+  HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
 ) {
   @attr value = ''
 
