@@ -93,16 +93,20 @@ export class QuantumCircuitElement extends HTMLElement {
     const step = this.activeStep
     if (step === null) return null
 
+    return this.fetchStepIndex(step)
+  }
+
+  get activeStep(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.active)
+
+    return step || null
+  }
+
+  fetchStepIndex(step: CircuitStepElement): number {
     const index = this.steps.indexOf(step)
     Util.need(index !== -1, `circuit-step index of ${step} not found.`)
 
     return index
-  }
-
-  private get activeStep(): CircuitStepElement | null {
-    const step = this.steps.find(each => each.active)
-
-    return step || null
   }
 
   private get steps(): CircuitStepElement[] {
@@ -192,6 +196,12 @@ export class QuantumCircuitElement extends HTMLElement {
       each.breakpoint = false
     }
     step.breakpoint = true
+  }
+
+  get breakpoint(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.breakpoint)
+
+    return step || null
   }
 
   private get dropzones(): CircuitDropzoneElement[] {
