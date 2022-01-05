@@ -30,6 +30,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.update()
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
+    this.addEventListener('circuit-step-mouseenter', this.runUnlessEditing)
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circle-notation-visibility-changed', this.updateVisibleQubitCircleKets)
   }
@@ -69,20 +70,25 @@ export class QuantumSimulatorElement extends HTMLElement {
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')
 
-    const qubitCount =
-      Math.max(
-        ...serializedSteps.map(serializedStep =>
-          Math.max(...serializedStep.map(operation => Math.max(...operation.targets)))
-        )
-      ) + 1
-    this.circleNotation.qubitCount = qubitCount
+    const maxTargetBit = Math.max(
+      ...serializedSteps.map(serializedStep =>
+        Math.max(...serializedStep.map(operation => Math.max(...operation.targets)))
+      )
+    )
+    const qubitCount = maxTargetBit >= 0 ? maxTargetBit + 1 : 1
 
+    this.circleNotation.qubitCount = qubitCount
     this.worker.postMessage({
       qubitCount,
       stepIndex,
       steps: serializedSteps,
       targets: this.visibleQubitCircleKets
     })
+  }
+
+  private runUnlessEditing(): void {
+    if (this.circuit.editing) return
+    this.run()
   }
 
   private get activeStepIndex(): number {
