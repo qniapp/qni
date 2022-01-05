@@ -90,7 +90,7 @@ export class CircleNotationElement extends HTMLElement {
 
   private dispatchVisibilityChangedEvent(): void {
     this.dispatchEvent(
-      new CustomEvent('circle-notation-visibility-changed', {
+      new CustomEvent('circle-notation-visibility-change', {
         detail: this.visibleQubitCircleKets,
         bubbles: true
       })

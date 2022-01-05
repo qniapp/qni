@@ -41,7 +41,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
     this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
     this.addEventListener('operation-inspector-update-if', this.updateIf)
-    this.addEventListener('operation-inspector-update-angle', this.updateAngle)
+    this.addEventListener('operation-inspector-angle-change', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
     this.addEventListener('circuit-step-click', this.setBreakpoint)
     this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
