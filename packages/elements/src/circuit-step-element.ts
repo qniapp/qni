@@ -150,6 +150,7 @@ export class CircuitStepElement extends HTMLElement {
 
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
     this.addEventListener('click', this.dispatchClickEvent)
+    this.addEventListener('operation-delete', this.dispatchUpdateEvent)
     this.addEventListener('circuit-dropzone-occupied', this.setOperationBit)
     this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
     this.addEventListener('circuit-dropzone-snap', this.setOperationBit)
@@ -160,7 +161,7 @@ export class CircuitStepElement extends HTMLElement {
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
-    this.dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
+    this.dispatchUpdateEvent()
   }
 
   updateConnections(connectionProps?: ConnectionProps): void {
@@ -583,6 +584,10 @@ export class CircuitStepElement extends HTMLElement {
 
         return true
       })
+  }
+
+  private dispatchUpdateEvent(): void {
+    this.dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
   }
 
   private dispatchMouseenterEvent(): void {
