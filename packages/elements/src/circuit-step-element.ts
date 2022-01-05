@@ -169,11 +169,14 @@ export class CircuitStepElement extends HTMLElement {
       each.connectBottom = false
     }
 
+    const controlDropzones = this.controlGateDropzones
+    const controllableDropzones = this.controllableDropzones(connectionProps)
+    for (const each of controllableDropzones) {
+      if (isControllable(each.operation)) each.operation.controls = []
+    }
+
     this.updateSwapConnections(connectionProps)
     this.updatePhasePhaseConnections(connectionProps)
-
-    const controllableDropzones = this.controllableDropzones(connectionProps)
-    const controlDropzones = this.controlGateDropzones
 
     if (controlDropzones.length === 0) return
     if (controlDropzones.length === 1 && controllableDropzones.length === 0) {

@@ -15,9 +15,6 @@ self.addEventListener(
     Util.notNull(steps)
     Util.notNull(targets)
 
-    // eslint-disable-next-line no-undef
-    console.log(steps)
-
     steps.forEach((operations, i) => {
       simulator.runStep(operations)
 
