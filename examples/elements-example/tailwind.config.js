@@ -1,4 +1,4 @@
 module.exports = {
   mode: 'jit',
-  content: ['./public/index.html'],
+  content: ['./views/**/*.ejs'],
 }
