@@ -1,3 +1,4 @@
+import {Interpreter, StateMachine, createMachine, interpret} from 'xstate'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
@@ -17,7 +18,6 @@ export declare class Draggable {
   set operationX(value: number)
   get operationY(): number
   set operationY(value: number)
-  get draggable(): boolean
   set draggable(value: boolean)
   get grabbed(): boolean
   set grabbed(value: boolean)
@@ -33,6 +33,22 @@ export declare class Draggable {
   delete(): void
 }
 
+type Context = Record<string, never>
+interface Schema {
+  states: {
+    noninteractable: Record<string, never>
+    draggable: Record<string, never>
+  }
+}
+type Transitions =
+  | {type: 'SET INTERACT'}
+  | {type: 'UNSET INTERACT'}
+  | {type: 'GRAB'; x: number; y: number}
+  | {type: 'UNGRAB'}
+  | {type: 'DRAG START'}
+  | {type: 'DRAG END'}
+  | {type: 'DRAG MOVE'; dx: number; dy: number}
+
 export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Draggable> & TBase {
   class DraggableMixinClass extends Base {
     @attr operationX = 0
@@ -42,19 +58,17 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr snapped = false
     @attr bit = -1
 
-    private snappedDropzone!: CircuitDropzoneElement | null
-
-    get draggable(): boolean {
-      return this.hasAttribute('data-draggable')
-    }
+    private draggableMachine!: StateMachine<Context, Schema, Transitions> | undefined
+    private draggableService!: Interpreter<Context, Schema, Transitions>
+    private snappedDropzone!: CircuitDropzoneElement | null | undefined
 
     set draggable(value: boolean) {
+      this.initStateMachine()
+
       if (value) {
-        this.setAttribute('data-draggable', '')
-        this.initDraggable()
+        this.draggableService.send({type: 'SET INTERACT'})
       } else {
-        this.removeAttribute('data-draggable')
-        this.deinitDraggable()
+        this.draggableService.send({type: 'UNSET INTERACT'})
       }
       this.removeAttribute('data-grabbed')
     }
@@ -70,25 +84,138 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return el as PaletteDropzoneElement | CircuitDropzoneElement
     }
 
-    private initDraggable(): void {
-      if (interact.isSet(this)) return
+    private initStateMachine(): void {
+      if (this.draggableMachine !== undefined) return
 
-      const dropzone = this.dropzone
-      if (isCircuitDropzoneElement(dropzone)) {
-        this.snappedDropzone = dropzone
-      } else {
-        this.snappedDropzone = null
-      }
+      this.draggableMachine = createMachine<Context, Transitions>(
+        {
+          id: 'draggable',
+          initial: 'noninteractable',
+          states: {
+            noninteractable: {
+              on: {
+                'SET INTERACT': {target: 'interactable'}
+              }
+            },
+            interactable: {
+              type: 'compound',
+              initial: 'ungrabbed',
+              entry: 'setInteract',
+              exit: 'unsetInteract',
+              on: {
+                'UNSET INTERACT': {target: 'noninteractable'}
+              },
+              states: {
+                ungrabbed: {
+                  on: {
+                    GRAB: {target: 'grabbed'}
+                  }
+                },
+                grabbed: {
+                  type: 'compound',
+                  initial: 'nondragging',
+                  entry: 'grab',
+                  exit: 'ungrab',
+                  on: {
+                    UNGRAB: {target: 'ungrabbed'}
+                  },
+                  states: {
+                    nondragging: {
+                      on: {
+                        'DRAG START': {target: 'dragging'}
+                      }
+                    },
+                    dragging: {
+                      type: 'compound',
+                      initial: 'moving',
+                      entry: 'startDragging',
+                      exit: 'endDragging',
+                      on: {
+                        'DRAG END': {target: 'nondragging'}
+                      },
+                      states: {
+                        moving: {
+                          entry: 'dragMove',
+                          on: {
+                            'DRAG MOVE': {target: 'moving'}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          actions: {
+            setInteract: () => {
+              const interactable = interact(this)
+              interactable.styleCursor(false)
+              interactable.on('down', this.grab.bind(this))
+              interactable.on('up', this.unGrab.bind(this))
+              interactable.draggable({
+                onstart: this.startDragging.bind(this),
+                onmove: this.dragMove.bind(this),
+                onend: this.endDragging.bind(this)
+              })
 
-      const interactable = interact(this)
-      interactable.styleCursor(false)
-      interactable.on('down', this.grab.bind(this))
-      interactable.on('up', this.unGrab.bind(this))
-      interactable.draggable({
-        onstart: this.startDragging.bind(this),
-        onmove: this.dragMove.bind(this),
-        onend: this.endDragging.bind(this)
-      })
+              const dropzone = this.dropzone
+              if (isCircuitDropzoneElement(dropzone)) {
+                this.snappedDropzone = dropzone
+              } else {
+                this.snappedDropzone = null
+              }
+
+              this.setAttribute('data-draggable', '')
+            },
+            unsetInteract: () => {
+              interact(this).unset()
+              this.removeAttribute('data-draggable')
+            },
+            grab: (_context, event) => {
+              if (event.type !== 'GRAB') return
+
+              this.grabbed = true
+              this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
+
+              if (isPaletteDropzoneElement(this.dropzone)) {
+                this.snapped = false
+                this.moveByOffset(event.x, event.y)
+              }
+            },
+            ungrab: () => {
+              this.grabbed = false
+              this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
+              if (!this.snapped && !this.dragging) this.delete()
+            },
+            startDragging: () => {
+              this.dragging = true
+            },
+            endDragging: () => {
+              this.grabbed = false
+              this.dragging = false
+
+              this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
+              if (this.snapped) {
+                this.moveTo(0, 0)
+                this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
+              } else {
+                this.delete()
+              }
+            },
+            dragMove: (_context, event) => {
+              if (event.type !== 'DRAG MOVE') return
+
+              this.move(event.dx, event.dy)
+            }
+          }
+        }
+      )
+
+      this.draggableService = interpret(this.draggableMachine)
+      this.draggableService.start()
     }
 
     private deinitDraggable(): void {
@@ -100,11 +227,11 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.dispatchEvent(new Event('operation-delete', {bubbles: true}))
     }
 
-    set snapTargets(value: Array<{x: number; y: number}>) {
+    set snapTargets(values: Array<{x: number; y: number}>) {
       interact(this).draggable({
         modifiers: [
           interact.modifiers.snap({
-            targets: value,
+            targets: values,
             range: this.snapRange,
             relativePoints: [{x: 0.5, y: 0.5}]
           })
@@ -143,40 +270,23 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     private grab(event: MouseEvent): void {
-      this.grabbed = true
-      this.dispatchEvent(new Event('operation-grab', {bubbles: true}))
-
-      if (isPaletteDropzoneElement(this.dropzone)) {
-        this.snapped = false
-        this.moveByOffset(event.offsetX, event.offsetY)
-      }
-    }
-
-    private startDragging(): void {
-      this.dragging = true
-    }
-
-    private dragMove(event: InteractEvent): void {
-      this.move(event.dx, event.dy)
+      this.draggableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
     }
 
     private unGrab(): void {
-      this.grabbed = false
-      this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
-      if (!this.snapped && !this.dragging) this.delete()
+      this.draggableService.send({type: 'UNGRAB'})
+    }
+
+    private startDragging(): void {
+      this.draggableService.send({type: 'DRAG START'})
     }
 
     private endDragging(): void {
-      this.grabbed = false
-      this.dragging = false
+      this.draggableService.send({type: 'DRAG END'})
+    }
 
-      this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
-      if (this.snapped) {
-        this.moveTo(0, 0)
-        this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
-      } else {
-        this.delete()
-      }
+    private dragMove(event: InteractEvent): void {
+      this.draggableService.send({type: 'DRAG MOVE', dx: event.dx, dy: event.dy})
     }
 
     private move(dx: number, dy: number): void {

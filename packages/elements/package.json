@@ -50,7 +50,8 @@
     "@interactjs/modifiers": "^1.10.11",
     "@qni/common": "^0.0.9",
     "interactjs": "^1.10.11",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "xstate": "^4.27.0"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.4",
