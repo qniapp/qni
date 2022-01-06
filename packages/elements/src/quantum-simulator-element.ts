@@ -35,6 +35,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-update', this.run)
     this.addEventListener('circle-notation-visibility-change', this.updateVisibleQubitCircleKets)
+
+    this.circuit.setBreakpoint(this.circuit.stepAt(0))
   }
 
   update(): void {
