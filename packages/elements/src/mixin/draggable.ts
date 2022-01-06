@@ -63,14 +63,13 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     private snappedDropzone!: CircuitDropzoneElement | null | undefined
 
     set draggable(value: boolean) {
-      this.initStateMachine()
+      this.maybeInitStateMachine()
 
       if (value) {
         this.draggableService.send({type: 'SET INTERACT'})
       } else {
         this.draggableService.send({type: 'UNSET INTERACT'})
       }
-      this.removeAttribute('data-grabbed')
     }
 
     get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement {
@@ -84,7 +83,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return el as PaletteDropzoneElement | CircuitDropzoneElement
     }
 
-    private initStateMachine(): void {
+    private maybeInitStateMachine(): void {
       if (this.draggableMachine !== undefined) return
 
       this.draggableMachine = createMachine<Context, Transitions>(
