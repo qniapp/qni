@@ -3,12 +3,6 @@
 require 'application_system_test_case'
 
 class MeasurementGateTest < ApplicationSystemTestCase
-  test 'measurement gate on palette does not display its value' do
-    visit circuit_path
-
-    assert_no_value palette('Measure')
-  end
-
   test 'measurement gate hovering on dropzone displays its value' do
     visit circuit_path
 
@@ -23,15 +17,6 @@ class MeasurementGateTest < ApplicationSystemTestCase
     measurement_gate = put_operation('Measure', col: 0, row: 0)
 
     assert_value '0', measurement_gate
-  end
-
-  test 'measurement gate does not display its value when unsnapped' do
-    visit circuit_path(json: '{"cols":[["Measure"]]}')
-
-    measurement_gate = quantum_circuit('measurement-gate')
-    drag_and_hover measurement_gate, over: find('body')
-
-    assert_no_value measurement_gate
   end
 
   test 'input and output wire state changes' do
