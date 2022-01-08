@@ -30,19 +30,19 @@ export declare class Draggable {
   get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement
   get snapRange(): number
   set snapTargets(value: Array<{x: number; y: number}>)
-  delete(): void
 }
 
 type DraggableContext = Record<string, never>
-interface Schema {
+interface DraggableSchema {
   states: {
-    start: Record<string, never>
-    'on dropzone': Record<string, never>
-    'not on dropzone': Record<string, never>
+    idle: Record<string, never>
+    onDropzone: Record<string, never>
+    notOnDropzone: Record<string, never>
     interactable: Record<string, never>
-    'on circuit-dropzone': Record<string, never>
-    'on palette-dropzone': Record<string, never>
+    onPaletteDropzone: Record<string, never>
+    onCircuitDropzone: Record<string, never>
     grabbed: Record<string, never>
+    ungrabbed: Record<string, never>
     dragging: {
       states: {
         unknown: Record<string, never>
@@ -55,14 +55,14 @@ interface Schema {
   }
 }
 type DraggableEvent =
-  | {type: 'SET INTERACT'}
-  | {type: 'UNSET INTERACT'}
+  | {type: 'SET_INTERACT'}
+  | {type: 'UNSET_INTERACT'}
   | {type: 'DELETE'}
   | {type: 'GRAB'; x: number; y: number}
   | {type: 'UNGRAB'}
-  | {type: 'DRAG START'}
-  | {type: 'DRAG END'}
-  | {type: 'DRAG MOVE'; dx: number; dy: number}
+  | {type: 'START_DRAGGING'}
+  | {type: 'END_DRAGGING'}
+  | {type: 'MOVE'; dx: number; dy: number}
   | {type: 'SNAP'; x: number; y: number}
   | {type: 'UNSNAP'}
 
@@ -75,17 +75,17 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr snapped = false
     @attr bit = -1
 
-    private draggableMachine!: StateMachine<DraggableContext, Schema, DraggableEvent> | undefined
-    private draggableService!: Interpreter<DraggableContext, Schema, DraggableEvent>
+    private draggableMachine!: StateMachine<DraggableContext, DraggableSchema, DraggableEvent> | undefined
+    private draggableService!: Interpreter<DraggableContext, DraggableSchema, DraggableEvent>
     private snappedDropzone!: CircuitDropzoneElement | null | undefined
 
     set draggable(value: boolean) {
       this.maybeInitStateMachine()
 
       if (value) {
-        this.draggableService.send({type: 'SET INTERACT'})
+        this.draggableService.send({type: 'SET_INTERACT'})
       } else {
-        this.draggableService.send({type: 'UNSET INTERACT'})
+        this.draggableService.send({type: 'UNSET_INTERACT'})
       }
     }
 
@@ -105,80 +105,80 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.draggableMachine = createMachine<DraggableContext, DraggableEvent>(
         {
           id: 'draggable',
-          initial: 'start',
+          initial: 'idle',
           states: {
-            start: {
+            idle: {
               always: [
-                {target: 'on dropzone', cond: 'onDropzone'},
-                {target: 'not on dropzone', cond: 'notOnDropzone'}
+                {target: 'onDropzone', cond: 'isOnDropzone'},
+                {target: 'notOnDropzone', cond: 'notOnDropzone'}
               ]
             },
-            'on dropzone': {
+            onDropzone: {
               on: {
-                'SET INTERACT': {
+                SET_INTERACT: {
                   target: 'interactable',
                   actions: ['setInteract']
-                },
-                DELETE: {target: 'deleted'}
+                }
               }
             },
-            'not on dropzone': {
-              on: {
-                DELETE: {target: 'deleted'}
-              }
-            },
+            notOnDropzone: {type: 'final'},
             interactable: {
               always: [
-                {target: 'on circuit-dropzone', cond: 'onCircuitDropzone'},
-                {target: 'on palette-dropzone', cond: 'onPaletteDropzone'}
+                {target: 'onCircuitDropzone', cond: 'isOnCircuitDropzone'},
+                {target: 'onPaletteDropzone', cond: 'isOnPaletteDropzone'}
               ]
             },
-            'on circuit-dropzone': {
+            onPaletteDropzone: {
               on: {
                 GRAB: {
                   target: 'grabbed',
                   actions: ['grab']
                 },
-                'UNSET INTERACT': {
-                  target: 'on dropzone',
+                UNSET_INTERACT: {
+                  target: 'onDropzone',
                   actions: ['unsetInteract']
                 }
               }
             },
-            'on palette-dropzone': {
+            onCircuitDropzone: {
               on: {
                 GRAB: {
                   target: 'grabbed',
                   actions: ['grab']
                 },
-                'UNSET INTERACT': {
-                  target: 'on dropzone',
+                UNSET_INTERACT: {
+                  target: 'onDropzone',
                   actions: ['unsetInteract']
                 }
               }
             },
             grabbed: {
               on: {
-                'DRAG START': {
+                START_DRAGGING: {
                   target: 'dragging',
                   actions: ['startDragging']
                 },
                 UNGRAB: {
-                  target: 'interactable',
+                  target: 'ungrabbed',
                   actions: ['ungrab']
-                },
-                DELETE: {target: 'deleted'}
+                }
               }
+            },
+            ungrabbed: {
+              always: [
+                {target: 'onCircuitDropzone', cond: 'isOnCircuitDropzone'},
+                {target: 'deleted', cond: 'isOnPaletteDropzone'}
+              ]
             },
             dragging: {
               type: 'compound',
               initial: 'unknown',
               on: {
-                'DRAG MOVE': {
+                MOVE: {
                   target: 'dragging',
                   actions: ['dragMove']
                 },
-                'DRAG END': {
+                END_DRAGGING: {
                   target: 'dropped',
                   actions: ['endDragging']
                 }
@@ -186,8 +186,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               states: {
                 unknown: {
                   always: [
-                    {target: 'snapped', cond: 'onCircuitDropzone'},
-                    {target: 'unsnapped', cond: 'onPaletteDropzone'}
+                    {target: 'snapped', cond: 'isOnCircuitDropzone'},
+                    {target: 'unsnapped', cond: 'isOnPaletteDropzone'}
                   ]
                 },
                 snapped: {
@@ -217,7 +217,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             },
             dropped: {
               always: [
-                {target: 'on circuit-dropzone', cond: 'droppedOnCircuitDropzone'},
+                {target: 'onCircuitDropzone', cond: 'droppedOnCircuitDropzone'},
                 {target: 'deleted', cond: 'trashed'}
               ]
             },
@@ -229,16 +229,16 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         },
         {
           guards: {
-            onDropzone: () => {
+            isOnDropzone: () => {
               return this.dropzone !== null
             },
             notOnDropzone: () => {
               return this.dropzone === null
             },
-            onCircuitDropzone: () => {
+            isOnCircuitDropzone: () => {
               return isCircuitDropzoneElement(this.dropzone)
             },
-            onPaletteDropzone: () => {
+            isOnPaletteDropzone: () => {
               return isPaletteDropzoneElement(this.dropzone)
             },
             droppedOnCircuitDropzone: () => {
@@ -293,7 +293,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             ungrab: () => {
               this.grabbed = false
               this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
-              if (!this.snapped && !this.dragging) this.delete()
             },
             startDragging: () => {
               this.dragging = true
@@ -301,17 +300,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             endDragging: () => {
               this.grabbed = false
               this.dragging = false
-
               this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
+
               if (this.snapped) {
                 this.moveTo(0, 0)
                 this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
-              } else {
-                this.delete()
               }
             },
             dragMove: (_context, event) => {
-              if (event.type !== 'DRAG MOVE') return
+              if (event.type !== 'MOVE') return
 
               this.move(event.dx, event.dy)
             },
@@ -340,12 +337,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         }
       )
 
-      this.draggableService = interpret(this.draggableMachine) // .onTransition(state => console.log(state.value))
+      // eslint-disable-next-line no-console
+      this.draggableService = interpret(this.draggableMachine).onTransition(state => console.log(state.value))
       this.draggableService.start()
-    }
-
-    delete(): void {
-      this.draggableService.send({type: 'DELETE'})
     }
 
     set snapTargets(values: Array<{x: number; y: number}>) {
@@ -387,15 +381,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     private startDragging(): void {
-      this.draggableService.send({type: 'DRAG START'})
+      this.draggableService.send({type: 'START_DRAGGING'})
     }
 
     private endDragging(): void {
-      this.draggableService.send({type: 'DRAG END'})
+      this.draggableService.send({type: 'END_DRAGGING'})
     }
 
     private dragMove(event: InteractEvent): void {
-      this.draggableService.send({type: 'DRAG MOVE', dx: event.dx, dy: event.dy})
+      this.draggableService.send({type: 'MOVE', dx: event.dx, dy: event.dy})
     }
 
     private move(dx: number, dy: number): void {

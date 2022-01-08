@@ -1,6 +1,7 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
+import {Interpreter, StateMachine, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
@@ -24,6 +25,15 @@ export type SnapTarget = {
   stepIndex: number | null
   wireIndex: number
 }
+
+type QuantumCircuitContext = Record<string, never>
+interface QuantumCircuitSchema {
+  states: {
+    idle: Record<string, never>
+    editing: Record<string, never>
+  }
+}
+type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -78,6 +88,11 @@ export class QuantumCircuitElement extends HTMLElement {
   // CPHASE
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
+
+  private quantumCircuitMachine!:
+    | StateMachine<QuantumCircuitContext, QuantumCircuitSchema, QuantumCircuitEvent>
+    | undefined
+  private quantumCircuitService!: Interpreter<QuantumCircuitContext, QuantumCircuitSchema, QuantumCircuitEvent>
 
   private snapTargets!: {
     [i: number]: {
@@ -218,10 +233,30 @@ export class QuantumCircuitElement extends HTMLElement {
     return window.getComputedStyle(this).flexDirection === 'column'
   }
 
-  /**
-   * @category Custom Elements
-   */
   connectedCallback(): void {
+    this.quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
+      id: 'quantum-circuit',
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            EDIT: {target: 'editing'}
+          }
+        },
+        editing: {
+          on: {
+            EDIT_DONE: {target: 'idle'}
+          }
+        }
+      }
+    })
+
+    this.quantumCircuitService = interpret(this.quantumCircuitMachine).onTransition(state => {
+      // eslint-disable-next-line no-console
+      console.log(`quantum-circuit state: ${state.value}`)
+    })
+    this.quantumCircuitService.start()
+
     this.attachShadow({mode: 'open'})
     this.update()
     this.appendMinimumSteps()
@@ -235,6 +270,18 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
     this.addEventListener('circuit-step-unsnap', this.updateConnections)
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-editing') {
+      if (newValue !== null) {
+        this.quantumCircuitService.send({type: 'EDIT'})
+      } else {
+        this.quantumCircuitService.send({type: 'EDIT_DONE'})
+      }
+    }
   }
 
   private update(): void {
