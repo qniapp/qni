@@ -1,9 +1,9 @@
 import {Interpreter, createMachine, interpret} from 'xstate'
+import {Util, describe} from '@qni/common'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
 import {PaletteDropzoneElement} from '../palette-dropzone-element'
-import {Util} from '@qni/common'
 import {attr} from '@github/catalyst'
 import interact from 'interactjs'
 
@@ -53,6 +53,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     @attr dragging = false
     @attr snapped = false
     @attr bit = -1
+    @attr debugDraggable = false
 
     private draggableMachine = createMachine<DraggableContext, DraggableEvent>(
       {
@@ -318,8 +319,10 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
 
       this.draggableService = interpret(this.draggableMachine)
         .onTransition(state => {
-          // eslint-disable-next-line no-console
-          console.log(state.value)
+          if (this.debugDraggable) {
+            // eslint-disable-next-line no-console
+            console.log(`draggable: ${describe(state.value)}`)
+          }
         })
         .start()
     }

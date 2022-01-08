@@ -34,6 +34,7 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr editing = false
+  @attr debug = false
 
   // Controlled-H
   @attr chDisabled = false
@@ -244,8 +245,10 @@ export class QuantumCircuitElement extends HTMLElement {
   connectedCallback(): void {
     this.quantumCircuitService = interpret(this.quantumCircuitMachine)
       .onTransition(state => {
-        // eslint-disable-next-line no-console
-        console.log(`quantum-circuit: ${state.value}`)
+        if (this.debug) {
+          // eslint-disable-next-line no-console
+          console.log(`quantum-circuit: ${state.value}`)
+        }
       })
       .start()
 
