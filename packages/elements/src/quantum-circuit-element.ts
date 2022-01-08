@@ -1,7 +1,7 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
-import {Interpreter, StateMachine, createMachine, interpret} from 'xstate'
+import {Interpreter, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
@@ -27,12 +27,6 @@ export type SnapTarget = {
 }
 
 type QuantumCircuitContext = Record<string, never>
-interface QuantumCircuitSchema {
-  states: {
-    idle: Record<string, never>
-    editing: Record<string, never>
-  }
-}
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
 @controller
@@ -89,10 +83,24 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
 
-  private quantumCircuitMachine!:
-    | StateMachine<QuantumCircuitContext, QuantumCircuitSchema, QuantumCircuitEvent>
-    | undefined
-  private quantumCircuitService!: Interpreter<QuantumCircuitContext, QuantumCircuitSchema, QuantumCircuitEvent>
+  private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
+    id: 'quantum-circuit',
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          EDIT: {target: 'editing'}
+        }
+      },
+      editing: {
+        on: {
+          EDIT_DONE: {target: 'idle'}
+        }
+      }
+    }
+  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
 
   private snapTargets!: {
     [i: number]: {
@@ -234,28 +242,12 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
-      id: 'quantum-circuit',
-      initial: 'idle',
-      states: {
-        idle: {
-          on: {
-            EDIT: {target: 'editing'}
-          }
-        },
-        editing: {
-          on: {
-            EDIT_DONE: {target: 'idle'}
-          }
-        }
-      }
-    })
-
-    this.quantumCircuitService = interpret(this.quantumCircuitMachine).onTransition(state => {
-      // eslint-disable-next-line no-console
-      console.log(`quantum-circuit state: ${state.value}`)
-    })
-    this.quantumCircuitService.start()
+    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
+      .onTransition(state => {
+        // eslint-disable-next-line no-console
+        console.log(`quantum-circuit: ${state.value}`)
+      })
+      .start()
 
     this.attachShadow({mode: 'open'})
     this.update()
