@@ -41,8 +41,7 @@ type DraggableEvent =
   | {type: 'UNGRAB'}
   | {type: 'START_DRAGGING'}
   | {type: 'END_DRAGGING'}
-  | {type: 'MOVE'; dx: number; dy: number}
-  | {type: 'SNAP'; x: number; y: number}
+  | {type: 'SNAP'}
   | {type: 'UNSNAP'}
 
 export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Draggable> & TBase {
@@ -127,10 +126,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             type: 'compound',
             initial: 'unknown',
             on: {
-              MOVE: {
-                target: 'dragging',
-                actions: ['dragMove']
-              },
               END_DRAGGING: {
                 target: 'dropped',
                 actions: ['endDragging']
@@ -145,10 +140,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               },
               snapped: {
                 on: {
-                  SNAP: {
-                    target: 'snapped',
-                    actions: ['snap']
-                  },
                   UNSNAP: {
                     target: 'unsnapped',
                     actions: ['unsnap']
@@ -160,9 +151,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
                   SNAP: {
                     target: 'snapped',
                     actions: ['snap']
-                  },
-                  UNSNAP: {
-                    target: 'unsnapped'
                   }
                 }
               }
@@ -260,30 +248,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.dispatchEvent(new Event('operation-drop', {bubbles: true}))
             }
           },
-          dragMove: (_context, event) => {
-            if (event.type !== 'MOVE') return
-
-            this.move(event.dx, event.dy)
-          },
-          snap: (_context, event) => {
-            if (event.type !== 'SNAP') return
-
-            const snapTargetInfo = {x: event.x, y: event.y}
-            this.dispatchEvent(new CustomEvent('operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
-
-            this.moveTo(0, 0)
-
-            if (this.snappedDropzone) {
-              this.snappedDropzone.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
-            }
-
+          snap: () => {
+            this.snapped = true
             this.snappedDropzone = this.dropzone as CircuitDropzoneElement
             this.dispatchEvent(new Event('operation-snap', {bubbles: true}))
           },
           unsnap: () => {
             this.snapped = false
             if (this.snappedDropzone) {
-              this.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
+              this.snappedDropzone.dispatchEvent(new Event('operation-unsnap', {bubbles: true}))
             }
           }
         }
@@ -346,14 +319,24 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return this.offsetWidth
     }
 
-    private moveEventListener(e: InteractEvent) {
-      const snapModifier = e.modifiers![0]
+    private moveEventListener(event: InteractEvent) {
+      const snapModifier = event.modifiers![0]
 
       if (snapModifier.inRange) {
         const snapTargetInfo = snapModifier.target.source
-        this.draggableService.send({type: 'SNAP', x: snapTargetInfo.x, y: snapTargetInfo.y})
+        this.dispatchEvent(new CustomEvent('operation-in-snap-range', {detail: {snapTargetInfo}, bubbles: true}))
+
+        this.moveTo(0, 0)
+
+        if (this.snappedDropzone && this.snappedDropzone !== this.dropzone) {
+          this.draggableService.send({type: 'UNSNAP'})
+        }
+
+        this.draggableService.send({type: 'SNAP'})
       } else {
-        this.draggableService.send({type: 'UNSNAP'})
+        if (this.snapped) {
+          this.draggableService.send({type: 'UNSNAP'})
+        }
       }
     }
 
@@ -374,7 +357,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     private dragMove(event: InteractEvent): void {
-      this.draggableService.send({type: 'MOVE', dx: event.dx, dy: event.dy})
+      this.move(event.dx, event.dy)
     }
 
     private move(dx: number, dy: number): void {
