@@ -1,8 +1,9 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
-import {Interpreter, createMachine, interpret} from 'xstate'
+import {Interpreter, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
+import {QuantumCircuitContext, QuantumCircuitEvent, QuantumCircuitMachine} from './quantum-circuit-machine'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
@@ -25,9 +26,6 @@ export type SnapTarget = {
   stepIndex: number | null
   wireIndex: number
 }
-
-type QuantumCircuitContext = Record<string, never>
-type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
 @controller
 export class QuantumCircuitElement extends HTMLElement {
@@ -84,22 +82,6 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
 
-  private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
-    id: 'quantum-circuit',
-    initial: 'idle',
-    states: {
-      idle: {
-        on: {
-          EDIT: {target: 'editing'}
-        }
-      },
-      editing: {
-        on: {
-          EDIT_DONE: {target: 'idle'}
-        }
-      }
-    }
-  })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
 
@@ -243,7 +225,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
+    this.quantumCircuitService = interpret(QuantumCircuitMachine)
       .onTransition(state => {
         if (this.debug) {
           // eslint-disable-next-line no-console
