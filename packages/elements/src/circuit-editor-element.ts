@@ -179,9 +179,8 @@ export class CircuitEditorElement extends HTMLElement {
       const newDropzone = newStep.dropzones[snapTarget.wireIndex]
       Util.notNull(newDropzone)
 
-      // TODO: dropzone.occupied = true, dropzone.operationName = ... etc. を dropzone 側でやる
+      // TODO: dropzone.operationName = ... etc. を dropzone 側でやる
       newDropzone.append(operation)
-      newDropzone.occupied = true
       newDropzone.operationName = operation.tagName.toLocaleLowerCase()
 
       // TODO: addShadowStepAfter の後で自動的に呼ぶ
