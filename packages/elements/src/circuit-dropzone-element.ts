@@ -51,6 +51,10 @@ export class CircuitDropzoneElement extends HTMLElement {
             PUT_OPERATION: {
               target: 'occupied',
               actions: ['putOperation']
+            },
+            DELETE_OPERATION: {
+              target: 'empty',
+              actions: ['deleteOperation']
             }
           }
         },
