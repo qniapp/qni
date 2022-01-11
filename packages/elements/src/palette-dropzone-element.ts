@@ -9,7 +9,6 @@ type PaletteDropzoneEvent =
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'; operation: Operation}
 
-@controller
 export class PaletteDropzoneElement extends HTMLElement {
   @attr debug = false
 
@@ -121,3 +120,5 @@ export class PaletteDropzoneElement extends HTMLElement {
     this.paletteDropzoneService.send({type: 'DELETE_OPERATION', operation})
   }
 }
+
+controller(PaletteDropzoneElement)
