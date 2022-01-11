@@ -53,7 +53,7 @@ export class CircuitDropzoneElement extends HTMLElement {
             },
             DELETE_OPERATION: {
               target: 'empty',
-              actions: ['deleteOperation']
+              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
             }
           }
         },
@@ -70,7 +70,6 @@ export class CircuitDropzoneElement extends HTMLElement {
           }
         },
         occupied: {
-          entry: 'dispatchOccupiedEvent',
           on: {
             UNSNAP_OPERATION: {
               target: 'empty',
@@ -78,7 +77,7 @@ export class CircuitDropzoneElement extends HTMLElement {
             },
             DELETE_OPERATION: {
               target: 'empty',
-              actions: ['deleteOperation']
+              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
             }
           }
         }
@@ -117,8 +116,8 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.operationName = ''
           this.removeChild(event.operation as Node)
         },
-        dispatchOccupiedEvent: () => {
-          this.dispatchEvent(new Event('circuit-dropzone-occupied', {bubbles: true}))
+        dispatchDeleteOperationEvent: () => {
+          this.dispatchEvent(new Event('circuit-dropzone-operation-delete', {bubbles: true}))
         }
       }
     }

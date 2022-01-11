@@ -259,7 +259,6 @@ export class QuantumCircuitElement extends HTMLElement {
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
     this.addEventListener('circuit-step-update', this.updateConnections)
-    this.addEventListener('circuit-step-occupied', this.updateChangedWire)
     this.addEventListener('circuit-step-snap', this.updateConnections)
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
     this.addEventListener('circuit-step-unsnap', this.updateConnections)

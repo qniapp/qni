@@ -1,3 +1,4 @@
+import {Interpreter, createMachine, interpret} from 'xstate'
 import {
   Operation,
   isControlGateElement,
@@ -17,7 +18,8 @@ import {
   SerializedControlGateType,
   SerializedPhaseGateType,
   SerializedSwapGateType,
-  Util
+  Util,
+  describe
 } from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
@@ -120,43 +122,266 @@ const groupBy = <K, V>(
     }, new Map<K, V[]>())
   )
 
-@controller
+type CircuitStepContext = Record<string, never>
+type CircuitStepEvent =
+  | {type: 'ACTIVATE'}
+  | {type: 'DEACTIVATE'}
+  | {type: 'SET_BREAKPOINT'}
+  | {type: 'UNSET_BREAKPOINT'}
+  | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
+  | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
+  | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'UNSHADOW'}
+
 export class CircuitStepElement extends HTMLElement {
   @attr active = false
   @attr breakpoint = false
+  @attr shadow = false
+  @attr debug = false
+
+  private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
+    {
+      id: 'circuit-step',
+      initial: 'unknown',
+      states: {
+        unknown: {
+          always: [
+            {target: 'shadow', cond: 'isShadow'},
+            {target: 'visible', cond: 'isVisible'}
+          ]
+        },
+        shadow: {
+          type: 'compound',
+          initial: 'unknown',
+          on: {
+            SNAP_DROPZONE: {
+              target: 'shadow',
+              actions: ['setOperationBit', 'dispatchSnapEvent']
+            },
+            UNSHADOW: {
+              target: 'visible',
+              actions: ['unshadow']
+            }
+          },
+          states: {
+            unknown: {
+              always: [
+                {target: 'inactive', cond: 'isInactive'},
+                {target: 'active', cond: 'isActive'}
+              ]
+            },
+            inactive: {
+              on: {
+                ACTIVATE: {
+                  target: 'active'
+                }
+              }
+            },
+            active: {
+              on: {
+                DEACTIVATE: {
+                  target: 'inactive'
+                }
+              }
+            }
+          }
+        },
+        visible: {
+          type: 'parallel',
+          on: {
+            SNAP_DROPZONE: {
+              target: 'visible',
+              actions: ['setOperationBit', 'dispatchSnapEvent']
+            },
+            UNSNAP_DROPZONE: {
+              target: 'visible',
+              actions: ['dispatchUnsnapEvent']
+            },
+            DELETE_OPERATION: {
+              target: 'visible',
+              actions: ['dispatchDeleteOperationEvent']
+            }
+          },
+          states: {
+            activatable: {
+              type: 'compound',
+              initial: 'unknown',
+              states: {
+                unknown: {
+                  always: [
+                    {target: 'inactive', cond: 'isInactive'},
+                    {target: 'active', cond: 'isActive'}
+                  ]
+                },
+                inactive: {
+                  on: {
+                    ACTIVATE: {
+                      target: 'active'
+                    }
+                  }
+                },
+                active: {
+                  on: {
+                    DEACTIVATE: {
+                      target: 'inactive'
+                    }
+                  }
+                }
+              }
+            },
+            breakpointable: {
+              type: 'compound',
+              initial: 'unknown',
+              states: {
+                unknown: {
+                  always: [
+                    {target: 'breakpointOn', cond: 'isBreakpointOn'},
+                    {target: 'breakpointOff', cond: 'isBreakpointOff'}
+                  ]
+                },
+                breakpointOn: {
+                  on: {
+                    UNSET_BREAKPOINT: {
+                      target: 'breakpointOff'
+                    }
+                  }
+                },
+                breakpointOff: {
+                  on: {
+                    SET_BREAKPOINT: {
+                      target: 'breakpointOn'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      actions: {
+        setOperationBit: (_context, event) => {
+          if (event.type !== 'SNAP_DROPZONE') return
+
+          const dropzone = event.dropzone
+          const bit = this.bit(dropzone)
+          Util.notNull(dropzone.operation)
+
+          dropzone.operation.bit = bit
+        },
+        dispatchSnapEvent: (_context, event) => {
+          if (event.type !== 'SNAP_DROPZONE') return
+
+          this.dispatchEvent(
+            new CustomEvent('circuit-step-snap', {
+              detail: {dropzone: event.dropzone},
+              bubbles: true
+            })
+          )
+        },
+        dispatchUnsnapEvent: (_context, event) => {
+          if (event.type !== 'UNSNAP_DROPZONE') return
+
+          this.dispatchEvent(
+            new CustomEvent('circuit-step-unsnap', {
+              detail: {dropzone: event.dropzone},
+              bubbles: true
+            })
+          )
+        },
+        dispatchDeleteOperationEvent: (_context, event) => {
+          if (event.type !== 'DELETE_OPERATION') return
+
+          this.dispatchEvent(
+            new CustomEvent('circuit-step-delete-operation', {
+              detail: {dropzone: event.dropzone},
+              bubbles: true
+            })
+          )
+        },
+        unshadow: () => {
+          this.shadow = false
+        }
+      },
+      guards: {
+        isShadow: () => {
+          return this.shadow
+        },
+        isVisible: () => {
+          return !this.shadow
+        },
+        isActive: () => {
+          return this.active
+        },
+        isInactive: () => {
+          return !this.active
+        },
+        isBreakpointOn: () => {
+          return this.breakpoint
+        },
+        isBreakpointOff: () => {
+          return !this.breakpoint
+        }
+      }
+    }
+  )
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private circuitStepService!: Interpreter<CircuitStepContext, any, CircuitStepEvent>
 
   get wireCount(): number {
     return this.dropzones.length
   }
 
-  get shadow(): boolean {
-    return this.hasAttribute('data-shadow')
-  }
-
-  set shadow(value: boolean) {
-    if (value) {
-      this.setAttribute('data-shadow', '')
-    } else {
-      this.removeAttribute('data-shadow')
-    }
-    for (const each of this.dropzones) {
-      each.shadow = value
-    }
-  }
-
   connectedCallback(): void {
+    this.circuitStepService = interpret(this.circuitStepMachine)
+      .onTransition(state => {
+        if (this.debug) {
+          // eslint-disable-next-line no-console
+          console.log(`circuit-step: ${describe(state.value)}`)
+        }
+      })
+      .start()
+
     this.attachShadow({mode: 'open'})
     this.update()
 
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
     this.addEventListener('click', this.dispatchClickEvent)
-    this.addEventListener('operation-delete', this.dispatchUpdateEvent)
-    this.addEventListener('circuit-dropzone-occupied', this.setOperationBit)
-    this.addEventListener('circuit-dropzone-occupied', this.dispatchOccupiedEvent)
-    this.addEventListener('circuit-dropzone-snap', this.setOperationBit)
-    this.addEventListener('circuit-dropzone-snap', this.dispatchSnapEvent)
-    this.addEventListener('circuit-dropzone-unsnap', this.dispatchUnsnapEvent)
+    this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
+    this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
+    this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-active') {
+      if (newValue !== null) {
+        this.circuitStepService.send({type: 'ACTIVATE'})
+      } else {
+        this.circuitStepService.send({type: 'DEACTIVATE'})
+      }
+    }
+
+    if (name === 'data-breakpoint') {
+      if (newValue !== null) {
+        this.circuitStepService.send({type: 'SET_BREAKPOINT'})
+      } else {
+        this.circuitStepService.send({type: 'UNSET_BREAKPOINT'})
+      }
+    }
+
+    if (name === 'data-shadow') {
+      for (const each of this.dropzones) {
+        if (newValue !== null) {
+          each.shadow = true
+        } else {
+          each.shadow = false
+        }
+      }
+    }
   }
 
   update(): void {
@@ -590,6 +815,11 @@ export class CircuitStepElement extends HTMLElement {
     this.dispatchEvent(new Event('circuit-step-update', {bubbles: true}))
   }
 
+  private deleteOperation(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'DELETE_OPERATION', dropzone})
+  }
+
   private dispatchMouseenterEvent(): void {
     this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
   }
@@ -598,43 +828,18 @@ export class CircuitStepElement extends HTMLElement {
     this.dispatchEvent(new Event('circuit-step-click', {bubbles: true}))
   }
 
-  private setOperationBit(event: Event): void {
+  private snapDropzone(event: Event): void {
     const dropzone = event.target as CircuitDropzoneElement
-    const bit = this.bit(dropzone)
-    Util.notNull(dropzone.operation)
-
-    dropzone.operation.bit = bit
+    this.circuitStepService.send({type: 'SNAP_DROPZONE', dropzone})
   }
 
-  private dispatchOccupiedEvent(event: Event): void {
-    this.dispatchEvent(
-      new CustomEvent('circuit-step-occupied', {
-        detail: {dropzone: event.target},
-        bubbles: true
-      })
-    )
-  }
-
-  private dispatchSnapEvent(event: Event): void {
-    this.dispatchEvent(
-      new CustomEvent('circuit-step-snap', {
-        detail: {dropzone: event.target},
-        bubbles: true
-      })
-    )
-  }
-
-  private dispatchUnsnapEvent(event: Event): void {
-    this.dispatchEvent(
-      new CustomEvent('circuit-step-unsnap', {
-        detail: {dropzone: event.target},
-        bubbles: true
-      })
-    )
+  private unsnapDropzone(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'UNSNAP_DROPZONE', dropzone})
   }
 
   private unshadow(): void {
-    this.shadow = false
+    this.circuitStepService.send({type: 'UNSHADOW'})
   }
 
   private get operations(): Operation[] {
@@ -780,3 +985,5 @@ export class CircuitStepElement extends HTMLElement {
     return serializedStep
   }
 }
+
+controller(CircuitStepElement)
