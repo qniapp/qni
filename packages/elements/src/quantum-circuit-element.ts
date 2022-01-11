@@ -1,9 +1,8 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
-import {Interpreter, interpret} from 'xstate'
+import {Interpreter, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
-import {QuantumCircuitContext, QuantumCircuitEvent, QuantumCircuitMachine} from './quantum-circuit-machine'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
@@ -27,7 +26,9 @@ export type SnapTarget = {
   wireIndex: number
 }
 
-@controller
+type QuantumCircuitContext = Record<string, never>
+type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
+
 export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
@@ -82,6 +83,22 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
 
+  private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
+    id: 'quantum-circuit',
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          EDIT: {target: 'editing'}
+        }
+      },
+      editing: {
+        on: {
+          EDIT_DONE: {target: 'idle'}
+        }
+      }
+    }
+  })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
 
@@ -225,7 +242,7 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.quantumCircuitService = interpret(QuantumCircuitMachine)
+    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
       .onTransition(state => {
         if (this.debug) {
           // eslint-disable-next-line no-console
@@ -966,3 +983,5 @@ export class QuantumCircuitElement extends HTMLElement {
     return this.steps.map(each => each.serialize())
   }
 }
+
+controller(QuantumCircuitElement)
