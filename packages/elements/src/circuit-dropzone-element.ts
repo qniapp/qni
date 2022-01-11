@@ -23,7 +23,6 @@ type CircuitDropzoneEvent =
   | {type: 'PUT_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'; operation: Operation}
 
-@controller
 export class CircuitDropzoneElement extends HTMLElement {
   @attr operationName = ''
   @attr inputWireQuantum = false
@@ -256,3 +255,5 @@ export class CircuitDropzoneElement extends HTMLElement {
     return html([iconWires.data] as unknown as TemplateStringsArray)
   }
 }
+
+controller(CircuitDropzoneElement)
