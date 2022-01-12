@@ -1,10 +1,10 @@
+import {Angleable, Flaggable, Ifable, isAngleable, isIfable, isMenuable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {Util, describe} from '@qni/common'
 import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import {isAngleable, isIfable, isMenuable} from './mixin'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
@@ -14,6 +14,9 @@ type CircuitEditorContext = Record<string, never>
 type CircuitEditorEvent =
   | {type: 'ACTIVATE_OPERATION'; operation: Operation}
   | {type: 'SHOW_OPERATION_MENU'; operation: Operation}
+  | {type: 'SHOW_OPERATION_INSPECTOR_IF'; operation: Ifable}
+  | {type: 'SHOW_OPERATION_INSPECTOR_ANGLE'; operation: Angleable}
+  | {type: 'SHOW_OPERATION_INSPECTOR_FLAG'; operation: Flaggable}
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'UNGRAB_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
@@ -89,6 +92,18 @@ export class CircuitEditorElement extends HTMLElement {
                 MOUSE_LEAVE_CIRCUIT: {
                   target: 'idle',
                   actions: ['deactivateAllSteps']
+                },
+                SHOW_OPERATION_INSPECTOR_IF: {
+                  target: 'idle',
+                  actions: ['showOperationInspectorIf']
+                },
+                SHOW_OPERATION_INSPECTOR_ANGLE: {
+                  target: 'idle',
+                  actions: ['showOperationInspectorAngle']
+                },
+                SHOW_OPERATION_INSPECTOR_FLAG: {
+                  target: 'idle',
+                  actions: ['showOperationInspectorFlag']
                 }
               }
             },
@@ -234,6 +249,21 @@ export class CircuitEditorElement extends HTMLElement {
 
           event.operation.showMenu()
         },
+        showOperationInspectorIf: (_context, event) => {
+          if (event.type !== 'SHOW_OPERATION_INSPECTOR_IF') return
+
+          this.inspectorButton.showIfInspector(event.operation)
+        },
+        showOperationInspectorAngle: (_context, event) => {
+          if (event.type !== 'SHOW_OPERATION_INSPECTOR_ANGLE') return
+
+          this.inspectorButton.showAngleInspector(event.operation)
+        },
+        showOperationInspectorFlag: (_context, event) => {
+          if (event.type !== 'SHOW_OPERATION_INSPECTOR_FLAG') return
+
+          this.inspectorButton.showFlagInspector(event.operation)
+        },
         maybeUpdateOperationInspector: (_context, event) => {
           if (event.type !== 'ACTIVATE_OPERATION') return
 
@@ -261,9 +291,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.addEventListener('operation-menu-if', this.showOperationIfInspector)
-    this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
-    this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
     this.addEventListener('operation-inspector-update-if', this.updateIf)
     this.addEventListener('operation-inspector-angle-change', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
@@ -271,6 +298,9 @@ export class CircuitEditorElement extends HTMLElement {
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
+    this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
+    this.addEventListener('operation-menu-angle', this.showOperationInspectorAngle)
+    this.addEventListener('operation-menu-flag', this.showOperationInspectorFlag)
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('operation-ungrab', this.ungrabOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
@@ -286,28 +316,6 @@ export class CircuitEditorElement extends HTMLElement {
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
-  }
-
-  private showOperationIfInspector(event: Event): void {
-    const operation = event.target
-    if (!isIfable(operation)) throw new Error(`${operation} isn't an Ifable Operation.`)
-
-    const inspectorButton = document.querySelector('inspector-button') as InspectorButtonElement
-    inspectorButton.showIfInspector(operation)
-  }
-
-  private showOperationAngleInspector(event: Event): void {
-    const operation = event.target
-    if (!isAngleable(operation)) throw new Error(`${operation} isn't an Angleable Operation.`)
-
-    this.inspectorButton.showAngleInspector(operation)
-  }
-
-  private showOperationFlagInspector(event: Event): void {
-    const operation = event.target
-    if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
-
-    this.inspectorButton.showFlagInspector(operation)
   }
 
   private updateIf(event: Event): void {
@@ -365,6 +373,27 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
     this.circuitEditorService.send({type: 'SHOW_OPERATION_MENU', operation})
+  }
+
+  private showOperationInspectorIf(event: Event): void {
+    const operation = event.target
+    if (!isIfable(operation)) throw new Error(`${operation} isn't an Ifable Operation.`)
+
+    this.circuitEditorService.send({type: 'SHOW_OPERATION_INSPECTOR_IF', operation})
+  }
+
+  private showOperationInspectorAngle(event: Event): void {
+    const operation = event.target
+    if (!isAngleable(operation)) throw new Error(`${operation} isn't an Angleable Operation.`)
+
+    this.circuitEditorService.send({type: 'SHOW_OPERATION_INSPECTOR_ANGLE', operation})
+  }
+
+  private showOperationInspectorFlag(event: Event): void {
+    const operation = event.target
+    if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
+
+    this.circuitEditorService.send({type: 'SHOW_OPERATION_INSPECTOR_FLAG', operation})
   }
 
   private grabOperation(event: Event): void {
