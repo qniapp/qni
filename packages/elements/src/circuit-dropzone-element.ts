@@ -173,7 +173,7 @@ export class CircuitDropzoneElement extends HTMLElement {
 
     this.addEventListener('operation-snap', this.snapOperation)
     this.addEventListener('operation-unsnap', this.unsnapOperation)
-    this.addEventListener('operation-enddragging', this.dropOperation)
+    this.addEventListener('operation-end-dragging', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
   }
 

@@ -187,7 +187,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           endDragging: () => {
             this.grabbed = false
             this.dragging = false
-            this.dispatchEvent(new Event('operation-enddragging', {bubbles: true}))
+            this.dispatchEvent(new Event('operation-end-dragging', {bubbles: true}))
           },
           snap: () => {
             this.snapped = true

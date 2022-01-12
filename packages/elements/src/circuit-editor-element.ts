@@ -12,6 +12,8 @@ import {isFlaggable} from './mixin/flaggable'
 
 type CircuitEditorContext = Record<string, never>
 type CircuitEditorEvent =
+  | {type: 'ACTIVATE_OPERATION'; operation: Operation}
+  | {type: 'SHOW_OPERATION_MENU'; operation: Operation}
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'UNGRAB_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
@@ -29,59 +31,89 @@ export class CircuitEditorElement extends HTMLElement {
   private circuitEditorMachine = createMachine<CircuitEditorContext, CircuitEditorEvent>(
     {
       id: 'circuit-editor',
-      initial: 'idle',
+      initial: 'inspectable',
       states: {
-        idle: {
-          entry: 'enableDragging',
+        inspectable: {
+          type: 'compound',
+          initial: 'unknown',
           on: {
-            GRAB_OPERATION: {
-              target: 'editing',
-              actions: [
-                'startCircuitEdit',
-                'setOperationActive',
-                'addDocumentCursorGrabbingStyle',
-                'appendCircuitWire',
-                'setSnapTargets'
-              ]
+            DROP_OPERATION: {
+              target: 'inspectable',
+              actions: ['initOperationMenu']
+            },
+            SHOW_OPERATION_MENU: {
+              target: 'inspectable',
+              actions: ['showOperationMenu']
+            },
+            ACTIVATE_OPERATION: {
+              target: 'inspectable',
+              actions: ['maybeUpdateOperationInspector']
             },
             CLICK_STEP: {
-              target: 'idle',
+              target: 'inspectable',
               actions: ['setBreakpoint']
-            },
-            SNAP_STEP: {
-              target: 'idle',
-              actions: ['activateStep']
-            },
-            UNSNAP_STEP: {
-              target: 'idle',
-              actions: ['deactivateStep']
             }
-          }
-        },
-        editing: {
-          on: {
-            UNGRAB_OPERATION: {
-              target: 'idle',
-              actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
-            },
-            END_DRAGGING_OPERATION: {
-              target: 'idle',
-              actions: [
-                'maybeRemoveLastEmptyWires',
-                'removeDocumentCursorGrabbingStyle',
-                'endCircuitEdit',
-                'maybeDisableAllInspectorPanes'
+          },
+          states: {
+            unknown: {
+              always: [
+                {target: 'idle', cond: 'isIdle'},
+                {target: 'editing', cond: 'isEditing'}
               ]
             },
-            DROP_OPERATION: {
-              target: 'idle',
-              actions: ['initOperationMenu']
+            idle: {
+              entry: 'enableDragging',
+              on: {
+                GRAB_OPERATION: {
+                  target: 'editing',
+                  actions: [
+                    'startCircuitEdit',
+                    'setOperationActive',
+                    'addDocumentCursorGrabbingStyle',
+                    'appendCircuitWire',
+                    'setSnapTargets'
+                  ]
+                }
+              }
+            },
+            editing: {
+              on: {
+                SNAP_STEP: {
+                  target: 'editing',
+                  actions: ['activateStep']
+                },
+                UNSNAP_STEP: {
+                  target: 'editing',
+                  actions: ['deactivateStep']
+                },
+                UNGRAB_OPERATION: {
+                  target: 'idle',
+                  actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
+                },
+                END_DRAGGING_OPERATION: {
+                  target: 'idle',
+                  actions: [
+                    'maybeRemoveLastEmptyWires',
+                    'removeDocumentCursorGrabbingStyle',
+                    'endCircuitEdit',
+                    'maybeDisableAllInspectorPanes'
+                  ]
+                }
+              }
             }
           }
         }
       }
     },
     {
+      guards: {
+        isIdle: () => {
+          return !this.circuit.editing
+        },
+        isEditing: () => {
+          return this.circuit.editing
+        }
+      },
       actions: {
         enableDragging: () => {
           this.circuit.draggable = true
@@ -143,6 +175,20 @@ export class CircuitEditorElement extends HTMLElement {
 
           const operation = event.operation
           if (isMenuable(operation)) operation.initMenu()
+        },
+        showOperationMenu: (_context, event) => {
+          if (event.type !== 'SHOW_OPERATION_MENU') return
+          if (this.inspectorButton.isInspectorShown) return
+
+          event.operation.showMenu()
+        },
+        maybeUpdateOperationInspector: (_context, event) => {
+          if (event.type !== 'ACTIVATE_OPERATION') return
+
+          const operation = event.operation
+          if (this.inspectorButton.isInspectorShown) {
+            this.inspectorButton.showInspector(operation)
+          }
         }
       }
     }
@@ -164,8 +210,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.update()
 
     this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
-    this.addEventListener('operation-active', this.maybeUpdateOperationInspector)
-    this.addEventListener('operation-showmenu', this.showOperationMenu)
     this.addEventListener('operation-in-snap-range', this.snapOperationIntoDropzone)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
     this.addEventListener('operation-menu-if', this.showOperationIfInspector)
@@ -177,9 +221,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
 
+    this.addEventListener('operation-active', this.activateOperation)
+    this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('operation-ungrab', this.ungrabOperation)
-    this.addEventListener('operation-enddragging', this.endDraggingOperation)
+    this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('circuit-step-click', this.clickStep)
     this.addEventListener('circuit-step-snap', this.snapStep)
@@ -194,23 +240,6 @@ export class CircuitEditorElement extends HTMLElement {
     if (this.circuit.editing) return
 
     this.circuit.deactivateAllSteps()
-  }
-
-  private maybeUpdateOperationInspector(event: Event): void {
-    const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
-
-    if (this.inspectorButton.isInspectorShown) {
-      this.inspectorButton.showInspector(operation)
-    }
-  }
-
-  private showOperationMenu(event: Event): void {
-    const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
-    if (this.inspectorButton.isInspectorShown) return
-
-    operation.showMenu()
   }
 
   private showOperationIfInspector(event: Event): void {
@@ -318,6 +347,20 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
     this.circuit.activateStep(step)
+  }
+
+  private activateOperation(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'ACTIVATE_OPERATION', operation})
+  }
+
+  private showOperationMenu(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'SHOW_OPERATION_MENU', operation})
   }
 
   private grabOperation(event: Event): void {
