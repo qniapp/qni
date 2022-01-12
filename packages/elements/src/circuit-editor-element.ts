@@ -17,6 +17,9 @@ type CircuitEditorEvent =
   | {type: 'SHOW_OPERATION_INSPECTOR_IF'; operation: Ifable}
   | {type: 'SHOW_OPERATION_INSPECTOR_ANGLE'; operation: Angleable}
   | {type: 'SHOW_OPERATION_INSPECTOR_FLAG'; operation: Flaggable}
+  | {type: 'SET_OPERATION_IF'; operation: Ifable; if: string}
+  | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
+  | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
   | {type: 'UNGRAB_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
@@ -104,6 +107,18 @@ export class CircuitEditorElement extends HTMLElement {
                 SHOW_OPERATION_INSPECTOR_FLAG: {
                   target: 'idle',
                   actions: ['showOperationInspectorFlag']
+                },
+                SET_OPERATION_IF: {
+                  target: 'idle',
+                  actions: ['setOperationIf']
+                },
+                SET_OPERATION_ANGLE: {
+                  target: 'idle',
+                  actions: ['setOperationAngle']
+                },
+                SET_OPERATION_FLAG: {
+                  target: 'idle',
+                  actions: ['setOperationFlag']
                 }
               }
             },
@@ -264,6 +279,22 @@ export class CircuitEditorElement extends HTMLElement {
 
           this.inspectorButton.showFlagInspector(event.operation)
         },
+        setOperationIf: (_context, event) => {
+          if (event.type !== 'SET_OPERATION_IF') return
+
+          event.operation.if = event.if
+        },
+        setOperationAngle: (_context, event) => {
+          if (event.type !== 'SET_OPERATION_ANGLE') return
+
+          event.operation.angle = event.angle
+          event.operation.reducedAngle = event.reducedAngle
+        },
+        setOperationFlag: (_context, event) => {
+          if (event.type !== 'SET_OPERATION_FLAG') return
+
+          event.operation.flag = event.flag
+        },
         maybeUpdateOperationInspector: (_context, event) => {
           if (event.type !== 'ACTIVATE_OPERATION') return
 
@@ -291,16 +322,15 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.addEventListener('operation-inspector-update-if', this.updateIf)
-    this.addEventListener('operation-inspector-angle-change', this.updateAngle)
-    this.addEventListener('operation-inspector-update-flag', this.updateFlag)
-
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
     this.addEventListener('operation-menu-angle', this.showOperationInspectorAngle)
     this.addEventListener('operation-menu-flag', this.showOperationInspectorFlag)
+    this.addEventListener('operation-inspector-if-change', this.setOperationIf)
+    this.addEventListener('operation-inspector-angle-change', this.setOperationAngle)
+    this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('operation-ungrab', this.ungrabOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
@@ -316,32 +346,6 @@ export class CircuitEditorElement extends HTMLElement {
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
-  }
-
-  private updateIf(event: Event): void {
-    const inspector = event.target as OperationInspectorElement
-    const activeOperation = this.activeOperation
-    if (!isIfable(activeOperation)) throw new Error('[data-if] not found.')
-
-    activeOperation.if = inspector.if
-  }
-
-  private updateAngle(event: Event): void {
-    const inspector = event.target as OperationInspectorElement
-    const activeOperation = this.activeOperation
-    Util.notNull(activeOperation)
-    if (!isAngleable(activeOperation)) throw new Error(`${activeOperation.outerHTML}: [data-angle] not found.`)
-
-    activeOperation.angle = inspector.angle
-    activeOperation.reducedAngle = inspector.reduceAngleFraction ? inspector.reducedAngle : ''
-  }
-
-  private updateFlag(event: Event): void {
-    const inspector = event.target as OperationInspectorElement
-    const activeOperation = this.activeOperation
-    if (!isFlaggable(activeOperation)) throw new Error('[data-flag] not found.')
-
-    activeOperation.flag = inspector.flag
   }
 
   private get activeOperation(): Operation | null {
@@ -394,6 +398,36 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
 
     this.circuitEditorService.send({type: 'SHOW_OPERATION_INSPECTOR_FLAG', operation})
+  }
+
+  private setOperationIf(event: Event): void {
+    const inspector = event.target as OperationInspectorElement
+    const operation = this.activeOperation
+    if (!isIfable(operation)) throw new Error('[data-if] not found.')
+
+    this.circuitEditorService.send({type: 'SET_OPERATION_IF', operation, if: inspector.if})
+  }
+
+  private setOperationAngle(event: Event): void {
+    const inspector = event.target as OperationInspectorElement
+    const operation = this.activeOperation
+    Util.notNull(operation)
+    if (!isAngleable(operation)) throw new Error(`${operation.outerHTML}: [data-angle] not found.`)
+
+    this.circuitEditorService.send({
+      type: 'SET_OPERATION_ANGLE',
+      operation,
+      angle: inspector.angle,
+      reducedAngle: inspector.reduceAngleFraction ? inspector.reducedAngle : ''
+    })
+  }
+
+  private setOperationFlag(event: Event): void {
+    const inspector = event.target as OperationInspectorElement
+    const operation = this.activeOperation
+    if (!isFlaggable(operation)) throw new Error('[data-flag] not found.')
+
+    this.circuitEditorService.send({type: 'SET_OPERATION_FLAG', operation, flag: inspector.flag})
   }
 
   private grabOperation(event: Event): void {

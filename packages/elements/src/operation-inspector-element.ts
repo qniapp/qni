@@ -131,7 +131,7 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changeIf(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-if', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-if-change', {bubbles: true}))
   }
 
   private changePhi(): void {
@@ -164,7 +164,7 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changeFlag(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-flag', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-flag-change', {bubbles: true}))
   }
 
   private backupCurrentDenominator(): void {
