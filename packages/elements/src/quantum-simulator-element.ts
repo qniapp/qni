@@ -1,9 +1,9 @@
 import {Complex, DetailedError, Util} from '@qni/common'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
+import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {isBlochDisplayElement} from './operation'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -60,6 +60,17 @@ export class QuantumSimulatorElement extends HTMLElement {
             blochDisplay.x = blochVector[0]
             blochDisplay.y = blochVector[1]
             blochDisplay.z = blochVector[2]
+          }
+        }
+
+        if (data.measuredBits) {
+          const measuredBits = data.measuredBits
+          for (const bitStr in measuredBits) {
+            const bit = parseInt(bitStr)
+            const measurementGate = step.dropzoneAt(bit).operation
+            if (isMeasurementGateElement(measurementGate)) {
+              measurementGate.value = measuredBits[bit].toString()
+            }
           }
         }
 
