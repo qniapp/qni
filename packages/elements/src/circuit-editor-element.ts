@@ -20,6 +20,7 @@ type CircuitEditorEvent =
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
   | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
+  | {type: 'MOUSE_ENTER_STEP'; step: CircuitStepElement}
   | {type: 'CLICK_STEP'; step: CircuitStepElement}
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
   | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
@@ -79,6 +80,10 @@ export class CircuitEditorElement extends HTMLElement {
                     'appendCircuitWire',
                     'setSnapTargets'
                   ]
+                },
+                MOUSE_ENTER_STEP: {
+                  target: 'idle',
+                  actions: ['activateStep']
                 }
               }
             },
@@ -191,7 +196,7 @@ export class CircuitEditorElement extends HTMLElement {
           this.circuit.setBreakpoint(event.step)
         },
         activateStep: (_context, event) => {
-          if (event.type !== 'SNAP_STEP') return
+          if (event.type !== 'MOUSE_ENTER_STEP' && event.type !== 'SNAP_STEP') return
 
           this.circuit.activateStep(event.step)
         },
@@ -255,7 +260,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-update-if', this.updateIf)
     this.addEventListener('operation-inspector-angle-change', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
-    this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
 
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
@@ -269,6 +273,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.snapStep)
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
     this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
+    this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
   }
 
   update(): void {
@@ -344,15 +349,6 @@ export class CircuitEditorElement extends HTMLElement {
     ) {
       this.activeOperation.active = false
     }
-  }
-
-  private activateStepUnlessEditing(event: Event): void {
-    if (this.circuit.editing) return
-
-    const step = event.target
-    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
-
-    this.circuit.activateStep(step)
   }
 
   private activateOperation(event: Event): void {
@@ -431,6 +427,15 @@ export class CircuitEditorElement extends HTMLElement {
     const x = snapTargetInfo.x
     const y = snapTargetInfo.y
     this.circuitEditorService.send({type: 'OPERATION_IN_SNAP_RANGE', operation, x, y})
+  }
+
+  private mouseEnterStep(event: Event): void {
+    if (this.circuit.editing) return
+
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    this.circuitEditorService.send({type: 'MOUSE_ENTER_STEP', step})
   }
 }
 
