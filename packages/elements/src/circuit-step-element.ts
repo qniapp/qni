@@ -3,6 +3,7 @@ import {
   Operation,
   isControlGateElement,
   isHGateElement,
+  isOperation,
   isPhaseGateElement,
   isRnotGateElement,
   isRxGateElement,
@@ -351,7 +352,7 @@ export class CircuitStepElement extends HTMLElement {
     this.update()
 
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
-    this.addEventListener('click', this.dispatchClickEvent)
+    this.addEventListener('click', this.maybeDispatchClickEvent)
     this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
     this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
@@ -828,7 +829,9 @@ export class CircuitStepElement extends HTMLElement {
     this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
   }
 
-  private dispatchClickEvent(): void {
+  private maybeDispatchClickEvent(event: MouseEvent): void {
+    if (isOperation(event.target)) return
+
     this.dispatchEvent(new Event('circuit-step-click', {bubbles: true}))
   }
 
