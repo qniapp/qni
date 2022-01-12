@@ -21,6 +21,7 @@ type CircuitEditorEvent =
   | {type: 'DELETE_OPERATION'}
   | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
   | {type: 'MOUSE_ENTER_STEP'; step: CircuitStepElement}
+  | {type: 'MOUSE_LEAVE_CIRCUIT'}
   | {type: 'CLICK_STEP'; step: CircuitStepElement}
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
   | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
@@ -84,6 +85,10 @@ export class CircuitEditorElement extends HTMLElement {
                 MOUSE_ENTER_STEP: {
                   target: 'idle',
                   actions: ['activateStep']
+                },
+                MOUSE_LEAVE_CIRCUIT: {
+                  target: 'idle',
+                  actions: ['deactivateAllSteps']
                 }
               }
             },
@@ -205,6 +210,9 @@ export class CircuitEditorElement extends HTMLElement {
 
           event.step.active = false
         },
+        deactivateAllSteps: () => {
+          this.circuit.deactivateAllSteps()
+        },
         maybeDisableAllInspectorPanes: (_context, event) => {
           if (event.type !== 'END_DRAGGING_OPERATION') return
 
@@ -253,7 +261,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
     this.addEventListener('operation-menu-if', this.showOperationIfInspector)
     this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
     this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
@@ -274,16 +281,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
     this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
+    this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
   }
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
-  }
-
-  private deactivateAllSteps(): void {
-    if (this.circuit.editing) return
-
-    this.circuit.deactivateAllSteps()
   }
 
   private showOperationIfInspector(event: Event): void {
@@ -436,6 +438,10 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
     this.circuitEditorService.send({type: 'MOUSE_ENTER_STEP', step})
+  }
+
+  private mouseLeaveCircuit(): void {
+    this.circuitEditorService.send({type: 'MOUSE_LEAVE_CIRCUIT'})
   }
 }
 
