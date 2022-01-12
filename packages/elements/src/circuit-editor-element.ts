@@ -18,6 +18,7 @@ type CircuitEditorEvent =
   | {type: 'UNGRAB_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
+  | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
   | {type: 'CLICK_STEP'; step: CircuitStepElement}
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
   | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
@@ -78,6 +79,10 @@ export class CircuitEditorElement extends HTMLElement {
             },
             editing: {
               on: {
+                OPERATION_IN_SNAP_RANGE: {
+                  target: 'editing',
+                  actions: ['snapOperationIntoDropzone']
+                },
                 SNAP_STEP: {
                   target: 'editing',
                   actions: ['activateStep']
@@ -128,6 +133,32 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'GRAB_OPERATION') return
 
           this.circuit.activateOperation(event.operation)
+        },
+        snapOperationIntoDropzone: (_context, event) => {
+          if (event.type !== 'OPERATION_IN_SNAP_RANGE') return
+
+          const operation = event.operation
+          const snapTarget = this.circuit.snapTargetAt(event.x, event.y)
+
+          operation.snapped = true
+
+          if (snapTarget.dropzone === null) {
+            const stepIndex = snapTarget.stepIndex
+            Util.notNull(stepIndex)
+
+            const newStep = this.circuit.addShadowStepAfter(stepIndex)
+            const newDropzone = newStep.dropzones[snapTarget.wireIndex]
+            Util.notNull(newDropzone)
+
+            // TODO: dropzone.operationName = ... etc. を dropzone 側でやる
+            newDropzone.append(operation)
+            newDropzone.operationName = operation.tagName.toLocaleLowerCase()
+
+            // TODO: addShadowStepAfter の後で自動的に呼ぶ
+            this.circuit.updateSnapTargets(newStep.dropzones)
+          } else {
+            snapTarget.dropzone.append(operation)
+          }
         },
         addDocumentCursorGrabbingStyle: () => {
           document.documentElement.setAttribute('data-grabbing', '')
@@ -210,7 +241,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.update()
 
     this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
-    this.addEventListener('operation-in-snap-range', this.snapOperationIntoDropzone)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
     this.addEventListener('operation-menu-if', this.showOperationIfInspector)
     this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
@@ -219,8 +249,8 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-change', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
     this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
-    document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
 
+    document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-grab', this.grabOperation)
@@ -230,6 +260,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-click', this.clickStep)
     this.addEventListener('circuit-step-snap', this.snapStep)
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
+    this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
   }
 
   update(): void {
@@ -262,35 +293,6 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
 
     this.inspectorButton.showFlagInspector(operation)
-  }
-
-  private snapOperationIntoDropzone(event: Event) {
-    const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
-
-    const customEvent = event as CustomEvent
-    const snapTargetInfo = customEvent.detail.snapTargetInfo
-    const snapTarget = this.circuit.snapTargetAt(snapTargetInfo.x, snapTargetInfo.y)
-
-    operation.snapped = true
-
-    if (snapTarget.dropzone === null) {
-      const stepIndex = snapTarget.stepIndex
-      Util.notNull(stepIndex)
-
-      const newStep = this.circuit.addShadowStepAfter(stepIndex)
-      const newDropzone = newStep.dropzones[snapTarget.wireIndex]
-      Util.notNull(newDropzone)
-
-      // TODO: dropzone.operationName = ... etc. を dropzone 側でやる
-      newDropzone.append(operation)
-      newDropzone.operationName = operation.tagName.toLocaleLowerCase()
-
-      // TODO: addShadowStepAfter の後で自動的に呼ぶ
-      this.circuit.updateSnapTargets(newStep.dropzones)
-    } else {
-      snapTarget.dropzone.append(operation)
-    }
   }
 
   private resizeCircuit(): void {
@@ -410,6 +412,17 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
     this.circuitEditorService.send({type: 'UNSNAP_STEP', step})
+  }
+
+  private operationInSnapRange(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    const customEvent = event as CustomEvent
+    const snapTargetInfo = customEvent.detail.snapTargetInfo
+    const x = snapTargetInfo.x
+    const y = snapTargetInfo.y
+    this.circuitEditorService.send({type: 'OPERATION_IN_SNAP_RANGE', operation, x, y})
   }
 }
 
