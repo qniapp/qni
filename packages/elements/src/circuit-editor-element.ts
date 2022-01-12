@@ -1,20 +1,83 @@
+import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
+import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
-import {controller, target} from '@github/catalyst'
+import {Util, describe} from '@qni/common'
+import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isAngleable, isIfable, isMenuable} from './mixin'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
-import {Util} from '@qni/common'
-import {isCircuitStepElement} from './circuit-step-element'
 import {isFlaggable} from './mixin/flaggable'
 
-@controller
+type CircuitEditorContext = Record<string, never>
+type CircuitEditorEvent =
+  | {type: 'CLICK_STEP'; step: CircuitStepElement}
+  | {type: 'SNAP_STEP'; step: CircuitStepElement}
+  | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
+
 export class CircuitEditorElement extends HTMLElement {
+  @attr debug = false
+
   @target circuit!: QuantumCircuitElement
   @target inspectorButton!: InspectorButtonElement
 
+  private circuitEditorMachine = createMachine<CircuitEditorContext, CircuitEditorEvent>(
+    {
+      id: 'circuit-editor',
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            CLICK_STEP: {
+              target: 'idle',
+              actions: ['setBreakpoint']
+            },
+            SNAP_STEP: {
+              target: 'idle',
+              actions: ['activateStep']
+            },
+            UNSNAP_STEP: {
+              target: 'idle',
+              actions: ['deactivateStep']
+            }
+          }
+        }
+      }
+    },
+    {
+      actions: {
+        setBreakpoint: (_context, event) => {
+          if (event.type !== 'CLICK_STEP') return
+
+          this.circuit.setBreakpoint(event.step)
+        },
+        activateStep: (_context, event) => {
+          if (event.type !== 'SNAP_STEP') return
+
+          this.circuit.activateStep(event.step)
+        },
+        deactivateStep: (_context, event) => {
+          if (event.type !== 'UNSNAP_STEP') return
+
+          event.step.active = false
+        }
+      }
+    }
+  )
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private circuitEditorService!: Interpreter<CircuitEditorContext, any, CircuitEditorEvent>
+
   connectedCallback(): void {
+    this.circuitEditorService = interpret(this.circuitEditorMachine)
+      .onTransition(state => {
+        if (this.debug) {
+          // eslint-disable-next-line no-console
+          console.log(`circuit-editor: ${describe(state.value)}`)
+        }
+      })
+      .start()
+
     this.attachShadow({mode: 'open'})
     this.update()
     this.makeOperationsDraggable()
@@ -43,11 +106,12 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-update-if', this.updateIf)
     this.addEventListener('operation-inspector-angle-change', this.updateAngle)
     this.addEventListener('operation-inspector-update-flag', this.updateFlag)
-    this.addEventListener('circuit-step-click', this.setBreakpoint)
     this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
-    this.addEventListener('circuit-step-snap', this.activateStep)
-    this.addEventListener('circuit-step-unsnap', this.deactivateStep)
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
+
+    this.addEventListener('circuit-step-click', this.clickStep)
+    this.addEventListener('circuit-step-snap', this.snapStep)
+    this.addEventListener('circuit-step-unsnap', this.unsnapStep)
   }
 
   update(): void {
@@ -237,14 +301,6 @@ export class CircuitEditorElement extends HTMLElement {
     }
   }
 
-  private setBreakpoint(event: Event): void {
-    const step = event.target
-    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
-
-    this.circuit.setBreakpoint(step)
-  }
-
-  // TODO: activateStep と処理を共通化
   private activateStepUnlessEditing(event: Event): void {
     if (this.circuit.editing) return
 
@@ -254,17 +310,26 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuit.activateStep(step)
   }
 
-  private activateStep(event: Event): void {
+  private clickStep(event: Event): void {
     const step = event.target
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
-    this.circuit.activateStep(step)
+    this.circuitEditorService.send({type: 'CLICK_STEP', step})
   }
 
-  private deactivateStep(event: Event): void {
+  private snapStep(event: Event): void {
     const step = event.target
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
-    step.active = false
+    this.circuitEditorService.send({type: 'SNAP_STEP', step})
+  }
+
+  private unsnapStep(event: Event): void {
+    const step = event.target
+    if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
+
+    this.circuitEditorService.send({type: 'UNSNAP_STEP', step})
   }
 }
+
+controller(CircuitEditorElement)

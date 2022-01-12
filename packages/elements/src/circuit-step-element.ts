@@ -158,6 +158,10 @@ export class CircuitStepElement extends HTMLElement {
               target: 'shadow',
               actions: ['setOperationBit', 'dispatchSnapEvent']
             },
+            UNSNAP_DROPZONE: {
+              target: 'shadow',
+              actions: ['dispatchUnsnapEvent']
+            },
             UNSHADOW: {
               target: 'visible',
               actions: ['unshadow']
