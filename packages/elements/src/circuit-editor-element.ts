@@ -48,10 +48,6 @@ export class CircuitEditorElement extends HTMLElement {
               target: 'inspectable',
               actions: ['initOperationMenu', 'resizeCircuit']
             },
-            SHOW_OPERATION_MENU: {
-              target: 'inspectable',
-              actions: ['showOperationMenu']
-            },
             ACTIVATE_OPERATION: {
               target: 'inspectable',
               actions: ['maybeUpdateOperationInspector']
@@ -59,10 +55,6 @@ export class CircuitEditorElement extends HTMLElement {
             DELETE_OPERATION: {
               target: 'inspectable',
               actions: ['resizeCircuit']
-            },
-            CLICK_STEP: {
-              target: 'inspectable',
-              actions: ['setBreakpoint']
             }
           },
           states: {
@@ -85,6 +77,10 @@ export class CircuitEditorElement extends HTMLElement {
                     'setSnapTargets'
                   ]
                 },
+                CLICK_STEP: {
+                  target: 'idle',
+                  actions: ['setBreakpoint']
+                },
                 MOUSE_ENTER_STEP: {
                   target: 'idle',
                   actions: ['activateStep']
@@ -92,6 +88,10 @@ export class CircuitEditorElement extends HTMLElement {
                 MOUSE_LEAVE_CIRCUIT: {
                   target: 'idle',
                   actions: ['deactivateAllSteps']
+                },
+                SHOW_OPERATION_MENU: {
+                  target: 'idle',
+                  actions: ['showOperationMenu']
                 },
                 SHOW_OPERATION_INSPECTOR_IF: {
                   target: 'idle',
