@@ -18,6 +18,7 @@ type CircuitEditorEvent =
   | {type: 'UNGRAB_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
+  | {type: 'DELETE_OPERATION'}
   | {type: 'OPERATION_IN_SNAP_RANGE'; operation: Operation; x: number; y: number}
   | {type: 'CLICK_STEP'; step: CircuitStepElement}
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
@@ -40,7 +41,7 @@ export class CircuitEditorElement extends HTMLElement {
           on: {
             DROP_OPERATION: {
               target: 'inspectable',
-              actions: ['initOperationMenu']
+              actions: ['initOperationMenu', 'resizeCircuit']
             },
             SHOW_OPERATION_MENU: {
               target: 'inspectable',
@@ -49,6 +50,10 @@ export class CircuitEditorElement extends HTMLElement {
             ACTIVATE_OPERATION: {
               target: 'inspectable',
               actions: ['maybeUpdateOperationInspector']
+            },
+            DELETE_OPERATION: {
+              target: 'inspectable',
+              actions: ['resizeCircuit']
             },
             CLICK_STEP: {
               target: 'inspectable',
@@ -172,6 +177,9 @@ export class CircuitEditorElement extends HTMLElement {
         maybeRemoveLastEmptyWires: () => {
           this.circuit.removeLastEmptyWires()
         },
+        resizeCircuit: () => {
+          this.circuit.resize()
+        },
         setSnapTargets: (_context, event) => {
           if (event.type !== 'GRAB_OPERATION') return
 
@@ -241,7 +249,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.update()
 
     this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
-    this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
     this.addEventListener('operation-menu-if', this.showOperationIfInspector)
     this.addEventListener('operation-menu-angle', this.showOperationAngleInspector)
     this.addEventListener('operation-menu-flag', this.showOperationFlagInspector)
@@ -257,6 +264,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-ungrab', this.ungrabOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
+    this.addEventListener('operation-delete', this.deleteOperation)
     this.addEventListener('circuit-step-click', this.clickStep)
     this.addEventListener('circuit-step-snap', this.snapStep)
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
@@ -293,10 +301,6 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isFlaggable(operation)) throw new Error(`${operation} isn't a Flaggable Operation.`)
 
     this.inspectorButton.showFlagInspector(operation)
-  }
-
-  private resizeCircuit(): void {
-    this.circuit.resize()
   }
 
   private updateIf(event: Event): void {
@@ -391,6 +395,10 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
     this.circuitEditorService.send({type: 'DROP_OPERATION', operation})
+  }
+
+  private deleteOperation(): void {
+    this.circuitEditorService.send({type: 'DELETE_OPERATION'})
   }
 
   private clickStep(event: Event): void {
