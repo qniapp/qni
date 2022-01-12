@@ -12,6 +12,9 @@ import {isFlaggable} from './mixin/flaggable'
 
 type CircuitEditorContext = Record<string, never>
 type CircuitEditorEvent =
+  | {type: 'GRAB_OPERATION'; operation: Operation}
+  | {type: 'UNGRAB_OPERATION'; operation: Operation}
+  | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'CLICK_STEP'; step: CircuitStepElement}
   | {type: 'SNAP_STEP'; step: CircuitStepElement}
   | {type: 'UNSNAP_STEP'; step: CircuitStepElement}
@@ -29,6 +32,16 @@ export class CircuitEditorElement extends HTMLElement {
       states: {
         idle: {
           on: {
+            GRAB_OPERATION: {
+              target: 'editing',
+              actions: [
+                'startCircuitEdit',
+                'setOperationActive',
+                'addDocumentCursorGrabbingStyle',
+                'appendCircuitWire',
+                'setSnapTargets'
+              ]
+            },
             CLICK_STEP: {
               target: 'idle',
               actions: ['setBreakpoint']
@@ -42,11 +55,61 @@ export class CircuitEditorElement extends HTMLElement {
               actions: ['deactivateStep']
             }
           }
+        },
+        editing: {
+          on: {
+            UNGRAB_OPERATION: {
+              target: 'idle',
+              actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
+            },
+            END_DRAGGING_OPERATION: {
+              target: 'idle',
+              actions: [
+                'maybeRemoveLastEmptyWires',
+                'removeDocumentCursorGrabbingStyle',
+                'endCircuitEdit',
+                'maybeDisableAllInspectorPanes'
+              ]
+            }
+          }
         }
       }
     },
     {
       actions: {
+        startCircuitEdit: () => {
+          this.circuit.editing = true
+        },
+        endCircuitEdit: () => {
+          this.circuit.editing = false
+        },
+        setOperationActive: (_context, event) => {
+          if (event.type !== 'GRAB_OPERATION') return
+
+          this.circuit.activateOperation(event.operation)
+        },
+        addDocumentCursorGrabbingStyle: () => {
+          document.documentElement.setAttribute('data-grabbing', '')
+        },
+        removeDocumentCursorGrabbingStyle: () => {
+          document.documentElement.removeAttribute('data-grabbing')
+        },
+        appendCircuitWire: () => {
+          Util.notNull(this.circuit)
+
+          this.circuit.appendWire()
+        },
+        maybeRemoveLastEmptyWires: () => {
+          Util.notNull(this.circuit)
+
+          this.circuit.removeLastEmptyWires()
+        },
+        setSnapTargets: (_context, event) => {
+          if (event.type !== 'GRAB_OPERATION') return
+          Util.notNull(this.circuit)
+
+          this.circuit.setSnapTargets(event.operation)
+        },
         setBreakpoint: (_context, event) => {
           if (event.type !== 'CLICK_STEP') return
 
@@ -61,6 +124,15 @@ export class CircuitEditorElement extends HTMLElement {
           if (event.type !== 'UNSNAP_STEP') return
 
           event.step.active = false
+        },
+        maybeDisableAllInspectorPanes: (_context, event) => {
+          if (event.type !== 'END_DRAGGING_OPERATION') return
+
+          const operation = event.operation
+          if (operation.snapped) return
+          if (!this.inspectorButton.isInspectorShown) return
+
+          this.inspectorButton.inspector.disableAllPanes()
         }
       }
     }
@@ -85,18 +157,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('quantum-circuit-mouseleave', this.deactivateAllSteps)
     this.addEventListener('operation-active', this.maybeUpdateOperationInspector)
     this.addEventListener('operation-showmenu', this.showOperationMenu)
-    this.addEventListener('operation-grab', this.startCircuitEdit)
-    this.addEventListener('operation-grab', this.setOperationActive)
-    this.addEventListener('operation-grab', this.setDocumentCursorStyleGrabbing)
-    this.addEventListener('operation-grab', this.appendWire)
-    this.addEventListener('operation-grab', this.setSnapTargets)
-    this.addEventListener('operation-ungrab', this.removeLastEmptyWires)
-    this.addEventListener('operation-ungrab', this.removeDocumentCursorStyleGrabbing)
-    this.addEventListener('operation-ungrab', this.endCircuitEdit)
-    this.addEventListener('operation-enddragging', this.removeLastEmptyWires)
-    this.addEventListener('operation-enddragging', this.removeDocumentCursorStyleGrabbing)
-    this.addEventListener('operation-enddragging', this.endCircuitEdit)
-    this.addEventListener('operation-enddragging', this.maybeDisableAllInspectorPanes)
     this.addEventListener('operation-drop', this.initOperationMenu)
     this.addEventListener('operation-in-snap-range', this.snapOperationIntoDropzone)
     this.addEventListener('circuit-dropzone-drop', this.resizeCircuit)
@@ -109,6 +169,9 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseenter', this.activateStepUnlessEditing)
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
 
+    this.addEventListener('operation-grab', this.grabOperation)
+    this.addEventListener('operation-ungrab', this.ungrabOperation)
+    this.addEventListener('operation-enddragging', this.endDraggingOperation)
     this.addEventListener('circuit-step-click', this.clickStep)
     this.addEventListener('circuit-step-snap', this.snapStep)
     this.addEventListener('circuit-step-unsnap', this.unsnapStep)
@@ -131,15 +194,6 @@ export class CircuitEditorElement extends HTMLElement {
     if (this.inspectorButton.isInspectorShown) {
       this.inspectorButton.showInspector(operation)
     }
-  }
-
-  private maybeDisableAllInspectorPanes(event: Event): void {
-    const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} isn't an Operation.`)
-    if (operation.snapped) return
-    if (!this.inspectorButton.isInspectorShown) return
-
-    this.inspectorButton.inspector.disableAllPanes()
   }
 
   private showOperationMenu(event: Event): void {
@@ -172,35 +226,14 @@ export class CircuitEditorElement extends HTMLElement {
     this.inspectorButton.showFlagInspector(operation)
   }
 
-  private startCircuitEdit(): void {
-    this.circuit.editing = true
-  }
-
-  private endCircuitEdit(): void {
-    this.circuit.editing = false
-  }
-
   private initOperationMenu(event: Event): void {
     const operation = event.target
 
     if (isMenuable(operation)) operation.initMenu()
   }
 
-  private setOperationActive(event: Event): void {
-    const operation = event.target
-    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
-
-    this.circuit.activateOperation(operation)
-  }
-
   private makeOperationsDraggable(): void {
     this.circuit.draggable = true
-  }
-
-  private appendWire(): void {
-    Util.notNull(this.circuit)
-
-    this.circuit.appendWire()
   }
 
   private setSnapTargets(event: Event): void {
@@ -209,20 +242,6 @@ export class CircuitEditorElement extends HTMLElement {
     Util.notNull(this.circuit)
 
     this.circuit.setSnapTargets(operation)
-  }
-
-  private removeLastEmptyWires(): void {
-    Util.notNull(this.circuit)
-
-    this.circuit.removeLastEmptyWires()
-  }
-
-  private setDocumentCursorStyleGrabbing(): void {
-    document.documentElement.setAttribute('data-grabbing', '')
-  }
-
-  private removeDocumentCursorStyleGrabbing(): void {
-    document.documentElement.removeAttribute('data-grabbing')
   }
 
   private snapOperationIntoDropzone(event: Event) {
@@ -308,6 +327,27 @@ export class CircuitEditorElement extends HTMLElement {
     if (!isCircuitStepElement(step)) throw new Error(`${step} isn't a circuit-step.`)
 
     this.circuit.activateStep(step)
+  }
+
+  private grabOperation(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
+  }
+
+  private ungrabOperation(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'UNGRAB_OPERATION', operation})
+  }
+
+  private endDraggingOperation(event: Event): void {
+    const operation = event.target
+    if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
+
+    this.circuitEditorService.send({type: 'END_DRAGGING_OPERATION', operation})
   }
 
   private clickStep(event: Event): void {
