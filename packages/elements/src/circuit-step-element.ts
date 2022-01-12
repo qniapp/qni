@@ -3,6 +3,7 @@ import {
   Operation,
   isControlGateElement,
   isHGateElement,
+  isMeasurementGateElement,
   isOperation,
   isPhaseGateElement,
   isRnotGateElement,
@@ -17,6 +18,7 @@ import {
 import {
   SerializedCircuitStep,
   SerializedControlGateType,
+  SerializedMeasurementGateType,
   SerializedPhaseGateType,
   SerializedSwapGateType,
   Util,
@@ -870,6 +872,18 @@ export class CircuitStepElement extends HTMLElement {
     const controlGroup = this.groupControlGates(operations)
     if (controlGroup !== null) serializedStep.push(controlGroup)
 
+    const flaggedMeasurementGates = operations
+      .filter((each): each is MeasurementGateElement => isMeasurementGateElement(each))
+      .filter(each => each.flag !== '')
+    for (const each of flaggedMeasurementGates) {
+      serializedStep.push({
+        type: SerializedMeasurementGateType,
+        targets: [each.bit],
+        flag: each.flag
+      })
+    }
+    operations = operations.filter(each => !(isMeasurementGateElement(each) && each.flag !== ''))
+
     serializedStep = serializedStep.concat(this.groupPhaseGates(operations))
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
 
@@ -926,7 +940,7 @@ export class CircuitStepElement extends HTMLElement {
     )
   }
 
-  groupSwapGatePair(operations: Operation[]): {
+  private groupSwapGatePair(operations: Operation[]): {
     type: typeof SerializedSwapGateType
     targets: number[]
     controls?: number[]
@@ -943,7 +957,9 @@ export class CircuitStepElement extends HTMLElement {
     }
   }
 
-  groupControlGates(operations: Operation[]): {type: typeof SerializedControlGateType; targets: number[]} | null {
+  private groupControlGates(
+    operations: Operation[]
+  ): {type: typeof SerializedControlGateType; targets: number[]} | null {
     const controlGates = operations.filter((each): each is ControlGateElement => isControlGateElement(each))
     if (controlGates.length < 2) return null
     if (operations.some(each => isControllable(each))) return null
@@ -952,7 +968,7 @@ export class CircuitStepElement extends HTMLElement {
     return {type: SerializedControlGateType, targets}
   }
 
-  groupPhaseGates(operations: Operation[]): SerializedCircuitStep {
+  private groupPhaseGates(operations: Operation[]): SerializedCircuitStep {
     const serializedStep: SerializedCircuitStep = []
     const phaseGates = operations.filter(
       (each): each is PhaseGateElement => isPhaseGateElement(each) && each.controls.length === 0

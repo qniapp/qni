@@ -4,6 +4,7 @@ import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {isIfable} from './mixin'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -72,6 +73,14 @@ export class QuantumSimulatorElement extends HTMLElement {
               measurementGate.value = measuredBits[bit].toString()
             }
           }
+        }
+
+        for (const each of step.dropzones) {
+          const operation = each.operation
+          if (!isIfable(operation)) continue
+          if (operation.if === '') continue
+
+          operation.disabled = !data.flags[operation.if]
         }
 
         if (stepIndex === data.step) {
