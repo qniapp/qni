@@ -3,6 +3,7 @@ import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {isBlochDisplayElement} from './operation'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -49,6 +50,19 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     switch (data.type) {
       case 'step': {
+        const step = this.circuit.stepAt(data.step)
+
+        for (const bitStr in data.blochVectors) {
+          const bit = parseInt(bitStr)
+          const blochDisplay = step.dropzoneAt(bit).operation
+          if (isBlochDisplayElement(blochDisplay)) {
+            const blochVector = data.blochVectors[bit]
+            blochDisplay.x = blochVector[0]
+            blochDisplay.y = blochVector[1]
+            blochDisplay.z = blochVector[2]
+          }
+        }
+
         if (stepIndex === data.step) {
           const complexAmplitudes: {[ket: number]: Complex} = {}
           for (const ket in data.amplitudes) {
