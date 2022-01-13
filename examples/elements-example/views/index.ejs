@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@qni/elements examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script type="module" src="/javascripts/application.js" defer></script>
+    <script type="module" src="/serviceworker-companion.js"></script>
+    <link href="./stylesheets/application.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="my-4 sm:my-12 lg:my-12">
+        <quantum-simulator class="inline-block">
+          <circuit-editor class="w-full md:w-auto flex justify-center md:inline-block">
+            <% include ./_palette %>
+
+            <quantum-circuit
+                data-target="quantum-simulator.circuit circuit-editor.circuit"
+                data-min-step-count="5"
+                data-min-wire-count="2"
+                data-ch-disabled="true"
+                data-cnot-max-control-gates="2"
+                data-cy-max-control-gates="1"
+                data-cz-max-control-gates="1"
+                data-crx-max-control-gates="1"
+                data-cry-max-control-gates="1"
+                data-crz-max-control-gates="1"
+            >
+            </quantum-circuit>
+
+            <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl">
+              <inspector-button
+                data-target="circuit-editor.inspectorButton"
+                class="inline-block h-10 w-10 p-1"
+              >
+                <div
+                    class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl"
+                >
+                  <% include ./common/_icon_mixer_horizontal %>
+                </div>
+              </inspector-button>
+            </div>
+          </circuit-editor>
+
+          <circle-notation
+              id="circle-notation"
+              class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-white border-2 border-b-4 border-slate-200 rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
+              data-target="quantum-simulator.circleNotation"
+              data-multi-qubits
+          >
+            <template id="circle-notation-popup">
+              <div class="text-base text-wolf mb-2">
+                |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal
+                <span class="circle-notation-popup__ket-decimal"></span>)
+              </div>
+              <ul class="list-none">
+                <li>
+                  Amplitude:
+                  <span
+                    class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"
+                  ></span>
+                  <span
+                    class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"
+                  ></span>
+                </li>
+                <li>
+                  Probability:
+                  <span
+                    class="circle-notation-popup__probability font-bold font-mono text-eel"
+                  ></span>
+                </li>
+                <li>
+                  Phase:
+                  <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
+                </li>
+              </ul>
+            </template>
+          </circle-notation>
+        </quantum-simulator>
+      </div>
+    </div>
+
+    <template id="operation-menu">
+      <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+        <div class="flex flex-row bg-white rounded-2xl drop-shadow-lg p-2">
+          <button
+            data-operation-menu-if
+            type="button"
+            class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+            disabled
+          >
+            <div class="h-5 w-5 flex items-center justify-center">
+              <div class="font-sans font-bold text-sm tracking-tighter whitespace-nowrap">
+                if <span class="italic">x</span>
+              </div>
+            </div>
+          </button>
+
+          <button
+              data-operation-menu-angle
+              type="button"
+              class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+              disabled
+          >
+            <% include ./common/_icon_angle %>
+          </button>
+
+          <button
+            data-operation-menu-flag
+            type="button"
+            class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+            disabled
+          >
+            <div class="h-5 w-5 flex items-center justify-center">
+              <div class="font-sans font-bold text-sm whitespace-nowrap">
+                (<span class="italic">x</span>)
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <div
+            data-operation-menu-delete
+            class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
+        >
+          <% include ./common/_icon_trash %>
+        </div>
+      </div>
+    </template>
+
+    <template id="operation-inspector-template">
+      <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
+        <div class="flex flex-col divide-y space-y-4 items-left">
+          <div id="conditional-gate-pane" class="flex flex-col items-left">
+            <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+            <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+              <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+              <input
+                data-target="operation-inspector.ifInput"
+                type="text"
+                name="if"
+                id="if-input"
+                spellcheck="false"
+                class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div id="angle-pane" class="flex flex-col items-left pt-4 mb-2">
+            <h1 class="font-bold text-gray-900">Angle</h1>
+
+            <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+              <label
+                for="angle-input"
+                class="font-normal text-gray-700 select-none"
+                data-target="operation-inspector.angleInputLabel"
+                >Angle</label
+              >
+              <input
+                data-target="operation-inspector.angleInput"
+                type="text"
+                name="angle"
+                id="angle-input"
+                spellcheck="false"
+                class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+                autocomplete="off"
+              />
+              <angle-slider
+                data-target="operation-inspector.angleSlider"
+                class="inline-block ml-2"
+              ></angle-slider>
+
+              <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+                >Denom</label
+              >
+              <input
+                data-target="operation-inspector.denominatorInput"
+                type="number"
+                min="2"
+                name="denominator"
+                id="denominator-input"
+                class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+                autocomplete="off"
+              />
+              <div class="pl-2 text-sm whitespace-nowrap text-gray-500">
+                <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+                  data-target="operation-inspector.denominatorLabel"
+                  class="font-bold text-yellow-600"
+                  >?</span
+                >
+              </div>
+
+              <div class="min-w-0 flex-1 text-sm">
+                <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none"
+                  >Reduce</label
+                >
+              </div>
+              <div class="flex items-center h-5">
+                <input
+                  data-target="operation-inspector.reduceAngleFractionCheckbox"
+                  id="reduce-fraction-checkbox"
+                  name="reduce-fraction"
+                  type="checkbox"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div id="conditional-flag-pane" class="flex flex-col items-left pt-4 mb-2">
+            <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+            <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+              <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+              <input
+                  data-target="operation-inspector.flagInput"
+                  type="text"
+                  name="flag"
+                  id="flag-input"
+                  spellcheck="false"
+                  class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+                  autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </operation-inspector>
+    </template>
+  </body>
+</html>

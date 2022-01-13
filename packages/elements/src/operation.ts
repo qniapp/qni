@@ -78,6 +78,9 @@ export const isSwapGateElement = (arg: unknown): arg is SwapGateElement =>
 export const isControlGateElement = (arg: unknown): arg is ControlGateElement =>
   arg !== undefined && arg !== null && arg instanceof ControlGateElement
 
+export const isBlochDisplayElement = (arg: unknown): arg is BlochDisplayElement =>
+  arg !== undefined && arg !== null && arg instanceof BlochDisplayElement
+
 export const isWriteGateElement = (arg: unknown): arg is WriteGateElement =>
   arg !== undefined && arg !== null && arg instanceof WriteGateElement
 

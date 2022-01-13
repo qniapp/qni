@@ -1,6 +1,7 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
+import {Interpreter, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
@@ -25,11 +26,14 @@ export type SnapTarget = {
   wireIndex: number
 }
 
-@controller
+type QuantumCircuitContext = Record<string, never>
+type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
+
 export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr editing = false
+  @attr debug = false
 
   // Controlled-H
   @attr chDisabled = false
@@ -79,6 +83,25 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
 
+  private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
+    id: 'quantum-circuit',
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          EDIT: {target: 'editing'}
+        }
+      },
+      editing: {
+        on: {
+          EDIT_DONE: {target: 'idle'}
+        }
+      }
+    }
+  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
+
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
@@ -93,16 +116,20 @@ export class QuantumCircuitElement extends HTMLElement {
     const step = this.activeStep
     if (step === null) return null
 
+    return this.fetchStepIndex(step)
+  }
+
+  get activeStep(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.active)
+
+    return step || null
+  }
+
+  fetchStepIndex(step: CircuitStepElement): number {
     const index = this.steps.indexOf(step)
     Util.need(index !== -1, `circuit-step index of ${step} not found.`)
 
     return index
-  }
-
-  private get activeStep(): CircuitStepElement | null {
-    const step = this.steps.find(each => each.active)
-
-    return step || null
   }
 
   private get steps(): CircuitStepElement[] {
@@ -194,6 +221,12 @@ export class QuantumCircuitElement extends HTMLElement {
     step.breakpoint = true
   }
 
+  get breakpoint(): CircuitStepElement | null {
+    const step = this.steps.find(each => each.breakpoint)
+
+    return step || null
+  }
+
   private get dropzones(): CircuitDropzoneElement[] {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
@@ -208,10 +241,16 @@ export class QuantumCircuitElement extends HTMLElement {
     return window.getComputedStyle(this).flexDirection === 'column'
   }
 
-  /**
-   * @category Custom Elements
-   */
   connectedCallback(): void {
+    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
+      .onTransition(state => {
+        if (this.debug) {
+          // eslint-disable-next-line no-console
+          console.log(`quantum-circuit: ${state.value}`)
+        }
+      })
+      .start()
+
     this.attachShadow({mode: 'open'})
     this.update()
     this.appendMinimumSteps()
@@ -219,13 +258,23 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateAllWires()
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
-    this.addEventListener('operation-delete', this.updateConnections)
     this.addEventListener('circuit-step-update', this.updateConnections)
-    this.addEventListener('circuit-step-occupied', this.updateChangedWire)
     this.addEventListener('circuit-step-snap', this.updateConnections)
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
     this.addEventListener('circuit-step-unsnap', this.updateConnections)
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
+  }
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-editing') {
+      if (newValue !== null) {
+        this.quantumCircuitService.send({type: 'EDIT'})
+      } else {
+        this.quantumCircuitService.send({type: 'EDIT_DONE'})
+      }
+    }
   }
 
   private update(): void {
@@ -933,3 +982,5 @@ export class QuantumCircuitElement extends HTMLElement {
     return this.steps.map(each => each.serialize())
   }
 }
+
+controller(QuantumCircuitElement)

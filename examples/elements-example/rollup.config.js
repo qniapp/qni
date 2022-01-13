@@ -1,18 +1,16 @@
-import resolve from "@rollup/plugin-node-resolve"
+import resolve from '@rollup/plugin-node-resolve'
 
 export default [
   {
-    input: "./src/application.js",
+    input: './src/application.js',
     output: [
       {
-        file: "./dist/application.js",
-        format: "es",
+        file: './public/javascripts/application.js',
+        format: 'es',
         sourcemap: true,
-      }
+      },
     ],
-    context: "window",
-    plugins: [
-      resolve(),
-    ],
+    context: 'window',
+    plugins: [resolve()],
   },
 ]

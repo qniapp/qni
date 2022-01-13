@@ -5,13 +5,20 @@
   "author": "@yasuhito",
   "license": "MIT",
   "scripts": {
-    "build": "yarn css && rollup -c",
-    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./dist/application.css",
-    "start": "http-server"
+    "start": "node ./bin/www",
+    "build": "yarn css && rollup -c && esbuild ./src/serviceworker.js --outdir=./public/ --bundle",
+    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./public/stylesheets/application.css",
+    "css:watch": "yarn css --watch"
   },
   "dependencies": {
     "@qni/elements": "^0.0.9",
-    "http-server": "^14.0.0"
+    "@qni/simulator": "^0.0.9",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
     "esbuild": "^0.14.5",

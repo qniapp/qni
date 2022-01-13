@@ -6,9 +6,6 @@ require 'test_helper'
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium_chrome_headless
 
-  # https://github.com/SeleniumHQ/selenium/issues/10025
-  Webdrivers::Chromedriver.required_version = '95.0.4638.69'
-
   def assert_steps(number)
     assert_selector 'circuit-step:not([data-shadow])', count: number
   end
@@ -34,16 +31,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_value(value, element)
-    within shadow_root(element) do
-      assert_selector '#value'
-    end
+    shadow_root(element).find_element :css, '#value'
     assert_equal value, element['data-value']
-  end
-
-  def assert_no_value(element)
-    within shadow_root(element) do
-      assert_no_selector '#value'
-    end
   end
 
   def assert_phi(phi, element)
@@ -88,26 +77,21 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_qubit_circles(number)
-    within shadow_root(find('#circle-notation')) do
-      assert_selector '.qubit-circle', count: number
-    end
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    assert_equal number, qubit_circles.length
   end
 
   def assert_magnitudes(*magnitudes)
-    within shadow_root(find('#circle-notation')) do
-      qubit_circles = all('.qubit-circle')
-      magnitudes.each_with_index do |each, index|
-        assert_in_delta each, qubit_circles[index]['data-magnitude'].to_f, 0.000001
-      end
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    magnitudes.each_with_index do |each, index|
+      assert_in_delta each, qubit_circles[index]['data-magnitude'].to_f, 0.000001
     end
   end
 
   def assert_phases(*phases)
-    within shadow_root(find('#circle-notation')) do
-      qubit_circles = all('.qubit-circle')
-      phases.each_with_index do |each, index|
-        assert_equal each, qubit_circles[index]['data-phase'].to_i
-      end
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    phases.each_with_index do |each, index|
+      assert_equal each, qubit_circles[index]['data-phase'].to_i
     end
   end
 

@@ -116,7 +116,7 @@ export class OperationInspectorElement extends HTMLElement {
     if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} isn't an angle-slider`)
 
     this.angleInput.value = angleSlider.angle
-    this.dispatchEvent(new Event('operation-inspector-update-angle', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
   }
 
   private backupCurrentPhi(): void {
@@ -131,7 +131,7 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changeIf(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-if', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-if-change', {bubbles: true}))
   }
 
   private changePhi(): void {
@@ -157,14 +157,14 @@ export class OperationInspectorElement extends HTMLElement {
       }
       this.backupCurrentPhi()
       this.angleSlider.initWithAngle(newPhi)
-      this.dispatchEvent(new Event('operation-inspector-update-angle', {bubbles: true}))
+      this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
     } else {
       this.restoreOriginalPhi()
     }
   }
 
   private changeFlag(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-flag', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-flag-change', {bubbles: true}))
   }
 
   private backupCurrentDenominator(): void {
@@ -196,6 +196,6 @@ export class OperationInspectorElement extends HTMLElement {
   }
 
   private changeReduceSetting(): void {
-    this.dispatchEvent(new Event('operation-inspector-update-angle', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
   }
 }
