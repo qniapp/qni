@@ -11,6 +11,7 @@ import {
   isRyGateElement,
   isRzGateElement,
   isSwapGateElement,
+  isWriteGateElement,
   isXGateElement,
   isYGateElement,
   isZGateElement
@@ -21,6 +22,8 @@ import {
   SerializedMeasurementGateType,
   SerializedPhaseGateType,
   SerializedSwapGateType,
+  SerializedWrite0GateType,
+  SerializedWrite1GateType,
   Util,
   describe
 } from '@qni/common'
@@ -884,6 +887,26 @@ export class CircuitStepElement extends HTMLElement {
     }
     operations = operations.filter(each => !(isMeasurementGateElement(each) && each.flag !== ''))
 
+    const write0Gates = operations
+      .filter((each): each is WriteGateElement => isWriteGateElement(each))
+      .filter(each => each.value === '0')
+    const write0Targets = write0Gates.map(each => each.bit)
+    serializedStep.push({
+      type: SerializedWrite0GateType,
+      targets: write0Targets
+    })
+    operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '0'))
+
+    const write1Gates = operations
+      .filter((each): each is WriteGateElement => isWriteGateElement(each))
+      .filter(each => each.value === '1')
+    const write1Targets = write1Gates.map(each => each.bit)
+    serializedStep.push({
+      type: SerializedWrite1GateType,
+      targets: write1Targets
+    })
+    operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '1'))
+
     serializedStep = serializedStep.concat(this.groupPhaseGates(operations))
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
 
@@ -904,7 +927,6 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case BlochDisplayElement:
-        case WriteGateElement:
         case MeasurementGateElement: {
           const targets = operationsGroup.map(each => each.bit)
           operationsGroup[0].operationType
