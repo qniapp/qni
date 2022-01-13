@@ -16,6 +16,7 @@
             <% include ./_palette %>
 
             <quantum-circuit
+                class="mr-2 md:mr-0"
                 data-target="quantum-simulator.circuit circuit-editor.circuit"
                 data-min-step-count="5"
                 data-min-wire-count="2"
@@ -29,7 +30,7 @@
             >
             </quantum-circuit>
 
-            <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl">
+            <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl z-50">
               <inspector-button
                 data-target="circuit-editor.inspectorButton"
                 class="inline-block h-10 w-10 p-1"
@@ -42,7 +43,7 @@
               </inspector-button>
             </div>
 
-            <div class="fixed bottom-0 left-0 right-0 px-4 py-4 mb-6 mx-6 bg-white drop-shadow-md rounded-xl grid grid-rows-2 grid-flow-col gap-2 md:hidden z-40">
+            <div class="fixed bottom-0 left-0 right-0 py-4 px-4 mb-6 mx-6 flex flex-row flex-wrap gap-2 bg-white drop-shadow-md rounded-xl md:hidden z-40">
               <palette-dropzone>
                 <h-gate></h-gate>
               </palette-dropzone>
