@@ -17,6 +17,7 @@ import {
   isZGateElement
 } from './operation'
 import {
+  SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
   SerializedMeasurementGateType,
@@ -886,8 +887,7 @@ export class CircuitStepElement extends HTMLElement {
         type: SerializedRxGateType,
         targets: [each.bit],
         angle: each.angle,
-        controls: each.controls,
-        if: each.if
+        controls: each.controls
       })
     }
     for (const each of ryGates) {
@@ -895,8 +895,7 @@ export class CircuitStepElement extends HTMLElement {
         type: SerializedRyGateType,
         targets: [each.bit],
         angle: each.angle,
-        controls: each.controls,
-        if: each.if
+        controls: each.controls
       })
     }
     for (const each of rzGates) {
@@ -904,8 +903,7 @@ export class CircuitStepElement extends HTMLElement {
         type: SerializedRzGateType,
         targets: [each.bit],
         angle: each.angle,
-        controls: each.controls,
-        if: each.if
+        controls: each.controls
       })
     }
     operations = operations.filter(each => !isRxGateElement(each) && !isRyGateElement(each) && !isRzGateElement(each))
@@ -925,22 +923,26 @@ export class CircuitStepElement extends HTMLElement {
     const write0Gates = operations
       .filter((each): each is WriteGateElement => isWriteGateElement(each))
       .filter(each => each.value === '0')
-    const write0Targets = write0Gates.map(each => each.bit)
-    serializedStep.push({
-      type: SerializedWrite0GateType,
-      targets: write0Targets
-    })
-    operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '0'))
+    if (write0Gates.length > 0) {
+      const write0Targets = write0Gates.map(each => each.bit)
+      serializedStep.push({
+        type: SerializedWrite0GateType,
+        targets: write0Targets
+      })
+      operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '0'))
+    }
 
     const write1Gates = operations
       .filter((each): each is WriteGateElement => isWriteGateElement(each))
       .filter(each => each.value === '1')
-    const write1Targets = write1Gates.map(each => each.bit)
-    serializedStep.push({
-      type: SerializedWrite1GateType,
-      targets: write1Targets
-    })
-    operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '1'))
+    if (write1Gates.length > 0) {
+      const write1Targets = write1Gates.map(each => each.bit)
+      serializedStep.push({
+        type: SerializedWrite1GateType,
+        targets: write1Targets
+      })
+      operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '1'))
+    }
 
     serializedStep = serializedStep.concat(this.groupPhaseGates(operations))
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
@@ -961,13 +963,9 @@ export class CircuitStepElement extends HTMLElement {
         case BlochDisplayElement:
         case MeasurementGateElement: {
           const targets = operationsGroup.map(each => each.bit)
-          operationsGroup[0].operationType
-          groupedOps = [
-            {
-              type: operationsGroup[0].operationType,
-              targets
-            }
-          ]
+          const opType = operationsGroup[0].operationType
+          if (opType !== SerializedBlochDisplayType && opType !== SerializedMeasurementGateType) break
+          groupedOps = [{type: opType, targets}]
           break
         }
         case SwapGateElement:
@@ -985,24 +983,20 @@ export class CircuitStepElement extends HTMLElement {
 
   private get containsControlledU(): boolean {
     return (
-      this.dropzones.some(each => {
-        return isControlGateElement(each.operation)
-      }) &&
-      this.dropzones.some(each => {
-        return isControllable(each.operation)
-      })
+      this.operations.some(each => isControlGateElement(each)) &&
+      this.operations.some(each => isControllable(each) && each.controls.length > 0)
     )
   }
 
   private groupSwapGatePair(operations: Operation[]): {
     type: typeof SerializedSwapGateType
-    targets: number[]
+    targets: [number, number]
     controls?: number[]
   } | null {
     const swapPair = operations.filter((each): each is SwapGateElement => isSwapGateElement(each))
     if (swapPair.length !== 2) return null
 
-    const targets = swapPair.map(each => each.bit)
+    const targets = [swapPair[0].bit, swapPair[1].bit] as [number, number]
     const controls = swapPair[0].controls
     if (controls !== undefined && controls.length > 0) {
       return {type: SerializedSwapGateType, targets, controls}
@@ -1050,12 +1044,14 @@ export class CircuitStepElement extends HTMLElement {
   private groupOperationsByControls(operations: ControllableOperations[]): SerializedCircuitStep {
     const serializedStep: SerializedCircuitStep = []
 
-    for (const [controls, group] of groupBy(operations, op => op.controls.toString())) {
+    for (const [controlsStr, group] of groupBy(operations, op => op.controls.toString())) {
+      const opType = group[0].operationType
       const targets = group.map(each => each.bit)
-      if (controls === '') {
-        serializedStep.push({type: group[0].operationType, targets})
+      if (controlsStr === '') {
+        serializedStep.push({type: opType, targets})
       } else {
-        serializedStep.push({type: group[0].operationType, targets, controls: group[0].controls})
+        const controls = group[0].controls
+        serializedStep.push({type: opType, targets, controls})
       }
     }
 

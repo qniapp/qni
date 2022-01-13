@@ -2,6 +2,6 @@ export const SerializedSwapGateType = 'Swap'
 
 export type SerializedSwapGate = {
   type: typeof SerializedSwapGateType
-  targets: number[]
+  targets: [number, number]
   controls?: number[]
 }
