@@ -21,6 +21,9 @@ import {
   SerializedControlGateType,
   SerializedMeasurementGateType,
   SerializedPhaseGateType,
+  SerializedRxGateType,
+  SerializedRyGateType,
+  SerializedRzGateType,
   SerializedSwapGateType,
   SerializedWrite0GateType,
   SerializedWrite1GateType,
@@ -875,6 +878,38 @@ export class CircuitStepElement extends HTMLElement {
     const controlGroup = this.groupControlGates(operations)
     if (controlGroup !== null) serializedStep.push(controlGroup)
 
+    const rxGates = operations.filter((each): each is RxGateElement => isRxGateElement(each))
+    const ryGates = operations.filter((each): each is RyGateElement => isRyGateElement(each))
+    const rzGates = operations.filter((each): each is RzGateElement => isRzGateElement(each))
+    for (const each of rxGates) {
+      serializedStep.push({
+        type: SerializedRxGateType,
+        targets: [each.bit],
+        angle: each.angle,
+        controls: each.controls,
+        if: each.if
+      })
+    }
+    for (const each of ryGates) {
+      serializedStep.push({
+        type: SerializedRyGateType,
+        targets: [each.bit],
+        angle: each.angle,
+        controls: each.controls,
+        if: each.if
+      })
+    }
+    for (const each of rzGates) {
+      serializedStep.push({
+        type: SerializedRzGateType,
+        targets: [each.bit],
+        angle: each.angle,
+        controls: each.controls,
+        if: each.if
+      })
+    }
+    operations = operations.filter(each => !isRxGateElement(each) && !isRyGateElement(each) && !isRzGateElement(each))
+
     const flaggedMeasurementGates = operations
       .filter((each): each is MeasurementGateElement => isMeasurementGateElement(each))
       .filter(each => each.flag !== '')
@@ -919,10 +954,7 @@ export class CircuitStepElement extends HTMLElement {
         case YGateElement:
         case ZGateElement:
         case PhaseGateElement:
-        case RnotGateElement:
-        case RxGateElement:
-        case RyGateElement:
-        case RzGateElement: {
+        case RnotGateElement: {
           groupedOps = this.groupOperationsByControls(operationsGroup as ControllableOperations[])
           break
         }
