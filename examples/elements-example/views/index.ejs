@@ -11,7 +11,7 @@
   <body class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="my-4 sm:my-12 lg:my-12">
-        <quantum-simulator class="inline-block mt-56 md:mt-0 w-full">
+        <quantum-simulator class="inline-block mt-56 mb-56 md:my-0 w-full">
           <circuit-editor class="w-full md:w-auto flex flex-row justify-end md:inline-block">
             <% include ./_palette %>
 
@@ -41,11 +41,59 @@
                 </div>
               </inspector-button>
             </div>
+
+            <div class="fixed bottom-0 left-0 right-0 px-4 py-4 mb-6 mx-6 bg-white drop-shadow-md rounded-xl grid grid-rows-2 grid-flow-col gap-2 md:hidden z-40">
+              <palette-dropzone>
+                <h-gate></h-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <x-gate></x-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <y-gate></y-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <z-gate></z-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <phase-gate data-angle="π/2"></phase-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <rnot-gate></rnot-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <rx-gate data-angle="π/2"></rx-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <ry-gate data-angle="π/2"></ry-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <rz-gate data-angle="π/2"></rz-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <swap-gate></swap-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <control-gate></control-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <bloch-display></bloch-display>
+              </palette-dropzone>
+              <palette-dropzone>
+                <write-gate data-value="0" data-help-id="write0-gate-help"></write-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <write-gate data-value="1" data-help-id="write1-gate-help"></write-gate>
+              </palette-dropzone>
+              <palette-dropzone>
+                <measurement-gate></measurement-gate>
+              </palette-dropzone>
+            </div>
           </circuit-editor>
 
           <circle-notation
               id="circle-notation"
-              class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-white border-2 border-b-4 border-slate-200 rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
+              class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-white drop-shadow rounded-2xl md:left-1/2 md:transform md:-translate-x-1/2 z-40"
               data-target="quantum-simulator.circleNotation"
               data-multi-qubits
           >
