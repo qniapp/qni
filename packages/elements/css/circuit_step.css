@@ -7,7 +7,8 @@ circuit-step {
   @apply space-x-4 space-y-0 space-x-reverse;
   @apply md:space-x-0 md:space-y-4;
 
-  @apply py-8;
+  @apply py-0 px-8;
+  @apply md:py-8 md:px-0;
 
   &[data-shadow] {
     @apply h-0 md:h-auto;
