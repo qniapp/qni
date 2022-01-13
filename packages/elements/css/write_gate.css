@@ -7,28 +7,31 @@ write-gate {
 
   &::part(icon) {
     @apply text-gray-500;
+    @apply transform-gpu origin-center;
+    @apply rotate-45;
+    @apply md:rotate-0;
   }
 
   &::part(value) {
-    @apply absolute;
-    @apply inset-0;
+    @apply absolute inset-0;
+    @apply transform-gpu origin-center;
+    @apply rotate-90;
+    @apply md:rotate-0;
   }
 
   &::part(value)::after {
-    @apply flex;
-    @apply justify-center;
-    @apply items-center;
+    @apply flex justify-center items-center;
     @apply h-full w-full;
     @apply font-mono;
   }
 
-  &[data-value="0"]::part(value)::after {
+  &[data-value='0']::part(value)::after {
     @apply text-red-500;
-    content: "0";
+    content: '0';
   }
 
-  &[data-value="1"]::part(value)::after {
+  &[data-value='1']::part(value)::after {
     @apply text-blue-500;
-    content: "1";
+    content: '1';
   }
 }
