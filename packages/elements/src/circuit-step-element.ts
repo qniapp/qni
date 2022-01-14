@@ -908,23 +908,13 @@ export class CircuitStepElement extends HTMLElement {
     }
     operations = operations.filter(each => !isMeasurementGateElement(each))
 
-    const write0Gates = operations
-      .filter((each): each is WriteGateElement => isWriteGateElement(each))
-      .filter(each => each.value === '0')
-    if (write0Gates.length > 0) {
-      const targets = write0Gates.map(each => each.bit)
-      serializedStep.push({type: write0Gates[0].operationType, targets})
-      operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '0'))
+    const writeGates = operations.filter((each): each is WriteGateElement => isWriteGateElement(each))
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_klass, ops] of groupBy(writeGates, op => op.value)) {
+      const targets = ops.map(each => each.bit)
+      serializedStep.push({type: ops[0].operationType, targets})
     }
-
-    const write1Gates = operations
-      .filter((each): each is WriteGateElement => isWriteGateElement(each))
-      .filter(each => each.value === '1')
-    if (write1Gates.length > 0) {
-      const targets = write1Gates.map(each => each.bit)
-      serializedStep.push({type: write1Gates[0].operationType, targets})
-      operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '1'))
-    }
+    operations = operations.filter(each => !isWriteGateElement(each))
 
     serializedStep = serializedStep.concat(this.groupPhaseGates(operations))
     operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
