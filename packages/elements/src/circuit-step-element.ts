@@ -22,8 +22,6 @@ import {
   SerializedControlGateType,
   SerializedPhaseGateType,
   SerializedSwapGateType,
-  SerializedWrite0GateType,
-  SerializedWrite1GateType,
   Util,
   describe
 } from '@qni/common'
@@ -914,11 +912,8 @@ export class CircuitStepElement extends HTMLElement {
       .filter((each): each is WriteGateElement => isWriteGateElement(each))
       .filter(each => each.value === '0')
     if (write0Gates.length > 0) {
-      const write0Targets = write0Gates.map(each => each.bit)
-      serializedStep.push({
-        type: SerializedWrite0GateType,
-        targets: write0Targets
-      })
+      const targets = write0Gates.map(each => each.bit)
+      serializedStep.push({type: write0Gates[0].operationType, targets})
       operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '0'))
     }
 
@@ -926,11 +921,8 @@ export class CircuitStepElement extends HTMLElement {
       .filter((each): each is WriteGateElement => isWriteGateElement(each))
       .filter(each => each.value === '1')
     if (write1Gates.length > 0) {
-      const write1Targets = write1Gates.map(each => each.bit)
-      serializedStep.push({
-        type: SerializedWrite1GateType,
-        targets: write1Targets
-      })
+      const targets = write1Gates.map(each => each.bit)
+      serializedStep.push({type: write1Gates[0].operationType, targets})
       operations = operations.filter(each => !(isWriteGateElement(each) && each.value === '1'))
     }
 
