@@ -20,7 +20,6 @@ import {
   SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
-  SerializedMeasurementGateType,
   SerializedPhaseGateType,
   SerializedSwapGateType,
   SerializedWrite0GateType,
@@ -897,17 +896,19 @@ export class CircuitStepElement extends HTMLElement {
     }
     operations = operations.filter(each => !isRxGateElement(each) && !isRyGateElement(each) && !isRzGateElement(each))
 
-    const flaggedMeasurementGates = operations
-      .filter((each): each is MeasurementGateElement => isMeasurementGateElement(each))
-      .filter(each => each.flag !== '')
-    for (const each of flaggedMeasurementGates) {
-      serializedStep.push({
-        type: SerializedMeasurementGateType,
-        targets: [each.bit],
-        flag: each.flag
-      })
+    const measurementGates = operations.filter((each): each is MeasurementGateElement => isMeasurementGateElement(each))
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_klass, ops] of groupBy(measurementGates, op => op.flag)) {
+      const targets = ops.map(each => each.bit)
+      const opType = ops[0].operationType
+      const flag = ops[0].flag
+      if (flag !== '') {
+        serializedStep.push({type: opType, targets, flag})
+      } else {
+        serializedStep.push({type: opType, targets})
+      }
     }
-    operations = operations.filter(each => !(isMeasurementGateElement(each) && each.flag !== ''))
+    operations = operations.filter(each => !isMeasurementGateElement(each))
 
     const write0Gates = operations
       .filter((each): each is WriteGateElement => isWriteGateElement(each))
@@ -949,12 +950,9 @@ export class CircuitStepElement extends HTMLElement {
           groupedOps = this.groupOperationsByControls(operationsGroup as ControllableOperations[])
           break
         }
-        case BlochDisplayElement:
-        case MeasurementGateElement: {
+        case BlochDisplayElement: {
           const targets = operationsGroup.map(each => each.bit)
-          const opType = operationsGroup[0].operationType
-          if (opType !== SerializedBlochDisplayType && opType !== SerializedMeasurementGateType) break
-          groupedOps = [{type: opType, targets}]
+          groupedOps = [{type: SerializedBlochDisplayType, targets}]
           break
         }
         case SwapGateElement:
