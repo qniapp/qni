@@ -22,9 +22,6 @@ import {
   SerializedControlGateType,
   SerializedMeasurementGateType,
   SerializedPhaseGateType,
-  SerializedRxGateType,
-  SerializedRyGateType,
-  SerializedRzGateType,
   SerializedSwapGateType,
   SerializedWrite0GateType,
   SerializedWrite1GateType,
@@ -879,32 +876,24 @@ export class CircuitStepElement extends HTMLElement {
     const controlGroup = this.groupControlGates(operations)
     if (controlGroup !== null) serializedStep.push(controlGroup)
 
-    const rxGates = operations.filter((each): each is RxGateElement => isRxGateElement(each))
-    const ryGates = operations.filter((each): each is RyGateElement => isRyGateElement(each))
-    const rzGates = operations.filter((each): each is RzGateElement => isRzGateElement(each))
-    for (const each of rxGates) {
-      serializedStep.push({
-        type: SerializedRxGateType,
-        targets: [each.bit],
-        angle: each.angle,
-        controls: each.controls
-      })
-    }
-    for (const each of ryGates) {
-      serializedStep.push({
-        type: SerializedRyGateType,
-        targets: [each.bit],
-        angle: each.angle,
-        controls: each.controls
-      })
-    }
-    for (const each of rzGates) {
-      serializedStep.push({
-        type: SerializedRzGateType,
-        targets: [each.bit],
-        angle: each.angle,
-        controls: each.controls
-      })
+    for (const [klass, ops] of groupBy(operations, op => op.constructor)) {
+      if (!(klass === RxGateElement || klass === RyGateElement || klass === RzGateElement)) continue
+
+      const rops = ops as Array<RxGateElement | RyGateElement | RzGateElement>
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const [_klass, sameAngleRops] of groupBy(rops, rop => rop.angle)) {
+        const rop0 = sameAngleRops[0]
+        const opType = rop0.operationType
+        const targets = sameAngleRops.map(each => each.bit)
+        const angle = rop0.angle
+        const controls = rop0.controls
+
+        if (controls.length > 0) {
+          serializedStep.push({type: opType, targets, angle, controls})
+        } else {
+          serializedStep.push({type: opType, targets, angle})
+        }
+      }
     }
     operations = operations.filter(each => !isRxGateElement(each) && !isRyGateElement(each) && !isRzGateElement(each))
 
