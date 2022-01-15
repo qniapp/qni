@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Util, describe} from '@qni/common'
+import {Complex, DetailedError, Util} from '@qni/common'
 import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
@@ -32,7 +32,9 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.update()
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
+    this.addEventListener('operation-inspector-if-change', this.run)
     this.addEventListener('operation-inspector-angle-change', this.run)
+    this.addEventListener('operation-inspector-flag-change', this.run)
     this.addEventListener('circuit-step-mouseenter', this.runUnlessEditing)
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-update', this.run)
@@ -114,9 +116,6 @@ export class QuantumSimulatorElement extends HTMLElement {
       )
     )
     const qubitCount = maxTargetBit >= 0 ? maxTargetBit + 1 : 1
-
-    // eslint-disable-next-line no-console
-    console.log(describe(serializedSteps))
 
     this.circleNotation.qubitCount = qubitCount
     this.worker.postMessage({

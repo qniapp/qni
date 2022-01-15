@@ -15,7 +15,8 @@ import {
   SerializedWrite1GateType,
   SerializedXGateType,
   SerializedYGateType,
-  SerializedZGateType
+  SerializedZGateType,
+  describe
 } from '@qni/common'
 import {Matrix} from './matrix'
 import {StateVector} from './state-vector'
@@ -38,6 +39,9 @@ export class Simulator {
   }
 
   runStep(operations: SerializedCircuitStep): Simulator {
+    // eslint-disable-next-line no-console
+    console.log(describe(operations))
+
     this.blochVectors = {}
 
     for (const each of operations) {

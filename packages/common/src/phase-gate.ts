@@ -5,4 +5,5 @@ export type SerializedPhaseGate = {
   angle?: string
   targets: number[]
   controls?: number[]
+  if?: string
 }
