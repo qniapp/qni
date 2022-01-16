@@ -130,8 +130,8 @@ describe('quantum-circuit element', function () {
 
         assert.deepEqual(circuit.serialize(), [
           [
-            {type: 'P', targets: [3]},
-            {type: 'P', targets: [1, 2], controls: [0]}
+            {type: 'P', targets: [1, 2], controls: [0]},
+            {type: 'P', targets: [3]}
           ]
         ])
       })
