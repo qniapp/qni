@@ -846,10 +846,6 @@ export class CircuitStepElement extends HTMLElement {
     this.circuitStepService.send({type: 'UNSHADOW'})
   }
 
-  private get operations(): Operation[] {
-    return this.dropzones.map(each => each.operation).filter((each): each is NonNullable<Operation> => each !== null)
-  }
-
   serialize(): SerializedCircuitStep {
     const serializedStep: SerializedCircuitStep = []
 
@@ -1051,8 +1047,11 @@ export class CircuitStepElement extends HTMLElement {
           throw new DetailedError('Unrecognized operation', {klass})
       }
     }
-
     return serializedStep
+  }
+
+  private get operations(): Operation[] {
+    return this.dropzones.map(each => each.operation).filter((each): each is NonNullable<Operation> => each !== null)
   }
 }
 

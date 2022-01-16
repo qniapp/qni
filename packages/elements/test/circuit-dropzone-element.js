@@ -36,13 +36,13 @@ describe('circuit-dropzone element', function () {
       document.body.textContent = ''
     })
 
-    it('no circuit-dropzone[data-occupied]', function () {
+    it('not occupied', function () {
       const dropzone = document.createElement('circuit-dropzone')
 
-      assert.isFalse(dropzone.hasAttribute('data-occupied'))
+      assert.isFalse(dropzone.occupied)
     })
 
-    it('circuit-dropzone[data-occupied]', function () {
+    it('occupied', function () {
       const container = document.createElement('div')
       container.innerHTML = `
 <circuit-dropzone>
@@ -51,7 +51,7 @@ describe('circuit-dropzone element', function () {
       document.body.append(container)
 
       const dropzone = document.querySelector('circuit-dropzone')
-      assert.isTrue(dropzone.hasAttribute('data-occupied'))
+      assert.isTrue(dropzone.occupied)
     })
   })
 })

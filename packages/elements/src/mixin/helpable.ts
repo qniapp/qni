@@ -107,11 +107,11 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
             this.help = true
           },
           disable: () => {
-            this.popup.disable()
+            this.popup?.disable()
             this.help = false
           },
           destroy: () => {
-            this.popup.destroy()
+            this.popup?.destroy()
           }
         }
       }

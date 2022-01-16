@@ -15,13 +15,13 @@ describe('quantum-circuit element', function () {
     // -|0>---X-M-
     it('draws classical and quantum wires', function () {
       const circuit = new window.QuantumCircuitElement()
+      document.body.append(circuit)
 
       circuit
         .write('0', 0, 1)
         .h({targets: [0]})
         .cnot(0, 1)
         .measure(0, 1)
-      document.body.append(circuit)
 
       assert.isFalse(circuit.stepAt(0).dropzoneAt(0).inputWireQuantum)
       assert.isFalse(circuit.stepAt(0).dropzoneAt(1).inputWireQuantum)
