@@ -129,6 +129,7 @@ type CircuitStepEvent =
   | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'PUT_OPERATION'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
 export class CircuitStepElement extends HTMLElement {
@@ -199,6 +200,10 @@ export class CircuitStepElement extends HTMLElement {
               target: 'visible',
               actions: ['dispatchUnsnapEvent']
             },
+            PUT_OPERATION: {
+              target: 'visible',
+              actions: ['setOperationBit']
+            },
             DELETE_OPERATION: {
               target: 'visible',
               actions: ['dispatchDeleteOperationEvent']
@@ -264,7 +269,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       actions: {
         setOperationBit: (_context, event) => {
-          if (event.type !== 'SNAP_DROPZONE') return
+          if (event.type !== 'SNAP_DROPZONE' && event.type !== 'PUT_OPERATION') return
 
           const dropzone = event.dropzone
           const bit = this.bit(dropzone)
@@ -354,6 +359,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
     this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
+    this.addEventListener('circuit-dropzone-put', this.putOperation)
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -846,6 +852,11 @@ export class CircuitStepElement extends HTMLElement {
     this.circuitStepService.send({type: 'UNSHADOW'})
   }
 
+  private putOperation(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'PUT_OPERATION', dropzone})
+  }
+
   serialize(): SerializedCircuitStep {
     const serializedStep: SerializedCircuitStep = []
 
@@ -999,7 +1010,7 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case SwapGateElement: {
-          const swapGates = sameOps as SwapGateElement[]
+          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.disabled)
           if (swapGates.length !== 2) break
 
           const opType = swapGates[0].operationType
@@ -1010,7 +1021,7 @@ export class CircuitStepElement extends HTMLElement {
           break
         }
         case ControlGateElement: {
-          const controlGates = sameOps as ControlGateElement[]
+          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.disabled)
           if (controlGates.length < 2) break
           if (this.operations.some(each => isControllable(each) && each.controls.length > 0)) break
 

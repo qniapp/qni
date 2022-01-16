@@ -631,7 +631,6 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of targets) {
       const operation = constructor()
       step.dropzoneAt(each).put(operation)
-      operation.bit = each
     }
 
     return step
