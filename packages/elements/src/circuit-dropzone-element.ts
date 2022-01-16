@@ -104,6 +104,7 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.append(event.operation)
           this.operationName = event.operation.tagName.toLocaleLowerCase()
           event.operation.snapped = true
+          this.dispatchEvent(new Event('circuit-dropzone-put', {bubbles: true}))
         },
         initOperation: (_context, event) => {
           if (event.type !== 'INIT_OPERATION') return

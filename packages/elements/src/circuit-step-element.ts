@@ -1,9 +1,25 @@
+import {
+  DetailedError,
+  SerializedCircuitStep,
+  SerializedHGate,
+  SerializedMeasurementGate,
+  SerializedPhaseGate,
+  SerializedRnotGate,
+  SerializedRxGate,
+  SerializedRyGate,
+  SerializedRzGate,
+  SerializedSwapGate,
+  SerializedXGate,
+  SerializedYGate,
+  SerializedZGate,
+  Util,
+  describe
+} from '@qni/common'
 import {Interpreter, createMachine, interpret} from 'xstate'
 import {
   Operation,
   isControlGateElement,
   isHGateElement,
-  isMeasurementGateElement,
   isOperation,
   isPhaseGateElement,
   isRnotGateElement,
@@ -15,15 +31,6 @@ import {
   isYGateElement,
   isZGateElement
 } from './operation'
-import {
-  SerializedCircuitStep,
-  SerializedControlGateType,
-  SerializedMeasurementGateType,
-  SerializedPhaseGateType,
-  SerializedSwapGateType,
-  Util,
-  describe
-} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
@@ -42,7 +49,6 @@ import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
 import {ZGateElement} from './z-gate-element'
 import {isControllable} from './mixin/controllable'
-import {isDisableable} from './mixin'
 
 export const isCircuitStepElement = (arg: unknown): arg is CircuitStepElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitStepElement
@@ -97,17 +103,6 @@ type ConnectionProps = {
   maxPhasePhaseTargetGates: number
 }
 
-type ControllableOperations =
-  | HGateElement
-  | XGateElement
-  | YGateElement
-  | ZGateElement
-  | PhaseGateElement
-  | RnotGateElement
-  | RxGateElement
-  | RyGateElement
-  | RzGateElement
-
 const groupBy = <K, V>(
   array: readonly V[],
   getKey: (current: V, index: number, orig: readonly V[]) => K
@@ -134,6 +129,7 @@ type CircuitStepEvent =
   | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'PUT_OPERATION'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
 export class CircuitStepElement extends HTMLElement {
@@ -204,6 +200,10 @@ export class CircuitStepElement extends HTMLElement {
               target: 'visible',
               actions: ['dispatchUnsnapEvent']
             },
+            PUT_OPERATION: {
+              target: 'visible',
+              actions: ['setOperationBit']
+            },
             DELETE_OPERATION: {
               target: 'visible',
               actions: ['dispatchDeleteOperationEvent']
@@ -269,7 +269,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       actions: {
         setOperationBit: (_context, event) => {
-          if (event.type !== 'SNAP_DROPZONE') return
+          if (event.type !== 'SNAP_DROPZONE' && event.type !== 'PUT_OPERATION') return
 
           const dropzone = event.dropzone
           const bit = this.bit(dropzone)
@@ -359,6 +359,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
     this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
+    this.addEventListener('circuit-dropzone-put', this.putOperation)
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -851,161 +852,217 @@ export class CircuitStepElement extends HTMLElement {
     this.circuitStepService.send({type: 'UNSHADOW'})
   }
 
-  private get operations(): Operation[] {
-    return this.dropzones
-      .map(each => each.operation)
-      .filter(each => !isDisableable(each) || !each.disabled)
-      .filter((each): each is NonNullable<Operation> => each !== null)
+  private putOperation(event: Event): void {
+    const dropzone = event.target as CircuitDropzoneElement
+    this.circuitStepService.send({type: 'PUT_OPERATION', dropzone})
   }
 
   serialize(): SerializedCircuitStep {
-    let serializedStep: SerializedCircuitStep = []
-    let operations = this.operations
+    const serializedStep: SerializedCircuitStep = []
 
-    if (this.containsControlledU) {
-      operations = operations.filter(each => !isControlGateElement(each))
-    }
-
-    const swapPair = this.groupSwapGatePair(operations)
-    if (swapPair !== null) serializedStep.push(swapPair)
-
-    const controlGroup = this.groupControlGates(operations)
-    if (controlGroup !== null) serializedStep.push(controlGroup)
-
-    const flaggedMeasurementGates = operations
-      .filter((each): each is MeasurementGateElement => isMeasurementGateElement(each))
-      .filter(each => each.flag !== '')
-    for (const each of flaggedMeasurementGates) {
-      serializedStep.push({
-        type: SerializedMeasurementGateType,
-        targets: [each.bit],
-        flag: each.flag
-      })
-    }
-    operations = operations.filter(each => !(isMeasurementGateElement(each) && each.flag !== ''))
-
-    serializedStep = serializedStep.concat(this.groupPhaseGates(operations))
-    operations = operations.filter(each => !(isPhaseGateElement(each) && each.controls.length === 0))
-
-    for (const [klass, operationsGroup] of groupBy(operations, op => op.constructor)) {
-      let groupedOps: SerializedCircuitStep | null = null
-
+    for (const [klass, sameOps] of groupBy(this.operations, op => op.constructor)) {
       switch (klass) {
-        case HGateElement:
-        case XGateElement:
-        case YGateElement:
-        case ZGateElement:
-        case PhaseGateElement:
-        case RnotGateElement:
-        case RxGateElement:
-        case RyGateElement:
-        case RzGateElement: {
-          groupedOps = this.groupOperationsByControls(operationsGroup as ControllableOperations[])
-          break
-        }
-        case BlochDisplayElement:
-        case WriteGateElement:
-        case MeasurementGateElement: {
-          const targets = operationsGroup.map(each => each.bit)
-          operationsGroup[0].operationType
-          groupedOps = [
-            {
-              type: operationsGroup[0].operationType,
-              targets
+        case HGateElement: {
+          const hGates = sameOps as HGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(hGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedHGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
             }
-          ]
+          }
           break
         }
-        case SwapGateElement:
-        case ControlGateElement:
+        case XGateElement: {
+          const xGates = sameOps as XGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(xGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedXGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
+            }
+          }
           break
+        }
+        case YGateElement: {
+          const yGates = sameOps as YGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(yGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedYGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
+            }
+          }
+          break
+        }
+        case ZGateElement: {
+          const zGates = sameOps as ZGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(zGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedZGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
+            }
+          }
+          break
+        }
+        case PhaseGateElement: {
+          const phaseGates = sameOps as PhaseGateElement[]
+          for (const [angle, sameAngleGates] of groupBy(phaseGates, gate => gate.angle)) {
+            for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+                const gate0 = sameControlGates[0]
+                const opType = gate0.operationType
+                const targets = sameControlGates.map(each => each.bit)
+                const serializedGate: SerializedPhaseGate = {type: opType, targets}
+                if (ifStr !== '') serializedGate.if = ifStr
+                if (angle !== '') serializedGate.angle = angle
+                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                serializedStep.push(serializedGate)
+              }
+            }
+          }
+          break
+        }
+        case RnotGateElement: {
+          const rnotGates = sameOps as RnotGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(rnotGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedRnotGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
+            }
+          }
+          break
+        }
+        case RxGateElement: {
+          const rxGates = sameOps as RxGateElement[]
+          for (const [angle, sameAngleGates] of groupBy(rxGates, gate => gate.angle)) {
+            for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+                const gate0 = sameControlGates[0]
+                const opType = gate0.operationType
+                const targets = sameControlGates.map(each => each.bit)
+                const serializedGate: SerializedRxGate = {type: opType, targets}
+                if (ifStr !== '') serializedGate.if = ifStr
+                if (angle !== '') serializedGate.angle = angle
+                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                serializedStep.push(serializedGate)
+              }
+            }
+          }
+          break
+        }
+        case RyGateElement: {
+          const ryGates = sameOps as RyGateElement[]
+          for (const [angle, sameAngleGates] of groupBy(ryGates, gate => gate.angle)) {
+            for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+                const gate0 = sameControlGates[0]
+                const opType = gate0.operationType
+                const targets = sameControlGates.map(each => each.bit)
+                const serializedGate: SerializedRyGate = {type: opType, targets}
+                if (ifStr !== '') serializedGate.if = ifStr
+                if (angle !== '') serializedGate.angle = angle
+                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                serializedStep.push(serializedGate)
+              }
+            }
+          }
+          break
+        }
+        case RzGateElement: {
+          const rzGates = sameOps as RzGateElement[]
+          for (const [angle, sameAngleGates] of groupBy(rzGates, gate => gate.angle)) {
+            for (const [ifStr, sameIfGates] of groupBy(sameAngleGates, gate => gate.if)) {
+              for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+                const gate0 = sameControlGates[0]
+                const opType = gate0.operationType
+                const targets = sameControlGates.map(each => each.bit)
+                const serializedGate: SerializedRzGate = {type: opType, targets}
+                if (ifStr !== '') serializedGate.if = ifStr
+                if (angle !== '') serializedGate.angle = angle
+                if (controlsStr !== '') serializedGate.controls = gate0.controls
+                serializedStep.push(serializedGate)
+              }
+            }
+          }
+          break
+        }
+        case SwapGateElement: {
+          const swapGates = (sameOps as SwapGateElement[]).filter(each => !each.disabled)
+          if (swapGates.length !== 2) break
+
+          const opType = swapGates[0].operationType
+          const controls = swapGates[0].controls
+          const serializedGate: SerializedSwapGate = {type: opType, targets: [swapGates[0].bit, swapGates[1].bit]}
+          if (controls !== undefined && controls.length > 0) serializedGate.controls = controls
+          serializedStep.push(serializedGate)
+          break
+        }
+        case ControlGateElement: {
+          const controlGates = (sameOps as ControlGateElement[]).filter(each => !each.disabled)
+          if (controlGates.length < 2) break
+          if (this.operations.some(each => isControllable(each) && each.controls.length > 0)) break
+
+          const targets = controlGates.map(each => each.bit)
+          serializedStep.push({type: controlGates[0].operationType, targets})
+          break
+        }
+        case BlochDisplayElement: {
+          const blochDisplays = sameOps as BlochDisplayElement[]
+          const targets = sameOps.map(each => each.bit)
+          serializedStep.push({type: blochDisplays[0].operationType, targets})
+          break
+        }
+        case WriteGateElement: {
+          const writeGates = sameOps as WriteGateElement[]
+          for (const [, sameValueGates] of groupBy(writeGates, gate => gate.value)) {
+            const targets = sameValueGates.map(each => each.bit)
+            serializedStep.push({type: sameValueGates[0].operationType, targets})
+          }
+          break
+        }
+        case MeasurementGateElement: {
+          const measurementGates = sameOps as MeasurementGateElement[]
+          for (const [flag, sameFlagGates] of groupBy(measurementGates, gate => gate.flag)) {
+            const targets = sameFlagGates.map(each => each.bit)
+            const opType = sameFlagGates[0].operationType
+            const serializedGate: SerializedMeasurementGate = {type: opType, targets}
+            if (flag !== '') serializedGate.flag = flag
+            serializedStep.push(serializedGate)
+          }
+          break
+        }
         default:
-          throw new Error(`Unknown operation type: ${klass}`)
+          throw new DetailedError('Unrecognized operation', {klass})
       }
-
-      if (groupedOps !== null) serializedStep = serializedStep.concat(groupedOps)
     }
-
     return serializedStep
   }
 
-  private get containsControlledU(): boolean {
-    return (
-      this.dropzones.some(each => {
-        return isControlGateElement(each.operation)
-      }) &&
-      this.dropzones.some(each => {
-        return isControllable(each.operation)
-      })
-    )
-  }
-
-  private groupSwapGatePair(operations: Operation[]): {
-    type: typeof SerializedSwapGateType
-    targets: number[]
-    controls?: number[]
-  } | null {
-    const swapPair = operations.filter((each): each is SwapGateElement => isSwapGateElement(each))
-    if (swapPair.length !== 2) return null
-
-    const targets = swapPair.map(each => each.bit)
-    const controls = swapPair[0].controls
-    if (controls !== undefined && controls.length > 0) {
-      return {type: SerializedSwapGateType, targets, controls}
-    } else {
-      return {type: SerializedSwapGateType, targets}
-    }
-  }
-
-  private groupControlGates(
-    operations: Operation[]
-  ): {type: typeof SerializedControlGateType; targets: number[]} | null {
-    const controlGates = operations.filter((each): each is ControlGateElement => isControlGateElement(each))
-    if (controlGates.length < 2) return null
-    if (operations.some(each => isControllable(each))) return null
-
-    const targets = controlGates.map(each => each.bit)
-    return {type: SerializedControlGateType, targets}
-  }
-
-  private groupPhaseGates(operations: Operation[]): SerializedCircuitStep {
-    const serializedStep: SerializedCircuitStep = []
-    const phaseGates = operations.filter(
-      (each): each is PhaseGateElement => isPhaseGateElement(each) && each.controls.length === 0
-    )
-
-    for (const [angle, group] of groupBy(phaseGates, phase => phase.angle)) {
-      const targets = group.map(each => each.bit)
-      if (angle === '') {
-        serializedStep.push({
-          type: SerializedPhaseGateType,
-          targets
-        })
-      } else {
-        serializedStep.push({
-          type: SerializedPhaseGateType,
-          angle,
-          targets
-        })
-      }
-    }
-
-    return serializedStep
-  }
-
-  private groupOperationsByControls(operations: ControllableOperations[]): SerializedCircuitStep {
-    const serializedStep: SerializedCircuitStep = []
-
-    for (const [controls, group] of groupBy(operations, op => op.controls.toString())) {
-      const targets = group.map(each => each.bit)
-      if (controls === '') {
-        serializedStep.push({type: group[0].operationType, targets})
-      } else {
-        serializedStep.push({type: group[0].operationType, targets, controls: group[0].controls})
-      }
-    }
-
-    return serializedStep
+  private get operations(): Operation[] {
+    return this.dropzones.map(each => each.operation).filter((each): each is NonNullable<Operation> => each !== null)
   }
 }
 

@@ -12,7 +12,6 @@ circuit-dropzone {
     @apply overflow-visible;
     @apply transform-gpu origin-center;
     @apply rotate-90;
-    @apply sm:rotate-90;
     @apply md:rotate-0;
   }
 
@@ -30,6 +29,21 @@ circuit-dropzone {
     @apply text-gray-200;
   }
 
+  &::part(wire-input) {
+    transform: translateX(-25%) scaleX(1.5);
+    transform-origin: left;
+  }
+  &::part(wire-output) {
+    transform: translateX(25%) scaleX(1.5);
+    transform-origin: right;
+  }
+  @media screen(md) {
+    &::part(wire-input),
+    &::part(wire-output) {
+      transform: none;
+    }
+  }
+
   &[data-connect-top]::part(connect-top) {
     transform-origin: center;
     transform: scaleY(1.8);
@@ -45,15 +59,21 @@ circuit-dropzone {
     @apply text-gray-900;
   }
 
-  &[data-operation-name="write-gate"]::part(wire-input),
-  &[data-operation-name="measurement-gate"]::part(wire-input) {
-    transform-origin: left;
-    transform: scaleX(0.33);
+  &[data-operation-name='write-gate']::part(wire-input),
+  &[data-operation-name='measurement-gate']::part(wire-input) {
+    transform: scaleX(0.75) translateX(-33.3%);
+
+    @media screen(md) {
+      transform: scaleX(0.33) translateX(0);
+    }
   }
 
-  &[data-operation-name="write-gate"]::part(wire-output),
-  &[data-operation-name="measurement-gate"]::part(wire-output) {
-    transform-origin: right;
-    transform: scaleX(0.33);
+  &[data-operation-name='write-gate']::part(wire-output),
+  &[data-operation-name='measurement-gate']::part(wire-output) {
+    transform: scaleX(0.75) translateX(33.3%);
+
+    @media screen(md) {
+      transform: scaleX(0.33) translateX(0);
+    }
   }
 }

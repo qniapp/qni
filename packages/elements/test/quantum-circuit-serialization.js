@@ -60,11 +60,6 @@ describe('quantum-circuit element', function () {
         circuit.h(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'H', targets: [0, 2]}]])
       })
-
-      it('disabled', function () {
-        circuit.h({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
-      })
     })
 
     describe('X', function () {
@@ -76,11 +71,6 @@ describe('quantum-circuit element', function () {
       it('targets = 0, 2', function () {
         circuit.x(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'X', targets: [0, 2]}]])
-      })
-
-      it('disabled', function () {
-        circuit.x({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
       })
     })
 
@@ -94,11 +84,6 @@ describe('quantum-circuit element', function () {
         circuit.y(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'Y', targets: [0, 2]}]])
       })
-
-      it('disabled', function () {
-        circuit.y({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
-      })
     })
 
     describe('Z', function () {
@@ -110,11 +95,6 @@ describe('quantum-circuit element', function () {
       it('targets = 0, 2', function () {
         circuit.z(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'Z', targets: [0, 2]}]])
-      })
-
-      it('disabled', function () {
-        circuit.z({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
       })
     })
 
@@ -128,11 +108,6 @@ describe('quantum-circuit element', function () {
         circuit.rnot(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'X^½', targets: [0, 2]}]])
       })
-
-      it('disabled', function () {
-        circuit.rnot({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
-      })
     })
 
     describe('Rx', function () {
@@ -144,11 +119,6 @@ describe('quantum-circuit element', function () {
       it('targets = 0, 2', function () {
         circuit.rx(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'Rx', targets: [0, 2]}]])
-      })
-
-      it('disabled', function () {
-        circuit.rx({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
       })
     })
 
@@ -162,11 +132,6 @@ describe('quantum-circuit element', function () {
         circuit.ry(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'Ry', targets: [0, 2]}]])
       })
-
-      it('disabled', function () {
-        circuit.ry({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
-      })
     })
 
     describe('Rz', function () {
@@ -178,11 +143,6 @@ describe('quantum-circuit element', function () {
       it('targets = 0, 2', function () {
         circuit.rz(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'Rz', targets: [0, 2]}]])
-      })
-
-      it('disabled', function () {
-        circuit.rz({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
       })
     })
 
@@ -255,11 +215,6 @@ describe('quantum-circuit element', function () {
       it('targets = 0, 2', function () {
         circuit.phase(0, 2)
         assert.deepEqual(circuit.serialize(), [[{type: 'P', targets: [0, 2]}]])
-      })
-
-      it('disabled', function () {
-        circuit.phase({targets: [0], disabled: true})
-        assert.deepEqual(circuit.serialize(), [[]])
       })
     })
 

@@ -371,6 +371,8 @@ export class QuantumCircuitElement extends HTMLElement {
       return h
     }, ...targets)
 
+    this.resize()
+
     return this
   }
 
@@ -607,6 +609,9 @@ export class QuantumCircuitElement extends HTMLElement {
       writeGate.value = value
       return writeGate
     }, ...targets)
+
+    this.resize()
+
     return this
   }
 
@@ -615,6 +620,7 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   measure(...targets: number[]): QuantumCircuitElement {
     this.applyOperationToTargets(() => new MeasurementGateElement(), ...targets)
+    this.resize()
     return this
   }
 
@@ -626,8 +632,6 @@ export class QuantumCircuitElement extends HTMLElement {
       const operation = constructor()
       step.dropzoneAt(each).put(operation)
     }
-
-    this.appendMinimumWires()
 
     return step
   }
@@ -645,6 +649,7 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   cnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
     this.controlledU(XGateElement, control, target)
+    this.resize()
     return this
   }
   cx = this.cnot
