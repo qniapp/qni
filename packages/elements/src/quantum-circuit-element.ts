@@ -258,10 +258,10 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateAllWires()
 
     this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
-    this.addEventListener('circuit-step-update', this.updateConnections)
-    this.addEventListener('circuit-step-snap', this.updateConnections)
+    this.addEventListener('circuit-step-update', this.updateStep)
+    this.addEventListener('circuit-step-snap', this.updateStep)
     this.addEventListener('circuit-step-snap', this.updateChangedWire)
-    this.addEventListener('circuit-step-unsnap', this.updateConnections)
+    this.addEventListener('circuit-step-unsnap', this.updateStep)
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
   }
 
@@ -281,13 +281,13 @@ export class QuantumCircuitElement extends HTMLElement {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
-  private updateConnections(event: Event): void {
+  private updateStep(event: Event): void {
     const step = event.target as CircuitStepElement
-    this.updateStepConnections(step)
+    this.updateStepOperationAttributes(step)
   }
 
-  private updateStepConnections(step: CircuitStepElement): void {
-    step.updateConnections({
+  private updateStepOperationAttributes(step: CircuitStepElement): void {
+    step.updateOperationAttributes({
       // Controlled-H
       disableCh: this.chDisabled,
       maxChControlGates: this.chMaxControlGates,
@@ -473,7 +473,7 @@ export class QuantumCircuitElement extends HTMLElement {
       if (disabled) phase.disable()
       return phase
     }, ...targets)
-    if (targets.length > 1) this.updateStepConnections(step)
+    if (targets.length > 1) this.updateStepOperationAttributes(step)
 
     return this
   }
@@ -579,7 +579,7 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   swap(...targets: number[]): QuantumCircuitElement {
     const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targets)
-    this.updateStepConnections(step)
+    this.updateStepOperationAttributes(step)
     return this
   }
 
@@ -588,7 +588,7 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   control(...targets: number[]): QuantumCircuitElement {
     const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targets)
-    this.updateStepConnections(step)
+    this.updateStepOperationAttributes(step)
     return this
   }
 
@@ -730,7 +730,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     this.appendMinimumWires()
-    this.updateStepConnections(step)
+    this.updateStepOperationAttributes(step)
 
     return this
   }
@@ -765,7 +765,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     this.appendMinimumWires()
-    this.updateStepConnections(step)
+    this.updateStepOperationAttributes(step)
   }
 
   private appendStepWithDropzones(nbit: number): CircuitStepElement {

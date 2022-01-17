@@ -129,7 +129,7 @@ type CircuitStepEvent =
   | {type: 'SNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSNAP_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'DELETE_OPERATION'; dropzone: CircuitDropzoneElement}
-  | {type: 'PUT_OPERATION'; dropzone: CircuitDropzoneElement}
+  | {type: 'OCCUPY_DROPZONE'; dropzone: CircuitDropzoneElement}
   | {type: 'UNSHADOW'}
 
 export class CircuitStepElement extends HTMLElement {
@@ -200,7 +200,7 @@ export class CircuitStepElement extends HTMLElement {
               target: 'visible',
               actions: ['dispatchUnsnapEvent']
             },
-            PUT_OPERATION: {
+            OCCUPY_DROPZONE: {
               target: 'visible',
               actions: ['setOperationBit']
             },
@@ -269,7 +269,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       actions: {
         setOperationBit: (_context, event) => {
-          if (event.type !== 'SNAP_DROPZONE' && event.type !== 'PUT_OPERATION') return
+          if (event.type !== 'OCCUPY_DROPZONE') return
 
           const dropzone = event.dropzone
           const bit = this.bit(dropzone)
@@ -350,16 +350,16 @@ export class CircuitStepElement extends HTMLElement {
       })
       .start()
 
-    this.attachShadow({mode: 'open'})
-    this.update()
-
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
     this.addEventListener('click', this.maybeDispatchClickEvent)
     this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
     this.addEventListener('circuit-dropzone-operation-delete', this.deleteOperation)
     this.addEventListener('circuit-dropzone-drop', this.unshadow)
-    this.addEventListener('circuit-dropzone-put', this.putOperation)
+    this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone)
+
+    this.attachShadow({mode: 'open'})
+    this.update()
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -397,7 +397,7 @@ export class CircuitStepElement extends HTMLElement {
     this.dispatchUpdateEvent()
   }
 
-  updateConnections(connectionProps?: ConnectionProps): void {
+  updateOperationAttributes(connectionProps?: ConnectionProps): void {
     for (const each of this.dropzones) {
       each.connectTop = false
       each.connectBottom = false
@@ -852,9 +852,9 @@ export class CircuitStepElement extends HTMLElement {
     this.circuitStepService.send({type: 'UNSHADOW'})
   }
 
-  private putOperation(event: Event): void {
+  private occupyDropzone(event: Event): void {
     const dropzone = event.target as CircuitDropzoneElement
-    this.circuitStepService.send({type: 'PUT_OPERATION', dropzone})
+    this.circuitStepService.send({type: 'OCCUPY_DROPZONE', dropzone})
   }
 
   serialize(): SerializedCircuitStep {
