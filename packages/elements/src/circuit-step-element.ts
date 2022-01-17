@@ -269,7 +269,7 @@ export class CircuitStepElement extends HTMLElement {
     {
       actions: {
         setOperationBit: (_context, event) => {
-          if (event.type !== 'OCCUPY_DROPZONE') return
+          if (event.type !== 'SNAP_DROPZONE' && event.type !== 'OCCUPY_DROPZONE') return
 
           const dropzone = event.dropzone
           const bit = this.bit(dropzone)
