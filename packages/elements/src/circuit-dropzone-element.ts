@@ -134,7 +134,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   get occupied(): boolean {
-    return this.operation !== null
+    return this.operationName !== ''
   }
 
   get operation(): Operation | null {

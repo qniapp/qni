@@ -1062,7 +1062,10 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   private get operations(): Operation[] {
-    return this.dropzones.map(each => each.operation).filter((each): each is NonNullable<Operation> => each !== null)
+    return this.dropzones
+      .filter(each => each.occupied)
+      .map(each => each.operation)
+      .filter((each): each is NonNullable<Operation> => each !== null)
   }
 }
 
