@@ -135,8 +135,10 @@ export class QuantumSimulatorElement extends HTMLElement {
     const activeStep = this.circuit.activeStep
     const breakpoint = this.circuit.breakpoint
     const step = activeStep || breakpoint
-    Util.notNull(step)
-
+    if (step === null) {
+      this.circuit.setBreakpoint(this.circuit.stepAt(0))
+      return 0
+    }
     return this.circuit.fetchStepIndex(step)
   }
 
