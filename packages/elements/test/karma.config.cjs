@@ -1,20 +1,20 @@
 module.exports = function (config) {
   config.set({
-    frameworks: ["mocha", "chai"],
+    frameworks: ['mocha', 'chai'],
     files: [
       {
-        pattern: "../dist/index.js",
-        type: "module",
+        pattern: '../dist/index.js',
+        type: 'module'
       },
       {
-        pattern: "../build/test.js",
-        type: "module",
+        pattern: '../build/test.js',
+        type: 'module'
       }
     ],
-    reporters: ["mocha"],
+    reporters: ['mocha'],
     autoWatch: false,
-    browsers: ["ChromeHeadless"],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO
   })
 }
