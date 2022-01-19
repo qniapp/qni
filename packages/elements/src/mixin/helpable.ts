@@ -89,7 +89,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
               animation: false,
               arrow: roundArrow + roundArrow,
               delay: 0,
-              placement: 'right',
+              placement: 'auto',
               theme: 'qni',
               // trigger: 'manual', // debug
               onShow(instance: Instance) {

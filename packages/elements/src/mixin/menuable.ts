@@ -18,6 +18,9 @@ export const isMenuable = (arg: unknown): arg is Menuable =>
 export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Menuable> & TBase {
   class MenuableMixinClass extends Base {
     public menu!: TippyInstance
+    private ifTooltip!: TippyInstance | undefined
+    private angleTooltip!: TippyInstance | undefined
+    private flagTooltip!: TippyInstance | undefined
 
     initMenu(): void {
       const popupInstance = (this as TippyReferenceElement)._tippy
@@ -35,7 +38,12 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         placement: 'top',
         theme: 'operation-menu',
         trigger: 'manual',
-        onShow: this.initMenuItems.bind(this)
+        onShow: this.initMenuItems.bind(this),
+        onHide: () => {
+          this.ifTooltip?.hide()
+          this.angleTooltip?.hide()
+          this.flagTooltip?.hide()
+        }
       })
     }
 
@@ -74,9 +82,9 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         Util.notNull(ifButton)
         ifButton.disabled = false
 
-        const ifTooltip = (ifButton as TippyReferenceElement)._tippy
-        if (ifTooltip === undefined) {
-          tippy(ifButton, {
+        this.ifTooltip = (ifButton as TippyReferenceElement)._tippy
+        if (this.ifTooltip === undefined) {
+          this.ifTooltip = tippy(ifButton, {
             animation: false,
             content: "Set `if' Conditional"
           })
@@ -89,9 +97,9 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         Util.notNull(angleButton)
         angleButton.disabled = false
 
-        const angleTooltip = (angleButton as TippyReferenceElement)._tippy
-        if (angleTooltip === undefined) {
-          tippy(angleButton, {
+        this.angleTooltip = (angleButton as TippyReferenceElement)._tippy
+        if (this.angleTooltip === undefined) {
+          this.angleTooltip = tippy(angleButton, {
             animation: false,
             content: 'Change Angle'
           })
@@ -104,9 +112,9 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         Util.notNull(flagButton)
         flagButton.disabled = false
 
-        const flagTooltip = (flagButton as TippyReferenceElement)._tippy
-        if (flagTooltip === undefined) {
-          tippy(flagButton, {
+        this.flagTooltip = (flagButton as TippyReferenceElement)._tippy
+        if (this.flagTooltip === undefined) {
+          this.flagTooltip = tippy(flagButton, {
             animation: false,
             content: 'Set Condifitonal Flag'
           })

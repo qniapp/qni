@@ -11,7 +11,6 @@ import interact from '@interactjs/interact'
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
   arg !== null && arg instanceof AngleSliderElement
 
-@controller
 export class AngleSliderElement extends HTMLElement {
   @attr denominator = 0
   @attr disabled = false
@@ -167,3 +166,5 @@ export class AngleSliderElement extends HTMLElement {
     this.style.paddingLeft = `${proportion * 100}%`
   }
 }
+
+controller(AngleSliderElement)
