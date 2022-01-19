@@ -73,7 +73,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
-    "postcss-preset-env": "^7.0.1",
+    "postcss-preset-env": "~7.2",
     "rollup": "^2.59.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-replace": "^2.2.0",
