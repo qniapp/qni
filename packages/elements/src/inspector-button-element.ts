@@ -70,7 +70,7 @@ export class InspectorButtonElement extends HTMLElement {
       arrow: false,
       content: this.popupContent,
       interactive: true,
-      offset: [0, 16],
+      offset: [0, 4],
       placement: 'bottom',
       theme: 'operation-inspector',
       trigger: 'manual',
