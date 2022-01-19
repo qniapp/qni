@@ -238,7 +238,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return Array.from(this.querySelectorAll('circuit-dropzone')) as CircuitDropzoneElement[]
   }
 
-  private get operations(): Operation[] {
+  get operations(): Operation[] {
     return this.dropzones
       .map<Operation | null>(each => each.operation)
       .filter((each: Operation | null) => each !== null) as Operation[]
