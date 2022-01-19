@@ -16,7 +16,7 @@
     <%= clear_circuit %>
   <% end %>
 
-  <circuit-editor>
+  <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
     <div id="palette"
          class="hidden fixed top-0 left-0 mt-14 ml-6 md:flex flex-row space-x-2 px-4 py-5 rounded-md bg-white drop-shadow z-40">
       <palette-dropzone>
@@ -523,7 +523,7 @@
     </div>
 
     <quantum-circuit
-        class="my-52 ml-6"
+        class="my-52 ml-6 mr-6 md:mr-0"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-update-url="true"
         data-min-step-count="5"
@@ -573,6 +573,54 @@
       </circle-notation>
     </div>
     <run-circuit-button class="fixed bottom-0 right-0 mr-6 mb-6 md:mb-8 z-40"></run-circuit-button>
+
+    <div class="fixed bottom-0 left-0 right-0 py-2 px-2 mb-6 mx-6 flex flex-row flex-wrap bg-white drop-shadow-md rounded-xl md:hidden z-40">
+      <palette-dropzone class="m-1">
+        <h-gate></h-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <x-gate></x-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <y-gate></y-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <z-gate></z-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <phase-gate data-angle="π/2"></phase-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <rnot-gate></rnot-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <rx-gate data-angle="π/2"></rx-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <ry-gate data-angle="π/2"></ry-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <rz-gate data-angle="π/2"></rz-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <swap-gate></swap-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <control-gate></control-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <bloch-display></bloch-display>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <write-gate data-value="0" data-help-id="write0-gate-help"></write-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <write-gate data-value="1" data-help-id="write1-gate-help"></write-gate>
+      </palette-dropzone>
+      <palette-dropzone class="m-1">
+        <measurement-gate></measurement-gate>
+      </palette-dropzone>
+    </div>
   </circuit-editor>
 </quantum-simulator>
 
