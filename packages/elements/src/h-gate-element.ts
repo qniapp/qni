@@ -18,7 +18,6 @@ export type HGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class HGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -37,4 +36,14 @@ export class HGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconHGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.if !== '') {
+      return `"${SerializedHGateType}<${this.if}"`
+    } else {
+      return `"${SerializedHGateType}"`
+    }
+  }
 }
+
+controller(HGateElement)

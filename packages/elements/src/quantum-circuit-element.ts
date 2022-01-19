@@ -33,6 +33,9 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr editing = false
+  @attr updateUrl = false
+  @attr json = ''
+  @attr circuitTitle = ''
   @attr debug = false
 
   // Controlled-H
@@ -138,6 +141,10 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private get emptySteps(): CircuitStepElement[] {
     return this.steps.filter(each => each.isEmpty)
+  }
+
+  private get nonEmptySteps(): CircuitStepElement[] {
+    return this.steps.filter(each => !each.isEmpty)
   }
 
   private get largestStep(): CircuitStepElement | null {
@@ -253,6 +260,8 @@ export class QuantumCircuitElement extends HTMLElement {
 
     this.attachShadow({mode: 'open'})
     this.update()
+
+    this.loadFromJson()
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -770,6 +779,13 @@ export class QuantumCircuitElement extends HTMLElement {
     this.updateStepOperationAttributes(step)
   }
 
+  private appendStep(): CircuitStepElement {
+    const step = new CircuitStepElement()
+
+    this.append(step)
+    return step
+  }
+
   private appendStepWithDropzones(nbit: number): CircuitStepElement {
     const step = new CircuitStepElement()
     this.append(step)
@@ -817,6 +833,203 @@ export class QuantumCircuitElement extends HTMLElement {
     for (const each of this.emptySteps) {
       each.remove()
     }
+  }
+
+  private loadFromJson(): void {
+    let jsonString
+    // let circuitBlock = null
+
+    if (this.updateUrl) {
+      jsonString = this.urlJson
+    } else {
+      jsonString = this.json
+    }
+
+    if (jsonString === '' || jsonString === 'new') {
+      if (this.updateUrl) {
+        this.resize()
+      }
+      return
+    }
+
+    const jsonData = JSON.parse(jsonString)
+    this.circuitTitle = (jsonData.title || '').trim()
+
+    for (const step of jsonData.cols) {
+      const circuitStep = this.appendStep()
+
+      for (const instruction of step) {
+        switch (true) {
+          case /^\|0>$/.test(instruction): {
+            const writeGate = new WriteGateElement()
+            writeGate.value = '0'
+            circuitStep.appendOperation(writeGate)
+            break
+          }
+          case /^\|1>$/.test(instruction): {
+            const writeGate = new WriteGateElement()
+            writeGate.value = '1'
+            circuitStep.appendOperation(writeGate)
+            break
+          }
+          case /^H$/.test(instruction): {
+            const hGate = new HGateElement()
+            circuitStep.appendOperation(hGate)
+            break
+          }
+          case /^H<(.+)$/.test(instruction): {
+            const hGate = new HGateElement()
+            hGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(hGate)
+            break
+          }
+          case /^X$/.test(instruction): {
+            const xGate = new XGateElement()
+            circuitStep.appendOperation(xGate)
+            break
+          }
+          case /^X<(.+)$/.test(instruction): {
+            const xGate = new XGateElement()
+            xGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(xGate)
+            break
+          }
+          case /^Y$/.test(instruction): {
+            const yGate = new YGateElement()
+            circuitStep.appendOperation(yGate)
+            break
+          }
+          case /^Y<(.+)$/.test(instruction): {
+            const yGate = new YGateElement()
+            yGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(yGate)
+            break
+          }
+          case /^Z$/.test(instruction): {
+            const zGate = new ZGateElement()
+            circuitStep.appendOperation(zGate)
+            break
+          }
+          case /^Z<(.+)$/.test(instruction): {
+            const zGate = new ZGateElement()
+            zGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(zGate)
+            break
+          }
+          case /^P$/.test(instruction): {
+            const phaseGate = new PhaseGateElement()
+            circuitStep.appendOperation(phaseGate)
+            break
+          }
+          case /^P\((.+)\)$/.test(instruction): {
+            const phaseGate = new PhaseGateElement()
+            phaseGate.angle = RegExp.$1.replace('_', '/')
+            circuitStep.appendOperation(phaseGate)
+            break
+          }
+          case /^X\^½$/.test(instruction): {
+            const rnotGate = new RnotGateElement()
+            circuitStep.appendOperation(rnotGate)
+            break
+          }
+          case /^X\^½<(.+)$/.test(instruction): {
+            const rnotGate = new RnotGateElement()
+            rnotGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(rnotGate)
+            break
+          }
+          case /^Rx$/.test(instruction): {
+            const rxGate = new RxGateElement()
+            circuitStep.appendOperation(rxGate)
+            break
+          }
+          case /^Rx\((.+)\)$/.test(instruction): {
+            const rxGate = new RxGateElement()
+            rxGate.angle = RegExp.$1.replace('_', '/')
+            circuitStep.appendOperation(rxGate)
+            break
+          }
+          case /^Ry$/.test(instruction): {
+            const ryGate = new RyGateElement()
+            circuitStep.appendOperation(ryGate)
+            break
+          }
+          case /^Ry\((.+)\)$/.test(instruction): {
+            const ryGate = new RyGateElement()
+            ryGate.angle = RegExp.$1.replace('_', '/')
+            circuitStep.appendOperation(ryGate)
+            break
+          }
+          case /^Rz$/.test(instruction): {
+            const rzGate = new RzGateElement()
+            circuitStep.appendOperation(rzGate)
+            break
+          }
+          case /^Rz\((.+)\)$/.test(instruction): {
+            const rzGate = new RzGateElement()
+            rzGate.angle = RegExp.$1.replace('_', '/')
+            circuitStep.appendOperation(rzGate)
+            break
+          }
+          case /^Swap$/.test(instruction): {
+            const swapGate = new SwapGateElement()
+            circuitStep.appendOperation(swapGate)
+            break
+          }
+          case /^•$/.test(instruction): {
+            const controlGate = new ControlGateElement()
+            circuitStep.appendOperation(controlGate)
+            break
+          }
+          case /^Bloch$/.test(instruction): {
+            const blochDisplay = new BlochDisplayElement()
+            circuitStep.appendOperation(blochDisplay)
+            break
+          }
+          case /^Measure$/.test(instruction): {
+            const measurementGate = new MeasurementGateElement()
+            circuitStep.appendOperation(measurementGate)
+            break
+          }
+          case /^Measure>(.+)$/.test(instruction): {
+            const measurementGate = new MeasurementGateElement()
+            measurementGate.flag = RegExp.$1.trim()
+            circuitStep.appendOperation(measurementGate)
+            break
+          }
+          case /^[[{](.+)$/.test(instruction): {
+            // const comment = RegExp.$1
+            // circuitStep.remove()
+            // circuitBlock = new CircuitBlockElement()
+            // circuitBlock.comment = comment
+            // circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
+            // this.append(circuitBlock)
+            break
+          }
+          case /^[\]}]$/.test(instruction): {
+            // circuitStep.remove()
+            // circuitBlock!.finalize()
+            break
+          }
+          default: {
+            if (instruction === 1) {
+              // if (circuitStep.qubitCount === 0) {
+              //   circuitStep.keep = true
+              // } else {
+              //   circuitStep.keep = false
+              // }
+            } else {
+              throw new Error(`Unknown instruction: ${instruction}`)
+            }
+            circuitStep.appendDropzone()
+          }
+        }
+        // circuitStep.updateConnections()
+        circuitStep.updateOperationAttributes()
+      }
+    }
+
+    this.resize()
   }
 
   private appendMinimumWires(): void {
@@ -987,6 +1200,54 @@ export class QuantumCircuitElement extends HTMLElement {
 
   serialize(): SerializedCircuitStep[] {
     return this.steps.map(each => each.serialize())
+  }
+
+  private get urlJson(): string {
+    const json = window.location.href.toString().split(window.location.host)[1].slice(1)
+    return decodeURIComponent(json)
+  }
+
+  toJson(): string {
+    const cols = []
+
+    for (const each of this.nonEmptySteps) {
+      cols.push(each.toJson())
+    }
+
+    if (this.circuitTitle !== '') {
+      return `{"cols":[${cols.join(',')}],"title":"${this.circuitTitle}"}`
+    } else {
+      return `{"cols":[${cols.join(',')}]}`
+    }
+
+    // let isInBlock = false
+    // const cols = []
+
+    // for (const each of this.nonEmptySteps) {
+    //   if (each.isInBlock) {
+    //     if (!isInBlock) {
+    //       const block = each.block
+    //       cols.push(`["[${block.comment}"]`)
+    //       isInBlock = true
+    //     }
+    //   } else {
+    //     if (isInBlock) {
+    //       cols.push('["]"]')
+    //       isInBlock = false
+    //     }
+    //   }
+    //   cols.push(each.toJson())
+    // }
+
+    // if (isInBlock) {
+    //   cols.push('["]"]')
+    // }
+
+    // if (this.circuitTitle !== '') {
+    //   return `{"cols":[${cols.join(',')}],"title":"${this.circuitTitle}"}`
+    // } else {
+    //   return `{"cols":[${cols.join(',')}]}`
+    // }
   }
 }
 

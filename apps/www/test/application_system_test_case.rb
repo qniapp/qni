@@ -2,6 +2,9 @@
 
 require 'test_helper'
 
+# https://github.com/rails/rails/pull/43503
+Selenium::WebDriver.logger.ignore(:browser_options)
+
 # rubocop:disable Metrics/ClassLength
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium_chrome_headless
@@ -35,20 +38,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_equal value, element['data-value']
   end
 
-  def assert_phi(phi, element)
-    assert_equal phi, element['data-phi']
+  def assert_angle(phi, element)
+    assert_equal phi, element['data-angle']
   end
 
-  def assert_theta(theta, element)
-    assert_equal theta, element['data-theta']
+  def assert_wire_bottom(dropzone)
+    assert_not_nil dropzone['data-connect-bottom']
   end
 
-  def assert_wire_bottom(operation)
-    assert_not_nil operation['data-wire-bottom']
-  end
-
-  def assert_wire_top(operation)
-    assert_not_nil operation['data-wire-top']
+  def assert_wire_top(dropzone)
+    assert_not_nil dropzone['data-connect-top']
   end
 
   def assert_input_wire_quantum(dropzone)
@@ -71,9 +70,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     popup_id = element['aria-describedby']
 
     assert_not_nil popup_id
-    within find("##{popup_id}") do
-      assert_text text
-    end
+    assert_selector("##{popup_id}", text: text)
   end
 
   def assert_qubit_circles(number)
@@ -105,10 +102,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   def put_operation(name, col:, row:)
     operation = palette(name)
-    locator = operation_name_to_locator(name)
 
-    page.execute_script "document.querySelector('#palette #{locator}').dispatchEvent(new Event('mousedown'))"
-
+    page.driver.browser.action
+        .move_to(operation.native, 0, 0)
+        .click_and_hold
+        .perform
     operation.drag_to dropzone(col, row), html5: false
 
     operation

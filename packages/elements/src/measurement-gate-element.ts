@@ -5,7 +5,6 @@ import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
 import {iconMeasurementGate} from './icon'
 
-@controller
 export class MeasurementGateElement extends MenuableMixin(
   HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
 ) {
@@ -24,8 +23,18 @@ export class MeasurementGateElement extends MenuableMixin(
   update(): void {
     render(
       html`${this.iconHtml(iconMeasurementGate)}
-        <div part="value"></div>`,
+        <div id="value" part="value"></div>`,
       this.shadowRoot!
     )
   }
+
+  toJson(): string {
+    if (this.flag === '') {
+      return `"${SerializedMeasurementGateType}"`
+    } else {
+      return `"${SerializedMeasurementGateType}>${this.flag}"`
+    }
+  }
 }
+
+controller(MeasurementGateElement)

@@ -3,16 +3,16 @@
      data-share-circuit-url-value="<%= circuit_url %>">
   <button id="share-button"
           type="button"
-          class="hidden md:inline-flex flex-row items-center border-transparent px-2 text-eel bg-snow rounded opacity-75 hover:opacity-100 focus:outline-none"
+          class="hidden md:inline-flex flex-row items-center border-transparent px-2 text-900 bg-white rounded opacity-75 hover:opacity-100 focus:outline-none"
           data-action="click->share#openModal">
     <%= icon :share %>
     <span class="pl-1">Share</span>
   </button>
 
   <button type="button"
-          class="block md:hidden fixed bottom-0 right-0 mr-6 mb-28 w-16 h-16 flex items-center justify-center bg-magnitude rounded-full shadow-lg z-40"
+          class="block md:hidden fixed bottom-0 right-0 mr-6 mb-28 w-16 h-16 flex items-center justify-center bg-sky-500 rounded-full shadow-lg z-40"
           data-action="click->share#openModal">
-    <%= icon :share, class: 'w-1/2 h-1/2 text-snow' %>
+    <%= icon :share, class: 'w-1/2 h-1/2 text-white' %>
   </button>
 
   <div id="share-modal"
@@ -23,7 +23,7 @@
        aria-modal="true">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
       <!-- Background overlay, show/hide based on modal state. -->
-      <div class="fixed inset-0 bg-eel bg-opacity-75 transition-opacity"
+      <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
            data-action="click->share#closeModal"
            aria-hidden="true"></div>
 
@@ -31,11 +31,11 @@
       <span class="hidden sm:inline-block sm:align-middle h-screen sm:h-screen" aria-hidden="true">&#8203;</span>
 
       <!-- Modal panel, show/hide based on modal state. -->
-      <div class="inline-block align-bottom bg-snow rounded-lg px-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full md:max-w-md p-6 md:p-6 pt-14 md:pt-14">
+      <div class="inline-block align-bottom bg-white rounded-lg px-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full md:max-w-md p-6 md:p-6 pt-14 md:pt-14">
         <div class="sm:block absolute top-0 right-0 pt-2 pr-2 md:pt-4 md:pr-4">
           <button id="close-share-modal-button"
                   type="button"
-                  class="bg-white rounded-md text-hare hover:text-eel focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="bg-white rounded-md text-hare hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   data-action="click->share#closeModal">
             <span class="sr-only">Close</span>
             <%= icon :outline_x %>
@@ -53,7 +53,7 @@
           </div>
           <div class="mt-1">
             <input type="text" name="circuit-title"
-                   class="shadow-sm focus:ring-superposition focus:border-superposition block w-full sm:text-sm border-swan rounded-md"
+                   class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-swan rounded-md"
                    autocomplete="off"
                    aria-describedby="circuit-title-optional"
                    data-share-target="circuitTitleInput"
@@ -61,12 +61,12 @@
           </div>
         </div>
 
-        <div class="mt-5 sm:mt-6 flex justify-between items-center border-1 border-hare rounded-md bg-polar py-2 px-3">
+        <div class="mt-5 sm:mt-6 flex justify-between items-center border-1 border-hare rounded-md bg-gray-200 py-2 px-3">
           <div id="circuit-url"
-               class="text-sm truncate text-eel opacity-75"
+               class="text-sm truncate text-gray-900 opacity-75"
                data-share-target="urlText"></div>
           <button id="copy-button"
-                  class="flex flex-row items-center border-transparent pl-4 text-eel bg-transparent opacity-75 hover:opacity-100 focus:outline-none"
+                  class="flex flex-row items-center border-transparent pl-4 text-gray-900 bg-transparent opacity-75 hover:opacity-100 focus:outline-none"
                   data-controller="clipboard"
                   data-action="click->clipboard#copyCurrentUrlToClipboard">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +79,7 @@
         <div class="mt-2 sm:mt-3">
           <button id="tweet-button"
                   type="button"
-                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-magnitude text-base font-medium text-snow hover:bg-superposition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-superposition sm:text-sm"
+                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-500 text-base font-medium text-white hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:text-sm"
                   data-action="click->share#tweet">
             <%= icon :twitter %>
             <span class="pl-1">Tweet</span>

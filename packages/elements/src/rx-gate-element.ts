@@ -19,7 +19,6 @@ export type RxGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class RxGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -40,4 +39,14 @@ export class RxGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconRxGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.angle === '') {
+      return `"${SerializedRxGateType}"`
+    } else {
+      return `"${SerializedRxGateType}(${this.angle.replace('/', '_')})"`
+    }
+  }
 }
+
+controller(RxGateElement)

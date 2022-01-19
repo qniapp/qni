@@ -7,7 +7,6 @@ import {attr, controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isNumeric} from './util'
 
-@controller
 export class OperationInspectorElement extends HTMLElement {
   @target ifInput!: HTMLInputElement
   @target angleInputLabel!: HTMLLabelElement
@@ -199,3 +198,5 @@ export class OperationInspectorElement extends HTMLElement {
     this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
   }
 }
+
+controller(OperationInspectorElement)

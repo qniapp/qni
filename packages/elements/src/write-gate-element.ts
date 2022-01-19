@@ -4,7 +4,6 @@ import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {iconWriteGate} from './icon'
 
-@controller
 export class WriteGateElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement))))
 ) {
@@ -34,4 +33,10 @@ export class WriteGateElement extends MenuableMixin(
       this.shadowRoot!
     )
   }
+
+  toJson(): string {
+    return `"|${this.value}>"`
+  }
 }
+
+controller(WriteGateElement)

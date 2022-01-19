@@ -12,7 +12,6 @@ import {SerializedSwapGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconSwapGate} from './icon'
 
-@controller
 export class SwapGateElement extends MenuableMixin(
   HelpableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
 ) {
@@ -29,4 +28,10 @@ export class SwapGateElement extends MenuableMixin(
   update(): void {
     render(html`${this.iconHtml(iconSwapGate)}`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    return `"${SerializedSwapGateType}"`
+  }
 }
+
+controller(SwapGateElement)

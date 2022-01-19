@@ -18,7 +18,6 @@ export type XGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class XGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -37,4 +36,14 @@ export class XGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconXGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.if !== '') {
+      return `"${SerializedXGateType}<${this.if}"`
+    } else {
+      return `"${SerializedXGateType}"`
+    }
+  }
 }
+
+controller(XGateElement)

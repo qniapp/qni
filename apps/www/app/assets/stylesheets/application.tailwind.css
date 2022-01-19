@@ -1,11 +1,11 @@
-@import "./variables";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
+@import '@qni/elements/dist/qni';
 
-@import "./angle_slider";
-@import "./gate_popup";
-@import "./quantum_simulator";
-@import "./tippy";
+/* @import "./angle_slider"; */
+/* @import "./gate_popup"; */
+/* @import "./quantum_simulator"; */
+/* @import "./tippy"; */
 
-@import "tailwindcss/utilities";
+@import 'tailwindcss/utilities';

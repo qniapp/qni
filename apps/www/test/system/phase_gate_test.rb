@@ -8,7 +8,7 @@ class PhaseGateTest < ApplicationSystemTestCase
 
     phase_gate = put_operation('Phase', col: 0, row: 0)
 
-    assert_phi 'π/2', phase_gate
+    assert_angle 'π/2', phase_gate
   end
 
   test 'apply to |0>' do

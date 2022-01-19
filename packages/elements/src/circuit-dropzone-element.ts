@@ -160,6 +160,16 @@ export class CircuitDropzoneElement extends HTMLElement {
     }
   }
 
+  toJson(): string | number {
+    const operation = this.operation
+
+    if (operation === null) {
+      return '1'
+    } else {
+      return operation.toJson()
+    }
+  }
+
   connectedCallback(): void {
     this.circuitDropzoneService = interpret(this.circuitDropzoneMachine)
       .onTransition(state => {

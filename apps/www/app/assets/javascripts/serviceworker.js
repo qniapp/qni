@@ -1,28 +1,21 @@
-import {Simulator} from 'lib'
+import {Simulator} from '@qni/simulator'
 import {Util} from '@qni/common'
 
 self.addEventListener(
   'message',
   function (e) {
-    const json = e.data.json
     const qubitCount = e.data.qubitCount
     const stepIndex = e.data.stepIndex
     const steps = e.data.steps
     const targets = e.data.targets
     const simulator = new Simulator('0'.repeat(qubitCount))
 
-    Util.notNull(json)
     Util.notNull(qubitCount)
     Util.notNull(stepIndex)
     Util.notNull(steps)
     Util.notNull(targets)
 
     steps.forEach((operations, i) => {
-      Util.need(
-        qubitCount === operations.length,
-        `qubitCount (${qubitCount}) === operations.length (${operations.length})`
-      )
-
       simulator.runStep(operations)
 
       self.postMessage({

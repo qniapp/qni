@@ -4,7 +4,6 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
 
-@controller
 export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMixin(ActivateableMixin(HTMLElement)))) {
   @target body!: HTMLElement
   @target vectorLine!: HTMLElement
@@ -28,10 +27,9 @@ export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMi
     Util.notNull(this.parentElement)
 
     if (this.parentElement.tagName === 'PALETTE-DROPZONE') return
-    if (this.grabbed) return
 
     const popupInstance = (this as TippyReferenceElement)._tippy
-    if (popupInstance) return
+    if (popupInstance) popupInstance.destroy()
 
     const content = this.blochInspectorPopupContent()
     const popup = tippy(this as Element, {
@@ -83,7 +81,7 @@ export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMi
     this.attachShadow({mode: 'open'})
     this.update()
     this.updateBlochVector()
-    this.addEventListener('mouseenter', this.showPopup)
+    this.addEventListener('mouseenter', this.showInspector)
   }
 
   disconnectedCallback(): void {
@@ -246,6 +244,10 @@ export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMi
     )
   }
 
+  toJson(): string {
+    return `"${SerializedBlochDisplayType}"`
+  }
+
   private updateBlochVector(): void {
     const vectorEndCircleWidth = this.vectorEndCircles[0].offsetWidth
 
@@ -255,6 +257,9 @@ export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMi
     if (this.d !== 0) {
       this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this.theta}deg)`
     }
+
+    const popupInstance = (this as TippyReferenceElement)._tippy
+    popupInstance?.setContent(this.blochInspectorPopupContent())
   }
 
   private get d(): number {
@@ -307,3 +312,5 @@ export class BlochDisplayElement extends MenuableMixin(HelpableMixin(DraggableMi
     return (value >= 0 ? '+' : '') + value.toFixed(digits)
   }
 }
+
+controller(BlochDisplayElement)

@@ -18,7 +18,6 @@ export type RnotGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class RnotGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -37,4 +36,14 @@ export class RnotGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconRnotGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.if !== '') {
+      return `"${SerializedRnotGateType}<${this.if}"`
+    } else {
+      return `"${SerializedRnotGateType}"`
+    }
+  }
 }
+
+controller(RnotGateElement)

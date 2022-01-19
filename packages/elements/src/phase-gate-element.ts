@@ -19,7 +19,6 @@ export type PhaseGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class PhaseGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -40,4 +39,14 @@ export class PhaseGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconPhaseGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.angle === '') {
+      return `"${SerializedPhaseGateType}"`
+    } else {
+      return `"${SerializedPhaseGateType}(${this.angle.replace('/', '_')})"`
+    }
+  }
 }
+
+controller(PhaseGateElement)

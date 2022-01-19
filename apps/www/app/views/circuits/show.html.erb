@@ -16,9 +16,56 @@
     <%= clear_circuit %>
   <% end %>
 
-  <div id="palette" class="hidden md:flex flex-row space-x-2 fixed top-0 let-0 mt-14 mx-6 px-4 py-5 bg-snow rounded-md border-2 border-b-4 border-swan z-40">
-    <palette-dropzone>
-      <h-gate>
+  <circuit-editor>
+    <div id="palette"
+         class="hidden fixed top-0 left-0 mt-14 ml-6 md:flex flex-row space-x-2 px-4 py-5 rounded-md bg-white drop-shadow z-40">
+      <palette-dropzone>
+        <h-gate></h-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <x-gate></x-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <y-gate></y-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <z-gate></z-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <rnot-gate></rnot-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <rx-gate data-angle="π/2"></rx-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <ry-gate data-angle="π/2"></ry-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <rz-gate data-angle="π/2"></rz-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <swap-gate></swap-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <control-gate></control-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <bloch-display></bloch-display>
+      </palette-dropzone>
+      <palette-dropzone>
+        <write-gate data-value="0" data-help-id="write0-gate-help"></write-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <write-gate data-value="1" data-help-id="write1-gate-help"></write-gate>
+      </palette-dropzone>
+      <palette-dropzone>
+        <measurement-gate></measurement-gate>
+      </palette-dropzone>
+
+      <template id="h-gate-help">
         <header>
           <h1>Hadamard Gate</h1>
           <p>Creates simple superpositions.</p>
@@ -41,13 +88,15 @@
             <h-gate data-size="sm"></h-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,180" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="0,180"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </h-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <x-gate>
+      <template id="x-gate-help">
         <header>
           <h1>NOT Gate (Pauli X Gate)</h1>
           <p>Swaps the qubit pair of <code>|0⟩</code> and <code>|1⟩</code>.</p>
@@ -74,19 +123,25 @@
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,70"
+              data-show-kets
+          ></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
             <x-gate data-size="sm"></x-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.4,0.9" data-phases="70,340" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.4,0.9"
+              data-phases="70,340"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </x-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <y-gate>
+      <template id="y-gate-help">
         <header>
           <h1>Pauli Y Gate</h1>
           <p>The combination of the X and Z gates.</p>
@@ -99,7 +154,11 @@
             <y-gate data-size="sm"></y-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0,1"
+              data-phases="0,90"
+              data-show-kets
+          ></circle-notation>
         </div>
 
         <div class="mt-5 flex flex-row items-center space-x-1">
@@ -113,19 +172,25 @@
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,70"
+              data-show-kets
+          ></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
             <y-gate data-size="sm"></y-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.4,0.9" data-phases="160,250" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.4,0.9"
+              data-phases="160,250"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </y-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <z-gate>
+      <template id="z-gate-help">
         <header>
           <h1>Pauli Z Gate</h1>
           <p>Negate phases when the qubit is ON.</p>
@@ -148,38 +213,44 @@
             <z-gate data-size="sm"></z-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,180" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0,1"
+              data-phases="0,180"
+              data-show-kets
+          ></circle-notation>
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,70"
+              data-show-kets
+          ></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
             <z-gate data-size="sm"></z-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,250" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,250"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </z-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <phase-gate data-phi="π/2">
+      <template id="phase-gate-help">
         <header>
           <h1>Phase Gate</h1>
-          <p>
-            Applies a phase of e<sup>iφ</sup> to the <code>|1⟩</code> state.
-          </p>
-          <p>
-            The default φ = π/2.
-          </p>
+          <p>Applies a phase of e<sup>iφ</sup> to the <code>|1⟩</code> state.</p>
+          <p>The default φ = π/2.</p>
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
           <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
+            <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
             <%= icon :arrow_right %>
           </div>
           <circle-notation data-show-kets></circle-notation>
@@ -189,26 +260,36 @@
           <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
+            <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0,1"
+              data-phases="0,90"
+              data-show-kets
+          ></circle-notation>
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,70"
+              data-show-kets
+          ></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <phase-gate data-phi="π/2" data-size="sm"></phase-gate>
+            <phase-gate data-angle="π/2" data-size="sm"></phase-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.9,0.4" data-phases="340,160" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.9,0.4"
+              data-phases="340,160"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </phase-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <rnot-gate>
+      <template id="rnot-gate-help">
         <header>
           <h1>Square Root of NOT Gate</h1>
           <p>Rotates around the X-axis by <code>π/2</code>.</p>
@@ -221,7 +302,11 @@
             <rnot-gate data-size="sm"></rnot-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="45,-45" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="45,-45"
+              data-show-kets
+          ></circle-notation>
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
@@ -231,62 +316,62 @@
             <rnot-gate data-size="sm"></rnot-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="-45,45" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="-45,45"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </rnot-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <rx-gate data-theta="π/2">
+      <template id="rx-gate-help">
         <header>
           <h1>Rx Gate</h1>
-          <p>
-            Rotates around the X-axis by the angle θ.
-          </p>
-          <p>
-            The default θ = π/2.
-          </p>
+          <p>Rotates around the X-axis by the angle θ.</p>
+          <p>The default θ = π/2.</p>
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
           <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <rx-gate data-theta="π/2" data-size="sm"></rx-gate>
+            <rx-gate data-angle="π/2" data-size="sm"></rx-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="0,-90" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="0,-90"
+              data-show-kets
+          ></circle-notation>
         </div>
 
         <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
           <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <rx-gate data-theta="π/2" data-size="sm"></rx-gate>
+            <rx-gate data-angle="π/2" data-size="sm"></rx-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="-90,0" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="-90,0"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </rx-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <ry-gate data-theta="π/2">
+      <template id="ry-gate-help">
         <header>
           <h1>Ry Gate</h1>
-          <p>
-            Rotates around the Y-axis by the angle θ.
-          </p>
-          <p>
-            The default θ = π/2.
-          </p>
+          <p>Rotates around the Y-axis by the angle θ.</p>
+          <p>The default θ = π/2.</p>
         </header>
 
         <div class="mt-5 flex flex-row items-center space-x-1">
           <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <ry-gate data-theta="π/2" data-size="sm"></ry-gate>
+            <ry-gate data-angle="π/2" data-size="sm"></ry-gate>
             <%= icon :arrow_right %>
           </div>
           <circle-notation data-magnitudes="0.7,0.7" data-show-kets></circle-notation>
@@ -296,31 +381,29 @@
           <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <ry-gate data-theta="π/2" data-size="sm"></ry-gate>
+            <ry-gate data-angle="π/2" data-size="sm"></ry-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0.7,0.7" data-phases="180,0" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0.7,0.7"
+              data-phases="180,0"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </ry-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <rz-gate data-theta="π/2">
+      <template id="rz-gate-help">
         <header>
           <h1>Rz Gate</h1>
-          <p>
-            Rotates around the Z-axis by the angle θ.
-          </p>
-          <p>
-            The default θ = π/2.
-          </p>
+          <p>Rotates around the Z-axis by the angle θ.</p>
+          <p>The default θ = π/2.</p>
         </header>
 
         <div class="mt-4 flex flex-row items-center space-x-1">
           <circle-notation data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <rz-gate data-theta="π/2" data-size="sm"></rz-gate>
+            <rz-gate data-angle="π/2" data-size="sm"></rz-gate>
             <%= icon :arrow_right %>
           </div>
           <circle-notation data-phases="-45,0" data-show-kets></circle-notation>
@@ -330,45 +413,41 @@
           <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
           <div class="flex flex-row items-center">
             <%= icon :minus %>
-            <rz-gate data-theta="π/2" data-size="sm"></rz-gate>
+            <rz-gate data-angle="π/2" data-size="sm"></rz-gate>
             <%= icon :arrow_right %>
           </div>
-          <circle-notation data-magnitudes="0,1" data-phases="0,45" data-show-kets></circle-notation>
+          <circle-notation
+              data-magnitudes="0,1"
+              data-phases="0,45"
+              data-show-kets
+          ></circle-notation>
         </div>
-      </rz-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <swap-gate>
+      <template id="swap-gate-help">
         <header>
           <h1>Swap Gate</h1>
           <p>Swap the values of two qubits.</p>
           <p>(Place two in the same column.)</p>
         </header>
-      </swap-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <control-gate>
+      <template id="control-gate-help">
         <header>
           <h1>Control Gate</h1>
           <p>Conditions on a qubit being ON.</p>
           <p>Gates in the same column only apply to states meeting the condition.</p>
         </header>
-      </control-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <bloch-display>
+      <template id="bloch-display-help">
         <header>
           <h1>Bloch Sphere Display</h1>
           <p>Shows a wire's local state as a point on the Bloch sphere.</p>
         </header>
-      </bloch-display>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <write-gate data-value="0">
+      <template id="write0-gate-help">
         <header>
           <h1><code>|0⟩</code> Operation</h1>
           <p>(Re)sets a qubit to state <code>|0⟩</code>.</p>
@@ -393,11 +472,9 @@
           </div>
           <circle-notation data-show-kets></circle-notation>
         </div>
-      </write-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <write-gate data-value="1">
+      <template id="write1-gate-help">
         <header>
           <h1><code>|1⟩</code> Operation</h1>
           <p>(Re)sets a qubit to state <code>|1⟩</code>.</p>
@@ -422,52 +499,228 @@
           </div>
           <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
         </div>
-      </write-gate>
-    </palette-dropzone>
+      </template>
 
-    <palette-dropzone>
-      <measurement-gate>
+      <template id="measurement-gate-help">
         <header>
           <h1>Measurement Gate</h1>
           <p>Measures whether a qubit is ON or OFF.</p>
         </header>
-      </measurement-gate>
-    </palette-dropzone>
-  </div>
+      </template>
+    </div>
 
-  <quantum-circuit class="block my-56 md:my-52 md:ml-6"
-                   data-update-url
-                   data-min-wire-count="2"
-                   data-min-step-count="5">
-  </quantum-circuit>
+    <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl z-50">
+      <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+      >
+        <div
+            class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl"
+        >
+          <%= icon :mixer_horizontal %>
+        </div>
+      </inspector-button>
+    </div>
 
-  <%= render GatePopupComponent.new(type: 'theta', label: 'θ', error_message: 'Invalid θ value') %>
-  <%= render GatePopupComponent.new(type: 'phi', label: 'φ', error_message: 'Invalid φ value') %>
-  <%= render GatePopupComponent.new(type: 'if', label: 'if', error_message: 'Invalid `if` value') %>
-  <%= render GatePopupComponent.new(type: 'flag', label: 'flag', error_message: 'Invalid flag') %>
+    <quantum-circuit
+        class="my-52 ml-6"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-update-url="true"
+        data-min-step-count="5"
+        data-min-wire-count="2"
+    >
+    </quantum-circuit>
 
-  <circle-notation id="circle-notation"
-                   class="circle-notation flex flex-row justify-center fixed top-0 md:top-auto left-0 md:left-auto right-0 md:right-auto mt-12 md:mt-0 mx-6 md:mx-0 md:bottom-0 w-auto h-32 md:h-auto overflow-y-auto mb-8 bg-snow border-2 border-b-4 border-swan rounded-md md:left-1/2 md:transform md:-translate-x-1/2 z-40"
-                   data-target="quantum-simulator.circleNotation"
-                   data-multi-qubits>
-    <template id="circle-notation-popup">
-      <div class="text-base text-wolf mb-2">
-        |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal <span class="circle-notation-popup__ket-decimal"></span>)
-      </div>
-      <ul class="list-none">
-        <li>
-          Amplitude: <span class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"></span>
-          <span class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"></span>
-        </li>
-        <li>
-          Probability: <span class="circle-notation-popup__probability font-bold font-mono text-eel"></span>
-        </li>
-        <li>
-          Phase: <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
-        </li>
-      </ul>
-    </template>
-  </circle-notation>
-
-  <run-circuit-button class="fixed bottom-0 right-0 mr-6 mb-6 md:mb-8 z-40"></run-circuit-button>
+    <div class="fixed top-0 left-0 right-0 md:top-auto md:left-1/2 md:right-auto md:bottom-0
+                mt-12 mx-6 mb-8 md:mt-0 md:mx-0
+                w-auto h-32 md:h-auto
+                rounded-xl md:rounded-2xl
+                md:transform md:-translate-x-1/2
+                bg-white drop-shadow-md z-40">
+      <circle-notation
+          id="circle-notation"
+          class="circle-notation flex flex-row justify-center overflow-y-auto w-full h-full"
+          data-target="quantum-simulator.circleNotation"
+          data-multi-qubits
+      >
+        <template id="circle-notation-popup">
+          <div class="text-base text-wolf mb-2">
+            |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal
+            <span class="circle-notation-popup__ket-decimal"></span>)
+          </div>
+          <ul class="list-none">
+            <li>
+              Amplitude:
+              <span
+                  class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"
+              ></span>
+              <span
+                  class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"
+              ></span>
+            </li>
+            <li>
+              Probability:
+              <span
+                  class="circle-notation-popup__probability font-bold font-mono text-eel"
+              ></span>
+            </li>
+            <li>
+              Phase:
+              <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
+            </li>
+          </ul>
+        </template>
+      </circle-notation>
+    </div>
+    <run-circuit-button class="fixed bottom-0 right-0 mr-6 mb-6 md:mb-8 z-40"></run-circuit-button>
+  </circuit-editor>
 </quantum-simulator>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row bg-white rounded-2xl drop-shadow-lg p-2">
+      <button
+          data-operation-menu-if
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm tracking-tighter whitespace-nowrap">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+          data-operation-menu-angle
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <%= icon :angle %>
+      </button>
+
+      <button
+          data-operation-menu-flag
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm whitespace-nowrap">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+        data-operation-menu-delete
+        class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
+    >
+      <%= icon :trash %>
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
+    <div class="flex flex-col divide-y space-y-4 items-left">
+      <div id="conditional-gate-pane" class="flex flex-col items-left">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+          <input
+              data-target="operation-inspector.ifInput"
+              type="text"
+              name="if"
+              id="if-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+          <label
+              for="angle-input"
+              class="font-normal text-gray-700 select-none"
+              data-target="operation-inspector.angleInputLabel"
+          >Angle</label
+                >
+          <input
+              data-target="operation-inspector.angleInput"
+              type="text"
+              name="angle"
+              id="angle-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+          <angle-slider
+              data-target="operation-inspector.angleSlider"
+              class="inline-block ml-2"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          >Denom</label
+                >
+          <input
+              data-target="operation-inspector.denominatorInput"
+              type="number"
+              min="2"
+              name="denominator"
+              id="denominator-input"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+          <div class="pl-2 text-sm whitespace-nowrap text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+                                                                                              data-target="operation-inspector.denominatorLabel"
+                                                                                              class="font-bold text-yellow-600"
+                                                                                          >?</span
+                                                                                            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none"
+            >Reduce</label
+                   >
+          </div>
+          <div class="flex items-center h-5">
+            <input
+                data-target="operation-inspector.reduceAngleFractionCheckbox"
+                id="reduce-fraction-checkbox"
+                name="reduce-fraction"
+                type="checkbox"
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+          <input
+              data-target="operation-inspector.flagInput"
+              type="text"
+              name="flag"
+              id="flag-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>

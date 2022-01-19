@@ -15,7 +15,6 @@ type MessageEventData = {
   flags: {[key: string]: boolean}
 }
 
-@controller
 export class QuantumSimulatorElement extends HTMLElement {
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
@@ -28,9 +27,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker = new Worker('/serviceworker.js')
     this.visibleQubitCircleKets = []
 
-    this.attachShadow({mode: 'open'})
-    this.update()
-
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
     this.addEventListener('operation-inspector-if-change', this.run)
     this.addEventListener('operation-inspector-angle-change', this.run)
@@ -40,6 +36,13 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
     this.addEventListener('circle-notation-visibility-change', this.updateVisibleQubitCircleKets)
+
+    this.addEventListener('circuit-step-snap', this.updateJsonUrl)
+    this.addEventListener('circuit-step-unsnap', this.updateJsonUrl)
+
+    this.attachShadow({mode: 'open'})
+    this.update()
+    this.updateJsonUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
   }
@@ -149,4 +152,13 @@ export class QuantumSimulatorElement extends HTMLElement {
 
     this.visibleQubitCircleKets = ketNumbers
   }
+
+  private updateJsonUrl(): void {
+    Util.notNull(this.circuit)
+
+    const json = this.circuit.toJson()
+    history.pushState('', '', encodeURIComponent(json))
+  }
 }
+
+controller(QuantumSimulatorElement)
