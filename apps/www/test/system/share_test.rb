@@ -6,7 +6,8 @@ class ShareTest < ApplicationSystemTestCase
   test 'default title' do
     visit circuit_path
 
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     assert_field 'circuit-title', with: ''
   end
@@ -14,7 +15,8 @@ class ShareTest < ApplicationSystemTestCase
   test 'default share url' do
     visit circuit_path
 
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     within find('#circuit-url') do
       assert_text "#{current_session_base_url}/#{URI.encode_www_form_component('{"cols":[]}')}"
@@ -23,7 +25,8 @@ class ShareTest < ApplicationSystemTestCase
 
   test 'close share modal' do
     visit circuit_path
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     find('#close-share-modal-button').click
 
@@ -32,7 +35,8 @@ class ShareTest < ApplicationSystemTestCase
 
   test 'set circuit title' do
     visit circuit_path
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     find_field('circuit-title').set("Grover反復\n")
 
@@ -43,7 +47,8 @@ class ShareTest < ApplicationSystemTestCase
 
   test 'copy URL to clipboard' do
     visit circuit_path
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     find('#copy-button').click
 
@@ -52,7 +57,8 @@ class ShareTest < ApplicationSystemTestCase
 
   test 'tweet without circuit title' do
     visit circuit_path
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
 
     find('#tweet-button').click
 
@@ -65,7 +71,8 @@ class ShareTest < ApplicationSystemTestCase
 
   test 'tweet with circuit title' do
     visit circuit_path
-    find('#share-button').click
+    find('#menu-button').click
+    find('#menu-item-share').click
     find_field('circuit-title').set("Grover反復\n")
 
     find('#tweet-button').click
