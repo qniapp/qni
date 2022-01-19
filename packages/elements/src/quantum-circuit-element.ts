@@ -1207,6 +1207,11 @@ export class QuantumCircuitElement extends HTMLElement {
     return decodeURIComponent(json)
   }
 
+  clear(): void {
+    history.pushState('', '', encodeURIComponent('{"cols":[]}'))
+    location.reload()
+  }
+
   toJson(): string {
     const cols = []
 

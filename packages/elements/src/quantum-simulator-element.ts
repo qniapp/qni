@@ -51,6 +51,10 @@ export class QuantumSimulatorElement extends HTMLElement {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
+  clearCircuit(): void {
+    this.circuit.clear()
+  }
+
   private handleServiceWorkerMessage(event: MessageEvent): void {
     const data = event.data as MessageEventData
     const stepIndex = this.activeStepIndex
