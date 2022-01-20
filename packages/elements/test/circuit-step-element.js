@@ -1,4 +1,4 @@
-import {testElementCreation} from './common/test-element-creation'
+import {testElementCreation} from './common/test-element-creation.js'
 
 describe('circuit-step element', function () {
   describe('element creation', function () {

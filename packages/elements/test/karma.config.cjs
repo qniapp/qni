@@ -7,8 +7,13 @@ module.exports = function (config) {
         type: 'module'
       },
       {
-        pattern: '../build/test.js',
+        pattern: '*.js',
         type: 'module'
+      },
+      {
+        pattern: 'common/*.js',
+        included: false,
+        served: true
       }
     ],
     reporters: ['mocha'],
