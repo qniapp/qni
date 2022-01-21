@@ -1,9 +1,10 @@
 import {Complex, DetailedError, Util} from '@qni/common'
-import {controller, target} from '@github/catalyst'
+import {controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
+import {RunCircuitButtonElement} from './run-circuit-button-element'
 import {isIfable} from './mixin'
 
 type MessageEventData = {
@@ -18,6 +19,7 @@ type MessageEventData = {
 export class QuantumSimulatorElement extends HTMLElement {
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
+  @targets runCircuitButtons!: RunCircuitButtonElement[]
 
   private visibleQubitCircleKets!: number[]
 
@@ -36,6 +38,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
     this.addEventListener('circle-notation-visibility-change', this.updateVisibleQubitCircleKets)
+    this.addEventListener('run-circuit-button-click', this.run)
 
     this.addEventListener('circuit-step-snap', this.updateJsonUrl)
     this.addEventListener('circuit-step-unsnap', this.updateJsonUrl)
@@ -45,6 +48,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.updateJsonUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
+    this.run()
   }
 
   update(): void {
@@ -104,6 +108,9 @@ export class QuantumSimulatorElement extends HTMLElement {
         break
       }
       case 'finish': {
+        for (const each of this.runCircuitButtons) {
+          each.enable()
+        }
         break
       }
       default:

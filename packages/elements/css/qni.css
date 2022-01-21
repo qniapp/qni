@@ -9,6 +9,7 @@
 @import './angle_slider';
 @import './operation_menu';
 @import './operation_inspector';
+@import './run_circuit_button';
 
 @import './html';
 @import './h_gate';

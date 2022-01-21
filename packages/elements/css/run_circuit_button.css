@@ -1,0 +1,30 @@
+run-circuit-button {
+  &::part(button) {
+    @apply w-10 h-10;
+    @apply text-gray-700;
+    @apply bg-white;
+
+    @media screen(md) {
+      @apply w-16 h-16;
+      @apply text-white;
+      @apply bg-purple-500;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border-width: 0px;
+    cursor: pointer;
+  }
+
+  &::part(button):disabled {
+    cursor: wait;
+  }
+
+  &::part(button):focus {
+    cursor: wait;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+}
