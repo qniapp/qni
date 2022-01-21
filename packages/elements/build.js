@@ -9,6 +9,7 @@ build({
   entryPoints: [entryFile],
   outdir: 'dist',
   bundle: true,
+  keepNames: true,
   format: 'esm',
   target: 'es2017',
   external: Object.keys(pkg['dependencies'])
