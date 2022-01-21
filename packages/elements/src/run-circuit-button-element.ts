@@ -3,8 +3,6 @@ import {html, render} from '@github/jtml'
 
 const reloadIcon = html`<style>
     .reload-icon {
-      fill: currentColor;
-      color: rgb(255, 255, 255);
       height: 60%;
       width: 60%;
     }
@@ -15,7 +13,7 @@ const reloadIcon = html`<style>
   </style>
 
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="reload-icon">
-    <path d="M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z" />
+    <path d="M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z" fill="currentColor" />
   </svg>`
 
 const ovalLoaderIcon = html`<style>
@@ -50,13 +48,12 @@ const ovalLoaderIcon = html`<style>
     </g>
   </svg>`
 
-@controller
 export class RunCircuitButtonElement extends HTMLElement {
-  @target button: HTMLInputElement
+  @target button!: HTMLInputElement
 
   runSimulator(): void {
     this.disable()
-    this.dispatchEvent(new Event('run-circuit-button.click', {bubbles: true}))
+    this.dispatchEvent(new Event('run-circuit-button-click', {bubbles: true}))
   }
 
   disable(): void {
@@ -70,49 +67,23 @@ export class RunCircuitButtonElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
-    this.dispatchEvent(
-      new Event('run-circuit-button.load', {
-        bubbles: true
-      })
-    )
   }
 
   update(): void {
     render(
-      html`<style>
-          #button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgb(206, 130, 255);
-            border-radius: 9999px;
-            border-width: 0px;
-            cursor: pointer;
-            width: 4rem;
-            height: 4rem;
-            box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-          }
-
-          #button:disabled {
-            cursor: wait;
-          }
-
-          #button:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-          }
-        </style>
-
-        <button
-          id="button"
-          type="button"
-          data-action="click:run-circuit-button#runSimulator"
-          data-target="run-circuit-button.button"
-          aria-label="Run circuit"
-        >
-          ${reloadIcon} ${ovalLoaderIcon}
-        </button>`,
+      html`<button
+        id="button"
+        part="button"
+        type="button"
+        data-action="click:run-circuit-button#runSimulator"
+        data-target="run-circuit-button.button"
+        aria-label="Run circuit"
+      >
+        ${reloadIcon} ${ovalLoaderIcon}
+      </button>`,
       this.shadowRoot!
     )
   }
 }
+
+controller(RunCircuitButtonElement)
