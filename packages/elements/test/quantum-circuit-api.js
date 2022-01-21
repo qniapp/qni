@@ -1,6 +1,8 @@
-import {testCircuitApi} from './common/test-circuit-api'
-import {testControlledU} from './common/test-controlled-u'
-import {testSimpleCircuitApi} from './common/test-simple-circuit-api'
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
+import {testCircuitApi} from './common/test-circuit-api.js'
+import {testControlledU} from './common/test-controlled-u.js'
+import {testSimpleCircuitApi} from './common/test-simple-circuit-api.js'
 
 describe('quantum-circuit element', function () {
   describe('simple API', function () {

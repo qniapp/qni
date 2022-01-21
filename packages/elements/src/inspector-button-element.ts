@@ -7,7 +7,6 @@ import {OperationInspectorElement} from './operation-inspector-element'
 import {Util} from '@qni/common'
 import {controller} from '@github/catalyst'
 
-@controller
 export class InspectorButtonElement extends HTMLElement {
   public popup!: TippyInstance
 
@@ -71,7 +70,7 @@ export class InspectorButtonElement extends HTMLElement {
       arrow: false,
       content: this.popupContent,
       interactive: true,
-      offset: [0, 16],
+      offset: [0, 4],
       placement: 'bottom',
       theme: 'operation-inspector',
       trigger: 'manual',
@@ -108,3 +107,5 @@ export class InspectorButtonElement extends HTMLElement {
     return content
   }
 }
+
+controller(InspectorButtonElement)

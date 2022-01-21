@@ -342,6 +342,10 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-in-snap-range', this.operationInSnapRange)
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
+
+    for (const each of this.circuit.operations) {
+      each.initMenu()
+    }
   }
 
   update(): void {

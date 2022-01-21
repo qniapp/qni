@@ -11,7 +11,6 @@ import {SerializedControlGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
 import {iconControlGate} from './icon'
 
-@controller
 export class ControlGateElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
 ) {
@@ -28,4 +27,10 @@ export class ControlGateElement extends MenuableMixin(
   update(): void {
     render(html`${this.iconHtml(iconControlGate)}`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    return `"${SerializedControlGateType}"`
+  }
 }
+
+controller(ControlGateElement)

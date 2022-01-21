@@ -1,6 +1,7 @@
-import {testDraggableOperation} from './common/test-draggable'
-import {testElementCreation} from './common/test-element-creation'
-import {testIconable} from './common/test-iconable'
+import '../dist/index'
+import {testDraggableOperation} from './common/test-draggable.js'
+import {testElementCreation} from './common/test-element-creation.js'
+import {testIconable} from './common/test-iconable.js'
 
 describe('write-gate element', function () {
   describe('element creation', function () {

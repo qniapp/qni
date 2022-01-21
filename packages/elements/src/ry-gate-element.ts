@@ -19,7 +19,6 @@ export type RyGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class RyGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -40,4 +39,14 @@ export class RyGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconRyGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.angle === '') {
+      return `"${SerializedRyGateType}"`
+    } else {
+      return `"${SerializedRyGateType}(${this.angle.replace('/', '_')})"`
+    }
+  }
 }
+
+controller(RyGateElement)

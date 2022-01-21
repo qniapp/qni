@@ -4,10 +4,13 @@
 import {application} from './application'
 
 import CircuitSvgController from './circuit_svg_controller.ts'
+application.register('circuit-svg', CircuitSvgController)
 
 import ClipboardController from './clipboard_controller.ts'
+application.register('clipboard', ClipboardController)
+
+import MenuController from './menu_controller.ts'
+application.register('menu', MenuController)
 
 import ShareController from './share_controller.ts'
-application.register('circuit-svg', CircuitSvgController)
-application.register('clipboard', ClipboardController)
 application.register('share', ShareController)

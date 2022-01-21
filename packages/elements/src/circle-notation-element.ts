@@ -3,7 +3,6 @@ import {attr, controller, targets} from '@github/catalyst'
 import tippy, {Instance, ReferenceElement, createSingleton, roundArrow} from 'tippy.js'
 import {Complex} from '@qni/common'
 
-@controller
 export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
   @attr size = ''
@@ -1012,3 +1011,5 @@ export class CircleNotationElement extends HTMLElement {
     return parseInt(dataKet!)
   }
 }
+
+controller(CircleNotationElement)

@@ -1,3 +1,6 @@
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
+
 function testControlledUSerialization(uName, uType) {
   let circuit
 

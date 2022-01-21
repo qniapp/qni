@@ -19,7 +19,6 @@ export type RzGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class RzGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
@@ -40,4 +39,14 @@ export class RzGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconRzGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.angle === '') {
+      return `"${SerializedRzGateType}"`
+    } else {
+      return `"${SerializedRzGateType}(${this.angle.replace('/', '_')})"`
+    }
+  }
 }
+
+controller(RzGateElement)

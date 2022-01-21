@@ -1,3 +1,5 @@
+import {assert} from '@esm-bundle/chai'
+
 export function testDraggableOperation(operationName) {
   afterEach(function () {
     document.body.textContent = ''

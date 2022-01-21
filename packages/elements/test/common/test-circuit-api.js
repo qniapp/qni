@@ -1,3 +1,5 @@
+import {assert} from '@esm-bundle/chai'
+
 export function testCircuitApi(uName, uClass) {
   let circuit
 

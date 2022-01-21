@@ -18,7 +18,6 @@ export type YGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class YGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -37,4 +36,14 @@ export class YGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconYGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.if !== '') {
+      return `"${SerializedYGateType}<${this.if}"`
+    } else {
+      return `"${SerializedYGateType}"`
+    }
+  }
 }
+
+controller(YGateElement)

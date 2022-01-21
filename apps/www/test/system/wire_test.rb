@@ -14,7 +14,10 @@ class WireTest < ApplicationSystemTestCase
   test 'add new wire on mousedown' do
     visit circuit_path
 
-    page.execute_script('document.querySelector("h-gate").dispatchEvent(new Event("mousedown"))')
+    page.driver.browser.action
+        .move_to(palette('H').native, 0, 0)
+        .click_and_hold
+        .perform
 
     within('quantum-circuit') do
       assert_wires 3

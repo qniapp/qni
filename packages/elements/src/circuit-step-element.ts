@@ -667,6 +667,12 @@ export class CircuitStepElement extends HTMLElement {
     return dropzone
   }
 
+  appendOperation(operation: Operation): void {
+    const dropzone = new CircuitDropzoneElement()
+    this.append(dropzone)
+    dropzone.put(operation)
+  }
+
   private get swapGateDropzones(): CircuitDropzoneElement[] {
     return this.dropzones.filter(each => each.occupied).filter(each => each.operationName === 'swap-gate')
   }
@@ -1066,6 +1072,17 @@ export class CircuitStepElement extends HTMLElement {
       .filter(each => each.occupied)
       .map(each => each.operation)
       .filter((each): each is NonNullable<Operation> => each !== null)
+  }
+
+  toJson(): string {
+    const jsons = this.dropzones.map(each => each.toJson())
+    while (jsons.length > 0 && jsons[jsons.length - 1] === '1') {
+      jsons.pop()
+    }
+    if (jsons.length === 0) {
+      return '[1]'
+    }
+    return `[${jsons.join(',')}]`
   }
 }
 

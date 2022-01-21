@@ -1,4 +1,6 @@
-import {testElementCreation} from './common/test-element-creation'
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
+import {testElementCreation} from './common/test-element-creation.js'
 
 describe('quantum-circuit element', function () {
   describe('element creation', function () {

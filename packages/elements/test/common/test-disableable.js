@@ -1,3 +1,5 @@
+import {assert} from '@esm-bundle/chai'
+
 export function testDisableable(operationName) {
   beforeEach(function () {
     const el = document.createElement(operationName)

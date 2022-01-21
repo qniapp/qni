@@ -40,8 +40,8 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_enabled control_gate1
     assert_enabled control_gate2
 
-    assert_wire_bottom control_gate1
-    assert_wire_top control_gate2
+    assert_wire_bottom dropzone(2, 0)
+    assert_wire_top dropzone(2, 1)
 
     assert_qubit_circles 4
     assert_magnitudes Math.sqrt(1.0 / 4), Math.sqrt(1.0 / 4), Math.sqrt(1.0 / 4), Math.sqrt(1.0 / 4)
@@ -63,10 +63,10 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_enabled control_gate1
     assert_enabled control_gate2
 
-    assert_wire_bottom control_gate1
+    assert_wire_bottom dropzone(2, 0)
     assert_wire_top dropzone(2, 1)
     assert_wire_bottom dropzone(2, 1)
-    assert_wire_top control_gate2
+    assert_wire_top dropzone(2, 2)
 
     assert_qubit_circles 8
     assert_magnitudes Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8)
@@ -90,10 +90,10 @@ class ControlGateTest < ApplicationSystemTestCase
     assert_enabled control_gate2
     assert_enabled control_gate3
 
-    assert_wire_bottom control_gate1
-    assert_wire_top control_gate2
-    assert_wire_bottom control_gate2
-    assert_wire_top control_gate3
+    assert_wire_bottom dropzone(2, 0)
+    assert_wire_top dropzone(2, 1)
+    assert_wire_bottom dropzone(2, 1)
+    assert_wire_top dropzone(2, 2)
 
     assert_qubit_circles 8
     assert_magnitudes Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8), Math.sqrt(1.0 / 8)

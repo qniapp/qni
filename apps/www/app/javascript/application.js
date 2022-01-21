@@ -1,6 +1,7 @@
-require("@rails/ujs").start()
-require("turbolinks").start()
+require('@rails/ujs').start()
+require('turbolinks').start()
 
-import "./components"
-import "./controllers"
-import "../assets/javascripts/serviceworker-companion"
+import '@qni/elements'
+
+import './controllers'
+import '../assets/javascripts/serviceworker-companion'

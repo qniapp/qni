@@ -8,7 +8,7 @@ class RxGateTest < ApplicationSystemTestCase
 
     rx_gate = put_operation('Rx', col: 0, row: 0)
 
-    assert_theta 'π/2', rx_gate
+    assert_angle 'π/2', rx_gate
   end
 
   test 'apply to |0>' do

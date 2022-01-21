@@ -18,7 +18,6 @@ export type ZGateElementProps = {
   disabled?: boolean
 }
 
-@controller
 export class ZGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -37,4 +36,14 @@ export class ZGateElement extends MenuableMixin(
   update(): void {
     render(html`<div part="body">${this.iconHtml(iconZGate)}</div>`, this.shadowRoot!)
   }
+
+  toJson(): string {
+    if (this.if !== '') {
+      return `"${SerializedZGateType}<${this.if}"`
+    } else {
+      return `"${SerializedZGateType}"`
+    }
+  }
 }
+
+controller(ZGateElement)

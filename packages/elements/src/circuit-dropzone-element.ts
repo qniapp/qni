@@ -1,15 +1,10 @@
-import '@interactjs/actions/drag'
-import '@interactjs/actions/drop'
-import '@interactjs/auto-start'
-import '@interactjs/dev-tools'
-import '@interactjs/modifiers'
 import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
 import {Util} from '@qni/common'
 import {iconWires} from './icon'
-import interact from '@interactjs/interact'
+import interact from 'interactjs'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitDropzoneElement
@@ -157,6 +152,16 @@ export class CircuitDropzoneElement extends HTMLElement {
     return {
       x: window.pageXOffset + rect.left + this.clientWidth / 2,
       y: window.pageYOffset + rect.top + this.clientHeight / 2
+    }
+  }
+
+  toJson(): string | number {
+    const operation = this.operation
+
+    if (operation === null) {
+      return '1'
+    } else {
+      return operation.toJson()
     }
   }
 
