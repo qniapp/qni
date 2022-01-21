@@ -1,3 +1,4 @@
+import '../dist/index'
 import {testElementCreation} from './common/test-element-creation.js'
 
 describe('circuit-editor element', function () {

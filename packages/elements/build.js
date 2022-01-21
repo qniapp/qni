@@ -1,5 +1,6 @@
 import {build} from 'esbuild'
 import npmDts from 'npm-dts'
+import pkg from './package.json'
 
 const {Generator} = npmDts
 const entryFile = 'src/index.ts'
@@ -9,7 +10,8 @@ build({
   outdir: 'dist',
   bundle: true,
   format: 'esm',
-  external: []
+  target: 'es2017',
+  external: Object.keys(pkg['dependencies'])
 })
 
 new Generator({

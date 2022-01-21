@@ -1,3 +1,5 @@
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
 import {testElementCreation} from './common/test-element-creation.js'
 
 describe('circuit-dropzone element', function () {

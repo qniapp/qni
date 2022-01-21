@@ -1,3 +1,6 @@
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
+
 describe('quantum-circuit element', function () {
   describe('data-c*-max-target-gates attributes', function () {
     let circuit

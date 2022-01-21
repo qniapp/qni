@@ -17,10 +17,10 @@
     "prelint": "npm run icon",
     "lint": "eslint . --ext .js,.ts && tsc --noEmit",
     "prebuild": "npm run icon && npm run css && npm run lint",
-    "build": "node build.js",
+    "build": "node --experimental-json-modules build.js",
     "build:packages": "yarn build",
     "pretest": "npm run build",
-    "test": "karma start test/karma.config.cjs",
+    "test": "web-test-runner test/*.js --node-resolve",
     "test:ci": "yarn test",
     "test:watch": "yarn test --auto-watch --no-single-run",
     "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
@@ -42,14 +42,24 @@
   "dependencies": {
     "@github/catalyst": "^1.1.4",
     "@github/jtml": "^0.4.0",
+    "@interactjs/actions": "^1.10.11",
+    "@interactjs/auto-start": "^1.10.11",
+    "@interactjs/dev-tools": "^1.10.11",
+    "@interactjs/interact": "^1.10.11",
+    "@interactjs/modifiers": "^1.10.11",
     "@qni/common": "^0.0.9",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
     "xstate": "^4.27.0"
   },
   "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
     "@github/prettier-config": "^0.0.4",
+    "@rollup/plugin-commonjs": "^18",
+    "@rollup/plugin-replace": "^3.0.1",
     "@tailwindcss/forms": "^0.4.0",
+    "@web/dev-server-rollup": "^0.3.14",
+    "@web/test-runner": "^0.13.25",
     "autoprefixer": "^10.4.0",
     "chai": "^4.3.4",
     "eslint-import-resolver-typescript": "^2.5.0",
@@ -77,7 +87,8 @@
     "dist/",
     "docs/",
     "icon/",
-    "tailwind.config.cjs"
+    "tailwind.config.cjs",
+    "web-test-runner.config.js"
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

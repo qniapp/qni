@@ -1,3 +1,4 @@
+import '../dist/index'
 import {testDisableable} from './common/test-disableable.js'
 import {testDraggableOperation} from './common/test-draggable.js'
 import {testElementCreation} from './common/test-element-creation.js'

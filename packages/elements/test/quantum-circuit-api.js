@@ -1,3 +1,5 @@
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
 import {testCircuitApi} from './common/test-circuit-api.js'
 import {testControlledU} from './common/test-controlled-u.js'
 import {testSimpleCircuitApi} from './common/test-simple-circuit-api.js'

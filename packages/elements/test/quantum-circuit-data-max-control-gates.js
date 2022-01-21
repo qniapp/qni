@@ -1,3 +1,6 @@
+import '../dist/index'
+import {assert} from '@esm-bundle/chai'
+
 function testMaxControlGates(gateType, gateMethodName, controlledGateClass) {
   let circuit
   const controlledGateMethodName = `c${gateMethodName}`

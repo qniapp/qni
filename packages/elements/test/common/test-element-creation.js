@@ -1,3 +1,5 @@
+import {assert} from '@esm-bundle/chai'
+
 export function testElementCreation(operationClass, operationName) {
   it('creates from document.createElement', function () {
     const el = document.createElement(operationName)
