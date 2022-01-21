@@ -1,12 +1,8 @@
-import '@interactjs/actions/drag'
-import '@interactjs/auto-start'
-import '@interactjs/dev-tools'
-import '@interactjs/modifiers'
 import {Util, angleDenominator, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
-import interact from '@interactjs/interact'
+import interact from 'interactjs'
 
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
   arg !== null && arg instanceof AngleSliderElement
