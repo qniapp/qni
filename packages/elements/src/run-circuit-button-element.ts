@@ -1,20 +1,6 @@
+import {TemplateResult, html, render} from '@github/jtml'
 import {controller, target} from '@github/catalyst'
-import {html, render} from '@github/jtml'
-
-const reloadIcon = html`<style>
-    .reload-icon {
-      height: 60%;
-      width: 60%;
-    }
-
-    #button:disabled > .reload-icon {
-      display: none;
-    }
-  </style>
-
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="reload-icon">
-    <path d="M14.66 15.66A8 8 0 1 1 17 10h-2a6 6 0 1 0-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z" fill="currentColor" />
-  </svg>`
+import {iconReload} from './icon'
 
 const ovalLoaderIcon = html`<style>
     .oval-loader-icon {
@@ -79,10 +65,14 @@ export class RunCircuitButtonElement extends HTMLElement {
         data-target="run-circuit-button.button"
         aria-label="Run circuit"
       >
-        ${reloadIcon} ${ovalLoaderIcon}
+        ${this.iconReloadHtml} ${ovalLoaderIcon}
       </button>`,
       this.shadowRoot!
     )
+  }
+
+  private get iconReloadHtml(): TemplateResult {
+    return html([iconReload.data] as unknown as TemplateStringsArray)
   }
 }
 

@@ -27,4 +27,17 @@ run-circuit-button {
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
+
+  &::part(reload-icon) {
+    @apply w-full h-full;
+    @apply m-1;
+
+    @media screen(md) {
+      @apply m-2;
+    }
+  }
+
+  &::part(button):disabled &::part(reload-icon) {
+    @apply hidden;
+  }
 }
