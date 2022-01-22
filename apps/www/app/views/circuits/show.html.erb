@@ -701,7 +701,9 @@
     </div>
 
     <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6">
-      <run-circuit-button class="md:hidden drop-shadow-md mr-2" data-targets="quantum-simulator.runCircuitButtons"></run-circuit-button>
+      <run-circuit-button
+          class="run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md z-40"
+          data-targets="quantum-simulator.runCircuitButtons"></run-circuit-button>
 
       <div class="py-2 px-2 flex flex-row flex-wrap bg-white drop-shadow-md rounded-xl md:hidden z-40">
         <palette-dropzone class="m-1">
@@ -754,7 +756,7 @@
   </circuit-editor>
 
   <run-circuit-button
-    class="hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-6 md:mb-8 drop-shadow-md z-40"
+    class="hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40"
     data-targets="quantum-simulator.runCircuitButtons"></run-circuit-button>
 </quantum-simulator>
 
