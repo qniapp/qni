@@ -24,7 +24,7 @@ Find a bug? Head over to our [issue tracker](https://github.com/qniapp/qni/issue
 
 ## License
 
-Qni is [MIT-licensed](LICENSE.md) open-source software from [TIS Inc.](https://tis.co.jp/)
+Qni is [MIT-licensed](LICENSE) open-source software from [TIS Inc.](https://tis.co.jp/)
 
 ---
 
