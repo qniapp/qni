@@ -109,7 +109,7 @@ export class QuantumSimulatorElement extends HTMLElement {
       }
       case 'finish': {
         for (const each of this.runCircuitButtons) {
-          each.enable()
+          each.running = false
         }
         break
       }

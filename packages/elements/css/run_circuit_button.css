@@ -1,30 +1,49 @@
 run-circuit-button {
-  &::part(button) {
-    @apply w-10 h-10;
-    @apply text-gray-700;
-    @apply bg-white;
+  &[data-running] {
+    @apply cursor-wait;
+  }
+
+  &::part(body) {
+    @apply flex items-center justify-center;
+    @apply cursor-pointer;
+    @apply rounded-full;
+  }
+
+  &::part(reload-icon),
+  &::part(tail-spin-icon) {
+    @apply w-4 h-4;
 
     @media screen(md) {
-      @apply w-16 h-16;
-      @apply text-white;
-      @apply bg-purple-500;
+      @apply w-8 h-8;
     }
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    border-width: 0px;
-    cursor: pointer;
   }
 
-  &::part(button):disabled {
-    cursor: wait;
+  &::part(tail-spin-icon) {
+    @apply hidden;
+
+    stroke: currentColor;
+    @apply text-gray-700;
+
+    @media screen(md) {
+      @apply text-white;
+    }
   }
 
-  &::part(button):focus {
-    cursor: wait;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+  &[data-running] &::part(reload-icon) {
+    @apply hidden;
+  }
+
+  &[data-running] &::part(tail-spin-icon) {
+    @apply block;
+  }
+
+  /* ripple */
+
+  &::part(ripple) {
+    @apply bg-white/70;
+  }
+
+  &.&--mobile::part(ripple) {
+    @apply bg-purple-500/70;
   }
 }
