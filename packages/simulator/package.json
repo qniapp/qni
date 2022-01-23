@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yasuhito/qni-simulator.git"
+    "url": "git+https://github.com/qniapp/qni.git"
   },
   "main": "index.js",
   "type": "module",
