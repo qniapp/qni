@@ -34,6 +34,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         arrow: false,
         content: this.menuContent,
         interactive: true,
+        appendTo: document.body,
         offset: [0, 16],
         placement: 'top',
         theme: 'operation-menu',
