@@ -23,8 +23,7 @@ export default [
       resolve(),
       commonjs({
         namedExports: {
-          'fraction.js': ['Fraction'],
-          nouislider: ['PipsMode']
+          'fraction.js': ['Fraction']
         }
       }),
       typescript({tsconfig: './tsconfig.json'})
