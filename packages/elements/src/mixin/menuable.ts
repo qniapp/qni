@@ -21,6 +21,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
     private ifTooltip!: TippyInstance | undefined
     private angleTooltip!: TippyInstance | undefined
     private flagTooltip!: TippyInstance | undefined
+    private deleteTooltip!: TippyInstance | undefined
 
     initMenu(): void {
       const popupInstance = (this as TippyReferenceElement)._tippy
@@ -44,6 +45,7 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
           this.ifTooltip?.hide()
           this.angleTooltip?.hide()
           this.flagTooltip?.hide()
+          this.deleteTooltip?.hide()
         }
       })
     }
@@ -126,9 +128,9 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       const deleteMenuItem = instance.popper.querySelector('[data-operation-menu-delete]')
       Util.notNull(deleteMenuItem)
 
-      const deletePopupuInstance = (deleteMenuItem as TippyReferenceElement)._tippy
-      if (deletePopupuInstance === undefined) {
-        tippy(deleteMenuItem, {
+      this.deleteTooltip = (deleteMenuItem as TippyReferenceElement)._tippy
+      if (this.deleteTooltip === undefined) {
+        this.deleteTooltip = tippy(deleteMenuItem, {
           animation: false,
           content: 'Delete'
         })
