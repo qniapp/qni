@@ -1,6 +1,3 @@
-# Qni
+# @qni/www
 
-Qni is an interactive quantum circuit simulator that runs in a web browser. It
-is useful for studying quantum computers and small experiments.
-
-For more see the [Qni Guide](https://yasuhito.github.io/qni/installation.html).
+The source for the [qniapp.net](https://qniapp.net) website.
