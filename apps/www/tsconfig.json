@@ -6,8 +6,6 @@
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "node",
-    "declaration": true,
-    "declarationDir": "types",
     "emitDeclarationOnly": true,
     "baseUrl": ".",
     "paths": {
@@ -16,7 +14,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "downlevelIteration": true,
+    "downlevelIteration": true
   },
-  "exclude": ["node_modules", "vendor", "public"],
+  "exclude": ["node_modules", "vendor", "public"]
 }
