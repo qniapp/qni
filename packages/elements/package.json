@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -42,7 +42,7 @@
   "dependencies": {
     "@github/catalyst": "^1.1.4",
     "@github/jtml": "^0.4.0",
-    "@qni/common": "^0.0.16",
+    "@qni/common": "^0.0.17",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
     "xstate": "^4.27.0"
