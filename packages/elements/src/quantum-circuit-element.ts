@@ -32,6 +32,7 @@ type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 export class QuantumCircuitElement extends HTMLElement {
   @attr minStepCount = 1
   @attr minWireCount = 1
+  @attr maxWireCount = 10
   @attr editing = false
   @attr updateUrl = false
   @attr json = ''
@@ -111,7 +112,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private get wireCount(): number {
+  get wireCount(): number {
     return this.stepAt(0).wireCount
   }
 

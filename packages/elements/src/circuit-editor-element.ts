@@ -76,7 +76,7 @@ export class CircuitEditorElement extends HTMLElement {
                     'startCircuitEdit',
                     'setOperationActive',
                     'addDocumentCursorGrabbingStyle',
-                    'appendCircuitWire',
+                    'maybeAppendCircuitWire',
                     'setSnapTargets'
                   ]
                 },
@@ -211,8 +211,10 @@ export class CircuitEditorElement extends HTMLElement {
         removeDocumentCursorGrabbingStyle: () => {
           document.documentElement.removeAttribute('data-grabbing')
         },
-        appendCircuitWire: () => {
-          this.circuit.appendWire()
+        maybeAppendCircuitWire: () => {
+          if (this.circuit.wireCount < this.circuit.maxWireCount) {
+            this.circuit.appendWire()
+          }
         },
         maybeRemoveLastEmptyWires: () => {
           this.circuit.removeLastEmptyWires()
