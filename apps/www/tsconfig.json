@@ -6,7 +6,6 @@
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "node",
-    "emitDeclarationOnly": true,
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*", "app/javascript/*", "app/components/*"]
