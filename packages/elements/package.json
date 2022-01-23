@@ -37,7 +37,7 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/yasuhito/qni-elements#readme",
+  "homepage": "https://github.com/qniapp/qni/tree/main/packages/elements#readme",
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@github/catalyst": "^1.1.4",
