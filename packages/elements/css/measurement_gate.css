@@ -8,9 +8,11 @@ measurement-gate {
 
   &::part(icon) {
     @apply text-purple-500;
+  }
+
+  circuit-dropzone &[data-snapped]::part(icon) {
     @apply transform-gpu origin-center;
-    @apply rotate-90;
-    @apply md:rotate-0;
+    @apply rotate-90 md:rotate-0;
   }
 
   &[data-value='0']::part(icon),
@@ -20,9 +22,11 @@ measurement-gate {
 
   &::part(value) {
     @apply absolute inset-0;
+  }
+
+  circuit-dropzone &[data-snapped]::part(value) {
     @apply transform-gpu origin-center;
-    @apply rotate-90;
-    @apply md:rotate-0;
+    @apply rotate-90 md:rotate-0;
   }
 
   &::part(value)::after {
