@@ -10,137 +10,12 @@
   <% end %>
 <% end %>
 
-<quantum-simulator class="relative">
+<quantum-simulator>
   <div data-controller="share"
        data-share-default-title-value="Qni"
        data-share-circuit-url-value="<%= circuit_url %>">
-    <div id="share-modal"
-         class="hidden fixed z-50 inset-0 overflow-y-auto"
-         data-share-target="modal"
-         aria-labelledby="modal-title"
-         role="dialog"
-         aria-modal="true">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!-- Background overlay, show/hide based on modal state. -->
-        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
-             data-action="click->share#closeModal"
-             aria-hidden="true"></div>
-
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle h-screen sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <!-- Modal panel, show/hide based on modal state. -->
-        <div class="inline-block align-bottom bg-white rounded-lg px-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full md:max-w-md p-6 md:p-6 pt-14 md:pt-14">
-          <div class="sm:block absolute top-0 right-0 pt-2 pr-2 md:pt-4 md:pr-4">
-            <button id="close-share-modal-button"
-                    type="button"
-                    class="bg-white rounded-md text-hare hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    data-action="click->share#closeModal">
-              <span class="sr-only">Close</span>
-              <%= icon :outline_x %>
-            </button>
-          </div>
-
-          <div class="text-lg absolute top-0 left-0 pt-4 pl-4 md:pl-6">
-            Share
-          </div>
-
-          <div>
-            <div class="flex justify-between">
-              <label for="circuit-title" class="block text-sm font-medium text-wolf">Title</label>
-              <span class="text-sm text-hare" id="circuit-title-optional">Optional</span>
-            </div>
-            <div class="mt-1">
-              <input type="text" name="circuit-title"
-                     class="shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-swan rounded-md"
-                     autocomplete="off"
-                     aria-describedby="circuit-title-optional"
-                     data-share-target="circuitTitleInput"
-                     data-action="keydown->share#update keyup->share#update">
-            </div>
-          </div>
-
-          <div class="mt-5 sm:mt-6 flex justify-between items-center border-1 border-hare rounded-md bg-gray-200 py-2 px-3">
-            <div id="circuit-url"
-                 class="text-sm truncate text-gray-900 opacity-75"
-                 data-share-target="urlText"></div>
-            <button id="copy-button"
-                    class="flex flex-row items-center border-transparent pl-4 text-gray-900 bg-transparent opacity-75 hover:opacity-100 focus:outline-none"
-                    data-controller="clipboard"
-                    data-action="click->clipboard#copyCurrentUrlToClipboard">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              <span class="pl-1">Copy</span>
-            </button>
-          </div>
-
-          <div class="mt-2 sm:mt-3">
-            <button id="tweet-button"
-                    type="button"
-                    class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-500 text-base font-medium text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:text-sm"
-                    data-action="click->share#tweet">
-              <%= icon :twitter %>
-              <span class="pl-1">Tweet</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="fixed top-0 left-0 bg-white rounded-br-2xl drop-shadow-xl z-40"
-         data-controller="menu" data-menu-active-class-value="bg-gray-200">
-      <div class="relative inline-block text-left w-10 h-10 p-1">
-        <button type="button" class="inline-flex justify-center items-center w-full h-full rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none"
-                id="menu-button" aria-expanded="true" aria-haspopup="true"
-                data-menu-target="button" data-action="click->menu#toggleDropdown">
-          <svg class="h-4 w-4" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-          </svg>
-        </button>
-
-        <div class="hidden origin-top-right absolute left-0 mt-2 w-56 overflow-hidden rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"
-             data-menu-target="dropdown">
-          <div class="py-1" role="none">
-            <span class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50 cursor-pointer"
-                  role="menuitem" tabindex="-1" id="menu-item-share"
-                  data-action="click->share#openModal">
-              <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 7.50003C5 8.32845 4.32843 9.00003 3.5 9.00003C2.67157 9.00003 2 8.32845 2 7.50003C2 6.6716 2.67157 6.00003 3.5 6.00003C4.32843 6.00003 5 6.6716 5 7.50003ZM5.71313 8.66388C5.29445 9.45838 4.46048 10 3.5 10C2.11929 10 1 8.88074 1 7.50003C1 6.11931 2.11929 5.00003 3.5 5.00003C4.46048 5.00003 5.29445 5.54167 5.71313 6.33616L9.10424 4.21671C9.03643 3.98968 9 3.74911 9 3.50003C9 2.11932 10.1193 1.00003 11.5 1.00003C12.8807 1.00003 14 2.11932 14 3.50003C14 4.88074 12.8807 6.00003 11.5 6.00003C10.6915 6.00003 9.97264 5.61624 9.51566 5.0209L5.9853 7.22738C5.99502 7.31692 6 7.40789 6 7.50003C6 7.59216 5.99502 7.68312 5.9853 7.77267L9.51567 9.97915C9.97265 9.38382 10.6915 9.00003 11.5 9.00003C12.8807 9.00003 14 10.1193 14 11.5C14 12.8807 12.8807 14 11.5 14C10.1193 14 9 12.8807 9 11.5C9 11.2509 9.03643 11.0104 9.10425 10.7833L5.71313 8.66388ZM11.5 5.00003C12.3284 5.00003 13 4.32846 13 3.50003C13 2.6716 12.3284 2.00003 11.5 2.00003C10.6716 2.00003 10 2.6716 10 3.50003C10 4.32846 10.6716 5.00003 11.5 5.00003ZM13 11.5C13 12.3285 12.3284 13 11.5 13C10.6716 13 10 12.3285 10 11.5C10 10.6716 10.6716 10 11.5 10C12.3284 10 13 10.6716 13 11.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-              </svg>
-              Share...
-            </span>
-          </div>
-          <div class="py-1" role="none">
-            <a href="https://github.com/qniapp/qni" target="_blank" rel="noopener noreferrer"
-               class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50" role="menuitem" tabindex="-1" id="menu-item-github">
-              <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.49936 0.850006C3.82767 0.850006 0.849976 3.8273 0.849976 7.50023C0.849976 10.4379 2.75523 12.9306 5.39775 13.8104C5.73047 13.8712 5.85171 13.6658 5.85171 13.4895C5.85171 13.3315 5.846 12.9135 5.84273 12.3587C3.99301 12.7604 3.60273 11.4671 3.60273 11.4671C3.30022 10.6988 2.86423 10.4942 2.86423 10.4942C2.26044 10.0819 2.90995 10.0901 2.90995 10.0901C3.57742 10.137 3.9285 10.7755 3.9285 10.7755C4.52167 11.7916 5.48512 11.4981 5.86396 11.3279C5.92438 10.8984 6.09625 10.6053 6.28608 10.4391C4.80948 10.2709 3.25695 9.70063 3.25695 7.15241C3.25695 6.42615 3.51618 5.83298 3.94157 5.368C3.87299 5.1998 3.64478 4.52375 4.00689 3.60807C4.00689 3.60807 4.56494 3.42926 5.83538 4.28941C6.36568 4.14204 6.93477 4.06856 7.50018 4.0657C8.06518 4.06856 8.63386 4.14204 9.16498 4.28941C10.4346 3.42926 10.9918 3.60807 10.9918 3.60807C11.3548 4.52375 11.1266 5.1998 11.0584 5.368C11.4846 5.83298 11.7418 6.42615 11.7418 7.15241C11.7418 9.70716 10.1868 10.2693 8.70571 10.4338C8.94412 10.6392 9.15681 11.045 9.15681 11.6655C9.15681 12.5542 9.14865 13.2715 9.14865 13.4895C9.14865 13.6675 9.26867 13.8745 9.60588 13.8095C12.2464 12.9282 14.15 10.4375 14.15 7.50023C14.15 3.8273 11.1723 0.850006 7.49936 0.850006Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-              </svg>
-              GitHub
-            </a>
-            <a href="https://twitter.com/qniapp" target="_blank" rel="noopener noreferrer"
-               class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50" role="menuitem" tabindex="-1" id="menu-item-twitter">
-              <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.23336 4.69629C7.23336 2.96884 8.63335 1.56857 10.36 1.56857C11.3736 1.56857 12.183 2.04804 12.7254 2.74385C13.3079 2.62467 13.8557 2.40913 14.3513 2.11508C14.1559 2.72598 13.7424 3.2396 13.2033 3.56463C13.2038 3.56568 13.2042 3.56674 13.2047 3.56779C13.7334 3.50361 14.2364 3.36302 14.7048 3.15546L14.7037 3.15715C14.3667 3.66183 13.9431 4.10736 13.4561 4.47034C13.4823 4.64672 13.4956 4.82427 13.4956 5.00079C13.4956 8.6871 10.6873 12.9746 5.52122 12.9746C3.93906 12.9746 2.46544 12.511 1.22505 11.7152C0.992632 11.5661 0.925108 11.2568 1.07423 11.0244C1.0874 11.0038 1.10183 10.9846 1.11734 10.9666C1.20582 10.8202 1.37438 10.7309 1.5554 10.7522C2.47066 10.8601 3.38568 10.7485 4.19219 10.3962C3.39226 10.0434 2.77129 9.35975 2.50204 8.51974C2.45359 8.3686 2.48835 8.20311 2.59351 8.08422C2.59716 8.0801 2.60087 8.07606 2.60464 8.0721C1.96391 7.50819 1.55973 6.68208 1.55973 5.76143V5.72759C1.55973 5.56814 1.64411 5.42059 1.78155 5.33974C1.82671 5.31317 1.87537 5.29511 1.92532 5.28558C1.70549 4.86154 1.58116 4.37984 1.58116 3.86958C1.58116 3.40165 1.58384 2.81192 1.91332 2.28081C1.98718 2.16175 2.10758 2.08915 2.2364 2.07195C2.42588 2.01237 2.64087 2.06969 2.77406 2.23302C3.86536 3.57126 5.44066 4.49583 7.23366 4.73961L7.23336 4.69629ZM5.52122 11.9746C4.73387 11.9746 3.97781 11.8435 3.27248 11.6023C4.13012 11.4538 4.95307 11.1159 5.66218 10.5602C5.81211 10.4427 5.87182 10.2435 5.81126 10.0629C5.7507 9.88234 5.583 9.75943 5.39255 9.75607C4.68968 9.74366 4.06712 9.39716 3.67793 8.86845C3.86828 8.85306 4.05428 8.82039 4.23445 8.77167C4.43603 8.71716 4.57363 8.53114 4.56674 8.32243C4.55985 8.11372 4.41029 7.93718 4.20555 7.89607C3.42694 7.73977 2.79883 7.16764 2.56169 6.42174C2.76255 6.47025 2.97102 6.4991 3.18482 6.5061C3.38563 6.51267 3.56646 6.38533 3.62795 6.19405C3.68943 6.00277 3.61666 5.79391 3.44963 5.68224C2.86523 5.29155 2.48116 4.62464 2.48116 3.86958C2.48116 3.70213 2.48352 3.55268 2.49355 3.41719C3.85115 4.79913 5.70873 5.68931 7.77588 5.79338C7.93225 5.80126 8.08328 5.73543 8.18395 5.61553C8.28463 5.49562 8.32332 5.33548 8.28851 5.18284C8.25255 5.02517 8.23336 4.86284 8.23336 4.69629C8.23336 3.52085 9.18591 2.56857 10.36 2.56857C11.5943 2.56857 12.4956 3.71208 12.4956 5.00079C12.4956 8.25709 10.0202 11.9746 5.52122 11.9746Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
-              </svg>
-              Twitter
-            </a>
-          </div>
-          <div class="py-1" role="none">
-            <a href="#" class="text-gray-700 group flex items-center px-4 py-2 text-sm hover:bg-gray-50"
-               role="menuitem" tabindex="-1" id="menu-item-clear-circuit"
-               data-action="click:quantum-simulator#clearCircuit">
-              <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-              </svg>
-              Clear circuit
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= share_modal %>
+    <%= menu %>
   </div>
 
   <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
@@ -803,7 +678,7 @@
         data-operation-menu-delete
         class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
     >
-      <%= icon :trash %>
+      <%= icon :trash, class: 'h-4 w-4' %>
     </div>
   </div>
 </template>

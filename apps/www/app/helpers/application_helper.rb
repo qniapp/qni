@@ -7,4 +7,12 @@ module ApplicationHelper
     title = circuit ? JSON.parse(circuit.json)['title'] : nil
     title || 'Qni'
   end
+
+  def share_modal
+    render 'share_modal'
+  end
+
+  def menu
+    render 'menu'
+  end
 end
