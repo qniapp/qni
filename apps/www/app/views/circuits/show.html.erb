@@ -32,18 +32,18 @@
     <%= palette_md %>
 
     <quantum-circuit
-        class="my-52 mr-6 md:ml-6 md:mr-0"
+        class="my-52 mx-6"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-update-url="true"
         data-min-step-count="5"
         data-min-wire-count="2"></quantum-circuit>
 
-    <%= circle_notation %>
-
-    <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6">
-      <%= run_circuit_button class: 'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md z-40' %>
+    <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6 z-30">
+      <%= run_circuit_button class: 'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md' %>
       <%= palette %>
     </div>
+
+    <%= circle_notation %>
   </circuit-editor>
 
   <%= run_circuit_button class: 'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40' %>
