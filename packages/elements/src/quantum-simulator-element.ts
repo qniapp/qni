@@ -1,5 +1,5 @@
 import {Complex, DetailedError, Util} from '@qni/common'
-import {controller, target, targets} from '@github/catalyst'
+import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {CircleNotationElement} from './circle-notation-element'
@@ -17,6 +17,8 @@ type MessageEventData = {
 }
 
 export class QuantumSimulatorElement extends HTMLElement {
+  @attr backend = ''
+
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
@@ -134,11 +136,14 @@ export class QuantumSimulatorElement extends HTMLElement {
     const qubitCount = maxTargetBit >= 0 ? maxTargetBit + 1 : 1
 
     this.circleNotation.qubitCount = qubitCount
+    const backend = this.backend.trim()
     this.worker.postMessage({
+      json: this.circuit.toJson(),
       qubitCount,
       stepIndex,
       steps: serializedSteps,
-      targets: this.visibleQubitCircleKets
+      targets: this.visibleQubitCircleKets,
+      backend: backend !== '' ? backend : null
     })
   }
 

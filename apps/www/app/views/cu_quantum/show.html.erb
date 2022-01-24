@@ -1,0 +1,201 @@
+<% content_for :meta_ogp do %>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= twitter_title %>">
+  <% if @json %>
+    <meta property="og:url" content="<%= circuit_url @json %>">
+    <meta property="og:description" content="<%= og_description @json %>">
+  <% end %>
+  <% if @circuit&.social_image&.attached? %>
+    <meta property="og:image" content="<%= rails_blob_url(@circuit.social_image, disposition: 'inline') %>">
+  <% end %>
+<% end %>
+
+<quantum-simulator data-backend="cu_quantum">
+  <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
+    <div data-controller="share"
+         data-share-default-title-value="Qni"
+         data-share-circuit-url-value="<%= circuit_url %>">
+      <%= share_modal %>
+      <%= menu %>
+    </div>
+
+    <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl z-40">
+      <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1">
+        <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+          <%= icon :mixer_horizontal %>
+        </div>
+      </inspector-button>
+    </div>
+
+    <%= palette_md %>
+
+    <quantum-circuit
+        class="my-52 mx-6"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-update-url="true"
+        data-min-step-count="5"
+        data-min-wire-count="2"></quantum-circuit>
+
+    <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6 z-30">
+      <%= run_circuit_button class: 'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md' %>
+      <%= palette %>
+    </div>
+
+    <%= circle_notation %>
+  </circuit-editor>
+
+  <%= run_circuit_button class: 'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40' %>
+</quantum-simulator>
+
+<%= palette_help_templates %>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row bg-white rounded-2xl drop-shadow-lg p-2">
+      <button
+          data-operation-menu-if
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm tracking-tighter whitespace-nowrap">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+          data-operation-menu-angle
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <%= icon :angle %>
+      </button>
+
+      <button
+          data-operation-menu-flag
+          type="button"
+          class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+          disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm whitespace-nowrap">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+        data-operation-menu-delete
+        class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
+    >
+      <%= icon :trash, class: 'h-4 w-4' %>
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
+    <div class="flex flex-col divide-y space-y-4 items-left">
+      <div id="conditional-gate-pane" class="flex flex-col items-left">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+          <input
+              data-target="operation-inspector.ifInput"
+              type="text"
+              name="if"
+              id="if-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+          <label
+              for="angle-input"
+              class="font-normal text-gray-700 select-none"
+              data-target="operation-inspector.angleInputLabel"
+          >Angle</label
+                >
+          <input
+              data-target="operation-inspector.angleInput"
+              type="text"
+              name="angle"
+              id="angle-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+          <angle-slider
+              data-target="operation-inspector.angleSlider"
+              class="inline-block ml-2"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          >Denom</label
+                >
+          <input
+              data-target="operation-inspector.denominatorInput"
+              type="number"
+              min="2"
+              name="denominator"
+              id="denominator-input"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+          <div class="pl-2 text-sm whitespace-nowrap text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+                                                                                              data-target="operation-inspector.denominatorLabel"
+                                                                                              class="font-bold text-yellow-600"
+                                                                                          >?</span
+                                                                                            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none"
+            >Reduce</label
+                   >
+          </div>
+          <div class="flex items-center h-5">
+            <input
+                data-target="operation-inspector.reduceAngleFractionCheckbox"
+                id="reduce-fraction-checkbox"
+                name="reduce-fraction"
+                type="checkbox"
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+          <input
+              data-target="operation-inspector.flagInput"
+              type="text"
+              name="flag"
+              id="flag-input"
+              spellcheck="false"
+              class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+              autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
