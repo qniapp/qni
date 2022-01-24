@@ -1,0 +1,40 @@
+<div class="fixed top-0 left-0 right-0 md:top-auto md:left-1/2 md:right-auto md:bottom-0
+            mt-12 mx-6 mb-8 md:mt-0 md:mx-0
+            w-auto h-32 md:h-auto
+            rounded-xl md:rounded-2xl
+            md:transform md:-translate-x-1/2
+            bg-white drop-shadow-md z-30">
+  <circle-notation
+      id="circle-notation"
+      class="circle-notation flex flex-row justify-center overflow-y-auto w-full h-full"
+      data-target="quantum-simulator.circleNotation"
+      data-multi-qubits>
+    <template id="circle-notation-popup">
+      <div class="text-base text-wolf mb-2">
+        |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal
+        <span class="circle-notation-popup__ket-decimal"></span>)
+      </div>
+      <ul class="list-none">
+        <li>
+          Amplitude:
+          <span
+              class="circle-notation-popup__amplitude-real font-bold font-mono text-eel"
+          ></span>
+          <span
+              class="circle-notation-popup__amplitude-imag font-bold font-mono text-eel"
+          ></span>
+        </li>
+        <li>
+          Probability:
+          <span
+              class="circle-notation-popup__probability font-bold font-mono text-eel"
+          ></span>
+        </li>
+        <li>
+          Phase:
+          <span class="circle-notation-popup__phase font-bold font-mono text-eel"></span>
+        </li>
+      </ul>
+    </template>
+  </circle-notation>
+</div>
