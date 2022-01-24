@@ -11,6 +11,13 @@
 <% end %>
 
 <quantum-simulator>
+  <div data-controller="share"
+       data-share-default-title-value="Qni"
+       data-share-circuit-url-value="<%= circuit_url %>">
+    <%= share_modal %>
+    <%= menu %>
+  </div>
+
   <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
     <div data-controller="share"
          data-share-default-title-value="Qni"
