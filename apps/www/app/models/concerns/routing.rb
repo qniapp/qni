@@ -9,7 +9,7 @@ module Routing
 
   def default_url_options
     if Rails.env.production?
-      { host: 'qni-quantum.herokuapp.com' }
+      { host: 'qniapp.net' }
     else
       { host: 'localhost', port: 3000 }
     end
