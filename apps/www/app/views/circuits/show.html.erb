@@ -10,44 +10,46 @@
   <% end %>
 <% end %>
 
-<quantum-simulator class="inline-block" data-update-url>
-  <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
-    <div data-controller="share"
-         data-share-default-title-value="Qni"
-         data-share-circuit-url-value="<%= circuit_url %>">
-      <%= share_modal %>
-      <%= menu %>
-    </div>
+<div class="flex flex-row-reverse md:flex-none md:flex-row w-full overflow-x-scroll">
+  <quantum-simulator class="inline-block" data-update-url>
+    <circuit-editor class="w-full flex flex-row justify-end md:inline-block">
+      <div data-controller="share"
+           data-share-default-title-value="Qni"
+           data-share-circuit-url-value="<%= circuit_url %>">
+        <%= share_modal %>
+        <%= menu %>
+      </div>
 
-    <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl z-40">
-      <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1">
-        <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
-          <%= icon :mixer_horizontal %>
-        </div>
-      </inspector-button>
-    </div>
+      <div class="fixed top-0 right-0 bg-white rounded-bl-2xl drop-shadow-xl z-40">
+        <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1">
+          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+            <%= icon :mixer_horizontal %>
+          </div>
+        </inspector-button>
+      </div>
 
-    <%= palette_md %>
+      <%= palette_md %>
 
-    <quantum-circuit
-        class="my-52 mx-6"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-update-url="true"
-        data-min-step-count="5"
-        data-min-wire-count="2"></quantum-circuit>
+      <quantum-circuit
+          class="my-52 mx-6"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-update-url="true"
+          data-min-step-count="5"
+          data-min-wire-count="2"></quantum-circuit>
 
-    <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6 z-30">
-      <%= run_circuit_button class: 'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md' %>
-      <%= palette %>
-    </div>
+      <div class="fixed bottom-0 left-0 right-0 flex flex-row items-center mx-6 mb-6 z-30">
+        <%= run_circuit_button class: 'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md' %>
+        <%= palette %>
+      </div>
 
-    <%= circle_notation %>
-  </circuit-editor>
+      <%= circle_notation %>
+    </circuit-editor>
 
-  <%= run_circuit_button class: 'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40' %>
-</quantum-simulator>
+    <%= run_circuit_button class: 'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40' %>
+  </quantum-simulator>
+</div>
 
 <%= palette_help_templates %>
 
