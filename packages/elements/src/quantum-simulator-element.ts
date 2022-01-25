@@ -1,5 +1,5 @@
 import {Complex, DetailedError, Util} from '@qni/common'
-import {controller, target, targets} from '@github/catalyst'
+import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {CircleNotationElement} from './circle-notation-element'
@@ -17,6 +17,8 @@ type MessageEventData = {
 }
 
 export class QuantumSimulatorElement extends HTMLElement {
+  @attr updateUrl = false
+
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
@@ -41,12 +43,12 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circle-notation-visibility-change', this.run)
     this.addEventListener('run-circuit-button-click', this.run)
 
-    this.addEventListener('circuit-step-snap', this.updateJsonUrl)
-    this.addEventListener('circuit-step-unsnap', this.updateJsonUrl)
+    this.addEventListener('circuit-step-snap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-step-unsnap', this.maybeUpdateUrl)
 
     this.attachShadow({mode: 'open'})
     this.update()
-    this.updateJsonUrl()
+    this.maybeUpdateUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
     this.run()
@@ -165,7 +167,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.visibleQubitCircleKets = ketNumbers
   }
 
-  private updateJsonUrl(): void {
+  private maybeUpdateUrl(): void {
+    if (!this.updateUrl) return
     Util.notNull(this.circuit)
 
     const json = this.circuit.toJson()

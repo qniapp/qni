@@ -1,4 +1,5 @@
 import commonjs from 'rollup-plugin-commonjs'
+import replace from 'rollup-plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 
 export default [
@@ -13,6 +14,9 @@ export default [
     ],
     context: 'window',
     plugins: [
+      replace({
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      }),
       resolve(),
       commonjs({
         namedExports: {
