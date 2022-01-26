@@ -11,6 +11,7 @@ build({
   bundle: true,
   minify: true,
   format: 'esm',
+  sourcemap: true,
   target: 'es2017',
   external: Object.keys(pkg['dependencies'])
 })
