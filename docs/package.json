@@ -1,0 +1,29 @@
+{
+  "name": "@qni/docs",
+  "version": "0.0.27",
+  "description": "An interactive tutorial for @qni/www.",
+  "author": "Yasuhito Takamiya <\"\"'yasuhito@gmail.com'\"\">",
+  "homepage": "https://github.com/qniapp/qni#readme",
+  "license": "MIT",
+  "main": "lib/docs.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qniapp/qni.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/qniapp/qni/issues"
+  },
+  "dependencies": {
+    "@qni/elements": "^0.0.27"
+  }
+}
