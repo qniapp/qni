@@ -17329,6 +17329,7 @@ Args: ${o}`
             this.addEventListener('circuit-dropzone-drop', this.unshadow),
             this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone),
             this.attachShadow({ mode: 'open' }),
+            this.updateOperationAttributes(),
             this.update()
         }
         attributeChangedCallback(t, e, r) {
