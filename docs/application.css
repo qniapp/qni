@@ -4321,6 +4321,10 @@ circuit-editor {
   height: 1.25rem;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -4353,6 +4357,10 @@ circuit-editor {
 
 .w-60 {
   width: 15rem;
+}
+
+.w-1\/2 {
+  width: 50%;
 }
 
 .min-w-0 {
@@ -4626,6 +4634,10 @@ circuit-editor {
   padding-bottom: 2.5rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -4636,18 +4648,6 @@ circuit-editor {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.pl-1 {
-  padding-left: 0.25rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
-.align-middle {
-  vertical-align: middle;
 }
 
 .font-sans {
@@ -4715,6 +4715,11 @@ circuit-editor {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -4748,16 +4753,6 @@ circuit-editor {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
-}
-
-.text-blue-600 {
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .shadow-sm {
