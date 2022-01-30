@@ -95,7 +95,9 @@ export class AngleSliderElement extends HTMLElement {
       })
       .start()
 
-    this.attachShadow({mode: 'open'})
+    if (this.shadowRoot === null) {
+      this.attachShadow({mode: 'open'})
+    }
     this.update()
     this.updateSnapAngles()
     this.initInteraction()
