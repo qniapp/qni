@@ -1,4 +1,5 @@
-import {Util, angleDenominator, radian as radianOf} from '@qni/common'
+import {Interpreter, createMachine, interpret} from 'xstate'
+import {Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
@@ -7,23 +8,59 @@ import interact from 'interactjs'
 export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
   arg !== null && arg instanceof AngleSliderElement
 
+type AngleSliderContext = Record<string, never>
+type AngleSliderEvent = {type: 'SET_ANGLE'; angle: string} | {type: 'START_MOVE'} | {type: 'END_MOVE'}
+
 export class AngleSliderElement extends HTMLElement {
+  @attr angle = ''
   @attr denominator = 0
   @attr disabled = false
+  @attr debug = false
 
   private snapAngles: {[radian: number]: string} = {}
-
-  get angle(): string {
-    const value = this.getAttribute('data-angle')
-    Util.notNull(value)
-
-    return value
-  }
-
-  set angle(value: string) {
-    this.setAttribute('data-angle', value)
-    this.dispatchEvent(new Event('angle-slider-update', {bubbles: true}))
-  }
+  private angleSliderMachine = createMachine<AngleSliderContext, AngleSliderEvent>(
+    {
+      id: 'angle-slider',
+      initial: 'idle',
+      states: {
+        idle: {
+          on: {
+            START_MOVE: {
+              target: 'moving'
+            },
+            SET_ANGLE: {
+              target: 'idle',
+              actions: ['dispatchUpdateEvent']
+            }
+          }
+        },
+        moving: {
+          on: {
+            SET_ANGLE: {
+              target: 'moving',
+              actions: ['dispatchChangeEvent']
+            },
+            END_MOVE: {
+              target: 'idle',
+              actions: ['dispatchUpdateEvent']
+            }
+          }
+        }
+      }
+    },
+    {
+      actions: {
+        dispatchChangeEvent: () => {
+          this.dispatchEvent(new Event('angle-slider-change', {bubbles: true}))
+        },
+        dispatchUpdateEvent: () => {
+          this.dispatchEvent(new Event('angle-slider-update', {bubbles: true}))
+        }
+      }
+    }
+  )
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private angleSliderService!: Interpreter<AngleSliderContext, any, AngleSliderEvent>
 
   get radian(): number {
     const value = this.getAttribute('data-radian')
@@ -40,8 +77,7 @@ export class AngleSliderElement extends HTMLElement {
   initWithAngle(angle: string): void {
     this.denominator = angleDenominator(angle)
     this.updateSnapAngles()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [radian, _] = this.findSnapAngle(radianOf(angle))
+    const [radian] = this.findSnapAngle(radianOf(angle))
     this.radian = radian
   }
 
@@ -49,18 +85,29 @@ export class AngleSliderElement extends HTMLElement {
     if (oldValue === newValue) return
     if (newValue === null) return
 
+    if (name === 'data-angle' && newValue !== '') {
+      this.angleSliderService.send({type: 'SET_ANGLE', angle: newValue})
+    }
     if (name === 'data-denominator' && this.denominator !== 0) {
       this.updateSnapAngles()
     }
   }
 
   connectedCallback(): void {
+    this.angleSliderService = interpret(this.angleSliderMachine)
+      .onTransition(state => {
+        if (this.debug) {
+          // eslint-disable-next-line no-console
+          console.log(`circuit-step: ${describe(state.value)}`)
+        }
+      })
+      .start()
+
     if (this.shadowRoot === null) {
       this.attachShadow({mode: 'open'})
     }
     this.update()
 
-    this.setAttribute('data-angle', '')
     this.updateSnapAngles()
     this.initInteraction()
   }
@@ -82,9 +129,33 @@ export class AngleSliderElement extends HTMLElement {
         })
       ],
       listeners: {
-        move: this.move.bind(this)
+        start: this.startMove.bind(this),
+        move: this.move.bind(this),
+        end: this.endMove.bind(this)
       }
     })
+  }
+
+  private startMove(): void {
+    this.angleSliderService.send({type: 'START_MOVE'})
+  }
+
+  private move(event: InteractEvent) {
+    const sliderWidth = interact.getElementRect(event.target).width
+    const proportion = event.pageX / sliderWidth
+
+    this.left = proportion
+
+    const radian = this.proportionToRadian(proportion)
+    this.setAttribute('data-radian', radian.toString())
+
+    const [, angle] = this.findSnapAngle(radian)
+
+    if (this.angle !== angle) this.angle = angle
+  }
+
+  endMove(): void {
+    this.angleSliderService.send({type: 'END_MOVE'})
   }
 
   private updateSnapAngles(): void {
@@ -137,21 +208,6 @@ export class AngleSliderElement extends HTMLElement {
     Util.notNull(snapAngle)
 
     return [snapRadian, snapAngle]
-  }
-
-  private move(event: InteractEvent) {
-    const sliderWidth = interact.getElementRect(event.target).width
-    const proportion = event.pageX / sliderWidth
-
-    this.left = proportion
-
-    const radian = this.proportionToRadian(proportion)
-    this.setAttribute('data-radian', radian.toString())
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, angle] = this.findSnapAngle(radian)
-
-    if (this.angle !== angle) this.angle = angle
   }
 
   private proportionToRadian(proportion: number) {

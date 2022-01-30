@@ -165,7 +165,7 @@
   }
 
   .angleable:not([data-reduced-angle=''])::before {
-    @apply flex justify-center;
+    @apply flex justify-center !important;
 
     content: attr(data-reduced-angle) '';
   }
