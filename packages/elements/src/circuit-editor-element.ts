@@ -332,6 +332,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-menu-flag', this.showOperationInspectorFlag)
     this.addEventListener('operation-inspector-if-change', this.setOperationIf)
     this.addEventListener('operation-inspector-angle-change', this.setOperationAngle)
+    this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
     this.addEventListener('operation-ungrab', this.ungrabOperation)

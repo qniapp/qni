@@ -34,6 +34,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
     this.addEventListener('operation-inspector-if-change', this.run)
     this.addEventListener('operation-inspector-angle-change', this.run)
+    this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)
     this.addEventListener('operation-inspector-flag-change', this.run)
     this.addEventListener('circuit-step-mouseenter', this.runUnlessEditing)
     this.addEventListener('circuit-step-snap', this.run)
