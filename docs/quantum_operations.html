@@ -1,260 +1,241 @@
 ---
+layout: default
+title: 量子コンピュータの命令
 ---
 
-<!DOCTYPE html>
-<html lang="">
-  <head>
-    <title>量子コンピュータの命令</title>
-
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Untitled</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <script type="module" src="./application.js" defer></script>
-    <link href="./application.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="mx-auto py-10">
-        <div class="pb-16">
-          <div>
-            <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-              量子コンピュータの命令
-            </h1>
-          </div>
-          <p class="my-1 text-lg text-gray-500">量子プログラミングのための低水準言語</p>
-        </div>
-
-        <p class="pb-10">
-          量子コンピュータの世界ではまだ、Python や Java のような高水準言語は登場していません。
-          このため、量子プログラミングでは、今後しばらくはアセンブラ命令のような低水準言語を使っていく必要があります。
-        </p>
-
-        <p class="pb-10">
-          初心者にとってひとつラッキーな点は、量子コンピュータの低水準言語は取っ付きやすい見た目であることです。
-          というのも、量子コンピュータの歴史のわりと早い段階 (90 年代半ば)
-          に、量子プログラムを図式として表現する方法が主流となったためです。 このため、従来の
-          <code class="text-purple-600">MOV</code> や
-          <code class="text-purple-600">ADD</code>
-          といった文字だけの無愛想なアセンブラ命令と比べると、量子コンピュータの命令はグラフィカルで、ずいぶん親しみやすくなっています。
-        </p>
-
-        <p class="pb-10">
-          現在では、どんな量子コンピュータでも使える標準的な命令セットと、それぞれを表す記号
-          (アイコン) がほぼ決まっています。
-          みなさんの興味を惹きそうな基本命令を図にリストアップしました。
-          詳細は後に説明するとして、まずはどんな命令があるか眺めてみましょう。
-        </p>
-
-        <div class="pb-10">
-          <table class="table-auto border-collapse border border-slate-400">
-            <thead>
-              <tr>
-                <th class="border border-slate-300 bg-slate-800 text-white py-2">記号</th>
-                <th class="border border-slate-300 bg-slate-800 text-white">名前</th>
-                <th class="border border-slate-300 bg-slate-800 text-white">説明</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <x-gate class="inline-block"></x-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">NOT または X</td>
-                <td class="border border-slate-300 p-2">ビットペアの入れ替え</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <circuit-step class="p-0">
-                    <circuit-dropzone>
-                      <control-gate></control-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <x-gate></x-gate>
-                    </circuit-dropzone>
-                  </circuit-step>
-                </td>
-                <td class="border border-slate-300 p-2">CNOT</td>
-                <td class="border border-slate-300 p-2">条件付き NOT</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <circuit-step class="p-0">
-                    <circuit-dropzone>
-                      <control-gate></control-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <control-gate></control-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <x-gate></x-gate>
-                    </circuit-dropzone>
-                  </circuit-step>
-                </td>
-                <td class="border border-slate-300 p-2">CCNOT または Toffoli (トフォリ)</td>
-                <td class="border border-slate-300 p-2">条件 x2 付き NOT</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <h-gate></h-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
-                <td class="border border-slate-300 p-2">簡単な重ね合わせの作成</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <phase-gate></phase-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">Phase Shift</td>
-                <td class="border border-slate-300 p-2">相対位相を回転</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex flex-row gap-2">
-                    <phase-gate data-angle="π"></phase-gate>
-                    <z-gate></z-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">Phase Shift (π) または Z</td>
-                <td class="border border-slate-300 p-2">
-                  相対位相を <code class="text-purple-600">π</code> 回転
-                </td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <phase-gate data-angle="π/2"></phase-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">Phase Shift (π/2) または S</td>
-                <td class="border border-slate-300 p-2">
-                  相対位相を <code class="text-purple-600">π/2</code> 回転
-                </td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <phase-gate data-angle="π/4"></phase-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">Phase Shift (π/4) または T</td>
-                <td class="border border-slate-300 p-2">
-                  相対位相を <code class="text-purple-600">π/4</code> 回転
-                </td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <circuit-step class="p-0">
-                      <circuit-dropzone>
-                        <phase-gate></phase-gate>
-                      </circuit-dropzone>
-                      <circuit-dropzone>
-                        <phase-gate></phase-gate>
-                      </circuit-dropzone>
-                    </circuit-step>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">CPHASE</td>
-                <td class="border border-slate-300 p-2">条件付きの Phase Shift</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <circuit-step class="p-0">
-                      <circuit-dropzone>
-                        <control-gate></control-gate>
-                      </circuit-dropzone>
-                      <circuit-dropzone>
-                        <control-gate></control-gate>
-                      </circuit-dropzone>
-                    </circuit-step>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">CZ</td>
-                <td class="border border-slate-300 p-2">CPHASE (π 回転)</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <measurement-gate></measurement-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">MEASUREMENT</td>
-                <td class="border border-slate-300 p-2">量子ビットを測定し 0 または 1 を返す</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex flex-row gap-2">
-                    <write-gate data-value="0"></write-gate>
-                    <write-gate data-value="1"></write-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">WRITE</td>
-                <td class="border border-slate-300 p-2">指定した値で量子ビットを初期化する</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <div class="flex justify-center">
-                    <rnot-gate></rnot-gate>
-                  </div>
-                </td>
-                <td class="border border-slate-300 p-2">Square root of NOT</td>
-                <td class="border border-slate-300 p-2">
-                  X の平方根 (2 度適用することで X と同等の作用)
-                </td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <circuit-step class="p-0">
-                    <circuit-dropzone>
-                      <swap-gate></swap-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <swap-gate></swap-gate>
-                    </circuit-dropzone>
-                  </circuit-step>
-                </td>
-                <td class="border border-slate-300 p-2">SWAP</td>
-                <td class="border border-slate-300 p-2">2 つの量子ビットを交換</td>
-              </tr>
-              <tr>
-                <td class="border border-slate-300 py-2 px-4">
-                  <circuit-step class="p-0">
-                    <circuit-dropzone>
-                      <swap-gate></swap-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <swap-gate></swap-gate>
-                    </circuit-dropzone>
-                    <circuit-dropzone>
-                      <control-gate></control-gate>
-                    </circuit-dropzone>
-                  </circuit-step>
-                </td>
-                <td class="border border-slate-300 p-2">CSWAP</td>
-                <td class="border border-slate-300 p-2">条件付き SWAP</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="pb-10">
-          以降では、これらの命令をドラッグアンドドロップすることでお手軽に量子プログラミングできる、Qni
-          を使っていきます。
-        </p>
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div class="mx-auto py-10">
+    <div class="pb-16">
+      <div>
+        <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+          量子コンピュータの命令
+        </h1>
       </div>
+      <p class="my-1 text-lg text-gray-500">量子プログラミングのための低水準言語</p>
     </div>
-  </body>
-</html>
+
+    <p class="pb-10">
+      量子コンピュータの世界ではまだ、Python や Java のような高水準言語は登場していません。
+      このため、量子プログラミングでは、今後しばらくはアセンブラ命令のような低水準言語を使っていく必要があります。
+    </p>
+
+    <p class="pb-10">
+      初心者にとってひとつラッキーな点は、量子コンピュータの低水準言語は取っ付きやすい見た目であることです。
+      というのも、量子コンピュータの歴史のわりと早い段階 (90 年代半ば)
+      に、量子プログラムを図式として表現する方法が主流となったためです。 このため、従来の
+      <code class="text-purple-600">MOV</code> や
+      <code class="text-purple-600">ADD</code>
+      といった文字だけの無愛想なアセンブラ命令と比べると、量子コンピュータの命令はグラフィカルで、ずいぶん親しみやすくなっています。
+    </p>
+
+    <p class="pb-10">
+      現在では、どんな量子コンピュータでも使える標準的な命令セットと、それぞれを表す記号 (アイコン)
+      がほぼ決まっています。 みなさんの興味を惹きそうな基本命令を図にリストアップしました。
+      詳細は後に説明するとして、まずはどんな命令があるか眺めてみましょう。
+    </p>
+
+    <div class="pb-10">
+      <table class="table-auto border-collapse border border-slate-400">
+        <thead>
+          <tr>
+            <th class="border border-slate-300 bg-slate-800 text-white py-2">記号</th>
+            <th class="border border-slate-300 bg-slate-800 text-white">名前</th>
+            <th class="border border-slate-300 bg-slate-800 text-white">説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <x-gate class="inline-block"></x-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">NOT または X</td>
+            <td class="border border-slate-300 p-2">ビットペアの入れ替え</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <circuit-step class="p-0">
+                <circuit-dropzone>
+                  <control-gate></control-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <x-gate></x-gate>
+                </circuit-dropzone>
+              </circuit-step>
+            </td>
+            <td class="border border-slate-300 p-2">CNOT</td>
+            <td class="border border-slate-300 p-2">条件付き NOT</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <circuit-step class="p-0">
+                <circuit-dropzone>
+                  <control-gate></control-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <control-gate></control-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <x-gate></x-gate>
+                </circuit-dropzone>
+              </circuit-step>
+            </td>
+            <td class="border border-slate-300 p-2">CCNOT または Toffoli (トフォリ)</td>
+            <td class="border border-slate-300 p-2">条件 x2 付き NOT</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <h-gate></h-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
+            <td class="border border-slate-300 p-2">簡単な重ね合わせの作成</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <phase-gate></phase-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">Phase Shift</td>
+            <td class="border border-slate-300 p-2">相対位相を回転</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex flex-row gap-2">
+                <phase-gate data-angle="π"></phase-gate>
+                <z-gate></z-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">Phase Shift (π) または Z</td>
+            <td class="border border-slate-300 p-2">
+              相対位相を <code class="text-purple-600">π</code> 回転
+            </td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <phase-gate data-angle="π/2"></phase-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">Phase Shift (π/2) または S</td>
+            <td class="border border-slate-300 p-2">
+              相対位相を <code class="text-purple-600">π/2</code> 回転
+            </td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <phase-gate data-angle="π/4"></phase-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">Phase Shift (π/4) または T</td>
+            <td class="border border-slate-300 p-2">
+              相対位相を <code class="text-purple-600">π/4</code> 回転
+            </td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <circuit-step class="p-0">
+                  <circuit-dropzone>
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone>
+                    <phase-gate></phase-gate>
+                  </circuit-dropzone>
+                </circuit-step>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">CPHASE</td>
+            <td class="border border-slate-300 p-2">条件付きの Phase Shift</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <circuit-step class="p-0">
+                  <circuit-dropzone>
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                  <circuit-dropzone>
+                    <control-gate></control-gate>
+                  </circuit-dropzone>
+                </circuit-step>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">CZ</td>
+            <td class="border border-slate-300 p-2">CPHASE (π 回転)</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <measurement-gate></measurement-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">MEASUREMENT</td>
+            <td class="border border-slate-300 p-2">量子ビットを測定し 0 または 1 を返す</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex flex-row gap-2">
+                <write-gate data-value="0"></write-gate>
+                <write-gate data-value="1"></write-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">WRITE</td>
+            <td class="border border-slate-300 p-2">指定した値で量子ビットを初期化する</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <div class="flex justify-center">
+                <rnot-gate></rnot-gate>
+              </div>
+            </td>
+            <td class="border border-slate-300 p-2">Square root of NOT</td>
+            <td class="border border-slate-300 p-2">
+              X の平方根 (2 度適用することで X と同等の作用)
+            </td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <circuit-step class="p-0">
+                <circuit-dropzone>
+                  <swap-gate></swap-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <swap-gate></swap-gate>
+                </circuit-dropzone>
+              </circuit-step>
+            </td>
+            <td class="border border-slate-300 p-2">SWAP</td>
+            <td class="border border-slate-300 p-2">2 つの量子ビットを交換</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-300 py-2 px-4">
+              <circuit-step class="p-0">
+                <circuit-dropzone>
+                  <swap-gate></swap-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <swap-gate></swap-gate>
+                </circuit-dropzone>
+                <circuit-dropzone>
+                  <control-gate></control-gate>
+                </circuit-dropzone>
+              </circuit-step>
+            </td>
+            <td class="border border-slate-300 p-2">CSWAP</td>
+            <td class="border border-slate-300 p-2">条件付き SWAP</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="pb-10">
+      以降では、これらの命令をドラッグアンドドロップすることでお手軽に量子プログラミングできる、Qni
+      を使っていきます。
+    </p>
+  </div>
+</div>

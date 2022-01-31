@@ -1,90 +1,65 @@
 ---
+layout: default
+title: 量子コンピュータの位置付け
 ---
 
-<!DOCTYPE html>
-<html lang="">
-  <head>
-    <title>量子コンピュータの位置付け</title>
-
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Untitled</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <script type="module" src="./application.js" defer></script>
-    <link href="./application.css" rel="stylesheet" />
-
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
-  </head>
-  <body>
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="mx-auto py-10">
-        <div class="pb-16">
-          <div>
-            <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
-              量子コンピュータの位置付け
-            </h1>
-          </div>
-          <p class="my-1 text-lg text-gray-500">GPU と QPU</p>
-        </div>
-
-        <p class="pb-10">
-          「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、数年後には従来のコンピュータはすべて量子コンピュータに置き換わる」最近の加熱する量子コンピュータ報道では、こうした論調のものが少なくありません。
-        </p>
-
-        <p class="pb-10">
-          これは、大きな誤解です。「はじめに」で述べたように、量子コンピュータは量子探索や因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは解けなかったクラスの問題を扱える特殊なデバイスの一種です。このような特定の用途向けのマシンやアーキテクチャは「ドメイン指向アーキテクチャ」と呼ばれ、GPU
-          (Graphic Processing Unit: 画像処理ユニット)
-          が代表的存在です。もともとグラフィック処理向けに開発された GPU
-          はコア数が非常に多いことから並列性が高く、ニューラルネットワークの計算を効率よく計算できることから、現在では機械学習ドメインに特化した専用
-          GPU
-          も登場しています。量子コンピュータも、本来は従来のコンピュータと対立するものではなく、むしろ
-          GPU と同じレイヤに位置付けられると考えると分かりやすいでしょう。
-        </p>
-
-        <p class="pb-10">
-          そんな GPU からの類推として、量子コンピュータを QPU (Quantum Processing Unit:
-          量子処理ユニット) と呼ぼうという動きがあります。たしかに、GPU と QPU
-          には多くの類似点があります。GPU プログラミングの特徴を挙げてみましょう:
-        </p>
-
-        <ul class="list-disc list-inside pb-10">
-          <li>
-            GPU
-            に適したタスクもあれば、適さないタスクもある。ディープラーニングに含まれる行列演算など、大量の単純な積和演算を含むタスクに適している一方で、CPU
-            と同程度の高クロックが必要な処理には適していない。
-          </li>
-          <li>
-            プログラムの処理すべてを GPU 上で実行することは非常にまれ。ふつうは CPU
-            で実行するプログラムが一部のタスクを GPU で実行し、実行結果を CPU で回収する。
-          </li>
-          <li>
-            GPU
-            のプログラミングには、特別な言語やコンパイラ、ライブラリが必要であり、アーキテクチャに依存したチューニングが必要。NVIDIA
-            専用の CUDA や、C や Fortran で使える OpenACC などがその代表。
-          </li>
-          <li>
-            GPU は CPU とは独立した独自の RAM を持つ。CPU からは GPU
-            へのメモリアクセスは、レイテンシが大きいため効率的でない。
-          </li>
-        </ul>
-
-        <p class="pb-10">
-          おもしろいことに、GPU を QPU に置き換えてもほぼ同じことがあてはまります! GPU
-          の登場は大きなプログラミングパラダイムの転換だったため、登場初期のプログラミングでは多くの苦労を伴いましたが、現在ではゲーム産業や数値計算分野でたくさんの
-          GPU プログラマが活躍しています。 それと同様に、QPU
-          でも多少の混乱はあるでしょうが、数年後には当たり前の技術となっているでしょう。
-        </p>
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div class="mx-auto py-10">
+    <div class="pb-16">
+      <div>
+        <h1 class="inline-block text-3xl font-extrabold text-gray-900 tracking-tight">
+          量子コンピュータの位置付け
+        </h1>
       </div>
+      <p class="my-1 text-lg text-gray-500">GPU と QPU</p>
     </div>
-  </body>
-</html>
+
+    <p class="pb-10">
+      「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、数年後には従来のコンピュータはすべて量子コンピュータに置き換わる」最近の加熱する量子コンピュータ報道では、こうした論調のものが少なくありません。
+    </p>
+
+    <p class="pb-10">
+      これは、大きな誤解です。「はじめに」で述べたように、量子コンピュータは量子探索や因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは解けなかったクラスの問題を扱える特殊なデバイスの一種です。このような特定の用途向けのマシンやアーキテクチャは「ドメイン指向アーキテクチャ」と呼ばれ、GPU
+      (Graphic Processing Unit: 画像処理ユニット)
+      が代表的存在です。もともとグラフィック処理向けに開発された GPU
+      はコア数が非常に多いことから並列性が高く、ニューラルネットワークの計算を効率よく計算できることから、現在では機械学習ドメインに特化した専用
+      GPU
+      も登場しています。量子コンピュータも、本来は従来のコンピュータと対立するものではなく、むしろ
+      GPU と同じレイヤに位置付けられると考えると分かりやすいでしょう。
+    </p>
+
+    <p class="pb-10">
+      そんな GPU からの類推として、量子コンピュータを QPU (Quantum Processing Unit:
+      量子処理ユニット) と呼ぼうという動きがあります。たしかに、GPU と QPU
+      には多くの類似点があります。GPU プログラミングの特徴を挙げてみましょう:
+    </p>
+
+    <ul class="list-disc list-inside pb-10">
+      <li>
+        GPU
+        に適したタスクもあれば、適さないタスクもある。ディープラーニングに含まれる行列演算など、大量の単純な積和演算を含むタスクに適している一方で、CPU
+        と同程度の高クロックが必要な処理には適していない。
+      </li>
+      <li>
+        プログラムの処理すべてを GPU 上で実行することは非常にまれ。ふつうは CPU
+        で実行するプログラムが一部のタスクを GPU で実行し、実行結果を CPU で回収する。
+      </li>
+      <li>
+        GPU
+        のプログラミングには、特別な言語やコンパイラ、ライブラリが必要であり、アーキテクチャに依存したチューニングが必要。NVIDIA
+        専用の CUDA や、C や Fortran で使える OpenACC などがその代表。
+      </li>
+      <li>
+        GPU は CPU とは独立した独自の RAM を持つ。CPU からは GPU
+        へのメモリアクセスは、レイテンシが大きいため効率的でない。
+      </li>
+    </ul>
+
+    <p class="pb-10">
+      おもしろいことに、GPU を QPU に置き換えてもほぼ同じことがあてはまります! GPU
+      の登場は大きなプログラミングパラダイムの転換だったため、登場初期のプログラミングでは多くの苦労を伴いましたが、現在ではゲーム産業や数値計算分野でたくさんの
+      GPU プログラマが活躍しています。 それと同様に、QPU
+      でも多少の混乱はあるでしょうが、数年後には当たり前の技術となっているでしょう。
+    </p>
+  </div>
+</div>
