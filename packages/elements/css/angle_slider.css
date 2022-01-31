@@ -1,23 +1,25 @@
 angle-slider {
-  @apply relative;
-  @apply w-full;
-  @apply h-1;
-  @apply my-2;
-  @apply bg-gray-300;
-  @apply rounded;
   @apply inline-block;
+  @apply relative;
   touch-action: none;
+
+  @apply h-1 w-full;
+  @apply m-2;
+  @apply rounded;
+  @apply bg-neutral-300;
 
   /* the slider handle */
   &::before {
     @apply block box-content;
     @apply relative top-0;
+    content: '';
+
     @apply w-4 h-4;
     @apply -mt-2.5 -ml-3;
-    @apply bg-blue-500 bg-clip-padding;
-    @apply border-4 border-gray-900 border-opacity-10 rounded-full;
-
-    content: "";
+    @apply bg-blue-500;
+    @apply rounded-full;
+    @apply bg-clip-padding;
+    @apply border-4 border-neutral-900 border-opacity-10;
   }
 
   &:hover::before {
