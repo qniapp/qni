@@ -2157,8 +2157,8 @@ phase-gate[data-reduced-angle='']:not([data-angle=''])::before {
 }
 
 phase-gate:not([data-reduced-angle=''])::before {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
   content: attr(data-reduced-angle) '';
 }
 
@@ -2510,8 +2510,8 @@ rx-gate[data-reduced-angle='']:not([data-angle=''])::before {
 }
 
 rx-gate:not([data-reduced-angle=''])::before {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
   content: attr(data-reduced-angle) '';
 }
 
@@ -2715,8 +2715,8 @@ ry-gate[data-reduced-angle='']:not([data-angle=''])::before {
 }
 
 ry-gate:not([data-reduced-angle=''])::before {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
   content: attr(data-reduced-angle) '';
 }
 
@@ -2920,8 +2920,8 @@ rz-gate[data-reduced-angle='']:not([data-angle=''])::before {
 }
 
 rz-gate:not([data-reduced-angle=''])::before {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
   content: attr(data-reduced-angle) '';
 }
 
@@ -4144,6 +4144,14 @@ circuit-editor {
   margin-left: 0.5rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+.mb-14 {
+  margin-bottom: 3.5rem;
+}
+
 .block {
   display: block;
 }
@@ -4166,6 +4174,10 @@ circuit-editor {
 
 .grid {
   display: grid;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-4 {
@@ -4234,6 +4246,10 @@ circuit-editor {
   width: 50%;
 }
 
+.w-64 {
+  width: 16rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -4244,6 +4260,14 @@ circuit-editor {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .table-auto {
@@ -4331,6 +4355,12 @@ circuit-editor {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -4339,6 +4369,10 @@ circuit-editor {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .whitespace-nowrap {
@@ -4443,6 +4477,11 @@ circuit-editor {
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -4497,8 +4536,19 @@ circuit-editor {
   padding-bottom: 0.5rem;
 }
 
-.pb-16 {
-  padding-bottom: 4rem;
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .pb-10 {
@@ -4507,6 +4557,10 @@ circuit-editor {
 
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pb-16 {
+  padding-bottom: 4rem;
 }
 
 .pl-2 {
@@ -4519,6 +4573,14 @@ circuit-editor {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .font-sans {
@@ -4566,6 +4628,14 @@ circuit-editor {
   font-weight: 400;
 }
 
+.font-medium {
+  font-weight: 500;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
 .italic {
   font-style: italic;
 }
@@ -4578,14 +4648,22 @@ circuit-editor {
   letter-spacing: -0.05em;
 }
 
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
 }
 
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .text-gray-500 {
@@ -4623,6 +4701,16 @@ circuit-editor {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
@@ -4649,6 +4737,16 @@ circuit-editor {
   background-color: rgb(254 202 202 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-blue-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / var(--tw-bg-opacity));
+}
+
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
 .focus\:border-indigo-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(99 102 241 / var(--tw-border-opacity));
@@ -4673,6 +4771,16 @@ circuit-editor {
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:flex-shrink-0 {
+    flex-shrink: 0;
   }
 }
 
