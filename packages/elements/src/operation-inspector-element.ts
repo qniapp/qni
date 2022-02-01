@@ -65,7 +65,7 @@ export class OperationInspectorElement extends HTMLElement {
       this.anglePaneDisabled = false
       this.angleInput.value = operation.angle
       this.backupCurrentPhi()
-      this.angleSlider.initWithAngle(operation.angle)
+      this.angleSlider.angle = operation.angle
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
@@ -81,7 +81,7 @@ export class OperationInspectorElement extends HTMLElement {
   private clear(): void {
     this.ifInput.value = ''
     this.angleInput.value = ''
-    this.angleSlider.radian = 0
+    this.angleSlider.angle = '0'
     this.denominatorInput.value = ''
     this.reduceAngleFractionCheckbox.checked = false
     this.flagInput.value = ''
@@ -164,7 +164,7 @@ export class OperationInspectorElement extends HTMLElement {
         newAngle = angle
       }
       this.backupCurrentPhi()
-      this.angleSlider.initWithAngle(newAngle)
+      this.angleSlider.angle = newAngle
       this.dispatchEvent(new Event('operation-inspector-angle-update', {bubbles: true}))
     } else {
       this.restoreOriginalPhi()
@@ -194,9 +194,8 @@ export class OperationInspectorElement extends HTMLElement {
       this.denominatorLabel.textContent = denominator
       this.angleSlider.denominator = parseInt(denominator)
 
-      const [radian, angle] = this.angleSlider.findSnapAngle(this.angleSlider.radian)
+      const [, angle] = this.angleSlider.findSnapAngle(this.angleSlider.radian)
       this.angleInput.value = angle
-      this.angleSlider.radian = radian
       this.angleSlider.angle = angle
     } else {
       this.restoreOriginalDenominator()
