@@ -9,11 +9,7 @@ export const isAngleSliderElement = (arg: unknown): arg is AngleSliderElement =>
   arg !== null && arg instanceof AngleSliderElement
 
 type AngleSliderContext = Record<string, never>
-type AngleSliderEvent =
-  | {type: 'SET_ANGLE'; angle: string}
-  | {type: 'SET_DENOMINATOR'; value: number}
-  | {type: 'START_MOVE'}
-  | {type: 'END_MOVE'}
+type AngleSliderEvent = {type: 'SET_ANGLE'} | {type: 'SET_DENOMINATOR'} | {type: 'START_MOVE'} | {type: 'END_MOVE'}
 
 export class AngleSliderElement extends HTMLElement {
   @attr angle = ''
@@ -38,14 +34,14 @@ export class AngleSliderElement extends HTMLElement {
               actions: [
                 'setDenominator',
                 'updateSnapAngles',
-                'setRadian',
+                'setRadianInAngle',
                 'updateHandlePosition',
                 'dispatchUpdateEvent'
               ]
             },
             SET_DENOMINATOR: {
               target: 'idle',
-              actions: ['updateSnapAngles']
+              actions: ['updateSnapAngles', 'setAngleInRadian']
             }
           }
         },
@@ -68,12 +64,18 @@ export class AngleSliderElement extends HTMLElement {
         setDenominator: (_context, event) => {
           if (event.type !== 'SET_ANGLE') return
 
-          this.denominator = angleDenominator(event.angle)
+          this.denominator = angleDenominator(this.angle)
         },
-        setRadian: (_context, event) => {
+        setAngleInRadian: (_context, event) => {
+          if (event.type !== 'SET_DENOMINATOR') return
+
+          const [, angle] = this.findSnapAngle(this.radian)
+          this.angle = angle
+        },
+        setRadianInAngle: (_context, event) => {
           if (event.type !== 'SET_ANGLE') return
 
-          const [radian] = this.findSnapAngle(radianOf(event.angle))
+          const [radian] = this.findSnapAngle(radianOf(this.angle))
           this.radian = radian
         },
         updateSnapAngles: () => {
@@ -99,10 +101,10 @@ export class AngleSliderElement extends HTMLElement {
     if (newValue === null) return
 
     if (name === 'data-angle' && newValue !== '') {
-      this.angleSliderService.send({type: 'SET_ANGLE', angle: newValue})
+      this.angleSliderService.send({type: 'SET_ANGLE'})
     }
     if (name === 'data-denominator' && this.denominator !== 0) {
-      this.angleSliderService.send({type: 'SET_DENOMINATOR', value: parseInt(newValue)})
+      this.angleSliderService.send({type: 'SET_DENOMINATOR'})
     }
   }
 
@@ -182,7 +184,7 @@ export class AngleSliderElement extends HTMLElement {
     if (this.angle !== angle) this.angle = angle
   }
 
-  endMove(): void {
+  private endMove(): void {
     this.angleSliderService.send({type: 'END_MOVE'})
   }
 
@@ -219,7 +221,7 @@ export class AngleSliderElement extends HTMLElement {
     }
   }
 
-  findSnapAngle(rad: number): [number, string] {
+  private findSnapAngle(rad: number): [number, string] {
     let minDelta = null
     let snapRadian = null
     let snapAngle = null

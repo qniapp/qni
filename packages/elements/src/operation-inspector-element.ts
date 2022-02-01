@@ -193,10 +193,7 @@ export class OperationInspectorElement extends HTMLElement {
     if (isNumeric(denominator) && parseInt(denominator) > 1) {
       this.denominatorLabel.textContent = denominator
       this.angleSlider.denominator = parseInt(denominator)
-
-      const [, angle] = this.angleSlider.findSnapAngle(this.angleSlider.radian)
-      this.angleInput.value = angle
-      this.angleSlider.angle = angle
+      this.angleInput.value = this.angleSlider.angle
     } else {
       this.restoreOriginalDenominator()
     }
