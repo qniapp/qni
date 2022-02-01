@@ -12,7 +12,6 @@ describe('angle-slider element', function () {
 
     beforeEach(function () {
       const container = document.createElement('div')
-      // eslint-disable-next-line github/unescaped-html-literal
       container.innerHTML = `<angle-slider></angle-slider>`
       document.body.append(container)
       angleSlider = document.querySelector('angle-slider')
