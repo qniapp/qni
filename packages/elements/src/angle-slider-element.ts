@@ -1,5 +1,5 @@
+import {DetailedError, Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
 import {Interpreter, createMachine, interpret} from 'xstate'
-import {Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
@@ -32,7 +32,7 @@ export class AngleSliderElement extends HTMLElement {
             SET_ANGLE: {
               target: 'idle',
               actions: [
-                'setDenominator',
+                'setDenominatorByAngle',
                 'updateSnapAngles',
                 'setRadianInAngle',
                 'updateHandlePosition',
@@ -41,7 +41,7 @@ export class AngleSliderElement extends HTMLElement {
             },
             SET_DENOMINATOR: {
               target: 'idle',
-              actions: ['updateSnapAngles', 'setAngleInRadian']
+              actions: ['validateDenominator', 'updateSnapAngles', 'setAngleInRadian']
             }
           }
         },
@@ -61,7 +61,12 @@ export class AngleSliderElement extends HTMLElement {
     },
     {
       actions: {
-        setDenominator: (_context, event) => {
+        validateDenominator: () => {
+          if (!Number.isInteger(this.denominator) || this.denominator <= 0) {
+            throw new DetailedError('Bad denominator', this.denominator)
+          }
+        },
+        setDenominatorByAngle: (_context, event) => {
           if (event.type !== 'SET_ANGLE') return
 
           this.denominator = angleDenominator(this.angle)
@@ -103,7 +108,7 @@ export class AngleSliderElement extends HTMLElement {
     if (name === 'data-angle' && newValue !== '') {
       this.angleSliderService.send({type: 'SET_ANGLE'})
     }
-    if (name === 'data-denominator' && this.denominator !== 0) {
+    if (name === 'data-denominator' && this.angleSliderService !== undefined) {
       this.angleSliderService.send({type: 'SET_DENOMINATOR'})
     }
   }
