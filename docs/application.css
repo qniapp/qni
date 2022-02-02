@@ -4086,7 +4086,7 @@ circuit-editor {
 
 .margin-note::before {
   counter-increment: MarginNote;
-  content: counter(MarginNote) "."
+  content: counter(MarginNote) '.';
 }
 
 .margin-note-marker::after {
@@ -4542,6 +4542,11 @@ circuit-editor {
   padding: 0px;
 }
 
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -4565,11 +4570,6 @@ circuit-editor {
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
 .px-6 {
