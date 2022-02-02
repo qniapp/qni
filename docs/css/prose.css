@@ -1,0 +1,7 @@
+.prose p {
+  @apply pb-10;
+}
+
+.prose code {
+  @apply text-purple-600;
+}

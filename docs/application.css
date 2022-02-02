@@ -4073,7 +4073,11 @@ circuit-editor {
   display: inline-block;
 }
 
-code {
+.prose p {
+  padding-bottom: 2.5rem;
+}
+
+.prose code {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
 }
@@ -4608,6 +4612,14 @@ code {
 
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
+}
+
+.\!pb-0 {
+  padding-bottom: 0px !important;
 }
 
 .font-sans {

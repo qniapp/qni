@@ -2,7 +2,8 @@
 @import 'tailwindcss/components';
 
 @import '@qni/elements/dist/qni';
-@import '../css/code';
+
+@import '../css/prose';
 @import '../css/margin_note';
 @import '../css/margin_note_marker';
 
