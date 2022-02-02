@@ -16,3 +16,7 @@
       link: ./p_bit.html
     - name: Qni で重ね合わせ
       link: ./qni_superposition.html
+    - name: 位相
+      link: ./phase.html
+    - name: 量子 NOT ゲート
+      link: ./not_gate.html
