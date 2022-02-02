@@ -14,3 +14,5 @@
   pages:
     - name: 確率的ビット
       link: ./p_bit.html
+    - name: Qni で重ね合わせ
+      link: ./qni_superposition.html
