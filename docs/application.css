@@ -4073,6 +4073,16 @@ circuit-editor {
   display: inline-block;
 }
 
+.prose h2 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(64 64 64 / var(--tw-text-opacity));
+  letter-spacing: -0.025em;
+  padding-bottom: 1rem;
+}
+
 .prose p {
   padding-bottom: 2.5rem;
 }
@@ -4333,12 +4343,12 @@ circuit-editor {
   list-style-type: disc;
 }
 
-.list-none {
-  list-style-type: none;
-}
-
 .list-decimal {
   list-style-type: decimal;
+}
+
+.list-none {
+  list-style-type: none;
 }
 
 .grid-cols-3 {
@@ -4602,24 +4612,20 @@ circuit-editor {
   padding-top: 1rem;
 }
 
-.pb-4 {
-  padding-bottom: 1rem;
-}
-
 .pb-2 {
   padding-bottom: 0.5rem;
 }
 
-.pt-5 {
-  padding-top: 1.25rem;
-}
-
-.pb-0 {
-  padding-bottom: 0px;
-}
-
 .\!pb-0 {
   padding-bottom: 0px !important;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
+.pt-5 {
+  padding-top: 1.25rem;
 }
 
 .font-sans {
@@ -4735,19 +4741,14 @@ circuit-editor {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-blue-700 {
-  --tw-text-opacity: 1;
-  color: rgb(29 78 216 / var(--tw-text-opacity));
-}
-
 .text-neutral-800 {
   --tw-text-opacity: 1;
   color: rgb(38 38 38 / var(--tw-text-opacity));
 }
 
-.text-red-800 {
+.text-blue-700 {
   --tw-text-opacity: 1;
-  color: rgb(153 27 27 / var(--tw-text-opacity));
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 
 .underline {
