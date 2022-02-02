@@ -4,257 +4,262 @@ title: 量子 NOT ゲート
 description: 量子ビットペアの入れ替え
 ---
 
-<p class="pb-10">
-  量子 NOT ゲートは従来の <span class="font-bold">NOT 演算</span>に似た働きをします。 NOT
-  演算は、<code>0</code> に適用するとビットが反転して <code>1</code> になり、逆に
-  <code>1</code> に適用すると <code>0</code> になるのでした。つまり、NOT 演算は &quot;<code
-    class="text-purple-600"
-    >0</code
-  >
-  と <code>1</code> を入れ替える&quot; という働きをします。
-</p>
+<div class="prose">
+  <p>
+    量子 NOT ゲートは従来の <span class="font-bold">NOT 演算</span>に似た働きをします。 NOT
+    演算は、<code>0</code> に適用するとビットが反転して <code>1</code> になり、逆に
+    <code>1</code> に適用すると <code>0</code> になるのでした。つまり、NOT 演算は &quot;<code
+      class="text-purple-600"
+      >0</code
+    >
+    と <code>1</code> を入れ替える&quot; という働きをします。
+  </p>
 
-<div class="flex justify-center pb-10">
-  <ul class="text-2xl">
-    <li class="flex flex-row items-center">
-      <code>NOT 0</code> {% include arrow_right.svg class="h-4 w-4 mx-2" %} <code>1</code>
-    </li>
-    <li class="flex flex-row items-center">
-      <code>NOT 1</code> {% include arrow_right.svg class="h-4 w-4 mx-2" %} <code>0</code>
-    </li>
-  </ul>
-</div>
+  <div class="flex justify-center pb-10">
+    <ul class="text-2xl">
+      <li class="flex flex-row items-center">
+        <code>NOT 0</code> {% include arrow_right.svg class="h-4 w-4 mx-2" %} <code>1</code>
+      </li>
+      <li class="flex flex-row items-center">
+        <code>NOT 1</code> {% include arrow_right.svg class="h-4 w-4 mx-2" %} <code>0</code>
+      </li>
+    </ul>
+  </div>
 
-<p class="pb-10">
-  <span class="font-bold">量子 NOT ゲート</span>は NOT 演算によく似ていて、量子ビットの {% include
-  ket.html label="0" %} と {% include ket.html label="1" %} を入れ替えます。 図で表すと、次のような
-  "円の入れ替え" の働きをします。
-</p>
+  <p>
+    <span class="font-bold">量子 NOT ゲート</span>は NOT 演算によく似ていて、量子ビットの {% include
+    ket.html label="0" %} と {% include ket.html label="1" %} を入れ替えます。
+    図で表すと、次のような "円の入れ替え" の働きをします。
+  </p>
 
-<div class="flex justify-center pb-10">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1 mb-8">
-      <circle-notation data-size="xl" data-show-kets></circle-notation>
-      <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-        <x-gate data-size="base"></x-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+  <div class="flex justify-center pb-10">
+    <div class="flex flex-col">
+      <div class="flex flex-row items-center space-x-1 mb-8">
+        <circle-notation data-size="xl" data-show-kets></circle-notation>
+        <div class="flex flex-row items-center">
+          {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+          <x-gate data-size="base"></x-gate>
+          {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        </div>
+        <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
       </div>
-      <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
-    </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
-      <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-        <x-gate data-size="base"></x-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div class="flex flex-row items-center space-x-1">
+        <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
+        <div class="flex flex-row items-center">
+          {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+          <x-gate data-size="base"></x-gate>
+          {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        </div>
+        <circle-notation data-size="xl" data-show-kets></circle-notation>
       </div>
-      <circle-notation data-size="xl" data-show-kets></circle-notation>
     </div>
   </div>
-</div>
 
-<div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
-  <p>
+  <div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
     量子 NOT ゲートを回路に置いて、{% include ket.html label="0" %} と {% include ket.html label="1"
     %} が入れ替わることを確認しましょう。
+  </div>
+
+  <div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          id="palette"
+          class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-gray-200 mb-10"
+        >
+          <palette-dropzone>
+            <x-gate></x-gate>
+          </palette-dropzone>
+        </div>
+
+        <div
+          class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="w-min flex flex-row justify-center px-4 py-4 bg-white rounded-xl border-2 border-b-4 border-gray-200 z-40"
+          data-multi-qubits
+          data-show-kets
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+
+  <p>
+    量子 NOT ゲートが従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
+    たとえば、次の {% include ket.html label="0" %} と {% include ket.html label="1" %}
+    の重ね合わせ状態にある量子ビットを考えましょう。
+  </p>
+
+  <div class="flex justify-center pb-10">
+    <circle-notation
+      data-size="xl"
+      data-magnitudes="0.8944271909999159,0.4472135954999579"
+      data-phases="-20,70"
+      data-show-kets
+    ></circle-notation>
+  </div>
+
+  <p>
+    これに量子 NOT ゲートを適用すると、{% include ket.html label="0" %} と {% include ket.html
+    label="1" %} の内容を交換します。 これはまさに、先ほど見た "{% include ket.html label="0" %} と
+    {% include ket.html label="1" %} の入れ換え" という効果です。
+  </p>
+
+  <div class="flex justify-center pb-10">
+    <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+      <circle-notation
+        data-size="xl"
+        data-magnitudes="0.8944271909999159,0.4472135954999579"
+        data-phases="-20,70"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <x-gate data-size="base"></x-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        data-size="xl"
+        data-magnitudes="0.4472135954999579,0.8944271909999159"
+        data-phases="70,-20"
+        data-show-kets
+      ></circle-notation>
+    </div>
+  </div>
+
+  <p>
+    量子 NOT ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% include
+    ket.html label="0" %} と {% include ket.html label="1" %} が 2
+    度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
+    ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
+    ゲートはそれ自身の逆演算である」と言います。
+  </p>
+
+  <div class="flex justify-center pb-10">
+    <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+      <circle-notation
+        data-size="xl"
+        data-magnitudes="0.8944271909999159,0.4472135954999579"
+        data-phases="-20,70"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <x-gate data-size="base"></x-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        data-size="xl"
+        data-magnitudes="0.4472135954999579,0.8944271909999159"
+        data-phases="70,-20"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <x-gate data-size="base"></x-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        data-size="xl"
+        data-magnitudes="0.8944271909999159,0.4472135954999579"
+        data-phases="-20,70"
+        data-show-kets
+      ></circle-notation>
+    </div>
+  </div>
+
+  <div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
+    <ul class="list-disc ml-4">
+      <li>
+        重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% include ket.html label="0" %} と {%
+        include ket.html label="1" %} が入れ替わることを確認しましょう。
+      </li>
+      <li>量子 NOT ゲートを 2 回適用すると元に戻ることを確認しましょう</li>
+    </ul>
+  </div>
+
+  <div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          id="palette"
+          class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-swan mb-10"
+        >
+          <palette-dropzone>
+            <x-gate></x-gate>
+          </palette-dropzone>
+        </div>
+
+        <div
+          class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{重ね合わせ状態の準備"],["|0>"],["H"],["Ry(3π_4)"],["P(31π_17)"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="w-min flex flex-row justify-center px-4 py-4 bg-white border-2 border-b-4 border-swan rounded-xl z-40"
+          data-multi-qubits
+          data-show-kets
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+
+  <p>
+    量子 NOT ゲートはよく <span class="font-bold">X ゲート</span>とも呼ばれます。
+    その由来は、量子ビット状態を 3 次元で表すと量子 NOT ゲートは X
+    軸を中心とした回転操作の一種だからです。 同様に、Y 軸で回転する Y ゲート、Z 軸で回転する Z
+    ゲートも存在します。 回転の具体的なイメージについては今は置いておいて、先に進みましょう。
   </p>
 </div>
-
-<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-gray-200 mb-10"
-      >
-        <palette-dropzone>
-          <x-gate></x-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        class="w-min flex flex-row justify-center px-4 py-4 bg-white rounded-xl border-2 border-b-4 border-gray-200 z-40"
-        data-multi-qubits
-        data-show-kets
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
-
-<p class="pb-10">
-  量子 NOT ゲートが従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
-  たとえば、次の {% include ket.html label="0" %} と {% include ket.html label="1" %}
-  の重ね合わせ状態にある量子ビットを考えましょう。
-</p>
-
-<div class="flex justify-center pb-10">
-  <circle-notation
-    data-size="xl"
-    data-magnitudes="0.8944271909999159,0.4472135954999579"
-    data-phases="-20,70"
-    data-show-kets
-  ></circle-notation>
-</div>
-
-<p class="pb-10">
-  これに量子 NOT ゲートを適用すると、{% include ket.html label="0" %} と {% include ket.html
-  label="1" %} の内容を交換します。 これはまさに、先ほど見た "{% include ket.html label="0" %} と {%
-  include ket.html label="1" %} の入れ換え" という効果です。
-</p>
-
-<div class="flex justify-center pb-10">
-  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-    <circle-notation
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation>
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-      <x-gate data-size="base"></x-gate>
-      {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
-    </div>
-    <circle-notation
-      data-size="xl"
-      data-magnitudes="0.4472135954999579,0.8944271909999159"
-      data-phases="70,-20"
-      data-show-kets
-    ></circle-notation>
-  </div>
-</div>
-
-<p class="pb-10">
-  量子 NOT ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% include ket.html
-  label="0" %} と {% include ket.html label="1" %} が 2 度入れ替わることで元の状態に戻ります。
-  つまり、量子 NOT ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
-  ゲートはそれ自身の逆演算である」と言います。
-</p>
-
-<div class="flex justify-center pb-10">
-  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-    <circle-notation
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation>
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-      <x-gate data-size="base"></x-gate>
-      {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
-    </div>
-    <circle-notation
-      data-size="xl"
-      data-magnitudes="0.4472135954999579,0.8944271909999159"
-      data-phases="70,-20"
-      data-show-kets
-    ></circle-notation>
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-      <x-gate data-size="base"></x-gate>
-      {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
-    </div>
-    <circle-notation
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation>
-  </div>
-</div>
-
-<div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
-  <ul class="list-disc ml-4">
-    <li>
-      重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% include ket.html label="0" %} と {%
-      include ket.html label="1" %} が入れ替わることを確認しましょう。
-    </li>
-    <li>量子 NOT ゲートを 2 回適用すると元に戻ることを確認しましょう</li>
-  </ul>
-</div>
-
-<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-swan mb-10"
-      >
-        <palette-dropzone>
-          <x-gate></x-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["{重ね合わせ状態の準備"],["|0>"],["H"],["Ry(3π_4)"],["P(31π_17)"],["}"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        class="w-min flex flex-row justify-center px-4 py-4 bg-white border-2 border-b-4 border-swan rounded-xl z-40"
-        data-multi-qubits
-        data-show-kets
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
-
-<p class="pb-10">
-  量子 NOT ゲートはよく <span class="font-bold">X ゲート</span>とも呼ばれます。
-  その由来は、量子ビット状態を 3 次元で表すと量子 NOT ゲートは X
-  軸を中心とした回転操作の一種だからです。 同様に、Y 軸で回転する Y ゲート、Z 軸で回転する Z
-  ゲートも存在します。 回転の具体的なイメージについては今は置いておいて、先に進みましょう。
-</p>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
