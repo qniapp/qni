@@ -1,6 +1,6 @@
-- name: はじめに
+- name: QPU
   pages:
-    - name: チュートリアル概要
+    - name: はじめに
       link: ./index.html
     - name: QPU とは
       link: ./qpu.html
@@ -10,3 +10,7 @@
       link: ./qni_intro.html
     - name: QPU 命令
       link: ./qpu_operations.html
+- name: 量子ビット (ドラフト)
+  pages:
+    - name: 確率的ビット
+      link: ./p_bit.html
