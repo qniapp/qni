@@ -4083,6 +4083,14 @@ circuit-editor {
   padding-bottom: 1rem;
 }
 
+.prose h3 {
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(64 64 64 / var(--tw-text-opacity));
+  letter-spacing: -0.025em;
+  padding-bottom: 1rem;
+}
+
 .prose p {
   padding-bottom: 2.5rem;
 }

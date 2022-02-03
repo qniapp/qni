@@ -6,6 +6,13 @@
   @apply pb-4;
 }
 
+.prose h3 {
+  @apply font-bold;
+  @apply text-neutral-700;
+  @apply tracking-tight;
+  @apply pb-4;
+}
+
 .prose p {
   @apply pb-10;
 }
