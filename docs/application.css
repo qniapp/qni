@@ -4312,6 +4312,10 @@ circuit-editor {
   width: 0px;
 }
 
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -4841,8 +4845,17 @@ circuit-editor {
 }
 
 @media (min-width: 768px) {
+  .md\:mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .md\:flex {
     display: flex;
+  }
+
+  .md\:w-2\/3 {
+    width: 66.666667%;
   }
 
   .md\:flex-shrink-0 {

@@ -1,4 +1,3 @@
-*.tldr
 .DS_Store
 build/
 dist/
