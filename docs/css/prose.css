@@ -17,6 +17,10 @@
   @apply pb-10;
 }
 
+.prose a {
+  @apply underline;
+}
+
 .prose code {
   @apply text-purple-600;
 }
