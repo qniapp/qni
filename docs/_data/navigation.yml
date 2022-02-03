@@ -16,7 +16,9 @@
       link: ./p_bit.html
     - name: Qni で重ね合わせ
       link: ./qni_superposition.html
-    - name: 位相
-      link: ./phase.html
+    - name: 量子ビット
+      link: ./q_bit.html
+    - name: 円表示
+      link: ./circle_notation.html
     - name: 量子 NOT ゲート
       link: ./not_gate.html
