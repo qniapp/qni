@@ -1,0 +1,24 @@
+- name: QPU
+  pages:
+    - name: はじめに
+      link: ./index.html
+    - name: QPU とは
+      link: ./qpu.html
+    - name: QPU は何が得意？
+      link: ./what_qpu_do_faster.html
+    - name: QPU 命令
+      link: ./qpu_operations.html
+    - name: Qni 入門
+      link: ./qni_intro.html
+# - name: 量子ビット (ドラフト)
+#   pages:
+#     - name: 確率的ビット
+#       link: ./p_bit.html
+#     - name: Qni で重ね合わせ
+#       link: ./qni_superposition.html
+#     - name: 量子ビット
+#       link: ./q_bit.html
+#     - name: 円表示
+#       link: ./circle_notation.html
+#     - name: 量子 NOT ゲート
+#       link: ./not_gate.html

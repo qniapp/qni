@@ -360,6 +360,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone)
 
     this.attachShadow({mode: 'open'})
+    this.updateOperationAttributes()
     this.update()
   }
 
