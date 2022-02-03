@@ -37,6 +37,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)
     this.addEventListener('operation-inspector-flag-change', this.run)
     this.addEventListener('circuit-step-mouseenter', this.runUnlessEditing)
+    this.addEventListener('circuit-step-mouseleave', this.runUnlessEditing)
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
@@ -153,11 +154,13 @@ export class QuantumSimulatorElement extends HTMLElement {
   private get activeStepIndex(): number {
     const activeStep = this.circuit.activeStep
     const breakpoint = this.circuit.breakpoint
-    const step = activeStep || breakpoint
+    let step = activeStep || breakpoint
+
     if (step === null) {
-      this.circuit.setBreakpoint(this.circuit.stepAt(0))
-      return 0
+      step = this.circuit.stepAt(0)
+      this.circuit.setBreakpoint(step)
     }
+
     return this.circuit.fetchStepIndex(step)
   }
 
