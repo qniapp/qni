@@ -6,10 +6,10 @@
       link: ./qpu.html
     - name: QPU は何が得意？
       link: ./what_qpu_do_faster.html
-    - name: Qni 入門
-      link: ./qni_intro.html
     - name: QPU 命令
       link: ./qpu_operations.html
+    - name: Qni 入門
+      link: ./qni_intro.html
 - name: 量子ビット (ドラフト)
   pages:
     - name: 確率的ビット
