@@ -1,0 +1,290 @@
+---
+layout: page
+title: 量子ビット
+description: 確率的ビットとの大きな違い
+---
+
+<p>量子ビットは、確率的ビットと非常によく似ています。大きな違いは 2 つだけです。</p>
+
+<ol class="list-decimal list-inside pb-10">
+  <li>
+    確率のかわりに振幅 (amplitude, アンプリチュード)
+    を使って状態を表現します。確率は正の値を持ちますが、振幅は負の値も持ちます。
+  </li>
+  <li>
+    振幅は測定中に 2 乗され確率となります。<a href="./what_qpu_do_faster">QPU は何が得意?</a>
+    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。
+  </li>
+</ol>
+
+<h2>確率</h2>
+
+<p>
+  最初に、確率的ビットが取り得る状態をおさらいしてみましょう
+  (コイントスの例を使ったことを思い出してください)。 ビットが
+  <code>0</code> の状態をコインの表、ビットが
+  <code>1</code> の状態をコインの裏とし、それぞれの確率を \(p_0,\ p_1\) とします。
+  表と裏の確率を足すと必ず <code>1</code> になり、またそれぞれの確率は <code>0</code> から
+  <code>1</code> の間ですから、
+</p>
+
+<p>$$p_0 + p_1 = 1\qquad (0 \leq p_0 \leq 1,\ 0 \leq p_1 \leq 1)$$</p>
+
+<p>が成り立ち、確率的ビットが取りうるすべての状態を表す次のグラフが得られるのでした。</p>
+
+<p>
+  <img src="./images/p0p1_graph.png" class="w-full md:w-2/3 h-auto md:mx-auto" />
+</p>
+
+<h2>振幅</h2>
+
+<p>
+  次は振幅を持つ量子ビットの取り得る状態をグラフにしてみましょう。 振幅は 2
+  乗すると確率になるのですから、ビットが <code>0</code> となる確率の振幅を \(a_0\)、ビットが
+  <code>1</code> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
+  これを先ほどの式に入れると、
+</p>
+
+<p>
+  \begin{split} &p_0 + p_1 = 1 \\ \\ \Longrightarrow\ &a_0^2 + a_1^2 = 1\qquad (-1 \leq a_0 \leq 1,\
+  -1 \leq a_1 \leq 1) \end{split}
+</p>
+
+<p>
+  となり、このグラフは円の形となります。
+  これを見て分かる通り、量子ビットが確率的ビットに比べて決定的に違うのは、振幅は負の値を持ち得ることです。
+  ここでは「量子ビットは確率的ビットよりもさらにたくさんの情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
+</p>
+
+<p>
+  <img src="./images/qbit_circular_state.png" class="w-full md:w-2/3 h-auto md:mx-auto" />
+</p>
+
+<h2>振幅は複素数</h2>
+
+<p>
+  実は、振幅は一般には複素数の値を取ります。ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると半径
+  が <code>1</code> の球表面になります。
+</p>
+
+<p>
+  <img src="./images/bloch_sphere.jpeg" class="w-full md:w-2/3 h-auto md:mx-auto" />
+</p>
+
+<p>
+  これをひらたく言えば、1 量子ビットの状態は地球上の 1 点として表せることになります
+  (島根とか、ニューヨークとか、南極とかあなたの好きな場所をどこでも思い浮かべて OK です)。
+  量子コンピュータが唯一できるのは、回転をあらわす行列をベクトルに掛けることでした (<a
+    href="./what_qpu_do_faster"
+    >QPU は何が得意?</a
+  >
+  を参照)。
+  これを地球で考えると、南極にいるペンギンを球面上の緯度・経度方向の回転の組合わせによって北極や島根県に飛ばすことに相当します。
+</p>
+
+<h2>ブロッホ球で実験</h2>
+
+<p>
+  Qni
+  にはちょうど、この球を表示する「ブロッホ球」という命令があります。これを使って量子ビットのいろんな状態を調べてみましょう。
+  下の回路には、すでにいくつかの QPU 命令が置いてあります。
+  ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令がどんな回転を表しているか推測してみましょう。
+</p>
+
+<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-swan mb-10"
+      >
+        <palette-dropzone>
+          <bloch-display></bloch-display>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>"],["X"],["Rx(π/2)"],["Rz(π/2)"],["Ry(π/2)"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="w-min flex flex-row justify-center px-4 py-4 bg-white border-2 border-b-4 border-swan rounded-xl z-40"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row bg-white rounded-2xl drop-shadow-lg p-2">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm tracking-tighter whitespace-nowrap">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        disabled
+      >
+        {% include angle.svg class="h-5 w-5" %}
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        disabled
+      >
+        <div class="h-5 w-5 flex items-center justify-center">
+          <div class="font-sans font-bold text-sm whitespace-nowrap">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
+    >
+      {% include trash.svg class="h-4 w-4" %}
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
+    <div class="flex flex-col divide-y space-y-4 items-left">
+      <div id="conditional-gate-pane" class="flex flex-col items-left">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+          <label
+            for="angle-input"
+            class="font-normal text-gray-700 select-none"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="inline-block ml-2"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            autocomplete="off"
+          />
+          <div class="pl-2 text-sm whitespace-nowrap text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex items-center h-5">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="flex flex-col items-left pt-4 mb-2">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
+          <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+
+{% include circle_notation_popup.html %}
