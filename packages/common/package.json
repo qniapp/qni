@@ -15,11 +15,9 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
-    "prebuild": "npm run lint",
+    "lint": "eslint . --ext .js,.ts",
+    "typecheck": "tsc --noEmit",
     "build": "node --experimental-json-modules build.js",
-    "build:common": "yarn build",
-    "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"

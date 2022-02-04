@@ -21,9 +21,9 @@
     "url": "https://github.com/qniapp/qni/issues"
   },
   "dependencies": {
-    "@qni/common": "^0.0.27",
-    "@qni/elements": "^0.0.27",
-    "@qni/simulator": "^0.0.27"
+    "@qni/common": "0.0.31",
+    "@qni/elements": "0.0.31",
+    "@qni/simulator": "0.0.31"
   },
   "devDependencies": {
     "esbuild": "^0.14.14",

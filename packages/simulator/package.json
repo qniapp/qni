@@ -14,10 +14,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
-    "prebuild": "npm run lint",
+    "lint": "eslint . --ext .js,.ts",
+    "typecheck": "tsc --noEmit",
     "build": "esbuild --bundle src/index.ts --outdir=dist --format=esm",
-    "build:packages": "yarn build",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
     "test:watch": "yarn test --auto-watch --no-single-run",

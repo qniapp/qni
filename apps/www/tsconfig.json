@@ -8,8 +8,9 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "app/javascript/*", "app/components/*"]
+      "*": ["node_modules/*", "app/javascript/*"]
     },
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
