@@ -978,6 +978,33 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
+"@qni/common@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@qni/common/-/common-0.0.27.tgz#6f47db2ff26bad4d2e3fb21d7ccd0d22ac9e9663"
+  integrity sha512-CIafr45nOYMetnTCs5OQXIHiC5x6O8jXJkJVgCdLq+I2xZF9vWSCo8UKE4rRRvt2RUOuZhZNP+FXrI4GMKPChQ==
+  dependencies:
+    fraction.js "^4.1.2"
+
+"@qni/elements@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@qni/elements/-/elements-0.0.27.tgz#d5d4aaaf159be464423825fc60e200ed805b61bd"
+  integrity sha512-ncy7URhFr2YYWKKcyBrw0oJPfp79N5nf7JsI06R8M6C+6SwX1sQdriGS+DDcZld+qWmzV+Df2HO/X+oKAZNW5A==
+  dependencies:
+    "@github/catalyst" "^1.1.4"
+    "@github/jtml" "^0.4.0"
+    "@qni/common" "^0.0.27"
+    interactjs "^1.10.11"
+    tippy.js "^6.3.7"
+    xstate "^4.27.0"
+
+"@qni/simulator@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@qni/simulator/-/simulator-0.0.27.tgz#f6653ed9c83a394dbc8b5431658a16f1278ea1c2"
+  integrity sha512-873937HdquF+8PyAVR64gozSEuumI6BsTFoKt32DjHWzYeT8h6DylO30M0oVmIWneiAJfIGdSsWrwlXAuV5LYw==
+  dependencies:
+    "@qni/elements" "^0.0.27"
+    fp-ts "^2.11.5"
+
 "@rails/ujs@~7.0":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.1.tgz#cb515d52c85be107908dd00822042f04e52cdea7"

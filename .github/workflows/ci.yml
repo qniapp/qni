@@ -5,9 +5,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -33,30 +33,32 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: sudo apt-get -y install libpq-dev
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7.4
-        working-directory: apps/www
-        bundler-cache: true
-    - name: Setup DB
-      run: |-
-        cd apps/www
-        cp config/database.yml.github-actions config/database.yml
-        bundle exec rails db:setup
-      env:
-        RAILS_ENV: test
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-    - run: lerna bootstrap
-    - run: yarn build
-    - run: yarn test:ci
-      env:
-        RAILS_ENV: test
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: sudo apt-get -y install libpq-dev
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.4
+          working-directory: apps/www
+          bundler-cache: true
+      - name: Setup DB
+        run: |-
+          cd apps/www
+          cp config/database.yml.github-actions config/database.yml
+          bundle exec rails db:setup
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+      - run: lerna bootstrap
+      - run: yarn lint
+      - run: yarn typecheck
+      - run: yarn build
+      - run: yarn test:ci
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
