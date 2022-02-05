@@ -8452,7 +8452,7 @@ function interpret(machine, options) {
 __name(interpret, "interpret");
 
 // ../packages/elements/dist/index.js
-var import_interactjs = __toESM(require_interact_min(), 1);
+var import_interactjs = __toESM(require_interact_min());
 
 // ../node_modules/@popperjs/core/lib/enums.js
 var top = "top";
@@ -12073,8 +12073,8 @@ var unsafeHTML = directive((value) => (part) => {
 });
 
 // ../packages/elements/dist/index.js
-var import_interactjs2 = __toESM(require_interact_min(), 1);
-var import_interactjs3 = __toESM(require_interact_min(), 1);
+var import_interactjs2 = __toESM(require_interact_min());
+var import_interactjs3 = __toESM(require_interact_min());
 var Zt = Object.defineProperty;
 var Fe2 = Object.getOwnPropertyDescriptor;
 var l2 = /* @__PURE__ */ __name((a, t) => Zt(a, "name", { value: t, configurable: true }), "l");
