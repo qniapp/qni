@@ -1,13 +1,13 @@
-<nav class="flex-1 px-6 bg-white space-y-1">
+<nav class="flex-1 space-y-1 bg-white px-6">
   {% for section in site.data.navigation %}
-  <div class="uppercase tracking-wide text-blue-700 px-2 py-2 text-sm font-bold">
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     {{ section.name }}
   </div>
 
   {% for item in section.pages %} {% assign item_url = item.link | remove_first: "." %}
   <a
     href="{{ item.link }}"
-    class="flex group items-center px-2 py-2 text-sm font-medium rounded-md {% if page.url == item_url %} text-gray-900 bg-blue-100 {% else %} text-gray-500 hover:text-gray-900 hover:bg-blue-50 {% endif %}"
+    class="group {% if page.url == item_url %} {% else %} {% endif %} flex items-center rounded-md bg-blue-100 px-2 py-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
   >
     {{ item.name }}
   </a>

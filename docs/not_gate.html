@@ -33,7 +33,7 @@ description: 量子ビットペアの入れ替え
 
 <div class="flex justify-center pb-10">
   <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1 mb-8">
+    <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation data-size="xl" data-show-kets></circle-notation>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
@@ -55,17 +55,17 @@ description: 量子ビットペアの入れ替え
   </div>
 </div>
 
-<div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
+<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
   量子 NOT ゲートを回路に置いて、{% include ket.html label="0" %} と {% include ket.html label="1"
   %} が入れ替わることを確認しましょう。
 </div>
 
-<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
         id="palette"
-        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-gray-200 mb-10"
+        class="mb-10 flex w-min rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
       >
         <palette-dropzone>
           <x-gate></x-gate>
@@ -73,13 +73,13 @@ description: 量子ビットペアの入れ替え
       </div>
 
       <div
-        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
             {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
           </div>
         </inspector-button>
@@ -98,7 +98,7 @@ description: 量子ビットペアの入れ替え
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="w-min flex flex-row justify-center px-4 py-4 bg-white rounded-xl border-2 border-b-4 border-gray-200 z-40"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
@@ -190,8 +190,8 @@ description: 量子ビットペアの入れ替え
   </div>
 </div>
 
-<div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
-  <ul class="list-disc ml-4">
+<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+  <ul class="ml-4 list-disc">
     <li>
       重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% include ket.html label="0" %} と {%
       include ket.html label="1" %} が入れ替わることを確認しましょう。
@@ -200,12 +200,12 @@ description: 量子ビットペアの入れ替え
   </ul>
 </div>
 
-<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
         id="palette"
-        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-swan mb-10"
+        class="border-swan mb-10 flex w-min rounded-xl border-2 border-b-4 bg-white px-4 py-5"
       >
         <palette-dropzone>
           <x-gate></x-gate>
@@ -213,13 +213,13 @@ description: 量子ビットペアの入れ替え
       </div>
 
       <div
-        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
             {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
           </div>
         </inspector-button>
@@ -238,7 +238,7 @@ description: 量子ビットペアの入れ替え
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="w-min flex flex-row justify-center px-4 py-4 bg-white border-2 border-b-4 border-swan rounded-xl z-40"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
@@ -256,15 +256,15 @@ description: 量子ビットペアの入れ替え
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
-    <div class="flex flex-row bg-white rounded-2xl drop-shadow-lg p-2">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
       <button
         data-operation-menu-if
         type="button"
-        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
         disabled
       >
-        <div class="h-5 w-5 flex items-center justify-center">
-          <div class="font-sans font-bold text-sm tracking-tighter whitespace-nowrap">
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
             if <span class="italic">x</span>
           </div>
         </div>
@@ -273,7 +273,7 @@ description: 量子ビットペアの入れ替え
       <button
         data-operation-menu-angle
         type="button"
-        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
         disabled
       >
         {% include angle.svg class="h-5 w-5" %}
@@ -282,11 +282,11 @@ description: 量子ビットペアの入れ替え
       <button
         data-operation-menu-flag
         type="button"
-        class="inline-flex items-center justify-center h-8 w-8 border border-transparent bg-white hover:bg-gray-200 rounded focus:outline-none"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
         disabled
       >
-        <div class="h-5 w-5 flex items-center justify-center">
-          <div class="font-sans font-bold text-sm whitespace-nowrap">
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
             (<span class="italic">x</span>)
           </div>
         </div>
@@ -295,7 +295,7 @@ description: 量子ビットペアの入れ替え
 
     <div
       data-operation-menu-delete
-      class="bg-white hover:bg-red-200 h-8 w-8 flex items-center justify-center rounded-full cursor-pointer drop-shadow-lg"
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
     >
       {% include trash.svg class="h-4 w-4" %}
     </div>
@@ -303,32 +303,32 @@ description: 量子ビットペアの入れ替え
 </template>
 
 <template id="operation-inspector-template">
-  <operation-inspector class="flex flex-col text-gray-900 p-4 w-60">
-    <div class="flex flex-col divide-y space-y-4 items-left">
-      <div id="conditional-gate-pane" class="flex flex-col items-left">
+  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
         <h1 class="font-bold text-gray-900">If Conditional</h1>
 
-        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
-          <label for="if-input" class="font-normal text-gray-700 select-none">If</label>
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
           <input
             data-target="operation-inspector.ifInput"
             type="text"
             name="if"
             id="if-input"
             spellcheck="false"
-            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
       </div>
 
-      <div id="angle-pane" class="flex flex-col items-left pt-4 mb-2">
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
         <h1 class="font-bold text-gray-900">Angle</h1>
 
-        <div class="pane-body grid grid-cols-3 grid-rows-3 items-center gap-2 ml-4 mr-2 mt-4">
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
           <label
             for="angle-input"
-            class="font-normal text-gray-700 select-none"
+            class="select-none font-normal text-gray-700"
             data-target="operation-inspector.angleInputLabel"
             >Angle</label
           >
@@ -338,12 +338,12 @@ description: 量子ビットペアの入れ替え
             name="angle"
             id="angle-input"
             spellcheck="false"
-            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
           <angle-slider
             data-target="operation-inspector.angleSlider"
-            class="inline-block ml-2"
+            class="ml-2 inline-block"
           ></angle-slider>
 
           <label for="denominator-input" class="block text-sm font-normal text-gray-700"
@@ -355,10 +355,10 @@ description: 量子ビットペアの入れ替え
             min="2"
             name="denominator"
             id="denominator-input"
-            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
-          <div class="pl-2 text-sm whitespace-nowrap text-gray-500">
+          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
             <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
               data-target="operation-inspector.denominatorLabel"
               class="font-bold text-yellow-600"
@@ -367,34 +367,34 @@ description: 量子ビットペアの入れ替え
           </div>
 
           <div class="min-w-0 flex-1 text-sm">
-            <label for="reduce-fraction-checkbox" class="font-normal text-gray-700 select-none"
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
               >Reduce</label
             >
           </div>
-          <div class="flex items-center h-5">
+          <div class="flex h-5 items-center">
             <input
               data-target="operation-inspector.reduceAngleFractionCheckbox"
               id="reduce-fraction-checkbox"
               name="reduce-fraction"
               type="checkbox"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
             />
           </div>
         </div>
       </div>
 
-      <div id="conditional-flag-pane" class="flex flex-col items-left pt-4 mb-2">
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
         <h1 class="font-bold text-gray-900">Conditional Flag</h1>
 
-        <div class="pane-body grid grid-cols-3 grid-rows-1 items-center gap-2 ml-4 mt-4">
-          <label for="flag-input" class="font-normal text-gray-700 select-none">Flag</label>
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
           <input
             data-target="operation-inspector.flagInput"
             type="text"
             name="flag"
             id="flag-input"
             spellcheck="false"
-            class="shadow-sm bg-gray-100 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-1 py-1 sm:text-sm border-transparent rounded-md"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>

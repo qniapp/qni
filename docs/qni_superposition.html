@@ -9,7 +9,7 @@ description: いろんな重ね合わせ状態を作ってみよう
   の重ね合わせ状態をとることができます。Qni では、これを次のように円で視覚化します。
 </p>
 
-<div class="flex flex-row justify-center items-center pb-10">
+<div class="flex flex-row items-center justify-center pb-10">
   <circle-notation
     data-size="xl"
     data-magnitudes="0.7071067811865475,0.7071067811865475"
@@ -25,7 +25,7 @@ description: いろんな重ね合わせ状態を作ってみよう
   <code>50%</code> の確率で重ね合わされていると言います。
 </p>
 
-<div class="p-4 border-l-4 border-blue-400 bg-blue-50 mb-10">
+<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
   <p class="!pb-0">
     これからは状態 <code>0</code> と <code>1</code> をそれぞれ記号 <code>|0⟩</code> と
     <code>|1⟩</code> で表します。
@@ -46,7 +46,7 @@ description: いろんな重ね合わせ状態を作ってみよう
   <table class="table-auto border-collapse border border-slate-400">
     <thead>
       <tr>
-        <th class="border border-slate-300 bg-slate-800 text-white py-2 px-4">確率</th>
+        <th class="border border-slate-300 bg-slate-800 py-2 px-4 text-white">確率</th>
         <th class="border border-slate-300 bg-slate-800 text-white">円表示</th>
       </tr>
     </thead>
@@ -54,7 +54,7 @@ description: いろんな重ね合わせ状態を作ってみよう
       <tr>
         <td class="border border-slate-300 py-2 px-4"><code>|0⟩</code> が 100%</td>
         <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row justify-center items-center pb-4">
+          <div class="flex flex-row items-center justify-center pb-4">
             <circle-notation
               data-size="xl"
               data-magnitudes="1,0"
@@ -67,7 +67,7 @@ description: いろんな重ね合わせ状態を作ってみよう
       <tr>
         <td class="border border-slate-300 py-2 px-4"><code>|1⟩</code> が 100%</td>
         <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row justify-center items-center pb-4">
+          <div class="flex flex-row items-center justify-center pb-4">
             <circle-notation
               data-size="xl"
               data-magnitudes="0,1"
@@ -82,7 +82,7 @@ description: いろんな重ね合わせ状態を作ってみよう
           <code>|0⟩</code> が 50%, <code>|1⟩</code> も 50%
         </td>
         <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row justify-center items-center pb-4">
+          <div class="flex flex-row items-center justify-center pb-4">
             <circle-notation
               data-size="xl"
               data-magnitudes="0.7071067811865475,0.7071067811865475"
@@ -97,7 +97,7 @@ description: いろんな重ね合わせ状態を作ってみよう
           <code>|0⟩</code> が 80%, <code>|1⟩</code> が 20%
         </td>
         <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row justify-center items-center pb-4">
+          <div class="flex flex-row items-center justify-center pb-4">
             <circle-notation
               data-size="xl"
               data-magnitudes="0.8944271909999159,0.4472135954999579"
@@ -132,12 +132,12 @@ description: いろんな重ね合わせ状態を作ってみよう
   命令が確率や位相を変化させ、命令の種類によってその変化が異なる、という 2 つです。
 </p>
 
-<div class="relative overflow-hidden rounded-2xl p-8 mb-10 bg-gray-50">
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
         id="palette"
-        class="w-min flex px-4 py-5 bg-white rounded-xl border-2 border-b-4 border-gray-200 mb-10 space-x-2"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
       >
         <palette-dropzone>
           <h-gate></h-gate>
@@ -169,13 +169,13 @@ description: いろんな重ね合わせ状態を作ってみよう
       </div>
 
       <div
-        class="absolute top-px right-px bg-white rounded-bl-2xl rounded-tr-2xl drop-shadow-xl z-40"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex items-center justify-center w-full h-full hover:bg-gray-200 rounded-xl">
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
             {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
           </div>
         </inspector-button>
@@ -194,7 +194,7 @@ description: いろんな重ね合わせ状態を作ってみよう
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="w-min flex flex-row justify-center px-4 py-4 bg-white rounded-xl border-2 border-b-4 border-gray-200 z-40"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
