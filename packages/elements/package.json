@@ -9,6 +9,7 @@
     "url": "git+https://github.com/qniapp/qni.git"
   },
   "main": "dist/index.js",
+  "type": "module",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -16,7 +17,7 @@
     "lint": "eslint . --ext .js,.ts",
     "typecheck": "tsc --noEmit",
     "prebuild": "npm run build:css",
-    "build": "node build.js",
+    "build": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "pretest": "npm run build",
     "test": "web-test-runner test/*.js --node-resolve",
@@ -71,7 +72,6 @@
     "dist/",
     "docs/",
     "icon/",
-    "build.js",
     "tailwind.config.cjs",
     "web-test-runner.config.js"
   ],
