@@ -1,13 +1,9 @@
 {
-  "extends": [
-    "plugin:github/recommended",
-    "plugin:github/browser",
-    "plugin:github/typescript"
-  ],
+  "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript"],
   "rules": {
     "github/unescaped-html-literal": "off",
     "i18n-text/no-en": "off",
     "import/named": "off"
   },
-  "ignorePatterns": ["/doc/"]
+  "ignorePatterns": ["build.js", "/doc/"]
 }
