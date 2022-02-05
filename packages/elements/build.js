@@ -7,6 +7,9 @@ const entryFile = 'src/index.ts'
 
 build({
   entryPoints: [entryFile],
+  loader: {
+    '.svg': 'text'
+  },
   outdir: 'dist',
   bundle: true,
   minify: true,

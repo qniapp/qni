@@ -3,8 +3,8 @@ import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
 import {Util} from '@qni/common'
-import {iconWires} from './icon'
 import interact from 'interactjs'
+import wiresIcon from '../icon/wires.svg'
 
 export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && arg instanceof CircuitDropzoneElement
@@ -260,7 +260,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   private get wireSvg(): TemplateResult {
-    return html([iconWires.data] as unknown as TemplateStringsArray)
+    return html([wiresIcon] as unknown as TemplateStringsArray)
   }
 }
 

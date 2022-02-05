@@ -6,8 +6,6 @@ export * from './mixin/constructor'
 export * from './mixin/flaggable'
 export * from './mixin/ifable'
 
-export * from './icon'
-
 export * from './inspector-button-element'
 export * from './operation-inspector-element'
 export * from './angle-slider-element'

@@ -4159,10 +4159,6 @@ circuit-editor {
   margin-right: auto;
 }
 
-.mr-8 {
-  margin-right: 2rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -4624,6 +4620,10 @@ circuit-editor {
   padding-bottom: 2.5rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -4646,10 +4646,6 @@ circuit-editor {
 
 .pt-5 {
   padding-top: 1.25rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
 }
 
 .text-center {

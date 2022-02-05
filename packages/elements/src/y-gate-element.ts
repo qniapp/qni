@@ -11,7 +11,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedYGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconYGate} from './icon'
+import yGateIcon from '../icon/y-gate.svg'
 
 export type YGateElementProps = {
   targets: number[]
@@ -34,7 +34,7 @@ export class YGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconYGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(yGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

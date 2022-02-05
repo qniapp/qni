@@ -12,7 +12,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRyGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconRyGate} from './icon'
+import ryGateIcon from '../icon/ry-gate.svg'
 
 export type RyGateElementProps = {
   targets: number[]
@@ -37,7 +37,7 @@ export class RyGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconRyGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(ryGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

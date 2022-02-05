@@ -10,7 +10,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedSwapGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconSwapGate} from './icon'
+import swapGateIcon from '../icon/swap-gate.svg'
 
 export class SwapGateElement extends MenuableMixin(
   HelpableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
@@ -26,7 +26,7 @@ export class SwapGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`${this.iconHtml(iconSwapGate)}`, this.shadowRoot!)
+    render(html`${this.iconHtml(swapGateIcon)}`, this.shadowRoot!)
   }
 
   toJson(): string {
