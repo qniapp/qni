@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>
-      <%= title @circuit %>
-    </title>
+    <title><%= title @circuit %></title>
 
-    <meta name="description" content="An open-source drag-and-drop quantum circuit simulator for exploring and understanding small quantum circuits.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#93C5FD">
+    <meta name="description" content="A quantum live-programming app that runs in your browser." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#93C5FD" />
 
     <% if content_for?(:meta_ogp) %>
       <%= yield :meta_ogp %>
@@ -19,15 +17,15 @@
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
     <%= stylesheet_link_tag 'application' %>
 
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" />
     <%= favicon_link_tag '/favicon.ico' %>
     <%= favicon_link_tag '/icon.svg', type: 'image/svg+xml' %>
     <%= favicon_link_tag '/apple-touch-icon.png', rel: 'apple-touch-icon' %>
+
+    <script defer data-domain="qniapp.net" src="https://plausible.io/js/plausible.js"></script>
   </head>
 
   <body class="bg-gray-50">
-    <div class="container relative">
-      <%= yield %>
-    </div>
+    <%= yield %>
   </body>
 </html>

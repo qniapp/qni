@@ -206,7 +206,6 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Step
    */
   activateStep(step: CircuitStepElement): void {
-    this.deactivateAllSteps()
     step.active = true
   }
 

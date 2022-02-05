@@ -3,7 +3,7 @@ import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {FlaggableMixin} from './mixin/flaggable'
 import {SerializedMeasurementGateType} from '@qni/common'
-import {iconMeasurementGate} from './icon'
+import measurementGateIcon from '../icon/measurement-gate.svg'
 
 export class MeasurementGateElement extends MenuableMixin(
   HelpableMixin(FlaggableMixin(DraggableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
@@ -22,7 +22,7 @@ export class MeasurementGateElement extends MenuableMixin(
 
   update(): void {
     render(
-      html`${this.iconHtml(iconMeasurementGate)}
+      html`${this.iconHtml(measurementGateIcon)}
         <div id="value" part="value"></div>`,
       this.shadowRoot!
     )

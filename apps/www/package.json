@@ -1,6 +1,6 @@
 {
   "name": "@qni/www",
-  "version": "0.0.18",
+  "version": "0.0.31",
   "description": "Web service for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/apps/www#readme",
@@ -26,9 +26,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "./bin/dev",
-    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
-    "build": "esbuild app/javascript/application.js --bundle --keep-names --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --outdir=app/assets/builds",
-    "build:apps": "yarn build",
+    "lint": "eslint . --ext .js,.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
     "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
     "build:npm": "rollup -c && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css",
     "build:docs": "cd docs && JEKYLL_ENV=production bundle exec jekyll build",
@@ -43,9 +43,9 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@qni/common": "^0.0.18",
-    "@qni/elements": "^0.0.18",
-    "@qni/simulator": "^0.0.18",
+    "@qni/common": "^0.0.31",
+    "@qni/elements": "^0.0.31",
+    "@qni/simulator": "^0.0.31",
     "@rails/ujs": "~7.0",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
@@ -53,6 +53,7 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "~1.6.1",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
     "@tailwindcss/forms": "~0.4",
@@ -70,7 +71,9 @@
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
-    "prettier": "~2.5",
+    "prettier": "~2.2.1",
+    "prettier-plugin-erb": "^0.4.0",
+    "prettier-plugin-tailwindcss": "^0.1.5",
     "rollup": "~2.66",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-dts": "^4.0.1",

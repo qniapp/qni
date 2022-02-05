@@ -12,7 +12,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedPhaseGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconPhaseGate} from './icon'
+import phaseGateIcon from '../icon/phase-gate.svg'
 
 export type PhaseGateElementProps = {
   targets: number[]
@@ -37,7 +37,7 @@ export class PhaseGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconPhaseGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(phaseGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

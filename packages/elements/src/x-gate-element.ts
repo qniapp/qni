@@ -11,7 +11,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedXGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconXGate} from './icon'
+import xGateIcon from '../icon/x-gate.svg'
 
 export type XGateElementProps = {
   targets: number[]
@@ -34,7 +34,7 @@ export class XGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconXGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(xGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

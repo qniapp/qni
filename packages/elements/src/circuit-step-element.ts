@@ -351,6 +351,7 @@ export class CircuitStepElement extends HTMLElement {
       .start()
 
     this.addEventListener('mouseenter', this.dispatchMouseenterEvent)
+    this.addEventListener('mouseleave', this.dispatchMouseleaveEvent)
     this.addEventListener('click', this.maybeDispatchClickEvent)
     this.addEventListener('circuit-dropzone-snap', this.snapDropzone)
     this.addEventListener('circuit-dropzone-unsnap', this.unsnapDropzone)
@@ -359,6 +360,7 @@ export class CircuitStepElement extends HTMLElement {
     this.addEventListener('circuit-dropzone-occupy', this.occupyDropzone)
 
     this.attachShadow({mode: 'open'})
+    this.updateOperationAttributes()
     this.update()
   }
 
@@ -836,6 +838,10 @@ export class CircuitStepElement extends HTMLElement {
 
   private dispatchMouseenterEvent(): void {
     this.dispatchEvent(new Event('circuit-step-mouseenter', {bubbles: true}))
+  }
+
+  private dispatchMouseleaveEvent(): void {
+    this.dispatchEvent(new Event('circuit-step-mouseleave', {bubbles: true}))
   }
 
   private maybeDispatchClickEvent(event: MouseEvent): void {

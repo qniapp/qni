@@ -2,7 +2,7 @@
 
 module OgpHelper
   def twitter_title
-    'qni-quantum.herokuapp.com (β)'
+    'qniapp.net'
   end
 
   def og_description(json)

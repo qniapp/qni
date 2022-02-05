@@ -65,7 +65,7 @@ export class OperationInspectorElement extends HTMLElement {
       this.anglePaneDisabled = false
       this.angleInput.value = operation.angle
       this.backupCurrentPhi()
-      this.angleSlider.initWithAngle(operation.angle)
+      this.angleSlider.angle = operation.angle
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
       this.backupCurrentDenominator()
@@ -81,7 +81,7 @@ export class OperationInspectorElement extends HTMLElement {
   private clear(): void {
     this.ifInput.value = ''
     this.angleInput.value = ''
-    this.angleSlider.radian = 0
+    this.angleSlider.angle = '0'
     this.denominatorInput.value = ''
     this.reduceAngleFractionCheckbox.checked = false
     this.flagInput.value = ''
@@ -98,9 +98,10 @@ export class OperationInspectorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
+    this.addEventListener('angle-slider-change', this.changeAngle)
     this.addEventListener('angle-slider-update', this.updateAngle)
     this.ifInput.addEventListener('change', this.changeIf.bind(this))
-    this.angleInput.addEventListener('change', this.changePhi.bind(this))
+    this.angleInput.addEventListener('change', this.updateAngleInput.bind(this))
     this.denominatorInput.addEventListener('change', this.changeDenominator.bind(this))
     this.reduceAngleFractionCheckbox.addEventListener('change', this.changeReduceSetting.bind(this))
     this.flagInput.addEventListener('change', this.changeFlag.bind(this))
@@ -110,12 +111,20 @@ export class OperationInspectorElement extends HTMLElement {
     render(html`<slot></slot>`, this.shadowRoot!)
   }
 
-  private updateAngle(event: Event): void {
+  private changeAngle(event: Event): void {
     const angleSlider = event.target
     if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} isn't an angle-slider`)
 
     this.angleInput.value = angleSlider.angle
     this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
+  }
+
+  private updateAngle(event: Event): void {
+    const angleSlider = event.target
+    if (!isAngleSliderElement(angleSlider)) throw new Error(`${angleSlider} isn't an angle-slider`)
+
+    this.angleInput.value = angleSlider.angle
+    this.dispatchEvent(new Event('operation-inspector-angle-update', {bubbles: true}))
   }
 
   private backupCurrentPhi(): void {
@@ -133,11 +142,11 @@ export class OperationInspectorElement extends HTMLElement {
     this.dispatchEvent(new Event('operation-inspector-if-change', {bubbles: true}))
   }
 
-  private changePhi(): void {
+  private updateAngleInput(): void {
     const angle = this.angleInput.value
 
     if (isValidAngle(angle)) {
-      let newPhi: string
+      let newAngle: string
       const denominator = angleDenominator(angle)
       this.denominatorInput.value = denominator.toString()
       this.denominatorLabel.textContent = denominator.toString()
@@ -145,18 +154,18 @@ export class OperationInspectorElement extends HTMLElement {
 
       if (isAngleLessThan(angle, '-2π')) {
         const numerator = denominator * 2
-        newPhi = `-${numerator}π/${denominator}`
-        this.angleInput.value = newPhi
+        newAngle = `-${numerator}π/${denominator}`
+        this.angleInput.value = newAngle
       } else if (isAngleGreaterThan(angle, '2π')) {
         const numerator = denominator * 2
-        newPhi = `${numerator}π/${denominator}`
-        this.angleInput.value = newPhi
+        newAngle = `${numerator}π/${denominator}`
+        this.angleInput.value = newAngle
       } else {
-        newPhi = angle
+        newAngle = angle
       }
       this.backupCurrentPhi()
-      this.angleSlider.initWithAngle(newPhi)
-      this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
+      this.angleSlider.angle = newAngle
+      this.dispatchEvent(new Event('operation-inspector-angle-update', {bubbles: true}))
     } else {
       this.restoreOriginalPhi()
     }
@@ -184,18 +193,14 @@ export class OperationInspectorElement extends HTMLElement {
     if (isNumeric(denominator) && parseInt(denominator) > 1) {
       this.denominatorLabel.textContent = denominator
       this.angleSlider.denominator = parseInt(denominator)
-
-      const [radian, angle] = this.angleSlider.findSnapAngle(this.angleSlider.radian)
-      this.angleInput.value = angle
-      this.angleSlider.radian = radian
-      this.angleSlider.angle = angle
+      this.angleInput.value = this.angleSlider.angle
     } else {
       this.restoreOriginalDenominator()
     }
   }
 
   private changeReduceSetting(): void {
-    this.dispatchEvent(new Event('operation-inspector-angle-change', {bubbles: true}))
+    this.dispatchEvent(new Event('operation-inspector-angle-update', {bubbles: true}))
   }
 }
 

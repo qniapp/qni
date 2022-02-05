@@ -1,18 +1,13 @@
 module.exports = {
   mode: 'jit',
-  content: ['./examples/*.html'],
+  content: ['./src/*.ts'],
   theme: {
     extend: {
-      borderWidth: {
-        '3': '3px',
-      },
       cursor: {
         grab: 'grab',
-        grabbing: 'grabbing',
-      },
-    },
+        grabbing: 'grabbing'
+      }
+    }
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ]
+  plugins: [require('@tailwindcss/forms')]
 }

@@ -1,16 +1,16 @@
-import {build} from 'esbuild'
-import npmDts from 'npm-dts'
-import pkg from './package.json'
+const {build} = require('esbuild')
+const {Generator} = require('npm-dts')
+const pkg = require('./package.json')
 
-const {Generator} = npmDts
 const entryFile = 'src/index.ts'
 
 build({
   entryPoints: [entryFile],
   outdir: 'dist',
   bundle: true,
-  keepNames: true,
+  minify: true,
   format: 'esm',
+  sourcemap: true,
   target: 'es2017',
   external: Object.keys(pkg['dependencies'])
 })

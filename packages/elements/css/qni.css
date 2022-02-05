@@ -49,11 +49,10 @@
 @layer components {
   .activateable[data-active]::after {
     @apply border-opacity-100;
-    @apply border-3;
   }
 
   .activateable[data-active][data-grabbed]::after {
-    @apply bg-yellow-500 bg-opacity-10;
+    @apply bg-purple-500 bg-opacity-20;
   }
 }
 
@@ -63,7 +62,7 @@
 
     &::after {
       @apply absolute inset-0;
-      @apply border-2 border-yellow-500 border-opacity-0;
+      @apply border-2 border-purple-500 border-opacity-0;
       @apply rounded;
 
       content: '';
@@ -165,7 +164,7 @@
   }
 
   .angleable:not([data-reduced-angle=''])::before {
-    @apply flex justify-center;
+    @apply flex justify-center !important;
 
     content: attr(data-reduced-angle) '';
   }

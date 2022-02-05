@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.18",
+  "version": "0.0.31",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -14,18 +14,16 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist build",
-    "prelint": "npm run icon",
-    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
-    "prebuild": "npm run icon && npm run css && npm run lint",
-    "build": "node --experimental-json-modules build.js",
-    "build:packages": "yarn build",
+    "lint": "eslint . --ext .js,.ts",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "npm run build:css",
+    "build": "node build.cjs",
+    "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "pretest": "npm run build",
     "test": "web-test-runner test/*.js --node-resolve",
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
-    "css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
-    "watch:css": "yarn css --watch",
-    "icon": "svg-to-ts --config icon/.svg-to-tsrc",
+    "watch:css": "yarn build:css --watch",
     "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
   },
   "keywords": [
@@ -42,7 +40,7 @@
   "dependencies": {
     "@github/catalyst": "^1.1.4",
     "@github/jtml": "^0.4.0",
-    "@qni/common": "^0.0.18",
+    "@qni/common": "^0.0.31",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
     "xstate": "^4.27.0"
@@ -66,7 +64,6 @@
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
-    "svg-to-ts": "^7.1.0",
     "tailwindcss": "~3.0",
     "typedoc": "^0.22.8",
     "typescript": "~4.5"

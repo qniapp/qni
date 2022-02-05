@@ -1,8 +1,9 @@
 import {Interpreter, createMachine, interpret} from 'xstate'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, target} from '@github/catalyst'
-import {iconReload, iconTailSpin} from './icon'
 import {describe} from '@qni/common'
+import reloadIcon from '../icon/reload.svg'
+import tailSpinIcon from '../icon/tail-spin.svg'
 
 type RunCircuitButtonContext = Record<string, never>
 type RunCircuitButtonEvent = {type: 'FINISH'} | {type: 'CLICK'; clientX: number; clientY: number}
@@ -145,11 +146,11 @@ export class RunCircuitButtonElement extends HTMLElement {
   }
 
   private get reloadIcon(): TemplateResult {
-    return html([iconReload.data] as unknown as TemplateStringsArray)
+    return html([reloadIcon] as unknown as TemplateStringsArray)
   }
 
   private get tailSpinIcon(): TemplateResult {
-    return html([iconTailSpin.data] as unknown as TemplateStringsArray)
+    return html([tailSpinIcon] as unknown as TemplateStringsArray)
   }
 }
 

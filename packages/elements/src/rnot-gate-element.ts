@@ -11,7 +11,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRnotGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconRnotGate} from './icon'
+import rnotGateIcon from '../icon/rnot-gate.svg'
 
 export type RnotGateElementProps = {
   targets: number[]
@@ -34,7 +34,7 @@ export class RnotGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconRnotGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(rnotGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

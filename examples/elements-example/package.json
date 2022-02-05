@@ -1,29 +1,29 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.18",
+  "version": "0.0.31",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
   "scripts": {
     "start": "node ./bin/www",
-    "build": "yarn css && rollup -c && esbuild ./src/serviceworker.js --outdir=./public/ --bundle",
-    "css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./public/stylesheets/application.css",
-    "css:watch": "yarn css --watch"
+    "build": "yarn build:css && esbuild src/application.js --bundle --keep-names --minify --outdir=public/javascripts/",
+    "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./public/stylesheets/application.css",
+    "css:watch": "yarn build:css --watch"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.18",
-    "@qni/simulator": "^0.0.18",
+    "@qni/elements": "^0.0.31",
+    "@qni/simulator": "^0.0.31",
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "rollup-plugin-commonjs": "^10.1.0"
+    "debug": "~4.3",
+    "ejs": "~3.1",
+    "express": "~4.17",
+    "http-errors": "~2.0",
+    "morgan": "~1.10"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
     "esbuild": "^0.14.5",
-    "rollup": "^2.61.1",
     "tailwindcss": "~3.0"
   },
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"

@@ -1,25 +1,26 @@
 import {TemplateResult, html} from '@github/jtml'
 import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
-import {icon} from '../icon'
 
 export declare class Iconable {
   get icon(): string
   set icon(value: string)
-  iconHtml(defaultIcon: icon): TemplateResult
+  iconHtml(svg: string): TemplateResult
 }
 
 export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Iconable> & TBase {
   class IconableMixinClass extends Base {
     @attr icon = ''
 
-    iconHtml(defaultIcon: icon): TemplateResult {
+    iconHtml(svg: string): TemplateResult {
       return html`${this.iconStyle}
-        <div id="icon" part="icon">${this.iconSvg(defaultIcon)}</div>`
+        <div id="icon" part="icon">${this.iconSvg(svg)}</div>`
     }
 
-    private iconSvg(defaultIcon: icon): Node | TemplateResult | null {
-      if (this.icon === '') return html([defaultIcon.data] as unknown as TemplateStringsArray)
+    private iconSvg(defaultIcon: string): Node | TemplateResult | null {
+      if (this.icon === '') {
+        return html([defaultIcon] as unknown as TemplateStringsArray)
+      }
 
       const template = document.getElementById(this.icon) as HTMLTemplateElement
       if (template === null) return null

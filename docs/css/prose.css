@@ -1,0 +1,26 @@
+.prose h2 {
+  @apply text-xl;
+  @apply font-bold;
+  @apply text-neutral-700;
+  @apply tracking-tight;
+  @apply pb-4;
+}
+
+.prose h3 {
+  @apply font-bold;
+  @apply text-neutral-700;
+  @apply tracking-tight;
+  @apply pb-4;
+}
+
+.prose p {
+  @apply pb-10;
+}
+
+.prose a {
+  @apply underline;
+}
+
+.prose code {
+  @apply text-purple-600;
+}

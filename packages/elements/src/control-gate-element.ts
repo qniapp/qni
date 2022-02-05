@@ -8,8 +8,8 @@ import {
 } from './mixin/'
 import {html, render} from '@github/jtml'
 import {SerializedControlGateType} from '@qni/common'
+import controlGateIcon from '../icon/control-gate.svg'
 import {controller} from '@github/catalyst'
-import {iconControlGate} from './icon'
 
 export class ControlGateElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement)))))
@@ -25,7 +25,7 @@ export class ControlGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`${this.iconHtml(iconControlGate)}`, this.shadowRoot!)
+    render(html`${this.iconHtml(controlGateIcon)}`, this.shadowRoot!)
   }
 
   toJson(): string {
