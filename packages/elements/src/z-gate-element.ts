@@ -11,7 +11,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedZGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconZGate} from './icon'
+import zGateIcon from '../icon/z-gate.svg'
 
 export type ZGateElementProps = {
   targets: number[]
@@ -34,7 +34,7 @@ export class ZGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconZGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(zGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

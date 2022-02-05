@@ -12,7 +12,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedRzGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconRzGate} from './icon'
+import rzGateIcon from '../icon/rz-gate.svg'
 
 export type RzGateElementProps = {
   targets: number[]
@@ -37,7 +37,7 @@ export class RzGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconRzGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(rzGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {

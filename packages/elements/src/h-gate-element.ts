@@ -11,7 +11,7 @@ import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedHGateType} from '@qni/common'
 import {controller} from '@github/catalyst'
-import {iconHGate} from './icon'
+import hGateIcon from '../icon/h-gate.svg'
 
 export type HGateElementProps = {
   targets: number[]
@@ -34,7 +34,7 @@ export class HGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`<div part="body">${this.iconHtml(iconHGate)}</div>`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(hGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {
