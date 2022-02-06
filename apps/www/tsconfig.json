@@ -1,20 +1,8 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es2017",
-    "module": "es6",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "app/javascript/*"]
-    },
     "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false,
-    "downlevelIteration": true
+    "experimentalDecorators": true
   },
-  "exclude": ["node_modules", "vendor", "public"]
+  "include": ["app/javascript/**/*"]
 }

@@ -1,15 +1,9 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "es2017",
-    "strict": true,
-    "declaration": true,
-    "outDir": "dist",
-    "paths": {
-      "*": ["./node_modules/*", "./src/*"]
-    },
-    "removeComments": true,
-    "moduleResolution": "node"
+    "composite": true,
+    "declaration": true
   },
+  "include": ["src/**/*"],
   "files": ["src/index.ts"]
 }

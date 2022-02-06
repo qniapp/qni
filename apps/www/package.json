@@ -27,7 +27,7 @@
   "scripts": {
     "dev": "./bin/dev",
     "lint": "eslint . --ext .js,.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc",
     "build": "esbuild app/javascript/application.js --bundle --keep-names --sourcemap --minify --outdir=app/assets/builds && esbuild app/assets/javascripts/serviceworker.js --bundle --sourcemap --minify --outdir=app/assets/builds",
     "build:css": "tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
     "build:npm": "rollup -c && yarn build:css && cp ./app/assets/builds/application.css dist/qni.css",
@@ -57,8 +57,6 @@
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
     "@tailwindcss/forms": "~0.4",
-    "@typescript-eslint/eslint-plugin": "~5.10",
-    "@typescript-eslint/parser": "~5.10",
     "autoprefixer": "^10.4.0",
     "esbuild": "~0.14",
     "eslint": "~8.7",
