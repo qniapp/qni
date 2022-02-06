@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "module": "esnext",
+    "target": "es2017",
+    "strict": true,
+    "moduleResolution": "node"
+  },
+  "exclude": ["node_modules", "dist", "*.d.ts"]
+}

@@ -30,13 +30,17 @@
     "pretty-quick": "pretty-quick"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.8.1",
-    "@typescript-eslint/parser": "^5.8.1",
+    "@prettier/plugin-ruby": "1.6.1",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
     "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.2.1",
+    "prettier-plugin-erb": "0.4.0",
+    "prettier-plugin-tailwindcss": "0.1.5",
     "pretty-quick": "^3.1.3"
   }
 }

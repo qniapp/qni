@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rm -rf dist build",
     "lint": "eslint . --ext .js,.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc",
     "prebuild": "npm run build:css",
     "build": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
@@ -51,8 +51,6 @@
     "@rollup/plugin-commonjs": "^18",
     "@rollup/plugin-replace": "^3.0.1",
     "@tailwindcss/forms": "^0.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.8.1",
-    "@typescript-eslint/parser": "^5.8.1",
     "@web/dev-server-rollup": "^0.3.14",
     "@web/test-runner": "^0.13.25",
     "autoprefixer": "^10.4.0",
