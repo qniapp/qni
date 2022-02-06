@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript"],
+  "extends": ["plugin:github/recommended", "plugin:github/browser", "plugin:github/typescript", "prettier"],
   "rules": {
     "i18n-text/no-en": "off",
     "import/extensions": "off",

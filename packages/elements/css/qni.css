@@ -96,7 +96,7 @@
 
     circuit-dropzone &:not([data-snapped])::part(icon)::before {
       @apply absolute -top-1/3 -right-1/3;
-      @apply w-6 h-6;
+      @apply h-6 w-6;
       @apply z-10;
 
       content: '';

@@ -20,9 +20,9 @@ AllCops:
   TargetRailsVersion: 6.0
   NewCops: enable
   Exclude:
-    - "bin/*"
-    - "db/**/*"
-    - "tmp/**/*"
+    - 'bin/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
 
 # Lint
 Lint/MissingSuper:

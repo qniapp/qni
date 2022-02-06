@@ -1,7 +1,6 @@
 {
   "name": "@qni/docs",
-  "private": true,
-  "version": "0.0.27",
+  "version": "0.0.31",
   "description": "An interactive tutorial for @qni/www.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni#readme",
@@ -26,10 +25,8 @@
     "@qni/simulator": "0.0.31"
   },
   "devDependencies": {
-    "@prettier/plugin-ruby": "1.6.1",
     "esbuild": "^0.14.14",
     "postcss-import": "^14.0.2",
-    "prettier": "2.2.1",
     "prettier-plugin-erb": "0.4.0",
     "prettier-plugin-tailwindcss": "^0.1.5",
     "tailwindcss": "^3.0.17"

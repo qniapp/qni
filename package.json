@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
+    "pretty-quick": "pretty-quick",
     "lint": "lerna run lint",
     "typecheck": "lerna run typecheck",
     "test": "lerna run test --stream",
@@ -26,8 +27,7 @@
     "publish:patch": "yarn build && yarn test && lerna publish",
     "docs": "lerna run docs",
     "fix:style": "yarn run prettier ./packages/common/src --write && yarn run prettier ./packages/simulator/src --write && yarn run prettier ./packages/elements/src --write",
-    "prepare": "husky install",
-    "pretty-quick": "pretty-quick"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "1.6.1",
@@ -38,7 +38,7 @@
     "eslint-plugin-github": "^4.3.5",
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
-    "prettier": "^2.2.1",
+    "prettier": "2.2.1",
     "prettier-plugin-erb": "0.4.0",
     "prettier-plugin-tailwindcss": "0.1.5",
     "pretty-quick": "^3.1.3"
