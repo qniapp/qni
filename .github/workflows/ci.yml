@@ -55,6 +55,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
       - run: lerna bootstrap
       - run: yarn build
+      - run: bundle exec rails build:javascript
       - run: yarn test:ci
         env:
           RAILS_ENV: test
