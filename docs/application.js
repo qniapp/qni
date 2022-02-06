@@ -1015,24 +1015,24 @@ var require_interact_min = __commonJS({
       Z.merge = J3, Z.from = function(t2) {
         return J3([], t2);
       };
-      var Q2 = /* @__PURE__ */ __name(function(t2, e2) {
+      var Q3 = /* @__PURE__ */ __name(function(t2, e2) {
         for (var n2 = 0; n2 < t2.length; n2++)
           if (e2(t2[n2], n2, t2))
             return n2;
         return -1;
       }, "Q");
-      Z.findIndex = Q2, Z.find = function(t2, e2) {
-        return t2[Q2(t2, e2)];
+      Z.findIndex = Q3, Z.find = function(t2, e2) {
+        return t2[Q3(t2, e2)];
       };
-      var tt2 = {};
-      function et(t2) {
-        return (et = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t3) {
+      var tt = {};
+      function et2(t2) {
+        return (et2 = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(t3) {
           return typeof t3;
         } : function(t3) {
           return t3 && typeof Symbol == "function" && t3.constructor === Symbol && t3 !== Symbol.prototype ? "symbol" : typeof t3;
         })(t2);
       }
-      __name(et, "et");
+      __name(et2, "et");
       function nt2(t2, e2) {
         for (var n2 = 0; n2 < e2.length; n2++) {
           var r2 = e2[n2];
@@ -1040,22 +1040,22 @@ var require_interact_min = __commonJS({
         }
       }
       __name(nt2, "nt");
-      function rt2(t2, e2) {
-        return (rt2 = Object.setPrototypeOf || function(t3, e3) {
+      function rt(t2, e2) {
+        return (rt = Object.setPrototypeOf || function(t3, e3) {
           return t3.__proto__ = e3, t3;
         })(t2, e2);
       }
-      __name(rt2, "rt");
-      function ot(t2, e2) {
-        return !e2 || et(e2) !== "object" && typeof e2 != "function" ? it2(t2) : e2;
+      __name(rt, "rt");
+      function ot2(t2, e2) {
+        return !e2 || et2(e2) !== "object" && typeof e2 != "function" ? it(t2) : e2;
       }
-      __name(ot, "ot");
-      function it2(t2) {
+      __name(ot2, "ot");
+      function it(t2) {
         if (t2 === void 0)
           throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         return t2;
       }
-      __name(it2, "it");
+      __name(it, "it");
       function at(t2) {
         return (at = Object.setPrototypeOf ? Object.getPrototypeOf : function(t3) {
           return t3.__proto__ || Object.getPrototypeOf(t3);
@@ -1066,12 +1066,12 @@ var require_interact_min = __commonJS({
         return e2 in t2 ? Object.defineProperty(t2, e2, { value: n2, enumerable: true, configurable: true, writable: true }) : t2[e2] = n2, t2;
       }
       __name(st, "st");
-      Object.defineProperty(tt2, "__esModule", { value: true }), tt2.DropEvent = void 0;
+      Object.defineProperty(tt, "__esModule", { value: true }), tt.DropEvent = void 0;
       var lt = function(t2) {
         !function(t3, e3) {
           if (typeof e3 != "function" && e3 !== null)
             throw new TypeError("Super expression must either be null or a function");
-          t3.prototype = Object.create(e3 && e3.prototype, { constructor: { value: t3, writable: true, configurable: true } }), e3 && rt2(t3, e3);
+          t3.prototype = Object.create(e3 && e3.prototype, { constructor: { value: t3, writable: true, configurable: true } }), e3 && rt(t3, e3);
         }(a2, t2);
         var e2, n2, r2, o3, i2 = (r2 = a2, o3 = function() {
           if (typeof Reflect == "undefined" || !Reflect.construct)
@@ -1093,14 +1093,14 @@ var require_interact_min = __commonJS({
             t3 = Reflect.construct(e3, arguments, n3);
           } else
             t3 = e3.apply(this, arguments);
-          return ot(this, t3);
+          return ot2(this, t3);
         });
         function a2(t3, e3, n3) {
           var r3;
           !function(t4, e4) {
             if (!(t4 instanceof e4))
               throw new TypeError("Cannot call a class as a function");
-          }(this, a2), st(it2(r3 = i2.call(this, e3._interaction)), "target", void 0), st(it2(r3), "dropzone", void 0), st(it2(r3), "dragEvent", void 0), st(it2(r3), "relatedTarget", void 0), st(it2(r3), "draggable", void 0), st(it2(r3), "timeStamp", void 0), st(it2(r3), "propagationStopped", false), st(it2(r3), "immediatePropagationStopped", false);
+          }(this, a2), st(it(r3 = i2.call(this, e3._interaction)), "target", void 0), st(it(r3), "dropzone", void 0), st(it(r3), "dragEvent", void 0), st(it(r3), "relatedTarget", void 0), st(it(r3), "draggable", void 0), st(it(r3), "timeStamp", void 0), st(it(r3), "propagationStopped", false), st(it(r3), "immediatePropagationStopped", false);
           var o4 = n3 === "dragleave" ? t3.prev : t3.cur, s3 = o4.element, l4 = o4.dropzone;
           return r3.type = n3, r3.target = s3, r3.currentTarget = s3, r3.dropzone = l4, r3.dragEvent = e3, r3.relatedTarget = e3.target, r3.draggable = e3.interactable, r3.timeStamp = e3.timeStamp, r3;
         }
@@ -1125,7 +1125,7 @@ var require_interact_min = __commonJS({
           this.immediatePropagationStopped = this.propagationStopped = true;
         } }]) && nt2(e2.prototype, n2), a2;
       }($2.BaseEvent);
-      tt2.DropEvent = lt;
+      tt.DropEvent = lt;
       var ut2 = {};
       function ct(t2, e2) {
         for (var n2 = 0; n2 < t2.slice().length; n2++) {
@@ -1166,7 +1166,7 @@ var require_interact_min = __commonJS({
       __name(dt2, "dt");
       function pt2(t2, e2, n2) {
         var r2 = t2.dropState, o3 = { enter: null, leave: null, activate: null, deactivate: null, move: null, drop: null };
-        return n2.type === "dragstart" && (o3.activate = new tt2.DropEvent(r2, n2, "dropactivate"), o3.activate.target = null, o3.activate.dropzone = null), n2.type === "dragend" && (o3.deactivate = new tt2.DropEvent(r2, n2, "dropdeactivate"), o3.deactivate.target = null, o3.deactivate.dropzone = null), r2.rejected || (r2.cur.element !== r2.prev.element && (r2.prev.dropzone && (o3.leave = new tt2.DropEvent(r2, n2, "dragleave"), n2.dragLeave = o3.leave.target = r2.prev.element, n2.prevDropzone = o3.leave.dropzone = r2.prev.dropzone), r2.cur.dropzone && (o3.enter = new tt2.DropEvent(r2, n2, "dragenter"), n2.dragEnter = r2.cur.element, n2.dropzone = r2.cur.dropzone)), n2.type === "dragend" && r2.cur.dropzone && (o3.drop = new tt2.DropEvent(r2, n2, "drop"), n2.dropzone = r2.cur.dropzone, n2.relatedTarget = r2.cur.element), n2.type === "dragmove" && r2.cur.dropzone && (o3.move = new tt2.DropEvent(r2, n2, "dropmove"), o3.move.dragmove = n2, n2.dropzone = r2.cur.dropzone)), o3;
+        return n2.type === "dragstart" && (o3.activate = new tt.DropEvent(r2, n2, "dropactivate"), o3.activate.target = null, o3.activate.dropzone = null), n2.type === "dragend" && (o3.deactivate = new tt.DropEvent(r2, n2, "dropdeactivate"), o3.deactivate.target = null, o3.deactivate.dropzone = null), r2.rejected || (r2.cur.element !== r2.prev.element && (r2.prev.dropzone && (o3.leave = new tt.DropEvent(r2, n2, "dragleave"), n2.dragLeave = o3.leave.target = r2.prev.element, n2.prevDropzone = o3.leave.dropzone = r2.prev.dropzone), r2.cur.dropzone && (o3.enter = new tt.DropEvent(r2, n2, "dragenter"), n2.dragEnter = r2.cur.element, n2.dropzone = r2.cur.dropzone)), n2.type === "dragend" && r2.cur.dropzone && (o3.drop = new tt.DropEvent(r2, n2, "drop"), n2.dropzone = r2.cur.dropzone, n2.relatedTarget = r2.cur.element), n2.type === "dragmove" && r2.cur.dropzone && (o3.move = new tt.DropEvent(r2, n2, "dropmove"), o3.move.dragmove = n2, n2.dropzone = r2.cur.dropzone)), o3;
       }
       __name(pt2, "pt");
       function vt(t2, e2) {
@@ -2016,7 +2016,7 @@ var require_interact_min = __commonJS({
       }
       __name(Ce3, "Ce");
       Object.defineProperty(je, "__esModule", { value: true }), je.InteractEvent = void 0;
-      var Fe3 = function(t2) {
+      var Fe2 = function(t2) {
         !function(t3, e3) {
           if (typeof e3 != "function" && e3 !== null)
             throw new TypeError("Super expression must either be null or a function");
@@ -2069,7 +2069,7 @@ var require_interact_min = __commonJS({
           this.propagationStopped = true;
         } }]) && Ie(e2.prototype, n2), a2;
       }($2.BaseEvent);
-      je.InteractEvent = Fe3, Object.defineProperties(Fe3.prototype, { pageX: { get: function() {
+      je.InteractEvent = Fe2, Object.defineProperties(Fe2.prototype, { pageX: { get: function() {
         return this.page.x;
       }, set: function(t2) {
         this.page.x = t2;
@@ -2113,7 +2113,7 @@ var require_interact_min = __commonJS({
             throw new TypeError("Cannot call a class as a function");
         }(this, t2), Ye(this, "id", void 0), Ye(this, "pointer", void 0), Ye(this, "event", void 0), Ye(this, "downTime", void 0), Ye(this, "downTarget", void 0), this.id = e2, this.pointer = n2, this.event = r2, this.downTime = o3, this.downTarget = i2;
       }, "t");
-      var Be, We, Le = {};
+      var Be, We2, Le = {};
       function Ue(t2, e2) {
         for (var n2 = 0; n2 < e2.length; n2++) {
           var r2 = e2[n2];
@@ -2129,9 +2129,9 @@ var require_interact_min = __commonJS({
         return Xe.PointerInfo;
       } }), Le.default = Le.Interaction = Le._ProxyMethods = Le._ProxyValues = void 0, Le._ProxyValues = Be, function(t2) {
         t2.interactable = "", t2.element = "", t2.prepared = "", t2.pointerIsDown = "", t2.pointerWasMoved = "", t2._proxy = "";
-      }(Be || (Le._ProxyValues = Be = {})), Le._ProxyMethods = We, function(t2) {
+      }(Be || (Le._ProxyValues = Be = {})), Le._ProxyMethods = We2, function(t2) {
         t2.start = "", t2.move = "", t2.end = "", t2.stop = "", t2.interacting = "";
-      }(We || (Le._ProxyMethods = We = {}));
+      }(We2 || (Le._ProxyMethods = We2 = {}));
       var Ne3 = 0, qe2 = function() {
         function t2(e3) {
           var n3 = this, r2 = e3.pointerType, o3 = e3.scopeFire;
@@ -2155,7 +2155,7 @@ var require_interact_min = __commonJS({
               return i2[t3].apply(i2, arguments);
             } });
           }, "l");
-          for (var u3 in We)
+          for (var u3 in We2)
             l4(u3);
           this._scopeFire("interactions:new", { interaction: this });
         }
@@ -2930,7 +2930,7 @@ var require_interact_min = __commonJS({
         })(t2);
       }
       __name(Xn, "Xn");
-      function Yn(t2, e2) {
+      function Yn2(t2, e2) {
         return function(t3) {
           if (Array.isArray(t3))
             return t3;
@@ -2963,7 +2963,7 @@ var require_interact_min = __commonJS({
           throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
         }();
       }
-      __name(Yn, "Yn");
+      __name(Yn2, "Yn");
       function Bn(t2, e2) {
         (e2 == null || e2 > t2.length) && (e2 = t2.length);
         for (var n2 = 0, r2 = Array(e2); n2 < e2; n2++)
@@ -2989,14 +2989,14 @@ var require_interact_min = __commonJS({
         })(t2, e2);
       }
       __name(Un, "Un");
-      function Vn2(t2, e2) {
+      function Vn(t2, e2) {
         return !e2 || Xn(e2) !== "object" && typeof e2 != "function" ? function(t3) {
           if (t3 === void 0)
             throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
           return t3;
         }(t2) : e2;
       }
-      __name(Vn2, "Vn");
+      __name(Vn, "Vn");
       function Nn(t2) {
         return (Nn = Object.setPrototypeOf ? Object.getPrototypeOf : function(t3) {
           return t3.__proto__ || Object.getPrototypeOf(t3);
@@ -3007,7 +3007,7 @@ var require_interact_min = __commonJS({
       var qn = ["pointerDown", "pointerMove", "pointerUp", "updatePointer", "removePointer", "windowBlur"];
       function $n(t2, e2) {
         return function(n2) {
-          var r2 = e2.interactions.list, o3 = B2.getPointerType(n2), i2 = Yn(B2.getEventTargets(n2), 2), a2 = i2[0], s3 = i2[1], l4 = [];
+          var r2 = e2.interactions.list, o3 = B2.getPointerType(n2), i2 = Yn2(B2.getEventTargets(n2), 2), a2 = i2[0], s3 = i2[1], l4 = [];
           if (/^touch/.test(n2.type)) {
             e2.prevTouchTime = e2.now();
             for (var u3 = 0; u3 < n2.changedTouches.length; u3++) {
@@ -3027,7 +3027,7 @@ var require_interact_min = __commonJS({
             }
           }
           for (var y3 = 0; y3 < l4.length; y3++) {
-            var m4 = Yn(l4[y3], 4), x3 = m4[0], w2 = m4[1], _3 = m4[2];
+            var m4 = Yn2(l4[y3], 4), x3 = m4[0], w2 = m4[1], _3 = m4[2];
             m4[3][t2](x3, n2, w2, _3);
           }
         };
@@ -3098,7 +3098,7 @@ var require_interact_min = __commonJS({
               t3 = Reflect.construct(e4, arguments, n4);
             } else
               t3 = e4.apply(this, arguments);
-            return Vn2(this, t3);
+            return Vn(this, t3);
           });
           function s3() {
             return Wn(this, s3), a3.apply(this, arguments);
@@ -12076,10 +12076,10 @@ var unsafeHTML = directive((value) => (part) => {
 var import_interactjs2 = __toESM(require_interact_min(), 1);
 var import_interactjs3 = __toESM(require_interact_min(), 1);
 var Zt = Object.defineProperty;
-var Fe2 = Object.getOwnPropertyDescriptor;
+var We = Object.getOwnPropertyDescriptor;
 var l2 = /* @__PURE__ */ __name((a, t) => Zt(a, "name", { value: t, configurable: true }), "l");
 var s = /* @__PURE__ */ __name((a, t, e, i) => {
-  for (var n = i > 1 ? void 0 : i ? Fe2(t, e) : t, o2 = a.length - 1, r; o2 >= 0; o2--)
+  for (var n = i > 1 ? void 0 : i ? We(t, e) : t, o2 = a.length - 1, r; o2 >= 0; o2--)
     (r = a[o2]) && (n = (i ? r(t, e, n) : r(n)) || n);
   return i && n && Zt(t, e, n), n;
 }, "s");
@@ -12097,7 +12097,7 @@ function f2(a) {
 }
 __name(f2, "f");
 l2(f2, "ActivateableMixin");
-var tt = l2((a) => typeof a == "object" && a !== null && typeof a.angle == "string" && typeof a.reducedAngle == "string", "isAngleable");
+var et = l2((a) => typeof a == "object" && a !== null && typeof a.angle == "string" && typeof a.reducedAngle == "string", "isAngleable");
 function K(a) {
   class t extends a {
     constructor() {
@@ -12226,7 +12226,7 @@ function v2(a) {
 }
 __name(v2, "v");
 l2(v2, "DraggableMixin");
-var it = l2((a) => typeof a == "object" && a !== null && typeof a.flag == "string", "isFlaggable");
+var nt = l2((a) => typeof a == "object" && a !== null && typeof a.flag == "string", "isFlaggable");
 function Jt(a) {
   class t extends a {
     constructor() {
@@ -12328,7 +12328,7 @@ function y(a) {
 }
 __name(y, "y");
 l2(y, "IconableMixin");
-var X = l2((a) => typeof a == "object" && a !== null && typeof a.if == "string", "isIfable");
+var j2 = l2((a) => typeof a == "object" && a !== null && typeof a.if == "string", "isIfable");
 function z(a) {
   class t extends a {
     constructor() {
@@ -12370,15 +12370,15 @@ function x(a) {
       return render2(html`${n}`, o2), o2;
     }
     initMenuItems(i) {
-      if (X(i.reference)) {
+      if (j2(i.reference)) {
         let o2 = i.popper.querySelector("button[data-operation-menu-if]");
         m.notNull(o2), o2.disabled = false, this.ifTooltip = o2._tippy, this.ifTooltip === void 0 && (this.ifTooltip = tippy_esm_default(o2, { animation: false, content: "Set `if' Conditional" }), o2.addEventListener("mousedown", this.showIfInspector.bind(this)));
       }
-      if (tt(i.reference)) {
+      if (et(i.reference)) {
         let o2 = i.popper.querySelector("button[data-operation-menu-angle]");
         m.notNull(o2), o2.disabled = false, this.angleTooltip = o2._tippy, this.angleTooltip === void 0 && (this.angleTooltip = tippy_esm_default(o2, { animation: false, content: "Change Angle" }), o2.addEventListener("mousedown", this.showAngleInspector.bind(this)));
       }
-      if (it(i.reference)) {
+      if (nt(i.reference)) {
         let o2 = i.popper.querySelector("button[data-operation-menu-flag]");
         m.notNull(o2), o2.disabled = false, this.flagTooltip = o2._tippy, this.flagTooltip === void 0 && (this.flagTooltip = tippy_esm_default(o2, { animation: false, content: "Set Condifitonal Flag" }), o2.addEventListener("mousedown", this.showFlagInspector.bind(this)));
       }
@@ -13368,8 +13368,8 @@ var Ht = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "Ht");
 l2(Ht, "InspectorButtonElement");
 controller(Ht);
-var Bt = l2((a) => a !== null && a instanceof j2, "isAngleSliderElement");
-var j2 = /* @__PURE__ */ __name(class extends HTMLElement {
+var Bt = l2((a) => a !== null && a instanceof X, "isAngleSliderElement");
+var X = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.angle = "";
@@ -13469,9 +13469,9 @@ var j2 = /* @__PURE__ */ __name(class extends HTMLElement {
   set left(t) {
     this.style.paddingLeft = `${t * 100}%`;
   }
-}, "j");
-l2(j2, "AngleSliderElement"), s([attr], j2.prototype, "angle", 2), s([attr], j2.prototype, "radian", 2), s([attr], j2.prototype, "denominator", 2), s([attr], j2.prototype, "disabled", 2), s([attr], j2.prototype, "debug", 2);
-controller(j2);
+}, "X");
+l2(X, "AngleSliderElement"), s([attr], X.prototype, "angle", 2), s([attr], X.prototype, "radian", 2), s([attr], X.prototype, "denominator", 2), s([attr], X.prototype, "disabled", 2), s([attr], X.prototype, "debug", 2);
+controller(X);
 var A = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -13495,11 +13495,11 @@ var A = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.flagInput.value;
   }
   set operation(t) {
-    if (this.clear(), this.disableAllPanes(), X(t) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = t.if), tt(t)) {
+    if (this.clear(), this.disableAllPanes(), j2(t) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = t.if), et(t)) {
       let e = Y(t.angle);
       ut(t) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (Et(t) || xt(t) || yt(t)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = t.angle, this.backupCurrentPhi(), this.angleSlider.angle = t.angle, this.denominatorInput.value = e.toString(), this.denominatorLabel.textContent = e.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = t.reducedAngle !== "";
     }
-    it(t) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = t.flag);
+    nt(t) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = t.flag);
   }
   clear() {
     this.ifInput.value = "", this.angleInput.value = "", this.angleSlider.angle = "0", this.denominatorInput.value = "", this.reduceAngleFractionCheckbox.checked = false, this.flagInput.value = "";
@@ -14400,7 +14400,7 @@ var Ne2 = `<svg part="tail-spin-icon" width="38" height="38" viewBox="0 0 38 38"
     </g>
 </svg>
 `;
-var nt = /* @__PURE__ */ __name(class extends HTMLElement {
+var ot = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.running = false;
@@ -14465,9 +14465,9 @@ var nt = /* @__PURE__ */ __name(class extends HTMLElement {
   get tailSpinIcon() {
     return html([Ne2]);
   }
-}, "nt");
-l2(nt, "RunCircuitButtonElement"), s([attr], nt.prototype, "running", 2), s([attr], nt.prototype, "debug", 2), s([target], nt.prototype, "body", 2), s([target], nt.prototype, "ripple", 2);
-controller(nt);
+}, "ot");
+l2(ot, "RunCircuitButtonElement"), s([attr], ot.prototype, "running", 2), s([attr], ot.prototype, "debug", 2), s([target], ot.prototype, "body", 2), s([target], ot.prototype, "ripple", 2);
+controller(ot);
 var $e = `<svg part="wires" width="48" height="48" viewBox="0 0 48 48" preserveAspectRatio="none">
   <line
     part="wire-input"
@@ -14934,7 +14934,7 @@ var F2 = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [o2, r] of C2(n, (p2) => p2.angle))
             for (let [p2, d2] of C2(r, (c2) => c2.if))
               for (let [c2, h2] of C2(d2, (u2) => u2.controls.toString())) {
-                let u2 = h2[0], g = u2.operationType, w = h2.map((Q2) => Q2.bit), O2 = { type: g, targets: w };
+                let u2 = h2[0], g = u2.operationType, w = h2.map((tt) => tt.bit), O2 = { type: g, targets: w };
                 p2 !== "" && (O2.if = p2), o2 !== "" && (O2.angle = o2), c2 !== "" && (O2.controls = u2.controls), t.push(O2);
               }
           break;
@@ -14953,7 +14953,7 @@ var F2 = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [o2, r] of C2(n, (p2) => p2.angle))
             for (let [p2, d2] of C2(r, (c2) => c2.if))
               for (let [c2, h2] of C2(d2, (u2) => u2.controls.toString())) {
-                let u2 = h2[0], g = u2.operationType, w = h2.map((Q2) => Q2.bit), O2 = { type: g, targets: w };
+                let u2 = h2[0], g = u2.operationType, w = h2.map((tt) => tt.bit), O2 = { type: g, targets: w };
                 p2 !== "" && (O2.if = p2), o2 !== "" && (O2.angle = o2), c2 !== "" && (O2.controls = u2.controls), t.push(O2);
               }
           break;
@@ -14963,7 +14963,7 @@ var F2 = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [o2, r] of C2(n, (p2) => p2.angle))
             for (let [p2, d2] of C2(r, (c2) => c2.if))
               for (let [c2, h2] of C2(d2, (u2) => u2.controls.toString())) {
-                let u2 = h2[0], g = u2.operationType, w = h2.map((Q2) => Q2.bit), O2 = { type: g, targets: w };
+                let u2 = h2[0], g = u2.operationType, w = h2.map((tt) => tt.bit), O2 = { type: g, targets: w };
                 p2 !== "" && (O2.if = p2), o2 !== "" && (O2.angle = o2), c2 !== "" && (O2.controls = u2.controls), t.push(O2);
               }
           break;
@@ -14973,7 +14973,7 @@ var F2 = /* @__PURE__ */ __name(class extends HTMLElement {
           for (let [o2, r] of C2(n, (p2) => p2.angle))
             for (let [p2, d2] of C2(r, (c2) => c2.if))
               for (let [c2, h2] of C2(d2, (u2) => u2.controls.toString())) {
-                let u2 = h2[0], g = u2.operationType, w = h2.map((Q2) => Q2.bit), O2 = { type: g, targets: w };
+                let u2 = h2[0], g = u2.operationType, w = h2.map((tt) => tt.bit), O2 = { type: g, targets: w };
                 p2 !== "" && (O2.if = p2), o2 !== "" && (O2.angle = o2), c2 !== "" && (O2.controls = u2.controls), t.push(O2);
               }
           break;
@@ -15624,8 +15624,8 @@ var m2 = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.steps.map((t) => t.serialize());
   }
   get urlJson() {
-    let t = window.location.href.toString().split(window.location.host)[1].slice(1);
-    return decodeURIComponent(t);
+    let t = window.location.href.toString().split("/").pop();
+    return m.notNull(t), decodeURIComponent(t);
   }
   clear() {
     history.pushState("", "", encodeURIComponent('{"cols":[]}')), location.reload();
@@ -15741,37 +15741,37 @@ var pt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   showOperationInspectorIf(t) {
     let e = t.target;
-    if (!X(e))
+    if (!j2(e))
       throw new Error(`${e} isn't an Ifable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_IF", operation: e });
   }
   showOperationInspectorAngle(t) {
     let e = t.target;
-    if (!tt(e))
+    if (!et(e))
       throw new Error(`${e} isn't an Angleable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_ANGLE", operation: e });
   }
   showOperationInspectorFlag(t) {
     let e = t.target;
-    if (!it(e))
+    if (!nt(e))
       throw new Error(`${e} isn't a Flaggable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_FLAG", operation: e });
   }
   setOperationIf(t) {
     let e = t.target, i = this.activeOperation;
-    if (!X(i))
+    if (!j2(i))
       throw new Error("[data-if] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_IF", operation: i, if: e.if });
   }
   setOperationAngle(t) {
     let e = t.target, i = this.activeOperation;
-    if (m.notNull(i), !tt(i))
+    if (m.notNull(i), !et(i))
       throw new Error(`${i.outerHTML}: [data-angle] not found.`);
     this.circuitEditorService.send({ type: "SET_OPERATION_ANGLE", operation: i, angle: e.angle, reducedAngle: e.reduceAngleFraction ? e.reducedAngle : "" });
   }
   setOperationFlag(t) {
     let e = t.target, i = this.activeOperation;
-    if (!it(i))
+    if (!nt(i))
       throw new Error("[data-flag] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_FLAG", operation: i, flag: e.flag });
   }
@@ -15849,9 +15849,10 @@ var pt = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "pt");
 l2(pt, "CircuitEditorElement"), s([attr], pt.prototype, "debug", 2), s([target], pt.prototype, "circuit", 2), s([target], pt.prototype, "inspectorButton", 2);
 controller(pt);
-var rt = /* @__PURE__ */ __name(class extends HTMLElement {
+var Q2 = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
+    this.backend = "";
     this.updateUrl = false;
   }
   connectedCallback() {
@@ -15885,7 +15886,7 @@ var rt = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         for (let r of o2.dropzones) {
           let p2 = r.operation;
-          !X(p2) || p2.if !== "" && (p2.disabled = !e.flags[p2.if]);
+          !j2(p2) || p2.if !== "" && (p2.disabled = !e.flags[p2.if]);
         }
         if (i === e.step) {
           let r = {};
@@ -15911,8 +15912,10 @@ var rt = /* @__PURE__ */ __name(class extends HTMLElement {
       return;
     let t = this.activeStepIndex, e = this.circuit.serialize();
     m.need(e.length > 0, "non-zero step length");
-    let i = Math.max(...e.map((o2) => Math.max(...o2.map((r) => Math.max(...r.targets))))), n = i >= 0 ? i + 1 : 1;
-    this.circleNotation.qubitCount = n, this.worker.postMessage({ qubitCount: n, stepIndex: t, steps: e, targets: this.visibleQubitCircleKets });
+    let i = Math.max(...e.map((r) => Math.max(...r.map((p2) => Math.max(...p2.targets))))), n = i >= 0 ? i + 1 : 1;
+    this.circleNotation.qubitCount = n;
+    let o2 = this.backend.trim();
+    this.worker.postMessage({ json: this.circuit.toJson(), qubitCount: n, stepIndex: t, steps: e, targets: this.visibleQubitCircleKets, backend: o2 !== "" ? o2 : null });
   }
   runUnlessEditing() {
     this.circuit.editing || this.run();
@@ -15932,9 +15935,9 @@ var rt = /* @__PURE__ */ __name(class extends HTMLElement {
     let t = this.circuit.toJson();
     history.pushState("", "", encodeURIComponent(t));
   }
-}, "rt");
-l2(rt, "QuantumSimulatorElement"), s([attr], rt.prototype, "updateUrl", 2), s([target], rt.prototype, "circuit", 2), s([target], rt.prototype, "circleNotation", 2), s([targets], rt.prototype, "runCircuitButtons", 2);
-controller(rt);
+}, "Q");
+l2(Q2, "QuantumSimulatorElement"), s([attr], Q2.prototype, "backend", 2), s([attr], Q2.prototype, "updateUrl", 2), s([target], Q2.prototype, "circuit", 2), s([target], Q2.prototype, "circleNotation", 2), s([targets], Q2.prototype, "runCircuitButtons", 2);
+controller(Q2);
 
 // src/serviceworker-companion.js
 if (navigator.serviceWorker) {
