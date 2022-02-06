@@ -59,6 +59,10 @@ jobs:
         run: |-
           cd apps/www
           bundle exec rails javascript:build
+      - name: css:build
+        run: |-
+          cd apps/www
+          bundle exec rails css:build
       - run: yarn test:ci
         env:
           RAILS_ENV: test
