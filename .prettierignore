@@ -1,3 +1,11 @@
+*.rb
+apps/www/app/assets/builds/
+apps/www/docs/
+apps/www/db/
+dist
 docs/application.css
 docs/application.js
 docs/serviceworker.js
+packages/common/docs/
+packages/elements/docs/
+packages/simulator/docs/

@@ -1,37 +1,37 @@
-@import "tippy.js/dist/border.css";
-@import "tippy.js/dist/svg-arrow.css";
-@import "tippy.js/dist/tippy.css";
+@import 'tippy.js/dist/border.css';
+@import 'tippy.js/dist/svg-arrow.css';
+@import 'tippy.js/dist/tippy.css';
 
-.tippy-box[data-theme~="qni"] {
+.tippy-box[data-theme~='qni'] {
   @apply bg-snow;
-  @apply border-2 border-solid border-eel;
+  @apply border-eel border-2 border-solid;
   @apply text-wolf;
   @apply text-xs;
   @apply md:text-sm;
 
   /* The border */
   .tippy-svg-arrow > svg:first-child {
-    fill: theme("colors.eel");
+    fill: theme('colors.eel');
   }
 
   /* The fill */
   .tippy-svg-arrow > svg:last-child {
-    fill: theme("colors.snow");
+    fill: theme('colors.snow');
   }
 
-  &[data-placement^="top"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='top'] > .tippy-svg-arrow svg:first-child {
     top: 18px;
   }
 
-  &[data-placement^="bottom"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
     bottom: 18px;
   }
 
-  &[data-placement^="left"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='left'] > .tippy-svg-arrow svg:first-child {
     left: 13px;
   }
 
-  &[data-placement^="right"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='right'] > .tippy-svg-arrow svg:first-child {
     right: 13px;
   }
 

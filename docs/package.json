@@ -1,7 +1,6 @@
 {
   "name": "@qni/docs",
-  "private": true,
-  "version": "0.0.27",
+  "version": "0.0.31",
   "description": "An interactive tutorial for @qni/www.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni#readme",
