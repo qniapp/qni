@@ -29,7 +29,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   declare worker: Worker
 
   connectedCallback(): void {
-    this.worker = new Worker('./serviceworker.js')
+    this.worker = new Worker('/serviceworker.js')
     this.visibleQubitCircleKets = []
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
