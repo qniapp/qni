@@ -11,6 +11,7 @@ import {
   SerializedRyGateType,
   SerializedRzGateType,
   SerializedSwapGateType,
+  SerializedTGateType,
   SerializedWrite0GateType,
   SerializedWrite1GateType,
   SerializedXGateType,
@@ -92,6 +93,15 @@ export class Simulator {
             this.cphase(each.controls, each.angle, each.targets[0])
           } else {
             this.cphase(each.targets.slice(1), each.angle, each.targets[0])
+          }
+          break
+        }
+        case SerializedTGateType: {
+          if (each.if && !this.flags[each.if]) break
+          if (each.controls && each.controls.length > 0) {
+            this.ct(each.controls, ...each.targets)
+          } else {
+            this.t(...each.targets)
           }
           break
         }
@@ -215,6 +225,16 @@ export class Simulator {
 
   cphase(controls: number | number[], phi: string, ...targets: number[]): Simulator {
     this.cu(controls, Matrix.PHASE(phi), ...targets)
+    return this
+  }
+
+  t(...targets: number[]): Simulator {
+    this.u(Matrix.T, ...targets)
+    return this
+  }
+
+  ct(controls: number | number[], ...targets: number[]): Simulator {
+    this.cu(controls, Matrix.T, ...targets)
     return this
   }
 

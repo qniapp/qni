@@ -9,6 +9,7 @@ import {
   SerializedRyGate,
   SerializedRzGate,
   SerializedSwapGate,
+  SerializedTGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
@@ -44,6 +45,7 @@ import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -948,6 +950,21 @@ export class CircuitStepElement extends HTMLElement {
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
                 serializedStep.push(serializedGate)
               }
+            }
+          }
+          break
+        }
+        case TGateElement: {
+          const tGates = sameOps as TGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(tGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedTGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
             }
           }
           break

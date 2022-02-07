@@ -9,6 +9,7 @@ export class Matrix {
   static readonly PAULI_X = Matrix.square(0, 1, 1, 0)
   static readonly PAULI_Y = Matrix.square(0, new Complex(0, -1), Complex.I, 0)
   static readonly PAULI_Z = Matrix.square(1, 0, 0, -1)
+  static readonly T = Matrix.square(1, 0, 0, Complex.from(Math.E).raisedTo(Complex.I.times(Math.PI / 4)))
 
   static PHASE(phi: string): Matrix {
     const φ = radian(phi)

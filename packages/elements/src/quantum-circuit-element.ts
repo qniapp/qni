@@ -18,6 +18,7 @@ import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
+import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
@@ -925,6 +926,17 @@ export class QuantumCircuitElement extends HTMLElement {
             const phaseGate = new PhaseGateElement()
             phaseGate.angle = RegExp.$1.replace('_', '/')
             circuitStep.appendOperation(phaseGate)
+            break
+          }
+          case /^T$/.test(instruction): {
+            const tGate = new TGateElement()
+            circuitStep.appendOperation(tGate)
+            break
+          }
+          case /^T<(.+)$/.test(instruction): {
+            const tGate = new TGateElement()
+            tGate.if = RegExp.$1.trim()
+            circuitStep.appendOperation(tGate)
             break
           }
           case /^X\^½$/.test(instruction): {

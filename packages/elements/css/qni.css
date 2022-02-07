@@ -17,6 +17,7 @@
 @import './y_gate';
 @import './z_gate';
 @import './phase_gate';
+@import './t_gate';
 @import './rnot_gate';
 @import './rx_gate';
 @import './ry_gate';
