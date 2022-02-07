@@ -2393,6 +2393,153 @@ phase-gate::part(icon) {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+t-gate[data-active]::after {
+  --tw-border-opacity: 1;
+}
+
+t-gate[data-active][data-grabbed]::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+}
+
+t-gate {
+  touch-action: none;
+}
+
+t-gate::after {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.25rem;
+  content: '';
+}
+
+t-gate[data-grabbed] {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  z-index: 40;
+}
+
+palette-dropzone t-gate {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+palette-dropzone t-gate:not([data-grabbed]):hover::after {
+  --tw-border-opacity: 1;
+}
+
+quantum-circuit:not([data-editing]) t-gate {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+quantum-circuit:not([data-editing]) t-gate:not([data-active]):hover::after {
+  --tw-border-opacity: 1;
+}
+
+quantum-circuit([data-editing]) t-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+  --tw-border-opacity: 1;
+}
+
+circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
+  position: absolute;
+  top: -33.333333%;
+  right: -33.333333%;
+  height: 1.5rem;
+  width: 1.5rem;
+  z-index: 10;
+  content: '';
+  background-image: url('data:image/svg+xml;utf8,<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+t-gate[data-if]::before {
+  display: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: -0.05em;
+  font-size: 0.75rem;
+  line-height: .75rem;
+  position: absolute;
+}
+
+circuit-dropzone t-gate[data-if]:not([data-if=''])::before {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  content: 'if\2009'attr(data-if);
+}
+
+circuit-dropzone t-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  content: attr(data-angle) '\2009if\2009'attr(data-if);
+}
+
+circuit-dropzone:not([data-connect-top]) t-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+}
+
+circuit-dropzone[data-connect-top][data-connect-bottom] t-gate[data-if]::before {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+      -1px 0 0 #fff, 1px 0 0 #fff;
+}
+
+circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::before {
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: -0.875rem;
+}
+
+t-gate {
+  display: inline-block;
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+
+t-gate[data-size='sm'] {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+t-gate {
+  border-radius: 0.25rem;
+}
+
+t-gate::part(body) {
+  height: 100%;
+  width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  border-radius: 0.25rem;
+}
+
+t-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
+t-gate::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 rnot-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -4257,20 +4404,20 @@ circuit-editor {
   margin-bottom: 2.5rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
 .mb-8 {
   margin-bottom: 2rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
 .ml-4 {
   margin-left: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .mr-2 {
@@ -4321,10 +4468,6 @@ circuit-editor {
   display: none;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .h-6 {
   height: 1.5rem;
 }
@@ -4335,6 +4478,10 @@ circuit-editor {
 
 .h-full {
   height: 100%;
+}
+
+.h-4 {
+  height: 1rem;
 }
 
 .h-8 {
@@ -4353,10 +4500,6 @@ circuit-editor {
   height: 100vh;
 }
 
-.w-4 {
-  width: 1rem;
-}
-
 .w-6 {
   width: 1.5rem;
 }
@@ -4373,6 +4516,10 @@ circuit-editor {
 
 .w-full {
   width: 100%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .w-8 {
@@ -4446,12 +4593,12 @@ circuit-editor {
   list-style-type: none;
 }
 
-.list-disc {
-  list-style-type: disc;
-}
-
 .list-decimal {
   list-style-type: decimal;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .grid-cols-3 {
@@ -4718,6 +4865,10 @@ circuit-editor {
   padding-bottom: 0.5rem;
 }
 
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -4732,10 +4883,6 @@ circuit-editor {
 
 .\!pb-0 {
   padding-bottom: 0px !important;
-}
-
-.pb-4 {
-  padding-bottom: 1rem;
 }
 
 .pt-5 {
@@ -4754,14 +4901,14 @@ circuit-editor {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-xl {
@@ -4819,11 +4966,6 @@ circuit-editor {
   letter-spacing: -0.025em;
 }
 
-.text-purple-600 {
-  --tw-text-opacity: 1;
-  color: rgb(147 51 234 / var(--tw-text-opacity));
-}
-
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -4852,6 +4994,11 @@ circuit-editor {
 .text-indigo-600 {
   --tw-text-opacity: 1;
   color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.text-purple-600 {
+  --tw-text-opacity: 1;
+  color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 
 .text-white {
