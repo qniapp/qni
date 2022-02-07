@@ -1,3 +1,11 @@
+# 1. The Qniapp is built as follows:
+#   $ git clone https://github.com/qniapp/qni.git
+#   $ cd qni
+#   $ docker build -f Dockerfile . -t qni_cpu
+# 2. Then run by:
+#   $ docker run -p 3000:3000 --rm -it qni_cpu
+# 3. access http://127.0.0.1:3000 in your browser
+
 FROM ubuntu:20.04
 
 RUN apt update
@@ -49,6 +57,9 @@ RUN cd /home/$DOCKER_USER && git clone https://github.com/sstephenson/ruby-build
 RUN cd /home/$DOCKER_USER && echo "export PATH=$PATH:$HOME/.rbenv/bin" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && git clone https://github.com/qniapp/qni.git
 RUN cd /home/$DOCKER_USER && source ~/.bashrc && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
+
+## settings for rails
+RUN cd /home/$DOCKER_USER && source ~/.bashrc && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
 
 ## settings for postgresql
 RUN sudo -u postgres service postgresql start && sudo -u postgres psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && sudo -u postgres createdb -O docker docker
