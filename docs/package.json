@@ -1,6 +1,6 @@
 {
   "name": "@qni/docs",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "An interactive tutorial for @qni/www.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni#readme",
@@ -20,9 +20,9 @@
     "url": "https://github.com/qniapp/qni/issues"
   },
   "dependencies": {
-    "@qni/common": "0.0.31",
-    "@qni/elements": "0.0.31",
-    "@qni/simulator": "0.0.31"
+    "@qni/common": "^0.0.32",
+    "@qni/elements": "^0.0.32",
+    "@qni/simulator": "^0.0.32"
   },
   "devDependencies": {
     "esbuild": "^0.14.14",
