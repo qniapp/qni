@@ -6,6 +6,11 @@
 #   $ docker run -p 3000:3000 --rm -it qni_cpu
 # 3. access http://127.0.0.1:3000 in your browser
 
+# Troubleshooting
+#   If the port 3000 is already used, change 3000 to 4000 (for example)
+#    $ docker run -p 4000:3000 --rm -it qni_cpu
+#   and access http://127.0.0.1:4000 in your browser
+
 FROM ubuntu:20.04
 
 RUN apt update
