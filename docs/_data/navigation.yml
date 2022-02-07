@@ -14,8 +14,8 @@
   pages:
     - name: 確率的ビット
       link: ./p_bit.html
-    - name: Qni で重ね合わせ
-      link: ./qni_superposition.html
+    - name: 重ね合わせ状態
+      link: ./superposition.html
     - name: 量子ビット
       link: ./q_bit.html
     - name: 状態ベクトル表示
