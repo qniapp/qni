@@ -63,6 +63,9 @@ export const isZGateElement = (arg: unknown): arg is ZGateElement =>
 export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   arg !== undefined && arg !== null && arg instanceof PhaseGateElement
 
+export const isTGateElement = (arg: unknown): arg is TGateElement =>
+  arg !== undefined && arg !== null && arg instanceof TGateElement
+
 export const isRnotGateElement = (arg: unknown): arg is RnotGateElement =>
   arg !== undefined && arg !== null && arg instanceof RnotGateElement
 

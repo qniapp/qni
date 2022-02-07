@@ -8,6 +8,7 @@ import {RxGateElement, RxGateElementProps} from './rx-gate-element'
 import {RyGateElement, RyGateElementProps} from './ry-gate-element'
 import {RzGateElement, RzGateElementProps} from './rz-gate-element'
 import {SerializedCircuitStep, Util} from '@qni/common'
+import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
@@ -18,7 +19,6 @@ import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
-import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 
 export type SnapTarget = {
@@ -60,6 +60,10 @@ export class QuantumCircuitElement extends HTMLElement {
   @attr cphaseDisabled = false
   @attr cphaseMaxControlGates = 0
   @attr cphaseMaxTargetGates = 0
+  // Controlled-T
+  @attr ctDisabled = false
+  @attr ctMaxControlGates = 0
+  @attr ctMaxTargetGates = 0
   // Controlled-√X
   @attr crnotDisabled = false
   @attr crnotMaxControlGates = 0
@@ -320,6 +324,10 @@ export class QuantumCircuitElement extends HTMLElement {
       disableCphase: this.cphaseDisabled,
       maxCphaseControlGates: this.cphaseMaxControlGates,
       maxCphaseTargetGates: this.cphaseMaxTargetGates,
+      // Controlled-T
+      disableCt: this.ctDisabled,
+      maxCtControlGates: this.ctMaxControlGates,
+      maxCtTargetGates: this.ctMaxTargetGates,
       // Controlled-√X
       disableCrnot: this.crnotDisabled,
       maxCrnotControlGates: this.crnotMaxControlGates,
@@ -486,6 +494,32 @@ export class QuantumCircuitElement extends HTMLElement {
       return phase
     }, ...targets)
     if (targets.length > 1) this.updateStepOperationAttributes(step)
+
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
+  t(...args: number[] | [TGateElementProps]): QuantumCircuitElement {
+    let targets: number[]
+    let disabled: boolean | undefined
+
+    if (typeof args[0] === 'number') {
+      targets = args as number[]
+    } else {
+      const props = args[0]
+      targets = props.targets
+      disabled = props.disabled
+    }
+
+    this.applyOperationToTargets(() => {
+      const t = new TGateElement()
+      if (disabled) t.disable()
+      return t
+    }, ...targets)
+
+    this.resize()
 
     return this
   }
@@ -693,6 +727,14 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
+  ct(control: number | number[], target: number | number[]): QuantumCircuitElement {
+    this.controlledU(TGateElement, control, target)
+    return this
+  }
+
+  /**
+   * @category Circuit Operation
+   */
   crnot(control: number | number[], target: number | number[]): QuantumCircuitElement {
     this.controlledU(RnotGateElement, control, target)
     return this
@@ -754,6 +796,7 @@ export class QuantumCircuitElement extends HTMLElement {
       | typeof YGateElement
       | typeof ZGateElement
       | typeof PhaseGateElement
+      | typeof TGateElement
       | typeof RnotGateElement
       | typeof RxGateElement
       | typeof RyGateElement
