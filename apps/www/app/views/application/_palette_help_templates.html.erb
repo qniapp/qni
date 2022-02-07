@@ -174,6 +174,44 @@
   </div>
 </template>
 
+<template id="t-gate-help">
+  <header>
+    <h1>T Gate</h1>
+    <p>A shortcut for <code>π/4</code> Phase gate.</p>
+    <p>Applies a phase of e<sup>iπ/4</sup> to the <code>|1⟩</code> state.</p>
+  </header>
+
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    <circle-notation data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      <%= icon :minus %>
+      <t-gate data-size="sm"></t-gate>
+      <%= icon :arrow_right %>
+    </div>
+    <circle-notation data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      <%= icon :minus %>
+      <t-gate data-size="sm"></t-gate>
+      <%= icon :arrow_right %>
+    </div>
+    <circle-notation data-magnitudes="0,1" data-phases="0,45" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0.9,0.4" data-phases="340,70" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      <%= icon :minus %>
+      <t-gate data-size="sm"></t-gate>
+      <%= icon :arrow_right %>
+    </div>
+    <circle-notation data-magnitudes="0.9,0.4" data-phases="340,115" data-show-kets></circle-notation>
+  </div>
+</template>
+
 <template id="rnot-gate-help">
   <header>
     <h1>Square Root of NOT Gate</h1>
