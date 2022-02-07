@@ -22,5 +22,7 @@
       link: ./circle_notation.html
 - name: QPU 命令
   pages:
-    - name: 量子 NOT ゲート
+    - name: 量子 NOT ゲート (X ゲート)
       link: ./not_gate.html
+    - name: H ゲート
+      link: ./h_gate.html
