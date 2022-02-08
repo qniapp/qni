@@ -8,9 +8,9 @@ description: 量子ビットから 0 または 1 を読み出す
 
 <p>
   MEASUREMENT (測定) 命令は量子ビットから <code>0</code> または <code>1</code> の値を読み出します。
-  量子ビット状態が {% include ket.html label="0" %} または {% include ket.html label="1" %}
-  など重ね合わせ状態にない場合、測定するとそのまま {% include ket.html label="0" %} と {% include
-  ket.html label="1" %} が返されます。
+  たとえば以下のように量子ビット状態が {% include ket.html label="0" %} または {% include ket.html
+  label="1" %} の状態にある場合、測定するとそのまま同じ {% include ket.html label="0" %} と {%
+  include ket.html label="1" %} (= <code>0</code> と <code>1</code>) が返されます。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -41,9 +41,8 @@ description: 量子ビットから 0 または 1 を読み出す
 
 <p>
   量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は {% include
-  ket.html label="0" %} と {% include ket.html label="1" %} の確率
-  (円表示の青い部分の面積。振幅の大きさの 2 乗) に応じて決まります。
-  よって、結果にはランダム性があります。
+  ket.html label="0" %} と {% include ket.html label="1" %} の確率 (青い円の面積 = 振幅の大きさの 2
+  乗) に応じて決まります。 つまり、測定の結果にはランダム性があります。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -87,9 +86,9 @@ description: 量子ビットから 0 または 1 を読み出す
 </div>
 
 <p>
-  測定によって量子ビットの振幅の大きさと位相の情報が破壊されるので、MEASUREMENT 命令は WRITE
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、MEASUREMENT 命令は WRITE
   命令と同様に破壊的です。
-  また、位相と振幅の大きさは独立したパラメータなので、位相の値は測定結果にまったく何の影響も与えないことに注意しましょう。
+  また、位相と振幅の大きさは独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
 </p>
 
 <h2>量子乱数ジェネレータ</h2>
