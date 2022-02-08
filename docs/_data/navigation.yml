@@ -30,3 +30,5 @@
       link: ./h_gate.html
     # - name: WRITE 命令
     #   link: ./write_operation.html
+    # - name: MEASUREMENT (測定) 命令
+    #   link: ./measurement_operation.html

@@ -1,0 +1,166 @@
+---
+layout: page
+title: MEASUREMENT (測定) 命令
+description: 量子ビットから 0 または 1 を読み出す
+---
+
+<h2>単純な状態の測定</h2>
+
+<p>
+  MEASUREMENT (測定) 命令は量子ビットから <code>0</code> または <code>1</code> の値を読み出します。
+  たとえば以下のように量子ビット状態が {% include ket.html label="0" %} または {% include ket.html
+  label="1" %} の状態にある場合、測定するとそのまま同じ {% include ket.html label="0" %} と {%
+  include ket.html label="1" %} (= <code>0</code> と <code>1</code>) が返されます。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation data-size="xl" data-show-kets></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
+    </div>
+  </div>
+</div>
+
+<h2>重ね合わせ状態の測定</h2>
+
+<p>
+  量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は {% include
+  ket.html label="0" %} と {% include ket.html label="1" %} の確率 (青い円の面積 = 振幅の大きさの 2
+  乗) に応じて決まります。 つまり、測定の結果にはランダム性があります。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-superposition-before-MEASUREMENT"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <div class="flex flex-col">
+        <div class="mb-8 flex flex-row">
+          <div class="my-auto mr-4">25%</div>
+          <circle-notation data-size="xl" data-show-kets></circle-notation>
+        </div>
+        <div class="flex flex-row">
+          <div class="my-auto mr-4">75%</div>
+          <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circuleNotationBefore = document.getElementById(
+      'circle-notation-superposition-before-MEASUREMENT'
+    )
+
+    circuleNotationBefore.setAmplitudes({
+      0: new Complex(0.25, 0.43301),
+      1: new Complex(0.43301, -0.75),
+    })
+  </script>
+</div>
+
+<p>
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、MEASUREMENT 命令は WRITE
+  命令と同様に破壊的です。
+  また、位相と振幅の大きさは独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
+</p>
+
+<h2>量子乱数ジェネレータ</h2>
+
+<p>
+  MEASUREMENT 命令とこれまでに学んだ WRITE 命令、H
+  ゲートを組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
+  WRITE で {% include ket.html label="0" %} に初期化した量子ビットを H
+  ゲートで重ね合わせ状態にし、MEASUREMENT 命令で測定することで <code>0</code> または
+  <code>1</code> をランダムに得ることができます。
+</p>
+
+<p>
+  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完全な乱数です。
+  その用途は思ったより広く、セキュリティ分野での暗号鍵の安全な生成はもちろん、モンテカルロ法など乱数を使ったアルゴリズムの速度や精度向上にもつながります。
+  実際に、量子乱数の生成は<a href="https://www.quantumbusinessmagazine.com/post/cambrid"
+    >すでにサービス化されています</a
+  >。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>"],["H"],["Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
