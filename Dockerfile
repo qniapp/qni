@@ -1,14 +1,14 @@
 # 1. The Qniapp is built as follows:
 #   $ git clone https://github.com/qniapp/qni.git
 #   $ cd qni
-#   $ docker build -f Dockerfile . -t qni_cpu
+#   $ docker build -f Dockerfile . -t qni_server
 # 2. Then run by:
-#   $ docker run -p 3000:3000 --rm -it qni_cpu
+#   $ docker run -p 3000:3000 --rm -it qni_server
 # 3. access http://127.0.0.1:3000 in your browser
 
 # Troubleshooting
 #   If the port 3000 is already used, change 3000 to 4000 (for example)
-#    $ docker run -p 4000:3000 --rm -it qni_cpu
+#    $ docker run -p 4000:3000 --rm -it qni_server
 #   and access http://127.0.0.1:4000 in your browser
 
 FROM ubuntu:20.04
@@ -31,7 +31,8 @@ RUN apt install -y ng-common ng-cjk emacs-nox
 RUN apt install -y postgresql postgresql-contrib
 
 ## node.js
-RUN apt install -y nodejs npm && npm install n -g &&  n stable && apt purge -y nodejs npm
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+RUN apt-get install -y nodejs
 
 ## npm
 RUN curl -qL https://www.npmjs.com/install.sh | sh
@@ -61,10 +62,12 @@ RUN cd /home/$DOCKER_USER && git clone https://github.com/rbenv/rbenv.git ~/.rbe
 RUN cd /home/$DOCKER_USER && git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN cd /home/$DOCKER_USER && echo "export PATH=$PATH:$HOME/.rbenv/bin" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && git clone https://github.com/qniapp/qni.git
-RUN cd /home/$DOCKER_USER && source ~/.bashrc && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
+
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/$DOCKER_USER/.rbenv/bin
+RUN cd /home/$DOCKER_USER && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
 
 ## settings for rails
-RUN cd /home/$DOCKER_USER && source ~/.bashrc && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
+RUN cd /home/$DOCKER_USER && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
 
 ## settings for postgresql
 RUN sudo -u postgres service postgresql start && sudo -u postgres psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && sudo -u postgres createdb -O docker docker
