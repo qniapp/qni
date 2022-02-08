@@ -3,12 +3,12 @@
 #   $ cd qni
 #   $ docker build -f Dockerfile_nvidia . -t qni_nvidia
 # 2. Then run by:
-#   $ docker run -p 3000:3000 --rm -it qni_nvidia
+#   $ docker run -p 3000:3000 --gpus all --rm -it qni_nvidia
 # 3. access http://127.0.0.1:3000 in your browser
 
 # Troubleshooting
 #   If the port 3000 is already used, change 3000 to 4000 (for example)
-#    $ docker run -p 4000:3000 --rm -it qni_nvidia
+#    $ docker run -p 4000:3000 --gpus all --rm -it qni_nvidia
 #   and access http://127.0.0.1:4000 in your browser
 
 FROM nvidia/cuda:11.6.0-devel-ubuntu20.04
@@ -32,6 +32,7 @@ RUN apt install -y ng-common ng-cjk emacs-nox
 RUN apt install -y postgresql postgresql-contrib
 
 ##
+RUN apt -y install cuda-drivers
 RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
 RUN tar xvfJ cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz -C /tmp
 RUN cd /tmp/cuquantum-linux-x86_64-0.1.0.30-archive ; tar cf - . | (cd /usr/local; tar vxf -)
