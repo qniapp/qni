@@ -2,6 +2,8 @@
 
 Welcome to the [Qni](https://qniapp.net) repository. Qni is a quantum computer simulator that runs in your browser.
 
+Qni is most inspired by Craig Gidney's [Quirk](https://github.com/Strilanc/Quirk), a pioneer in quantum circuit simulators. Qni inherits Quirk's features, such as live programming of quantum circuits and circuit bookmarks, and extends them based on modern web technologies such as CSS responsive design and Web Components standards. This makes it possible to enjoy quantum circuit programming on smartphones and embed "live" quantum circuits in any web page.
+
 ## Contents
 
 This repository is a monorepo containing three packages:
