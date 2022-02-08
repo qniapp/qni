@@ -28,3 +28,5 @@
       link: ./not_gate.html
     - name: H ゲート
       link: ./h_gate.html
+    # - name: WRITE 命令
+    #   link: ./write_operation.html
