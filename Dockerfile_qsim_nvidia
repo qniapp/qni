@@ -1,14 +1,14 @@
 # 1. The Qniapp is built as follows:
 #   $ git clone https://github.com/qniapp/qni.git
 #   $ cd qni
-#   $ docker build -f Dockerfile_nvidia . -t qni_nvidia
+#   $ docker build -f Dockerfile_qsim_nvidia . -t qni_qsim_nvidia
 # 2. Then run by:
-#   $ docker run -p 3000:3000 --gpus all --rm -it qni_nvidia
+#   $ docker run -p 3000:3000 --gpus all --rm -it qni_qsim_nvidia
 # 3. access http://127.0.0.1:3000 in your browser
 
 # Troubleshooting
 #   If the port 3000 is already used, change 3000 to 4000 (for example)
-#    $ docker run -p 4000:3000 --gpus all --rm -it qni_nvidia
+#    $ docker run -p 4000:3000 --gpus all --rm -it qni_qsim_nvidia
 #   and access http://127.0.0.1:4000 in your browser
 
 FROM nvidia/cuda:11.5.1-devel-ubuntu20.04
