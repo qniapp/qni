@@ -1,0 +1,39 @@
+FROM nvidia/cuda:11.5.1-devel-ubuntu20.04
+
+RUN apt update
+RUN apt -y upgrade
+RUN apt install -y sudo
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt install -y tzdata
+# set your timezone
+ENV TZ Asia/Tokyo
+RUN echo "${TZ}" > /etc/timezone \
+  && rm /etc/localtime \
+  && ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+  && dpkg-reconfigure -f noninteractive tzdata
+
+RUN apt install -y build-essential
+RUN apt install -y git wget time curl libssl-dev zlib1g-dev libpq-dev
+RUN apt install -y redis-server
+RUN apt install -y ng-common ng-cjk emacs-nox
+RUN apt install -y postgresql postgresql-contrib
+
+## cuda
+RUN apt -y install cuda-drivers
+
+RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
+RUN tar xvfJ cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz -C /tmp
+RUN cd /tmp/cuquantum-linux-x86_64-0.1.0.30-archive ; tar cf - . | (cd /usr/local; tar vxf -)
+RUN apt -y install libcutensor1 libcutensor-dev libcutensor-doc
+
+## python3
+RUN apt install -y python3 python3-pip
+RUN sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+ENV CUQUANTUM_ROOT=/usr/local
+ENV CUSTATEVEC_ROOT=/usr/local
+ENV CUDA_PATH=/usr/local/cuda
+ENV CUTENSOR_ROOT=/usr
+
+RUN cd /home/$DOCKER_USER && pip3 install cupy-cuda115 numpy scipy cython
+RUN cd /home/$DOCKER_USER && git clone https://github.com/NVIDIA/cuQuantum.git && cd cuQuantum/python && pip3 install -v .
