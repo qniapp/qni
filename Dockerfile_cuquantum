@@ -33,11 +33,10 @@ RUN apt install -y postgresql postgresql-contrib
 
 ## cuda
 RUN apt -y install cuda-drivers
-
+RUN apt -y install libcutensor1 libcutensor-dev libcutensor-doc
 RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
 RUN tar xvfJ cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz -C /tmp
 RUN cd /tmp/cuquantum-linux-x86_64-0.1.0.30-archive ; tar cf - . | (cd /usr/local; tar vxf -)
-RUN apt -y install libcutensor1 libcutensor-dev libcutensor-doc
 
 ## node.js
 RUN apt install -y nodejs npm && npm install n -g &&  n stable && apt purge -y nodejs npm
@@ -78,24 +77,19 @@ ENV CUQUANTUM_IGNORE_SOLVER=1
 RUN cd /home/$DOCKER_USER && pip3 install cupy-cuda115 numpy scipy cython
 RUN cd /home/$DOCKER_USER && git clone https://github.com/NVIDIA/cuQuantum.git && cd cuQuantum/python && pip3 install -v .
 
-# qsim
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/$DOCKER_USER/.rbenv/bin:/home/$DOCKER_USER/.local/bin
-RUN cd /home/$DOCKER_USER && pip3 install pybind11 pytest numpy sympy cirq && git clone https://github.com/quantumlib/qsim.git && cd qsim && make && make run-py-tests
-
 # Qni
 RUN cd /home/$DOCKER_USER && echo "cd /home/$DOCKER_USER" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 RUN cd /home/$DOCKER_USER && git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN cd /home/$DOCKER_USER && echo "export PATH=$PATH:$HOME/.rbenv/bin" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && echo "export CUQUANTUM_ROOT=/usr/local" >> ~/.bashrc
-RUN cd /home/$DOCKER_USER && echo "export LD_LIBRARY_PATH=${CUQUANTUM_ROOT}/lib64:${LD_LIBRARY_PATH}:$LD_LIBRARY_PATH" >> ~/.bashrc
+RUN cd /home/$DOCKER_USER && echo "export LD_LIBRARY_PATH=${CUQUANTUM_ROOT}/lib64:${LD_LIBRARY_PATH}" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && git clone https://github.com/nakatamaho/qni.git
 RUN cd /home/$DOCKER_USER && cd qni && git fetch origin cuquantum-backend
 RUN cd /home/$DOCKER_USER && cd qni && git checkout cuquantum-backend
 
-RUN cd /home/$DOCKER_USER && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
-
 ## settings for rails
+RUN cd /home/$DOCKER_USER && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
 RUN cd /home/$DOCKER_USER && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
 
 ## settings for postgresql
