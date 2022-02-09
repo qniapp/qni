@@ -101,14 +101,6 @@ description: 量子ビットから 0 または 1 を読み出す
   <code>1</code> をランダムに得ることができます。
 </p>
 
-<p>
-  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
-  その用途は予想異常に広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法など乱数を使ったアルゴリズムの速度や精度向上にもつながります。
-  実際に、量子乱数の生成は<a href="https://www.quantumbusinessmagazine.com/post/cambrid"
-    >すでにサービス化されています</a
-  >。
-</p>
-
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -146,6 +138,14 @@ description: 量子ビットから 0 または 1 を読み出す
     </circuit-editor>
   </quantum-simulator>
 </div>
+
+<p>
+  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
+  その用途は予想異常に広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法など乱数を使ったアルゴリズムの速度や精度向上にもつながります。
+  実際に、量子乱数の生成は<a href="https://www.quantumbusinessmagazine.com/post/cambrid"
+    >すでにサービス化されています</a
+  >。
+</p>
 
 <template id="circle-notation-popup">
   <ul class="list-none">
