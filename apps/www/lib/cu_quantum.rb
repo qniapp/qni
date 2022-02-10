@@ -1,6 +1,13 @@
-require 'pycall'
+require 'pycall/import'
+include PyCall::Import
 
 class CuQuantum
+
+  module Py
+    extend PyCall::Import
+    pyimport :cirq, as: :cirq
+    pyimport :qsimcirq, as: :qsimcirq
+  end
 
   def initialize(circuit_id:, qubit_count:, step_index:, steps:, targets:)
     @circuit_id = circuit_id
