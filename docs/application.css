@@ -4894,6 +4894,14 @@ circuit-editor {
   padding-bottom: 0px !important;
 }
 
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
 .pt-5 {
   padding-top: 1.25rem;
 }
