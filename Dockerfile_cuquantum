@@ -34,7 +34,7 @@ RUN apt install -y postgresql postgresql-contrib
 ## cuda
 RUN apt -y install cuda-drivers
 RUN apt -y install libcutensor1 libcutensor-dev libcutensor-doc
-RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
+RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
 RUN tar xvfJ cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz -C /tmp
 RUN cd /tmp/cuquantum-linux-x86_64-0.1.0.30-archive ; tar cf - . | (cd /usr/local; tar vxf -)
 
