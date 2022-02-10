@@ -10,7 +10,7 @@ gem 'view_component', require: 'view_component/engine'
 
 # Drivers
 gem 'pg'
-
+gem 'pycall'
 gem 'puma', '~> 5.5'
 
 # JavaScript, CSS and assets
