@@ -16,11 +16,14 @@ class CuQuantum
     @steps = steps
     @targets = targets
 
-    q0, q1 = cirq.LineQubit.range(2)
-    circuit = cirq.Circuit(cirq.H(q0), cirq.CX(q0, q1))
-    print("Circuit:")
-    print(circuit)
-    print()
+PyCall.exec(<<PYTHON)
+import cirq
+import qsimcirq
+q0, q1 = cirq.LineQubit.range(2)
+circuit = cirq.Circuit(cirq.H(q0), cirq.CX(q0, q1))
+print("Circuit:")
+print(circuit)
+PYTHON
   end
 
   def run
