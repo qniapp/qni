@@ -97,6 +97,7 @@ RUN sudo -u postgres service postgresql start && sudo -u postgres psql --command
 RUN cd /home/$DOCKER_USER && sudo -u postgres service postgresql start && cd qni/apps/www && ./bin/rails db:create && ./bin/rails db:migrate && ./bin/rails db:fixtures:load
 
 RUN cd /home/$DOCKER_USER && echo -e "#!/usr/bin/env bash\n\
+export PYTHONIOENCODING=utf-8 \n\
 sudo -u postgres service postgresql start \n\
 cd /home/${DOCKER_USER} ; source ~/.bashrc ; cd qni/apps/www \n\
 ./bin/rails s -b 0.0.0.0" > /tmp/startup.sh
