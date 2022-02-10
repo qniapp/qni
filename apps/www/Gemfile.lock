@@ -165,6 +165,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
+    pycall (1.4.1)
     racc (1.6.0)
     rack (2.2.3)
     rack-mini-profiler (2.3.3)
@@ -297,6 +298,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   pg
   puma (~> 5.5)
+  pycall
   rack-mini-profiler
   rails (~> 6.1)
   rbtrace

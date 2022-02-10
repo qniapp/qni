@@ -1,10 +1,26 @@
+require 'pycall/import'
+include PyCall::Import
+
 class CuQuantum
+
+  module Py
+    extend PyCall::Import
+    pyimport :cirq, as: :cirq
+    pyimport :qsimcirq, as: :qsimcirq
+  end
+
   def initialize(circuit_id:, qubit_count:, step_index:, steps:, targets:)
     @circuit_id = circuit_id
     @qubit_count = qubit_count
     @step_index = step_index
     @steps = steps
     @targets = targets
+
+    q0, q1 = cirq.LineQubit.range(2)
+    circuit = cirq.Circuit(cirq.H(q0), cirq.CX(q0, q1))
+    print("Circuit:")
+    print(circuit)
+    print()
   end
 
   def run
@@ -33,8 +49,8 @@ class CuQuantum
       # {"type"=>"Z", "controls"=>[], "if"=>nil}
       when 'P'
       # {"type"=>"P", "phi"=>"pi/2", "controls"=>[], "targets"=>[0], "if"=>nil}
-      when 'X^½'
-      # {"type"=>"X^½", "controls"=>[], "if"=>nil}
+      when 'X^'
+      # {"type"=>"X^", "controls"=>[], "if"=>nil}
       when 'Rx'
       # {"type"=>"Rx", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
       when 'Ry'
@@ -43,8 +59,8 @@ class CuQuantum
       # {"type"=>"Rz", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
       when 'Swap'
       # {"type"=>"Swap", "controls"=>[], "targets"=>[]}
-      when '•'
-      # {"type"=>"•", "targets"=>[0]}
+      when ''
+      # {"type"=>"", "targets"=>[0]}
       when 'Bloch'
       # {"type"=>"Bloch"}
       when 'Write'

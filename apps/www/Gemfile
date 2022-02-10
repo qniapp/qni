@@ -10,7 +10,6 @@ gem 'view_component', require: 'view_component/engine'
 
 # Drivers
 gem 'pg'
-
 gem 'puma', '~> 5.5'
 
 # JavaScript, CSS and assets
@@ -35,6 +34,7 @@ gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'grover'
 gem 'serviceworker-rails'
+gem 'pycall'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
