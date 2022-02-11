@@ -4894,16 +4894,16 @@ circuit-editor {
   padding-bottom: 0px !important;
 }
 
-.pt-5 {
-  padding-top: 1.25rem;
+.pl-4 {
+  padding-left: 1rem;
 }
 
 .pr-2 {
   padding-right: 0.5rem;
 }
 
-.pl-4 {
-  padding-left: 1rem;
+.pt-5 {
+  padding-top: 1.25rem;
 }
 
 .text-center {
