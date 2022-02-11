@@ -236,6 +236,29 @@ description: 重ね合わせ状態の作成
   </script>
 </div>
 
+<h2>H ゲートを回転として見る</h2>
+
+<p>
+  H ゲートを回転として見ると、H ゲートはブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180
+  度の回転となります。 たとえば北極の {% include ket.html label="0" %} 状態に H
+  ゲートを適用すると、赤い矢印に沿って X の文字の部分まで回転します。
+  もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。
+</p>
+
+<figure>
+  <img
+    src="./images/bloch_H0.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-1/3"
+  />
+  <figcaption class="pt-4 text-center">
+    H ゲートの回転 (画像クレジット:
+    <a
+      href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice"
+      >physics.stackexchange.com</a
+    >)
+  </figcaption>
+</figure>
+
 <h2>任意の重ね合わせ状態に H ゲートを適用</h2>
 
 <p>
@@ -280,8 +303,8 @@ description: 重ね合わせ状態の作成
 </div>
 
 <p>
-  これを頭の中だけで求めるのは大変なので、さしあたっては Qni に計算をおまかせして OK です。
-  実は、円を使って図だけでおおまかな変化を導き出すこともできるのですが、そのためには H
+  これを頭の中だけで想像するのは大変なので、さしあたっては Qni に計算をおまかせして OK です。
+  実は、円の図だけでおおまかな変化を導き出すこともできるのですが、そのためには H
   ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。
   詳しい方法はのちほど紹介します。
 </p>
