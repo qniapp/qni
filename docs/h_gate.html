@@ -6,55 +6,77 @@ description: 重ね合わせ状態の作成
 
 <p>
   H ゲートはフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon Hadamard, 1865 - 1963)
-  の名前を冠したゲートで、別名アダマールゲートとも呼びます。
-  ちなみに、「アダマール」はフランス語発音に近いカタカナ表記 (最初の H は発音しない)
-  で、英語では普通「ハダマードゲート」と言います。
+  の名前を冠したゲートで、別名アダマールゲートとも呼びます{% include margin_note.html
+  content="英語では「ハダマードゲート (Hadamard
+  gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h
+  と最後の d を発音しない) に近いカタカナ表記です。" %}。
 </p>
 
 <p>
-  H ゲートはシンプルな重ね合わせ状態を作成します。 {% include ket.html label="0" %} または {%
-  include ket.html label="1" %} に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
+  H ゲートはシンプルな重ね合わせ状態を作ります。 {% include ket.html label="0" %} または {% include
+  ket.html label="1" %} に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
 <div class="flex justify-center pb-10">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation data-size="xl" data-show-kets></circle-notation>
+      <circle-notation
+        id="circle-notation-H0-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <h-gate data-size="base"></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
       <circle-notation
-        id="circle-notation-H0"
+        id="circle-notation-H0-after"
         data-size="xl"
-        data-magnitudes="0,1"
         data-show-kets
       ></circle-notation>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation data-size="xl" data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation
+        id="circle-notation-H1-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <h-gate data-size="base"></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation id="circle-notation-H1" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation
+        id="circle-notation-H1-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
     </div>
   </div>
 
   <script type="module">
     import { Complex } from './application.js'
 
-    let circleNotationH0 = document.getElementById('circle-notation-H0')
-    let circleNotationH1 = document.getElementById('circle-notation-H1')
+    let circleNotationH0before = document.getElementById('circle-notation-H0-before')
+    let circleNotationH1before = document.getElementById('circle-notation-H1-before')
+    let circleNotationH0after = document.getElementById('circle-notation-H0-after')
+    let circleNotationH1after = document.getElementById('circle-notation-H1-after')
 
-    circleNotationH0.setAmplitudes({
+    circleNotationH0before.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+    circleNotationH0after.setAmplitudes({
       0: new Complex(Math.sqrt(0.5), 0),
       1: new Complex(Math.sqrt(0.5), 0),
     })
-    circleNotationH1.setAmplitudes({
+    circleNotationH1before.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+    circleNotationH1after.setAmplitudes({
       0: new Complex(Math.sqrt(0.5), 0),
       1: new Complex(-Math.sqrt(0.5), 0),
     })
@@ -132,10 +154,83 @@ description: 重ね合わせ状態の作成
 
 <p>
   H ゲートを続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni
-  上で試してみましょう! 実際に H ゲートを 2 個連続して置くと、{% include ket.html label="0" %} も {%
+  で試してみましょう! 実際に H ゲートを 2 個連続して置くと、{% include ket.html label="0" %} も {%
   include ket.html label="1" %} もそれぞれ元の状態に戻ります。 つまり、H ゲートも X
-  ゲートと同様にそれ自身を打ち消す効果を持っており、それ自身の逆演算であると言えます。
+  ゲートと同様にそれ自身を打ち消す効果を持っており、それ自身の逆演算です。
 </p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-H0-a" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-H0-b" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-H0-c" data-size="xl" data-show-kets></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-H1-a" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-H1-b" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-H1-c" data-size="xl" data-show-kets></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationH0a = document.getElementById('circle-notation-H0-a')
+    let circleNotationH0b = document.getElementById('circle-notation-H0-b')
+    let circleNotationH0c = document.getElementById('circle-notation-H0-c')
+    let circleNotationH1a = document.getElementById('circle-notation-H1-a')
+    let circleNotationH1b = document.getElementById('circle-notation-H1-b')
+    let circleNotationH1c = document.getElementById('circle-notation-H1-c')
+
+    circleNotationH0a.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+    circleNotationH0b.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(Math.sqrt(0.5), 0),
+    })
+    circleNotationH0c.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+
+    circleNotationH1a.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+    circleNotationH1b.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(-Math.sqrt(0.5), 0),
+    })
+    circleNotationH1c.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+  </script>
+</div>
 
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
   任意の重ね合わせ状態に H ゲートを適用するとどうなるでしょうか？
