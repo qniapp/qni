@@ -95,12 +95,14 @@ description: 重ね合わせ状態の作成
   ゲートに対応するものはありません。
 </p>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+<h2>ハンズオン</h2>
+
+<p>
   H ゲートを {% include ket.html label="0" %} と {% include ket.html label="1" %}
   に適用して、重ね合わせ状態が作られることを確認しましょう。 {% include ket.html label="0" %}
   は最初から回路にセットされていますが、{% include ket.html label="1" %}
   を作るにはどうしたらいいでしょうか？ (ヒント: X ゲートを使います)
-</div>
+</p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
@@ -152,11 +154,13 @@ description: 重ね合わせ状態の作成
   </quantum-simulator>
 </div>
 
+<h2>逆演算</h2>
+
 <p>
   H ゲートを続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni
   で試してみましょう! 実際に H ゲートを 2 個連続して置くと、{% include ket.html label="0" %} も {%
   include ket.html label="1" %} もそれぞれ元の状態に戻ります。 つまり、H ゲートも X
-  ゲートと同様にそれ自身を打ち消す効果を持っており、それ自身の逆演算です。
+  ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -232,12 +236,55 @@ description: 重ね合わせ状態の作成
   </script>
 </div>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
-  任意の重ね合わせ状態に H ゲートを適用するとどうなるでしょうか？
-  これも状態ベクトルの円だけで説明できますが、それを行うには H ゲートを行列で表したもの
-  (ゲートの行列表現) の知識が必要になります。 詳細については後で説明しますので、さしあたっては Qni
-  に計算をおまかせすれば OK です。
+<h2>任意の重ね合わせ状態に H ゲートを適用</h2>
+
+<p>
+  次のように振幅の大きさと位相の異なる重ね合わせ状態に H
+  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか？
+</p>
+
+<div class="flex flex-row justify-center space-x-4 pb-10">
+  <div class="mb-8 flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-H-superposition-before"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <h-gate data-size="base"></h-gate>
+      {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+    </div>
+    <circle-notation
+      id="circle-notation-H-superposition-after"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationBefore = document.getElementById('circle-notation-H-superposition-before')
+    let circleNotationAfter = document.getElementById('circle-notation-H-superposition-after')
+
+    circleNotationBefore.setAmplitudes({
+      0: new Complex(-0.38268, 0),
+      1: new Complex(0.7855, -0.48636),
+    })
+    circleNotationAfter.setAmplitudes({
+      0: new Complex(0.28483, -0.34391),
+      1: new Complex(-0.82603, 0.34391),
+    })
+  </script>
 </div>
+
+<p>
+  これを頭の中だけで求めるのは大変なので、さしあたっては Qni に計算をおまかせして OK です。
+  実は、円を使って図だけでおおまかな変化を導き出すこともできるのですが、そのためには H
+  ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。
+  詳しい方法はのちほど紹介します。
+</p>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
