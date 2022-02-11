@@ -66,7 +66,7 @@ SHELL ["/bin/bash", "-l", "-c"]
 
 # qsim
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/$DOCKER_USER/.rbenv/bin:/home/$DOCKER_USER/.local/bin
-RUN cd /home/$DOCKER_USER && pip3 install pybind11 pytest numpy sympy cirq && git clone https://github.com/quantumlib/qsim.git && cd qsim && make && make run-py-tests
+RUN cd /home/$DOCKER_USER && pip3 install pybind11 pytest numpy sympy cirq qsimcirq
 
 # Qni
 RUN cd /home/$DOCKER_USER && echo "cd /home/$DOCKER_USER" >> ~/.bashrc
