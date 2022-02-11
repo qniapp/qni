@@ -4346,6 +4346,10 @@ circuit-editor {
   color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 
+.prose figure {
+  padding-bottom: 2.5rem;
+}
+
 .margin-note {
   position: relative;
   float: right;
