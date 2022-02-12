@@ -23,6 +23,9 @@ class cirqbridge:
         print(circuit_from_qni)
         sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
+        print("numofqubits") 
+        print(numofqubits)
+        sys.stdout.flush()
         c = cirq.Circuit()
         i = 0
         m = 0
@@ -33,77 +36,20 @@ class cirqbridge:
             j = 0
             for circuit_qni in column_qni:
                 j = j + 1
+                print("procssing circit ...")
+                print(column_qni)
+                sys.stdout.flush()
                 if circuit_qni['type'] == u'H':
-                    c.append(cirq.H(qubits[j-1]))
-                    #if circuit_qni['targets'] == []:
-                    #    c.append(cirq.H(qubits[j-1]))
-                    #else:
-                    #    controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                    #    c.append(cirq.ControlledOperation(controledqubits, cirq.H(qubits[j-1])))
-                elif circuit_qni['type'] == u'X':
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.X(qubits[j-1]))
+                    target = circuit_qni['targets'][0]
+                    if not "controls" in circuit_qni:
+                        c.append(cirq.H(qubits[target]))
                     else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.X(qubits[j-1])))
-                elif circuit_qni['type'] == u'Y':
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.Y(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.Y(qubits[j-1])))
-                elif circuit_qni['type'] == u'Z':
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.Z(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.Z(qubits[j-1])))
-                elif circuit_qni['type'] == u'Rx':
-                    _expr = parse_expr(circuit_qni['theta'], transformations=transformations)
-                    theta = float(_expr.evalf())
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.rx(theta).on(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.rx(theta).on(qubits[j-1])))
-                elif circuit_qni['type'] == u'Ry':
-                    _expr = parse_expr(circuit_qni['theta'], transformations=transformations)
-                    theta = float(_expr.evalf())
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.ry(theta).on(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.ry(theta).on(qubits[j-1])))
-                elif circuit_qni['type'] == u'Rz':
-                    _expr = parse_expr(circuit_qni['theta'], transformations=transformations)
-                    theta = float(_expr.evalf())
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.rz(theta).on(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.rz(theta).on(qubits[j-1])))
-                elif circuit_qni['type'] == u'P':
-                    __phi = circuit_qni['phi'] + '/pi'
-                    _expr = parse_expr(__phi, transformations=transformations)
-                    phi = float(_expr.evalf())
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.ZPowGate(exponent=phi).on(qubits[j-1]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.ZPowGate(exponent=phi).on(qubits[j-1])))
-                elif circuit_qni['type'] == u'X^':
-                    if circuit_qni['targets'] == []:
-                        c.append(cirq.X(qubits[j-1]) ** 0.5)
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.X(qubits[j-1]) ** 0.5))
-                elif circuit_qni['type'] == u'Swap':
-                    if circuit_qni['targets'] != []:
-                        j0 = circuit_qni['targets'][0]
-                        j1 = circuit_qni['targets'][1]
-                        c.append(cirq.SWAP(cirq.LineQubit(j0), cirq.LineQubit(j1)))
-                    else:
-                        print("disabled")
+                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
+                        print("controledqubits")
+                        sys.stdout.flush()
+                        print(controledqubits)
+                        sys.stdout.flush()
+                        c.append(cirq.ControlledOperation(controledqubits, cirq.H(qubits[target])))
                 elif circuit_qni['type'] == u'Measure':
                     key= 'm' + str(m)
                     c.append(cirq.measure(qubits[j-1], key=key))
