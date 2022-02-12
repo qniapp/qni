@@ -7,8 +7,9 @@ description: 量子ビットの初期化
 <p>
   WRITE 命令は量子ビットの状態を {% include ket.html label="0" %} または {% include ket.html
   label="1" %} に初期化する命令です。 実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。
-  通常は回路の先頭に WRITE 命令を置くことで量子ビットを初期化してから、H
-  ゲートなどの演算命令を置いていくことで量子プログラムを記述します。
+  通常は回路の先頭に WRITE 命令を置くことで量子ビットを {% include ket.html label="0" %} や {%
+  include ket.html label="1" %} に初期化します。 続けて H ゲートなどの QPU
+  命令を置いていくことで量子プログラムを記述します。
 </p>
 
 <div class="flex flex-col items-center">
@@ -55,9 +56,10 @@ description: 量子ビットの初期化
 
 <p>
   WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  量子ビットの状態がどんな状態にあっても、たとえば {% include ket.html label="0" %}
+  つまり量子ビットの状態がどんな状態にあっても、たとえば {% include ket.html label="0" %}
   命令を置いた時点で振幅の大きさと位相の情報は破壊され、{% include ket.html label="0" %}
-  に初期化されます。 これは右から左方向へは戻せない操作なので、WRITE 命令は破壊的であると言えます。
+  に初期化されます。 これは元に戻すのに必要な情報を損失していることになるため、WRITE
+  命令は非可逆です。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -108,13 +110,13 @@ description: 量子ビットの初期化
     let circleNotationWrite1After = document.getElementById('circle-notation-WRITE1-after')
 
     circleNotationWrite0Before.setAmplitudes({
-      0: new Complex(0.5, 0.5),
-      1: new Complex(0.5, -0.5),
+      0: new Complex(-0.38268, 0),
+      1: new Complex(0.7855, -0.48636),
     })
     circleNotationWrite0After.setAmplitudes({ 0: 1, 1: 0 })
     circleNotationWrite1Before.setAmplitudes({
-      0: new Complex(0.5, 0.5),
-      1: new Complex(0.5, -0.5),
+      0: new Complex(0.28483, -0.34391),
+      1: new Complex(-0.82603, 0.34391),
     })
     circleNotationWrite1After.setAmplitudes({ 0: 0, 1: 1 })
   </script>
