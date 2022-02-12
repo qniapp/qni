@@ -14,11 +14,13 @@ class cirqbridge:
     def __init__(self):
         return
 
-    def run_simulation(self,numofqubits,circuit_from_qni):
+    def run_simulation(self,numofqubits,_circuit_from_qni):
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
-        print("homa start")
+        circuit_from_qni = []
+        for a in _circuit_from_qni:
+            if len(a) != 0:
+                circuit_from_qni.append(a)
         print(circuit_from_qni)
-        print("homa end")
         sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
         c = cirq.Circuit()
