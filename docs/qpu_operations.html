@@ -1,6 +1,6 @@
 ---
 layout: page
-title: QPU 命令
+title: QPU 演算
 description: 量子プログラミングのための低水準言語
 ---
 
@@ -15,28 +15,26 @@ description: 量子プログラミングのための低水準言語
   に、量子プログラムを図式として表現する方法が主流となったためです。 このため、従来の
   <code>MOV</code> や
   <code>ADD</code>
-  といった文字だけの無愛想なアセンブラ命令と比べると、量子コンピュータの命令はグラフィカルで構造を把握しやすく、また楽譜のような美しささえあります。
+  といった文字だけの無愛想なアセンブラ命令と比べると、量子コンピュータの演算命令はグラフィカルで構造を把握しやすく、また楽譜のような美しささえあります。
 </p>
 
-<p>
-  <figure>
-    <img
-      src="./images/quantum_circuit_diagram_example.jpeg"
-      class="h-auto w-full md:mx-auto md:w-2/3"
-    />
-    <figcaption class="text-center">
-      <a href="https://arxiv.org/pdf/1802.05428.pdf"
-        >Quantum Circuit Design for Training Perceptron Models</a
-      >
-      より引用
-    </figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/quantum_circuit_diagram_example.jpeg"
+    class="h-auto w-full md:mx-auto md:w-2/3"
+  />
+  <figcaption class="text-center">
+    <a href="https://arxiv.org/pdf/1802.05428.pdf"
+      >Quantum Circuit Design for Training Perceptron Models</a
+    >
+    より引用
+  </figcaption>
+</figure>
 
 <p>
-  現在では、どんな量子コンピュータでも使える標準的な命令セットと、それぞれを表す記号 (アイコン)
-  がほぼ決まっています。 代表的な基本命令を図にリストアップしました。
-  詳細は後に説明するとして、まずはどんな命令があるか眺めてみましょう。
+  現在では、どんな量子コンピュータでも使える標準的な演算命令セットと、それぞれを表す記号 (アイコン)
+  がほぼ決まっています。 代表的な基本演算を図にリストアップしました。
+  詳細は後に説明するとして、まずはどんな演算があるか眺めてみましょう。
 </p>
 
 <div class="pb-10">
@@ -96,7 +94,7 @@ description: 量子プログラミングのための低水準言語
           </div>
         </td>
         <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
-        <td class="border border-slate-300 p-2">簡単な重ね合わせの作成</td>
+        <td class="border border-slate-300 p-2">シンプルな重ね合わせの作成</td>
       </tr>
       <tr>
         <td class="border border-slate-300 py-2 px-4">

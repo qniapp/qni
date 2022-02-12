@@ -81,7 +81,7 @@ export class OperationInspectorElement extends HTMLElement {
   private clear(): void {
     this.ifInput.value = ''
     this.angleInput.value = ''
-    this.angleSlider.angle = '0'
+    this.angleSlider.angle = ''
     this.denominatorInput.value = ''
     this.reduceAngleFractionCheckbox.checked = false
     this.flagInput.value = ''

@@ -7,10 +7,10 @@ circuit-dropzone {
   &::part(wires) {
     @apply absolute;
     @apply inset-0;
-    @apply w-full h-full;
+    @apply h-full w-full;
 
     @apply overflow-visible;
-    @apply transform-gpu origin-center;
+    @apply origin-center transform-gpu;
     @apply rotate-90;
     @apply md:rotate-0;
   }

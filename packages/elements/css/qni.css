@@ -17,6 +17,7 @@
 @import './y_gate';
 @import './z_gate';
 @import './phase_gate';
+@import './t_gate';
 @import './rnot_gate';
 @import './rx_gate';
 @import './ry_gate';
@@ -96,7 +97,7 @@
 
     circuit-dropzone &:not([data-snapped])::part(icon)::before {
       @apply absolute -top-1/3 -right-1/3;
-      @apply w-6 h-6;
+      @apply h-6 w-6;
       @apply z-10;
 
       content: '';

@@ -1,6 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
-@import "@qni/elements/dist/qni";
+@import '@qni/elements/dist/qni';
 
 @import 'tailwindcss/utilities';

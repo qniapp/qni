@@ -140,6 +140,31 @@ describe('quantum-circuit element', function () {
       })
     })
 
+    describe('data-ct-max-target-gates', function () {
+      it('•-T-T T (data-ct-max-target-gates = 2)', function () {
+        circuit.ctMaxTargetGates = 2
+        circuit.ct(0, [1, 2, 3])
+
+        const step = circuit.stepAt(0)
+        assert.instanceOf(step.dropzoneAt(0).operation, window.ControlGateElement)
+        assert.instanceOf(step.dropzoneAt(1).operation, window.TGateElement)
+        assert.instanceOf(step.dropzoneAt(2).operation, window.TGateElement)
+        assert.instanceOf(step.dropzoneAt(3).operation, window.TGateElement)
+
+        assert.isTrue(!step.dropzoneAt(0).connectTop && step.dropzoneAt(0).connectBottom)
+        assert.isTrue(step.dropzoneAt(1).connectTop && step.dropzoneAt(1).connectBottom)
+        assert.isTrue(step.dropzoneAt(2).connectTop && !step.dropzoneAt(2).connectBottom)
+        assert.isTrue(step.dropzoneAt(3).noConnections)
+
+        assert.deepEqual(circuit.serialize(), [
+          [
+            {type: 'T', targets: [1, 2], controls: [0]},
+            {type: 'T', targets: [3]}
+          ]
+        ])
+      })
+    })
+
     describe('data-crnot-max-target-gates', function () {
       it('•-X^½-X^½ X^½ (data-crnot-max-target-gates = 2)', function () {
         circuit.crnotMaxTargetGates = 2

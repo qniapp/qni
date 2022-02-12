@@ -38,6 +38,10 @@ describe('quantum-circuit element', function () {
       testSimpleCircuitApi('phase', window.PhaseGateElement)
     })
 
+    describe('t', function () {
+      testSimpleCircuitApi('t', window.TGateElement)
+    })
+
     describe('rnot', function () {
       testSimpleCircuitApi('rnot', window.RnotGateElement)
     })
@@ -218,6 +222,10 @@ describe('quantum-circuit element', function () {
       testControlledU('phase', window.PhaseGateElement)
     })
 
+    describe('ct', function () {
+      testControlledU('t', window.TGateElement)
+    })
+
     describe('crnot', function () {
       testControlledU('rnot', window.RnotGateElement)
     })
@@ -297,6 +305,10 @@ describe('quantum-circuit element', function () {
 
     describe('phase', function () {
       testCircuitApi('phase', window.PhaseGateElement)
+    })
+
+    describe('t', function () {
+      testCircuitApi('t', window.TGateElement)
     })
 
     describe('rnot', function () {

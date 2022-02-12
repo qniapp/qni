@@ -8,6 +8,7 @@ import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -19,6 +20,7 @@ export type Operation =
   | YGateElement
   | ZGateElement
   | PhaseGateElement
+  | TGateElement
   | RnotGateElement
   | RxGateElement
   | RyGateElement
@@ -35,6 +37,7 @@ export const isOperation = (arg: unknown): arg is Operation =>
   arg instanceof YGateElement ||
   arg instanceof ZGateElement ||
   arg instanceof PhaseGateElement ||
+  arg instanceof TGateElement ||
   arg instanceof RnotGateElement ||
   arg instanceof RxGateElement ||
   arg instanceof RyGateElement ||
@@ -59,6 +62,9 @@ export const isZGateElement = (arg: unknown): arg is ZGateElement =>
 
 export const isPhaseGateElement = (arg: unknown): arg is PhaseGateElement =>
   arg !== undefined && arg !== null && arg instanceof PhaseGateElement
+
+export const isTGateElement = (arg: unknown): arg is TGateElement =>
+  arg !== undefined && arg !== null && arg instanceof TGateElement
 
 export const isRnotGateElement = (arg: unknown): arg is RnotGateElement =>
   arg !== undefined && arg !== null && arg instanceof RnotGateElement

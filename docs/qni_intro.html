@@ -44,80 +44,67 @@ description: QPU シミュレータ Qni の使い方
 <h2>Qni のツール群</h2>
 <p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni.png"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">
-      Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>) のユーザインタフェース
-    </figcaption>
-  </figure>
-</p>
+<figure>
+  <img src="./images/qni.png" class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3" />
+  <figcaption class="pt-4 text-center">
+    Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>) のユーザインタフェース
+  </figcaption>
+</figure>
 
 <h3>命令パレット</h3>
 <p>
   量子回路に配置する命令の並んだツールです。ここからドラッグアンドドロップで回路に命令を置いていくことで、回路に命令を追加できます。それぞれの命令については、後の項目でそれぞれ詳しく紹介します。
 </p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni_palette.png"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">QPU 命令の並ぶ命令パレット</figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/qni_palette.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">QPU 演算の並ぶ命令パレット</figcaption>
+</figure>
 
 <h3>量子回路エディタ</h3>
 <p>
   量子回路を表示したり編集したりするためのエディタです。量子回路エディタは、プログラムの途中状態での量子ビットの内容を表示するのにも使います。
 </p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni_editor.png"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">
-      量子プログラムを量子回路として視覚的に編集できる量子回路エディタ
-    </figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/qni_editor.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">
+    量子プログラムを量子回路として視覚的に編集できる量子回路エディタ
+  </figcaption>
+</figure>
 
 <h3>状態ベクトル表示</h3>
 <p>量子ビットの状態を視覚的に表示します。表示の読み方と使い方については、後の項目で説明します。</p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni_state_vector.png"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">
-      量子ビットの状態 (状態ベクトル) を円表示する状態ベクトル表示
-    </figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/qni_state_vector.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">
+    量子ビットの状態 (状態ベクトル) を円表示する状態ベクトル表示
+  </figcaption>
+</figure>
 
 <h2>ライブプログラミングによる開発</h2>
 <p>
   Qni
-  の一番の特徴はそのリアルタイム性です。命令パレットからドラッグした命令を量子回路エディタ上にかざすだけで、結果を状態ベクトル表示に描画します。これによって、命令の働きとその結果を素早く確認できます。
+  の一番の特徴はそのリアルタイム性です。命令パレットからドラッグした命令を量子回路エディタ上にかざすだけで、結果を状態ベクトル表示にリアルタイム描画します。これによって、命令の働きとその実行結果を素早く確認できます。
 </p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni_live_programming.gif"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">リアルタイムに量子ビットの状態変化を表示</figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/qni_live_programming.gif"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">リアルタイムに量子ビットの状態変化を表示</figcaption>
+</figure>
 
 <p>
   また、ステップ実行によるデバッグも簡単です。プログラムの途中状態を確認したい場合にはその箇所にマウスポインタをホバーするだけで、状態ベクトルが更新されます。また、クリックするとその場所にブレークポイント
@@ -125,15 +112,13 @@ description: QPU シミュレータ Qni の使い方
   が表示されます。プログラム中の異なる地点での状態ベクトルの変化を確認するには、基準となる地点にブレークポイントを設定しておき、別の場所にマウスポインタをホバーするだけです。
 </p>
 
-<p>
-  <figure>
-    <img
-      src="./images/qni_step_execution.gif"
-      class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-    />
-    <figcaption class="pt-4 text-center">ブレークポイントによる量子回路のデバッグ</figcaption>
-  </figure>
-</p>
+<figure>
+  <img
+    src="./images/qni_step_execution.gif"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">ブレークポイントによる量子回路のデバッグ</figcaption>
+</figure>
 
 <p>
   興味がある人は、次に進む前に Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>)

@@ -1,4 +1,4 @@
-.tippy-box[data-theme~="qni"] {
+.tippy-box[data-theme~='qni'] {
   @apply bg-white;
   @apply border-2 border-solid border-gray-500;
   @apply text-gray-700;
@@ -7,27 +7,27 @@
 
   /* The border */
   .tippy-svg-arrow > svg:first-child {
-    fill: theme("colors.gray.500");
+    fill: theme('colors.gray.500');
   }
 
   /* The fill */
   .tippy-svg-arrow > svg:last-child {
-    fill: theme("colors.white");
+    fill: theme('colors.white');
   }
 
-  &[data-placement^="top"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='top'] > .tippy-svg-arrow svg:first-child {
     top: 18px;
   }
 
-  &[data-placement^="bottom"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
     bottom: 18px;
   }
 
-  &[data-placement^="left"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='left'] > .tippy-svg-arrow svg:first-child {
     left: 13px;
   }
 
-  &[data-placement^="right"] > .tippy-svg-arrow svg:first-child {
+  &[data-placement^='right'] > .tippy-svg-arrow svg:first-child {
     right: 13px;
   }
 
@@ -43,11 +43,11 @@
   }
 }
 
-.tippy-box[data-theme~="operation-menu"] {
+.tippy-box[data-theme~='operation-menu'] {
   @apply bg-transparent;
 }
 
-.tippy-box[data-theme~="operation-inspector"] {
+.tippy-box[data-theme~='operation-inspector'] {
   @apply rounded-2xl;
   @apply bg-white;
   @apply drop-shadow-lg;

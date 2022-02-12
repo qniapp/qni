@@ -100,6 +100,10 @@ describe('quantum-circuit element', function () {
       testMaxControlGates('P', 'phase', window.PhaseGateElement)
     })
 
+    describe('data-ct-max-control-gates', function () {
+      testMaxControlGates('T', 't', window.TGateElement)
+    })
+
     describe('data-crnot-max-control-gates', function () {
       testMaxControlGates('X^½', 'rnot', window.RnotGateElement)
     })

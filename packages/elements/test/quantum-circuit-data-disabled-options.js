@@ -60,6 +60,15 @@ describe('quantum-circuit element', function () {
       assert.deepEqual(circuit.serialize(), [[{type: 'P', targets: [1]}]])
     })
 
+    it('data-ct-disabled', function () {
+      circuit.ctDisabled = true
+
+      circuit.ct(0, 1)
+      assert.isFalse(circuit.stepAt(0).dropzoneAt(0).connectBottom)
+      assert.isFalse(circuit.stepAt(0).dropzoneAt(1).connectTop)
+      assert.deepEqual(circuit.serialize(), [[{type: 'T', targets: [1]}]])
+    })
+
     it('data-crnot-disabled', function () {
       circuit.crnotDisabled = true
 
