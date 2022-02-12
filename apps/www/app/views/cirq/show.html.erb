@@ -1,36 +1,32 @@
-<% content_for :meta_ogp do %>
+<eext1>
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="<%= twitter_title %>" />
-  <% if @json %>
-    <meta property="og:url" content="<%= circuit_url @json %>" />
-    <meta property="og:description" content="<%= og_description @json %>" />
-  <% end %>
-  <% if @circuit&.social_image&.attached? %>
-    <meta property="og:image" content="<%= rails_blob_url(@circuit.social_image, disposition: 'inline') %>" />
-  <% end %>
-<% end %>
+  <meta name="twitter:title" content="eex2eex" />
+  <eext3>
+    <meta property="og:url" content="eex4eex" />
+    <meta property="og:description" content="eex5eex" />
+  </eext3>
+  <eext6>
+    <meta property="og:image" content="eex7eex" />
+  </eext6>
+</eext1>
 
 <div class="relative flex w-full flex-row-reverse overflow-x-scroll md:flex-none md:flex-row">
-  <quantum-simulator class="inline-block" data-backend="cu_quantum" data-update-url>
+  <quantum-simulator class="inline-block" data-backend="cirq" data-update-url>
     <circuit-editor class="flex w-full flex-row justify-end md:inline-block">
-      <div
-        data-controller="share"
-        data-share-default-title-value="Qni"
-        data-share-circuit-url-value="<%= circuit_url %>"
-      >
-        <%= share_modal %>
-        <%= menu %>
+      <div data-controller="share" data-share-default-title-value="Qni" data-share-circuit-url-value="eex8eex">
+        <eext9 />
+        <eext10 />
       </div>
 
       <div class="fixed top-0 right-0 z-40 rounded-bl-2xl bg-white drop-shadow-xl">
         <inspector-button data-target="circuit-editor.inspectorButton" class="inline-block h-10 w-10 p-1">
           <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            <%= icon :mixer_horizontal %>
+            <eext11 />
           </div>
         </inspector-button>
       </div>
 
-      <%= palette_md %>
+      <eext12 />
 
       <quantum-circuit
         class="my-52 mx-6"
@@ -41,24 +37,18 @@
       ></quantum-circuit>
 
       <div class="fixed bottom-0 left-0 right-0 z-30 mx-6 mb-6 flex flex-row items-center">
-        <%=
-          run_circuit_button class:
-                               'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md'
-        %>
-        <%= palette %>
+        <eext13 />
+        <eext14 />
       </div>
 
-      <%= circle_notation %>
+      <eext15 />
     </circuit-editor>
 
-    <%=
-      run_circuit_button class:
-                           'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40'
-    %>
+    <eext16 />
   </quantum-simulator>
 </div>
 
-<%= palette_help_templates %>
+<eext17 />
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
@@ -82,7 +72,7 @@
         class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
         disabled
       >
-        <%= icon :angle %>
+        <eext18 />
       </button>
 
       <button
@@ -101,7 +91,7 @@
       data-operation-menu-delete
       class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
     >
-      <%= icon :trash, class: 'h-4 w-4' %>
+      <eext19 />
     </div>
   </div>
 </template>

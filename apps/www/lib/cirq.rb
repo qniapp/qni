@@ -1,4 +1,4 @@
-class CuQuantum
+class Cirq
   def initialize(circuit_id:, qubit_count:, step_index:, steps:, targets:)
     @circuit_id = circuit_id
     @qubit_count = qubit_count
@@ -8,9 +8,7 @@ class CuQuantum
   end
 
   def run
-    @steps.map.with_index do |each, index|
-      execute_step each, index
-    end
+    @steps.map.with_index { |each, index| execute_step each, index }
   end
 
   private
@@ -24,47 +22,42 @@ class CuQuantum
     step.each_with_index do |each, bit|
       case each.fetch('type')
       when 'H'
-      # {"type"=>"H", "controls"=>[], "if"=>nil}
+        # {"type"=>"H", "controls"=>[], "if"=>nil}
       when 'X'
-      # {"type"=>"X", "controls"=>[], "if"=>nil}
+        # {"type"=>"X", "controls"=>[], "if"=>nil}
       when 'Y'
-      # {"type"=>"Y", "controls"=>[], "if"=>nil}
+        # {"type"=>"Y", "controls"=>[], "if"=>nil}
       when 'Z'
-      # {"type"=>"Z", "controls"=>[], "if"=>nil}
+        # {"type"=>"Z", "controls"=>[], "if"=>nil}
       when 'P'
-      # {"type"=>"P", "phi"=>"pi/2", "controls"=>[], "targets"=>[0], "if"=>nil}
+        # {"type"=>"P", "phi"=>"pi/2", "controls"=>[], "targets"=>[0], "if"=>nil}
       when 'X^½'
-      # {"type"=>"X^½", "controls"=>[], "if"=>nil}
+        # {"type"=>"X^½", "controls"=>[], "if"=>nil}
       when 'Rx'
-      # {"type"=>"Rx", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
+        # {"type"=>"Rx", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
       when 'Ry'
-      # {"type"=>"Ry", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
+        # {"type"=>"Ry", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
       when 'Rz'
-      # {"type"=>"Rz", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
+        # {"type"=>"Rz", "theta"=>"pi/2", "controls"=>[], "targets"=>[], "if"=>nil}
       when 'Swap'
-      # {"type"=>"Swap", "controls"=>[], "targets"=>[]}
+        # {"type"=>"Swap", "controls"=>[], "targets"=>[]}
       when '•'
-      # {"type"=>"•", "targets"=>[0]}
+        # {"type"=>"•", "targets"=>[0]}
       when 'Bloch'
-      # {"type"=>"Bloch"}
+        # {"type"=>"Bloch"}
       when 'Write'
-      # {"type"=>"Write", "value"=>0}
+        # {"type"=>"Write", "value"=>0}
       when 'Measure'
         # {"type"=>"Measure", "flag"=>""}
         measured_bits[bit] = [0, 1].sample # rubocop:disable Performance/CollectionLiteralInLoop
       when '1'
-      # NOP
+        # NOP
       else
         raise "Unknown operation: #{each.inspect}"
       end
     end
 
-    amplitudes =
-      if index == @step_index
-        @targets.index_with do
-          [rand, 0]
-        end
-      end
+    amplitudes = (@targets.index_with { [rand, 0] } if index == @step_index)
 
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
   end
