@@ -72,19 +72,19 @@
   version "2.11.2"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
 
-"@qni/common@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@qni/common/-/common-0.0.30.tgz#fad62ab8bd46701d5983f836ea4c8250a1ce751a"
+"@qni/common@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@qni/common/-/common-0.0.32.tgz#5e8a09932d56c584eeb9e1d8e6bd7578fc3224cf"
   dependencies:
     fraction.js "^4.1.2"
 
-"@qni/elements@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@qni/elements/-/elements-0.0.30.tgz#7423206cd03e73b5f6eabc58ba3c8e6314016b0a"
+"@qni/elements@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@qni/elements/-/elements-0.0.32.tgz#3b97646bba2dacd39e91779674b5bfd907e057a0"
   dependencies:
     "@github/catalyst" "^1.1.4"
     "@github/jtml" "^0.4.0"
-    "@qni/common" "^0.0.30"
+    "@qni/common" "^0.0.32"
     interactjs "^1.10.11"
     tippy.js "^6.3.7"
     xstate "^4.27.0"
@@ -245,19 +245,9 @@ ansi-colors@4.1.1, ansi-colors@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/ansi-colors/-/ansi-colors-4.1.1.tgz"
 
-ansi-regex@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-3.0.0.tgz"
-
 ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz"
-
-ansi-styles@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.npmjs.org/ansi-styles/-/ansi-styles-3.2.1.tgz"
-  dependencies:
-    color-convert "^1.9.0"
 
 ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   version "4.3.0"
@@ -394,14 +384,6 @@ chai@^4.3.4:
     pathval "^1.1.1"
     type-detect "^4.0.5"
 
-chalk@^2.0.1, chalk@^2.1.0:
-  version "2.4.2"
-  resolved "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
-  dependencies:
-    ansi-styles "^3.2.1"
-    escape-string-regexp "^1.0.5"
-    supports-color "^5.3.0"
-
 chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz"
@@ -435,21 +417,11 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-color-convert@^1.9.0:
-  version "1.9.3"
-  resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
-  dependencies:
-    color-name "1.1.3"
-
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz"
   dependencies:
     color-name "~1.1.4"
-
-color-name@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz"
 
 color-name@~1.1.4:
   version "1.1.4"
@@ -993,8 +965,8 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.4.tgz"
 
 follow-redirects@^1.0.0:
-  version "1.14.5"
-  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.5.tgz"
+  version "1.14.8"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
 
 fp-ts@^2.11.5:
   version "2.11.8"
@@ -1113,10 +1085,6 @@ growl@1.10.5:
 has-bigints@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/has-bigints/-/has-bigints-1.0.1.tgz"
-
-has-flag@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz"
 
 has-flag@^4.0.0:
   version "4.0.0"
@@ -1366,14 +1334,6 @@ karma-chrome-launcher@^3.1.0:
   dependencies:
     which "^1.2.1"
 
-karma-mocha-reporter@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.npmjs.org/karma-mocha-reporter/-/karma-mocha-reporter-2.2.5.tgz"
-  dependencies:
-    chalk "^2.1.0"
-    log-symbols "^2.1.0"
-    strip-ansi "^4.0.0"
-
 karma-mocha@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/karma-mocha/-/karma-mocha-2.0.1.tgz"
@@ -1458,12 +1418,6 @@ log-symbols@4.1.0:
   dependencies:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
-
-log-symbols@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/log-symbols/-/log-symbols-2.2.0.tgz"
-  dependencies:
-    chalk "^2.0.1"
 
 log4js@^6.3.0:
   version "6.3.0"
@@ -1944,12 +1898,6 @@ string.prototype.trimstart@^1.0.4:
     call-bind "^1.0.2"
     define-properties "^1.1.3"
 
-strip-ansi@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-4.0.0.tgz"
-  dependencies:
-    ansi-regex "^3.0.0"
-
 strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
@@ -1969,12 +1917,6 @@ supports-color@8.1.1:
   resolved "https://registry.npmjs.org/supports-color/-/supports-color-8.1.1.tgz"
   dependencies:
     has-flag "^4.0.0"
-
-supports-color@^5.3.0:
-  version "5.5.0"
-  resolved "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"
-  dependencies:
-    has-flag "^3.0.0"
 
 supports-color@^7.1.0:
   version "7.2.0"
