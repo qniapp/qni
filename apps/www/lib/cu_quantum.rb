@@ -45,26 +45,33 @@ class cirqbridge:
                         c.append(cirq.H(qubits[target]))
                     else:
                         controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        print("controledqubits")
-                        sys.stdout.flush()
-                        print(controledqubits)
-                        sys.stdout.flush()
                         c.append(cirq.ControlledOperation(controledqubits, cirq.H(qubits[target])))
+                if circuit_qni['type'] == u'X':
+                    target = circuit_qni['targets'][0]
+                    if not "controls" in circuit_qni:
+                        c.append(cirq.X(qubits[target]))
+                    else:
+                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
+                        c.append(cirq.ControlledOperation(controledqubits, cirq.X(qubits[target])))
+                if circuit_qni['type'] == u'Y':
+                    target = circuit_qni['targets'][0]
+                    if not "controls" in circuit_qni:
+                        c.append(cirq.Y(qubits[target]))
+                    else:
+                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
+                        c.append(cirq.ControlledOperation(controledqubits, cirq.Y(qubits[target])))
                 elif circuit_qni['type'] == u'Measure':
                     key= 'm' + str(m)
                     c.append(cirq.measure(qubits[j-1], key=key))
                     m = m + 1
-                elif circuit_qni['type'] == u'Write':
-                    if circuit_qni['value'] == 0:
-                        c.append(cirq.ops.reset(qubits[j-1]))
-                    elif circuit_qni['value'] == 1:
-                        c.append(cirq.ops.reset(qubits[j-1]))
-                        c.append(cirq.X(qubits[j-1]))
-                    else:
-                        pass #nop
+                elif circuit_qni['type'] == u'|0>':
+                    target = circuit_qni['targets'][0]
+                    c.append(cirq.ops.reset(qubits[target]))
+                elif circuit_qni['type'] == u'|1>':
+                    target = circuit_qni['targets'][0]
+                    c.append(cirq.ops.reset(qubits[target]))
+                    c.append(cirq.X(qubits[target]))
                 elif circuit_qni['type'] == u'':
-                    pass #nop
-                elif circuit_qni['type'] == u'1':
                     pass #nop
                 else:
                     print("unsupported gate", circuit_qni['type'])
