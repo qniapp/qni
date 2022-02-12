@@ -1033,45 +1033,45 @@ var require_interact_min = __commonJS({
         })(t2);
       }
       __name(et2, "et");
-      function nt2(t2, e2) {
+      function nt(t2, e2) {
         for (var n2 = 0; n2 < e2.length; n2++) {
           var r2 = e2[n2];
           r2.enumerable = r2.enumerable || false, r2.configurable = true, "value" in r2 && (r2.writable = true), Object.defineProperty(t2, r2.key, r2);
         }
       }
-      __name(nt2, "nt");
-      function rt(t2, e2) {
-        return (rt = Object.setPrototypeOf || function(t3, e3) {
+      __name(nt, "nt");
+      function rt2(t2, e2) {
+        return (rt2 = Object.setPrototypeOf || function(t3, e3) {
           return t3.__proto__ = e3, t3;
         })(t2, e2);
       }
-      __name(rt, "rt");
+      __name(rt2, "rt");
       function ot2(t2, e2) {
-        return !e2 || et2(e2) !== "object" && typeof e2 != "function" ? it(t2) : e2;
+        return !e2 || et2(e2) !== "object" && typeof e2 != "function" ? it2(t2) : e2;
       }
       __name(ot2, "ot");
-      function it(t2) {
+      function it2(t2) {
         if (t2 === void 0)
           throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
         return t2;
       }
-      __name(it, "it");
-      function at2(t2) {
-        return (at2 = Object.setPrototypeOf ? Object.getPrototypeOf : function(t3) {
+      __name(it2, "it");
+      function at(t2) {
+        return (at = Object.setPrototypeOf ? Object.getPrototypeOf : function(t3) {
           return t3.__proto__ || Object.getPrototypeOf(t3);
         })(t2);
       }
-      __name(at2, "at");
-      function st(t2, e2, n2) {
+      __name(at, "at");
+      function st2(t2, e2, n2) {
         return e2 in t2 ? Object.defineProperty(t2, e2, { value: n2, enumerable: true, configurable: true, writable: true }) : t2[e2] = n2, t2;
       }
-      __name(st, "st");
+      __name(st2, "st");
       Object.defineProperty(tt, "__esModule", { value: true }), tt.DropEvent = void 0;
-      var lt2 = function(t2) {
+      var lt = function(t2) {
         !function(t3, e3) {
           if (typeof e3 != "function" && e3 !== null)
             throw new TypeError("Super expression must either be null or a function");
-          t3.prototype = Object.create(e3 && e3.prototype, { constructor: { value: t3, writable: true, configurable: true } }), e3 && rt(t3, e3);
+          t3.prototype = Object.create(e3 && e3.prototype, { constructor: { value: t3, writable: true, configurable: true } }), e3 && rt2(t3, e3);
         }(a2, t2);
         var e2, n2, r2, o3, i2 = (r2 = a2, o3 = function() {
           if (typeof Reflect == "undefined" || !Reflect.construct)
@@ -1087,9 +1087,9 @@ var require_interact_min = __commonJS({
             return false;
           }
         }(), function() {
-          var t3, e3 = at2(r2);
+          var t3, e3 = at(r2);
           if (o3) {
-            var n3 = at2(this).constructor;
+            var n3 = at(this).constructor;
             t3 = Reflect.construct(e3, arguments, n3);
           } else
             t3 = e3.apply(this, arguments);
@@ -1100,7 +1100,7 @@ var require_interact_min = __commonJS({
           !function(t4, e4) {
             if (!(t4 instanceof e4))
               throw new TypeError("Cannot call a class as a function");
-          }(this, a2), st(it(r3 = i2.call(this, e3._interaction)), "target", void 0), st(it(r3), "dropzone", void 0), st(it(r3), "dragEvent", void 0), st(it(r3), "relatedTarget", void 0), st(it(r3), "draggable", void 0), st(it(r3), "timeStamp", void 0), st(it(r3), "propagationStopped", false), st(it(r3), "immediatePropagationStopped", false);
+          }(this, a2), st2(it2(r3 = i2.call(this, e3._interaction)), "target", void 0), st2(it2(r3), "dropzone", void 0), st2(it2(r3), "dragEvent", void 0), st2(it2(r3), "relatedTarget", void 0), st2(it2(r3), "draggable", void 0), st2(it2(r3), "timeStamp", void 0), st2(it2(r3), "propagationStopped", false), st2(it2(r3), "immediatePropagationStopped", false);
           var o4 = n3 === "dragleave" ? t3.prev : t3.cur, s3 = o4.element, l4 = o4.dropzone;
           return r3.type = n3, r3.target = s3, r3.currentTarget = s3, r3.dropzone = l4, r3.dragEvent = e3, r3.relatedTarget = e3.target, r3.draggable = e3.interactable, r3.timeStamp = e3.timeStamp, r3;
         }
@@ -1123,17 +1123,17 @@ var require_interact_min = __commonJS({
           this.propagationStopped = true;
         } }, { key: "stopImmediatePropagation", value: function() {
           this.immediatePropagationStopped = this.propagationStopped = true;
-        } }]) && nt2(e2.prototype, n2), a2;
+        } }]) && nt(e2.prototype, n2), a2;
       }($2.BaseEvent);
-      tt.DropEvent = lt2;
-      var ut2 = {};
-      function ct(t2, e2) {
+      tt.DropEvent = lt;
+      var ut = {};
+      function ct2(t2, e2) {
         for (var n2 = 0; n2 < t2.slice().length; n2++) {
           var r2 = t2.slice()[n2], o3 = r2.dropzone, i2 = r2.element;
           e2.dropzone = o3, e2.target = i2, o3.fire(e2), e2.propagationStopped = e2.immediatePropagationStopped = false;
         }
       }
-      __name(ct, "ct");
+      __name(ct2, "ct");
       function ft2(t2, e2) {
         for (var n2 = function(t3, e3) {
           for (var n3 = t3.interactables, r3 = [], o4 = 0; o4 < n3.list.length; o4++) {
@@ -1171,7 +1171,7 @@ var require_interact_min = __commonJS({
       __name(pt, "pt");
       function vt(t2, e2) {
         var n2 = t2.dropState, r2 = n2.activeDrops, o3 = n2.cur, i2 = n2.prev;
-        e2.leave && i2.dropzone.fire(e2.leave), e2.enter && o3.dropzone.fire(e2.enter), e2.move && o3.dropzone.fire(e2.move), e2.drop && o3.dropzone.fire(e2.drop), e2.deactivate && ct(r2, e2.deactivate), n2.prev.dropzone = o3.dropzone, n2.prev.element = o3.element;
+        e2.leave && i2.dropzone.fire(e2.leave), e2.enter && o3.dropzone.fire(e2.enter), e2.move && o3.dropzone.fire(e2.move), e2.drop && o3.dropzone.fire(e2.drop), e2.deactivate && ct2(r2, e2.deactivate), n2.prev.dropzone = o3.dropzone, n2.prev.element = o3.element;
       }
       __name(vt, "vt");
       function ht2(t2, e2) {
@@ -1184,7 +1184,7 @@ var require_interact_min = __commonJS({
         }
       }
       __name(ht2, "ht");
-      Object.defineProperty(ut2, "__esModule", { value: true }), ut2.default = void 0;
+      Object.defineProperty(ut, "__esModule", { value: true }), ut.default = void 0;
       var gt = { id: "actions/drop", install: function(t2) {
         var e2 = t2.actions, n2 = t2.interactStatic, r2 = t2.Interactable, o3 = t2.defaults;
         t2.usePlugin(c2.default), r2.prototype.dropzone = function(t3) {
@@ -1229,7 +1229,7 @@ var require_interact_min = __commonJS({
         var n2 = t2.interaction, r2 = (t2.event, t2.iEvent);
         if (n2.prepared.name === "drag") {
           var o3 = n2.dropState;
-          o3.activeDrops = null, o3.events = null, o3.activeDrops = ft2(e2, n2.element), o3.events = pt(n2, 0, r2), o3.events.activate && (ct(o3.activeDrops, o3.events.activate), e2.fire("actions/drop:start", { interaction: n2, dragEvent: r2 }));
+          o3.activeDrops = null, o3.events = null, o3.activeDrops = ft2(e2, n2.element), o3.events = pt(n2, 0, r2), o3.events.activate && (ct2(o3.activeDrops, o3.events.activate), e2.fire("actions/drop:start", { interaction: n2, dragEvent: r2 }));
         }
       }, "interactions:action-move": ht2, "interactions:after-action-move": function(t2, e2) {
         var n2 = t2.interaction, r2 = t2.iEvent;
@@ -1246,7 +1246,7 @@ var require_interact_min = __commonJS({
           n2 && (n2.activeDrops = null, n2.events = null, n2.cur.dropzone = null, n2.cur.element = null, n2.prev.dropzone = null, n2.prev.element = null, n2.rejected = false);
         }
       } }, getActiveDrops: ft2, getDrop: dt, getDropEvents: pt, fireDropEvents: vt, defaults: { enabled: false, accept: null, overlap: "pointer" } }, yt2 = gt;
-      ut2.default = yt2;
+      ut.default = yt2;
       var mt = {};
       function bt2(t2) {
         var e2 = t2.interaction, n2 = t2.iEvent, r2 = t2.phase;
@@ -1392,7 +1392,7 @@ var require_interact_min = __commonJS({
       var Tt2 = {};
       Object.defineProperty(Tt2, "__esModule", { value: true }), Tt2.default = void 0;
       var Mt = { id: "actions", install: function(t2) {
-        t2.usePlugin(mt.default), t2.usePlugin(_t.default), t2.usePlugin(c2.default), t2.usePlugin(ut2.default);
+        t2.usePlugin(mt.default), t2.usePlugin(_t.default), t2.usePlugin(c2.default), t2.usePlugin(ut.default);
       } };
       Tt2.default = Mt;
       var jt2 = {};
@@ -6486,11 +6486,11 @@ var StateNode = /* @__PURE__ */ function() {
     var stateTransitions = keys(transitionMap).map(function(key) {
       return transitionMap[key];
     });
-    var enabledTransitions = flatten(stateTransitions.map(function(st) {
-      return st.transitions;
+    var enabledTransitions = flatten(stateTransitions.map(function(st2) {
+      return st2.transitions;
     }));
-    var willTransition = stateTransitions.some(function(st) {
-      return st.transitions.length > 0;
+    var willTransition = stateTransitions.some(function(st2) {
+      return st2.transitions.length > 0;
     });
     if (!willTransition) {
       return this.next(state, _event);
@@ -12112,6 +12112,25 @@ function J2(a) {
 }
 __name(J2, "J");
 l2(J2, "AngleableMixin");
+var it = l2((a) => typeof a == "object" && a !== null && typeof a.controls == "object", "isControllable");
+function S2(a) {
+  class t extends a {
+    set controls(i) {
+      this.setAttribute("data-controls", i.sort().join());
+    }
+    get controls() {
+      let i = this.getAttribute("data-controls");
+      return i === null ? [] : i === "" ? [] : i.split(",").map((n) => parseInt(n)).sort();
+    }
+    get isControlled() {
+      return this.controls.length > 0;
+    }
+  }
+  __name(t, "t");
+  return l2(t, "ControllableMixinClass"), t;
+}
+__name(S2, "S");
+l2(S2, "ControllableMixin");
 function T(a) {
   class t extends a {
     constructor() {
@@ -12227,7 +12246,7 @@ function v2(a) {
 }
 __name(v2, "v");
 l2(v2, "DraggableMixin");
-var nt = l2((a) => typeof a == "object" && a !== null && typeof a.flag == "string", "isFlaggable");
+var ot = l2((a) => typeof a == "object" && a !== null && typeof a.flag == "string", "isFlaggable");
 function ee(a) {
   class t extends a {
     constructor() {
@@ -12379,7 +12398,7 @@ function x(a) {
         let o2 = i.popper.querySelector("button[data-operation-menu-angle]");
         m.notNull(o2), o2.disabled = false, this.angleTooltip = o2._tippy, this.angleTooltip === void 0 && (this.angleTooltip = tippy_esm_default(o2, { animation: false, content: "Change Angle" }), o2.addEventListener("mousedown", this.showAngleInspector.bind(this)));
       }
-      if (nt(i.reference)) {
+      if (ot(i.reference)) {
         let o2 = i.popper.querySelector("button[data-operation-menu-flag]");
         m.notNull(o2), o2.disabled = false, this.flagTooltip = o2._tippy, this.flagTooltip === void 0 && (this.flagTooltip = tippy_esm_default(o2, { animation: false, content: "Set Condifitonal Flag" }), o2.addEventListener("mousedown", this.showFlagInspector.bind(this)));
       }
@@ -12660,25 +12679,6 @@ var M2 = /* @__PURE__ */ __name(class extends x(E(v2(T(y(g(HTMLElement)))))) {
 }, "M");
 l2(M2, "ControlGateElement");
 controller(M2);
-var ut = l2((a) => typeof a == "object" && a !== null && typeof a.controls == "object", "isControllable");
-function S2(a) {
-  class t extends a {
-    set controls(i) {
-      this.setAttribute("data-controls", i.sort().join());
-    }
-    get controls() {
-      let i = this.getAttribute("data-controls");
-      return i === null ? [] : i === "" ? [] : i.split(",").map((n) => parseInt(n)).sort();
-    }
-    get isControlled() {
-      return this.controls.length > 0;
-    }
-  }
-  __name(t, "t");
-  return l2(t, "ControllableMixinClass"), t;
-}
-__name(S2, "S");
-l2(S2, "ControllableMixin");
 var le = `<svg
   width="48"
   height="48"
@@ -13340,7 +13340,7 @@ var Ct = l2((a) => a != null && a instanceof P, "isRzGateElement");
 var ze2 = l2((a) => a != null && a instanceof V, "isSwapGateElement");
 var Bt = l2((a) => a != null && a instanceof M2, "isControlGateElement");
 var _e = l2((a) => a != null && a instanceof z, "isBlochDisplayElement");
-var Js = l2((a) => a != null && a instanceof H2, "isWriteGateElement");
+var Qs = l2((a) => a != null && a instanceof H2, "isWriteGateElement");
 var Ae2 = l2((a) => a != null && a instanceof R2, "isMeasurementGateElement");
 function Me(a) {
   return /^-?\d+$/.test(a);
@@ -13529,7 +13529,7 @@ var A = /* @__PURE__ */ __name(class extends HTMLElement {
       let e = Y(t.angle);
       ht(t) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (xt(t) || yt(t) || Ct(t)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = t.angle, this.backupCurrentPhi(), this.angleSlider.angle = t.angle, this.denominatorInput.value = e.toString(), this.denominatorLabel.textContent = e.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = t.reducedAngle !== "";
     }
-    nt(t) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = t.flag);
+    ot(t) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = t.flag);
   }
   clear() {
     this.ifInput.value = "", this.angleInput.value = "", this.angleSlider.angle = "", this.denominatorInput.value = "", this.reduceAngleFractionCheckbox.checked = false, this.flagInput.value = "";
@@ -14430,7 +14430,7 @@ var He = `<svg part="tail-spin-icon" width="38" height="38" viewBox="0 0 38 38" 
     </g>
 </svg>
 `;
-var ot = /* @__PURE__ */ __name(class extends HTMLElement {
+var rt = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.running = false;
@@ -14495,9 +14495,9 @@ var ot = /* @__PURE__ */ __name(class extends HTMLElement {
   get tailSpinIcon() {
     return html([He]);
   }
-}, "ot");
-l2(ot, "RunCircuitButtonElement"), s([attr], ot.prototype, "running", 2), s([attr], ot.prototype, "debug", 2), s([target], ot.prototype, "body", 2), s([target], ot.prototype, "ripple", 2);
-controller(ot);
+}, "rt");
+l2(rt, "RunCircuitButtonElement"), s([attr], rt.prototype, "running", 2), s([attr], rt.prototype, "debug", 2), s([target], rt.prototype, "body", 2), s([target], rt.prototype, "ripple", 2);
+controller(rt);
 var Fe2 = `<svg part="wires" width="48" height="48" viewBox="0 0 48 48" preserveAspectRatio="none">
   <line
     part="wire-input"
@@ -14767,7 +14767,7 @@ var W = /* @__PURE__ */ __name(class extends HTMLElement {
       n.connectTop = false, n.connectBottom = false;
     let e = this.controlGateDropzones, i = this.controllableDropzones(t);
     for (let n of i)
-      ut(n.operation) && (n.operation.controls = []);
+      it(n.operation) && (n.operation.controls = []);
     if (this.updateSwapConnections(t), this.updatePhasePhaseConnections(t), e.length !== 0) {
       if (e.length === 1 && i.length === 0) {
         e[0].operation.disable();
@@ -14827,7 +14827,7 @@ var W = /* @__PURE__ */ __name(class extends HTMLElement {
       h2.connectBottom = c2.some((w) => this.bit(h2) < w), h2.connectTop = c2.some((w) => this.bit(h2) > w), o2 === null || o2 !== null && parseInt(m2) < o2 ? u2.enable() : (h2.connectTop = Math.max(...c2) > this.bit(h2), u2.disable());
     }
     for (let m2 of e) {
-      if (!ut(m2.operation))
+      if (!it(m2.operation))
         throw new Error(`${m2.operation} isn't controllable.`);
       m2.operation.controls = this.controlBits(m2, r, t), m2.connectTop = c2.some((h2) => h2 < this.bit(m2)), m2.connectBottom = c2.some((h2) => h2 > this.bit(m2));
     }
@@ -14886,7 +14886,7 @@ var W = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   controllableDropzones(t) {
     let e = 0, i = 0, n = 0, o2 = 0, r = 0, p2 = 0, d2 = 0, c2 = 0, m2 = 0, h2 = 0;
-    return this.dropzones.filter((u2) => u2.occupied).filter((u2) => ut(u2.operation)).filter((u2) => t === void 0 ? true : we2(u2.operation) ? (e += 1, t.maxChTargetGates !== 0 && e > t.maxChTargetGates ? false : !t.disableCh) : Te2(u2.operation) ? (i += 1, t.maxCnotTargetGates !== 0 && i > t.maxCnotTargetGates ? false : !t.disableCnot) : Se(u2.operation) ? (n += 1, t.maxCyTargetGates !== 0 && n > t.maxCyTargetGates ? false : !t.disableCy) : Ge2(u2.operation) ? (o2 += 1, t.maxCzTargetGates !== 0 && o2 > t.maxCzTargetGates ? false : !t.disableCz) : ht(u2.operation) ? (r += 1, t.maxCphaseTargetGates !== 0 && r > t.maxCphaseTargetGates ? false : !t.disableCphase) : Oe(u2.operation) ? (p2 += 1, t.maxCtTargetGates !== 0 && p2 > t.maxCtTargetGates ? false : !t.disableCt) : Ie(u2.operation) ? (d2 += 1, t.maxCrnotTargetGates !== 0 && d2 > t.maxCrnotTargetGates ? false : !t.disableCrnot) : xt(u2.operation) ? (c2 += 1, t.maxCrxTargetGates !== 0 && c2 > t.maxCrxTargetGates ? false : !t.disableCrx) : yt(u2.operation) ? (m2 += 1, t.maxCryTargetGates !== 0 && m2 > t.maxCryTargetGates ? false : !t.disableCry) : Ct(u2.operation) ? (h2 += 1, t.maxCrzTargetGates !== 0 && h2 > t.maxCrzTargetGates ? false : !t.disableCrz) : ze2(u2.operation) ? !t.disableCswap : true);
+    return this.dropzones.filter((u2) => u2.occupied).filter((u2) => it(u2.operation)).filter((u2) => t === void 0 ? true : we2(u2.operation) ? (e += 1, t.maxChTargetGates !== 0 && e > t.maxChTargetGates ? false : !t.disableCh) : Te2(u2.operation) ? (i += 1, t.maxCnotTargetGates !== 0 && i > t.maxCnotTargetGates ? false : !t.disableCnot) : Se(u2.operation) ? (n += 1, t.maxCyTargetGates !== 0 && n > t.maxCyTargetGates ? false : !t.disableCy) : Ge2(u2.operation) ? (o2 += 1, t.maxCzTargetGates !== 0 && o2 > t.maxCzTargetGates ? false : !t.disableCz) : ht(u2.operation) ? (r += 1, t.maxCphaseTargetGates !== 0 && r > t.maxCphaseTargetGates ? false : !t.disableCphase) : Oe(u2.operation) ? (p2 += 1, t.maxCtTargetGates !== 0 && p2 > t.maxCtTargetGates ? false : !t.disableCt) : Ie(u2.operation) ? (d2 += 1, t.maxCrnotTargetGates !== 0 && d2 > t.maxCrnotTargetGates ? false : !t.disableCrnot) : xt(u2.operation) ? (c2 += 1, t.maxCrxTargetGates !== 0 && c2 > t.maxCrxTargetGates ? false : !t.disableCrx) : yt(u2.operation) ? (m2 += 1, t.maxCryTargetGates !== 0 && m2 > t.maxCryTargetGates ? false : !t.disableCry) : Ct(u2.operation) ? (h2 += 1, t.maxCrzTargetGates !== 0 && h2 > t.maxCrzTargetGates ? false : !t.disableCrz) : ze2(u2.operation) ? !t.disableCswap : true);
   }
   dispatchUpdateEvent() {
     this.dispatchEvent(new Event("circuit-step-update", { bubbles: true }));
@@ -15027,7 +15027,7 @@ var W = /* @__PURE__ */ __name(class extends HTMLElement {
         }
         case M2: {
           let n = i.filter((r) => !r.disabled);
-          if (n.length < 2 || this.operations.some((r) => ut(r) && r.controls.length > 0))
+          if (n.length < 2 || this.operations.some((r) => it(r) && r.controls.length > 0))
             break;
           let o2 = n.map((r) => r.bit);
           t.push({ type: n[0].operationType, targets: o2 });
@@ -15707,7 +15707,7 @@ var b2 = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "b");
 l2(b2, "QuantumCircuitElement"), s([attr], b2.prototype, "minStepCount", 2), s([attr], b2.prototype, "minWireCount", 2), s([attr], b2.prototype, "maxWireCount", 2), s([attr], b2.prototype, "editing", 2), s([attr], b2.prototype, "updateUrl", 2), s([attr], b2.prototype, "json", 2), s([attr], b2.prototype, "circuitTitle", 2), s([attr], b2.prototype, "debug", 2), s([attr], b2.prototype, "chDisabled", 2), s([attr], b2.prototype, "chMaxControlGates", 2), s([attr], b2.prototype, "chMaxTargetGates", 2), s([attr], b2.prototype, "cnotDisabled", 2), s([attr], b2.prototype, "cnotMaxControlGates", 2), s([attr], b2.prototype, "cnotMaxTargetGates", 2), s([attr], b2.prototype, "cyDisabled", 2), s([attr], b2.prototype, "cyMaxControlGates", 2), s([attr], b2.prototype, "cyMaxTargetGates", 2), s([attr], b2.prototype, "czDisabled", 2), s([attr], b2.prototype, "czMaxControlGates", 2), s([attr], b2.prototype, "czMaxTargetGates", 2), s([attr], b2.prototype, "cphaseDisabled", 2), s([attr], b2.prototype, "cphaseMaxControlGates", 2), s([attr], b2.prototype, "cphaseMaxTargetGates", 2), s([attr], b2.prototype, "ctDisabled", 2), s([attr], b2.prototype, "ctMaxControlGates", 2), s([attr], b2.prototype, "ctMaxTargetGates", 2), s([attr], b2.prototype, "crnotDisabled", 2), s([attr], b2.prototype, "crnotMaxControlGates", 2), s([attr], b2.prototype, "crnotMaxTargetGates", 2), s([attr], b2.prototype, "crxDisabled", 2), s([attr], b2.prototype, "crxMaxControlGates", 2), s([attr], b2.prototype, "crxMaxTargetGates", 2), s([attr], b2.prototype, "cryDisabled", 2), s([attr], b2.prototype, "cryMaxControlGates", 2), s([attr], b2.prototype, "cryMaxTargetGates", 2), s([attr], b2.prototype, "crzDisabled", 2), s([attr], b2.prototype, "crzMaxControlGates", 2), s([attr], b2.prototype, "crzMaxTargetGates", 2), s([attr], b2.prototype, "cswapDisabled", 2), s([attr], b2.prototype, "cswapMaxControlGates", 2), s([attr], b2.prototype, "swapDisabled", 2), s([attr], b2.prototype, "controlControlDisabled", 2), s([attr], b2.prototype, "controlControlMaxTargetGates", 2), s([attr], b2.prototype, "phasePhaseDisabled", 2), s([attr], b2.prototype, "phasePhaseMaxTargetGates", 2);
 controller(b2);
-var lt = /* @__PURE__ */ __name(class extends HTMLElement {
+var ct = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.debug = false;
@@ -15821,7 +15821,7 @@ var lt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   showOperationInspectorFlag(t) {
     let e = t.target;
-    if (!nt(e))
+    if (!ot(e))
       throw new Error(`${e} isn't a Flaggable Operation.`);
     this.circuitEditorService.send({ type: "SHOW_OPERATION_INSPECTOR_FLAG", operation: e });
   }
@@ -15839,7 +15839,7 @@ var lt = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   setOperationFlag(t) {
     let e = t.target, i = this.activeOperation;
-    if (!nt(i))
+    if (!ot(i))
       throw new Error("[data-flag] not found.");
     this.circuitEditorService.send({ type: "SET_OPERATION_FLAG", operation: i, flag: e.flag });
   }
@@ -15914,10 +15914,10 @@ var lt = /* @__PURE__ */ __name(class extends HTMLElement {
   mouseLeaveCircuit() {
     this.circuitEditorService.send({ type: "MOUSE_LEAVE_CIRCUIT" });
   }
-}, "lt");
-l2(lt, "CircuitEditorElement"), s([attr], lt.prototype, "debug", 2), s([target], lt.prototype, "circuit", 2), s([target], lt.prototype, "inspectorButton", 2);
-controller(lt);
-var at = /* @__PURE__ */ __name(class extends HTMLElement {
+}, "ct");
+l2(ct, "CircuitEditorElement"), s([attr], ct.prototype, "debug", 2), s([target], ct.prototype, "circuit", 2), s([target], ct.prototype, "inspectorButton", 2);
+controller(ct);
+var st = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.updateUrl = false;
@@ -15979,7 +15979,10 @@ var at = /* @__PURE__ */ __name(class extends HTMLElement {
       return;
     let t = this.activeStepIndex, e = this.circuit.serialize();
     m.need(e.length > 0, "non-zero step length");
-    let i = Math.max(...e.map((o2) => Math.max(...o2.map((r) => Math.max(...r.targets))))), n = i >= 0 ? i + 1 : 1;
+    let i = Math.max(...e.map((o2) => Math.max(...o2.map((r) => {
+      let p2 = [];
+      return it(r) && (p2 = r.controls), Math.max(...r.targets.concat(p2));
+    })))), n = i >= 0 ? i + 1 : 1;
     this.circleNotation.qubitCount = n, this.worker.postMessage({ qubitCount: n, stepIndex: t, steps: e, targets: this.visibleQubitCircleKets });
   }
   runUnlessEditing() {
@@ -16000,9 +16003,9 @@ var at = /* @__PURE__ */ __name(class extends HTMLElement {
     let t = this.circuit.toJson();
     history.pushState("", "", encodeURIComponent(t));
   }
-}, "at");
-l2(at, "QuantumSimulatorElement"), s([attr], at.prototype, "updateUrl", 2), s([target], at.prototype, "circuit", 2), s([target], at.prototype, "circleNotation", 2), s([targets], at.prototype, "runCircuitButtons", 2);
-controller(at);
+}, "st");
+l2(st, "QuantumSimulatorElement"), s([attr], st.prototype, "updateUrl", 2), s([target], st.prototype, "circuit", 2), s([target], st.prototype, "circleNotation", 2), s([targets], st.prototype, "runCircuitButtons", 2);
+controller(st);
 
 // src/serviceworker-companion.js
 if (navigator.serviceWorker) {
