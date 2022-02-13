@@ -1,5 +1,6 @@
 export * from './activateable'
 export * from './angleable'
+export * from './controllable'
 export * from './disableable'
 export * from './draggable'
 export * from './flaggable'

@@ -19,7 +19,7 @@ export function IconableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
 
     private iconSvg(defaultIcon: string): Node | TemplateResult | null {
       if (this.icon === '') {
-        return html([defaultIcon] as unknown as TemplateStringsArray)
+        return html(([defaultIcon] as unknown) as TemplateStringsArray)
       }
 
       const template = document.getElementById(this.icon) as HTMLTemplateElement

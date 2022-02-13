@@ -1,6 +1,6 @@
 .gate-popup {
   &__input-wrapper {
-    @apply border-2 border-swan;
+    @apply border-swan border-2;
     @apply px-3 py-2;
     @apply relative;
     @apply rounded-md;

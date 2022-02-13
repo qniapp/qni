@@ -6,7 +6,7 @@ angle-slider {
 
   /* the slider handle */
   &::before {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
     @apply -mt-2.5 -ml-3;
     @apply bg-blue-500;
     @apply rounded-full;

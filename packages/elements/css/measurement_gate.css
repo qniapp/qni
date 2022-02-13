@@ -11,7 +11,7 @@ measurement-gate {
   }
 
   circuit-dropzone &[data-snapped]::part(icon) {
-    @apply transform-gpu origin-center;
+    @apply origin-center transform-gpu;
     @apply rotate-90 md:rotate-0;
   }
 
@@ -25,7 +25,7 @@ measurement-gate {
   }
 
   circuit-dropzone &[data-snapped]::part(value) {
-    @apply transform-gpu origin-center;
+    @apply origin-center transform-gpu;
     @apply rotate-90 md:rotate-0;
   }
 

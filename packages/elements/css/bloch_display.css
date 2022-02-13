@@ -7,24 +7,24 @@ bloch-display {
 
   /* 3D perspective */
 
-  &[data-size="xs"]::part(perspective) {
+  &[data-size='xs']::part(perspective) {
     perspective: 2rem;
   }
 
-  &[data-size="sm"]::part(perspective) {
+  &[data-size='sm']::part(perspective) {
     perspective: 3rem;
   }
 
   &::part(perspective),
-  &[data-size="base"]::part(perspective) {
+  &[data-size='base']::part(perspective) {
     perspective: 4rem;
   }
 
-  &[data-size="lg"]::part(perspective) {
+  &[data-size='lg']::part(perspective) {
     perspective: 5rem;
   }
 
-  &[data-size="xl"]::part(perspective) {
+  &[data-size='xl']::part(perspective) {
     perspective: 6rem;
   }
 
@@ -50,7 +50,7 @@ bloch-display {
     @apply bg-red-500;
   }
 
-  &[data-d="0"]::part(vector-end-circle) {
+  &[data-d='0']::part(vector-end-circle) {
     @apply bg-blue-500;
   }
 

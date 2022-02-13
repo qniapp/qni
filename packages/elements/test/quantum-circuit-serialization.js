@@ -233,6 +233,18 @@ describe('quantum-circuit element', function () {
       })
     })
 
+    describe('T', function () {
+      it('targets = 0', function () {
+        circuit.t(0)
+        assert.deepEqual(circuit.serialize(), [[{type: 'T', targets: [0]}]])
+      })
+
+      it('targets = 0, 2', function () {
+        circuit.t(0, 2)
+        assert.deepEqual(circuit.serialize(), [[{type: 'T', targets: [0, 2]}]])
+      })
+    })
+
     describe('Swap', function () {
       it('targets = 0', function () {
         circuit.swap(0)
@@ -272,6 +284,10 @@ describe('quantum-circuit element', function () {
 
     describe('cphase', function () {
       testControlledUSerialization('phase', 'P')
+    })
+
+    describe('ct', function () {
+      testControlledUSerialization('t', 'T')
     })
 
     describe('crnot', function () {
