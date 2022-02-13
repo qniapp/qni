@@ -5,44 +5,52 @@ description: 量子ビット状態のグラフィカルな表現
 ---
 
 <p>
-  <a href="qni_superposition.html">Qni で重ね合わせ</a>では、Qni
+  <a href="superposition.html">重ね合わせ状態</a>では、Qni
   の状態ベクトル表示を使って重ね合わせ状態と位相について簡単に紹介しました。
-  本チュートリアルでは全体を通して、数式ではなくこの状態ベクトル表示だけで量子ビットの状態を表現します。
-  そこであらためて、状態ベクトル表示の正しい読み方、特に振幅や位相の概念をどう表しているか詳しく見ていきましょう。
+  本チュートリアルでは全体を通して、数式ではなくこの状態ベクトル表示で量子ビットの状態を表現します。
+  そこであらためて、状態ベクトル表示の正しい読み方、特に<span class="font-bold">振幅</span>や<span
+    class="font-bold"
+    >位相</span
+  >の概念がどう表されるか詳しく見ていきましょう。
 </p>
 
 <h2>振幅と確率</h2>
 
 <p>
-  量子ビットを測定すると、<code>|0⟩</code> または <code>|1⟩</code> の振幅の 2
-  乗がその値を得る確率を決めることを<a href="q_bit.html">量子ビット</a>で説明しました。
-  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径 x
-  半径 x π) はその確率に比例します。
+  量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、 <code>|0⟩</code> と
+  <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした (<a
+    href="q_bit.html"
+    >量子ビット</a
+  >)。 状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径
+  x 半径 x π) はその確率に正比例します。
   以下の円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。たしかに振幅の大きさの
-  2 乗が確率と等しくなっていることを確認してください。
+  2 乗が確率と等しくなっていることを確認しましょう。
 </p>
 
 <div class="flex flex-row justify-center space-x-4 pb-10">
-  <circle-notation id="cn0" data-size="xl" data-show-kets></circle-notation>
-
-  <circle-notation id="cn1" data-size="xl" data-show-kets></circle-notation>
-
-  <circle-notation id="cn2" data-size="xl" data-show-kets></circle-notation>
-
-  <circle-notation id="cn3" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation id="circle-notation-A" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation id="circle-notation-B" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation id="circle-notation-C" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation id="circle-notation-D" data-size="xl" data-show-kets></circle-notation>
 
   <script type="module">
     import { Complex } from './application.js'
 
-    let cn0 = document.getElementById('cn0')
-    let cn1 = document.getElementById('cn1')
-    let cn2 = document.getElementById('cn2')
-    let cn3 = document.getElementById('cn3')
+    let circleNotationA = document.getElementById('circle-notation-A')
+    let circleNotationB = document.getElementById('circle-notation-B')
+    let circleNotationC = document.getElementById('circle-notation-C')
+    let circleNotationD = document.getElementById('circle-notation-D')
 
-    cn0.setAmplitudes({ 0: new Complex(1, 0), 1: new Complex(0, 0) })
-    cn1.setAmplitudes({ 0: new Complex(0, 0), 1: new Complex(1, 0) })
-    cn2.setAmplitudes({ 0: new Complex(1 / Math.sqrt(2), 0), 1: new Complex(1 / Math.sqrt(2), 0) })
-    cn3.setAmplitudes({ 0: new Complex(Math.sqrt(0.8), 0), 1: new Complex(Math.sqrt(0.2), 0) })
+    circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
+    circleNotationC.setAmplitudes({
+      0: new Complex(1 / Math.sqrt(2), 0),
+      1: new Complex(1 / Math.sqrt(2), 0),
+    })
+    circleNotationD.setAmplitudes({
+      0: new Complex(Math.sqrt(0.8), 0),
+      1: new Complex(Math.sqrt(0.2), 0),
+    })
   </script>
 </div>
 
@@ -58,70 +66,99 @@ description: 量子ビット状態のグラフィカルな表現
 <h2>位相</h2>
 
 <p>
-  <code>|0⟩</code> を基準として
-  <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、反時計まわりに <code>0</code> から
-  <code>2π (360°)</code> まで持つことができます。 位相は <code>|0⟩</code> に対する
-  <code>|1⟩</code> の相対的な回転を表すので、相対位相とも呼ばれます。
+  <code>|0⟩</code> を基準として <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code
+    >0</code
+  >
+  から <code>2π (360°)</code> まで持つことができます。
+  状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は <code>|0⟩</code> に対する
+  <code>|1⟩</code> の相対的な回転を表すので、<span class="font-bold">相対位相</span>とも呼ばれます。
 </p>
 
 <div class="flex flex-row justify-center space-x-4 pb-10">
   <div class="flex flex-col items-center">
     <code class="pb-2">π/4</code>
-    <circle-notation id="cnp0" data-size="xl" data-show-kets></circle-notation>
+    <circle-notation id="circle-notation-phase-π/4" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
     <code class="pb-2">π/2</code>
-    <circle-notation id="cnp1" data-size="xl" data-show-kets></circle-notation>
+    <circle-notation id="circle-notation-phase-π/2" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
     <code class="pb-2">π</code>
-    <circle-notation id="cnp2" data-size="xl" data-show-kets></circle-notation>
+    <circle-notation id="circle-notation-phase-π" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
     <code class="pb-2">3π/2</code>
-    <circle-notation id="cnp3" data-size="xl" data-show-kets></circle-notation>
+    <circle-notation
+      id="circle-notation-phase-3π/2"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
   </div>
   <div class="flex flex-col items-center">
     <code class="pb-2">2π</code>
-    <circle-notation id="cnp4" data-size="xl" data-show-kets></circle-notation>
+    <circle-notation id="circle-notation-phase-2π" data-size="xl" data-show-kets></circle-notation>
   </div>
 
   <script type="module">
     import { Complex } from './application.js'
 
-    let cnp0 = document.getElementById('cnp0')
-    let cnp1 = document.getElementById('cnp1')
-    let cnp2 = document.getElementById('cnp2')
-    let cnp3 = document.getElementById('cnp3')
-    let cnp4 = document.getElementById('cnp4')
+    let circleNotationA = document.getElementById('circle-notation-phase-π/4')
+    let circleNotationB = document.getElementById('circle-notation-phase-π/2')
+    let circleNotationC = document.getElementById('circle-notation-phase-π')
+    let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
+    let circleNotationE = document.getElementById('circle-notation-phase-2π')
 
-    cnp0.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
-    cnp1.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0, Math.sqrt(0.5)) })
-    cnp2.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(-Math.sqrt(0.5), 0) })
-    cnp3.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0, -Math.sqrt(0.5)) })
-    cnp4.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(Math.sqrt(0.5), 0) })
+    circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
+    circleNotationB.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(0, Math.sqrt(0.5)),
+    })
+    circleNotationC.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(-Math.sqrt(0.5), 0),
+    })
+    circleNotationD.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(0, -Math.sqrt(0.5)),
+    })
+    circleNotationE.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(Math.sqrt(0.5), 0),
+    })
   </script>
 </div>
 
 <p>
-  位相は <code>|0⟩</code> に対する <code>|1⟩</code> の相対的な回転なので、ある種の QPU 命令によって
-  <code>|0⟩</code> が回転している場合にはその角度を基準とした <code>|1⟩</code> の回転を考えます。
+  位相は相対的な値なので、ある種の QPU 演算によって
+  <code>|0⟩</code> が回転している場合には、その角度を基準とした <code>|1⟩</code> の回転を考えます。
   たとえば、以下の 2 つの状態は相対的にはどちらも
-  <code>π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
+  <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
 </p>
 
 <div class="flex flex-row justify-center space-x-4 pb-10">
-  <circle-notation id="cn-samep0" data-size="xl" data-show-kets></circle-notation>
-  <circle-notation id="cn-samep1" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation
+    id="circle-notation-phase-3π/2-a"
+    data-size="xl"
+    data-show-kets
+  ></circle-notation>
+  <circle-notation
+    id="circle-notation-phase-3π/2-b"
+    data-size="xl"
+    data-show-kets
+  ></circle-notation>
 
   <script type="module">
     import { Complex } from './application.js'
 
-    let cnp0 = document.getElementById('cn-samep0')
-    let cnp1 = document.getElementById('cn-samep1')
+    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
+    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
 
-    cnp0.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
-    cnp1.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0, Math.sqrt(0.5)) })
+    circleNotationA.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(0, -Math.sqrt(0.5)),
+    })
+    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
   </script>
 </div>
 
@@ -129,8 +166,8 @@ description: 量子ビット状態のグラフィカルな表現
 
 <p>
   量子ビットの中身を状態ベクトル表示で読む方法を説明しました。 量子ビットには、振幅の大きさ
-  (またはそれを 2 乗した確率) と位相という、まったく独立した情報を持たせることができます。
-  状態ベクトル表示はそれらの情報をグラフィカルに表示します。
+  (またはそれを 2 乗した確率) と位相という、まったく独立した 2 つの情報を持たせることができます。
+  状態ベクトル表示は振幅の大きさを青色の円の半径、位相を時計の針の角度として表示します。
 </p>
 
 <template id="circle-notation-popup">

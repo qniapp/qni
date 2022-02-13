@@ -24,3 +24,7 @@
 .prose code {
   @apply text-purple-600;
 }
+
+.prose figure {
+  @apply pb-10;
+}

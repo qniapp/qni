@@ -2,10 +2,10 @@ import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
+import {isControllable, isIfable} from './mixin'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
-import {isIfable} from './mixin'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -131,12 +131,19 @@ export class QuantumSimulatorElement extends HTMLElement {
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')
 
-    const maxTargetBit = Math.max(
+    const maxControlTargetBit = Math.max(
       ...serializedSteps.map(serializedStep =>
-        Math.max(...serializedStep.map(operation => Math.max(...operation.targets)))
+        Math.max(
+          ...serializedStep.map(operation => {
+            let controls: number[] = []
+            if (isControllable(operation)) controls = operation.controls
+
+            return Math.max(...operation.targets.concat(controls))
+          })
+        )
       )
     )
-    const qubitCount = maxTargetBit >= 0 ? maxTargetBit + 1 : 1
+    const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
 
     this.circleNotation.qubitCount = qubitCount
     const backend = this.backend.trim()

@@ -11,10 +11,10 @@ run-circuit-button {
 
   &::part(reload-icon),
   &::part(tail-spin-icon) {
-    @apply w-4 h-4;
+    @apply h-4 w-4;
 
     @media screen(md) {
-      @apply w-8 h-8;
+      @apply h-8 w-8;
     }
   }
 

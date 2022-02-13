@@ -9,6 +9,7 @@ import {
   SerializedRyGate,
   SerializedRzGate,
   SerializedSwapGate,
+  SerializedTGate,
   SerializedXGate,
   SerializedYGate,
   SerializedZGate,
@@ -27,6 +28,7 @@ import {
   isRyGateElement,
   isRzGateElement,
   isSwapGateElement,
+  isTGateElement,
   isXGateElement,
   isYGateElement,
   isZGateElement
@@ -44,6 +46,7 @@ import {RxGateElement} from './rx-gate-element'
 import {RyGateElement} from './ry-gate-element'
 import {RzGateElement} from './rz-gate-element'
 import {SwapGateElement} from './swap-gate-element'
+import {TGateElement} from './t-gate-element'
 import {WriteGateElement} from './write-gate-element'
 import {XGateElement} from './x-gate-element'
 import {YGateElement} from './y-gate-element'
@@ -74,6 +77,10 @@ type ConnectionProps = {
   disableCphase: boolean
   maxCphaseControlGates: number
   maxCphaseTargetGates: number
+  // Controlled-T
+  disableCt: boolean
+  maxCtControlGates: number
+  maxCtTargetGates: number
   // Controlled-√X
   disableCrnot: boolean
   maxCrnotControlGates: number
@@ -616,6 +623,8 @@ export class CircuitStepElement extends HTMLElement {
         bits = allControlBits.slice(0, connectionProps.maxCzControlGates)
       } else if (connectionProps.maxCphaseControlGates > 0 && dropzone.operationName === 'phase-gate') {
         bits = allControlBits.slice(0, connectionProps.maxCphaseControlGates)
+      } else if (connectionProps.maxCtControlGates > 0 && dropzone.operationName === 't-gate') {
+        bits = allControlBits.slice(0, connectionProps.maxCtControlGates)
       } else if (connectionProps.maxCrnotControlGates > 0 && dropzone.operationName === 'rnot-gate') {
         bits = allControlBits.slice(0, connectionProps.maxCrnotControlGates)
       } else if (connectionProps.maxCrxControlGates > 0 && dropzone.operationName === 'rx-gate') {
@@ -713,6 +722,9 @@ export class CircuitStepElement extends HTMLElement {
     ) {
       ndropzones = props.maxCphaseControlGates
     }
+    if (controllableOperationNames.includes('t-gate') && !props.disableCt && props.maxCtControlGates > ndropzones) {
+      ndropzones = props.maxCtControlGates
+    }
     if (
       controllableOperationNames.includes('rnot-gate') &&
       !props.disableCrnot &&
@@ -747,6 +759,7 @@ export class CircuitStepElement extends HTMLElement {
     let numY = 0
     let numZ = 0
     let numPhase = 0
+    let numT = 0
     let numRnot = 0
     let numRx = 0
     let numRy = 0
@@ -792,6 +805,13 @@ export class CircuitStepElement extends HTMLElement {
             return false
           }
           return !connectionProps.disableCphase
+        }
+        if (isTGateElement(each.operation)) {
+          numT += 1
+          if (connectionProps.maxCtTargetGates !== 0 && numT > connectionProps.maxCtTargetGates) {
+            return false
+          }
+          return !connectionProps.disableCt
         }
         if (isRnotGateElement(each.operation)) {
           numRnot += 1
@@ -948,6 +968,21 @@ export class CircuitStepElement extends HTMLElement {
                 if (controlsStr !== '') serializedGate.controls = gate0.controls
                 serializedStep.push(serializedGate)
               }
+            }
+          }
+          break
+        }
+        case TGateElement: {
+          const tGates = sameOps as TGateElement[]
+          for (const [ifStr, sameIfGates] of groupBy(tGates, gate => gate.if)) {
+            for (const [controlsStr, sameControlGates] of groupBy(sameIfGates, gate => gate.controls.toString())) {
+              const gate0 = sameControlGates[0]
+              const opType = gate0.operationType
+              const targets = sameControlGates.map(each => each.bit)
+              const serializedGate: SerializedTGate = {type: opType, targets}
+              if (ifStr !== '') serializedGate.if = ifStr
+              if (controlsStr !== '') serializedGate.controls = gate0.controls
+              serializedStep.push(serializedGate)
             }
           }
           break

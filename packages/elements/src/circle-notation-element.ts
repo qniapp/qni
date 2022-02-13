@@ -15,20 +15,21 @@ export class CircleNotationElement extends HTMLElement {
   @targets qubitCircleGroups!: HTMLElement[]
   @targets visibleQubitCircleGroups!: HTMLElement[]
 
-  setAmplitudes(amplitudes: {[ket: number]: Complex}): void {
+  setAmplitudes(amplitudes: {[ket: number]: number | Complex}): void {
     const qubitCircles = this.qubitCircles
 
     for (const [i, each] of Object.entries(amplitudes)) {
       const qubitCircle = qubitCircles[parseInt(i)]
+      const amplitude = Complex.from(each)
 
-      qubitCircle.setAttribute('data-amplitude-real', each.real.toString())
-      qubitCircle.setAttribute('data-amplitude-imag', each.imag.toString())
+      qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())
+      qubitCircle.setAttribute('data-amplitude-imag', amplitude.imag.toString())
 
-      const magnitude = each.abs()
+      const magnitude = amplitude.abs()
       this.setRoundedMagnitude(qubitCircle, magnitude)
       if (magnitude === 0) continue
 
-      const phaseDeg = (each.phase() / Math.PI) * 180
+      const phaseDeg = (amplitude.phase() / Math.PI) * 180
       this.setRoundedPhase(qubitCircle, phaseDeg)
     }
   }

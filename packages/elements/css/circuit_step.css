@@ -1,7 +1,7 @@
 circuit-step {
   @apply relative;
 
-  @apply flex justify-center items-center;
+  @apply flex items-center justify-center;
   @apply flex-row-reverse md:flex-col;
 
   @apply space-x-4 space-y-0 space-x-reverse;
