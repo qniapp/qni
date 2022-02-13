@@ -68,7 +68,6 @@
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
     "prettier-plugin-erb": "^0.4.0",
-    "prettier-plugin-tailwindcss": "^0.1.5",
     "rollup": "~2.66",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-dts": "^4.0.1",

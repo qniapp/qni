@@ -27,8 +27,7 @@
   "devDependencies": {
     "esbuild": "^0.14.14",
     "postcss-import": "^14.0.2",
-    "prettier-plugin-erb": "0.4.0",
-    "prettier-plugin-tailwindcss": "^0.1.5"
+    "prettier-plugin-erb": "0.4.0"
   },
   "eslintIgnore": [
     "application.css",
