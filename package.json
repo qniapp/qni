@@ -34,7 +34,7 @@
     "@tailwindcss/forms": "^0.4.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
-    "eslint": "^8.5.0",
+    "eslint": "~8.9",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",
     "husky": "^7.0.4",

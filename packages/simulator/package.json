@@ -37,7 +37,6 @@
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@types/qunit": "^2.11.2",
     "chai": "^4.3.4",
-    "eslint": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",
     "karma": "^6.3.9",
     "karma-chai": "^0.1.0",
