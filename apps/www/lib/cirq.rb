@@ -15,6 +15,8 @@ class cirqbridge:
         return
 
     def run_simulation(self,numofqubits,_circuit_from_qni):
+        print("python cirqbridge start")
+        sys.stdout.flush()
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
         circuit_from_qni = []
         for a in _circuit_from_qni:
@@ -23,9 +25,6 @@ class cirqbridge:
         print(circuit_from_qni)
         sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
-        print("numofqubits")
-        print(numofqubits)
-        sys.stdout.flush()
         c = cirq.Circuit()
         i = 0
         m = 0
@@ -40,67 +39,50 @@ class cirqbridge:
                 print(column_qni)
                 sys.stdout.flush()
                 if circuit_qni['type'] == u'H':
-                    target = circuit_qni['targets'][0]
+                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if not "controls" in circuit_qni:
-                        c.append(cirq.H(qubits[target]))
+                        c.append([ cirq.H(index) for index in targetqubits] )
                     else:
                         controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.H(qubits[target])))
-                if circuit_qni['type'] == u'X':
-                    target = circuit_qni['targets'][0]
-                    if not "controls" in circuit_qni:
-                        c.append(cirq.X(qubits[target]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.X(qubits[target])))
-                if circuit_qni['type'] == u'Y':
-                    target = circuit_qni['targets'][0]
-                    if not "controls" in circuit_qni:
-                        c.append(cirq.Y(qubits[target]))
-                    else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        c.append(cirq.ControlledOperation(controledqubits, cirq.Y(qubits[target])))
-                elif circuit_qni['type'] == u'Measure':
-                    key= 'm' + str(m)
-                    c.append(cirq.measure(qubits[j-1], key=key))
-                    m = m + 1
+                        c.append([ cirq.ControlledOperation(controledqubits, cirq.H(index)) for index in targetqubits ])
                 elif circuit_qni['type'] == u'|0>':
-                    target = circuit_qni['targets'][0]
-                    c.append(cirq.ops.reset(qubits[target]))
+                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                    c.append([ cirq.ops.reset(index) for index in targetqubits] )
                 elif circuit_qni['type'] == u'|1>':
-                    target = circuit_qni['targets'][0]
-                    c.append(cirq.ops.reset(qubits[target]))
-                    c.append(cirq.X(qubits[target]))
+                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                    c.append([ cirq.ops.reset(index) for index in targetqubits] )
+                    c.append([ cirq.X(index) for index in targetqubits] )
                 elif circuit_qni['type'] == u'':
                     pass #nop
                 else:
                     print("unsupported gate", circuit_qni['type'])
             print("circuit column", column_qni)
 
-        print('Cirq circiuts')
+        print("")
+        print('Cirq circiut')
         print(c)
-        print('Cirq start:')
         cirq_simulator = cirq.Simulator()
-        cirq_results = cirq_simulator.simulate(c)
-        print('Cirq end')
-        print('Cirq print result:')
-        print(cirq_results)
+        cirq_result = cirq_simulator.simulate(c)
+        print('Cirq result:')
+        print(cirq_result)
         sys.stdout.flush()
 
-        print('qsim results:')
         qsim_simulator = qsimcirq.QSimSimulator()
-        qsim_results = qsim_simulator.simulate(c)
-        print(qsim_results)
+        qsim_result = qsim_simulator.simulate(c)
+        print('qsim result:')
+        print(qsim_result)
         sys.stdout.flush()
 
-        print('qsim GPU results:')
         gpu_options = qsimcirq.QSimOptions(use_gpu=True)
         qsim_simulator = qsimcirq.QSimSimulator(qsim_options=gpu_options)
-        qsim_gpu_results = qsim_simulator.simulate(c)
-        print(qsim_gpu_results)
+        qsim_gpu_result = qsim_simulator.simulate(c)
+        print('qsim GPU result:')
+        print(qsim_gpu_result)
         sys.stdout.flush()
+        print("")
 
         print("python cirqbridge end")
+        sys.stdout.flush()
         #return (result.final_state_vector)
 
 PYTHON
@@ -159,7 +141,9 @@ class Cirq
       when 'Measure'
         # {"type"=>"Measure", "flag"=>""}
         measured_bits[bit] = [0, 1].sample # rubocop:disable Performance/CollectionLiteralInLoop
-      when '1'
+      when '|0>'
+        # NOP
+      when '|1>'
         # NOP
       else
         raise "Unknown operation: #{each.inspect}"
