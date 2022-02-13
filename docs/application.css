@@ -4453,6 +4453,10 @@ circuit-editor {
   margin-top: 0.25rem;
 }
 
+.mr-16 {
+  margin-right: 4rem;
+}
+
 .block {
   display: block;
 }
@@ -4870,6 +4874,11 @@ circuit-editor {
   padding-right: 2rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .pl-4 {
   padding-left: 1rem;
 }
@@ -4908,6 +4917,10 @@ circuit-editor {
 
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
 }
 
 .text-center {
