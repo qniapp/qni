@@ -32,8 +32,8 @@
   "devDependencies": {
     "@prettier/plugin-ruby": "1.5.5",
     "@tailwindcss/forms": "^0.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.10.2",
+    "@typescript-eslint/eslint-plugin": "~5.11",
+    "@typescript-eslint/parser": "~5.11",
     "eslint": "~8.9",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",

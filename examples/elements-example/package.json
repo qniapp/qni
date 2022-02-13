@@ -21,8 +21,6 @@
     "morgan": "~1.10"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.8.1",
-    "@typescript-eslint/parser": "^5.8.1",
     "esbuild": "^0.14.5"
   },
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
