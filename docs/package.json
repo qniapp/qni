@@ -25,7 +25,6 @@
     "@qni/simulator": "^0.0.32"
   },
   "devDependencies": {
-    "esbuild": "^0.14.14",
     "postcss-import": "^14.0.2",
     "prettier-plugin-erb": "0.4.0"
   },

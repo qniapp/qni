@@ -20,8 +20,6 @@
     "http-errors": "~2.0",
     "morgan": "~1.10"
   },
-  "devDependencies": {
-    "esbuild": "^0.14.5"
-  },
+  "devDependencies": {},
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

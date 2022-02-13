@@ -56,7 +56,6 @@
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
     "autoprefixer": "^10.4.0",
-    "esbuild": "~0.14",
     "eslint-config-prettier": "~8.3",
     "eslint-import-resolver-typescript": "~2.5",
     "eslint-plugin-github": "~4.3",
