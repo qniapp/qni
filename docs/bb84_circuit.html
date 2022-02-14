@@ -4,10 +4,32 @@ title: BB84 回路
 description: 量子鍵配送を量子回路として実装
 ---
 
-<div class="relative mb-10 rounded-2xl bg-gray-50 p-8">
-  <div class="overflow-scroll">
+<p>
+  量子回路として実装した BB84 プロトコルを動かしてみましょう。
+  今回の回路は、アリス、イブ、ボブそれぞれが持つ量子ビットを表現するために、ワイヤが 3 本あります。
+  一番上がアリスの量子ビット、真ん中がイブ、三番目がボブの量子ビットを表します。
+</p>
+
+<p>
+  アリスは量子鍵の 1 ビット分を表す量子ビットに状態をセットし、ボブに送ろうとします。
+  イブはアリスとボブの中間で量子ビットを横取りし、真ん中のワイヤで盗聴 (測定)
+  した後、別の量子ビットをボブに送ります。 ボブは受け取った量子ビットにランダムに H
+  ゲートを適用してから測定します。
+</p>
+
+<div class="relative mb-10 rounded-2xl bg-gray-50">
+  <div class="overflow-scroll p-8">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
+        <div
+          id="palette"
+          class="absolute left-0 top-0 ml-6 mt-8 flex w-min rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+        >
+          <palette-dropzone>
+            <bloch-display></bloch-display>
+          </palette-dropzone>
+        </div>
+
         <div
           class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
         >
@@ -24,12 +46,12 @@ description: 量子鍵配送を量子回路として実装
         </div>
 
         <quantum-circuit
-          class="mb-40"
+          class="mt-32 mb-40"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
           data-min-step-count="8"
-          data-json='{"cols":[["|0>"],["H"],["Measure>aliceX"],["|0>"],["H"],["Measure>aliceH"],["|0>"],["X<aliceX"],["Bloch"],["H<aliceH"],["Bloch"],["Swap","Swap"],[1,"H"],[1,"Measure>eveX"],[1,"|0>"],[1,"X<eveX"],[1,"H"],[1,1,"|0>"],[1,1,"H"],[1,1,"Measure>bobH"],[1,"Swap","Swap"],[1,1,"H<bobH"],[1,1,"Measure"]]}'
+          data-json='{"cols":[["|0>"],["H"],["Measure>aliceX"],["|0>"],["H"],["Measure>aliceH"],["|0>"],["X<aliceX"],["Bloch"],["H<aliceH"],["Bloch"],["Swap","Swap"],[1,"H"],[1,"Measure>eveX"],[1,"|0>"],[1,"X<eveX"],[1,"H"],[1,"Bloch"],[1,1,"|0>"],[1,1,"H"],[1,1,"Measure>bobH"],[1,"Swap","Swap"],[1,1,"H<bobH"],[1,1,"Bloch"],[1,1,"Measure"]]}'
         >
         </quantum-circuit>
 
@@ -217,3 +239,63 @@ description: 量子鍵配送を量子回路として実装
     </li>
   </ul>
 </template>
+
+<h2>アリス</h2>
+
+<p>
+  アリスはまず、盗聴を検出するための仕掛けを施した量子ビット {% include ket.html label="0" %} または
+  {% include ket.html label="1" %} を作るためのランダム値を 2 つ作ります。 最初に、状態 {% include
+  ket.html label="0" %} または {% include ket.html label="1" %}
+  を決めるためのランダムデータを作るため、<a href="./measurement_operation.html"
+    >量子乱数ジェネレータ</a
+  >で <code>0</code> または <code>1</code> を作り、変数 <code>aliceX</code> にセットします
+  (MEASUREMENT ゲートの上の文字は測定で得られた <code>0</code> または
+  <code>1</code> を変数にセットすることを表します)。同様に、H
+  ゲートを適用する/しないをランダムに決めるための変数
+  <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
+</p>
+
+<p>
+  次に、このランダムな値を持つ 2 つの変数 <code>aliceX</code> と
+  <code>aliceH</code> を使って、量子鍵の 1 ビット分を作ります。 {% include ket.html label="0" %}
+  に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ X ゲートを適用します (X
+  ゲートの上の <code>if aliceX</code> がこの適用条件を表します)。
+  これによって、アリスの量子ビットはランダムに {% include ket.html label="0" %} または {% include
+  ket.html label="1" %} の状態を持ちます。 同様に、ランダムな変数 <code>aliceH</code> の値が
+  <code>1</code> だった場合に H ゲートを適用します。 できあがった量子ビットを
+  (イブにすぐ横取りされてしまうものの) ボブへと送ります。
+</p>
+
+<p>
+  アリスが送信する量子ビットの状態は、左から 2 つめのブロッホ球で確認できます。 「{% include
+  ket.html label="0" %} または {% include ket.html label="1" %}」の 2 通り掛ける、「H
+  を適用する/しない」の 2 通りで、計 4 通りの状態を持つことを確認してください。
+</p>
+
+<h2>イブ</h2>
+
+<p>
+  イブは横取りした量子ビットを盗聴し、ボブへ別の量子ビットを送ります。 しかしイブは<a
+    href="./no_cloning_theorem.html"
+    >クローン禁止定理</a
+  >によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
+  さらにアリスが {% include ket.html label="0" %} と {% include ket.html label="1" %}
+  のどちらを送ったのか、さらに H ゲートを適用したかどうかが測定結果からは分からないため、測定結果は
+  <code>1/2</code> の確率でしか当たりません。 また盗聴行為が直接バレるのを防ぐため、X ゲートと H
+  ゲートでアリスの量子ビットに偽装した新たな量子ビットをボブへ送る必要があります。
+</p>
+
+<p>
+  イブが送信する量子ビットの状態は、左から 3
+  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ
+  <code>3/4</code> の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
+</p>
+
+<h2>ボブ</h2>
+
+<p>
+  ボブは BB84 プロトコルに従ってランダムに H ゲートを適用し、アリスからの量子ビットを測定します。
+  そして H
+  ゲートを適用した/しないがアリスと一致する量子ビットのうち、半分の測定結果を突き合わせ、等しいかどうかを確認します。
+  このとき、イブが盗聴した影響でその約半分に不一致が置こるため、イブの盗聴が判明します。
+</p>
