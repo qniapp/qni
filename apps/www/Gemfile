@@ -35,6 +35,7 @@ gem 'better_html'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'grover'
 gem 'serviceworker-rails'
+gem 'pycall'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

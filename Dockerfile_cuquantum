@@ -1,0 +1,105 @@
+# 1. The Qniapp is built as follows:
+#   $ git clone https://github.com/qniapp/qni.git
+#   $ cd qni
+#   $ docker build -f Dockerfile_cuquantum . -t qni_cuquantum
+# 2. Then run by:
+#   $ docker run -p 3000:3000 --gpus all --rm -it qni_cuquantum
+# 3. access http://127.0.0.1:3000 in your browser
+
+# Troubleshooting
+#   If the port 3000 is already used, change 3000 to 4000 (for example)
+#    $ docker run -p 4000:3000 --gpus all --rm -it qni_cuquantum
+#   and access http://127.0.0.1:4000 in your browser
+
+FROM nvidia/cuda:11.5.1-devel-ubuntu20.04
+
+RUN apt update
+RUN apt -y upgrade
+RUN apt install -y sudo
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt install -y tzdata
+# set your timezone
+ENV TZ Asia/Tokyo
+RUN echo "${TZ}" > /etc/timezone \
+  && rm /etc/localtime \
+  && ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+  && dpkg-reconfigure -f noninteractive tzdata
+
+RUN apt install -y build-essential
+RUN apt install -y git wget time curl libssl-dev zlib1g-dev libpq-dev
+RUN apt install -y redis-server
+RUN apt install -y ng-common ng-cjk emacs-nox
+RUN apt install -y postgresql postgresql-contrib
+
+## cuda
+RUN apt -y install cuda-drivers
+RUN apt -y install libcutensor1 libcutensor-dev libcutensor-doc
+RUN wget https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz
+RUN tar xvfJ cuquantum-linux-x86_64-0.1.0.30-archive.tar.xz -C /tmp
+RUN cd /tmp/cuquantum-linux-x86_64-0.1.0.30-archive ; tar cf - . | (cd /usr/local; tar vxf -)
+
+## node.js
+RUN apt install -y nodejs npm && npm install n -g &&  n stable && apt purge -y nodejs npm
+
+## npm
+RUN curl -qL https://www.npmjs.com/install.sh | sh
+
+## yarn
+RUN npm install -g yarn
+
+## ruby
+RUN wget https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.4.tar.gz && tar xvfz ruby-2.7.4.tar.gz && cd ruby-2.7.4 && ./configure && make && make install
+
+## python3
+RUN apt install -y python3 python3-pip
+RUN sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+
+ARG DOCKER_UID=1000
+ARG DOCKER_USER=docker
+ARG DOCKER_PASSWORD=docker
+RUN useradd -u $DOCKER_UID -m $DOCKER_USER --shell /bin/bash && echo "$DOCKER_USER:$DOCKER_PASSWORD" | chpasswd && echo "$DOCKER_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER ${DOCKER_USER}
+RUN echo "\n\
+[user]\n\
+        email = ${GIT_EMAIL}\n\
+        name = ${GIT_NAME}\n\
+" > /home/$DOCKER_USER/.gitconfig
+
+SHELL ["/bin/bash", "-l", "-c"] 
+
+# cuQuantum
+ENV CUQUANTUM_ROOT=/usr/local
+ENV CUSTATEVEC_ROOT=/usr/local
+ENV CUTENSOR_ROOT=/usr
+ENV CUDA_PATH=/usr/local/cuda
+ENV CUQUANTUM_IGNORE_SOLVER=1
+RUN cd /home/$DOCKER_USER && pip3 install cupy-cuda115 numpy scipy cython
+RUN cd /home/$DOCKER_USER && git clone https://github.com/NVIDIA/cuQuantum.git && cd cuQuantum/python && pip3 install -v .
+
+# Qni
+RUN cd /home/$DOCKER_USER && echo "cd /home/$DOCKER_USER" >> ~/.bashrc
+RUN cd /home/$DOCKER_USER && git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+RUN cd /home/$DOCKER_USER && git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN cd /home/$DOCKER_USER && echo "export PATH=$PATH:$HOME/.rbenv/bin" >> ~/.bashrc
+RUN cd /home/$DOCKER_USER && echo "export CUQUANTUM_ROOT=/usr/local" >> ~/.bashrc
+RUN cd /home/$DOCKER_USER && echo "export LD_LIBRARY_PATH=${CUQUANTUM_ROOT}/lib64:${LD_LIBRARY_PATH}" >> ~/.bashrc
+RUN cd /home/$DOCKER_USER && git clone https://github.com/nakatamaho/qni.git
+RUN cd /home/$DOCKER_USER && cd qni && git fetch origin cuquantum-backend
+RUN cd /home/$DOCKER_USER && cd qni && git checkout cuquantum-backend
+
+## settings for rails
+RUN cd /home/$DOCKER_USER && cd qni/apps/www && bundle config set path 'vendor/cache' && bundle install && yarn install
+RUN cd /home/$DOCKER_USER && cd qni && yarn build && cd apps/www && ./bin/rails css:build && ./bin/rails javascript:build
+
+## settings for postgresql
+RUN sudo -u postgres service postgresql start && sudo -u postgres psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && sudo -u postgres createdb -O docker docker
+RUN cd /home/$DOCKER_USER && sudo -u postgres service postgresql start && cd qni/apps/www && ./bin/rails db:create && ./bin/rails db:migrate && ./bin/rails db:fixtures:load
+
+RUN cd /home/$DOCKER_USER && echo -e "#!/usr/bin/env bash\n\
+export PYTHONIOENCODING=utf-8 \n\
+sudo -u postgres service postgresql start \n\
+cd /home/${DOCKER_USER} ; source ~/.bashrc ; cd qni/apps/www \n\
+./bin/rails s -b 0.0.0.0" > /tmp/startup.sh
+RUN chmod 744 /tmp/startup.sh
+ENTRYPOINT ["/bin/sh", "-c", "/tmp/startup.sh"]
