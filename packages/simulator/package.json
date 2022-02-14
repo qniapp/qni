@@ -1,6 +1,6 @@
 {
   "name": "@qni/simulator",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "Quantum simulator for @qni.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -29,7 +29,7 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@qni/elements": "^0.0.32",
+    "@qni/elements": "^0.0.33",
     "fp-ts": "^2.11.5"
   },
   "devDependencies": {
