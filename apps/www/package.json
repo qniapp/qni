@@ -49,6 +49,7 @@
     "@rails/ujs": "~7.0",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
+    "esbuild": "^0.14.21",
     "puppeteer": "~13.1",
     "turbolinks": "^5.2.0"
   },
@@ -56,6 +57,7 @@
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
     "autoprefixer": "^10.4.0",
+    "esbuild": "^0.14.21",
     "eslint-config-prettier": "~8.3",
     "eslint-import-resolver-typescript": "~2.5",
     "eslint-plugin-github": "~4.3",
