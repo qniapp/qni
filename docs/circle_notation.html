@@ -1,189 +1,448 @@
----
-layout: page
-title: 状態ベクトル表示
-description: 量子ビット状態のグラフィカルな表現
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>状態ベクトル表示</title>
 
-<p>
-  <a href="superposition.html">重ね合わせ状態</a>では、Qni
-  の状態ベクトル表示を使って重ね合わせ状態と位相について簡単に紹介しました。
-  本チュートリアルでは全体を通して、数式ではなくこの状態ベクトル表示で量子ビットの状態を表現します。
-  そこであらためて、状態ベクトル表示の正しい読み方、特に<span class="font-bold">振幅</span>や<span
-    class="font-bold"
-    >位相</span
-  >の概念がどう表されるか詳しく見ていきましょう。
-</p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<h2>振幅と確率</h2>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-<p>
-  量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、 <code>|0⟩</code> と
-  <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした (<a
-    href="q_bit.html"
-    >量子ビット</a
-  >)。 状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径
-  x 半径 x π) はその確率に正比例します。
-  以下の円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。たしかに振幅の大きさの
-  2 乗が確率と等しくなっていることを確認しましょう。
-</p>
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
 
-<div class="flex flex-row justify-center space-x-4 pb-10">
-  <circle-notation id="circle-notation-A" data-size="xl" data-show-kets></circle-notation>
-  <circle-notation id="circle-notation-B" data-size="xl" data-show-kets></circle-notation>
-  <circle-notation id="circle-notation-C" data-size="xl" data-show-kets></circle-notation>
-  <circle-notation id="circle-notation-D" data-size="xl" data-show-kets></circle-notation>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex w-64 flex-col">
+          <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+            <div class="flex flex-shrink-0 items-center px-8">
+              <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+              <span
+                class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+                >Qni</span
+              >
+            </div>
+            <div class="mt-5 mb-14 flex flex-grow flex-col">
+              <nav class="flex-1 space-y-1 bg-white px-6">
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU
+                </div>
 
-  <script type="module">
-    import { Complex } from './application.js'
+                <a
+                  href="./index.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  はじめに
+                </a>
 
-    let circleNotationA = document.getElementById('circle-notation-A')
-    let circleNotationB = document.getElementById('circle-notation-B')
-    let circleNotationC = document.getElementById('circle-notation-C')
-    let circleNotationD = document.getElementById('circle-notation-D')
+                <a
+                  href="./qpu.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU とは
+                </a>
 
-    circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
-    circleNotationC.setAmplitudes({
-      0: new Complex(1 / Math.sqrt(2), 0),
-      1: new Complex(1 / Math.sqrt(2), 0),
-    })
-    circleNotationD.setAmplitudes({
-      0: new Complex(Math.sqrt(0.8), 0),
-      1: new Complex(Math.sqrt(0.2), 0),
-    })
-  </script>
-</div>
+                <a
+                  href="./what_qpu_do_faster.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU は何が得意？
+                </a>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
-  振幅は一般に複素数であるため (<a href="q_bit.html">量子ビット</a
-  >を参照)、ポップアップに表示される振幅は複素数のフォーマットで出力されます。
-  今までは「確率は振幅の 2 乗」と説明してきましたが、複素数であることを考えると「確率は振幅の<span
-    class="font-bold"
-    >大きさ</span
-  >の 2 乗」がより正確な表現です。
-</div>
+                <a
+                  href="./qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU 演算
+                </a>
 
-<h2>位相</h2>
+                <a
+                  href="./qni_intro.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  Qni 入門
+                </a>
 
-<p>
-  <code>|0⟩</code> を基準として <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code
-    >0</code
-  >
-  から <code>2π (360°)</code> まで持つことができます。
-  状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は <code>|0⟩</code> に対する
-  <code>|1⟩</code> の相対的な回転を表すので、<span class="font-bold">相対位相</span>とも呼ばれます。
-</p>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子ビット
+                </div>
 
-<div class="flex flex-row justify-center space-x-4 pb-10">
-  <div class="flex flex-col items-center">
-    <code class="pb-2">π/4</code>
-    <circle-notation id="circle-notation-phase-π/4" data-size="xl" data-show-kets></circle-notation>
-  </div>
-  <div class="flex flex-col items-center">
-    <code class="pb-2">π/2</code>
-    <circle-notation id="circle-notation-phase-π/2" data-size="xl" data-show-kets></circle-notation>
-  </div>
-  <div class="flex flex-col items-center">
-    <code class="pb-2">π</code>
-    <circle-notation id="circle-notation-phase-π" data-size="xl" data-show-kets></circle-notation>
-  </div>
-  <div class="flex flex-col items-center">
-    <code class="pb-2">3π/2</code>
-    <circle-notation
-      id="circle-notation-phase-3π/2"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
-  </div>
-  <div class="flex flex-col items-center">
-    <code class="pb-2">2π</code>
-    <circle-notation id="circle-notation-phase-2π" data-size="xl" data-show-kets></circle-notation>
-  </div>
+                <a
+                  href="./p_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  確率的ビット
+                </a>
 
-  <script type="module">
-    import { Complex } from './application.js'
+                <a
+                  href="./superposition.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  重ね合わせ状態
+                </a>
 
-    let circleNotationA = document.getElementById('circle-notation-phase-π/4')
-    let circleNotationB = document.getElementById('circle-notation-phase-π/2')
-    let circleNotationC = document.getElementById('circle-notation-phase-π')
-    let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
-    let circleNotationE = document.getElementById('circle-notation-phase-2π')
+                <a
+                  href="./q_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子ビット
+                </a>
 
-    circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
-    circleNotationB.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, Math.sqrt(0.5)),
-    })
-    circleNotationC.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-    circleNotationD.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationE.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
-    })
-  </script>
-</div>
+                <a
+                  href="./circle_notation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  状態ベクトル表示
+                </a>
 
-<p>
-  位相は相対的な値なので、ある種の QPU 演算によって
-  <code>|0⟩</code> が回転している場合には、その角度を基準とした <code>|1⟩</code> の回転を考えます。
-  たとえば、以下の 2 つの状態は相対的にはどちらも
-  <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
-</p>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU 演算その 1
+                </div>
 
-<div class="flex flex-row justify-center space-x-4 pb-10">
-  <circle-notation
-    id="circle-notation-phase-3π/2-a"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation>
-  <circle-notation
-    id="circle-notation-phase-3π/2-b"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation>
+                <a
+                  href="./cpu_vs_qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CPU 演算との違い
+                </a>
 
-  <script type="module">
-    import { Complex } from './application.js'
+                <a
+                  href="./not_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子 NOT ゲート (X ゲート)
+                </a>
 
-    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
-    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+                <a
+                  href="./h_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  H ゲート
+                </a>
 
-    circleNotationA.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
-  </script>
-</div>
+                <a
+                  href="./write_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  WRITE 命令
+                </a>
 
-<h2>まとめ</h2>
+                <a
+                  href="./measurement_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  MEASUREMENT (測定) 命令
+                </a>
 
-<p>
-  量子ビットの中身を状態ベクトル表示で読む方法を説明しました。 量子ビットには、振幅の大きさ
-  (またはそれを 2 乗した確率) と位相という、まったく独立した 2 つの情報を持たせることができます。
-  状態ベクトル表示は振幅の大きさを青色の円の半径、位相を時計の針の角度として表示します。
-</p>
+                <a
+                  href="./no_cloning_theorem.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CLONE (複製) 命令!?
+                </a>
 
-<template id="circle-notation-popup">
-  <ul class="list-none">
-    <li>
-      振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
-    </li>
-  </ul>
-</template>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子暗号通信
+                </div>
+
+                <a
+                  href="./quantum_key_distribution.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子鍵配送
+                </a>
+
+                <a
+                  href="./bb84_protocol.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 プロトコル
+                </a>
+
+                <a
+                  href="./bb84_circuit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 回路
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-0 flex-1 flex-col overflow-hidden">
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div class="mt-5 sm:mb-12 lg:mb-16">
+                <div class="mb-10 border-b border-gray-200 pb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                      状態ベクトル表示
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">量子ビット状態のグラフィカルな表現</p>
+                </div>
+                <div class="prose">
+                  <p>
+                    <a href="superposition.html">重ね合わせ状態</a>では、Qni
+                    の状態ベクトル表示を使って重ね合わせ状態と位相について簡単に紹介しました。
+                    本チュートリアルでは全体を通して、数式ではなくこの状態ベクトル表示で量子ビットの状態を表現します。
+                    そこであらためて、状態ベクトル表示の正しい読み方、特に<span class="font-bold"
+                      >振幅</span
+                    >や<span class="font-bold">位相</span
+                    >の概念がどう表されるか詳しく見ていきましょう。
+                  </p>
+
+                  <h2>振幅と確率</h2>
+
+                  <p>
+                    量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、
+                    <code>|0⟩</code> と <code>|1⟩</code> それぞれの振幅の 2
+                    乗を計算することによって求められるのでした (<a href="q_bit.html">量子ビット</a
+                    >)。
+                    状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積
+                    (半径 x 半径 x π) はその確率に正比例します。
+                    以下の円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。たしかに振幅の大きさの
+                    2 乗が確率と等しくなっていることを確認しましょう。
+                  </p>
+
+                  <div class="flex flex-row justify-center space-x-4 pb-10">
+                    <circle-notation
+                      id="circle-notation-A"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+                    <circle-notation
+                      id="circle-notation-B"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+                    <circle-notation
+                      id="circle-notation-C"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+                    <circle-notation
+                      id="circle-notation-D"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+
+                    <script type="module">
+                      import { Complex } from './application.js'
+
+                      let circleNotationA = document.getElementById('circle-notation-A')
+                      let circleNotationB = document.getElementById('circle-notation-B')
+                      let circleNotationC = document.getElementById('circle-notation-C')
+                      let circleNotationD = document.getElementById('circle-notation-D')
+
+                      circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
+                      circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
+                      circleNotationC.setAmplitudes({
+                        0: new Complex(1 / Math.sqrt(2), 0),
+                        1: new Complex(1 / Math.sqrt(2), 0),
+                      })
+                      circleNotationD.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.8), 0),
+                        1: new Complex(Math.sqrt(0.2), 0),
+                      })
+                    </script>
+                  </div>
+
+                  <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+                    振幅は一般に複素数であるため (<a href="q_bit.html">量子ビット</a
+                    >を参照)、ポップアップに表示される振幅は複素数のフォーマットで出力されます。
+                    今までは「確率は振幅の 2
+                    乗」と説明してきましたが、複素数であることを考えると「確率は振幅の<span
+                      class="font-bold"
+                      >大きさ</span
+                    >の 2 乗」がより正確な表現です。
+                  </div>
+
+                  <h2>位相</h2>
+
+                  <p>
+                    <code>|0⟩</code> を基準として
+                    <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code>0</code> から
+                    <code>2π (360°)</code> まで持つことができます。
+                    状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は
+                    <code>|0⟩</code> に対する <code>|1⟩</code> の相対的な回転を表すので、<span
+                      class="font-bold"
+                      >相対位相</span
+                    >とも呼ばれます。
+                  </p>
+
+                  <div class="flex flex-row justify-center space-x-4 pb-10">
+                    <div class="flex flex-col items-center">
+                      <code class="pb-2">π/4</code>
+                      <circle-notation
+                        id="circle-notation-phase-π/4"
+                        data-size="xl"
+                        data-show-kets
+                      ></circle-notation>
+                    </div>
+                    <div class="flex flex-col items-center">
+                      <code class="pb-2">π/2</code>
+                      <circle-notation
+                        id="circle-notation-phase-π/2"
+                        data-size="xl"
+                        data-show-kets
+                      ></circle-notation>
+                    </div>
+                    <div class="flex flex-col items-center">
+                      <code class="pb-2">π</code>
+                      <circle-notation
+                        id="circle-notation-phase-π"
+                        data-size="xl"
+                        data-show-kets
+                      ></circle-notation>
+                    </div>
+                    <div class="flex flex-col items-center">
+                      <code class="pb-2">3π/2</code>
+                      <circle-notation
+                        id="circle-notation-phase-3π/2"
+                        data-size="xl"
+                        data-show-kets
+                      ></circle-notation>
+                    </div>
+                    <div class="flex flex-col items-center">
+                      <code class="pb-2">2π</code>
+                      <circle-notation
+                        id="circle-notation-phase-2π"
+                        data-size="xl"
+                        data-show-kets
+                      ></circle-notation>
+                    </div>
+
+                    <script type="module">
+                      import { Complex } from './application.js'
+
+                      let circleNotationA = document.getElementById('circle-notation-phase-π/4')
+                      let circleNotationB = document.getElementById('circle-notation-phase-π/2')
+                      let circleNotationC = document.getElementById('circle-notation-phase-π')
+                      let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
+                      let circleNotationE = document.getElementById('circle-notation-phase-2π')
+
+                      circleNotationA.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(0.5, 0.5),
+                      })
+                      circleNotationB.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(0, Math.sqrt(0.5)),
+                      })
+                      circleNotationC.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(-Math.sqrt(0.5), 0),
+                      })
+                      circleNotationD.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(0, -Math.sqrt(0.5)),
+                      })
+                      circleNotationE.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(Math.sqrt(0.5), 0),
+                      })
+                    </script>
+                  </div>
+
+                  <p>
+                    位相は相対的な値なので、ある種の QPU 演算によって
+                    <code>|0⟩</code> が回転している場合には、その角度を基準とした
+                    <code>|1⟩</code> の回転を考えます。 たとえば、以下の 2
+                    つの状態は相対的にはどちらも
+                    <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
+                  </p>
+
+                  <div class="flex flex-row justify-center space-x-4 pb-10">
+                    <circle-notation
+                      id="circle-notation-phase-3π/2-a"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+                    <circle-notation
+                      id="circle-notation-phase-3π/2-b"
+                      data-size="xl"
+                      data-show-kets
+                    ></circle-notation>
+
+                    <script type="module">
+                      import { Complex } from './application.js'
+
+                      let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
+                      let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+
+                      circleNotationA.setAmplitudes({
+                        0: new Complex(Math.sqrt(0.5), 0),
+                        1: new Complex(0, -Math.sqrt(0.5)),
+                      })
+                      circleNotationB.setAmplitudes({
+                        0: new Complex(0.5, 0.5),
+                        1: new Complex(0.5, -0.5),
+                      })
+                    </script>
+                  </div>
+
+                  <h2>まとめ</h2>
+
+                  <p>
+                    量子ビットの中身を状態ベクトル表示で読む方法を説明しました。
+                    量子ビットには、振幅の大きさ (またはそれを 2 乗した確率)
+                    と位相という、まったく独立した 2 つの情報を持たせることができます。
+                    状態ベクトル表示は振幅の大きさを青色の円の半径、位相を時計の針の角度として表示します。
+                  </p>
+
+                  <template id="circle-notation-popup">
+                    <ul class="list-none">
+                      <li>
+                        振幅:
+                        <span
+                          class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"
+                        ></span>
+                        <span
+                          class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"
+                        ></span>
+                      </li>
+                      <li>
+                        確率:
+                        <span
+                          class="circle-notation-popup__probability text-eel font-mono font-bold"
+                        ></span>
+                      </li>
+                      <li>
+                        位相:
+                        <span
+                          class="circle-notation-popup__phase text-eel font-mono font-bold"
+                        ></span>
+                      </li>
+                    </ul>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

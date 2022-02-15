@@ -14,8 +14,8 @@
     "packages/simulator",
     "packages/elements",
     "apps/www",
-    "examples/elements-example",
-    "docs"
+    "apps/tutorial",
+    "examples/elements-example"
   ],
   "scripts": {
     "build": "lerna run build --stream",

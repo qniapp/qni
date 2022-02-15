@@ -1,0 +1,338 @@
+---
+layout: page
+title: MEASUREMENT (測定) 命令
+description: 量子ビットから 0 または 1 を読み出す
+---
+
+<h2>単純な状態の測定</h2>
+
+<p>
+  MEASUREMENT (測定) 命令は量子ビットから <code>0</code> または <code>1</code> の値を読み出します。
+  たとえば以下のように量子ビット状態が {% include ket.html label="0" %} または {% include ket.html
+  label="1" %} の状態にある場合、測定するとそのまま同じ {% include ket.html label="0" %} と {%
+  include ket.html label="1" %} が返されます。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-0" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-1" data-size="xl" data-show-kets></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-2" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation id="circle-notation-3" data-size="xl" data-show-kets></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotation0 = document.getElementById('circle-notation-0')
+    let circleNotation1 = document.getElementById('circle-notation-1')
+    let circleNotation2 = document.getElementById('circle-notation-2')
+    let circleNotation3 = document.getElementById('circle-notation-3')
+
+    circleNotation0.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotation1.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotation2.setAmplitudes({ 0: 0, 1: 1 })
+    circleNotation3.setAmplitudes({ 0: 0, 1: 1 })
+  </script>
+</div>
+
+<h2>重ね合わせ状態の測定</h2>
+
+<p>
+  量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は {% include
+  ket.html label="0" %} と {% include ket.html label="1" %} の確率 (青い円の面積 = 振幅の大きさの 2
+  乗) に応じて決まります。 つまり、測定の結果にはランダム性があります。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-superposition-before-MEASUREMENT"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <measurement-gate data-size="base"></measurement-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <div class="flex flex-col">
+        <div class="mb-8 flex flex-row">
+          <div class="my-auto mr-4 text-purple-600">25%</div>
+          <circle-notation id="circle-notation-4" data-size="xl" data-show-kets></circle-notation>
+        </div>
+        <div class="flex flex-row">
+          <div class="my-auto mr-4 text-purple-600">75%</div>
+          <circle-notation id="circle-notation-5" data-size="xl" data-show-kets></circle-notation>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circuleNotationBefore = document.getElementById(
+      'circle-notation-superposition-before-MEASUREMENT'
+    )
+    let circleNotation4 = document.getElementById('circle-notation-4')
+    let circleNotation5 = document.getElementById('circle-notation-5')
+
+    circuleNotationBefore.setAmplitudes({
+      0: new Complex(0.25, 0.43301),
+      1: new Complex(0.43301, -0.75),
+    })
+    circleNotation4.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotation5.setAmplitudes({ 0: 0, 1: 1 })
+  </script>
+</div>
+
+<p>
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、MEASUREMENT 命令は WRITE
+  命令と同じく逆演算を持ちません。
+  また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
+</p>
+
+<h2>量子乱数ジェネレータ</h2>
+
+<p>
+  MEASUREMENT 命令とこれまでに学んだ WRITE 命令、H
+  ゲートを組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
+  WRITE で {% include ket.html label="0" %} に初期化した量子ビットを H
+  ゲートで重ね合わせ状態にし、MEASUREMENT 命令で測定することで <code>0</code> または
+  <code>1</code> をランダムに得ることができます。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>"],["H"],["Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
+  単なる乱数生成と言ってもその用途は広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法といった乱数を使ったアルゴリズムの速度や精度向上にもつながります。
+  実際に、量子乱数の生成は<a href="https://www.quantumbusinessmagazine.com/post/cambrid"
+    >すでにサービス化もされています</a
+  >。
+</p>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        {% include angle.svg class="h-5 w-5" %}
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      {% include trash.svg class="h-4 w-4" %}
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-gray-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>

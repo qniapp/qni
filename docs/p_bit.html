@@ -1,130 +1,355 @@
----
-layout: page
-title: 確率的ビット
-description: 量子ビットの確率的な性質
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>確率的ビット</title>
 
-<p>
-  量子コンピュータの計算結果を取り出すには、測定という確率に基づいた奇妙な操作があるのでした (<a
-    href="./what_qpu_do_faster.html"
-    >QPU は何が得意?</a
-  >
-  参照)。 序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
-</p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<p>
-  この節では、ふつうのコンピュータが持つビット (古典ビット)
-  をおさらいした後、確率と確率的ビットを学びます。
-  確率的ビットは量子コンピュータの量子ビットによく似ているので、確率的ビットを通して量子ビットの重要な側面を理解できます。
-  ここでは、確率的ビットの状態はどんなものか、また測定によって確率的ビットからどのように情報を取り出すことができるかを学びます。
-</p>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-<h2>古典ビット</h2>
-<p>
-  ご存知のように、従来のビット (古典ビット{% include margin_note.html
-  content="量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。"
-  %}) は <code>0</code> または
-  <code>1</code> のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は
-  <code>0</code> か <code>1</code> のみで、また計算中のその中身 (状態) も常に <code>0</code> か
-  <code>1</code> です。
-</p>
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
 
-<h2>確率</h2>
-<p>
-  確率とは「元旦には <code>10%</code> の確率で雪が降る」とか「<code>80%</code>
-  の確率で日本列島に台風が上陸する」といったイベントが起こる可能性を数値化したものです。確実に発生するイベントなら
-  <code>100%</code>、絶対に発生しないイベントなら <code>0%</code> の確率を持ちます。
-</p>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex w-64 flex-col">
+          <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+            <div class="flex flex-shrink-0 items-center px-8">
+              <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+              <span
+                class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+                >Qni</span
+              >
+            </div>
+            <div class="mt-5 mb-14 flex flex-grow flex-col">
+              <nav class="flex-1 space-y-1 bg-white px-6">
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU
+                </div>
 
-<p>
-  例として、コイントスを考えてみましょう。コインを投げて手でキャッチすると、「コインが表」または「コインが裏」のイベントが起こります。
-  偏りのないコインならば、それぞれのイベントの確率は <code>50%</code> ずつです。
-  また、表の出やすいコイン (表 <code>60.8%</code>、裏 <code>39.2%</code>)
-  や絶対に裏しか出ないインチキコイン (表: <code>0%</code>、裏: <code>100%</code>)
-  など、無限のバリエーションが存在します。
-</p>
+                <a
+                  href="./index.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  はじめに
+                </a>
 
-<p>
-  表と裏の確率を足すと必ず
-  <code>100%</code>
-  になることを考えると、表と裏になる確率すべての組合わせを次のグラフのように図式化できます。
-  横軸は表の出る確率 (<code>0</code>〜<code>100%</code>)、縦軸は裏の出る確率
-  (<code>0</code>〜<code>100%</code>)
-  で、さまざまなコインが持ちうる確率のすべての組合わせは青色の線分になります。
-</p>
+                <a
+                  href="./qpu.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU とは
+                </a>
 
-<p>
-  <img src="./images/p_bit_graph.png" class="h-auto w-full md:mx-auto md:w-1/3" />
-</p>
+                <a
+                  href="./what_qpu_do_faster.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU は何が得意？
+                </a>
 
-<h2>確率的ビット</h2>
+                <a
+                  href="./qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU 演算
+                </a>
 
-<p>
-  確率的ビットは、コイントスと同じ確率的な性質を持っています。計算中の確率的ビットの状態は、コインが宙に浮いていてまだ表か裏か定まっていない状態と同じと考えることができます。
-  コインの表を値 <code>0</code>、コインの裏を値
-  <code>1</code> とすると、確率的ビットはたとえば「<code>60%</code> の確率で <code>0</code>、<code
-    >40%</code
-  >
-  の確率で <code>1</code>」などという状態を取ることができます。
-</p>
+                <a
+                  href="./qni_intro.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  Qni 入門
+                </a>
 
-<p>
-  計算後、値を取り出す操作 (測定) をした後の確率的ビットは、手の中のコイン (表か裏かが定まった状態)
-  に対応します。 つまり、値を取り出した時点で確率は消え <code>0</code> か
-  <code>1</code> かが確定するので、古典ビットとまったく見分けがつきません。
-</p>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子ビット
+                </div>
 
-<p>
-  こうした確率的な情報はいったいコンピュータの計算に使えるのでしょうか？ 古典ビットの値
-  <code>0</code> と <code>1</code> は確定した値を表しているのに対し、確率的ビットはおおよその知識
-  (または知識の欠如) を表しているので、あまり役に立たないと思うかもしれません。
-  確率ビットの利点は、部分的な知識をより正確に表現できることです。
-  もし何かが完全に分かっていないのであれば、計算をあきらめるのではなくそれを認め、確率のまま計算を進めてしまおうというのが確率的ビットの考えかたです。
-</p>
+                <a
+                  href="./p_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  確率的ビット
+                </a>
 
-<h2>重ね合わせはなぜ強力?</h2>
+                <a
+                  href="./superposition.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  重ね合わせ状態
+                </a>
 
-<p>
-  確率的ビットの確率的な <code>0</code> と <code>1</code> の状態 (コインが宙を舞っている状態)
-  を重ね合わせ状態と言います。 <code>0</code> と <code>1</code> が完全に確定しない状態のまま、2
-  つの値を重ね合わせて計算を進めるイメージです。
-  よく「量子コンピュータは重ね合わせと量子もつれを使った強力なコンピュータである」と言いますが、なぜ重ね合わせが強力なのでしょうか?
-</p>
+                <a
+                  href="./q_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子ビット
+                </a>
 
-<p>
-  直感的に納得する方法の 1 つは、先ほどのグラフ上で古典ビットと確率的ビットを比べてみることです。
-  古典ビットは常に <code>0</code> または
-  <code>1</code> の状態しか取りませんから、先程のグラフ同様に表すと古典ビットの取りうる状態は 2
-  点になります。
-</p>
+                <a
+                  href="./circle_notation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  状態ベクトル表示
+                </a>
 
-<p>
-  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full md:mx-auto md:w-2/3" />
-</p>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU 演算その 1
+                </div>
 
-<p>
-  一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。このように取りうる状態の数で比較すると
-  2 個 vs. 無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
-</p>
+                <a
+                  href="./cpu_vs_qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CPU 演算との違い
+                </a>
 
-<p>
-  またはこう考えることもできます。たとえば確率的ビットが <code>0</code> になる確率を
-  <code>0.11001001011...%</code> のように好きな <code>0</code> と
-  <code>1</code> の並びにセットできるとします。 そしてそこにすべての Wikipedia の記事と YouTube
-  の全動画データ、そしてインターネットでみつかるすべての猫画像を 2 進数として埋め込みます。
-  それはなんと、確率的ビットたった 1 個に超巨大なデータを埋め込めることにほかなりません!
-</p>
+                <a
+                  href="./not_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子 NOT ゲート (X ゲート)
+                </a>
 
-<figure>
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-  <figcaption class="pt-4 text-center">
-    すべての Wikipedia 記事と YouTube 動画、そしてネットの猫画像をまとめて 0 と 1
-    で表現し、確率的ビットが <code>0</code> となる確率に埋め込む!
-  </figcaption>
-</figure>
+                <a
+                  href="./h_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  H ゲート
+                </a>
 
-<p>
-  ...実際に埋め込めたとしても、測定によって <code>0</code> としか
-  <code>1</code> しか取り出せないなら確率に乗せたデータは消えてしまうのではないでしょうか？
-  チュートリアル後半では、確率のデータをなんとかして取り出すための量子アルゴリズムを紹介します。
-</p>
+                <a
+                  href="./write_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  WRITE 命令
+                </a>
+
+                <a
+                  href="./measurement_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  MEASUREMENT (測定) 命令
+                </a>
+
+                <a
+                  href="./no_cloning_theorem.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CLONE (複製) 命令!?
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子暗号通信
+                </div>
+
+                <a
+                  href="./quantum_key_distribution.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子鍵配送
+                </a>
+
+                <a
+                  href="./bb84_protocol.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 プロトコル
+                </a>
+
+                <a
+                  href="./bb84_circuit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 回路
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-0 flex-1 flex-col overflow-hidden">
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div class="mt-5 sm:mb-12 lg:mb-16">
+                <div class="mb-10 border-b border-gray-200 pb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                      確率的ビット
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">量子ビットの確率的な性質</p>
+                </div>
+                <div class="prose">
+                  <p>
+                    量子コンピュータの計算結果を取り出すには、測定という確率に基づいた奇妙な操作があるのでした
+                    (<a href="./what_qpu_do_faster.html">QPU は何が得意?</a>
+                    参照)。
+                    序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
+                  </p>
+
+                  <p>
+                    この節では、ふつうのコンピュータが持つビット (古典ビット)
+                    をおさらいした後、確率と確率的ビットを学びます。
+                    確率的ビットは量子コンピュータの量子ビットによく似ているので、確率的ビットを通して量子ビットの重要な側面を理解できます。
+                    ここでは、確率的ビットの状態はどんなものか、また測定によって確率的ビットからどのように情報を取り出すことができるかを学びます。
+                  </p>
+
+                  <h2>古典ビット</h2>
+                  <p>
+                    ご存知のように、従来のビット (古典ビット<span class="margin-note-marker"></span>
+                    <span class="margin-note w-1/3">
+                      量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。
+                    </span>
+                    ) は <code>0</code> または
+                    <code>1</code>
+                    のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は
+                    <code>0</code> か <code>1</code> のみで、また計算中のその中身 (状態) も常に
+                    <code>0</code> か <code>1</code> です。
+                  </p>
+
+                  <h2>確率</h2>
+                  <p>
+                    確率とは「元旦には <code>10%</code> の確率で雪が降る」とか「<code>80%</code>
+                    の確率で日本列島に台風が上陸する」といったイベントが起こる可能性を数値化したものです。確実に発生するイベントなら
+                    <code>100%</code>、絶対に発生しないイベントなら
+                    <code>0%</code> の確率を持ちます。
+                  </p>
+
+                  <p>
+                    例として、コイントスを考えてみましょう。コインを投げて手でキャッチすると、「コインが表」または「コインが裏」のイベントが起こります。
+                    偏りのないコインならば、それぞれのイベントの確率は <code>50%</code> ずつです。
+                    また、表の出やすいコイン (表 <code>60.8%</code>、裏 <code>39.2%</code>)
+                    や絶対に裏しか出ないインチキコイン (表: <code>0%</code>、裏: <code>100%</code>)
+                    など、無限のバリエーションが存在します。
+                  </p>
+
+                  <p>
+                    表と裏の確率を足すと必ず
+                    <code>100%</code>
+                    になることを考えると、表と裏になる確率すべての組合わせを次のグラフのように図式化できます。
+                    横軸は表の出る確率 (<code>0</code>〜<code>100%</code>)、縦軸は裏の出る確率
+                    (<code>0</code>〜<code>100%</code>)
+                    で、さまざまなコインが持ちうる確率のすべての組合わせは青色の線分になります。
+                  </p>
+
+                  <p>
+                    <img src="./images/p_bit_graph.png" class="h-auto w-full md:mx-auto md:w-1/3" />
+                  </p>
+
+                  <h2>確率的ビット</h2>
+
+                  <p>
+                    確率的ビットは、コイントスと同じ確率的な性質を持っています。計算中の確率的ビットの状態は、コインが宙に浮いていてまだ表か裏か定まっていない状態と同じと考えることができます。
+                    コインの表を値 <code>0</code>、コインの裏を値
+                    <code>1</code> とすると、確率的ビットはたとえば「<code>60%</code> の確率で
+                    <code>0</code>、<code>40%</code> の確率で
+                    <code>1</code>」などという状態を取ることができます。
+                  </p>
+
+                  <p>
+                    計算後、値を取り出す操作 (測定) をした後の確率的ビットは、手の中のコイン
+                    (表か裏かが定まった状態) に対応します。 つまり、値を取り出した時点で確率は消え
+                    <code>0</code> か
+                    <code>1</code> かが確定するので、古典ビットとまったく見分けがつきません。
+                  </p>
+
+                  <p>
+                    こうした確率的な情報はいったいコンピュータの計算に使えるのでしょうか？
+                    古典ビットの値
+                    <code>0</code> と
+                    <code>1</code> は確定した値を表しているのに対し、確率的ビットはおおよその知識
+                    (または知識の欠如) を表しているので、あまり役に立たないと思うかもしれません。
+                    確率ビットの利点は、部分的な知識をより正確に表現できることです。
+                    もし何かが完全に分かっていないのであれば、計算をあきらめるのではなくそれを認め、確率のまま計算を進めてしまおうというのが確率的ビットの考えかたです。
+                  </p>
+
+                  <h2>重ね合わせはなぜ強力?</h2>
+
+                  <p>
+                    確率的ビットの確率的な <code>0</code> と <code>1</code> の状態
+                    (コインが宙を舞っている状態) を重ね合わせ状態と言います。 <code>0</code> と
+                    <code>1</code> が完全に確定しない状態のまま、2
+                    つの値を重ね合わせて計算を進めるイメージです。
+                    よく「量子コンピュータは重ね合わせと量子もつれを使った強力なコンピュータである」と言いますが、なぜ重ね合わせが強力なのでしょうか?
+                  </p>
+
+                  <p>
+                    直感的に納得する方法の 1
+                    つは、先ほどのグラフ上で古典ビットと確率的ビットを比べてみることです。
+                    古典ビットは常に <code>0</code> または
+                    <code>1</code>
+                    の状態しか取りませんから、先程のグラフ同様に表すと古典ビットの取りうる状態は 2
+                    点になります。
+                  </p>
+
+                  <p>
+                    <img
+                      src="./images/c_bit_and_p_bit.png"
+                      class="h-auto w-full md:mx-auto md:w-2/3"
+                    />
+                  </p>
+
+                  <p>
+                    一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。このように取りうる状態の数で比較すると
+                    2 個 vs. 無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
+                  </p>
+
+                  <p>
+                    またはこう考えることもできます。たとえば確率的ビットが
+                    <code>0</code> になる確率を <code>0.11001001011...%</code> のように好きな
+                    <code>0</code> と <code>1</code> の並びにセットできるとします。
+                    そしてそこにすべての Wikipedia の記事と YouTube
+                    の全動画データ、そしてインターネットでみつかるすべての猫画像を 2
+                    進数として埋め込みます。 それはなんと、確率的ビットたった 1
+                    個に超巨大なデータを埋め込めることにほかなりません!
+                  </p>
+
+                  <figure>
+                    <img
+                      src="./images/wikipedia_youtube_cat.png"
+                      class="h-auto w-full border border-neutral-300"
+                    />
+                    <figcaption class="pt-4 text-center">
+                      すべての Wikipedia 記事と YouTube 動画、そしてネットの猫画像をまとめて 0 と 1
+                      で表現し、確率的ビットが <code>0</code> となる確率に埋め込む!
+                    </figcaption>
+                  </figure>
+
+                  <p>
+                    ...実際に埋め込めたとしても、測定によって <code>0</code> としか
+                    <code>1</code>
+                    しか取り出せないなら確率に乗せたデータは消えてしまうのではないでしょうか？
+                    チュートリアル後半では、確率のデータをなんとかして取り出すための量子アルゴリズムを紹介します。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

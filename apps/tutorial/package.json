@@ -1,5 +1,5 @@
 {
-  "name": "@qni/docs",
+  "name": "@qni/tutorial",
   "version": "0.0.34",
   "description": "An interactive tutorial for @qni/www.",
   "author": "@yasuhito",
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "lint": "bundle exec rubocop",
-    "start": "bundle exec jekyll s",
+    "start": "bundle exec jekyll s -d ../../docs",
     "build": "yarn build:css && yarn build:js",
     "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
     "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./application.css",

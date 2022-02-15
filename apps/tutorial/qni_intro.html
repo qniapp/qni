@@ -1,0 +1,126 @@
+---
+layout: page
+title: Qni 入門
+description: QPU シミュレータ Qni の使い方
+---
+
+<p>
+  本チュートリアルでは、量子コンピュータのシミュレータである Qni (<a href="https://qniapp.net/"
+    >https://qniapp.net/</a
+  >) を使って学習します。なぜ、実機ではなくシミュレータを使うのでしょう？
+  現在、さまざまな実機の量子コンピュータがクラウド経由で利用可能ですが、残念ながら次の理由により実機は初心者の学習にはあまり向いていません。
+</p>
+
+<ul class="list-inside list-disc pb-10">
+  <li>
+    実機でのプログラムはキューイングシステム経由で実行されるので、結果を得るまでに数分かかること
+  </li>
+  <li>実機はエラーが発生するため、小規模なプログラムであっても正しい結果が返ってこないこと</li>
+  <li>ほとんどの実機は有料であり、利用するのにかなり高めの料金が発生すること</li>
+</ul>
+
+<p>
+  そこで本チュートリアルでは、量子コンピュータ実機 (数十〜百量子ビット程度) よりも小規模
+  (十量子ビット程度) になりますが、Qni
+  シミュレータを使います。このチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、最小のシステムを詳細に説明することで、量子コンピュータの最も基本的で、最も興味深い、そして時に不穏な結果を説明することです。最小の量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
+</p>
+
+<p>
+  そして何よりシミュレータは自分専用なので、実機と違って好きなだけ使うことができます。Qni
+  ではリアルタイムに実行結果が返ってきますので、初心者にとって重要なトライアル &
+  エラーにもってこいです。そして将来的に実現するであろう理想的な (エラー率ゼロの)
+  量子コンピュータと同じ動きをしますので、チュートリアルの内容と実行結果がぴったり一致します。
+</p>
+
+<p>
+  初心者にとって Qni
+  がうれしいもうひとつの点は、グラフィカルにプログラミングできることです。ほとんどの量子コンピュータでは、プログラミングに
+  Python
+  などの量子計算ライブラリを使う必要があります。量子コンピュータを学ぶためには、まずこれらに習熟しておく必要があるというわけです。
+  一方 Qni では、GUI
+  によって直接量子回路を編集したり実行したりできるので、ハードルがかなり低くなっています。
+</p>
+
+<h2>Qni のツール群</h2>
+<p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
+
+<figure>
+  <img src="./images/qni.png" class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3" />
+  <figcaption class="pt-4 text-center">
+    Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>) のユーザインタフェース
+  </figcaption>
+</figure>
+
+<h3>命令パレット</h3>
+<p>
+  量子回路に配置する命令の並んだツールです。ここからドラッグアンドドロップで回路に命令を置いていくことで、回路に命令を追加できます。それぞれの命令については、後の項目でそれぞれ詳しく紹介します。
+</p>
+
+<figure>
+  <img
+    src="./images/qni_palette.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">QPU 演算の並ぶ命令パレット</figcaption>
+</figure>
+
+<h3>量子回路エディタ</h3>
+<p>
+  量子回路を表示したり編集したりするためのエディタです。量子回路エディタは、プログラムの途中状態での量子ビットの内容を表示するのにも使います。
+</p>
+
+<figure>
+  <img
+    src="./images/qni_editor.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">
+    量子プログラムを量子回路として視覚的に編集できる量子回路エディタ
+  </figcaption>
+</figure>
+
+<h3>状態ベクトル表示</h3>
+<p>量子ビットの状態を視覚的に表示します。表示の読み方と使い方については、後の項目で説明します。</p>
+
+<figure>
+  <img
+    src="./images/qni_state_vector.png"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">
+    量子ビットの状態 (状態ベクトル) を円表示する状態ベクトル表示
+  </figcaption>
+</figure>
+
+<h2>ライブプログラミングによる開発</h2>
+<p>
+  Qni
+  の一番の特徴はそのリアルタイム性です。命令パレットからドラッグした命令を量子回路エディタ上にかざすだけで、結果を状態ベクトル表示にリアルタイム描画します。これによって、命令の働きとその実行結果を素早く確認できます。
+</p>
+
+<figure>
+  <img
+    src="./images/qni_live_programming.gif"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">リアルタイムに量子ビットの状態変化を表示</figcaption>
+</figure>
+
+<p>
+  また、ステップ実行によるデバッグも簡単です。プログラムの途中状態を確認したい場合にはその箇所にマウスポインタをホバーするだけで、状態ベクトルが更新されます。また、クリックするとその場所にブレークポイント
+  (濃い紫の線)
+  が表示されます。プログラム中の異なる地点での状態ベクトルの変化を確認するには、基準となる地点にブレークポイントを設定しておき、別の場所にマウスポインタをホバーするだけです。
+</p>
+
+<figure>
+  <img
+    src="./images/qni_step_execution.gif"
+    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
+  />
+  <figcaption class="pt-4 text-center">ブレークポイントによる量子回路のデバッグ</figcaption>
+</figure>
+
+<p>
+  興味がある人は、次に進む前に Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>)
+  をいろいろいじって実験してみましょう!
+</p>

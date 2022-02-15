@@ -1,47 +1,260 @@
----
-layout: page
-title: CLONE (複製) 命令!?
-description: 量子ビットの状態は複製不可能
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>CLONE (複製) 命令!?</title>
 
-<p>
-  現在のプログラミング言語では、変数 <code>a</code> の値を別の変数
-  <code>b</code> に簡単にコピーできます。 ところが QPU の世界では、ある量子ビットの情報
-  (振幅の大きさ、位相) を他の量子ビットにコピーできません。 つまり、<span class="font-bold"
-    >QPU には CLONE 命令はありません</span
-  >。 これは量子ビットを支配する量子力学のルールによるもので、「クローン禁止定理 (no-cloning
-  theorem)」として知られています。
-</p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<p>
-  数式を使ったクローン禁止定理の証明はとても簡単で、量子状態のコピーが作れるとなると明らかな不具合が出てしまうことを使います。
-  以下では、数式を使わずこれを直感的に説明します。
-</p>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-<p>
-  もし量子ビット状態の複製が可能であれば、未知の状態にある量子ビットが与えられたとき、同じ状態を持つ量子ビットを好きなだけ作ることができます。
-  何百万個〜と超大量にクローンを作っておけば、それぞれの測定を繰り返すことによって、元の量子ビットの振幅の大きさを推定することができます。
-  これは 1 つの量子ビットから無限に情報を得られることを意味します。これは明らかに不可能なことです。
-</p>
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
 
-<figure>
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-</figure>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex w-64 flex-col">
+          <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+            <div class="flex flex-shrink-0 items-center px-8">
+              <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+              <span
+                class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+                >Qni</span
+              >
+            </div>
+            <div class="mt-5 mb-14 flex flex-grow flex-col">
+              <nav class="flex-1 space-y-1 bg-white px-6">
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU
+                </div>
 
-<p>
-  たとえば<a href="./p_bit.html">確率的ビット</a>で出てきたような、確率 (振幅の大きさの 2 乗)
-  にすべての Wikipedia の記事、すべての YouTube
-  動画、インターネットでみつかる猫画像データを詰め込んだ量子ビットを持っていたとします。
-  もし量子ビットを他のビットにコピーできる能力があるなら、好きなだけコピーを作ってすべて測定することで、<code
-    >0</code
-  >
-  が出た回数から元データを取り出すことができます。
-  十分な数のクローン量子ビットを作ってそれぞれ測定すれば、任意精度での確率が統計的に求まるので、あらゆる猫画像がたった
-  1 量子ビットから取り出せるのです。
-</p>
+                <a
+                  href="./index.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  はじめに
+                </a>
 
-<p>
-  これじゃ、USB
-  メモリもデータセンターも必要ないし、携帯電話のギガ割にお金を払う必要もありません。データを詰め込んだ量子ビットをたった
-  1 個送ればいいのですから。たしかに、これは良すぎる話です。
-</p>
+                <a
+                  href="./qpu.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU とは
+                </a>
+
+                <a
+                  href="./what_qpu_do_faster.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU は何が得意？
+                </a>
+
+                <a
+                  href="./qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU 演算
+                </a>
+
+                <a
+                  href="./qni_intro.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  Qni 入門
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子ビット
+                </div>
+
+                <a
+                  href="./p_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  確率的ビット
+                </a>
+
+                <a
+                  href="./superposition.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  重ね合わせ状態
+                </a>
+
+                <a
+                  href="./q_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子ビット
+                </a>
+
+                <a
+                  href="./circle_notation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  状態ベクトル表示
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU 演算その 1
+                </div>
+
+                <a
+                  href="./cpu_vs_qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CPU 演算との違い
+                </a>
+
+                <a
+                  href="./not_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子 NOT ゲート (X ゲート)
+                </a>
+
+                <a
+                  href="./h_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  H ゲート
+                </a>
+
+                <a
+                  href="./write_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  WRITE 命令
+                </a>
+
+                <a
+                  href="./measurement_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  MEASUREMENT (測定) 命令
+                </a>
+
+                <a
+                  href="./no_cloning_theorem.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CLONE (複製) 命令!?
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子暗号通信
+                </div>
+
+                <a
+                  href="./quantum_key_distribution.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子鍵配送
+                </a>
+
+                <a
+                  href="./bb84_protocol.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 プロトコル
+                </a>
+
+                <a
+                  href="./bb84_circuit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 回路
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-0 flex-1 flex-col overflow-hidden">
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div class="mt-5 sm:mb-12 lg:mb-16">
+                <div class="mb-10 border-b border-gray-200 pb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                      CLONE (複製) 命令!?
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">量子ビットの状態は複製不可能</p>
+                </div>
+                <div class="prose">
+                  <p>
+                    現在のプログラミング言語では、変数 <code>a</code> の値を別の変数
+                    <code>b</code> に簡単にコピーできます。 ところが QPU
+                    の世界では、ある量子ビットの情報 (振幅の大きさ、位相)
+                    を他の量子ビットにコピーできません。 つまり、<span class="font-bold"
+                      >QPU には CLONE 命令はありません</span
+                    >。 これは量子ビットを支配する量子力学のルールによるもので、「クローン禁止定理
+                    (no-cloning theorem)」として知られています。
+                  </p>
+
+                  <p>
+                    数式を使ったクローン禁止定理の証明はとても簡単で、量子状態のコピーが作れるとなると明らかな不具合が出てしまうことを使います。
+                    以下では、数式を使わずこれを直感的に説明します。
+                  </p>
+
+                  <p>
+                    もし量子ビット状態の複製が可能であれば、未知の状態にある量子ビットが与えられたとき、同じ状態を持つ量子ビットを好きなだけ作ることができます。
+                    何百万個〜と超大量にクローンを作っておけば、それぞれの測定を繰り返すことによって、元の量子ビットの振幅の大きさを推定することができます。
+                    これは 1
+                    つの量子ビットから無限に情報を得られることを意味します。これは明らかに不可能なことです。
+                  </p>
+
+                  <figure>
+                    <img
+                      src="./images/wikipedia_youtube_cat.png"
+                      class="h-auto w-full border border-neutral-300"
+                    />
+                  </figure>
+
+                  <p>
+                    たとえば<a href="./p_bit.html">確率的ビット</a>で出てきたような、確率
+                    (振幅の大きさの 2 乗) にすべての Wikipedia の記事、すべての YouTube
+                    動画、インターネットでみつかる猫画像データを詰め込んだ量子ビットを持っていたとします。
+                    もし量子ビットを他のビットにコピーできる能力があるなら、好きなだけコピーを作ってすべて測定することで、<code
+                      >0</code
+                    >
+                    が出た回数から元データを取り出すことができます。
+                    十分な数のクローン量子ビットを作ってそれぞれ測定すれば、任意精度での確率が統計的に求まるので、あらゆる猫画像がたった
+                    1 量子ビットから取り出せるのです。
+                  </p>
+
+                  <p>
+                    これじゃ、USB
+                    メモリもデータセンターも必要ないし、携帯電話のギガ割にお金を払う必要もありません。データを詰め込んだ量子ビットをたった
+                    1 個送ればいいのですから。たしかに、これは良すぎる話です。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

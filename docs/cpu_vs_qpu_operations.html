@@ -1,34 +1,247 @@
----
-layout: page
-title: CPU 演算との違い
-description: 量子コンピュータ版 論理演算
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>CPU 演算との違い</title>
 
-<p>
-  QPU 演算は、<code>AND</code> や <code>OR</code> といった CPU で実行される論理演算の量子版です。
-  QPU 演算と CPU 演算には、次の大きな違いがあります。
-</p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<ol class="list-inside list-decimal pb-10">
-  <li class="pb-4">
-    QPU
-    演算は重ね合わせ状態に作用できます。入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
-    一方で CPU 論理演算は <code>0</code> または <code>1</code> のみを入力・出力します。
-  </li>
-  <li>
-    QPU 演算の大部分は、逆方向の演算 (逆演算)
-    を持ちます。演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます
-    (後にいくつかの QPU 演算と逆演算を具体的に見ます)。 一方で CPU
-    論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (<code>0</code> または
-    <code>1</code>) から入力の 2 ビット (<code>00</code>, <code>01</code>, <code>10</code>,
-    <code>11</code>) を知ることはできません。
-  </li>
-</ol>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-<p>
-  逆演算は量子プログラミングでひんぱんに使うテクニックの 1 つである<span class="font-bold"
-    >アンコンピュテーション</span
-  >にとって重要です。
-  アンコンピュテーションとは、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用する方法で、少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
-  後にそのやり方を見ていきますが、量子プログラミング言語にはまだガベージ・コレクションのような高級な機能はないので、プログラマが明示的に実装してやる必要があります。
-</p>
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex w-64 flex-col">
+          <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+            <div class="flex flex-shrink-0 items-center px-8">
+              <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+              <span
+                class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+                >Qni</span
+              >
+            </div>
+            <div class="mt-5 mb-14 flex flex-grow flex-col">
+              <nav class="flex-1 space-y-1 bg-white px-6">
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU
+                </div>
+
+                <a
+                  href="./index.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  はじめに
+                </a>
+
+                <a
+                  href="./qpu.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU とは
+                </a>
+
+                <a
+                  href="./what_qpu_do_faster.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU は何が得意？
+                </a>
+
+                <a
+                  href="./qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU 演算
+                </a>
+
+                <a
+                  href="./qni_intro.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  Qni 入門
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子ビット
+                </div>
+
+                <a
+                  href="./p_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  確率的ビット
+                </a>
+
+                <a
+                  href="./superposition.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  重ね合わせ状態
+                </a>
+
+                <a
+                  href="./q_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子ビット
+                </a>
+
+                <a
+                  href="./circle_notation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  状態ベクトル表示
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU 演算その 1
+                </div>
+
+                <a
+                  href="./cpu_vs_qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CPU 演算との違い
+                </a>
+
+                <a
+                  href="./not_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子 NOT ゲート (X ゲート)
+                </a>
+
+                <a
+                  href="./h_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  H ゲート
+                </a>
+
+                <a
+                  href="./write_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  WRITE 命令
+                </a>
+
+                <a
+                  href="./measurement_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  MEASUREMENT (測定) 命令
+                </a>
+
+                <a
+                  href="./no_cloning_theorem.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CLONE (複製) 命令!?
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子暗号通信
+                </div>
+
+                <a
+                  href="./quantum_key_distribution.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子鍵配送
+                </a>
+
+                <a
+                  href="./bb84_protocol.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 プロトコル
+                </a>
+
+                <a
+                  href="./bb84_circuit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 回路
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-0 flex-1 flex-col overflow-hidden">
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div class="mt-5 sm:mb-12 lg:mb-16">
+                <div class="mb-10 border-b border-gray-200 pb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                      CPU 演算との違い
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">量子コンピュータ版 論理演算</p>
+                </div>
+                <div class="prose">
+                  <p>
+                    QPU 演算は、<code>AND</code> や <code>OR</code> といった CPU
+                    で実行される論理演算の量子版です。 QPU 演算と CPU
+                    演算には、次の大きな違いがあります。
+                  </p>
+
+                  <ol class="list-inside list-decimal pb-10">
+                    <li class="pb-4">
+                      QPU
+                      演算は重ね合わせ状態に作用できます。入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
+                      一方で CPU 論理演算は <code>0</code> または
+                      <code>1</code> のみを入力・出力します。
+                    </li>
+                    <li>
+                      QPU 演算の大部分は、逆方向の演算 (逆演算)
+                      を持ちます。演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます
+                      (後にいくつかの QPU 演算と逆演算を具体的に見ます)。 一方で CPU
+                      論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (<code
+                        >0</code
+                      >
+                      または <code>1</code>) から入力の 2 ビット (<code>00</code>, <code>01</code>,
+                      <code>10</code>, <code>11</code>) を知ることはできません。
+                    </li>
+                  </ol>
+
+                  <p>
+                    逆演算は量子プログラミングでひんぱんに使うテクニックの 1 つである<span
+                      class="font-bold"
+                      >アンコンピュテーション</span
+                    >にとって重要です。
+                    アンコンピュテーションとは、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用する方法で、少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
+                    後にそのやり方を見ていきますが、量子プログラミング言語にはまだガベージ・コレクションのような高級な機能はないので、プログラマが明示的に実装してやる必要があります。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

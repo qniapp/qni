@@ -1,92 +1,312 @@
----
-layout: page
-title: はじめに
-description: プログラマ向け実践量子プログラミング
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>はじめに</title>
 
-{% ket hoge %} {% capture margin_note_preskill %} John Preskill,
-<a href="https://arxiv.org/pdf/2106.10522.pdf">Quantum computing 40 years later</a>
-(2021) {% endcapture %}
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<p>
-  1980 年代初頭に<span class="font-bold">量子コンピュータ</span>のアイディアは生まれました{% include
-  margin_note.html content=margin_note_preskill %}。
-  かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
-  従来のコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
-  はその内部構造が古典物理学、より正確には電磁気学で説明できます。
-  情報の単位であるビットは、従来のコンピュータではコンデンサとして実装されており、そのハードウェアは量子力学以前の古い物理学に基づいて設計されているからです。
-  一方でファインマンの言う量子コンピュータは量子力学をベースとしており、原子や電子といった量子をビットとして使い、その不思議な振舞いを利用して膨大な量子力学シミュレーション計算を高速化できる夢のコンピュータです。
-</p>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-<p>
-  ファインマンのアイデアをきっかけに、量子コンピュータに適したアルゴリズム探しが始まりました。
-  そして 1990 年代には、<span class="font-bold">量子探索</span>と<span class="font-bold"
-    >量子因数分解</span
-  >という最も有望な量子コンピュータアルゴリズムの 2 つが開発されました。
-</p>
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
 
-<p>
-  量子探索の威力を理解するために、昔ながらの電話帳で特定の電話番号に一致する名前を検索することを考えてみましょう。電話帳の登録件数が
-  <code>1</code> 万件だとすると、平均してその半分の
-  <code>5,000</code> 件には目を通さなければ目的の名前にはたどり着きません。
-  一方、量子探索アルゴリズムでは、たった <code>100</code> 回の検索で十分です。
-  もし量子コンピュータが量子探索で <code>5,000</code> 回の推測をしたならば、<code>2,500</code>
-  万件の電話帳を検索できます。
-</p>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+      <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex w-64 flex-col">
+          <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+            <div class="flex flex-shrink-0 items-center px-8">
+              <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+              <span
+                class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+                >Qni</span
+              >
+            </div>
+            <div class="mt-5 mb-14 flex flex-grow flex-col">
+              <nav class="flex-1 space-y-1 bg-white px-6">
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU
+                </div>
 
-<p>
-  量子因数分解アルゴリズムは、セキュリティに対して脅威 (株価の下落を含む)
-  をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題（長さ数百桁の数の因数分解など）を事実上解くことが不可能であることに依存しているためです。
-  量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
-</p>
+                <a
+                  href="./index.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  はじめに
+                </a>
 
-<p>
-  一方で、こうしたアルゴリズムを実行するための量子コンピュータに関しては、正確な現状が知られていません。
-  派手な量子関連の投資ニュースに便乗してか、量子探索や量子因数分解が現在の量子コンピュータですぐにでも実行できる、と誤解させるような記事も少なくありません。
-  それどころか「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した怪しいビジネスもちらほら見かけます。
-</p>
+                <a
+                  href="./qpu.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU とは
+                </a>
 
-<p>
-  量子コンピュータの正しい知識が広まらない原因の 1
-  つは、量子コンピュータの敷居が高すぎることにあります。
-  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級〜中級者向けコンテンツは不足しています。
-  量子コンピュータを勉強しようとうっかり量子力学の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった方も多いでしょう。
-</p>
+                <a
+                  href="./what_qpu_do_faster.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU は何が得意？
+                </a>
 
-<p>
-  Python や JavaScript などのプログラミング解説書には数式はひとつも出てきません。
-  ならば、量子コンピュータにも、もっとそんなスタイルのガイドブックやチュートリアルがあってもいいのではないのでしょうか。
-</p>
+                <a
+                  href="./qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  QPU 演算
+                </a>
 
-<p>
-  実際に、量子コンピュータプログラミングを学ぶのに複雑な数学を理解する必要はありません。
-  今までやってきたプログラミング学習と同様に、量子コンピュータの命令やアルゴリズムがどのように動作するかの感覚をつかむだけでよいのです。
-  基本的な命令とアルゴリズムを理解したら、必要に応じて、次のレベルに進むための数学をちょっとずつ勉強すればいいのです。
-  このことを念頭に置いて、本チュートリアルでは、必要な場合以外は数学的な専門用語を避け、実用的な観点から量子コンピュータプログラミングを紹介します。
-</p>
+                <a
+                  href="./qni_intro.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  Qni 入門
+                </a>
 
-<p>
-  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特徴として、我々の開発している量子コンピュータシミューレータ
-  <a href="https://qniapp.net/">Qni (キューニ)</a> をそこかしこで使っています。Qni
-  を使うと、シミュレータを通してあれこれ実験を重ねることで、量子コンピュータを使うための直感的感覚を養うことができます。Qni
-  は、量子プログラムをエレガントに記述するためのグラフィカルなユーザインタフェースを提供しています。操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと便利であり教育的でもあります。
-  より高度な量子コンピュータ (量子情報) を勉強する際にも、Qni
-  は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
-</p>
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子ビット
+                </div>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
-  Qni の関連ページは以下のとおりです:
-  <ul class="mt-4 list-inside list-disc">
-    <li>Qni シミュレータ: <a href="https://qniapp.net/">https://qniapp.net/</a></li>
-    <li>
-      GitHub の Organization: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a>
-    </li>
-  </ul>
-</div>
+                <a
+                  href="./p_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  確率的ビット
+                </a>
 
-<p>
-  このチュートリアルは Qni と同様に GitHub
-  でオープンに執筆しており、読者からのフィードバックを歓迎しています。ささいな typo の修正でも、ぜひ
-  GitHub でフィードバックをおねがいします。また、著者に加わりたい方も、ぜひ Pull Request
-  を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。
-</p>
+                <a
+                  href="./superposition.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  重ね合わせ状態
+                </a>
+
+                <a
+                  href="./q_bit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子ビット
+                </a>
+
+                <a
+                  href="./circle_notation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  状態ベクトル表示
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  QPU 演算その 1
+                </div>
+
+                <a
+                  href="./cpu_vs_qpu_operations.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CPU 演算との違い
+                </a>
+
+                <a
+                  href="./not_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子 NOT ゲート (X ゲート)
+                </a>
+
+                <a
+                  href="./h_gate.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  H ゲート
+                </a>
+
+                <a
+                  href="./write_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  WRITE 命令
+                </a>
+
+                <a
+                  href="./measurement_operation.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  MEASUREMENT (測定) 命令
+                </a>
+
+                <a
+                  href="./no_cloning_theorem.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  CLONE (複製) 命令!?
+                </a>
+
+                <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+                  量子暗号通信
+                </div>
+
+                <a
+                  href="./quantum_key_distribution.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  量子鍵配送
+                </a>
+
+                <a
+                  href="./bb84_protocol.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 プロトコル
+                </a>
+
+                <a
+                  href="./bb84_circuit.html"
+                  class="group flex items-center rounded-md bg-blue-100 py-2 pl-4 pr-2 text-sm font-medium text-gray-900 text-gray-500 hover:bg-blue-50 hover:text-gray-900"
+                >
+                  BB84 回路
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-0 flex-1 flex-col overflow-hidden">
+        <main class="relative flex-1 overflow-y-auto focus:outline-none">
+          <div class="py-5">
+            <div class="h-8"></div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              <div class="mt-5 sm:mb-12 lg:mb-16">
+                <div class="mb-10 border-b border-gray-200 pb-10">
+                  <div>
+                    <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                      はじめに
+                    </h1>
+                  </div>
+                  <p class="mt-1 text-lg text-gray-500">プログラマ向け実践量子プログラミング</p>
+                </div>
+                <div class="prose">
+                  <p>
+                    1980 年代初頭に<span class="font-bold">量子コンピュータ</span
+                    >のアイディアは生まれました<span class="margin-note-marker"></span>
+                    <span class="margin-note w-1/3">
+                      John Preskill,
+                      <a href="https://arxiv.org/pdf/2106.10522.pdf"
+                        >Quantum computing 40 years later</a
+                      >
+                      (2021)
+                    </span>
+                    。
+                    かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
+                    従来のコンピュータ
+                    (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
+                    はその内部構造が古典物理学、より正確には電磁気学で説明できます。
+                    情報の単位であるビットは、従来のコンピュータではコンデンサとして実装されており、そのハードウェアは量子力学以前の古い物理学に基づいて設計されているからです。
+                    一方でファインマンの言う量子コンピュータは量子力学をベースとしており、原子や電子といった量子をビットとして使い、その不思議な振舞いを利用して膨大な量子力学シミュレーション計算を高速化できる夢のコンピュータです。
+                  </p>
+
+                  <p>
+                    ファインマンのアイデアをきっかけに、量子コンピュータに適したアルゴリズム探しが始まりました。
+                    そして 1990 年代には、<span class="font-bold">量子探索</span>と<span
+                      class="font-bold"
+                      >量子因数分解</span
+                    >という最も有望な量子コンピュータアルゴリズムの 2 つが開発されました。
+                  </p>
+
+                  <p>
+                    量子探索の威力を理解するために、昔ながらの電話帳で特定の電話番号に一致する名前を検索することを考えてみましょう。電話帳の登録件数が
+                    <code>1</code> 万件だとすると、平均してその半分の
+                    <code>5,000</code> 件には目を通さなければ目的の名前にはたどり着きません。
+                    一方、量子探索アルゴリズムでは、たった <code>100</code> 回の検索で十分です。
+                    もし量子コンピュータが量子探索で <code>5,000</code> 回の推測をしたならば、<code
+                      >2,500</code
+                    >
+                    万件の電話帳を検索できます。
+                  </p>
+
+                  <p>
+                    量子因数分解アルゴリズムは、セキュリティに対して脅威 (株価の下落を含む)
+                    をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題（長さ数百桁の数の因数分解など）を事実上解くことが不可能であることに依存しているためです。
+                    量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
+                  </p>
+
+                  <p>
+                    一方で、こうしたアルゴリズムを実行するための量子コンピュータに関しては、正確な現状が知られていません。
+                    派手な量子関連の投資ニュースに便乗してか、量子探索や量子因数分解が現在の量子コンピュータですぐにでも実行できる、と誤解させるような記事も少なくありません。
+                    それどころか「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した怪しいビジネスもちらほら見かけます。
+                  </p>
+
+                  <p>
+                    量子コンピュータの正しい知識が広まらない原因の 1
+                    つは、量子コンピュータの敷居が高すぎることにあります。
+                    クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級〜中級者向けコンテンツは不足しています。
+                    量子コンピュータを勉強しようとうっかり量子力学の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった方も多いでしょう。
+                  </p>
+
+                  <p>
+                    Python や JavaScript などのプログラミング解説書には数式はひとつも出てきません。
+                    ならば、量子コンピュータにも、もっとそんなスタイルのガイドブックやチュートリアルがあってもいいのではないのでしょうか。
+                  </p>
+
+                  <p>
+                    実際に、量子コンピュータプログラミングを学ぶのに複雑な数学を理解する必要はありません。
+                    今までやってきたプログラミング学習と同様に、量子コンピュータの命令やアルゴリズムがどのように動作するかの感覚をつかむだけでよいのです。
+                    基本的な命令とアルゴリズムを理解したら、必要に応じて、次のレベルに進むための数学をちょっとずつ勉強すればいいのです。
+                    このことを念頭に置いて、本チュートリアルでは、必要な場合以外は数学的な専門用語を避け、実用的な観点から量子コンピュータプログラミングを紹介します。
+                  </p>
+
+                  <p>
+                    このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特徴として、我々の開発している量子コンピュータシミューレータ
+                    <a href="https://qniapp.net/">Qni (キューニ)</a> をそこかしこで使っています。Qni
+                    を使うと、シミュレータを通してあれこれ実験を重ねることで、量子コンピュータを使うための直感的感覚を養うことができます。Qni
+                    は、量子プログラムをエレガントに記述するためのグラフィカルなユーザインタフェースを提供しています。操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと便利であり教育的でもあります。
+                    より高度な量子コンピュータ (量子情報) を勉強する際にも、Qni
+                    は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
+                  </p>
+
+                  <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+                    Qni の関連ページは以下のとおりです:
+                    <ul class="mt-4 list-inside list-disc">
+                      <li>
+                        Qni シミュレータ: <a href="https://qniapp.net/">https://qniapp.net/</a>
+                      </li>
+                      <li>
+                        GitHub の Organization:
+                        <a href="https://github.com/qniapp/">https://github.com/qniapp/</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <p>
+                    このチュートリアルは Qni と同様に GitHub
+                    でオープンに執筆しており、読者からのフィードバックを歓迎しています。ささいな
+                    typo の修正でも、ぜひ GitHub
+                    でフィードバックをおねがいします。また、著者に加わりたい方も、ぜひ Pull Request
+                    を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

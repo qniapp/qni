@@ -1,0 +1,301 @@
+---
+layout: page
+title: BB84 回路
+description: 量子鍵配送を量子回路として実装
+---
+
+<p>
+  量子回路として実装した BB84 プロトコルを動かしてみましょう。
+  今回の回路は、アリス、イブ、ボブそれぞれが持つ量子ビットを表現するために、ワイヤが 3 本あります。
+  一番上がアリスの量子ビット、真ん中がイブ、三番目がボブの量子ビットを表します。
+</p>
+
+<p>
+  アリスは暗号鍵の 1 ビット分を表す量子ビットに状態をセットし、ボブに送ろうとします。
+  イブはアリスとボブの中間で量子ビットを横取りし、真ん中のワイヤで盗聴 (測定)
+  した後、別の量子ビットをボブに送ります。 ボブは受け取った量子ビットにランダムに H
+  ゲートを適用してから測定します。
+</p>
+
+<div class="relative mb-10 rounded-2xl bg-gray-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          id="palette"
+          class="absolute left-0 top-0 ml-6 mt-8 flex w-min rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+        >
+          <palette-dropzone>
+            <bloch-display></bloch-display>
+          </palette-dropzone>
+        </div>
+
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-32 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>"],["H"],["Measure>aliceX"],["|0>"],["H"],["Measure>aliceH"],["|0>"],["X<aliceX"],["Bloch"],["H<aliceH"],["Bloch"],["Swap","Swap"],[1,"H"],[1,"Measure>eveX"],[1,"|0>"],[1,"X<eveX"],[1,"H"],[1,"Bloch"],[1,1,"|0>"],[1,1,"H"],[1,1,"Measure>bobH"],[1,"Swap","Swap"],[1,1,"H<bobH"],[1,1,"Bloch"],[1,1,"Measure"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+          data-show-kets
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        {% include angle.svg class="h-5 w-5" %}
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      {% include trash.svg class="h-4 w-4" %}
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-gray-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+<h2>アリス</h2>
+
+<p>
+  アリスはまず、盗聴を検出するための仕掛けを施した量子ビット {% include ket.html label="0" %} または
+  {% include ket.html label="1" %} を作るためのランダム値を 2 つ作ります。 最初に、状態 {% include
+  ket.html label="0" %} または {% include ket.html label="1" %}
+  を決めるためのランダムデータを作るため、<a href="./measurement_operation.html"
+    >量子乱数ジェネレータ</a
+  >で <code>0</code> または <code>1</code> を作り、変数 <code>aliceX</code> にセットします
+  (MEASUREMENT ゲートの上の文字は測定で得られた <code>0</code> または
+  <code>1</code> を変数にセットすることを表します)。同様に、H
+  ゲートを適用する/しないをランダムに決めるための変数
+  <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
+</p>
+
+<p>
+  次に、このランダムな値を持つ 2 つの変数 <code>aliceX</code> と
+  <code>aliceH</code> を使って、暗号鍵の 1 ビット分を作ります。 {% include ket.html label="0" %}
+  に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ X ゲートを適用します (X
+  ゲートの上の <code>if aliceX</code> がこの適用条件を表します)。
+  これによって、アリスの量子ビットはランダムに {% include ket.html label="0" %} または {% include
+  ket.html label="1" %} の状態を持ちます。 同様に、ランダムな変数 <code>aliceH</code> の値が
+  <code>1</code> だった場合に H ゲートを適用します。 できあがった量子ビットを
+  (イブにすぐ横取りされてしまうものの) ボブへと送ります。
+</p>
+
+<p>
+  アリスが送信する量子ビットの状態は、左から 2 つめのブロッホ球で確認できます。 「{% include
+  ket.html label="0" %} または {% include ket.html label="1" %}」の 2 通り掛ける、「H
+  を適用する/しない」の 2 通りで、計 4 通りの状態を持つことを確認してください。
+</p>
+
+<h2>イブ</h2>
+
+<p>
+  イブは横取りした量子ビットを盗聴し、ボブへ別の量子ビットを送ります。 しかしイブは<a
+    href="./no_cloning_theorem.html"
+    >クローン禁止定理</a
+  >によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
+  さらにアリスが {% include ket.html label="0" %} と {% include ket.html label="1" %}
+  のどちらを送ったのか、さらに H ゲートを適用したかどうかが測定結果からは分からないため、測定結果は
+  <code>1/2</code> の確率でしか当たりません。 また盗聴行為が直接バレるのを防ぐため、X ゲートと H
+  ゲートでアリスの量子ビットに偽装した新たな量子ビットをボブへ送る必要があります。
+</p>
+
+<p>
+  イブが送信する量子ビットの状態は、左から 3
+  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ
+  <code>3/4</code> の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
+</p>
+
+<h2>ボブ</h2>
+
+<p>
+  ボブは BB84 プロトコルに従ってランダムに H ゲートを適用し、アリスからの量子ビットを測定します。
+  そして H
+  ゲートを適用した/しないがアリスと一致する量子ビットのうち、半分の測定結果を突き合わせ、等しいかどうかを確認します。
+  このとき、イブが盗聴した影響でその約半分に不一致が置こるため、イブの盗聴が判明します。
+</p>
