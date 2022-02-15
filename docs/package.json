@@ -10,6 +10,7 @@
     "url": "git+https://github.com/qniapp/qni.git"
   },
   "scripts": {
+    "lint": "bundle exec rubocop",
     "start": "bundle exec jekyll s",
     "build": "yarn build:css && yarn build:js",
     "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
