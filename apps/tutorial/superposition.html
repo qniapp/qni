@@ -203,52 +203,5 @@ description: いろんな重ね合わせ状態を作ってみよう
   </quantum-simulator>
 </div>
 
-<template id="operation-menu">
-  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
-    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
-      <button
-        data-operation-menu-if
-        type="button"
-        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
-        disabled
-      >
-        <div class="flex h-5 w-5 items-center justify-center">
-          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
-            if <span class="italic">x</span>
-          </div>
-        </div>
-      </button>
-
-      <button
-        data-operation-menu-angle
-        type="button"
-        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
-        disabled
-      >
-        {% include angle.svg class="h-5 w-5" %}
-      </button>
-
-      <button
-        data-operation-menu-flag
-        type="button"
-        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
-        disabled
-      >
-        <div class="flex h-5 w-5 items-center justify-center">
-          <div class="whitespace-nowrap font-sans text-sm font-bold">
-            (<span class="italic">x</span>)
-          </div>
-        </div>
-      </button>
-    </div>
-
-    <div
-      data-operation-menu-delete
-      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
-    >
-      {% include trash.svg class="h-4 w-4" %}
-    </div>
-  </div>
-</template>
-
-{% include operation_inspector_template.html %} {% include simple_circle_notation_popup.html %}
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+simple_circle_notation_popup.html %}
