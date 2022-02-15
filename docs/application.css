@@ -4332,7 +4332,7 @@ circuit-editor {
   padding-bottom: 1rem;
 }
 
-.prose p {
+.prose p, .prose figure, .prose ul {
   padding-bottom: 2.5rem;
 }
 
@@ -4344,10 +4344,6 @@ circuit-editor {
 .prose code {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
-}
-
-.prose figure {
-  padding-bottom: 2.5rem;
 }
 
 .margin-note {
@@ -4969,6 +4965,10 @@ circuit-editor {
 
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
 }
 
 .text-center {

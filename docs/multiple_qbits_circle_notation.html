@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>CLONE (複製) 命令!?</title>
+    <title>状態ベクトル表示</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -155,7 +155,7 @@
    
   <a
     href="./no_cloning_theorem.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     CLONE (複製) 命令!?
   </a>
@@ -193,7 +193,7 @@
    
   <a
     href="./multiple_qbits_circle_notation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     状態ベクトル表示
   </a>
@@ -213,52 +213,118 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  CLONE (複製) 命令!?
+                  状態ベクトル表示
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットの状態は複製不可能</p>
+              <p class="mt-1 text-lg text-gray-500">複数の量子ビットの可視化</p>
             </div>
             <div class="prose"><p>
-  現在のプログラミング言語では、変数 <code>a</code> の値を別の変数
-  <code>b</code> に簡単にコピーできます。 ところが QPU の世界では、ある量子ビットの情報
-  (振幅の大きさ、位相) を他の量子ビットにコピーできません。 つまり、<span class="font-bold"
-    >QPU には CLONE 命令はありません</span
-  >。 これは量子ビットを支配する量子力学のルールによるもので、「クローン禁止定理 (no-cloning
-  theorem)」として知られています。
+  複数の量子ビットを使うと、たくさんの状態を表すことができます。
+  たとえば 2 量子ビットを並べると、それぞれの量子ビットは <code>|0⟩</code> および <code>|1⟩</code> の状態を持つことができるため、その組合わせは次の 4 通りになります。
 </p>
+
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code></li>
+  <li><code>|0⟩</code> と <code>|1⟩</code></li>
+  <li><code>|1⟩</code> と <code>|0⟩</code></li>
+  <li><code>|1⟩</code> と <code>|1⟩</code></li>
+</ul>
 
 <p>
-  数式を使ったクローン禁止定理の証明はとても簡単で、量子状態のコピーが作れるとなると明らかな不具合が出てしまうことを使います。
-  以下では、数式を使わずこれを直感的に説明します。
+  簡単のために、<code>|0⟩</code> と <code>|0⟩</code> のように量子ビットを並べたものを <code>|00⟩</code> とまとめて書くことにしましょう。
+  すると、先ほどの 4 通りは次のように書けます。
 </p>
+
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code></li>
+  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code></li>
+  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code></li>
+  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code></li>
+</ul>
 
 <p>
-  もし量子ビット状態の複製が可能であれば、未知の状態にある量子ビットが与えられたとき、同じ状態を持つ量子ビットを好きなだけ作ることができます。
-  何百万個〜と超大量にクローンを作っておけば、それぞれの測定を繰り返すことによって、元の量子ビットの振幅の大きさを推定することができます。
-  これは 1 つの量子ビットから無限に情報を得られることを意味します。これは明らかに不可能なことです。
+  ここで、書き直した中身の数字を 2 進数として見てみます。
+  すると、先ほどの 4 通りはさらに次のように書き換えることができます。
 </p>
 
-<figure>
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-</figure>
-
-<p>
-  たとえば<a href="./p_bit.html">確率的ビット</a>で出てきたような、確率 (振幅の大きさの 2 乗)
-  にすべての Wikipedia の記事、すべての YouTube
-  動画、インターネットでみつかる猫画像データを詰め込んだ量子ビットを持っていたとします。
-  もし量子ビットを他のビットにコピーできる能力があるなら、好きなだけコピーを作ってすべて測定することで、<code
-    >0</code
-  >
-  が出た回数から元データを取り出すことができます。
-  十分な数のクローン量子ビットを作ってそれぞれ測定すれば、任意精度での確率が統計的に求まるので、あらゆる猫画像がたった
-  1 量子ビットから取り出せるのです。
-</p>
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code> (2 進数) → <code>|0⟩</code> (10 進数)</li>
+  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code> (2 進数) → <code>|1⟩</code> (10 進数)</li>
+  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code> (2 進数) → <code>|2⟩</code> (10 進数)</li>
+  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code> (2 進数) → <code>|3⟩</code> (10 進数)</li>
+</ul>
 
 <p>
-  これじゃ、USB
-  メモリもデータセンターも必要ないし、携帯電話のギガ割にお金を払う必要もありません。データを詰め込んだ量子ビットをたった
-  1 個送ればいいのですから。たしかに、これは良すぎる話です。
+  つまり、2 量子ビット使うと <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> という 4 つの状態を表すことができます。
+  これは、Qni の状態ベクトル表示では次のように表せます。
 </p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-2qubit" data-multi-qubits data-qubit-count="2" data-size="xl" data-show-kets></circle-notation>
+
+      <script type="module">
+       import { Complex } from './application.js'
+
+       let circleNotation = document.getElementById('circle-notation-2qubit')
+
+       circleNotation.setAmplitudes({
+           0: 1
+       })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか？
+  1 量子ビットでは円が 2 つだったので、単純に 3 倍して円 6 個とするのは間違いです。
+  先ほどと同様に 3 桁の 2 進数を考えると、3 量子ビットでは <code>|0⟩</code> から <code>|7⟩</code> まで 8 通りの状態を表すことができます。
+  つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8 個になります。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-4qubit" data-multi-qubits data-qubit-count="3" data-size="xl" data-show-kets></circle-notation>
+
+      <script type="module">
+       import { Complex } from './application.js'
+
+       let circleNotation = document.getElementById('circle-notation-4qubit')
+
+       circleNotation.setAmplitudes({
+           0: 1
+       })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  このようにビット数を増やすと表せる状態 (数) が倍々になっていく現象は、実は古典ビットでもまったく同じです。
+  古典ビットは <code>0</code> と <code>1</code> の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
+  しかし複数の量子ビットでは、次に紹介するように 1 量子ビットの場合と同じく<span class="font-bold">重ね合わせ状態</span>を持つことができるという大きな違いがあります。
+</p>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
 </div>
           </div>
         </div>

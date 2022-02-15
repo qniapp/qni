@@ -13,7 +13,9 @@
   @apply pb-4;
 }
 
-.prose p {
+.prose p,
+.prose figure,
+.prose ul {
   @apply pb-10;
 }
 
@@ -23,8 +25,4 @@
 
 .prose code {
   @apply text-purple-600;
-}
-
-.prose figure {
-  @apply pb-10;
 }
