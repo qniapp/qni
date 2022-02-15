@@ -317,20 +317,4 @@ description: 量子ビットから 0 または 1 を読み出す
   </operation-inspector>
 </template>
 
-<template id="circle-notation-popup">
-  <ul class="list-none">
-    <li>
-      振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
-    </li>
-  </ul>
-</template>
+{% include circle_notation_popup.html %}

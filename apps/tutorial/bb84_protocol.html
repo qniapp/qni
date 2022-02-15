@@ -245,25 +245,11 @@ description: 量子力学で暗号鍵の盗聴を検出
 
 <h2>まとめ</h2>
 
-BB84 は量子乱数の完全なランダム性や、H
-ゲートがそれ自身の逆演算であるという性質、そしてクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
-数種類の QPU
-命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも先に商業化できることが期待されています。
+<p>
+  BB84 は量子乱数の完全なランダム性や、H
+  ゲートがそれ自身の逆演算であるという性質、そしてクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
+  数種類の QPU
+  命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも先に商業化できることが期待されています。
+</p>
 
-<template id="circle-notation-popup">
-  <ul class="list-none">
-    <li>
-      振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
-    </li>
-  </ul>
-</template>
+{% include circle_notation_popup.html %}
