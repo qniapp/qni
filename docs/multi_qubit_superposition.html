@@ -207,13 +207,13 @@
               <p class="mt-1 text-lg text-gray-500">複数量子ビットでの重ね合わせ</p>
             </div>
             <div class="prose"><p>
-  1 量子ビットの場合と同じく、複数量子ビットでも重ね合わせ状態を取ることができます。
-  ここでは 3 量子ビットのいろいろな状態を考えてみましょう。
+  1 量子ビットの場合と同じく、複数量子ビットでも重ね合わせ状態を取ることができます。 ここでは 3
+  量子ビットのいろいろな状態を考えてみましょう。
 </p>
 
 <p>
-  次の状態では <code>|2⟩</code> が確率 <code>100%</code> なので、3 量子ビットすべてを測定すると必ず <code>|2⟩</code> が得られます。
-  <code>|2⟩</code> 以外の確率はすべて <code>0%</code> なので、これは重ね合わせ状態でありません。
+  次の状態では <code>|2⟩</code> が確率 <code>100%</code> なので、3 量子ビットすべてを測定すると必ず <code>|2⟩</code> が得られます。 <code>|2⟩</code> 以外の確率はすべて
+  <code>0%</code> なので、これは重ね合わせ状態でありません。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -228,12 +228,12 @@
       ></circle-notation>
 
       <script type="module">
-       let circleNotation = document.getElementById('circle-notation-3qubit-nonsuperposition')
-       circleNotation.setAmplitudes({
-           0: 0,
-           1: 0,
-           2: 1,
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-nonsuperposition')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: 1,
+        })
       </script>
     </div>
   </div>
@@ -257,12 +257,12 @@
       </div>
 
       <quantum-circuit
-          class="mb-10"
-          data-target="quantum-simulator.circuit circuit-editor.circuit"
-          data-min-wire-count="1"
-          data-max-wire-count="1"
-          data-min-step-count="8"
-          data-json='{"cols":[["|0>","|0>","|0>"],[1,"X",1],["Measure","Measure","Measure"]]}'
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],[1,"X",1],["Measure","Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -277,18 +277,18 @@
     </circuit-editor>
 
     <run-circuit-button
-        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-        data-targets="quantum-simulator.runCircuitButtons"
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
     ></run-circuit-button>
   </quantum-simulator>
 </div>
 
 <p>
-  次は <code>|0⟩</code>, <code>|2⟩</code>, <code>|4⟩</code>, <code>|6⟩</code> がそれぞれ確率 <code>25%</code> の重ね合わせ状態にあります。
-  3 量子ビットすべてを測定すると <code>|0⟩</code>, <code>|2⟩</code>, <code>|4⟩</code>, <code>|6⟩</code> のいずれかが確率 <code>25%</code> ずつ (つまり <code>1/4</code> の確率) で得られます。
-  重ね合わせではすべての確率を足すと必ず <code>100%</code> になり、この場合もそうなっていることを確認してください。
+  次は <code>|0⟩</code>, <code>|2⟩</code>, <code>|4⟩</code>, <code>|6⟩</code> がそれぞれ確率
+  <code>25%</code> の重ね合わせ状態にあります。 3 量子ビットすべてを測定すると <code>|0⟩</code>, <code>|2⟩</code>, <code>|4⟩</code>, <code>|6⟩</code> のいずれかが確率 <code>25%</code> ずつ (つまり
+  <code>1/4</code> の確率) で得られます。 重ね合わせではすべての確率を足すと必ず
+  <code>100%</code> になり、この場合もそうなっていることを確認してください。
 </p>
-
 
 <div class="flex justify-center pb-10">
   <div class="flex flex-col">
@@ -302,16 +302,16 @@
       ></circle-notation>
 
       <script type="module">
-       let circleNotation = document.getElementById('circle-notation-3qubit-simple-superposition')
-       circleNotation.setAmplitudes({
-           0: 0.5,
-           1: 0,
-           2: 0.5,
-           3: 0,
-           4: 0.5,
-           5: 0,
-           6: 0.5
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-simple-superposition')
+        circleNotation.setAmplitudes({
+          0: 0.5,
+          1: 0,
+          2: 0.5,
+          3: 0,
+          4: 0.5,
+          5: 0,
+          6: 0.5,
+        })
       </script>
     </div>
   </div>
@@ -335,12 +335,12 @@
       </div>
 
       <quantum-circuit
-          class="mb-10"
-          data-target="quantum-simulator.circuit circuit-editor.circuit"
-          data-min-wire-count="1"
-          data-max-wire-count="1"
-          data-min-step-count="8"
-          data-json='{"cols":[["|0>","|0>","|0>"],[1,"H","H"],["Measure","Measure","Measure"]]}'
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],[1,"H","H"],["Measure","Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -355,15 +355,16 @@
     </circuit-editor>
 
     <run-circuit-button
-        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-        data-targets="quantum-simulator.runCircuitButtons"
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
     ></run-circuit-button>
   </quantum-simulator>
 </div>
 
 <p>
   最後はそれぞれの確率が異なり、さらに位相も異なる例です。
-  今までの例と同じく、それぞれの確率に応じて <code>|0⟩</code> 〜 <code>|7⟩</code> のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
+  今までの例と同じく、それぞれの確率に応じて <code>|0⟩</code> 〜 <code>|7⟩</code>
+  のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
   そして位相は確率とは独立したパラメータなので、測定される確率にはまったく影響しないことを思い出しておきましょう。
 </p>
 
@@ -379,19 +380,19 @@
       ></circle-notation>
 
       <script type="module">
-       import { Complex } from './application.js'
+        import { Complex } from './application.js'
 
-       let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
-       circleNotation.setAmplitudes({
-           0: new Complex(0.42678, -0.17678),
-           1: new Complex(0.17678, -0.07322),
-           2: new Complex(0.17678, 0.42678),
-           3: new Complex(0.07322, 0.17678),
-           4: new Complex(-0.42678, 0.17678),
-           5: new Complex(-0.17678, 0.07322),
-           6: new Complex(-0.17678, -0.42678),
-           7: new Complex(-0.07322, -0.17678),
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
       </script>
     </div>
   </div>
@@ -415,12 +416,12 @@
       </div>
 
       <quantum-circuit
-          class="mb-10"
-          data-target="quantum-simulator.circuit circuit-editor.circuit"
-          data-min-wire-count="1"
-          data-max-wire-count="1"
-          data-min-step-count="8"
-          data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["Measure","Measure","Measure"]]}'
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["Measure","Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -435,8 +436,8 @@
     </circuit-editor>
 
     <run-circuit-button
-        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-        data-targets="quantum-simulator.runCircuitButtons"
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
     ></run-circuit-button>
   </quantum-simulator>
 </div>
@@ -496,8 +497,8 @@
     </div>
 
     <div
-      data-operation-menu-delete
-      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+        data-operation-menu-delete
+        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
     >
       <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
