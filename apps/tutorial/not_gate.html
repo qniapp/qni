@@ -26,9 +26,8 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  <span class="font-bold">量子 NOT ゲート</span>は NOT 演算によく似ていて、量子ビットの {% include
-  ket.html label="0" %} と {% include ket.html label="1" %} を入れ替えます。 図で表すと、次のような
-  "円の入れ替え" の働きをします。
+  <span class="font-bold">量子 NOT ゲート</span>は NOT 演算によく似ていて、量子ビットの {% ket 0 %}
+  と {% ket 1 %} を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -56,8 +55,7 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
-  量子 NOT ゲートを回路に置いて、{% include ket.html label="0" %} と {% include ket.html label="1"
-  %} が入れ替わることを確認しましょう。
+  量子 NOT ゲートを回路に置いて、{% ket 0 %} と {% ket 1 %} が入れ替わることを確認しましょう。
 </div>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
@@ -109,8 +107,7 @@ description: 量子ビットペアの入れ替え
 
 <p>
   量子 NOT ゲートが従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
-  たとえば、次の {% include ket.html label="0" %} と {% include ket.html label="1" %}
-  の重ね合わせ状態にある量子ビットを考えましょう。
+  たとえば、次の {% ket 0 %} と {% ket 1 %} の重ね合わせ状態にある量子ビットを考えましょう。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -123,9 +120,8 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  これに量子 NOT ゲートを適用すると、{% include ket.html label="0" %} と {% include ket.html
-  label="1" %} の内容を交換します。 これはまさに、先ほど見た "{% include ket.html label="0" %} と {%
-  include ket.html label="1" %} の入れ換え" という効果です。
+  これに量子 NOT ゲートを適用すると、{% ket 0 %} と {% ket 1 %} の内容を交換します。
+  これはまさに、先ほど見た "{% ket 0 %} と {% ket 1 %} の入れ換え" という効果です。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -151,9 +147,9 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  量子 NOT ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% include ket.html
-  label="0" %} と {% include ket.html label="1" %} が 2 度入れ替わることで元の状態に戻ります。
-  つまり、量子 NOT ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
+  量子 NOT ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% ket 0 %} と {%
+  ket 1 %} が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
+  ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
   ゲートはそれ自身の逆演算である」と言います。
 </p>
 
@@ -193,8 +189,8 @@ description: 量子ビットペアの入れ替え
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
   <ul class="ml-4 list-disc">
     <li>
-      重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% include ket.html label="0" %} と {%
-      include ket.html label="1" %} が入れ替わることを確認しましょう。
+      重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% ket 0 %} と {% ket 1 %}
+      が入れ替わることを確認しましょう。
     </li>
     <li>量子 NOT ゲートを 2 回適用すると元に戻ることを確認しましょう</li>
   </ul>

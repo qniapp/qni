@@ -210,11 +210,8 @@
 
 <p>
   MEASUREMENT (測定) 命令は量子ビットから <code>0</code> または <code>1</code> の値を読み出します。
-  たとえば以下のように量子ビット状態が <code>|0⟩</code>
- または <code>|1⟩</code>
- の状態にある場合、測定するとそのまま同じ <code>|0⟩</code>
- と <code>|1⟩</code>
- が返されます。
+  たとえば以下のように量子ビット状態が <code>|0⟩</code> または <code>|1⟩</code>
+  の状態にある場合、測定するとそのまま同じ <code>|0⟩</code> と <code>|1⟩</code> が返されます。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -262,10 +259,9 @@
 <h2>重ね合わせ状態の測定</h2>
 
 <p>
-  量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は <code>|0⟩</code>
- と <code>|1⟩</code>
- の確率 (青い円の面積 = 振幅の大きさの 2
-  乗) に応じて決まります。 つまり、測定の結果にはランダム性があります。
+  量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は <code>|0⟩</code> と
+  <code>|1⟩</code> の確率 (青い円の面積 = 振幅の大きさの 2 乗) に応じて決まります。
+  つまり、測定の結果にはランダム性があります。
 </p>
 
 <div class="flex justify-center pb-10">
@@ -325,10 +321,8 @@
 <p>
   MEASUREMENT 命令とこれまでに学んだ WRITE 命令、H
   ゲートを組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
-  WRITE で <code>|0⟩</code>
- に初期化した量子ビットを H
-  ゲートで重ね合わせ状態にし、MEASUREMENT 命令で測定することで <code>0</code> または
-  <code>1</code> をランダムに得ることができます。
+  WRITE で <code>|0⟩</code> に初期化した量子ビットを H ゲートで重ね合わせ状態にし、MEASUREMENT
+  命令で測定することで <code>0</code> または <code>1</code> をランダムに得ることができます。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
