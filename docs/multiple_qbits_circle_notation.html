@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>WRITE 命令</title>
+    <title>状態ベクトル表示</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -141,7 +141,7 @@
    
   <a
     href="./write_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     WRITE 命令
   </a>
@@ -201,130 +201,117 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  WRITE 命令
+                  状態ベクトル表示
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットの初期化</p>
+              <p class="mt-1 text-lg text-gray-500">複数の量子ビットの可視化</p>
             </div>
             <div class="prose"><p>
-  WRITE 命令は量子ビットの状態を <code>|0⟩</code> または <code>|1⟩</code> に初期化する命令です。
-  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。 通常は回路の先頭に WRITE
-  命令を置くことで量子ビットを <code>|0⟩</code> や <code>|1⟩</code> に初期化します。 続けて H ゲートなどの QPU
-  命令を置いていくことで量子プログラムを記述します。
+  複数の量子ビットを使うと、たくさんの状態を表すことができます。 たとえば 2
+  量子ビットを並べると、それぞれの量子ビットは <code>|0⟩</code> および <code>|1⟩</code>
+  の状態を持つことができるため、その組合わせは次の 4 通りになります。
 </p>
 
-<div class="flex flex-col items-center">
-  <div>量子ビットを <code>|0⟩</code> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="0"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <y-gate></y-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
-</div>
-
-<div class="flex flex-col items-center">
-  <div>量子ビットを <code>|1⟩</code> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="1"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <z-gate></z-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
-</div>
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code></li>
+  <li><code>|0⟩</code> と <code>|1⟩</code></li>
+  <li><code>|1⟩</code> と <code>|0⟩</code></li>
+  <li><code>|1⟩</code> と <code>|1⟩</code></li>
+</ul>
 
 <p>
-  WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  つまり量子ビットの状態がどんな状態にあっても、たとえば <code>|0⟩</code>
-  命令を置いた時点で振幅の大きさと位相の情報は破壊され、<code>|0⟩</code> に初期化されます。
-  これは元に戻すのに必要な情報を損失していることになるため、WRITE 命令は非可逆です。
+  簡単のために、<code>|0⟩</code> と <code>|0⟩</code> のように量子ビットを並べたものを <code>|00⟩</code>
+  とまとめて書くことにしましょう。 すると、先ほどの 4 通りは次のように書けます。
+</p>
+
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code></li>
+  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code></li>
+  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code></li>
+  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code></li>
+</ul>
+
+<p>
+  ここで、書き直した中身の数字を 2 進数として見てみます。 すると、先ほどの 4
+  通りはさらに次のように書き換えることができます。
+</p>
+
+<ul class="list-inside list-disc">
+  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code> (2 進数) → <code>|0⟩</code> (10 進数)</li>
+  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code> (2 進数) → <code>|1⟩</code> (10 進数)</li>
+  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code> (2 進数) → <code>|2⟩</code> (10 進数)</li>
+  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code> (2 進数) → <code>|3⟩</code> (10 進数)</li>
+</ul>
+
+<p>
+  つまり、2 量子ビット使うと <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> という 4
+  つの状態を表すことができます。 これは、Qni の状態ベクトル表示では次のように表せます。
 </p>
 
 <div class="flex justify-center pb-10">
   <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-WRITE0-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-        <write-gate data-size="base" data-value="0"></write-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <circle-notation
-        id="circle-notation-WRITE0-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-    </div>
-
     <div class="flex flex-row items-center space-x-1">
       <circle-notation
-        id="circle-notation-WRITE1-before"
+        id="circle-notation-2qubit"
+        data-multi-qubits
+        data-qubit-count="2"
         data-size="xl"
         data-show-kets
       ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-        <write-gate data-size="base" data-value="1"></write-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <script type="module">
+        import { Complex } from './application.js'
 
-      </div>
-      <circle-notation
-        id="circle-notation-WRITE1-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
+        let circleNotation = document.getElementById('circle-notation-2qubit')
+
+        circleNotation.setAmplitudes({
+          0: 1,
+        })
+      </script>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationWrite0Before = document.getElementById('circle-notation-WRITE0-before')
-    let circleNotationWrite0After = document.getElementById('circle-notation-WRITE0-after')
-    let circleNotationWrite1Before = document.getElementById('circle-notation-WRITE1-before')
-    let circleNotationWrite1After = document.getElementById('circle-notation-WRITE1-after')
-
-    circleNotationWrite0Before.setAmplitudes({
-      0: new Complex(-0.38268, 0),
-      1: new Complex(0.7855, -0.48636),
-    })
-    circleNotationWrite0After.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotationWrite1Before.setAmplitudes({
-      0: new Complex(0.28483, -0.34391),
-      1: new Complex(-0.82603, 0.34391),
-    })
-    circleNotationWrite1After.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
 </div>
+
+<p>
+  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか？ 1 量子ビットでは円が 2
+  つだったので、単純に 3 倍して円 6 個とするのは間違いです。 先ほどと同様に 3 桁の 2
+  進数を考えると、3 量子ビットでは <code>|0⟩</code> から <code>|7⟩</code> まで 8
+  通りの状態を表すことができます。 つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8
+  個になります。
+</p>
+
+<div class="flex justify-center pb-10">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-4qubit"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-4qubit')
+
+        circleNotation.setAmplitudes({
+          0: 1,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  このようにビット数を増やすと表せる状態 (数)
+  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは <code>0</code> と
+  <code>1</code> の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
+  しかし複数の量子ビットでは、次に紹介するように 1 量子ビットの場合と同じく<span class="font-bold"
+    >重ね合わせ状態</span
+  >を持つことができるという大きな違いがあります。
+</p>
 
 <template id="circle-notation-popup">
   <ul class="list-none">
