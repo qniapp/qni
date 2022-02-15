@@ -1,7 +1,7 @@
 - name: QPU
   pages:
     - name: はじめに
-      link: ./index.html
+      link: ./
     - name: QPU とは
       link: ./qpu.html
     - name: QPU は何が得意？
