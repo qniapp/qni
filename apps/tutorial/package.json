@@ -15,6 +15,7 @@
     "build": "yarn build:css && yarn build:js",
     "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
     "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./application.css",
+    "watch:js": "yarn build:js --watch",
     "watch:css": "yarn build:css --watch"
   },
   "bugs": {
