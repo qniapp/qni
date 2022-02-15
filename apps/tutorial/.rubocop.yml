@@ -1,0 +1,15 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'Gemfile'
+
+Style/Documentation:
+  Exclude:
+    - '_plugins/*.rb'

@@ -1,1 +1,8 @@
-_site/
+.sass-cache/
+README.md
+assets/
+css/
+package.json
+postcss.config.js
+src/
+tailwind.config.js
