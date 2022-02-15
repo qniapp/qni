@@ -45,4 +45,6 @@
 # - name: 複数の量子ビット
 #   pages:
 #     - name: 状態ベクトル表示
-#       link: ./multiple_qbits_circle_notation.html
+#       link: ./multi_qubit_circle_notation.html
+#     - name: 重ね合わせ状態
+#       link: ./multi_qubit_superposition.html
