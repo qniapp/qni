@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Jekyll
   class KetTag < Liquid::Tag
-    def initialize(tag_name, text, tokens)
+    def initialize(tag_name, label, tokens)
       super
-      @text = text.strip
+      @label = label.strip
     end
 
-    def render(context)
-      "<code>|#{@text}⟩</code>"
+    def render(_context)
+      "<code>|#{@label}⟩</code>"
     end
   end
 end
