@@ -13,6 +13,10 @@
   @apply pb-4;
 }
 
+.prose p {
+  @apply md:mr-auto md:w-2/3;
+}
+
 .prose p,
 .prose figure,
 .prose ul {

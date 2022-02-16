@@ -206,27 +206,31 @@
               </div>
               <p class="mt-1 text-lg text-gray-500">プログラマ向け量子プログラミング実践チュートリアル</p>
             </div>
-            <div class="prose">
-
-<p>
-  1980 年代初頭に<span class="font-bold">量子コンピュータ</span>のアイディアは生まれました<span class="margin-note-marker"></span>
-<span class="margin-note w-1/3">  John Preskill,
-<a href="https://arxiv.org/pdf/2106.10522.pdf">Quantum computing 40 years later</a>
-(2021)  </span>
-。
+            <div class="prose"><p>
+  1980 年代初頭に<span class="font-bold">量子コンピュータ</span>のアイディアは生まれました<label for="margin-note-preskill" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-preskill" class="margin-toggle"><span class="margin-note md:w-1/2">John Preskill,
+  <a href="https://arxiv.org/abs/2106.10522">Quantum computing 40 years later</a> (2021) </span>。
   かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
   現在のあらゆるコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
-  の仕組みを見てみると、その内部構造は古典物理学、より正確には電磁気学で説明できます。
-  情報の単位であるビットを電磁気学に基くコンデンサとして実装しているからです。
+  の内部構造は、古典物理学、より正確には電磁気学で説明できます。
+  これは、情報の単位であるビットが、電磁気学に基いた素子であるコンデンサとして実装されているからです。
   一方でファインマンの言う量子コンピュータは量子力学をベースとしています。
-  量子コンピュータは原子や電子といった量子をビットとして使い、その不思議な振舞いを利用して膨大な量子力学シミュレーションを高速化できるという、まさに夢のコンピュータです。
+  量子コンピュータは原子や電子といった量子をビットとして使い、その不思議な振舞いを利用することでミクロな
+  "自然" のシミュレーション (量子系シミュレーション)
+  に必要な膨大な計算を高速化できるという、まさに夢のコンピュータです。
 </p>
 
 <p>
-  ファインマンのアイデアをきっかけに、量子コンピュータに適したアルゴリズム探しが始まりました。
-  そして 1990 年代には、<span class="font-bold">量子探索</span>と<span class="font-bold"
-    >量子因数分解</span
-  >という最も有望な量子コンピュータアルゴリズムの 2 つが開発されました。
+  ファインマンのアイデアをきっかけに、量子コンピュータに適したさらなるアルゴリズム探しが始まりました。
+  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-grover" class="margin-toggle"><span class="margin-note md:w-1/2">「グローヴァーのアルゴリズム」としても知られる。Lov K. Grover,
+  <a href="https://arxiv.org/abs/quant-ph/9605043"
+    >A fast quantum mechanical algorithm for database search</a
+  >
+  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-shore" class="margin-toggle"><span class="margin-note md:w-1/2">「ショアのアルゴリズム」としても知られる。Peter W. Shor,
+  <a href="https://arxiv.org/abs/quant-ph/9508027"
+    >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
+    Computer</a
+  >
+  (1995)</span>という最も有望な量子コンピュータアルゴリズムの 2 つが開発されました。
 </p>
 
 <p>
@@ -278,7 +282,7 @@
   は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
 </p>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:w-2/3 md:mr-auto">
   Qni の関連ページは以下のとおりです:
   <ul class="mt-4 list-inside list-disc !pb-0">
     <li>Qni シミュレータ: <a href="https://qniapp.net/">https://qniapp.net/</a></li>
