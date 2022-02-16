@@ -5112,6 +5112,14 @@ label.margin-toggle:not(.margin-note-number) {
   padding-top: 1.25rem;
 }
 
+.pb-12 {
+  padding-bottom: 3rem;
+}
+
+.pb-14 {
+  padding-bottom: 3.5rem;
+}
+
 .text-center {
   text-align: center;
 }
