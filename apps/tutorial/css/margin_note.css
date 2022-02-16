@@ -1,13 +1,73 @@
-.margin-note {
-  position: relative;
-  float: right;
-  display: block;
-
-  @apply text-neutral-500;
-  @apply py-2 pl-12;
+body {
+  counter-reset: margin-note-counter;
 }
 
-.margin-note::before {
-  counter-increment: MarginNote;
-  content: counter(MarginNote) '.';
+.margin-note-number {
+  counter-increment: margin-note-counter;
+}
+
+.margin-note-number:after,
+.sidenote:before {
+  position: relative;
+  vertical-align: baseline;
+}
+
+.margin-note-number:after {
+  @apply text-sm;
+  @apply rounded px-0.5 md:px-0;
+  @apply bg-blue-100 md:bg-transparent;
+  @apply left-0;
+
+  content: counter(margin-note-counter);
+  top: -0.5rem;
+}
+
+.sidenote:before {
+  content: counter(margin-note-counter) ' ';
+  font-size: 1rem;
+  top: -0.5rem;
+}
+
+input.margin-toggle {
+  display: none;
+}
+
+label.margin-toggle:not(.margin-note-number) {
+  display: none;
+}
+
+.margin-note {
+  @apply relative;
+  @apply text-sm;
+  @apply text-neutral-500;
+
+  @apply hidden md:block;
+  @apply float-right clear-right;
+  @apply md:mb-4 md:pl-12;
+}
+
+@screen md {
+  .margin-note {
+    margin-right: -50%;
+  }
+}
+
+.margin-note-number + .margin-toggle + .margin-note::before {
+  content: counter(margin-note-counter) '. ';
+}
+
+.margin-toggle:checked + .margin-note {
+  @apply block;
+  @apply float-left md:float-right;
+  @apply align-baseline;
+  @apply left-4 md:left-auto;
+  @apply clear-both;
+  @apply w-11/12 md:w-1/2;
+  @apply m-4 md:m-0;
+}
+
+@screen md {
+  .margin-toggle:checked + .margin-note {
+    margin-right: -50%;
+  }
 }

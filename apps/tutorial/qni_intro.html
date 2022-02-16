@@ -5,9 +5,10 @@ description: QPU シミュレータ Qni の使い方
 ---
 
 <p>
-  本チュートリアルでは、量子コンピュータのシミュレータである Qni (<a href="https://qniapp.net/"
+  本チュートリアルでは、量子コンピュータのシミュレータである Qni (キューニ){% nmargin_note qni %}<a
+    href="https://qniapp.net/"
     >https://qniapp.net/</a
-  >) を使って学習します。なぜ、実機ではなくシミュレータを使うのでしょう？
+  >{% endnmargin_note %} を使って学習します。 なぜ、実機ではなくシミュレータを使うのでしょう？
   現在、さまざまな実機の量子コンピュータがクラウド経由で利用可能ですが、残念ながら次の理由により実機は初心者の学習にはあまり向いていません。
 </p>
 
@@ -21,8 +22,8 @@ description: QPU シミュレータ Qni の使い方
 
 <p>
   そこで本チュートリアルでは、量子コンピュータ実機 (数十〜百量子ビット程度) よりも小規模
-  (十量子ビット程度) になりますが、Qni
-  シミュレータを使います。このチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、最小のシステムを詳細に説明することで、量子コンピュータの最も基本的で、最も興味深い、そして時に不穏な結果を説明することです。最小の量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
+  (十量子ビット程度) になりますが、Qni シミュレータを使います。
+  このチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、最小のシステムを詳細に説明することで、量子コンピュータの最も基本的で、最も興味深い、そして時に不穏な結果を説明することです。最小の量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
 </p>
 
 <p>
@@ -45,10 +46,8 @@ description: QPU シミュレータ Qni の使い方
 <p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
 
 <figure>
-  <img src="./images/qni.png" class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3" />
-  <figcaption class="pt-4 text-center">
-    Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>) のユーザインタフェース
-  </figcaption>
+  {% margin_note qni-user-interface %}Qni のユーザインタフェース{% endmargin_note %}
+  <img src="./images/qni.png" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <h3>命令パレット</h3>
@@ -57,11 +56,8 @@ description: QPU シミュレータ Qni の使い方
 </p>
 
 <figure>
-  <img
-    src="./images/qni_palette.png"
-    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-  />
-  <figcaption class="pt-4 text-center">QPU 演算の並ぶ命令パレット</figcaption>
+  {% margin_note qni-palette %}さまざまな QPU 演算の並ぶ命令パレット{% endmargin_note %}
+  <img src="./images/qni_palette.png" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <h3>量子回路エディタ</h3>
@@ -70,26 +66,18 @@ description: QPU シミュレータ Qni の使い方
 </p>
 
 <figure>
-  <img
-    src="./images/qni_editor.png"
-    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-  />
-  <figcaption class="pt-4 text-center">
-    量子プログラムを量子回路として視覚的に編集できる量子回路エディタ
-  </figcaption>
+  {% margin_note qni-editor %}量子プログラムを量子回路として視覚的に編集できる量子回路エディタ{%
+  endmargin_note %}
+  <img src="./images/qni_editor.png" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <h3>状態ベクトル表示</h3>
 <p>量子ビットの状態を視覚的に表示します。表示の読み方と使い方については、後の項目で説明します。</p>
 
 <figure>
-  <img
-    src="./images/qni_state_vector.png"
-    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-  />
-  <figcaption class="pt-4 text-center">
-    量子ビットの状態 (状態ベクトル) を円表示する状態ベクトル表示
-  </figcaption>
+  {% margin_note qni-state-vector %}量子ビットの状態 (状態ベクトル) を円表示する状態ベクトル表示{%
+  endmargin_note %}
+  <img src="./images/qni_state_vector.png" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <h2>ライブプログラミングによる開発</h2>
@@ -99,11 +87,8 @@ description: QPU シミュレータ Qni の使い方
 </p>
 
 <figure>
-  <img
-    src="./images/qni_live_programming.gif"
-    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-  />
-  <figcaption class="pt-4 text-center">リアルタイムに量子ビットの状態変化を表示</figcaption>
+  {% margin_note qni-live-programming %}リアルタイムに量子ビットの状態変化を表示{% endmargin_note %}
+  <img src="./images/qni_live_programming.gif" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <p>
@@ -113,14 +98,11 @@ description: QPU シミュレータ Qni の使い方
 </p>
 
 <figure>
-  <img
-    src="./images/qni_step_execution.gif"
-    class="h-auto w-full border border-neutral-300 md:mx-auto md:w-2/3"
-  />
-  <figcaption class="pt-4 text-center">ブレークポイントによる量子回路のデバッグ</figcaption>
+  {% margin_note qni-breakpoint %}ブレークポイントによる量子回路のデバッグ{% endmargin_note %}
+  <img src="./images/qni_step_execution.gif" class="h-auto w-full border border-neutral-300" />
 </figure>
 
 <p>
-  興味がある人は、次に進む前に Qni (<a href="https://qniapp.net/">https://qniapp.net/</a>)
+  興味がある人は、次に進む前に <a href="https://qniapp.net/">Qni</a>
   をいろいろいじって実験してみましょう!
 </p>
