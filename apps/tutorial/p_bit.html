@@ -5,11 +5,10 @@ description: 量子ビットの確率的な性質
 ---
 
 <p>
-  量子コンピュータの計算結果を取り出すには、測定という確率に基づいた奇妙な操作があるのでした (<a
-    href="./what_qpu_do_faster.html"
-    >QPU は何が得意?</a
-  >
-  参照)。 序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
+  量子コンピュータの計算結果を取り出すには、測定という確率に基づいた奇妙な操作があるのでした{%
+  nmargin_note what-qpu-do-faster %}<a href="./what_qpu_do_faster.html">QPU は何が得意?</a>
+  を参照。{% endnmargin_note %}。
+  序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
 </p>
 
 <p>
@@ -21,9 +20,9 @@ description: 量子ビットの確率的な性質
 
 <h2>古典ビット</h2>
 <p>
-  ご存知のように、従来のビット (古典ビット{% include margin_note.html
-  content="量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。"
-  %}) は <code>0</code> または
+  ご存知のように、従来のビット (古典ビット{% nmargin_note classical-bit
+  %}量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。{%
+  endnmargin_note %}) は <code>0</code> または
   <code>1</code> のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は
   <code>0</code> か <code>1</code> のみで、また計算中のその中身 (状態) も常に <code>0</code> か
   <code>1</code> です。
@@ -53,9 +52,9 @@ description: 量子ビットの確率的な性質
   で、さまざまなコインが持ちうる確率のすべての組合わせは青色の線分になります。
 </p>
 
-<p>
-  <img src="./images/p_bit_graph.png" class="h-auto w-full md:mx-auto md:w-1/3" />
-</p>
+<figure>
+  <img src="./images/p_bit_graph.png" class="h-auto w-full" />
+</figure>
 
 <h2>確率的ビット</h2>
 
@@ -98,9 +97,9 @@ description: 量子ビットの確率的な性質
   点になります。
 </p>
 
-<p>
-  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full md:mx-auto md:w-2/3" />
-</p>
+<figure>
+  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full" />
+</figure>
 
 <p>
   一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。このように取りうる状態の数で比較すると
@@ -115,12 +114,8 @@ description: 量子ビットの確率的な性質
   それはなんと、確率的ビットたった 1 個に超巨大なデータを埋め込めることにほかなりません!
 </p>
 
-<figure>
+<figure class="!w-full">
   <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-  <figcaption class="pt-4 text-center">
-    すべての Wikipedia 記事と YouTube 動画、そしてネットの猫画像をまとめて 0 と 1
-    で表現し、確率的ビットが <code>0</code> となる確率に埋め込む!
-  </figcaption>
 </figure>
 
 <p>

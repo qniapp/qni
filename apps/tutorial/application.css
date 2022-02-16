@@ -4744,6 +4744,10 @@ label.margin-toggle:not(.margin-note-number) {
   width: 0px;
 }
 
+.\!w-full {
+  width: 100% !important;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
