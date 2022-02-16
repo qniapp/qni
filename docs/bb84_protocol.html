@@ -208,7 +208,7 @@
             </div>
             <div class="prose"><p>
   暗号の話を始める前に、いつもの登場人物を紹介しましょう。同じ小学校に通うアリスとボブ、イブの 3
-  人です<label for="margin-note-alice-bob" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-alice-bob" class="margin-toggle"><span class="margin-note md:w-1/2">暗号技術の解説記事や論文では、説明のためによくこの架空の 3
+  人です<label for="margin-note-alice-bob" class="margin-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-alice-bob" class="margin-toggle"><span class="margin-note">暗号技術の解説記事や論文では、説明のためによくこの架空の 3
   人が登場します。 たいていはアリス (Alice) がボブ (Bob) にメッセージを送り、悪いハッカーのイブ
   (Eve) が盗聴を企てます。複雑な暗号の例になるとさらに、チャーリー (Charlie)、デイヴ
   (Dave)、というように頭文字に A, B, C, D,... を持つキャラクター達が続々と登場します。</span>。
@@ -228,7 +228,7 @@
   <code>1</code>
   をランダムに並べた長い文字列を作り、それを盗聴されないようにボブに送る必要があります。
   普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数アルゴリズムを突き止めることで暗号鍵を盗んでしまう可能性があります。
-  そこで、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-toggle"><span class="margin-note md:w-1/2"><a
+  そこで、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-toggle"><span class="margin-note"><a
     href="./measurement_operation.html"
     >MEASUREMENT (測定) 命令</a
   >を参照</span>を使って、原理的にまったく予測できない完璧な乱数を生成します。
@@ -441,7 +441,7 @@
 
 <p>
   もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか？
-  クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-toggle"><span class="margin-note md:w-1/2"><a href="./no_cloning_theorem.html"
+  クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-toggle"><span class="margin-note"><a href="./no_cloning_theorem.html"
     >CLONE (複製) 命令!?</a
   >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
   このため、盗聴するにはアリスの送った量子ビットをこっそり測定し、別の量子ビットをボブに送る必要があります。

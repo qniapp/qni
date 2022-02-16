@@ -2,17 +2,17 @@ body {
   counter-reset: margin-note-counter;
 }
 
-.margin-note-number {
+.margin-note--numbered {
   counter-increment: margin-note-counter;
 }
 
-.margin-note-number:after,
+.margin-note--numbered:after,
 .sidenote:before {
   position: relative;
   vertical-align: baseline;
 }
 
-.margin-note-number:after {
+.margin-note--numbered:after {
   @apply text-sm;
   @apply rounded px-0.5 md:px-0;
   @apply bg-blue-100 md:bg-transparent;
@@ -32,7 +32,7 @@ input.margin-toggle {
   display: none;
 }
 
-label.margin-toggle:not(.margin-note-number) {
+label.margin-toggle:not(.margin-note--numbered) {
   display: none;
 }
 
@@ -44,6 +44,7 @@ label.margin-toggle:not(.margin-note-number) {
   @apply hidden md:block;
   @apply float-right clear-right;
   @apply md:mb-4 md:pl-12;
+  @apply w-1/2;
 }
 
 @screen md {
@@ -52,7 +53,7 @@ label.margin-toggle:not(.margin-note-number) {
   }
 }
 
-.margin-note-number + .margin-toggle + .margin-note::before {
+label.margin-note--numbered + input.margin-toggle + .margin-note::before {
   content: counter(margin-note-counter) '. ';
 }
 
