@@ -15,7 +15,7 @@ body {
   @apply m-4 sm:m-0 sm:mb-4 sm:pl-12;
   @apply w-11/12 sm:w-1/2;
 
-  .margin-toggle:checked + & {
+  .margin-note-toggle:checked + & {
     @apply block;
   }
 }
@@ -30,30 +30,28 @@ body {
   counter-increment: margin-note-counter;
 }
 
-.margin-note--numbered:after,
-.sidenote:before {
-  position: relative;
-  vertical-align: baseline;
-}
-
 .margin-note--numbered:after {
+  @apply relative;
   @apply text-sm;
-  @apply rounded px-0.5 md:px-0;
-  @apply bg-blue-100 md:bg-transparent;
-  @apply left-0;
+  @apply rounded px-0.5 sm:px-0;
+  @apply bg-blue-100 sm:bg-transparent;
+  @apply -top-2;
+  @apply align-baseline;
 
   content: counter(margin-note-counter);
-  top: -0.5rem;
 }
 
-input.margin-toggle {
-  display: none;
+input.margin-note-toggle {
+  @apply hidden;
 }
 
-label.margin-toggle:not(.margin-note--numbered) {
-  display: none;
+label.margin-note-toggle:not(.margin-note--numbered) {
+  @apply hidden;
 }
 
-label.margin-note--numbered + input.margin-toggle + .margin-note::before {
-  content: counter(margin-note-counter) '. ';
+label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
+  @apply relative;
+  @apply -top-2;
+
+  content: counter(margin-note-counter);
 }
