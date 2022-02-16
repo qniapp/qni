@@ -209,13 +209,13 @@
             <div class="prose"><p>量子ビットは、確率的ビットと非常によく似ています。大きな違いは 2 つだけです。</p>
 
 <ul class="list-inside list-decimal">
-  <li class="pb-4">
+  <li>
     確率のかわりに振幅 (amplitude, アンプリチュード)
     を使って状態を表現します。確率は正の値を持ちますが、振幅は負の値も持ちます。
   </li>
   <li>
-    振幅は測定中に 2 乗され確率となります。<a href="./what_qpu_do_faster">QPU は何が得意?</a>
-    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。
+    振幅は測定中に 2 乗され確率となります<label for="margin-note-amplitude-prob" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-amplitude-prob" class="margin-toggle"><span class="margin-note md:w-1/2"><a href="./what_qpu_do_faster">QPU は何が得意?</a> で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。</span>。
+    つまり「振幅の 2 乗 = 確率」です。
   </li>
 </ul>
 
@@ -234,9 +234,9 @@
 
 <p>が成り立ち、確率的ビットが取りうるすべての状態を表す次のグラフが得られるのでした。</p>
 
-<p>
-  <img src="./images/p0p1_graph.png" class="h-auto w-full md:mx-auto md:w-2/5" />
-</p>
+<figure>
+  <img src="./images/p0p1_graph.png" class="h-auto w-full" />
+</figure>
 
 <h2>振幅</h2>
 
@@ -258,9 +258,9 @@
   ここでは「量子ビットは確率的ビットよりもさらにたくさんの情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
 </p>
 
-<p>
-  <img src="./images/qbit_circular_state.png" class="h-auto w-full md:mx-auto md:w-2/5" />
-</p>
+<figure>
+  <img src="./images/qbit_circular_state.png" class="h-auto w-full" />
+</figure>
 
 <h2>振幅は複素数</h2>
 
@@ -273,16 +273,12 @@
   そして北極は状態 <code>|0⟩</code>、南極は状態 <code>|1⟩</code> にそれぞれ対応します。
 </p>
 
-<p>
-  <img src="./images/bloch_sphere.png" class="h-auto w-full md:mx-auto md:w-2/5" />
-</p>
+<figure>
+  <img src="./images/bloch_sphere.png" class="h-auto w-full" />
+</figure>
 
 <p>
-  量子コンピュータが唯一できるのは、回転をあらわす行列をベクトルに掛けることでした (<a
-    href="./what_qpu_do_faster"
-    >QPU は何が得意?</a
-  >
-  を参照)。
+  量子コンピュータが唯一できるのは、回転をあらわす行列をベクトルに掛けることでした<label for="margin-note-" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-" class="margin-toggle"><span class="margin-note md:w-1/2"><a href="./what_qpu_do_faster">QPU は何が得意?</a> を参照。</span>。
   これを地球で考えると、南極にいるペンギンを球面上の回転の組合わせによって北極や島根県に飛ばすことに相当します。
 </p>
 
