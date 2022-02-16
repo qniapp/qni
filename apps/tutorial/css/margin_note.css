@@ -52,6 +52,7 @@ label.margin-note-toggle:not(.margin-note--numbered) {
 label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   @apply relative;
   @apply -top-2;
+  @apply pr-1;
 
   content: counter(margin-note-counter);
 }

@@ -4464,6 +4464,7 @@ label.margin-note-toggle:not(.margin-note--numbered) {
 label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   position: relative;
   top: -0.5rem;
+  padding-right: 0.25rem;
   content: counter(margin-note-counter);
 }
 
