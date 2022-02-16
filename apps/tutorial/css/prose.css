@@ -13,7 +13,9 @@
   @apply pb-4;
 }
 
-.prose p {
+.prose p,
+.prose ul,
+.prose figure {
   @apply md:mr-auto md:w-2/3;
 }
 
@@ -21,10 +23,6 @@
 .prose figure,
 .prose ul {
   @apply pb-10;
-}
-
-.prose ul {
-  @apply md:mr-auto md:w-2/3;
 }
 
 .prose li:not(:first-child) {

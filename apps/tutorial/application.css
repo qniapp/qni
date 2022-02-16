@@ -4486,27 +4486,17 @@ label.margin-toggle:not(.margin-note-number) {
 }
 
 @media (min-width: 768px) {
-  .prose p {
+  .prose p, .prose ul, .prose figure {
     margin-right: auto;
   }
 
-  .prose p {
+  .prose p, .prose ul, .prose figure {
     width: 66.666667%;
   }
 }
 
 .prose p, .prose figure, .prose ul {
   padding-bottom: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .prose ul {
-    margin-right: auto;
-  }
-
-  .prose ul {
-    width: 66.666667%;
-  }
 }
 
 .prose li:not(:first-child) {
