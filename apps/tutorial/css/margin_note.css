@@ -52,7 +52,7 @@ label.margin-toggle:not(.margin-note-number) {
   }
 }
 
-.margin-note::before {
+.margin-note-number + .margin-toggle + .margin-note::before {
   content: counter(margin-note-counter) '. ';
 }
 

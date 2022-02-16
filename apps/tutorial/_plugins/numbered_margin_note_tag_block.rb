@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Jekyll
-  class MarginNoteTagBlock < Liquid::Block
+  class NumberedMarginNoteTagBlock < Liquid::Block
     def initialize(tag_name, note_name, tokens)
       super
       @note_id = "margin-note-#{note_name.strip}"
@@ -14,4 +14,4 @@ module Jekyll
   end
 end
 
-Liquid::Template.register_tag('margin_note', Jekyll::MarginNoteTagBlock)
+Liquid::Template.register_tag('nmargin_note', Jekyll::NumberedMarginNoteTagBlock)
