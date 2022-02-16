@@ -4499,6 +4499,20 @@ label.margin-toggle:not(.margin-note-number) {
   padding-bottom: 2.5rem;
 }
 
+@media (min-width: 768px) {
+  .prose ul {
+    margin-right: auto;
+  }
+
+  .prose ul {
+    width: 66.666667%;
+  }
+}
+
+.prose li:not(:first-child) {
+  margin-top: 0.5rem;
+}
+
 .prose a {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
