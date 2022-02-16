@@ -4491,7 +4491,7 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   }
 
   .prose p, .prose ul, .prose figure {
-    width: 66.666667%;
+    width: 58.333333%;
   }
 }
 
@@ -4596,16 +4596,16 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   margin-right: 4rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .mr-4 {
   margin-right: 1rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .ml-4 {
@@ -5328,8 +5328,8 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
     display: flex;
   }
 
-  .md\:w-2\/3 {
-    width: 66.666667%;
+  .md\:w-7\/12 {
+    width: 58.333333%;
   }
 
   .md\:flex-shrink-0 {
