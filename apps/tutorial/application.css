@@ -4318,6 +4318,97 @@ body {
   counter-reset: margin-note-counter;
 }
 
+.margin-note {
+  position: relative;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(115 115 115 / var(--tw-text-opacity));
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    display: block;
+  }
+}
+
+.margin-note {
+  vertical-align: baseline;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    vertical-align: middle;
+  }
+}
+
+.margin-note {
+  float: left;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    float: right;
+  }
+}
+
+.margin-note {
+  clear: both;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    clear: right;
+  }
+}
+
+.margin-note {
+  left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    left: auto;
+  }
+}
+
+.margin-note {
+  margin: 1rem;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    margin: 0px;
+  }
+
+  .margin-note {
+    margin-bottom: 1rem;
+  }
+
+  .margin-note {
+    padding-left: 3rem;
+  }
+}
+
+.margin-note {
+  width: 91.666667%;
+}
+
+@media (min-width: 640px) {
+  .margin-note {
+    width: 50%;
+  }
+
+  .margin-note {
+    margin-right: -50%;
+  }
+}
+
+.margin-toggle:checked + .margin-note {
+  display: block;
+}
+
 .margin-note--numbered {
   counter-increment: margin-note-counter;
 }
@@ -4374,95 +4465,8 @@ label.margin-toggle:not(.margin-note--numbered) {
   display: none;
 }
 
-.margin-note {
-  position: relative;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgb(115 115 115 / var(--tw-text-opacity));
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .margin-note {
-    display: block;
-  }
-}
-
-.margin-note {
-  float: right;
-  clear: right;
-}
-
-@media (min-width: 768px) {
-  .margin-note {
-    margin-bottom: 1rem;
-  }
-
-  .margin-note {
-    padding-left: 3rem;
-  }
-}
-
-.margin-note {
-  width: 50%;
-}
-
-@media (min-width: 768px) {
-  .margin-note {
-    margin-right: -50%;
-  }
-}
-
 label.margin-note--numbered + input.margin-toggle + .margin-note::before {
   content: counter(margin-note-counter) '. ';
-}
-
-.margin-toggle:checked + .margin-note {
-  display: block;
-  float: left;
-}
-
-@media (min-width: 768px) {
-  .margin-toggle:checked + .margin-note {
-    float: right;
-  }
-}
-
-.margin-toggle:checked + .margin-note {
-  vertical-align: baseline;
-  left: 1rem;
-}
-
-@media (min-width: 768px) {
-  .margin-toggle:checked + .margin-note {
-    left: auto;
-  }
-}
-
-.margin-toggle:checked + .margin-note {
-  clear: both;
-  width: 91.666667%;
-}
-
-@media (min-width: 768px) {
-  .margin-toggle:checked + .margin-note {
-    width: 50%;
-  }
-}
-
-.margin-toggle:checked + .margin-note {
-  margin: 1rem;
-}
-
-@media (min-width: 768px) {
-  .margin-toggle:checked + .margin-note {
-    margin: 0px;
-  }
-
-  .margin-toggle:checked + .margin-note {
-    margin-right: -50%;
-  }
 }
 
 .prose h2 {

@@ -2,6 +2,30 @@ body {
   counter-reset: margin-note-counter;
 }
 
+.margin-note {
+  @apply relative;
+  @apply text-sm;
+  @apply text-neutral-500;
+
+  @apply hidden sm:block;
+  @apply align-baseline sm:align-middle;
+  @apply float-left sm:float-right;
+  @apply clear-both sm:clear-right;
+  @apply left-4 sm:left-auto;
+  @apply m-4 sm:m-0 sm:mb-4 sm:pl-12;
+  @apply w-11/12 sm:w-1/2;
+}
+
+@screen sm {
+  .margin-note {
+    margin-right: -50%;
+  }
+}
+
+.margin-toggle:checked + .margin-note {
+  @apply block;
+}
+
 .margin-note--numbered {
   counter-increment: margin-note-counter;
 }
@@ -36,39 +60,6 @@ label.margin-toggle:not(.margin-note--numbered) {
   display: none;
 }
 
-.margin-note {
-  @apply relative;
-  @apply text-sm;
-  @apply text-neutral-500;
-
-  @apply hidden md:block;
-  @apply float-right clear-right;
-  @apply md:mb-4 md:pl-12;
-  @apply w-1/2;
-}
-
-@screen md {
-  .margin-note {
-    margin-right: -50%;
-  }
-}
-
 label.margin-note--numbered + input.margin-toggle + .margin-note::before {
   content: counter(margin-note-counter) '. ';
-}
-
-.margin-toggle:checked + .margin-note {
-  @apply block;
-  @apply float-left md:float-right;
-  @apply align-baseline;
-  @apply left-4 md:left-auto;
-  @apply clear-both;
-  @apply w-11/12 md:w-1/2;
-  @apply m-4 md:m-0;
-}
-
-@screen md {
-  .margin-toggle:checked + .margin-note {
-    margin-right: -50%;
-  }
 }
