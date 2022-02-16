@@ -221,8 +221,8 @@
 <p>
   量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、 <code>|0⟩</code> と
   <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした<label for="margin-note-q-bit-0" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-q-bit-0" class="margin-toggle"><span class="margin-note md:w-1/2"><a href="q_bit.html">量子ビット</a>を参照</span>。
-  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径
-  x 半径 x π) はその確率に正比例します。
+  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径 x
+  半径 x π) はその確率に正比例します。
   以下の円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。たしかに振幅の大きさの
   2 乗が確率と等しくなっていることを確認しましょう。
 </p>
@@ -234,23 +234,23 @@
   <circle-notation id="circle-notation-D" data-size="xl" data-show-kets></circle-notation>
 
   <script type="module">
-   import { Complex } from './application.js'
+    import { Complex } from './application.js'
 
-   let circleNotationA = document.getElementById('circle-notation-A')
-   let circleNotationB = document.getElementById('circle-notation-B')
-   let circleNotationC = document.getElementById('circle-notation-C')
-   let circleNotationD = document.getElementById('circle-notation-D')
+    let circleNotationA = document.getElementById('circle-notation-A')
+    let circleNotationB = document.getElementById('circle-notation-B')
+    let circleNotationC = document.getElementById('circle-notation-C')
+    let circleNotationD = document.getElementById('circle-notation-D')
 
-   circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
-   circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
-   circleNotationC.setAmplitudes({
-       0: new Complex(1 / Math.sqrt(2), 0),
-       1: new Complex(1 / Math.sqrt(2), 0),
-   })
-   circleNotationD.setAmplitudes({
-       0: new Complex(Math.sqrt(0.8), 0),
-       1: new Complex(Math.sqrt(0.2), 0),
-   })
+    circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
+    circleNotationC.setAmplitudes({
+      0: new Complex(1 / Math.sqrt(2), 0),
+      1: new Complex(1 / Math.sqrt(2), 0),
+    })
+    circleNotationD.setAmplitudes({
+      0: new Complex(Math.sqrt(0.8), 0),
+      1: new Complex(Math.sqrt(0.2), 0),
+    })
   </script>
 </div>
 
