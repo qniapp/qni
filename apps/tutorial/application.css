@@ -4307,6 +4307,7 @@ circuit-editor {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -4399,14 +4400,20 @@ body {
   .margin-note {
     width: 50%;
   }
-
-  .margin-note {
-    margin-right: -50%;
-  }
 }
 
 .margin-toggle:checked + .margin-note {
-  display: block;
+    display: block;
+  }
+
+.margin-toggle:checked + .margin-note {
+    display: block;
+  }
+
+@media (min-width: 640px) {
+  .margin-note {
+    margin-right: -50%;
+  }
 }
 
 .margin-note--numbered {
@@ -4448,12 +4455,6 @@ body {
 .margin-note--numbered:after {
   left: 0px;
   content: counter(margin-note-counter);
-  top: -0.5rem;
-}
-
-.sidenote:before {
-  content: counter(margin-note-counter) ' ';
-  font-size: 1rem;
   top: -0.5rem;
 }
 
@@ -4757,7 +4758,7 @@ label.margin-note--numbered + input.margin-toggle + .margin-note::before {
 }
 
 .flex-1 {
-  flex: 1 1 0%;
+  flex: 1 1;
 }
 
 .flex-shrink-0 {
@@ -5247,6 +5248,7 @@ label.margin-note--numbered + input.margin-toggle + .margin-note::before {
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 

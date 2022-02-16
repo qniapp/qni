@@ -14,16 +14,16 @@ body {
   @apply left-4 sm:left-auto;
   @apply m-4 sm:m-0 sm:mb-4 sm:pl-12;
   @apply w-11/12 sm:w-1/2;
+
+  .margin-toggle:checked + & {
+    @apply block;
+  }
 }
 
 @screen sm {
   .margin-note {
     margin-right: -50%;
   }
-}
-
-.margin-toggle:checked + .margin-note {
-  @apply block;
 }
 
 .margin-note--numbered {
@@ -43,12 +43,6 @@ body {
   @apply left-0;
 
   content: counter(margin-note-counter);
-  top: -0.5rem;
-}
-
-.sidenote:before {
-  content: counter(margin-note-counter) ' ';
-  font-size: 1rem;
   top: -0.5rem;
 }
 
