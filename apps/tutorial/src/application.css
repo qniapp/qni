@@ -4,8 +4,6 @@
 @import '@qni/elements/dist/qni';
 
 @import '../css/margin_note';
-@import '../css/margin_note_marker';
 @import '../css/prose';
-/* @import '../css/tufte'; */
 
 @import 'tailwindcss/utilities';
