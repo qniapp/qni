@@ -29,7 +29,7 @@ description: 量子力学で暗号鍵の盗聴を検出
   普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数アルゴリズムを突き止めることで暗号鍵を盗んでしまう可能性があります。
   そこで、量子乱数ジェネレータ{% nmargin_note measurement-operation %}<a
     href="./measurement_operation.html"
-    >MEASUREMENT (測定) 命令</a
+    >MEASUREMENT 命令</a
   >を参照{% endnmargin_note%}を使って、原理的にまったく予測できない完璧な乱数を生成します。
   アリスは長めに <code>4,000</code> 文字の暗号鍵を量子乱数で生成しました。
 </p>
@@ -64,7 +64,12 @@ description: 量子力学で暗号鍵の盗聴を検出
 <div class="flex pb-10">
   <div class="flex flex-col">
     <div class="flex flex-row items-center">
-      <div class="mr-16">ボブに {% ket 0 %} を送る場合 (H なし/あり)</div>
+      <div class="mr-8">
+        <div class="flex flex-col">
+          <div>ボブに {% ket 0 %} を送る場合</div>
+          <div>(H ゲートなし/あり)</div>
+        </div>
+      </div>
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
@@ -108,7 +113,12 @@ description: 量子力学で暗号鍵の盗聴を検出
     <hr class="pt-8" />
 
     <div class="flex flex-row items-center">
-      <div class="mr-16">ボブに {% ket 1 %} を送る場合 (H なし/あり)</div>
+      <div class="mr-8">
+        <div class="flex flex-col">
+          <div>ボブに {% ket 1 %} を送る場合</div>
+          <div>(H ゲートなし/あり)</div>
+        </div>
+      </div>
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
@@ -233,7 +243,7 @@ description: 量子力学で暗号鍵の盗聴を検出
 <p>
   もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか？
   クローン禁止定理{% nmargin_note no-cloning-theorem %}<a href="./no_cloning_theorem.html"
-    >CLONE (複製) 命令!?</a
+    >CLONE 命令!?</a
   >を参照{% endnmargin_note
   %}により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
   このため、盗聴するにはアリスの送った量子ビットをこっそり測定し、別の量子ビットをボブに送る必要があります。

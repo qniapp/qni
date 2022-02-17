@@ -63,7 +63,7 @@
     href="./what_qpu_do_faster.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
-    QPU は何が得意？
+    QPU は何が得意?
   </a>
    
   <a
@@ -129,7 +129,7 @@
     href="./not_gate.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
-    量子 NOT ゲート (X ゲート)
+    X ゲート (量子 NOT)
   </a>
    
   <a
@@ -150,14 +150,14 @@
     href="./measurement_operation.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
-    MEASUREMENT (測定) 命令
+    MEASUREMENT 命令
   </a>
    
   <a
     href="./no_cloning_theorem.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
-    CLONE (複製) 命令!?
+    CLONE 命令!?
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
@@ -230,7 +230,7 @@
   普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数アルゴリズムを突き止めることで暗号鍵を盗んでしまう可能性があります。
   そこで、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-note-toggle"><span class="margin-note"><a
     href="./measurement_operation.html"
-    >MEASUREMENT (測定) 命令</a
+    >MEASUREMENT 命令</a
   >を参照</span>を使って、原理的にまったく予測できない完璧な乱数を生成します。
   アリスは長めに <code>4,000</code> 文字の暗号鍵を量子乱数で生成しました。
 </p>
@@ -265,7 +265,12 @@
 <div class="flex pb-10">
   <div class="flex flex-col">
     <div class="flex flex-row items-center">
-      <div class="mr-16">ボブに <code>|0⟩</code> を送る場合 (H なし/あり)</div>
+      <div class="mr-8">
+        <div class="flex flex-col">
+          <div>ボブに <code>|0⟩</code> を送る場合</div>
+          <div>(H ゲートなし/あり)</div>
+        </div>
+      </div>
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
@@ -313,7 +318,12 @@
     <hr class="pt-8" />
 
     <div class="flex flex-row items-center">
-      <div class="mr-16">ボブに <code>|1⟩</code> を送る場合 (H なし/あり)</div>
+      <div class="mr-8">
+        <div class="flex flex-col">
+          <div>ボブに <code>|1⟩</code> を送る場合</div>
+          <div>(H ゲートなし/あり)</div>
+        </div>
+      </div>
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
@@ -442,7 +452,7 @@
 <p>
   もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか？
   クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-note-toggle"><span class="margin-note"><a href="./no_cloning_theorem.html"
-    >CLONE (複製) 命令!?</a
+    >CLONE 命令!?</a
   >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
   このため、盗聴するにはアリスの送った量子ビットをこっそり測定し、別の量子ビットをボブに送る必要があります。
 </p>

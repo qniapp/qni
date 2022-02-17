@@ -1,17 +1,16 @@
 ---
 layout: page
-title: 量子 NOT ゲート (X ゲート)
+title: X ゲート (量子 NOT)
 description: 量子ビットペアの入れ替え
 ---
 
 <p>
-  量子 NOT ゲートは従来の <span class="font-bold">NOT 演算</span>に似た働きをします。 NOT
-  演算は、<code>0</code> に適用するとビットが反転して <code>1</code> になり、逆に
-  <code>1</code> に適用すると <code>0</code> になるのでした。つまり、NOT 演算は &quot;<code
-    class="text-purple-600"
+  X ゲートは従来の <span class="font-bold">NOT 演算</span>に似た働きをします。 NOT 演算は、<code
     >0</code
   >
-  と <code>1</code> を入れ替える&quot; という働きをします。
+  に適用するとビットが反転して <code>1</code> になり、逆に <code>1</code> に適用すると
+  <code>0</code> になるのでした。つまり、NOT 演算は &quot;<code class="text-purple-600">0</code> と
+  <code>1</code> を入れ替える&quot; という働きをします。
 </p>
 
 <div class="flex justify-center">
@@ -26,8 +25,8 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  <span class="font-bold">量子 NOT ゲート</span>は NOT 演算によく似ていて、量子ビットの {% ket 0 %}
-  と {% ket 1 %} を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
+  <span class="font-bold">X ゲート</span>は NOT 演算によく似ていて、量子ビットの {% ket 0 %} と {%
+  ket 1 %} を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
 </p>
 
 <div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
@@ -55,7 +54,7 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
-  量子 NOT ゲートを回路に置いて、{% ket 0 %} と {% ket 1 %} が入れ替わることを確認しましょう。
+  X ゲートを回路に置いて、{% ket 0 %} と {% ket 1 %} が入れ替わることを確認しましょう。
 </div>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
@@ -106,7 +105,7 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  量子 NOT ゲートが従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
+  X ゲートが従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
   たとえば、次の {% ket 0 %} と {% ket 1 %} の重ね合わせ状態にある量子ビットを考えましょう。
 </p>
 
@@ -120,7 +119,7 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  これに量子 NOT ゲートを適用すると、{% ket 0 %} と {% ket 1 %} の内容を交換します。
+  これにX ゲートを適用すると、{% ket 0 %} と {% ket 1 %} の内容を交換します。
   これはまさに、先ほど見た "{% ket 0 %} と {% ket 1 %} の入れ換え" という効果です。
 </p>
 
@@ -147,13 +146,13 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  量子 NOT ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% ket 0 %} と {%
-  ket 1 %} が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
+  X ゲートを続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 {% ket 0 %} と {% ket 1 %}
+  が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
   ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
   ゲートはそれ自身の逆演算である」と言います。
 </p>
 
-<div class="flex justify-center pb-10">
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
   <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
     <circle-notation
       data-size="xl"
@@ -189,10 +188,10 @@ description: 量子ビットペアの入れ替え
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="!w-full list-disc px-4 !pb-0">
     <li>
-      重ね合わせ状態の量子ビットに量子 NOT ゲートを適用し、{% ket 0 %} と {% ket 1 %}
+      重ね合わせ状態の量子ビットにX ゲートを適用し、{% ket 0 %} と {% ket 1 %}
       が入れ替わることを確認しましょう。
     </li>
-    <li>量子 NOT ゲートを 2 回適用すると元に戻ることを確認しましょう</li>
+    <li>X ゲートを 2 回適用すると元に戻ることを確認しましょう</li>
   </ul>
 </div>
 
@@ -244,8 +243,7 @@ description: 量子ビットペアの入れ替え
 </div>
 
 <p>
-  量子 NOT ゲートはよく <span class="font-bold">X ゲート</span>とも呼ばれます。
-  その由来は、量子ビット状態をブロッホ球表すと量子 NOT ゲートは X
+  「X ゲート」の名前の由来は、量子ビット状態をブロッホ球で表すと量子 NOT ゲートは X
   軸を中心とした回転操作の一種だからです。
 </p>
 
