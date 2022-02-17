@@ -48,3 +48,5 @@
 #       link: ./multi_qubit_circle_notation.html
 #     - name: 重ね合わせ状態
 #       link: ./multi_qubit_superposition.html
+#     - name: 複数量子ビットでの演算
+#       link: ./multi_qubit_operation.html
