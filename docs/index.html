@@ -207,8 +207,9 @@
               <p class="mt-1 text-lg text-gray-500">プログラマ向け量子プログラミング実践チュートリアル</p>
             </div>
             <div class="prose"><p>
-  1980 年代初頭に<span class="font-bold">量子コンピュータ</span>のアイディアは生まれました<label for="margin-note-preskill" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-preskill" class="margin-toggle"><span class="margin-note md:w-1/2">John Preskill,
-  <a href="https://arxiv.org/abs/2106.10522">Quantum computing 40 years later</a> (2021) </span>。
+  1980 年代初頭に<span class="font-bold">量子コンピュータ</span>のアイディアは生まれました<label for="margin-note-preskill" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-preskill" class="margin-note-toggle"><span class="margin-note">John Preskill,
+  <a href="https://arxiv.org/abs/2106.10522" class="italic">Quantum computing 40 years later</a>
+  (2021) </span>。
   かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
   現在のあらゆるコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
   の内部構造は、古典物理学、より正確には電磁気学で説明できます。
@@ -221,12 +222,15 @@
 
 <p>
   ファインマンのアイデアをきっかけに、量子コンピュータに適したさらなるアルゴリズム探しが始まりました。
-  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-grover" class="margin-toggle"><span class="margin-note md:w-1/2">「グローヴァーのアルゴリズム」としても知られる。Lov K. Grover,
-  <a href="https://arxiv.org/abs/quant-ph/9605043"
+  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note"><span
+    class="font-bold"
+    >グローヴァーのアルゴリズム</span
+  >としても知られています。Lov K. Grover,
+  <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
     >A fast quantum mechanical algorithm for database search</a
   >
-  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-toggle margin-note-number"></label><input type="checkbox" id="margin-note-shore" class="margin-toggle"><span class="margin-note md:w-1/2">「ショアのアルゴリズム」としても知られる。Peter W. Shor,
-  <a href="https://arxiv.org/abs/quant-ph/9508027"
+  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shore" class="margin-note-toggle"><span class="margin-note"><span class="font-bold">ショアのアルゴリズム</span>としても知られています。Peter W. Shor,
+  <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
     >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
     Computer</a
   >
@@ -249,14 +253,14 @@
 </p>
 
 <p>
-  一方で、こうしたアルゴリズムを実行するための量子コンピュータに関しては、正確な現状が知られていません。
+  こうした比較的よく知られている量子アルゴリズムとは反対に、量子コンピュータ自体に関しては、正確な現状が知られていません。
   派手な量子関連の投資ニュースに便乗してか、量子探索や量子因数分解が現在の量子コンピュータですぐにでも実行できる、と誤解させるような記事も少なくありません。
   それどころか「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した怪しいビジネスもちらほら見かけます。
 </p>
 
 <p>
   量子コンピュータの正しい知識が広まらない原因の 1 つは、その敷居が高すぎることにあります。
-  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級〜中級者向けコンテンツは不足しています。
+  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級コンテンツは不足しています。
   量子コンピュータを勉強しようとうっかり専門の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった方も多いでしょう。
 </p>
 
@@ -273,28 +277,20 @@
 </p>
 
 <p>
-  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特徴として、我々の開発している量子コンピュータシミューレータ
-  <a href="https://qniapp.net/">Qni (キューニ)</a> をそこかしこで使っています。Qni
+  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特徴として、我々が開発するオープンソースな量子コンピュータシミューレータ
+  Qni (キューニ)<label for="margin-note-qni" class="margin-note-toggle"></label><input type="checkbox" id="margin-note-qni" class="margin-note-toggle"><span class="margin-note">
+  <img src="./images/qni_screenshot_grover.png" class="mb-2 border border-neutral-300" />
+  Qni (<a href="https://qniapp.net/">https://qniapp.net</a>) は量子プログラミング環境を提供する無料
+  Web サービスです。 </span> をそこかしこで使っています。Qni
   を使うと、シミュレータ上であれこれ実験を重ねることで、量子コンピュータを使うための直感的感覚を養うことができます。Qni
   は、量子プログラムをエレガントに記述するためのグラフィカルなユーザインタフェースを提供しています。操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと効率的であり教育的でもあります。
   より高度な量子コンピュータや量子情報といった専門分野を勉強する際にも、Qni
   は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
 </p>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-2/3">
-  Qni の関連ページは以下のとおりです:
-  <ul class="mt-4 !w-full list-inside list-disc !pb-0">
-    <li>Qni シミュレータ: <a href="https://qniapp.net/">https://qniapp.net/</a></li>
-    <li>
-      GitHub のプロジェクトページ:
-      <a href="https://github.com/qniapp/">https://github.com/qniapp/</a>
-    </li>
-  </ul>
-</div>
-
 <p>
-  このチュートリアルは Qni と同様に GitHub
-  でオープンに開発しており、読者からのフィードバックを歓迎しています。 typo
+  このチュートリアルは Qni と同様に GitHub でオープンに開発<label for="margin-note-qni-github" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qni-github" class="margin-note-toggle"><span class="margin-note">GitHub の
+  Qni プロジェクトページ: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a></span>しており、読者からのフィードバックを歓迎しています。 typo
   などのささいな修正でも、ぜひ GitHub
   でフィードバックをお願いします。また、著者に加わりたい方も、ぜひ Pull Request
   を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。

@@ -4,12 +4,14 @@ module Jekyll
   class NumberedMarginNoteTagBlock < Liquid::Block
     def initialize(tag_name, note_name, tokens)
       super
-      @note_id = "margin-note-#{note_name.strip}"
+      @margin_note_id = "margin-note-#{note_name.strip}"
     end
 
     def render(context)
       text = super
-      %(<label for="#{@note_id}" class="margin-toggle margin-note-number"></label><input type="checkbox" id="#{@note_id}" class="margin-toggle"><span class="margin-note md:w-1/2">#{text}</span>)
+      %(<label for="#{@margin_note_id}" class="margin-note-toggle margin-note--numbered"></label>) +
+        %(<input type="checkbox" id="#{@margin_note_id}" class="margin-note-toggle">) +
+        %(<span class="margin-note">#{text}</span>)
     end
   end
 end

@@ -16,7 +16,7 @@
 .prose p,
 .prose ul,
 .prose figure {
-  @apply md:mr-auto md:w-2/3;
+  @apply md:mr-auto md:w-7/12;
 }
 
 .prose p,
