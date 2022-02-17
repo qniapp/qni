@@ -1,0 +1,413 @@
+---
+layout: page
+title: 複数量子ビットでの演算
+description: 状態ベクトルのペアで計算
+---
+
+<p>
+  複数量子ビットに対してゲートを適用するとどうなるでしょうか？ 今までは単一の量子ビットに X ゲートや
+  H
+  ゲートを適用してきましたが、複数量子ビットに適用する場合でもそれぞれのゲートの働きは変わりません。
+  しかし、ゲートを配置した位置 (ビット) によって、演算の対象となる状態ベクトルの円が異なってきます。
+  ゲートを 1 ビット目、2 ビット目、3
+  ビット目、、、と置いていくことによって、その動作の違いを確認してみましょう。
+</p>
+
+<h2>ゲートを 1 ビット目に置いた場合</h2>
+
+<p>
+  以降では 3 量子ビットの回路を例として考えます。この場合、状態ベクトルは 8
+  個の円として表示されます。 この状態ベクトルに対して、X ゲートを 1 ビット目 (回路の一番上のワイヤ)
+  に適用すると、X ゲートは「{% ket 0 %} と {% ket 1 %}」、「{% ket 2 %} と {% ket 3 %}」、「{% ket 4
+  %} と {% ket 5 %}」、「{% ket 6 %} と {% ket 7 %}」という<span class="font-bold"
+    >隣同士の円 (1 つだけ離れた円同士)</span
+  >
+  それぞれのペアに対して、X ゲートの動作である「円の入れ替え」を行います。
+</p>
+
+<figure>
+  <img src="./images/bit1_ket_pair.png" />
+</figure>
+
+<p>
+  これを具体的な状態ベクトルで見ると、次のようになります。 {% ket 0 %} と {% ket 1 %}、{% ket 2 %}
+  と {% ket 3 %}、… それぞれのペアが X ゲートによって入れ替わります。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-X1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X1')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>X ゲートを 1 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X1')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.17678, -0.07322),
+          1: new Complex(0.42678, -0.17678),
+          2: new Complex(0.07322, 0.17678),
+          3: new Complex(0.17678, 0.42678),
+          4: new Complex(-0.17678, 0.07322),
+          5: new Complex(-0.42678, 0.17678),
+          6: new Complex(-0.07322, -0.17678),
+          7: new Complex(-0.17678, -0.42678),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  この動作を Qni 上でも確認してみましょう。 下の回路で X
+  ゲートの適用前と適用後を比べてみると、たしかに隣同士の円が X
+  ゲートによって入れ替わっていることが分かります。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["X"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<h2>ゲートを 2 ビット目に置いた場合</h2>
+
+<p>
+  ゲートを置く位置を変えると、ゲートが作用する円のペアが変化します。
+  先ほどと同じ状態ベクトルに対して、X ゲートを 2 ビット目に適用すると、X ゲートは「{% ket 0 %} と {%
+  ket 2 %}」、「{% ket 1 %} と {% ket 3 %}」、「{% ket 4 %} と {% ket 6 %}」、「{% ket 5 %} と {%
+  ket 7 %}」という
+  <span class="font-bold">1 つ飛ばしの円同士 (2 つ離れた円同士)</span>
+  で作ったペアに対して、円の入れ替えを行います。
+</p>
+
+<figure>
+  <img src="./images/bit2_ket_pair.png" />
+</figure>
+
+<p>
+  これを状態ベクトルで見ると、次のようになります。 {% ket 0 %} と {% ket 2 %} や {% ket 5 %} と {%
+  ket 7 %} が X ゲートによって入れ替わることを確認しましょう。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-X2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X2')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>X ゲートを 2 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X2')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.17678, 0.42678),
+          1: new Complex(0.07322, 0.17678),
+          2: new Complex(0.42678, -0.17678),
+          3: new Complex(0.17678, -0.07322),
+          4: new Complex(-0.17678, -0.42678),
+          5: new Complex(-0.07322, -0.17678),
+          6: new Complex(-0.42678, 0.17678),
+          7: new Complex(-0.17678, 0.07322),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>これも Qni で確認しておきましょう。</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],[1,"X"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<h2>ゲートを 3 ビット目に置いた場合</h2>
+
+<p>
+  X ゲートを 3 ビット目に適用すると、<span class="font-bold">4 つ離れた円同士</span
+  >で作ったペアに対して、円の入れ替えを行います。 つまり「{% ket 0 %} と {% ket 4 %}」、「{% ket 1
+  %} と {% ket 5 %}」、「{% ket 2 %} と {% ket 6 %}」、「{% ket 3 %} と {% ket 7 %}」のペアについて
+  X ゲート演算が行われます。
+</p>
+
+<figure>
+  <img src="./images/bit3_ket_pair.png" />
+</figure>
+
+<p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-X3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X3')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>X ゲートを 3 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X3')
+        circleNotation.setAmplitudes({
+          0: new Complex(-0.42678, 0.17678),
+          1: new Complex(-0.17678, 0.07322),
+          2: new Complex(-0.17678, -0.42678),
+          3: new Complex(-0.07322, -0.17678),
+          4: new Complex(0.42678, -0.17678),
+          5: new Complex(0.17678, -0.07322),
+          6: new Complex(0.17678, 0.42678),
+          7: new Complex(0.07322, 0.17678),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>こちらも Qni で確認しておきましょう。</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],[1,1,"X"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<h2>まとめ</h2>
+
+<p>複数の量子ビットにゲートを適用するには、次のように 2 段階に分けて考える必要があります。</p>
+
+<ul class="list-inside list-decimal">
+  <li>ゲートを置いたビット番号によって、ゲートを作用させるペアを決める。</li>
+  <li>それぞれのペアについて、ゲートの演算を適用する</li>
+</ul>
+
+<p>
+  ペアの決めかたは一般に、\(n\) 番目のビットにゲートを置くと \((n - 1)^2\)
+  離れた円同士がペアとなります。 たとえば 3 ビット目にゲートを置いた場合、\((3 - 1)^2 = 4\) なので 4
+  つ離れた円同士のペアを考えれば OK です。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}
