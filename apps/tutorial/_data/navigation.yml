@@ -28,6 +28,9 @@
       link: ./not_gate.html
     - name: H ゲート
       link: ./h_gate.html
+    # - name: PHASE ゲート
+    #   link: ./phase_gate.html
+    #   new: true
     - name: WRITE 命令
       link: ./write_operation.html
     - name: MEASUREMENT 命令
