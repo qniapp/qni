@@ -56,3 +56,6 @@
 #     - name: 複数量子ビットでの演算
 #       link: ./multi_qubit_operation.html
 #       new: true
+#     - name: ランダムバイトジェネレータ
+#       link: ./random_byte_generator.html
+#       new: true
