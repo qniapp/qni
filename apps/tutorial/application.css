@@ -4565,6 +4565,11 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   margin-right: auto;
 }
 
+.\!mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -4639,6 +4644,10 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.\!mr-auto {
+  margin-right: auto !important;
 }
 
 .block {
@@ -4753,6 +4762,10 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
 
 .w-0 {
   width: 0px;
+}
+
+.\!w-auto {
+  width: auto !important;
 }
 
 .min-w-0 {

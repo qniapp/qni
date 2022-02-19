@@ -25,7 +25,7 @@
     - name: CPU 演算との違い
       link: ./cpu_vs_qpu_operations.html
     - name: X ゲート (量子 NOT)
-      link: ./not_gate.html
+      link: ./x_gate.html
     - name: H ゲート
       link: ./h_gate.html
     # - name: PHASE ゲート
