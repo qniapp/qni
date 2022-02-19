@@ -59,3 +59,7 @@
 #     - name: ランダムバイトジェネレータ
 #       link: ./random_byte_generator.html
 #       new: true
+- name: ふろく
+  pages:
+    - name: クローン禁止定理の証明
+      link: ./no_cloning_theorem_proof.html

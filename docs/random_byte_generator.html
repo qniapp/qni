@@ -204,6 +204,19 @@
     
   </a>
    
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
 </nav>
 </div>
     </div>
@@ -225,17 +238,22 @@
               <p class="mt-1 text-lg text-gray-500">H ゲートを複数量子ビットに適用</p>
             </div>
             <div class="prose"><p>
-  量子乱数ジェネレータ<label for="margin-note-quantum-random-generator" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-quantum-random-generator" class="margin-note-toggle"><span class="margin-note"><a href="./measurement_operation.html">MEASUREMENT 命令</a>を参照</span>は 1 ビットの乱数 <code>0</code> または <code>1</code> を生成するものでした。
-  より大きな乱数を生成するにはどうしたらよいでしょうか？
-  今回は 8 個の量子ビットを使って、1 バイト (= 8 ビット, 0 から 255 まで) の乱数を生成する回路を紹介します。
+  量子乱数ジェネレータ<label for="margin-note-quantum-random-generator" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-quantum-random-generator" class="margin-note-toggle"><span class="margin-note"><a
+    href="./measurement_operation.html"
+    >MEASUREMENT 命令</a
+  >を参照</span>は 1 ビットの乱数 <code>0</code> または
+  <code>1</code> を生成するものでした。 より大きな乱数を生成するにはどうしたらよいでしょうか？
+  今回は 8 個の量子ビットを使って、1 バイト (= 8 ビット, 0 から 255 まで)
+  の乱数を生成する回路を紹介します。
 </p>
 
 <p>
-  次の回路は、1 ビット目から 8 ビット目それぞれに H ゲートを適用し、最後にすべてのビットを測定します。
-  測定すると 0 から 255 までの数のうちどれか 1 つをランダムに出力します。
+  次の回路は、1 ビット目から 8 ビット目それぞれに H
+  ゲートを適用し、最後にすべてのビットを測定します。 測定すると 0 から 255 までの数のうちどれか 1
+  つをランダムに出力します。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 w-full md:mr-auto">
+<div class="relative mb-10 w-full overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
@@ -253,51 +271,56 @@
       </div>
 
       <quantum-circuit
-          class="mb-10"
-          data-target="quantum-simulator.circuit circuit-editor.circuit"
-          data-min-wire-count="1"
-          data-max-wire-count="1"
-          data-min-step-count="5"
-          data-json='{"cols":[["|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>"],["H"],[1,"H"],[1,1,"H"],[1,1,1,"H"],[1,1,1,1,"H"],[1,1,1,1,1,"H"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,1,1,"H"],["Measure","Measure","Measure","Measure","Measure","Measure","Measure","Measure"]]}'
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>"],["H"],[1,"H"],[1,1,"H"],[1,1,1,"H"],[1,1,1,1,"H"],[1,1,1,1,1,"H"],[1,1,1,1,1,1,"H"],[1,1,1,1,1,1,1,"H"],["Measure","Measure","Measure","Measure","Measure","Measure","Measure","Measure"]]}'
       >
       </quantum-circuit>
 
       <circle-notation
-          id="circle-notation"
-          data-target="quantum-simulator.circleNotation"
-          class="overflow-scroll z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white"
-          data-multi-qubits
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center overflow-scroll rounded-xl border-2 border-b-4 border-gray-200 bg-white"
+        data-multi-qubits
       >
       </circle-notation>
     </circuit-editor>
 
     <run-circuit-button
-        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-        data-targets="quantum-simulator.runCircuitButtons"
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
     ></run-circuit-button>
   </quantum-simulator>
 </div>
 
 <p>
-  大筋としてこれがどのように動作しているか、状態ベクトル表示を使って調べてみましょう。
-  H ゲートを全ビットに適用した時点の状態ベクトルを見ると、<code>|0⟩</code> から <code>|255⟩</code> それぞれの確率は等しく 0.390625% (100 / 256 %) になります。
-  これを測定することで、<code>|0⟩</code> から <code>|255⟩</code> のうちどれか 1 つがランダムに出力されます。
+  大筋としてこれがどのように動作しているか、状態ベクトル表示を使って調べてみましょう。 H
+  ゲートを全ビットに適用した時点の状態ベクトルを見ると、<code>|0⟩</code> から <code>|255⟩</code>
+  それぞれの確率は等しく 0.390625% (100 / 256 %) になります。 これを測定することで、<code>|0⟩</code> から
+  <code>|255⟩</code> のうちどれか 1 つがランダムに出力されます。
 </p>
 
 <h2>等しい重ね合わせができる仕組み</h2>
 
 <p>
-  なぜ等しい重ね合わせ状態ができるか、H ゲートを 1 つずつ適用した時の状態ベクトルを詳しく見てみましょう。
-  以下では、スペースの都合上 3 量子ビットまでを見て行きます。
+  なぜ等しい重ね合わせ状態ができるか、H ゲートを 1
+  つずつ適用した時の状態ベクトルを詳しく見てみましょう。 以下では、スペースの都合上 3
+  量子ビットまでを見て行きます。
 </p>
 
 <p>
-  初期状態で 1 ビット目に H ゲートを適用すると、複数量子ビットにゲートを適用したときのルール<label for="margin-note-multi-qubit-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-multi-qubit-operation" class="margin-note-toggle"><span class="margin-note"><a href="./multi_qubit_operation.html">複数量子ビットでの演算</a>を参照</span>より、隣同士の円それぞれのペア (「<code>|0⟩</code> と <code>|1⟩</code>」、「<code>|2⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|5⟩</code>」、「<code>|6⟩</code> と <code>|7⟩</code>」) に対して H ゲートが適用されます。
+  初期状態で 1 ビット目に H ゲートを適用すると、複数量子ビットにゲートを適用したときのルール<label for="margin-note-multi-qubit-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-multi-qubit-operation" class="margin-note-toggle"><span class="margin-note"><a href="./multi_qubit_operation.html"
+    >複数量子ビットでの演算</a
+  >を参照</span>より、隣同士の円それぞれのペア (「<code>|0⟩</code> と <code>|1⟩</code>」、「<code>|2⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|5⟩</code>」、「<code>|6⟩</code> と <code>|7⟩</code>」)
+  に対して H ゲートが適用されます。
 </p>
 
 <p>
-  H ゲートはシンプルな重ね合わせを作る命令で、<code>|0⟩</code> の確率を等しく <code>|0⟩</code> と <code>|1⟩</code> に割り振ります<label for="margin-note-h-gate" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-h-gate" class="margin-note-toggle"><span class="margin-note"><a href="./h_gate.html">H ゲート</a>参照</span>。
-  ここでは 4 つのペアのうち、最初のペアの左側の円だけが確率 100% を持っています。
+  H ゲートはシンプルな重ね合わせを作る命令で、<code>|0⟩</code> の確率を等しく <code>|0⟩</code> と <code>|1⟩</code>
+  に割り振ります<label for="margin-note-h-gate" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-h-gate" class="margin-note-toggle"><span class="margin-note"><a href="./h_gate.html">H ゲート</a>参照</span>。 ここでは 4 つのペアのうち、最初のペアの左側の円だけが確率 100% を持っています。
   そこで最初のペアだけが 50% の重ね合わせ状態となり、ほかのペアは変化しません。
 </p>
 
@@ -340,13 +363,13 @@
       ></circle-notation>
 
       <script type="module">
-       import { Complex } from './application.js'
+        import { Complex } from './application.js'
 
-       let circleNotation = document.getElementById('circle-notation-3qubit-after-H1')
-       circleNotation.setAmplitudes({
-           0: Math.sqrt(0.5),
-           1: Math.sqrt(0.5),
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-H1')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: Math.sqrt(0.5),
+        })
       </script>
     </div>
   </div>
@@ -357,8 +380,8 @@
 </p>
 
 <p>
-  ここでは 4 つのペアのうち、「<code>|0⟩</code> と <code>|2⟩</code>」、「<code>|1⟩</code> と <code>|3⟩</code>」のペアの左側の円が確率 50% を持っています。
-  そこでこれらのペアだけが 25% の重ね合わせ状態となり、ほかのペアは変化しません。
+  ここでは 4 つのペアのうち、「<code>|0⟩</code> と <code>|2⟩</code>」、「<code>|1⟩</code> と <code>|3⟩</code>」のペアの左側の円が確率 50% を持っています。 そこでこれらのペアだけが 25%
+  の重ね合わせ状態となり、ほかのペアは変化しません。
 </p>
 
 <div class="flex pb-10">
@@ -377,8 +400,8 @@
 
         let circleNotation = document.getElementById('circle-notation-3qubit-before-H2')
         circleNotation.setAmplitudes({
-            0: Math.sqrt(0.5),
-            1: Math.sqrt(0.5),
+          0: Math.sqrt(0.5),
+          1: Math.sqrt(0.5),
         })
       </script>
     </div>
@@ -401,23 +424,23 @@
       ></circle-notation>
 
       <script type="module">
-       import { Complex } from './application.js'
+        import { Complex } from './application.js'
 
-       let circleNotation = document.getElementById('circle-notation-3qubit-after-H2')
-       circleNotation.setAmplitudes({
-           0: 0.5,
-           1: 0.5,
-           2: 0.5,
-           3: 0.5,
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-H2')
+        circleNotation.setAmplitudes({
+          0: 0.5,
+          1: 0.5,
+          2: 0.5,
+          3: 0.5,
+        })
       </script>
     </div>
   </div>
 </div>
 
 <p>
-  同様に 3 ビット目に H ゲートを適用すると、4 つ離れた円同士のペア (「<code>|0⟩</code> と <code>|4⟩</code>」、「<code>|1⟩</code> と <code>|5⟩</code>」、「<code>|2⟩</code> と <code>|6⟩</code>」、「<code>|3⟩</code> と <code>|7⟩</code>」) について、全ペアの左の円が確率 25% を持っているので、
-  すべての円が等しく 12.5% の重ね合わせ状態となります。
+  同様に 3 ビット目に H ゲートを適用すると、4 つ離れた円同士のペア (「<code>|0⟩</code> と <code>|4⟩</code>」、「<code>|1⟩</code> と <code>|5⟩</code>」、「<code>|2⟩</code> と <code>|6⟩</code>」、「<code>|3⟩</code> と <code>|7⟩</code>」) について、全ペアの左の円が確率 25% を持っているので、 すべての円が等しく 12.5%
+  の重ね合わせ状態となります。
 </p>
 
 <div class="flex pb-10">
@@ -436,10 +459,10 @@
 
         let circleNotation = document.getElementById('circle-notation-3qubit-before-H3')
         circleNotation.setAmplitudes({
-            0: 0.5,
-            1: 0.5,
-            2: 0.5,
-            3: 0.5,
+          0: 0.5,
+          1: 0.5,
+          2: 0.5,
+          3: 0.5,
         })
       </script>
     </div>
@@ -462,26 +485,27 @@
       ></circle-notation>
 
       <script type="module">
-       import { Complex } from './application.js'
+        import { Complex } from './application.js'
 
-       let circleNotation = document.getElementById('circle-notation-3qubit-after-H3')
-       circleNotation.setAmplitudes({
-           0: Math.sqrt(0.125),
-           1: Math.sqrt(0.125),
-           2: Math.sqrt(0.125),
-           3: Math.sqrt(0.125),
-           4: Math.sqrt(0.125),
-           5: Math.sqrt(0.125),
-           6: Math.sqrt(0.125),
-           7: Math.sqrt(0.125),
-       })
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-H3')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: Math.sqrt(0.125),
+          7: Math.sqrt(0.125),
+        })
       </script>
     </div>
   </div>
 </div>
 
 <p>
-  同じプロセスを 4 ビット目、5 ビット目、… と続けていくことで、最終的にすべての円が等しく確率 0.390625% (100/256 %) を持つようになります。
+  同じプロセスを 4 ビット目、5 ビット目、… と続けていくことで、最終的にすべての円が等しく確率
+  0.390625% (100/256 %) を持つようになります。
 </p>
 
 <template id="circle-notation-popup">

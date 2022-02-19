@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>CLONE 命令!?</title>
+    <title>クローン禁止定理の証明</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -169,7 +169,7 @@
    
   <a
     href="./no_cloning_theorem.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">CLONE 命令!?</span>
     
@@ -211,7 +211,7 @@
    
   <a
     href="./no_cloning_theorem_proof.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">クローン禁止定理の証明</span>
     
@@ -232,54 +232,24 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  CLONE 命令!?
+                  クローン禁止定理の証明
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">禁じられた QPU 命令</p>
+              <p class="mt-1 text-lg text-gray-500"></p>
             </div>
-            <div class="prose"><p>
-  現在のプログラミング言語では、変数 <code>a</code> の値を別の変数
-  <code>b</code> に簡単にコピーできます。 ところが QPU の世界では、ある量子ビットの情報
-  (振幅の大きさ、位相) を他の量子ビットにコピーできません。 つまり、<span class="font-bold"
-    >QPU には CLONE 命令はありません</span
-  >。 これは量子ビットを支配する量子力学のルールによるもので、「クローン禁止定理 (no-cloning
-  theorem)」として知られています。
-</p>
-
-<p>
-  数式を使ったクローン禁止定理の証明はとても簡単で、量子状態のコピーが作れるとなると明らかな不具合が出てしまうことを使います<label for="margin-note-no-cloning-theorem-proof" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem-proof" class="margin-note-toggle"><span class="margin-note">参考として、<a href="./no_cloning_theorem_proof.html"
-    >ふろく: クローン禁止定理の証明</a
-  >に数式による証明があります。</span>。
-  以下では、数式を使わずこれを直感的に説明します。
-</p>
-
-<p>
-  もし量子ビット状態の複製が可能であれば、未知の状態にある量子ビットが与えられたとき、同じ状態を持つ量子ビットを好きなだけ作ることができます。
-  何百万個〜と超大量にクローンを作っておけば、それぞれの測定を繰り返すことによって、元の量子ビットの振幅の大きさを推定することができます。
-  これは 1 つの量子ビットから無限に情報を得られることを意味します。これは明らかに不可能なことです。
-</p>
-
-<figure class="!w-full">
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-</figure>
-
-<p>
-  たとえば<a href="./p_bit.html">確率的ビット</a>で出てきたような、確率 (振幅の大きさの 2 乗)
-  にすべての Wikipedia の記事、すべての YouTube
-  動画、インターネットでみつかる猫画像データを詰め込んだ量子ビットを持っていたとします。
-  もし量子ビットを他のビットにコピーできる能力があるなら、好きなだけコピーを作ってすべて測定することで、<code
-    >0</code
-  >
-  が出た回数から元データを取り出すことができます。
-  十分な数のクローン量子ビットを作ってそれぞれ測定すれば、任意精度での確率が統計的に求まるので、あらゆる猫画像がたった
-  1 量子ビットから取り出せるのです。
-</p>
-
-<p>
-  これじゃ、USB
-  メモリもデータセンターも必要ないし、携帯電話のギガ割にお金を払う必要もありません。データを詰め込んだ量子ビットをたった
-  1 個送ればいいのですから。たしかに、これは良すぎる話です。
-</p>
+            <div class="prose">量子ビットの情報を複製できるユニタリ演算子 \(U_{CLONE}\) があったとする。
+このとき、任意の状態を持つ量子ビット \(|🍎\rangle\), \(|👶\rangle\) について、次が成り立つとする。
+\[ \left\{ \begin{array}{l} U_{CLONE}(|🍎\rangle|0\rangle) = |🍎\rangle|🍎\rangle \\
+U_{CLONE}(|👶\rangle|0\rangle) = |👶\rangle|👶\rangle \end{array} \right. \] 1 番目の式から、 $$
+(\langle 0|\langle 🍎|)U^{\dagger}_{CLONE} = \langle🍎|\langle🍎| $$ この式と 2
+番目の式の両辺で内積を取ると、 $$ \begin{array}{l} &(\langle
+0|\langle🍎|)U^{\dagger}_{CLONE}U_{CLONE}(|👶\rangle|0\rangle) =
+\langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle 0|\langle🍎|👶\rangle|0\rangle =
+\langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle\langle 0|0\rangle =
+\langle🍎|👶\rangle\langle🍎|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle = (\langle🍎|👶\rangle)^2
+\\ \end{array} $$ よって \(\langle🍎|👶\rangle\) は \(0\) または \(1\) となり、\(|🍎\rangle\) と
+\(|👶\rangle\) が任意であることに矛盾する。 以上より、そのようなユニタリ演算子 \(U_{CLONE}\)
+は存在しない。
 </div>
           </div>
         </div>
