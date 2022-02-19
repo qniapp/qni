@@ -276,6 +276,62 @@ description: H ゲートを複数量子ビットに適用
   0.390625% (100/256 %) を持つようになります。
 </p>
 
+<h2>回路をコンパクトにする</h2>
+
+<p>
+  最初の回路で 1 ビット目から 8 ビット目まで置いた H
+  ゲートは、それぞれが置かれたビットのみに作用します。 つまり、異なるビットに置いた H
+  ゲートはそれぞれ他のゲートとは独立して実行されるので、可能な限り左に詰めることで他のゲートと同時に実行できます。
+  このことを使うと、先ほどの回路は次のようにかなりコンパクトに書き直せます。
+</p>
+
+<div class="relative mb-10 w-full overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>"],["H","H","H","H","H","H","H","H"],["Measure","Measure","Measure","Measure","Measure","Measure","Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center overflow-scroll rounded-xl border-2 border-b-4 border-gray-200 bg-white"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  多くの量子アルゴリズムでは、最初の準備段階として、均一な重ね合わせ状態をこのように縦に並べた H
+  ゲートで作ります。 非常によく使うパターンですので覚えておきましょう。
+</p>
+
 <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
     |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
