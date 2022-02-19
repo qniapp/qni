@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>WRITE 命令</title>
+    <title>クローン禁止定理の証明</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -153,7 +153,7 @@
    
   <a
     href="./write_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">WRITE 命令</span>
     
@@ -211,7 +211,7 @@
    
   <a
     href="./no_cloning_theorem_proof.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">クローン禁止定理の証明</span>
     
@@ -232,149 +232,43 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  WRITE 命令
+                  クローン禁止定理の証明
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットの初期化</p>
+              <p class="mt-1 text-lg text-gray-500"></p>
             </div>
-            <div class="prose"><p>
-  WRITE 命令は量子ビットの状態を <code>|0⟩</code> または <code>|1⟩</code> に初期化する命令です。
-  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。 通常は回路の先頭に WRITE
-  命令を置くことで量子ビットを <code>|0⟩</code> や <code>|1⟩</code> に初期化します。 続けて H ゲートなどの QPU
-  命令を置いていくことで量子プログラムを記述します。
-</p>
+            <div class="prose">量子ビットの情報を複製できるユニタリ演算子 \(U_{CLONE}\) があったとする。
+このとき、任意の状態を持つ量子ビット \(|🍎\rangle\), \(|👶\rangle\) について、次が成り立つとする。
 
-<div class="flex flex-col items-center pb-10 md:mr-auto md:w-7/12">
-  <div>量子ビットを <code>|0⟩</code> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="0"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <y-gate></y-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
-</div>
+\[
+\left\{
+\begin{array}{l}
+U_{CLONE}(|🍎\rangle|0\rangle) = |🍎\rangle|🍎\rangle \\
+U_{CLONE}(|👶\rangle|0\rangle) = |👶\rangle|👶\rangle
+\end{array}
+\right.
+\]
 
-<div class="flex flex-col items-center md:mr-auto md:w-7/12">
-  <div>量子ビットを <code>|1⟩</code> に初期化してからゲートを配置</div>
-  <quantum-circuit>
-    <circuit-step>
-      <circuit-dropzone>
-        <write-gate data-value="1"></write-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <z-gate></z-gate>
-      </circuit-dropzone>
-    </circuit-step>
-    <circuit-step>
-      <circuit-dropzone>
-        <h-gate></h-gate>
-      </circuit-dropzone>
-    </circuit-step>
-  </quantum-circuit>
-</div>
+1 番目の式から、
 
-<p>
-  WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  つまり量子ビットの状態がどんな状態にあっても、たとえば <code>|0⟩</code>
-  命令を置いた時点で振幅の大きさと位相の情報は破壊され、<code>|0⟩</code> に初期化されます。
-  これは元に戻すのに必要な情報を損失していることになるため、WRITE 命令は非可逆です。
-</p>
+$$
+(\langle 0|\langle 🍎|)U^{\dagger}_{CLONE} = \langle🍎|\langle🍎|
+$$
 
-<div class="flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-WRITE0-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+この式と 2 番目の式の両辺で内積を取ると、
 
-        <write-gate data-size="base" data-value="0"></write-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+$$
+\begin{array}{l}
+&(\langle 0|\langle🍎|)U^{\dagger}_{CLONE}U_{CLONE}(|👶\rangle|0\rangle) = \langle🍎|\langle🍎|👶\rangle|👶\rangle \\
+\Rightarrow &\langle 0|\langle🍎|👶\rangle|0\rangle = \langle🍎|\langle🍎|👶\rangle|👶\rangle \\
+\Rightarrow &\langle🍎|👶\rangle\langle 0|0\rangle = \langle🍎|👶\rangle\langle🍎|👶\rangle \\
+\Rightarrow &\langle🍎|👶\rangle = (\langle🍎|👶\rangle)^2 \\
+\end{array}
+$$
 
-      </div>
-      <circle-notation
-        id="circle-notation-WRITE0-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-    </div>
+よって \(\langle🍎|👶\rangle\) は \(0\) または \(1\) となり、\(|🍎\rangle\) と \(|👶\rangle\) が任意であることに矛盾する。
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-WRITE1-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-        <write-gate data-size="base" data-value="1"></write-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <circle-notation
-        id="circle-notation-WRITE1-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-    </div>
-  </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationWrite0Before = document.getElementById('circle-notation-WRITE0-before')
-    let circleNotationWrite0After = document.getElementById('circle-notation-WRITE0-after')
-    let circleNotationWrite1Before = document.getElementById('circle-notation-WRITE1-before')
-    let circleNotationWrite1After = document.getElementById('circle-notation-WRITE1-after')
-
-    circleNotationWrite0Before.setAmplitudes({
-      0: new Complex(-0.38268, 0),
-      1: new Complex(0.7855, -0.48636),
-    })
-    circleNotationWrite0After.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotationWrite1Before.setAmplitudes({
-      0: new Complex(0.28483, -0.34391),
-      1: new Complex(-0.82603, 0.34391),
-    })
-    circleNotationWrite1After.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
-</div>
-
-<template id="circle-notation-popup">
-  <ul class="list-none">
-    <li>
-      振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
-    </li>
-  </ul>
-</template>
-
+以上より、そのようなユニタリ演算子 \(U_{CLONE}\) は存在しない。
 </div>
           </div>
         </div>
