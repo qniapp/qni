@@ -1,0 +1,336 @@
+---
+layout: page
+title: PHASE ゲート (複数量子ビット)
+description: 複数量子ビットに PHASE ゲートを適用すると？
+---
+
+<p>
+  複数量子ビットの練習として、PHASE ゲートを適用した場合を考えてみましょう。 考え方としては H
+  ゲートとまったく同じで、PHASE ゲートを置いたビット番号によって
+  ゲートを作用させるペアを決めてから、それぞれのペアに PHASE ゲートを適用します。
+</p>
+
+<p>
+  注意するのは、PHASE ゲートは左側の円は変化させず、右側の円の位相のみに作用する点です。
+  ペアに作用させる場合にも、このルールは同じです。
+</p>
+
+<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-P-amp-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <circuit-dropzone>
+          <phase-gate data-angle="π/4" data-size="base"></phase-gate>
+        </circuit-dropzone>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        id="circle-notation-P-amp-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    document.getElementById('circle-notation-P-amp-before').setAmplitudes({
+      0: new Complex(0.92388, 0),
+      1: new Complex(0.38268, 0),
+    })
+    document.getElementById('circle-notation-P-amp-after').setAmplitudes({
+      0: new Complex(0.92388, 0),
+      1: new Complex(0.2706, 0.2706),
+    })
+  </script>
+</div>
+
+<h2>PHASE ゲートを 1 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートを 1 ビット目に置くと、PHASE ゲートは「{% ket 0 %} と {% ket 1 %}」、「{% ket 2 %} と
+  {% ket 3 %}」、「{% ket 4 %} と {% ket 5 %}」、「{% ket 6 %} と {% ket 7 %}」
+  それぞれのペアに対して作用します。
+</p>
+
+<figure>
+  <img src="./images/phase_bit1_ket_pair.png" />
+</figure>
+
+<p>PHASE ゲートはペアの右側の位相にしか作用しないので、全体では円の半分のみに作用します。</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-P1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-P1')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: Math.sqrt(0.125),
+          7: Math.sqrt(0.125),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>PHASE(π/4) ゲートを 1 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-P1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-P1')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: new Complex(0.25, 0.25),
+          2: Math.sqrt(0.125),
+          3: new Complex(0.25, 0.25),
+          4: Math.sqrt(0.125),
+          5: new Complex(0.25, 0.25),
+          6: Math.sqrt(0.125),
+          7: new Complex(0.25, 0.25),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<h2>PHASE ゲートを 2 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートを 2 ビット目に適用する場合、ペアは「{% ket 0 %} と {% ket 2 %}」、「{% ket 1 %} と {%
+  ket 3 %}」、「{% ket 4 %} と {% ket 6 %}」、「{% ket 5 %} と {% ket 7 %}」になります。
+</p>
+
+<figure>
+  <img src="./images/phase_bit2_ket_pair.png" />
+</figure>
+
+<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-P2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-P2')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: Math.sqrt(0.125),
+          7: Math.sqrt(0.125),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>PHASE(π/4) ゲートを 2 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-P2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-P2')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: new Complex(0.25, 0.25),
+          3: new Complex(0.25, 0.25),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: new Complex(0.25, 0.25),
+          7: new Complex(0.25, 0.25),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<h2>PHASE ゲートを 3 ビット目に置いた場合</h2>
+
+<p>
+  PHASE ゲートを 2 ビット目に適用する場合、ペアは「{% ket 0 %} と {% ket 4 %}」、「{% ket 1 %} と {%
+  ket 5 %}」、「{% ket 2 %} と {% ket 6 %}」、「{% ket 3 %} と {% ket 7 %}」になります。
+</p>
+
+<figure>
+  <img src="./images/phase_bit3_ket_pair.png" />
+</figure>
+
+<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-P3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-P3')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: Math.sqrt(0.125),
+          7: Math.sqrt(0.125),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>PHASE(π/4) ゲートを 3 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-P3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-P3')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: new Complex(0.25, 0.25),
+          5: new Complex(0.25, 0.25),
+          6: new Complex(0.25, 0.25),
+          7: new Complex(0.25, 0.25),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>最後に、PHASE ゲートの回路の各ビットに置くことで実際に確認しておきましょう。</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="border-swan mb-10 flex w-min rounded-xl border-2 border-b-4 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <phase-gate data-angle="π/4"></phase-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

@@ -59,6 +59,9 @@
 #     - name: ランダムバイトジェネレータ
 #       link: ./random_byte_generator.html
 #       new: true
+#     - name: PHASE ゲート (複数量子ビット)
+#       link: ./multi_qubit_phase_gate.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
