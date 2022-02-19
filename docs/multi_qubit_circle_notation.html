@@ -251,7 +251,7 @@
 </ul>
 
 <p>
-  簡単のために、<code>|0⟩</code> と <code>|0⟩</code> のように量子ビットを並べたものを <code>|00⟩</code>
+  スペースを節約するために、<code>|0⟩</code> と <code>|0⟩</code> のように量子ビットを並べたものを <code>|00⟩</code>
   とまとめて書くことにしましょう。 すると、先ほどの 4 通りは次のように書けます。
 </p>
 
@@ -275,8 +275,8 @@
 </ul>
 
 <p>
-  つまり、2 量子ビット使うと <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> という 4
-  つの状態を表すことができます。 これは、Qni の状態ベクトル表示では次のように表せます。
+  つまり、2 量子ビット使うと <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> という 4 つの状態を表すことができます。
+  これは、Qni の状態ベクトル表示では次のように 4 つの円のうち、どれか 1 つを塗り潰した状態として表せます。
 </p>
 
 <div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
@@ -296,7 +296,8 @@
         let circleNotation = document.getElementById('circle-notation-2qubit')
 
         circleNotation.setAmplitudes({
-          0: 1,
+          0: 0,
+          1: 1,
         })
       </script>
     </div>
@@ -304,11 +305,10 @@
 </div>
 
 <p>
-  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか？ 1 量子ビットでは円が 2
-  つだったので、単純に 3 倍して円 6 個とするのは間違いです。 先ほどと同様に 3 桁の 2
-  進数を考えると、3 量子ビットでは <code>|0⟩</code> から <code>|7⟩</code> まで 8
-  通りの状態を表すことができます。 つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8
-  個になります。
+  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか？
+  1 量子ビットでは円が 2 つ、2 量子ビットでは円が 4 つだったので、単純に円 6 個と考えるのは間違いです。
+  先ほどと同様に 3 桁の 2 進数を考えると、3 量子ビットでは <code>|0⟩</code> から <code>|7⟩</code> まで 8 通りの状態を表すことができます。
+  つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8 個になります。
 </p>
 
 <div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
@@ -328,7 +328,12 @@
         let circleNotation = document.getElementById('circle-notation-4qubit')
 
         circleNotation.setAmplitudes({
-          0: 1,
+          0: 0,
+          1: 0,
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 1,
         })
       </script>
     </div>
