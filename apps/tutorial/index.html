@@ -13,10 +13,11 @@ description: プログラマ向け量子プログラミング実践チュート�
   現在のあらゆるコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
   の内部構造は、古典物理学、より正確には電磁気学で説明できます。
   これは、情報の単位であるビットが、電磁気学に基いた基本素子であるコンデンサとして実装されているからです。
-  一方でファインマンの言う量子コンピュータは量子力学をベースとしています。
-  量子コンピュータは原子や電子、光子といった量子をビットとして使い、その不思議な振舞いを利用することでミクロな
-  "自然" のシミュレーション (量子系シミュレーション)
-  に必要な膨大な計算を高速化できるという、まさに夢のコンピュータです。
+  一方でファインマンの言う量子コンピュータは<span class="font-bold">量子力学</span
+  >をベースとしています。 量子コンピュータは原子や電子、光子といった<span class="font-bold"
+    >量子</span
+  >をビットとして使い、その不思議な振舞いを利用することでミクロな "自然" のシミュレーション
+  (量子系シミュレーション) に必要な膨大な計算を高速化できるという、まさに夢のコンピュータです。
 </p>
 
 <p>
@@ -82,10 +83,75 @@ description: プログラマ向け量子プログラミング実践チュート�
 
 <p>
   このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特徴として、我々が開発するオープンソースな量子コンピュータシミューレータ
-  Qni (キューニ){% margin_note qni %}
+  <span class="font-bold">Qni (キューニ)</span>{% margin_note qni %}
   <img src="./images/qni_screenshot_grover.png" class="mb-2 border border-neutral-300" />
-  Qni (<a href="https://qniapp.net/">https://qniapp.net</a>) は量子プログラミング環境を提供する無料
-  Web サービスです。 {% endmargin_note %} をそこかしこで使っています。Qni
+  Qni は量子プログラミング環境を提供する Web サービスです。<a href="https://qniapp.net/"
+    >https://qniapp.net</a
+  >
+  で誰でも無料で利用できます。{% endmargin_note %} をそこかしこで使っています。
+  以下のようにチュートリアル中に埋め込まれた
+  <span class="font-bold">mini Qni (ミニ・キューニ)</span>
+  で、量子プログラミングについて学んだことをすぐ実験できるようになっています。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <h-gate></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <x-gate></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <y-gate></y-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <z-gate></z-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  Qni
   を使うと、シミュレータ上であれこれ実験を重ねることで、量子コンピュータを使うための直感的感覚を養うことができます。Qni
   は、量子プログラムをエレガントに記述するためのグラフィカルなユーザインタフェースを提供しています。操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと効率的であり教育的でもあります。
   より高度な量子アルゴリズムや量子情報といった専門分野を勉強する際にも、Qni
@@ -133,3 +199,6 @@ description: プログラマ向け量子プログラミング実践チュート�
   でフィードバックをお願いします。また、著者に加わりたい方も、ぜひ Pull Request
   を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。
 </p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}
