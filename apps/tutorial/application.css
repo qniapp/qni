@@ -4641,10 +4641,6 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   margin-top: 0.25rem;
 }
 
-.\!mr-auto {
-  margin-right: auto !important;
-}
-
 .block {
   display: block;
 }
