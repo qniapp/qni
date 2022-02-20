@@ -15,13 +15,15 @@
 
 .prose p,
 .prose ul,
-.prose figure {
+.prose figure,
+.prose orbit-reviewarea {
   @apply md:mr-auto md:w-7/12;
 }
 
 .prose p,
 .prose figure,
-.prose ul {
+.prose ul,
+.prose orbit-reviewarea {
   @apply pb-10;
 }
 

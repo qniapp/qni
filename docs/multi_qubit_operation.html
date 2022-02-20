@@ -21,10 +21,11 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
     <script
-      defer
-      data-domain="qniapp.github.io"
-      src="https://plausible.io/js/plausible.js"
+        defer
+        data-domain="qniapp.github.io"
+        src="https://plausible.io/js/plausible.js"
     ></script>
   </head>
   <body>
@@ -636,7 +637,10 @@
 <p>複数の量子ビットにゲートを適用するには、次のように 2 段階に分けて考える必要があります。</p>
 
 <ul class="list-inside list-decimal">
-  <li>ゲートを置いたビット番号によって、ゲートを作用させるペア (<span class="font-bold">演算ペア</span>) を決める。</li>
+  <li>
+    ゲートを置いたビット番号によって、ゲートを作用させるペア (<span class="font-bold">演算ペア</span
+    >) を決める。
+  </li>
   <li>それぞれの演算ペアについて、ゲートを適用する</li>
 </ul>
 
@@ -646,9 +650,7 @@
   つ離れた円同士のペアを考えれば OK です。
 </p>
 
-<p>
-  なぜこのようになるかは、次項で詳しく説明します。
-</p>
+<p>なぜこのようになるかは、次項で詳しく説明します。</p>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">

@@ -21,10 +21,11 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
     <script
-      defer
-      data-domain="qniapp.github.io"
-      src="https://plausible.io/js/plausible.js"
+        defer
+        data-domain="qniapp.github.io"
+        src="https://plausible.io/js/plausible.js"
     ></script>
   </head>
   <body>
@@ -244,7 +245,7 @@
   かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
   現在のあらゆるコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
   の内部構造は、古典物理学、より正確には電磁気学で説明できます。
-  これは、情報の単位であるビットが、電磁気学に基いた素子であるコンデンサとして実装されているからです。
+  これは、情報の単位であるビットが、電磁気学に基いた基本素子であるコンデンサとして実装されているからです。
   一方でファインマンの言う量子コンピュータは量子力学をベースとしています。
   量子コンピュータは原子や電子といった量子をビットとして使い、その不思議な振舞いを利用することでミクロな
   "自然" のシミュレーション (量子系シミュレーション)
@@ -253,19 +254,17 @@
 
 <p>
   ファインマンのアイデアをきっかけに、量子コンピュータに適したさらなるアルゴリズム探しが始まりました。
-  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note"><span
-    class="font-bold"
-    >グローヴァーのアルゴリズム</span
+  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note">開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、<span class="font-bold">グローバーのアルゴリズム</span
   >としても知られています。Lov K. Grover,
   <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
-    >A fast quantum mechanical algorithm for database search</a
-  >
-  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shore" class="margin-note-toggle"><span class="margin-note"><span class="font-bold">ショアのアルゴリズム</span>としても知られています。Peter W. Shor,
+  >A fast quantum mechanical algorithm for database search</a
+                                                          >
+  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shore" class="margin-note-toggle"><span class="margin-note">開発者である数学者、ピーター・ショアの名前にちなんで、<span class="font-bold">ショアのアルゴリズム</span>としても知られています。Peter W. Shor,
   <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
     >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
     Computer</a
   >
-  (1995)</span>という最も有望な量子コンピュータアルゴリズムの 2 つが開発されました。
+  (1995)</span>という最も有望で代表的な量子コンピュータアルゴリズムの 2 つが開発されました。
 </p>
 
 <p>
@@ -273,8 +272,9 @@
   <code>1</code> 万件だとすると、平均してその半分の
   <code>5,000</code> 件には目を通さなければ目的の名前にはたどり着きません。
   一方、量子探索アルゴリズムでは、たった <code>100</code> 回の検索で十分です。
-  もし量子コンピュータが量子探索で <code>5,000</code> 回の推測をしたならば、<code>2,500</code>
+  もし量子コンピュータが量子探索で <code>5,000</code> 回の推測をしたならば、実に<code>2,500</code>
   万件の電話帳を検索できます。
+  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを高速に検索できます。
 </p>
 
 <p>
@@ -318,6 +318,37 @@
   より高度な量子アルゴリズムや量子情報といった専門分野を勉強する際にも、Qni
   は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="**量子コンピュータ**の名前の由来は?"
+    answer="動作原理が量子力学に基づくことから名付けられた"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="現在のコンピュータを、量子コンピュータとの対比で何と呼ぶ?"
+    answer="古典コンピュータ"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
+  ></orbit-prompt>
+  <orbit-prompt question="量子探索の主な用途は?" answer="リスト検索"></orbit-prompt>
+  <orbit-prompt
+      question="量子探索アルゴリズムの別名は?"
+      answer="グローバーのアルゴリズム">
+  </orbit-prompt>
+  <orbit-prompt
+      question="量子因数分解アルゴリズムの別名は?"
+      answer="ショアのアルゴリズム"
+    ></orbit-prompt>
+  <orbit-prompt
+      question="量子因数分解によって脅威を受ける分野は何か?"
+      answer="インターネット・セキュリティ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータシミュレータ *Qni* の読みは?"
+    answer="キューニ"
+  ></orbit-prompt>
+</orbit-reviewarea>
 
 <p>
   このチュートリアルは Qni と同様に GitHub でオープンに開発<label for="margin-note-qni-github" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qni-github" class="margin-note-toggle"><span class="margin-note">GitHub の
