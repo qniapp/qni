@@ -23,9 +23,9 @@
     ></script>
     <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
     <script
-        defer
-        data-domain="qniapp.github.io"
-        src="https://plausible.io/js/plausible.js"
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
     ></script>
   </head>
   <body>
@@ -247,24 +247,28 @@
   の内部構造は、古典物理学、より正確には電磁気学で説明できます。
   これは、情報の単位であるビットが、電磁気学に基いた基本素子であるコンデンサとして実装されているからです。
   一方でファインマンの言う量子コンピュータは量子力学をベースとしています。
-  量子コンピュータは原子や電子といった量子をビットとして使い、その不思議な振舞いを利用することでミクロな
+  量子コンピュータは原子や電子、光子といった量子をビットとして使い、その不思議な振舞いを利用することでミクロな
   "自然" のシミュレーション (量子系シミュレーション)
   に必要な膨大な計算を高速化できるという、まさに夢のコンピュータです。
 </p>
 
 <p>
   ファインマンのアイデアをきっかけに、量子コンピュータに適したさらなるアルゴリズム探しが始まりました。
-  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note">開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、<span class="font-bold">グローバーのアルゴリズム</span
+  そして 1990 年代には、<span class="font-bold">量子探索</span><label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note">開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、<span class="font-bold"
+    >グローバーのアルゴリズム</span
   >としても知られています。Lov K. Grover,
   <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
-  >A fast quantum mechanical algorithm for database search</a
-                                                          >
-  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shore" class="margin-note-toggle"><span class="margin-note">開発者である数学者、ピーター・ショアの名前にちなんで、<span class="font-bold">ショアのアルゴリズム</span>としても知られています。Peter W. Shor,
+    >A fast quantum mechanical algorithm for database search</a
+  >
+  (1996)</span>と<span class="font-bold">量子因数分解</span><label for="margin-note-shore" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-shore" class="margin-note-toggle"><span class="margin-note">開発者である数学者、ピーター・ショアの名前にちなんで、<span class="font-bold"
+    >ショアのアルゴリズム</span
+  >としても知られています。Peter W. Shor,
   <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
     >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
     Computer</a
   >
-  (1995)</span>という最も有望で代表的な量子コンピュータアルゴリズムの 2 つが開発されました。
+  (1995)</span>という最も有望で代表的な量子コンピュータアルゴリズムの 2
+  つが開発されました。
 </p>
 
 <p>
@@ -329,20 +333,22 @@
     answer="古典コンピュータ"
   ></orbit-prompt>
   <orbit-prompt
-    cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
+      question="量子コンピュータでビットの格納に使われる量子を 1 つ挙げると?"
+      answer="原子 or 電子 or 光子"
+  ></orbit-prompt>
+  <orbit-prompt
+      cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
   ></orbit-prompt>
   <orbit-prompt question="量子探索の主な用途は?" answer="リスト検索"></orbit-prompt>
-  <orbit-prompt
-      question="量子探索アルゴリズムの別名は?"
-      answer="グローバーのアルゴリズム">
+  <orbit-prompt question="量子探索アルゴリズムの別名は?" answer="グローバーのアルゴリズム">
   </orbit-prompt>
   <orbit-prompt
-      question="量子因数分解アルゴリズムの別名は?"
-      answer="ショアのアルゴリズム"
-    ></orbit-prompt>
+    question="量子因数分解アルゴリズムの別名は?"
+    answer="ショアのアルゴリズム"
+  ></orbit-prompt>
   <orbit-prompt
-      question="量子因数分解によって脅威を受ける分野は何か?"
-      answer="インターネット・セキュリティ"
+    question="量子因数分解によって脅威を受ける分野は何か?"
+    answer="インターネット・セキュリティ"
   ></orbit-prompt>
   <orbit-prompt
     question="量子コンピュータシミュレータ *Qni* の読みは?"
