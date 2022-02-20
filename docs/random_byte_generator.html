@@ -314,9 +314,12 @@
 <p>
   初期状態で 1 ビット目に H ゲートを適用すると、複数量子ビットにゲートを適用したときのルール<label for="margin-note-multi-qubit-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-multi-qubit-operation" class="margin-note-toggle"><span class="margin-note"><a href="./multi_qubit_operation.html"
     >複数量子ビットでの演算</a
-  >を参照</span>より、隣同士の円それぞれのペア (「<code>|0⟩</code> と <code>|1⟩</code>」、「<code>|2⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|5⟩</code>」、「<code>|6⟩</code> と <code>|7⟩</code>」)
-  に対して H ゲートが適用されます。
+  >を参照</span>より、隣同士の円それぞれのペア に対して H ゲートが適用されます。
 </p>
+
+<figure>
+  <img src="./images/H_bit1_ket_pair.png" />
+</figure>
 
 <p>
   H ゲートはシンプルな重ね合わせを作る命令で、<code>|0⟩</code> の確率を等しく <code>|0⟩</code> と <code>|1⟩</code>
@@ -376,8 +379,12 @@
 </div>
 
 <p>
-  ここで 2 ビット目に H ゲートを適用すると、2 つ離れた円同士のペア (「<code>|0⟩</code> と <code>|2⟩</code>」、「<code>|1⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|6⟩</code>」、「<code>|5⟩</code> と <code>|7⟩</code>」) それぞれに H ゲートが適用されます。
+  ここで 2 ビット目に H ゲートを適用すると、2 つ離れた円同士のペアそれぞれに H ゲートが適用されます。
 </p>
+
+<figure>
+  <img src="./images/H_bit2_ket_pair.png" />
+</figure>
 
 <p>
   ここでは 4 つのペアのうち、「<code>|0⟩</code> と <code>|2⟩</code>」、「<code>|1⟩</code> と <code>|3⟩</code>」のペアの左側の円が確率 50% を持っています。 そこでこれらのペアだけが 25%
@@ -439,9 +446,13 @@
 </div>
 
 <p>
-  同様に 3 ビット目に H ゲートを適用すると、4 つ離れた円同士のペア (「<code>|0⟩</code> と <code>|4⟩</code>」、「<code>|1⟩</code> と <code>|5⟩</code>」、「<code>|2⟩</code> と <code>|6⟩</code>」、「<code>|3⟩</code> と <code>|7⟩</code>」) について、全ペアの左の円が確率 25% を持っているので、 すべての円が等しく 12.5%
+  同様に 3 ビット目に H ゲートを適用すると、4 つ離れた円同士のペアについて、全ペアの左の円が確率 25% を持っているので、すべての円が等しく 12.5%
   の重ね合わせ状態となります。
 </p>
+
+<figure>
+  <img src="./images/H_bit3_ket_pair.png" />
+</figure>
 
 <div class="flex pb-10">
   <div class="flex flex-col items-center">
