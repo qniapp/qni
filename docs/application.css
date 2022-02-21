@@ -4565,6 +4565,11 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   margin-right: 0.5rem;
 }
 
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -4779,6 +4784,10 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
   flex-grow: 1;
 }
 
+.basis-1\/4 {
+  flex-basis: 25%;
+}
+
 .table-auto {
   table-layout: auto;
 }
@@ -4840,6 +4849,10 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
 
 .gap-2 {
@@ -5151,6 +5164,10 @@ label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
 
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .font-mono {
