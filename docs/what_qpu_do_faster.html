@@ -361,7 +361,9 @@
 
 <p>
   掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
-  量子ビット<label for="margin-note-qubit" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note-toggle"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<span class="font-bold">量子ビット</span>と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
+  量子ビット<label for="margin-note-qubit" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note-toggle"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<span class="font-bold"
+    >量子ビット</span
+  >と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
   100 量子ビットを越える程度です。</span>の量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
   個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note-toggle"><span class="margin-note">一般に、\(n\)
   個の量子ビットを持つマシンでは、数を 2 の \(n\) 乗個ならべたベクトルの掛け算を実行します。</span>
@@ -463,12 +465,11 @@
 <p>
   ここがおそらく一番トリッキーな部分です。
   行列とベクトルの掛け算の結果のベクトルは、なんとそのまま取り出すことができません。
-  唯一できることは<span class="font-bold">測定</span>という操作で得られる別のベクトルを取り出すことだけです。
+  唯一できることは<span class="font-bold">測定</span
+  >という操作で得られる別のベクトルを取り出すことだけです。
 </p>
 
-<p>
-  たとえば、量子コンピュータが掛け算の結果として次のベクトルを持っているとします。
-</p>
+<p>たとえば、量子コンピュータが掛け算の結果として次のベクトルを持っているとします。</p>
 
 <p>$$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix}$$</p>
 
@@ -482,8 +483,9 @@
 </p>
 
 <p>
-  そしてそれぞれの確率に従って、その成分だけを 1 とするベクトルが出力されます (下図、赤色のベクトル)。
-  ユーザは赤色のベクトルのうちどれか 1 つだけを、確率的に取り出すことしかできません。
+  そしてそれぞれの確率に従って、その成分だけを 1 とするベクトルが出力されます
+  (下図、赤色のベクトル)。 ユーザは赤色のベクトルのうちどれか 1
+  つだけを、確率的に取り出すことしかできません。
 </p>
 
 <p>
@@ -501,16 +503,19 @@
   量子コンピュータでの行列とベクトルの掛け算は、出力するベクトルを決める確率の<ruby
     ><rb>素</rb><rt>もと</rt></ruby
   >
-  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note-toggle"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1 というルールは、確率から来ています。つまり、測定によって出てくるベクトルそれぞれの確率をすべて足すと 100% にならなければならないため、二乗和は必ず 1 となります。</span>。
-  測定した瞬間に元のベクトルは破壊され、最終的には 1 つの成分だけが 1 でほかはすべて 0 となるベクトルだけが確率的に取り出せます。
+  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note-toggle"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1
+  というルールは、確率から来ています。つまり、測定によって出てくるベクトルそれぞれの確率をすべて足すと
+  100% にならなければならないため、二乗和は必ず 1 となります。</span>。
+  測定した瞬間に元のベクトルは破壊され、最終的には 1 つの成分だけが 1 でほかはすべて 0
+  となるベクトルだけが確率的に取り出せます。
   どう考えても奇妙な動作ですが、これも量子力学のルールに従ったものです。
 </p>
 
 <orbit-reviewarea color="blue">
   <orbit-prompt cloze="量子コンピュータからベクトルを取り出す操作を{測定}と呼ぶ"></orbit-prompt>
   <orbit-prompt
-      question="状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?"
-      answer="25%"
+    question="状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?"
+    answer="25%"
   ></orbit-prompt>
 </orbit-reviewarea>
 
@@ -524,7 +529,8 @@
 
 <p>
   こんなに厳しい制約が課せられた上でも、うまく動作する量子アルゴリズムがいろいろと提案されています。
-  たとえば後に見る量子フーリエ変換 (QFT) アルゴリズムは、量子因数分解などの中間的なステップとして動作することで、測定することなく計算結果をそのまま次のステップへと渡します。
+  たとえば後に見る量子フーリエ変換 (QFT)
+  アルゴリズムは、量子因数分解などの中間的なステップとして動作することで、測定することなく計算結果をそのまま次のステップへと渡します。
 </p>
 </div>
           </div>
