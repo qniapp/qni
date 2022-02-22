@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>QPU 演算</title>
+    <title>量子回路</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -71,10 +71,10 @@
   </a>
    
   <a
-    href="./qpu_operations.html"
+    href="./quantum_circuit.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
-    <span class="flex-1">QPU 演算</span>
+    <span class="flex-1">量子回路</span>
     
   </a>
    
@@ -318,7 +318,7 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  QPU 演算
+                  量子回路
                 </h1>
               </div>
               <p class="mt-1 text-lg text-gray-500">量子プログラミングのための低水準言語</p>
@@ -328,15 +328,23 @@
   このため、量子プログラミングでは、今後しばらくはアセンブラ命令のような<span class="font-bold"
     >低水準言語</span
   >を使っていく必要があります。
+  低水準言語では、ビットレベルでの演算を積み重ねることでプログラム全体を記述します。
+  このため高水準言語よりも冗長であり、またビット単位での操作を熟知している必要があります。
 </p>
 
 <p>
   初心者にとってひとつラッキーな点は、量子コンピュータの低水準言語は取っ付きやすい見た目であることです。
-  というのも、量子コンピュータの歴史のわりと早い段階 (90 年代半ば)
-  に、量子プログラムを図式として表現する方法が主流となったためです。 このため、従来の
-  <code>MOV</code> や
-  <code>ADD</code>
-  といった文字だけの無骨なアセンブラ命令と比べると、量子コンピュータの演算命令はグラフィカルで構造を把握しやすく、また楽譜のような美しささえあります。
+  というのも、量子コンピュータの歴史の最初期に、量子コンピュータの提唱者の一人であるファインマンが量子プログラムを図式として表現する記法を発明したからです。<label for="margin-note-" class="margin-note-toggle"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note">
+  <img src="./images/feynman_full_adder.png" class="mb-2 border border-neutral-300" />
+  ファインマンが量子コンピュータを提唱した最初の論文 (1986 年)
+  に掲載されている図の抜粋。ここで使われている記法は、現在使われている記法とほとんど変わっていません。Richard
+  P. Feynman,
+  <a href="https://link.springer.com/article/10.1007/BF01886518" class="italic"
+    >Quantum mechanical computers</a
+  >
+  (1986)</span> この記法は、従来の <code>MOV</code> や
+  <code>ADD</code> といった文字だけの無骨なアセンブラ命令と比べると、
+  グラフィカルで構造を把握しやすく、また楽譜のような美しささえあります。
 </p>
 
 <figure>
@@ -349,9 +357,41 @@
 </figure>
 
 <p>
-  現在では、どんな量子コンピュータでも使える標準的な演算命令セットと、それぞれを表す記号 (アイコン)
-  がほぼ決まっています。 代表的な基本演算を図にリストアップしました。
-  詳細は後に説明するとして、まずはどんな演算があるかざっと眺めておきましょう。
+  このように量子プログラムを図式として表したものを<span class="font-bold">量子回路</span
+  >と呼びます。 量子回路は水平方向に伸びる何本かの線 (<span class="font-bold">ワイヤ</span>)
+  と、ワイヤ上に置かれた <span class="font-bold">QPU 命令</span>から構成されます。
+  それぞれのワイヤは、量子ビット 1 つに対応します。つまり、8 量子ビットを使用する量子回路は 8
+  本のワイヤを持ちます。 量子回路は楽譜と同じく、一番左の列から右に向かって実行されます。
+  ワイヤ上に置かれた QPU 命令が各量子ビットに対して演算を行います。
+</p>
+
+<figure>
+  <img src="./images/basic_quantum_circuit.png" class="h-auto w-full" />
+</figure>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="現在のコンピュータと比べ、量子コンピュータのプログラミングには抽象度の面でどんな違いがあるか?"
+    answer="量子コンピュータではビットレベルの低水準プログラミングが必要"
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="量子プログラムを図式として表したものを{量子回路}と呼ぶ"></orbit-prompt>
+  <orbit-prompt cloze="量子回路で水平方向に伸びる線を{ワイヤ}と呼ぶ"> </orbit-prompt>
+  <orbit-prompt
+    question="ワイヤ上に置かれた H などの箱を何と呼ぶか?"
+    question-attachments="https://qniapp.github.io/qni/images/basic_quantum_cirquit.png"
+    answer="QPU 命令"
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="4 量子ビットを使用する量子回路は {4} 本のワイヤを持つ"> </orbit-prompt>
+  <orbit-prompt question="量子回路はどの方向に実行される?" answer="左から右 (楽譜と同じ)">
+  </orbit-prompt>
+</orbit-reviewarea>
+
+<p>
+  現在では、どんな量子コンピュータでも使える標準的な命令セットと、それぞれを表す記号 (アイコン)
+  がほぼ決まっています。 代表的な基本 QPU 命令を表にリストアップしました。
+  詳細は後に説明するとして、どんな命令があるかまずはざっと眺めておきましょう。
 </p>
 
 <div class="pb-10">
@@ -372,6 +412,45 @@
         </td>
         <td class="border border-slate-300 p-2">NOT または X</td>
         <td class="border border-slate-300 p-2">ビットペアの入れ替え</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">
+          <div class="flex justify-center">
+            <h-gate></h-gate>
+          </div>
+        </td>
+        <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
+        <td class="border border-slate-300 p-2">シンプルな重ね合わせの作成</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">
+          <div class="flex justify-center">
+            <phase-gate></phase-gate>
+          </div>
+        </td>
+        <td class="border border-slate-300 p-2">Phase Shift (位相シフト)</td>
+        <td class="border border-slate-300 p-2">相対位相を回転</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">
+          <div class="flex flex-row gap-2">
+            <write-gate data-value="0"></write-gate>
+            <write-gate data-value="1"></write-gate>
+          </div>
+        </td>
+        <td class="border border-slate-300 p-2">WRITE</td>
+        <td class="border border-slate-300 p-2">指定した値で量子ビットを初期化する</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">
+          <div class="flex justify-center">
+            <measurement-gate></measurement-gate>
+          </div>
+        </td>
+        <td class="border border-slate-300 p-2">MEASUREMENT (測定)</td>
+        <td class="border border-slate-300 p-2">
+          量子ビットを測定し <code>0</code> または <code>1</code> を返す
+        </td>
       </tr>
       <tr>
         <td class="border border-slate-300 py-2 px-4">
@@ -405,24 +484,6 @@
         <td class="border border-slate-300 p-2">条件2個付き NOT</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <h-gate></h-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
-        <td class="border border-slate-300 p-2">シンプルな重ね合わせの作成</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <phase-gate></phase-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">Phase Shift (位相シフト)</td>
-        <td class="border border-slate-300 p-2">相対位相を回転</td>
-      </tr>
-      <tr>
         <td class="border border-slate-300 py-4 px-4">
           <div class="flex justify-center">
             <circuit-step class="p-0">
@@ -453,36 +514,6 @@
         </td>
         <td class="border border-slate-300 p-2">CZ</td>
         <td class="border border-slate-300 p-2">CPHASE (<code>π</code> 回転)</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <measurement-gate></measurement-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">MEASUREMENT (測定)</td>
-        <td class="border border-slate-300 p-2">
-          量子ビットを測定し <code>0</code> または <code>1</code> を返す
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row gap-2">
-            <write-gate data-value="0"></write-gate>
-            <write-gate data-value="1"></write-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">WRITE</td>
-        <td class="border border-slate-300 p-2">指定した値で量子ビットを初期化する</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <rnot-gate></rnot-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">Square root of NOT</td>
-        <td class="border border-slate-300 p-2">X の平方根 (2 度適用することで X と同等の作用)</td>
       </tr>
       <tr>
         <td class="border border-slate-300 py-2 px-4">

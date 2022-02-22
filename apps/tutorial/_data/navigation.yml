@@ -6,8 +6,8 @@
       link: ./qpu.html
     - name: QPU は何が得意?
       link: ./what_qpu_do_faster.html
-    - name: QPU 演算
-      link: ./qpu_operations.html
+    - name: 量子回路
+      link: ./quantum_circuit.html
     - name: Qni 入門
       link: ./qni_intro.html
 - name: 量子ビット
