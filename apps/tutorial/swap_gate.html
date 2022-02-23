@@ -1,0 +1,95 @@
+---
+layout: page
+title: SWAP ゲート
+description: 量子ビットの交換
+---
+
+<p>
+  SWAP ゲートはその名の通り、2 つの量子ビットを入れ替えます。
+  その作用は、次の回路を見てもらえれば明らかでしょう。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|1>"],["Swap","Swap"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  SWAP ゲートは 2 個 1 組で動作します。 当然ですが 1 個や 3 個の SWAP
+  ゲートでは量子ビットの入れ替えは起こりません。 また、動作させるには同じ列に 2 個の SWAP
+  ゲートを置く必要があります。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|1>"],["Swap",1],[1,"Swap"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+simple_circle_notation_popup.html %}
