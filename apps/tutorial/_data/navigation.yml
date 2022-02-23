@@ -37,9 +37,9 @@
       link: ./measurement_operation.html
     - name: CLONE 命令!?
       link: ./no_cloning_theorem.html
-    - name: 組合わせゲート
-      link: ./gate_combination.html
-      new: true
+    # - name: 組合わせゲート
+    #   link: ./gate_combination.html
+    #   new: true
 - name: 量子暗号通信
   pages:
     - name: 量子鍵配送
@@ -71,11 +71,11 @@
     - name: 部分的な測定
       link: ./partial_measurement.html
       new: true
-- name: QPU 命令その 2
-  pages:
-    - name: SWAP パズル
-      link: ./swap_from_cnots.html
-      new: true
+# - name: QPU 命令その 2
+#   pages:
+#     - name: SWAP パズル
+#       link: ./swap_from_cnots.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
