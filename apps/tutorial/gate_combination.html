@@ -6,15 +6,14 @@ description: ゲートを組合わせて別のゲートを作る
 
 <p>
   ボブには生まれつきのハッカー気質があります。
-  同じ小学校に通うアリスは、自作の高性能量子コンピュータを持っています。
-  イブは謎のルートで手に入れた最新の量子コンピュータ QStation 7 をいつも自慢してきます。
-  しかし、ボブには型落ちの QStation 5 mini しかありません。
-  でも、ボブには工夫してアリスやイブに負けない量子プログラムを作り上げる能力があります。
+  同じ小学校に通うイブは、謎のルートで手に入れた最新の量子コンピュータ QStation 7
+  をいつもボブに自慢してきます。 ボブには型落ちの QStation 5 mini しかありません。
+  でも、ボブはたったそれだけの機材でイブに負けない量子回路をいつも作り上げてしまいます。
 </p>
 
 <p>
-  たとえば、ボブの QStation 5 mini には PHASE(π) ゲートがありません。 しかし、ボブは H ゲートと NOT
-  ゲートを組合わせれば PHASE(π) を作れることを知っています。
+  たとえば、ボブの QStation 5 mini には PHASE(π) ゲートがありません。 しかし、次のように H ゲートと
+  NOT ゲートを組合わせれば PHASE(π) を作れることをボブは発見しました。
 </p>
 
 <div class="pb-10 md:mr-auto md:w-7/12">
@@ -41,7 +40,7 @@ description: ゲートを組合わせて別のゲートを作る
 
 <p>
   こんな調子で、ボブは必要なゲートはいつも自分で作ってしまいます。
-  いつの間にか身に付けた能力ですが、手元にあるものだけで何とか問題を解決しようとするボブの姿勢は、ハッカーの独創性の源とも言えます。
+  いつの間にか自然と身に付いた能力ですが、手元にあるものだけで何とかしようとするボブの姿勢は、ハッカーの独創性の源と言えます。
 </p>
 
 <p>
@@ -149,7 +148,7 @@ description: ゲートを組合わせて別のゲートを作る
 </div>
 
 <p>
-  平方根 X ゲートを 2 回適用し、X ゲートと同じ効果 (ビットの反転) が置こることを確かめましょう。
+  平方根 X ゲートを 2 回適用し、X ゲートと同じ効果 (ビットの反転) が起こることを確かめましょう。
   ここでは {% ket 0 %} が {% ket 1 %} になれば成功です。
 </p>
 
@@ -201,8 +200,8 @@ description: ゲートを組合わせて別のゲートを作る
 </div>
 
 <p>
-  なぜ、平方根 X ゲートを 2 回適用すると X ゲートになるのでしょうか? ボブの最初のテクニック、H と X
-  ゲートから PHASE(π) ゲートを作る方法を思い出してください。
+  なぜ、平方根 X ゲートを 2 回適用すると X ゲートになるのでしょうか?
+  ボブの最初のテクニック、PHASE(π) ゲートを作る方法を思い出してください。
 </p>
 
 <div class="pb-10 md:mr-auto md:w-7/12">
@@ -228,7 +227,7 @@ description: ゲートを組合わせて別のゲートを作る
 </div>
 
 <p>
-  左と右はまったく同じ効果を持つので、両者を H
+  左右はまったく同じ効果を持つので、両者を H
   ゲートで挟んだもの同士もやはりまったく同じ効果を持つはずです。
 </p>
 
@@ -343,10 +342,7 @@ description: ゲートを組合わせて別のゲートを作る
   </div>
 </div>
 
-<p>
-  平方根 X ゲートを 2 回掛けることは、左側の H PHASE(π/2) H を 2 回掛けることと等しくなります。
-  つまり、
-</p>
+<p>左右をそれぞれ 2 回繰り返してみます。</p>
 
 <div class="pb-10 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center justify-center space-x-4">
@@ -416,7 +412,7 @@ description: ゲートを組合わせて別のゲートを作る
   </div>
 </div>
 
-<p>連続する 2 つの PHASE(π/2) は PHASE(π) と同じなので置き換えると、</p>
+<p>連続する 2 つの PHASE(π/2) は PHASE(π) と同じなので、置き換えると、</p>
 
 <div class="pb-10 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center justify-center space-x-4">
@@ -470,6 +466,52 @@ description: ゲートを組合わせて別のゲートを作る
     </div>
   </div>
 </div>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="H ゲートを連続して 2 回置いた回路は何と同等?"
+    answer="何もしない回路"
+    answer-attachments="https://qniapp.github.io/qni/images/HH.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="2 つの連続する H ゲートが「消える」のはなぜ?"
+    answer="H ゲートはそれ自体の逆演算でもあるから"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π/2) ゲートを連続して 2 回置いた回路は何と同等?"
+    answer="PHASE(π)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π) ゲート、PHASE(π/2) ゲートのみを置いた回路は何と同等?"
+    answer="PHASE(3π/2)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π) ゲートを H, X ゲートだけで作ると?"
+    answer="H-X-H"
+    answer-attachments="https://qniapp.github.io/qni/images/HXH.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="平方根 X ゲートはどんなゲート?"
+    answer="2 回掛けると X になるゲート"
+    answer-attachments="https://qniapp.github.io/qni/images/2rnots.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="平方根 X ゲートを H, PHASE(π/2) ゲートだけで作ると?"
+    answer="H-PHASE(π/2)-H"
+    answer-attachments="https://qniapp.github.io/qni/images/rnot_gate_decomposition.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="X ゲートを H, PHASE(π) ゲートだけで作ると?"
+    answer="H-PHASE(π)-H"
+    answer-attachments="https://qniapp.github.io/qni/images/X_gate_decomposition.png"
+  >
+  </orbit-prompt>
+</orbit-reviewarea>
 
 {% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
 circle_notation_popup.html %}
