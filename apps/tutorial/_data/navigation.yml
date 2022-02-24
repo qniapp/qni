@@ -68,7 +68,7 @@
     - name: PHASE ゲート (複数量子ビット)
       link: ./multi_qubit_phase_gate.html
       new: true
-    - name: 部分的な測定
+    - name: 1 ビット測定
       link: ./partial_measurement.html
       new: true
 # - name: QPU 命令その 2
@@ -81,6 +81,9 @@
 #       new: true
 #     - name: SWAP パズル
 #       link: ./swap_from_cnots.html
+#       new: true
+#     - name: 量子もつれ
+#       link: ./entanglement.html
 #       new: true
 - name: ふろく
   pages:
