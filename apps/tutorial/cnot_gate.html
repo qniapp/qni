@@ -1,0 +1,244 @@
+---
+layout: page
+title: CNOT ゲート
+description: 条件付き X ゲート
+---
+
+<p>
+  CNOT ゲートは 2 量子ビットに作用する QPU 命令で、条件付きで X ゲートを適用します。 CNOT
+  ゲートは以下のように、条件となる量子ビットに置かれる<span class="font-bold"
+    >コントロールゲート</span
+  >と、X ゲートの 2 つから構成されます。 コントロールゲートを置いたビットを
+  <span class="font-bold">コントロールビット</span>、X ゲートを置いたビットを<span class="font-bold"
+    >ターゲットビット</span
+  >と呼びます。 コントロールビットが <code>0</code> でないとき、ターゲットビットに置いた X
+  ゲートが発動します。
+</p>
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <circuit-step class="p-0">
+    <circuit-dropzone data-connect-bottom>
+      <control-gate></control-gate>
+    </circuit-dropzone>
+    <circuit-dropzone data-connect-top>
+      <x-gate></x-gate>
+    </circuit-dropzone>
+  </circuit-step>
+</div>
+
+<p>
+  以下の回路は CNOT の基本的な動きを見るものです。 最初の CNOT はビット 1
+  をコントロールビット、ビット 2 をターゲットビットとして X ゲートを適用します。
+  コントロールビットは {% ket 1 %} なので X ゲートが発動し、ターゲットビットが反転して {% ket 0 %}
+  から {% ket 1 %} になっていることが分かります。 2 つめの CNOT では、コントロールビットは {% ket 0
+  %} です。このため X ゲートは発動せず、ターゲットビットはそのままです。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|1>","|0>"],["•","X"],["Measure","Measure"],["|0>","|0>"],["•","X"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  CNOT が量子ゲートたるゆえんは、コントロールビットが重ね合わせ状態を取れることです。
+  たとえば、次のようにコントロールビットを H ゲートで重ね合わせにした状態で CNOT
+  を適用してみましょう。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  ビット 1 に H ゲートを適用すると、演算ペアのルール{% nmargin_note operation-pair %}<a
+    href="./operator_pair.html"
+    >演算ペア</a
+  >を参照。{% endnmargin_note %}により {% ket 0 %} {% ket 1 %} のペアに H
+  ゲートが作用し、重ね合わせ状態ができます。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-H1')
+        circleNotation.setAmplitudes({
+          0: 1,
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>H ゲートを 1 ビット目に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-H1')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  次にビット 1 をコントロールビット、ビット 2 をターゲットビットとする CNOT を適用します。
+  ターゲットはビット 2 なので、X ゲートの適用先は次の演算ペアとなります。
+</p>
+
+<figure>
+  <img src="./images/2qubits_bit2_ket_pair.png" />
+</figure>
+
+<p>
+  ここで、コントロールビットであるビット 1 によって X ゲートを適用する演算ペアを選びます。
+  ビットで見るために {% ket 0 %}, {% ket 1 %}, {% ket 2 %}, {% ket 3 %} をそれぞれ 2 進数で表すと {%
+  ket 00 %}, {% ket 01 %}, {% ket 10 %}, {% ket 11 %} となります。 このうちビット 1 が立っているのは
+  {% ket 01 %} と {% ket 11 %} (青色の円) だけなので、{% ket 1 %} と {% ket 3 %} のペアのみに X
+  ゲートを適用します。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>CNOT (コントロールビット 1, ターゲットビット 2) を適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+simple_circle_notation_popup.html %}
