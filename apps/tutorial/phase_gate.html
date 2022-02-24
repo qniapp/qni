@@ -5,9 +5,10 @@ description: 相対位相を直接操作する
 ---
 
 <p>
-  PHASE ゲートはその名の通り{% nmargin_note phase-gate %}phase: 相、位相、フェーズ{% endnmargin_note
-  %}、位相を操作するゲートです。 重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ {%
-  ket 1 %} の位相を回転させることができます。
+  <span class="font-bold">PHASE ゲート</span>はその名の通り{% nmargin_note phase-gate %}phase:
+  相、位相、フェーズ{% endnmargin_note %}、位相を操作するゲートです。
+  重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ {% ket 1 %}
+  の位相を回転できます。
 </p>
 
 <div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
@@ -77,41 +78,47 @@ description: 相対位相を直接操作する
     import { Complex } from './application.js'
 
     document.getElementById('circle-notation-P-π/4-before').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
+      1: Math.sqrt(0.5),
     })
     document.getElementById('circle-notation-P-π/4-after').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
       1: new Complex(0.5, 0.5),
     })
     document.getElementById('circle-notation-P-π/2-before').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
+      1: Math.sqrt(0.5),
     })
     document.getElementById('circle-notation-P-π/2-after').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
       1: new Complex(0, Math.sqrt(0.5)),
     })
     document.getElementById('circle-notation-P-13π/8-before').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
+      1: Math.sqrt(0.5),
     })
     document.getElementById('circle-notation-P-13π/8-after').setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
       1: new Complex(0.2706, -0.65328),
     })
   </script>
 </div>
 
 <p>
-  上の例にもあるように、位相ゲートは角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を
-  <code>π/2</code> 回転する PHASE ゲートは上に <code>π/2</code> が付きます。 文章中では PHASE(π/2)
+  PHASE ゲートは角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を
+  <code>π/2</code> 回転する PHASE ゲートは上に <code>π/2</code> が付きます。文中では PHASE(π/2)
   などとパラメータを付けて書きます。
 </p>
 
 <p>
   PHASE ゲートは {% ket 0 %} に何の変化も与えないことに注意してください。 また PHASE ゲートは {% ket
-  1 %} の位相のみを回転するので、振幅の大きさにも影響は与えませんし、影響も受けません。
+  1 %}
+  の位相のみを回転するので、振幅の大きさにも影響は与えません。また回転する角度は振幅の大きさの影響を受けません{%
+  nmargin_note phase-and-amplitude-norm
+  %}量子ビットの振幅の大きさと位相は独立したパラメータである、ということを思い出しましょう (<a
+    href="./circle_notation.html"
+    >状態ベクトル表示</a
+  >を参照)。{% endnmargin_note %}。
 </p>
 
 <div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
@@ -188,16 +195,16 @@ description: 相対位相を直接操作する
     let circleNotationH0c = document.getElementById('circle-notation-P-c')
 
     circleNotationH0a.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
+      1: Math.sqrt(0.5),
     })
     circleNotationH0b.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
       1: new Complex(0, Math.sqrt(0.5)),
     })
     circleNotationH0c.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
+      0: Math.sqrt(0.5),
+      1: Math.sqrt(0.5),
     })
   </script>
 </div>
@@ -206,8 +213,8 @@ description: 相対位相を直接操作する
 
 <p>
   PHASE ゲートを重ね合わせ状態に適用して、{% ket 1 %} の位相を回転してみましょう。 PHASE
-  ゲートの角度を変更するには、回路上に配置した PHASE
-  ゲートをクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
+  ゲートの角度はデフォルトで <code>π/2</code> にセットされています。変更するには、回路上に配置した
+  PHASE ゲートをクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
