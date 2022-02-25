@@ -29,9 +29,8 @@ description: 量子コンピュータの正しい位置付け
 </p>
 
 <p>
-  従来、特定のタスク向けのマシンやアーキテクチャを「ドメイン指向アーキテクチャ」と呼び、<span
-    class="font-bold"
-    >GPU</span
+  従来、特定のタスク向けのマシンやアーキテクチャを「ドメイン指向アーキテクチャ」と呼び、<mark
+    >GPU</mark
   >
   (Graphic Processing Unit: 画像処理ユニット)
   が代表的存在です。もともとグラフィック処理向けに開発された GPU
@@ -41,26 +40,24 @@ description: 量子コンピュータの正しい位置付け
 </p>
 
 <p>
-  そんな GPU からの類推として、量子コンピュータを <span class="font-bold">QPU</span> (Quantum
-  Processing Unit: 量子処理ユニット) と呼ぼうという考えがあります。実際のところ、GPU と QPU
+  そんな GPU からの類推として、量子コンピュータを <mark>QPU</mark> (Quantum Processing Unit:
+  量子処理ユニット) と呼ぼうという考えがあります。実際のところ、GPU と QPU
   にはどれだけ類似点があるでしょうか。まずは GPU プログラミングの特徴を挙げてみましょう:
 </p>
 
 <ul class="list-inside list-disc">
   <li>
-    <span class="font-bold">GPU に適したタスクもあれば、まったく適さないタスクもある。</span>
+    {% bold GPU に適したタスクもあれば、まったく適さないタスクもある。 %}
     ディープラーニングなど大量の単純な積和演算を含むタスクに適している一方で、CPU
     並の高クロックが必要な処理には適さない。
   </li>
   <li>
-    <span class="font-bold">プログラムの処理すべてを GPU 上で実行することは非常にまれ。</span>
-    ふつうは CPU で実行するプログラムが一部のタスクを GPU で実行し、後で実行結果を回収する。
+    {% bold プログラムの処理すべてを GPU 上で実行することは非常にまれ。 %} ふつうは CPU
+    で実行するプログラムが一部のタスクを GPU で実行し、後で実行結果を回収する。
   </li>
   <li>
-    <span class="font-bold"
-      >GPU プログラミングには、特別な言語やコンパイラ、ライブラリが必要。</span
-    >
-    NVIDIA 専用の CUDA や、C や Fortran で使える OpenACC などがその代表。
+    {% bold GPU プログラミングには、特別な言語やコンパイラ、ライブラリが必要。 %} NVIDIA 専用の CUDA
+    や、C や Fortran で使える OpenACC などがその代表。
   </li>
 </ul>
 
