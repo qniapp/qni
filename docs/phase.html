@@ -329,65 +329,64 @@
 </p>
 
 <div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
-  <circle-notation
-      id="circle-notation-phases"
-      data-size="xl"
-      data-show-kets
-  ></circle-notation>
+  <circle-notation id="circle-notation-phases" data-size="xl" data-show-kets></circle-notation>
 
   <script type="module">
-   import { Complex } from './application.js'
+    import { Complex } from './application.js'
 
-   document.getElementById('circle-notation-phases').setAmplitudes({
-       0: new Complex(-0.20015, 0.44444),
-       1: new Complex(0.67819, -0.54997)
-   })
+    document.getElementById('circle-notation-phases').setAmplitudes({
+      0: new Complex(-0.20015, 0.44444),
+      1: new Complex(0.67819, -0.54997),
+    })
   </script>
 </div>
 
 <p>
-  位相は量子ビットが持つある種の回転を表します。
-  位相は反時計まわりの方向に回転し、-2π (-360°) から 2π (360度) までの値を取ることができます。
+  位相は量子ビットが持つある種の回転を表します。 位相は反時計まわりの方向に回転し、-2π (-360°) から
+  2π (360度) までの値を取ることができます。
 </p>
 
 <p>
   確率と位相は、量子ビットが持つ<mark>まったく独立した 2 つのパラメータ</mark>です。
-  言い換えれば量子ビットは、確率という 0 〜 1 の大きさを表すパラメータと、位相という -2π 〜 2πの角度を表すパラメータを持つことができ、それぞれ独立して調整できます。
+  言い換えれば量子ビットは、確率という 0 〜 1 の大きさを表すパラメータと、位相という -2π 〜
+  2πの角度を表すパラメータを持つことができ、それぞれ独立して調整できます。
 </p>
 
 <p>
-  量子ビットを<mark>測定すると、確率と位相はどちらも消滅</mark>します。
-  このとき確率は <code>|0⟩</code> または <code>|1⟩</code> が出てくる可能性に直接影響する一方で、位相は直接的には影響しません。
+  量子ビットを<mark>測定すると、確率と位相はどちらも消滅</mark>します。 このとき確率は <code>|0⟩</code>
+  または <code>|1⟩</code> が出てくる可能性に直接影響する一方で、位相は直接的には影響しません。
   では、位相はいったい何に使えるのでしょうか?
 </p>
 
 <p>
   ひとつは、<mark>データのエンコード</mark>です。
-  <a href="p_bit.html">確率的ビット</a>の説明では、データをバイナリに変換して確率に埋め込むテクニックを紹介しました。
+  <a href="p_bit.html">確率的ビット</a
+  >の説明では、データをバイナリに変換して確率に埋め込むテクニックを紹介しました。
   同様に、データをうまく -2π 〜 2 π の間の数値に変換することで、位相に埋め込むことができます。
   もちろん、量子ビットを測定すると位相は破壊されるので、埋め込んだデータをそのまま取り出すことはできませんが、計算に使うことができます。
 </p>
 
 <p>
-  位相のもうひとつの用途は、<mark>確率の間接的な操作</mark>です。
-  後に紹介する量子探索アルゴリズム<label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note">グローバーのアルゴリズム。アルゴリズムの特長は「<a href="./index.html">はじめに</a>」の電話帳の例を参照。</span>では、探索するリスト内の大量のアイテムのうち、見つけ出したい目的のアイテムにマークをつけ、このアイテムが測定で浮かび上がるように確率を上昇させます。
-  このマークをつけるという操作は、目的のアイテムだけ位相を 180 度逆向きにするという方法で実現します。
+  位相のもうひとつの用途は、<mark>確率の間接的な操作</mark>です。 後に紹介する量子探索アルゴリズム<label for="margin-note-grover" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-grover" class="margin-note-toggle"><span class="margin-note">グローバーのアルゴリズム。アルゴリズムの特長は「<a href="./index.html"
+    >はじめに</a
+  >」の電話帳の例を参照。</span>では、探索するリスト内の大量のアイテムのうち、見つけ出したい目的のアイテムにマークをつけ、このアイテムが測定で浮かび上がるように確率を上昇させます。
+  このマークをつけるという操作は、目的のアイテムだけ位相を 180
+  度逆向きにするという方法で実現します。
 </p>
 
 <h2>確率と位相を QPU 命令で操作してみよう</h2>
 
 <p>
-  いよいよ Qni を使った最初の実験です。
-  いくつかの QPU 命令で、量子ビットの確率と位相を変更できます。
-  回路に QPU 命令をドラッグアンドドロップすることで、<code
-                                                     >|0⟩</code
-                                                         >
-  と <code>|1⟩</code> の確率や位相が変化するのを見てみましょう。
+  いよいよ Qni を使った最初の実験です。 いくつかの QPU
+  命令で、量子ビットの確率と位相を変更できます。 回路に QPU
+  命令をドラッグアンドドロップすることで、<code>|0⟩</code> と
+  <code>|1⟩</code> の確率や位相が変化するのを見てみましょう。
   それぞれの命令が何をしているかは、まだ気にしなくてかまいません。
 </p>
 
 <p>
-  ここで確認しておきたいのは、QPU 命令が確率や位相を変化させ、命令の種類によってその変化が異なる、という点です。
+  ここで確認しておきたいのは、QPU
+  命令が確率や位相を変化させ、命令の種類によってその変化が異なる、という点です。
   命令によっては確率がまったく変化しないかわりに、位相だけを回転させるものもあります。
   またはその逆や、両方を変化させるものもあります。
 </p>
@@ -453,11 +452,11 @@
       </quantum-circuit>
 
       <circle-notation
-          id="circle-notation"
-          data-target="quantum-simulator.circleNotation"
-          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
-          data-multi-qubits
-          data-show-kets
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
       >
       </circle-notation>
     </circuit-editor>

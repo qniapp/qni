@@ -1,12 +1,12 @@
 ---
 layout: page
 title: 重ね合わせ状態
-description: いろんな重ね合わせ状態を作ってみよう
+description: Qni の重ね合わせ状態の視覚化
 ---
 
 <p>
-  量子ビットは確率的ビットによく似ており、1 量子ビットは <code>0</code> と <code>1</code>
-  の重ね合わせ状態をとることができます。Qni では、これを次のように円で視覚化します。
+  Qni では、1 ビットでの <code>0</code> と <code>1</code> の重ね合わせ状態を次のように 2
+  つの円で表示します。
 </p>
 
 <div class="flex flex-row items-center justify-center pb-10 md:mr-auto md:w-7/12">
@@ -19,20 +19,21 @@ description: いろんな重ね合わせ状態を作ってみよう
 </div>
 
 <p>
-  2 個の円はそれぞれ状態 <code>0</code> (左) と <code>1</code> (右)
-  をあらわしており、中の青い部分の面積はそれぞれの確率を表しています。
+  2 個の円はそれぞれ古典ビット <code>0</code> (左) と <code>1</code> (右)
+  を表しており、中の青い部分の面積はそれぞれの確率を表しています。
   この状態ではどちらも五分五分なので、<code>0</code> と <code>1</code> がそれぞれ
-  <code>50%</code> の確率で重ね合わされていると言います。
+  <code>50%</code> の確率で重ね合っていると読みます。
+  円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
 </p>
 
 <div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <p class="!w-full !pb-0">
-    これからは状態 <code>0</code> と <code>1</code> をそれぞれ記号 <code>|0⟩</code> と
+    これからは古典ビット <code>0</code> と <code>1</code> をそれぞれ記号 <code>|0⟩</code> と
     <code>|1⟩</code> で表します。
     これらは量子力学や量子コンピュータでよく使われる記号で、「ディラックのケット
     (または単にケット)」と呼ばれます。 後に詳しく説明しますが、現時点では <code>0</code> と
     <code>1</code>
-    の状態を区別するための単なるラベルだと考えて大丈夫です。
+    の状態を区別するための単なるラベルと考えて大丈夫です。
   </p>
 </div>
 
@@ -110,6 +111,20 @@ description: いろんな重ね合わせ状態を作ってみよう
     </tbody>
   </table>
 </div>
+
+<p>
+  表の 1 行目と 2 行目は、古典ビットと同じ状態を表しています。 {% ket 0 %} が 100% または {% ket 1
+  %} が 100% の状態では重ね合わせは生じていないため、それぞれ古典ビット <code>0</code> と
+  <code>1</code> でも表現できるからです。 {% ket 0 %} が 100% の状態を、単に状態 {% ket 0 %}
+  と呼びます。同様に、{% ket 1 %} が 100% の状態を状態 {% ket 1 %} と呼びます。
+</p>
+
+<p>
+  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (青く塗り潰された円)
+  は破壊され、状態 {% ket 0 %} または {% ket 1 %} に変化します。
+  つまり、重ね合わせ状態にあるビットを測定すると、古典ビット <code>0</code> または
+  <code>1</code> で表すことのできる状態に変化します。
+</p>
 
 {% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
 simple_circle_notation_popup.html %}
