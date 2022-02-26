@@ -340,8 +340,8 @@
 <p>
   ご存知のように、従来のビット (古典ビット<label for="margin-note-classical-bit" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-classical-bit" class="margin-note-toggle"><span class="margin-note">量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。</span>とも呼ぶ) は <code>0</code> または
   <code>1</code> のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は
-  <code>0</code> か <code>1</code> のみです。
-  また計算中のその中身 (状態) も常に <code>0</code> か <code>1</code> です。
+  <code>0</code> か <code>1</code> のみです。 また計算中のその中身 (状態) も常に <code>0</code> か
+  <code>1</code> です。
 </p>
 
 <h2>確率</h2>
@@ -353,17 +353,17 @@
 
 <p>
   確率の例として、コイントスを考えてみましょう。
-  コインを投げてそれを見ずに手で覆うと、手の中ではコインが「表」または「裏」の 2 通りのイベントが発生します。
-  偏りのないコインならば、それぞれのイベントの確率は 50% ずつです。
+  コインを投げてそれを見ずに手で覆うと、手の中ではコインが「表」または「裏」の 2
+  通りのイベントが発生します。 偏りのないコインならば、それぞれのイベントの確率は 50% ずつです。
   また、表の出やすいコイン (表 60.8%、裏 39.2%) や両面が裏のインチキコイン (表: 0%、裏: 100%)
   など、無限のバリエーションが存在します。
 </p>
 
 <p>
-  表と裏の確率を足すと必ず 100%
-  になる<label for="margin-note-probability-100" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probability-100" class="margin-note-toggle"><span class="margin-note">確率論では、起こりうるすべてのイベントの確率を足すと 100% になります。</span>ことを考えると、表と裏になる確率すべての組合わせを次のグラフに図式化できます。
+  表と裏の確率を足すと必ず 100% になる<label for="margin-note-probability-100" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probability-100" class="margin-note-toggle"><span class="margin-note">確率論では、起こりうるすべてのイベントの確率を足すと 100% になります。</span>ことを考えると、表と裏になる確率すべての組合わせを次のグラフに図式化できます。
   横軸は表の出る確率 (0〜100%)、縦軸は裏の出る確率 (0〜100%) です。
-  あらゆるコインの性質を表と裏が出る確率で特徴付けしたとき、任意のコインはこの線分上のどれか 1 点として表せます。
+  あらゆるコインの性質を表と裏が出る確率で特徴付けしたとき、任意のコインはこの線分上のどれか 1
+  点として表せます。
 </p>
 
 <figure>
@@ -380,8 +380,10 @@
 </p>
 
 <p>
-  計算後、値を取り出す操作 (測定) をした後の確率的ビットは、コインの表か裏かが定まった状態に対応します。
-  つまり、値を取り出した時点で確率は消え <code>0</code> か <code>1</code> かが確定するので、古典ビットとまったく見分けがつきません。
+  計算後、値を取り出す操作 (測定)
+  をした後の確率的ビットは、コインの表か裏かが定まった状態に対応します。
+  つまり、値を取り出した時点で確率は消え <code>0</code> か
+  <code>1</code> かが確定するので、古典ビットとまったく見分けがつきません。
 </p>
 
 <p>
@@ -395,14 +397,19 @@
 <h2>重ね合わせはなぜ強力?</h2>
 
 <p>
-  確率的ビットの確率的な <code>0</code> と <code>1</code> の状態を<mark>重ね合わせ状態</mark>と言います。
-  <code>0</code> または <code>1</code> が起こる 2 つの確率を重ね合わせ、「<code>0</code> が 60%、<code>1</code> が40%」という 1 つの状態として扱うイメージです。
-  重ね合わせは量子コンピュータが強力である 1 つの理由としてよく挙げられますが、それはなぜでしょうか?
+  確率的ビットの確率的な <code>0</code> と
+  <code>1</code> の状態を<mark>重ね合わせ状態</mark>と言います。 <code>0</code> または
+  <code>1</code> が起こる 2 つの確率を重ね合わせ、「<code>0</code> が 60%、<code>1</code>
+  が40%」という 1 つの状態として扱うイメージです。 重ね合わせは量子コンピュータが強力である 1
+  つの理由としてよく挙げられますが、それはなぜでしょうか?
 </p>
 
 <p>
-  直感的に納得する方法の 1 つは、先ほどのグラフ上で古典ビットと確率的ビットを直接比べてみることです。
-  古典ビットは常に <code>0</code> または <code>1</code> の状態しか取りませんから、先程のグラフ上に表すと古典ビットの取りうる状態は 2 点になります。
+  直感的に納得する方法の 1
+  つは、先ほどのグラフ上で古典ビットと確率的ビットを直接比べてみることです。 古典ビットは常に
+  <code>0</code> または
+  <code>1</code> の状態しか取りませんから、先程のグラフ上に表すと古典ビットの取りうる状態は 2
+  点になります。
 </p>
 
 <figure>
@@ -411,13 +418,17 @@
 
 <p>
   一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。
-  このように取りうる状態の数で比較すると、古典ビットは 2 個であるのに対して確率的ビットは無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
+  このように取りうる状態の数で比較すると、古典ビットは 2
+  個であるのに対して確率的ビットは無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
 </p>
 
 <p>
-  またはこう考えることもできます。
-  確率的ビットの状態は「<code>0</code> が 0.11001001011%、<code>1</code> が 99.88998998989%」のようにいくらでも細かくセットできます。
-  ここで <code>0</code> の確率の少数点以下を 2 進数と見て、そこにすべての Wikipedia の記事と YouTube の全動画データ、そしてインターネットでみつかるすべての猫画像を 2 進数として埋め込みます。
+  またはこう考えることもできます。 確率的ビットの状態は「<code>0</code> が 0.11001001011%、<code
+    >1</code
+  >
+  が 99.88998998989%」のようにいくらでも細かくセットできます。 ここで
+  <code>0</code> の確率の少数点以下を 2 進数と見て、そこにすべての Wikipedia の記事と YouTube
+  の全動画データ、そしてインターネットでみつかるすべての猫画像を 2 進数として埋め込みます。
   それはなんと、確率的ビットたった 1 個に超巨大なデータを埋め込めることにほかなりません!
 </p>
 
@@ -426,10 +437,52 @@
 </figure>
 
 <p>
-  …実際に埋め込めたとしても、測定によって <code>0</code> または <code>1</code> しか取り出せないなら、確率に乗せたデータは消えてしまうのではないでしょうか？
+  …実際に埋め込めたとしても、測定によって <code>0</code> または
+  <code>1</code> しか取り出せないなら、確率に乗せたデータは消えてしまうのではないでしょうか？
   たしかにその通りですが、<mark>測定前なら確率の値を計算データとして使えます</mark>。
-  このように、膨大なデータをビットに乗せて計算に使えてしまう<label for="margin-note-probablity-data" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probablity-data" class="margin-note-toggle"><span class="margin-note">量子機械学習アルゴリズムでは、膨大なデータをこのように確率として量子ビットに埋め込むことで量子コンピュータに入力し計算します。</span>のが確率的ビットの強みです。
+  このように、膨大なデータでも確率の形にエンコードして持つことができ、それを計算データとして使える<label for="margin-note-probablity-data" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probablity-data" class="margin-note-toggle"><span class="margin-note">量子機械学習アルゴリズムでは、膨大なデータをこのように確率として量子ビットに埋め込むことで量子コンピュータに入力し計算します。</span>のが確率的ビットの強みです。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子力学と古典力学の対比から、従来のビットを{古典ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+      question="1 つの古典ビットが持ちうる状態はいくつ?"
+      answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt
+      question="1 つの古典ビットから取り出せる値はいくつ?"
+      answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt cloze="「60%で0」のように確率的な状態を持つビットを{確率的ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt cloze="確率的に 0 または 1 を持つ状態を{重ね合わせ状態}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+      question="1 つの確率的ビットが持ちうる状態はいくつ?"
+      answer="無限大"
+  ></orbit-prompt>
+  <orbit-prompt
+      question="1 つの確率的ビットを測定して取り出せる値は何?"
+      answer="0 または 1"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+      question="1 つの確率的ビットが持ちうる状態を、横軸 0 の確率、縦軸 1 の確率とそれぞれ取ると、どんなグラフになる?"
+      answer-attachments="https://qniapp.github.io/qni/images/p_bit_graph.png"
+      answer="線分"
+  ></orbit-prompt>
+  <orbit-prompt
+      question="古典ビットよりも確率的ビットの方が強力な理由を、それぞれが取りうる状態の数に着目して説明すると?"
+      answer="古典ビットは 2 通りの状態しか持てないのに対し、確率的ビットは無限大通りの状態を持てる"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+      question="大きなデータを 1 つの確率的ビットに埋め込む方法は?"
+      answer="データの 2 進表現を、確率的ビットが 0 となる確率の値にエンコードする"
+  >
+  </orbit-prompt>
+</orbit-reviewarea>
 </div>
           </div>
         </div>

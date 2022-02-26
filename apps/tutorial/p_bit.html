@@ -126,7 +126,42 @@ description: 量子ビットの確率的性質と重ね合わせ状態
   …実際に埋め込めたとしても、測定によって <code>0</code> または
   <code>1</code> しか取り出せないなら、確率に乗せたデータは消えてしまうのではないでしょうか？
   たしかにその通りですが、<mark>測定前なら確率の値を計算データとして使えます</mark>。
-  このように、膨大なデータをビットに乗せて計算に使えてしまう{% nmargin_note probablity-data
+  このように、膨大なデータでも確率の形にエンコードして持つことができ、それを計算データとして使える{%
+  nmargin_note probablity-data
   %}量子機械学習アルゴリズムでは、膨大なデータをこのように確率として量子ビットに埋め込むことで量子コンピュータに入力し計算します。{%
   endnmargin_note %}のが確率的ビットの強みです。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子力学と古典力学の対比から、従来のビットを{古典ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+    question="1 つの古典ビットが持ちうる状態はいくつ?"
+    answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="1 つの古典ビットから取り出せる値はいくつ?"
+    answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt cloze="「60%で0」のように確率的な状態を持つビットを{確率的ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt cloze="確率的に 0 または 1 を持つ状態を{重ね合わせ状態}と呼ぶ"> </orbit-prompt>
+  <orbit-prompt question="1 つの確率的ビットが持ちうる状態はいくつ?" answer="無限大"></orbit-prompt>
+  <orbit-prompt question="1 つの確率的ビットを測定して取り出せる値は何?" answer="0 または 1">
+  </orbit-prompt>
+  <orbit-prompt
+    question="1 つの確率的ビットが持ちうる状態を、横軸 0 の確率、縦軸 1 の確率とそれぞれ取ると、どんなグラフになる?"
+    answer-attachments="https://qniapp.github.io/qni/images/p_bit_graph.png"
+    answer="線分"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典ビットよりも確率的ビットの方が強力な理由を、それぞれが取りうる状態の数に着目して説明すると?"
+    answer="古典ビットは 2 通りの状態しか持てないのに対し、確率的ビットは無限大通りの状態を持てる"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="大きなデータを 1 つの確率的ビットに埋め込む方法は?"
+    answer="データの 2 進表現を、確率的ビットが 0 となる確率の値にエンコードする"
+  >
+  </orbit-prompt>
+</orbit-reviewarea>
