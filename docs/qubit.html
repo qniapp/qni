@@ -325,7 +325,7 @@
             </div>
             <div class="prose"><p>量子ビットは、確率的ビットと非常によく似ています。主な違いは 2 つだけです。</p>
 
-<ul class="list-inside list-decimal">
+<ul class="list-decimal">
   <li>
     確率のかわりに<mark>振幅 (amplitude)</mark> という値を使って状態を表現します。
     確率は正の値を持ちますが、振幅は負の値も持ちます。
@@ -362,8 +362,7 @@
 
 <p>
   次は振幅を持つ量子ビットの取り得る状態をグラフにしてみましょう。 振幅は 2
-  乗すると確率になるのですから、ビットが <code>|0⟩</code> となる確率の振幅を \(a_0\)、ビットが
-  <code>|1⟩</code> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
+  乗すると確率になるのですから、ビットが <code>|0⟩</code> となる確率の振幅を \(a_0\)、ビットが <code>|1⟩</code> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
   これを先ほどの式に入れると、
 </p>
 
@@ -373,7 +372,9 @@
 </p>
 
 <p>
-  となり、このグラフは半径 <code>1</code> の円になります。つまり、<mark>量子ビットの状態はこの円のうちの 1 点となります。</mark>
+  となり、このグラフは半径 <code>1</code> の円になります。つまり、<mark
+    >量子ビットの状態はこの円のうちの 1 点となります。</mark
+  >
 </p>
 
 <figure>
@@ -389,8 +390,14 @@
 
 <p>
   実は、振幅は一般には複素数の値を取ります。
-  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると<mark>半径 <code>1</code> の球表面</mark>になります。
-  これを<mark>ブロッホ球<label for="margin-note-bloch-sphere" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-bloch-sphere" class="margin-note-toggle"><span class="margin-note">ブロッホ球の名前はスイス出身の物理学者、<a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B">フェリックス・ブロッホ</a>に由来します。</span></mark>と呼びます。
+  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると<mark
+    >半径 <code>1</code> の球表面</mark
+  >になります。 これを<mark
+    >ブロッホ球<label for="margin-note-bloch-sphere" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-bloch-sphere" class="margin-note-toggle"><span class="margin-note">ブロッホ球の名前はスイス出身の物理学者、<a
+      href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B"
+      >フェリックス・ブロッホ</a
+    >に由来します。</span></mark
+  >と呼びます。
 </p>
 
 <figure>
@@ -418,8 +425,8 @@
 </p>
 
 <p>
-  下の量子回路には、すでにいくつかの QPU 命令が置いてあります。
-  それぞれの QPU 命令は、量子ビットに対する異なる回転操作を表しています。
+  下の量子回路には、すでにいくつかの QPU 命令が置いてあります。 それぞれの QPU
+  命令は、量子ビットに対する異なる回転操作を表しています。
   ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令によってどんな回転が起こるか推測してみましょう。
 </p>
 
