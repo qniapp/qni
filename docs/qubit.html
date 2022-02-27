@@ -342,31 +342,27 @@
   </li>
   <li>
     振幅は測定中に 2 乗され確率となります<label for="margin-note-amplitude-prob" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude-prob" class="margin-note-toggle"><span class="margin-note"><a
-                                                                              href="./what_qpu_do_faster"
-                                                                          >QPU は何が得意?</a
-                                                                                          >
+      href="./what_qpu_do_faster"
+      >QPU は何が得意?</a
+    >
     で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。</span>。 つまり「<mark>振幅の 2 乗 = 確率</mark>」です。
   </li>
 </ul>
 
 <p>
-  Qni の円表示では、<mark>振幅は確率を表す青い円の半径</mark>を表します。
-  円の面積は半径の 2 乗 x π、つまり振幅の 2 乗かける π なので、青い円の面積は確率に正比例します。
+  Qni の円表示では、<mark>振幅は確率を表す青い円の半径</mark>を表します。 円の面積は半径の 2 乗 x
+  π、つまり振幅の 2 乗かける π なので、青い円の面積は確率に正比例します。
 </p>
 
 <div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
-  <circle-notation
-      id="circle-notation-80-20"
-      data-size="xl"
-      data-show-kets
-  ></circle-notation>
+  <circle-notation id="circle-notation-80-20" data-size="xl" data-show-kets></circle-notation>
   <script type="module">
-   import { Complex } from './application.js'
+    import { Complex } from './application.js'
 
-   document.getElementById('circle-notation-80-20').setAmplitudes({
-       0: Math.sqrt(0.8),
-       1: Math.sqrt(0.2),
-   })
+    document.getElementById('circle-notation-80-20').setAmplitudes({
+      0: Math.sqrt(0.8),
+      1: Math.sqrt(0.2),
+    })
   </script>
 </div>
 
