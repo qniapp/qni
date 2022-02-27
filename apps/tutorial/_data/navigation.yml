@@ -17,7 +17,7 @@
     - name: 重ね合わせ状態
       link: ./superposition.html
     - name: 量子ビット
-      link: ./q_bit.html
+      link: ./qubit.html
     # - name: 位相
     #   link: ./phase.html
     #   new: true

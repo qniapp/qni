@@ -108,7 +108,7 @@
   </a>
    
   <a
-    href="./q_bit.html"
+    href="./qubit.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">量子ビット</span>
@@ -323,19 +323,19 @@
               </div>
               <p class="mt-1 text-lg text-gray-500">確率的ビットとの大きな違い</p>
             </div>
-            <div class="prose"><p>量子ビットは、確率的ビットと非常によく似ています。大きな違いは 2 つだけです。</p>
+            <div class="prose"><p>量子ビットは、確率的ビットと非常によく似ています。主な違いは 2 つだけです。</p>
 
-<ul class="list-inside list-decimal">
+<ul class="list-decimal">
   <li>
-    確率のかわりに振幅 (amplitude, アンプリチュード)
-    を使って状態を表現します。確率は正の値を持ちますが、振幅は負の値も持ちます。
+    確率のかわりに<mark>振幅 (amplitude)</mark> という値を使って状態を表現します。
+    確率は正の値を持ちますが、振幅は負の値も持ちます。
   </li>
   <li>
     振幅は測定中に 2 乗され確率となります<label for="margin-note-amplitude-prob" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude-prob" class="margin-note-toggle"><span class="margin-note"><a
       href="./what_qpu_do_faster"
       >QPU は何が得意?</a
     >
-    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。</span>。 つまり「振幅の 2 乗 = 確率」です。
+    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。</span>。 つまり「<mark>振幅の 2 乗 = 確率</mark>」です。
   </li>
 </ul>
 
@@ -362,8 +362,7 @@
 
 <p>
   次は振幅を持つ量子ビットの取り得る状態をグラフにしてみましょう。 振幅は 2
-  乗すると確率になるのですから、ビットが <code>0</code> となる確率の振幅を \(a_0\)、ビットが
-  <code>1</code> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
+  乗すると確率になるのですから、ビットが <code>|0⟩</code> となる確率の振幅を \(a_0\)、ビットが <code>|1⟩</code> となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
   これを先ほどの式に入れると、
 </p>
 
@@ -373,24 +372,32 @@
 </p>
 
 <p>
-  となり、このグラフは円の形となります。
-  これを見て分かる通り、量子ビットが確率的ビットに比べて決定的に違うのは、振幅は負の値を持ち得ることです。
-  ここでは「量子ビットは確率的ビットよりもさらにたくさんの情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
+  となり、このグラフは半径 <code>1</code> の円になります。つまり、<mark
+    >量子ビットの状態はこの円のうちの 1 点となります。</mark
+  >
 </p>
 
 <figure>
   <img src="./images/qbit_circular_state.png" class="h-auto w-full" />
 </figure>
 
+<p>
+  これを見て分かる通り、量子ビットが確率的ビットに比べて決定的に違うのは、振幅は負の値を持ち得ることです。
+  ここでは「量子ビットは確率的ビットよりもさらに広い範囲の情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
+</p>
+
 <h2>振幅は複素数</h2>
 
 <p>
   実は、振幅は一般には複素数の値を取ります。
-  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると半径
-  <code>1</code> の球表面になります。 これをひらたく言えば、1 量子ビットの状態は地球上のとある 1
-  点として表せることになります
-  (島根とか、ニューヨークとか、南極とかあなたの好きな場所をどこでも思い浮かべて OK です)。
-  そして北極は状態 <code>|0⟩</code>、南極は状態 <code>|1⟩</code> にそれぞれ対応します。
+  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると<mark
+    >半径 <code>1</code> の球表面</mark
+  >になります。 これを<mark
+    >ブロッホ球<label for="margin-note-bloch-sphere" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-bloch-sphere" class="margin-note-toggle"><span class="margin-note">ブロッホ球の名前はスイス出身の物理学者、<a
+      href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B"
+      >フェリックス・ブロッホ</a
+    >に由来します。</span></mark
+  >と呼びます。
 </p>
 
 <figure>
@@ -398,17 +405,44 @@
 </figure>
 
 <p>
-  量子コンピュータが唯一できるのは、回転をあらわす行列をベクトルに掛けることでした<label for="margin-note-" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note"><a href="./what_qpu_do_faster">QPU は何が得意?</a> を参照。</span>。
-  これを地球で考えると、南極にいるペンギンを球面上の回転の組合わせによって北極や島根県に飛ばすことに相当します。
+  これをひらたく言えば、1 量子ビットの状態は地球上のとある 1 点として表せることになります
+  (東京とか、ニューヨークとか、南極とかあなたの好きな場所をどこでも思い浮かべて OK です)。
+  この場合、状態 <code>|0⟩</code> は北極点、状態 <code>|1⟩</code> は南極点にそれぞれ対応します。
 </p>
+
+<p>
+  量子コンピュータが唯一得意な計算は、回転をあらわす行列をベクトルに掛けることでした<label for="margin-note-" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note"><a href="./what_qpu_do_faster">QPU は何が得意?</a> を参照。</span>。
+  これを地球で考えると、地球上のある点を回転操作で別の位置に移動させることに相当します。
+  これはたとえば、南極点 <code>|1⟩</code>
+  にいるペンギンの位置をベクトルとして表したとき、そのベクトルに球面上の回転を表す行列をかけることで、ペンギンを北極やハワイなど好きな場所に移動させることに相当します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    cloze="確率的ビットでは確率でビットの状態を表す。量子ビットでは{振幅}でビットの状態を表す"
+  ></orbit-prompt>
+  <orbit-prompt cloze="量子ビットの振幅は、一般に{複素数}の値をとる"></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態は、{半径 1 の球面}上のある 1 点として表せる"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態を球面上の 1 点として視覚化した図を{ブロッホ球}と呼ぶ"
+  ></orbit-prompt>
+  <orbit-prompt cloze="ブロッホ球では、状態 $|0\rangle$ は{北極点}に対応する"></orbit-prompt>
+  <orbit-prompt cloze="ブロッホ球では、状態 $|1\rangle$ は{南極点}に対応する"></orbit-prompt>
+</orbit-reviewarea>
 
 <h2>ブロッホ球で実験</h2>
 
 <p>
-  Qni
-  にはちょうど、この球を表示する「ブロッホ球」という命令があります。これを使って量子ビットのいろんな状態を調べてみましょう。
-  下の回路には、すでにいくつかの QPU 演算が置いてあります。
-  ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令がどんな回転を表しているか推測してみましょう。
+  Qni にはちょうど、1 量子ビットの状態を球上の点として表示する「ブロッホ球」命令があります。
+  これを使って、量子ビットのいろんな状態を見てみましょう。
+</p>
+
+<p>
+  下の量子回路には、すでにいくつかの QPU 命令が置いてあります。 それぞれの QPU
+  命令は、量子ビットに対する異なる回転操作を表しています。
+  ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令によってどんな回転が起こるか推測してみましょう。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
