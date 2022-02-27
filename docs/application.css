@@ -4826,10 +4826,6 @@ mark {
           user-select: none;
 }
 
-.list-inside {
-  list-style-position: inside;
-}
-
 .list-decimal {
   list-style-type: decimal;
 }
