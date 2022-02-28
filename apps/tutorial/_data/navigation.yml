@@ -77,9 +77,9 @@
     - name: SWAP パズル
       link: ./swap_from_cnots.html
       new: true
-#     - name: 量子もつれ
-#       link: ./entanglement.html
-#       new: true
+    - name: 量子もつれ
+      link: ./entanglement.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
