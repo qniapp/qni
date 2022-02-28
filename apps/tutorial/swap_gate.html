@@ -5,8 +5,9 @@ description: 量子ビットの交換
 ---
 
 <p>
-  SWAP ゲートはその名の通り、2 つの量子ビットを入れ替えます。
-  その作用は、次の回路を見てもらえれば明らかでしょう。
+  今までの QPU 命令と異なり、SWAP ゲートは 2 つの量子ビットに作用します。 SWAP
+  ゲートはその名の通り、2 つの量子ビットを入れ替える効果を持ちます。 たとえば次の回路では、{% ket 0
+  %} と {% ket 1 %} を SWAP ゲートによって入れ替えます。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -48,9 +49,10 @@ description: 量子ビットの交換
 </div>
 
 <p>
-  SWAP ゲートは 2 個 1 組で動作します。 当然ですが 1 個や 3 個の SWAP
+  SWAP ゲートは 2 個 1 組で動作します。 当然ながら 1 個や 3 個の SWAP
   ゲートでは量子ビットの入れ替えは起こりません。 また、動作させるには同じ列に 2 個の SWAP
-  ゲートを置く必要があります。
+  ゲートを置く必要があります (簡単なクイズ: 次の無効な SWAP
+  ゲートを動作させるにはどう動かせばよいでしょうか?)。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">

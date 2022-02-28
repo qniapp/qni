@@ -39,9 +39,9 @@
       link: ./measurement_operation.html
     - name: CLONE 命令!?
       link: ./no_cloning_theorem.html
-    # - name: 組合わせゲート
-    #   link: ./gate_combination.html
-    #   new: true
+    - name: 組合わせゲート
+      link: ./gate_combination.html
+      new: true
 - name: 量子暗号通信
   pages:
     - name: 量子鍵配送
@@ -66,11 +66,11 @@
       link: ./multi_qubit_phase_gate.html
     - name: 1 ビット測定
       link: ./partial_measurement.html
-# - name: QPU 命令その 2
-#   pages:
-#     - name: SWAP ゲート
-#       link: ./swap_gate.html
-#       new: true
+- name: QPU 命令その 2
+  pages:
+    - name: SWAP ゲート
+      link: ./swap_gate.html
+      new: true
 #     - name: CNOT ゲート
 #       link: ./cnot_gate.html
 #       new: true

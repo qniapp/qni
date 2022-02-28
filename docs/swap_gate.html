@@ -194,6 +194,16 @@
     
   </a>
    
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     量子暗号通信
   </div>
@@ -285,6 +295,21 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     ふろく
   </div>
 
@@ -318,8 +343,8 @@
               <p class="mt-1 text-lg text-gray-500">量子ビットの交換</p>
             </div>
             <div class="prose"><p>
-  SWAP ゲートはその名の通り、2 つの量子ビットを入れ替えます。
-  その作用は、次の回路を見てもらえれば明らかでしょう。
+  今までの QPU 命令と異なり、SWAP ゲートは 2 つの量子ビットに作用します。 SWAP
+  ゲートはその名の通り、2 つの量子ビットを入れ替える効果を持ちます。 たとえば次の回路では、<code>|0⟩</code> と <code>|1⟩</code> を SWAP ゲートによって入れ替えます。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -362,9 +387,10 @@
 </div>
 
 <p>
-  SWAP ゲートは 2 個 1 組で動作します。 当然ですが 1 個や 3 個の SWAP
+  SWAP ゲートは 2 個 1 組で動作します。 当然ながら 1 個や 3 個の SWAP
   ゲートでは量子ビットの入れ替えは起こりません。 また、動作させるには同じ列に 2 個の SWAP
-  ゲートを置く必要があります。
+  ゲートを置く必要があります (簡単なクイズ: 次の無効な SWAP
+  ゲートを動作させるにはどう動かせばよいでしょうか?)。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
