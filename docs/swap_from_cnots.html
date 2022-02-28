@@ -319,6 +319,16 @@
     
   </a>
    
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     ふろく
   </div>
@@ -353,25 +363,22 @@
               <p class="mt-1 text-lg text-gray-500">CNOT から SWAP を作るには?</p>
             </div>
             <div class="prose"><p>
-  いつもならとっくに寝ている時間ですが、アリスは自宅ガレージで量子フーリエ変換回路の調整にいそしんでいます。
+  いつもならとっくに寝ているはずの時間ですが、アリスは自宅ガレージで量子フーリエ変換回路の調整にいそしんでいます。
   明日は小学校の量子コンピュータクラブの発表会で、自慢の量子プログラムをみんなの前でお披露目するからです。
 </p>
 
 <p>「そっちはどんな調子?」</p>
 
 <p>
-  同じく夜更ししている同じクラブのボブから、チャットが飛び込みました。
+  同じクラブのボブから、チャットが飛び込みました。
   返信しようとした瞬間、アリスは飲んでいた牛乳をカスタムキーボードの上にこぼしてしまいました。
-  これは自作量子コンピュータを操作するためにアリスがこしらえた特製キーボードで、
-  量子回路を入力するための CNOT や SWAP といった特別なキーが並びます。
+  これは自作量子コンピュータを操作するための特製キーボードで、 量子ゲートを入力するための CNOT や
+  SWAP といった特別なキーが並んでいます。
 </p>
 
 <p>「あっ、SWAP キーが動かなくなっちゃった!」</p>
 
-<p>
-  SWAP キーが動かなければ、明日のデモはうまく行きません。 幸いなことに、CNOT
-  キーはまだ生きています。
-</p>
+<p>SWAP キーが動かなければ、明日のデモはできません。 幸いなことに、CNOT キーはまだ生きています。</p>
 
 <h2>問題: CNOT から SWAP を作るには?</h2>
 
@@ -601,8 +608,10 @@
 </template>
  <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
-    (二進 |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩)
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩ (二進 |<span
+      class="circle-notation-popup__ket-binary font-mono"
+    ></span
+    >⟩)
   </div>
 
   <ul class="list-none">
