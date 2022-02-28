@@ -32,7 +32,7 @@
     <div class="flex h-screen overflow-hidden">
   <div class="hidden md:flex md:flex-shrink-0">
   <div class="flex w-64 flex-col">
-    <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
       <div class="flex flex-shrink-0 items-center px-8">
         <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
         <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
@@ -416,8 +416,9 @@
   <code>0</code> であることが確定しています。 なぜならば、元々の重ね合わせは <code>|0⟩</code> または <code>|3⟩</code> (2 進数で表すと <code>|00⟩</code> または <code>|11⟩</code>) だったので、ビット 1 が
   <code>0</code> だった場合にはビット 2 も <code>0</code> (<code>|00⟩</code>)
   であることが自動的に分かるからです。 同様に、もし先にビット 2
-  を測定した場合も、その結果によってビット 1 の値が確定します。 これは、<mark>ビット 1 とビット 2
-    の間に量子もつれという見えないリンクが生まれている</mark>ことを意味します。
+  を測定した場合も、その結果によってビット 1 の値が確定します。 これは、<mark
+    >ビット 1 とビット 2 の間に量子もつれという見えないリンクが生まれている</mark
+  >ことを意味します。
 </p>
 
 <p>
@@ -690,5 +691,18 @@
   </div>
 </div>
 
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
   </body>
 </html>

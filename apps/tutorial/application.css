@@ -4541,6 +4541,11 @@ mark {
   position: relative;
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
 .left-0 {
   left: 0px;
 }
@@ -4824,6 +4829,11 @@ mark {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+.snap-x {
+  -ms-scroll-snap-type: x var(--tw-scroll-snap-strictness);
+      scroll-snap-type: x var(--tw-scroll-snap-strictness);
 }
 
 .list-decimal {
