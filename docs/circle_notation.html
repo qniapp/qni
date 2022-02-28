@@ -116,6 +116,16 @@
   </a>
    
   <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
     href="./circle_notation.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
@@ -157,8 +167,6 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">PHASE ゲート</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -226,8 +234,6 @@
   >
     <span class="flex-1">状態ベクトル表示</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -235,8 +241,6 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">重ね合わせ状態</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -246,8 +250,6 @@
   >
     <span class="flex-1">複数量子ビットでの演算</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -255,8 +257,6 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">演算ペア</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -266,8 +266,6 @@
   >
     <span class="flex-1">ランダムバイトジェネレータ</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -276,8 +274,6 @@
   >
     <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -285,8 +281,6 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">1 ビット測定</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -321,24 +315,36 @@
                   状態ベクトル表示
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビット状態のグラフィカルな表現</p>
+              <p class="mt-1 text-lg text-gray-500">量子ビット状態の円による表示</p>
             </div>
             <div class="prose"><p>
-  <a href="superposition.html">重ね合わせ状態</a>では、Qni
-  の状態ベクトル表示を使って重ね合わせ状態と位相について簡単に紹介しました。
-  本チュートリアルでは全体を通して、数式ではなくこの状態ベクトル表示で量子ビットの状態を表現します。
-  そこであらためて、状態ベクトル表示の正しい読み方、特に<mark>振幅</mark>や<mark>位相</mark>の概念がどう表されるか詳しく見ていきましょう。
+  量子コンピュータが持つ量子ビット全体の状態を<mark>状態ベクトル</mark>と呼びます。
+  状態ベクトルを使えば、量子コンピュータのある時点での状態をベクトル 1 つで表すことができます。
+  一般にベクトルとは数を並べたものですが、本チュートリアルでは<mark>円の並びで状態ベクトルを表現します</mark>。
+  ここでは、状態ベクトルの正しい読み方、特に量子ビットが持つ<mark>振幅や確率、位相</mark>の概念が円としてどう表されるか詳しく見ていきましょう。
 </p>
 
-<h2>振幅と確率</h2>
+<h2>振幅</h2>
+
+<p>
+  振幅は、量子ビットの円それぞれの「重み」を表す値です。
+  重みは量子ビットの測定に関わる値で、測定によって <code>|0⟩</code> や <code>|1⟩</code> が出る可能性を表すものです。
+  たとえば確率は、<code>|0⟩</code> または <code>|1⟩</code> が測定される可能性を直接的に表した値です。
+  また位相は、<code>|0⟩</code> や <code>|1⟩</code> が測定される確率を間接的に操作できます<label for="margin-note-" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note"><a href="./phase.html">位相</a>を参照。</span>。
+  円それぞれに割り当てられた<mark>振幅は、確率と位相の両方を 1 つの値で表します</mark>。
+</p>
+
+<h2>振幅と確率の関係</h2>
 
 <p>
   量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、 <code>|0⟩</code> と
-  <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした<label for="margin-note-q-bit-0" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-0" class="margin-note-toggle"><span class="margin-note"><a href="q_bit.html">量子ビット</a>を参照</span>。
-  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表しますので、その面積 (半径 x
+  <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした。
+  振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note-toggle"><span class="margin-note"><a href="q_bit.html">量子ビット</a>を参照</span>、より正しくは「<mark>確率は振幅の大きさ<label for="margin-note-magnitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-magnitude" class="margin-note-toggle"><span class="margin-note">ある振幅 (複素数) \(\alpha = a + bi\) について、その大きさ \(|\alpha|\) は \(\sqrt{a^2 + b^2}\) で計算できます。確率は振幅の大きさの 2 乗なので、\(|
+    \alpha|^2 = a^2 + b^2\) となります。</span>  (magnitude) の 2 乗</mark>」と言えます。
+  状態ベクトル表示では、<mark>青く塗りつぶされた円の半径は振幅の大きさを表す</mark>ので、その面積 (半径 x
   半径 x π) はその確率に正比例します。
-  以下の円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。たしかに振幅の大きさの
-  2 乗が確率と等しくなっていることを確認しましょう。
+  状態ベクトルの円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。
+  下の円それぞれにマウスオーバーして、たしかに振幅の大きさの 2 乗が確率と等しくなっていることを確認しましょう。
 </p>
 
 <div class="flex flex-row space-x-4 pb-14">
@@ -368,22 +374,21 @@
   </script>
 </div>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
-  振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note-toggle"><span class="margin-note"><a href="q_bit.html">量子ビット</a>を参照</span>、ポップアップに表示される振幅は複素数のフォーマットで出力されます。
-  今までは「確率は振幅の 2
-  乗」と説明してきましたが、複素数であることを考えると「確率は振幅の<mark>大きさ</mark>の 2
-  乗」がより正確な表現です。
-</div>
-
-<h2>位相</h2>
+<h2>振幅と位相の関係</h2>
 
 <p>
-  <code>|0⟩</code> を基準として <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code
-    >0</code
-  >
-  から <code>2π (360°)</code> まで持つことができます。
-  状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は <code>|0⟩</code> に対する
-  <code>|1⟩</code> の相対的な回転を表すので、<mark>相対位相</mark>とも呼ばれます。
+  状態ベクトルの円それぞれの位相は、複素数である振幅の偏角を表します。
+  偏角とは振幅の値 (複素数) \(\alpha = a + bi\) の \(a\) と \(b\) によって決まる次の角度です。
+</p>
+
+<figure>
+  <img src="./images/argument_of_complex.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  たとえば下の <code>π/4</code> の <code>|1⟩</code> のポップアップを見ると、振幅が \(0.5 + 0.5i\) となっています。
+  \(a\) と \(b\) はそれぞれ \(0.5\) と等しいので、上の図で考えると偏角は確かに <code>π/4 (45°)</code> となります。
+  余裕のある人は、ほかの偏角と振幅も確認してみましょう。
 </p>
 
 <div class="flex flex-row space-x-4 pb-14">
@@ -402,84 +407,164 @@
   <div class="flex flex-col items-center">
     <code class="pb-2">3π/2</code>
     <circle-notation
-      id="circle-notation-phase-3π/2"
-      data-size="xl"
-      data-show-kets
+        id="circle-notation-phase-3π/2"
+        data-size="xl"
+        data-show-kets
     ></circle-notation>
   </div>
-  <div class="flex flex-col items-center">
-    <code class="pb-2">2π</code>
-    <circle-notation id="circle-notation-phase-2π" data-size="xl" data-show-kets></circle-notation>
-  </div>
 
   <script type="module">
-    import { Complex } from './application.js'
+   import { Complex } from './application.js'
 
-    let circleNotationA = document.getElementById('circle-notation-phase-π/4')
-    let circleNotationB = document.getElementById('circle-notation-phase-π/2')
-    let circleNotationC = document.getElementById('circle-notation-phase-π')
-    let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
-    let circleNotationE = document.getElementById('circle-notation-phase-2π')
+   let circleNotationA = document.getElementById('circle-notation-phase-π/4')
+   let circleNotationB = document.getElementById('circle-notation-phase-π/2')
+   let circleNotationC = document.getElementById('circle-notation-phase-π')
+   let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
 
-    circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
-    circleNotationB.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, Math.sqrt(0.5)),
-    })
-    circleNotationC.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-    circleNotationD.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationE.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
-    })
+   circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
+   circleNotationB.setAmplitudes({
+       0: new Complex(Math.sqrt(0.5), 0),
+       1: new Complex(0, Math.sqrt(0.5)),
+   })
+   circleNotationC.setAmplitudes({
+       0: new Complex(Math.sqrt(0.5), 0),
+       1: new Complex(-Math.sqrt(0.5), 0),
+   })
+   circleNotationD.setAmplitudes({
+       0: new Complex(Math.sqrt(0.5), 0),
+       1: new Complex(0, -Math.sqrt(0.5)),
+   })
   </script>
 </div>
 
-<p>
-  位相は相対的な値なので、ある種の QPU 演算によって
-  <code>|0⟩</code> が回転している場合には、その角度を基準とした <code>|1⟩</code> の回転を考えます。
-  たとえば、以下の 2 つの状態は相対的にはどちらも
-  <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
-</p>
 
-<div class="flex flex-row justify-center space-x-4 pb-14 md:mr-auto md:w-7/12">
-  <circle-notation
-    id="circle-notation-phase-3π/2-a"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation>
-  <circle-notation
-    id="circle-notation-phase-3π/2-b"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation>
+<!--
+     <p>
+     <code>|0⟩</code> を基準として <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code
+     >0</code
+     >
+     から <code>2π (360°)</code> まで持つことができます。
+     状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は <code>|0⟩</code> に対する
+     <code>|1⟩</code> の相対的な回転を表すので、<mark>相対位相</mark>とも呼ばれます。
+     </p>
 
-  <script type="module">
-    import { Complex } from './application.js'
+     <div class="flex flex-row space-x-4 pb-14">
+     <div class="flex flex-col items-center">
+     <code class="pb-2">π/4</code>
+     <circle-notation id="circle-notation-phase-π/4" data-size="xl" data-show-kets></circle-notation>
+     </div>
+     <div class="flex flex-col items-center">
+     <code class="pb-2">π/2</code>
+     <circle-notation id="circle-notation-phase-π/2" data-size="xl" data-show-kets></circle-notation>
+     </div>
+     <div class="flex flex-col items-center">
+     <code class="pb-2">π</code>
+     <circle-notation id="circle-notation-phase-π" data-size="xl" data-show-kets></circle-notation>
+     </div>
+     <div class="flex flex-col items-center">
+     <code class="pb-2">3π/2</code>
+     <circle-notation
+     id="circle-notation-phase-3π/2"
+     data-size="xl"
+     data-show-kets
+     ></circle-notation>
+     </div>
+     <div class="flex flex-col items-center">
+     <code class="pb-2">2π</code>
+     <circle-notation id="circle-notation-phase-2π" data-size="xl" data-show-kets></circle-notation>
+     </div>
 
-    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
-    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+     <script type="module">
+     import { Complex } from './application.js'
 
-    circleNotationA.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
-  </script>
-</div>
+     let circleNotationA = document.getElementById('circle-notation-phase-π/4')
+     let circleNotationB = document.getElementById('circle-notation-phase-π/2')
+     let circleNotationC = document.getElementById('circle-notation-phase-π')
+     let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
+     let circleNotationE = document.getElementById('circle-notation-phase-2π')
+
+     circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
+     circleNotationB.setAmplitudes({
+     0: new Complex(Math.sqrt(0.5), 0),
+     1: new Complex(0, Math.sqrt(0.5)),
+     })
+     circleNotationC.setAmplitudes({
+     0: new Complex(Math.sqrt(0.5), 0),
+     1: new Complex(-Math.sqrt(0.5), 0),
+     })
+     circleNotationD.setAmplitudes({
+     0: new Complex(Math.sqrt(0.5), 0),
+     1: new Complex(0, -Math.sqrt(0.5)),
+     })
+     circleNotationE.setAmplitudes({
+     0: new Complex(Math.sqrt(0.5), 0),
+     1: new Complex(Math.sqrt(0.5), 0),
+     })
+     </script>
+     </div>
+
+     <p>
+     位相は相対的な値なので、ある種の QPU 演算によって
+     <code>|0⟩</code> が回転している場合には、その角度を基準とした <code>|1⟩</code> の回転を考えます。
+     たとえば、以下の 2 つの状態は相対的にはどちらも
+     <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
+     </p>
+
+     <div class="flex flex-row justify-center space-x-4 pb-14 md:mr-auto md:w-7/12">
+     <circle-notation
+     id="circle-notation-phase-3π/2-a"
+     data-size="xl"
+     data-show-kets
+     ></circle-notation>
+     <circle-notation
+     id="circle-notation-phase-3π/2-b"
+     data-size="xl"
+     data-show-kets
+     ></circle-notation>
+
+     <script type="module">
+     import { Complex } from './application.js'
+
+     let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
+     let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+
+     circleNotationA.setAmplitudes({
+     0: new Complex(Math.sqrt(0.5), 0),
+     1: new Complex(0, -Math.sqrt(0.5)),
+     })
+     circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
+     </script>
+     </div>
+-->
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子コンピュータが持つ量子ビット全体の状態を{状態ベクトル}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt cloze="Qni では{円}を並べることで状態ベクトルを表現する">
+  </orbit-prompt>
+  <orbit-prompt cloze="振幅は、量子ビットの測定結果に影響する{重み}を表す">
+  </orbit-prompt>
+  <orbit-prompt cloze="振幅は、状態ベクトルの円それぞれの{確率}と{位相}の両方を 1 つの値で表す">
+  </orbit-prompt>
+  <orbit-prompt cloze="状態ベクトルの円の確率は、振幅の{大きさ}の 2 乗">
+  </orbit-prompt>
+  <orbit-prompt cloze="振幅の{大きさ}は、状態ベクトルの青い円の{半径}で表される">
+  </orbit-prompt>
+  <orbit-prompt cloze="状態ベクトルの円の位相は、振幅の{偏角}">
+  </orbit-prompt>
+  <orbit-prompt
+      question="振幅 $a + bi$ の偏角を図で表すと?"
+      answer=""
+      answer-attachments="https://qniapp.github.io/qni/images/argument_of_complex.png"
+  ></orbit-prompt>
+</orbit-reviewarea>
 
 <h2>まとめ</h2>
 
 <p>
-  量子ビットの中身を状態ベクトル表示で読む方法を説明しました。 量子ビットには、振幅の大きさ
-  (またはそれを 2 乗した確率) と位相という、まったく独立した 2 つの情報を持たせることができます。
-  状態ベクトル表示は振幅の大きさを青色の円の半径、位相を時計の針の角度として表示します。
+  状態ベクトル表示から読み取れる振幅と確率、位相の関係を紹介しました。
+  測定結果に影響する「円の重み」が振幅であり、振幅から確率と位相という独立した 2 つのプロパティが得られます。
+  状態ベクトル表示は確率を青色の円の半径、位相を時計の針の角度として表示します。
 </p>
 
 <template id="circle-notation-popup">
