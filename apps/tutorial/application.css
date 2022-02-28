@@ -4892,11 +4892,11 @@ mark {
 }
 
 @media (min-width: 768px) {
-  .prose p, .prose ul, .prose figure, .prose orbit-reviewarea {
+  .prose > p, .prose ul, .prose figure, .prose orbit-reviewarea {
     margin-right: auto;
   }
 
-  .prose p, .prose ul, .prose figure, .prose orbit-reviewarea {
+  .prose > p, .prose ul, .prose figure, .prose orbit-reviewarea {
     width: 58.333333%;
   }
 }
