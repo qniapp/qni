@@ -32,7 +32,7 @@
     <div class="flex h-screen overflow-hidden">
   <div class="hidden md:flex md:flex-shrink-0">
   <div class="flex w-64 flex-col">
-    <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+    <div class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4 sidebar">
       <div class="flex flex-shrink-0 items-center px-8">
         <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
         <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
@@ -836,5 +836,18 @@
   </div>
 </div>
 
+
+    <script>
+     let sidebar = document.querySelector(".sidebar");
+
+     let sidebarScroll = sessionStorage.getItem("sidebar-scroll");
+     if (sidebarScroll !== null) {
+         sidebar.scrollTop = parseInt(sidebarScroll, 10);
+     }
+
+     window.addEventListener("beforeunload", () => {
+         sessionStorage.setItem("sidebar-scroll", sidebar.scrollTop);
+     });
+    </script>
   </body>
 </html>
