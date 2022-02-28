@@ -5,7 +5,7 @@ body {
 .margin-note {
   @apply relative;
   @apply text-sm;
-  @apply text-neutral-500;
+  @apply text-neutral-500 dark:text-neutral-300;
 
   @apply hidden sm:block;
   @apply align-baseline sm:align-middle;
