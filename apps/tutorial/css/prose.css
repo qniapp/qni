@@ -1,6 +1,6 @@
-.prose > p,
-.prose ul,
-.prose figure,
-.prose orbit-reviewarea {
+.tufte > p,
+.tufte ul,
+.tufte figure,
+.tufte orbit-reviewarea {
   @apply md:mr-auto md:w-7/12;
 }

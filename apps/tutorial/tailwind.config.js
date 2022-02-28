@@ -5,5 +5,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography'), require('postcss-import'), require('tailwindcss')],
+  plugins: [require('postcss-import'), require('tailwindcss'), require('@tailwindcss/typography')],
 }
