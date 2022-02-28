@@ -309,6 +309,16 @@
     
   </a>
    
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     ふろく
   </div>
@@ -409,7 +419,7 @@
 <p>
   CNOT が量子ゲートたるゆえんは、コントロールビットが重ね合わせ状態を取れることです。
   たとえば、次のようにコントロールビットを H ゲートで重ね合わせにした状態で CNOT
-  を適用してみましょう。
+  を適用することができます。この結果は <code>|0⟩</code> と <code>|3⟩</code> の等しい重ね合わせとなります。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -451,10 +461,7 @@
 </div>
 
 <p>
-  ビット 1 に H ゲートを適用すると、演算ペアのルール<label for="margin-note-operation-pair" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-operation-pair" class="margin-note-toggle"><span class="margin-note"><a
-    href="./operator_pair.html"
-    >演算ペア</a
-  >を参照。</span>により <code>|0⟩</code> <code>|1⟩</code> のペアに H
+  この動作を順を追って見ていきましょう。 ビット 1 に H ゲートを適用すると、演算ペアのルール<label for="margin-note-operation-pair" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-operation-pair" class="margin-note-toggle"><span class="margin-note"><a href="./operator_pair.html">演算ペア</a>を参照。</span>により <code>|0⟩</code> <code>|1⟩</code> のペアに H
   ゲートが作用し、重ね合わせ状態ができます。
 </p>
 
@@ -577,6 +584,54 @@
       </script>
     </div>
   </div>
+</div>
+
+<p>以上より、確かに <code>|0⟩</code> と <code>|3⟩</code> の等しい重ね合わせが得られました。</p>
+
+<h2>CNOT の逆演算</h2>
+
+<p>
+  CNOT の逆演算は CNOT それ自身です。 以下のように CNOT を並べて見ると、2 つの X
+  ゲートは発動する条件 (コントロールビット) が同じであること、また X ゲートはそれ自体が X
+  ゲートの逆演算であることから、CNOT を並べると何もしないことが分かります。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|1>","|0>"],["•","X"],["•","X"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
 </div>
 
 <template id="operation-menu">
@@ -745,16 +800,26 @@
   </operation-inspector>
 </template>
  <template id="circle-notation-popup">
-  <div class="p-2">
-    <ul class="list-none">
-      <li>
-        確率:
-        <span
-          class="circle-notation-popup__probability font-mono font-bold text-neutral-800"
-        ></span>
-      </li>
-    </ul>
+  <div class="text-wolf mb-2 text-base">
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
+    (二進 |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩)
   </div>
+
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
 </template>
 
 </div>

@@ -71,7 +71,7 @@ description: 条件付き X ゲート
 <p>
   CNOT が量子ゲートたるゆえんは、コントロールビットが重ね合わせ状態を取れることです。
   たとえば、次のようにコントロールビットを H ゲートで重ね合わせにした状態で CNOT
-  を適用してみましょう。
+  を適用することができます。この結果は {% ket 0 %} と {% ket 3 %} の等しい重ね合わせとなります。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -112,10 +112,9 @@ description: 条件付き X ゲート
 </div>
 
 <p>
-  ビット 1 に H ゲートを適用すると、演算ペアのルール{% nmargin_note operation-pair %}<a
-    href="./operator_pair.html"
-    >演算ペア</a
-  >を参照。{% endnmargin_note %}により {% ket 0 %} {% ket 1 %} のペアに H
+  この動作を順を追って見ていきましょう。 ビット 1 に H ゲートを適用すると、演算ペアのルール{%
+  nmargin_note operation-pair %}<a href="./operator_pair.html">演算ペア</a>を参照。{%
+  endnmargin_note %}により {% ket 0 %} {% ket 1 %} のペアに H
   ゲートが作用し、重ね合わせ状態ができます。
 </p>
 
@@ -237,5 +236,52 @@ description: 条件付き X ゲート
   </div>
 </div>
 
+<p>以上より、確かに {% ket 0 %} と {% ket 3 %} の等しい重ね合わせが得られました。</p>
+
+<h2>CNOT の逆演算</h2>
+
+<p>
+  CNOT の逆演算は CNOT それ自身です。 以下のように CNOT を並べて見ると、2 つの X
+  ゲートは発動する条件 (コントロールビット) が同じであること、また X ゲートはそれ自体が X
+  ゲートの逆演算であることから、CNOT を並べると何もしないことが分かります。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|1>","|0>"],["•","X"],["•","X"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
 {% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
-simple_circle_notation_popup.html %}
+circle_notation_popup.html %}

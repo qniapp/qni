@@ -71,9 +71,9 @@
     - name: SWAP ゲート
       link: ./swap_gate.html
       new: true
-#     - name: CNOT ゲート
-#       link: ./cnot_gate.html
-#       new: true
+    - name: CNOT ゲート
+      link: ./cnot_gate.html
+      new: true
 #     - name: SWAP パズル
 #       link: ./swap_from_cnots.html
 #       new: true
