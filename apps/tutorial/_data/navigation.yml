@@ -85,6 +85,9 @@
 #     - name: もつれをほどく
 #       link: ./disentangle.html
 #       new: true
+#     - name: もつれを操作する
+#       link: ./entanglement_operation.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
