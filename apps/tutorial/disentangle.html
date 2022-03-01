@@ -1,0 +1,109 @@
+---
+layout: page
+title: もつれをほどく
+description: 量子もつれ状態を元に戻す
+---
+
+<p>
+  量子もつれ状態は、ほどいてもつれのない状態に戻すことができます。
+  元に戻すには、量子もつれを作る回路の逆演算となる回路を作ります。
+  逆演算回路を作るために、元の量子回路をもう一度よく見てみましょう。
+</p>
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  まず、右側の CNOT を消すことを考えます。 CNOT の逆演算は CNOT なので{% nmargin_note cnot-inverse
+  %}<a href="./cnot_gate.html">CNOT ゲート</a>を参照{% endnmargin_note %}、CNOT を次のように 2
+  つ並べます。
+</p>
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["•","X"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+すると CNOT 2 個が消え、H ゲート 1 つだけの回路になります。
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"],["H"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  こうなると後は簡単です。 H ゲートの逆演算は H ゲートなので{% nmargin_note h-inverse %}<a
+    href="./h_gate.html"
+    >H ゲート</a
+  >を参照{% endnmargin_note %}、H ゲートを並べます。
+</p>
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"],["H"],["H"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+すると 2 個の H ゲートが消え、もつれ回路は消えました。
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  以上をまとめると、量子もつれ状態を作ってから逆演算回路によって元に戻す量子回路は次のようになります。
+  真ん中の CNOT 2 つが消え、次に H ゲート 2
+  つが消えることで確かに逆演算になっていることが分かります。
+</p>
+
+<div class="pb-10 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["•","X"],["H"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  量子もつれを作る H と CNOT の量子回路を<mark
+    >ベル回路{% nmargin_note bell
+    %}物理学者ジョン・スチュアート・ベルに由来します。ベルは量子もつれが存在することを決定付けることとなった<mark>ベルの不等式</mark>と<mark>ベル実験</mark>の考案者として有名です。{%
+    endnmargin_note %}</mark
+  >と呼び、ベル回路によってできる量子もつれ状態を<mark>ベル状態またはベルペア</mark>と呼びます。
+  ベル状態をほどいて元に戻す回路を<mark>逆ベル回路</mark>と呼びます。
+  つまりこの量子回路は、ベル回路の後に逆ベル回路を並べたものです。
+</p>
+
+<p>
+  逆ベル回路の使いみちは、もつれをほどくことで、もつれに対して行ったゲート操作の結果を取り出すことです。
+  もつれに対して行うゲート操作については、次の節で詳しく説明します。
+</p>
