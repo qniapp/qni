@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>MEASUREMENT 命令</title>
+    <title>もつれを操作する</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -180,7 +180,7 @@
    
   <a
     href="./measurement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">MEASUREMENT 命令</span>
     
@@ -356,7 +356,7 @@
    
   <a
     href="./entanglement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">もつれを操作する</span>
     
@@ -392,128 +392,21 @@
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
                 <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  MEASUREMENT 命令
+                  もつれを操作する
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットから 0 または 1 を読み出す</p>
+              <p class="mt-1 text-lg text-gray-500">もつれた量子ビットをまとめて操作</p>
             </div>
-            <div class="prose"><h2>単純な状態の測定</h2>
-
-<p>
-  MEASUREMENT 命令は量子ビットから <code>0</code> または <code>1</code> の値を読み出します。
-  たとえば以下のように量子ビット状態が <code>|0⟩</code> または <code>|1⟩</code>
-  の状態にある場合、測定するとそのまま同じ <code>|0⟩</code> と <code>|1⟩</code> が返されます。
+            <div class="prose"><p>
+  もつれた量子ビットに 1
+  個の量子ゲートを適用すると、もつれ状態にあるすべての量子ビットに一度に作用します。
+  つまり、量子もつれを使えば 1 個の量子ゲートで複数の量子ビットを操作できます<label for="margin-note-entanglement-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-entanglement-operation" class="margin-note-toggle"><span class="margin-note">もつれ状態にある量子ビットに量子ゲートを適用する場合、一部の量子ビットにのみ選択的に作用させることはできません。必ずすべての量子ビットに作用する点に注意してください。</span>。
 </p>
 
-<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-0" data-size="xl" data-show-kets></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-        <measurement-gate data-size="base"></measurement-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <circle-notation id="circle-notation-1" data-size="xl" data-show-kets></circle-notation>
-    </div>
-
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-2" data-size="xl" data-show-kets></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-        <measurement-gate data-size="base"></measurement-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <circle-notation id="circle-notation-3" data-size="xl" data-show-kets></circle-notation>
-    </div>
-  </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotation0 = document.getElementById('circle-notation-0')
-    let circleNotation1 = document.getElementById('circle-notation-1')
-    let circleNotation2 = document.getElementById('circle-notation-2')
-    let circleNotation3 = document.getElementById('circle-notation-3')
-
-    circleNotation0.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation1.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation2.setAmplitudes({ 0: 0, 1: 1 })
-    circleNotation3.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
-</div>
-
-<h2>重ね合わせ状態の測定</h2>
-
 <p>
-  量子ビットが重ね合わせ状態にある場合、<code>0</code> と <code>1</code> が出る確率は <code>|0⟩</code> と
-  <code>|1⟩</code> の確率 (青い円の面積 = 振幅の大きさの 2 乗) に応じて決まります。
-  つまり、測定の結果にはランダム性があります。
-</p>
-
-<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-superposition-before-MEASUREMENT"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-        <measurement-gate data-size="base"></measurement-gate>
-        <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <div class="flex flex-col">
-        <div class="mb-8 flex flex-row">
-          <div class="my-auto mr-4 text-purple-600">25%</div>
-          <circle-notation id="circle-notation-4" data-size="xl" data-show-kets></circle-notation>
-        </div>
-        <div class="flex flex-row">
-          <div class="my-auto mr-4 text-purple-600">75%</div>
-          <circle-notation id="circle-notation-5" data-size="xl" data-show-kets></circle-notation>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circuleNotationBefore = document.getElementById(
-      'circle-notation-superposition-before-MEASUREMENT'
-    )
-    let circleNotation4 = document.getElementById('circle-notation-4')
-    let circleNotation5 = document.getElementById('circle-notation-5')
-
-    circuleNotationBefore.setAmplitudes({
-      0: new Complex(0.25, 0.43301),
-      1: new Complex(0.43301, -0.75),
-    })
-    circleNotation4.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation5.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
-</div>
-
-<p>
-  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、MEASUREMENT 命令は WRITE
-  命令と同じく逆演算を持ちません。
-  また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
-</p>
-
-<h2>量子乱数ジェネレータ</h2>
-
-<p>
-  MEASUREMENT 命令とこれまでに学んだ WRITE 命令、H
-  ゲートを組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
-  WRITE で <code>|0⟩</code> に初期化した量子ビットを H ゲートで重ね合わせ状態にし、MEASUREMENT
-  命令で測定することで <code>0</code> または <code>1</code> をランダムに得ることができます。
+  ベル回路でもつれさせた量子ビットに、X ゲートを適用させてみましょう。
+  次の量子回路では、もつれた量子ビットのうちの片方に X ゲートを適用します。
+  そして、逆ベル回路でもつれをほどき、測定します。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -539,7 +432,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>"],["H"],["Measure"]]}'
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["•","X"],["H"],["Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -548,7 +441,6 @@
         data-target="quantum-simulator.circleNotation"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
-        data-show-kets
       >
       </circle-notation>
     </circuit-editor>
@@ -561,12 +453,409 @@
 </div>
 
 <p>
-  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
-  単なる乱数生成と言ってもその用途は広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法といった乱数を使ったアルゴリズムの速度や精度向上にもつながります。
-  実際に、量子乱数の生成はすでにサービス化もされています<label for="margin-note-quantum-origin" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-quantum-origin" class="margin-note-toggle"><span class="margin-note"><a
-    href="https://www.quantumbusinessmagazine.com/post/cambrid"
-    >Cambridge Quantum社、量子乱数生成サービス「Quantum Origin」を発表</a
-  ></span>。
+  驚くべきことは、X ゲートをビット 1 に作用させたにもかかわらず、測定するとビット 2
+  が反転していることです。 もつれた量子ビットの最初のビットに X
+  ゲートを適用した結果、両方のビットに作用が働き、結果として最初のビットはそのままでもう一方のビットが反転しています。
+</p>
+
+<p>
+  このようなパターンは他のゲートでも起こります。 たとえばビット 1 に PHASE(π)
+  ゲートを作用させると、今度はビット 1 のみが 1 に変わりビット 2 はそのままです。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  今度はビット 1 に X ゲートと PHASE(π) ゲートの両方を適用するとどうなるでしょうか? 想像通り、ビット
+  1 と 2 の両方が 1 になります。
+</p>
+
+<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  なぜこのような結果になるか、演算ペアのルールを使って X ゲートの例で確認してみましょう。 X
+  ゲートを適用する前のベル状態は、次のようになっています。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  X ゲートをビット 1 に適用すると、<code>|0⟩</code> <code>|1⟩</code> と <code>|2⟩</code> <code>|3⟩</code>
+  の演算ペアがそれぞれ次のように入れ替わります。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>X ゲートをビット 1 に適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-X1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-X1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: Math.sqrt(0.5),
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  次に逆ベル回路でもつれをほどきます。 逆ベル回路の CNOT 演算を適用すると、ビット 1
+  に置いたコントロールゲートによって <code>|1⟩</code> <code>|3⟩</code> のペアが選択され、ビット 2 に置いた X
+  ゲートによって入れ替わります。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-before-cnot"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-before-cnot')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: Math.sqrt(0.5),
+          3: 0,
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>CNOT ゲート (コントロールビット 1, ターゲットビット 2) を適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-cnot"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-cnot')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: Math.sqrt(0.5),
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  逆ベル回路の H をビット 1 に適用すると、<code>|0⟩</code> <code>|1⟩</code> と <code>|2⟩</code> <code>|3⟩</code>
+  のペアに働き <code>|2⟩</code> の確率が 100% になります。
+</p>
+
+<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-before-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-before-H1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: Math.sqrt(0.5),
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>H ゲートをビット 1 に適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-H1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: 1,
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  これを測定すると 100% の確率で <code>|2⟩</code> (二進数で <code>|10⟩</code>) が出ます。
+  よって、測定するとビット 1 が 0, ビット 2 が 1 となります。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  もつれ状態にゲートを適用すると、もつれたすべての量子ビットに作用します。
+  逆ベル回路によってもつれをほどき測定すると、ゲートを作用した結果を取り出すことができます。
+  このもつれをほどいて測定するシーケンス (CNOT, H, 測定) を<mark>ベル測定</mark>と呼びます。
+</p>
+
+<p>
+  今回はベル状態に X
+  ゲート、PHASE(π)、その両方のゲートを適用しベル測定した場合の結果を見てきました。
+  ゲートを何も適用しない素のベル状態に加えて、これらのゲートを適用した状態 4
+  つをまとめたものもベル状態と呼びます。 4
+  つのベル状態と、それをベル測定した結果をまとめておきましょう。
+</p>
+
+<div class="pb-10">
+  <table class="table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
+    <thead>
+      <tr>
+        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
+        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">なし</td>
+        <td class="border border-slate-300 py-2 px-4">00</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X</td>
+        <td class="border border-slate-300 py-2 px-4">10</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X と PHASE(π)</td>
+        <td class="border border-slate-300 py-2 px-4">11</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">PHASE(π)</td>
+        <td class="border border-slate-300 py-2 px-4">01</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  覚えやすくするために、ゲートの別名を導入します。 PHASE(π) ゲートは Z
+  ゲートとしても知られています。 また、X と PHASE(π) ゲート (つまり Z ゲート) の組合わせは Y
+  ゲートとしても知られています。 このことを使うと、上の表は X, Y, Z ゲートで次のように書き直せます。
+</p>
+
+<div class="pb-10">
+  <table class="table-auto border-collapse border border-slate-400 pb-10 md:mr-auto md:w-7/12">
+    <thead>
+      <tr>
+        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
+        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">なし</td>
+        <td class="border border-slate-300 py-2 px-4">00</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X</td>
+        <td class="border border-slate-300 py-2 px-4">10</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">Y</td>
+        <td class="border border-slate-300 py-2 px-4">11</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">Z</td>
+        <td class="border border-slate-300 py-2 px-4">01</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  次では、この仕組みを使った<mark>超高密度符号化</mark>というかっこいい名前のアルゴリズムを紹介します。
 </p>
 
 <template id="operation-menu">
