@@ -360,27 +360,27 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   WRITE 命令
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットの初期化</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子ビットの初期化</p>
             </div>
-            <div class="prose"><p>
-  WRITE 命令は量子ビットの状態を <code>|0⟩</code> または <code>|1⟩</code> に初期化する命令です。
+            <div class="content-with-margin"><p>
+  WRITE 命令は量子ビットの状態を \(|0\rangle\) または \(|1\rangle\) に初期化する命令です。
   実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。 通常は回路の先頭に WRITE
-  命令を置くことで量子ビットを <code>|0⟩</code> や <code>|1⟩</code> に初期化します。 続けて H ゲートなどの QPU
+  命令を置くことで量子ビットを \(|0\rangle\) や \(|1\rangle\) に初期化します。 続けて H ゲートなどの QPU
   命令を置いていくことで量子プログラムを記述します。
 </p>
 
-<div class="flex flex-col items-center pb-10 md:mr-auto md:w-7/12">
-  <div>量子ビットを <code>|0⟩</code> に初期化してからゲートを配置</div>
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを \(|0\rangle\) に初期化してからゲートを配置</div>
   <quantum-circuit>
     <circuit-step>
       <circuit-dropzone>
@@ -400,8 +400,8 @@
   </quantum-circuit>
 </div>
 
-<div class="flex flex-col items-center md:mr-auto md:w-7/12">
-  <div>量子ビットを <code>|1⟩</code> に初期化してからゲートを配置</div>
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを \(|1\rangle\) に初期化してからゲートを配置</div>
   <quantum-circuit>
     <circuit-step>
       <circuit-dropzone>
@@ -423,12 +423,12 @@
 
 <p>
   WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  つまり量子ビットの状態がどんな状態にあっても、たとえば <code>|0⟩</code>
-  命令を置いた時点で振幅の大きさと位相の情報は破壊され、<code>|0⟩</code> に初期化されます。
+  つまり量子ビットの状態がどんな状態にあっても、たとえば \(|0\rangle\)
+  命令を置いた時点で振幅の大きさと位相の情報は破壊され、\(|0\rangle\) に初期化されます。
   これは元に戻すのに必要な情報を損失していることになるため、WRITE 命令は非可逆です。
 </p>
 
-<div class="flex justify-center md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation
@@ -520,7 +520,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

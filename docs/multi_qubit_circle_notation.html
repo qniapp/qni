@@ -360,41 +360,41 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   状態ベクトル表示
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">複数の量子ビットの可視化</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">複数の量子ビットの可視化</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   複数の量子ビットを使うと、たくさんの状態を表すことができます。 たとえば 2
-  量子ビットを並べると、それぞれの量子ビットは <code>|0⟩</code> および <code>|1⟩</code>
+  量子ビットを並べると、それぞれの量子ビットは \(|0\rangle\) および \(|1\rangle\)
   の状態を持つことができるため、その組合わせは次の 4 通りになります。
 </p>
 
-<ul class="list-disc">
-  <li><code>|0⟩</code> と <code>|0⟩</code></li>
-  <li><code>|0⟩</code> と <code>|1⟩</code></li>
-  <li><code>|1⟩</code> と <code>|0⟩</code></li>
-  <li><code>|1⟩</code> と <code>|1⟩</code></li>
+<ul>
+  <li>\(|0\rangle\) と \(|0\rangle\)</li>
+  <li>\(|0\rangle\) と \(|1\rangle\)</li>
+  <li>\(|1\rangle\) と \(|0\rangle\)</li>
+  <li>\(|1\rangle\) と \(|1\rangle\)</li>
 </ul>
 
 <p>
-  スペースを節約するために、<code>|0⟩</code> と <code>|0⟩</code> のように量子ビットを並べたものを <code>|00⟩</code>
+  スペースを節約するために、\(|0\rangle\) と \(|0\rangle\) のように量子ビットを並べたものを \(|00\rangle\)
   とまとめて書くことにしましょう。 すると、先ほどの 4 通りは次のように書けます。
 </p>
 
-<ul class="list-disc">
-  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code></li>
-  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code></li>
-  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code></li>
-  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code></li>
+<ul>
+  <li>\(|0\rangle\) と \(|0\rangle\) → \(|00\rangle\)</li>
+  <li>\(|0\rangle\) と \(|1\rangle\) → \(|01\rangle\)</li>
+  <li>\(|1\rangle\) と \(|0\rangle\) → \(|10\rangle\)</li>
+  <li>\(|1\rangle\) と \(|1\rangle\) → \(|11\rangle\)</li>
 </ul>
 
 <p>
@@ -402,20 +402,20 @@
   通りはさらに次のように書き換えることができます。
 </p>
 
-<ul class="list-disc">
-  <li><code>|0⟩</code> と <code>|0⟩</code> → <code>|00⟩</code> (2 進数) → <code>|0⟩</code> (10 進数)</li>
-  <li><code>|0⟩</code> と <code>|1⟩</code> → <code>|01⟩</code> (2 進数) → <code>|1⟩</code> (10 進数)</li>
-  <li><code>|1⟩</code> と <code>|0⟩</code> → <code>|10⟩</code> (2 進数) → <code>|2⟩</code> (10 進数)</li>
-  <li><code>|1⟩</code> と <code>|1⟩</code> → <code>|11⟩</code> (2 進数) → <code>|3⟩</code> (10 進数)</li>
+<ul>
+  <li>\(|0\rangle\) と \(|0\rangle\) → \(|00\rangle\) (2 進数) → \(|0\rangle\) (10 進数)</li>
+  <li>\(|0\rangle\) と \(|1\rangle\) → \(|01\rangle\) (2 進数) → \(|1\rangle\) (10 進数)</li>
+  <li>\(|1\rangle\) と \(|0\rangle\) → \(|10\rangle\) (2 進数) → \(|2\rangle\) (10 進数)</li>
+  <li>\(|1\rangle\) と \(|1\rangle\) → \(|11\rangle\) (2 進数) → \(|3\rangle\) (10 進数)</li>
 </ul>
 
 <p>
-  つまり、2 量子ビット使うと <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> という 4
+  つまり、2 量子ビット使うと \(|0\rangle\), \(|1\rangle\), \(|2\rangle\), \(|3\rangle\) という 4
   つの状態を表すことができます。 これは、Qni の状態ベクトル表示では次のように 4 つの円のうち、どれか
   1 つを塗り潰した状態として表せます。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
       <circle-notation
@@ -441,46 +441,44 @@
 </div>
 
 <p>
-  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか？ 1 量子ビットでは円が 2 つ、2
+  さらに 3 量子ビットに増やすと円の数はどうなるでしょうか? 1 量子ビットでは円が 2 つ、2
   量子ビットでは円が 4 つだったので、単純に円 6 個と考えるのは間違いです。 先ほどと同様に 3 桁の 2
-  進数を考えると、3 量子ビットでは <code>|0⟩</code> から <code>|7⟩</code> まで 8
+  進数を考えると、3 量子ビットでは \(|0\rangle\) から \(|7\rangle\) まで 8
   通りの状態を表すことができます。 つまり、3 量子ビットを状態ベクトルとして表示すると丸が 8
   個になります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-4qubit"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
+<div class="my-5 flex flex-col">
+  <div class="flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-4qubit"
+      data-multi-qubits
+      data-qubit-count="3"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
 
-      <script type="module">
-        import { Complex } from './application.js'
+    <script type="module">
+      import { Complex } from './application.js'
 
-        let circleNotation = document.getElementById('circle-notation-4qubit')
+      let circleNotation = document.getElementById('circle-notation-4qubit')
 
-        circleNotation.setAmplitudes({
-          0: 0,
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 0,
-          5: 1,
-        })
-      </script>
-    </div>
+      circleNotation.setAmplitudes({
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 1,
+      })
+    </script>
   </div>
 </div>
 
 <p>
   このようにビット数を増やすと表せる状態 (数)
-  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは <code>0</code> と
-  <code>1</code> の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
+  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは 0 と 1
+  の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
   しかし複数の量子ビットでは、次に紹介するように 1
   量子ビットの場合と同じく<mark>重ね合わせ状態</mark>を持つことができるという大きな違いがあります。
 </p>
@@ -513,7 +511,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

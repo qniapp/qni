@@ -360,19 +360,19 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   状態ベクトル表示
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビット状態の円による表示</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子ビット状態の円による表示</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   量子コンピュータが持つ量子ビット全体の状態を<mark>状態ベクトル</mark>と呼びます。
   状態ベクトルを使えば、量子コンピュータのある時点での状態をベクトル 1 つで表すことができます。
   一般にベクトルとは数を並べたものですが、本チュートリアルでは<mark>円の並びで状態ベクトルを表現します</mark>。
@@ -383,9 +383,9 @@
 
 <p>
   振幅は、量子ビットの円それぞれの「重み」を表す値です。
-  重みは量子ビットの測定に関わる値で、測定によって <code>|0⟩</code> や <code>|1⟩</code>
-  が出る可能性を表すものです。 たとえば確率は、<code>|0⟩</code> または <code>|1⟩</code>
-  が測定される可能性を直接的に表した値です。 また位相は、<code>|0⟩</code> や <code>|1⟩</code>
+  重みは量子ビットの測定に関わる値で、測定によって \(|0\rangle\) や \(|1\rangle\)
+  が出る可能性を表すものです。 たとえば確率は、\(|0\rangle\) または \(|1\rangle\)
+  が測定される可能性を直接的に表した値です。 また位相は、\(|0\rangle\) や \(|1\rangle\)
   が測定される確率を間接的に操作できます<label for="margin-note-" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note"><a href="./phase.html">位相</a>を参照。</span>。 円それぞれに割り当てられた<mark
     >振幅は、確率と位相の両方を 1 つの値で表します</mark
   >。
@@ -394,9 +394,8 @@
 <h2>振幅と確率の関係</h2>
 
 <p>
-  量子ビットを測定した時に <code>0</code> または <code>1</code> を得る確率は、 <code>|0⟩</code> と
-  <code>|1⟩</code> それぞれの振幅の 2 乗を計算することによって求められるのでした。
-  振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note-toggle"><span class="margin-note"><a href="qubit.html">量子ビット</a>を参照</span>、より正しくは「<mark
+  量子ビットを測定した時に 0 または 1 を得る確率は、 \(|0\rangle\) と \(|1\rangle\) それぞれの振幅の 2
+  乗を計算することによって求められるのでした。 振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note-toggle"><span class="margin-note"><a href="qubit.html">量子ビット</a>を参照</span>、より正しくは「<mark
     >確率は振幅の大きさ<label for="margin-note-magnitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-magnitude" class="margin-note-toggle"><span class="margin-note">ある振幅 (複素数) \(\alpha = a + bi\)
     について、その大きさ \(|\alpha|\) は \(\sqrt{a^2 + b^2}\) で計算できます。確率は振幅の大きさの 2
     乗なので、\(| \alpha|^2 = a^2 + b^2\) となります。</span> (magnitude) の 2
@@ -448,26 +447,26 @@
 </figure>
 
 <p>
-  たとえば下の <code>π/4</code> の <code>|1⟩</code> のポップアップを見ると、振幅が \(0.5 + 0.5i\)
-  となっています。 \(a\) と \(b\) はそれぞれ \(0.5\) と等しいので、上の図で考えると偏角は確かに
-  <code>π/4 (45°)</code> となります。 余裕のある人は、ほかの偏角と振幅も確認してみましょう。
+  たとえば下の π/4 の \(|1\rangle\) のポップアップを見ると、振幅が \(0.5 + 0.5i\) となっています。
+  \(a\) と \(b\) はそれぞれ \(0.5\) と等しいので、上の図で考えると偏角は確かに π/4 (45°)
+  となります。 余裕のある人は、ほかの偏角と振幅も確認してみましょう。
 </p>
 
 <div class="flex flex-row space-x-4 pb-14">
   <div class="flex flex-col items-center">
-    <code class="pb-2">π/4</code>
+    <span class="pb-2">π/4</span>
     <circle-notation id="circle-notation-phase-π/4" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
-    <code class="pb-2">π/2</code>
+    <span class="pb-2">π/2</span>
     <circle-notation id="circle-notation-phase-π/2" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
-    <code class="pb-2">π</code>
+    <span class="pb-2">π</span>
     <circle-notation id="circle-notation-phase-π" data-size="xl" data-show-kets></circle-notation>
   </div>
   <div class="flex flex-col items-center">
-    <code class="pb-2">3π/2</code>
+    <span class="pb-2">3π/2</span>
     <circle-notation
       id="circle-notation-phase-3π/2"
       data-size="xl"
@@ -501,12 +500,9 @@
 
 <!--
      <p>
-     <code>|0⟩</code> を基準として <code>|1⟩</code> がどれだけ回転しているかを位相と呼び、<code
-     >0</code
-     >
-     から <code>2π (360°)</code> まで持つことができます。
-     状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は <code>|0⟩</code> に対する
-     <code>|1⟩</code> の相対的な回転を表すので、<mark>相対位相</mark>とも呼ばれます。
+     \(|0\rangle\) を基準として \(|1\rangle\) がどれだけ回転しているかを位相と呼び、0 から 2π (360°) まで持つことができます。
+     状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は \(|0\rangle\) に対する
+     \(|1\rangle\) の相対的な回転を表すので、<mark>相対位相</mark>とも呼ばれます。
      </p>
 
      <div class="flex flex-row space-x-4 pb-14">
@@ -566,9 +562,9 @@
 
      <p>
      位相は相対的な値なので、ある種の QPU 演算によって
-     <code>|0⟩</code> が回転している場合には、その角度を基準とした <code>|1⟩</code> の回転を考えます。
+     \(|0\rangle\) が回転している場合には、その角度を基準とした \(|1\rangle\) の回転を考えます。
      たとえば、以下の 2 つの状態は相対的にはどちらも
-     <code>3π/2</code> の回転なので、見た目は違いますが同じ状態を表しています。
+     3π/2 の回転なので、見た目は違いますが同じ状態を表しています。
      </p>
 
      <div class="flex flex-row justify-center space-x-4 pb-14 md:mr-auto md:w-7/12">
@@ -652,7 +648,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

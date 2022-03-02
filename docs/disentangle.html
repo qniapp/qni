@@ -360,25 +360,25 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   もつれをほどく
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子もつれ状態を元に戻す</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子もつれ状態を元に戻す</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   量子もつれ状態は、ほどいてもつれのない状態に戻すことができます。
   元に戻すには、量子もつれを作る回路の逆演算となる回路を作ります。
   逆演算回路を作るために、元の量子回路をもう一度よく見てみましょう。
 </p>
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -393,7 +393,7 @@
   つ並べます。
 </p>
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -405,7 +405,7 @@
 
 すると CNOT 2 個が消え、H ゲート 1 つだけの回路になります。
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -422,7 +422,7 @@
   >を参照</span>、H ゲートを並べます。
 </p>
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -434,7 +434,7 @@
 
 すると 2 個の H ゲートが消え、もつれ回路は消えました。
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -450,7 +450,7 @@
   つが消えることで確かに逆演算になっていることが分かります。
 </p>
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
     data-min-wire-count="1"
     data-max-wire-count="1"
@@ -475,7 +475,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

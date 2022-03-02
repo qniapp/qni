@@ -360,20 +360,20 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   複数量子ビットでの演算
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">状態ベクトルのペアで計算</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">状態ベクトルのペアで計算</p>
             </div>
-            <div class="prose"><p>
-  複数量子ビットに対してゲートを適用するとどうなるでしょうか？ 今までは単一の量子ビットに X ゲートや
+            <div class="content-with-margin"><p>
+  複数量子ビットに対してゲートを適用するとどうなるでしょうか? 今までは単一の量子ビットに X ゲートや
   H
   ゲートを適用してきましたが、複数量子ビットに適用する場合でもそれぞれのゲートの働きは変わりません。
   しかし、ゲートを配置したビット によって、演算の対象となる状態ベクトルの円が異なってきます。
@@ -386,7 +386,7 @@
 <p>
   以降では 3 量子ビットの回路を例として考えます。この場合、状態ベクトルは \(2^3 = 8\)
   個の円として表示されます。 この状態ベクトルに対して、X ゲートを 1 ビット目 (回路の一番上のワイヤ)
-  に適用すると、X ゲートは「<code>|0⟩</code> と <code>|1⟩</code>」、「<code>|2⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|5⟩</code>」、「<code>|6⟩</code> と <code>|7⟩</code>」という<mark
+  に適用すると、X ゲートは「\(|0\rangle\) と \(|1\rangle\)」、「\(|2\rangle\) と \(|3\rangle\)」、「\(|4\rangle\) と \(|5\rangle\)」、「\(|6\rangle\) と \(|7\rangle\)」という<mark
     >隣同士の円 (1 つだけ離れた円同士)</mark
   >
   それぞれのペアに対して、X ゲートの動作である「円の入れ替え」を行います。
@@ -397,11 +397,11 @@
 </figure>
 
 <p>
-  これを具体的な状態ベクトルで見ると、次のようになります。 <code>|0⟩</code> と <code>|1⟩</code>、<code>|2⟩</code>
-  と <code>|3⟩</code>、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
+  これを具体的な状態ベクトルで見ると、次のようになります。 \(|0\rangle\) と \(|1\rangle\)、\(|2\rangle\)
+  と \(|3\rangle\)、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -471,11 +471,11 @@
   ゲートによって入れ替わっていることが分かります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -519,7 +519,7 @@
 
 <p>
   ゲートを置く位置を変えると、ゲートが作用する円のペアが変化します。
-  先ほどと同じ状態ベクトルに対して、X ゲートを 2 ビット目に適用すると、X ゲートは「<code>|0⟩</code> と <code>|2⟩</code>」、「<code>|1⟩</code> と <code>|3⟩</code>」、「<code>|4⟩</code> と <code>|6⟩</code>」、「<code>|5⟩</code> と <code>|7⟩</code>」という
+  先ほどと同じ状態ベクトルに対して、X ゲートを 2 ビット目に適用すると、X ゲートは「\(|0\rangle\) と \(|2\rangle\)」、「\(|1\rangle\) と \(|3\rangle\)」、「\(|4\rangle\) と \(|6\rangle\)」、「\(|5\rangle\) と \(|7\rangle\)」という
   <mark>1 つ飛ばしの円同士 (2 つ離れた円同士)</mark>
   で作ったペアに対して、円の入れ替えを行います。
 </p>
@@ -529,10 +529,10 @@
 </figure>
 
 <p>
-  これを状態ベクトルで見ると、次のようになります。 <code>|0⟩</code> と <code>|2⟩</code> や <code>|5⟩</code> と <code>|7⟩</code> が X ゲートによって入れ替わることが分かります。
+  これを状態ベクトルで見ると、次のようになります。 \(|0\rangle\) と \(|2\rangle\) や \(|5\rangle\) と \(|7\rangle\) が X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -598,11 +598,11 @@
 
 <p>これも Qni で実際に確認しておきましょう。</p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -646,7 +646,7 @@
 
 <p>
   X ゲートを 3 ビット目に適用すると、<mark>4 つ離れた円同士</mark
-  >で作ったペアに対して、円の入れ替えを行います。 つまり「<code>|0⟩</code> と <code>|4⟩</code>」、「<code>|1⟩</code> と <code>|5⟩</code>」、「<code>|2⟩</code> と <code>|6⟩</code>」、「<code>|3⟩</code> と <code>|7⟩</code>」のペアについて
+  >で作ったペアに対して、円の入れ替えを行います。 つまり「\(|0\rangle\) と \(|4\rangle\)」、「\(|1\rangle\) と \(|5\rangle\)」、「\(|2\rangle\) と \(|6\rangle\)」、「\(|3\rangle\) と \(|7\rangle\)」のペアについて
   X ゲート演算が行われます。
 </p>
 
@@ -656,7 +656,7 @@
 
 <p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -722,11 +722,11 @@
 
 <p>こちらも Qni で確認しておきましょう。</p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -851,32 +851,32 @@
   </div>
 </template>
  <template id="operation-inspector-template">
-  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
     <div class="items-left flex flex-col space-y-4 divide-y">
       <div id="conditional-gate-pane" class="items-left flex flex-col">
-        <h1 class="font-bold text-gray-900">If Conditional</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
           <input
             data-target="operation-inspector.ifInput"
             type="text"
             name="if"
             id="if-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
       </div>
 
       <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Angle</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
 
         <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
           <label
             for="angle-input"
-            class="select-none font-normal text-gray-700"
+            class="select-none font-normal text-neutral-700"
             data-target="operation-inspector.angleInputLabel"
             >Angle</label
           >
@@ -886,7 +886,7 @@
             name="angle"
             id="angle-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
           <angle-slider
@@ -894,7 +894,7 @@
             class="ml-2 inline-block"
           ></angle-slider>
 
-          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
             >Denom</label
           >
           <input
@@ -903,10 +903,10 @@
             min="2"
             name="denominator"
             id="denominator-input"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
-          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
             <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
               data-target="operation-inspector.denominatorLabel"
               class="font-bold text-yellow-600"
@@ -915,7 +915,7 @@
           </div>
 
           <div class="min-w-0 flex-1 text-sm">
-            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
               >Reduce</label
             >
           </div>
@@ -925,24 +925,24 @@
               id="reduce-fraction-checkbox"
               name="reduce-fraction"
               type="checkbox"
-              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
             />
           </div>
         </div>
       </div>
 
       <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
           <input
             data-target="operation-inspector.flagInput"
             type="text"
             name="flag"
             id="flag-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
@@ -978,7 +978,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

@@ -360,28 +360,28 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   SWAP ゲート
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子ビットの交換</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子ビットの交換</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   今までの QPU 命令と異なり、SWAP ゲートは 2 つの量子ビットに作用します。 SWAP
-  ゲートはその名の通り、2 つの量子ビットを入れ替える効果を持ちます。 たとえば次の回路では、<code>|0⟩</code> と <code>|1⟩</code> を SWAP ゲートによって入れ替えます。
+  ゲートはその名の通り、2 つの量子ビットを入れ替える効果を持ちます。 たとえば次の回路では、\(|0\rangle\) と \(|1\rangle\) を SWAP ゲートによって入れ替えます。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -423,11 +423,11 @@
   ゲートを動作させるにはどう動かせばよいでしょうか?)。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -528,32 +528,32 @@
   </div>
 </template>
  <template id="operation-inspector-template">
-  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
     <div class="items-left flex flex-col space-y-4 divide-y">
       <div id="conditional-gate-pane" class="items-left flex flex-col">
-        <h1 class="font-bold text-gray-900">If Conditional</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
           <input
             data-target="operation-inspector.ifInput"
             type="text"
             name="if"
             id="if-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
       </div>
 
       <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Angle</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
 
         <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
           <label
             for="angle-input"
-            class="select-none font-normal text-gray-700"
+            class="select-none font-normal text-neutral-700"
             data-target="operation-inspector.angleInputLabel"
             >Angle</label
           >
@@ -563,7 +563,7 @@
             name="angle"
             id="angle-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
           <angle-slider
@@ -571,7 +571,7 @@
             class="ml-2 inline-block"
           ></angle-slider>
 
-          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
             >Denom</label
           >
           <input
@@ -580,10 +580,10 @@
             min="2"
             name="denominator"
             id="denominator-input"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
-          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
             <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
               data-target="operation-inspector.denominatorLabel"
               class="font-bold text-yellow-600"
@@ -592,7 +592,7 @@
           </div>
 
           <div class="min-w-0 flex-1 text-sm">
-            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
               >Reduce</label
             >
           </div>
@@ -602,24 +602,24 @@
               id="reduce-fraction-checkbox"
               name="reduce-fraction"
               type="checkbox"
-              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
             />
           </div>
         </div>
       </div>
 
       <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
           <input
             data-target="operation-inspector.flagInput"
             type="text"
             name="flag"
             id="flag-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
@@ -643,7 +643,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

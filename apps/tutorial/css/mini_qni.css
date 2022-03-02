@@ -1,0 +1,8 @@
+.mini-qni {
+  @apply bg-neutral-50;
+  @apply my-5;
+  @apply overflow-hidden;
+  @apply p-8;
+  @apply relative;
+  @apply rounded-md;
+}

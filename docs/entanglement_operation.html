@@ -360,19 +360,19 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   もつれを操作する
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">もつれた量子ビットをまとめて操作</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">もつれた量子ビットをまとめて操作</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   もつれた量子ビットに 1
   個の量子ゲートを適用すると、もつれ状態にあるすべての量子ビットに一度に作用します。
   つまり、量子もつれを使えば 1 個の量子ゲートで複数の量子ビットを操作できます<label for="margin-note-entanglement-operation" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-entanglement-operation" class="margin-note-toggle"><span class="margin-note">もつれ状態にある量子ビットに量子ゲートを適用する場合、一部の量子ビットにのみ選択的に作用させることはできません。必ずすべての量子ビットに作用する点に注意してください。</span>。
@@ -384,11 +384,11 @@
   そして、逆ベル回路でもつれをほどき、測定します。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -438,11 +438,11 @@
   ゲートを作用させると、今度はビット 1 のみが 1 に変わりビット 2 はそのままです。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -486,11 +486,11 @@
   1 と 2 の両方が 1 になります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -534,7 +534,7 @@
   ゲートを適用する前のベル状態は、次のようになっています。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="flex flex-row items-center space-x-1">
       <circle-notation
@@ -561,11 +561,11 @@
 </div>
 
 <p>
-  X ゲートをビット 1 に適用すると、<code>|0⟩</code> <code>|1⟩</code> と <code>|2⟩</code> <code>|3⟩</code>
+  X ゲートをビット 1 に適用すると、\(|0\rangle\) \(|1\rangle\) と \(|2\rangle\) \(|3\rangle\)
   の演算ペアがそれぞれ次のように入れ替わります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -623,11 +623,11 @@
 
 <p>
   次に逆ベル回路でもつれをほどきます。 逆ベル回路の CNOT 演算を適用すると、ビット 1
-  に置いたコントロールゲートによって <code>|1⟩</code> <code>|3⟩</code> のペアが選択され、ビット 2 に置いた X
+  に置いたコントロールゲートによって \(|1\rangle\) \(|3\rangle\) のペアが選択され、ビット 2 に置いた X
   ゲートによって入れ替わります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -684,11 +684,11 @@
 </div>
 
 <p>
-  逆ベル回路の H をビット 1 に適用すると、<code>|0⟩</code> <code>|1⟩</code> と <code>|2⟩</code> <code>|3⟩</code>
-  のペアに働き <code>|2⟩</code> の確率が 100% になります。
+  逆ベル回路の H をビット 1 に適用すると、\(|0\rangle\) \(|1\rangle\) と \(|2\rangle\) \(|3\rangle\)
+  のペアに働き \(|2\rangle\) の確率が 100% になります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -745,7 +745,7 @@
 </div>
 
 <p>
-  これを測定すると 100% の確率で <code>|2⟩</code> (二進数で <code>|10⟩</code>) が出ます。
+  これを測定すると 100% の確率で \(|2\rangle\) (二進数で \(|10\rangle\)) が出ます。
   よって、測定するとビット 1 が 0, ビット 2 が 1 となります。
 </p>
 
@@ -801,7 +801,7 @@
 </p>
 
 <div class="pb-10">
-  <table class="table-auto border-collapse border border-slate-400 pb-10 md:mr-auto md:w-7/12">
+  <table class="my-5 table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
     <thead>
       <tr>
         <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
@@ -899,32 +899,32 @@
   </div>
 </template>
  <template id="operation-inspector-template">
-  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
     <div class="items-left flex flex-col space-y-4 divide-y">
       <div id="conditional-gate-pane" class="items-left flex flex-col">
-        <h1 class="font-bold text-gray-900">If Conditional</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
           <input
             data-target="operation-inspector.ifInput"
             type="text"
             name="if"
             id="if-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
       </div>
 
       <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Angle</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
 
         <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
           <label
             for="angle-input"
-            class="select-none font-normal text-gray-700"
+            class="select-none font-normal text-neutral-700"
             data-target="operation-inspector.angleInputLabel"
             >Angle</label
           >
@@ -934,7 +934,7 @@
             name="angle"
             id="angle-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
           <angle-slider
@@ -942,7 +942,7 @@
             class="ml-2 inline-block"
           ></angle-slider>
 
-          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
             >Denom</label
           >
           <input
@@ -951,10 +951,10 @@
             min="2"
             name="denominator"
             id="denominator-input"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
-          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
             <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
               data-target="operation-inspector.denominatorLabel"
               class="font-bold text-yellow-600"
@@ -963,7 +963,7 @@
           </div>
 
           <div class="min-w-0 flex-1 text-sm">
-            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
               >Reduce</label
             >
           </div>
@@ -973,24 +973,24 @@
               id="reduce-fraction-checkbox"
               name="reduce-fraction"
               type="checkbox"
-              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
             />
           </div>
         </div>
       </div>
 
       <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
           <input
             data-target="operation-inspector.flagInput"
             type="text"
             name="flag"
             id="flag-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
@@ -1026,7 +1026,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

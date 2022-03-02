@@ -14,7 +14,7 @@ description: 量子ビットの間にリンクを作る
   での計算に欠かせない強力な道具の 1 つです。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="flex flex-row items-center space-x-1">
       <circle-notation
@@ -44,28 +44,26 @@ description: 量子ビットの間にリンクを作る
   なぜこの状態がもつれと呼ばれるのか、細かく見ていきましょう。 ビット 1 のみを測定すると、<a
     href="./partial_measurement.html"
     >1 ビット測定</a
-  >のルールに従って 50% の確率で <code>0</code>、残り 50% の確率で <code>1</code> が得られます。
-  もし <code>0</code> が得られた場合、ビット 2 は測定しなくても
-  <code>0</code> であることが確定しています。 なぜならば、元々の重ね合わせは {% ket 0 %} または {%
-  ket 3 %} (2 進数で表すと {% ket 00 %} または {% ket 11 %}) だったので、ビット 1 が
-  <code>0</code> だった場合にはビット 2 も <code>0</code> ({% ket 00 %})
-  であることが自動的に分かるからです。 同様に、もし先にビット 2
-  を測定した場合も、その結果によってビット 1 の値が確定します。 これは、<mark
-    >ビット 1 とビット 2 の間に量子もつれという見えないリンクが生まれている</mark
+  >のルールに従って 50% の確率で 0、残り 50% の確率で 1 が得られます。 もし 0 が得られた場合、ビット
+  2 は測定しなくても 0 であることが確定しています。 なぜならば、元々の重ね合わせは {% ket 0 %}
+  または {% ket 3 %} (2 進数で表すと {% ket 00 %} または {% ket 11 %}) だったので、ビット 1 が 0
+  だった場合にはビット 2 も 0 ({% ket 00 %}) であることが自動的に分かるからです。
+  同様に、もし先にビット 2 を測定した場合も、その結果によってビット 1 の値が確定します。
+  これは、<mark>ビット 1 とビット 2 の間に量子もつれという見えないリンクが生まれている</mark
   >ことを意味します。
 </p>
 
 <p>
   以下の回路でビット 1 とビット 2 のもつれを作って確認できます。
-  右下の実行ボタンを何度クリックしても、測定結果は <code>0</code> と <code>0</code> または
-  <code>1</code> と <code>1</code> になり、ビット 1 と 2 の値は必ず同じになります。
+  右下の実行ボタンを何度クリックしても、測定結果は 0 と 0 または 1 と 1 になり、ビット 1 と 2
+  の値は必ず同じになります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -108,9 +106,8 @@ description: 量子ビットの間にリンクを作る
   つがそれぞれおはじきくらいの大きさのチップに埋め込まれているとして、上の回路でもつれさせたあと<mark>測定せずに</mark>アリス、ボブに
   1 つずつ持たせるとします。 そしてアリスは島根県、ボブは岐阜県へバスで移動します。
   百キロ以上離れている 2 人ですが、2 つの量子ビットはもつれたままの状態にあります。
-  ここで島根県のアリスが自分の量子ビットを測定して <code>0</code> が出たとします。
-  次にボブが岐阜県で自分の量子ビットを測定すると、(島根にいるアリスの結果と同じ) 必ず
-  <code>0</code> が出ます。
+  ここで島根県のアリスが自分の量子ビットを測定して 0 が出たとします。
+  次にボブが岐阜県で自分の量子ビットを測定すると、(島根にいるアリスの結果と同じ) 必ず 0 が出ます。
   このように、どんなに離れていても測定結果が連動するというのが量子もつれの特徴です。
 </p>
 

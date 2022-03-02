@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title>QPU は何が得意？</title>
+    <title>QPU は何が得意?</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -360,19 +360,19 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  QPU は何が得意？
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  QPU は何が得意?
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子コンピュータの得意分野と制限</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子コンピュータの得意分野と制限</p>
             </div>
-            <div class="prose"><p>
+            <div class="content-with-margin"><p>
   結局のところ、量子コンピュータ (QPU)
   は何が得意なのでしょうか。そしてさらに重要なことですが、メカニズム上の制限はあるのでしょうか。
 </p>
@@ -388,7 +388,7 @@
   <img src="./images/matrix_multiplication.png" class="h-auto w-full" />
 </figure>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   本節では QPU の原理を説明するために、行列やベクトルといった数学的な用語をちょっとだけ使います。
   しかしあくまで概略を紹介するだけなので、これらの概念に馴染みがなくても大丈夫です。
 </div>
@@ -406,7 +406,7 @@
   <li>計算結果が一筋縄では取り出せないこと</li>
 </ul>
 
-<h2>1. 巨大なベクトルの入力</h2>
+<h2>巨大なベクトルの入力</h2>
 
 <p>
   掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
@@ -446,7 +446,7 @@
   ></orbit-prompt>
 </orbit-reviewarea>
 
-<h2>2. 使える行列の制限</h2>
+<h2>使える行列の制限</h2>
 
 <p>
   量子コンピュータが扱うベクトルは常に「<mark>二乗和</mark><label for="margin-note-square-sum" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note-toggle"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせたもの</span>が
@@ -506,7 +506,7 @@
   <orbit-prompt cloze="ユニタリ行列は{回転}で構成されている"></orbit-prompt>
 </orbit-reviewarea>
 
-<h2>3. 計算結果の取り出し</h2>
+<h2>計算結果の取り出し</h2>
 
 <p>
   ここがおそらく一番トリッキーな部分です。
@@ -577,7 +577,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>

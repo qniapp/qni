@@ -26,7 +26,7 @@ description: 確率的ビットとの大きな違い
   π、つまり振幅の 2 乗かける π なので、青い円の面積は確率に正比例します。
 </p>
 
-<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <circle-notation id="circle-notation-80-20" data-size="xl" data-show-kets></circle-notation>
   <script type="module">
     import { Complex } from './application.js'
@@ -42,11 +42,9 @@ description: 確率的ビットとの大きな違い
 
 <p>
   最初に、確率的ビットが取り得る状態をおさらいしてみましょう
-  (コイントスの例を使ったことを思い出してください)。 ビットが
-  <code>0</code> の状態をコインの表、ビットが
-  <code>1</code> の状態をコインの裏とし、それぞれの確率を \(p_0,\ p_1\) とします。
-  表と裏の確率を足すと必ず <code>1</code> になり、またそれぞれの確率は <code>0</code> から
-  <code>1</code> の間ですから、
+  (コイントスの例を使ったことを思い出してください)。 ビットが 0 の状態をコインの表、ビットが 1
+  の状態をコインの裏とし、それぞれの確率を \(p_0,\ p_1\) とします。 表と裏の確率を足すと必ず 1
+  になり、またそれぞれの確率は 0 から 1 の間ですから、
 </p>
 
 <p>$$p_0 + p_1 = 1\qquad (0 \leq p_0 \leq 1,\ 0 \leq p_1 \leq 1)$$</p>
@@ -72,7 +70,7 @@ description: 確率的ビットとの大きな違い
 </p>
 
 <p>
-  となり、このグラフは半径 <code>1</code> の円になります。つまり、<mark
+  となり、このグラフは半径 1 の円になります。つまり、<mark
     >量子ビットの状態はこの円のうちの 1 点となります。</mark
   >
 </p>
@@ -91,7 +89,7 @@ description: 確率的ビットとの大きな違い
 <p>
   実は、振幅は一般には複素数の値を取ります。
   ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると<mark
-    >半径 <code>1</code> の球表面</mark
+    >半径 1 の球表面</mark
   >になります。 これを<mark
     >ブロッホ球{% nmargin_note bloch-sphere %}ブロッホ球の名前はスイス出身の物理学者、<a
       href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B"
@@ -146,7 +144,7 @@ description: 確率的ビットとの大きな違い
   ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令によってどんな回転が起こるか推測してみましょう。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
@@ -159,14 +157,16 @@ description: 確率的ビットとの大きな違い
       </div>
 
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
           </div>
         </inspector-button>
       </div>

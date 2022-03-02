@@ -17,7 +17,7 @@ description: 重ね合わせ状態の作成
   に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
-<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
+<div class="mx-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation
@@ -26,9 +26,9 @@ description: 重ね合わせ状態の作成
         data-show-kets
       ></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation
         id="circle-notation-H0-after"
@@ -44,9 +44,9 @@ description: 重ね合わせ状態の作成
         data-show-kets
       ></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation
         id="circle-notation-H1-after"
@@ -84,9 +84,8 @@ description: 重ね合わせ状態の作成
 </div>
 
 <p>
-  {% ket 1 %} に対して H ゲートを適用したときのみ、{% ket 1 %} の位相が
-  <code>π</code> 変化していることに注意してください。 {% ket 0 %} に対する H
-  ゲート操作は、位相の回転を含みません。
+  {% ket 1 %} に対して H ゲートを適用したときのみ、{% ket 1 %} の位相が π
+  変化していることに注意してください。 {% ket 0 %} に対する H ゲート操作は、位相の回転を含みません。
 </p>
 
 <p>
@@ -99,16 +98,16 @@ description: 重ね合わせ状態の作成
 
 <p>
   H ゲートを {% ket 0 %} と {% ket 1 %} に適用して、重ね合わせ状態が作られることを確認しましょう。
-  {% ket 0 %} は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか？
+  {% ket 0 %} は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか?
   (ヒント: X ゲートを使います)
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
         id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
       >
         <palette-dropzone>
           <h-gate></h-gate>
@@ -119,14 +118,16 @@ description: 重ね合わせ状態の作成
       </div>
 
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
           </div>
         </inspector-button>
       </div>
@@ -144,7 +145,7 @@ description: 重ね合わせ状態の作成
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
@@ -162,20 +163,20 @@ description: 重ね合わせ状態の作成
   ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
-<div class="flex pb-14">
+<div class="mx-5 flex">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation id="circle-notation-H0-a" data-size="xl" data-show-kets></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation id="circle-notation-H0-b" data-size="xl" data-show-kets></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation id="circle-notation-H0-c" data-size="xl" data-show-kets></circle-notation>
     </div>
@@ -183,15 +184,15 @@ description: 重ね合わせ状態の作成
     <div class="flex flex-row items-center space-x-1">
       <circle-notation id="circle-notation-H1-a" data-size="xl" data-show-kets></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation id="circle-notation-H1-b" data-size="xl" data-show-kets></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate data-size="base"></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation id="circle-notation-H1-c" data-size="xl" data-show-kets></circle-notation>
     </div>
@@ -250,17 +251,17 @@ description: 重ね合わせ状態の作成
     href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice"
     >physics.stackexchange.com</a
   >){% endmargin_note %}
-  <img src="./images/bloch_H0.png" class="h-auto w-full border border-neutral-300" />
+  <img src="./images/bloch_H0.png" class="h-auto w-full" />
 </figure>
 
 <h2>任意の重ね合わせ状態に H ゲートを適用</h2>
 
 <p>
   次のように振幅の大きさと位相の異なる重ね合わせ状態に H
-  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか？
+  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか?
 </p>
 
-<div class="flex flex-row justify-center space-x-4 pb-10 md:mr-auto md:w-7/12">
+<div class="mx-5 flex flex-row justify-center space-x-4 md:mr-auto md:w-7/12">
   <div class="mb-8 flex flex-row items-center space-x-1">
     <circle-notation
       id="circle-notation-H-superposition-before"
@@ -268,9 +269,9 @@ description: 重ね合わせ状態の作成
       data-show-kets
     ></circle-notation>
     <div class="flex flex-row items-center">
-      {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+      {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <h-gate data-size="base"></h-gate>
-      {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
     <circle-notation
       id="circle-notation-H-superposition-after"

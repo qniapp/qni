@@ -9,10 +9,10 @@ description: 条件付き X ゲート
   ゲートは以下のように、条件となる量子ビットに置かれる<mark>コントロールゲート</mark>と、X ゲートの
   2 つから構成されます。 コントロールゲートを置いたビットを
   <mark>コントロールビット</mark>、X ゲートを置いたビットを<mark>ターゲットビット</mark>と呼びます。
-  コントロールビットが <code>0</code> でないとき、ターゲットビットに置いた X ゲートが発動します。
+  コントロールビットが 0 でないとき、ターゲットビットに置いた X ゲートが発動します。
 </p>
 
-<div class="pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
   <circuit-step class="p-0">
     <circuit-dropzone data-connect-bottom>
       <control-gate></control-gate>
@@ -31,11 +31,11 @@ description: 条件付き X ゲート
   %} です。このため X ゲートは発動せず、ターゲットビットはそのままです。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -74,11 +74,11 @@ description: 条件付き X ゲート
   を適用することができます。この結果は {% ket 0 %} と {% ket 3 %} の等しい重ね合わせとなります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -118,7 +118,7 @@ description: 条件付き X ゲート
   ゲートが作用し、重ね合わせ状態ができます。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -145,7 +145,7 @@ description: 条件付き X ゲート
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-3qubit-after-H1"
         data-multi-qubits
@@ -184,7 +184,7 @@ description: 条件付き X ゲート
   ゲートを適用します。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -212,7 +212,7 @@ description: 条件付き X ゲート
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-3qubit-after-CNOT"
         data-multi-qubits
@@ -246,11 +246,11 @@ description: 条件付き X ゲート
   ゲートの逆演算であることから、CNOT を並べると何もしないことが分かります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"

@@ -5,7 +5,7 @@ description: 状態ベクトルのペアで計算
 ---
 
 <p>
-  複数量子ビットに対してゲートを適用するとどうなるでしょうか？ 今までは単一の量子ビットに X ゲートや
+  複数量子ビットに対してゲートを適用するとどうなるでしょうか? 今までは単一の量子ビットに X ゲートや
   H
   ゲートを適用してきましたが、複数量子ビットに適用する場合でもそれぞれのゲートの働きは変わりません。
   しかし、ゲートを配置したビット によって、演算の対象となる状態ベクトルの円が異なってきます。
@@ -34,7 +34,7 @@ description: 状態ベクトルのペアで計算
   と {% ket 3 %}、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -102,11 +102,11 @@ description: 状態ベクトルのペアで計算
   ゲートによって入れ替わっていることが分かります。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -165,7 +165,7 @@ description: 状態ベクトルのペアで計算
   ket 7 %} が X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -229,11 +229,11 @@ description: 状態ベクトルのペアで計算
 
 <p>これも Qni で実際に確認しておきましょう。</p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
@@ -287,7 +287,7 @@ description: 状態ベクトルのペアで計算
 
 <p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
 
-<div class="flex justify-center pb-10 md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -351,11 +351,11 @@ description: 状態ベクトルのペアで計算
 
 <p>こちらも Qni で確認しておきましょう。</p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"

@@ -74,158 +74,142 @@ description: 量子プログラミングのための低水準言語
   詳細は後に説明するとして、どんな命令があるかまずはざっと眺めておきましょう。
 </p>
 
-<div class="pb-10">
-  <table class="table-auto border-collapse border border-slate-400">
-    <thead>
-      <tr>
-        <th class="border border-slate-300 bg-slate-800 py-2 text-white">記号</th>
-        <th class="border border-slate-300 bg-slate-800 text-white">名前</th>
-        <th class="border border-slate-300 bg-slate-800 text-white">説明</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <x-gate class="inline-block"></x-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">NOT または X</td>
-        <td class="border border-slate-300 p-2">ビットペアの入れ替え</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <h-gate></h-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">H または Hadamard (アダマール)</td>
-        <td class="border border-slate-300 p-2">シンプルな重ね合わせの作成</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <phase-gate></phase-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">Phase Shift (位相シフト)</td>
-        <td class="border border-slate-300 p-2">相対位相を回転</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row gap-2">
-            <write-gate data-value="0"></write-gate>
-            <write-gate data-value="1"></write-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">WRITE</td>
-        <td class="border border-slate-300 p-2">指定した値で量子ビットを初期化する</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <measurement-gate></measurement-gate>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">MEASUREMENT (測定)</td>
-        <td class="border border-slate-300 p-2">
-          量子ビットを測定し <code>0</code> または <code>1</code> を返す
-        </td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <circuit-step class="p-0">
-            <circuit-dropzone data-connect-bottom>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top>
-              <x-gate></x-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </td>
-        <td class="border border-slate-300 p-2">CNOT</td>
-        <td class="border border-slate-300 p-2">条件付き NOT</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <circuit-step class="p-0">
-            <circuit-dropzone data-connect-bottom>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top data-connect-bottom>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top>
-              <x-gate></x-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </td>
-        <td class="border border-slate-300 p-2">CCNOT または Toffoli (トフォリ)</td>
-        <td class="border border-slate-300 p-2">条件2個付き NOT</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-4 px-4">
-          <div class="flex justify-center">
-            <circuit-step class="p-0">
-              <circuit-dropzone data-connect-bottom>
-                <phase-gate data-angle="π/2"></phase-gate>
-              </circuit-dropzone>
-              <circuit-dropzone data-connect-top>
-                <phase-gate data-angle="π/2"></phase-gate>
-              </circuit-dropzone>
-            </circuit-step>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">CPHASE</td>
-        <td class="border border-slate-300 p-2">条件付きの Phase Shift</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex justify-center">
-            <circuit-step class="p-0">
-              <circuit-dropzone data-connect-bottom>
-                <control-gate></control-gate>
-              </circuit-dropzone>
-              <circuit-dropzone data-connect-top>
-                <control-gate></control-gate>
-              </circuit-dropzone>
-            </circuit-step>
-          </div>
-        </td>
-        <td class="border border-slate-300 p-2">CZ</td>
-        <td class="border border-slate-300 p-2">CPHASE (<code>π</code> 回転)</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <circuit-step class="p-0">
-            <circuit-dropzone data-connect-bottom>
-              <swap-gate></swap-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top>
-              <swap-gate></swap-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </td>
-        <td class="border border-slate-300 p-2">SWAP</td>
-        <td class="border border-slate-300 p-2">2 つの量子ビットを交換</td>
-      </tr>
-      <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <circuit-step class="p-0">
-            <circuit-dropzone data-connect-bottom>
-              <swap-gate></swap-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top data-connect-bottom>
-              <swap-gate></swap-gate>
-            </circuit-dropzone>
-            <circuit-dropzone data-connect-top>
-              <control-gate></control-gate>
-            </circuit-dropzone>
-          </circuit-step>
-        </td>
-        <td class="border border-slate-300 p-2">CSWAP</td>
-        <td class="border border-slate-300 p-2">条件付き SWAP</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>記号</th>
+      <th>名前</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <x-gate></x-gate>
+      </td>
+      <td class="align-middle">NOT または X</td>
+      <td class="align-middle">ビットペアの入れ替え</td>
+    </tr>
+    <tr>
+      <td>
+        <h-gate></h-gate>
+      </td>
+      <td class="align-middle">H または Hadamard (アダマール)</td>
+      <td class="align-middle">シンプルな重ね合わせの作成</td>
+    </tr>
+    <tr>
+      <td>
+        <phase-gate></phase-gate>
+      </td>
+      <td class="align-middle">Phase Shift (位相シフト)</td>
+      <td class="align-middle">相対位相を回転</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="flex flex-row gap-2">
+          <write-gate data-value="0"></write-gate>
+          <write-gate data-value="1"></write-gate>
+        </div>
+      </td>
+      <td class="align-middle">WRITE</td>
+      <td class="align-middle">指定した値で量子ビットを初期化する</td>
+    </tr>
+    <tr>
+      <td>
+        <measurement-gate></measurement-gate>
+      </td>
+      <td class="align-middle">MEASUREMENT (測定)</td>
+      <td class="align-middle">量子ビットを測定し 0 または 1 を返す</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <x-gate></x-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CNOT</td>
+      <td>条件付き NOT</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <x-gate></x-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CCNOT または Toffoli (トフォリ)</td>
+      <td>条件2個付き NOT</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-4">
+          <circuit-dropzone data-connect-bottom>
+            <phase-gate data-angle="π/2"></phase-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <phase-gate data-angle="π/2"></phase-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CPHASE</td>
+      <td>条件付きの Phase Shift</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CZ</td>
+      <td>CPHASE (π 回転)</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>SWAP</td>
+      <td>2 つの量子ビットを交換</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CSWAP</td>
+      <td>条件付き SWAP</td>
+    </tr>
+  </tbody>
+</table>

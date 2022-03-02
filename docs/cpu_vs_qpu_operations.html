@@ -360,36 +360,39 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <article class="prose prose-neutral max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <div>
-                <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   CPU 演算との違い
                 </h1>
               </div>
-              <p class="mt-1 text-lg text-gray-500">量子コンピュータ版 論理演算</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子コンピュータ版 論理演算</p>
             </div>
-            <div class="prose"><p>
-  QPU 演算は、<code>AND</code> や <code>OR</code> といった CPU で実行される論理演算の量子版です。
-  QPU 演算と CPU 演算には、次の大きな違いがあります。
+            <div class="content-with-margin"><p>
+  QPU 演算は、AND や OR といった CPU で実行される論理演算の量子版です。 QPU 演算と CPU
+  演算には、次の大きな違いがあります。
 </p>
 
 <ul class="list-decimal">
   <li>
-    QPU
-    演算は重ね合わせ状態に作用できます。入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
-    一方で CPU 論理演算は <code>0</code> または <code>1</code> のみを入力・出力します。
+    <p><strong>QPU 演算は重ね合わせ状態に作用できます。</strong></p>
+    <p>
+      入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
+      一方で CPU 論理演算は 0 または 1 のみを入力・出力します。
+    </p>
   </li>
   <li>
-    QPU 演算の大部分は、逆方向の演算 (逆演算)
-    を持ちます。演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます
-    (後にいくつかの QPU 演算と逆演算を具体的に見ます)。 一方で CPU
-    論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (<code>0</code> または
-    <code>1</code>) から入力の 2 ビット (<code>00</code>, <code>01</code>, <code>10</code>,
-    <code>11</code>) を知ることはできません。
+    <p><strong>QPU 演算の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
+    <p>
+      演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます (後にいくつかの
+      QPU 演算と逆演算を具体的に見ます)。 一方で CPU
+      論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (0 または 1) から入力の
+      2 ビット (00, 01, 10, 11) を知ることはできません。
+    </p>
   </li>
 </ul>
 
@@ -402,7 +405,7 @@
 </div>
           </div>
         </div>
-      </div>
+      </article>
     </main>
   </div>
 </div>
