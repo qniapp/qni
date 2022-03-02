@@ -17,18 +17,18 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
 
 <div class="mx-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-P-amp-before"
         data-size="xl"
         data-show-kets
       ></circle-notation>
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <circuit-dropzone>
           <phase-gate data-angle="π/4" data-size="base"></phase-gate>
         </circuit-dropzone>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
       <circle-notation
         id="circle-notation-P-amp-after"
@@ -66,7 +66,7 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
 
 <p>PHASE ゲートはペアの右側の位相にしか作用しないので、全体では円の半分のみに作用します。</p>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -95,12 +95,12 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
     </div>
 
     <div class="flex flex-col items-center space-y-2">
-      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <div>PHASE(π/4) ゲートを 1 ビット目に適用</div>
-      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-3qubit-after-P1"
         data-multi-qubits
@@ -141,7 +141,7 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
 
 <p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -170,12 +170,12 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
     </div>
 
     <div class="flex flex-col items-center space-y-2">
-      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <div>PHASE(π/4) ゲートを 2 ビット目に適用</div>
-      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-3qubit-after-P2"
         data-multi-qubits
@@ -216,7 +216,7 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
 
 <p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -245,12 +245,12 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
     </div>
 
     <div class="flex flex-col items-center space-y-2">
-      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <div>PHASE(π/4) ゲートを 3 ビット目に適用</div>
-      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
+    <div class="flex flex-row items-center space-x-1">
       <circle-notation
         id="circle-notation-3qubit-after-P3"
         data-multi-qubits
@@ -280,7 +280,7 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
 
 <p>最後に、PHASE ゲートの回路の各ビットに置くことで実際に確認しておきましょう。</p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
+<div class="relative mb-10 overflow-hidden rounded-md bg-neutral-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
@@ -299,8 +299,10 @@ description: 複数量子ビットに PHASE ゲートを適用すると?
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
           </div>
         </inspector-button>
       </div>
