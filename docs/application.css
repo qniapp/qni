@@ -5036,6 +5036,11 @@ mark {
   margin-bottom: 0px;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -5661,6 +5666,10 @@ mark {
 
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .text-center {
