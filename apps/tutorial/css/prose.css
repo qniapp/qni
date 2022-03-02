@@ -13,8 +13,6 @@
   @apply pb-4;
 }
 
-.prose p,
-.prose ul,
 .prose figure,
 .prose orbit-reviewarea,
 .prose .mini-qni {
@@ -25,21 +23,8 @@
   @apply mt-10;
 }
 
-.prose figure,
-.prose ul {
+.prose figure {
   @apply pb-10;
-}
-
-.prose ul {
-  @apply list-inside;
-}
-
-.prose li:not(:first-child) {
-  @apply mt-2;
-}
-
-.prose a {
-  @apply underline;
 }
 
 .prose code {

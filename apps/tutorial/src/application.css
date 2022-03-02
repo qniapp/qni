@@ -7,5 +7,6 @@
 @import '../css/mark';
 @import '../css/mini_qni';
 @import '../css/prose';
+@import '../css/content_with_margin';
 
 @import 'tailwindcss/utilities';

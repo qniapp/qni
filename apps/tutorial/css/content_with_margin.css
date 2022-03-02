@@ -1,0 +1,4 @@
+.content-with-margin > p,
+.content-with-margin ul {
+  @apply md:mr-auto md:w-7/12;
+}

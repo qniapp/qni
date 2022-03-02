@@ -4956,11 +4956,11 @@ mark {
 }
 
 @media (min-width: 768px) {
-  .prose p, .prose ul, .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
+  .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
     margin-right: auto;
   }
 
-  .prose p, .prose ul, .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
+  .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
     width: 58.333333%;
   }
 }
@@ -4969,26 +4969,23 @@ mark {
   margin-top: 2.5rem;
 }
 
-.prose figure, .prose ul {
+.prose figure {
   padding-bottom: 2.5rem;
-}
-
-.prose ul {
-  list-style-position: inside;
-}
-
-.prose li:not(:first-child) {
-  margin-top: 0.5rem;
-}
-
-.prose a {
-  -webkit-text-decoration-line: underline;
-          text-decoration-line: underline;
 }
 
 .prose code {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .content-with-margin > p, .content-with-margin ul {
+    margin-right: auto;
+  }
+
+  .content-with-margin > p, .content-with-margin ul {
+    width: 58.333333%;
+  }
 }
 
 .absolute {
