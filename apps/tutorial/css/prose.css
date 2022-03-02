@@ -1,9 +1,0 @@
-.prose figure,
-.prose orbit-reviewarea,
-.prose .mini-qni {
-  @apply md:mr-auto md:w-7/12;
-}
-
-.prose orbit-reviewarea {
-  @apply mt-10;
-}

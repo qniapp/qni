@@ -4938,25 +4938,11 @@ mark {
 }
 
 @media (min-width: 768px) {
-  .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
+  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul {
     margin-right: auto;
   }
 
-  .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
-    width: 58.333333%;
-  }
-}
-
-.prose orbit-reviewarea {
-  margin-top: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .content-with-margin > p, .content-with-margin ul {
-    margin-right: auto;
-  }
-
-  .content-with-margin > p, .content-with-margin ul {
+  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul {
     width: 58.333333%;
   }
 }
@@ -5395,12 +5381,12 @@ mark {
   border-radius: 9999px;
 }
 
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
 .rounded-bl-2xl {
