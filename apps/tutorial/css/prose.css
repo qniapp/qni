@@ -20,10 +20,12 @@
   @apply md:mr-auto md:w-7/12;
 }
 
-.prose p,
-.prose figure,
-.prose ul,
 .prose orbit-reviewarea {
+  @apply mt-10;
+}
+
+.prose figure,
+.prose ul {
   @apply pb-10;
 }
 

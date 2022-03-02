@@ -360,7 +360,7 @@
 
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <div class="py-5">
+      <div class="prose max-w-none py-5">
         <div class="h-8"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
@@ -372,7 +372,7 @@
               </div>
               <p class="mt-1 text-lg text-gray-500">量子ビットの初期化</p>
             </div>
-            <div class="prose"><p>
+            <div><p>
   WRITE 命令は量子ビットの状態を <code>|0⟩</code> または <code>|1⟩</code> に初期化する命令です。
   実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。 通常は回路の先頭に WRITE
   命令を置くことで量子ビットを <code>|0⟩</code> や <code>|1⟩</code> に初期化します。 続けて H ゲートなどの QPU
