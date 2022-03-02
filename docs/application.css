@@ -4937,24 +4937,6 @@ mark {
   border-radius: 0.375rem;
 }
 
-.prose h2 {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(64 64 64 / var(--tw-text-opacity));
-  letter-spacing: -0.025em;
-  padding-bottom: 1rem;
-}
-
-.prose h3 {
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(64 64 64 / var(--tw-text-opacity));
-  letter-spacing: -0.025em;
-  padding-bottom: 1rem;
-}
-
 @media (min-width: 768px) {
   .prose figure, .prose orbit-reviewarea, .prose .mini-qni {
     margin-right: auto;
@@ -4967,10 +4949,6 @@ mark {
 
 .prose orbit-reviewarea {
   margin-top: 2.5rem;
-}
-
-.prose figure {
-  padding-bottom: 2.5rem;
 }
 
 .prose code {
@@ -5032,6 +5010,11 @@ mark {
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .mx-auto {
