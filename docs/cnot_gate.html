@@ -394,8 +394,8 @@
 <p>
   以下の回路は CNOT の基本的な動きを見るものです。 最初の CNOT はビット 1
   をコントロールビット、ビット 2 をターゲットビットとして X ゲートを適用します。
-  コントロールビットは <code>|1⟩</code> なので X ゲートが発動し、ターゲットビットが反転して <code>|0⟩</code>
-  から <code>|1⟩</code> になっていることが分かります。 2 つめの CNOT では、コントロールビットは <code>|0⟩</code> です。このため X ゲートは発動せず、ターゲットビットはそのままです。
+  コントロールビットは \(|1\rangle\) なので X ゲートが発動し、ターゲットビットが反転して \(|0\rangle\)
+  から \(|1\rangle\) になっていることが分かります。 2 つめの CNOT では、コントロールビットは \(|0\rangle\) です。このため X ゲートは発動せず、ターゲットビットはそのままです。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -439,7 +439,7 @@
 <p>
   CNOT が量子ゲートたるゆえんは、コントロールビットが重ね合わせ状態を取れることです。
   たとえば、次のようにコントロールビットを H ゲートで重ね合わせにした状態で CNOT
-  を適用することができます。この結果は <code>|0⟩</code> と <code>|3⟩</code> の等しい重ね合わせとなります。
+  を適用することができます。この結果は \(|0\rangle\) と \(|3\rangle\) の等しい重ね合わせとなります。
 </p>
 
 <div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
@@ -481,7 +481,7 @@
 </div>
 
 <p>
-  この動作を順を追って見ていきましょう。 ビット 1 に H ゲートを適用すると、演算ペアのルール<label for="margin-note-operation-pair" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-operation-pair" class="margin-note-toggle"><span class="margin-note"><a href="./operator_pair.html">演算ペア</a>を参照。</span>により <code>|0⟩</code> <code>|1⟩</code> のペアに H
+  この動作を順を追って見ていきましょう。 ビット 1 に H ゲートを適用すると、演算ペアのルール<label for="margin-note-operation-pair" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-operation-pair" class="margin-note-toggle"><span class="margin-note"><a href="./operator_pair.html">演算ペア</a>を参照。</span>により \(|0\rangle\) \(|1\rangle\) のペアに H
   ゲートが作用し、重ね合わせ状態ができます。
 </p>
 
@@ -547,8 +547,8 @@
 
 <p>
   ここで、コントロールビットであるビット 1 によって X ゲートを適用する演算ペアを選びます。
-  ビットで見るために <code>|0⟩</code>, <code>|1⟩</code>, <code>|2⟩</code>, <code>|3⟩</code> をそれぞれ 2 進数で表すと <code>|00⟩</code>, <code>|01⟩</code>, <code>|10⟩</code>, <code>|11⟩</code> となります。 このうちビット 1 が立っているのは
-  <code>|01⟩</code> と <code>|11⟩</code> (青色の円) だけなので、<code>|1⟩</code> と <code>|3⟩</code> のペアのみに X
+  ビットで見るために \(|0\rangle\), \(|1\rangle\), \(|2\rangle\), \(|3\rangle\) をそれぞれ 2 進数で表すと \(|00\rangle\), \(|01\rangle\), \(|10\rangle\), \(|11\rangle\) となります。 このうちビット 1 が立っているのは
+  \(|01\rangle\) と \(|11\rangle\) (青色の円) だけなので、\(|1\rangle\) と \(|3\rangle\) のペアのみに X
   ゲートを適用します。
 </p>
 
@@ -606,7 +606,7 @@
   </div>
 </div>
 
-<p>以上より、確かに <code>|0⟩</code> と <code>|3⟩</code> の等しい重ね合わせが得られました。</p>
+<p>以上より、確かに \(|0\rangle\) と \(|3\rangle\) の等しい重ね合わせが得られました。</p>
 
 <h2>CNOT の逆演算</h2>
 

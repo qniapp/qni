@@ -8,7 +8,7 @@ module Jekyll
     end
 
     def render(_context)
-      "<code>|#{@label}⟩</code>"
+      "\\(|#{@label}\\rangle\\)"
     end
   end
 end
