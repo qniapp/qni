@@ -17,7 +17,7 @@ description: 重ね合わせ状態の作成
   に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
-<div class="flex justify-center pb-14 md:mr-auto md:w-7/12">
+<div class="mx-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation
@@ -84,9 +84,8 @@ description: 重ね合わせ状態の作成
 </div>
 
 <p>
-  {% ket 1 %} に対して H ゲートを適用したときのみ、{% ket 1 %} の位相が
-  <code>π</code> 変化していることに注意してください。 {% ket 0 %} に対する H
-  ゲート操作は、位相の回転を含みません。
+  {% ket 1 %} に対して H ゲートを適用したときのみ、{% ket 1 %} の位相が π
+  変化していることに注意してください。 {% ket 0 %} に対する H ゲート操作は、位相の回転を含みません。
 </p>
 
 <p>
@@ -99,7 +98,7 @@ description: 重ね合わせ状態の作成
 
 <p>
   H ゲートを {% ket 0 %} と {% ket 1 %} に適用して、重ね合わせ状態が作られることを確認しましょう。
-  {% ket 0 %} は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか？
+  {% ket 0 %} は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか?
   (ヒント: X ゲートを使います)
 </p>
 
@@ -162,7 +161,7 @@ description: 重ね合わせ状態の作成
   ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
-<div class="flex pb-14">
+<div class="mx-5 flex">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <circle-notation id="circle-notation-H0-a" data-size="xl" data-show-kets></circle-notation>
@@ -250,17 +249,17 @@ description: 重ね合わせ状態の作成
     href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice"
     >physics.stackexchange.com</a
   >){% endmargin_note %}
-  <img src="./images/bloch_H0.png" class="h-auto w-full border border-neutral-300" />
+  <img src="./images/bloch_H0.png" class="h-auto w-full" />
 </figure>
 
 <h2>任意の重ね合わせ状態に H ゲートを適用</h2>
 
 <p>
   次のように振幅の大きさと位相の異なる重ね合わせ状態に H
-  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか？
+  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか?
 </p>
 
-<div class="flex flex-row justify-center space-x-4 pb-10 md:mr-auto md:w-7/12">
+<div class="mx-5 flex flex-row justify-center space-x-4 md:mr-auto md:w-7/12">
   <div class="mb-8 flex flex-row items-center space-x-1">
     <circle-notation
       id="circle-notation-H-superposition-before"
