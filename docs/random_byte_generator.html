@@ -376,8 +376,8 @@
   量子乱数ジェネレータ<label for="margin-note-quantum-random-generator" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-quantum-random-generator" class="margin-note-toggle"><span class="margin-note"><a
     href="./measurement_operation.html"
     >MEASUREMENT 命令</a
-  >を参照</span>は 1 ビットの乱数 <code>0</code> または
-  <code>1</code> を生成するものでした。 より大きな乱数を生成するにはどうしたらよいでしょうか? 今回は
+  >を参照</span>は 1 ビットの乱数 0 または
+  1 を生成するものでした。 より大きな乱数を生成するにはどうしたらよいでしょうか? 今回は
   8 個の量子ビットを使って、1 バイト (= 8 ビット, 0 から 255 まで)
   の乱数を生成する回路を紹介します。
 </p>
@@ -388,7 +388,7 @@
   つをランダムに出力します。
 </p>
 
-<div class="relative mb-10 w-full overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto">
+<div class="relative my-5 w-full overflow-hidden rounded-md bg-gray-50 p-8 md:mr-auto">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
@@ -462,7 +462,7 @@
   そこで最初のペアだけが 50% の重ね合わせ状態となり、ほかのペアは変化しません。
 </p>
 
-<div class="flex pb-10">
+<div class="flex my-5">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -527,7 +527,7 @@
   の重ね合わせ状態となり、ほかのペアは変化しません。
 </p>
 
-<div class="flex pb-10">
+<div class="flex my-5">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -590,7 +590,7 @@
   <img src="./images/H_bit3_ket_pair.png" />
 </figure>
 
-<div class="flex pb-10">
+<div class="flex my-5">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
       <circle-notation
@@ -664,7 +664,7 @@
   このことを使うと、先ほどの回路は次のようにかなりコンパクトに書き直せます。
 </p>
 
-<div class="relative mb-10 w-full overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto">
+<div class="relative my-5 w-full overflow-hidden rounded-md bg-gray-50 p-8 md:mr-auto">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div

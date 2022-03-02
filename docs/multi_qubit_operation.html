@@ -401,68 +401,68 @@
   と \(|3\rangle\)、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex my-5">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
-  <div class="mb-4 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-before-X1"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-X1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
 
-    <script type="module">
-      import { Complex } from './application.js'
+      <script type="module">
+        import { Complex } from './application.js'
 
-      let circleNotation = document.getElementById('circle-notation-3qubit-before-X1')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.42678, -0.17678),
-        1: new Complex(0.17678, -0.07322),
-        2: new Complex(0.17678, 0.42678),
-        3: new Complex(0.07322, 0.17678),
-        4: new Complex(-0.42678, 0.17678),
-        5: new Complex(-0.17678, 0.07322),
-        6: new Complex(-0.17678, -0.42678),
-        7: new Complex(-0.07322, -0.17678),
-      })
-    </script>
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X1')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>X ゲートを 1 ビット目に適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X1"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X1')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.17678, -0.07322),
+          1: new Complex(0.42678, -0.17678),
+          2: new Complex(0.07322, 0.17678),
+          3: new Complex(0.17678, 0.42678),
+          4: new Complex(-0.17678, 0.07322),
+          5: new Complex(-0.42678, 0.17678),
+          6: new Complex(-0.07322, -0.17678),
+          7: new Complex(-0.17678, -0.42678),
+        })
+      </script>
+    </div>
   </div>
-
-  <div class="flex flex-col items-center space-y-2">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    <div>X ゲートを 1 ビット目に適用</div>
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-  </div>
-
-  <div class="mb-8 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-after-X1"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
-
-    <script type="module">
-      import { Complex } from './application.js'
-
-      let circleNotation = document.getElementById('circle-notation-3qubit-after-X1')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.17678, -0.07322),
-        1: new Complex(0.42678, -0.17678),
-        2: new Complex(0.07322, 0.17678),
-        3: new Complex(0.17678, 0.42678),
-        4: new Complex(-0.17678, 0.07322),
-        5: new Complex(-0.42678, 0.17678),
-        6: new Complex(-0.07322, -0.17678),
-        7: new Complex(-0.17678, -0.42678),
-      })
-    </script>
-  </div>
-</div>
 </div>
 
 <p>
@@ -532,68 +532,68 @@
   これを状態ベクトルで見ると、次のようになります。 \(|0\rangle\) と \(|2\rangle\) や \(|5\rangle\) と \(|7\rangle\) が X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="flex my-5">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-before-X2"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
+      <circle-notation
+        id="circle-notation-3qubit-before-X2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
 
-    <script type="module">
-      import { Complex } from './application.js'
+      <script type="module">
+        import { Complex } from './application.js'
 
-      let circleNotation = document.getElementById('circle-notation-3qubit-before-X2')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.42678, -0.17678),
-        1: new Complex(0.17678, -0.07322),
-        2: new Complex(0.17678, 0.42678),
-        3: new Complex(0.07322, 0.17678),
-        4: new Complex(-0.42678, 0.17678),
-        5: new Complex(-0.17678, 0.07322),
-        6: new Complex(-0.17678, -0.42678),
-        7: new Complex(-0.07322, -0.17678),
-      })
-    </script>
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X2')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>X ゲートを 2 ビット目に適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X2"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X2')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.17678, 0.42678),
+          1: new Complex(0.07322, 0.17678),
+          2: new Complex(0.42678, -0.17678),
+          3: new Complex(0.17678, -0.07322),
+          4: new Complex(-0.17678, -0.42678),
+          5: new Complex(-0.07322, -0.17678),
+          6: new Complex(-0.42678, 0.17678),
+          7: new Complex(-0.17678, 0.07322),
+        })
+      </script>
+    </div>
   </div>
-
-  <div class="flex flex-col items-center space-y-2">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    <div>X ゲートを 2 ビット目に適用</div>
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-  </div>
-
-  <div class="mb-8 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-after-X2"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
-
-    <script type="module">
-      import { Complex } from './application.js'
-
-      let circleNotation = document.getElementById('circle-notation-3qubit-after-X2')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.17678, 0.42678),
-        1: new Complex(0.07322, 0.17678),
-        2: new Complex(0.42678, -0.17678),
-        3: new Complex(0.17678, -0.07322),
-        4: new Complex(-0.17678, -0.42678),
-        5: new Complex(-0.07322, -0.17678),
-        6: new Complex(-0.42678, 0.17678),
-        7: new Complex(-0.17678, 0.07322),
-      })
-    </script>
-  </div>
-</div>
 </div>
 
 <p>これも Qni で実際に確認しておきましょう。</p>
@@ -656,68 +656,68 @@
 
 <p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
 
-<div class="flex my-5">
+<div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-before-X3"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
+      <circle-notation
+        id="circle-notation-3qubit-before-X3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
 
-    <script type="module">
-      import { Complex } from './application.js'
+      <script type="module">
+        import { Complex } from './application.js'
 
-      let circleNotation = document.getElementById('circle-notation-3qubit-before-X3')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.42678, -0.17678),
-        1: new Complex(0.17678, -0.07322),
-        2: new Complex(0.17678, 0.42678),
-        3: new Complex(0.07322, 0.17678),
-        4: new Complex(-0.42678, 0.17678),
-        5: new Complex(-0.17678, 0.07322),
-        6: new Complex(-0.17678, -0.42678),
-        7: new Complex(-0.07322, -0.17678),
-      })
-    </script>
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-X3')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>X ゲートを 3 ビット目に適用</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-X3"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-X3')
+        circleNotation.setAmplitudes({
+          0: new Complex(-0.42678, 0.17678),
+          1: new Complex(-0.17678, 0.07322),
+          2: new Complex(-0.17678, -0.42678),
+          3: new Complex(-0.07322, -0.17678),
+          4: new Complex(0.42678, -0.17678),
+          5: new Complex(0.17678, -0.07322),
+          6: new Complex(0.17678, 0.42678),
+          7: new Complex(0.07322, 0.17678),
+        })
+      </script>
+    </div>
   </div>
-
-  <div class="flex flex-col items-center space-y-2">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    <div>X ゲートを 3 ビット目に適用</div>
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-  </div>
-
-  <div class="mb-8 flex flex-row items-center space-x-1">
-    <circle-notation
-      id="circle-notation-3qubit-after-X3"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation>
-
-    <script type="module">
-      import { Complex } from './application.js'
-
-      let circleNotation = document.getElementById('circle-notation-3qubit-after-X3')
-      circleNotation.setAmplitudes({
-        0: new Complex(-0.42678, 0.17678),
-        1: new Complex(-0.17678, 0.07322),
-        2: new Complex(-0.17678, -0.42678),
-        3: new Complex(-0.07322, -0.17678),
-        4: new Complex(0.42678, -0.17678),
-        5: new Complex(0.17678, -0.07322),
-        6: new Complex(0.17678, 0.42678),
-        7: new Complex(0.07322, 0.17678),
-      })
-    </script>
-  </div>
-</div>
 </div>
 
 <p>こちらも Qni で確認しておきましょう。</p>
