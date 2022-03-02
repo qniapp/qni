@@ -88,12 +88,12 @@ description: プログラマ向け量子プログラミング実践チュート�
   で、量子プログラミングについて学んだことをすぐ実験できるようになっています。
 </p>
 
-<div class="relative my-5 overflow-hidden rounded-2xl bg-gray-50 p-8 md:mr-auto md:w-7/12">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
       <div
         id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
       >
         <palette-dropzone>
           <h-gate></h-gate>
@@ -110,14 +110,16 @@ description: プログラマ向け量子プログラミング実践チュート�
       </div>
 
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
           </div>
         </inspector-button>
       </div>
@@ -135,7 +137,7 @@ description: プログラマ向け量子プログラミング実践チュート�
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
