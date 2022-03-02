@@ -4951,11 +4951,6 @@ mark {
   margin-top: 2.5rem;
 }
 
-.prose code {
-  --tw-text-opacity: 1;
-  color: rgb(147 51 234 / var(--tw-text-opacity));
-}
-
 @media (min-width: 768px) {
   .content-with-margin > p, .content-with-margin ul {
     margin-right: auto;
@@ -5000,6 +4995,10 @@ mark {
 
 .z-40 {
   z-index: 40;
+}
+
+.m-0 {
+  margin: 0px;
 }
 
 .my-auto {
@@ -5588,6 +5587,11 @@ mark {
   padding-right: 2rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .pb-10 {
   padding-bottom: 2.5rem;
 }
@@ -5638,6 +5642,14 @@ mark {
 
 .text-center {
   text-align: center;
+}
+
+.align-top {
+  vertical-align: top;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .font-mono {

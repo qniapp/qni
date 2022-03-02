@@ -7,7 +7,3 @@
 .prose orbit-reviewarea {
   @apply mt-10;
 }
-
-.prose code {
-  @apply text-purple-600;
-}
