@@ -17,13 +17,13 @@ description: 量子鍵配送を量子回路として実装
   ゲートを適用してから測定します。
 </p>
 
-<div class="relative mb-10 rounded-2xl bg-gray-50">
+<div class="relative mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
         <div
           id="palette"
-          class="absolute left-0 top-0 ml-6 mt-8 flex w-min rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+          class="absolute left-0 top-0 ml-6 mt-8 flex w-min rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
         >
           <palette-dropzone>
             <bloch-display></bloch-display>
@@ -38,9 +38,9 @@ description: 量子鍵配送を量子回路として実装
             class="inline-block h-10 w-10 p-1"
           >
             <div
-              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
             >
-              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
             </div>
           </inspector-button>
         </div>
@@ -82,10 +82,9 @@ circle_notation_popup.html %}
   アリスはまず、盗聴を検出するための仕掛けを施した量子ビット {% ket 0 %} または {% ket 1 %}
   を作るためのランダム値を 2 つ作ります。 最初に、状態 {% ket 0 %} または {% ket 1 %}
   を決めるためのランダムデータを作るため、量子乱数ジェネレータ{% nmargin_note measurement-operation
-  %}<a href="./measurement_operation.html">MEASUREMENT 命令</a>を参照{% endnmargin_note%}で
-  <code>0</code> または <code>1</code> を作り、変数 <code>aliceX</code> にセットします (MEASUREMENT
-  ゲートの上の文字は測定で得られた <code>0</code> または
-  <code>1</code> を変数にセットすることを表します)。同様に、H
+  %}<a href="./measurement_operation.html">MEASUREMENT 命令</a>を参照{% endnmargin_note%}で 0 または
+  1 を作り、変数 <code>aliceX</code> にセットします (MEASUREMENT ゲートの上の文字は測定で得られた 0
+  または 1 を変数にセットすることを表します)。同様に、H
   ゲートを適用する/しないをランダムに決めるための変数
   <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
 </p>
@@ -96,9 +95,8 @@ circle_notation_popup.html %}
   に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ X ゲートを適用します (X
   ゲートの上の <code>if aliceX</code> がこの適用条件を表します)。
   これによって、アリスの量子ビットはランダムに {% ket 0 %} または {% ket 1 %} の状態を持ちます。
-  同様に、ランダムな変数 <code>aliceH</code> の値が <code>1</code> だった場合に H
-  ゲートを適用します。 できあがった量子ビットを (イブにすぐ横取りされてしまうものの)
-  ボブへと送ります。
+  同様に、ランダムな変数 <code>aliceH</code> の値が 1 だった場合に H ゲートを適用します。
+  できあがった量子ビットを (イブにすぐ横取りされてしまうものの) ボブへと送ります。
 </p>
 
 <p>
@@ -117,15 +115,15 @@ circle_notation_popup.html %}
   >を参照{% endnmargin_note
   %}によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
   さらにアリスが {% ket 0 %} と {% ket 1 %} のどちらを送ったのか、さらに H
-  ゲートを適用したかどうかが測定結果からは分からないため、測定結果は
-  <code>1/2</code> の確率でしか当たりません。 また盗聴行為が直接バレるのを防ぐため、X ゲートと H
+  ゲートを適用したかどうかが測定結果からは分からないため、測定結果は 1/2 の確率でしか当たりません。
+  また盗聴行為が直接バレるのを防ぐため、X ゲートと H
   ゲートでアリスの量子ビットに偽装した新たな量子ビットをボブへ送る必要があります。
 </p>
 
 <p>
   イブが送信する量子ビットの状態は、左から 3
-  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ
-  <code>3/4</code> の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
+  つめのブロッホ球で確認できます。アリスが送る量子ビットの状態は 4 通りなので、およそ 3/4
+  の確率でアリスの送った状態と異なる量子ビットをボブに送ることになります。
 </p>
 
 <h2>ボブ</h2>
