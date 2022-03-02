@@ -42,8 +42,28 @@
     @apply h-8 w-8;
   }
 
+  .operation[data-size='xs'] {
+    @apply h-4 w-4;
+  }
+
   .operation[data-size='sm'] {
     @apply h-6 w-6;
+  }
+
+  .operation[data-size='base'] {
+    @apply h-8 w-8;
+  }
+
+  .operation[data-size='lg'] {
+    @apply h-10 w-10;
+  }
+
+  .operation[data-size='xl'] {
+    @apply h-12 w-12;
+  }
+
+  .operation[data-size='2xl'] {
+    @apply h-16 w-16;
   }
 }
 
