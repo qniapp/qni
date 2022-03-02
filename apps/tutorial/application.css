@@ -1567,6 +1567,11 @@ select {
   width: 1.5rem;
 }
 
+.operation[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 .operation[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -2194,6 +2199,11 @@ h-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+h-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 h-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -2359,6 +2369,11 @@ x-gate[data-size='xs'] {
 x-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+x-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 x-gate[data-size='lg'] {
@@ -2528,6 +2543,11 @@ y-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+y-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 y-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -2693,6 +2713,11 @@ z-gate[data-size='xs'] {
 z-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+z-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 z-gate[data-size='lg'] {
@@ -2919,6 +2944,11 @@ phase-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+phase-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 phase-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -3086,6 +3116,11 @@ t-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+t-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 t-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -3251,6 +3286,11 @@ rnot-gate[data-size='xs'] {
 rnot-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+rnot-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 rnot-gate[data-size='lg'] {
@@ -3477,6 +3517,11 @@ rx-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+rx-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 rx-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -3699,6 +3744,11 @@ ry-gate[data-size='xs'] {
 ry-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+ry-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 ry-gate[data-size='lg'] {
@@ -3925,6 +3975,11 @@ rz-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+rz-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 rz-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -4046,6 +4101,11 @@ swap-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+swap-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 swap-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -4159,6 +4219,11 @@ control-gate[data-size='sm'] {
   width: 1.5rem;
 }
 
+control-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
 control-gate[data-size='lg'] {
   height: 2.5rem;
   width: 2.5rem;
@@ -4270,6 +4335,11 @@ bloch-display[data-size='xs'] {
 bloch-display[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+bloch-display[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 bloch-display[data-size='lg'] {
@@ -4444,6 +4514,11 @@ write-gate[data-size='xs'] {
 write-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+write-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 write-gate[data-size='lg'] {
@@ -4647,6 +4722,11 @@ measurement-gate[data-size='xs'] {
 measurement-gate[data-size='sm'] {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+measurement-gate[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
 }
 
 measurement-gate[data-size='lg'] {
