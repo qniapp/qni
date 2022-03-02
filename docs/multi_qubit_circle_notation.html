@@ -378,7 +378,7 @@
   の状態を持つことができるため、その組合わせは次の 4 通りになります。
 </p>
 
-<ul class="list-disc">
+<ul>
   <li>\(|0\rangle\) と \(|0\rangle\)</li>
   <li>\(|0\rangle\) と \(|1\rangle\)</li>
   <li>\(|1\rangle\) と \(|0\rangle\)</li>
@@ -390,7 +390,7 @@
   とまとめて書くことにしましょう。 すると、先ほどの 4 通りは次のように書けます。
 </p>
 
-<ul class="list-disc">
+<ul>
   <li>\(|0\rangle\) と \(|0\rangle\) → \(|00\rangle\)</li>
   <li>\(|0\rangle\) と \(|1\rangle\) → \(|01\rangle\)</li>
   <li>\(|1\rangle\) と \(|0\rangle\) → \(|10\rangle\)</li>
@@ -402,7 +402,7 @@
   通りはさらに次のように書き換えることができます。
 </p>
 
-<ul class="list-disc">
+<ul>
   <li>\(|0\rangle\) と \(|0\rangle\) → \(|00\rangle\) (2 進数) → \(|0\rangle\) (10 進数)</li>
   <li>\(|0\rangle\) と \(|1\rangle\) → \(|01\rangle\) (2 進数) → \(|1\rangle\) (10 進数)</li>
   <li>\(|1\rangle\) と \(|0\rangle\) → \(|10\rangle\) (2 進数) → \(|2\rangle\) (10 進数)</li>
@@ -448,39 +448,37 @@
   個になります。
 </p>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-4qubit"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
+<div class="my-5 flex flex-col">
+  <div class="flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-4qubit"
+      data-multi-qubits
+      data-qubit-count="3"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
 
-      <script type="module">
-        import { Complex } from './application.js'
+    <script type="module">
+      import { Complex } from './application.js'
 
-        let circleNotation = document.getElementById('circle-notation-4qubit')
+      let circleNotation = document.getElementById('circle-notation-4qubit')
 
-        circleNotation.setAmplitudes({
-          0: 0,
-          1: 0,
-          2: 0,
-          3: 0,
-          4: 0,
-          5: 1,
-        })
-      </script>
-    </div>
+      circleNotation.setAmplitudes({
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 1,
+      })
+    </script>
   </div>
 </div>
 
 <p>
   このようにビット数を増やすと表せる状態 (数)
-  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは <code>0</code> と
-  <code>1</code> の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
+  が倍々になっていく現象は、実は古典ビットでもまったく同じです。 古典ビットは 0 と 1
+  の値を持つので、3 桁の 2 進数で考えると 0 から 7 まで 8 通りの数を表せるからです。
   しかし複数の量子ビットでは、次に紹介するように 1
   量子ビットの場合と同じく<mark>重ね合わせ状態</mark>を持つことができるという大きな違いがあります。
 </p>
