@@ -1562,12 +1562,6 @@ select {
 
 /* bottom label */
 
-/* top label */
-
-/* top label over wire */
-
-/* bottom label */
-
 .tippy-box{
   border:1px transparent
 }
@@ -2037,25 +2031,26 @@ circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
 }
 
 h-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone h-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone h-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2072,7 +2067,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] h-gate[data-if]::before 
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) h-gate[data-if]::before {
@@ -2204,25 +2199,26 @@ circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
 }
 
 x-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone x-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone x-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2239,7 +2235,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] x-gate[data-if]::before 
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) x-gate[data-if]::before {
@@ -2371,25 +2367,26 @@ circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
 }
 
 y-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone y-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone y-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2406,7 +2403,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] y-gate[data-if]::before 
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) y-gate[data-if]::before {
@@ -2538,25 +2535,26 @@ circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
 }
 
 z-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone z-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone z-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2573,7 +2571,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] z-gate[data-if]::before 
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::before {
@@ -2762,25 +2760,26 @@ circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
 }
 
 phase-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone phase-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone phase-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2797,7 +2796,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] phase-gate[data-if]::bef
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-if]::before {
@@ -2929,25 +2928,26 @@ circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
 }
 
 t-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone t-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone t-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -2964,7 +2964,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] t-gate[data-if]::before 
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::before {
@@ -3096,25 +3096,26 @@ circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
 }
 
 rnot-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone rnot-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone rnot-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -3131,7 +3132,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] rnot-gate[data-if]::befo
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rnot-gate[data-if]::before {
@@ -3320,25 +3321,26 @@ circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
 }
 
 rx-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone rx-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone rx-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -3355,7 +3357,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] rx-gate[data-if]::before
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-if]::before {
@@ -3544,25 +3546,26 @@ circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
 }
 
 ry-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone ry-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone ry-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -3579,7 +3582,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] ry-gate[data-if]::before
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-if]::before {
@@ -3768,25 +3771,26 @@ circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
 }
 
 rz-gate[data-if]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
+  white-space: nowrap;
+  content: '';
 }
 
 circuit-dropzone rz-gate[data-if]:not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
   content: 'if\2009'attr(data-if);
 }
 
 circuit-dropzone rz-gate[data-angle][data-if]:not([data-angle='']):not([data-if=''])::before {
-  display: flex;
-  justify-content: center;
-  white-space: nowrap;
   content: attr(data-angle) '\2009if\2009'attr(data-if);
 }
 
@@ -3803,7 +3807,7 @@ circuit-dropzone[data-connect-top][data-connect-bottom] rz-gate[data-if]::before
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-if]::before {
@@ -5083,6 +5087,12 @@ circuit-dropzone .draggable:not([data-snapped])::part(icon)::before {
   height: 4rem;
   width: 4rem;
 }
+
+/* top label */
+
+/* top label over wire */
+
+/* bottom label */
 
 body {
   counter-reset: margin-note-counter;
