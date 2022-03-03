@@ -2039,7 +2039,6 @@ h-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone h-gate[data-if]:not([data-if=''])::before {
@@ -2207,7 +2206,6 @@ x-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone x-gate[data-if]:not([data-if=''])::before {
@@ -2375,7 +2373,6 @@ y-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone y-gate[data-if]:not([data-if=''])::before {
@@ -2543,7 +2540,6 @@ z-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone z-gate[data-if]:not([data-if=''])::before {
@@ -2650,24 +2646,25 @@ phase-gate[data-active][data-grabbed]::after {
 }
 
 phase-gate[data-angle]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
-}
-
-phase-gate[data-reduced-angle='']:not([data-angle=''])::before {
-  display: flex;
-  justify-content: center;
-  content: attr(data-angle) '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
 }
 
 phase-gate:not([data-reduced-angle=''])::before {
-  display: flex !important;
-  justify-content: center !important;
   content: attr(data-reduced-angle) '';
+}
+
+phase-gate[data-reduced-angle='']:not([data-angle=''])::before {
+  content: attr(data-angle) '';
 }
 
 palette-dropzone phase-gate::before {
@@ -2675,8 +2672,6 @@ palette-dropzone phase-gate::before {
 }
 
 phase-gate[data-angle][data-size='sm']::before {
-  display: flex;
-  justify-content: center;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -2696,10 +2691,11 @@ circuit-dropzone[data-connect-top][data-connect-bottom] phase-gate[data-angle]::
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-angle]::before {
+  top: auto;
   bottom: 0px;
   left: 0px;
   right: 0px;
@@ -2768,7 +2764,6 @@ phase-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone phase-gate[data-if]:not([data-if=''])::before {
@@ -2936,7 +2931,6 @@ t-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone t-gate[data-if]:not([data-if=''])::before {
@@ -3104,7 +3098,6 @@ rnot-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone rnot-gate[data-if]:not([data-if=''])::before {
@@ -3211,24 +3204,25 @@ rx-gate[data-active][data-grabbed]::after {
 }
 
 rx-gate[data-angle]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
-}
-
-rx-gate[data-reduced-angle='']:not([data-angle=''])::before {
-  display: flex;
-  justify-content: center;
-  content: attr(data-angle) '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
 }
 
 rx-gate:not([data-reduced-angle=''])::before {
-  display: flex !important;
-  justify-content: center !important;
   content: attr(data-reduced-angle) '';
+}
+
+rx-gate[data-reduced-angle='']:not([data-angle=''])::before {
+  content: attr(data-angle) '';
 }
 
 palette-dropzone rx-gate::before {
@@ -3236,8 +3230,6 @@ palette-dropzone rx-gate::before {
 }
 
 rx-gate[data-angle][data-size='sm']::before {
-  display: flex;
-  justify-content: center;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -3257,10 +3249,11 @@ circuit-dropzone[data-connect-top][data-connect-bottom] rx-gate[data-angle]::bef
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle]::before {
+  top: auto;
   bottom: 0px;
   left: 0px;
   right: 0px;
@@ -3329,7 +3322,6 @@ rx-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone rx-gate[data-if]:not([data-if=''])::before {
@@ -3436,24 +3428,25 @@ ry-gate[data-active][data-grabbed]::after {
 }
 
 ry-gate[data-angle]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
-}
-
-ry-gate[data-reduced-angle='']:not([data-angle=''])::before {
-  display: flex;
-  justify-content: center;
-  content: attr(data-angle) '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
 }
 
 ry-gate:not([data-reduced-angle=''])::before {
-  display: flex !important;
-  justify-content: center !important;
   content: attr(data-reduced-angle) '';
+}
+
+ry-gate[data-reduced-angle='']:not([data-angle=''])::before {
+  content: attr(data-angle) '';
 }
 
 palette-dropzone ry-gate::before {
@@ -3461,8 +3454,6 @@ palette-dropzone ry-gate::before {
 }
 
 ry-gate[data-angle][data-size='sm']::before {
-  display: flex;
-  justify-content: center;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -3482,10 +3473,11 @@ circuit-dropzone[data-connect-top][data-connect-bottom] ry-gate[data-angle]::bef
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle]::before {
+  top: auto;
   bottom: 0px;
   left: 0px;
   right: 0px;
@@ -3554,7 +3546,6 @@ ry-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone ry-gate[data-if]:not([data-if=''])::before {
@@ -3661,24 +3652,25 @@ rz-gate[data-active][data-grabbed]::after {
 }
 
 rz-gate[data-angle]::before {
-  display: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
   line-height: .75rem;
-  position: absolute;
-}
-
-rz-gate[data-reduced-angle='']:not([data-angle=''])::before {
-  display: flex;
-  justify-content: center;
-  content: attr(data-angle) '';
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  margin-top: -0.875rem;
 }
 
 rz-gate:not([data-reduced-angle=''])::before {
-  display: flex !important;
-  justify-content: center !important;
   content: attr(data-reduced-angle) '';
+}
+
+rz-gate[data-reduced-angle='']:not([data-angle=''])::before {
+  content: attr(data-angle) '';
 }
 
 palette-dropzone rz-gate::before {
@@ -3686,8 +3678,6 @@ palette-dropzone rz-gate::before {
 }
 
 rz-gate[data-angle][data-size='sm']::before {
-  display: flex;
-  justify-content: center;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -3707,10 +3697,11 @@ circuit-dropzone[data-connect-top][data-connect-bottom] rz-gate[data-angle]::bef
   right: 0px;
   margin-top: -0.875rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
+        -1px 0 0 #fff, 1px 0 0 #fff;
 }
 
 circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle]::before {
+  top: auto;
   bottom: 0px;
   left: 0px;
   right: 0px;
@@ -3779,7 +3770,6 @@ rz-gate[data-if]::before {
   font-size: 0.75rem;
   line-height: .75rem;
   white-space: nowrap;
-  content: '';
 }
 
 circuit-dropzone rz-gate[data-if]:not([data-if=''])::before {
