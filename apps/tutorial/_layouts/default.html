@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="h-full">
   <head>
     <title>{{ page.title }}</title>
 
@@ -28,12 +28,23 @@
       src="https://plausible.io/js/plausible.js"
     ></script>
   </head>
-  <body>
+  <body class="w-full">
     {{ content }}
 
     <script>
-      let sidebar = document.querySelector('.sidebar')
+      let mobileSidebar = document.getElementById('mobile-sidebar')
 
+      let mobileSidebarOpenButton = document.getElementById('mobile-sidebar-open-button')
+      mobileSidebarOpenButton.addEventListener('click', () => {
+        mobileSidebar.classList.remove('hidden')
+      })
+
+      let mobileSidebarCloseButton = document.getElementById('mobile-sidebar-close-button')
+      mobileSidebarCloseButton.addEventListener('click', () => {
+        mobileSidebar.classList.add('hidden')
+      })
+
+      let sidebar = document.querySelector('.sidebar')
       let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
       if (sidebarScroll !== null) {
         sidebar.scrollTop = parseInt(sidebarScroll, 10)
