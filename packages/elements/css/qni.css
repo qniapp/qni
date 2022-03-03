@@ -73,15 +73,17 @@
       @apply border-opacity-100;
     }
 
-    quantum-circuit:not([data-editing]) & {
+    circuit-editor quantum-circuit:not([data-editing]) & {
       @apply cursor-grab;
     }
 
-    quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
+    circuit-editor quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
       @apply border-opacity-100;
     }
 
-    quantum-circuit([data-editing]) &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+    circuit-editor
+      quantum-circuit([data-editing])
+      &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
       @apply border-opacity-100;
     }
 
