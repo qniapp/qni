@@ -5134,16 +5134,6 @@ body {
 }
 
 .margin-note {
-  left: 1rem;
-}
-
-@media (min-width: 640px) {
-  .margin-note {
-    left: auto;
-  }
-}
-
-.margin-note {
   margin: 1rem;
 }
 
@@ -5171,21 +5161,15 @@ body {
   }
 }
 
-.margin-note-toggle:checked + .margin-note {
-  display: block;
-}
-
-@media (min-width: 640px) {
-  .margin-note {
-    margin-right: -50%;
-  }
-}
-
 .margin-note--numbered {
   counter-increment: margin-note-counter;
 }
 
-.margin-note--numbered:after {
+.margin-note__toggle:checked + .margin-note {
+  display: block;
+}
+
+.margin-note__toggle:after {
   position: relative;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -5195,38 +5179,40 @@ body {
 }
 
 @media (min-width: 640px) {
-  .margin-note--numbered:after {
+  .margin-note__toggle:after {
     padding-left: 0px;
     padding-right: 0px;
   }
 }
 
-.margin-note--numbered:after {
+.margin-note__toggle:after {
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {
-  .margin-note--numbered:after {
+  .margin-note__toggle:after {
     background-color: transparent;
   }
 }
 
-.margin-note--numbered:after {
+.margin-note__toggle:after {
   top: -0.5rem;
   vertical-align: baseline;
+  content: '…';
+}
+
+.margin-note__toggle.margin-note--numbered:after {
   content: counter(margin-note-counter);
 }
 
-input.margin-note-toggle {
-  display: none;
+@media (min-width: 640px) {
+  .margin-note {
+    margin-right: -50%;
+  }
 }
 
-label.margin-note-toggle:not(.margin-note--numbered) {
-  display: none;
-}
-
-label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
+label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   position: relative;
   top: -0.5rem;
   padding-right: 0.25rem;
@@ -5313,6 +5299,11 @@ mark {
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .my-auto {
@@ -6196,6 +6187,11 @@ mark {
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .sm\:after\:hidden::after {
+    content: var(--tw-content);
+    display: none;
   }
 }
 

@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'jit',
-  content: ['./*.html', '_includes/*.html', '_layouts/*.html'],
+  content: ['./*.html', '_includes/*.html', '_layouts/*.html', '_plugins/*.rb/'],
   theme: {
     extend: {},
   },

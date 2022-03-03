@@ -9,8 +9,8 @@ module Jekyll
 
     def render(context)
       text = super
-      %(<label for="#{@margin_note_id}" class="margin-note-toggle margin-note--numbered"></label>) +
-        %(<input type="checkbox" id="#{@margin_note_id}" class="margin-note-toggle">) +
+      %(<label for="#{@margin_note_id}" class="margin-note__toggle margin-note--numbered"></label>) +
+        %(<input type="checkbox" id="#{@margin_note_id}" class="margin-note__toggle hidden">) +
         %(<span class="margin-note">#{text}</span>)
     end
   end

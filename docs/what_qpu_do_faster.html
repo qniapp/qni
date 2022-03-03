@@ -410,9 +410,9 @@
 
 <p>
   掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
-  量子ビット<label for="margin-note-qubit" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note-toggle"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<mark>量子ビット</mark>と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
+  量子ビット<label for="margin-note-qubit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<mark>量子ビット</mark>と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
   100 量子ビットを越える程度です。</span>の量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
-  個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note-toggle"><span class="margin-note">一般に、\(n\)
+  個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note__toggle hidden"><span class="margin-note">一般に、\(n\)
   個の量子ビットを持つマシンでは、数を 2 の \(n\) 乗個ならべたベクトルの掛け算を実行します。</span>
 </p>
 
@@ -449,7 +449,7 @@
 <h2>使える行列の制限</h2>
 
 <p>
-  量子コンピュータが扱うベクトルは常に「<mark>二乗和</mark><label for="margin-note-square-sum" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note-toggle"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせたもの</span>が
+  量子コンピュータが扱うベクトルは常に「<mark>二乗和</mark><label for="margin-note-square-sum" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note__toggle hidden"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせたもの</span>が
   1」という性質を保つ必要があります。
   量子コンピュータに入力するベクトルと、行列とベクトルを掛けて新たにできるベクトルは、この性質を保たなければなりません。
 </p>
@@ -466,7 +466,7 @@
 <p>
   制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の<mark>可逆性</mark>)。
   つまり、ある行列 \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
-  を掛けてやることで元のベクトルが得られる必要があります<label for="margin-note-matrix-inverse" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-matrix-inverse" class="margin-note-toggle"><span class="margin-note">行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。</span>。
+  を掛けてやることで元のベクトルが得られる必要があります<label for="margin-note-matrix-inverse" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-matrix-inverse" class="margin-note__toggle hidden"><span class="margin-note">行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。</span>。
   こちらもやはり、量子力学に由来する制限です。
 </p>
 
@@ -479,7 +479,7 @@
   なぜこの制限が難しいのか、私が考えられる最も良い例えはルービックキューブです。
   キューブをばらばらにして組み直すことで、直接的に色をそろえるのはルール違反です。
   できるのは列を回転させることだけで、そこがチャレンジングな部分です。
-  ユニタリ行列も回転で構成されており、空間上の点や図形をある一定のルールで回転させる回転行列<label for="margin-note-rotation-matrix" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-rotation-matrix" class="margin-note-toggle"><span class="margin-note">3D
+  ユニタリ行列も回転で構成されており、空間上の点や図形をある一定のルールで回転させる回転行列<label for="margin-note-rotation-matrix" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-rotation-matrix" class="margin-note__toggle hidden"><span class="margin-note">3D
   ゲームのキャラクター表示やカメラ移動には、回転行列がたくさん使われています。</span>と呼ばれるものの一種です。
 </p>
 
@@ -545,7 +545,7 @@
   量子コンピュータでの行列とベクトルの掛け算は、出力するベクトルを決める確率の<ruby
     ><rb>素</rb><rt>もと</rt></ruby
   >
-  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note-toggle"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1
+  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1
   というルールは、確率から来ています。つまり、測定によって出てくるベクトルそれぞれの確率をすべて足すと
   100% にならなければならないため、二乗和は必ず 1 となります。</span>。
   測定した瞬間に元のベクトルは破壊され、最終的には 1 つの成分だけが 1 でほかはすべて 0
