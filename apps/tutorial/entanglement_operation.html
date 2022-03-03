@@ -1,0 +1,463 @@
+---
+layout: page
+title: もつれを操作する
+description: もつれた量子ビットをまとめて操作
+---
+
+<p>
+  もつれた量子ビットに 1
+  個の量子ゲートを適用すると、もつれ状態にあるすべての量子ビットに一度に作用します。
+  つまり、量子もつれを使えば 1 個の量子ゲートで複数の量子ビットを操作できます{% nmargin_note
+  entanglement-operation
+  %}もつれ状態にある量子ビットに量子ゲートを適用する場合、一部の量子ビットにのみ選択的に作用させることはできません。必ずすべての量子ビットに作用する点に注意してください。{%
+  endnmargin_note %}。
+</p>
+
+<p>
+  ベル回路でもつれさせた量子ビットに、X ゲートを適用させてみましょう。
+  次の量子回路では、もつれた量子ビットのうちの片方に X ゲートを適用します。
+  そして、逆ベル回路でもつれをほどき、測定します。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["•","X"],["H"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  驚くべきことは、X ゲートをビット 1 に作用させたにもかかわらず、測定するとビット 2
+  が反転していることです。 もつれた量子ビットの最初のビットに X
+  ゲートを適用した結果、両方のビットに作用が働き、結果として最初のビットはそのままでもう一方のビットが反転しています。
+</p>
+
+<p>
+  このようなパターンは他のゲートでも起こります。 たとえばビット 1 に PHASE(π)
+  ゲートを作用させると、今度はビット 1 のみが 1 に変わりビット 2 はそのままです。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  今度はビット 1 に X ゲートと PHASE(π) ゲートの両方を適用するとどうなるでしょうか? 想像通り、ビット
+  1 と 2 の両方が 1 になります。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  なぜこのような結果になるか、演算ペアのルールを使って X ゲートの例で確認してみましょう。 X
+  ゲートを適用する前のベル状態は、次のようになっています。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  X ゲートをビット 1 に適用すると、{% ket 0 %} {% ket 1 %} と {% ket 2 %} {% ket 3 %}
+  の演算ペアがそれぞれ次のように入れ替わります。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>X ゲートをビット 1 に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-X1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-X1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: Math.sqrt(0.5),
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  次に逆ベル回路でもつれをほどきます。 逆ベル回路の CNOT 演算を適用すると、ビット 1
+  に置いたコントロールゲートによって {% ket 1 %} {% ket 3 %} のペアが選択され、ビット 2 に置いた X
+  ゲートによって入れ替わります。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-before-cnot"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-before-cnot')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: Math.sqrt(0.5),
+          3: 0,
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>CNOT ゲート (コントロールビット 1, ターゲットビット 2) を適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-cnot"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-cnot')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: Math.sqrt(0.5),
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  逆ベル回路の H をビット 1 に適用すると、{% ket 0 %} {% ket 1 %} と {% ket 2 %} {% ket 3 %}
+  のペアに働き {% ket 2 %} の確率が 100% になります。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-before-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-before-H1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: Math.sqrt(0.5),
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <div>H ゲートをビット 1 に適用</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bellpair-after-H1"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-bellpair-after-H1')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: 0,
+          2: 1,
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  これを測定すると 100% の確率で {% ket 2 %} (二進数で {% ket 10 %}) が出ます。
+  よって、測定するとビット 1 が 0, ビット 2 が 1 となります。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  もつれ状態にゲートを適用すると、もつれたすべての量子ビットに作用します。
+  逆ベル回路によってもつれをほどき測定すると、ゲートを作用した結果を取り出すことができます。
+  このもつれをほどいて測定するシーケンス (CNOT, H, 測定) を<mark>ベル測定</mark>と呼びます。
+</p>
+
+<p>
+  今回はベル状態に X
+  ゲート、PHASE(π)、その両方のゲートを適用しベル測定した場合の結果を見てきました。
+  ゲートを何も適用しない素のベル状態に加えて、これらのゲートを適用した状態 4
+  つをまとめたものもベル状態と呼びます。 4
+  つのベル状態と、それをベル測定した結果をまとめておきましょう。
+</p>
+
+<div class="pb-10">
+  <table class="table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
+    <thead>
+      <tr>
+        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
+        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">なし</td>
+        <td class="border border-slate-300 py-2 px-4">00</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X</td>
+        <td class="border border-slate-300 py-2 px-4">10</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X と PHASE(π)</td>
+        <td class="border border-slate-300 py-2 px-4">11</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">PHASE(π)</td>
+        <td class="border border-slate-300 py-2 px-4">01</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  覚えやすくするために、ゲートの別名を導入します。 PHASE(π) ゲートは Z
+  ゲートとしても知られています。 また、X と PHASE(π) ゲート (つまり Z ゲート) の組合わせは Y
+  ゲートとしても知られています。 このことを使うと、上の表は X, Y, Z ゲートで次のように書き直せます。
+</p>
+
+<div class="pb-10">
+  <table class="my-5 table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
+    <thead>
+      <tr>
+        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
+        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">なし</td>
+        <td class="border border-slate-300 py-2 px-4">00</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">X</td>
+        <td class="border border-slate-300 py-2 px-4">10</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">Y</td>
+        <td class="border border-slate-300 py-2 px-4">11</td>
+      </tr>
+      <tr>
+        <td class="border border-slate-300 py-2 px-4">Z</td>
+        <td class="border border-slate-300 py-2 px-4">01</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  次では、この仕組みを使った<mark>超高密度符号化</mark>というかっこいい名前のアルゴリズムを紹介します。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

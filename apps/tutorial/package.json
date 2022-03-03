@@ -1,0 +1,42 @@
+{
+  "name": "@qni/tutorial",
+  "version": "0.0.34",
+  "description": "An interactive tutorial for @qni/www.",
+  "author": "@yasuhito",
+  "homepage": "https://github.com/qniapp/qni#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qniapp/qni.git"
+  },
+  "scripts": {
+    "lint": "bundle exec rubocop",
+    "start": "bundle exec jekyll s -d ../../docs",
+    "build": "yarn build:css && yarn build:js",
+    "build:js": "esbuild src/application.js --bundle --format=esm --keep-names --sourcemap --outdir=. && esbuild src/serviceworker.js --bundle --keep-names --minify --sourcemap --outdir=.",
+    "build:css": "tailwindcss -c tailwind.config.js --postcss -i ./src/application.css -o ./application.css",
+    "watch:js": "yarn build:js --watch",
+    "watch:css": "yarn build:css --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/qniapp/qni/issues"
+  },
+  "dependencies": {
+    "@qni/common": "^0.0.34",
+    "@qni/elements": "^0.0.34",
+    "@qni/simulator": "^0.0.34"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
+    "autoprefixer": "^10.4.2",
+    "postcss-import": "^14.0.2",
+    "prettier-plugin-erb": "0.4.0"
+  },
+  "eslintIgnore": [
+    "application.css",
+    "application.js",
+    "application.js.map",
+    "serviceworker.js",
+    "serviceworker.js.map"
+  ]
+}

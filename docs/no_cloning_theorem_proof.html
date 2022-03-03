@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>クローン禁止定理の証明</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+  <div class="hidden md:flex md:flex-shrink-0">
+  <div class="flex w-64 flex-col">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+      <div class="flex flex-shrink-0 items-center px-8">
+        <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+        <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+          >Qni</span
+        >
+      </div>
+      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-6">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 演算との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <main class="relative flex-1 overflow-y-auto focus:outline-none">
+      <article class="prose prose-neutral max-w-none py-5">
+        <div class="h-8"></div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 sm:mb-12 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  クローン禁止定理の証明
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500"></p>
+            </div>
+            <div class="content-with-margin">量子ビットの情報を複製できるユニタリ演算子 \(U_{CLONE}\) があったとする。
+このとき、任意の状態の量子ビット \(|🍎\rangle\), \(|👶\rangle\) について、次が成り立つとする。 \[
+\left\{ \begin{array}{l} U_{CLONE}(|🍎\rangle|0\rangle) = |🍎\rangle|🍎\rangle \\
+U_{CLONE}(|👶\rangle|0\rangle) = |👶\rangle|👶\rangle \end{array} \right. \] 1 番目の式から、 $$
+(\langle 0|\langle 🍎|)U^{\dagger}_{CLONE} = \langle🍎|\langle🍎| $$ この式と 2
+番目の式の両辺で内積を取ると、 $$ \begin{array}{l} &(\langle
+0|\langle🍎|)U^{\dagger}_{CLONE}U_{CLONE}(|👶\rangle|0\rangle) =
+\langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle 0|\langle🍎|👶\rangle|0\rangle =
+\langle🍎|\langle🍎|👶\rangle|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle\langle 0|0\rangle =
+\langle🍎|👶\rangle\langle🍎|👶\rangle \\ \Rightarrow &\langle🍎|👶\rangle = (\langle🍎|👶\rangle)^2
+\\ \end{array} $$ よって \(\langle🍎|👶\rangle\) は \(0\) または \(1\) となり、\(|🍎\rangle\) と
+\(|👶\rangle\) が任意であることに矛盾する。 以上より、そのようなユニタリ演算子 \(U_{CLONE}\)
+は存在しない。
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
+  </body>
+</html>

@@ -1,20 +1,404 @@
----
-layout: page
-title: QPU とは
-description: 量子コンピュータの正しい位置付け
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>QPU とは</title>
 
-<p>
-  「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、数年後には従来のコンピュータはすべて量子コンピュータに置き換わる」最近の加熱する量子コンピュータ報道では、こうした論調のものが少なくありません。
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+  <div class="hidden md:flex md:flex-shrink-0">
+  <div class="flex w-64 flex-col">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+      <div class="flex flex-shrink-0 items-center px-8">
+        <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+        <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+          >Qni</span
+        >
+      </div>
+      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-6">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 演算との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <main class="relative flex-1 overflow-y-auto focus:outline-none">
+      <article class="prose prose-neutral max-w-none py-5">
+        <div class="h-8"></div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 sm:mb-12 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  QPU とは
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子コンピュータの正しい位置付け</p>
+            </div>
+            <div class="content-with-margin"><p>
+  「量子コンピュータとは、従来のコンピュータとまったく異なる方式の超高速なコンピュータであり、近い将来には従来のコンピュータはすべて量子コンピュータに置き換わる」最近の加熱する量子コンピュータ報道では、こうした論調のものが少なくありません。
 </p>
 
 <p>
   これは、大きな誤解です。<a href="./index.html">はじめに</a
-  >で述べたように、量子コンピュータは量子探索や因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは解けなかったクラスの問題を扱うための特殊な補助デバイスの一種です。
+  >で述べたように、量子コンピュータは量子探索や量子因数分解といった特定のタスクで威力を発揮するもので、従来のコンピュータでは解けなかったクラスの問題を扱うための特殊なアクセラレータの一種です。
+  こうした特定のタスク、つまり古典アルゴリズムよりも高速な量子アルゴリズムの一覧は、<a
+    href="https://quantumalgorithmzoo.org/"
+    >Quantum Algorithm Zoo</a
+  >
+  というサイトに網羅的にまとまっています。 現時点でここに掲載されている量子アルゴリズムはまだ 60
+  個程度のため、近い将来に現在のコンピュータすべてが量子コンピュータに置き換わるという意見はいささか乱暴すぎるということが分かります。
+  とは言っても、Quantum Algorithm Zoo に掲載されている量子検索や量子因数分解、HHL<label for="margin-note-hhl" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-hhl" class="margin-note-toggle"><span class="margin-note">連立一次方程式を高速に解くことのできる量子アルゴリズム。HHL はアルゴリズムを開発したホロー
+  (Harrow)、ハシディム (Hassidim)、ロイド (Lloyd) 氏の頭文字を取ったもの。Aram W. Harrow, Avinatan
+  Hassidim, Seth Lloyd,
+  <a href="https://arxiv.org/abs/0811.3171" class="italic"
+    >Quantum Algorithm for Linear Systems of Equations</a
+  >
+  (2008)</span>
+  といった量子アルゴリズムは応用できる範囲がとても広いため、アクセラレータとしての量子コンピュータへの期待をくつがえすものではありません。
 </p>
 
 <p>
-  このような特定の用途向けのマシンやアーキテクチャを「ドメイン指向アーキテクチャ」と呼び、GPU
+  従来、特定のタスク向けのマシンやアーキテクチャを「ドメイン指向アーキテクチャ」と呼び、<mark
+    >GPU</mark
+  >
   (Graphic Processing Unit: 画像処理ユニット)
   が代表的存在です。もともとグラフィック処理向けに開発された GPU
   はコア数が非常に多いことから並列性が高く、ニューラルネットワークの計算を効率よく計算できることから、現在では機械学習ドメインに特化した専用
@@ -23,34 +407,80 @@ description: 量子コンピュータの正しい位置付け
 </p>
 
 <p>
-  そんな GPU からの類推として、量子コンピュータを QPU (Quantum Processing Unit: 量子処理ユニット)
-  と呼ぼうという考えがあります。実際のところ、GPU と QPU にはどれだけ類似点があるでしょうか。まずは
-  GPU プログラミングの特徴を挙げてみましょう:
+  そんな GPU からの類推として、量子コンピュータを <mark>QPU</mark> (Quantum Processing Unit:
+  量子処理ユニット) と呼ぼうという考えがあります。実際のところ、GPU と QPU
+  にはどれだけ類似点があるでしょうか。まずは GPU プログラミングの特徴を挙げてみましょう:
 </p>
 
-<ul class="list-inside list-disc pb-10">
+<ul>
   <li>
-    <span class="font-bold">GPU に適したタスクもあれば、まったく適さないタスクもある。</span>
-    ディープラーニングなど大量の単純な積和演算を含むタスクに適している一方で、CPU
-    と同程度の高クロックが必要な処理には適さない。
+    <p><strong>GPU に適したタスクもあれば、まったく適さないタスクもある。</strong></p>
+    <p>
+      ディープラーニングなど大量の単純な積和演算を含むタスクに適している一方で、CPU
+      並の高クロックが必要な処理には適さない。
+    </p>
   </li>
   <li>
-    <span class="font-bold">プログラムの処理すべてを GPU 上で実行することは非常にまれ。</span>
-    ふつうは CPU で実行するプログラムが一部のタスクを GPU で実行し、後で実行結果を回収する。
+    <p><strong>プログラムの処理すべてを GPU 上で実行することは非常にまれ。</strong></p>
+    <p>ふつうは CPU で実行するプログラムが一部のタスクを GPU で実行し、後で実行結果を回収する。</p>
   </li>
   <li>
-    <span class="font-bold"
-      >GPU プログラミングには、特別な言語やコンパイラ、ライブラリが必要。</span
-    >
-    NVIDIA 専用の CUDA や、C や Fortran で使える OpenACC などがその代表。
+    <p><strong>GPU プログラミングには、特別な言語やコンパイラ、ライブラリが必要。</strong></p>
+    <p>NVIDIA 専用の CUDA や、C や Fortran で使える OpenACC などがその代表。</p>
   </li>
 </ul>
 
+<p>興味深いことに、「GPU」を「QPU」に置き換えてもほぼ同じことがあてはまります!</p>
+
 <p>
-  おもしろいことに、「GPU」を「QPU」に置き換えてもほぼ同じことがあてはまります! それならば、GPU
-  が辿ってきた道を振り返ることで、これから QPU が進む未来を大まかに予測できるのではないでしょうか。
-  1999 年に登場した GPU は、プログラミングパラダイム上の大きな転換をプログラマにもたらしました。
+  それならば、GPU が辿ってきた道を振り返ることで、これから QPU
+  が進む未来を大まかに予測できるのではないでしょうか。 1999 年に登場した GPU
+  は、プログラミングパラダイムの大きな転換をプログラマにもたらしました。
   それも過ぎ去った現在では、ゲーム産業や数値計算をはじめとした分野で、たくさんの GPU
   プログラマが活躍しています。 そう考えれば、QPU
   プログラミングにも最初は多少の混乱はあるでしょうが、数年後には当たり前の技術となっているでしょう。
+  それならいつかは自分にもできそう、そう思えてきませんか?
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="「現在のコンピュータすべてが将来的にはすべて量子コンピュータに置き換わる」
+              という意見に**現時点で**反証できる事実は何?"
+    answer="古典よりも高速な量子アルゴリズムはまだ 60 個程度しか知られていない"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="HHL アルゴリズムの用途は?"
+    answer="連立一次方程式の高速な求解"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="ドメイン指向アーキテクチャの代表例で、機械学習などで広く用いられているデバイスは?"
+    answer="GPU"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータの別名で、特定タスク向けのアクセラレータとしての側面を強調する名前は?"
+    answer="QPU"
+  ></orbit-prompt>
+</orbit-reviewarea>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
+  </body>
+</html>

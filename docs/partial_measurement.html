@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>1 ビット測定</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+  <div class="hidden md:flex md:flex-shrink-0">
+  <div class="flex w-64 flex-col">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+      <div class="flex flex-shrink-0 items-center px-8">
+        <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+        <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+          >Qni</span
+        >
+      </div>
+      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-6">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 演算との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <main class="relative flex-1 overflow-y-auto focus:outline-none">
+      <article class="prose prose-neutral max-w-none py-5">
+        <div class="h-8"></div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 sm:mb-12 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  1 ビット測定
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">複数量子ビットのうち 1 量子ビットのみを測定する</p>
+            </div>
+            <div class="content-with-margin"><p>
+  今までは複数の量子ビットをすべてまとめて測定してきましたが、1
+  量子ビットだけを測定することもできます。 測定も QPU 命令の 1 つ (MEASUREMENT 命令)
+  なので、演算ペアの考えかたを使います。
+</p>
+
+<p>たとえば以下の状態ベクトルについて、ビット 1 のみを測定する場合を考えます。</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mx-4 flex flex-row justify-between">
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+      <span class="basis-1/4 text-center text-purple-600">0%</span>
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+    </div>
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  ビット 1 に QPU 命令を適用する場合、隣同士の円 (\(|0\rangle\) と \(|1\rangle\)、\(|2\rangle\) と \(|3\rangle\)) の演算ペアを考えるのでした。 MEASUREMENT 命令をビット 1 に適用すると、0 または 1
+  が得られます。 このときそれぞれの確率は、次のように計算できます。
+</p>
+
+<ul class="list-disc">
+  <li>
+    <span class="font-bold">0 になる確率: </span> 演算ペアの<mark>左の円</mark> (\(|0\rangle\) と \(|2\rangle\)) の確率を足す
+    (= 33%)
+  </li>
+  <li>
+    <span class="font-bold">1 になる確率: </span> 演算ペアの<mark>右の円</mark> (\(|1\rangle\) と \(|3\rangle\)) の確率を足す
+    (= 66%)
+  </li>
+</ul>
+
+<p>
+  33% の確率でビット 1 が 0 になった場合、\(|1\rangle\) と \(|3\rangle\) の円は空になります。
+  なぜならば、1 と 3 を 2 進数で表した場合それぞれのビット 1 は 1 のため、測定されたビット 1 が 0
+  という結果に反するからです。 そして残った円 (\(|0\rangle\) と \(|2\rangle\)) の確率は、全体で確率が
+  100% となるようにノーマライズされます。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-0-before"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-0-before')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <span>ビット 1 を測定し 0 が出た</span>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-0-after"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-0-after')
+        circleNotation.setAmplitudes({
+          0: 1,
+          1: 0,
+          2: 0,
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  66% の確率でビット 1 が 1 になった場合、\(|0\rangle\) と \(|2\rangle\) の円は空になります。
+  そして残った円 \(|1\rangle\) と \(|3\rangle\) の確率が全体で 100% となるようにノーマライズされます。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-1-before"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-1-before')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <span>ビット 1 を測定し 1 が出た</span>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-1-after"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-1-after')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
+    </div>
+  </div>
+</template>
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-neutral-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+ <template id="circle-notation-popup">
+  <div class="text-wolf mb-2 text-base">
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩ (二進 |<span
+      class="circle-notation-popup__ket-binary font-mono"
+    ></span
+    >⟩)
+  </div>
+
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
+  </body>
+</html>

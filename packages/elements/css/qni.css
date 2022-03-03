@@ -35,39 +35,19 @@
 
 @import 'tailwindcss/utilities';
 
-@layer components {
-  .operation {
-    @apply inline-block;
-    @apply relative;
-    @apply h-8 w-8;
+@layer utilities {
+  .activateable {
+    &[data-active]::after {
+      @apply border-opacity-100;
+    }
+
+    &[data-active][data-grabbed]::after {
+      @apply bg-purple-500 bg-opacity-20;
+    }
   }
 
-  .operation[data-size='sm'] {
-    @apply h-6 w-6;
-  }
-}
-
-@layer components {
-  .activateable[data-active]::after {
-    @apply border-opacity-100;
-  }
-
-  .activateable[data-active][data-grabbed]::after {
-    @apply bg-purple-500 bg-opacity-20;
-  }
-}
-
-@layer components {
   .draggable {
     touch-action: none;
-
-    &::after {
-      @apply absolute inset-0;
-      @apply border-2 border-purple-500 border-opacity-0;
-      @apply rounded;
-
-      content: '';
-    }
 
     &[data-grabbed] {
       @apply cursor-grabbing;
@@ -75,16 +55,23 @@
       @apply z-40;
     }
 
-    palette-dropzone & {
+    /* grabbable cursor style */
+    circuit-editor palette-dropzone &,
+    circuit-editor quantum-circuit:not([data-editing]) & {
       @apply cursor-grab;
+    }
+
+    /* show border */
+    circuit-editor &::after {
+      @apply absolute inset-0;
+      @apply rounded;
+      @apply border-2 border-purple-500 border-opacity-0;
+
+      content: '';
     }
 
     palette-dropzone &:not([data-grabbed]):hover::after {
       @apply border-opacity-100;
-    }
-
-    quantum-circuit:not([data-editing]) & {
-      @apply cursor-grab;
     }
 
     quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
@@ -95,13 +82,44 @@
       @apply border-opacity-100;
     }
 
+    /* show trash icon */
     circuit-dropzone &:not([data-snapped])::part(icon)::before {
       @apply absolute -top-1/3 -right-1/3;
       @apply h-6 w-6;
       @apply z-10;
 
       content: '';
-      background-image: url('data:image/svg+xml;utf8,<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+      background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+    }
+  }
+
+  .operation {
+    @apply inline-block;
+    @apply relative;
+    @apply h-8 w-8;
+
+    &[data-size='xs'] {
+      @apply h-4 w-4;
+    }
+
+    &[data-size='sm'] {
+      @apply h-6 w-6;
+    }
+
+    &[data-size='base'] {
+      @apply h-8 w-8;
+    }
+
+    &[data-size='lg'] {
+      @apply h-10 w-10;
+    }
+
+    &[data-size='xl'] {
+      @apply h-12 w-12;
+    }
+
+    &[data-size='2xl'] {
+      @apply h-16 w-16;
     }
   }
 }

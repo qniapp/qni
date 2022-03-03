@@ -1115,6 +1115,20 @@ export class QuantumCircuitElement extends HTMLElement {
         dropzone.inputWireQuantum = wireQuantum
         dropzone.outputWireQuantum = false
         wireQuantum = false
+      } else if (dropzone.operationName === 'swap-gate') {
+        const swapDropzones = step.dropzones.filter(each => each.operationName === 'swap-gate')
+        if (swapDropzones.length === 2) {
+          const dropzoneBits = swapDropzones.map(each => step.bit(each))
+          const bit = step.bit(dropzone)
+          const otherDropzoneBit = dropzoneBits[0] === bit ? dropzoneBits[1] : dropzoneBits[0]
+          const otherDropzone = step.dropzoneAt(otherDropzoneBit)
+          dropzone.inputWireQuantum = wireQuantum
+          dropzone.outputWireQuantum = otherDropzone.inputWireQuantum
+          wireQuantum = otherDropzone.inputWireQuantum
+        } else {
+          dropzone.inputWireQuantum = wireQuantum
+          dropzone.outputWireQuantum = wireQuantum
+        }
       } else {
         dropzone.inputWireQuantum = wireQuantum
         dropzone.outputWireQuantum = wireQuantum

@@ -1,0 +1,58 @@
+body {
+  counter-reset: margin-note-counter;
+}
+
+.margin-note {
+  @apply relative;
+  @apply text-sm;
+  @apply text-neutral-500;
+
+  @apply hidden sm:block;
+  @apply align-baseline sm:align-middle;
+  @apply float-left sm:float-right;
+  @apply clear-both sm:clear-right;
+  @apply left-4 sm:left-auto;
+  @apply m-4 sm:m-0 sm:mb-4 sm:pl-12;
+  @apply w-11/12 sm:w-1/2;
+
+  .margin-note-toggle:checked + & {
+    @apply block;
+  }
+}
+
+@screen sm {
+  .margin-note {
+    margin-right: -50%;
+  }
+}
+
+.margin-note--numbered {
+  counter-increment: margin-note-counter;
+}
+
+.margin-note--numbered:after {
+  @apply relative;
+  @apply text-sm;
+  @apply rounded px-0.5 sm:px-0;
+  @apply bg-blue-100 sm:bg-transparent;
+  @apply -top-2;
+  @apply align-baseline;
+
+  content: counter(margin-note-counter);
+}
+
+input.margin-note-toggle {
+  @apply hidden;
+}
+
+label.margin-note-toggle:not(.margin-note--numbered) {
+  @apply hidden;
+}
+
+label.margin-note--numbered + input.margin-note-toggle + .margin-note::before {
+  @apply relative;
+  @apply -top-2;
+  @apply pr-1;
+
+  content: counter(margin-note-counter);
+}

@@ -1,0 +1,308 @@
+---
+layout: page
+title: H ゲート
+description: 重ね合わせ状態の作成
+---
+
+<p>
+  H ゲートはフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon Hadamard, 1865 - 1963)
+  の名前を冠したゲートで、別名アダマールゲートとも呼びます{% nmargin_note h-gate
+  %}英語では「ハダマードゲート (Hadamard
+  gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h
+  と最後の d を発音しない) に近いカタカナ表記です。{% endnmargin_note %}。
+</p>
+
+<p>
+  H ゲートはシンプルな重ね合わせ状態を作ります。 {% ket 0 %} または {% ket 1 %}
+  に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
+</p>
+
+<div class="mx-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-H0-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation
+        id="circle-notation-H0-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-H1-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation
+        id="circle-notation-H1-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationH0before = document.getElementById('circle-notation-H0-before')
+    let circleNotationH1before = document.getElementById('circle-notation-H1-before')
+    let circleNotationH0after = document.getElementById('circle-notation-H0-after')
+    let circleNotationH1after = document.getElementById('circle-notation-H1-after')
+
+    circleNotationH0before.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+    circleNotationH0after.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(Math.sqrt(0.5), 0),
+    })
+    circleNotationH1before.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+    circleNotationH1after.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(-Math.sqrt(0.5), 0),
+    })
+  </script>
+</div>
+
+<p>
+  {% ket 1 %} に対して H ゲートを適用したときのみ、{% ket 1 %} の位相が π
+  変化していることに注意してください。 {% ket 0 %} に対する H ゲート操作は、位相の回転を含みません。
+</p>
+
+<p>
+  H ゲートは QPU
+  独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H
+  ゲートに対応するものはありません。
+</p>
+
+<h2>ハンズオン</h2>
+
+<p>
+  H ゲートを {% ket 0 %} と {% ket 1 %} に適用して、重ね合わせ状態が作られることを確認しましょう。
+  {% ket 0 %} は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか?
+  (ヒント: X ゲートを使います)
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <h-gate></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <x-gate></x-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<h2>逆演算</h2>
+
+<p>
+  H ゲートを続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni
+  で試してみましょう! 実際に H ゲートを 2 個連続して置くと、{% ket 0 %} も {% ket 1 %}
+  もそれぞれ元の状態に戻ります。 つまり、H ゲートも X
+  ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
+</p>
+
+<div class="mx-5 flex">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-H0-a" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation id="circle-notation-H0-b" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation id="circle-notation-H0-c" data-size="xl" data-show-kets></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation id="circle-notation-H1-a" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation id="circle-notation-H1-b" data-size="xl" data-show-kets></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <h-gate data-size="base"></h-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      </div>
+      <circle-notation id="circle-notation-H1-c" data-size="xl" data-show-kets></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationH0a = document.getElementById('circle-notation-H0-a')
+    let circleNotationH0b = document.getElementById('circle-notation-H0-b')
+    let circleNotationH0c = document.getElementById('circle-notation-H0-c')
+    let circleNotationH1a = document.getElementById('circle-notation-H1-a')
+    let circleNotationH1b = document.getElementById('circle-notation-H1-b')
+    let circleNotationH1c = document.getElementById('circle-notation-H1-c')
+
+    circleNotationH0a.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+    circleNotationH0b.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(Math.sqrt(0.5), 0),
+    })
+    circleNotationH0c.setAmplitudes({
+      0: 1,
+      1: 0,
+    })
+
+    circleNotationH1a.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+    circleNotationH1b.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(-Math.sqrt(0.5), 0),
+    })
+    circleNotationH1c.setAmplitudes({
+      0: 0,
+      1: 1,
+    })
+  </script>
+</div>
+
+<h2>H ゲートを回転として見る</h2>
+
+<p>
+  H ゲートを回転として見ると、H ゲートはブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180
+  度の回転となります。 たとえば北極の {% ket 0 %} 状態に H ゲートを適用すると、赤い矢印に沿って X
+  の文字の部分まで回転します。 もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります
+  (逆演算)。
+</p>
+
+<figure>
+  {% margin_note h-gate-rotation %}H ゲートの回転 (画像クレジット:
+  <a
+    href="https://physics.stackexchange.com/questions/313959/visual-interpretation-on-the-bloch-sphere-when-hadamard-gate-is-applied-twice"
+    >physics.stackexchange.com</a
+  >){% endmargin_note %}
+  <img src="./images/bloch_H0.png" class="h-auto w-full" />
+</figure>
+
+<h2>任意の重ね合わせ状態に H ゲートを適用</h2>
+
+<p>
+  次のように振幅の大きさと位相の異なる重ね合わせ状態に H
+  ゲートを適用した場合、その変化はどのように理解するとよいでしょうか?
+</p>
+
+<div class="mx-5 flex flex-row justify-center space-x-4 md:mr-auto md:w-7/12">
+  <div class="mb-8 flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-H-superposition-before"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      <h-gate data-size="base"></h-gate>
+      {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+    </div>
+    <circle-notation
+      id="circle-notation-H-superposition-after"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationBefore = document.getElementById('circle-notation-H-superposition-before')
+    let circleNotationAfter = document.getElementById('circle-notation-H-superposition-after')
+
+    circleNotationBefore.setAmplitudes({
+      0: new Complex(-0.38268, 0),
+      1: new Complex(0.7855, -0.48636),
+    })
+    circleNotationAfter.setAmplitudes({
+      0: new Complex(0.28483, -0.34391),
+      1: new Complex(-0.82603, 0.34391),
+    })
+  </script>
+</div>
+
+<p>
+  これを頭の中だけで想像するのは大変なので、さしあたっては Qni に計算をおまかせして OK です。
+  実は、円の図だけでおおまかな変化を導き出すこともできるのですが、そのためには H
+  ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。
+  詳しい方法はのちほど紹介します。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

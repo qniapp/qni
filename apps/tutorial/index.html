@@ -1,0 +1,213 @@
+---
+layout: page
+title: はじめに
+description: プログラマ向け量子プログラミング実践チュートリアル
+---
+
+<p>
+  1980 年代初頭に<mark>量子コンピュータ</mark>のアイディアは生まれました{% nmargin_note preskill
+  %}John Preskill,
+  <a href="https://arxiv.org/abs/2106.10522" class="italic">Quantum computing 40 years later</a>
+  (2021) {% endnmargin_note %}。
+  かの大物理学者ファインマンの「自然をシミュレーションしたければ、量子力学の原理でコンピュータを作らなくてはならない」という言葉が有名です。
+  現在のあらゆるコンピュータ (ノートパソコンやスマホから最新のゲーム機、世界最速のスパコンまで)
+  の内部構造は、古典物理学、より正確には電磁気学で説明できます。
+  これは、情報の単位であるビットが、電磁気学に基いた基本素子であるコンデンサとして実装されているからです。
+  一方でファインマンの言う量子コンピュータは<mark>量子力学</mark>をベースとしています。
+  量子コンピュータは原子や電子、光子といった<mark>量子</mark>をビットとして使い、その不思議な振舞いを利用することでミクロな
+  "自然" のシミュレーション (量子系シミュレーション)
+  に必要な膨大な計算を高速化できるという、まさに夢のコンピュータです。
+</p>
+
+<p>
+  ファインマンのアイデアをきっかけに、量子コンピュータに適したさらなるアルゴリズム探しが始まりました。
+  そして 1990 年代には、<mark>量子探索</mark>{% nmargin_note grover
+  %}開発者であるコンピュータ科学者、ロブ・グローバーの名前にちなんで、<mark>グローバーのアルゴリズム</mark>としても知られています。Lov
+  K. Grover,
+  <a href="https://arxiv.org/abs/quant-ph/9605043" class="italic"
+    >A fast quantum mechanical algorithm for database search</a
+  >
+  (1996){% endnmargin_note %}と<mark>量子因数分解</mark>{% nmargin_note shore
+  %}開発者である数学者、ピーター・ショアの名前にちなんで、<mark>ショアのアルゴリズム</mark>としても知られています。Peter
+  W. Shor,
+  <a href="https://arxiv.org/abs/quant-ph/9508027" class="italic"
+    >Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum
+    Computer</a
+  >
+  (1995){% endnmargin_note %}という最も有望で代表的な量子コンピュータアルゴリズムの 2
+  つが開発されました。
+</p>
+
+<p>
+  量子探索の威力を理解するために、昔ながらの電話帳で特定の電話番号に一致する名前を検索することを考えてみましょう。電話帳の登録件数が
+  1 万件だとすると、平均してその半分の 5,000 件には目を通さなければ目的の名前にはたどり着きません。
+  一方、量子探索アルゴリズムでは、たった 100 回の検索で十分です。 もし量子コンピュータが量子探索で
+  5,000 回の推測をしたならば、実に 2,500 万件の電話帳を検索できます。
+  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを高速に検索できます。
+</p>
+
+<p>
+  量子因数分解アルゴリズムは、セキュリティに対して脅威 (株価の下落を含む)
+  をもたらすものです。というのも、インターネット・セキュリティの最も一般的な方式である公開鍵暗号は、特定の数学問題（長さ数百桁の数の因数分解など）を事実上解くことが不可能であることに依存しているためです。
+  量子アルゴリズムは、最もよく知られた古典的なアルゴリズムよりも指数関数的に速くこのタスクを実行できるため、現代の暗号のいくつかの形式は、暗号解読者を阻止できません。
+</p>
+
+<p>
+  こうした量子アルゴリズムの強力さが比較的よく知られているのとは反対に、量子コンピュータ自体に関しては、正確な現状が知られていません。
+  派手な量子関連の投資ニュースに便乗してか、量子探索や量子因数分解が現在の量子コンピュータですぐにでも実行できる、と誤解させるような記事も少なくありません。
+  それどころか「量子重ね合わせ」「量子もつれ」といったキャッチーなキーワードを濫用した怪しいビジネスもちらほら見かけます。
+</p>
+
+<p>
+  量子コンピュータの正しい知識が広まらない原因の 1 つは、その敷居が高すぎることにあります。
+  クラウド越しに本物の量子コンピュータを使える現在でさえ、量子コンピュータの初級コンテンツは不足しています。
+  量子コンピュータを勉強しようとうっかり専門の教科書や大学の講義スライドに手を出してしまい、そこにぎっしり詰まった高度な物理学や数学を前に挫折してしまった方も多いでしょう。
+</p>
+
+<p>
+  Python や JavaScript などのプログラミング解説書には高度な数式はひとつも出てきません。
+  ならば、量子コンピュータにも、もっとそんなスタイルのガイドブックやチュートリアルがあってもいいのではないのでしょうか?
+</p>
+
+<p>
+  実際に、量子コンピュータプログラミングを学ぶのに複雑な数学を理解する必要はありません。
+  今までやってきたプログラミング学習と同様に、量子コンピュータの命令やアルゴリズムがどのように動作するかの感覚をつかむだけでよいのです。
+  基本的な命令とアルゴリズムを理解したら、必要に応じて、次のレベルに進むための数学を少しずつ学んでいきましょう。
+  このことを念頭に置いて、本チュートリアルでは、必要な場合以外は数学的な専門用語を避け、実用的な観点から量子コンピュータプログラミングを紹介します。
+</p>
+
+<p>
+  このチュートリアルは、量子コンピュータプログラミングの実践的入門です。特長として、我々が開発するオープンソースな量子コンピュータシミューレータ
+  <mark>Qni (キューニ)</mark>{% margin_note qni %}
+  <img src="./images/qni_screenshot_grover.png" class="mb-2 border border-neutral-300" />
+  Qni は量子プログラミング環境を提供する Web サービスです。<a href="https://qniapp.net/"
+    >https://qniapp.net</a
+  >
+  で誰でも無料で利用できます。{% endmargin_note %} をそこかしこで使っています。
+  以下のようにチュートリアル中に埋め込まれた mini Qni (ミニ・キューニ)
+  で、量子プログラミングについて学んだことをすぐ実験できるようになっています。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <h-gate></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <x-gate></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <y-gate></y-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <z-gate></z-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  Qni
+  を使うと、シミュレータ上であれこれ実験を重ねることで、量子コンピュータを使うための直感的感覚を養うことができます。Qni
+  は、量子プログラムをエレガントに記述するためのグラフィカルなユーザインタフェースを提供しています。操作結果はリアルタイムに表示されるので、実機を使った演習よりもずっと効率的であり教育的でもあります。
+  より高度な量子アルゴリズムや量子情報といった専門分野を勉強する際にも、Qni
+  は電卓がわりにちょっとした計算にも役立つので、あなたの道具箱に加えていただければと思います。
+</p>
+
+<p>
+  チュートリアルのもう一つの特長は、チュートリアル中にクイズ{% nmargin_note %}Andy Matuschak
+  氏によるオープンソースの無料学習ツール
+  <a href="https://withorbit.com/">Orbit</a> を利用しています。クイズ機能を利用する場合は
+  <a href="https://withorbit.com/terms">Orbit の利用規約及びプライバシー・ポリシー</a
+  >を確認してください。{% endnmargin_note %}が埋め込まれていることです。
+  クイズでは、それぞれの記事のポイントを 1 問 1 答形式で出題します。
+  一度解いたクイズは、忘却曲線に沿った適切なタイミング (数時間から数日、数ヶ月、時には数年後!)
+  で復習クイズとして再び出題されます。
+  これによって、読者は比較的少ない労力で学んだことを深く内面化できる仕組みになっています。
+  もちろん、クイズに答えずにこのチュートリアルを読み進めることもできますが、ぜひ試してみてください。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="**量子コンピュータ**の名前の由来は?"
+    answer="動作原理が量子力学に基づくことから名付けられた"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="現在のコンピュータを、量子コンピュータとの対比で何と呼ぶ?"
+    answer="古典コンピュータ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータでビットの格納に使われる量子を 1 つ挙げると?"
+    answer="原子 or 電子 or 光子"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="90 年代に提案された、量子コンピュータ向けの代表的なアルゴリズムは{量子探索}と{量子因数分解}"
+  ></orbit-prompt>
+  <orbit-prompt question="量子探索の主な用途は?" answer="リスト検索"></orbit-prompt>
+  <orbit-prompt question="量子探索アルゴリズムの別名は?" answer="グローバーのアルゴリズム">
+  </orbit-prompt>
+  <orbit-prompt
+    question="量子因数分解アルゴリズムの別名は?"
+    answer="ショアのアルゴリズム"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子因数分解によって脅威を受ける分野は何か?"
+    answer="インターネット・セキュリティ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータシミュレータ *Qni* の読みは?"
+    answer="キューニ"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<p>
+  このチュートリアルは Qni と同様に GitHub でオープンに開発{% nmargin_note qni-github %}GitHub の
+  Qni プロジェクトページ: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a>{%
+  endnmargin_note %}しており、読者からのフィードバックを歓迎しています。 typo
+  などのささいな修正でも、ぜひ GitHub
+  でフィードバックをお願いします。また、著者に加わりたい方も、ぜひ Pull Request
+  を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

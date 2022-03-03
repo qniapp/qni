@@ -1,0 +1,127 @@
+---
+layout: page
+title: 量子もつれ
+description: 量子ビットの間にリンクを作る
+---
+
+<p>
+  <a href="./cnot_gate.html">CNOT ゲートの説明</a>で作った量子回路{% margin_note %}<img
+    src="./images/entanglement_circuit.png"
+    class="mb-2 border border-neutral-300"
+  />量子もつれ状態を作る量子回路{% endmargin_note
+  %}は、実は<mark>量子もつれ</mark>と呼ばれる量子ビットの状態を作っています。
+  量子もつれは重ね合わせ状態と同じく、古典ビットにはなく量子ビットだけが取れる状態で、QPU
+  での計算に欠かせない強力な道具の 1 つです。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  なぜこの状態がもつれと呼ばれるのか、細かく見ていきましょう。 ビット 1 のみを測定すると、<a
+    href="./partial_measurement.html"
+    >1 ビット測定</a
+  >のルールに従って 50% の確率で 0、残り 50% の確率で 1 が得られます。 もし 0 が得られた場合、ビット
+  2 は測定しなくても 0 であることが確定しています。 なぜならば、元々の重ね合わせは {% ket 0 %}
+  または {% ket 3 %} (2 進数で表すと {% ket 00 %} または {% ket 11 %}) だったので、ビット 1 が 0
+  だった場合にはビット 2 も 0 ({% ket 00 %}) であることが自動的に分かるからです。
+  同様に、もし先にビット 2 を測定した場合も、その結果によってビット 1 の値が確定します。
+  これは、<mark>ビット 1 とビット 2 の間に量子もつれという見えないリンクが生まれている</mark
+  >ことを意味します。
+</p>
+
+<p>
+  以下の回路でビット 1 とビット 2 のもつれを作って確認できます。
+  右下の実行ボタンを何度クリックしても、測定結果は 0 と 0 または 1 と 1 になり、ビット 1 と 2
+  の値は必ず同じになります。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["Measure"],[1,"Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  量子もつれのどこが興味深いのでしょう? たとえば量子ビット 2
+  つがそれぞれおはじきくらいの大きさのチップに埋め込まれているとして、上の回路でもつれさせたあと<mark>測定せずに</mark>アリス、ボブに
+  1 つずつ持たせるとします。 そしてアリスは島根県、ボブは岐阜県へバスで移動します。
+  百キロ以上離れている 2 人ですが、2 つの量子ビットはもつれたままの状態にあります。
+  ここで島根県のアリスが自分の量子ビットを測定して 0 が出たとします。
+  次にボブが岐阜県で自分の量子ビットを測定すると、(島根にいるアリスの結果と同じ) 必ず 0 が出ます。
+  このように、どんなに離れていても測定結果が連動するというのが量子もつれの特徴です。
+</p>
+
+<p>
+  この不思議な遠隔作用は、あのアインシュタインを始めとする 20
+  世紀初期の物理学者達を大いに悩ませました。
+  しかし、本チュートリアルではこれを「量子ビットがもともと持つ性質」としてそのまま受け入れることとします。
+  つまり、量子力学や哲学的な深い洞察は避け、単なる量子ビットのいち機能として使っていきます。
+</p>
+
+<p>
+  量子もつれは、異なる量子ビットの値を連動させることで、いわば一度の操作でたくさんの量子ビットの値を操作できるようにするものです。
+  これから紹介していく量子アルゴリズムはすべて、この量子もつれと重ね合わせを何らかの形で使っています。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

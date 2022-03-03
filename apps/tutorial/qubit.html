@@ -1,0 +1,213 @@
+---
+layout: page
+title: 量子ビット
+description: 確率的ビットとの大きな違い
+---
+
+<p>量子ビットは、確率的ビットと非常によく似ています。主な違いは 2 つだけです。</p>
+
+<ul class="list-decimal">
+  <li>
+    確率のかわりに<mark>振幅 (amplitude)</mark> という値を使って状態を表現します。
+    確率は正の値を持ちますが、振幅は負の値も持ちます。
+  </li>
+  <li>
+    振幅は測定中に 2 乗され確率となります{% nmargin_note amplitude-prob %}<a
+      href="./what_qpu_do_faster"
+      >QPU は何が得意?</a
+    >
+    で紹介した測定で、確率を求めるために 2 乗の計算をしたことを思い出してください。{%
+    endnmargin_note %}。 つまり「<mark>振幅の 2 乗 = 確率</mark>」です。
+  </li>
+</ul>
+
+<p>
+  Qni の円表示では、<mark>振幅は確率を表す青い円の半径</mark>を表します。 円の面積は半径の 2 乗 x
+  π、つまり振幅の 2 乗かける π なので、青い円の面積は確率に正比例します。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <circle-notation id="circle-notation-80-20" data-size="xl" data-show-kets></circle-notation>
+  <script type="module">
+    import { Complex } from './application.js'
+
+    document.getElementById('circle-notation-80-20').setAmplitudes({
+      0: Math.sqrt(0.8),
+      1: Math.sqrt(0.2),
+    })
+  </script>
+</div>
+
+<h2>確率</h2>
+
+<p>
+  最初に、確率的ビットが取り得る状態をおさらいしてみましょう
+  (コイントスの例を使ったことを思い出してください)。 ビットが 0 の状態をコインの表、ビットが 1
+  の状態をコインの裏とし、それぞれの確率を \(p_0,\ p_1\) とします。 表と裏の確率を足すと必ず 1
+  になり、またそれぞれの確率は 0 から 1 の間ですから、
+</p>
+
+<p>$$p_0 + p_1 = 1\qquad (0 \leq p_0 \leq 1,\ 0 \leq p_1 \leq 1)$$</p>
+
+<p>が成り立ち、確率的ビットが取りうるすべての状態を表す次のグラフが得られるのでした。</p>
+
+<figure>
+  <img src="./images/p0p1_graph.png" class="h-auto w-full" />
+</figure>
+
+<h2>振幅</h2>
+
+<p>
+  次は振幅を持つ量子ビットの取り得る状態をグラフにしてみましょう。 振幅は 2
+  乗すると確率になるのですから、ビットが {% ket 0 %} となる確率の振幅を \(a_0\)、ビットが {% ket 1
+  %} となる確率の振幅を \(a_1\) とすると、\(a_0^2 = p_0,\ a_1^2 = p_1\) が成り立ちます。
+  これを先ほどの式に入れると、
+</p>
+
+<p>
+  \begin{split} &p_0 + p_1 = 1 \\ \\ \Longrightarrow\ &a_0^2 + a_1^2 = 1\qquad (-1 \leq a_0 \leq 1,\
+  -1 \leq a_1 \leq 1) \end{split}
+</p>
+
+<p>
+  となり、このグラフは半径 1 の円になります。つまり、<mark
+    >量子ビットの状態はこの円のうちの 1 点となります。</mark
+  >
+</p>
+
+<figure>
+  <img src="./images/qbit_circular_state.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  これを見て分かる通り、量子ビットが確率的ビットに比べて決定的に違うのは、振幅は負の値を持ち得ることです。
+  ここでは「量子ビットは確率的ビットよりもさらに広い範囲の情報を表現できそうだ」ということを視覚的に理解してもらえれば十分です。
+</p>
+
+<h2>振幅は複素数</h2>
+
+<p>
+  実は、振幅は一般には複素数の値を取ります。
+  ここでは複素数の詳しい説明や計算は省きますが、この場合に量子ビットが取りうる状態を図にすると<mark
+    >半径 1 の球表面</mark
+  >になります。 これを<mark
+    >ブロッホ球{% nmargin_note bloch-sphere %}ブロッホ球の名前はスイス出身の物理学者、<a
+      href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A7%E3%83%AA%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%96%E3%83%AD%E3%83%83%E3%83%9B"
+      >フェリックス・ブロッホ</a
+    >に由来します。{% endnmargin_note %}</mark
+  >と呼びます。
+</p>
+
+<figure>
+  <img src="./images/bloch_sphere.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  これをひらたく言えば、1 量子ビットの状態は地球上のとある 1 点として表せることになります
+  (東京とか、ニューヨークとか、南極とかあなたの好きな場所をどこでも思い浮かべて OK です)。
+  この場合、状態 {% ket 0 %} は北極点、状態 {% ket 1 %} は南極点にそれぞれ対応します。
+</p>
+
+<p>
+  量子コンピュータが唯一得意な計算は、回転をあらわす行列をベクトルに掛けることでした{% nmargin_note
+  %}<a href="./what_qpu_do_faster">QPU は何が得意?</a> を参照。{% endnmargin_note %}。
+  これを地球で考えると、地球上のある点を回転操作で別の位置に移動させることに相当します。
+  これはたとえば、南極点 {% ket 1 %}
+  にいるペンギンの位置をベクトルとして表したとき、そのベクトルに球面上の回転を表す行列をかけることで、ペンギンを北極やハワイなど好きな場所に移動させることに相当します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    cloze="確率的ビットでは確率でビットの状態を表す。量子ビットでは{振幅}でビットの状態を表す"
+  ></orbit-prompt>
+  <orbit-prompt cloze="量子ビットの振幅は、一般に{複素数}の値をとる"></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態は、{半径 1 の球面}上のある 1 点として表せる"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="1 量子ビットの状態を球面上の 1 点として視覚化した図を{ブロッホ球}と呼ぶ"
+  ></orbit-prompt>
+  <orbit-prompt cloze="ブロッホ球では、状態 $|0\rangle$ は{北極点}に対応する"></orbit-prompt>
+  <orbit-prompt cloze="ブロッホ球では、状態 $|1\rangle$ は{南極点}に対応する"></orbit-prompt>
+</orbit-reviewarea>
+
+<h2>ブロッホ球で実験</h2>
+
+<p>
+  Qni にはちょうど、1 量子ビットの状態を球上の点として表示する「ブロッホ球」命令があります。
+  これを使って、量子ビットのいろんな状態を見てみましょう。
+</p>
+
+<p>
+  下の量子回路には、すでにいくつかの QPU 命令が置いてあります。 それぞれの QPU
+  命令は、量子ビットに対する異なる回転操作を表しています。
+  ブロッホ球を回路上のいろんな場所に置いてみることで、それぞれの命令によってどんな回転が起こるか推測してみましょう。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="border-swan mb-10 flex w-min rounded-xl border-2 border-b-4 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <bloch-display></bloch-display>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>"],["X"],["Rx(π/2)"],["Rz(π/2)"],["Ry(π/2)"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %}

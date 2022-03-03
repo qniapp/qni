@@ -1,6 +1,6 @@
 {
   "name": "@qni/simulator",
-  "version": "0.0.32",
+  "version": "0.0.34",
   "description": "Quantum simulator for @qni.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -29,7 +29,7 @@
   ],
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "@qni/elements": "^0.0.32",
+    "@qni/elements": "^0.0.34",
     "fp-ts": "^2.11.5"
   },
   "devDependencies": {
@@ -37,7 +37,6 @@
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@types/qunit": "^2.11.2",
     "chai": "^4.3.4",
-    "eslint": "^8.3.0",
     "eslint-plugin-github": "^4.3.5",
     "karma": "^6.3.9",
     "karma-chai": "^0.1.0",

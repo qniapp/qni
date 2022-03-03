@@ -1,0 +1,94 @@
+- name: QPU
+  pages:
+    - name: はじめに
+      link: ./
+    - name: QPU とは
+      link: ./qpu.html
+    - name: QPU は何が得意?
+      link: ./what_qpu_do_faster.html
+    - name: 量子回路
+      link: ./quantum_circuit.html
+    - name: Qni 入門
+      link: ./qni_intro.html
+- name: 量子ビット
+  pages:
+    - name: 確率的ビット
+      link: ./p_bit.html
+    - name: 重ね合わせ状態
+      link: ./superposition.html
+    - name: 量子ビット
+      link: ./qubit.html
+    - name: 位相
+      link: ./phase.html
+      new: true
+    - name: 状態ベクトル表示
+      link: ./circle_notation.html
+- name: QPU 命令その 1
+  pages:
+    - name: CPU 演算との違い
+      link: ./cpu_vs_qpu_operations.html
+    - name: X ゲート (量子 NOT)
+      link: ./x_gate.html
+    - name: H ゲート
+      link: ./h_gate.html
+    - name: PHASE ゲート
+      link: ./phase_gate.html
+    - name: WRITE 命令
+      link: ./write_operation.html
+    - name: MEASUREMENT 命令
+      link: ./measurement_operation.html
+    - name: CLONE 命令!?
+      link: ./no_cloning_theorem.html
+    - name: 組合わせゲート
+      link: ./gate_combination.html
+      new: true
+- name: 量子暗号通信
+  pages:
+    - name: 量子鍵配送
+      link: ./quantum_key_distribution.html
+    - name: BB84 プロトコル
+      link: ./bb84_protocol.html
+    - name: BB84 回路
+      link: ./bb84_circuit.html
+- name: 複数量子ビット
+  pages:
+    - name: 状態ベクトル表示
+      link: ./multi_qubit_circle_notation.html
+    - name: 重ね合わせ状態
+      link: ./multi_qubit_superposition.html
+    - name: 複数量子ビットでの演算
+      link: ./multi_qubit_operation.html
+    - name: 演算ペア
+      link: ./operator_pair.html
+    - name: ランダムバイトジェネレータ
+      link: ./random_byte_generator.html
+    - name: PHASE ゲート (複数量子ビット)
+      link: ./multi_qubit_phase_gate.html
+    - name: 1 ビット測定
+      link: ./partial_measurement.html
+- name: QPU 命令その 2
+  pages:
+    - name: SWAP ゲート
+      link: ./swap_gate.html
+      new: true
+    - name: CNOT ゲート
+      link: ./cnot_gate.html
+      new: true
+    - name: SWAP パズル
+      link: ./swap_from_cnots.html
+      new: true
+    - name: 量子もつれ
+      link: ./entanglement.html
+      new: true
+# - name: 超高密度符号化
+#   pages:
+#     - name: もつれをほどく
+#       link: ./disentangle.html
+#       new: true
+#     - name: もつれを操作する
+#       link: ./entanglement_operation.html
+#       new: true
+- name: ふろく
+  pages:
+    - name: クローン禁止定理の証明
+      link: ./no_cloning_theorem_proof.html

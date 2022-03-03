@@ -1,0 +1,238 @@
+---
+layout: page
+title: 重ね合わせ状態
+description: 複数量子ビットでの重ね合わせ
+---
+
+<p>
+  1 量子ビットの場合と同じく、複数量子ビットでも重ね合わせ状態を取ることができます。 ここでは 3
+  量子ビットのいろいろな状態を考えてみましょう。
+</p>
+
+<p>
+  次の状態では {% ket 2 %} が確率 100% なので、3 量子ビットすべてを測定すると必ず {% ket 2 %}
+  が得られます。 {% ket 2 %} 以外の確率はすべて 0% なので、これは重ね合わせ状態でありません。
+</p>
+
+<div class="my-5 flex flex-col">
+  <div class="flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-3qubit-nonsuperposition"
+      data-multi-qubits
+      data-qubit-count="3"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+
+    <script type="module">
+      let circleNotation = document.getElementById('circle-notation-3qubit-nonsuperposition')
+      circleNotation.setAmplitudes({
+        0: 0,
+        1: 0,
+        2: 1,
+      })
+    </script>
+  </div>
+</div>
+
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],[1,"X",1],["Measure","Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  次は {% ket 0 %}, {% ket 2 %}, {% ket 4 %}, {% ket 6 %} がそれぞれ確率 25%
+  の重ね合わせ状態にあります。 3 量子ビットすべてを測定すると {% ket 0 %}, {% ket 2 %}, {% ket 4 %},
+  {% ket 6 %} のいずれかが確率 25% ずつ (つまり 1/4 の確率) で得られます。
+  重ね合わせではすべての確率を足すと必ず 100%
+  になり、この場合もそうなっていることを確認してください。
+</p>
+
+<div class="my-5 flex flex-col">
+  <div class="flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-3qubit-simple-superposition"
+      data-multi-qubits
+      data-qubit-count="3"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+
+    <script type="module">
+      let circleNotation = document.getElementById('circle-notation-3qubit-simple-superposition')
+      circleNotation.setAmplitudes({
+        0: 0.5,
+        1: 0,
+        2: 0.5,
+        3: 0,
+        4: 0.5,
+        5: 0,
+        6: 0.5,
+      })
+    </script>
+  </div>
+</div>
+
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],[1,"H","H"],["Measure","Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+<p>
+  最後はそれぞれの確率が異なり、さらに位相も異なる例です。
+  今までの例と同じく、それぞれの確率に応じて {% ket 0 %} 〜 {% ket 7 %}
+  のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
+  そして位相と確率はそれぞれ独立した量子ビットのプロパティなので、位相は確率にまったく影響しないことを思い出しておきましょう{%
+  nmargin_note %}位相の意味や使い途については<a href="./phase.html">位相</a>を参照してください。{%
+  endnmargin_note %}。
+</p>
+
+<div class="my-5 flex flex-col">
+  <div class="flex flex-row items-center space-x-1">
+    <circle-notation
+      id="circle-notation-3qubit-superposition"
+      data-multi-qubits
+      data-qubit-count="3"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+
+    <script type="module">
+      import { Complex } from './application.js'
+
+      let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
+      circleNotation.setAmplitudes({
+        0: new Complex(0.42678, -0.17678),
+        1: new Complex(0.17678, -0.07322),
+        2: new Complex(0.17678, 0.42678),
+        3: new Complex(0.07322, 0.17678),
+        4: new Complex(-0.42678, 0.17678),
+        5: new Complex(-0.17678, 0.07322),
+        6: new Complex(-0.17678, -0.42678),
+        7: new Complex(-0.07322, -0.17678),
+      })
+    </script>
+  </div>
+</div>
+
+<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["Measure","Measure","Measure"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+      data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

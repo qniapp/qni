@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>量子回路</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+  <div class="hidden md:flex md:flex-shrink-0">
+  <div class="flex w-64 flex-col">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+      <div class="flex flex-shrink-0 items-center px-8">
+        <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+        <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+          >Qni</span
+        >
+      </div>
+      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-6">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 演算との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <main class="relative flex-1 overflow-y-auto focus:outline-none">
+      <article class="prose prose-neutral max-w-none py-5">
+        <div class="h-8"></div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 sm:mb-12 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  量子回路
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子プログラミングのための低水準言語</p>
+            </div>
+            <div class="content-with-margin"><p>
+  量子コンピュータの世界ではまだ、Python や Java のような高水準言語は登場していません。
+  このため、量子プログラミングでは、今後しばらくはアセンブラ命令のような<mark>低水準言語</mark>を使っていく必要があります。
+  低水準言語では、ビットレベルでの演算を積み重ねることでプログラム全体を記述します。
+  このため高水準言語よりも冗長であり、またビット単位での操作を熟知している必要があります。
+</p>
+
+<p>
+  初心者にとってひとつラッキーな点は、量子コンピュータの低水準言語は取っ付きやすい見た目であることです。
+  というのも、量子コンピュータの歴史の最初期に、量子コンピュータの提唱者の一人であるファインマンが量子プログラムを図式として表現する記法を発明したからです。<label for="margin-note-" class="margin-note-toggle"></label><input type="checkbox" id="margin-note-" class="margin-note-toggle"><span class="margin-note">
+  <img src="./images/feynman_full_adder.png" class="mb-2 border border-neutral-300" />
+  ファインマンが量子コンピュータを提唱した最初の論文 (1986 年)
+  に掲載されている図の抜粋。ここで使われている記法は、現在使われている記法とほとんど変わっていません。Richard
+  P. Feynman,
+  <a href="https://link.springer.com/article/10.1007/BF01886518" class="italic"
+    >Quantum mechanical computers</a
+  >
+  (1986)</span> この記法は、従来の <code>MOV</code> や
+  <code>ADD</code> といった文字だけの無骨なアセンブラ命令と比べると、
+  グラフィカルで構造を把握しやすく、また楽譜のような美しささえあります。
+</p>
+
+<figure>
+  <label for="margin-note-quantum-circuit-design" class="margin-note-toggle"></label><input type="checkbox" id="margin-note-quantum-circuit-design" class="margin-note-toggle"><span class="margin-note">Yu Zheng, Sicong Lu, Re-Bing Wu,
+  <a href="https://arxiv.org/abs/1802.05428" class="italic"
+    >Quantum Circuit Design for Training Perceptron Models</a
+  >
+  より引用</span>
+  <img src="./images/quantum_circuit_diagram_example.jpeg" class="h-auto w-full" />
+</figure>
+
+<p>
+  このように量子プログラムを図式として表したものを<mark>量子回路</mark>と呼びます。
+  量子回路は水平方向に伸びる何本かの線 (<mark>ワイヤ</mark>) と、ワイヤ上に置かれた
+  <mark>QPU 命令</mark>から構成されます。 それぞれのワイヤは、量子ビット 1 つに対応します。つまり、8
+  量子ビットを使用する量子回路は 8 本のワイヤを持ちます。
+  量子回路は楽譜と同じく、一番左の列から右に向かって実行されます。 ワイヤ上に置かれた QPU
+  命令が各量子ビットに対して演算を行います。
+</p>
+
+<figure>
+  <img src="./images/basic_quantum_circuit.png" class="h-auto w-full" />
+</figure>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="現在のコンピュータと比べ、量子コンピュータのプログラミングには抽象度の面でどんな違いがあるか?"
+    answer="量子コンピュータではビットレベルの低水準プログラミングが必要"
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="量子プログラムを図式として表したものを{量子回路}と呼ぶ"></orbit-prompt>
+  <orbit-prompt cloze="量子回路で水平方向に伸びる線を{ワイヤ}と呼ぶ"> </orbit-prompt>
+  <orbit-prompt
+    question="ワイヤ上に置かれた H などの箱を何と呼ぶか?"
+    question-attachments="https://qniapp.github.io/qni/images/basic_quantum_circuit.png"
+    answer="QPU 命令"
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="4 量子ビットを使用する量子回路は {4} 本のワイヤを持つ"> </orbit-prompt>
+  <orbit-prompt question="量子回路はどの方向に実行される?" answer="左から右 (楽譜と同じ)">
+  </orbit-prompt>
+</orbit-reviewarea>
+
+<p>
+  現在では、どんな量子コンピュータでも使える標準的な命令セットと、それぞれを表す記号 (アイコン)
+  がほぼ決まっています。 代表的な基本 QPU 命令を表にリストアップしました。
+  詳細は後に説明するとして、どんな命令があるかまずはざっと眺めておきましょう。
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>記号</th>
+      <th>名前</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <x-gate></x-gate>
+      </td>
+      <td class="align-middle">NOT または X</td>
+      <td class="align-middle">ビットペアの入れ替え</td>
+    </tr>
+    <tr>
+      <td>
+        <h-gate></h-gate>
+      </td>
+      <td class="align-middle">H または Hadamard (アダマール)</td>
+      <td class="align-middle">シンプルな重ね合わせの作成</td>
+    </tr>
+    <tr>
+      <td>
+        <phase-gate></phase-gate>
+      </td>
+      <td class="align-middle">Phase Shift (位相シフト)</td>
+      <td class="align-middle">相対位相を回転</td>
+    </tr>
+    <tr>
+      <td>
+        <div class="flex flex-row gap-2">
+          <write-gate data-value="0"></write-gate>
+          <write-gate data-value="1"></write-gate>
+        </div>
+      </td>
+      <td class="align-middle">WRITE</td>
+      <td class="align-middle">指定した値で量子ビットを初期化する</td>
+    </tr>
+    <tr>
+      <td>
+        <measurement-gate></measurement-gate>
+      </td>
+      <td class="align-middle">MEASUREMENT (測定)</td>
+      <td class="align-middle">量子ビットを測定し 0 または 1 を返す</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <x-gate></x-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CNOT</td>
+      <td>条件付き NOT</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <x-gate></x-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CCNOT または Toffoli (トフォリ)</td>
+      <td>条件2個付き NOT</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="py-4">
+          <circuit-dropzone data-connect-bottom>
+            <phase-gate data-angle="π/2"></phase-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <phase-gate data-angle="π/2"></phase-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CPHASE</td>
+      <td>条件付きの Phase Shift</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CZ</td>
+      <td>CPHASE (π 回転)</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>SWAP</td>
+      <td>2 つの量子ビットを交換</td>
+    </tr>
+    <tr>
+      <td class="flex">
+        <circuit-step class="p-0">
+          <circuit-dropzone data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top data-connect-bottom>
+            <swap-gate></swap-gate>
+          </circuit-dropzone>
+          <circuit-dropzone data-connect-top>
+            <control-gate></control-gate>
+          </circuit-dropzone>
+        </circuit-step>
+      </td>
+      <td>CSWAP</td>
+      <td>条件付き SWAP</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
+  </body>
+</html>

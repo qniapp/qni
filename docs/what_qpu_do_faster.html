@@ -1,10 +1,378 @@
----
-layout: page
-title: QPU は何が得意？
-description: 量子コンピュータの得意分野と制限
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>QPU は何が得意?</title>
 
-<p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+  </head>
+  <body>
+    <div class="flex h-screen overflow-hidden">
+  <div class="hidden md:flex md:flex-shrink-0">
+  <div class="flex w-64 flex-col">
+    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+      <div class="flex flex-shrink-0 items-center px-8">
+        <img class="mr-2 h-8 w-8" src="https://qniapp.net/icon-512.png" alt="Qni" />
+        <span class="font-sans text-xl font-bold tracking-wider text-gray-900 subpixel-antialiased"
+          >Qni</span
+        >
+      </div>
+      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-6">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 演算との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート (複数量子ビット)</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+</div>
+    </div>
+  </div>
+</div>
+
+  <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <main class="relative flex-1 overflow-y-auto focus:outline-none">
+      <article class="prose prose-neutral max-w-none py-5">
+        <div class="h-8"></div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 sm:mb-12 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  QPU は何が得意?
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">量子コンピュータの得意分野と制限</p>
+            </div>
+            <div class="content-with-margin"><p>
   結局のところ、量子コンピュータ (QPU)
   は何が得意なのでしょうか。そしてさらに重要なことですが、メカニズム上の制限はあるのでしょうか。
 </p>
@@ -16,36 +384,36 @@ description: 量子コンピュータの得意分野と制限
   たった 1 ステップで掛けることができます。
 </p>
 
-<p>
-  <img src="./images/matrix_multiplication.png" class="h-auto w-full md:mx-auto md:w-2/3" />
-</p>
+<figure>
+  <img src="./images/matrix_multiplication.png" class="h-auto w-full" />
+</figure>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   本節では QPU の原理を説明するために、行列やベクトルといった数学的な用語をちょっとだけ使います。
-  しかしあくまで概略を紹介するだけなので、これらの概念に馴染みがなくても大丈夫です。 また、Qni は
-  QPU の動作を視覚的にわかりやすいユーザインタフェースで表現するので、ほぼ意識する必要もありません。
+  しかしあくまで概略を紹介するだけなので、これらの概念に馴染みがなくても大丈夫です。
 </div>
 
 <p>
   行列の掛け算を知らなくても、行列計算がゲームの 3D CG
   やスパコンなどの数値計算などで活躍しているとなんとなく知っていれば、その重要さが分かるでしょう。
-  しかも行列の掛け算には大量の足し算と掛け算が含まれるので、それがたった 1
+  行列の掛け算には大量の足し算と掛け算が含まれるので、それがたった 1
   ステップでできるという量子コンピュータの能力は驚くべきものです。しかし落とし穴もあります。
 </p>
 
-<ol class="list-inside list-decimal pb-10">
+<ul class="list-decimal">
   <li>巨大なベクトルを入力するのが大変なこと</li>
   <li>使える行列に制限があること</li>
   <li>計算結果が一筋縄では取り出せないこと</li>
-</ol>
+</ul>
 
-<h2>1. 巨大なベクトルの入力</h2>
+<h2>巨大なベクトルの入力</h2>
 
 <p>
-  掛け算しようとするベクトルのデータは、当然ながら量子コンピュータに入力してやる必要があります。たとえば、3
-  量子ビットの量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
-  個ならんだものになります (一般に、\(n\) 個の量子ビットを持つマシンでは、数を 2 の \(n\)
-  乗個ならべたベクトルへの掛け算を実行します)。
+  掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
+  量子ビット<label for="margin-note-qubit" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note-toggle"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<mark>量子ビット</mark>と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
+  100 量子ビットを越える程度です。</span>の量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
+  個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note-toggle"><span class="margin-note">一般に、\(n\)
+  個の量子ビットを持つマシンでは、数を 2 の \(n\) 乗個ならべたベクトルの掛け算を実行します。</span>
 </p>
 
 <p>$$\begin{bmatrix} 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0 \\ 0.5 \\ 0 \end{bmatrix}$$</p>
@@ -59,90 +427,139 @@ description: 量子コンピュータの得意分野と制限
 
 <p>
   もの数をセットしなければならず、これには 1,000
-  年単位の膨大な時間がかかってしまいます。唯一の希望は、まっさらなベクトルの初期状態から始めて、量子コンピュータの中でいろんな行列を掛けていくことによって、計算的に入力データを作ることです。それでもほとんどの場合、合理的な時間では実行できません。
+  年単位の膨大な時間がかかってしまいます。唯一の希望は、まっさらな初期状態のベクトルから始めて、量子コンピュータの中でいろんな行列を掛けていくことによって、計算的に入力データを作ることです。それでもほとんどの場合、合理的な時間では実行できません。
 </p>
 
-<h2>2. 使える行列の制限</h2>
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子コンピュータが扱う情報の最小単位を{量子ビット}と呼ぶ"></orbit-prompt>
+  <orbit-prompt
+    question="4 量子ビットの量子コンピュータへ入力できるベクトルのサイズは?"
+    answer="$2^4 = 16$"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="多量子ビットを持つ量子コンピュータへのデータ入力の問題は?"
+    answer="入力データのサイズが $2^n$ と指数関数であるため、現実的な時間内で入力が終わらないこと"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータへ巨大なデータを入力するのに唯一可能な方法は?"
+    answer="量子コンピュータ内で計算的に入力データを作る"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+<h2>使える行列の制限</h2>
 
 <p>
-  量子コンピュータが扱うベクトルは常に「2 乗長さの和
-  (ベクトルの数をそれぞれ二乗して足し合わせたもの) が 1」という性質を保つ必要があります。
+  量子コンピュータが扱うベクトルは常に「<mark>二乗和</mark><label for="margin-note-square-sum" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note-toggle"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせたもの</span>が
+  1」という性質を保つ必要があります。
   量子コンピュータに入力するベクトルと、行列とベクトルを掛けて新たにできるベクトルは、この性質を保たなければなりません。
 </p>
 
+<figure>
+  <img src="./images/state_vector_norm1.png" class="h-auto w-full" />
+</figure>
+
 <p>
-  <img src="./images/state_vector_norm1.png" class="h-auto w-full md:mx-auto md:w-2/3" />
+  逆に言うと、行列の掛け算はベクトルの二乗和を変えてはいけません。
+  この行列に対する制限は、量子力学に由来するものです。
 </p>
 
 <p>
-  逆に言うと、行列の掛け算はベクトルの 2 乗長さの和を変えてはいけません。この行列に対する制限その 1
-  は、量子力学に由来するものです。
+  制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の<mark>可逆性</mark>)。
+  つまり、ある行列 \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
+  を掛けてやることで元のベクトルが得られる必要があります<label for="margin-note-matrix-inverse" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-matrix-inverse" class="margin-note-toggle"><span class="margin-note">行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。</span>。
+  こちらもやはり、量子力学に由来する制限です。
 </p>
 
-<p>
-  制限その 2 として、行列の掛け算はいつも元に戻せる必要があります。つまり、ある行列 \(A\)
-  を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
-  を掛けてやることで元のベクトルが得られる必要があります (行列の掛け算では、元に戻す行列 \(B\)
-  が存在しないことがよくあります)。こちらもやはり、量子力学に由来する制限です。
-</p>
+<figure>
+  <img src="./images/matrix_multiplication_inverse.png" class="h-auto w-full" />
+</figure>
 
 <p>
-  <img src="./images/matrix_multiplication_inverse.png" class="h-auto w-full md:mx-auto md:w-2/3" />
-</p>
-
-<p>
-  数学の用語では、これら 2 つの性質を満たす行列を「ユニタリ行列」と呼びます。
+  数学の用語では、これら 2 つの性質を満たす行列を<mark>ユニタリ行列</mark>と呼びます。
   なぜこの制限が難しいのか、私が考えられる最も良い例えはルービックキューブです。
   キューブをばらばらにして組み直すことで、直接的に色をそろえるのはルール違反です。
-  できるのは列を回転させることだけで、そこがチャレンジングな部分です。(ユニタリ行列も回転で構成されています)。
+  できるのは列を回転させることだけで、そこがチャレンジングな部分です。
+  ユニタリ行列も回転で構成されており、空間上の点や図形をある一定のルールで回転させる回転行列<label for="margin-note-rotation-matrix" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-rotation-matrix" class="margin-note-toggle"><span class="margin-note">3D
+  ゲームのキャラクター表示やカメラ移動には、回転行列がたくさん使われています。</span>と呼ばれるものの一種です。
 </p>
 
-<h2>3. 計算結果の取り出し</h2>
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="次のベクトルの二乗和はいくつ? $$\begin{bmatrix} 0 \\ 1 \\ 2 \end{bmatrix}$$"
+    answer="$0^2 + 1^2 + 2^2 = 5$"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータへの入力データ (ベクトル) の二乗和についての制限は?"
+    answer="必ず 1 でなければならない"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータが掛ける行列について、ベクトルの二乗和に関する制限は?"
+    answer="掛け算で新たにできるベクトルの二乗和が 1 でなくてはならない"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子コンピュータがベクトルへ掛ける行列について、可逆性に関する制限は?"
+    answer="掛け算で新たにできるベクトルを元に戻す行列がなくてはならない"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="量子コンピュータがベクトルへ掛けることのできる行列を{ユニタリ}行列と呼ぶ"
+  ></orbit-prompt>
+  <orbit-prompt cloze="ユニタリ行列は{回転}で構成されている"></orbit-prompt>
+</orbit-reviewarea>
+
+<h2>計算結果の取り出し</h2>
 
 <p>
-  ここがおそらく一番トリッキーな部分です。量子コンピュータで計算した行列とベクトルの掛け算結果をそのまま取り出すことはできません。
-  唯一できることは次の「測定」という命令で出てくるベクトルを取り出すことだけです。
-  たとえば、掛け算の結果が次のベクトルになっているとします。
+  ここがおそらく一番トリッキーな部分です。
+  行列とベクトルの掛け算の結果のベクトルは、なんとそのまま取り出すことができません。
+  唯一できることは<mark>測定</mark>という操作で得られる別のベクトルを取り出すことだけです。
 </p>
+
+<p>たとえば、量子コンピュータが掛け算の結果として次のベクトルを持っているとします。</p>
 
 <p>$$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix}$$</p>
 
-<p>ここで「測定」命令を行うと、それぞれの成分が 2 乗され、確率 (\(\%\)) として解釈されます。</p>
+<p>ここで測定を行うと、それぞれの成分が二乗され、確率 (\(\%\)) として解釈されます。</p>
 
 <p>
-  $$\begin{bmatrix} 0\% \\ (0.5)^2 = 0.25 = 25\% \\ 0\% \\ 0\% \\ (0.707)^2 = 0.5 = 50\% \\ 0\% \\
-  (0.5)^2 = 0.25 = 25\% \\ 0\% \end{bmatrix}$$
-</p>
-
-<p>そしてこの確率に従って、50% の確率で、その成分だけを 1 とする次のベクトルが出力されます。</p>
-
-<p>
-  $$\begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\% \end{bmatrix}
-  \longrightarrow \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$$
+  $$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix} \longrightarrow
+  \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \end{bmatrix} =
+  \begin{bmatrix} 0 \\ 0.25 \\ 0 \\ 0 \\ 0.5 \\ 0 \\ 0.25 \\ 0 \end{bmatrix} \longrightarrow
+  \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\% \end{bmatrix}$$
 </p>
 
 <p>
-  または、確率 \(25\%\) でその成分だけを \(1\)
-  とする次のいずれかのベクトルが返ります。ユーザが取り出せるのは、これらの \(0\) または \(1\)
-  のみを持つベクトルだけです。
+  そしてそれぞれの確率に従って、その成分だけを 1 とするベクトルが出力されます。
+  ユーザはこれらのベクトルのうちどれか 1 つだけを、確率的に取り出すことしかできません。
 </p>
 
 <p>
-  $$\begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\% \end{bmatrix}
-  \longrightarrow \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}\ または\
-  \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\% \end{bmatrix}
-  \longrightarrow \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0 \end{bmatrix}$$
+  $$ \begin{bmatrix} 0\% \\ \textcolor{red}{25\%} \\ 0\% \\ 0\% \\ \textcolor{blue}{50\%} \\ 0\% \\
+  \textcolor{magenta}{25\%} \\ 0\% \end{bmatrix} \longrightarrow \begin{bmatrix} 0 \\
+  \textcolor{red}{1} \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}\ または\ \begin{bmatrix} 0 \\ 0 \\
+  0 \\ 0 \\ \textcolor{blue}{1} \\ 0 \\ 0 \\ 0 \end{bmatrix} または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\
+  0 \\ 0 \\ 0 \\ \textcolor{magenta}{1} \\ 0 \end{bmatrix} $$
 </p>
 
 <p>
   これは結局、何を意味するでしょうか?
-  量子コンピュータで行列とベクトルの掛け算は、出力するベクトルを決める確率の<ruby
+  量子コンピュータでの行列とベクトルの掛け算は、出力するベクトルを決める確率の<ruby
     ><rb>素</rb><rt>もと</rt></ruby
   >
-  (振幅、二乗すると確率になる数) を計算しているのです。
-  しかも測定した瞬間に元のベクトルは破棄され、最終的には一番確率の大きい成分をだけを 1
-  とするベクトルが返ります。 とても不思議な動作ですが、これも量子力学のルールに従ったものです。
+  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note-toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note-toggle"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1
+  というルールは、確率から来ています。つまり、測定によって出てくるベクトルそれぞれの確率をすべて足すと
+  100% にならなければならないため、二乗和は必ず 1 となります。</span>。
+  測定した瞬間に元のベクトルは破壊され、最終的には 1 つの成分だけが 1 でほかはすべて 0
+  となるベクトルだけが確率的に取り出せます。
+  どう考えても奇妙な動作ですが、これも量子力学のルールに従ったものです。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子コンピュータからベクトルを取り出す操作を{測定}と呼ぶ"></orbit-prompt>
+  <orbit-prompt
+    question="状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?"
+    answer="25%"
+  ></orbit-prompt>
+</orbit-reviewarea>
 
 <h2>まとめ</h2>
 
@@ -153,7 +570,30 @@ description: 量子コンピュータの得意分野と制限
 </p>
 
 <p>
-  こんなに厳しいルールが課せられた上でも、うまく動作する量子アルゴリズムがいろいろと提案されています。
+  こんなに厳しい制約が課せられた上でも、うまく動作する量子アルゴリズムがいろいろと提案されています。
   たとえば後に見る量子フーリエ変換 (QFT)
-  アルゴリズムは、量子因数分解などの中間的なステップとして動作することで、測定することなく計算結果をそのまま次のステップへと渡すことができます。
+  アルゴリズムは、量子因数分解などの中間的なステップとして動作することで、測定することなく計算結果をそのまま次のステップへと渡します。
 </p>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+
+    <script>
+      let sidebar = document.querySelector('.sidebar')
+
+      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+      if (sidebarScroll !== null) {
+        sidebar.scrollTop = parseInt(sidebarScroll, 10)
+      }
+
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
+      })
+    </script>
+  </body>
+</html>
