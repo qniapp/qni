@@ -130,8 +130,6 @@
       @apply font-mono tracking-tighter;
       @apply text-xs leading-3;
       @apply whitespace-nowrap;
-
-      content: '';
     }
 
     circuit-dropzone &[data-if]:not([data-if=''])::before {
@@ -169,54 +167,54 @@
 }
 
 @layer components {
-  .angleable[data-angle]::before {
-    @apply hidden;
-    @apply font-mono tracking-tighter;
-    @apply text-xs leading-3;
-    @apply absolute;
-  }
+  .angleable {
+    &[data-angle]::before {
+      @apply absolute;
+      @apply flex justify-center;
+      @apply font-mono tracking-tighter;
+      @apply text-xs leading-3;
 
-  .angleable[data-reduced-angle='']:not([data-angle=''])::before {
-    @apply flex justify-center;
+      @apply top-0 left-0 right-0;
+      @apply -mt-3.5;
+    }
 
-    content: attr(data-angle) '';
-  }
+    &:not([data-reduced-angle=''])::before {
+      content: attr(data-reduced-angle) '' !important;
+    }
 
-  .angleable:not([data-reduced-angle=''])::before {
-    @apply flex justify-center !important;
+    &[data-reduced-angle='']:not([data-angle=''])::before {
+      content: attr(data-angle) '';
+    }
 
-    content: attr(data-reduced-angle) '';
-  }
+    palette-dropzone &::before {
+      @apply hidden !important;
+    }
 
-  palette-dropzone .angleable::before {
-    @apply hidden !important;
-  }
+    /* top label */
+    &[data-angle][data-size='sm']::before {
+      @apply top-0 left-0 right-0;
+      @apply -mt-3.5;
+    }
 
-  /* top label */
-  .angleable[data-angle][data-size='sm']::before {
-    @apply flex justify-center;
-    @apply top-0 left-0 right-0;
-    @apply -mt-3.5;
-  }
+    circuit-dropzone:not([data-connect-top]) &[data-angle]::before {
+      @apply top-0 left-0 right-0;
+      @apply -mt-3.5;
+    }
 
-  circuit-dropzone:not([data-connect-top]) .angleable[data-angle]::before {
-    @apply top-0 left-0 right-0;
-    @apply -mt-3.5;
-  }
+    /* top label over wire */
+    circuit-dropzone[data-connect-top][data-connect-bottom] &[data-angle]::before {
+      @apply top-0 left-0 right-0;
+      @apply -mt-3.5;
 
-  /* top label over wire */
-  circuit-dropzone[data-connect-top][data-connect-bottom] .angleable[data-angle]::before {
-    @apply top-0 left-0 right-0;
-    @apply -mt-3.5;
+      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
+        -1px 0 0 #fff, 1px 0 0 #fff;
+    }
 
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
-      -1px 0 0 #fff, 1px 0 0 #fff;
-  }
-
-  /* bottom label */
-  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .angleable[data-angle]::before {
-    @apply bottom-0 left-0 right-0;
-    @apply -mb-3.5;
+    /* bottom label */
+    circuit-dropzone[data-connect-top]:not([data-connect-bottom]) &[data-angle]::before {
+      @apply top-auto bottom-0 left-0 right-0;
+      @apply -mb-3.5;
+    }
   }
 }
 
