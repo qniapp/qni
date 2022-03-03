@@ -53,10 +53,14 @@
 
     &::after {
       @apply absolute inset-0;
-      @apply border-2 border-purple-500 border-opacity-0;
+      /* @apply border-2 border-purple-500 border-opacity-0; */
       @apply rounded;
 
       content: '';
+    }
+
+    circuit-editor &::after {
+      @apply border-2 border-purple-500 border-opacity-0;
     }
 
     &[data-grabbed] {
@@ -65,25 +69,22 @@
       @apply z-40;
     }
 
-    circuit-editor palette-dropzone & {
-      @apply cursor-grab;
-    }
-
-    circuit-editor palette-dropzone &:not([data-grabbed]):hover::after {
-      @apply border-opacity-100;
-    }
-
+    /* grabbable cursor style */
+    circuit-editor palette-dropzone &,
     circuit-editor quantum-circuit:not([data-editing]) & {
       @apply cursor-grab;
     }
 
-    circuit-editor quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
+    /* show border */
+    palette-dropzone &:not([data-grabbed]):hover::after {
       @apply border-opacity-100;
     }
 
-    circuit-editor
-      quantum-circuit([data-editing])
-      &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
+    quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
+      @apply border-opacity-100;
+    }
+
+    quantum-circuit([data-editing]) &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
       @apply border-opacity-100;
     }
 
