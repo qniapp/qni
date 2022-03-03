@@ -12,7 +12,7 @@ body {
   @apply float-left sm:float-right;
   @apply clear-both sm:clear-right;
   @apply left-4 sm:left-auto;
-  @apply m-4 sm:m-0 sm:mb-4 sm:pl-12;
+  @apply m-4 sm:m-0 sm:mb-5 sm:pl-12;
   @apply w-11/12 sm:w-1/2;
 
   .margin-note-toggle:checked + & {
