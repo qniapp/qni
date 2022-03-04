@@ -4,5 +4,10 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('postcss-import'), require('@tailwindcss/typography'), require('tailwindcss')],
+  plugins: [
+    require('postcss-import'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss'),
+  ],
 }
