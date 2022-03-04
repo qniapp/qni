@@ -7,18 +7,14 @@ layout: default
     class="fixed inset-0 z-40 flex hidden md:hidden"
     role="dialog"
     aria-modal="true"
-    data-sidebar-target="mobile"
+    data-sidebar-target="menu"
   >
     <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-    <div
-      class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4"
-      data-sidebar-target="mobileMenu"
-    >
+    <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
       <div class="absolute top-0 right-0 -mr-12 pt-2">
         <button
           type="button"
           class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-          data-sidebar-target="mobileCloseButton"
           data-action="click->sidebar#close"
         >
           <!-- Heroicon name: outline/x -->
@@ -53,7 +49,9 @@ layout: default
           >
         </div>
       </div>
-      <div class="mt-5 h-0 flex-1 overflow-y-auto">{% include navigation.html %}</div>
+      <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
+        {% include navigation.html %}
+      </div>
     </div>
 
     <div class="w-14 flex-shrink-0" aria-hidden="true">

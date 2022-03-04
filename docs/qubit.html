@@ -37,14 +37,31 @@
       Stimulus.register(
         'sidebar',
         class extends Controller {
-          static targets = ['mobile']
+          static targets = ['menu', 'body', 'bodyMd']
+
+          connect() {
+            let bodyMdScroll = sessionStorage.getItem('sidebar-md-scroll')
+            if (bodyMdScroll !== null) {
+              this.bodyMdTarget.scrollTop = parseInt(bodyMdScroll, 10)
+            }
+
+            window.addEventListener('beforeunload', () => {
+              sessionStorage.setItem('sidebar-scroll', this.bodyTarget.scrollTop)
+              sessionStorage.setItem('sidebar-md-scroll', this.bodyMdTarget.scrollTop)
+            })
+          }
 
           open() {
-            this.mobileTarget.classList.remove('hidden')
+            this.menuTarget.classList.remove('hidden')
+
+            let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+            if (sidebarScroll !== null) {
+              this.bodyTarget.scrollTop = parseInt(sidebarScroll, 10)
+            }
           }
 
           close() {
-            this.mobileTarget.classList.add('hidden')
+            this.menuTarget.classList.add('hidden')
           }
         }
       )
@@ -56,18 +73,16 @@
     class="fixed inset-0 z-40 flex hidden md:hidden"
     role="dialog"
     aria-modal="true"
-    data-sidebar-target="mobile"
+    data-sidebar-target="menu"
   >
     <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
     <div
       class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4"
-      data-sidebar-target="mobileMenu"
     >
       <div class="absolute top-0 right-0 -mr-12 pt-2">
         <button
           type="button"
           class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-          data-sidebar-target="mobileCloseButton"
           data-action="click->sidebar#close"
         >
           <!-- Heroicon name: outline/x -->
@@ -102,7 +117,7 @@
           >
         </div>
       </div>
-      <div class="mt-5 h-0 flex-1 overflow-y-auto"><nav class="flex-1 space-y-1 bg-white px-3 md:px-6">
+      <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body"><nav class="flex-1 space-y-1 bg-white px-3 md:px-6">
   
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-700">
     QPU
@@ -426,7 +441,10 @@
 
   <div class="hidden md:flex md:flex-shrink-0">
   <div class="flex w-64 flex-col">
-    <div class="sidebar flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4">
+    <div
+      class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4"
+      data-sidebar-target="bodyMd"
+    >
       <div class="flex flex-shrink-0 items-center px-8">
         <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
         <div class="flex flex-row items-end">
@@ -1177,17 +1195,5 @@
   </div>
 </div>
 
-
-    <script>
-      let sidebar = document.querySelector('.sidebar')
-      let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
-      if (sidebarScroll !== null) {
-        sidebar.scrollTop = parseInt(sidebarScroll, 10)
-      }
-
-      window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop)
-      })
-    </script>
   </body>
 </html>
