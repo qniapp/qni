@@ -5496,6 +5496,10 @@ mark {
   z-index: 10;
 }
 
+.z-50 {
+  z-index: 50;
+}
+
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
