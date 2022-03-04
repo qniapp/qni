@@ -27,54 +27,50 @@
       data-domain="qniapp.github.io"
       src="https://plausible.io/js/plausible.js"
     ></script>
+    <script type="module">
+      import {
+        Application,
+        Controller,
+      } from 'https://unpkg.com/@hotwired/stimulus/dist/stimulus.js'
+      window.Stimulus = Application.start()
+
+      Stimulus.register(
+        'sidebar',
+        class extends Controller {
+          static targets = ['mobile']
+
+          open() {
+            console.log('*** OPEN ***')
+            this.mobileTarget.classList.remove('hidden')
+          }
+
+          close() {
+            console.log('*** CLOSE ***')
+            this.mobileTarget.classList.add('hidden')
+          }
+        }
+      )
+    </script>
   </head>
   <body class="w-full">
-    <div class="flex h-screen overflow-hidden">
-  <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+    <div class="flex h-screen overflow-hidden" data-controller="sidebar">
   <div
-    id="mobile-sidebar"
     class="fixed inset-0 z-40 flex hidden md:hidden"
     role="dialog"
     aria-modal="true"
+    data-sidebar-target="mobile"
   >
-    <!--
-      Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-      Entering: "transition-opacity ease-linear duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "transition-opacity ease-linear duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
     <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-
-    <!--
-      Off-canvas menu, show/hide based on off-canvas menu state.
-
-      Entering: "transition ease-in-out duration-300 transform"
-        From: "-translate-x-full"
-        To: "translate-x-0"
-      Leaving: "transition ease-in-out duration-300 transform"
-        From: "translate-x-0"
-        To: "-translate-x-full"
-    -->
-    <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4">
-      <!--
-        Close button, show/hide based on off-canvas menu state.
-
-        Entering: "ease-in-out duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "ease-in-out duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
+    <div
+      class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4"
+      data-sidebar-target="mobileMenu"
+    >
       <div class="absolute top-0 right-0 -mr-12 pt-2">
         <button
-          id="mobile-sidebar-close-button"
           type="button"
           class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          data-sidebar-target="mobileCloseButton"
+          data-action="click->sidebar#close"
         >
           <!-- Heroicon name: outline/x -->
           <svg
@@ -765,12 +761,13 @@
   </div>
 </div>
 
+
   <div class="flex w-0 flex-1 flex-col overflow-hidden">
     <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow md:hidden">
       <button
-        id="mobile-sidebar-open-button"
         type="button"
         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+        data-action="click->sidebar#open"
       >
         <!-- Heroicon name: outline/menu-alt-2 -->
         <svg
@@ -1032,18 +1029,6 @@
 
 
     <script>
-      let mobileSidebar = document.getElementById('mobile-sidebar')
-
-      let mobileSidebarOpenButton = document.getElementById('mobile-sidebar-open-button')
-      mobileSidebarOpenButton.addEventListener('click', () => {
-        mobileSidebar.classList.remove('hidden')
-      })
-
-      let mobileSidebarCloseButton = document.getElementById('mobile-sidebar-close-button')
-      mobileSidebarCloseButton.addEventListener('click', () => {
-        mobileSidebar.classList.add('hidden')
-      })
-
       let sidebar = document.querySelector('.sidebar')
       let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
       if (sidebarScroll !== null) {
