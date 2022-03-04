@@ -1,0 +1,40 @@
+<div
+  class="fixed inset-0 z-50 flex hidden md:hidden"
+  role="dialog"
+  aria-modal="true"
+  data-sidebar-target="menu"
+>
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+  <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
+    <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <button
+        type="button"
+        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        data-action="click->sidebar#close"
+      >
+        {% include cross.svg %}
+      </button>
+    </div>
+
+    <div class="flex flex-shrink-0 items-center px-4">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-end">
+        <span
+          class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+          >Qni</span
+        >
+        <span
+          class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+          >Tutorial</span
+        >
+      </div>
+    </div>
+    <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
+      {% include navigation.html %}
+    </div>
+  </div>
+
+  <div class="w-14 flex-shrink-0" aria-hidden="true">
+    <!-- Dummy element to force sidebar to shrink to fit close icon -->
+  </div>
+</div>
