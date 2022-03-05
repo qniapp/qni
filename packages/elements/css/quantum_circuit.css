@@ -1,7 +1,5 @@
 quantum-circuit {
-  @apply flex;
-  @apply flex-col;
+  @apply flex flex-col md:flex-row;
+  @apply items-center;
   @apply w-min;
-  @apply md:flex-row;
-  @apply items-start md:items-center;
 }

@@ -5087,9 +5087,6 @@ circuit-step[data-breakpoint]::after {
 quantum-circuit {
   display: flex;
   flex-direction: column;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
 }
 
 @media (min-width: 768px) {
@@ -5099,13 +5096,10 @@ quantum-circuit {
 }
 
 quantum-circuit {
-  align-items: flex-start;
-}
-
-@media (min-width: 768px) {
-  quantum-circuit {
-    align-items: center;
-  }
+  align-items: center;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
 }
 
 circuit-editor {
