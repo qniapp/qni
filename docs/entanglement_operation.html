@@ -837,7 +837,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["•","X"],["H"],["Measure","Measure"]]}'
+        data-json='{"cols":[["|0>","|0>"],["{ベル回路"],["H"],["•","X"],["}"],["X"],["{逆ベル回路"],["•","X"],["H"],["}"],["Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -891,7 +891,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+        data-json='{"cols":[["|0>","|0>"],["{ベル回路"],["H"],["•","X"],["}"],["P(π)"],["{逆ベル回路"],["•","X"],["H"],["}"],["Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -939,7 +939,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["X"],["P(π)"],["•","X"],["H"],["Measure","Measure"]]}'
+        data-json='{"cols":[["|0>","|0>"],["{ベル回路"],["H"],["•","X"],["}"],["X"],["P(π)"],["{逆ベル回路"],["•","X"],["H"],["}"],["Measure","Measure"]]}'
       >
       </quantum-circuit>
 
@@ -960,7 +960,8 @@
 </div>
 
 <p>
-  なぜこのような結果になるか、演算ペアのルールを使って X ゲートの例で確認してみましょう。 X
+  なぜこのような結果になるか、演算ペアのルールを使って X
+  ゲートの例で量子ビットの変化を確認してみましょう。 X
   ゲートを適用する前のベル状態は、次のようになっています。
 </p>
 
@@ -991,8 +992,8 @@
 </div>
 
 <p>
-  X ゲートをビット 1 に適用すると、\(|0\rangle\) \(|1\rangle\) と \(|2\rangle\) \(|3\rangle\)
-  の演算ペアがそれぞれ次のように入れ替わります。
+  X ゲートをビット 1 に適用すると、\(|0\rangle\) \(|1\rangle\) と \(|2\rangle\) \(|3\rangle\) の演算ペアが X
+  ゲートによってそれぞれ次のように入れ替わります。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1052,9 +1053,10 @@
 </div>
 
 <p>
-  次に逆ベル回路でもつれをほどきます。 逆ベル回路の CNOT 演算を適用すると、ビット 1
-  に置いたコントロールゲートによって \(|1\rangle\) \(|3\rangle\) のペアが選択され、ビット 2 に置いた X
-  ゲートによって入れ替わります。
+  次に逆ベル回路でもつれをほどきます。 まず最初の CNOT では、ビット 2 に置いた X ゲートの演算ペアは
+  \(|0\rangle\) \(|2\rangle\) と \(|1\rangle\) \(|3\rangle\) です。 コントロールゲートがビット 1
+  にあるので、演算ペアのうちビット 1 が立ったものを選ぶと \(|1\rangle\) \(|3\rangle\)
+  のペアが有効になります。 これが X ゲートによって次のように入れ替わります。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1184,41 +1186,41 @@
 <p>
   もつれ状態にゲートを適用すると、もつれたすべての量子ビットに作用します。
   逆ベル回路によってもつれをほどき測定すると、ゲートを作用した結果を取り出すことができます。
-  このもつれをほどいて測定するシーケンス (CNOT, H, 測定) を<mark>ベル測定</mark>と呼びます。
+  このもつれをほどいて測定するシーケンス (逆ベル回路 + 測定) を<mark>ベル測定</mark>と呼びます。
 </p>
 
 <p>
   今回はベル状態に X
   ゲート、PHASE(π)、その両方のゲートを適用しベル測定した場合の結果を見てきました。
-  ゲートを何も適用しない素のベル状態に加えて、これらのゲートを適用した状態 4
+  ゲートを何も適用しない素のベル状態に加え、これらのゲートを適用した状態 4
   つをまとめたものもベル状態と呼びます。 4
   つのベル状態と、それをベル測定した結果をまとめておきましょう。
 </p>
 
-<div class="pb-10">
-  <table class="table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
     <thead>
       <tr>
-        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
-        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+        <th>適用するゲート</th>
+        <th>ベル測定の結果</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">なし</td>
-        <td class="border border-slate-300 py-2 px-4">00</td>
+        <td>なし</td>
+        <td>00</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">X</td>
-        <td class="border border-slate-300 py-2 px-4">10</td>
+        <td>X</td>
+        <td>10</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">X と PHASE(π)</td>
-        <td class="border border-slate-300 py-2 px-4">11</td>
+        <td>X と PHASE(π)</td>
+        <td>11</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">PHASE(π)</td>
-        <td class="border border-slate-300 py-2 px-4">01</td>
+        <td>PHASE(π)</td>
+        <td>01</td>
       </tr>
     </tbody>
   </table>
@@ -1227,33 +1229,81 @@
 <p>
   覚えやすくするために、ゲートの別名を導入します。 PHASE(π) ゲートは Z
   ゲートとしても知られています。 また、X と PHASE(π) ゲート (つまり Z ゲート) の組合わせは Y
-  ゲートとしても知られています。 このことを使うと、上の表は X, Y, Z ゲートで次のように書き直せます。
+  ゲートとしても知られています。
 </p>
 
-<div class="pb-10">
-  <table class="my-5 table-auto border-collapse border border-slate-400 md:mr-auto md:w-7/12">
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <phase-gate data-angle="π"></phase-gate>
+    </circuit-dropzone>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <y-gate></y-gate>
+    </circuit-dropzone>
+  </div>
+</div>
+
+<p>このことを使うと、上の表は X, Y, Z ゲートで次のように書き直せます。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
     <thead>
       <tr>
-        <th class="border border-slate-300 bg-slate-800 text-white">適用するゲート</th>
-        <th class="border border-slate-300 bg-slate-800 text-white">ベル測定の結果</th>
+        <th>適用するゲート</th>
+        <th>ベル測定の結果</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">なし</td>
-        <td class="border border-slate-300 py-2 px-4">00</td>
+        <td>なし</td>
+        <td>00</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">X</td>
-        <td class="border border-slate-300 py-2 px-4">10</td>
+        <td>X</td>
+        <td>10</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">Y</td>
-        <td class="border border-slate-300 py-2 px-4">11</td>
+        <td>Y</td>
+        <td>11</td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">Z</td>
-        <td class="border border-slate-300 py-2 px-4">01</td>
+        <td>Z</td>
+        <td>01</td>
       </tr>
     </tbody>
   </table>
