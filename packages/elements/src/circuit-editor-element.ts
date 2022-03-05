@@ -352,9 +352,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
 
-    for (const each of this.circuit.operations) {
-      each.initMenu()
-    }
+    this.addEventListener('quantum-circuit-init', () => {
+      for (const each of this.circuit.operations) {
+        each.initMenu()
+      }
+    })
   }
 
   update(): void {

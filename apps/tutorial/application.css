@@ -5909,10 +5909,6 @@ mark {
   align-self: flex-start;
 }
 
-.self-end {
-  align-self: flex-end;
-}
-
 .self-center {
   align-self: center;
 }
@@ -6513,10 +6509,6 @@ mark {
 
   .md\:flex-shrink-0 {
     flex-shrink: 0;
-  }
-
-  .md\:flex-row {
-    flex-direction: row;
   }
 
   .md\:items-start {

@@ -282,6 +282,8 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
     this.addEventListener('circuit-step-delete-operation', this.updateStep)
     this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
+
+    this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
