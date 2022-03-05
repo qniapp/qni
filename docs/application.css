@@ -5092,12 +5092,6 @@ quantum-circuit {
   width: min-content;
 }
 
-@media (min-width: 640px) {
-  quantum-circuit {
-    flex-direction: column;
-  }
-}
-
 @media (min-width: 768px) {
   quantum-circuit {
     flex-direction: row;
@@ -5106,6 +5100,12 @@ quantum-circuit {
 
 quantum-circuit {
   align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  quantum-circuit {
+    align-items: center;
+  }
 }
 
 circuit-editor {
