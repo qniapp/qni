@@ -14,7 +14,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .js,.ts",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "build": "node build.js",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",

@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rm -rf dist build",
     "lint": "eslint . --ext .js,.ts",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "prebuild": "npm run build:css",
     "build": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
