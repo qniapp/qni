@@ -36,6 +36,7 @@ import {
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
+import {CircuitBlockElement} from './circuit-block-element'
 import {CircuitDropzoneElement} from './circuit-dropzone-element'
 import {ControlGateElement} from './control-gate-element'
 import {HGateElement} from './h-gate-element'
@@ -143,6 +144,7 @@ export class CircuitStepElement extends HTMLElement {
   @attr active = false
   @attr breakpoint = false
   @attr shadow = false
+  @attr keep = false
   @attr debug = false
 
   private circuitStepMachine = createMachine<CircuitStepContext, CircuitStepEvent>(
@@ -345,6 +347,19 @@ export class CircuitStepElement extends HTMLElement {
 
   get wireCount(): number {
     return this.dropzones.length
+  }
+
+  get isInBlock(): boolean {
+    if (this.closest('circuit-block') === null) {
+      return false
+    }
+    return true
+  }
+
+  get block(): CircuitBlockElement {
+    const block = this.closest('circuit-block') as CircuitBlockElement
+
+    return block!
   }
 
   connectedCallback(): void {
@@ -649,6 +664,7 @@ export class CircuitStepElement extends HTMLElement {
   }
 
   get isEmpty(): boolean {
+    if (this.keep) return false
     return this.dropzones.every(each => !each.occupied)
   }
 

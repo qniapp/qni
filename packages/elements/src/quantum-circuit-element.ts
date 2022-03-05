@@ -12,9 +12,10 @@ import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
+import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
@@ -91,6 +92,8 @@ export class QuantumCircuitElement extends HTMLElement {
   // CPHASE
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
+
+  @targets blocks!: CircuitBlockElement[]
 
   private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
     id: 'quantum-circuit',
@@ -279,6 +282,8 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
     this.addEventListener('circuit-step-delete-operation', this.updateStep)
     this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
+
+    this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -374,14 +379,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   h(...args: number[] | [HGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -389,7 +394,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const h = new HGateElement()
       if (disabled) h.disable()
       return h
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -400,14 +405,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   x(...args: number[] | [XGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -415,7 +420,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const x = new XGateElement()
       if (disabled) x.disable()
       return x
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -424,14 +429,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   y(...args: number[] | [YGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -439,7 +444,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const y = new YGateElement()
       if (disabled) y.disable()
       return y
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -448,14 +453,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   z(...args: number[] | [ZGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -463,7 +468,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const z = new ZGateElement()
       if (disabled) z.disable()
       return z
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -473,17 +478,17 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   phase(...args: number[] | [string, ...number[]] | [PhaseGateElementProps]): QuantumCircuitElement {
     let angle = ''
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else if (typeof args[0] === 'string') {
       angle = args[0]
-      targets = args.slice(1) as number[]
+      targetBits = args.slice(1) as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -492,8 +497,8 @@ export class QuantumCircuitElement extends HTMLElement {
       phase.angle = angle
       if (disabled) phase.disable()
       return phase
-    }, ...targets)
-    if (targets.length > 1) this.updateStepOperationAttributes(step)
+    }, ...targetBits)
+    if (targetBits.length > 1) this.updateStepOperationAttributes(step)
 
     return this
   }
@@ -502,14 +507,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   t(...args: number[] | [TGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -517,7 +522,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const t = new TGateElement()
       if (disabled) t.disable()
       return t
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -528,14 +533,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rnot(...args: number[] | [RnotGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -543,7 +548,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rnot = new RnotGateElement()
       if (disabled) rnot.disable()
       return rnot
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -552,14 +557,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rx(...args: number[] | [RxGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -567,7 +572,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rx = new RxGateElement()
       if (disabled) rx.disable()
       return rx
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -576,14 +581,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   ry(...args: number[] | [RyGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -591,7 +596,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const ry = new RyGateElement()
       if (disabled) ry.disable()
       return ry
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -600,14 +605,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rz(...args: number[] | [RzGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -615,7 +620,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rz = new RzGateElement()
       if (disabled) rz.disable()
       return rz
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -623,8 +628,8 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  swap(...targets: number[]): QuantumCircuitElement {
-    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targets)
+  swap(...targetBits: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targetBits)
     this.updateStepOperationAttributes(step)
     return this
   }
@@ -632,8 +637,8 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  control(...targets: number[]): QuantumCircuitElement {
-    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targets)
+  control(...targetBits: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targetBits)
     this.updateStepOperationAttributes(step)
     return this
   }
@@ -641,20 +646,20 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  bloch(...targets: number[]): QuantumCircuitElement {
-    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targets)
+  bloch(...targetBits: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targetBits)
     return this
   }
 
   /**
    * @category Circuit Operation
    */
-  write(value: '0' | '1', ...targets: number[]): QuantumCircuitElement {
+  write(value: '0' | '1', ...targetBits: number[]): QuantumCircuitElement {
     this.applyOperationToTargets(() => {
       const writeGate = new WriteGateElement()
       writeGate.value = value
       return writeGate
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -664,17 +669,17 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  measure(...targets: number[]): QuantumCircuitElement {
-    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targets)
+  measure(...targetBits: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targetBits)
     this.resize()
     return this
   }
 
-  private applyOperationToTargets(constructor: () => Operation, ...targets: number[]): CircuitStepElement {
-    const nbit = Math.max(...targets) + 1
+  private applyOperationToTargets(constructor: () => Operation, ...targetBits: number[]): CircuitStepElement {
+    const nbit = Math.max(...targetBits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of targets) {
+    for (const each of targetBits) {
       const operation = constructor()
       step.dropzoneAt(each).put(operation)
     }
@@ -775,11 +780,11 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  cc(...targets: number[]): QuantumCircuitElement {
-    const nbit = Math.max(...targets) + 1
+  cc(...targetBits: number[]): QuantumCircuitElement {
+    const nbit = Math.max(...targetBits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of targets) {
+    for (const each of targetBits) {
       step.dropzoneAt(each).put(new ControlGateElement())
     }
 
@@ -805,17 +810,17 @@ export class QuantumCircuitElement extends HTMLElement {
     control: number | number[],
     target: number | number[]
   ): void {
-    const controls = ([] as number[]).concat(...[control])
-    const targets = ([] as number[]).concat(...[target])
+    const controlBits = ([] as number[]).concat(...[control])
+    const targetBits = ([] as number[]).concat(...[target])
 
-    const bits = controls.concat(targets)
+    const bits = controlBits.concat(targetBits)
     const nbit = Math.max(...bits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of controls) {
+    for (const each of controlBits) {
       step.dropzoneAt(each).put(new ControlGateElement())
     }
-    for (const each of targets) {
+    for (const each of targetBits) {
       step.dropzoneAt(each).put(new constructor())
     }
 
@@ -824,10 +829,21 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private appendStep(): CircuitStepElement {
-    const step = new CircuitStepElement()
+    // const step = new CircuitStepElement()
 
-    this.append(step)
-    return step
+    // this.append(step)
+    // return step
+
+    const el = new CircuitStepElement()
+
+    const lastBlock = this.blocks.slice(-1)[0] || null
+    if (lastBlock === null || lastBlock.finalized) {
+      this.append(el)
+    } else {
+      lastBlock.append(el)
+    }
+
+    return el
   }
 
   private appendStepWithDropzones(nbit: number): CircuitStepElement {
@@ -881,7 +897,7 @@ export class QuantumCircuitElement extends HTMLElement {
 
   private loadFromJson(): void {
     let jsonString
-    // let circuitBlock = null
+    let circuitBlock = null
 
     if (this.updateUrl) {
       jsonString = this.urlJson
@@ -1053,26 +1069,26 @@ export class QuantumCircuitElement extends HTMLElement {
             break
           }
           case /^[[{](.+)$/.test(instruction): {
-            // const comment = RegExp.$1
-            // circuitStep.remove()
-            // circuitBlock = new CircuitBlockElement()
-            // circuitBlock.comment = comment
-            // circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
-            // this.append(circuitBlock)
+            const comment = RegExp.$1
+            circuitStep.remove()
+            circuitBlock = new CircuitBlockElement()
+            circuitBlock.comment = comment
+            circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
+            this.append(circuitBlock)
             break
           }
           case /^[\]}]$/.test(instruction): {
-            // circuitStep.remove()
-            // circuitBlock!.finalize()
+            circuitStep.remove()
+            circuitBlock!.finalize()
             break
           }
           default: {
             if (instruction === 1) {
-              // if (circuitStep.qubitCount === 0) {
-              //   circuitStep.keep = true
-              // } else {
-              //   circuitStep.keep = false
-              // }
+              if (circuitStep.dropzones.length === circuitStep.freeDropzones.length) {
+                circuitStep.keep = true
+              } else {
+                circuitStep.keep = false
+              }
             } else {
               throw new Error(`Unknown instruction: ${instruction}`)
             }
@@ -1282,10 +1298,27 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   toJson(): string {
+    let isInBlock = false
     const cols = []
 
     for (const each of this.nonEmptySteps) {
+      if (each.isInBlock) {
+        if (!isInBlock) {
+          const block = each.block
+          cols.push(`["[${block.comment}"]`)
+          isInBlock = true
+        }
+      } else {
+        if (isInBlock) {
+          cols.push('["]"]')
+          isInBlock = false
+        }
+      }
       cols.push(each.toJson())
+    }
+
+    if (isInBlock) {
+      cols.push('["]"]')
     }
 
     if (this.circuitTitle !== '') {
@@ -1293,35 +1326,6 @@ export class QuantumCircuitElement extends HTMLElement {
     } else {
       return `{"cols":[${cols.join(',')}]}`
     }
-
-    // let isInBlock = false
-    // const cols = []
-
-    // for (const each of this.nonEmptySteps) {
-    //   if (each.isInBlock) {
-    //     if (!isInBlock) {
-    //       const block = each.block
-    //       cols.push(`["[${block.comment}"]`)
-    //       isInBlock = true
-    //     }
-    //   } else {
-    //     if (isInBlock) {
-    //       cols.push('["]"]')
-    //       isInBlock = false
-    //     }
-    //   }
-    //   cols.push(each.toJson())
-    // }
-
-    // if (isInBlock) {
-    //   cols.push('["]"]')
-    // }
-
-    // if (this.circuitTitle !== '') {
-    //   return `{"cols":[${cols.join(',')}],"title":"${this.circuitTitle}"}`
-    // } else {
-    //   return `{"cols":[${cols.join(',')}]}`
-    // }
   }
 }
 

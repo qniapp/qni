@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "noEmit": true,
     "module": "esnext",
     "target": "es2017",
     "strict": true,

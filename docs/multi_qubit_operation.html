@@ -924,7 +924,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["X"]]}'
+        data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ状態の生成"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["}"],["X"]]}'
       >
       </quantum-circuit>
 
@@ -1051,7 +1051,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],[1,"X"]]}'
+        data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ状態の生成"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["}"],[1,"X"]]}'
       >
       </quantum-circuit>
 
@@ -1175,7 +1175,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],[1,1,"X"]]}'
+        data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ状態の生成"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["}"],[1,1,"X"]]}'
       >
       </quantum-circuit>
 
@@ -1382,10 +1382,10 @@
 </template>
  <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩ (二進 |<span
-      class="circle-notation-popup__ket-binary font-mono"
-    ></span
-    >⟩)
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
+    <div class="inline-block text-neutral-400">
+      (|<span class="circle-notation-popup__ket-binary font-mono"></span>⟩)
+    </div>
   </div>
 
   <ul class="list-none">
