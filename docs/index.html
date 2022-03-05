@@ -838,7 +838,7 @@
   1 万件だとすると、平均してその半分の 5,000 件には目を通さなければ目的の名前にはたどり着きません。
   一方、量子探索アルゴリズムでは、たった 100 回の検索で十分です。 もし量子コンピュータが量子探索で
   5,000 回の推測をしたならば、実に 2,500 万件の電話帳を検索できます。
-  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを高速に検索できます。
+  このように、量子探索アルゴリズムは巨大なリストの中から特定のアイテムを効率的に検索できます。
 </p>
 
 <p>
@@ -885,22 +885,25 @@
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
+    <circuit-editor class="flex h-full w-full flex-col md:items-start">
       <div
         id="palette"
         class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
       >
+        <palette-dropzone class="self-start">
+          <write-gate data-value="0"></write-gate>
+        </palette-dropzone>
         <palette-dropzone>
           <h-gate></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <control-gate></control-gate>
         </palette-dropzone>
         <palette-dropzone>
           <x-gate></x-gate>
         </palette-dropzone>
         <palette-dropzone>
-          <y-gate></y-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <z-gate></z-gate>
+          <measurement-gate></measurement-gate>
         </palette-dropzone>
       </div>
 
@@ -921,19 +924,19 @@
       </div>
 
       <quantum-circuit
-        class="mb-10"
+        class="mb-10 self-center"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="5"
-        data-json='{"cols":[["|0>"]]}'
+        data-json='{"cols":[["{量子もつれ"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure"],[1,"Measure"]]}'
       >
       </quantum-circuit>
 
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        class="z-40 flex w-min flex-row justify-center self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
       >
@@ -1001,7 +1004,7 @@
   Qni プロジェクトページ: <a href="https://github.com/qniapp/">https://github.com/qniapp/</a></span>しており、読者からのフィードバックを歓迎しています。 typo
   などのささいな修正でも、ぜひ GitHub
   でフィードバックをお願いします。また、著者に加わりたい方も、ぜひ Pull Request
-  を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていきたいと思っています。
+  を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていく予定です。
 </p>
 
 <template id="operation-menu">
@@ -1171,10 +1174,10 @@
 </template>
  <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩ (二進 |<span
-      class="circle-notation-popup__ket-binary font-mono"
-    ></span
-    >⟩)
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
+    <div class="inline-block text-neutral-400">
+      (|<span class="circle-notation-popup__ket-binary font-mono"></span>⟩)
+    </div>
   </div>
 
   <ul class="list-none">
