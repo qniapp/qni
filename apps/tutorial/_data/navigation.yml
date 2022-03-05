@@ -1,4 +1,4 @@
-- name: QPU
+- name: イントロダクション
   pages:
     - name: はじめに
       link: ./
@@ -62,7 +62,7 @@
       link: ./operator_pair.html
     - name: ランダムバイトジェネレータ
       link: ./random_byte_generator.html
-    - name: PHASE ゲート (複数量子ビット)
+    - name: PHASE ゲート
       link: ./multi_qubit_phase_gate.html
     - name: 1 ビット測定
       link: ./partial_measurement.html
