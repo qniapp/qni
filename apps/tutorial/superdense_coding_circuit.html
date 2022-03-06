@@ -1,0 +1,99 @@
+---
+layout: page
+section: 超密度符号化
+title: 超密度符号化回路
+description: Qni で超密度符号化回路を動かしてみよう
+---
+
+<p>
+  超密度符号化を Qni で動かしてみましょう。 Qni
+  による超密度符号化回路の実装はほぼ「アルゴリズムの説明そのまま」であり、今まで見てきたベル状態やベル回路、ベル測定を理解していれば難しくありません。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,1,1,"|0>","|0>"],["{ベル回路"],[1,1,1,"H"],[1,1,1,"•","X"],["}"],[1,1,"Swap","Swap"],[1,1,1,1,"Swap",1,"Swap"],["{送信する2ビットを生成"],["|0>","|0>"],["H","H"],["Measure>bit1","Measure>bit2"],["}"],[1],["|0>","|0>"],["{送信ビットに応じたベル状態を作る"],["X<bit1","X<bit2"],[1,"•","X"],["•",1,"Z"],["}"],["Measure","Measure"],[1,1,"Swap",1,1,"Swap"],["{ベル測定"],[1,1,1,1,1,"•","X"],[1,1,1,1,1,"H"],[1,1,1,1,1,"Measure","Measure"],["}"],[1]],"title":"Superdense Coding"}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  最初のブロックではベル回路によってベルペアを作り、送信者 (回路の上側) と受信者 (回路の下側)
+  にそれぞれ 1 つずつ渡します。
+</p>
+
+<p>
+  2 つめのブロックでは、送信者が送信する 2 ビットをランダムに作ります。 ここでは H ゲートと
+  MEASUREMENT 命令の組 2 つで実現しています。
+</p>
+
+<p>
+  3 つめのブロックでは、送信者が先ほど決めたランダムな 2 ビットに対応するベル状態を作ります。
+  送信ビットのビット 1 とビット 2 に応じて、X ゲートと Z ゲートの ON/OFF を決めます。
+</p>
+
+<ul>
+  <li>
+    <p><strong>00 を送るとき</strong></p>
+    <p>何もしない</p>
+  </li>
+  <li>
+    <p><strong>01 を送るとき</strong></p>
+    <p>Z ゲートを適用する</p>
+  </li>
+  <li>
+    <p><strong>10 を送るとき</strong></p>
+    <p>X ゲートを適用する</p>
+  </li>
+  <li>
+    <p><strong>11 を送るとき</strong></p>
+    <p>X ゲート + Z ゲート (= Y ゲート) を適用する</p>
+  </li>
+</ul>
+
+<p>
+  最後のブロックでは、受信者が送信者の量子ビットを受け取り自分の量子ビットとあわせてベル測定することで、送信された
+  2 ビットの情報を読み出します。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

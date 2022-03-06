@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>もつれをほどく</title>
+    <title>超密度符号化回路</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -798,121 +798,292 @@
               <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">超密度符号化</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  もつれをほどく
+                  超密度符号化回路
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">量子もつれ状態を元に戻す回路</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">Qni で超密度符号化回路を動かしてみよう</p>
             </div>
             <div class="content-with-margin"><p>
-  量子もつれ状態は、ほどいてもつれのない状態に戻すことができます。
-  元に戻すには、量子もつれを作る回路の逆演算となる回路を作ります。
-  逆演算回路を作るために、元の量子回路をもう一度よく見てみましょう。
+  超密度符号化を Qni で動かしてみましょう。 Qni
+  による超密度符号化回路の実装はほぼ「アルゴリズムの説明そのまま」であり、今まで見てきたベル状態やベル回路、ベル測定を理解していれば難しくありません。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"]]}'
-  >
-  </quantum-circuit>
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,1,1,"|0>","|0>"],["{ベル回路"],[1,1,1,"H"],[1,1,1,"•","X"],["}"],[1,1,"Swap","Swap"],[1,1,1,1,"Swap",1,"Swap"],["{送信する2ビットを生成"],["|0>","|0>"],["H","H"],["Measure>bit1","Measure>bit2"],["}"],[1],["|0>","|0>"],["{送信ビットに応じたベル状態を作る"],["X<bit1","X<bit2"],[1,"•","X"],["•",1,"Z"],["}"],["Measure","Measure"],[1,1,"Swap",1,1,"Swap"],["{ベル測定"],[1,1,1,1,1,"•","X"],[1,1,1,1,1,"H"],[1,1,1,1,1,"Measure","Measure"],["}"],[1]],"title":"Superdense Coding"}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
 </div>
 
 <p>
-  まず、右側の CNOT を消すことを考えます。 CNOT の逆演算は CNOT なので<label for="margin-note-cnot-inverse" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-cnot-inverse" class="margin-note__toggle hidden"><span class="margin-note"><a href="./cnot_gate.html">CNOT ゲート</a>を参照</span>、CNOT を次のように 2
-  つ並べます。
+  最初のブロックではベル回路によってベルペアを作り、送信者 (回路の上側) と受信者 (回路の下側)
+  にそれぞれ 1 つずつ渡します。
 </p>
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["•","X"]]}'
-  >
-  </quantum-circuit>
-</div>
-
-すると CNOT 2 個が消え、H ゲート 1 つだけの回路になります。
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["H"]]}'
-  >
-  </quantum-circuit>
-</div>
 
 <p>
-  こうなると後は簡単です。 H ゲートの逆演算は H ゲートなので<label for="margin-note-h-inverse" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-h-inverse" class="margin-note__toggle hidden"><span class="margin-note"><a
-    href="./h_gate.html"
-    >H ゲート</a
-  >を参照</span>、H ゲートを並べます。
+  2 つめのブロックでは、送信者が送信する 2 ビットをランダムに作ります。 ここでは H ゲートと
+  MEASUREMENT 命令の組 2 つで実現しています。
 </p>
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["H"],["H"]]}'
-  >
-  </quantum-circuit>
-</div>
-
-すると 2 個の H ゲートが消え、もつれ回路は消えました。
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"]]}'
-  >
-  </quantum-circuit>
-</div>
 
 <p>
-  以上をまとめると、量子もつれ状態を作ってから逆演算回路によってもつれをほどく量子回路は次のようになります。
-  真ん中の CNOT 2 つが消え、次に H ゲート 2
-  つが消えることで確かに逆演算になっていることが分かります。
+  3 つめのブロックでは、送信者が先ほど決めたランダムな 2 ビットに対応するベル状態を作ります。
+  送信ビットのビット 1 とビット 2 に応じて、X ゲートと Z ゲートの ON/OFF を決めます。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["{もつれを作る"],["H"],["•","X"],["}"],[1],["{もつれをほどく"],["•","X"],["H"],["}"]]}'
-  >
-  </quantum-circuit>
-</div>
+<ul>
+  <li>
+    <p><strong>00 を送るとき</strong></p>
+    <p>何もしない</p>
+  </li>
+  <li>
+    <p><strong>01 を送るとき</strong></p>
+    <p>Z ゲートを適用する</p>
+  </li>
+  <li>
+    <p><strong>10 を送るとき</strong></p>
+    <p>X ゲートを適用する</p>
+  </li>
+  <li>
+    <p><strong>11 を送るとき</strong></p>
+    <p>X ゲート + Z ゲート (= Y ゲート) を適用する</p>
+  </li>
+</ul>
 
 <p>
-  量子もつれを作る H と CNOT の量子回路を<mark
-    >ベル回路<label for="margin-note-bell" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-bell" class="margin-note__toggle hidden"><span class="margin-note">物理学者ジョン・スチュアート・ベルに由来します。ベルは量子もつれが存在することを決定付けることとなったベルの不等式とベル実験の考案者として有名です。</span></mark
-  >と呼び、ベル回路によってできる量子もつれ状態を<mark>ベル状態またはベルペア</mark>と呼びます。
-  ベル状態をほどいて元に戻す回路を<mark>逆ベル回路</mark>と呼びます。
-  つまりこの量子回路は、ベル回路の後に逆ベル回路を並べたものです。
+  最後のブロックでは、受信者が送信者の量子ビットを受け取り自分の量子ビットとあわせてベル測定することで、送信された
+  2 ビットの情報を読み出します。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-min-wire-count="1"
-    data-max-wire-count="1"
-    data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["{ベル回路"],["H"],["•","X"],["}"],[1],["{逆ベル回路"],["•","X"],["H"],["}"]]}'
-  >
-  </quantum-circuit>
-</div>
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
 
-<p>
-  逆ベル回路の使いみちは、<mark>もつれをほどくことで、もつれに対して行ったゲート操作の結果を取り出す</mark>ことです。
-  もつれに対して行うゲート操作については、次の節で詳しく説明します。
-</p>
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
+    </div>
+  </div>
+</template>
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-neutral-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+ <template id="circle-notation-popup">
+  <div class="text-wolf mb-2 text-base">
+    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
+    <div class="inline-block text-neutral-400">
+      (|<span class="circle-notation-popup__ket-binary font-mono"></span>⟩)
+    </div>
+  </div>
+
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
 </div>
           </div>
         </div>

@@ -80,7 +80,7 @@
     - name: 量子もつれ
       link: ./entanglement.html
       new: true
-# - name: 超高密度符号化
+# - name: 超密度符号化
 #   pages:
 #     - name: もつれをほどく
 #       link: ./disentangle.html
@@ -90,6 +90,9 @@
 #       new: true
 #     - name: ベル状態の判別
 #       link: ./discriminating_bell_states.html
+#       new: true
+#     - name: 超密度符号化回路
+#       link: ./superdense_coding_circuit.html
 #       new: true
 - name: ふろく
   pages:
