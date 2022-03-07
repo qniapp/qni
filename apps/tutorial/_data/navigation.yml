@@ -20,7 +20,6 @@
       link: ./qubit.html
     - name: 位相
       link: ./phase.html
-      new: true
     - name: 状態ベクトル表示
       link: ./circle_notation.html
 - name: QPU 命令その 1
@@ -41,7 +40,6 @@
       link: ./no_cloning_theorem.html
     - name: 組合わせゲート
       link: ./gate_combination.html
-      new: true
 - name: 量子暗号通信
   pages:
     - name: 量子鍵配送
@@ -70,30 +68,26 @@
   pages:
     - name: SWAP ゲート
       link: ./swap_gate.html
-      new: true
     - name: CNOT ゲート
       link: ./cnot_gate.html
-      new: true
     - name: SWAP パズル
       link: ./swap_from_cnots.html
-      new: true
     - name: 量子もつれ
       link: ./entanglement.html
+- name: 超密度符号化
+  pages:
+    - name: もつれをほどく
+      link: ./disentangle.html
       new: true
-# - name: 超密度符号化
-#   pages:
-#     - name: もつれをほどく
-#       link: ./disentangle.html
-#       new: true
-#     - name: もつれを操作する
-#       link: ./entanglement_operation.html
-#       new: true
-#     - name: ベル状態の判別
-#       link: ./discriminating_bell_states.html
-#       new: true
-#     - name: 超密度符号化回路
-#       link: ./superdense_coding_circuit.html
-#       new: true
+    - name: もつれを操作する
+      link: ./entanglement_operation.html
+      new: true
+    - name: ベル状態の判別
+      link: ./discriminating_bell_states.html
+      new: true
+    - name: 超密度符号化回路
+      link: ./superdense_coding_circuit.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明

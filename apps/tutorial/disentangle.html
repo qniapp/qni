@@ -16,7 +16,7 @@ description: 量子もつれ状態を元に戻す回路
     data-min-wire-count="1"
     data-max-wire-count="1"
     data-min-step-count="5"
-    data-json='{"cols":[["|0>","|0>"],["H"],["•","X"]]}'
+    data-json='{"cols":[["|0>","|0>"],["{もつれを作る"],["H"],["•","X"],["}"]]}'
   >
   </quantum-circuit>
 </div>
@@ -112,6 +112,33 @@ description: 量子もつれ状態を元に戻す回路
     data-json='{"cols":[["|0>","|0>"],["{ベル回路"],["H"],["•","X"],["}"],[1],["{逆ベル回路"],["•","X"],["H"],["}"]]}'
   >
   </quantum-circuit>
+</div>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CNOT"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.5),
+          1: 0,
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+    <span>ベル状態 (ベルペア)</span>
+  </div>
 </div>
 
 <p>
