@@ -10,6 +10,12 @@ circuit-step {
   @apply py-0 px-8;
   @apply md:py-8 md:px-0;
 
+  &.no-rotation {
+    @apply flex-col items-start;
+    @apply space-x-0;
+    @apply p-0;
+  }
+
   &[data-shadow] {
     @apply h-0 md:h-auto;
     @apply md:w-0;
