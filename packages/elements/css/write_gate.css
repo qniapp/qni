@@ -11,7 +11,7 @@ write-gate {
 
   circuit-dropzone &[data-snapped]::part(icon) {
     @apply origin-center transform-gpu;
-    @apply rotate-45 md:rotate-0;
+    @apply rotate-90 md:rotate-0;
   }
 
   &::part(value) {
