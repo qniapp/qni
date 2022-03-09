@@ -26,7 +26,7 @@ circuit-dropzone {
 
   &::part(wire-input),
   &::part(wire-output) {
-    @apply text-gray-200;
+    @apply text-neutral-200;
   }
 
   &::part(wire-input) {
@@ -56,7 +56,7 @@ circuit-dropzone {
 
   &[data-input-wire-quantum]::part(wire-input),
   &[data-output-wire-quantum]::part(wire-output) {
-    @apply text-gray-900;
+    @apply text-neutral-900;
   }
 
   &[data-operation-name='write-gate']::part(wire-input),

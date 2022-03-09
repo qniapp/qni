@@ -4540,7 +4540,7 @@ write-gate {
 
 write-gate::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
+  color: rgb(115 115 115 / var(--tw-text-opacity));
 }
 
 circuit-dropzone write-gate[data-snapped]::part(icon) {
@@ -4762,7 +4762,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
 
 measurement-gate[data-value='0']::part(icon), measurement-gate[data-value='1']::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
+  color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
 measurement-gate::part(value) {
@@ -4859,7 +4859,7 @@ circuit-dropzone::part(connect-top), circuit-dropzone::part(connect-bottom) {
 
 circuit-dropzone::part(wire-input), circuit-dropzone::part(wire-output) {
   --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
+  color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
 circuit-dropzone::part(wire-input) {
@@ -4891,7 +4891,7 @@ circuit-dropzone[data-connect-bottom]::part(connect-bottom) {
 
 circuit-dropzone[data-input-wire-quantum]::part(wire-input), circuit-dropzone[data-output-wire-quantum]::part(wire-output) {
   --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
+  color: rgb(23 23 23 / var(--tw-text-opacity));
 }
 
 circuit-dropzone[data-operation-name='write-gate']::part(wire-input),

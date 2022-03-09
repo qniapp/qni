@@ -6,7 +6,7 @@ write-gate {
   @apply rounded;
 
   &::part(icon) {
-    @apply text-gray-500;
+    @apply text-neutral-500;
   }
 
   circuit-dropzone &[data-snapped]::part(icon) {
