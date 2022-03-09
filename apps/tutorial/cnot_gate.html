@@ -14,14 +14,16 @@ description: 条件付き X ゲート
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
-  <circuit-step class="p-0">
-    <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-      <control-gate></control-gate>
-    </circuit-dropzone>
-    <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-      <x-gate></x-gate>
-    </circuit-dropzone>
-  </circuit-step>
+  <div class="flex flex-row justify-center">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
 </div>
 
 <p>

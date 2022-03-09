@@ -15,6 +15,10 @@ circuit-dropzone {
     @apply md:rotate-0;
   }
 
+  circuit-step.no-rotation &::part(wires) {
+    @apply rotate-0;
+  }
+
   &[data-shadow]::part(wires) {
     display: none;
   }

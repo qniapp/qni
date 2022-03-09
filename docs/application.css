@@ -4848,6 +4848,11 @@ circuit-dropzone::part(wires) {
   }
 }
 
+circuit-step.no-rotation circuit-dropzone::part(wires) {
+  --tw-rotate: 0deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 circuit-dropzone[data-shadow]::part(wires) {
   display: none;
 }
@@ -4977,6 +4982,21 @@ circuit-step {
     padding-left: 0px;
     padding-right: 0px;
   }
+}
+
+circuit-step.no-rotation {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+circuit-step.no-rotation > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
+}
+
+circuit-step.no-rotation {
+  padding: 0px;
 }
 
 circuit-step[data-shadow] {
@@ -5522,6 +5542,11 @@ mark {
   margin-bottom: 0px;
 }
 
+.-my-2 {
+  margin-top: -0.5rem;
+  margin-bottom: -0.5rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -5835,6 +5860,10 @@ mark {
   flex-direction: column;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .items-end {
   align-items: flex-end;
 }
@@ -5877,6 +5906,12 @@ mark {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -6090,6 +6125,11 @@ mark {
   padding-bottom: 0px;
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6118,6 +6158,21 @@ mark {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.\!py-6 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.\!py-4 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
 .pb-14 {
@@ -6498,6 +6553,11 @@ mark {
 
   .md\:items-start {
     align-items: flex-start;
+  }
+
+  .md\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .md\:px-6 {
