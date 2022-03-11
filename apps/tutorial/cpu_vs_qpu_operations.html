@@ -1,28 +1,60 @@
 ---
 layout: page
 section: QPU 命令その 1
-title: CPU 演算との違い
+title: CPU 命令との違い
 description: 量子コンピュータ版 論理演算
 ---
 
 <p>
-  QPU 演算は、AND や OR といった CPU で実行される論理演算の量子版です。 QPU 演算と CPU
-  演算には、次の大きな違いがあります。
+  QPU 命令は、CPU で実行される AND や NOT, OR といった命令 (論理演算) の量子ビット版です。 QPU
+  命令と CPU 命令には、次の大きな違いがあります。
 </p>
 
 <ul class="list-decimal">
   <li>
-    <p><strong>QPU 演算は重ね合わせ状態に作用できます。</strong></p>
+    <p><strong>QPU 命令は重ね合わせ状態に作用できます。</strong></p>
     <p>
-      入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
-      一方で CPU 論理演算は 0 または 1 のみを入力・出力します。
+      CPU 論理演算は 0 または 1 のみを入力・出力します。 0 と 1 は古典 1
+      ビットで表せる値のすべてです。
     </p>
+
+    <figure class="!w-full">
+      <img src="./images/logic_gates_and_not.png" class="h-auto w-full" />
+    </figure>
+
+    <p>
+      一方で QPU 命令は量子ビットを入出力します。 量子ビットは 0 と 1 だけでなく、0 と 1
+      の重ね合わせ状態を持つことができます。 QPU 命令は 0 と 1
+      の確率や、量子ビットの位相にも作用します。
+    </p>
+
+    <div class="my-5 flex items-center justify-center">
+      <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+        <circle-notation
+          data-size="xl"
+          data-magnitudes="0.8944271909999159,0.4472135954999579"
+          data-phases="-20,70"
+          data-show-kets
+        ></circle-notation>
+        <div class="flex flex-row items-center">
+          {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+          <span class="rounded bg-green-500 p-2 text-white">QPU 命令</span>
+          {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        </div>
+        <circle-notation
+          data-size="xl"
+          data-magnitudes="0.4472135954999579,0.8944271909999159"
+          data-phases="70,-20"
+          data-show-kets
+        ></circle-notation>
+      </div>
+    </div>
   </li>
   <li>
-    <p><strong>QPU 演算の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
+    <p><strong>QPU 命令の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
     <p>
       演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます (後にいくつかの
-      QPU 演算と逆演算を具体的に見ます)。 一方で CPU
+      QPU 命令と逆演算を具体的に見ます)。 一方で CPU
       論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (0 または 1) から入力の
       2 ビット (00, 01, 10, 11) を知ることはできません。
     </p>
@@ -35,3 +67,18 @@ description: 量子コンピュータ版 論理演算
   アンコンピュテーションとは、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用する方法で、少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
   後にそのやり方を見ていきますが、量子プログラミング言語にはまだガベージ・コレクションのような高級な機能はないので、プログラマが明示的に実装してやる必要があります。
 </p>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %}

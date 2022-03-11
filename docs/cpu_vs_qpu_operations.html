@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>CPU 演算との違い</title>
+    <title>CPU 命令との違い</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -203,7 +203,7 @@
     href="./cpu_vs_qpu_operations.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
-    <span class="flex-1">CPU 演算との違い</span>
+    <span class="flex-1">CPU 命令との違い</span>
     
   </a>
    
@@ -577,7 +577,7 @@
     href="./cpu_vs_qpu_operations.html"
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
-    <span class="flex-1">CPU 演算との違い</span>
+    <span class="flex-1">CPU 命令との違い</span>
     
   </a>
    
@@ -864,29 +864,63 @@
               <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">QPU 命令その 1</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  CPU 演算との違い
+                  CPU 命令との違い
                 </h1>
               </div>
               <p class="mt-1 mb-0 text-lg text-gray-500">量子コンピュータ版 論理演算</p>
             </div>
             <div class="content-with-margin"><p>
-  QPU 演算は、AND や OR といった CPU で実行される論理演算の量子版です。 QPU 演算と CPU
-  演算には、次の大きな違いがあります。
+  QPU 命令は、CPU で実行される AND や NOT, OR といった命令 (論理演算) の量子ビット版です。
+  QPU 命令と CPU 命令には、次の大きな違いがあります。
 </p>
 
 <ul class="list-decimal">
   <li>
-    <p><strong>QPU 演算は重ね合わせ状態に作用できます。</strong></p>
+    <p><strong>QPU 命令は重ね合わせ状態に作用できます。</strong></p>
     <p>
-      入力として振幅の大きさと位相というパラメータを持つ量子ビットを取り、それらを変更した量子ビットを出力します。
-      一方で CPU 論理演算は 0 または 1 のみを入力・出力します。
+      CPU 論理演算は 0 または 1 のみを入力・出力します。
+      0 と 1 は古典 1 ビットで表せる値のすべてです。
     </p>
+
+    <figure class="!w-full">
+      <img src="./images/logic_gates_and_not.png" class="h-auto w-full" />
+    </figure>
+
+    <p>
+      一方で QPU 命令は量子ビットを入出力します。
+      量子ビットは 0 と 1 だけでなく、0 と 1 の重ね合わせ状態を持つことができます。
+      QPU 命令は 0 と 1 の確率や、量子ビットの位相にも作用します。
+    </p>
+
+    <div class="my-5 flex justify-center items-center">
+      <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+        <circle-notation
+            data-size="xl"
+            data-magnitudes="0.8944271909999159,0.4472135954999579"
+            data-phases="-20,70"
+            data-show-kets
+        ></circle-notation>
+        <div class="flex flex-row items-center">
+          <svg class="h-6 w-6 fill-current text-neutral-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          <span class="p-2 rounded bg-green-500 text-white">QPU 命令</span>
+          <svg class="h-6 w-6 fill-current text-neutral-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+        </div>
+        <circle-notation
+            data-size="xl"
+            data-magnitudes="0.4472135954999579,0.8944271909999159"
+            data-phases="70,-20"
+            data-show-kets
+        ></circle-notation>
+      </div>
+    </div>
   </li>
   <li>
-    <p><strong>QPU 演算の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
+    <p><strong>QPU 命令の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
     <p>
       演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます (後にいくつかの
-      QPU 演算と逆演算を具体的に見ます)。 一方で CPU
+      QPU 命令と逆演算を具体的に見ます)。 一方で CPU
       論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (0 または 1) から入力の
       2 ビット (00, 01, 10, 11) を知ることはできません。
     </p>
@@ -899,6 +933,186 @@
   アンコンピュテーションとは、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用する方法で、少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
   後にそのやり方を見ていきますが、量子プログラミング言語にはまだガベージ・コレクションのような高級な機能はないので、プログラマが明示的に実装してやる必要があります。
 </p>
+
+<template id="circle-notation-popup">
+  <ul class="list-none">
+    <li>
+      確率:
+      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
+    </div>
+  </div>
+</template>
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-neutral-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+
 </div>
           </div>
         </div>
