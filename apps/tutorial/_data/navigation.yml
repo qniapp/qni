@@ -24,7 +24,7 @@
       link: ./circle_notation.html
 - name: QPU 命令その 1
   pages:
-    - name: CPU 演算との違い
+    - name: CPU 命令との違い
       link: ./cpu_vs_qpu_operations.html
     - name: X ゲート (量子 NOT)
       link: ./x_gate.html
