@@ -72,6 +72,9 @@
       link: ./cnot_gate.html
     - name: SWAP パズル
       link: ./swap_from_cnots.html
+    # - name: CPHASE ゲート
+    #   link: ./cphase.html
+    #   new: true
     - name: 量子もつれ
       link: ./entanglement.html
 - name: 超密度符号化

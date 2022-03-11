@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>PHASE ゲート</title>
+    <title>CPHASE ゲート</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -339,7 +339,7 @@
    
   <a
     href="./multi_qubit_phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">PHASE ゲート</span>
     
@@ -713,7 +713,7 @@
    
   <a
     href="./multi_qubit_phase_gate.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">PHASE ゲート</span>
     
@@ -861,227 +861,142 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
-              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">複数量子ビット</p>
+              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">QPU 命令その 2</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  PHASE ゲート
+                  CPHASE ゲート
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">複数量子ビットに PHASE ゲートを適用すると?</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">条件付き PHASE ゲート</p>
             </div>
             <div class="content-with-margin"><p>
-  複数量子ビットの練習として、PHASE ゲートを適用した場合を考えてみましょう。 考え方としては H
-  ゲートとまったく同じで、PHASE ゲートを置いたビット番号によって
-  ゲートを作用させるペアを決めてから、それぞれのペアに PHASE ゲートを適用します。
+  コントロールゲートと組合わせた PHASE ゲートを CPHASE ゲートと呼びます。
+  CNOT ゲートと同じく、CPHASE ゲートは条件付きで PHASE ゲートを作用させるものです。
 </p>
 
-<p>
-  注意するのは、PHASE ゲートは左側の円は変化させず、右側の円の位相のみに作用する点です。
-  ペアに作用させる場合にも、このルールは同じです。
-</p>
-
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-P-amp-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-      <div class="flex flex-row items-center">
-        <svg class="h-6 w-6 fill-current text-neutral-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row justify-center">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
         <phase-gate data-angle="π/4"></phase-gate>
-        <svg class="h-6 w-6 fill-current text-neutral-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      </div>
-      <circle-notation
-        id="circle-notation-P-amp-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-    </div>
+      </circuit-dropzone>
+    </circuit-step>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-P-amp-before').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.38268, 0),
-    })
-    document.getElementById('circle-notation-P-amp-after').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.2706, 0.2706),
-    })
-  </script>
 </div>
 
-<h2>PHASE ゲートを 1 ビット目に置いた場合</h2>
-
 <p>
-  PHASE ゲートを 1 ビット目に置くと、PHASE ゲートは「\(|0\rangle\) と \(|1\rangle\)」、「\(|2\rangle\) と
-  \(|3\rangle\)」、「\(|4\rangle\) と \(|5\rangle\)」、「\(|6\rangle\) と \(|7\rangle\)」
-  それぞれのペアに対して作用します。
+  CPHASE ゲートの特徴に対称性があります。
+  CPHASE ではコントロールビットとターゲットビットとの区別がなく、入れ替えてもまったく同じ動作をします。
 </p>
 
-<figure>
-  <img src="./images/phase_bit1_ket_pair.png" />
-</figure>
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
 
-<p>PHASE ゲートはペアの右側の位相にしか作用しないので、全体では円の半分のみに作用します。</p>
+    <span>=</span>
 
-<div class="my-5 flex">
-  <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-3qubit-before-P1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-P1')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: Math.sqrt(0.125),
-          7: Math.sqrt(0.125),
-        })
-      </script>
-    </div>
-
-    <div class="flex flex-col items-center space-y-2">
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <div>PHASE(π/4) ゲートを 1 ビット目に適用</div>
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-3qubit-after-P1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P1')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: new Complex(0.25, 0.25),
-          2: Math.sqrt(0.125),
-          3: new Complex(0.25, 0.25),
-          4: Math.sqrt(0.125),
-          5: new Complex(0.25, 0.25),
-          6: Math.sqrt(0.125),
-          7: new Complex(0.25, 0.25),
-        })
-      </script>
-    </div>
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
   </div>
 </div>
 
-<h2>PHASE ゲートを 2 ビット目に置いた場合</h2>
-
 <p>
-  PHASE ゲートを 2 ビット目に適用する場合、ペアは「\(|0\rangle\) と \(|2\rangle\)」、「\(|1\rangle\) と \(|3\rangle\)」、「\(|4\rangle\) と \(|6\rangle\)」、「\(|5\rangle\) と \(|7\rangle\)」になります。
+  この対称性のため、CPHASE ゲートはしばしば、次のようにコントロールゲートを使わず PHASE ゲート同士を接続した形で書きます。
 </p>
 
-<figure>
-  <img src="./images/phase_bit2_ket_pair.png" />
-</figure>
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
 
-<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+    <span>=</span>
 
-<div class="my-5 flex">
-  <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-3qubit-before-P2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
 
-      <script type="module">
-        import { Complex } from './application.js'
+    <span>=</span>
 
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-P2')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: Math.sqrt(0.125),
-          7: Math.sqrt(0.125),
-        })
-      </script>
-    </div>
-
-    <div class="flex flex-col items-center space-y-2">
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <div>PHASE(π/4) ゲートを 2 ビット目に適用</div>
-      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation
-        id="circle-notation-3qubit-after-P2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P2')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: new Complex(0.25, 0.25),
-          3: new Complex(0.25, 0.25),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: new Complex(0.25, 0.25),
-          7: new Complex(0.25, 0.25),
-        })
-      </script>
-    </div>
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
   </div>
 </div>
 
-<h2>PHASE ゲートを 3 ビット目に置いた場合</h2>
+<h2>CPHASE ゲートの作用</h2>
 
 <p>
-  PHASE ゲートをビット 3 に適用する場合、ペアは「\(|0\rangle\) と \(|4\rangle\)」、「\(|1\rangle\) と \(|5\rangle\)」、「\(|2\rangle\) と \(|6\rangle\)」、「\(|3\rangle\) と \(|7\rangle\)」になります。
+  ビット 1 をコントロールビット、ビット 3 をターゲットビットとした CPHASE ゲートの作用を見てみましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+      data-min-wire-count="1"
+      data-max-wire-count="1"
+      data-min-step-count="5"
+      data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H"],["}"],["•",1,"P(π/4)"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  まずはコントロールゲートなし、PHASE ゲートのみをビット 3 に適用した場合の動作をおさらいします。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+      data-min-wire-count="1"
+      data-max-wire-count="1"
+      data-min-step-count="5"
+      data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H"],["}"],[1,1,"P(π/4)"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  PHASE ゲートをビット 3 に適用する場合、演算ペアは 4 つ離れた円のペア「\(|0\rangle\) と \(|4\rangle\)」、「\(|1\rangle\) と \(|5\rangle\)」、「\(|2\rangle\) と \(|6\rangle\)」、「\(|3\rangle\) と \(|7\rangle\)」になります。
 </p>
 
 <figure>
   <img src="./images/phase_bit3_ket_pair.png" />
 </figure>
 
-<p>ここでもやはり PHASE ゲートは円の半分のみに作用します。</p>
+<p>
+  PHASE ゲートは演算ペアの右側の円のみに作用します。
+  つまり、円の半分のみに作用します。
+</p>
 
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
@@ -1114,7 +1029,7 @@
     <div class="flex flex-col items-center space-y-2">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <div>PHASE(π/4) ゲートを 3 ビット目に適用</div>
+      <div>PHASE(π/4) ゲートをビット 3 に適用</div>
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1129,38 +1044,141 @@
       ></circle-notation>
 
       <script type="module">
-        import { Complex } from './application.js'
+       import { Complex } from './application.js'
 
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P3')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: new Complex(0.25, 0.25),
-          5: new Complex(0.25, 0.25),
-          6: new Complex(0.25, 0.25),
-          7: new Complex(0.25, 0.25),
-        })
+       let circleNotation = document.getElementById('circle-notation-3qubit-after-P3')
+       circleNotation.setAmplitudes({
+           0: Math.sqrt(0.125),
+           1: Math.sqrt(0.125),
+           2: Math.sqrt(0.125),
+           3: Math.sqrt(0.125),
+           4: new Complex(0.25, 0.25),
+           5: new Complex(0.25, 0.25),
+           6: new Complex(0.25, 0.25),
+           7: new Complex(0.25, 0.25),
+       })
       </script>
     </div>
   </div>
 </div>
 
-<p>最後に、PHASE ゲートの回路の各ビットに置くことで実際に確認しておきましょう。</p>
+<p>
+  次にコントロールゲートをビット 1 に置いた場合を考えます。
+  この場合、ビット 1 が立っている演算ペアのみに PHASE ゲートを適用するのでした。
+  すると先ほどの演算ペアの半分「\(|1\rangle\) と \(|5\rangle\)」、「\(|3\rangle\) と \(|7\rangle\)」が PHASE ゲートの対象になります。
+</p>
 
-<div class="relative mb-10 overflow-hidden rounded-md bg-neutral-50 p-8">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+<div class="my-5 flex">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-before-CPHASE"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-before-CPHASE')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.125),
+          1: Math.sqrt(0.125),
+          2: Math.sqrt(0.125),
+          3: Math.sqrt(0.125),
+          4: Math.sqrt(0.125),
+          5: Math.sqrt(0.125),
+          6: Math.sqrt(0.125),
+          7: Math.sqrt(0.125),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      <div>CPHASE(π/4) (コントロールビット 1、ターゲットビット 3)</div>
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2C7.77614 2 8 2.22386 8 2.5L8 11.2929L11.1464 8.14645C11.3417 7.95118 11.6583 7.95118 11.8536 8.14645C12.0488 8.34171 12.0488 8.65829 11.8536 8.85355L7.85355 12.8536C7.75979 12.9473 7.63261 13 7.5 13C7.36739 13 7.24021 12.9473 7.14645 12.8536L3.14645 8.85355C2.95118 8.65829 2.95118 8.34171 3.14645 8.14645C3.34171 7.95118 3.65829 7.95118 3.85355 8.14645L7 11.2929L7 2.5C7 2.22386 7.22386 2 7.5 2Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-after-CPHASE"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+       import { Complex } from './application.js'
+
+       let circleNotation = document.getElementById('circle-notation-3qubit-after-CPHASE')
+       circleNotation.setAmplitudes({
+           0: Math.sqrt(0.125),
+           1: Math.sqrt(0.125),
+           2: Math.sqrt(0.125),
+           3: Math.sqrt(0.125),
+           4: Math.sqrt(0.125),
+           5: new Complex(0.25, 0.25),
+           6: Math.sqrt(0.125),
+           7: new Complex(0.25, 0.25),
+       })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  コントロールビットを 1 つ増やすごとに、回転する円の数は半分になります。
+  つまり上の 3 量子ビットの例でコントロールゲートを 2 個に増やすと、回転する円は 1 つになります。
+</p>
+
+<h2>ハンズオン</h2>
+
+<p>
+  コントロールゲート 2 個の PHASE ゲート (CCPHASE) を作り、回転する円が 1 個になることを確認しましょう。
+  また、CCPHASE を同等な 3 個のPHASE ゲートに書き換え、同様に動作することを確認しましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/4"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
-      <div
-        id="palette"
-        class="border-swan mb-10 flex w-min rounded-xl border-2 border-b-4 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <phase-gate data-angle="π/4"></phase-gate>
-        </palette-dropzone>
-      </div>
-
       <div
         class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
@@ -1168,22 +1186,32 @@
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
         </inspector-button>
       </div>
 
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <phase-gate data-angle="π/4"></phase-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <control-gate></control-gate>
+        </palette-dropzone>
+      </div>
+
       <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["{重ね合わせ状態の準備"],["|0>","|0>","|0>"],["H","H","H"],["}"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H"],["}"],["•",1,"P(π/4)"]]}'
       >
       </quantum-circuit>
 
@@ -1192,17 +1220,132 @@
         data-target="quantum-simulator.circleNotation"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
-        data-show-kets
       >
       </circle-notation>
     </circuit-editor>
 
     <run-circuit-button
-      class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-      data-targets="quantum-simulator.runCircuitButtons"
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
     ></run-circuit-button>
   </quantum-simulator>
+  </div>
 </div>
+
+<h2>CZ ゲート</h2>
+
+<p>
+  角度が π の場合の CPHASE(π) は、次のようにコントロールゲートのみで書くことができます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
+<p>
+  このコントロールゲートのみのゲートを CZ ゲートと呼びます。
+  これは、PHASE(π) には Z ゲートという別名があるため、CPHASE(π) は次のように Z ゲートにコントロールゲートを組合わせたもの (つまり CZ) としても書けるからです。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+
+    <span>=</span>
+
+    <circuit-step class="no-rotation p-0">
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+        <control-gate></control-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </div>
+</div>
+
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
