@@ -51,22 +51,67 @@ description: 量子コンピュータ版 論理演算
     </div>
   </li>
   <li>
-    <p><strong>QPU 命令の大部分は、逆方向の演算 (逆演算) を持ちます。</strong></p>
+    <p><strong>QPU 命令の大部分は、逆方向の命令 (逆演算) を持ちます。</strong></p>
     <p>
-      演算を適用した後に逆演算を適用すると、量子ビットを元の状態に戻すことができます (後にいくつかの
-      QPU 命令と逆演算を具体的に見ます)。 一方で CPU
-      論理演算はそのほとんどが非可逆です。たとえば、AND 演算の出力 1 ビット (0 または 1) から入力の
-      2 ビット (00, 01, 10, 11) を知ることはできません。
+      AND などの CPU 命令では、出力の 1 ビットから入力の 2 ビットを知ることはできません。
+      たとえば、AND の出力が 0 だった場合には、入力は 00/01/10 の 3 通りで、どれか 1
+      つに特定することはできません。 これを「AND は非可逆である」と言います。
     </p>
+
+    <p>
+      一方でほとんどの QPU 命令は可逆です。 つまりある QPU 命令に対応する逆命令 (逆演算)
+      を適用することで、出力の量子ビットから元々の入力された量子ビットを得ることができます
+    </p>
+
+    <div class="my-5 flex items-center justify-center">
+      <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+        <circle-notation
+          data-size="lg"
+          data-magnitudes="0.8944271909999159,0.4472135954999579"
+          data-phases="-20,70"
+          data-show-kets
+        ></circle-notation>
+        <div class="flex flex-row items-center">
+          {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+          <span class="whitespace-nowrap rounded bg-green-500 p-2 text-xs text-white">命令</span>
+          {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+        </div>
+        <circle-notation
+          data-size="lg"
+          data-magnitudes="0.4472135954999579,0.8944271909999159"
+          data-phases="70,-20"
+          data-show-kets
+        ></circle-notation>
+        <div class="flex flex-row items-center">
+          {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+          <span class="whitespace-nowrap rounded bg-green-500 p-2 text-xs text-white">逆演算</span>
+          {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+        </div>
+        <circle-notation
+          data-size="lg"
+          data-magnitudes="0.8944271909999159,0.4472135954999579"
+          data-phases="-20,70"
+          data-show-kets
+        ></circle-notation>
+      </div>
+    </div>
   </li>
 </ul>
 
+<p>逆演算は量子プログラミングでひんぱんに使うテクニックの 1 つです。</p>
+
 <p>
-  逆演算は量子プログラミングでひんぱんに使うテクニックの 1
-  つである<mark>アンコンピュテーション</mark>にとって重要です。
-  アンコンピュテーションとは、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用する方法で、少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
-  後にそのやり方を見ていきますが、量子プログラミング言語にはまだガベージ・コレクションのような高級な機能はないので、プログラマが明示的に実装してやる必要があります。
+  たとえば量子ビット同士をもつれさせるいくつかの QPU
+  命令の後に逆演算を施すと、もつれた量子ビットを元通りに戻すことができます。
+  この量子ビットをもつれさせる/ほどくという操作は、量子プログラミングの基本的なテクニックです。
 </p>
+
+<p>
+  またアンコンピュテーションというテクニックを使うと、実行中にぐちゃぐちゃになった量子ビットの状態を元の初期状態に戻して再利用できます。
+  これらは少ない量子ビット数でやりくりするための量子版ガベージ・コレクションとも言えるものです。
+</p>
+
+<p>これらのテクニックの基本となる、代表的な QPU 命令と逆演算を具体的に見ていきましょう。</p>
 
 <template id="circle-notation-popup">
   <ul class="list-none">
