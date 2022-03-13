@@ -6648,13 +6648,6 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-erb@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-erb/-/prettier-plugin-erb-0.2.0.tgz#d40b4b58e6ae8705017ab4aedb1614386e371277"
-  integrity sha512-lh+AFhR6LOll4fxWG3viH0q65hijqRdsOL2BbmcBSihPoUjojwm/4UG+AOadpecIgSn5Ec2biruJ4PWrMNeOfg==
-  dependencies:
-    prettier-html-templates "^0.1.0"
-
 prettier-plugin-erb@0.4.0, prettier-plugin-erb@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/prettier-plugin-erb/-/prettier-plugin-erb-0.4.0.tgz#5a2a86e02c6360481187aaadd165bc598eda4412"

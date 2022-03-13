@@ -41,7 +41,6 @@
     "husky": "^7.0.4",
     "lerna": "^4.0.0",
     "prettier": "2.2.0",
-    "prettier-plugin-erb": "0.2.0",
     "prettier-plugin-tailwindcss": "^0.1.5",
     "pretty-quick": "^3.1.3",
     "tailwindcss": "^3.0.22"
