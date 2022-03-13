@@ -1,12 +1,12 @@
 <div
   class="fixed top-0 left-0 z-40 rounded-br-2xl bg-white drop-shadow-xl"
   data-controller="menu"
-  data-menu-active-class-value="bg-gray-200"
+  data-menu-active-class-value="bg-neutral-200"
 >
   <div class="relative inline-block h-10 w-10 p-1 text-left">
     <button
       type="button"
-      class="inline-flex h-full w-full items-center justify-center rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none"
+      class="inline-flex h-full w-full items-center justify-center rounded-xl text-sm font-medium text-neutral-700 hover:bg-neutral-200 focus:outline-none"
       id="menu-button"
       aria-expanded="true"
       aria-haspopup="true"
@@ -24,7 +24,7 @@
     </button>
 
     <div
-      class="absolute left-0 mt-2 hidden w-56 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      class="absolute left-0 mt-2 hidden w-56 origin-top-right divide-y divide-neutral-100 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="menu-button"
@@ -32,55 +32,19 @@
       data-menu-target="dropdown"
     >
       <%= menu_item_group do %>
-        <span
-          class="group flex cursor-pointer items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-          role="menuitem"
-          tabindex="-1"
-          id="menu-item-share"
-          data-action="click->share#openModal"
-        >
-          <%= icon :share, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
-          Share...
-        </span>
+        <%= menu_item_action id: 'menu-item-share', action: 'click->share#openModal', icon: :share, text: 'Share...' %>
       <% end %>
       <%= menu_item_group do %>
-        <a
-          href="https://github.com/qniapp/qni"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-          role="menuitem"
-          tabindex="-1"
-          id="menu-item-github"
-        >
-          <%= icon :github, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
-          GitHub
-        </a>
-        <a
-          href="https://twitter.com/qniapp"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-          role="menuitem"
-          tabindex="-1"
-          id="menu-item-twitter"
-        >
-          <%= icon :twitter, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
-          Twitter
-        </a>
+        <%= menu_item_link id: 'menu-item-github', href: 'https://github.com/qniapp/qni', icon: :github, text: 'GitHub' %>
+        <%= menu_item_link id: 'menu-item-twitter', href: 'https://twitter.com/qniapp', icon: :twitter, text: 'Twitter' %>
       <% end %>
       <%= menu_item_group do %>
-        <a
-          href="#"
-          class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-          role="menuitem"
-          tabindex="-1"
-          id="menu-item-clear-circuit"
-          data-action="click:quantum-simulator#clearCircuit"
-        >
-          <%= icon :trash, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
-          Clear circuit
-        </a>
+        <%=
+          menu_item_action id: 'menu-item-clear-circuit',
+                           action: 'click:quantum-simulator#clearCircuit',
+                           icon: :trash,
+                           text: 'Clear circuit'
+        %>
       <% end %>
     </div>
   </div>

@@ -1,0 +1,17 @@
+<% id = options.fetch(:id) %>
+<% href = options.fetch(:href) %>
+<% icon = options.fetch(:icon) %>
+<% text = options.fetch(:text) %>
+
+<a
+  href="[object Object]"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group flex items-center px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+  role="menuitem"
+  tabindex="-1"
+  id="[object Object]"
+>
+  <%= icon icon, class: 'mr-3 h-5 w-5 text-neutral-400 group-hover:text-neutral-500' %>
+  <%= text %>
+</a>
