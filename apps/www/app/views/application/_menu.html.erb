@@ -31,7 +31,7 @@
       tabindex="-1"
       data-menu-target="dropdown"
     >
-      <div class="py-1" role="none">
+      <%= menu_item_group do %>
         <span
           class="group flex cursor-pointer items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
           role="menuitem"
@@ -42,8 +42,8 @@
           <%= icon :share, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
           Share...
         </span>
-      </div>
-      <div class="py-1" role="none">
+      <% end %>
+      <%= menu_item_group do %>
         <a
           href="https://github.com/qniapp/qni"
           target="_blank"
@@ -68,8 +68,8 @@
           <%= icon :twitter, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
           Twitter
         </a>
-      </div>
-      <div class="py-1" role="none">
+      <% end %>
+      <%= menu_item_group do %>
         <a
           href="#"
           class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
@@ -81,7 +81,7 @@
           <%= icon :trash, class: 'mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500' %>
           Clear circuit
         </a>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
