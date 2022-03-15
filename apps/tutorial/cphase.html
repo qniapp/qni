@@ -7,7 +7,7 @@ description: 条件付き PHASE ゲート
 
 <p>
   コントロールゲートと組合わせた PHASE ゲートを CPHASE ゲートと呼びます。 CNOT
-  ゲートと同じく、CPHASE ゲートは条件付きで PHASE ゲートを作用させるものです。
+  ゲートと同じく、CPHASE ゲートは条件付きで PHASE ゲートを作用させます。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -54,7 +54,8 @@ description: 条件付き PHASE ゲート
 
 <p>
   この対称性のため、CPHASE ゲートはしばしば、次のようにコントロールゲートを使わず PHASE
-  ゲート同士を接続した形で書きます。
+  ゲート同士を接続した形で書きます。 このとき、ペアとなる CPHASE
+  ゲートはそれぞれ同じ角度を持たなければいけないことに注意してください。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -92,6 +93,8 @@ description: 条件付き PHASE ゲート
   </div>
 </div>
 
+<p>Qni では CPHASE をコントロールゲートありと PHASE ゲート 2 個の両方で書くことができます。</p>
+
 <h2>CPHASE ゲートの作用</h2>
 
 <p>
@@ -110,7 +113,7 @@ description: 条件付き PHASE ゲート
 </div>
 
 <p>
-  まずはコントロールゲートなし、PHASE ゲートのみをビット 3 に適用した場合の動作をおさらいします。
+  まずはコントロールゲートなしで、PHASE ゲートのみをビット 3 に適用した場合の動作をおさらいします。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -133,7 +136,10 @@ description: 条件付き PHASE ゲート
   <img src="./images/phase_bit3_ket_pair.png" />
 </figure>
 
-<p>PHASE ゲートは演算ペアの右側の円のみに作用します。 つまり、円の半分のみに作用します。</p>
+<p>
+  PHASE ゲートは演算ペアの右側の円のみに作用します。
+  つまり、すべての円のうち半分の円のみに作用します。
+</p>
 
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
@@ -266,8 +272,8 @@ description: 条件付き PHASE ゲート
 </div>
 
 <p>
-  コントロールビットを 1 つ増やすごとに、回転する円の数は半分になります。 つまり上の 3
-  量子ビットの例でコントロールゲートを 2 個に増やすと、回転する円は 1 つになります。
+  このように、コントロールビットを 1 つ増やすごとに、回転する円の数は半分になります。 たとえば、上の
+  3 量子ビットの例でコントロールゲートを 2 個に増やすと、回転する円は 1 つになります。
 </p>
 
 <h2>ハンズオン</h2>
@@ -476,6 +482,74 @@ description: 条件付き PHASE ゲート
         <control-gate></control-gate>
       </circuit-dropzone>
     </circuit-step>
+  </div>
+</div>
+
+<h2>ハンズオン</h2>
+
+<p>
+  CZ ゲートをコントロールゲートと PHASE(π) ゲートの組合わせ、コントロールゲートと Z
+  ゲートの組合わせ、コントロールゲートのみの 3 通りで作り、同じ動作になることを確認しましょう。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <div
+          id="palette"
+          class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+        >
+          <palette-dropzone>
+            <phase-gate data-angle="π"></phase-gate>
+          </palette-dropzone>
+          <palette-dropzone>
+            <z-gate></z-gate>
+          </palette-dropzone>
+          <palette-dropzone>
+            <control-gate></control-gate>
+          </palette-dropzone>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H"],["}"],["•",1,"P(π)"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
   </div>
 </div>
 
