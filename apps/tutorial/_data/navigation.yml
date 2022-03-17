@@ -87,6 +87,11 @@
       link: ./discriminating_bell_states.html
     - name: 超密度符号化回路
       link: ./superdense_coding_circuit.html
+- name: 量子テレポーテーション
+  pages:
+    - name: 量子インターネット
+      link: ./quantum_internet.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明

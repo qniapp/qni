@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>Qni 入門</title>
+    <title>量子インターネット</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -143,7 +143,7 @@
    
   <a
     href="./qni_intro.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">Qni 入門</span>
     
@@ -444,7 +444,7 @@
    
   <a
     href="./quantum_internet.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">量子インターネット</span>
     
@@ -534,7 +534,7 @@
    
   <a
     href="./qni_intro.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">Qni 入門</span>
     
@@ -835,7 +835,7 @@
    
   <a
     href="./quantum_internet.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">量子インターネット</span>
     
@@ -895,90 +895,37 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
           <div class="mt-5 sm:mb-12 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
-              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">イントロダクション</p>
+              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">量子テレポーテーション</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  Qni 入門
+                  量子インターネット
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">QPU シミュレータ Qni の使い方</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">2 つの古典ビットで 1 量子ビットを送る</p>
             </div>
             <div class="content-with-margin"><p>
-  本チュートリアルでは、量子コンピュータシミュレータ Qni を使います。
-  なぜ、実機ではなくシミュレータを使うのでしょう?
-  現在、さまざまな実機の量子コンピュータがクラウド経由で利用可能ですが、残念ながら次の理由により初心者の学習にはあまり向いていません。
-</p>
-
-<ul>
-  <li>
-    <p><strong>待ち時間がかかる</strong></p>
-    <p>
-      実機でのプログラムはキューイングシステム経由で実行されるので、結果を得るまでに数分かかります。
-    </p>
-  </li>
-  <li>
-    <p><strong>計算結果が合わない</strong></p>
-    <p>実機はエラーが発生するため、小規模なプログラムであっても正しい結果が返ってきません。</p>
-  </li>
-  <li>
-    <p><strong>お金がかかる</strong></p>
-    <p>ほとんどの実機は有料であるため、学習のための実験や試行錯誤には気軽に使えません。</p>
-  </li>
-</ul>
-
-<p>
-  そこで本チュートリアルでは、使える量子ビット数は実機よりも少なくなってしまいますが<label for="margin-note-qubit-real-vs-simulator" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit-real-vs-simulator" class="margin-note__toggle hidden"><span class="margin-note">実機の量子ビット数は数十〜百量子ビット程度です。
-  これに対してシミュレータの量子ビット数は 10 量子ビット程度です。</span>、Qni
-  シミュレータを使います。
-  このチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、小さいシステムを詳細に説明することで、量子コンピュータの最も基本的で興味深く、時に不穏な動作を説明することです。
-  小さい量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
+  ボブは、自分の量子コンピュータとアリスの量子コンピュータをネット接続して、人気の量子潜水鑑ゲームで対戦しようと考えました。
+  量子コンピュータ用の対戦ゲームで遊ぶには、量子ビットを送受信できる量子インターネットが必要です。
+  しかしボブの家にはまだ量子インターネットは届いておらず、マンション契約の古いインターネット回線があるのみです。
+  インターネット経由で量子ビットをやりとりするには、どうすればよいでしょうか?
 </p>
 
 <p>
-  何より Qni は自分専用かつ無料で使えるので、実機と違って好きなだけ使い倒すことができます!
-  またリアルタイムに実行結果が返ってきますので、初心者にとって重要なトライアル &
-  エラーにもってこいです。 そして真の量子コンピュータ (エラーゼロの理想的な量子コンピュータ)
-  と同じ動きをしますので、チュートリアルの説明通りの実行結果を得ることができます。
+  超密度符号化アルゴリズムでは、もつれた量子ビットのペアがあったときに、1 つの量子ビットを送ることで 2 古典ビット分の情報を送れることを見ました。
+  これを応用すれば、2 つの古典ビットをインターネット経由で送ることで、1 つの量子ビットを送ることもできそうです。
 </p>
 
 <p>
-  初心者にとって Qni
-  が最適なもうひとつの理由は、グラフィカルにプログラミングできることです。ほとんどの量子コンピュータでは、プログラミングに
-  Python などの量子計算ライブラリを使います。量子コンピュータを始めるためにはまず Python
-  と専用ライブラリの勉強から、、、というわけです。 一方 Qni では、GUI
-  によって直接量子回路を編集したり実行したりできるので、ハードルが相当低くなっています。
+  ボブはこれを検証するために、アリスにもつれた量子ビットを作ってもらい、片方の量子ビットを学校で受け取りました。
+  ボブの手元には、アリスに送信しようとしている量子ビットと、もつれた片方の量子ビット、合計 2 量子ビットがあります。
+  アリスの手元には、もつれた片方の 1 量子ビットがあります。
+  これを回路で表すと次のようになり、上 2 量子ビットがボブ、最後の 1 量子ビットがアリスの量子ビットを表します。
 </p>
 
-<h2>Qni のユーザインタフェース</h2>
-<p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
-
-<p>
-  チュートリアル中には次のような mini Qni がいたる所に埋め込まれています。
-  これを使うことで、学んだことをその場ですぐに実験できるようになっています。
-  それぞれのツールの名前と使い方を見て行きましょう。
-</p>
-
-<div class="mini-qni">
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <h-gate></h-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <x-gate></x-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <y-gate></y-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <z-gate></z-gate>
-        </palette-dropzone>
-      </div>
-
       <div
         class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
@@ -986,186 +933,375 @@
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
         </inspector-button>
       </div>
 
       <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"]]}'
       >
       </quantum-circuit>
 
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
-        data-show-kets
       >
       </circle-notation>
     </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
   </quantum-simulator>
 </div>
-
-<h3>命令パレット</h3>
-<p>
-  量子回路に配置する QPU 命令の並んだツールです。
-  ここからドラッグアンドドロップで量子回路に命令を置いていくことで、量子プログラムを記述できます。
-  それぞれの QPU 命令の働きについては、後の項目でそれぞれ詳しく紹介します。
-</p>
-
-<div
-  class="my-5 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
->
-  <palette-dropzone>
-    <h-gate></h-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <x-gate></x-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <y-gate></y-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <z-gate></z-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <phase-gate></phase-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <rnot-gate></rnot-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <rx-gate></rx-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <ry-gate></ry-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <rz-gate></rz-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <swap-gate></swap-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <control-gate></control-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <bloch-display></bloch-display>
-  </palette-dropzone>
-  <palette-dropzone>
-    <write-gate data-value="0"></write-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <write-gate data-value="1"></write-gate>
-  </palette-dropzone>
-  <palette-dropzone>
-    <measurement-gate></measurement-gate>
-  </palette-dropzone>
 </div>
 
-<h3>量子回路エディタ</h3>
 <p>
-  量子回路を表示したり編集したりするためのエディタです。
-  後で説明しますが、量子回路エディタはステップ実行やブレークポイントといったデバッグにも使います。
+  次のステップは何をすべきでしょうか?
+  最終的には、アリスがボブの量子ビットを受け取ることが目的です。
+  量子ビットは複製できないので、ボブは送ろうとしている量子ビットを破壊するアクション (測定) を必ずどこかで起こす必要があります。
+  しかし、量子ビットを単純に 1 回測定するだけでは、その振幅の大きさや位相を取り出すことはできません。
+  つまり、ボブは送りたい量子ビットと、もつれた片方の量子ビットに何らかの操作をしてから測定する必要がありそうです。
 </p>
 
-<quantum-circuit
-  class="my-5"
-  data-target="quantum-simulator.circuit circuit-editor.circuit"
-  data-min-wire-count="1"
-  data-max-wire-count="1"
-  data-min-step-count="5"
-  data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["Measure"],[1,"Measure"]]}'
->
-</quantum-circuit>
-
-<h3>状態ベクトル表示</h3>
 <p>
-  量子ビットの状態を視覚的に表示します。表示の読み方や使い方については、<a
-    href="./circle_notation.html"
-    >状態ベクトル表示</a
-  >で詳しく説明します。
+  2 つの量子ビットを操作し測定するテクニックと言えば、超密度符号化で紹介したベル測定です。
+  ボブはためしに、アリスに送信する量子ビットともつれた片方の量子ビットをベル測定することにしてみました。
 </p>
 
-<div class="my-5 flex md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-1">
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"]]}'
+      >
+      </quantum-circuit>
+
       <circle-notation
-        id="circle-notation-3qubit-superposition"
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation>
+      >
+      </circle-notation>
+    </circuit-editor>
 
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.42678, -0.17678),
-          1: new Complex(0.17678, -0.07322),
-          2: new Complex(0.17678, 0.42678),
-          3: new Complex(0.07322, 0.17678),
-          4: new Complex(-0.42678, 0.17678),
-          5: new Complex(-0.17678, 0.07322),
-          6: new Complex(-0.17678, -0.42678),
-          7: new Complex(-0.07322, -0.17678),
-        })
-      </script>
-    </div>
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
   </div>
 </div>
 
-<h2>ライブプログラミングによる開発</h2>
 <p>
-  Qni の一番の特徴はそのリアルタイム性です。QPU
-  命令をドラッグして好きな場所に動かすだけで、実行結果をリアルタイムに描画します。これによって、命令の働きや編集結果を素早く確認できます。
+  ボブによる測定の後、生き残るのはアリスの持つ 1 量子ビットです。
+  つまり、ボブの量子ビットの状態がもつれを通してアリスの量子ビットに移動すれば成功です。
+  これを確認するために、アリスの量子ビットにブロッホ球と MEASUREMENT 命令を置いてボブの量子ビットと比べてみましょう。
 </p>
 
-<figure>
-  <label for="margin-note-qni-live-programming" class="margin-note__toggle sm:after:hidden"></label><input type="checkbox" id="margin-note-qni-live-programming" class="margin-note__toggle hidden"><span class="margin-note">リアルタイムに量子ビットの状態変化を表示</span>
-  <img src="./images/qni_live_programming.gif" class="h-auto w-full border border-neutral-300" />
-</figure>
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{アリスの量子ビット"],[1,1,"Bloch"],[1,1,"Measure"],["}"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+  </div>
+</div>
+
+<h2>文字化け</h2>
 
 <p>
-  デバッグも簡単です。プログラムの途中状態を確認したい場合には、量子回路の任意の場所にマウスポインタをホバーするだけでその箇所での状態ベクトルを表示できます。
-  これはいわゆるステップ実行として使うことができます。
+  この回路を右下のボタンで何度か再実行すると、ボブの送った \(|0\rangle\) (ブロッホ球が上向きの状態) が、アリスの量子ビットではたまにひっくり返って \(|1\rangle\) (ブロッホ球が下向きの状態) となることが分かります。
 </p>
 
 <p>
-  また、量子回路の任意の場所をクリックすることで、その場所にブレークポイント (濃い紫の線)
-  をセットできます。
-  プログラム中の異なる地点での状態ベクトルの変化を確認するには、基準となる地点にブレークポイントを設定しておき、別の場所にマウスポインタをホバーするだけです。
+  ボブは注意深くこの「文字化け」を観察し、次のパターンがあることを発見しました。
 </p>
 
-<figure>
-  <label for="margin-note-qni-breakpoint" class="margin-note__toggle sm:after:hidden"></label><input type="checkbox" id="margin-note-qni-breakpoint" class="margin-note__toggle hidden"><span class="margin-note">ブレークポイントによる量子回路のデバッグ</span>
-  <img src="./images/qni_step_execution.gif" class="h-auto w-full border border-neutral-300" />
-</figure>
-
-<h2>動かして学ぶ</h2>
+<ul>
+  <li>1 量子ビット目の測定結果はアリスの量子ビットの状態と関係がない</li>
+  <li>2 量子ビット目の測定結果 1 のときだけ、アリスの量子ビットがひっくり返って \(|1\rangle\) になる</li>
+</ul>
 
 <p>
-  本チュートリアルは触って動かせる mini Qni
-  を読書体験に埋め込むことで、最短ルートで量子コンピュータの基本を学べることを目指しています。
-  Python
-  やエディタなど他の言語やツールを行ったり来たりしなくても、ブラウザだけで量子コンピュータプログラミング体験を完結できるよう設計されています。
-  これによって、「説明を読む → 自分で実験する →
-  実行結果を理解する」の学習ループを可能な限りタイトに回すことができます。
-  この「動かして学ぶ」というアプローチは、私の経験上、量子コンピュータプログラミングのような高度なトピックでも途中で挫折せず、楽しく継続的に学べる良い方法です。
+  この文字化けを直すには、2 量子ビット目の測定結果が 1 のときだけ、アリスの量子ビットを X ゲートでひっくり返します。
+  つまり、ボブはベル測定の結果をアリスへインターネット経由で送り、アリスは 2 ビット目の測定結果と自分の量子ビットに CNOT ゲートをかけます。
 </p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["}"],[1],["{アリスの量子ビット"],[1,1,"Bloch"],[1,1,"Measure"],["}"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  文字化けは直りました!
+  しかし、ボブが送信に成功したのは重ね合わせのない \(|0\rangle\) のみです。
+  重ね合わせ状態の量子ビットも送れるでしょうか?
+</p>
+
+<h2>重ね合わせの送信</h2>
+
+<p>
+  次は H ゲートで重ね合わせ状態にした量子ビットを送ってみましょう。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["}"],[1],["{アリスの量子ビット"],[1,1,"Bloch"],[1,1,"Measure"],["}"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  今度は別のパターンの文字化けが発生しました。
+  ボブの緻密なデバッグによると、1 ビット目が 1 のときだけ、アリスの量子ビットがブロッホ球の手前から奥へ反転しています。
+</p>
+
+<p>
+  これは Z 軸 (縦向きの軸) まわりの反転なので、Z ゲートによって修正できそうです。
+  アリスはベル測定の 1 ビット目と、自分の量子ビットに CZ ゲートをかけます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["•",1,"Z"],["}"],[1],["{アリスの量子ビット"],[1,1,"Bloch"],[1,1,"Measure"],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  これもうまく行きました!
+  ボブは念のために、さらに複雑な重ね合わせ状態もテストし、成功することを確認しました。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["P(π/4)"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["•",1,"Z"],["}"],[1],["{アリスの量子ビット"],[1,1,"Bloch"],[1,1,"Measure"],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+        data-multi-qubits
+      >
+      </circle-notation>
+    </circuit-editor>
+
+    <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+    ></run-circuit-button>
+  </quantum-simulator>
+  </div>
+</div>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
