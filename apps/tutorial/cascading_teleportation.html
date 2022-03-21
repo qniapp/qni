@@ -1,0 +1,87 @@
+---
+layout: page
+section: 量子テレポーテーション
+title: 多段テレポーテーション
+description: 量子テレポーテーションを複数回行う
+---
+
+<p>
+  前回紹介した量子テレポーテーションを繰り返せば、直感的にはどんなに離れた人同士でも通信できそうです。
+  たとえばボブとアリス、それにキャロルが次の状況にあるとします。
+</p>
+
+<p>$$ボブ \longleftarrow\longrightarrow アリス \longleftarrow\longrightarrow キャロル$$</p>
+
+<p>
+  ここで \(\longleftarrow\longrightarrow\) はもつれた量子ビットを 1 つずつ持つことを意味します。
+  つまり、ボブとアリスはもつれた量子ビットを 1
+  つずつ共有しており、またアリスとキャロルは別のもつれた量子ビットを 1 つずつ共有しています。
+</p>
+
+<p>
+  この場合に、ボブからアリス、アリスからキャロルへと量子テレポーテーションを 2
+  回行うことで、ボブの量子ビットをアリス経由でキャロルへ送ることができます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれ準備"],[1,"H"],[1,"•","X"],["}"],["|0>"],["{ボブの量子ビット"],["H"],["T"],["H"],["Bloch"],["}"],[1],["{テレポーテーション(ボブ→アリス)"],["•","X"],["H"],["Measure","Measure"],[1,"•","X"],["•",1,"Z"],[1,1,"Bloch"],["}"],[1,1,1,"|0>","|0>"],["{もつれ準備"],[1,1,1,"H"],[1,1,1,"•","X"],["}"],[1],["{テレポーテーション(アリス→キャロル)"],[1,1,"•","X"],[1,1,"H"],[1,1,"Measure","Measure"],[1,1,1,"•","X"],[1,1,"•",1,"Z"],[1,1,1,1,"Bloch"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  ここでのポイントは、テレポーテーション 1 回につき 1 つの量子もつれが必要なことです。
+  それぞれの量子テレポーテーションでは、もつれた量子ビットの測定によって古典ビット 2
+  つを取り出します。 測定した量子もつれは破壊されるので、再利用することはできません。
+  これは以前紹介した超密度符号化でも同じで、量子もつれ 1 つを破壊することで古典ビット 2
+  つを取り出すことができました。
+</p>
+
+<p>
+  このように、量子プログラミングでは量子もつれをある種のリソースとして取り扱います。
+  リソースは計算を進めるのに必要な「燃料」とも言えるもので、量子テレポーテーションや超密度符号化をするたびに消費されます。
+  リソースがなくなると計算できないので、量子アルゴリズムには必要な数の量子もつれを作るというステップが必ず存在します。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

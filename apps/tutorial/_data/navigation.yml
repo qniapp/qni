@@ -92,6 +92,9 @@
 #     - name: 量子インターネット
 #       link: ./quantum_internet.html
 #       new: true
+#     - name: 多段テレポーテーション
+#       link: ./cascading_teleportation.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
