@@ -388,8 +388,6 @@
   >
     <span class="flex-1">CPHASE ゲート</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -434,6 +432,41 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -764,8 +797,6 @@
   >
     <span class="flex-1">CPHASE ゲート</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -810,6 +841,41 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -874,31 +940,28 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">量子テレポーテーションで離れた量子もつれを作る</p>
             </div>
             <div class="content-with-margin"><p>
-  多段テレポーテーションではボブからアリス、アリスからキャロルへとバケツリレーのように量子テレポーテーションを使って量子ビットを送りました。
+  多段テレポーテーションではボブからアリス、アリスからキャロルへとバケツリレーのように短い距離の量子テレポーテーションを繰り返して量子ビットを送りました。
 </p>
 
 <p>$$ボブ \longleftarrow\longrightarrow アリス \longleftarrow\longrightarrow キャロル$$</p>
 
 <p>
-  計算リソースとして必要な量子もつれは 2 つで、ボブとアリス、アリスとキャロルの間の量子もつれを使いました。
+  遠く離れたボブとキャロルの間に直接量子もつれを作るにはどうしたらよいでしょうか?
+  量子もつれは壊れやすいため、離れた距離に運ぼうとすると高い確率でもつれは切れてしまいます。
 </p>
 
 <p>
-  ボブとキャロルの間に直接量子もつれを作るにはどうしたらよいでしょうか?
-  量子もつれは壊れやすいため、たとえば次のような状況で重要になってきます。
-  ボブとキャロルの自宅はとても離れているので、2 人でもつれた量子ビットを共有しようにも、量子ビットを運んでいる間にかなりの確率でもつれが切れてしまいます。
-  しかしアリスはボブとキャロルのちょうど中間地点に住んでいるので、ボブやキャロルとならもつれた量子ビットを簡単に共有できます。
-</p>
-
-<p>
-  実は量子テレポーテーションを使えば、もつれた量子ビットも送ることができます。
-  つまり、ボブとアリスで共有した量子もつれのうち、1 量子ビットを量子テレポーテーションによってキャロルに送ります。
-  するとボブとキャロルの間でもつれた量子ビットが共有されます。
+  量子テレポーテーションを使えば、遠く離れたもつれを作ることができます。
+  近距離にいるボブとアリスが共有した量子もつれのうち、アリスの持つ量子ビットを量子テレポーテーションによってキャロルに送ります
+  (アリスとキャロルの間にある短い量子もつれを使います)。
+  すると、遠く離れたボブとキャロルの間でもつれた量子ビットが共有されます。
+  つまり、もつれた量子ビットの片割れを量子テレポーテーションで移動することで、遠く離れたもつれを作り出すことができます。
 </p>
 
 <p>
   次の回路では、ビット 1 と 2 がボブとアリスで共有された量子もつれを表します。
-  アリスは量子テレポーテーションによってはビット 2 をキャロル (ビット 4) へ送ります。
+  アリスは量子テレポーテーションによってはビット 2 をキャロル (ビット 4) へ送ります。 すると、ビット
+  1 と 4 の間で離れた量子もつれを作ることができます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -922,12 +985,12 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],[1,1,"|0>","|0>"],[1,1,"H"],[1,1,"•","X"],[1,"•","X"],[1,"H"],[1,"Measure","Measure"],[1,1,"•","X"],[1,"•",1,"Z"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],[1,1,"|0>","|0>"],[1,1,"H"],[1,1,"•","X"],[1,"•","X"],[1,"H"],[1,"Measure","Measure"],[1,1,"•","X"],[1,"•",1,"Z"]]}'
         >
         </quantum-circuit>
 
@@ -941,16 +1004,26 @@
       </circuit-editor>
 
       <run-circuit-button
-          class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-          data-targets="quantum-simulator.runCircuitButtons"
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
       ></run-circuit-button>
     </quantum-simulator>
   </div>
 </div>
 
 <p>
-  最後のステップの状態ベクトルを表示することで、ビット 1 と 4 がもつれていることを確認できます。
-  測定で出てくる値は \(|0000\rangle\) と \(|1001\rangle\) や \(|0110\rangle\) と \(|1111\rangle\) のように、必ずビット 1 と 3 が同じ値になります。
+  ビット 1 と 4 がもつれていることは、最後のステップの状態ベクトルを表示することで確認できます。
+  確率がゼロでない値は \(|0000\rangle\) と \(|1001\rangle\) や \(|0110\rangle\) と \(|1111\rangle\)
+  のように、必ずビット 1 と 4 が同じ値になります。このため、確かにもつれていることが分かります。
+</p>
+
+<h2>チャレンジ</h2>
+
+<p>
+  長距離間の量子もつれを使った長距離テレポーテーション回路を
+  <a href="https://qniapp.net/">Qni</a> で書いてみましょう。 消費される量子もつれは全部で 3 つです。
+  最初に上の回路と同様に、2 つの量子もつれを使って離れた量子もつれを作ります。
+  次にその量子もつれを使って量子ビットをテレポーテーションします。
 </p>
 
 <template id="operation-menu">

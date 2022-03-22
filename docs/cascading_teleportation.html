@@ -388,8 +388,6 @@
   >
     <span class="flex-1">CPHASE ゲート</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -434,6 +432,41 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -764,8 +797,6 @@
   >
     <span class="flex-1">CPHASE ゲート</span>
     
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
   </a>
    
   <a
@@ -810,6 +841,41 @@
     class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
     
   </a>
    
@@ -939,17 +1005,17 @@
 </div>
 
 <p>
-  ここでのポイントは、テレポーテーション 1 回につき 1 つの量子もつれが必要なことです。
+  ポイントは、テレポーテーション 1 回につき 1 つの量子もつれが必要なことです。
   それぞれの量子テレポーテーションでは、もつれた量子ビットの測定によって古典ビット 2
   つを取り出します。 測定した量子もつれは破壊されるので、再利用することはできません。
-  これは以前紹介した超密度符号化でも同じで、量子もつれ 1 つを破壊することで古典ビット 2
+  これは以前紹介した超密度符号化でも同様で、量子もつれ 1 つを消費することで古典ビット 2
   つを取り出すことができました。
 </p>
 
 <p>
   このように、量子プログラミングでは量子もつれをある種のリソースとして取り扱います。
-  リソースは計算を進めるのに必要な「燃料」とも言えるもので、量子テレポーテーションや超密度符号化をするたびに消費されます。
-  リソースがなくなると計算できないので、量子アルゴリズムには必要な数の量子もつれを作るというステップが必ず存在します。
+  リソースは量子計算を進めるのに必要な「燃料」とも言えるもので、量子テレポーテーションや超密度符号化をするたびに消費されます。
+  リソースがなくなると計算できないので、量子アルゴリズムには「必要な量子もつれを作る」というステップが必ず存在します。
 </p>
 
 <template id="operation-menu">

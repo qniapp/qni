@@ -74,7 +74,6 @@
       link: ./swap_from_cnots.html
     - name: CPHASE ゲート
       link: ./cphase.html
-      new: true
     - name: 量子もつれ
       link: ./entanglement.html
 - name: 超密度符号化
@@ -87,17 +86,17 @@
       link: ./discriminating_bell_states.html
     - name: 超密度符号化回路
       link: ./superdense_coding_circuit.html
-# - name: 量子テレポーテーション
-#   pages:
-#     - name: テレポーテーション回路
-#       link: ./teleportation_circuit.html
-#       new: true
-#     - name: 多段テレポーテーション
-#       link: ./cascading_teleportation.html
-#       new: true
-#     - name: 長距離間の量子もつれ
-#       link: ./long_distance_entanglement.html
-#       new: true
+- name: 量子テレポーテーション
+  pages:
+    - name: テレポーテーション回路
+      link: ./teleportation_circuit.html
+      new: true
+    - name: 多段テレポーテーション
+      link: ./cascading_teleportation.html
+      new: true
+    - name: 長距離間の量子もつれ
+      link: ./long_distance_entanglement.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
