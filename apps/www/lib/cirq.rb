@@ -30,6 +30,7 @@ class cirqbridge:
         i = 0
         m = 0
         measurement = []
+        is_measured = false
         _step_index = 0
         sys.stdout.flush()
         for column_qni in circuit_from_qni:
@@ -137,6 +138,7 @@ class cirqbridge:
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     c.append([ cirq.measure(index, key = 'm' + str(m + i))  for i, index in enumerate(targetqubits)] )
                     m = m + len(targetqubits)
+                    is_measured=true
                 elif circuit_qni['type'] == u'Swap':
                     targetqubit0=qubits[circuit_qni['targets'][0]]
                     targetqubit1=qubits[circuit_qni['targets'][1]]
@@ -149,25 +151,30 @@ class cirqbridge:
             print("circuit column", column_qni)
 
         print("")
-        print('Cirq circiut')
-        print(c)
-        cirq_simulator = cirq.Simulator()
-        cirq_result = cirq_simulator.simulate(c)
-        print('Cirq result:')
-        print(cirq_result)
+        #print('Cirq circiut')
+        #print(c)
+        #cirq_simulator = cirq.Simulator()
+        #cirq_result = cirq_simulator.simulate(c)
+        #print('Cirq result:')
+        #print(cirq_result)
 
         qsim_simulator = qsimcirq.QSimSimulator()
         qsim_result = qsim_simulator.simulate(c)
+        if is_measured == true:
+            qsim_measure_result = qsim_simulator.run(c, repetitions=1)
         print('qsim result:')
         print(qsim_result)
+        if is_measured == true:
+            print(qsim_measure_result)
 
-        gpu_options = qsimcirq.QSimOptions(use_gpu=True)
-        qsim_simulator = qsimcirq.QSimSimulator(qsim_options=gpu_options)
-        qsim_gpu_result = qsim_simulator.simulate(c)
-        print('qsim GPU result:')
-        print(qsim_gpu_result)
-        sys.stdout.flush()
-        print("")
+        # Define a circuit with measurements.
+        #gpu_options = qsimcirq.QSimOptions(use_gpu=True)
+        #qsim_simulator = qsimcirq.QSimSimulator(qsim_options=gpu_options)
+        #qsim_gpu_result = qsim_simulator.simulate(c)
+        #print('qsim GPU result:')
+        #print(qsim_gpu_result)
+        #sys.stdout.flush()
+        #print("")
 
         print("python cirqbridge end")
         sys.stdout.flush()
