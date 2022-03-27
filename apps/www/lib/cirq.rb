@@ -160,12 +160,17 @@ class cirqbridge:
 
         qsim_simulator = qsimcirq.QSimSimulator()
         qsim_result = qsim_simulator.simulate(c)
+        measurement ={} 
         if is_measured == true:
             qsim_measure_result = qsim_simulator.run(c, repetitions=1)
         print('qsim result:')
         print(qsim_result)
         if is_measured == true:
             print(qsim_measure_result)
+            measurement = qsim_measure_result.measurements
+#            for k in measurement.keys():
+#                print(measurement[k][0][0])
+#                print(type(measurement[k][0][0]))
 
         # Define a circuit with measurements.
         #gpu_options = qsimcirq.QSimOptions(use_gpu=True)
@@ -178,7 +183,7 @@ class cirqbridge:
 
         print("python cirqbridge end")
         sys.stdout.flush()
-        return (qsim_result.final_state_vector)
+        return (qsim_result.final_state_vector, measurement)
 
 PYTHON
 
@@ -193,9 +198,10 @@ class Cirq
 
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
-    wavefunction=cirqbridge.run_simulation(@qubit_count, @steps, @step_index)
+    wavefunction, m_bits=cirqbridge.run_simulation(@qubit_count, @steps, @step_index)
     print("printing cirqbridge result from Ruby\n")
     p wavefunction
+    p m_bits
     measured_bits = {}
     amplitudes = (@targets.index_with { [rand, 0] })
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
