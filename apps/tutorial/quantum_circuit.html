@@ -74,152 +74,154 @@ description: 量子プログラミングのための低水準言語
   詳細は後に説明するとして、どんな命令があるかまずはざっと眺めておきましょう。
 </p>
 
-<table>
-  <thead>
-    <tr>
-      <th>記号</th>
-      <th>名前</th>
-      <th>説明</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <x-gate></x-gate>
-      </td>
-      <td class="align-middle">NOT または X</td>
-      <td class="align-middle">ビットペアの入れ替え</td>
-    </tr>
-    <tr>
-      <td>
-        <h-gate></h-gate>
-      </td>
-      <td class="align-middle">H または Hadamard (アダマール)</td>
-      <td class="align-middle">シンプルな重ね合わせの作成</td>
-    </tr>
-    <tr>
-      <td>
-        <phase-gate></phase-gate>
-      </td>
-      <td class="align-middle">Phase Shift (位相シフト)</td>
-      <td class="align-middle">相対位相を回転</td>
-    </tr>
-    <tr>
-      <td>
-        <div class="flex flex-row gap-2">
-          <write-gate data-value="0"></write-gate>
-          <write-gate data-value="1"></write-gate>
-        </div>
-      </td>
-      <td class="align-middle">WRITE</td>
-      <td class="align-middle">指定した値で量子ビットを初期化する</td>
-    </tr>
-    <tr>
-      <td>
-        <measurement-gate></measurement-gate>
-      </td>
-      <td class="align-middle">MEASUREMENT (測定)</td>
-      <td class="align-middle">量子ビットを測定し 0 または 1 を返す</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <control-gate></control-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <x-gate></x-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>CNOT</td>
-      <td>条件付き NOT</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <control-gate></control-gate>
-          </circuit-dropzone>
-          <circuit-dropzone
-            data-connect-top
-            data-connect-bottom
-            data-input-wire-quantum
-            data-output-wire-quantum
-          >
-            <control-gate></control-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <x-gate></x-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>CCNOT または Toffoli (トフォリ)</td>
-      <td>条件2個付き NOT</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation !md:py-6 !py-4">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <phase-gate data-angle="π/2"></phase-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <phase-gate data-angle="π/2"></phase-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>CPHASE</td>
-      <td>条件付きの Phase Shift</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <control-gate></control-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <control-gate></control-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>CZ</td>
-      <td>CPHASE (π 回転)</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <swap-gate></swap-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <swap-gate></swap-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>SWAP</td>
-      <td>2 つの量子ビットを交換</td>
-    </tr>
-    <tr>
-      <td>
-        <circuit-step class="no-rotation">
-          <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
-            <swap-gate></swap-gate>
-          </circuit-dropzone>
-          <circuit-dropzone
-            data-connect-top
-            data-connect-bottom
-            data-input-wire-quantum
-            data-output-wire-quantum
-          >
-            <swap-gate></swap-gate>
-          </circuit-dropzone>
-          <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
-            <control-gate></control-gate>
-          </circuit-dropzone>
-        </circuit-step>
-      </td>
-      <td>CSWAP</td>
-      <td>条件付き SWAP</td>
-    </tr>
-  </tbody>
-</table>
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>記号</th>
+        <th>名前</th>
+        <th>説明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <x-gate></x-gate>
+        </td>
+        <td class="align-middle">NOT または X</td>
+        <td class="align-middle">ビットペアの入れ替え</td>
+      </tr>
+      <tr>
+        <td>
+          <h-gate></h-gate>
+        </td>
+        <td class="align-middle">H または Hadamard (アダマール)</td>
+        <td class="align-middle">シンプルな重ね合わせの作成</td>
+      </tr>
+      <tr>
+        <td>
+          <phase-gate></phase-gate>
+        </td>
+        <td class="align-middle">Phase Shift (位相シフト)</td>
+        <td class="align-middle">相対位相を回転</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="flex flex-row gap-2">
+            <write-gate data-value="0"></write-gate>
+            <write-gate data-value="1"></write-gate>
+          </div>
+        </td>
+        <td class="align-middle">WRITE</td>
+        <td class="align-middle">指定した値で量子ビットを初期化する</td>
+      </tr>
+      <tr>
+        <td>
+          <measurement-gate></measurement-gate>
+        </td>
+        <td class="align-middle">MEASUREMENT (測定)</td>
+        <td class="align-middle">量子ビットを測定し 0 または 1 を返す</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <control-gate></control-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <x-gate></x-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>CNOT</td>
+        <td>条件付き NOT</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <control-gate></control-gate>
+            </circuit-dropzone>
+            <circuit-dropzone
+              data-connect-top
+              data-connect-bottom
+              data-input-wire-quantum
+              data-output-wire-quantum
+            >
+              <control-gate></control-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <x-gate></x-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>CCNOT または Toffoli (トフォリ)</td>
+        <td>条件2個付き NOT</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation !md:py-6 !py-4">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <phase-gate data-angle="π/2"></phase-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <phase-gate data-angle="π/2"></phase-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>CPHASE</td>
+        <td>条件付きの Phase Shift</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <control-gate></control-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <control-gate></control-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>CZ</td>
+        <td>CPHASE (π 回転)</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <swap-gate></swap-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <swap-gate></swap-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>SWAP</td>
+        <td>2 つの量子ビットを交換</td>
+      </tr>
+      <tr>
+        <td>
+          <circuit-step class="no-rotation">
+            <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
+              <swap-gate></swap-gate>
+            </circuit-dropzone>
+            <circuit-dropzone
+              data-connect-top
+              data-connect-bottom
+              data-input-wire-quantum
+              data-output-wire-quantum
+            >
+              <swap-gate></swap-gate>
+            </circuit-dropzone>
+            <circuit-dropzone data-connect-top data-input-wire-quantum data-output-wire-quantum>
+              <control-gate></control-gate>
+            </circuit-dropzone>
+          </circuit-step>
+        </td>
+        <td>CSWAP</td>
+        <td>条件付き SWAP</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
