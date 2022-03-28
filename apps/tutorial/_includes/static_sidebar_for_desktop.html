@@ -1,11 +1,8 @@
-<div class="hidden md:flex md:flex-shrink-0">
-  <div class="flex w-64 flex-col">
-    <div
-      class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4"
-      data-sidebar-target="bodyMd"
-    >
-      <div class="flex flex-shrink-0 items-center px-8">
-        <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+<div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+  <div class="flex flex-grow flex-col bg-white" data-sidebar-target="bodyMd">
+    <div class="flex h-16 flex-shrink-0 items-center px-8">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-center">
         <div class="flex flex-row items-end">
           <span
             class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
@@ -17,7 +14,9 @@
           >
         </div>
       </div>
-      <div class="mt-5 mb-14 flex flex-grow flex-col">{% include navigation.html %}</div>
+    </div>
+    <div class="mb-14 flex h-0 flex-grow flex-col overflow-y-auto">
+      {% include navigation.html %}
     </div>
   </div>
 </div>
