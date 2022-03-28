@@ -23,8 +23,8 @@ class cirqbridge:
         for a in _circuit_from_qni:
             if len(a) != 0:
                 circuit_from_qni.append(a)
-        print(circuit_from_qni)
-        sys.stdout.flush()
+        #print(circuit_from_qni)
+        #sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
         c = cirq.Circuit()
         i = 0
@@ -37,14 +37,14 @@ class cirqbridge:
             if _step_index > step_index:
                 break
             _step_index = _step_index + 1
-            print("circuit column", i, column_qni)
+            #print("circuit column", i, column_qni)
             i = i + 1
             j = 0
             for circuit_qni in column_qni:
                 j = j + 1
-                print("procssing circit ...")
-                print(column_qni)
-                sys.stdout.flush()
+                #print("procssing circit ...")
+                #print(column_qni)
+                #sys.stdout.flush()
                 if circuit_qni['type'] == u'H':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if not "controls" in circuit_qni:
@@ -148,7 +148,7 @@ class cirqbridge:
                 else:
                     print("unsupported gate", circuit_qni['type'])
                     exit(1)
-            print("circuit column", column_qni)
+            #print("circuit column", column_qni)
 
         print("")
         print('Cirq circiut')
@@ -156,6 +156,7 @@ class cirqbridge:
         cirq_simulator = cirq.Simulator()
         cirq_result = cirq_simulator.simulate(c)
         sys.stdout.flush()
+        print("python cirqbridge end")
         return (cirq_result.final_state_vector,cirq_result.measurements)
 
 PYTHON
