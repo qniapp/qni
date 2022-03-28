@@ -974,7 +974,7 @@
 
 <p>
   掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
-  量子ビット<label for="margin-note-qubit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータで扱う情報の最小単位を<mark>量子ビット</mark>と呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
+  量子ビット<label for="margin-note-qubit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータで扱う情報の最小単位を量子ビットと呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
   100 量子ビットを越える程度です。</span>の量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
   個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note__toggle hidden"><span class="margin-note">一般に、\(n\)
   個の量子ビットを持つマシンでは、数を 2 の \(n\) 乗個ならべたベクトルの掛け算を実行します。</span>
@@ -1013,8 +1013,7 @@
 <h2>使える行列の制限</h2>
 
 <p>
-  量子コンピュータが扱うベクトルは常に「<mark>二乗和</mark><label for="margin-note-square-sum" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note__toggle hidden"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせたもの</span>が
-  1」という性質を保つ必要があります。
+  量子コンピュータが扱うベクトルは常に「二乗和が 1」という性質を保つ必要があります<label for="margin-note-square-sum" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note__toggle hidden"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせると 1 になること。</span>。
   量子コンピュータに入力するベクトルと、行列とベクトルを掛けて新たにできるベクトルは、この性質を保たなければなりません。
 </p>
 
@@ -1028,8 +1027,8 @@
 </p>
 
 <p>
-  制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の<mark>可逆性</mark>)。
-  つまり、ある行列 \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
+  制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の可逆性)。 つまり、ある行列
+  \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
   を掛けてやることで元のベクトルが得られる必要があります<label for="margin-note-matrix-inverse" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-matrix-inverse" class="margin-note__toggle hidden"><span class="margin-note">行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。</span>。
   こちらもやはり、量子力学に由来する制限です。
 </p>
@@ -1039,7 +1038,7 @@
 </figure>
 
 <p>
-  数学の用語では、これら 2 つの性質を満たす行列を<mark>ユニタリ行列</mark>と呼びます。
+  数学の用語では、これら 2 つの性質を満たす行列をユニタリ行列と呼びます。
   なぜこの制限が難しいのか、私が考えられる最も良い例えはルービックキューブです。
   キューブをばらばらにして組み直すことで、直接的に色をそろえるのはルール違反です。
   できるのは列を回転させることだけで、そこがチャレンジングな部分です。
@@ -1075,7 +1074,7 @@
 <p>
   ここがおそらく一番トリッキーな部分です。
   行列とベクトルの掛け算の結果のベクトルは、なんとそのまま取り出すことができません。
-  唯一できることは<mark>測定</mark>という操作で得られる別のベクトルを取り出すことだけです。
+  唯一できることは測定という操作で得られる別のベクトルを取り出すことだけです。
 </p>
 
 <p>たとえば、量子コンピュータが掛け算の結果として次のベクトルを持っているとします。</p>
@@ -1086,8 +1085,7 @@
 
 <p>
   $$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix} \longrightarrow
-  \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \end{bmatrix} =
-  \begin{bmatrix} 0 \\ 0.25 \\ 0 \\ 0 \\ 0.5 \\ 0 \\ 0.25 \\ 0 \end{bmatrix} \longrightarrow
+  \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \end{bmatrix} \longrightarrow
   \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\% \end{bmatrix}$$
 </p>
 
@@ -1097,11 +1095,11 @@
 </p>
 
 <p>
-  $$ \begin{bmatrix} 0\% \\ \textcolor{red}{25\%} \\ 0\% \\ 0\% \\ \textcolor{blue}{50\%} \\ 0\% \\
-  \textcolor{magenta}{25\%} \\ 0\% \end{bmatrix} \longrightarrow \begin{bmatrix} 0 \\
+  $$ \begin{bmatrix} 0\% \\ \textcolor{red}{25\%} \\ 0\% \\ 0\% \\ \textcolor{red}{50\%} \\ 0\% \\
+  \textcolor{red}{25\%} \\ 0\% \end{bmatrix} \longrightarrow \begin{bmatrix} 0 \\
   \textcolor{red}{1} \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}\ または\ \begin{bmatrix} 0 \\ 0 \\
-  0 \\ 0 \\ \textcolor{blue}{1} \\ 0 \\ 0 \\ 0 \end{bmatrix} または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\
-  0 \\ 0 \\ 0 \\ \textcolor{magenta}{1} \\ 0 \end{bmatrix} $$
+  0 \\ 0 \\ \textcolor{red}{1} \\ 0 \\ 0 \\ 0 \end{bmatrix} または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\
+  0 \\ 0 \\ 0 \\ \textcolor{red}{1} \\ 0 \end{bmatrix} $$
 </p>
 
 <p>
