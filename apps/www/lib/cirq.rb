@@ -151,39 +151,12 @@ class cirqbridge:
             print("circuit column", column_qni)
 
         print("")
-        #print('Cirq circiut')
-        #print(c)
-        #cirq_simulator = cirq.Simulator()
-        #cirq_result = cirq_simulator.simulate(c)
-        #print('Cirq result:')
-        #print(cirq_result)
-
-        qsim_simulator = qsimcirq.QSimSimulator()
-        qsim_result = qsim_simulator.simulate(c)
-        measurement ={} 
-        if is_measured == true:
-            qsim_measure_result = qsim_simulator.run(c, repetitions=1)
-        print('qsim result:')
-        print(qsim_result)
-        if is_measured == true:
-            print(qsim_measure_result)
-            measurement = qsim_measure_result.measurements
-#            for k in measurement.keys():
-#                print(measurement[k][0][0])
-#                print(type(measurement[k][0][0]))
-
-        # Define a circuit with measurements.
-        #gpu_options = qsimcirq.QSimOptions(use_gpu=True)
-        #qsim_simulator = qsimcirq.QSimSimulator(qsim_options=gpu_options)
-        #qsim_gpu_result = qsim_simulator.simulate(c)
-        #print('qsim GPU result:')
-        #print(qsim_gpu_result)
-        #sys.stdout.flush()
-        #print("")
-
-        print("python cirqbridge end")
+        print('Cirq circiut')
+        print(c)
+        cirq_simulator = cirq.Simulator()
+        cirq_result = cirq_simulator.simulate(c)
         sys.stdout.flush()
-        return (qsim_result.final_state_vector, measurement)
+        return (cirq_result.final_state_vector,cirq_result.measurements)
 
 PYTHON
 
