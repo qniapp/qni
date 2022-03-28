@@ -1019,12 +1019,12 @@
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor class="flex h-full w-full flex-col md:items-start">
+    <circuit-editor class="flex h-full w-full flex-col">
       <div
         id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+        class="mb-10 flex w-min space-x-2 self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5 md:self-start"
       >
-        <palette-dropzone class="self-start">
+        <palette-dropzone>
           <write-gate data-value="0"></write-gate>
         </palette-dropzone>
         <palette-dropzone>
@@ -1058,7 +1058,7 @@
       </div>
 
       <quantum-circuit
-        class="mb-10 self-center"
+        class="mb-10 self-center md:self-start"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-min-wire-count="1"
         data-max-wire-count="2"
@@ -1070,7 +1070,7 @@
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        class="z-40 flex w-min flex-row justify-center self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4 md:self-start"
         data-multi-qubits
         data-show-kets
       >

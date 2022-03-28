@@ -6580,6 +6580,10 @@ mark {
     align-items: flex-start;
   }
 
+  .md\:self-start {
+    align-self: flex-start;
+  }
+
   .md\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
