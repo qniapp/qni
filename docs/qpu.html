@@ -67,10 +67,10 @@
       )
     </script>
   </head>
-  <body class="w-full">
-    <div class="flex h-screen overflow-hidden" data-controller="sidebar">
+  <body class="h-full">
+    <div data-controller="sidebar">
   <div
-  class="fixed inset-0 z-50 flex hidden md:hidden"
+  class="fixed inset-0 z-[200] flex hidden md:hidden"
   role="dialog"
   aria-modal="true"
   data-sidebar-target="menu"
@@ -492,14 +492,11 @@
     <!-- Dummy element to force sidebar to shrink to fit close icon -->
   </div>
 </div>
- <div class="hidden md:flex md:flex-shrink-0">
-  <div class="flex w-64 flex-col">
-    <div
-      class="flex flex-grow flex-col overflow-y-auto bg-white pt-5 pb-4"
-      data-sidebar-target="bodyMd"
-    >
-      <div class="flex flex-shrink-0 items-center px-8">
-        <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+ <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+  <div class="flex flex-grow flex-col bg-white" data-sidebar-target="bodyMd">
+    <div class="flex h-16 flex-shrink-0 items-center px-8">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-center">
         <div class="flex flex-row items-end">
           <span
             class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
@@ -511,7 +508,9 @@
           >
         </div>
       </div>
-      <div class="mt-5 mb-14 flex flex-grow flex-col"><nav class="flex-1 space-y-1 bg-white px-3 md:px-6">
+    </div>
+    <div class="mb-14 flex h-0 flex-grow flex-col overflow-y-auto">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6">
   
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     イントロダクション
@@ -893,19 +892,20 @@
   </a>
    
 </nav>
-</div>
+
     </div>
   </div>
 </div>
 
 
-  <div class="flex w-0 flex-1 flex-col overflow-hidden">
-    <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow md:hidden">
+  <div class="flex flex-1 flex-col md:pl-64">
+    <div class="sticky top-0 z-[100] flex h-16 flex-shrink-0 bg-white shadow md:shadow-none">
       <button
         type="button"
         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
         data-action="click->sidebar#open"
       >
+        <span class="sr-only">Open sidebar</span>
         <svg
     class="h-6 w-6"
     width="15"
@@ -925,13 +925,12 @@
       </button>
     </div>
 
-    <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <article class="prose prose-neutral max-w-none py-5">
-        <div class="hidden h-8 md:block"></div>
+    <main>
+      <article class="prose prose-neutral max-w-none">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <div class="mt-5 sm:mb-12 lg:mb-16">
+          <div class="mt-5 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
-              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">イントロダクション</p>
+              <p class="my-2 text-sm font-semibold leading-6 text-blue-600">イントロダクション</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   QPU とは

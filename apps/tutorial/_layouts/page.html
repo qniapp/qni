@@ -2,27 +2,27 @@
 layout: default
 ---
 
-<div class="flex h-screen overflow-hidden" data-controller="sidebar">
+<div data-controller="sidebar">
   {% include off_canvas_menu_for_mobile.html %} {% include static_sidebar_for_desktop.html %}
 
-  <div class="flex w-0 flex-1 flex-col overflow-hidden">
-    <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow md:hidden">
+  <div class="flex flex-1 flex-col md:pl-64">
+    <div class="sticky top-0 z-[100] flex h-16 flex-shrink-0 bg-white shadow md:shadow-none">
       <button
         type="button"
         class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
         data-action="click->sidebar#open"
       >
+        <span class="sr-only">Open sidebar</span>
         {% include hamburger_menu.svg %}
       </button>
     </div>
 
-    <main class="relative flex-1 overflow-y-auto focus:outline-none">
-      <article class="prose prose-neutral max-w-none py-5">
-        <div class="hidden h-8 md:block"></div>
+    <main>
+      <article class="prose prose-neutral max-w-none">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <div class="mt-5 sm:mb-12 lg:mb-16">
+          <div class="mt-5 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
-              <p class="mb-2 text-sm font-semibold leading-6 text-blue-600">{{ page.section }}</p>
+              <p class="my-2 text-sm font-semibold leading-6 text-blue-600">{{ page.section }}</p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
                   {{ page.title }}
