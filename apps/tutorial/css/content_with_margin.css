@@ -6,7 +6,3 @@
 .content-with-margin footer {
   @apply md:mr-auto md:w-7/12;
 }
-
-.content-with-margin > p {
-  @apply overflow-x-auto;
-}

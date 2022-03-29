@@ -5438,10 +5438,6 @@ mark {
   }
 }
 
-.content-with-margin > p {
-  overflow-x: auto;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
