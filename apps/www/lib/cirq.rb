@@ -173,15 +173,15 @@ class Cirq
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
     wavefunction, m_bits=cirqbridge.run_simulation(@qubit_count, @steps, @step_index)
-    #print("printing cirqbridge result from Ruby\n")
-    #p wavefunction
-    #p wavefunction.size
-    #p m_bits
-    amplitudes = Array.new(wavefunction.size)
-    measured_bits = [] #Array.new(m_bits.size)
+    amplitudes = {}
+    measured_bits = {}
+    _tmpa = []
     for num in 0..wavefunction.size-1 do
-        amplitudes[num] = wavefunction[num]
+        _tmpa = Array[wavefunction[num].real,wavefunction[num].imag]
+        basis=num.to_s(2).rjust(@qubit_count, '0')
+        amplitudes.store(basis,_tmpa)
     end
+    print("printing cirqbridge result from Ruby\n")
     p amplitudes
     # { amplitudes: wavefunction, measuredBits: m_bits, blochVectors: {} }
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
