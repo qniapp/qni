@@ -177,13 +177,11 @@ class Cirq
     measured_bits = {}
     _tmpa = []
     for num in 0..wavefunction.size-1 do
-        _tmpa = Array[wavefunction[num].real,wavefunction[num].imag]
-        basis=num.to_s(2).rjust(@qubit_count, '0')
-        amplitudes.store(basis,_tmpa)
+        _tmpa = Array[wavefunction[num].real.to_f,wavefunction[num].imag.to_f]
+        amplitudes.store(num,_tmpa)
     end
     print("printing cirqbridge result from Ruby\n")
     p amplitudes
-    # { amplitudes: wavefunction, measuredBits: m_bits, blochVectors: {} }
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
   end
 
