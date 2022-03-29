@@ -2,6 +2,7 @@
 .content-with-margin > p,
 .content-with-margin figure,
 .content-with-margin orbit-reviewarea,
-.content-with-margin ul {
+.content-with-margin ul,
+.content-with-margin footer {
   @apply md:mr-auto md:w-7/12;
 }

@@ -1,5 +1,5 @@
 <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-  <div class="flex flex-grow flex-col bg-white" data-sidebar-target="bodyMd">
+  <div class="flex flex-grow flex-col bg-white">
     <div class="flex h-16 flex-shrink-0 items-center px-8">
       <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
       <div class="flex flex-row items-center">
@@ -15,6 +15,8 @@
         </div>
       </div>
     </div>
-    <div class="flex h-0 flex-grow flex-col overflow-y-auto">{% include navigation.html %}</div>
+    <div class="flex h-0 flex-grow flex-col overflow-y-auto" data-sidebar-target="bodyMd">
+      {% include navigation.html %}
+    </div>
   </div>
 </div>
