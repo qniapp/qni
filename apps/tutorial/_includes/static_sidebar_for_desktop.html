@@ -1,19 +1,21 @@
 <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
   <div class="flex flex-grow flex-col bg-white">
     <div class="flex h-16 flex-shrink-0 items-center border-b border-slate-900/10 px-8">
-      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
-      <div class="flex flex-row items-center">
-        <div class="flex flex-row items-end">
-          <span
-            class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
-            >Qni</span
-          >
-          <span
-            class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
-            >Tutorial</span
-          >
+      <a href="/" class="flex flex-shrink-0 cursor-pointer flex-row">
+        <img class="mr-2 h-7 w-7" src="./images/qni-icon-512.png" alt="Qni" />
+        <div class="flex flex-row items-center">
+          <div class="flex flex-row items-end">
+            <span
+              class="select-none font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+              >Qni</span
+            >
+            <span
+              class="ml-0.5 select-none font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+              >Tutorial</span
+            >
+          </div>
         </div>
-      </div>
+      </a>
     </div>
     <div class="flex h-0 flex-grow flex-col overflow-y-auto md:py-6" data-sidebar-target="bodyMd">
       {% include navigation.html %}
