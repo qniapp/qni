@@ -1,7 +1,7 @@
+import {Complex, Util} from '@qni/common'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, targets} from '@github/catalyst'
 import tippy, {Instance, ReferenceElement, createSingleton, roundArrow} from 'tippy.js'
-import {Complex} from '@qni/common'
 
 export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
@@ -20,6 +20,8 @@ export class CircleNotationElement extends HTMLElement {
 
     for (const [i, each] of Object.entries(amplitudes)) {
       const qubitCircle = qubitCircles[parseInt(i)]
+      Util.notNull(qubitCircle)
+
       const amplitude = Complex.from(each)
 
       qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())

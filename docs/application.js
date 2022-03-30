@@ -3177,26 +3177,26 @@ var require_interact_min = __commonJS({
           throw new TypeError("Cannot call a class as a function");
       }
       __name(rr, "rr");
-      function or2(t2, e2) {
+      function or(t2, e2) {
         for (var n2 = 0; n2 < e2.length; n2++) {
           var r2 = e2[n2];
           r2.enumerable = r2.enumerable || false, r2.configurable = true, "value" in r2 && (r2.writable = true), Object.defineProperty(t2, r2.key, r2);
         }
       }
-      __name(or2, "or");
+      __name(or, "or");
       function ir(t2, e2, n2) {
-        return e2 && or2(t2.prototype, e2), n2 && or2(t2, n2), t2;
+        return e2 && or(t2.prototype, e2), n2 && or(t2, n2), t2;
       }
       __name(ir, "ir");
-      function ar(t2, e2, n2) {
+      function ar2(t2, e2, n2) {
         return e2 in t2 ? Object.defineProperty(t2, e2, { value: n2, enumerable: true, configurable: true, writable: true }) : t2[e2] = n2, t2;
       }
-      __name(ar, "ar");
+      __name(ar2, "ar");
       Object.defineProperty(Zn, "__esModule", { value: true }), Zn.initScope = lr, Zn.Scope = void 0;
       var sr = function() {
         function t2() {
           var e2 = this;
-          rr(this, t2), ar(this, "id", "__interact_scope_".concat(Math.floor(100 * Math.random()))), ar(this, "isInitialized", false), ar(this, "listenerMaps", []), ar(this, "browser", b2.default), ar(this, "defaults", (0, ge2.default)(Me3.defaults)), ar(this, "Eventable", cn.Eventable), ar(this, "actions", { map: {}, phases: { start: true, move: true, end: true }, methodDict: {}, phaselessTypes: {} }), ar(this, "interactStatic", (0, gn.createInteractStatic)(this)), ar(this, "InteractEvent", je.InteractEvent), ar(this, "Interactable", void 0), ar(this, "interactables", new wn.InteractableSet(this)), ar(this, "_win", void 0), ar(this, "document", void 0), ar(this, "window", void 0), ar(this, "documents", []), ar(this, "_plugins", { list: [], map: {} }), ar(this, "onWindowUnload", function(t3) {
+          rr(this, t2), ar2(this, "id", "__interact_scope_".concat(Math.floor(100 * Math.random()))), ar2(this, "isInitialized", false), ar2(this, "listenerMaps", []), ar2(this, "browser", b2.default), ar2(this, "defaults", (0, ge2.default)(Me3.defaults)), ar2(this, "Eventable", cn.Eventable), ar2(this, "actions", { map: {}, phases: { start: true, move: true, end: true }, methodDict: {}, phaselessTypes: {} }), ar2(this, "interactStatic", (0, gn.createInteractStatic)(this)), ar2(this, "InteractEvent", je.InteractEvent), ar2(this, "Interactable", void 0), ar2(this, "interactables", new wn.InteractableSet(this)), ar2(this, "_win", void 0), ar2(this, "document", void 0), ar2(this, "window", void 0), ar2(this, "documents", []), ar2(this, "_plugins", { list: [], map: {} }), ar2(this, "onWindowUnload", function(t3) {
             return e2.removeDocument(t3.target);
           });
           var n2 = this;
@@ -4679,10 +4679,10 @@ function __read(o2, n) {
   var m2 = typeof Symbol === "function" && o2[Symbol.iterator];
   if (!m2)
     return o2;
-  var i = m2.call(o2), r, ar = [], e;
+  var i = m2.call(o2), r, ar2 = [], e;
   try {
     while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-      ar.push(r.value);
+      ar2.push(r.value);
   } catch (error3) {
     e = { error: error3 };
   } finally {
@@ -4694,19 +4694,19 @@ function __read(o2, n) {
         throw e.error;
     }
   }
-  return ar;
+  return ar2;
 }
 __name(__read, "__read");
 function __spreadArray(to, from, pack) {
   if (pack || arguments.length === 2)
-    for (var i = 0, l3 = from.length, ar; i < l3; i++) {
-      if (ar || !(i in from)) {
-        if (!ar)
-          ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
+    for (var i = 0, l3 = from.length, ar2; i < l3; i++) {
+      if (ar2 || !(i in from)) {
+        if (!ar2)
+          ar2 = Array.prototype.slice.call(from, 0, i);
+        ar2[i] = from[i];
       }
     }
-  return to.concat(ar || Array.prototype.slice.call(from));
+  return to.concat(ar2 || Array.prototype.slice.call(from));
 }
 __name(__spreadArray, "__spreadArray");
 
@@ -12986,7 +12986,7 @@ var Tt = p2((s) => s != null && s instanceof $, "isRzGateElement");
 var _e = p2((s) => s != null && s instanceof V2, "isSwapGateElement");
 var Ut = p2((s) => s != null && s instanceof R2, "isControlGateElement");
 var Ae = p2((s) => s != null && s instanceof z2, "isBlochDisplayElement");
-var ol = p2((s) => s != null && s instanceof B, "isWriteGateElement");
+var al = p2((s) => s != null && s instanceof B, "isWriteGateElement");
 var Me2 = p2((s) => s != null && s instanceof D2, "isMeasurementGateElement");
 function Re2(s) {
   return /^-?\d+$/.test(s);
@@ -13252,7 +13252,9 @@ var Y = /* @__PURE__ */ __name(class extends HTMLElement {
   setAmplitudes(t) {
     let e = this.qubitCircles;
     for (let [i, n] of Object.entries(t)) {
-      let r = e[parseInt(i)], a = h.from(n);
+      let r = e[parseInt(i)];
+      m.notNull(r);
+      let a = h.from(n);
       r.setAttribute("data-amplitude-real", a.real.toString()), r.setAttribute("data-amplitude-imag", a.imag.toString());
       let o2 = a.abs();
       if (this.setRoundedMagnitude(r, o2), o2 === 0)
