@@ -53,7 +53,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      - run: lerna bootstrap
+      - run: yarn
       - run: yarn build
       - run: yarn test:ci
         env:
