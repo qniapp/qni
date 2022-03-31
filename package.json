@@ -18,7 +18,7 @@
     "examples/elements-example"
   ],
   "scripts": {
-    "build": "yarn workspaces foreach -vi run build",
+    "build": "yarn workspaces foreach -vti run build",
     "pretty-quick": "pretty-quick",
     "lint": "yarn workspaces foreach -vpi run lint",
     "g:eslint": "cd $INIT_CWD && eslint",
