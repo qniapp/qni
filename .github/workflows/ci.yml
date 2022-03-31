@@ -53,6 +53,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+      - run: yarn set version berry
       - run: yarn
       - run: yarn build
       - run: yarn test:ci
