@@ -32,6 +32,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@colors/colors@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@colors/colors@npm:1.5.0"
+  checksum: d64d5260bed1d5012ae3fc617d38d1afc0329fec05342f4e6b838f46998855ba56e0a73833f4a80fa8378c84810da254f76a8a19c39d038260dc06dc4e007425
+  languageName: node
+  linkType: hard
+
 "@dabh/diagnostics@npm:^2.0.2":
   version: 2.0.2
   resolution: "@dabh/diagnostics@npm:2.0.2"
@@ -209,8 +216,9 @@ __metadata:
     eslint-plugin-github: ^4.3.5
     eslint-plugin-prettier: ^4.0.0
     fraction.js: ^4.1.2
+    karma: ^6.3.17
     karma-chrome-launcher: ^3.1.0
-    karma-esbuild: ^2.2.0
+    karma-esbuild: ^2.2.4
     karma-qunit: ^4.1.2
     npm-dts: ~1.3
     qunit: ^2.17.2
@@ -293,10 +301,12 @@ __metadata:
     chai: ^4.3.4
     eslint-plugin-github: ^4.3.5
     fp-ts: ^2.11.5
-    karma: ^6.3.9
+    karma: ^6.3.17
     karma-chai: ^0.1.0
     karma-chrome-launcher: ^3.1.0
+    karma-esbuild: ^2.2.4
     karma-mocha: ^2.0.1
+    karma-qunit: ^4.1.2
     mocha: ^9.1.3
     rollup: ^2.60.2
     typedoc: ^0.22.10
@@ -4588,15 +4598,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-esbuild@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "karma-esbuild@npm:2.2.0"
+"karma-esbuild@npm:^2.2.4":
+  version: 2.2.4
+  resolution: "karma-esbuild@npm:2.2.4"
   dependencies:
     chokidar: ^3.5.1
     source-map: 0.6.1
   peerDependencies:
     esbuild: ">=0.8.45"
-  checksum: b88484d05cdfdb242ee8a65700911107bbb4494d191c71cf17bb230956d967178e5a5bd4f565155a3f54b05b6debaa3275c0336365969ac2794ba69f7a3f51d2
+  checksum: acb70da831dce3fd1b0a74362574fc0184678611a5afe491008b9198b1a412e709305bb4e34f225681ae915966b8fb1dc3e48dc6d6277377f0be3b6afecac0c7
   languageName: node
   linkType: hard
 
@@ -4619,14 +4629,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma@npm:^6.3.9":
-  version: 6.3.16
-  resolution: "karma@npm:6.3.16"
+"karma@npm:^6.3.17":
+  version: 6.3.17
+  resolution: "karma@npm:6.3.17"
   dependencies:
+    "@colors/colors": 1.5.0
     body-parser: ^1.19.0
     braces: ^3.0.2
     chokidar: ^3.5.1
-    colors: 1.4.0
     connect: ^3.7.0
     di: ^0.0.1
     dom-serialize: ^2.2.1
@@ -4649,7 +4659,7 @@ __metadata:
     yargs: ^16.1.1
   bin:
     karma: bin/karma
-  checksum: eb1703d4907ac31a47019e2b6b5f69e1ecd7870dabee1ed8f284d9730f665e02ae9ef1a75733b5d4b6a27fe68069536d0845b9e41747c43507128b3ac645c87f
+  checksum: 5d72fd6ce72879071fbbcbd7f469232090a110349f131ddbc52b5df8a43901ef04ac000dda609d4d7f31aab320037fc25f5f1783f1adec74362c87b87865d228
   languageName: node
   linkType: hard
 
