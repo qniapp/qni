@@ -1,6 +1,6 @@
 {
   "name": "@qni/www",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "Web service for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/apps/www#readme",
@@ -43,9 +43,9 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@qni/common": "^0.0.36",
-    "@qni/elements": "^0.0.36",
-    "@qni/simulator": "^0.0.36",
+    "@qni/common": "^0.0.37",
+    "@qni/elements": "^0.0.37",
+    "@qni/simulator": "^0.0.37",
     "@rails/ujs": "~7.0",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
