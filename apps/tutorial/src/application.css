@@ -1,7 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
-@import '../../../node_modules/@qni/elements/dist/qni';
+@import '../../../packages/elements/dist/qni';
 
 @import '../css/margin_note';
 @import '../css/mark';
