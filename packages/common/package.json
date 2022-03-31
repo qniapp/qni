@@ -14,8 +14,8 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "lint": "eslint . --ext .js,.ts",
-    "typecheck": "tsc --noEmit",
+    "lint": "yarn g:eslint . --ext .js,.ts",
+    "typecheck": "yarn g:tsc --noEmit",
     "build": "node build.js",
     "test": "karma start test/karma.config.cjs",
     "test:ci": "yarn test",
@@ -29,6 +29,7 @@
     "fraction.js": "^4.1.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
     "eslint-plugin-github": "^4.3.5",
     "eslint-plugin-prettier": "^4.0.0",
     "karma-chrome-launcher": "^3.1.0",
