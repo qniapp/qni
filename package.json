@@ -27,7 +27,7 @@
     "test": "yarn workspaces foreach -vi run test",
     "test:ci": "yarn workspaces foreach -vi run test:ci",
     "publish:patch": "yarn build && yarn test && lerna publish",
-    "docs": "lerna run docs",
+    "docs": "yarn workspaces foreach -vpi run docs",
     "fix:style": "yarn run prettier ./packages/common/src --write && yarn run prettier ./packages/simulator/src --write && yarn run prettier ./packages/elements/src --write",
     "prepare": "husky install"
   },
