@@ -27,6 +27,9 @@
     "simulator",
     "quantum-computing"
   ],
+  "files": [
+    "dist"
+  ],
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@qni/elements": "^0.0.38",
