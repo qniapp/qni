@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.36",
+  "version": "0.0.40",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -17,7 +17,8 @@
     "lint": "eslint . --ext .js,.ts",
     "typecheck": "tsc --noEmit",
     "prebuild": "npm run build:css",
-    "build": "node build.cjs",
+    "build": "yarn build:css && yarn build:js",
+    "build:js": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "pretest": "npm run build",
     "test": "web-test-runner test/*.js --node-resolve",
@@ -40,7 +41,7 @@
   "dependencies": {
     "@github/catalyst": "^1.1.4",
     "@github/jtml": "^0.4.0",
-    "@qni/common": "^0.0.36",
+    "@qni/common": "^0.0.40",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
     "xstate": "^4.27.0"
