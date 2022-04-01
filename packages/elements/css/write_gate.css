@@ -1,7 +1,7 @@
 write-gate {
-  @apply activateable;
-  @apply draggable;
   @apply operation;
+  @apply operation-activateable;
+  @apply operation-draggable;
 
   &::part(icon) {
     @apply text-neutral-500;

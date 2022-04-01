@@ -1,8 +1,8 @@
 h-gate {
-  @apply activateable;
-  @apply draggable;
-  @apply ifable;
   @apply operation;
+  @apply operation-activateable;
+  @apply operation-draggable;
+  @apply operation-ifable;
 
   &::part(body) {
     @apply h-full w-full;

@@ -66,7 +66,7 @@
     @apply h-16 w-16;
   }
 
-  .activateable {
+  .operation-activateable {
     &[data-active]::after {
       @apply border-opacity-100;
     }
@@ -76,7 +76,7 @@
     }
   }
 
-  .draggable {
+  .operation-draggable {
     touch-action: none;
 
     &[data-grabbed] {
@@ -123,7 +123,7 @@
     }
   }
 
-  .ifable {
+  .operation-ifable {
     &[data-if]::before {
       @apply absolute;
       @apply flex justify-center;
@@ -167,7 +167,7 @@
 }
 
 @layer components {
-  .angleable {
+  .operation-angleable {
     &[data-angle]::before {
       @apply absolute;
       @apply flex justify-center;
@@ -219,27 +219,27 @@
 }
 
 @layer components {
-  .flaggable[data-flag]::before {
+  .operation-flaggable[data-flag]::before {
     @apply hidden;
     @apply font-mono tracking-tighter;
     @apply text-xs leading-3;
     @apply absolute;
   }
 
-  circuit-dropzone .flaggable[data-flag]:not([data-flag=''])::before {
+  circuit-dropzone .operation-flaggable[data-flag]:not([data-flag=''])::before {
     @apply flex justify-center;
 
     content: attr(data-flag) '';
   }
 
   /* top label */
-  circuit-dropzone:not([data-connect-top]) .flaggable[data-flag]::before {
+  circuit-dropzone:not([data-connect-top]) .operation-flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
   }
 
   /* top label over wire */
-  circuit-dropzone[data-connect-top][data-connect-bottom] .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top][data-connect-bottom] .operation-flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
@@ -248,7 +248,7 @@
   }
 
   /* bottom label */
-  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .operation-flaggable[data-flag]::before {
     @apply bottom-0 left-0 right-0;
     @apply -mb-3.5;
   }

@@ -1,7 +1,7 @@
 swap-gate {
-  @apply activateable;
-  @apply draggable;
   @apply operation;
+  @apply operation-activateable;
+  @apply operation-draggable;
 
   &::part(icon) {
     @apply text-green-500;

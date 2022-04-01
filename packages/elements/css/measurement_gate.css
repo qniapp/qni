@@ -1,8 +1,8 @@
 measurement-gate {
-  @apply activateable;
-  @apply draggable;
-  @apply flaggable;
   @apply operation;
+  @apply operation-activateable;
+  @apply operation-draggable;
+  @apply operation-flaggable;
 
   &::part(icon) {
     @apply text-purple-500;
