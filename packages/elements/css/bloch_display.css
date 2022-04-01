@@ -3,8 +3,6 @@ bloch-display {
   @apply draggable;
   @apply operation;
 
-  @apply rounded;
-
   /* 3D perspective */
 
   &[data-size='xs']::part(perspective) {
