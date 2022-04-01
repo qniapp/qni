@@ -4,8 +4,6 @@ t-gate {
   @apply ifable;
   @apply operation;
 
-  @apply rounded;
-
   &::part(body) {
     @apply h-full w-full;
     @apply bg-green-500;

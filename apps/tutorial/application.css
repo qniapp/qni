@@ -2972,7 +2972,6 @@ t-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 t-gate::part(body) {
