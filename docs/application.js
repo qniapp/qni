@@ -12683,7 +12683,7 @@ var z2 = /* @__PURE__ */ __name(class extends x(E(v(g(HTMLElement)))) {
 p2(z2, "BlochDisplayElement"), l2([target], z2.prototype, "body", 2), l2([target], z2.prototype, "vectorLine", 2), l2([target], z2.prototype, "vectorEnd", 2), l2([target], z2.prototype, "vector", 2), l2([targets], z2.prototype, "vectorEndCircles", 2), l2([attr], z2.prototype, "x", 2), l2([attr], z2.prototype, "y", 2), l2([attr], z2.prototype, "z", 2);
 controller(z2);
 var le2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" fill="currentColor"/>
+  <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" fill="currentColor"/>
 </svg>
 `;
 var R2 = /* @__PURE__ */ __name(class extends x(E(v(T(y(g(HTMLElement)))))) {
