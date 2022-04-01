@@ -3105,7 +3105,6 @@ rnot-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 rnot-gate::part(body) {
