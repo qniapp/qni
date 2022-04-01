@@ -13986,13 +13986,12 @@ var Y = /* @__PURE__ */ __name(class extends HTMLElement {
         <div id="body">${this.qubitCirclesHtml}</div>`, this.shadowRoot);
     for (let [t, e] of (this.getAttribute("data-magnitudes") || "1.0").split(",").entries())
       this.setRoundedMagnitude(this.qubitCircles[t], parseFloat(e));
-    if (this.phases.trim() !== "")
-      for (let [t, e] of this.phases.split(",").entries()) {
-        let i = this.qubitCircles[t], n = e ? parseFloat(e) : 0;
-        this.setRoundedPhase(i, n);
-        let r = i.querySelector(".qubit-circle__phase");
-        r.style.transform = `rotate(${-n}deg)`;
-      }
+    for (let [t, e] of (this.getAttribute("data-phases") || "").split(",").entries()) {
+      let i = this.qubitCircles[t], n = e ? parseFloat(e) : 0;
+      this.setRoundedPhase(i, n);
+      let r = i.querySelector(".qubit-circle__phase");
+      r.style.transform = `rotate(${-n}deg)`;
+    }
   }
   setRoundedMagnitude(t, e) {
     if (t === null || t === void 0)
