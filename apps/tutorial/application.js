@@ -13984,7 +13984,7 @@ var Y = /* @__PURE__ */ __name(class extends HTMLElement {
         </style>
 
         <div id="body">${this.qubitCirclesHtml}</div>`, this.shadowRoot);
-    for (let [t, e] of this.magnitudes.split(",").entries())
+    for (let [t, e] of (this.getAttribute("data-magnitudes") || "1.0").split(",").entries())
       this.setRoundedMagnitude(this.qubitCircles[t], parseFloat(e));
     if (this.phases.trim() !== "")
       for (let [t, e] of this.phases.split(",").entries()) {

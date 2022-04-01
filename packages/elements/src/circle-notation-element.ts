@@ -775,7 +775,7 @@ export class CircleNotationElement extends HTMLElement {
       this.shadowRoot!
     )
 
-    for (const [i, each] of this.magnitudes.split(',').entries()) {
+    for (const [i, each] of (this.getAttribute('data-magnitudes') || '1.0').split(',').entries()) {
       this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
     }
     if (this.phases.trim() === '') return
