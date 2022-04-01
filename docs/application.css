@@ -5165,6 +5165,73 @@ circuit-editor {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.operation-xs {
+  height: 1rem;
+  width: 1rem;
+}
+
+.operation-sm {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.operation-base {
+  height: 2rem;
+  width: 2rem;
+}
+
+.operation-lg {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.operation-xl {
+  height: 3rem;
+  width: 3rem;
+}
+
+.operation-2xl {
+  height: 4rem;
+  width: 4rem;
+}
+
+.operation {
+  display: inline-block;
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+
+.operation[data-size='xs'] {
+  height: 1rem;
+  width: 1rem;
+}
+
+.operation[data-size='sm'] {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.operation[data-size='base'] {
+  height: 2rem;
+  width: 2rem;
+}
+
+.operation[data-size='lg'] {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.operation[data-size='xl'] {
+  height: 3rem;
+  width: 3rem;
+}
+
+.operation[data-size='2xl'] {
+  height: 4rem;
+  width: 4rem;
+}
+
 .draggable {
   touch-action: none;
 }
@@ -5222,43 +5289,6 @@ circuit-dropzone .draggable:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
-}
-
-.operation {
-  display: inline-block;
-  position: relative;
-  height: 2rem;
-  width: 2rem;
-}
-
-.operation[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-.operation[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-.operation[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-.operation[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-.operation[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-.operation[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
 }
 
 /* top label */
