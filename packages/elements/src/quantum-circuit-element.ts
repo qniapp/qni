@@ -899,14 +899,14 @@ export class QuantumCircuitElement extends HTMLElement {
     let jsonString
     let circuitBlock = null
 
-    if (this.updateUrl) {
+    if (this.hasAttribute('data-update-url')) {
       jsonString = this.urlJson
     } else {
       jsonString = this.json
     }
 
     if (jsonString === '' || jsonString === 'new') {
-      if (this.updateUrl) {
+      if (this.hasAttribute('data-update-url')) {
         this.resize()
       }
       return

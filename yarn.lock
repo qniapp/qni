@@ -59,10 +59,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@github/catalyst@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.1.4.tgz#b1eb7b35f590d882230ca516f2672a13591b7ce3"
-  integrity sha512-Q805VHpMeDev33e/73HcbyXaL7uIqW5bo6+XsoLkcY1oTGJVTZcxr1DDrI8nBfwhmxy3BADqL6WJ0lM/GHhI8w==
+"@github/catalyst@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.3.1.tgz#fcd0f960b4317427b03741a4f068ea17b8efe203"
+  integrity sha512-QWQwVD7CQlW90VibJByYorCpVpeGR9W9+7S87BZatOFpd+N0/NkC8oHIvMXnAn9g5SV0RdJDm4ZLWnBVTvXudQ==
 
 "@github/jtml@^0.4.0":
   version "0.4.0"
@@ -8182,6 +8182,11 @@ typescript@^4.5.2, typescript@~4.5:
   version "4.5.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
+
+typescript@~4.6:
+  version "4.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
 typical@^4.0.0:
   version "4.0.0"

@@ -4448,11 +4448,11 @@ __name(handleEvent, "handleEvent");
 function* bindings(el) {
   for (const action of (el.getAttribute("data-action") || "").trim().split(/\s+/)) {
     const eventSep = action.lastIndexOf(":");
-    const methodSep = action.lastIndexOf("#");
+    const methodSep = Math.max(0, action.lastIndexOf("#")) || action.length;
     yield {
       type: action.slice(0, eventSep),
       tag: action.slice(eventSep + 1, methodSep),
-      method: action.slice(methodSep + 1)
+      method: action.slice(methodSep + 1) || "handleEvent"
     };
   }
 }
@@ -4546,13 +4546,18 @@ function attr(proto, key) {
   attrs.get(proto).push(key);
 }
 __name(attr, "attr");
+var initialized = /* @__PURE__ */ new WeakSet();
 function initializeAttrs(instance, names) {
+  if (initialized.has(instance))
+    return;
+  initialized.add(instance);
   if (!names)
     names = getAttrNames(Object.getPrototypeOf(instance));
   for (const key of names) {
     const value = instance[key];
     const name = attrToAttributeName(key);
     let descriptor = {
+      configurable: true,
       get() {
         return this.getAttribute(name) || "";
       },
@@ -4562,6 +4567,7 @@ function initializeAttrs(instance, names) {
     };
     if (typeof value === "number") {
       descriptor = {
+        configurable: true,
         get() {
           return Number(this.getAttribute(name) || 0);
         },
@@ -4571,6 +4577,7 @@ function initializeAttrs(instance, names) {
       };
     } else if (typeof value === "boolean") {
       descriptor = {
+        configurable: true,
         get() {
           return this.hasAttribute(name);
         },
@@ -4605,6 +4612,7 @@ __name(attrToAttributeName, "attrToAttributeName");
 function defineObservedAttributes(classObject) {
   let observed = classObject.observedAttributes || [];
   Object.defineProperty(classObject, "observedAttributes", {
+    configurable: true,
     get() {
       const attrMap = getAttrNames(classObject.prototype);
       return [...attrMap].map(attrToAttributeName).concat(observed);
@@ -4616,21 +4624,45 @@ function defineObservedAttributes(classObject) {
 }
 __name(defineObservedAttributes, "defineObservedAttributes");
 
+// ../../node_modules/@github/catalyst/lib/core.js
+var instances = /* @__PURE__ */ new WeakSet();
+function initializeInstance(instance, connect) {
+  instance.toggleAttribute("data-catalyst", true);
+  customElements.upgrade(instance);
+  instances.add(instance);
+  autoShadowRoot(instance);
+  initializeAttrs(instance);
+  bind(instance);
+  if (connect)
+    connect.call(instance);
+  if (instance.shadowRoot)
+    bindShadow(instance.shadowRoot);
+}
+__name(initializeInstance, "initializeInstance");
+function initializeAttributeChanged(instance, name, oldValue, newValue, attributeChangedCallback) {
+  initializeAttrs(instance);
+  if (name !== "data-catalyst" && attributeChangedCallback) {
+    attributeChangedCallback.call(instance, name, oldValue, newValue);
+  }
+}
+__name(initializeAttributeChanged, "initializeAttributeChanged");
+function initializeClass(classObject) {
+  defineObservedAttributes(classObject);
+  register(classObject);
+}
+__name(initializeClass, "initializeClass");
+
 // ../../node_modules/@github/catalyst/lib/controller.js
 function controller(classObject) {
   const connect = classObject.prototype.connectedCallback;
   classObject.prototype.connectedCallback = function() {
-    this.toggleAttribute("data-catalyst", true);
-    autoShadowRoot(this);
-    initializeAttrs(this);
-    bind(this);
-    if (connect)
-      connect.call(this);
-    if (this.shadowRoot)
-      bindShadow(this.shadowRoot);
+    initializeInstance(this, connect);
   };
-  defineObservedAttributes(classObject);
-  register(classObject);
+  const attributeChanged = classObject.prototype.attributeChangedCallback;
+  classObject.prototype.attributeChangedCallback = function(name, oldValue, newValue) {
+    initializeAttributeChanged(this, name, oldValue, newValue, attributeChanged);
+  };
+  initializeClass(classObject);
 }
 __name(controller, "controller");
 
@@ -11400,14 +11432,14 @@ function tippy(targets2, optionalProps) {
     var isMoreThanOneReferenceElement = elements.length > 1;
     warnWhen(isSingleContentElement && isMoreThanOneReferenceElement, ["tippy() was passed an Element as the `content` prop, but more than", "one tippy instance was created by this invocation. This means the", "content element will only be appended to the last tippy instance.", "\n\n", "Instead, pass the .innerHTML of the element, or use a function that", "returns a cloned version of the element instead.", "\n\n", "1) content: element.innerHTML\n", "2) content: () => element.cloneNode(true)"].join(" "));
   }
-  var instances = elements.reduce(function(acc, reference2) {
+  var instances2 = elements.reduce(function(acc, reference2) {
     var instance = reference2 && createTippy(reference2, passedProps);
     if (instance) {
       acc.push(instance);
     }
     return acc;
   }, []);
-  return isElement2(targets2) ? instances[0] : instances;
+  return isElement2(targets2) ? instances2[0] : instances2;
 }
 __name(tippy, "tippy");
 tippy.defaultProps = defaultProps;
@@ -13264,7 +13296,7 @@ var Y = /* @__PURE__ */ __name(class extends HTMLElement {
     }
   }
   connectedCallback() {
-    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initQubitCirclePopup(this.qubitCircles), this.multiQubits && (this.startQubitCircleVisibilityObserver(), this.dispatchLoadEvent()));
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initQubitCirclePopup(this.qubitCircles), this.hasAttribute("data-multi-qubits") && (this.startQubitCircleVisibilityObserver(), this.dispatchLoadEvent()));
   }
   dispatchLoadEvent() {
     this.dispatchEvent(new Event("circle-notation.load", { bubbles: true }));
@@ -13975,7 +14007,7 @@ var Y = /* @__PURE__ */ __name(class extends HTMLElement {
     i < 0 && (i = 360 + i), t.setAttribute("data-phase", e.toString()), t.setAttribute("data-rounded-phase", i.toString());
   }
   get qubitCirclesHtml() {
-    return this.multiQubits ? this.stateVectorHtml(10) : html`${this.qubitCircleHtml(0)} ${this.qubitCircleHtml(1)}`;
+    return this.hasAttribute("data-multi-qubits") ? this.stateVectorHtml(10) : html`${this.qubitCircleHtml(0)} ${this.qubitCircleHtml(1)}`;
   }
   qubitCircleHtml(t) {
     return html`<div
@@ -15429,8 +15461,8 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   loadFromJson() {
     let t, e = null;
-    if (this.updateUrl ? t = this.urlJson : t = this.json, t === "" || t === "new") {
-      this.updateUrl && this.resize();
+    if (this.hasAttribute("data-update-url") ? t = this.urlJson : t = this.json, t === "" || t === "new") {
+      this.hasAttribute("data-update-url") && this.resize();
       return;
     }
     let i = JSON.parse(t);
