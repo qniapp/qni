@@ -12913,7 +12913,7 @@ var H2 = /* @__PURE__ */ __name(class extends x(E(O2(S(v(T(y(g(HTMLElement))))))
 p2(H2, "TGateElement");
 controller(H2);
 var xe2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M9 10V40M34 10L40 24L34 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9 10V40M34 10L40 24L34 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 var B = /* @__PURE__ */ __name(class extends x(E(v(y(g(HTMLElement))))) {

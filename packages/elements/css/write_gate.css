@@ -3,8 +3,6 @@ write-gate {
   @apply draggable;
   @apply operation;
 
-  @apply rounded;
-
   &::part(icon) {
     @apply text-neutral-500;
   }
