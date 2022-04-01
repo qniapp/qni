@@ -12945,7 +12945,7 @@ var B = /* @__PURE__ */ __name(class extends x(E(v(y(g(HTMLElement))))) {
 p2(B, "WriteGateElement"), l2([attr], B.prototype, "value", 2);
 controller(B);
 var ye2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
 var U = /* @__PURE__ */ __name(class extends x(E(O2(S(v(T(y(g(HTMLElement)))))))) {
