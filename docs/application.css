@@ -2839,7 +2839,6 @@ phase-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 phase-gate::part(body) {
