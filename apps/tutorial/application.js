@@ -12873,7 +12873,7 @@ var $ = /* @__PURE__ */ __name(class extends x(E(O2(S(J2(v(T(y(g(HTMLElement))))
 p2($, "RzGateElement");
 controller($);
 var ge = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
 var V2 = /* @__PURE__ */ __name(class extends x(E(S(v(T(y(g(HTMLElement))))))) {

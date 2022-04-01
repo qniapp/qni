@@ -3,8 +3,6 @@ swap-gate {
   @apply draggable;
   @apply operation;
 
-  @apply rounded;
-
   &::part(icon) {
     @apply text-green-500;
   }
