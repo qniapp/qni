@@ -3295,7 +3295,6 @@ rx-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 rx-gate::part(body) {
@@ -3486,7 +3485,6 @@ ry-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 ry-gate::part(body) {
@@ -3677,7 +3675,6 @@ rz-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 rz-gate::part(body) {
