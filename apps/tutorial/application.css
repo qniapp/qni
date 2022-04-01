@@ -2250,39 +2250,6 @@ h-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-h-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-h-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-h-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-h-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-h-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-h-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-h-gate {
   border-radius: 0.25rem;
 }
 
@@ -2417,39 +2384,6 @@ x-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-x-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-x-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-x-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-x-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-x-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-x-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-x-gate {
   border-radius: 0.25rem;
 }
 
@@ -2584,39 +2518,6 @@ y-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-y-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-y-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-y-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-y-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-y-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-y-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-y-gate {
   border-radius: 0.25rem;
 }
 
@@ -2751,39 +2652,6 @@ z-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-z-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-z-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-z-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-z-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-z-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-z-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-z-gate {
   border-radius: 0.25rem;
 }
 
@@ -2975,39 +2843,6 @@ phase-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-phase-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-phase-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-phase-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-phase-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-phase-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-phase-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-phase-gate {
   border-radius: 0.25rem;
 }
 
@@ -3142,39 +2977,6 @@ t-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-t-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-t-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-t-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-t-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-t-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-t-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-t-gate {
   border-radius: 0.25rem;
 }
 
@@ -3309,39 +3111,6 @@ rnot-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-rnot-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-rnot-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-rnot-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-rnot-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-rnot-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-rnot-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-rnot-gate {
   border-radius: 0.25rem;
 }
 
@@ -3533,39 +3302,6 @@ rx-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-rx-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-rx-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-rx-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-rx-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-rx-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-rx-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-rx-gate {
   border-radius: 0.25rem;
 }
 
@@ -3757,39 +3493,6 @@ ry-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-ry-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-ry-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-ry-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-ry-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-ry-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-ry-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-ry-gate {
   border-radius: 0.25rem;
 }
 
@@ -3981,39 +3684,6 @@ rz-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-rz-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-rz-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-rz-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-rz-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-rz-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-rz-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-rz-gate {
   border-radius: 0.25rem;
 }
 
@@ -4102,39 +3772,6 @@ swap-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-swap-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-swap-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-swap-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-swap-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-swap-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-swap-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-swap-gate {
   border-radius: 0.25rem;
 }
 
@@ -4215,39 +3852,6 @@ control-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-control-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-control-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-control-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-control-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-control-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-control-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-control-gate {
   border-radius: 0.25rem;
 }
 
@@ -4328,39 +3932,6 @@ bloch-display {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-bloch-display[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-bloch-display[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-bloch-display[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-bloch-display[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-bloch-display[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-bloch-display[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-bloch-display {
   border-radius: 0.25rem;
 }
 
@@ -4502,39 +4073,6 @@ write-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-write-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-write-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-write-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-write-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-write-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-write-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-write-gate {
   border-radius: 0.25rem;
 }
 
@@ -4705,39 +4243,6 @@ measurement-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-}
-
-measurement-gate[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-measurement-gate[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-measurement-gate[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-measurement-gate[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-measurement-gate[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-measurement-gate[data-size='2xl'] {
-  height: 4rem;
-  width: 4rem;
-}
-
-measurement-gate {
   border-radius: 0.25rem;
 }
 
@@ -5165,6 +4670,13 @@ circuit-editor {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.operation {
+  display: inline-block;
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+
 .operation-xs {
   height: 1rem;
   width: 1rem;
@@ -5191,43 +4703,6 @@ circuit-editor {
 }
 
 .operation-2xl {
-  height: 4rem;
-  width: 4rem;
-}
-
-.operation {
-  display: inline-block;
-  position: relative;
-  height: 2rem;
-  width: 2rem;
-}
-
-.operation[data-size='xs'] {
-  height: 1rem;
-  width: 1rem;
-}
-
-.operation[data-size='sm'] {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-.operation[data-size='base'] {
-  height: 2rem;
-  width: 2rem;
-}
-
-.operation[data-size='lg'] {
-  height: 2.5rem;
-  width: 2.5rem;
-}
-
-.operation[data-size='xl'] {
-  height: 3rem;
-  width: 3rem;
-}
-
-.operation[data-size='2xl'] {
   height: 4rem;
   width: 4rem;
 }
