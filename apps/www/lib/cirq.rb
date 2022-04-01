@@ -15,30 +15,28 @@ class cirqbridge:
     def __init__(self):
         return
 
-    def run_simulation(self,numofqubits,_circuit_from_qni,step_index):
-        print("python cirqbridge start")
-        sys.stdout.flush()
+    def build_circuit(self,numofqubits,_circuit_from_qni,step_index):
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
         circuit_from_qni = []
         for a in _circuit_from_qni:
             if len(a) != 0:
                 circuit_from_qni.append(a)
-        #print(circuit_from_qni)
-        #sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
         c = cirq.Circuit()
         i = 0
         m = 0
         measurement = []
         is_measured = false
-        _step_index = 0
-        sys.stdout.flush()
+        _step_index = []
+        _current_index = 0
         for column_qni in circuit_from_qni:
-            if _step_index > step_index:
-                break
-            _step_index = _step_index + 1
-            #print("circuit column", i, column_qni)
+            print("circuit column", i, column_qni)
+            sys.stdout.flush()
             i = i + 1
+            _current_index = _current_index + len(column_qni)
+            _step_index.append(_current_index + 1)
+            print(_step_index)
+            sys.stdout.flush()
             j = 0
             for circuit_qni in column_qni:
                 j = j + 1
@@ -147,17 +145,18 @@ class cirqbridge:
                     pass #nop
                 else:
                     print("unsupported gate", circuit_qni['type'])
+                    sys.stdout.flush()
                     exit(1)
-            #print("circuit column", column_qni)
+        return (c, _step_index)
 
-        print("")
-        print('Cirq circiut')
+    def run_circuit_until(self,c, _step_index, until):
+        print("run_circuit_until")
         print(c)
-        cirq_simulator = cirq.Simulator()
-        cirq_result = cirq_simulator.simulate(c)
+        print(until)
+        print("current step", _step_index)
+        print("gate number", _step_index[until])
         sys.stdout.flush()
-        print("python cirqbridge end")
-        return (cirq_result.final_state_vector,cirq_result.measurements)
+        return
 
 PYTHON
 
@@ -172,15 +171,18 @@ class Cirq
 
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
-    wavefunction, m_bits=cirqbridge.run_simulation(@qubit_count, @steps, @step_index)
+    cirq_circuit, _step_index =cirqbridge.build_circuit(@qubit_count, @steps, @step_index)
+    wavefunction =cirqbridge.run_circuit_until(cirq_circuit, _step_index, @step_index)
+    p cirq_circuit
+    p _step_index
     amplitudes = {}
     measured_bits = {}
-    for num in 0..wavefunction.size-1 do
-        amplitudes.store(num,Array[wavefunction[num].real.to_f,wavefunction[num].imag.to_f])
-    end
-    p m_bits
-    print("printing cirqbridge result from Ruby\n")
-    p amplitudes
+#    for num in 0..wavefunction.size-1 do
+#        amplitudes.store(num,Array[wavefunction[num].real.to_f,wavefunction[num].imag.to_f])
+#    end
+#    p m_bits
+#    print("printing cirqbridge result from Ruby\n")
+#    p amplitudes
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
   end
 
