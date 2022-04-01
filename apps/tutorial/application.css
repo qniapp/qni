@@ -2250,7 +2250,6 @@ h-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
-  border-radius: 0.25rem;
 }
 
 h-gate::part(body) {

@@ -12703,7 +12703,7 @@ var R2 = /* @__PURE__ */ __name(class extends x(E(v(T(y(g(HTMLElement)))))) {
 p2(R2, "ControlGateElement");
 controller(R2);
 var ce = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 13V35M17 24H31M31 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M17 13V35M17 24H31M31 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
 var q2 = /* @__PURE__ */ __name(class extends x(E(O2(S(v(T(y(g(HTMLElement)))))))) {
