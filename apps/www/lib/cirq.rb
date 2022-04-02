@@ -175,11 +175,8 @@ class Cirq
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
     cirq_circuit = cirqbridge.build_circuit(@qubit_count, @steps, @step_index)
-    p "circuit from cirq start" 
-    p cirq_circuit
-    p "circuit from cirq end"
-    # step_index must be incremented when we intialize a qubit to |1>.
-    # Initalize to |1> means initalize to |0> and follwed by negation
+    # @step_index must be incremented when we add a gate, which intialize a qubit to |1>.
+    # Note: Initalize to |1> means initalize to |0> and follwed by negation
     _step_index = 0
     i = 0 
     for a in @steps do
