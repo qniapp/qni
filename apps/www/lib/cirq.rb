@@ -162,11 +162,13 @@ class cirqbridge:
         for i, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
             if counter > until:
                 break
-            #print('state at step %d: %s' % (i, np.around(step.state_vector(), 3)))
+#            print('state at step %d: %s' % (i, np.around(step.state_vector(), 3)))
             counter = counter + 1;
-            sys.stdout.flush()
-        #print('state at step' % step.state_vector())
-        return step.state_vector()
+#            sys.stdout.flush()
+#        print('state at step %s' % np.around(step.state_vector(), 3))
+#        print('state at measurement %s' % step.measurements)
+#        sys.stdout.flush()
+        return step.state_vector(), step.measurements
 
 PYTHON
 
@@ -198,9 +200,8 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    p "run until following steps corrected, original"
-    p _step_index, @step_index
-    wavefunction = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
+    wavefunction, measurement_result = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
+    p measurement_result
     amplitudes = {}
 # not working code
     _tmpa = []
