@@ -4,7 +4,7 @@ control-gate {
   @apply operation-draggable;
 
   &::part(icon) {
-    @apply text-green-500;
+    @apply text-emerald-500;
   }
 
   &[data-disabled]::part(icon) {

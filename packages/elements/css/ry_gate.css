@@ -2,20 +2,8 @@ ry-gate {
   @apply operation;
   @apply operation-activateable;
   @apply operation-angleable;
+  @apply operation-disableable;
   @apply operation-draggable;
   @apply operation-ifable;
-
-  &::part(body) {
-    @apply h-full w-full;
-    @apply bg-green-500;
-    @apply rounded;
-  }
-
-  &[data-disabled]::part(body) {
-    @apply bg-gray-500;
-  }
-
-  &::part(icon) {
-    @apply text-white;
-  }
+  @apply operation-square;
 }

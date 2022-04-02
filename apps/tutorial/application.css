@@ -2144,6 +2144,19 @@ h-gate {
   width: 2rem;
 }
 
+circuit-editor h-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 h-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -2151,6 +2164,11 @@ h-gate[data-active]::after {
 h-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+h-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 h-gate {
@@ -2168,19 +2186,6 @@ h-gate[data-grabbed] {
 circuit-editor palette-dropzone h-gate, circuit-editor quantum-circuit:not([data-editing]) h-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor h-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone h-gate:not([data-grabbed]):hover::after {
@@ -2253,16 +2258,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) h-gate[data-if]::b
 }
 
 h-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-h-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 h-gate::part(icon) {
@@ -2277,6 +2277,19 @@ x-gate {
   width: 2rem;
 }
 
+circuit-editor x-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 x-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -2284,6 +2297,24 @@ x-gate[data-active]::after {
 x-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+x-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  height: 100%;
+  width: 100%;
+  border-radius: 9999px;
+}
+
+x-gate::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+x-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 x-gate {
@@ -2301,19 +2332,6 @@ x-gate[data-grabbed] {
 circuit-editor palette-dropzone x-gate, circuit-editor quantum-circuit:not([data-editing]) x-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor x-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone x-gate:not([data-grabbed]):hover::after {
@@ -2385,29 +2403,24 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) x-gate[data-if]::b
   margin-bottom: -0.875rem;
 }
 
-x-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-  border-radius: 9999px;
-}
-
-x-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-
-x-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 y-gate {
   display: inline-block;
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor y-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 y-gate[data-active]::after {
@@ -2417,6 +2430,11 @@ y-gate[data-active]::after {
 y-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+y-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 y-gate {
@@ -2434,19 +2452,6 @@ y-gate[data-grabbed] {
 circuit-editor palette-dropzone y-gate, circuit-editor quantum-circuit:not([data-editing]) y-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor y-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone y-gate:not([data-grabbed]):hover::after {
@@ -2519,16 +2524,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) y-gate[data-if]::b
 }
 
 y-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-y-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 y-gate::part(icon) {
@@ -2543,6 +2543,19 @@ z-gate {
   width: 2rem;
 }
 
+circuit-editor z-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 z-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -2550,6 +2563,11 @@ z-gate[data-active]::after {
 z-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+z-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 z-gate {
@@ -2567,19 +2585,6 @@ z-gate[data-grabbed] {
 circuit-editor palette-dropzone z-gate, circuit-editor quantum-circuit:not([data-editing]) z-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor z-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone z-gate:not([data-grabbed]):hover::after {
@@ -2652,16 +2657,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 }
 
 z-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-z-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 z-gate::part(icon) {
@@ -2674,6 +2674,19 @@ phase-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor phase-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 phase-gate[data-active]::after {
@@ -2742,6 +2755,24 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
   margin-bottom: -0.875rem;
 }
 
+phase-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  height: 100%;
+  width: 100%;
+  border-radius: 9999px;
+}
+
+phase-gate::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+phase-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
 phase-gate {
   touch-action: none;
 }
@@ -2757,19 +2788,6 @@ phase-gate[data-grabbed] {
 circuit-editor palette-dropzone phase-gate, circuit-editor quantum-circuit:not([data-editing]) phase-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor phase-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone phase-gate:not([data-grabbed]):hover::after {
@@ -2841,29 +2859,24 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-if
   margin-bottom: -0.875rem;
 }
 
-phase-gate::part(body) {
-  height: 100%;
-  width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-  border-radius: 9999px;
-}
-
-phase-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-
-phase-gate::part(icon) {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 t-gate {
   display: inline-block;
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor t-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 t-gate[data-active]::after {
@@ -2873,6 +2886,11 @@ t-gate[data-active]::after {
 t-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+t-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 t-gate {
@@ -2890,19 +2908,6 @@ t-gate[data-grabbed] {
 circuit-editor palette-dropzone t-gate, circuit-editor quantum-circuit:not([data-editing]) t-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor t-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone t-gate:not([data-grabbed]):hover::after {
@@ -2975,16 +2980,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::b
 }
 
 t-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-t-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 t-gate::part(icon) {
@@ -2999,6 +2999,19 @@ rnot-gate {
   width: 2rem;
 }
 
+circuit-editor rnot-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 rnot-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -3006,6 +3019,11 @@ rnot-gate[data-active]::after {
 rnot-gate[data-active][data-grabbed]::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+}
+
+rnot-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 rnot-gate {
@@ -3023,19 +3041,6 @@ rnot-gate[data-grabbed] {
 circuit-editor palette-dropzone rnot-gate, circuit-editor quantum-circuit:not([data-editing]) rnot-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor rnot-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone rnot-gate:not([data-grabbed]):hover::after {
@@ -3108,16 +3113,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rnot-gate[data-if]
 }
 
 rnot-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-rnot-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 rnot-gate::part(icon) {
@@ -3130,6 +3130,19 @@ rx-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor rx-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 rx-gate[data-active]::after {
@@ -3198,6 +3211,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
   margin-bottom: -0.875rem;
 }
 
+rx-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
 rx-gate {
   touch-action: none;
 }
@@ -3213,19 +3231,6 @@ rx-gate[data-grabbed] {
 circuit-editor palette-dropzone rx-gate, circuit-editor quantum-circuit:not([data-editing]) rx-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor rx-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone rx-gate:not([data-grabbed]):hover::after {
@@ -3298,16 +3303,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-if]::
 }
 
 rx-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-rx-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 rx-gate::part(icon) {
@@ -3320,6 +3320,19 @@ ry-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor ry-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 ry-gate[data-active]::after {
@@ -3388,6 +3401,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
   margin-bottom: -0.875rem;
 }
 
+ry-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
 ry-gate {
   touch-action: none;
 }
@@ -3403,19 +3421,6 @@ ry-gate[data-grabbed] {
 circuit-editor palette-dropzone ry-gate, circuit-editor quantum-circuit:not([data-editing]) ry-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor ry-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone ry-gate:not([data-grabbed]):hover::after {
@@ -3488,16 +3493,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-if]::
 }
 
 ry-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-ry-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 ry-gate::part(icon) {
@@ -3510,6 +3510,19 @@ rz-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor rz-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 rz-gate[data-active]::after {
@@ -3578,6 +3591,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
   margin-bottom: -0.875rem;
 }
 
+rz-gate[data-disabled]::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
 rz-gate {
   touch-action: none;
 }
@@ -3593,19 +3611,6 @@ rz-gate[data-grabbed] {
 circuit-editor palette-dropzone rz-gate, circuit-editor quantum-circuit:not([data-editing]) rz-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor rz-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone rz-gate:not([data-grabbed]):hover::after {
@@ -3678,16 +3683,11 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-if]::
 }
 
 rz-gate::part(body) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
-}
-
-rz-gate[data-disabled]::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 rz-gate::part(icon) {
@@ -3700,6 +3700,19 @@ swap-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor swap-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 swap-gate[data-active]::after {
@@ -3728,19 +3741,6 @@ circuit-editor palette-dropzone swap-gate, circuit-editor quantum-circuit:not([d
   cursor: grab;
 }
 
-circuit-editor swap-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
-}
-
 palette-dropzone swap-gate:not([data-grabbed]):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3766,7 +3766,7 @@ circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
 
 swap-gate::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
+  color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 swap-gate[data-disabled]::part(icon) {
@@ -3779,6 +3779,19 @@ control-gate {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor control-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 control-gate[data-active]::after {
@@ -3807,19 +3820,6 @@ circuit-editor palette-dropzone control-gate, circuit-editor quantum-circuit:not
   cursor: grab;
 }
 
-circuit-editor control-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
-}
-
 palette-dropzone control-gate:not([data-grabbed]):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3845,7 +3845,7 @@ circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
 
 control-gate::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
+  color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 control-gate[data-disabled]::part(icon) {
@@ -3858,6 +3858,19 @@ bloch-display {
   position: relative;
   height: 2rem;
   width: 2rem;
+}
+
+circuit-editor bloch-display::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
 }
 
 bloch-display[data-active]::after {
@@ -3884,19 +3897,6 @@ bloch-display[data-grabbed] {
 circuit-editor palette-dropzone bloch-display, circuit-editor quantum-circuit:not([data-editing]) bloch-display {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor bloch-display::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone bloch-display:not([data-grabbed]):hover::after {
@@ -4000,6 +4000,19 @@ write-gate {
   width: 2rem;
 }
 
+circuit-editor write-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 write-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -4024,19 +4037,6 @@ write-gate[data-grabbed] {
 circuit-editor palette-dropzone write-gate, circuit-editor quantum-circuit:not([data-editing]) write-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor write-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone write-gate:not([data-grabbed]):hover::after {
@@ -4131,6 +4131,19 @@ measurement-gate {
   width: 2rem;
 }
 
+circuit-editor measurement-gate::after {
+  position: absolute;
+  border-width: 2px;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  --tw-border-opacity: 0;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  content: '';
+}
+
 measurement-gate[data-active]::after {
   --tw-border-opacity: 1;
 }
@@ -4155,19 +4168,6 @@ measurement-gate[data-grabbed] {
 circuit-editor palette-dropzone measurement-gate, circuit-editor quantum-circuit:not([data-editing]) measurement-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-circuit-editor measurement-gate::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0.25rem;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  content: '';
 }
 
 palette-dropzone measurement-gate:not([data-grabbed]):hover::after {
@@ -4349,7 +4349,7 @@ circuit-dropzone[data-shadow]::part(wires) {
 
 circuit-dropzone::part(connect-top), circuit-dropzone::part(connect-bottom) {
   --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
+  color: rgb(16 185 129 / var(--tw-text-opacity));
 }
 
 circuit-dropzone::part(wire-input), circuit-dropzone::part(wire-output) {
@@ -4662,6 +4662,8 @@ circuit-editor {
   width: 2rem;
 }
 
+/* operation sizes */
+
 .operation-xs {
   height: 1rem;
   width: 1rem;
@@ -4692,9 +4694,13 @@ circuit-editor {
   width: 4rem;
 }
 
-/* grabbable cursor style */
+/* operation shapes */
 
-/* show border */
+/* data-disabled */
+
+/* data-active */
+
+/* grabbable cursor style */
 
 /* show trash icon */
 
@@ -5497,9 +5503,9 @@ mark {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
 
-.bg-green-500 {
+.bg-emerald-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50 {
