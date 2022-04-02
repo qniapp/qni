@@ -17,8 +17,8 @@ class cirqbridge:
         return
 
     def build_circuit(self,numofqubits,_circuit_from_qni,step_index):
-        print("build_circuit")
-        sys.stdout.flush()
+#        print("build_circuit")
+#        sys.stdout.flush()
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
         circuit_from_qni = []
         for a in _circuit_from_qni:
@@ -32,8 +32,8 @@ class cirqbridge:
         is_measured = false
         _current_index = 0
         for column_qni in circuit_from_qni:
-            print("circuit column", i, column_qni)
-            sys.stdout.flush()
+#            print("circuit column", i, column_qni)
+#            sys.stdout.flush()
             i = i + 1
             j = 0
             moment = []
@@ -147,19 +147,26 @@ class cirqbridge:
                 for __c in _c:
                     moment.append(__c)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
-        sys.stdout.flush()
+#        sys.stdout.flush()
         return c
 
-    def run_circuit_until(self,c, _step_index, until):
-        print("run_circuit_until")
+    def run_circuit_until_step_index(self, c, until):
+        print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
+        print("until (corrected):", until)
         sys.stdout.flush()
-        #next_state = 0
-        #a = cirq_simulator.simulate_moment_steps(c, initial_state=next_state)
-        #print (a) 
-        sys.stdout.flush()
-        return
+        cirq_simulator = cirq.Simulator()
+        counter = 0 
+        _tmpa = []
+        for i, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+            if counter > until:
+                break
+            #print('state at step %d: %s' % (i, np.around(step.state_vector(), 3)))
+            counter = counter + 1;
+            sys.stdout.flush()
+        #print('state at step' % step.state_vector())
+        return step.state_vector()
 
 PYTHON
 
@@ -193,7 +200,15 @@ class Cirq
     end
     p "run until following steps corrected, original"
     p _step_index, @step_index
-#    wavefunction = cirqbridge.run_circuit_until(cirq_circuit, _step_index, @step_index)
+    wavefunction = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
+    amplitudes = {}
+# not working code
+    _tmpa = []
+    for num in 0..wavefunction.size-1 do
+        _tmpa = Array[wavefunction[num].real.to_f,wavefunction[num].imag.to_f]
+        amplitudes.store(num,_tmpa)
+    end
+    p amplitudes
     amplitudes = {}
     measured_bits = {}
     { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
