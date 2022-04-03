@@ -202,17 +202,20 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
-    result_list = _result_list.to_a
-    _amplitudes=result_list[_step_index][':amplitude']
-    amplitudes = {}
-    _tmpa = []
-    for num in 0.._amplitudes.size-1 do
-        _tmpa = Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f]
-        amplitudes.store(num,_tmpa)
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index).to_a
+    result_list = []
+    for var in _result_list do
+        hash = {}
+        a = var.to_h
+        hash[:measuredBits]=a[":measuredBits"]
+        hash[:blochVectors]=a[":blochVectors"]
+        result_list.push(hash)
     end
-    result_list[_step_index][':amplitude']=amplitudes
-    result_list
+    _amplitudes=_result_list[_step_index][':amplitude']
+    amplitudes = {}
+    for num in 0.._amplitudes.size-1 do
+        amplitudes.store(num,Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f])
+    end
+    result_list[_step_index][:amplitudes]=amplitudes
   end
-
 end
