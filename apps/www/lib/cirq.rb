@@ -217,5 +217,6 @@ class Cirq
         amplitudes.store(num,Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f])
     end
     result_list[_step_index][:amplitudes]=amplitudes
+    result_list
   end
 end
