@@ -41,7 +41,7 @@
     @apply relative;
     @apply h-8 w-8;
 
-    circuit-editor &::after {
+    &::after {
       @apply absolute;
 
       content: '';

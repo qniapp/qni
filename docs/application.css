@@ -2144,7 +2144,7 @@ h-gate {
   width: 2rem;
 }
 
-circuit-editor h-gate::after {
+h-gate::after {
   position: absolute;
   content: '';
 }
@@ -2295,7 +2295,7 @@ x-gate {
   width: 2rem;
 }
 
-circuit-editor x-gate::after {
+x-gate::after {
   position: absolute;
   content: '';
 }
@@ -2446,7 +2446,7 @@ y-gate {
   width: 2rem;
 }
 
-circuit-editor y-gate::after {
+y-gate::after {
   position: absolute;
   content: '';
 }
@@ -2597,7 +2597,7 @@ z-gate {
   width: 2rem;
 }
 
-circuit-editor z-gate::after {
+z-gate::after {
   position: absolute;
   content: '';
 }
@@ -2748,7 +2748,7 @@ phase-gate {
   width: 2rem;
 }
 
-circuit-editor phase-gate::after {
+phase-gate::after {
   position: absolute;
   content: '';
 }
@@ -2956,7 +2956,7 @@ t-gate {
   width: 2rem;
 }
 
-circuit-editor t-gate::after {
+t-gate::after {
   position: absolute;
   content: '';
 }
@@ -3107,7 +3107,7 @@ rnot-gate {
   width: 2rem;
 }
 
-circuit-editor rnot-gate::after {
+rnot-gate::after {
   position: absolute;
   content: '';
 }
@@ -3258,7 +3258,7 @@ rx-gate {
   width: 2rem;
 }
 
-circuit-editor rx-gate::after {
+rx-gate::after {
   position: absolute;
   content: '';
 }
@@ -3466,7 +3466,7 @@ ry-gate {
   width: 2rem;
 }
 
-circuit-editor ry-gate::after {
+ry-gate::after {
   position: absolute;
   content: '';
 }
@@ -3674,7 +3674,7 @@ rz-gate {
   width: 2rem;
 }
 
-circuit-editor rz-gate::after {
+rz-gate::after {
   position: absolute;
   content: '';
 }
@@ -3882,7 +3882,7 @@ swap-gate {
   width: 2rem;
 }
 
-circuit-editor swap-gate::after {
+swap-gate::after {
   position: absolute;
   content: '';
 }
@@ -3979,7 +3979,7 @@ control-gate {
   width: 2rem;
 }
 
-circuit-editor control-gate::after {
+control-gate::after {
   position: absolute;
   content: '';
 }
@@ -4076,7 +4076,7 @@ bloch-display {
   width: 2rem;
 }
 
-circuit-editor bloch-display::after {
+bloch-display::after {
   position: absolute;
   content: '';
 }
@@ -4234,7 +4234,7 @@ write-gate {
   width: 2rem;
 }
 
-circuit-editor write-gate::after {
+write-gate::after {
   position: absolute;
   content: '';
 }
@@ -4383,7 +4383,7 @@ measurement-gate {
   width: 2rem;
 }
 
-circuit-editor measurement-gate::after {
+measurement-gate::after {
   position: absolute;
   content: '';
 }
@@ -4932,7 +4932,7 @@ circuit-editor {
   width: 2rem;
 }
 
-circuit-editor .operation::after {
+.operation::after {
   position: absolute;
   content: '';
 }
