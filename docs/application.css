@@ -2220,9 +2220,8 @@ h-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 h-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -2385,9 +2384,8 @@ x-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 x-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -2524,9 +2522,8 @@ y-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 y-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -2676,9 +2673,8 @@ z-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 z-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -2898,9 +2894,8 @@ phase-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 phase-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3037,9 +3032,8 @@ t-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 t-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3189,9 +3183,8 @@ rnot-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 rnot-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3398,9 +3391,8 @@ rx-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 rx-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3607,9 +3599,8 @@ ry-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 ry-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3816,9 +3807,8 @@ rz-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 rz-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -3963,9 +3953,8 @@ swap-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 swap-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -4061,9 +4050,8 @@ control-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 control-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -4159,9 +4147,8 @@ bloch-display[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 bloch-display[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -4318,9 +4305,8 @@ write-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 write-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;
@@ -4506,9 +4492,8 @@ measurement-gate[data-hoverable]:not([data-grabbed]):hover::after {
 }
 
 measurement-gate[data-hoverable][data-active]:hover::after {
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
   border-radius: 0.375rem;
   top: -2px;
   right: -2px;

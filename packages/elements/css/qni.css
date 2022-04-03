@@ -110,7 +110,7 @@
     }
 
     &[data-hoverable][data-active]:hover::after {
-      @apply border-2 border-purple-500;
+      @apply bg-purple-500 bg-opacity-20;
       @apply rounded-md;
 
       top: -2px;
