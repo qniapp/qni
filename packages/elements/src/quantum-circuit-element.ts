@@ -922,148 +922,175 @@ export class QuantumCircuitElement extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(instruction): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '0'
             circuitStep.appendOperation(writeGate)
             break
           }
           case /^\|1>$/.test(instruction): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '1'
             circuitStep.appendOperation(writeGate)
             break
           }
           case /^H$/.test(instruction): {
             const hGate = new HGateElement()
+            hGate.hoverable = true
             circuitStep.appendOperation(hGate)
             break
           }
           case /^H<(.+)$/.test(instruction): {
             const hGate = new HGateElement()
+            hGate.hoverable = true
             hGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(hGate)
             break
           }
           case /^X$/.test(instruction): {
             const xGate = new XGateElement()
+            xGate.hoverable = true
             circuitStep.appendOperation(xGate)
             break
           }
           case /^X<(.+)$/.test(instruction): {
             const xGate = new XGateElement()
+            xGate.hoverable = true
             xGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(xGate)
             break
           }
           case /^Y$/.test(instruction): {
             const yGate = new YGateElement()
+            yGate.hoverable = true
             circuitStep.appendOperation(yGate)
             break
           }
           case /^Y<(.+)$/.test(instruction): {
             const yGate = new YGateElement()
+            yGate.hoverable = true
             yGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(yGate)
             break
           }
           case /^Z$/.test(instruction): {
             const zGate = new ZGateElement()
+            zGate.hoverable = true
             circuitStep.appendOperation(zGate)
             break
           }
           case /^Z<(.+)$/.test(instruction): {
             const zGate = new ZGateElement()
+            zGate.hoverable = true
             zGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(zGate)
             break
           }
           case /^P$/.test(instruction): {
             const phaseGate = new PhaseGateElement()
+            phaseGate.hoverable = true
             circuitStep.appendOperation(phaseGate)
             break
           }
           case /^P\((.+)\)$/.test(instruction): {
             const phaseGate = new PhaseGateElement()
+            phaseGate.hoverable = true
             phaseGate.angle = RegExp.$1.replace('_', '/')
             circuitStep.appendOperation(phaseGate)
             break
           }
           case /^T$/.test(instruction): {
             const tGate = new TGateElement()
+            tGate.hoverable = true
             circuitStep.appendOperation(tGate)
             break
           }
           case /^T<(.+)$/.test(instruction): {
             const tGate = new TGateElement()
+            tGate.hoverable = true
             tGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(tGate)
             break
           }
           case /^X\^½$/.test(instruction): {
             const rnotGate = new RnotGateElement()
+            rnotGate.hoverable = true
             circuitStep.appendOperation(rnotGate)
             break
           }
           case /^X\^½<(.+)$/.test(instruction): {
             const rnotGate = new RnotGateElement()
+            rnotGate.hoverable = true
             rnotGate.if = RegExp.$1.trim()
             circuitStep.appendOperation(rnotGate)
             break
           }
           case /^Rx$/.test(instruction): {
             const rxGate = new RxGateElement()
+            rxGate.hoverable = true
             circuitStep.appendOperation(rxGate)
             break
           }
           case /^Rx\((.+)\)$/.test(instruction): {
             const rxGate = new RxGateElement()
+            rxGate.hoverable = true
             rxGate.angle = RegExp.$1.replace('_', '/')
             circuitStep.appendOperation(rxGate)
             break
           }
           case /^Ry$/.test(instruction): {
             const ryGate = new RyGateElement()
+            ryGate.hoverable = true
             circuitStep.appendOperation(ryGate)
             break
           }
           case /^Ry\((.+)\)$/.test(instruction): {
             const ryGate = new RyGateElement()
+            ryGate.hoverable = true
             ryGate.angle = RegExp.$1.replace('_', '/')
             circuitStep.appendOperation(ryGate)
             break
           }
           case /^Rz$/.test(instruction): {
             const rzGate = new RzGateElement()
+            rzGate.hoverable = true
             circuitStep.appendOperation(rzGate)
             break
           }
           case /^Rz\((.+)\)$/.test(instruction): {
             const rzGate = new RzGateElement()
+            rzGate.hoverable = true
             rzGate.angle = RegExp.$1.replace('_', '/')
             circuitStep.appendOperation(rzGate)
             break
           }
           case /^Swap$/.test(instruction): {
             const swapGate = new SwapGateElement()
+            swapGate.hoverable = true
             circuitStep.appendOperation(swapGate)
             break
           }
           case /^•$/.test(instruction): {
             const controlGate = new ControlGateElement()
+            controlGate.hoverable = true
             circuitStep.appendOperation(controlGate)
             break
           }
           case /^Bloch$/.test(instruction): {
             const blochDisplay = new BlochDisplayElement()
+            blochDisplay.hoverable = true
             circuitStep.appendOperation(blochDisplay)
             break
           }
           case /^Measure$/.test(instruction): {
             const measurementGate = new MeasurementGateElement()
+            measurementGate.hoverable = true
             circuitStep.appendOperation(measurementGate)
             break
           }
           case /^Measure>(.+)$/.test(instruction): {
             const measurementGate = new MeasurementGateElement()
+            measurementGate.hoverable = true
             measurementGate.flag = RegExp.$1.trim()
             circuitStep.appendOperation(measurementGate)
             break

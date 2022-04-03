@@ -40,6 +40,12 @@
     @apply inline-block;
     @apply relative;
     @apply h-8 w-8;
+
+    circuit-editor &::after {
+      @apply absolute;
+
+      content: '';
+    }
   }
 
   /* operation sizes */
@@ -94,6 +100,16 @@
     }
   }
 
+  /* data-hoverable */
+
+  .operation-hoverable {
+    &[data-hoverable]:not([data-grabbed]):hover::after {
+      @apply bg-purple-500 bg-opacity-20;
+      @apply inset-0;
+      @apply rounded;
+    }
+  }
+
   /* data-disabled */
 
   .operation-disableable {
@@ -105,25 +121,24 @@
   /* data-active */
 
   .operation-activateable {
-    circuit-editor &::after {
-      @apply absolute;
-      @apply border-2 border-purple-500 border-opacity-0;
+    &[data-active]::after {
       @apply rounded-md;
+      @apply border-2 border-purple-500;
 
       top: -2px;
       right: -2px;
       bottom: -2px;
       left: -2px;
-
-      content: '';
-    }
-
-    &[data-active]::after {
-      @apply border-opacity-100;
     }
 
     &[data-active][data-grabbed]::after {
+      @apply border-2 border-purple-500;
       @apply bg-purple-500 bg-opacity-20;
+
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
     }
   }
 
@@ -140,14 +155,6 @@
     circuit-editor palette-dropzone &,
     circuit-editor quantum-circuit:not([data-editing]) & {
       @apply cursor-grab;
-    }
-
-    palette-dropzone &:not([data-grabbed]):hover::after {
-      @apply border-opacity-100;
-    }
-
-    quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
-      @apply border-opacity-100;
     }
 
     quantum-circuit([data-editing]) &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {

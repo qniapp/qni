@@ -4,5 +4,6 @@ x-gate {
   @apply operation-circle;
   @apply operation-disableable;
   @apply operation-draggable;
+  @apply operation-hoverable;
   @apply operation-ifable;
 }
