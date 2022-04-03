@@ -108,6 +108,16 @@
       @apply inset-0;
       @apply rounded;
     }
+
+    &[data-hoverable][data-active]:hover::after {
+      @apply border-2 border-purple-500;
+      @apply rounded-md;
+
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+    }
   }
 
   /* data-disabled */

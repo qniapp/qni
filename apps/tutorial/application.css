@@ -2219,6 +2219,17 @@ h-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+h-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 h-gate[data-if]::before {
   position: absolute;
   display: flex;
@@ -2373,6 +2384,17 @@ x-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+x-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 x-gate[data-if]::before {
   position: absolute;
   display: flex;
@@ -2499,6 +2521,17 @@ y-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+y-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 y-gate[data-if]::before {
@@ -2640,6 +2673,17 @@ z-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+z-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 z-gate[data-if]::before {
@@ -2853,6 +2897,17 @@ phase-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+phase-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 phase-gate[data-if]::before {
   position: absolute;
   display: flex;
@@ -2979,6 +3034,17 @@ t-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+t-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 t-gate[data-if]::before {
@@ -3120,6 +3186,17 @@ rnot-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+rnot-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rnot-gate[data-if]::before {
@@ -3320,6 +3397,17 @@ rx-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+rx-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 rx-gate[data-if]::before {
   position: absolute;
   display: flex;
@@ -3516,6 +3604,17 @@ ry-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+ry-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 ry-gate[data-if]::before {
@@ -3716,6 +3815,17 @@ rz-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+rz-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 rz-gate[data-if]::before {
   position: absolute;
   display: flex;
@@ -3852,6 +3962,17 @@ swap-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+swap-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 swap-gate::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(16 185 129 / var(--tw-text-opacity));
@@ -3939,6 +4060,17 @@ control-gate[data-hoverable]:not([data-grabbed]):hover::after {
   border-radius: 0.25rem;
 }
 
+control-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
 control-gate::part(icon) {
   --tw-text-opacity: 1;
   color: rgb(16 185 129 / var(--tw-text-opacity));
@@ -4024,6 +4156,17 @@ bloch-display[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+bloch-display[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 /* 3D perspective */
@@ -4172,6 +4315,17 @@ write-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+write-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 write-gate::part(icon) {
@@ -4349,6 +4503,17 @@ measurement-gate[data-hoverable]:not([data-grabbed]):hover::after {
   bottom: 0px;
   left: 0px;
   border-radius: 0.25rem;
+}
+
+measurement-gate[data-hoverable][data-active]:hover::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 measurement-gate::part(icon) {
