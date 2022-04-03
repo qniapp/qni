@@ -2209,7 +2209,7 @@ circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-h-gate[data-hoverable]:not([data-grabbed]):hover::after {
+h-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -2373,7 +2373,7 @@ circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-x-gate[data-hoverable]:not([data-grabbed]):hover::after {
+x-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -2511,7 +2511,7 @@ circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-y-gate[data-hoverable]:not([data-grabbed]):hover::after {
+y-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -2662,7 +2662,7 @@ circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-z-gate[data-hoverable]:not([data-grabbed]):hover::after {
+z-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -2883,7 +2883,7 @@ circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-phase-gate[data-hoverable]:not([data-grabbed]):hover::after {
+phase-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3021,7 +3021,7 @@ circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-t-gate[data-hoverable]:not([data-grabbed]):hover::after {
+t-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3172,7 +3172,7 @@ circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-rnot-gate[data-hoverable]:not([data-grabbed]):hover::after {
+rnot-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3380,7 +3380,7 @@ circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-rx-gate[data-hoverable]:not([data-grabbed]):hover::after {
+rx-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3588,7 +3588,7 @@ circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-ry-gate[data-hoverable]:not([data-grabbed]):hover::after {
+ry-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3796,7 +3796,7 @@ circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-rz-gate[data-hoverable]:not([data-grabbed]):hover::after {
+rz-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -3942,7 +3942,7 @@ circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-swap-gate[data-hoverable]:not([data-grabbed]):hover::after {
+swap-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -4039,7 +4039,7 @@ circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-control-gate[data-hoverable]:not([data-grabbed]):hover::after {
+control-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -4136,7 +4136,7 @@ circuit-dropzone bloch-display:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-bloch-display[data-hoverable]:not([data-grabbed]):hover::after {
+bloch-display[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -4294,7 +4294,7 @@ circuit-dropzone write-gate:not([data-snapped])::part(icon)::before {
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
 }
 
-write-gate[data-hoverable]:not([data-grabbed]):hover::after {
+write-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;
@@ -4481,7 +4481,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) measurement-gate[d
   margin-bottom: -0.875rem;
 }
 
-measurement-gate[data-hoverable]:not([data-grabbed]):hover::after {
+measurement-gate[data-hoverable]:hover::after {
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
   top: 0px;

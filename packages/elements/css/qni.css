@@ -103,7 +103,7 @@
   /* data-hoverable */
 
   .operation-hoverable {
-    &[data-hoverable]:not([data-grabbed]):hover::after {
+    &[data-hoverable]:hover::after {
       @apply bg-purple-500 bg-opacity-20;
       @apply inset-0;
       @apply rounded;
