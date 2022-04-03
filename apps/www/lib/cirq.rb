@@ -143,30 +143,34 @@ class cirqbridge:
                     print("unsupported gate", circuit_qni['type'])
                     sys.stdout.flush()
                     exit(1)
-                print(_c)
+#                print(_c)
                 for __c in _c:
                     moment.append(__c)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
 #        sys.stdout.flush()
         return c
-
     def run_circuit_until_step_index(self, c, until):
         print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
-        print("until (corrected):", until)
-        sys.stdout.flush()
+#        print("until (corrected):", until)
+#        sys.stdout.flush()
         cirq_simulator = cirq.Simulator()
         counter = 0 
-        _tmpa = []
+        _data = []
         for i, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+#            print('state at step %s' % np.around(step.state_vector(), 3))
+#            print('state at measurement %s' % step.measurements)
+            dic = {}
+            dic[':measuredBits'] = {}
+            dic[':blochVectors'] = {}
+            _data.append(dic)
             if counter >= until:
+                dic[':amplitude'] = step.state_vector()
                 break
             counter = counter + 1;
-#        print('state at step %s' % np.around(step.state_vector(), 3))
-#        print('state at measurement %s' % step.measurements)
         sys.stdout.flush()
-        return step.state_vector(), step.measurements
+        return _data
 
 PYTHON
 
@@ -198,20 +202,17 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    wavefunction, measurement_result = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
-    p wavefunction
-    p measurement_result
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index)
+    result_list = _result_list.to_a
+    _amplitudes=result_list[_step_index][':amplitude']
     amplitudes = {}
-# not working code
     _tmpa = []
-    for num in 0..wavefunction.size-1 do
-        _tmpa = Array[wavefunction[num].real.to_f,wavefunction[num].imag.to_f]
+    for num in 0.._amplitudes.size-1 do
+        _tmpa = Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f]
         amplitudes.store(num,_tmpa)
     end
-    p amplitudes
-    amplitudes = {}
-    measured_bits = {}
-    { amplitudes: amplitudes, measuredBits: measured_bits, blochVectors: {} }
+    result_list[_step_index][':amplitude']=amplitudes
+    result_list
   end
 
 end
