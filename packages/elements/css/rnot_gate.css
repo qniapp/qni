@@ -3,6 +3,7 @@ rnot-gate {
   @apply operation-activateable;
   @apply operation-disableable;
   @apply operation-draggable;
+  @apply operation-hoverable;
   @apply operation-ifable;
   @apply operation-square;
 }

@@ -2144,26 +2144,32 @@ h-gate {
   width: 2rem;
 }
 
-circuit-editor h-gate::after {
+h-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 h-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 h-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 h-gate[data-disabled]::part(body) {
@@ -2188,14 +2194,6 @@ circuit-editor palette-dropzone h-gate, circuit-editor quantum-circuit:not([data
   cursor: grab;
 }
 
-palette-dropzone h-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) h-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) h-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2209,6 +2207,26 @@ circuit-dropzone h-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+h-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+h-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 h-gate[data-if]::before {
@@ -2277,26 +2295,32 @@ x-gate {
   width: 2rem;
 }
 
-circuit-editor x-gate::after {
+x-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 x-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 x-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 x-gate::part(body) {
@@ -2334,14 +2358,6 @@ circuit-editor palette-dropzone x-gate, circuit-editor quantum-circuit:not([data
   cursor: grab;
 }
 
-palette-dropzone x-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) x-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) x-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2355,6 +2371,26 @@ circuit-dropzone x-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+x-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+x-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 x-gate[data-if]::before {
@@ -2410,26 +2446,32 @@ y-gate {
   width: 2rem;
 }
 
-circuit-editor y-gate::after {
+y-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 y-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 y-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 y-gate[data-disabled]::part(body) {
@@ -2454,14 +2496,6 @@ circuit-editor palette-dropzone y-gate, circuit-editor quantum-circuit:not([data
   cursor: grab;
 }
 
-palette-dropzone y-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) y-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) y-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2475,6 +2509,26 @@ circuit-dropzone y-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+y-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+y-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 y-gate[data-if]::before {
@@ -2543,26 +2597,32 @@ z-gate {
   width: 2rem;
 }
 
-circuit-editor z-gate::after {
+z-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 z-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 z-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 z-gate[data-disabled]::part(body) {
@@ -2587,14 +2647,6 @@ circuit-editor palette-dropzone z-gate, circuit-editor quantum-circuit:not([data
   cursor: grab;
 }
 
-palette-dropzone z-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) z-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) z-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2608,6 +2660,26 @@ circuit-dropzone z-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+z-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+z-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 z-gate[data-if]::before {
@@ -2676,26 +2748,32 @@ phase-gate {
   width: 2rem;
 }
 
-circuit-editor phase-gate::after {
+phase-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 phase-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 phase-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 phase-gate[data-angle]::before {
@@ -2790,14 +2868,6 @@ circuit-editor palette-dropzone phase-gate, circuit-editor quantum-circuit:not([
   cursor: grab;
 }
 
-palette-dropzone phase-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) phase-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) phase-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2811,6 +2881,26 @@ circuit-dropzone phase-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+phase-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+phase-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 phase-gate[data-if]::before {
@@ -2866,26 +2956,32 @@ t-gate {
   width: 2rem;
 }
 
-circuit-editor t-gate::after {
+t-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 t-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 t-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 t-gate[data-disabled]::part(body) {
@@ -2910,14 +3006,6 @@ circuit-editor palette-dropzone t-gate, circuit-editor quantum-circuit:not([data
   cursor: grab;
 }
 
-palette-dropzone t-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) t-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) t-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -2931,6 +3019,26 @@ circuit-dropzone t-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+t-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+t-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 t-gate[data-if]::before {
@@ -2999,26 +3107,32 @@ rnot-gate {
   width: 2rem;
 }
 
-circuit-editor rnot-gate::after {
+rnot-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 rnot-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rnot-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rnot-gate[data-disabled]::part(body) {
@@ -3043,14 +3157,6 @@ circuit-editor palette-dropzone rnot-gate, circuit-editor quantum-circuit:not([d
   cursor: grab;
 }
 
-palette-dropzone rnot-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) rnot-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) rnot-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3064,6 +3170,26 @@ circuit-dropzone rnot-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+rnot-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+rnot-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rnot-gate[data-if]::before {
@@ -3132,26 +3258,32 @@ rx-gate {
   width: 2rem;
 }
 
-circuit-editor rx-gate::after {
+rx-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 rx-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rx-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rx-gate[data-angle]::before {
@@ -3233,14 +3365,6 @@ circuit-editor palette-dropzone rx-gate, circuit-editor quantum-circuit:not([dat
   cursor: grab;
 }
 
-palette-dropzone rx-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) rx-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) rx-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3254,6 +3378,26 @@ circuit-dropzone rx-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+rx-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+rx-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rx-gate[data-if]::before {
@@ -3322,26 +3466,32 @@ ry-gate {
   width: 2rem;
 }
 
-circuit-editor ry-gate::after {
+ry-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 ry-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 ry-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 ry-gate[data-angle]::before {
@@ -3423,14 +3573,6 @@ circuit-editor palette-dropzone ry-gate, circuit-editor quantum-circuit:not([dat
   cursor: grab;
 }
 
-palette-dropzone ry-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) ry-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) ry-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3444,6 +3586,26 @@ circuit-dropzone ry-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+ry-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+ry-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 ry-gate[data-if]::before {
@@ -3512,26 +3674,32 @@ rz-gate {
   width: 2rem;
 }
 
-circuit-editor rz-gate::after {
+rz-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 rz-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rz-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rz-gate[data-angle]::before {
@@ -3613,14 +3781,6 @@ circuit-editor palette-dropzone rz-gate, circuit-editor quantum-circuit:not([dat
   cursor: grab;
 }
 
-palette-dropzone rz-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) rz-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) rz-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3634,6 +3794,26 @@ circuit-dropzone rz-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+rz-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+rz-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 rz-gate[data-if]::before {
@@ -3702,26 +3882,32 @@ swap-gate {
   width: 2rem;
 }
 
-circuit-editor swap-gate::after {
+swap-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 swap-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 swap-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 swap-gate {
@@ -3741,14 +3927,6 @@ circuit-editor palette-dropzone swap-gate, circuit-editor quantum-circuit:not([d
   cursor: grab;
 }
 
-palette-dropzone swap-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) swap-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) swap-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3762,6 +3940,26 @@ circuit-dropzone swap-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+swap-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+swap-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 swap-gate::part(icon) {
@@ -3781,26 +3979,32 @@ control-gate {
   width: 2rem;
 }
 
-circuit-editor control-gate::after {
+control-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 control-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 control-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 control-gate {
@@ -3820,14 +4024,6 @@ circuit-editor palette-dropzone control-gate, circuit-editor quantum-circuit:not
   cursor: grab;
 }
 
-palette-dropzone control-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) control-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) control-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3841,6 +4037,26 @@ circuit-dropzone control-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+control-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+control-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 control-gate::part(icon) {
@@ -3860,26 +4076,32 @@ bloch-display {
   width: 2rem;
 }
 
-circuit-editor bloch-display::after {
+bloch-display::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 bloch-display[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 bloch-display[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 bloch-display {
@@ -3899,14 +4121,6 @@ circuit-editor palette-dropzone bloch-display, circuit-editor quantum-circuit:no
   cursor: grab;
 }
 
-palette-dropzone bloch-display:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) bloch-display:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) bloch-display:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -3920,6 +4134,26 @@ circuit-dropzone bloch-display:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+bloch-display[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+bloch-display[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 /* 3D perspective */
@@ -4000,26 +4234,32 @@ write-gate {
   width: 2rem;
 }
 
-circuit-editor write-gate::after {
+write-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 write-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 write-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 write-gate {
@@ -4039,14 +4279,6 @@ circuit-editor palette-dropzone write-gate, circuit-editor quantum-circuit:not([
   cursor: grab;
 }
 
-palette-dropzone write-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) write-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
-}
-
 quantum-circuit([data-editing]) write-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
   --tw-border-opacity: 1;
 }
@@ -4060,6 +4292,26 @@ circuit-dropzone write-gate:not([data-snapped])::part(icon)::before {
   z-index: 10;
   content: '';
   background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="%23111827" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style="fill-rule:nonzero;fill:rgb(255, 255, 255)"/></svg>');
+}
+
+write-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+write-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 write-gate::part(icon) {
@@ -4131,26 +4383,32 @@ measurement-gate {
   width: 2rem;
 }
 
-circuit-editor measurement-gate::after {
+measurement-gate::after {
   position: absolute;
-  border-width: 2px;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-  --tw-border-opacity: 0;
-  border-radius: 0.375rem;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
   content: '';
 }
 
 measurement-gate[data-active]::after {
+  border-radius: 0.375rem;
+  border-width: 2px;
   --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 measurement-gate[data-active][data-grabbed]::after {
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(168 85 247 / var(--tw-border-opacity));
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.2;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 measurement-gate {
@@ -4168,14 +4426,6 @@ measurement-gate[data-grabbed] {
 circuit-editor palette-dropzone measurement-gate, circuit-editor quantum-circuit:not([data-editing]) measurement-gate {
   cursor: -webkit-grab;
   cursor: grab;
-}
-
-palette-dropzone measurement-gate:not([data-grabbed]):hover::after {
-  --tw-border-opacity: 1;
-}
-
-quantum-circuit:not([data-editing]) measurement-gate:not([data-active]):hover::after {
-  --tw-border-opacity: 1;
 }
 
 quantum-circuit([data-editing]) measurement-gate:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
@@ -4229,6 +4479,26 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) measurement-gate[d
   left: 0px;
   right: 0px;
   margin-bottom: -0.875rem;
+}
+
+measurement-gate[data-hoverable]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 0.25rem;
+}
+
+measurement-gate[data-hoverable][data-active]:hover::after {
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  border-radius: 0.375rem;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
 }
 
 measurement-gate::part(icon) {
@@ -4662,6 +4932,11 @@ circuit-editor {
   width: 2rem;
 }
 
+.operation::after {
+  position: absolute;
+  content: '';
+}
+
 /* operation sizes */
 
 .operation-xs {
@@ -4695,6 +4970,8 @@ circuit-editor {
 }
 
 /* operation shapes */
+
+/* data-hoverable */
 
 /* data-disabled */
 

@@ -3,6 +3,7 @@ measurement-gate {
   @apply operation-activateable;
   @apply operation-draggable;
   @apply operation-flaggable;
+  @apply operation-hoverable;
 
   &::part(icon) {
     @apply text-purple-500;
