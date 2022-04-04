@@ -16,7 +16,7 @@ class cirqbridge:
     def __init__(self):
         return
 
-    def build_circuit(self,numofqubits,_circuit_from_qni,step_index):
+    def build_circuit(self,numofqubits,_circuit_from_qni):
 #        print("build_circuit")
 #        sys.stdout.flush()
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
@@ -28,15 +28,15 @@ class cirqbridge:
         c = cirq.Circuit()
         i = 0
         m = 0
-        measurement = []
-        is_measured = false
+        measurement_moment = []
         _current_index = 0
         for column_qni in circuit_from_qni:
-#            print("circuit column", i, column_qni)
-#            sys.stdout.flush()
+            print("circuit column", i, column_qni)
+            sys.stdout.flush()
+            moment = []
+            measurement_moment.append([])
             i = i + 1
             j = 0
-            moment = []
             for circuit_qni in column_qni:
                 j = j + 1
                 if circuit_qni['type'] == u'H':
@@ -114,7 +114,7 @@ class cirqbridge:
                     else:
                         controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
                         _c = [ cirq.ControlledOperation(controledqubits, cirq.Z(index)**0.25) for index in targetqubits ]
-                elif circuit_qni['type'] == u'X^':
+                elif circuit_qni['type'] == u'X^½':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if not "controls" in circuit_qni:
                         _c = [ cirq.X(index)**0.5 for index in targetqubits]
@@ -131,8 +131,10 @@ class cirqbridge:
                 elif circuit_qni['type'] == u'Measure':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     _c = [ cirq.measure(index, key = 'm' + str(m + i))  for i, index in enumerate(targetqubits)]
+                    __m = [ 'm' + str(m + i)  for i, index in enumerate(targetqubits)]
+                    _m = [[__m[i], circuit_qni['targets'][i]] for i, index in enumerate(targetqubits)]
+                    measurement_moment[i-1].append(_m)
                     m = m + len(targetqubits)
-                    is_measured=true
                 elif circuit_qni['type'] == u'Swap':
                     targetqubit0=qubits[circuit_qni['targets'][0]]
                     targetqubit1=qubits[circuit_qni['targets'][1]]
@@ -143,13 +145,14 @@ class cirqbridge:
                     print("unsupported gate", circuit_qni['type'])
                     sys.stdout.flush()
                     exit(1)
-#                print(_c)
                 for __c in _c:
                     moment.append(__c)
+            print("moment", moment)
+            print("measurement_moment", measurement_moment)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
 #        sys.stdout.flush()
-        return c
-    def run_circuit_until_step_index(self, c, until):
+        return c, measurement_moment
+    def run_circuit_until_step_index(self, c, measurement_moment, until):
         print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
@@ -158,9 +161,16 @@ class cirqbridge:
         cirq_simulator = cirq.Simulator()
         counter = 0 
         _data = []
+        print (cirq_simulator.simulate_moment_steps(c)) 
+        print ("homa0")
+        print (measurement_moment)
+        print ("homa1")
         for i, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
-#            print('state at step %s' % np.around(step.state_vector(), 3))
-#            print('state at measurement %s' % step.measurements)
+            print('state at step %s' % np.around(step.state_vector(), 3))
+            print('state at measurement %s' % step.measurements)
+            print('step %s' % step)
+            if len(measurement_moment[i]) != 0:
+                print('measurement_moment %d %s' % (i, measurement_moment[i][0]))
             dic = {}
             dic[':measuredBits'] = {}
             dic[':blochVectors'] = {}
@@ -185,7 +195,7 @@ class Cirq
 
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
-    cirq_circuit = cirqbridge.build_circuit(@qubit_count, @steps, @step_index)
+    cirq_circuit, measurement_moment = cirqbridge.build_circuit(@qubit_count, @steps)
     # @step_index must be incremented when we add a gate, which intialize a qubit to |1>.
     # Note: Initalize to |1> means initalize to |0> and follwed by negation
     _step_index = 0
@@ -202,7 +212,7 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, _step_index).to_a
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index).to_a
     result_list = []
     for var in _result_list do
         hash = {}
@@ -220,3 +230,4 @@ class Cirq
     result_list
   end
 end
+
