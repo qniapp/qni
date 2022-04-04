@@ -31,8 +31,8 @@ class cirqbridge:
         measurement_moment = []
         _current_index = 0
         for column_qni in circuit_from_qni:
-            print("circuit column", i, column_qni)
-            sys.stdout.flush()
+            #print("circuit column", i, column_qni)
+            #sys.stdout.flush()
             moment = []
             measurement_moment.append([])
             i = i + 1
@@ -147,8 +147,6 @@ class cirqbridge:
                     exit(1)
                 for __c in _c:
                     moment.append(__c)
-            print("moment", moment)
-            print("measurement_moment", measurement_moment)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
 #        sys.stdout.flush()
         return c, measurement_moment
@@ -156,11 +154,13 @@ class cirqbridge:
         print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
+        sys.stdout.flush()
 #        print("until (corrected):", until)
 #        sys.stdout.flush()
         cirq_simulator = cirq.Simulator()
         _data = []
         for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+            sys.stdout.flush()
             dic = {}
             dic[':measuredBits'] = {}
             dic[':blochVectors'] = {}
@@ -168,17 +168,22 @@ class cirqbridge:
             if counter >= until:
                 dic[':amplitude'] = step.state_vector()
                 break
-        print (step.measurements)
+        if len(step.measurements) == 0:
+            return _data
+
         for i in range(len(measurement_moment)):
-            print (_data[i])
             if len(measurement_moment[i]) !=0:
                 for j in range(len(measurement_moment[i][0])):
                     _key = measurement_moment[i][0][j][0]
+                    _qubit = measurement_moment[i][0][j][1]
                     _step = i
-                    _value = step.measurements[_key][0]
-                    print(_step, _key, _value)
-
-        sys.stdout.flush()
+                    sys.stdout.flush()
+                    if _key not in step.measurements:
+                        break
+                    _value= step.measurements[_key][0]
+#                    print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
+#                    sys.stdout.flush()
+                    _data[i][':measuredBits'][_qubit] = _value
         return _data
 
 PYTHON
@@ -226,6 +231,7 @@ class Cirq
         amplitudes.store(num,Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f])
     end
     result_list[_step_index][:amplitudes]=amplitudes
+    p result_list 
     result_list
   end
 end
