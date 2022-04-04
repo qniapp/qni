@@ -934,133 +934,83 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(writeGate)
             break
           }
-          case /^H$/.test(instruction): {
+          case /^H/.test(instruction): {
             const hGate = new HGateElement()
+            const ifCond = ((/^<(.+)$/.exec(instruction.slice(1)) || [])[1] || '').trim()
             hGate.hoverable = true
+            hGate.if = ifCond
             circuitStep.appendOperation(hGate)
             break
           }
-          case /^H<(.+)$/.test(instruction): {
-            const hGate = new HGateElement()
-            hGate.hoverable = true
-            hGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(hGate)
-            break
-          }
-          case /^X$/.test(instruction): {
+          case /^X$/.test(instruction) || /^X<(.+)$/.test(instruction): {
             const xGate = new XGateElement()
+            const ifCond = instruction.slice(2).trim()
             xGate.hoverable = true
+            xGate.if = ifCond
             circuitStep.appendOperation(xGate)
             break
           }
-          case /^X<(.+)$/.test(instruction): {
-            const xGate = new XGateElement()
-            xGate.hoverable = true
-            xGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(xGate)
-            break
-          }
-          case /^Y$/.test(instruction): {
+          case /^Y/.test(instruction): {
             const yGate = new YGateElement()
+            const ifCond = ((/^<(.+)$/.exec(instruction.slice(1)) || [])[1] || '').trim()
             yGate.hoverable = true
+            yGate.if = ifCond
             circuitStep.appendOperation(yGate)
             break
           }
-          case /^Y<(.+)$/.test(instruction): {
-            const yGate = new YGateElement()
-            yGate.hoverable = true
-            yGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(yGate)
-            break
-          }
-          case /^Z$/.test(instruction): {
+          case /^Z/.test(instruction): {
             const zGate = new ZGateElement()
+            const ifCond = ((/^<(.+)$/.exec(instruction.slice(1)) || [])[1] || '').trim()
             zGate.hoverable = true
+            zGate.if = ifCond
             circuitStep.appendOperation(zGate)
             break
           }
-          case /^Z<(.+)$/.test(instruction): {
-            const zGate = new ZGateElement()
-            zGate.hoverable = true
-            zGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(zGate)
-            break
-          }
-          case /^P$/.test(instruction): {
+          case /^P/.test(instruction): {
             const phaseGate = new PhaseGateElement()
+            const angle = ((/^\((.+)\)$/.exec(instruction.slice(1)) || [])[1] || '').trim().replace('_', '/')
             phaseGate.hoverable = true
+            phaseGate.angle = angle
             circuitStep.appendOperation(phaseGate)
             break
           }
-          case /^P\((.+)\)$/.test(instruction): {
-            const phaseGate = new PhaseGateElement()
-            phaseGate.hoverable = true
-            phaseGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(phaseGate)
-            break
-          }
-          case /^T$/.test(instruction): {
+          case /^T/.test(instruction): {
             const tGate = new TGateElement()
+            const ifCond = ((/^<(.+)$/.exec(instruction.slice(1)) || [])[1] || '').trim()
             tGate.hoverable = true
+            tGate.if = ifCond
             circuitStep.appendOperation(tGate)
             break
           }
-          case /^T<(.+)$/.test(instruction): {
-            const tGate = new TGateElement()
-            tGate.hoverable = true
-            tGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(tGate)
-            break
-          }
-          case /^X\^½$/.test(instruction): {
+          case /^X\^½/.test(instruction): {
             const rnotGate = new RnotGateElement()
+            const ifCond = ((/^<(.+)$/.exec(instruction.slice(3)) || [])[1] || '').trim()
             rnotGate.hoverable = true
+            rnotGate.if = ifCond
             circuitStep.appendOperation(rnotGate)
             break
           }
-          case /^X\^½<(.+)$/.test(instruction): {
-            const rnotGate = new RnotGateElement()
-            rnotGate.hoverable = true
-            rnotGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(rnotGate)
-            break
-          }
-          case /^Rx$/.test(instruction): {
+          case /^Rx/.test(instruction): {
             const rxGate = new RxGateElement()
+            const angle = ((/^\((.+)\)$/.exec(instruction.slice(2)) || [])[1] || '').trim().replace('_', '/')
             rxGate.hoverable = true
+            rxGate.angle = angle
             circuitStep.appendOperation(rxGate)
             break
           }
-          case /^Rx\((.+)\)$/.test(instruction): {
-            const rxGate = new RxGateElement()
-            rxGate.hoverable = true
-            rxGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(rxGate)
-            break
-          }
-          case /^Ry$/.test(instruction): {
+          case /^Ry/.test(instruction): {
             const ryGate = new RyGateElement()
+            const angle = ((/^\((.+)\)$/.exec(instruction.slice(2)) || [])[1] || '').trim().replace('_', '/')
             ryGate.hoverable = true
+            ryGate.angle = angle
             circuitStep.appendOperation(ryGate)
             break
           }
-          case /^Ry\((.+)\)$/.test(instruction): {
-            const ryGate = new RyGateElement()
-            ryGate.hoverable = true
-            ryGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(ryGate)
-            break
-          }
-          case /^Rz$/.test(instruction): {
+          case /^Rz/.test(instruction): {
             const rzGate = new RzGateElement()
+            const angle = ((/^\((.+)\)$/.exec(instruction.slice(2)) || [])[1] || '').trim().replace('_', '/')
             rzGate.hoverable = true
-            circuitStep.appendOperation(rzGate)
-            break
-          }
-          case /^Rz\((.+)\)$/.test(instruction): {
-            const rzGate = new RzGateElement()
-            rzGate.hoverable = true
-            rzGate.angle = RegExp.$1.replace('_', '/')
+            rzGate.angle = angle
             circuitStep.appendOperation(rzGate)
             break
           }
@@ -1082,21 +1032,16 @@ export class QuantumCircuitElement extends HTMLElement {
             circuitStep.appendOperation(blochDisplay)
             break
           }
-          case /^Measure$/.test(instruction): {
+          case /^Measure/.test(instruction): {
             const measurementGate = new MeasurementGateElement()
+            const flag = ((/^>(.+)$/.exec(instruction.slice(7)) || [])[1] || '').trim()
             measurementGate.hoverable = true
-            circuitStep.appendOperation(measurementGate)
-            break
-          }
-          case /^Measure>(.+)$/.test(instruction): {
-            const measurementGate = new MeasurementGateElement()
-            measurementGate.hoverable = true
-            measurementGate.flag = RegExp.$1.trim()
+            measurementGate.flag = flag
             circuitStep.appendOperation(measurementGate)
             break
           }
           case /^[[{](.+)$/.test(instruction): {
-            const comment = RegExp.$1
+            const comment = instruction.slice(1)
             circuitStep.remove()
             circuitBlock = new CircuitBlockElement()
             circuitBlock.comment = comment

@@ -84,7 +84,7 @@ var require_fraction = __commonJS({
       __name(factorize, "factorize");
       var parse2 = /* @__PURE__ */ __name(function(p1, p22) {
         var n = 0, d2 = 1, s = 1;
-        var v2 = 0, w3 = 0, x2 = 0, y2 = 1, z2 = 1;
+        var v2 = 0, w2 = 0, x2 = 0, y2 = 1, z2 = 1;
         var A3 = 0, B2 = 1;
         var C2 = 1, D3 = 1;
         var N3 = 1e7;
@@ -172,14 +172,14 @@ var require_fraction = __commonJS({
                 A3++;
               }
               if (B2.length === A3 + 1) {
-                w3 = assign2(B2[A3++], s);
+                w2 = assign2(B2[A3++], s);
               } else if (B2[A3 + 1] === "." || B2[A3] === ".") {
                 if (B2[A3] !== ".") {
                   v2 = assign2(B2[A3++], s);
                 }
                 A3++;
                 if (A3 + 1 === B2.length || B2[A3 + 1] === "(" && B2[A3 + 3] === ")" || B2[A3 + 1] === "'" && B2[A3 + 3] === "'") {
-                  w3 = assign2(B2[A3], s);
+                  w2 = assign2(B2[A3], s);
                   y2 = Math.pow(10, B2[A3].length);
                   A3++;
                 }
@@ -189,18 +189,18 @@ var require_fraction = __commonJS({
                   A3 += 3;
                 }
               } else if (B2[A3 + 1] === "/" || B2[A3 + 1] === ":") {
-                w3 = assign2(B2[A3], s);
+                w2 = assign2(B2[A3], s);
                 y2 = assign2(B2[A3 + 2], 1);
                 A3 += 3;
               } else if (B2[A3 + 3] === "/" && B2[A3 + 1] === " ") {
                 v2 = assign2(B2[A3], s);
-                w3 = assign2(B2[A3 + 2], s);
+                w2 = assign2(B2[A3 + 2], s);
                 y2 = assign2(B2[A3 + 4], 1);
                 A3 += 5;
               }
               if (B2.length <= A3) {
                 d2 = y2 * z2;
-                s = n = x2 + d2 * v2 + z2 * w3;
+                s = n = x2 + d2 * v2 + z2 * w2;
                 break;
               }
             }
@@ -660,8 +660,8 @@ var require_interact_min = __commonJS({
       var x2 = { init: function(t2) {
         var e2 = h2.default.Element, n2 = t2.navigator || {};
         x2.supportsTouch = "ontouchstart" in t2 || i.default.func(t2.DocumentTouch) && h2.default.document instanceof t2.DocumentTouch, x2.supportsPointerEvent = n2.pointerEnabled !== false && !!h2.default.PointerEvent, x2.isIOS = /iP(hone|od|ad)/.test(n2.platform), x2.isIOS7 = /iP(hone|od|ad)/.test(n2.platform) && /OS 7[^\d]/.test(n2.appVersion), x2.isIe9 = /MSIE 9/.test(n2.userAgent), x2.isOperaMobile = n2.appName === "Opera" && x2.supportsTouch && /Presto/.test(n2.userAgent), x2.prefixedMatchesSelector = "matches" in e2.prototype ? "matches" : "webkitMatchesSelector" in e2.prototype ? "webkitMatchesSelector" : "mozMatchesSelector" in e2.prototype ? "mozMatchesSelector" : "oMatchesSelector" in e2.prototype ? "oMatchesSelector" : "msMatchesSelector", x2.pEventTypes = x2.supportsPointerEvent ? h2.default.PointerEvent === t2.MSPointerEvent ? { up: "MSPointerUp", down: "MSPointerDown", over: "mouseover", out: "mouseout", move: "MSPointerMove", cancel: "MSPointerCancel" } : { up: "pointerup", down: "pointerdown", over: "pointerover", out: "pointerout", move: "pointermove", cancel: "pointercancel" } : null, x2.wheelEvent = h2.default.document && "onmousewheel" in h2.default.document ? "mousewheel" : "wheel";
-      }, supportsTouch: null, supportsPointerEvent: null, isIOS7: null, isIOS: null, isIe9: null, isOperaMobile: null, prefixedMatchesSelector: null, pEventTypes: null, wheelEvent: null }, w3 = x2;
-      b2.default = w3;
+      }, supportsTouch: null, supportsPointerEvent: null, isIOS7: null, isIOS: null, isIe9: null, isOperaMobile: null, prefixedMatchesSelector: null, pEventTypes: null, wheelEvent: null }, w2 = x2;
+      b2.default = w2;
       var _2 = {};
       function P2(t2) {
         var e2 = t2.parentNode;
@@ -742,10 +742,10 @@ var require_interact_min = __commonJS({
         return false;
       }, _2.getActualElement = function(t2) {
         return t2.correspondingUseElement || t2;
-      }, _2.getScrollXY = T, _2.getElementClientRect = M3, _2.getElementRect = function(t2) {
+      }, _2.getScrollXY = T2, _2.getElementClientRect = M3, _2.getElementRect = function(t2) {
         var n2 = M3(t2);
         if (!b2.default.isIOS7 && n2) {
-          var r2 = T(e.getWindow(t2));
+          var r2 = T2(e.getWindow(t2));
           n2.left += r2.x, n2.right += r2.x, n2.top += r2.y, n2.bottom += r2.y;
         }
         return n2;
@@ -765,10 +765,10 @@ var require_interact_min = __commonJS({
         return r2;
       }
       __name(E2, "E");
-      function T(t2) {
+      function T2(t2) {
         return { x: (t2 = t2 || e.window).scrollX || t2.document.documentElement.scrollLeft, y: t2.scrollY || t2.document.documentElement.scrollTop };
       }
-      __name(T, "T");
+      __name(T2, "T");
       function M3(t2) {
         var e2 = t2 instanceof h2.default.SVGElement ? t2.getBoundingClientRect() : t2.getClientRects()[0];
         return e2 && { left: e2.left, right: e2.right, top: e2.top, bottom: e2.bottom, width: e2.width || e2.right - e2.left, height: e2.height || e2.bottom - e2.top };
@@ -2113,7 +2113,7 @@ var require_interact_min = __commonJS({
             throw new TypeError("Cannot call a class as a function");
         }(this, t2), Ye2(this, "id", void 0), Ye2(this, "pointer", void 0), Ye2(this, "event", void 0), Ye2(this, "downTime", void 0), Ye2(this, "downTarget", void 0), this.id = e2, this.pointer = n2, this.event = r2, this.downTime = o3, this.downTarget = i2;
       }, "t");
-      var Be2, We, Le = {};
+      var Be, We, Le = {};
       function Ue2(t2, e2) {
         for (var n2 = 0; n2 < e2.length; n2++) {
           var r2 = e2[n2];
@@ -2127,9 +2127,9 @@ var require_interact_min = __commonJS({
       __name(Ve, "Ve");
       Object.defineProperty(Le, "__esModule", { value: true }), Object.defineProperty(Le, "PointerInfo", { enumerable: true, get: function() {
         return Xe.PointerInfo;
-      } }), Le.default = Le.Interaction = Le._ProxyMethods = Le._ProxyValues = void 0, Le._ProxyValues = Be2, function(t2) {
+      } }), Le.default = Le.Interaction = Le._ProxyMethods = Le._ProxyValues = void 0, Le._ProxyValues = Be, function(t2) {
         t2.interactable = "", t2.element = "", t2.prepared = "", t2.pointerIsDown = "", t2.pointerWasMoved = "", t2._proxy = "";
-      }(Be2 || (Le._ProxyValues = Be2 = {})), Le._ProxyMethods = We, function(t2) {
+      }(Be || (Le._ProxyValues = Be = {})), Le._ProxyMethods = We, function(t2) {
         t2.start = "", t2.move = "", t2.end = "", t2.stop = "", t2.interacting = "";
       }(We || (Le._ProxyMethods = We = {}));
       var Ne = 0, qe3 = function() {
@@ -2148,7 +2148,7 @@ var require_interact_min = __commonJS({
               return i2[t3];
             } });
           }, "a");
-          for (var s2 in Be2)
+          for (var s2 in Be)
             a2(s2);
           var l4 = /* @__PURE__ */ __name(function(t3) {
             Object.defineProperty(n3._proxy, t3, { value: function() {
@@ -2229,8 +2229,8 @@ var require_interact_min = __commonJS({
         } }]) && Ue2(e2.prototype, n2), t2;
       }();
       Le.Interaction = qe3;
-      var $e = qe3;
-      Le.default = $e;
+      var $e2 = qe3;
+      Le.default = $e2;
       var Ge2 = {};
       function He(t2) {
         t2.pointerIsDown && (Qe(t2.coords.cur, t2.offset.total), t2.offset.pending.x = 0, t2.offset.pending.y = 0);
@@ -3027,8 +3027,8 @@ var require_interact_min = __commonJS({
             }
           }
           for (var y3 = 0; y3 < l4.length; y3++) {
-            var m3 = Yn(l4[y3], 4), x3 = m3[0], w4 = m3[1], _3 = m3[2];
-            m3[3][t2](x3, n2, w4, _3);
+            var m3 = Yn(l4[y3], 4), x3 = m3[0], w3 = m3[1], _3 = m3[2];
+            m3[3][t2](x3, n2, w3, _3);
           }
         };
       }
@@ -3572,8 +3572,8 @@ var require_interact_min = __commonJS({
             (g3 = i.default.func(y3) ? y3(d3, p4, e2._proxy, f3, v3) : y3) && u3.push({ x: (i.default.number(g3.x) ? g3.x : d3) + f3.x, y: (i.default.number(g3.y) ? g3.y : p4) + f3.y, range: i.default.number(g3.range) ? g3.range : o3.range, source: y3, index: v3, offset: f3 });
           }
         for (var m3 = { target: null, inRange: false, distance: 0, range: 0, delta: { x: 0, y: 0 } }, b3 = 0; b3 < u3.length; b3++) {
-          var x3 = u3[b3], w4 = x3.range, _3 = x3.x - l4.x, P3 = x3.y - l4.y, O4 = (0, C2.default)(_3, P3), S3 = O4 <= w4;
-          w4 === 1 / 0 && m3.inRange && m3.range !== 1 / 0 && (S3 = false), m3.target && !(S3 ? m3.inRange && w4 !== 1 / 0 ? O4 / w4 < m3.distance / m3.range : w4 === 1 / 0 && m3.range !== 1 / 0 || O4 < m3.distance : !m3.inRange && O4 < m3.distance) || (m3.target = x3, m3.distance = O4, m3.range = w4, m3.inRange = S3, m3.delta.x = _3, m3.delta.y = P3);
+          var x3 = u3[b3], w3 = x3.range, _3 = x3.x - l4.x, P3 = x3.y - l4.y, O4 = (0, C2.default)(_3, P3), S3 = O4 <= w3;
+          w3 === 1 / 0 && m3.inRange && m3.range !== 1 / 0 && (S3 = false), m3.target && !(S3 ? m3.inRange && w3 !== 1 / 0 ? O4 / w3 < m3.distance / m3.range : w3 === 1 / 0 && m3.range !== 1 / 0 || O4 < m3.distance : !m3.inRange && O4 < m3.distance) || (m3.target = x3, m3.distance = O4, m3.range = w3, m3.inRange = S3, m3.delta.x = _3, m3.delta.y = P3);
         }
         return m3.inRange && (n2.x = m3.target.x, n2.y = m3.target.y), r2.closest = m3, m3;
       }, defaults: { range: 1 / 0, targets: null, offset: null, offsetWithOrigin: true, origin: null, relativePoints: null, endOnly: false, enabled: false } };
@@ -12111,8 +12111,8 @@ var ee = Object.defineProperty;
 var Ke = Object.getOwnPropertyDescriptor;
 var p2 = /* @__PURE__ */ __name((s, t) => ee(s, "name", { value: t, configurable: true }), "p");
 var l2 = /* @__PURE__ */ __name((s, t, e, i) => {
-  for (var n = i > 1 ? void 0 : i ? Ke(t, e) : t, r = s.length - 1, a; r >= 0; r--)
-    (a = s[r]) && (n = (i ? a(t, e, n) : a(n)) || n);
+  for (var n = i > 1 ? void 0 : i ? Ke(t, e) : t, r = s.length - 1, o2; r >= 0; r--)
+    (o2 = s[r]) && (n = (i ? o2(t, e, n) : o2(n)) || n);
   return i && n && ee(t, e, n), n;
 }, "l");
 function g(s) {
@@ -12261,15 +12261,15 @@ function v(s) {
       this.move(i.dx, i.dy);
     }
     move(i, n) {
-      let r = this.operationX + i, a = this.operationY + n;
-      this.moveTo(r, a);
+      let r = this.operationX + i, o2 = this.operationY + n;
+      this.moveTo(r, o2);
     }
     moveTo(i, n) {
       this.operationX = i, this.operationY = n, this.style.transform = `translate(${i}px, ${n}px)`;
     }
     moveByOffset(i, n) {
-      let r = i - this.clientWidth / 2, a = n - this.clientHeight / 2;
-      this.move(r, a);
+      let r = i - this.clientWidth / 2, o2 = n - this.clientHeight / 2;
+      this.move(r, o2);
     }
   }
   __name(t, "t");
@@ -12411,8 +12411,8 @@ function y(s) {
   class t extends s {
     initMenu() {
       this._tippy || (this.addEventListener("click", this.dispatchShowMenuEvent), this.menu = tippy_esm_default(this, { allowHTML: true, animation: false, arrow: false, content: this.menuContent, interactive: true, appendTo: document.body, offset: [0, 16], placement: "top", theme: "operation-menu", trigger: "manual", onShow: this.initMenuItems.bind(this), onHide: () => {
-        var n, r, a, o2;
-        (n = this.ifTooltip) == null || n.hide(), (r = this.angleTooltip) == null || r.hide(), (a = this.flagTooltip) == null || a.hide(), (o2 = this.deleteTooltip) == null || o2.hide();
+        var n, r, o2, a;
+        (n = this.ifTooltip) == null || n.hide(), (r = this.angleTooltip) == null || r.hide(), (o2 = this.flagTooltip) == null || o2.hide(), (a = this.deleteTooltip) == null || a.hide();
       } }));
     }
     showMenu() {
@@ -12700,7 +12700,7 @@ var pe = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="htt
   <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" fill="currentColor"/>
 </svg>
 `;
-var q2 = /* @__PURE__ */ __name(class extends y(E(v(S(C(g(x(HTMLElement))))))) {
+var R2 = /* @__PURE__ */ __name(class extends y(E(v(S(C(g(x(HTMLElement))))))) {
   get operationType() {
     return Fe;
   }
@@ -12713,14 +12713,14 @@ var q2 = /* @__PURE__ */ __name(class extends y(E(v(S(C(g(x(HTMLElement))))))) {
   toJson() {
     return `"${Fe}"`;
   }
-}, "q");
-p2(q2, "ControlGateElement");
-controller(q2);
+}, "R");
+p2(R2, "ControlGateElement");
+controller(R2);
 var de2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M17 13V35M17 24H31M31 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
-var D2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
+var N2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
   get operationType() {
     return le;
   }
@@ -12733,9 +12733,9 @@ var D2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement)))
   toJson() {
     return this.if !== "" ? `"${le}<${this.if}"` : `"${le}"`;
   }
-}, "D");
-p2(D2, "HGateElement");
-controller(D2);
+}, "N");
+p2(N2, "HGateElement");
+controller(N2);
 var ue = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M8 35C8 30.7565 9.68571 26.6869 12.6863 23.6863C15.6869 20.6857 19.7565 19 24 19C28.2435 19 32.3131 20.6857 35.3137 23.6863C38.3143 26.6869 40 30.7565 40 35" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M24.5 33L35 15" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -12775,7 +12775,7 @@ var he = `<svg
   <path d="M17 24A7 7 0 1 0 31 24A7 7 0 1 0 17 24M19 34L29 13" />
 </svg>
 `;
-var N2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
+var L = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
   get operationType() {
     return be;
   }
@@ -12788,9 +12788,9 @@ var N2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement
   toJson() {
     return this.angle === "" ? `"${be}"` : `"${be}(${this.angle.replace("/", "_")})"`;
   }
-}, "N");
-p2(N2, "PhaseGateElement");
-controller(N2);
+}, "L");
+p2(L, "PhaseGateElement");
+controller(L);
 var me = `<svg
   width="48"
   height="48"
@@ -12805,7 +12805,7 @@ var me = `<svg
   <path d="M24 32L34 18M34 32L24 18" />
 </svg>
 `;
-var L = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
+var P = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
   get operationType() {
     return Se;
   }
@@ -12818,16 +12818,16 @@ var L = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))
   toJson() {
     return this.if !== "" ? `"${Se}<${this.if}"` : `"${Se}"`;
   }
-}, "L");
-p2(L, "RnotGateElement");
-controller(L);
+}, "P");
+p2(P, "RnotGateElement");
+controller(P);
 var be2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M34.6093 13.0016L24.7475 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M24.8187 13.0016L34.6093 35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-var P = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
+var H2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
   get operationType() {
     return ke;
   }
@@ -12840,16 +12840,16 @@ var P = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)
   toJson() {
     return this.angle === "" ? `"${ke}"` : `"${ke}(${this.angle.replace("/", "_")})"`;
   }
-}, "P");
-p2(P, "RxGateElement");
-controller(P);
+}, "H");
+p2(H2, "RxGateElement");
+controller(H2);
 var fe2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M34.6093 13.0016L29.5 23.5V35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M24.5 13L29.5 23.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-var H2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
+var B = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement)))))))))) {
   get operationType() {
     return Ce;
   }
@@ -12862,9 +12862,9 @@ var H2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(Q2(v(S(C(g(x(HTMLElement
   toJson() {
     return this.angle === "" ? `"${Ce}"` : `"${Ce}(${this.angle.replace("/", "_")})"`;
   }
-}, "H");
-p2(H2, "RyGateElement");
-controller(H2);
+}, "B");
+p2(B, "RyGateElement");
+controller(B);
 var ge = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12.3214 35V24M18 24.5L21.7303 35M12.3214 24V13C21 13 22 15.5 22 18.5C22 21.5 21 24 12.3214 24Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M24.5 13H34.5L24.5 35H34.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -12890,7 +12890,7 @@ var ve2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="ht
   <path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-var Y = /* @__PURE__ */ __name(class extends y(E(G2(v(S(C(g(x(HTMLElement)))))))) {
+var U = /* @__PURE__ */ __name(class extends y(E(G2(v(S(C(g(x(HTMLElement)))))))) {
   get operationType() {
     return Me;
   }
@@ -12903,14 +12903,14 @@ var Y = /* @__PURE__ */ __name(class extends y(E(G2(v(S(C(g(x(HTMLElement)))))))
   toJson() {
     return `"${Me}"`;
   }
-}, "Y");
-p2(Y, "SwapGateElement");
-controller(Y);
+}, "U");
+p2(U, "SwapGateElement");
+controller(U);
 var xe2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M15 13H33M24 13V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
-var B = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
+var F2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
   get operationType() {
     return xe;
   }
@@ -12923,14 +12923,14 @@ var B = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))
   toJson() {
     return this.if !== "" ? `"${xe}<${this.if}"` : `"${xe}"`;
   }
-}, "B");
-p2(B, "TGateElement");
-controller(B);
+}, "F");
+p2(F2, "TGateElement");
+controller(F2);
 var ye2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M9 10V40M34 10L40 24L34 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-var U = /* @__PURE__ */ __name(class extends y(E(v(C(g(x(HTMLElement)))))) {
+var D2 = /* @__PURE__ */ __name(class extends y(E(v(C(g(x(HTMLElement)))))) {
   constructor() {
     super(...arguments);
     this.value = "";
@@ -12955,14 +12955,14 @@ var U = /* @__PURE__ */ __name(class extends y(E(v(C(g(x(HTMLElement)))))) {
   toJson() {
     return `"|${this.value}>"`;
   }
-}, "U");
-p2(U, "WriteGateElement"), l2([attr], U.prototype, "value", 2);
-controller(U);
+}, "D");
+p2(D2, "WriteGateElement"), l2([attr], D2.prototype, "value", 2);
+controller(D2);
 var Ce2 = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M15 24H33M24 15V33" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
-var F2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
+var W2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
   get operationType() {
     return fe;
   }
@@ -12975,36 +12975,16 @@ var F2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement)))
   toJson() {
     return this.if !== "" ? `"${fe}<${this.if}"` : `"${fe}"`;
   }
-}, "F");
-p2(F2, "XGateElement");
-controller(F2);
-var we = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M17 13L24 24M24 24L31 13M24 24V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg>
-`;
-var W2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
-  get operationType() {
-    return de;
-  }
-  connectedCallback() {
-    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
-  }
-  update() {
-    render2(html`<div part="body">${this.iconHtml(we)}</div>`, this.shadowRoot);
-  }
-  toJson() {
-    return this.if !== "" ? `"${de}<${this.if}"` : `"${de}"`;
-  }
 }, "W");
-p2(W2, "YGateElement");
+p2(W2, "XGateElement");
 controller(W2);
 var Te = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M17.5 13H31L17.5 35H31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M17 13L24 24M24 24L31 13M24 24V35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 `;
 var V2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
   get operationType() {
-    return ye;
+    return de;
   }
   connectedCallback() {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
@@ -13013,32 +12993,52 @@ var V2 = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement)))
     render2(html`<div part="body">${this.iconHtml(Te)}</div>`, this.shadowRoot);
   }
   toJson() {
-    return this.if !== "" ? `"${ye}<${this.if}"` : `"${ye}"`;
+    return this.if !== "" ? `"${de}<${this.if}"` : `"${de}"`;
   }
 }, "V");
-p2(V2, "ZGateElement");
+p2(V2, "YGateElement");
 controller(V2);
-var O2 = p2((s) => s instanceof D2 || s instanceof F2 || s instanceof W2 || s instanceof V2 || s instanceof N2 || s instanceof B || s instanceof L || s instanceof P || s instanceof H2 || s instanceof $ || s instanceof Y || s instanceof q2 || s instanceof A2 || s instanceof U || s instanceof k, "isOperation");
-var Se2 = p2((s) => s != null && s instanceof D2, "isHGateElement");
-var Ge = p2((s) => s != null && s instanceof F2, "isXGateElement");
-var Oe = p2((s) => s != null && s instanceof W2, "isYGateElement");
-var Ie2 = p2((s) => s != null && s instanceof V2, "isZGateElement");
-var bt = p2((s) => s != null && s instanceof N2, "isPhaseGateElement");
-var ze = p2((s) => s != null && s instanceof B, "isTGateElement");
-var Ae = p2((s) => s != null && s instanceof L, "isRnotGateElement");
-var wt = p2((s) => s != null && s instanceof P, "isRxGateElement");
-var Tt = p2((s) => s != null && s instanceof H2, "isRyGateElement");
+var we = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M17.5 13H31L17.5 35H31" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+var Y = /* @__PURE__ */ __name(class extends y(E(I2(G2(v(S(C(g(x(HTMLElement))))))))) {
+  get operationType() {
+    return ye;
+  }
+  connectedCallback() {
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
+  }
+  update() {
+    render2(html`<div part="body">${this.iconHtml(we)}</div>`, this.shadowRoot);
+  }
+  toJson() {
+    return this.if !== "" ? `"${ye}<${this.if}"` : `"${ye}"`;
+  }
+}, "Y");
+p2(Y, "ZGateElement");
+controller(Y);
+var O2 = p2((s) => s instanceof N2 || s instanceof W2 || s instanceof V2 || s instanceof Y || s instanceof L || s instanceof F2 || s instanceof P || s instanceof H2 || s instanceof B || s instanceof $ || s instanceof U || s instanceof R2 || s instanceof A2 || s instanceof D2 || s instanceof k, "isOperation");
+var Se2 = p2((s) => s != null && s instanceof N2, "isHGateElement");
+var Ge = p2((s) => s != null && s instanceof W2, "isXGateElement");
+var Oe = p2((s) => s != null && s instanceof V2, "isYGateElement");
+var Ie2 = p2((s) => s != null && s instanceof Y, "isZGateElement");
+var bt = p2((s) => s != null && s instanceof L, "isPhaseGateElement");
+var ze = p2((s) => s != null && s instanceof F2, "isTGateElement");
+var Ae = p2((s) => s != null && s instanceof P, "isRnotGateElement");
+var Tt = p2((s) => s != null && s instanceof H2, "isRxGateElement");
+var wt = p2((s) => s != null && s instanceof B, "isRyGateElement");
 var St = p2((s) => s != null && s instanceof $, "isRzGateElement");
-var _e = p2((s) => s != null && s instanceof Y, "isSwapGateElement");
-var Ft = p2((s) => s != null && s instanceof q2, "isControlGateElement");
+var _e = p2((s) => s != null && s instanceof U, "isSwapGateElement");
+var Ft = p2((s) => s != null && s instanceof R2, "isControlGateElement");
 var Me2 = p2((s) => s != null && s instanceof A2, "isBlochDisplayElement");
-var pl = p2((s) => s != null && s instanceof U, "isWriteGateElement");
-var Re2 = p2((s) => s != null && s instanceof k, "isMeasurementGateElement");
-function qe2(s) {
+var pl = p2((s) => s != null && s instanceof D2, "isWriteGateElement");
+var qe2 = p2((s) => s != null && s instanceof k, "isMeasurementGateElement");
+function Re2(s) {
   return /^-?\d+$/.test(s);
 }
-__name(qe2, "qe");
-p2(qe2, "isNumeric");
+__name(Re2, "Re");
+p2(Re2, "isNumeric");
 var Wt = /* @__PURE__ */ __name(class extends HTMLElement {
   get isInspectorShown() {
     return this.popup.state.isVisible;
@@ -13180,8 +13180,8 @@ var K = /* @__PURE__ */ __name(class extends HTMLElement {
   findSnapAngle(t) {
     let e = null, i = null, n = null;
     for (let r in this.snapAngles) {
-      let a = Math.abs(parseFloat(r) - t);
-      (e === null || a < e) && (e = a, i = parseFloat(r), n = this.snapAngles[r]);
+      let o2 = Math.abs(parseFloat(r) - t);
+      (e === null || o2 < e) && (e = o2, i = parseFloat(r), n = this.snapAngles[r]);
     }
     return m.notNull(i), m.notNull(n), [i, n];
   }
@@ -13219,7 +13219,7 @@ var M2 = /* @__PURE__ */ __name(class extends HTMLElement {
   set operation(t) {
     if (this.clear(), this.disableAllPanes(), Z(t) && (this.conditionalGatePaneDisabled = false, this.ifInput.value = t.if), nt(t)) {
       let e = X(t.angle);
-      bt(t) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (wt(t) || Tt(t) || St(t)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = t.angle, this.backupCurrentPhi(), this.angleSlider.angle = t.angle, this.denominatorInput.value = e.toString(), this.denominatorLabel.textContent = e.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = t.reducedAngle !== "";
+      bt(t) ? (this.angleInputLabel.textContent = "\u{1D711}", this.denominatorVariableLabel.textContent = "\u{1D711}") : (Tt(t) || wt(t) || St(t)) && (this.angleInputLabel.textContent = "\u{1D6F3}", this.denominatorVariableLabel.textContent = "\u{1D6F3}"), this.anglePaneDisabled = false, this.angleInput.value = t.angle, this.backupCurrentPhi(), this.angleSlider.angle = t.angle, this.denominatorInput.value = e.toString(), this.denominatorLabel.textContent = e.toString(), this.backupCurrentDenominator(), this.reduceAngleFractionCheckbox.checked = t.reducedAngle !== "";
     }
     at(t) && (this.conditionalFlagPaneDisabled = false, this.flagInput.value = t.flag);
   }
@@ -13277,7 +13277,7 @@ var M2 = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   changeDenominator() {
     let t = this.denominatorInput.value;
-    qe2(t) && parseInt(t) > 1 ? (this.denominatorLabel.textContent = t, this.angleSlider.denominator = parseInt(t), this.angleInput.value = this.angleSlider.angle) : this.restoreOriginalDenominator();
+    Re2(t) && parseInt(t) > 1 ? (this.denominatorLabel.textContent = t, this.angleSlider.denominator = parseInt(t), this.angleInput.value = this.angleSlider.angle) : this.restoreOriginalDenominator();
   }
   changeReduceSetting() {
     this.dispatchEvent(new Event("operation-inspector-angle-update", { bubbles: true }));
@@ -13300,13 +13300,13 @@ var j = /* @__PURE__ */ __name(class extends HTMLElement {
     for (let [i, n] of Object.entries(t)) {
       let r = e[parseInt(i)];
       m.notNull(r);
-      let a = h.from(n);
-      r.setAttribute("data-amplitude-real", a.real.toString()), r.setAttribute("data-amplitude-imag", a.imag.toString());
-      let o2 = a.abs();
-      if (this.setRoundedMagnitude(r, o2), o2 === 0)
+      let o2 = h.from(n);
+      r.setAttribute("data-amplitude-real", o2.real.toString()), r.setAttribute("data-amplitude-imag", o2.imag.toString());
+      let a = o2.abs();
+      if (this.setRoundedMagnitude(r, a), a === 0)
         continue;
-      let d2 = a.phase() / Math.PI * 180;
-      this.setRoundedPhase(r, d2);
+      let c2 = o2.phase() / Math.PI * 180;
+      this.setRoundedPhase(r, c2);
     }
   }
   connectedCallback() {
@@ -13321,8 +13321,8 @@ var j = /* @__PURE__ */ __name(class extends HTMLElement {
   startQubitCircleVisibilityObserver() {
     let t = { root: this, threshold: [0, 0.2] }, e = p2((n) => {
       for (let r of n) {
-        let a = r.target;
-        r.intersectionRatio >= 0.2 ? (a.setAttribute("data-targets", "circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups"), this.dispatchVisibilityChangedEvent()) : r.intersectionRatio === 0 && a.setAttribute("data-targets", "circle-notation.qubitCircleGroups");
+        let o2 = r.target;
+        r.intersectionRatio >= 0.2 ? (o2.setAttribute("data-targets", "circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups"), this.dispatchVisibilityChangedEvent()) : r.intersectionRatio === 0 && o2.setAttribute("data-targets", "circle-notation.qubitCircleGroups");
       }
     }, "callback"), i = new IntersectionObserver(e, t);
     for (let n of this.qubitCircleGroups)
@@ -14034,23 +14034,23 @@ var j = /* @__PURE__ */ __name(class extends HTMLElement {
     </div>`;
   }
   stateVectorHtml(t) {
-    let e = html``, i = this.qubitCircleGroup([...Array(2 ** t).keys()], (n) => this.qubitCircleGroup(n, (r) => this.qubitCircleGroup(r, (a) => this.qubitCircleGroup(a, (o2) => this.qubitCircleGroup(o2, (d2) => this.qubitCircleGroup(d2, (c2) => this.qubitCircleGroup(c2)))))), 256);
+    let e = html``, i = this.qubitCircleGroup([...Array(2 ** t).keys()], (n) => this.qubitCircleGroup(n, (r) => this.qubitCircleGroup(r, (o2) => this.qubitCircleGroup(o2, (a) => this.qubitCircleGroup(a, (c2) => this.qubitCircleGroup(c2, (d2) => this.qubitCircleGroup(d2)))))), 256);
     for (let n of i)
       e = html`${e} ${n}`;
     return e;
   }
   qubitCircleGroup(t, e, i = t.length / 2) {
-    return p2((r, a = 1) => r.reduce((o2, d2, c2) => c2 % a ? o2 : [...o2, r.slice(c2, c2 + a)], []), "arrayChunk")(t, i).map((r) => {
-      let a = html``;
+    return p2((r, o2 = 1) => r.reduce((a, c2, d2) => d2 % o2 ? a : [...a, r.slice(d2, d2 + o2)], []), "arrayChunk")(t, i).map((r) => {
+      let o2 = html``;
       if (e)
-        for (let o2 of e(r))
-          a = html`${a} ${o2}`;
+        for (let a of e(r))
+          o2 = html`${o2} ${a}`;
       else
-        for (let o2 of r)
-          a = html`${a} ${this.qubitCircleHtml(o2)}`;
+        for (let a of r)
+          o2 = html`${o2} ${this.qubitCircleHtml(a)}`;
       return i === 64 ? html`<div class="qubit-circle-group--size${i}" data-targets="circle-notation.qubitCircleGroups">
-          ${a}
-        </div>` : html`<div class="qubit-circle-group--size${i}">${a}</div>`;
+          ${o2}
+        </div>` : html`<div class="qubit-circle-group--size${i}">${o2}</div>`;
     });
   }
   initQubitCirclePopup(t) {
@@ -14060,19 +14060,19 @@ var j = /* @__PURE__ */ __name(class extends HTMLElement {
   setPopupContent(t) {
     if (this.popupEl === null)
       return;
-    let e = t.target, i = this.ketDecimal(e), n = e.getAttribute("data-amplitude-real"), r = e.getAttribute("data-amplitude-imag"), a = e.getAttribute("data-magnitude"), o2 = e.getAttribute("data-phase"), d2;
-    n === null || r === null ? d2 = h.ZERO : d2 = new h(parseFloat(n), parseFloat(r));
-    let c2;
-    a && parseFloat(a) === 0 ? c2 = 0 : c2 = o2 ? parseFloat(o2) : 0, this.setQubitCirclePopupContent(this.popupEl.content, e, i, d2, a ? parseFloat(a) : 0, c2, this.qubitCount);
+    let e = t.target, i = this.ketDecimal(e), n = e.getAttribute("data-amplitude-real"), r = e.getAttribute("data-amplitude-imag"), o2 = e.getAttribute("data-magnitude"), a = e.getAttribute("data-phase"), c2;
+    n === null || r === null ? c2 = h.ZERO : c2 = new h(parseFloat(n), parseFloat(r));
+    let d2;
+    o2 && parseFloat(o2) === 0 ? d2 = 0 : d2 = a ? parseFloat(a) : 0, this.setQubitCirclePopupContent(this.popupEl.content, e, i, c2, o2 ? parseFloat(o2) : 0, d2, this.qubitCount);
   }
-  setQubitCirclePopupContent(t, e, i, n, r, a, o2) {
-    e._tippy.setContent(this.popupContent(t, i, n, r, a, o2));
+  setQubitCirclePopupContent(t, e, i, n, r, o2, a) {
+    e._tippy.setContent(this.popupContent(t, i, n, r, o2, a));
   }
-  popupContent(t, e, i, n, r, a) {
-    let o2 = t.querySelector(".circle-notation-popup__ket-binary"), d2 = t.querySelector(".circle-notation-popup__ket-decimal"), c2 = t.querySelector(".circle-notation-popup__amplitude-real"), m2 = t.querySelector(".circle-notation-popup__amplitude-imag"), h2 = t.querySelector(".circle-notation-popup__probability"), u2 = t.querySelector(".circle-notation-popup__phase");
-    o2 && (o2.textContent = e.toString(2).padStart(a, "0")), d2 && (d2.textContent = e.toString()), c2 && (c2.textContent = this.forceSigned(i.real, 5)), m2 && (m2.textContent = `${this.forceSigned(i.imag, 5)}i`), h2 && (h2.textContent = `${this.forceSigned(n * n * 100, 4)}%`), u2 && (u2.textContent = `${this.forceSigned(r, 2)}\xB0`);
-    let T = document.createElement("div");
-    return T.appendChild(t.cloneNode(true)), T.innerHTML;
+  popupContent(t, e, i, n, r, o2) {
+    let a = t.querySelector(".circle-notation-popup__ket-binary"), c2 = t.querySelector(".circle-notation-popup__ket-decimal"), d2 = t.querySelector(".circle-notation-popup__amplitude-real"), m2 = t.querySelector(".circle-notation-popup__amplitude-imag"), h2 = t.querySelector(".circle-notation-popup__probability"), u2 = t.querySelector(".circle-notation-popup__phase");
+    a && (a.textContent = e.toString(2).padStart(o2, "0")), c2 && (c2.textContent = e.toString()), d2 && (d2.textContent = this.forceSigned(i.real, 5)), m2 && (m2.textContent = `${this.forceSigned(i.imag, 5)}i`), h2 && (h2.textContent = `${this.forceSigned(n * n * 100, 4)}%`), u2 && (u2.textContent = `${this.forceSigned(r, 2)}\xB0`);
+    let w2 = document.createElement("div");
+    return w2.appendChild(t.cloneNode(true)), w2.innerHTML;
   }
   get popupEl() {
     return document.getElementById("circle-notation-popup");
@@ -14087,7 +14087,7 @@ var j = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "j");
 p2(j, "CircleNotationElement"), l2([attr], j.prototype, "qubitCount", 2), l2([attr], j.prototype, "size", 2), l2([attr], j.prototype, "magnitudes", 2), l2([attr], j.prototype, "phases", 2), l2([attr], j.prototype, "multiQubits", 2), l2([attr], j.prototype, "showKets", 2), l2([targets], j.prototype, "qubitCircles", 2), l2([targets], j.prototype, "qubitCircleGroups", 2), l2([targets], j.prototype, "visibleQubitCircleGroups", 2);
 controller(j);
-var Be = `<svg part="reload-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+var $e = `<svg part="reload-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M1.84998 7.49998C1.84998 4.66458 4.05979 1.84998 7.49998 1.84998C10.2783 1.84998 11.6515 3.9064 12.2367 5H10.5C10.2239 5 10 5.22386 10 5.5C10 5.77614 10.2239 6 10.5 6H13.5C13.7761 6 14 5.77614 14 5.5V2.5C14 2.22386 13.7761 2 13.5 2C13.2239 2 13 2.22386 13 2.5V4.31318C12.2955 3.07126 10.6659 0.849976 7.49998 0.849976C3.43716 0.849976 0.849976 4.18537 0.849976 7.49998C0.849976 10.8146 3.43716 14.15 7.49998 14.15C9.44382 14.15 11.0622 13.3808 12.2145 12.2084C12.8315 11.5806 13.3133 10.839 13.6418 10.0407C13.7469 9.78536 13.6251 9.49315 13.3698 9.38806C13.1144 9.28296 12.8222 9.40478 12.7171 9.66014C12.4363 10.3425 12.0251 10.9745 11.5013 11.5074C10.5295 12.4963 9.16504 13.15 7.49998 13.15C4.05979 13.15 1.84998 10.3354 1.84998 7.49998Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
 </svg>
 `;
@@ -14138,8 +14138,8 @@ var st = /* @__PURE__ */ __name(class extends HTMLElement {
       this.ripple && this.ripple.remove();
       let i = document.createElement("span");
       i.id = "ripple";
-      let n = Math.max(this.clientWidth, this.clientHeight), r = n / 2, a = this.getBoundingClientRect(), o2 = a.left + window.pageXOffset, d2 = a.top + window.pageYOffset;
-      i.setAttribute("part", "ripple"), i.setAttribute("data-target", "run-circuit-button.ripple"), i.style.width = i.style.height = `${n}px`, i.style.left = `${e.clientX - (o2 + r)}px`, i.style.top = `${e.clientY - (d2 + r)}px`, this.body.appendChild(i);
+      let n = Math.max(this.clientWidth, this.clientHeight), r = n / 2, o2 = this.getBoundingClientRect(), a = o2.left + window.pageXOffset, c2 = o2.top + window.pageYOffset;
+      i.setAttribute("part", "ripple"), i.setAttribute("data-target", "run-circuit-button.ripple"), i.style.width = i.style.height = `${n}px`, i.style.left = `${e.clientX - (a + r)}px`, i.style.top = `${e.clientY - (c2 + r)}px`, this.body.appendChild(i);
     }, dispatchClickEvent: () => {
       this.dispatchEvent(new Event("run-circuit-button-click", { bubbles: true }));
     } }, guards: { isIdle: () => !this.running, isRunning: () => this.running } });
@@ -14183,7 +14183,7 @@ var st = /* @__PURE__ */ __name(class extends HTMLElement {
     this.runCircuitButtonService.send({ type: "CLICK", clientX: t.clientX, clientY: t.clientY });
   }
   get reloadIcon() {
-    return html([Be]);
+    return html([$e]);
   }
   get tailSpinIcon() {
     return html([Ue]);
@@ -14450,12 +14450,12 @@ var _ = /* @__PURE__ */ __name(class extends HTMLElement {
 }, "_");
 p2(_, "CircuitDropzoneElement"), l2([attr], _.prototype, "operationName", 2), l2([attr], _.prototype, "inputWireQuantum", 2), l2([attr], _.prototype, "outputWireQuantum", 2), l2([attr], _.prototype, "connectTop", 2), l2([attr], _.prototype, "connectBottom", 2), l2([attr], _.prototype, "shadow", 2), l2([attr], _.prototype, "debug", 2);
 controller(_);
-var et = p2((s) => s != null && s instanceof R2, "isCircuitStepElement");
-var w2 = p2((s, t) => Array.from(s.reduce((e, i, n, r) => {
-  let a = t(i, n, r), o2 = e.get(a);
-  return o2 ? o2.push(i) : e.set(a, [i]), e;
+var et = p2((s) => s != null && s instanceof q2, "isCircuitStepElement");
+var T = p2((s, t) => Array.from(s.reduce((e, i, n, r) => {
+  let o2 = t(i, n, r), a = e.get(o2);
+  return a ? a.push(i) : e.set(o2, [i]), e;
 }, /* @__PURE__ */ new Map())), "groupBy");
-var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
+var q2 = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
     this.active = false;
@@ -14521,11 +14521,11 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
         n.operation.disable();
     else {
       for (let r of i)
-        r.operation.enable(), r.connectTop = i.some((o2) => this.bit(o2) < this.bit(r)), r.connectBottom = i.some((o2) => this.bit(o2) > this.bit(r));
+        r.operation.enable(), r.connectTop = i.some((a) => this.bit(a) < this.bit(r)), r.connectBottom = i.some((a) => this.bit(a) > this.bit(r));
       let n = i.map((r) => this.bit(r));
       for (let r of this.freeDropzones) {
-        let a = Math.min(...n), o2 = Math.max(...n);
-        a < this.bit(r) && this.bit(r) < o2 && (r.connectTop = true, r.connectBottom = true);
+        let o2 = Math.min(...n), a = Math.max(...n);
+        o2 < this.bit(r) && this.bit(r) < a && (r.connectTop = true, r.connectBottom = true);
       }
     }
   }
@@ -14537,16 +14537,16 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
       let n = i.operation;
       if (n.angle === "" || t !== void 0 && t.maxPhasePhaseTargetGates === 1)
         continue;
-      let r = e.filter((a) => {
-        if (!bt(a.operation))
-          throw new Error(`${a.operation} isn't a phase-gate element.`);
-        return n.angle === a.operation.angle;
-      }).map((a) => this.bit(a));
-      t !== void 0 && t.maxPhasePhaseTargetGates > 1 && (r = r.slice(0, t.maxPhasePhaseTargetGates)), !!r.includes(this.bit(i)) && (i.connectTop = r.some((a) => a < this.bit(i)), i.connectBottom = r.some((a) => a > this.bit(i)));
+      let r = e.filter((o2) => {
+        if (!bt(o2.operation))
+          throw new Error(`${o2.operation} isn't a phase-gate element.`);
+        return n.angle === o2.operation.angle;
+      }).map((o2) => this.bit(o2));
+      t !== void 0 && t.maxPhasePhaseTargetGates > 1 && (r = r.slice(0, t.maxPhasePhaseTargetGates)), !!r.includes(this.bit(i)) && (i.connectTop = r.some((o2) => o2 < this.bit(i)), i.connectBottom = r.some((o2) => o2 > this.bit(i)));
     }
     for (let i of this.freeDropzones) {
-      let r = this.phaseGateDropzones.filter((d2) => d2.connectTop || d2.connectBottom).map((d2) => this.bit(d2)), a = Math.min(...r), o2 = Math.max(...r);
-      a < this.bit(i) && this.bit(i) < o2 && (i.connectTop = true, i.connectBottom = true);
+      let r = this.phaseGateDropzones.filter((c2) => c2.connectTop || c2.connectBottom).map((c2) => this.bit(c2)), o2 = Math.min(...r), a = Math.max(...r);
+      o2 < this.bit(i) && this.bit(i) < a && (i.connectTop = true, i.connectBottom = true);
     }
   }
   updateControlControlConnections(t) {
@@ -14554,26 +14554,26 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
     t !== void 0 && (t.maxControlControlTargetGates === 1 ? i = [] : t.maxControlControlTargetGates > 1 && (i = i.slice(0, t.maxControlControlTargetGates)));
     for (let r of e) {
       n += 1;
-      let a = r.operation;
-      (t == null ? void 0 : t.disableControlControl) || t !== void 0 && (t.maxControlControlTargetGates === 1 || t.maxControlControlTargetGates > 0 && n > t.maxControlControlTargetGates) ? a.disable() : (a.enable(), r.connectTop = i.some((o2) => this.bit(r) > o2), r.connectBottom = i.some((o2) => this.bit(r) < o2));
+      let o2 = r.operation;
+      (t == null ? void 0 : t.disableControlControl) || t !== void 0 && (t.maxControlControlTargetGates === 1 || t.maxControlControlTargetGates > 0 && n > t.maxControlControlTargetGates) ? o2.disable() : (o2.enable(), r.connectTop = i.some((a) => this.bit(r) > a), r.connectBottom = i.some((a) => this.bit(r) < a));
     }
   }
   updateControlledUConnections(t) {
-    let e = this.controllableDropzones(t), i = this.controlGateDropzones, n = [...new Set(e.map((m2) => m2.operationName))], r = this.numControlGateDropzones(t, n), a = i.map((m2) => this.bit(m2)), o2 = r === null ? a : a.slice(0, r), d2 = e.map((m2) => this.bit(m2)), c2 = o2.concat(d2);
+    let e = this.controllableDropzones(t), i = this.controlGateDropzones, n = [...new Set(e.map((m2) => m2.operationName))], r = this.numControlGateDropzones(t, n), o2 = i.map((m2) => this.bit(m2)), a = r === null ? o2 : o2.slice(0, r), c2 = e.map((m2) => this.bit(m2)), d2 = a.concat(c2);
     for (let [m2, h2] of Object.entries(i)) {
       let u2 = h2.operation;
-      h2.connectBottom = c2.some((T) => this.bit(h2) < T), h2.connectTop = c2.some((T) => this.bit(h2) > T), r === null || r !== null && parseInt(m2) < r ? u2.enable() : (h2.connectTop = Math.max(...c2) > this.bit(h2), u2.disable());
+      h2.connectBottom = d2.some((w2) => this.bit(h2) < w2), h2.connectTop = d2.some((w2) => this.bit(h2) > w2), r === null || r !== null && parseInt(m2) < r ? u2.enable() : (h2.connectTop = Math.max(...d2) > this.bit(h2), u2.disable());
     }
     for (let m2 of e) {
       if (!rt(m2.operation))
         throw new Error(`${m2.operation} isn't controllable.`);
-      m2.operation.controls = this.controlBits(m2, a, t), m2.connectTop = c2.some((h2) => h2 < this.bit(m2)), m2.connectBottom = c2.some((h2) => h2 > this.bit(m2));
+      m2.operation.controls = this.controlBits(m2, o2, t), m2.connectTop = d2.some((h2) => h2 < this.bit(m2)), m2.connectBottom = d2.some((h2) => h2 > this.bit(m2));
     }
   }
   updateFreeDropzoneConnections(t) {
-    let e = this.controllableDropzones(t), i = this.controlGateDropzones.filter((d2) => Ft(d2.operation) && !d2.operation.disabled).map((d2) => this.bit(d2)), n = e.map((d2) => this.bit(d2)), r = i.concat(n), a = Math.min(...r), o2 = Math.max(...r);
-    for (let d2 of this.freeDropzones)
-      a < this.bit(d2) && this.bit(d2) < o2 && (d2.connectTop = true, d2.connectBottom = true);
+    let e = this.controllableDropzones(t), i = this.controlGateDropzones.filter((c2) => Ft(c2.operation) && !c2.operation.disabled).map((c2) => this.bit(c2)), n = e.map((c2) => this.bit(c2)), r = i.concat(n), o2 = Math.min(...r), a = Math.max(...r);
+    for (let c2 of this.freeDropzones)
+      o2 < this.bit(c2) && this.bit(c2) < a && (c2.connectTop = true, c2.connectBottom = true);
   }
   controlBits(t, e, i) {
     let n = e;
@@ -14623,8 +14623,8 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
     return e.includes("h-gate") && !t.disableCh && t.maxChControlGates > i && (i = t.maxChControlGates), e.includes("x-gate") && !t.disableCnot && t.maxCnotControlGates > i && (i = t.maxCnotControlGates), e.includes("y-gate") && !t.disableCy && t.maxCyControlGates > i && (i = t.maxCyControlGates), e.includes("z-gate") && !t.disableCz && t.maxCzControlGates > i && (i = t.maxCzControlGates), e.includes("phase-gate") && !t.disableCphase && t.maxCphaseControlGates > i && (i = t.maxCphaseControlGates), e.includes("t-gate") && !t.disableCt && t.maxCtControlGates > i && (i = t.maxCtControlGates), e.includes("rnot-gate") && !t.disableCrnot && t.maxCrnotControlGates > i && (i = t.maxCrnotControlGates), e.includes("rx-gate") && !t.disableCrx && t.maxCrxControlGates > i && (i = t.maxCrxControlGates), e.includes("ry-gate") && !t.disableCry && t.maxCryControlGates > i && (i = t.maxCryControlGates), e.includes("rz-gate") && !t.disableCrz && t.maxCrzControlGates > i && (i = t.maxCrzControlGates), e.includes("swap-gate") && !t.disableCswap && t.maxCswapControlGates > i && (i = t.maxCswapControlGates), i === 0 ? null : i;
   }
   controllableDropzones(t) {
-    let e = 0, i = 0, n = 0, r = 0, a = 0, o2 = 0, d2 = 0, c2 = 0, m2 = 0, h2 = 0;
-    return this.dropzones.filter((u2) => u2.occupied).filter((u2) => rt(u2.operation)).filter((u2) => t === void 0 ? true : Se2(u2.operation) ? (e += 1, t.maxChTargetGates !== 0 && e > t.maxChTargetGates ? false : !t.disableCh) : Ge(u2.operation) ? (i += 1, t.maxCnotTargetGates !== 0 && i > t.maxCnotTargetGates ? false : !t.disableCnot) : Oe(u2.operation) ? (n += 1, t.maxCyTargetGates !== 0 && n > t.maxCyTargetGates ? false : !t.disableCy) : Ie2(u2.operation) ? (r += 1, t.maxCzTargetGates !== 0 && r > t.maxCzTargetGates ? false : !t.disableCz) : bt(u2.operation) ? (a += 1, t.maxCphaseTargetGates !== 0 && a > t.maxCphaseTargetGates ? false : !t.disableCphase) : ze(u2.operation) ? (o2 += 1, t.maxCtTargetGates !== 0 && o2 > t.maxCtTargetGates ? false : !t.disableCt) : Ae(u2.operation) ? (d2 += 1, t.maxCrnotTargetGates !== 0 && d2 > t.maxCrnotTargetGates ? false : !t.disableCrnot) : wt(u2.operation) ? (c2 += 1, t.maxCrxTargetGates !== 0 && c2 > t.maxCrxTargetGates ? false : !t.disableCrx) : Tt(u2.operation) ? (m2 += 1, t.maxCryTargetGates !== 0 && m2 > t.maxCryTargetGates ? false : !t.disableCry) : St(u2.operation) ? (h2 += 1, t.maxCrzTargetGates !== 0 && h2 > t.maxCrzTargetGates ? false : !t.disableCrz) : _e(u2.operation) ? !t.disableCswap : true);
+    let e = 0, i = 0, n = 0, r = 0, o2 = 0, a = 0, c2 = 0, d2 = 0, m2 = 0, h2 = 0;
+    return this.dropzones.filter((u2) => u2.occupied).filter((u2) => rt(u2.operation)).filter((u2) => t === void 0 ? true : Se2(u2.operation) ? (e += 1, t.maxChTargetGates !== 0 && e > t.maxChTargetGates ? false : !t.disableCh) : Ge(u2.operation) ? (i += 1, t.maxCnotTargetGates !== 0 && i > t.maxCnotTargetGates ? false : !t.disableCnot) : Oe(u2.operation) ? (n += 1, t.maxCyTargetGates !== 0 && n > t.maxCyTargetGates ? false : !t.disableCy) : Ie2(u2.operation) ? (r += 1, t.maxCzTargetGates !== 0 && r > t.maxCzTargetGates ? false : !t.disableCz) : bt(u2.operation) ? (o2 += 1, t.maxCphaseTargetGates !== 0 && o2 > t.maxCphaseTargetGates ? false : !t.disableCphase) : ze(u2.operation) ? (a += 1, t.maxCtTargetGates !== 0 && a > t.maxCtTargetGates ? false : !t.disableCt) : Ae(u2.operation) ? (c2 += 1, t.maxCrnotTargetGates !== 0 && c2 > t.maxCrnotTargetGates ? false : !t.disableCrnot) : Tt(u2.operation) ? (d2 += 1, t.maxCrxTargetGates !== 0 && d2 > t.maxCrxTargetGates ? false : !t.disableCrx) : wt(u2.operation) ? (m2 += 1, t.maxCryTargetGates !== 0 && m2 > t.maxCryTargetGates ? false : !t.disableCry) : St(u2.operation) ? (h2 += 1, t.maxCrzTargetGates !== 0 && h2 > t.maxCrzTargetGates ? false : !t.disableCrz) : _e(u2.operation) ? !t.disableCswap : true);
   }
   dispatchUpdateEvent() {
     this.dispatchEvent(new Event("circuit-step-update", { bubbles: true }));
@@ -14659,136 +14659,136 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   serialize() {
     let t = [];
-    for (let [e, i] of w2(this.operations, (n) => n.constructor))
+    for (let [e, i] of T(this.operations, (n) => n.constructor))
       switch (e) {
-        case D2: {
+        case N2: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
-            }
-          break;
-        }
-        case F2: {
-          let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
             }
           break;
         }
         case W2: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
             }
           break;
         }
         case V2: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
             }
           break;
         }
-        case N2: {
+        case Y: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.angle))
-            for (let [o2, d2] of w2(a, (c2) => c2.if))
-              for (let [c2, m2] of w2(d2, (h2) => h2.controls.toString())) {
-                let h2 = m2[0], u2 = h2.operationType, T = m2.map((it) => it.bit), z2 = { type: u2, targets: T };
-                o2 !== "" && (z2.if = o2), r !== "" && (z2.angle = r), c2 !== "" && (z2.controls = h2.controls), t.push(z2);
-              }
-          break;
-        }
-        case B: {
-          let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
             }
           break;
         }
         case L: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.if))
-            for (let [o2, d2] of w2(a, (c2) => c2.controls.toString())) {
-              let c2 = d2[0], m2 = c2.operationType, h2 = d2.map((T) => T.bit), u2 = { type: m2, targets: h2 };
-              r !== "" && (u2.if = r), o2 !== "" && (u2.controls = c2.controls), t.push(u2);
+          for (let [r, o2] of T(n, (a) => a.angle))
+            for (let [a, c2] of T(o2, (d2) => d2.if))
+              for (let [d2, m2] of T(c2, (h2) => h2.controls.toString())) {
+                let h2 = m2[0], u2 = h2.operationType, w2 = m2.map((it) => it.bit), z2 = { type: u2, targets: w2 };
+                a !== "" && (z2.if = a), r !== "" && (z2.angle = r), d2 !== "" && (z2.controls = h2.controls), t.push(z2);
+              }
+          break;
+        }
+        case F2: {
+          let n = i;
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
             }
           break;
         }
         case P: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.angle))
-            for (let [o2, d2] of w2(a, (c2) => c2.if))
-              for (let [c2, m2] of w2(d2, (h2) => h2.controls.toString())) {
-                let h2 = m2[0], u2 = h2.operationType, T = m2.map((it) => it.bit), z2 = { type: u2, targets: T };
-                o2 !== "" && (z2.if = o2), r !== "" && (z2.angle = r), c2 !== "" && (z2.controls = h2.controls), t.push(z2);
-              }
+          for (let [r, o2] of T(n, (a) => a.if))
+            for (let [a, c2] of T(o2, (d2) => d2.controls.toString())) {
+              let d2 = c2[0], m2 = d2.operationType, h2 = c2.map((w2) => w2.bit), u2 = { type: m2, targets: h2 };
+              r !== "" && (u2.if = r), a !== "" && (u2.controls = d2.controls), t.push(u2);
+            }
           break;
         }
         case H2: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.angle))
-            for (let [o2, d2] of w2(a, (c2) => c2.if))
-              for (let [c2, m2] of w2(d2, (h2) => h2.controls.toString())) {
-                let h2 = m2[0], u2 = h2.operationType, T = m2.map((it) => it.bit), z2 = { type: u2, targets: T };
-                o2 !== "" && (z2.if = o2), r !== "" && (z2.angle = r), c2 !== "" && (z2.controls = h2.controls), t.push(z2);
+          for (let [r, o2] of T(n, (a) => a.angle))
+            for (let [a, c2] of T(o2, (d2) => d2.if))
+              for (let [d2, m2] of T(c2, (h2) => h2.controls.toString())) {
+                let h2 = m2[0], u2 = h2.operationType, w2 = m2.map((it) => it.bit), z2 = { type: u2, targets: w2 };
+                a !== "" && (z2.if = a), r !== "" && (z2.angle = r), d2 !== "" && (z2.controls = h2.controls), t.push(z2);
+              }
+          break;
+        }
+        case B: {
+          let n = i;
+          for (let [r, o2] of T(n, (a) => a.angle))
+            for (let [a, c2] of T(o2, (d2) => d2.if))
+              for (let [d2, m2] of T(c2, (h2) => h2.controls.toString())) {
+                let h2 = m2[0], u2 = h2.operationType, w2 = m2.map((it) => it.bit), z2 = { type: u2, targets: w2 };
+                a !== "" && (z2.if = a), r !== "" && (z2.angle = r), d2 !== "" && (z2.controls = h2.controls), t.push(z2);
               }
           break;
         }
         case $: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.angle))
-            for (let [o2, d2] of w2(a, (c2) => c2.if))
-              for (let [c2, m2] of w2(d2, (h2) => h2.controls.toString())) {
-                let h2 = m2[0], u2 = h2.operationType, T = m2.map((it) => it.bit), z2 = { type: u2, targets: T };
-                o2 !== "" && (z2.if = o2), r !== "" && (z2.angle = r), c2 !== "" && (z2.controls = h2.controls), t.push(z2);
+          for (let [r, o2] of T(n, (a) => a.angle))
+            for (let [a, c2] of T(o2, (d2) => d2.if))
+              for (let [d2, m2] of T(c2, (h2) => h2.controls.toString())) {
+                let h2 = m2[0], u2 = h2.operationType, w2 = m2.map((it) => it.bit), z2 = { type: u2, targets: w2 };
+                a !== "" && (z2.if = a), r !== "" && (z2.angle = r), d2 !== "" && (z2.controls = h2.controls), t.push(z2);
               }
           break;
         }
-        case Y: {
-          let n = i.filter((d2) => !d2.disabled);
+        case U: {
+          let n = i.filter((c2) => !c2.disabled);
           if (n.length !== 2)
             break;
-          let r = n[0].operationType, a = n[0].controls, o2 = { type: r, targets: [n[0].bit, n[1].bit] };
-          a !== void 0 && a.length > 0 && (o2.controls = a), t.push(o2);
+          let r = n[0].operationType, o2 = n[0].controls, a = { type: r, targets: [n[0].bit, n[1].bit] };
+          o2 !== void 0 && o2.length > 0 && (a.controls = o2), t.push(a);
           break;
         }
-        case q2: {
-          let n = i.filter((a) => !a.disabled);
-          if (n.length < 2 || this.operations.some((a) => rt(a) && a.controls.length > 0))
+        case R2: {
+          let n = i.filter((o2) => !o2.disabled);
+          if (n.length < 2 || this.operations.some((o2) => rt(o2) && o2.controls.length > 0))
             break;
-          let r = n.map((a) => a.bit);
+          let r = n.map((o2) => o2.bit);
           t.push({ type: n[0].operationType, targets: r });
           break;
         }
         case A2: {
-          let n = i, r = i.map((a) => a.bit);
+          let n = i, r = i.map((o2) => o2.bit);
           t.push({ type: n[0].operationType, targets: r });
           break;
         }
-        case U: {
+        case D2: {
           let n = i;
-          for (let [, r] of w2(n, (a) => a.value)) {
-            let a = r.map((o2) => o2.bit);
-            t.push({ type: r[0].operationType, targets: a });
+          for (let [, r] of T(n, (o2) => o2.value)) {
+            let o2 = r.map((a) => a.bit);
+            t.push({ type: r[0].operationType, targets: o2 });
           }
           break;
         }
         case k: {
           let n = i;
-          for (let [r, a] of w2(n, (o2) => o2.flag)) {
-            let o2 = a.map((m2) => m2.bit), c2 = { type: a[0].operationType, targets: o2 };
-            r !== "" && (c2.flag = r), t.push(c2);
+          for (let [r, o2] of T(n, (a) => a.flag)) {
+            let a = o2.map((m2) => m2.bit), d2 = { type: o2[0].operationType, targets: a };
+            r !== "" && (d2.flag = r), t.push(d2);
           }
           break;
         }
@@ -14806,9 +14806,9 @@ var R2 = /* @__PURE__ */ __name(class extends HTMLElement {
       t.pop();
     return t.length === 0 ? "[1]" : `[${t.join(",")}]`;
   }
-}, "R");
-p2(R2, "CircuitStepElement"), l2([attr], R2.prototype, "active", 2), l2([attr], R2.prototype, "breakpoint", 2), l2([attr], R2.prototype, "shadow", 2), l2([attr], R2.prototype, "keep", 2), l2([attr], R2.prototype, "debug", 2);
-controller(R2);
+}, "q");
+p2(q2, "CircuitStepElement"), l2([attr], q2.prototype, "active", 2), l2([attr], q2.prototype, "breakpoint", 2), l2([attr], q2.prototype, "shadow", 2), l2([attr], q2.prototype, "keep", 2), l2([attr], q2.prototype, "debug", 2);
+controller(q2);
 var dt = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);
@@ -14828,8 +14828,8 @@ var dt = /* @__PURE__ */ __name(class extends HTMLElement {
       if (i.snapped = true, n.dropzone === null) {
         let r = n.stepIndex;
         m.notNull(r);
-        let a = this.circuit.addShadowStepAfter(r), o2 = a.dropzones[n.wireIndex];
-        m.notNull(o2), o2.append(i), o2.operationName = i.tagName.toLocaleLowerCase(), this.circuit.updateSnapTargets(a.dropzones);
+        let o2 = this.circuit.addShadowStepAfter(r), a = o2.dropzones[n.wireIndex];
+        m.notNull(a), a.append(i), a.operationName = i.tagName.toLocaleLowerCase(), this.circuit.updateSnapTargets(o2.dropzones);
       } else
         n.dropzone.append(i);
     }, addDocumentCursorGrabbingStyle: () => {
@@ -14995,8 +14995,8 @@ var dt = /* @__PURE__ */ __name(class extends HTMLElement {
     let e = t.target;
     if (!O2(e))
       throw new Error(`${e} must be an Operation.`);
-    let n = t.detail.snapTargetInfo, r = n.x, a = n.y;
-    this.circuitEditorService.send({ type: "OPERATION_IN_SNAP_RANGE", operation: e, x: r, y: a });
+    let n = t.detail.snapTargetInfo, r = n.x, o2 = n.y;
+    this.circuitEditorService.send({ type: "OPERATION_IN_SNAP_RANGE", operation: e, x: r, y: o2 });
   }
   mouseEnterStep(t) {
     if (this.circuit.editing)
@@ -15158,14 +15158,14 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
   appendMinimumSteps() {
     let t = this.minStepCount - this.steps.length;
     for (let e = 0; e < t; e++)
-      this.append(new R2());
+      this.append(new q2());
   }
   stepAt(t) {
     let e = this.steps[t];
     return m.notNull(e), e;
   }
   addShadowStepAfter(t) {
-    let e = new R2();
+    let e = new q2();
     e.shadow = true;
     for (let i = 0; i < this.wireCount; i++)
       e.appendDropzone();
@@ -15234,7 +15234,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new D2();
+      let n = new N2();
       return i && n.disable(), n;
     }, ...e), this.resize(), this;
   }
@@ -15247,7 +15247,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new F2();
+      let n = new W2();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15260,7 +15260,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new W2();
+      let n = new V2();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15273,7 +15273,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new V2();
+      let n = new Y();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15284,12 +15284,12 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     else if (typeof t[0] == "string")
       e = t[0], i = t.slice(1);
     else {
-      let a = t[0];
-      i = a.targets, n = a.disabled;
+      let o2 = t[0];
+      i = o2.targets, n = o2.disabled;
     }
     let r = this.applyOperationToTargets(() => {
-      let a = new N2();
-      return a.angle = e, n && a.disable(), a;
+      let o2 = new L();
+      return o2.angle = e, n && o2.disable(), o2;
     }, ...i);
     return i.length > 1 && this.updateStepOperationAttributes(r), this;
   }
@@ -15302,7 +15302,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new B();
+      let n = new F2();
       return i && n.disable(), n;
     }, ...e), this.resize(), this;
   }
@@ -15315,7 +15315,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new L();
+      let n = new P();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15328,7 +15328,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new P();
+      let n = new H2();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15341,7 +15341,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       e = n.targets, i = n.disabled;
     }
     return this.applyOperationToTargets(() => {
-      let n = new H2();
+      let n = new B();
       return i && n.disable(), n;
     }, ...e), this;
   }
@@ -15359,11 +15359,11 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     }, ...e), this;
   }
   swap(...t) {
-    let e = this.applyOperationToTargets(() => new Y(), ...t);
+    let e = this.applyOperationToTargets(() => new U(), ...t);
     return this.updateStepOperationAttributes(e), this;
   }
   control(...t) {
-    let e = this.applyOperationToTargets(() => new q2(), ...t);
+    let e = this.applyOperationToTargets(() => new R2(), ...t);
     return this.updateStepOperationAttributes(e), this;
   }
   bloch(...t) {
@@ -15371,7 +15371,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   write(t, ...e) {
     return this.applyOperationToTargets(() => {
-      let i = new U();
+      let i = new D2();
       return i.value = t, i;
     }, ...e), this.resize(), this;
   }
@@ -15381,64 +15381,64 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
   applyOperationToTargets(t, ...e) {
     let i = Math.max(...e) + 1, n = this.appendStepWithDropzones(i);
     for (let r of e) {
-      let a = t();
-      n.dropzoneAt(r).put(a);
+      let o2 = t();
+      n.dropzoneAt(r).put(o2);
     }
     return n;
   }
   ch(t, e) {
-    return this.controlledU(D2, t, e), this;
-  }
-  cnot(t, e) {
-    return this.controlledU(F2, t, e), this.resize(), this;
-  }
-  cy(t, e) {
-    return this.controlledU(W2, t, e), this;
-  }
-  cz(t, e) {
-    return this.controlledU(V2, t, e), this;
-  }
-  cphase(t, e) {
     return this.controlledU(N2, t, e), this;
   }
-  ct(t, e) {
-    return this.controlledU(B, t, e), this;
+  cnot(t, e) {
+    return this.controlledU(W2, t, e), this.resize(), this;
   }
-  crnot(t, e) {
+  cy(t, e) {
+    return this.controlledU(V2, t, e), this;
+  }
+  cz(t, e) {
+    return this.controlledU(Y, t, e), this;
+  }
+  cphase(t, e) {
     return this.controlledU(L, t, e), this;
   }
-  crx(t, e) {
+  ct(t, e) {
+    return this.controlledU(F2, t, e), this;
+  }
+  crnot(t, e) {
     return this.controlledU(P, t, e), this;
   }
-  cry(t, e) {
+  crx(t, e) {
     return this.controlledU(H2, t, e), this;
+  }
+  cry(t, e) {
+    return this.controlledU(B, t, e), this;
   }
   crz(t, e) {
     return this.controlledU($, t, e), this;
   }
   cswap(t, e) {
-    return this.controlledU(Y, t, e), this;
+    return this.controlledU(U, t, e), this;
   }
   cc(...t) {
     let e = Math.max(...t) + 1, i = this.appendStepWithDropzones(e);
     for (let n of t)
-      i.dropzoneAt(n).put(new q2());
+      i.dropzoneAt(n).put(new R2());
     return this.appendMinimumWires(), this.updateStepOperationAttributes(i), this;
   }
   controlledU(t, e, i) {
-    let n = [].concat(e), r = [].concat(i), a = n.concat(r), o2 = Math.max(...a) + 1, d2 = this.appendStepWithDropzones(o2);
-    for (let c2 of n)
-      d2.dropzoneAt(c2).put(new q2());
-    for (let c2 of r)
-      d2.dropzoneAt(c2).put(new t());
-    this.appendMinimumWires(), this.updateStepOperationAttributes(d2);
+    let n = [].concat(e), r = [].concat(i), o2 = n.concat(r), a = Math.max(...o2) + 1, c2 = this.appendStepWithDropzones(a);
+    for (let d2 of n)
+      c2.dropzoneAt(d2).put(new R2());
+    for (let d2 of r)
+      c2.dropzoneAt(d2).put(new t());
+    this.appendMinimumWires(), this.updateStepOperationAttributes(c2);
   }
   appendStep() {
-    let t = new R2(), e = this.blocks.slice(-1)[0] || null;
+    let t = new q2(), e = this.blocks.slice(-1)[0] || null;
     return e === null || e.finalized ? this.append(t) : e.append(t), t;
   }
   appendStepWithDropzones(t) {
-    let e = new R2();
+    let e = new q2();
     this.append(e);
     for (let i = 0; i < t; i++) {
       let n = new _();
@@ -15482,157 +15482,103 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitTitle = (i.title || "").trim();
     for (let n of i.cols) {
       let r = this.appendStep();
-      for (let a of n) {
+      for (let o2 of n) {
         switch (true) {
-          case /^\|0>$/.test(a): {
-            let o2 = new U();
-            o2.hoverable = true, o2.value = "0", r.appendOperation(o2);
+          case /^\|0>$/.test(o2): {
+            let a = new D2();
+            a.hoverable = true, a.value = "0", r.appendOperation(a);
             break;
           }
-          case /^\|1>$/.test(a): {
-            let o2 = new U();
-            o2.hoverable = true, o2.value = "1", r.appendOperation(o2);
+          case /^\|1>$/.test(o2): {
+            let a = new D2();
+            a.hoverable = true, a.value = "1", r.appendOperation(a);
             break;
           }
-          case /^H$/.test(a): {
-            let o2 = new D2();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^H/.test(o2): {
+            let a = new N2(), c2 = ((/^<(.+)$/.exec(o2.slice(1)) || [])[1] || "").trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^H<(.+)$/.test(a): {
-            let o2 = new D2();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case (/^X$/.test(o2) || /^X<(.+)$/.test(o2)): {
+            let a = new W2(), c2 = o2.slice(2).trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^X$/.test(a): {
-            let o2 = new F2();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^Y/.test(o2): {
+            let a = new V2(), c2 = ((/^<(.+)$/.exec(o2.slice(1)) || [])[1] || "").trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^X<(.+)$/.test(a): {
-            let o2 = new F2();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case /^Z/.test(o2): {
+            let a = new Y(), c2 = ((/^<(.+)$/.exec(o2.slice(1)) || [])[1] || "").trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^Y$/.test(a): {
-            let o2 = new W2();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^P/.test(o2): {
+            let a = new L(), c2 = ((/^\((.+)\)$/.exec(o2.slice(1)) || [])[1] || "").trim().replace("_", "/");
+            a.hoverable = true, a.angle = c2, r.appendOperation(a);
             break;
           }
-          case /^Y<(.+)$/.test(a): {
-            let o2 = new W2();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case /^T/.test(o2): {
+            let a = new F2(), c2 = ((/^<(.+)$/.exec(o2.slice(1)) || [])[1] || "").trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^Z$/.test(a): {
-            let o2 = new V2();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^X\^½/.test(o2): {
+            let a = new P(), c2 = ((/^<(.+)$/.exec(o2.slice(3)) || [])[1] || "").trim();
+            a.hoverable = true, a.if = c2, r.appendOperation(a);
             break;
           }
-          case /^Z<(.+)$/.test(a): {
-            let o2 = new V2();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case /^Rx/.test(o2): {
+            let a = new H2(), c2 = ((/^\((.+)\)$/.exec(o2.slice(2)) || [])[1] || "").trim().replace("_", "/");
+            a.hoverable = true, a.angle = c2, r.appendOperation(a);
             break;
           }
-          case /^P$/.test(a): {
-            let o2 = new N2();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^Ry/.test(o2): {
+            let a = new B(), c2 = ((/^\((.+)\)$/.exec(o2.slice(2)) || [])[1] || "").trim().replace("_", "/");
+            a.hoverable = true, a.angle = c2, r.appendOperation(a);
             break;
           }
-          case /^P\((.+)\)$/.test(a): {
-            let o2 = new N2();
-            o2.hoverable = true, o2.angle = RegExp.$1.replace("_", "/"), r.appendOperation(o2);
+          case /^Rz/.test(o2): {
+            let a = new $(), c2 = ((/^\((.+)\)$/.exec(o2.slice(2)) || [])[1] || "").trim().replace("_", "/");
+            a.hoverable = true, a.angle = c2, r.appendOperation(a);
             break;
           }
-          case /^T$/.test(a): {
-            let o2 = new B();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^Swap$/.test(o2): {
+            let a = new U();
+            a.hoverable = true, r.appendOperation(a);
             break;
           }
-          case /^T<(.+)$/.test(a): {
-            let o2 = new B();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case /^•$/.test(o2): {
+            let a = new R2();
+            a.hoverable = true, r.appendOperation(a);
             break;
           }
-          case /^X\^½$/.test(a): {
-            let o2 = new L();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^Bloch$/.test(o2): {
+            let a = new A2();
+            a.hoverable = true, r.appendOperation(a);
             break;
           }
-          case /^X\^½<(.+)$/.test(a): {
-            let o2 = new L();
-            o2.hoverable = true, o2.if = RegExp.$1.trim(), r.appendOperation(o2);
+          case /^Measure/.test(o2): {
+            let a = new k(), c2 = ((/^>(.+)$/.exec(o2.slice(7)) || [])[1] || "").trim();
+            a.hoverable = true, a.flag = c2, r.appendOperation(a);
             break;
           }
-          case /^Rx$/.test(a): {
-            let o2 = new P();
-            o2.hoverable = true, r.appendOperation(o2);
+          case /^[[{](.+)$/.test(o2): {
+            console.log(o2);
+            let a = o2.slice(1);
+            r.remove(), e = new tt(), e.comment = a, e.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(e);
             break;
           }
-          case /^Rx\((.+)\)$/.test(a): {
-            let o2 = new P();
-            o2.hoverable = true, o2.angle = RegExp.$1.replace("_", "/"), r.appendOperation(o2);
-            break;
-          }
-          case /^Ry$/.test(a): {
-            let o2 = new H2();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^Ry\((.+)\)$/.test(a): {
-            let o2 = new H2();
-            o2.hoverable = true, o2.angle = RegExp.$1.replace("_", "/"), r.appendOperation(o2);
-            break;
-          }
-          case /^Rz$/.test(a): {
-            let o2 = new $();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^Rz\((.+)\)$/.test(a): {
-            let o2 = new $();
-            o2.hoverable = true, o2.angle = RegExp.$1.replace("_", "/"), r.appendOperation(o2);
-            break;
-          }
-          case /^Swap$/.test(a): {
-            let o2 = new Y();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^•$/.test(a): {
-            let o2 = new q2();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^Bloch$/.test(a): {
-            let o2 = new A2();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^Measure$/.test(a): {
-            let o2 = new k();
-            o2.hoverable = true, r.appendOperation(o2);
-            break;
-          }
-          case /^Measure>(.+)$/.test(a): {
-            let o2 = new k();
-            o2.hoverable = true, o2.flag = RegExp.$1.trim(), r.appendOperation(o2);
-            break;
-          }
-          case /^[[{](.+)$/.test(a): {
-            let o2 = RegExp.$1;
-            r.remove(), e = new tt(), e.comment = o2, e.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(e);
-            break;
-          }
-          case /^[\]}]$/.test(a): {
+          case /^[\]}]$/.test(o2): {
             r.remove(), e.finalize();
             break;
           }
           default: {
-            if (a === 1)
+            if (o2 === 1)
               r.dropzones.length === r.freeDropzones.length ? r.keep = true : r.keep = false;
             else
-              throw new Error(`Unknown instruction: ${a}`);
+              throw new Error(`Unknown instruction: ${o2}`);
             r.appendDropzone();
           }
         }
@@ -15658,10 +15604,10 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
       else if (n.operationName === "measurement-gate")
         n.inputWireQuantum = e, n.outputWireQuantum = false, e = false;
       else if (n.operationName === "swap-gate") {
-        let r = i.dropzones.filter((a) => a.operationName === "swap-gate");
+        let r = i.dropzones.filter((o2) => o2.operationName === "swap-gate");
         if (r.length === 2) {
-          let a = r.map((m2) => i.bit(m2)), o2 = i.bit(n), d2 = a[0] === o2 ? a[1] : a[0], c2 = i.dropzoneAt(d2);
-          n.inputWireQuantum = e, n.outputWireQuantum = c2.inputWireQuantum, e = c2.inputWireQuantum;
+          let o2 = r.map((m2) => i.bit(m2)), a = i.bit(n), c2 = o2[0] === a ? o2[1] : o2[0], d2 = i.dropzoneAt(c2);
+          n.inputWireQuantum = e, n.outputWireQuantum = d2.inputWireQuantum, e = d2.inputWireQuantum;
         } else
           n.inputWireQuantum = e, n.outputWireQuantum = e;
       } else
@@ -15690,9 +15636,9 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     this.snapTargets = {};
     let n = t.dropzone;
     Kt(n) && e.push(n);
-    for (let [r, a] of Object.entries(this.dropzones)) {
-      let o2 = a.snapTarget, d2 = this.isVertical ? o2.y : o2.x, c2 = this.isVertical ? o2.x : o2.y, m2 = parseInt(r) % this.wireCount, h2 = d2 - t.snapRange * 0.75, u2 = d2 + t.snapRange * 0.75;
-      parseInt(r) < this.wireCount && (this.isVertical ? i.push({ x: c2, y: h2 }) : i.push({ x: h2, y: c2 }), this.snapTargets[h2] === void 0 && (this.snapTargets[h2] = {}), this.snapTargets[h2][c2] === void 0 && (this.snapTargets[h2][c2] = { dropzone: null, stepIndex: -1, wireIndex: m2 })), this.isVertical ? i.push({ x: c2, y: u2 }) : i.push({ x: u2, y: c2 }), this.snapTargets[u2] === void 0 && (this.snapTargets[u2] = {}), this.snapTargets[u2][c2] === void 0 && (this.snapTargets[u2][c2] = { dropzone: null, stepIndex: Math.floor(parseInt(r) / this.wireCount), wireIndex: m2 }), (!a.occupied || a === n) && i.push(o2), this.snapTargets[d2] === void 0 && (this.snapTargets[d2] = {}), this.snapTargets[d2][c2] === void 0 && (this.snapTargets[d2][c2] = { dropzone: a, stepIndex: null, wireIndex: m2 });
+    for (let [r, o2] of Object.entries(this.dropzones)) {
+      let a = o2.snapTarget, c2 = this.isVertical ? a.y : a.x, d2 = this.isVertical ? a.x : a.y, m2 = parseInt(r) % this.wireCount, h2 = c2 - t.snapRange * 0.75, u2 = c2 + t.snapRange * 0.75;
+      parseInt(r) < this.wireCount && (this.isVertical ? i.push({ x: d2, y: h2 }) : i.push({ x: h2, y: d2 }), this.snapTargets[h2] === void 0 && (this.snapTargets[h2] = {}), this.snapTargets[h2][d2] === void 0 && (this.snapTargets[h2][d2] = { dropzone: null, stepIndex: -1, wireIndex: m2 })), this.isVertical ? i.push({ x: d2, y: u2 }) : i.push({ x: u2, y: d2 }), this.snapTargets[u2] === void 0 && (this.snapTargets[u2] = {}), this.snapTargets[u2][d2] === void 0 && (this.snapTargets[u2][d2] = { dropzone: null, stepIndex: Math.floor(parseInt(r) / this.wireCount), wireIndex: m2 }), (!o2.occupied || o2 === n) && i.push(a), this.snapTargets[c2] === void 0 && (this.snapTargets[c2] = {}), this.snapTargets[c2][d2] === void 0 && (this.snapTargets[c2][d2] = { dropzone: o2, stepIndex: null, wireIndex: m2 });
     }
     t.snapTargets = i;
   }
@@ -15702,13 +15648,13 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     let i = this.isVertical ? e.snapTarget.y : e.snapTarget.x;
     for (let [n, r] of Object.entries(this.snapTargets))
       if (!(parseInt(n) <= i))
-        for (let a in r) {
-          let o2 = r[a];
-          o2.stepIndex !== null && (o2.stepIndex += 1);
+        for (let o2 in r) {
+          let a = r[o2];
+          a.stepIndex !== null && (a.stepIndex += 1);
         }
     for (let [n, r] of Object.entries(t)) {
-      let a = r.snapTarget, o2 = this.isVertical ? a.y : a.x, d2 = this.isVertical ? a.x : a.y;
-      m.notNull(this.snapTargets[o2]), this.snapTargets[o2][d2] = { dropzone: r, stepIndex: null, wireIndex: parseInt(n) };
+      let o2 = r.snapTarget, a = this.isVertical ? o2.y : o2.x, c2 = this.isVertical ? o2.x : o2.y;
+      m.notNull(this.snapTargets[a]), this.snapTargets[a][c2] = { dropzone: r, stepIndex: null, wireIndex: parseInt(n) };
     }
   }
   serialize() {
@@ -15758,31 +15704,31 @@ var pt = /* @__PURE__ */ __name(class extends HTMLElement {
     switch (e.type) {
       case "step": {
         let r = this.circuit.stepAt(e.step);
-        for (let a in e.blochVectors) {
-          let o2 = parseInt(a), d2 = r.dropzoneAt(o2).operation;
-          if (Me2(d2)) {
-            let c2 = e.blochVectors[o2];
-            d2.x = c2[0], d2.y = c2[1], d2.z = c2[2];
+        for (let o2 in e.blochVectors) {
+          let a = parseInt(o2), c2 = r.dropzoneAt(a).operation;
+          if (Me2(c2)) {
+            let d2 = e.blochVectors[a];
+            c2.x = d2[0], c2.y = d2[1], c2.z = d2[2];
           }
         }
         if (e.measuredBits) {
-          let a = e.measuredBits;
-          for (let o2 in a) {
-            let d2 = parseInt(o2), c2 = r.dropzoneAt(d2).operation;
-            Re2(c2) && (c2.value = a[d2].toString());
+          let o2 = e.measuredBits;
+          for (let a in o2) {
+            let c2 = parseInt(a), d2 = r.dropzoneAt(c2).operation;
+            qe2(d2) && (d2.value = o2[c2].toString());
           }
         }
-        for (let a of r.dropzones) {
-          let o2 = a.operation;
-          !Z(o2) || o2.if !== "" && (o2.disabled = !e.flags[o2.if]);
+        for (let o2 of r.dropzones) {
+          let a = o2.operation;
+          !Z(a) || a.if !== "" && (a.disabled = !e.flags[a.if]);
         }
         if (i === e.step) {
-          let a = {};
-          for (let o2 in e.amplitudes) {
-            let d2 = e.amplitudes[o2];
-            a[o2] = new h(d2[0], d2[1]);
+          let o2 = {};
+          for (let a in e.amplitudes) {
+            let c2 = e.amplitudes[a];
+            o2[a] = new h(c2[0], c2[1]);
           }
-          (n = this.circleNotation) == null || n.setAmplitudes(a);
+          (n = this.circleNotation) == null || n.setAmplitudes(o2);
         }
         break;
       }
@@ -15800,9 +15746,9 @@ var pt = /* @__PURE__ */ __name(class extends HTMLElement {
       return;
     let t = this.activeStepIndex, e = this.circuit.serialize();
     m.need(e.length > 0, "non-zero step length");
-    let i = Math.max(...e.map((r) => Math.max(...r.map((a) => {
-      let o2 = [];
-      return rt(a) && (o2 = a.controls), Math.max(...a.targets.concat(o2));
+    let i = Math.max(...e.map((r) => Math.max(...r.map((o2) => {
+      let a = [];
+      return rt(o2) && (a = o2.controls), Math.max(...o2.targets.concat(a));
     })))), n = i >= 0 ? i + 1 : 1;
     this.circleNotation.qubitCount = n, this.worker.postMessage({ qubitCount: n, stepIndex: t, steps: e, targets: this.visibleQubitCircleKets });
   }
