@@ -159,18 +159,8 @@ class cirqbridge:
 #        print("until (corrected):", until)
 #        sys.stdout.flush()
         cirq_simulator = cirq.Simulator()
-        counter = 0 
         _data = []
-        print (cirq_simulator.simulate_moment_steps(c)) 
-        print ("homa0")
-        print (measurement_moment)
-        print ("homa1")
-        for i, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
-            print('state at step %s' % np.around(step.state_vector(), 3))
-            print('state at measurement %s' % step.measurements)
-            print('step %s' % step)
-            if len(measurement_moment[i]) != 0:
-                print('measurement_moment %d %s' % (i, measurement_moment[i][0]))
+        for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
             dic = {}
             dic[':measuredBits'] = {}
             dic[':blochVectors'] = {}
@@ -178,7 +168,16 @@ class cirqbridge:
             if counter >= until:
                 dic[':amplitude'] = step.state_vector()
                 break
-            counter = counter + 1;
+        print (step.measurements)
+        for i in range(len(measurement_moment)):
+            print (_data[i])
+            if len(measurement_moment[i]) !=0:
+                for j in range(len(measurement_moment[i][0])):
+                    _key = measurement_moment[i][0][j][0]
+                    _step = i
+                    _value = step.measurements[_key][0]
+                    print(_step, _key, _value)
+
         sys.stdout.flush()
         return _data
 
