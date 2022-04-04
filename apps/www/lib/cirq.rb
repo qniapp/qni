@@ -165,9 +165,8 @@ class cirqbridge:
             dic[':measuredBits'] = {}
             dic[':blochVectors'] = {}
             _data.append(dic)
-            if counter >= until:
+            if counter == until:
                 dic[':amplitude'] = step.state_vector()
-                break
         if len(step.measurements) == 0:
             return _data
 
@@ -181,8 +180,8 @@ class cirqbridge:
                     if _key not in step.measurements:
                         break
                     _value= step.measurements[_key][0]
-#                    print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
-#                    sys.stdout.flush()
+                    print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
+                    sys.stdout.flush()
                     _data[i][':measuredBits'][_qubit] = _value
         return _data
 
@@ -221,7 +220,7 @@ class Cirq
     for var in _result_list do
         hash = {}
         a = var.to_h
-        hash[:measuredBits]=a[":measuredBits"]
+        hash[:measuredBits]=a[":measuredBits"].to_h
         hash[:blochVectors]=a[":blochVectors"]
         result_list.push(hash)
     end
