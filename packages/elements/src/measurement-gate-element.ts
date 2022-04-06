@@ -22,8 +22,10 @@ export class MeasurementGateElement extends MenuableMixin(
 
   update(): void {
     render(
-      html`${this.iconHtml(measurementGateIcon)}
-        <div id="value" part="value"></div>`,
+      html`<div part="body">
+        ${this.iconHtml(measurementGateIcon)}
+        <div id="value" part="value"></div>
+      </div>`,
       this.shadowRoot!
     )
   }

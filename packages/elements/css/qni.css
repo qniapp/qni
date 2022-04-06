@@ -100,23 +100,63 @@
     }
   }
 
+  .operation-transparent {
+    &::part(body) {
+      @apply h-full w-full;
+      @apply rounded;
+    }
+  }
+
   /* data-hoverable */
 
   .operation-hoverable {
-    &[data-hoverable]:hover::after {
-      @apply bg-purple-500 bg-opacity-20;
-      @apply inset-0;
-      @apply rounded;
-    }
-
-    &[data-hoverable][data-active]:hover::after {
-      @apply bg-purple-500 bg-opacity-20;
+    palette-dropzone &[data-hoverable]:hover::after,
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
+      @apply border-2 border-neutral-400;
       @apply rounded-md;
 
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+    }
+  }
+
+  /* data-active */
+
+  .operation-activateable {
+    &[data-active]::after {
+      @apply border-2 border-purple-500;
+      @apply rounded-md;
+
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+    }
+  }
+
+  /* data-grabbed */
+
+  .operation-grabbable {
+    &[data-grabbed] {
+      @apply cursor-grabbing;
+    }
+
+    &[data-grabbed]:not([data-snapped]) {
+      @apply z-40;
+    }
+
+    &[data-grabbed]::part(body) {
+      @apply bg-purple-500;
+    }
+
+    &[data-grabbed]::part(icon) {
+      @apply text-white;
+    }
+
+    &[data-grabbed]::after {
+      @apply border-none;
     }
   }
 
@@ -128,38 +168,8 @@
     }
   }
 
-  /* data-active */
-
-  .operation-activateable {
-    &[data-active]::after {
-      @apply rounded-md;
-      @apply border-2 border-purple-500;
-
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
-    }
-
-    &[data-active][data-grabbed]::after {
-      @apply border-2 border-purple-500;
-      @apply bg-purple-500 bg-opacity-20;
-
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
-    }
-  }
-
   .operation-draggable {
     touch-action: none;
-
-    &[data-grabbed] {
-      @apply cursor-grabbing;
-      @apply bg-white;
-      @apply z-40;
-    }
 
     /* grabbable cursor style */
     circuit-editor palette-dropzone &,
