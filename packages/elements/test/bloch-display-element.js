@@ -1,6 +1,6 @@
 import '../dist/index'
-import {testDraggableOperation} from './common/test-draggable.js'
-import {testElementCreation} from './common/test-element-creation.js'
+import {testDraggableOperation} from './common/test-draggable'
+import {testElementCreation} from './common/test-element-creation'
 
 describe('bloch-display element', function () {
   describe('element creation', function () {

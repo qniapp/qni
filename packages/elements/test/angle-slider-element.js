@@ -1,6 +1,6 @@
 import '../dist/index'
 import {assert} from '@esm-bundle/chai'
-import {testElementCreation} from './common/test-element-creation.js'
+import {testElementCreation} from './common/test-element-creation'
 
 describe('angle-slider element', function () {
   describe('element creation', function () {
