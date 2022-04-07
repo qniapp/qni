@@ -9,7 +9,7 @@ describe('bloch-display element', function () {
   })
 
   describe('activateable', function () {
-    testActivateable('x-gate')
+    testActivateable('bloch-display')
   })
 
   describe('draggable', function () {
