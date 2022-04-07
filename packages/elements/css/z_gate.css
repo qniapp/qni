@@ -3,6 +3,7 @@ z-gate {
   @apply operation-activateable;
   @apply operation-disableable;
   @apply operation-draggable;
+  @apply operation-grabbable;
   @apply operation-hoverable;
   @apply operation-ifable;
   @apply operation-square;

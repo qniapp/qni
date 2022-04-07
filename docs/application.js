@@ -12708,7 +12708,7 @@ var R2 = /* @__PURE__ */ __name(class extends y(E(v(S(C(g(x(HTMLElement))))))) {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
   }
   update() {
-    render2(html`${this.iconHtml(pe)}`, this.shadowRoot);
+    render2(html`<div part="body">${this.iconHtml(pe)}</div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Fe}"`;
@@ -12754,8 +12754,8 @@ var k = /* @__PURE__ */ __name(class extends y(E(ne(v(C(g(x(HTMLElement))))))) {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
   }
   update() {
-    render2(html`${this.iconHtml(ue)}
-        <div id="value" part="value"></div>`, this.shadowRoot);
+    render2(html`<div part="body">${this.iconHtml(ue)}
+        <div id="value" part="value"></div></div>`, this.shadowRoot);
   }
   toJson() {
     return this.flag === "" ? `"${ve}"` : `"${ve}>${this.flag}"`;
@@ -12898,7 +12898,7 @@ var U = /* @__PURE__ */ __name(class extends y(E(G2(v(S(C(g(x(HTMLElement)))))))
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
   }
   update() {
-    render2(html`${this.iconHtml(ve2)}`, this.shadowRoot);
+    render2(html`<div part="body">${this.iconHtml(ve2)}</div>`, this.shadowRoot);
   }
   toJson() {
     return `"${Me}"`;
@@ -12949,8 +12949,8 @@ var D2 = /* @__PURE__ */ __name(class extends y(E(v(C(g(x(HTMLElement)))))) {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update());
   }
   update() {
-    render2(html`${this.iconHtml(ye2)}
-        <div part="value"></div>`, this.shadowRoot);
+    render2(html`<div part="body">${this.iconHtml(ye2)}
+        <div part="value"></div></div>`, this.shadowRoot);
   }
   toJson() {
     return `"|${this.value}>"`;

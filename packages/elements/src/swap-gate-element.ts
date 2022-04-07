@@ -29,7 +29,7 @@ export class SwapGateElement extends MenuableMixin(
   }
 
   update(): void {
-    render(html`${this.iconHtml(swapGateIcon)}`, this.shadowRoot!)
+    render(html`<div part="body">${this.iconHtml(swapGateIcon)}</div>`, this.shadowRoot!)
   }
 
   toJson(): string {
