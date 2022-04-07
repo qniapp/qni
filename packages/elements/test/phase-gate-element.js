@@ -3,6 +3,7 @@ import {testActivateable} from './common/test-activateable'
 import {testDisableable} from './common/test-disableable'
 import {testDraggableOperation} from './common/test-draggable'
 import {testElementCreation} from './common/test-element-creation'
+import {testHoverable} from './common/test-hoverable'
 import {testIconable} from './common/test-iconable'
 import {testWireableOperation} from './common/test-wireable'
 
@@ -16,6 +17,10 @@ describe('phase-gate element', function () {
 
   describe('element creation', function () {
     testElementCreation(window.PhaseGateElement, 'phase-gate')
+  })
+
+  describe('hoverable', function () {
+    testHoverable('phase-gate')
   })
 
   describe('activateable', function () {
