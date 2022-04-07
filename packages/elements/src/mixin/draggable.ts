@@ -136,8 +136,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           dropped: {
             entry: ['drop'],
             always: [
-              {target: 'grabbable', cond: 'droppedOnCircuitDropzone'},
-              {target: 'deleted', cond: 'trashed'}
+              {target: 'grabbable', cond: 'isDroppedOnCircuitDropzone'},
+              {target: 'deleted', cond: 'isTrashed'}
             ]
           },
           deleted: {
@@ -218,17 +218,17 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           isOnPaletteDropzone: () => {
             return isPaletteDropzoneElement(this.dropzone)
           },
-          droppedOnCircuitDropzone: () => {
+          isDroppedOnCircuitDropzone: () => {
             return this.snapped && isCircuitDropzoneElement(this.dropzone)
           },
-          trashed: () => {
+          isTrashed: () => {
             return !this.snapped
           }
         }
       }
     )
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
+    public draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
 
     set draggable(value: boolean) {
       this.maybeInitStateMachine()

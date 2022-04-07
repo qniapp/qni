@@ -6,6 +6,20 @@ export function testDraggableOperation(operationName) {
     document.body.textContent = ''
   })
 
+  it('should reach "grabbable" given "idle" when the "SET_INTERACT" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+
+    operation.draggable = true
+
+    assert.equal(operation.draggableService.state.value, 'grabbable')
+  })
+
   it(`dispatches operation-grab event on mousedown`, async function () {
     const container = document.createElement('div')
     container.innerHTML = `
