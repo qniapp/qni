@@ -3,12 +3,17 @@ import {testActivateable} from './common/test-activateable'
 import {testDisableable} from './common/test-disableable'
 import {testDraggableOperation} from './common/test-draggable'
 import {testElementCreation} from './common/test-element-creation'
+import {testHoverable} from './common/test-hoverable'
 import {testIconable} from './common/test-iconable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('rnot-gate element', function () {
   describe('element creation', function () {
     testElementCreation(window.RnotGateElement, 'rnot-gate')
+  })
+
+  describe('hoverable', function () {
+    testHoverable('rnot-gate')
   })
 
   describe('activateable', function () {
