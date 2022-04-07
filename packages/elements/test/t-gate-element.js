@@ -1,4 +1,5 @@
 import '../dist/index'
+import {testActivateable} from './common/test-activateable'
 import {testDisableable} from './common/test-disableable.js'
 import {testDraggableOperation} from './common/test-draggable.js'
 import {testElementCreation} from './common/test-element-creation.js'
@@ -8,6 +9,10 @@ import {testWireableOperation} from './common/test-wireable.js'
 describe('t-gate element', function () {
   describe('element creation', function () {
     testElementCreation(window.TGateElement, 't-gate')
+  })
+
+  describe('activateable', function () {
+    testActivateable('t-gate')
   })
 
   describe('iconable', function () {
