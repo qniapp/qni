@@ -3,6 +3,8 @@ import {Constructor} from './constructor'
 export declare class Activateable {
   get active(): boolean
   set active(value: boolean)
+  activate(): void
+  deactivate(): void
 }
 
 export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
@@ -15,11 +17,19 @@ export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
 
     set active(value: boolean) {
       if (value) {
-        this.setAttribute('data-active', '')
-        this.dispatchEvent(new Event('operation-active', {bubbles: true}))
+        this.activate()
       } else {
-        this.removeAttribute('data-active')
+        this.deactivate()
       }
+    }
+
+    activate() {
+      this.setAttribute('data-active', '')
+      this.dispatchEvent(new Event('operation-active', {bubbles: true}))
+    }
+
+    deactivate() {
+      this.removeAttribute('data-active')
     }
   }
 
