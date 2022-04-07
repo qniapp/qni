@@ -1,4 +1,5 @@
 import {assert} from '@esm-bundle/chai'
+import {once} from './once'
 
 export function testActivateable(operationName) {
   beforeEach(function () {
@@ -42,12 +43,5 @@ export function testActivateable(operationName) {
     operation.activate()
 
     await activeEvent
-  })
-}
-
-// TODO: 他の once と一緒に一箇所にまとめる
-function once(element, eventName) {
-  return new Promise(resolve => {
-    element.addEventListener(eventName, resolve, {once: true})
   })
 }
