@@ -4742,6 +4742,56 @@ function __spreadArray(to, from, pack) {
 }
 __name(__spreadArray, "__spreadArray");
 
+// ../../node_modules/xstate/es/types.js
+var ActionTypes;
+(function(ActionTypes2) {
+  ActionTypes2["Start"] = "xstate.start";
+  ActionTypes2["Stop"] = "xstate.stop";
+  ActionTypes2["Raise"] = "xstate.raise";
+  ActionTypes2["Send"] = "xstate.send";
+  ActionTypes2["Cancel"] = "xstate.cancel";
+  ActionTypes2["NullEvent"] = "";
+  ActionTypes2["Assign"] = "xstate.assign";
+  ActionTypes2["After"] = "xstate.after";
+  ActionTypes2["DoneState"] = "done.state";
+  ActionTypes2["DoneInvoke"] = "done.invoke";
+  ActionTypes2["Log"] = "xstate.log";
+  ActionTypes2["Init"] = "xstate.init";
+  ActionTypes2["Invoke"] = "xstate.invoke";
+  ActionTypes2["ErrorExecution"] = "error.execution";
+  ActionTypes2["ErrorCommunication"] = "error.communication";
+  ActionTypes2["ErrorPlatform"] = "error.platform";
+  ActionTypes2["ErrorCustom"] = "xstate.error";
+  ActionTypes2["Update"] = "xstate.update";
+  ActionTypes2["Pure"] = "xstate.pure";
+  ActionTypes2["Choose"] = "xstate.choose";
+})(ActionTypes || (ActionTypes = {}));
+var SpecialTargets;
+(function(SpecialTargets2) {
+  SpecialTargets2["Parent"] = "#_parent";
+  SpecialTargets2["Internal"] = "#_internal";
+})(SpecialTargets || (SpecialTargets = {}));
+
+// ../../node_modules/xstate/es/actionTypes.js
+var start = ActionTypes.Start;
+var stop = ActionTypes.Stop;
+var raise = ActionTypes.Raise;
+var send = ActionTypes.Send;
+var cancel = ActionTypes.Cancel;
+var nullEvent = ActionTypes.NullEvent;
+var assign = ActionTypes.Assign;
+var after = ActionTypes.After;
+var doneState = ActionTypes.DoneState;
+var log = ActionTypes.Log;
+var init = ActionTypes.Init;
+var invoke = ActionTypes.Invoke;
+var errorExecution = ActionTypes.ErrorExecution;
+var errorPlatform = ActionTypes.ErrorPlatform;
+var error = ActionTypes.ErrorCustom;
+var update = ActionTypes.Update;
+var choose = ActionTypes.Choose;
+var pure = ActionTypes.Pure;
+
 // ../../node_modules/xstate/es/constants.js
 var STATE_DELIMITER = ".";
 var EMPTY_ACTIVITY_MAP = {};
@@ -4753,10 +4803,6 @@ var IS_PRODUCTION = false;
 
 // ../../node_modules/xstate/es/utils.js
 var _a;
-function keys(value) {
-  return Object.keys(value);
-}
-__name(keys, "keys");
 function matchesState(parentStateId, childStateId, delimiter) {
   if (delimiter === void 0) {
     delimiter = STATE_DELIMITER;
@@ -4772,7 +4818,7 @@ function matchesState(parentStateId, childStateId, delimiter) {
   if (isString(parentStateValue)) {
     return parentStateValue in childStateValue;
   }
-  return keys(parentStateValue).every(function(key) {
+  return Object.keys(parentStateValue).every(function(key) {
     if (!(key in childStateValue)) {
       return false;
     }
@@ -4836,7 +4882,7 @@ function pathToStateValue(statePath) {
 __name(pathToStateValue, "pathToStateValue");
 function mapValues(collection, iteratee) {
   var result = {};
-  var collectionKeys = keys(collection);
+  var collectionKeys = Object.keys(collection);
   for (var i = 0; i < collectionKeys.length; i++) {
     var key = collectionKeys[i];
     result[key] = iteratee(collection[key], key, collection, i);
@@ -4848,7 +4894,7 @@ function mapFilterValues(collection, iteratee, predicate) {
   var e_1, _a2;
   var result = {};
   try {
-    for (var _b = __values(keys(collection)), _c = _b.next(); !_c.done; _c = _b.next()) {
+    for (var _b = __values(Object.keys(collection)), _c = _b.next(); !_c.done; _c = _b.next()) {
       var key = _c.value;
       var item = collection[key];
       if (!predicate(item)) {
@@ -4930,7 +4976,7 @@ function toStatePaths(stateValue) {
   if (isString(stateValue)) {
     return [[stateValue]];
   }
-  var result = flatten(keys(stateValue).map(function(key) {
+  var result = flatten(Object.keys(stateValue).map(function(key) {
     var subStateValue = stateValue[key];
     if (typeof subStateValue !== "string" && (!subStateValue || !Object.keys(subStateValue).length)) {
       return [[key]];
@@ -5079,7 +5125,7 @@ function updateContext(context, _event, assignActions, state) {
       partialUpdate = assignment(acc, _event.data, meta);
     } else {
       try {
-        for (var _b = __values(keys(assignment)), _c = _b.next(); !_c.done; _c = _b.next()) {
+        for (var _b = __values(Object.keys(assignment)), _c = _b.next(); !_c.done; _c = _b.next()) {
           var key = _c.value;
           var propAssignment = assignment[key];
           partialUpdate[key] = isFunction(propAssignment) ? propAssignment(acc, _event.data, meta) : propAssignment;
@@ -5166,13 +5212,11 @@ var symbolObservable = /* @__PURE__ */ function() {
 }();
 var interopSymbols = (_a = {}, _a[symbolObservable] = function() {
   return this;
+}, _a[Symbol.observable] = function() {
+  return this;
 }, _a);
 function isMachine(value) {
-  try {
-    return "__xstatenode" in value;
-  } catch (e) {
-    return false;
-  }
+  return !!value && "__xstatenode" in value;
 }
 __name(isMachine, "isMachine");
 function isActor(value) {
@@ -5245,7 +5289,7 @@ function evaluateGuard(machine, guard, context, _event, state) {
   if (guard.type === DEFAULT_GUARD_TYPE) {
     return ((guards === null || guards === void 0 ? void 0 : guards[guard.name]) || guard.predicate)(context, _event.data, guardMeta);
   }
-  var condFn = guards[guard.type];
+  var condFn = guards === null || guards === void 0 ? void 0 : guards[guard.type];
   if (!condFn) {
     throw new Error("Guard '".concat(guard.type, "' is not implemented on machine '").concat(machine.id, "'."));
   }
@@ -5279,56 +5323,6 @@ function createInvokeId(stateNodeId, index) {
   return "".concat(stateNodeId, ":invocation[").concat(index, "]");
 }
 __name(createInvokeId, "createInvokeId");
-
-// ../../node_modules/xstate/es/types.js
-var ActionTypes;
-(function(ActionTypes2) {
-  ActionTypes2["Start"] = "xstate.start";
-  ActionTypes2["Stop"] = "xstate.stop";
-  ActionTypes2["Raise"] = "xstate.raise";
-  ActionTypes2["Send"] = "xstate.send";
-  ActionTypes2["Cancel"] = "xstate.cancel";
-  ActionTypes2["NullEvent"] = "";
-  ActionTypes2["Assign"] = "xstate.assign";
-  ActionTypes2["After"] = "xstate.after";
-  ActionTypes2["DoneState"] = "done.state";
-  ActionTypes2["DoneInvoke"] = "done.invoke";
-  ActionTypes2["Log"] = "xstate.log";
-  ActionTypes2["Init"] = "xstate.init";
-  ActionTypes2["Invoke"] = "xstate.invoke";
-  ActionTypes2["ErrorExecution"] = "error.execution";
-  ActionTypes2["ErrorCommunication"] = "error.communication";
-  ActionTypes2["ErrorPlatform"] = "error.platform";
-  ActionTypes2["ErrorCustom"] = "xstate.error";
-  ActionTypes2["Update"] = "xstate.update";
-  ActionTypes2["Pure"] = "xstate.pure";
-  ActionTypes2["Choose"] = "xstate.choose";
-})(ActionTypes || (ActionTypes = {}));
-var SpecialTargets;
-(function(SpecialTargets2) {
-  SpecialTargets2["Parent"] = "#_parent";
-  SpecialTargets2["Internal"] = "#_internal";
-})(SpecialTargets || (SpecialTargets = {}));
-
-// ../../node_modules/xstate/es/actionTypes.js
-var start = ActionTypes.Start;
-var stop = ActionTypes.Stop;
-var raise = ActionTypes.Raise;
-var send = ActionTypes.Send;
-var cancel = ActionTypes.Cancel;
-var nullEvent = ActionTypes.NullEvent;
-var assign = ActionTypes.Assign;
-var after = ActionTypes.After;
-var doneState = ActionTypes.DoneState;
-var log = ActionTypes.Log;
-var init = ActionTypes.Init;
-var invoke = ActionTypes.Invoke;
-var errorExecution = ActionTypes.ErrorExecution;
-var errorPlatform = ActionTypes.ErrorPlatform;
-var error = ActionTypes.ErrorCustom;
-var update = ActionTypes.Update;
-var choose = ActionTypes.Choose;
-var pure = ActionTypes.Pure;
 
 // ../../node_modules/xstate/es/actions.js
 var initEvent = /* @__PURE__ */ toSCXMLEvent({
@@ -5608,12 +5602,105 @@ function resolveActions(machine, currentState, currentContext, _event, actions, 
 }
 __name(resolveActions, "resolveActions");
 
+// ../../node_modules/xstate/es/serviceScope.js
+var serviceStack = [];
+var provide = /* @__PURE__ */ __name(function(service, fn2) {
+  serviceStack.push(service);
+  var result = fn2(service);
+  serviceStack.pop();
+  return result;
+}, "provide");
+
+// ../../node_modules/xstate/es/Actor.js
+function createNullActor(id) {
+  var _a2;
+  return _a2 = {
+    id,
+    send: function() {
+      return void 0;
+    },
+    subscribe: function() {
+      return {
+        unsubscribe: function() {
+          return void 0;
+        }
+      };
+    },
+    getSnapshot: function() {
+      return void 0;
+    },
+    toJSON: function() {
+      return {
+        id
+      };
+    }
+  }, _a2[symbolObservable] = function() {
+    return this;
+  }, _a2;
+}
+__name(createNullActor, "createNullActor");
+function createInvocableActor(invokeDefinition, machine, context, _event) {
+  var _a2;
+  var invokeSrc = toInvokeSource(invokeDefinition.src);
+  var serviceCreator = (_a2 = machine === null || machine === void 0 ? void 0 : machine.options.services) === null || _a2 === void 0 ? void 0 : _a2[invokeSrc.type];
+  var resolvedData = invokeDefinition.data ? mapContext(invokeDefinition.data, context, _event) : void 0;
+  var tempActor = serviceCreator ? createDeferredActor(serviceCreator, invokeDefinition.id, resolvedData) : createNullActor(invokeDefinition.id);
+  tempActor.meta = invokeDefinition;
+  return tempActor;
+}
+__name(createInvocableActor, "createInvocableActor");
+function createDeferredActor(entity, id, data) {
+  var tempActor = createNullActor(id);
+  tempActor.deferred = true;
+  if (isMachine(entity)) {
+    var initialState_1 = tempActor.state = provide(void 0, function() {
+      return (data ? entity.withContext(data) : entity).initialState;
+    });
+    tempActor.getSnapshot = function() {
+      return initialState_1;
+    };
+  }
+  return tempActor;
+}
+__name(createDeferredActor, "createDeferredActor");
+function isActor2(item) {
+  try {
+    return typeof item.send === "function";
+  } catch (e) {
+    return false;
+  }
+}
+__name(isActor2, "isActor");
+function isSpawnedActor(item) {
+  return isActor2(item) && "id" in item;
+}
+__name(isSpawnedActor, "isSpawnedActor");
+function toActorRef(actorRefLike) {
+  var _a2;
+  return __assign((_a2 = {
+    subscribe: function() {
+      return {
+        unsubscribe: function() {
+          return void 0;
+        }
+      };
+    },
+    id: "anonymous",
+    getSnapshot: function() {
+      return void 0;
+    }
+  }, _a2[symbolObservable] = function() {
+    return this;
+  }, _a2), actorRefLike);
+}
+__name(toActorRef, "toActorRef");
+
 // ../../node_modules/xstate/es/stateUtils.js
 var isLeafNode = /* @__PURE__ */ __name(function(stateNode) {
   return stateNode.type === "atomic" || stateNode.type === "final";
 }, "isLeafNode");
 function getChildren(stateNode) {
-  return keys(stateNode.states).map(function(key) {
+  return Object.keys(stateNode.states).map(function(key) {
     return stateNode.states[key];
   });
 }
@@ -5863,20 +5950,20 @@ function stateValuesEqual(a, b2) {
   if (isString(a) || isString(b2)) {
     return a === b2;
   }
-  var aKeys = keys(a);
-  var bKeys = keys(b2);
+  var aKeys = Object.keys(a);
+  var bKeys = Object.keys(b2);
   return aKeys.length === bKeys.length && aKeys.every(function(key) {
     return stateValuesEqual(a[key], b2[key]);
   });
 }
 __name(stateValuesEqual, "stateValuesEqual");
-function isState(state) {
-  if (isString(state)) {
+function isStateConfig(state) {
+  if (typeof state !== "object" || state === null) {
     return false;
   }
-  return "value" in state && "history" in state;
+  return "value" in state && "_event" in state;
 }
-__name(isState, "isState");
+__name(isStateConfig, "isStateConfig");
 function bindActionToState(action, state) {
   var exec = action.exec;
   var boundAction = __assign(__assign({}, action), {
@@ -5998,7 +6085,7 @@ var State = /* @__PURE__ */ function() {
     if (isString(stateValue)) {
       return [stateValue];
     }
-    var valueKeys = keys(stateValue);
+    var valueKeys = Object.keys(stateValue);
     return valueKeys.concat.apply(valueKeys, __spreadArray([], __read(valueKeys.map(function(key) {
       return _this.toStrings(stateValue[key], delimiter).map(function(s) {
         return key + delimiter + s;
@@ -6006,7 +6093,12 @@ var State = /* @__PURE__ */ function() {
     })), false));
   };
   State2.prototype.toJSON = function() {
-    var _a2 = this, configuration = _a2.configuration, transitions = _a2.transitions, tags = _a2.tags, machine = _a2.machine, jsonValues = __rest(_a2, ["configuration", "transitions", "tags", "machine"]);
+    var _a2 = this;
+    _a2.configuration;
+    _a2.transitions;
+    var tags = _a2.tags;
+    _a2.machine;
+    var jsonValues = __rest(_a2, ["configuration", "transitions", "tags", "machine"]);
     return __assign(__assign({}, jsonValues), {
       tags: Array.from(tags)
     });
@@ -6030,92 +6122,1201 @@ var State = /* @__PURE__ */ function() {
   return State2;
 }();
 
-// ../../node_modules/xstate/es/serviceScope.js
-var serviceStack = [];
-var provide = /* @__PURE__ */ __name(function(service, fn2) {
-  serviceStack.push(service);
-  var result = fn2(service);
-  serviceStack.pop();
-  return result;
-}, "provide");
+// ../../node_modules/xstate/es/scheduler.js
+var defaultOptions = {
+  deferEvents: false
+};
+var Scheduler = /* @__PURE__ */ function() {
+  function Scheduler2(options) {
+    this.processingEvent = false;
+    this.queue = [];
+    this.initialized = false;
+    this.options = __assign(__assign({}, defaultOptions), options);
+  }
+  __name(Scheduler2, "Scheduler");
+  Scheduler2.prototype.initialize = function(callback) {
+    this.initialized = true;
+    if (callback) {
+      if (!this.options.deferEvents) {
+        this.schedule(callback);
+        return;
+      }
+      this.process(callback);
+    }
+    this.flushEvents();
+  };
+  Scheduler2.prototype.schedule = function(task) {
+    if (!this.initialized || this.processingEvent) {
+      this.queue.push(task);
+      return;
+    }
+    if (this.queue.length !== 0) {
+      throw new Error("Event queue should be empty when it is not processing events");
+    }
+    this.process(task);
+    this.flushEvents();
+  };
+  Scheduler2.prototype.clear = function() {
+    this.queue = [];
+  };
+  Scheduler2.prototype.flushEvents = function() {
+    var nextCallback = this.queue.shift();
+    while (nextCallback) {
+      this.process(nextCallback);
+      nextCallback = this.queue.shift();
+    }
+  };
+  Scheduler2.prototype.process = function(callback) {
+    this.processingEvent = true;
+    try {
+      callback();
+    } catch (e) {
+      this.clear();
+      throw e;
+    } finally {
+      this.processingEvent = false;
+    }
+  };
+  return Scheduler2;
+}();
 
-// ../../node_modules/xstate/es/Actor.js
-function createNullActor(id) {
-  return __assign({
-    id,
-    send: function() {
-      return void 0;
-    },
-    subscribe: function() {
-      return {
-        unsubscribe: function() {
-          return void 0;
-        }
-      };
+// ../../node_modules/xstate/es/registry.js
+var children = /* @__PURE__ */ new Map();
+var sessionIdIndex = 0;
+var registry = {
+  bookId: function() {
+    return "x:".concat(sessionIdIndex++);
+  },
+  register: function(id, actor) {
+    children.set(id, actor);
+    return id;
+  },
+  get: function(id) {
+    return children.get(id);
+  },
+  free: function(id) {
+    children.delete(id);
+  }
+};
+
+// ../../node_modules/xstate/es/devTools.js
+function getGlobal() {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  if (!IS_PRODUCTION) {
+    console.warn("XState could not find a global object in this environment. Please let the maintainers know and raise an issue here: https://github.com/statelyai/xstate/issues");
+  }
+}
+__name(getGlobal, "getGlobal");
+function getDevTools() {
+  var global2 = getGlobal();
+  if (global2 && "__xstate__" in global2) {
+    return global2.__xstate__;
+  }
+  return void 0;
+}
+__name(getDevTools, "getDevTools");
+function registerService(service) {
+  if (!getGlobal()) {
+    return;
+  }
+  var devTools = getDevTools();
+  if (devTools) {
+    devTools.register(service);
+  }
+}
+__name(registerService, "registerService");
+
+// ../../node_modules/xstate/es/behaviors.js
+function spawnBehavior(behavior, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  var state = behavior.initialState;
+  var observers2 = /* @__PURE__ */ new Set();
+  var mailbox = [];
+  var flushing = false;
+  var flush = /* @__PURE__ */ __name(function() {
+    if (flushing) {
+      return;
+    }
+    flushing = true;
+    while (mailbox.length > 0) {
+      var event_1 = mailbox.shift();
+      state = behavior.transition(state, event_1, actorCtx);
+      observers2.forEach(function(observer) {
+        return observer.next(state);
+      });
+    }
+    flushing = false;
+  }, "flush");
+  var actor = toActorRef({
+    id: options.id,
+    send: function(event2) {
+      mailbox.push(event2);
+      flush();
     },
     getSnapshot: function() {
-      return void 0;
+      return state;
     },
-    toJSON: function() {
+    subscribe: function(next, handleError, complete) {
+      var observer = toObserver(next, handleError, complete);
+      observers2.add(observer);
+      observer.next(state);
       return {
-        id
+        unsubscribe: function() {
+          observers2.delete(observer);
+        }
       };
     }
-  }, interopSymbols);
+  });
+  var actorCtx = {
+    parent: options.parent,
+    self: actor,
+    id: options.id || "anonymous",
+    observers: observers2
+  };
+  state = behavior.start ? behavior.start(actorCtx) : state;
+  return actor;
 }
-__name(createNullActor, "createNullActor");
-function createInvocableActor(invokeDefinition, machine, context, _event) {
-  var _a2;
-  var invokeSrc = toInvokeSource(invokeDefinition.src);
-  var serviceCreator = (_a2 = machine === null || machine === void 0 ? void 0 : machine.options.services) === null || _a2 === void 0 ? void 0 : _a2[invokeSrc.type];
-  var resolvedData = invokeDefinition.data ? mapContext(invokeDefinition.data, context, _event) : void 0;
-  var tempActor = serviceCreator ? createDeferredActor(serviceCreator, invokeDefinition.id, resolvedData) : createNullActor(invokeDefinition.id);
-  tempActor.meta = invokeDefinition;
-  return tempActor;
-}
-__name(createInvocableActor, "createInvocableActor");
-function createDeferredActor(entity, id, data) {
-  var tempActor = createNullActor(id);
-  tempActor.deferred = true;
-  if (isMachine(entity)) {
-    var initialState_1 = tempActor.state = provide(void 0, function() {
-      return (data ? entity.withContext(data) : entity).initialState;
-    });
-    tempActor.getSnapshot = function() {
-      return initialState_1;
+__name(spawnBehavior, "spawnBehavior");
+
+// ../../node_modules/xstate/es/interpreter.js
+var DEFAULT_SPAWN_OPTIONS = {
+  sync: false,
+  autoForward: false
+};
+var InterpreterStatus;
+(function(InterpreterStatus2) {
+  InterpreterStatus2[InterpreterStatus2["NotStarted"] = 0] = "NotStarted";
+  InterpreterStatus2[InterpreterStatus2["Running"] = 1] = "Running";
+  InterpreterStatus2[InterpreterStatus2["Stopped"] = 2] = "Stopped";
+})(InterpreterStatus || (InterpreterStatus = {}));
+var Interpreter = /* @__PURE__ */ function() {
+  function Interpreter2(machine, options) {
+    var _this = this;
+    if (options === void 0) {
+      options = Interpreter2.defaultOptions;
+    }
+    this.machine = machine;
+    this.scheduler = new Scheduler();
+    this.delayedEventsMap = {};
+    this.listeners = /* @__PURE__ */ new Set();
+    this.contextListeners = /* @__PURE__ */ new Set();
+    this.stopListeners = /* @__PURE__ */ new Set();
+    this.doneListeners = /* @__PURE__ */ new Set();
+    this.eventListeners = /* @__PURE__ */ new Set();
+    this.sendListeners = /* @__PURE__ */ new Set();
+    this.initialized = false;
+    this.status = InterpreterStatus.NotStarted;
+    this.children = /* @__PURE__ */ new Map();
+    this.forwardTo = /* @__PURE__ */ new Set();
+    this.init = this.start;
+    this.send = function(event2, payload) {
+      if (isArray(event2)) {
+        _this.batch(event2);
+        return _this.state;
+      }
+      var _event = toSCXMLEvent(toEventObject(event2, payload));
+      if (_this.status === InterpreterStatus.Stopped) {
+        if (!IS_PRODUCTION) {
+          warn(false, 'Event "'.concat(_event.name, '" was sent to stopped service "').concat(_this.machine.id, '". This service has already reached its final state, and will not transition.\nEvent: ').concat(JSON.stringify(_event.data)));
+        }
+        return _this.state;
+      }
+      if (_this.status !== InterpreterStatus.Running && !_this.options.deferEvents) {
+        throw new Error('Event "'.concat(_event.name, '" was sent to uninitialized service "').concat(_this.machine.id, '". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.\nEvent: ').concat(JSON.stringify(_event.data)));
+      }
+      _this.scheduler.schedule(function() {
+        _this.forward(_event);
+        var nextState = _this.nextState(_event);
+        _this.update(nextState, _event);
+      });
+      return _this._state;
     };
+    this.sendTo = function(event2, to) {
+      var isParent = _this.parent && (to === SpecialTargets.Parent || _this.parent.id === to);
+      var target2 = isParent ? _this.parent : isString(to) ? _this.children.get(to) || registry.get(to) : isActor(to) ? to : void 0;
+      if (!target2) {
+        if (!isParent) {
+          throw new Error("Unable to send event to child '".concat(to, "' from service '").concat(_this.id, "'."));
+        }
+        if (!IS_PRODUCTION) {
+          warn(false, "Service '".concat(_this.id, "' has no parent: unable to send event ").concat(event2.type));
+        }
+        return;
+      }
+      if ("machine" in target2) {
+        target2.send(__assign(__assign({}, event2), {
+          name: event2.name === error ? "".concat(error2(_this.id)) : event2.name,
+          origin: _this.sessionId
+        }));
+      } else {
+        target2.send(event2.data);
+      }
+    };
+    var resolvedOptions = __assign(__assign({}, Interpreter2.defaultOptions), options);
+    var clock = resolvedOptions.clock, logger = resolvedOptions.logger, parent = resolvedOptions.parent, id = resolvedOptions.id;
+    var resolvedId = id !== void 0 ? id : machine.id;
+    this.id = resolvedId;
+    this.logger = logger;
+    this.clock = clock;
+    this.parent = parent;
+    this.options = resolvedOptions;
+    this.scheduler = new Scheduler({
+      deferEvents: this.options.deferEvents
+    });
+    this.sessionId = registry.bookId();
   }
-  return tempActor;
-}
-__name(createDeferredActor, "createDeferredActor");
-function isActor2(item) {
-  try {
-    return typeof item.send === "function";
-  } catch (e) {
-    return false;
-  }
-}
-__name(isActor2, "isActor");
-function isSpawnedActor(item) {
-  return isActor2(item) && "id" in item;
-}
-__name(isSpawnedActor, "isSpawnedActor");
-function toActorRef(actorRefLike) {
-  return __assign(__assign({
-    subscribe: function() {
+  __name(Interpreter2, "Interpreter");
+  Object.defineProperty(Interpreter2.prototype, "initialState", {
+    get: function() {
+      var _this = this;
+      if (this._initialState) {
+        return this._initialState;
+      }
+      return provide(this, function() {
+        _this._initialState = _this.machine.initialState;
+        return _this._initialState;
+      });
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Interpreter2.prototype, "state", {
+    get: function() {
+      if (!IS_PRODUCTION) {
+        warn(this.status !== InterpreterStatus.NotStarted, "Attempted to read state from uninitialized service '".concat(this.id, "'. Make sure the service is started first."));
+      }
+      return this._state;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Interpreter2.prototype.execute = function(state, actionsConfig) {
+    var e_1, _a2;
+    try {
+      for (var _b = __values(state.actions), _c = _b.next(); !_c.done; _c = _b.next()) {
+        var action = _c.value;
+        this.exec(action, state, actionsConfig);
+      }
+    } catch (e_1_1) {
+      e_1 = {
+        error: e_1_1
+      };
+    } finally {
+      try {
+        if (_c && !_c.done && (_a2 = _b.return))
+          _a2.call(_b);
+      } finally {
+        if (e_1)
+          throw e_1.error;
+      }
+    }
+  };
+  Interpreter2.prototype.update = function(state, _event) {
+    var e_2, _a2, e_3, _b, e_4, _c, e_5, _d;
+    var _this = this;
+    state._sessionid = this.sessionId;
+    this._state = state;
+    if (this.options.execute) {
+      this.execute(this.state);
+    }
+    this.children.forEach(function(child) {
+      _this.state.children[child.id] = child;
+    });
+    if (this.devTools) {
+      this.devTools.send(_event.data, state);
+    }
+    if (state.event) {
+      try {
+        for (var _e2 = __values(this.eventListeners), _f = _e2.next(); !_f.done; _f = _e2.next()) {
+          var listener = _f.value;
+          listener(state.event);
+        }
+      } catch (e_2_1) {
+        e_2 = {
+          error: e_2_1
+        };
+      } finally {
+        try {
+          if (_f && !_f.done && (_a2 = _e2.return))
+            _a2.call(_e2);
+        } finally {
+          if (e_2)
+            throw e_2.error;
+        }
+      }
+    }
+    try {
+      for (var _g = __values(this.listeners), _h = _g.next(); !_h.done; _h = _g.next()) {
+        var listener = _h.value;
+        listener(state, state.event);
+      }
+    } catch (e_3_1) {
+      e_3 = {
+        error: e_3_1
+      };
+    } finally {
+      try {
+        if (_h && !_h.done && (_b = _g.return))
+          _b.call(_g);
+      } finally {
+        if (e_3)
+          throw e_3.error;
+      }
+    }
+    try {
+      for (var _j = __values(this.contextListeners), _k = _j.next(); !_k.done; _k = _j.next()) {
+        var contextListener = _k.value;
+        contextListener(this.state.context, this.state.history ? this.state.history.context : void 0);
+      }
+    } catch (e_4_1) {
+      e_4 = {
+        error: e_4_1
+      };
+    } finally {
+      try {
+        if (_k && !_k.done && (_c = _j.return))
+          _c.call(_j);
+      } finally {
+        if (e_4)
+          throw e_4.error;
+      }
+    }
+    var isDone = isInFinalState(state.configuration || [], this.machine);
+    if (this.state.configuration && isDone) {
+      var finalChildStateNode = state.configuration.find(function(sn) {
+        return sn.type === "final" && sn.parent === _this.machine;
+      });
+      var doneData = finalChildStateNode && finalChildStateNode.doneData ? mapContext(finalChildStateNode.doneData, state.context, _event) : void 0;
+      try {
+        for (var _l = __values(this.doneListeners), _m = _l.next(); !_m.done; _m = _l.next()) {
+          var listener = _m.value;
+          listener(doneInvoke(this.id, doneData));
+        }
+      } catch (e_5_1) {
+        e_5 = {
+          error: e_5_1
+        };
+      } finally {
+        try {
+          if (_m && !_m.done && (_d = _l.return))
+            _d.call(_l);
+        } finally {
+          if (e_5)
+            throw e_5.error;
+        }
+      }
+      this.stop();
+    }
+  };
+  Interpreter2.prototype.onTransition = function(listener) {
+    this.listeners.add(listener);
+    if (this.status === InterpreterStatus.Running) {
+      listener(this.state, this.state.event);
+    }
+    return this;
+  };
+  Interpreter2.prototype.subscribe = function(nextListenerOrObserver, _2, completeListener) {
+    var _this = this;
+    if (!nextListenerOrObserver) {
       return {
         unsubscribe: function() {
           return void 0;
         }
       };
-    },
-    id: "anonymous",
-    getSnapshot: function() {
-      return void 0;
     }
-  }, interopSymbols), actorRefLike);
+    var listener;
+    var resolvedCompleteListener = completeListener;
+    if (typeof nextListenerOrObserver === "function") {
+      listener = nextListenerOrObserver;
+    } else {
+      listener = nextListenerOrObserver.next.bind(nextListenerOrObserver);
+      resolvedCompleteListener = nextListenerOrObserver.complete.bind(nextListenerOrObserver);
+    }
+    this.listeners.add(listener);
+    if (this.status === InterpreterStatus.Running) {
+      listener(this.state);
+    }
+    if (resolvedCompleteListener) {
+      this.onDone(resolvedCompleteListener);
+    }
+    return {
+      unsubscribe: function() {
+        listener && _this.listeners.delete(listener);
+        resolvedCompleteListener && _this.doneListeners.delete(resolvedCompleteListener);
+      }
+    };
+  };
+  Interpreter2.prototype.onEvent = function(listener) {
+    this.eventListeners.add(listener);
+    return this;
+  };
+  Interpreter2.prototype.onSend = function(listener) {
+    this.sendListeners.add(listener);
+    return this;
+  };
+  Interpreter2.prototype.onChange = function(listener) {
+    this.contextListeners.add(listener);
+    return this;
+  };
+  Interpreter2.prototype.onStop = function(listener) {
+    this.stopListeners.add(listener);
+    return this;
+  };
+  Interpreter2.prototype.onDone = function(listener) {
+    this.doneListeners.add(listener);
+    return this;
+  };
+  Interpreter2.prototype.off = function(listener) {
+    this.listeners.delete(listener);
+    this.eventListeners.delete(listener);
+    this.sendListeners.delete(listener);
+    this.stopListeners.delete(listener);
+    this.doneListeners.delete(listener);
+    this.contextListeners.delete(listener);
+    return this;
+  };
+  Interpreter2.prototype.start = function(initialState) {
+    var _this = this;
+    if (this.status === InterpreterStatus.Running) {
+      return this;
+    }
+    this.machine._init();
+    registry.register(this.sessionId, this);
+    this.initialized = true;
+    this.status = InterpreterStatus.Running;
+    var resolvedState = initialState === void 0 ? this.initialState : provide(this, function() {
+      return isStateConfig(initialState) ? _this.machine.resolveState(initialState) : _this.machine.resolveState(State.from(initialState, _this.machine.context));
+    });
+    if (this.options.devTools) {
+      this.attachDev();
+    }
+    this.scheduler.initialize(function() {
+      _this.update(resolvedState, initEvent);
+    });
+    return this;
+  };
+  Interpreter2.prototype.stop = function() {
+    var e_6, _a2, e_7, _b, e_8, _c, e_9, _d, e_10, _e2;
+    var _this = this;
+    try {
+      for (var _f = __values(this.listeners), _g = _f.next(); !_g.done; _g = _f.next()) {
+        var listener = _g.value;
+        this.listeners.delete(listener);
+      }
+    } catch (e_6_1) {
+      e_6 = {
+        error: e_6_1
+      };
+    } finally {
+      try {
+        if (_g && !_g.done && (_a2 = _f.return))
+          _a2.call(_f);
+      } finally {
+        if (e_6)
+          throw e_6.error;
+      }
+    }
+    try {
+      for (var _h = __values(this.stopListeners), _j = _h.next(); !_j.done; _j = _h.next()) {
+        var listener = _j.value;
+        listener();
+        this.stopListeners.delete(listener);
+      }
+    } catch (e_7_1) {
+      e_7 = {
+        error: e_7_1
+      };
+    } finally {
+      try {
+        if (_j && !_j.done && (_b = _h.return))
+          _b.call(_h);
+      } finally {
+        if (e_7)
+          throw e_7.error;
+      }
+    }
+    try {
+      for (var _k = __values(this.contextListeners), _l = _k.next(); !_l.done; _l = _k.next()) {
+        var listener = _l.value;
+        this.contextListeners.delete(listener);
+      }
+    } catch (e_8_1) {
+      e_8 = {
+        error: e_8_1
+      };
+    } finally {
+      try {
+        if (_l && !_l.done && (_c = _k.return))
+          _c.call(_k);
+      } finally {
+        if (e_8)
+          throw e_8.error;
+      }
+    }
+    try {
+      for (var _m = __values(this.doneListeners), _o = _m.next(); !_o.done; _o = _m.next()) {
+        var listener = _o.value;
+        this.doneListeners.delete(listener);
+      }
+    } catch (e_9_1) {
+      e_9 = {
+        error: e_9_1
+      };
+    } finally {
+      try {
+        if (_o && !_o.done && (_d = _m.return))
+          _d.call(_m);
+      } finally {
+        if (e_9)
+          throw e_9.error;
+      }
+    }
+    if (!this.initialized) {
+      return this;
+    }
+    __spreadArray([], __read(this.state.configuration), false).sort(function(a, b2) {
+      return b2.order - a.order;
+    }).forEach(function(stateNode) {
+      var e_11, _a3;
+      try {
+        for (var _b2 = __values(stateNode.definition.exit), _c2 = _b2.next(); !_c2.done; _c2 = _b2.next()) {
+          var action = _c2.value;
+          _this.exec(action, _this.state);
+        }
+      } catch (e_11_1) {
+        e_11 = {
+          error: e_11_1
+        };
+      } finally {
+        try {
+          if (_c2 && !_c2.done && (_a3 = _b2.return))
+            _a3.call(_b2);
+        } finally {
+          if (e_11)
+            throw e_11.error;
+        }
+      }
+    });
+    this.children.forEach(function(child) {
+      if (isFunction(child.stop)) {
+        child.stop();
+      }
+    });
+    try {
+      for (var _p = __values(Object.keys(this.delayedEventsMap)), _q = _p.next(); !_q.done; _q = _p.next()) {
+        var key = _q.value;
+        this.clock.clearTimeout(this.delayedEventsMap[key]);
+      }
+    } catch (e_10_1) {
+      e_10 = {
+        error: e_10_1
+      };
+    } finally {
+      try {
+        if (_q && !_q.done && (_e2 = _p.return))
+          _e2.call(_p);
+      } finally {
+        if (e_10)
+          throw e_10.error;
+      }
+    }
+    this.scheduler.clear();
+    this.initialized = false;
+    this.status = InterpreterStatus.Stopped;
+    registry.free(this.sessionId);
+    return this;
+  };
+  Interpreter2.prototype.batch = function(events) {
+    var _this = this;
+    if (this.status === InterpreterStatus.NotStarted && this.options.deferEvents) {
+      if (!IS_PRODUCTION) {
+        warn(false, "".concat(events.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, '" and are deferred. Make sure .start() is called for this service.\nEvent: ').concat(JSON.stringify(event)));
+      }
+    } else if (this.status !== InterpreterStatus.Running) {
+      throw new Error("".concat(events.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, '". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.'));
+    }
+    this.scheduler.schedule(function() {
+      var e_12, _a2;
+      var nextState = _this.state;
+      var batchChanged = false;
+      var batchedActions = [];
+      var _loop_1 = /* @__PURE__ */ __name(function(event_12) {
+        var _event = toSCXMLEvent(event_12);
+        _this.forward(_event);
+        nextState = provide(_this, function() {
+          return _this.machine.transition(nextState, _event);
+        });
+        batchedActions.push.apply(batchedActions, __spreadArray([], __read(nextState.actions.map(function(a) {
+          return bindActionToState(a, nextState);
+        })), false));
+        batchChanged = batchChanged || !!nextState.changed;
+      }, "_loop_1");
+      try {
+        for (var events_1 = __values(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
+          var event_1 = events_1_1.value;
+          _loop_1(event_1);
+        }
+      } catch (e_12_1) {
+        e_12 = {
+          error: e_12_1
+        };
+      } finally {
+        try {
+          if (events_1_1 && !events_1_1.done && (_a2 = events_1.return))
+            _a2.call(events_1);
+        } finally {
+          if (e_12)
+            throw e_12.error;
+        }
+      }
+      nextState.changed = batchChanged;
+      nextState.actions = batchedActions;
+      _this.update(nextState, toSCXMLEvent(events[events.length - 1]));
+    });
+  };
+  Interpreter2.prototype.sender = function(event2) {
+    return this.send.bind(this, event2);
+  };
+  Interpreter2.prototype.nextState = function(event2) {
+    var _this = this;
+    var _event = toSCXMLEvent(event2);
+    if (_event.name.indexOf(errorPlatform) === 0 && !this.state.nextEvents.some(function(nextEvent) {
+      return nextEvent.indexOf(errorPlatform) === 0;
+    })) {
+      throw _event.data.data;
+    }
+    var nextState = provide(this, function() {
+      return _this.machine.transition(_this.state, _event);
+    });
+    return nextState;
+  };
+  Interpreter2.prototype.forward = function(event2) {
+    var e_13, _a2;
+    try {
+      for (var _b = __values(this.forwardTo), _c = _b.next(); !_c.done; _c = _b.next()) {
+        var id = _c.value;
+        var child = this.children.get(id);
+        if (!child) {
+          throw new Error("Unable to forward event '".concat(event2, "' from interpreter '").concat(this.id, "' to nonexistant child '").concat(id, "'."));
+        }
+        child.send(event2);
+      }
+    } catch (e_13_1) {
+      e_13 = {
+        error: e_13_1
+      };
+    } finally {
+      try {
+        if (_c && !_c.done && (_a2 = _b.return))
+          _a2.call(_b);
+      } finally {
+        if (e_13)
+          throw e_13.error;
+      }
+    }
+  };
+  Interpreter2.prototype.defer = function(sendAction) {
+    var _this = this;
+    this.delayedEventsMap[sendAction.id] = this.clock.setTimeout(function() {
+      if (sendAction.to) {
+        _this.sendTo(sendAction._event, sendAction.to);
+      } else {
+        _this.send(sendAction._event);
+      }
+    }, sendAction.delay);
+  };
+  Interpreter2.prototype.cancel = function(sendId) {
+    this.clock.clearTimeout(this.delayedEventsMap[sendId]);
+    delete this.delayedEventsMap[sendId];
+  };
+  Interpreter2.prototype.exec = function(action, state, actionFunctionMap) {
+    if (actionFunctionMap === void 0) {
+      actionFunctionMap = this.machine.options.actions;
+    }
+    var context = state.context, _event = state._event;
+    var actionOrExec = action.exec || getActionFunction(action.type, actionFunctionMap);
+    var exec = isFunction(actionOrExec) ? actionOrExec : actionOrExec ? actionOrExec.exec : action.exec;
+    if (exec) {
+      try {
+        return exec(context, _event.data, {
+          action,
+          state: this.state,
+          _event
+        });
+      } catch (err) {
+        if (this.parent) {
+          this.parent.send({
+            type: "xstate.error",
+            data: err
+          });
+        }
+        throw err;
+      }
+    }
+    switch (action.type) {
+      case send:
+        var sendAction = action;
+        if (typeof sendAction.delay === "number") {
+          this.defer(sendAction);
+          return;
+        } else {
+          if (sendAction.to) {
+            this.sendTo(sendAction._event, sendAction.to);
+          } else {
+            this.send(sendAction._event);
+          }
+        }
+        break;
+      case cancel:
+        this.cancel(action.sendId);
+        break;
+      case start: {
+        if (this.status !== InterpreterStatus.Running) {
+          return;
+        }
+        var activity = action.activity;
+        if (!this.state.activities[activity.id || activity.type]) {
+          break;
+        }
+        if (activity.type === ActionTypes.Invoke) {
+          var invokeSource = toInvokeSource(activity.src);
+          var serviceCreator = this.machine.options.services ? this.machine.options.services[invokeSource.type] : void 0;
+          var id = activity.id, data = activity.data;
+          if (!IS_PRODUCTION) {
+            warn(!("forward" in activity), "`forward` property is deprecated (found in invocation of '".concat(activity.src, "' in in machine '").concat(this.machine.id, "'). ") + "Please use `autoForward` instead.");
+          }
+          var autoForward = "autoForward" in activity ? activity.autoForward : !!activity.forward;
+          if (!serviceCreator) {
+            if (!IS_PRODUCTION) {
+              warn(false, "No service found for invocation '".concat(activity.src, "' in machine '").concat(this.machine.id, "'."));
+            }
+            return;
+          }
+          var resolvedData = data ? mapContext(data, context, _event) : void 0;
+          if (typeof serviceCreator === "string") {
+            return;
+          }
+          var source = isFunction(serviceCreator) ? serviceCreator(context, _event.data, {
+            data: resolvedData,
+            src: invokeSource,
+            meta: activity.meta
+          }) : serviceCreator;
+          if (!source) {
+            return;
+          }
+          var options = void 0;
+          if (isMachine(source)) {
+            source = resolvedData ? source.withContext(resolvedData) : source;
+            options = {
+              autoForward
+            };
+          }
+          this.spawn(source, id, options);
+        } else {
+          this.spawnActivity(activity);
+        }
+        break;
+      }
+      case stop: {
+        this.stopChild(action.activity.id);
+        break;
+      }
+      case log:
+        var label = action.label, value = action.value;
+        if (label) {
+          this.logger(label, value);
+        } else {
+          this.logger(value);
+        }
+        break;
+      default:
+        if (!IS_PRODUCTION) {
+          warn(false, "No implementation found for action type '".concat(action.type, "'"));
+        }
+        break;
+    }
+    return void 0;
+  };
+  Interpreter2.prototype.removeChild = function(childId) {
+    var _a2;
+    this.children.delete(childId);
+    this.forwardTo.delete(childId);
+    (_a2 = this.state) === null || _a2 === void 0 ? true : delete _a2.children[childId];
+  };
+  Interpreter2.prototype.stopChild = function(childId) {
+    var child = this.children.get(childId);
+    if (!child) {
+      return;
+    }
+    this.removeChild(childId);
+    if (isFunction(child.stop)) {
+      child.stop();
+    }
+  };
+  Interpreter2.prototype.spawn = function(entity, name, options) {
+    if (isPromiseLike(entity)) {
+      return this.spawnPromise(Promise.resolve(entity), name);
+    } else if (isFunction(entity)) {
+      return this.spawnCallback(entity, name);
+    } else if (isSpawnedActor(entity)) {
+      return this.spawnActor(entity, name);
+    } else if (isObservable(entity)) {
+      return this.spawnObservable(entity, name);
+    } else if (isMachine(entity)) {
+      return this.spawnMachine(entity, __assign(__assign({}, options), {
+        id: name
+      }));
+    } else if (isBehavior(entity)) {
+      return this.spawnBehavior(entity, name);
+    } else {
+      throw new Error('Unable to spawn entity "'.concat(name, '" of type "').concat(typeof entity, '".'));
+    }
+  };
+  Interpreter2.prototype.spawnMachine = function(machine, options) {
+    var _this = this;
+    if (options === void 0) {
+      options = {};
+    }
+    var childService = new Interpreter2(machine, __assign(__assign({}, this.options), {
+      parent: this,
+      id: options.id || machine.id
+    }));
+    var resolvedOptions = __assign(__assign({}, DEFAULT_SPAWN_OPTIONS), options);
+    if (resolvedOptions.sync) {
+      childService.onTransition(function(state) {
+        _this.send(update, {
+          state,
+          id: childService.id
+        });
+      });
+    }
+    var actor = childService;
+    this.children.set(childService.id, actor);
+    if (resolvedOptions.autoForward) {
+      this.forwardTo.add(childService.id);
+    }
+    childService.onDone(function(doneEvent) {
+      _this.removeChild(childService.id);
+      _this.send(toSCXMLEvent(doneEvent, {
+        origin: childService.id
+      }));
+    }).start();
+    return actor;
+  };
+  Interpreter2.prototype.spawnBehavior = function(behavior, id) {
+    var actorRef = spawnBehavior(behavior, {
+      id,
+      parent: this
+    });
+    this.children.set(id, actorRef);
+    return actorRef;
+  };
+  Interpreter2.prototype.spawnPromise = function(promise, id) {
+    var _a2;
+    var _this = this;
+    var canceled = false;
+    var resolvedData;
+    promise.then(function(response) {
+      if (!canceled) {
+        resolvedData = response;
+        _this.removeChild(id);
+        _this.send(toSCXMLEvent(doneInvoke(id, response), {
+          origin: id
+        }));
+      }
+    }, function(errorData) {
+      if (!canceled) {
+        _this.removeChild(id);
+        var errorEvent = error2(id, errorData);
+        try {
+          _this.send(toSCXMLEvent(errorEvent, {
+            origin: id
+          }));
+        } catch (error3) {
+          reportUnhandledExceptionOnInvocation(errorData, error3, id);
+          if (_this.devTools) {
+            _this.devTools.send(errorEvent, _this.state);
+          }
+          if (_this.machine.strict) {
+            _this.stop();
+          }
+        }
+      }
+    });
+    var actor = (_a2 = {
+      id,
+      send: function() {
+        return void 0;
+      },
+      subscribe: function(next, handleError, complete) {
+        var observer = toObserver(next, handleError, complete);
+        var unsubscribed = false;
+        promise.then(function(response) {
+          if (unsubscribed) {
+            return;
+          }
+          observer.next(response);
+          if (unsubscribed) {
+            return;
+          }
+          observer.complete();
+        }, function(err) {
+          if (unsubscribed) {
+            return;
+          }
+          observer.error(err);
+        });
+        return {
+          unsubscribe: function() {
+            return unsubscribed = true;
+          }
+        };
+      },
+      stop: function() {
+        canceled = true;
+      },
+      toJSON: function() {
+        return {
+          id
+        };
+      },
+      getSnapshot: function() {
+        return resolvedData;
+      }
+    }, _a2[symbolObservable] = function() {
+      return this;
+    }, _a2);
+    this.children.set(id, actor);
+    return actor;
+  };
+  Interpreter2.prototype.spawnCallback = function(callback, id) {
+    var _a2;
+    var _this = this;
+    var canceled = false;
+    var receivers = /* @__PURE__ */ new Set();
+    var listeners = /* @__PURE__ */ new Set();
+    var emitted;
+    var receive = /* @__PURE__ */ __name(function(e) {
+      emitted = e;
+      listeners.forEach(function(listener) {
+        return listener(e);
+      });
+      if (canceled) {
+        return;
+      }
+      _this.send(toSCXMLEvent(e, {
+        origin: id
+      }));
+    }, "receive");
+    var callbackStop;
+    try {
+      callbackStop = callback(receive, function(newListener) {
+        receivers.add(newListener);
+      });
+    } catch (err) {
+      this.send(error2(id, err));
+    }
+    if (isPromiseLike(callbackStop)) {
+      return this.spawnPromise(callbackStop, id);
+    }
+    var actor = (_a2 = {
+      id,
+      send: function(event2) {
+        return receivers.forEach(function(receiver) {
+          return receiver(event2);
+        });
+      },
+      subscribe: function(next) {
+        var observer = toObserver(next);
+        listeners.add(observer.next);
+        return {
+          unsubscribe: function() {
+            listeners.delete(observer.next);
+          }
+        };
+      },
+      stop: function() {
+        canceled = true;
+        if (isFunction(callbackStop)) {
+          callbackStop();
+        }
+      },
+      toJSON: function() {
+        return {
+          id
+        };
+      },
+      getSnapshot: function() {
+        return emitted;
+      }
+    }, _a2[symbolObservable] = function() {
+      return this;
+    }, _a2);
+    this.children.set(id, actor);
+    return actor;
+  };
+  Interpreter2.prototype.spawnObservable = function(source, id) {
+    var _a2;
+    var _this = this;
+    var emitted;
+    var subscription = source.subscribe(function(value) {
+      emitted = value;
+      _this.send(toSCXMLEvent(value, {
+        origin: id
+      }));
+    }, function(err) {
+      _this.removeChild(id);
+      _this.send(toSCXMLEvent(error2(id, err), {
+        origin: id
+      }));
+    }, function() {
+      _this.removeChild(id);
+      _this.send(toSCXMLEvent(doneInvoke(id), {
+        origin: id
+      }));
+    });
+    var actor = (_a2 = {
+      id,
+      send: function() {
+        return void 0;
+      },
+      subscribe: function(next, handleError, complete) {
+        return source.subscribe(next, handleError, complete);
+      },
+      stop: function() {
+        return subscription.unsubscribe();
+      },
+      getSnapshot: function() {
+        return emitted;
+      },
+      toJSON: function() {
+        return {
+          id
+        };
+      }
+    }, _a2[symbolObservable] = function() {
+      return this;
+    }, _a2);
+    this.children.set(id, actor);
+    return actor;
+  };
+  Interpreter2.prototype.spawnActor = function(actor, name) {
+    this.children.set(name, actor);
+    return actor;
+  };
+  Interpreter2.prototype.spawnActivity = function(activity) {
+    var implementation = this.machine.options && this.machine.options.activities ? this.machine.options.activities[activity.type] : void 0;
+    if (!implementation) {
+      if (!IS_PRODUCTION) {
+        warn(false, "No implementation found for activity '".concat(activity.type, "'"));
+      }
+      return;
+    }
+    var dispose = implementation(this.state.context, activity);
+    this.spawnEffect(activity.id, dispose);
+  };
+  Interpreter2.prototype.spawnEffect = function(id, dispose) {
+    var _a2;
+    this.children.set(id, (_a2 = {
+      id,
+      send: function() {
+        return void 0;
+      },
+      subscribe: function() {
+        return {
+          unsubscribe: function() {
+            return void 0;
+          }
+        };
+      },
+      stop: dispose || void 0,
+      getSnapshot: function() {
+        return void 0;
+      },
+      toJSON: function() {
+        return {
+          id
+        };
+      }
+    }, _a2[symbolObservable] = function() {
+      return this;
+    }, _a2));
+  };
+  Interpreter2.prototype.attachDev = function() {
+    var global2 = getGlobal();
+    if (this.options.devTools && global2) {
+      if (global2.__REDUX_DEVTOOLS_EXTENSION__) {
+        var devToolsOptions = typeof this.options.devTools === "object" ? this.options.devTools : void 0;
+        this.devTools = global2.__REDUX_DEVTOOLS_EXTENSION__.connect(__assign(__assign({
+          name: this.id,
+          autoPause: true,
+          stateSanitizer: function(state) {
+            return {
+              value: state.value,
+              context: state.context,
+              actions: state.actions
+            };
+          }
+        }, devToolsOptions), {
+          features: __assign({
+            jump: false,
+            skip: false
+          }, devToolsOptions ? devToolsOptions.features : void 0)
+        }), this.machine);
+        this.devTools.init(this.state);
+      }
+      registerService(this);
+    }
+  };
+  Interpreter2.prototype.toJSON = function() {
+    return {
+      id: this.id
+    };
+  };
+  Interpreter2.prototype[symbolObservable] = function() {
+    return this;
+  };
+  Interpreter2.prototype.getSnapshot = function() {
+    if (this.status === InterpreterStatus.NotStarted) {
+      return this.initialState;
+    }
+    return this._state;
+  };
+  Interpreter2.defaultOptions = {
+    execute: true,
+    deferEvents: true,
+    clock: {
+      setTimeout: function(fn2, ms) {
+        return setTimeout(fn2, ms);
+      },
+      clearTimeout: function(id) {
+        return clearTimeout(id);
+      }
+    },
+    logger: /* @__PURE__ */ console.log.bind(console),
+    devTools: false
+  };
+  Interpreter2.interpret = interpret;
+  return Interpreter2;
+}();
+function interpret(machine, options) {
+  var interpreter = new Interpreter(machine, options);
+  return interpreter;
 }
-__name(toActorRef, "toActorRef");
+__name(interpret, "interpret");
 
 // ../../node_modules/xstate/es/invokeUtils.js
 function toInvokeSource2(src) {
@@ -6136,7 +7337,9 @@ function toInvokeDefinition(invokeConfig) {
     type: invoke
   }, invokeConfig), {
     toJSON: function() {
-      var onDone = invokeConfig.onDone, onError = invokeConfig.onError, invokeDef = __rest(invokeConfig, ["onDone", "onError"]);
+      invokeConfig.onDone;
+      invokeConfig.onError;
+      var invokeDef = __rest(invokeConfig, ["onDone", "onError"]);
       return __assign(__assign({}, invokeDef), {
         type: invoke,
         src: toInvokeSource2(invokeConfig.src)
@@ -6171,7 +7374,7 @@ var validateArrayifiedTransitions = /* @__PURE__ */ __name(function(stateNode, e
   warn(!hasNonLastUnguardedTarget, "One or more transitions for ".concat(eventText, " on state '").concat(stateNode.id, "' are unreachable. ") + "Make sure that the default transition is the last one defined.");
 }, "validateArrayifiedTransitions");
 var StateNode = /* @__PURE__ */ function() {
-  function StateNode2(config, options, _context) {
+  function StateNode2(config, options, _context, _stateInfo) {
     var _this = this;
     if (_context === void 0) {
       _context = "context" in config ? config.context : void 0;
@@ -6194,14 +7397,14 @@ var StateNode = /* @__PURE__ */ function() {
     this.idMap = {};
     this.tags = [];
     this.options = Object.assign(createDefaultOptions(), options);
-    this.parent = this.options._parent;
-    this.key = this.config.key || this.options._key || this.config.id || "(machine)";
+    this.parent = _stateInfo === null || _stateInfo === void 0 ? void 0 : _stateInfo.parent;
+    this.key = this.config.key || (_stateInfo === null || _stateInfo === void 0 ? void 0 : _stateInfo.key) || this.config.id || "(machine)";
     this.machine = this.parent ? this.parent.machine : this;
     this.path = this.parent ? this.parent.path.concat(this.key) : [];
     this.delimiter = this.config.delimiter || (this.parent ? this.parent.delimiter : STATE_DELIMITER);
     this.id = this.config.id || __spreadArray([this.machine.key], __read(this.path), false).join(this.delimiter);
     this.version = this.parent ? this.parent.version : this.config.version;
-    this.type = this.config.type || (this.config.parallel ? "parallel" : this.config.states && keys(this.config.states).length ? "compound" : this.config.history ? "history" : "atomic");
+    this.type = this.config.type || (this.config.parallel ? "parallel" : this.config.states && Object.keys(this.config.states).length ? "compound" : this.config.history ? "history" : "atomic");
     this.schema = this.parent ? this.machine.schema : (_a2 = this.config.schema) !== null && _a2 !== void 0 ? _a2 : {};
     this.description = this.config.description;
     if (!IS_PRODUCTION) {
@@ -6210,9 +7413,9 @@ var StateNode = /* @__PURE__ */ function() {
     this.initial = this.config.initial;
     this.states = this.config.states ? mapValues(this.config.states, function(stateConfig, key) {
       var _a3;
-      var stateNode = new StateNode2(stateConfig, {
-        _parent: _this,
-        _key: key
+      var stateNode = new StateNode2(stateConfig, {}, void 0, {
+        parent: _this,
+        key
       });
       Object.assign(_this.idMap, __assign((_a3 = {}, _a3[stateNode.id] = stateNode, _a3), stateNode.idMap));
       return stateNode;
@@ -6416,7 +7619,7 @@ var StateNode = /* @__PURE__ */ function() {
       return __assign(__assign({}, transition), {
         event: eventType
       });
-    }) : flatten(keys(afterConfig).map(function(delay, i) {
+    }) : flatten(Object.keys(afterConfig).map(function(delay, i) {
       var configTransition = afterConfig[delay];
       var resolvedTransition = isString(configTransition) ? {
         target: configTransition
@@ -6448,7 +7651,7 @@ var StateNode = /* @__PURE__ */ function() {
       var initialStateValue = this.getStateNode(stateValue).initial;
       return initialStateValue !== void 0 ? this.getStateNodes((_a2 = {}, _a2[stateValue] = initialStateValue, _a2)) : [this, this.states[stateValue]];
     }
-    var subStateKeys = keys(stateValue);
+    var subStateKeys = Object.keys(stateValue);
     var subStateNodes = [this];
     subStateNodes.push.apply(subStateNodes, __spreadArray([], __read(flatten(subStateKeys.map(function(subStateKey) {
       return _this.getStateNode(subStateKey).getStateNodes(stateValue[subStateKey]);
@@ -6460,12 +7663,14 @@ var StateNode = /* @__PURE__ */ function() {
     return this.events.includes(eventType);
   };
   StateNode2.prototype.resolveState = function(state) {
-    var configuration = Array.from(getConfiguration([], this.getStateNodes(state.value)));
-    return new State(__assign(__assign({}, state), {
-      value: this.resolve(state.value),
+    var stateFromConfig = state instanceof State ? state : State.create(state);
+    var configuration = Array.from(getConfiguration([], this.getStateNodes(stateFromConfig.value)));
+    return new State(__assign(__assign({}, stateFromConfig), {
+      value: this.resolve(stateFromConfig.value),
       configuration,
       done: isInFinalState(configuration, this),
-      tags: getTagsFromConfiguration(configuration)
+      tags: getTagsFromConfiguration(configuration),
+      machine: this.machine
     }));
   };
   StateNode2.prototype.transitionLeafNode = function(stateValue, state, _event) {
@@ -6477,7 +7682,7 @@ var StateNode = /* @__PURE__ */ function() {
     return next;
   };
   StateNode2.prototype.transitionCompoundNode = function(stateValue, state, _event) {
-    var subStateKeys = keys(stateValue);
+    var subStateKeys = Object.keys(stateValue);
     var stateNode = this.getStateNode(subStateKeys[0]);
     var next = stateNode._transition(stateValue[subStateKeys[0]], state, _event);
     if (!next || !next.transitions.length) {
@@ -6489,7 +7694,7 @@ var StateNode = /* @__PURE__ */ function() {
     var e_2, _a2;
     var transitionMap = {};
     try {
-      for (var _b = __values(keys(stateValue)), _c = _b.next(); !_c.done; _c = _b.next()) {
+      for (var _b = __values(Object.keys(stateValue)), _c = _b.next(); !_c.done; _c = _b.next()) {
         var subStateKey = _c.value;
         var subStateValue = stateValue[subStateKey];
         if (!subStateValue) {
@@ -6514,7 +7719,7 @@ var StateNode = /* @__PURE__ */ function() {
           throw e_2.error;
       }
     }
-    var stateTransitions = keys(transitionMap).map(function(key) {
+    var stateTransitions = Object.keys(transitionMap).map(function(key) {
       return transitionMap[key];
     });
     var enabledTransitions = flatten(stateTransitions.map(function(st2) {
@@ -6529,7 +7734,7 @@ var StateNode = /* @__PURE__ */ function() {
     var entryNodes = flatten(stateTransitions.map(function(t) {
       return t.entrySet;
     }));
-    var configuration = flatten(keys(transitionMap).map(function(key) {
+    var configuration = flatten(Object.keys(transitionMap).map(function(key) {
       return transitionMap[key].configuration;
     }));
     return {
@@ -6540,7 +7745,7 @@ var StateNode = /* @__PURE__ */ function() {
       })),
       configuration,
       source: state,
-      actions: flatten(keys(transitionMap).map(function(key) {
+      actions: flatten(Object.keys(transitionMap).map(function(key) {
         return transitionMap[key].actions;
       }))
     };
@@ -6549,7 +7754,7 @@ var StateNode = /* @__PURE__ */ function() {
     if (isString(stateValue)) {
       return this.transitionLeafNode(stateValue, state, _event);
     }
-    if (keys(stateValue).length === 1) {
+    if (Object.keys(stateValue).length === 1) {
       return this.transitionCompoundNode(stateValue, state, _event);
     }
     return this.transitionParallelNode(stateValue, state, _event);
@@ -6936,7 +8141,7 @@ var StateNode = /* @__PURE__ */ function() {
           }
           return stateValue;
         }
-        if (!keys(stateValue).length) {
+        if (!Object.keys(stateValue).length) {
           return this.initialStateValue || {};
         }
         return mapValues(stateValue, function(subStateValue, subStateKey) {
@@ -6984,6 +8189,7 @@ var StateNode = /* @__PURE__ */ function() {
     configurable: true
   });
   StateNode2.prototype.getInitialState = function(stateValue, context) {
+    this._init();
     var configuration = this.getStateNodes(stateValue);
     return this.resolveTransition({
       configuration,
@@ -6996,7 +8202,6 @@ var StateNode = /* @__PURE__ */ function() {
   };
   Object.defineProperty(StateNode2.prototype, "initialState", {
     get: function() {
-      this._init();
       var initialStateValue = this.initialStateValue;
       if (!initialStateValue) {
         throw new Error("Cannot retrieve initial state from simple state '".concat(this.id, "'."));
@@ -7066,7 +8271,7 @@ var StateNode = /* @__PURE__ */ function() {
     return this.states[stateKey].getFromRelativePath(childStatePath);
   };
   StateNode2.prototype.historyValue = function(relativeStateValue) {
-    if (!keys(this.states).length) {
+    if (!Object.keys(this.states).length) {
       return void 0;
     }
     return {
@@ -7105,7 +8310,7 @@ var StateNode = /* @__PURE__ */ function() {
   Object.defineProperty(StateNode2.prototype, "stateIds", {
     get: function() {
       var _this = this;
-      var childStateIds = flatten(keys(this.states).map(function(stateKey) {
+      var childStateIds = flatten(Object.keys(this.states).map(function(stateKey) {
         return _this.states[stateKey].stateIds;
       }));
       return [this.id].concat(childStateIds);
@@ -7123,7 +8328,7 @@ var StateNode = /* @__PURE__ */ function() {
       var events = new Set(this.ownEvents);
       if (states) {
         try {
-          for (var _c = __values(keys(states)), _d = _c.next(); !_d.done; _d = _c.next()) {
+          for (var _c = __values(Object.keys(states)), _d = _c.next(); !_d.done; _d = _c.next()) {
             var stateId = _d.value;
             var state = states[stateId];
             if (state.states) {
@@ -7240,7 +8445,7 @@ var StateNode = /* @__PURE__ */ function() {
       onConfig = this.config.on;
     } else {
       var _b = this.config.on, _c = WILDCARD, _d = _b[_c], wildcardConfigs = _d === void 0 ? [] : _d, strictTransitionConfigs_1 = __rest(_b, [typeof _c === "symbol" ? _c : _c + ""]);
-      onConfig = flatten(keys(strictTransitionConfigs_1).map(function(key) {
+      onConfig = flatten(Object.keys(strictTransitionConfigs_1).map(function(key) {
         if (!IS_PRODUCTION && key === NULL_EVENT) {
           warn(false, "Empty string transition configs (e.g., `{ on: { '': ... }}`) for transient transitions are deprecated. Specify the transition in the `{ always: ... }` property instead. " + 'Please check the `on` configuration for "#'.concat(_this.id, '".'));
         }
@@ -7300,1188 +8505,6 @@ function createMachine(config, options) {
   return new StateNode(config, options);
 }
 __name(createMachine, "createMachine");
-
-// ../../node_modules/xstate/es/scheduler.js
-var defaultOptions = {
-  deferEvents: false
-};
-var Scheduler = /* @__PURE__ */ function() {
-  function Scheduler2(options) {
-    this.processingEvent = false;
-    this.queue = [];
-    this.initialized = false;
-    this.options = __assign(__assign({}, defaultOptions), options);
-  }
-  __name(Scheduler2, "Scheduler");
-  Scheduler2.prototype.initialize = function(callback) {
-    this.initialized = true;
-    if (callback) {
-      if (!this.options.deferEvents) {
-        this.schedule(callback);
-        return;
-      }
-      this.process(callback);
-    }
-    this.flushEvents();
-  };
-  Scheduler2.prototype.schedule = function(task) {
-    if (!this.initialized || this.processingEvent) {
-      this.queue.push(task);
-      return;
-    }
-    if (this.queue.length !== 0) {
-      throw new Error("Event queue should be empty when it is not processing events");
-    }
-    this.process(task);
-    this.flushEvents();
-  };
-  Scheduler2.prototype.clear = function() {
-    this.queue = [];
-  };
-  Scheduler2.prototype.flushEvents = function() {
-    var nextCallback = this.queue.shift();
-    while (nextCallback) {
-      this.process(nextCallback);
-      nextCallback = this.queue.shift();
-    }
-  };
-  Scheduler2.prototype.process = function(callback) {
-    this.processingEvent = true;
-    try {
-      callback();
-    } catch (e) {
-      this.clear();
-      throw e;
-    } finally {
-      this.processingEvent = false;
-    }
-  };
-  return Scheduler2;
-}();
-
-// ../../node_modules/xstate/es/registry.js
-var children = /* @__PURE__ */ new Map();
-var sessionIdIndex = 0;
-var registry = {
-  bookId: function() {
-    return "x:".concat(sessionIdIndex++);
-  },
-  register: function(id, actor) {
-    children.set(id, actor);
-    return id;
-  },
-  get: function(id) {
-    return children.get(id);
-  },
-  free: function(id) {
-    children.delete(id);
-  }
-};
-
-// ../../node_modules/xstate/es/devTools.js
-function getGlobal() {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  return void 0;
-}
-__name(getGlobal, "getGlobal");
-function getDevTools() {
-  var global2 = getGlobal();
-  if (global2 && "__xstate__" in global2) {
-    return global2.__xstate__;
-  }
-  return void 0;
-}
-__name(getDevTools, "getDevTools");
-function registerService(service) {
-  if (!getGlobal()) {
-    return;
-  }
-  var devTools = getDevTools();
-  if (devTools) {
-    devTools.register(service);
-  }
-}
-__name(registerService, "registerService");
-
-// ../../node_modules/xstate/es/behaviors.js
-function spawnBehavior(behavior, options) {
-  if (options === void 0) {
-    options = {};
-  }
-  var state = behavior.initialState;
-  var observers2 = /* @__PURE__ */ new Set();
-  var mailbox = [];
-  var flushing = false;
-  var flush = /* @__PURE__ */ __name(function() {
-    if (flushing) {
-      return;
-    }
-    flushing = true;
-    while (mailbox.length > 0) {
-      var event_1 = mailbox.shift();
-      state = behavior.transition(state, event_1, actorCtx);
-      observers2.forEach(function(observer) {
-        return observer.next(state);
-      });
-    }
-    flushing = false;
-  }, "flush");
-  var actor = toActorRef({
-    id: options.id,
-    send: function(event2) {
-      mailbox.push(event2);
-      flush();
-    },
-    getSnapshot: function() {
-      return state;
-    },
-    subscribe: function(next, handleError, complete) {
-      var observer = toObserver(next, handleError, complete);
-      observers2.add(observer);
-      observer.next(state);
-      return {
-        unsubscribe: function() {
-          observers2.delete(observer);
-        }
-      };
-    }
-  });
-  var actorCtx = {
-    parent: options.parent,
-    self: actor,
-    id: options.id || "anonymous",
-    observers: observers2
-  };
-  state = behavior.start ? behavior.start(actorCtx) : state;
-  return actor;
-}
-__name(spawnBehavior, "spawnBehavior");
-
-// ../../node_modules/xstate/es/interpreter.js
-var DEFAULT_SPAWN_OPTIONS = {
-  sync: false,
-  autoForward: false
-};
-var InterpreterStatus;
-(function(InterpreterStatus2) {
-  InterpreterStatus2[InterpreterStatus2["NotStarted"] = 0] = "NotStarted";
-  InterpreterStatus2[InterpreterStatus2["Running"] = 1] = "Running";
-  InterpreterStatus2[InterpreterStatus2["Stopped"] = 2] = "Stopped";
-})(InterpreterStatus || (InterpreterStatus = {}));
-var Interpreter = /* @__PURE__ */ function() {
-  function Interpreter2(machine, options) {
-    var _this = this;
-    if (options === void 0) {
-      options = Interpreter2.defaultOptions;
-    }
-    this.machine = machine;
-    this.scheduler = new Scheduler();
-    this.delayedEventsMap = {};
-    this.listeners = /* @__PURE__ */ new Set();
-    this.contextListeners = /* @__PURE__ */ new Set();
-    this.stopListeners = /* @__PURE__ */ new Set();
-    this.doneListeners = /* @__PURE__ */ new Set();
-    this.eventListeners = /* @__PURE__ */ new Set();
-    this.sendListeners = /* @__PURE__ */ new Set();
-    this.initialized = false;
-    this.status = InterpreterStatus.NotStarted;
-    this.children = /* @__PURE__ */ new Map();
-    this.forwardTo = /* @__PURE__ */ new Set();
-    this.init = this.start;
-    this.send = function(event2, payload) {
-      if (isArray(event2)) {
-        _this.batch(event2);
-        return _this.state;
-      }
-      var _event = toSCXMLEvent(toEventObject(event2, payload));
-      if (_this.status === InterpreterStatus.Stopped) {
-        if (!IS_PRODUCTION) {
-          warn(false, 'Event "'.concat(_event.name, '" was sent to stopped service "').concat(_this.machine.id, '". This service has already reached its final state, and will not transition.\nEvent: ').concat(JSON.stringify(_event.data)));
-        }
-        return _this.state;
-      }
-      if (_this.status !== InterpreterStatus.Running && !_this.options.deferEvents) {
-        throw new Error('Event "'.concat(_event.name, '" was sent to uninitialized service "').concat(_this.machine.id, '". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.\nEvent: ').concat(JSON.stringify(_event.data)));
-      }
-      _this.scheduler.schedule(function() {
-        _this.forward(_event);
-        var nextState = _this.nextState(_event);
-        _this.update(nextState, _event);
-      });
-      return _this._state;
-    };
-    this.sendTo = function(event2, to) {
-      var isParent = _this.parent && (to === SpecialTargets.Parent || _this.parent.id === to);
-      var target2 = isParent ? _this.parent : isString(to) ? _this.children.get(to) || registry.get(to) : isActor(to) ? to : void 0;
-      if (!target2) {
-        if (!isParent) {
-          throw new Error("Unable to send event to child '".concat(to, "' from service '").concat(_this.id, "'."));
-        }
-        if (!IS_PRODUCTION) {
-          warn(false, "Service '".concat(_this.id, "' has no parent: unable to send event ").concat(event2.type));
-        }
-        return;
-      }
-      if ("machine" in target2) {
-        target2.send(__assign(__assign({}, event2), {
-          name: event2.name === error ? "".concat(error2(_this.id)) : event2.name,
-          origin: _this.sessionId
-        }));
-      } else {
-        target2.send(event2.data);
-      }
-    };
-    var resolvedOptions = __assign(__assign({}, Interpreter2.defaultOptions), options);
-    var clock = resolvedOptions.clock, logger = resolvedOptions.logger, parent = resolvedOptions.parent, id = resolvedOptions.id;
-    var resolvedId = id !== void 0 ? id : machine.id;
-    this.id = resolvedId;
-    this.logger = logger;
-    this.clock = clock;
-    this.parent = parent;
-    this.options = resolvedOptions;
-    this.scheduler = new Scheduler({
-      deferEvents: this.options.deferEvents
-    });
-    this.sessionId = registry.bookId();
-  }
-  __name(Interpreter2, "Interpreter");
-  Object.defineProperty(Interpreter2.prototype, "initialState", {
-    get: function() {
-      var _this = this;
-      if (this._initialState) {
-        return this._initialState;
-      }
-      return provide(this, function() {
-        _this._initialState = _this.machine.initialState;
-        return _this._initialState;
-      });
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Interpreter2.prototype, "state", {
-    get: function() {
-      if (!IS_PRODUCTION) {
-        warn(this.status !== InterpreterStatus.NotStarted, "Attempted to read state from uninitialized service '".concat(this.id, "'. Make sure the service is started first."));
-      }
-      return this._state;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Interpreter2.prototype.execute = function(state, actionsConfig) {
-    var e_1, _a2;
-    try {
-      for (var _b = __values(state.actions), _c = _b.next(); !_c.done; _c = _b.next()) {
-        var action = _c.value;
-        this.exec(action, state, actionsConfig);
-      }
-    } catch (e_1_1) {
-      e_1 = {
-        error: e_1_1
-      };
-    } finally {
-      try {
-        if (_c && !_c.done && (_a2 = _b.return))
-          _a2.call(_b);
-      } finally {
-        if (e_1)
-          throw e_1.error;
-      }
-    }
-  };
-  Interpreter2.prototype.update = function(state, _event) {
-    var e_2, _a2, e_3, _b, e_4, _c, e_5, _d;
-    var _this = this;
-    state._sessionid = this.sessionId;
-    this._state = state;
-    if (this.options.execute) {
-      this.execute(this.state);
-    }
-    this.children.forEach(function(child) {
-      _this.state.children[child.id] = child;
-    });
-    if (this.devTools) {
-      this.devTools.send(_event.data, state);
-    }
-    if (state.event) {
-      try {
-        for (var _e2 = __values(this.eventListeners), _f = _e2.next(); !_f.done; _f = _e2.next()) {
-          var listener = _f.value;
-          listener(state.event);
-        }
-      } catch (e_2_1) {
-        e_2 = {
-          error: e_2_1
-        };
-      } finally {
-        try {
-          if (_f && !_f.done && (_a2 = _e2.return))
-            _a2.call(_e2);
-        } finally {
-          if (e_2)
-            throw e_2.error;
-        }
-      }
-    }
-    try {
-      for (var _g = __values(this.listeners), _h = _g.next(); !_h.done; _h = _g.next()) {
-        var listener = _h.value;
-        listener(state, state.event);
-      }
-    } catch (e_3_1) {
-      e_3 = {
-        error: e_3_1
-      };
-    } finally {
-      try {
-        if (_h && !_h.done && (_b = _g.return))
-          _b.call(_g);
-      } finally {
-        if (e_3)
-          throw e_3.error;
-      }
-    }
-    try {
-      for (var _j = __values(this.contextListeners), _k = _j.next(); !_k.done; _k = _j.next()) {
-        var contextListener = _k.value;
-        contextListener(this.state.context, this.state.history ? this.state.history.context : void 0);
-      }
-    } catch (e_4_1) {
-      e_4 = {
-        error: e_4_1
-      };
-    } finally {
-      try {
-        if (_k && !_k.done && (_c = _j.return))
-          _c.call(_j);
-      } finally {
-        if (e_4)
-          throw e_4.error;
-      }
-    }
-    var isDone = isInFinalState(state.configuration || [], this.machine);
-    if (this.state.configuration && isDone) {
-      var finalChildStateNode = state.configuration.find(function(sn) {
-        return sn.type === "final" && sn.parent === _this.machine;
-      });
-      var doneData = finalChildStateNode && finalChildStateNode.doneData ? mapContext(finalChildStateNode.doneData, state.context, _event) : void 0;
-      try {
-        for (var _l = __values(this.doneListeners), _m = _l.next(); !_m.done; _m = _l.next()) {
-          var listener = _m.value;
-          listener(doneInvoke(this.id, doneData));
-        }
-      } catch (e_5_1) {
-        e_5 = {
-          error: e_5_1
-        };
-      } finally {
-        try {
-          if (_m && !_m.done && (_d = _l.return))
-            _d.call(_l);
-        } finally {
-          if (e_5)
-            throw e_5.error;
-        }
-      }
-      this.stop();
-    }
-  };
-  Interpreter2.prototype.onTransition = function(listener) {
-    this.listeners.add(listener);
-    if (this.status === InterpreterStatus.Running) {
-      listener(this.state, this.state.event);
-    }
-    return this;
-  };
-  Interpreter2.prototype.subscribe = function(nextListenerOrObserver, _2, completeListener) {
-    var _this = this;
-    if (!nextListenerOrObserver) {
-      return {
-        unsubscribe: function() {
-          return void 0;
-        }
-      };
-    }
-    var listener;
-    var resolvedCompleteListener = completeListener;
-    if (typeof nextListenerOrObserver === "function") {
-      listener = nextListenerOrObserver;
-    } else {
-      listener = nextListenerOrObserver.next.bind(nextListenerOrObserver);
-      resolvedCompleteListener = nextListenerOrObserver.complete.bind(nextListenerOrObserver);
-    }
-    this.listeners.add(listener);
-    if (this.status === InterpreterStatus.Running) {
-      listener(this.state);
-    }
-    if (resolvedCompleteListener) {
-      this.onDone(resolvedCompleteListener);
-    }
-    return {
-      unsubscribe: function() {
-        listener && _this.listeners.delete(listener);
-        resolvedCompleteListener && _this.doneListeners.delete(resolvedCompleteListener);
-      }
-    };
-  };
-  Interpreter2.prototype.onEvent = function(listener) {
-    this.eventListeners.add(listener);
-    return this;
-  };
-  Interpreter2.prototype.onSend = function(listener) {
-    this.sendListeners.add(listener);
-    return this;
-  };
-  Interpreter2.prototype.onChange = function(listener) {
-    this.contextListeners.add(listener);
-    return this;
-  };
-  Interpreter2.prototype.onStop = function(listener) {
-    this.stopListeners.add(listener);
-    return this;
-  };
-  Interpreter2.prototype.onDone = function(listener) {
-    this.doneListeners.add(listener);
-    return this;
-  };
-  Interpreter2.prototype.off = function(listener) {
-    this.listeners.delete(listener);
-    this.eventListeners.delete(listener);
-    this.sendListeners.delete(listener);
-    this.stopListeners.delete(listener);
-    this.doneListeners.delete(listener);
-    this.contextListeners.delete(listener);
-    return this;
-  };
-  Interpreter2.prototype.start = function(initialState) {
-    var _this = this;
-    if (this.status === InterpreterStatus.Running) {
-      return this;
-    }
-    registry.register(this.sessionId, this);
-    this.initialized = true;
-    this.status = InterpreterStatus.Running;
-    var resolvedState = initialState === void 0 ? this.initialState : provide(this, function() {
-      return isState(initialState) ? _this.machine.resolveState(initialState) : _this.machine.resolveState(State.from(initialState, _this.machine.context));
-    });
-    if (this.options.devTools) {
-      this.attachDev();
-    }
-    this.scheduler.initialize(function() {
-      _this.update(resolvedState, initEvent);
-    });
-    return this;
-  };
-  Interpreter2.prototype.stop = function() {
-    var e_6, _a2, e_7, _b, e_8, _c, e_9, _d, e_10, _e2;
-    var _this = this;
-    try {
-      for (var _f = __values(this.listeners), _g = _f.next(); !_g.done; _g = _f.next()) {
-        var listener = _g.value;
-        this.listeners.delete(listener);
-      }
-    } catch (e_6_1) {
-      e_6 = {
-        error: e_6_1
-      };
-    } finally {
-      try {
-        if (_g && !_g.done && (_a2 = _f.return))
-          _a2.call(_f);
-      } finally {
-        if (e_6)
-          throw e_6.error;
-      }
-    }
-    try {
-      for (var _h = __values(this.stopListeners), _j = _h.next(); !_j.done; _j = _h.next()) {
-        var listener = _j.value;
-        listener();
-        this.stopListeners.delete(listener);
-      }
-    } catch (e_7_1) {
-      e_7 = {
-        error: e_7_1
-      };
-    } finally {
-      try {
-        if (_j && !_j.done && (_b = _h.return))
-          _b.call(_h);
-      } finally {
-        if (e_7)
-          throw e_7.error;
-      }
-    }
-    try {
-      for (var _k = __values(this.contextListeners), _l = _k.next(); !_l.done; _l = _k.next()) {
-        var listener = _l.value;
-        this.contextListeners.delete(listener);
-      }
-    } catch (e_8_1) {
-      e_8 = {
-        error: e_8_1
-      };
-    } finally {
-      try {
-        if (_l && !_l.done && (_c = _k.return))
-          _c.call(_k);
-      } finally {
-        if (e_8)
-          throw e_8.error;
-      }
-    }
-    try {
-      for (var _m = __values(this.doneListeners), _o = _m.next(); !_o.done; _o = _m.next()) {
-        var listener = _o.value;
-        this.doneListeners.delete(listener);
-      }
-    } catch (e_9_1) {
-      e_9 = {
-        error: e_9_1
-      };
-    } finally {
-      try {
-        if (_o && !_o.done && (_d = _m.return))
-          _d.call(_m);
-      } finally {
-        if (e_9)
-          throw e_9.error;
-      }
-    }
-    if (!this.initialized) {
-      return this;
-    }
-    __spreadArray([], __read(this.state.configuration), false).sort(function(a, b2) {
-      return b2.order - a.order;
-    }).forEach(function(stateNode) {
-      var e_11, _a3;
-      try {
-        for (var _b2 = __values(stateNode.definition.exit), _c2 = _b2.next(); !_c2.done; _c2 = _b2.next()) {
-          var action = _c2.value;
-          _this.exec(action, _this.state);
-        }
-      } catch (e_11_1) {
-        e_11 = {
-          error: e_11_1
-        };
-      } finally {
-        try {
-          if (_c2 && !_c2.done && (_a3 = _b2.return))
-            _a3.call(_b2);
-        } finally {
-          if (e_11)
-            throw e_11.error;
-        }
-      }
-    });
-    this.children.forEach(function(child) {
-      if (isFunction(child.stop)) {
-        child.stop();
-      }
-    });
-    try {
-      for (var _p = __values(keys(this.delayedEventsMap)), _q = _p.next(); !_q.done; _q = _p.next()) {
-        var key = _q.value;
-        this.clock.clearTimeout(this.delayedEventsMap[key]);
-      }
-    } catch (e_10_1) {
-      e_10 = {
-        error: e_10_1
-      };
-    } finally {
-      try {
-        if (_q && !_q.done && (_e2 = _p.return))
-          _e2.call(_p);
-      } finally {
-        if (e_10)
-          throw e_10.error;
-      }
-    }
-    this.scheduler.clear();
-    this.initialized = false;
-    this.status = InterpreterStatus.Stopped;
-    registry.free(this.sessionId);
-    return this;
-  };
-  Interpreter2.prototype.batch = function(events) {
-    var _this = this;
-    if (this.status === InterpreterStatus.NotStarted && this.options.deferEvents) {
-      if (!IS_PRODUCTION) {
-        warn(false, "".concat(events.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, '" and are deferred. Make sure .start() is called for this service.\nEvent: ').concat(JSON.stringify(event)));
-      }
-    } else if (this.status !== InterpreterStatus.Running) {
-      throw new Error("".concat(events.length, ' event(s) were sent to uninitialized service "').concat(this.machine.id, '". Make sure .start() is called for this service, or set { deferEvents: true } in the service options.'));
-    }
-    this.scheduler.schedule(function() {
-      var e_12, _a2;
-      var nextState = _this.state;
-      var batchChanged = false;
-      var batchedActions = [];
-      var _loop_1 = /* @__PURE__ */ __name(function(event_12) {
-        var _event = toSCXMLEvent(event_12);
-        _this.forward(_event);
-        nextState = provide(_this, function() {
-          return _this.machine.transition(nextState, _event);
-        });
-        batchedActions.push.apply(batchedActions, __spreadArray([], __read(nextState.actions.map(function(a) {
-          return bindActionToState(a, nextState);
-        })), false));
-        batchChanged = batchChanged || !!nextState.changed;
-      }, "_loop_1");
-      try {
-        for (var events_1 = __values(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
-          var event_1 = events_1_1.value;
-          _loop_1(event_1);
-        }
-      } catch (e_12_1) {
-        e_12 = {
-          error: e_12_1
-        };
-      } finally {
-        try {
-          if (events_1_1 && !events_1_1.done && (_a2 = events_1.return))
-            _a2.call(events_1);
-        } finally {
-          if (e_12)
-            throw e_12.error;
-        }
-      }
-      nextState.changed = batchChanged;
-      nextState.actions = batchedActions;
-      _this.update(nextState, toSCXMLEvent(events[events.length - 1]));
-    });
-  };
-  Interpreter2.prototype.sender = function(event2) {
-    return this.send.bind(this, event2);
-  };
-  Interpreter2.prototype.nextState = function(event2) {
-    var _this = this;
-    var _event = toSCXMLEvent(event2);
-    if (_event.name.indexOf(errorPlatform) === 0 && !this.state.nextEvents.some(function(nextEvent) {
-      return nextEvent.indexOf(errorPlatform) === 0;
-    })) {
-      throw _event.data.data;
-    }
-    var nextState = provide(this, function() {
-      return _this.machine.transition(_this.state, _event);
-    });
-    return nextState;
-  };
-  Interpreter2.prototype.forward = function(event2) {
-    var e_13, _a2;
-    try {
-      for (var _b = __values(this.forwardTo), _c = _b.next(); !_c.done; _c = _b.next()) {
-        var id = _c.value;
-        var child = this.children.get(id);
-        if (!child) {
-          throw new Error("Unable to forward event '".concat(event2, "' from interpreter '").concat(this.id, "' to nonexistant child '").concat(id, "'."));
-        }
-        child.send(event2);
-      }
-    } catch (e_13_1) {
-      e_13 = {
-        error: e_13_1
-      };
-    } finally {
-      try {
-        if (_c && !_c.done && (_a2 = _b.return))
-          _a2.call(_b);
-      } finally {
-        if (e_13)
-          throw e_13.error;
-      }
-    }
-  };
-  Interpreter2.prototype.defer = function(sendAction) {
-    var _this = this;
-    this.delayedEventsMap[sendAction.id] = this.clock.setTimeout(function() {
-      if (sendAction.to) {
-        _this.sendTo(sendAction._event, sendAction.to);
-      } else {
-        _this.send(sendAction._event);
-      }
-    }, sendAction.delay);
-  };
-  Interpreter2.prototype.cancel = function(sendId) {
-    this.clock.clearTimeout(this.delayedEventsMap[sendId]);
-    delete this.delayedEventsMap[sendId];
-  };
-  Interpreter2.prototype.exec = function(action, state, actionFunctionMap) {
-    if (actionFunctionMap === void 0) {
-      actionFunctionMap = this.machine.options.actions;
-    }
-    var context = state.context, _event = state._event;
-    var actionOrExec = action.exec || getActionFunction(action.type, actionFunctionMap);
-    var exec = isFunction(actionOrExec) ? actionOrExec : actionOrExec ? actionOrExec.exec : action.exec;
-    if (exec) {
-      try {
-        return exec(context, _event.data, {
-          action,
-          state: this.state,
-          _event
-        });
-      } catch (err) {
-        if (this.parent) {
-          this.parent.send({
-            type: "xstate.error",
-            data: err
-          });
-        }
-        throw err;
-      }
-    }
-    switch (action.type) {
-      case send:
-        var sendAction = action;
-        if (typeof sendAction.delay === "number") {
-          this.defer(sendAction);
-          return;
-        } else {
-          if (sendAction.to) {
-            this.sendTo(sendAction._event, sendAction.to);
-          } else {
-            this.send(sendAction._event);
-          }
-        }
-        break;
-      case cancel:
-        this.cancel(action.sendId);
-        break;
-      case start: {
-        if (this.status !== InterpreterStatus.Running) {
-          return;
-        }
-        var activity = action.activity;
-        if (!this.state.activities[activity.id || activity.type]) {
-          break;
-        }
-        if (activity.type === ActionTypes.Invoke) {
-          var invokeSource = toInvokeSource(activity.src);
-          var serviceCreator = this.machine.options.services ? this.machine.options.services[invokeSource.type] : void 0;
-          var id = activity.id, data = activity.data;
-          if (!IS_PRODUCTION) {
-            warn(!("forward" in activity), "`forward` property is deprecated (found in invocation of '".concat(activity.src, "' in in machine '").concat(this.machine.id, "'). ") + "Please use `autoForward` instead.");
-          }
-          var autoForward = "autoForward" in activity ? activity.autoForward : !!activity.forward;
-          if (!serviceCreator) {
-            if (!IS_PRODUCTION) {
-              warn(false, "No service found for invocation '".concat(activity.src, "' in machine '").concat(this.machine.id, "'."));
-            }
-            return;
-          }
-          var resolvedData = data ? mapContext(data, context, _event) : void 0;
-          if (typeof serviceCreator === "string") {
-            return;
-          }
-          var source = isFunction(serviceCreator) ? serviceCreator(context, _event.data, {
-            data: resolvedData,
-            src: invokeSource,
-            meta: activity.meta
-          }) : serviceCreator;
-          if (!source) {
-            return;
-          }
-          var options = void 0;
-          if (isMachine(source)) {
-            source = resolvedData ? source.withContext(resolvedData) : source;
-            options = {
-              autoForward
-            };
-          }
-          this.spawn(source, id, options);
-        } else {
-          this.spawnActivity(activity);
-        }
-        break;
-      }
-      case stop: {
-        this.stopChild(action.activity.id);
-        break;
-      }
-      case log:
-        var label = action.label, value = action.value;
-        if (label) {
-          this.logger(label, value);
-        } else {
-          this.logger(value);
-        }
-        break;
-      default:
-        if (!IS_PRODUCTION) {
-          warn(false, "No implementation found for action type '".concat(action.type, "'"));
-        }
-        break;
-    }
-    return void 0;
-  };
-  Interpreter2.prototype.removeChild = function(childId) {
-    var _a2;
-    this.children.delete(childId);
-    this.forwardTo.delete(childId);
-    (_a2 = this.state) === null || _a2 === void 0 ? true : delete _a2.children[childId];
-  };
-  Interpreter2.prototype.stopChild = function(childId) {
-    var child = this.children.get(childId);
-    if (!child) {
-      return;
-    }
-    this.removeChild(childId);
-    if (isFunction(child.stop)) {
-      child.stop();
-    }
-  };
-  Interpreter2.prototype.spawn = function(entity, name, options) {
-    if (isPromiseLike(entity)) {
-      return this.spawnPromise(Promise.resolve(entity), name);
-    } else if (isFunction(entity)) {
-      return this.spawnCallback(entity, name);
-    } else if (isSpawnedActor(entity)) {
-      return this.spawnActor(entity, name);
-    } else if (isObservable(entity)) {
-      return this.spawnObservable(entity, name);
-    } else if (isMachine(entity)) {
-      return this.spawnMachine(entity, __assign(__assign({}, options), {
-        id: name
-      }));
-    } else if (isBehavior(entity)) {
-      return this.spawnBehavior(entity, name);
-    } else {
-      throw new Error('Unable to spawn entity "'.concat(name, '" of type "').concat(typeof entity, '".'));
-    }
-  };
-  Interpreter2.prototype.spawnMachine = function(machine, options) {
-    var _this = this;
-    if (options === void 0) {
-      options = {};
-    }
-    var childService = new Interpreter2(machine, __assign(__assign({}, this.options), {
-      parent: this,
-      id: options.id || machine.id
-    }));
-    var resolvedOptions = __assign(__assign({}, DEFAULT_SPAWN_OPTIONS), options);
-    if (resolvedOptions.sync) {
-      childService.onTransition(function(state) {
-        _this.send(update, {
-          state,
-          id: childService.id
-        });
-      });
-    }
-    var actor = childService;
-    this.children.set(childService.id, actor);
-    if (resolvedOptions.autoForward) {
-      this.forwardTo.add(childService.id);
-    }
-    childService.onDone(function(doneEvent) {
-      _this.removeChild(childService.id);
-      _this.send(toSCXMLEvent(doneEvent, {
-        origin: childService.id
-      }));
-    }).start();
-    return actor;
-  };
-  Interpreter2.prototype.spawnBehavior = function(behavior, id) {
-    var actorRef = spawnBehavior(behavior, {
-      id,
-      parent: this
-    });
-    this.children.set(id, actorRef);
-    return actorRef;
-  };
-  Interpreter2.prototype.spawnPromise = function(promise, id) {
-    var _this = this;
-    var canceled = false;
-    var resolvedData;
-    promise.then(function(response) {
-      if (!canceled) {
-        resolvedData = response;
-        _this.removeChild(id);
-        _this.send(toSCXMLEvent(doneInvoke(id, response), {
-          origin: id
-        }));
-      }
-    }, function(errorData) {
-      if (!canceled) {
-        _this.removeChild(id);
-        var errorEvent = error2(id, errorData);
-        try {
-          _this.send(toSCXMLEvent(errorEvent, {
-            origin: id
-          }));
-        } catch (error3) {
-          reportUnhandledExceptionOnInvocation(errorData, error3, id);
-          if (_this.devTools) {
-            _this.devTools.send(errorEvent, _this.state);
-          }
-          if (_this.machine.strict) {
-            _this.stop();
-          }
-        }
-      }
-    });
-    var actor = __assign({
-      id,
-      send: function() {
-        return void 0;
-      },
-      subscribe: function(next, handleError, complete) {
-        var observer = toObserver(next, handleError, complete);
-        var unsubscribed = false;
-        promise.then(function(response) {
-          if (unsubscribed) {
-            return;
-          }
-          observer.next(response);
-          if (unsubscribed) {
-            return;
-          }
-          observer.complete();
-        }, function(err) {
-          if (unsubscribed) {
-            return;
-          }
-          observer.error(err);
-        });
-        return {
-          unsubscribe: function() {
-            return unsubscribed = true;
-          }
-        };
-      },
-      stop: function() {
-        canceled = true;
-      },
-      toJSON: function() {
-        return {
-          id
-        };
-      },
-      getSnapshot: function() {
-        return resolvedData;
-      }
-    }, interopSymbols);
-    this.children.set(id, actor);
-    return actor;
-  };
-  Interpreter2.prototype.spawnCallback = function(callback, id) {
-    var _this = this;
-    var canceled = false;
-    var receivers = /* @__PURE__ */ new Set();
-    var listeners = /* @__PURE__ */ new Set();
-    var emitted;
-    var receive = /* @__PURE__ */ __name(function(e) {
-      emitted = e;
-      listeners.forEach(function(listener) {
-        return listener(e);
-      });
-      if (canceled) {
-        return;
-      }
-      _this.send(toSCXMLEvent(e, {
-        origin: id
-      }));
-    }, "receive");
-    var callbackStop;
-    try {
-      callbackStop = callback(receive, function(newListener) {
-        receivers.add(newListener);
-      });
-    } catch (err) {
-      this.send(error2(id, err));
-    }
-    if (isPromiseLike(callbackStop)) {
-      return this.spawnPromise(callbackStop, id);
-    }
-    var actor = __assign({
-      id,
-      send: function(event2) {
-        return receivers.forEach(function(receiver) {
-          return receiver(event2);
-        });
-      },
-      subscribe: function(next) {
-        listeners.add(next);
-        return {
-          unsubscribe: function() {
-            listeners.delete(next);
-          }
-        };
-      },
-      stop: function() {
-        canceled = true;
-        if (isFunction(callbackStop)) {
-          callbackStop();
-        }
-      },
-      toJSON: function() {
-        return {
-          id
-        };
-      },
-      getSnapshot: function() {
-        return emitted;
-      }
-    }, interopSymbols);
-    this.children.set(id, actor);
-    return actor;
-  };
-  Interpreter2.prototype.spawnObservable = function(source, id) {
-    var _this = this;
-    var emitted;
-    var subscription = source.subscribe(function(value) {
-      emitted = value;
-      _this.send(toSCXMLEvent(value, {
-        origin: id
-      }));
-    }, function(err) {
-      _this.removeChild(id);
-      _this.send(toSCXMLEvent(error2(id, err), {
-        origin: id
-      }));
-    }, function() {
-      _this.removeChild(id);
-      _this.send(toSCXMLEvent(doneInvoke(id), {
-        origin: id
-      }));
-    });
-    var actor = __assign({
-      id,
-      send: function() {
-        return void 0;
-      },
-      subscribe: function(next, handleError, complete) {
-        return source.subscribe(next, handleError, complete);
-      },
-      stop: function() {
-        return subscription.unsubscribe();
-      },
-      getSnapshot: function() {
-        return emitted;
-      },
-      toJSON: function() {
-        return {
-          id
-        };
-      }
-    }, interopSymbols);
-    this.children.set(id, actor);
-    return actor;
-  };
-  Interpreter2.prototype.spawnActor = function(actor, name) {
-    this.children.set(name, actor);
-    return actor;
-  };
-  Interpreter2.prototype.spawnActivity = function(activity) {
-    var implementation = this.machine.options && this.machine.options.activities ? this.machine.options.activities[activity.type] : void 0;
-    if (!implementation) {
-      if (!IS_PRODUCTION) {
-        warn(false, "No implementation found for activity '".concat(activity.type, "'"));
-      }
-      return;
-    }
-    var dispose = implementation(this.state.context, activity);
-    this.spawnEffect(activity.id, dispose);
-  };
-  Interpreter2.prototype.spawnEffect = function(id, dispose) {
-    this.children.set(id, __assign({
-      id,
-      send: function() {
-        return void 0;
-      },
-      subscribe: function() {
-        return {
-          unsubscribe: function() {
-            return void 0;
-          }
-        };
-      },
-      stop: dispose || void 0,
-      getSnapshot: function() {
-        return void 0;
-      },
-      toJSON: function() {
-        return {
-          id
-        };
-      }
-    }, interopSymbols));
-  };
-  Interpreter2.prototype.attachDev = function() {
-    var global2 = getGlobal();
-    if (this.options.devTools && global2) {
-      if (global2.__REDUX_DEVTOOLS_EXTENSION__) {
-        var devToolsOptions = typeof this.options.devTools === "object" ? this.options.devTools : void 0;
-        this.devTools = global2.__REDUX_DEVTOOLS_EXTENSION__.connect(__assign(__assign({
-          name: this.id,
-          autoPause: true,
-          stateSanitizer: function(state) {
-            return {
-              value: state.value,
-              context: state.context,
-              actions: state.actions
-            };
-          }
-        }, devToolsOptions), {
-          features: __assign({
-            jump: false,
-            skip: false
-          }, devToolsOptions ? devToolsOptions.features : void 0)
-        }), this.machine);
-        this.devTools.init(this.state);
-      }
-      registerService(this);
-    }
-  };
-  Interpreter2.prototype.toJSON = function() {
-    return {
-      id: this.id
-    };
-  };
-  Interpreter2.prototype[symbolObservable] = function() {
-    return this;
-  };
-  Interpreter2.prototype.getSnapshot = function() {
-    if (this.status === InterpreterStatus.NotStarted) {
-      return this.initialState;
-    }
-    return this._state;
-  };
-  Interpreter2.defaultOptions = /* @__PURE__ */ function(global2) {
-    return {
-      execute: true,
-      deferEvents: true,
-      clock: {
-        setTimeout: function(fn2, ms) {
-          return setTimeout(fn2, ms);
-        },
-        clearTimeout: function(id) {
-          return clearTimeout(id);
-        }
-      },
-      logger: global2.console.log.bind(console),
-      devTools: false
-    };
-  }(typeof self !== "undefined" ? self : global);
-  Interpreter2.interpret = interpret;
-  return Interpreter2;
-}();
-function interpret(machine, options) {
-  var interpreter = new Interpreter(machine, options);
-  return interpreter;
-}
-__name(interpret, "interpret");
 
 // ../../packages/elements/dist/index.js
 var import_interactjs = __toESM(require_interact_min(), 1);
@@ -8809,8 +8832,8 @@ function mergePaddingObject(paddingObject) {
 __name(mergePaddingObject, "mergePaddingObject");
 
 // ../../node_modules/@popperjs/core/lib/utils/expandToHashMap.js
-function expandToHashMap(value, keys2) {
-  return keys2.reduce(function(hashMap, key) {
+function expandToHashMap(value, keys) {
+  return keys.reduce(function(hashMap, key) {
     hashMap[key] = value;
     return hashMap;
   }, {});
@@ -10157,9 +10180,9 @@ function debounce2(fn2, ms) {
   };
 }
 __name(debounce2, "debounce");
-function removeProperties(obj, keys2) {
+function removeProperties(obj, keys) {
   var clone = Object.assign({}, obj);
-  keys2.forEach(function(key) {
+  keys.forEach(function(key) {
     delete clone[key];
   });
   return clone;
@@ -10466,8 +10489,8 @@ var setDefaultProps = /* @__PURE__ */ __name(function setDefaultProps2(partialPr
   if (true) {
     validateProps(partialProps, []);
   }
-  var keys2 = Object.keys(partialProps);
-  keys2.forEach(function(key) {
+  var keys = Object.keys(partialProps);
+  keys.forEach(function(key) {
     defaultProps[key] = partialProps[key];
   });
 }, "setDefaultProps");
@@ -10526,8 +10549,8 @@ function validateProps(partialProps, plugins) {
   if (plugins === void 0) {
     plugins = [];
   }
-  var keys2 = Object.keys(partialProps);
-  keys2.forEach(function(prop) {
+  var keys = Object.keys(partialProps);
+  keys.forEach(function(prop) {
     var nonPluginProps = removeProperties(defaultProps, Object.keys(pluginProps));
     var didPassUnknownProp = !hasOwnProperty(nonPluginProps, prop);
     if (didPassUnknownProp) {
@@ -12121,7 +12144,13 @@ function g(s) {
       return this.hasAttribute("data-active");
     }
     set active(i) {
-      i ? (this.setAttribute("data-active", ""), this.dispatchEvent(new Event("operation-active", { bubbles: true }))) : this.removeAttribute("data-active");
+      i ? this.activate() : this.deactivate();
+    }
+    activate() {
+      this.setAttribute("data-active", ""), this.dispatchEvent(new Event("operation-active", { bubbles: true }));
+    }
+    deactivate() {
+      this.removeAttribute("data-active");
     }
   }
   __name(t, "t");

@@ -59,15 +59,15 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@github/catalyst@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.3.1.tgz#fcd0f960b4317427b03741a4f068ea17b8efe203"
-  integrity sha512-QWQwVD7CQlW90VibJByYorCpVpeGR9W9+7S87BZatOFpd+N0/NkC8oHIvMXnAn9g5SV0RdJDm4ZLWnBVTvXudQ==
+"@github/catalyst@~1.3":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.3.2.tgz#46d63722a9182f2b4da5a8b604ecb3bdaaa378d0"
+  integrity sha512-QAjk2cBIBK9VPOSMla6swI9R1GJIgMZ562T4iTYz6xvAimb12m5WSjfYa65cVQB9Lm4XV0KNF2myzKGw2LG3Ww==
 
-"@github/jtml@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@github/jtml/-/jtml-0.4.0.tgz#67afe0c3570dea800725970f931373ef71ccee52"
-  integrity sha512-749dmX5totDaFnRkr3gTCz9cIswRf4BgN1G1skyYx7MZHoYS+5qvCXTep0gae4YxX6N28EnS3vZvD8pYvyLI7w==
+"@github/jtml@~0.4":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@github/jtml/-/jtml-0.4.1.tgz#e95396b3f8d206261dd5c2c8924a25fa7e0e537e"
+  integrity sha512-BZ8Lp0Rr2YuhyIujJZ19snIWXWSgpkE6QOXH8pxHaIpv10ejJrN6uvG15M+ZdWCEK5LEsIIUvW95SCyRBeKXzw==
   dependencies:
     "@github/template-parts" "^0.3.0"
 
@@ -8600,10 +8600,10 @@ ws@^7.4.2:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.6.tgz#e59fc509fb15ddfb65487ee9765c5a51dec5fe7b"
   integrity sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==
 
-xstate@^4.27.0:
-  version "4.28.1"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.28.1.tgz#5cd6b5976aaf5943538462f149339cd67802f104"
-  integrity sha512-0xvaegeZNeHJAJvpjznyNr91qB1xy1PqeYMDyknh5S23TBPQJUHS81hk8W3UcvnB9uNs0YmOU2daoqb3WegzYQ==
+xstate@~4.30:
+  version "4.30.6"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.30.6.tgz#62b6dea37a500e0e1c0ff7c553a801eea5119554"
+  integrity sha512-V7liK1cjkZRh6R/MSneG8S5VLGRatpOUcnNieiYJX4LbwKi9eUVUH5V04ugJYVcJ+2oKDKvEFvzk0VnSC7lTag==
 
 xtend@^4.0.2, xtend@~4.0.1:
   version "4.0.2"
