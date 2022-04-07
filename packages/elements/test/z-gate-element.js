@@ -1,4 +1,5 @@
 import '../dist/index'
+import {testActivateable} from './common/test-activateable'
 import {testDisableable} from './common/test-disableable.js'
 import {testDraggableOperation} from './common/test-draggable.js'
 import {testElementCreation} from './common/test-element-creation.js'
@@ -8,6 +9,10 @@ import {testWireableOperation} from './common/test-wireable.js'
 describe('z-gate element', function () {
   describe('element creation', function () {
     testElementCreation(window.ZGateElement, 'z-gate')
+  })
+
+  describe('activateable', function () {
+    testActivateable('z-gate')
   })
 
   describe('iconable', function () {
