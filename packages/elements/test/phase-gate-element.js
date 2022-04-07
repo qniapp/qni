@@ -1,9 +1,10 @@
 import '../dist/index'
-import {testDisableable} from './common/test-disableable.js'
-import {testDraggableOperation} from './common/test-draggable.js'
-import {testElementCreation} from './common/test-element-creation.js'
-import {testIconable} from './common/test-iconable.js'
-import {testWireableOperation} from './common/test-wireable.js'
+import {testActivateable} from './common/test-activateable'
+import {testDisableable} from './common/test-disableable'
+import {testDraggableOperation} from './common/test-draggable'
+import {testElementCreation} from './common/test-element-creation'
+import {testIconable} from './common/test-iconable'
+import {testWireableOperation} from './common/test-wireable'
 
 describe('phase-gate element', function () {
   beforeEach(function () {
@@ -15,6 +16,10 @@ describe('phase-gate element', function () {
 
   describe('element creation', function () {
     testElementCreation(window.PhaseGateElement, 'phase-gate')
+  })
+
+  describe('activateable', function () {
+    testActivateable('phase-gate')
   })
 
   describe('iconable', function () {

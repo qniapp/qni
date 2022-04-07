@@ -1,4 +1,5 @@
 import {assert} from '@esm-bundle/chai'
+import {once} from './once'
 
 export function testDraggableOperation(operationName) {
   afterEach(function () {
@@ -36,12 +37,6 @@ export function testDraggableOperation(operationName) {
     await ungrabEvent
 
     assert.isFalse(operation.hasAttribute('data-grabbed'))
-  })
-}
-
-function once(element, eventName) {
-  return new Promise(resolve => {
-    element.addEventListener(eventName, resolve, {once: true})
   })
 }
 
