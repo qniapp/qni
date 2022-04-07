@@ -20,6 +20,36 @@ export function testDraggableOperation(operationName) {
     assert.equal(operation.draggableService.state.value, 'grabbable')
   })
 
+  it('should reach "grabbed" given "grabbable" when the "GRAB" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    operation.draggable = true
+
+    mousedown(operation)
+
+    assert.equal(operation.draggableService.state.value, 'grabbed')
+  })
+
+  it('should reach "idle" given "grabbable" when the "UNSET_INTERACT" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    operation.draggable = true
+
+    operation.draggable = false
+
+    assert.equal(operation.draggableService.state.value, 'idle')
+  })
+
   it(`dispatches operation-grab event on mousedown`, async function () {
     const container = document.createElement('div')
     container.innerHTML = `
