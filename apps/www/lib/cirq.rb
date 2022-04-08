@@ -164,6 +164,10 @@ class cirqbridge:
         _data = []
         for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
             print("current step from qni")
+            if steps[counter] == []:
+                print(steps[counter], "null step!")
+                sys.stdout.flush()
+                break
             print(steps[counter])
             sys.stdout.flush()
             dic = {}
