@@ -12,9 +12,10 @@ This repository is a monorepo containing three packages:
 - [**packages/simulator**](https://github.com/qniapp/qni/tree/main/packages/simulator) contains the source for the [@qni/simulator](https://www.npmjs.com/package/@qni/simulator) package. This is a quantum computer simulator implementation in TypeScript. It is usually called by the browser's ServiceWorker thread and runs asynchronously.
 - [**packages/elements**](https://github.com/qniapp/qni/tree/main/packages/elements) contains the source for the [@qni/elements](https://www.npmjs.com/package/@qni/elements) package. This is a custom web component library for rendering quantum circuits. It is used by `@qni/www` as well as several other projects.
 
-And one app:
+And two apps:
 
 - [**apps/www**](https://github.com/qniapp/qni/tree/main/apps/www) contains the source for the [qniapp.net](https://qniapp.net) website.
+- [**apps/tutorial**](https://github.com/qniapp/qni/tree/main/apps/tutorial) contains the source for the [qniapp.github.io/qni](https://qniapp.github.io/qni/) website.
 
 And one example:
 

@@ -3,6 +3,7 @@ import {
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
+  HoverableMixin,
   IconableMixin,
   IfableMixin,
   MenuableMixin
@@ -20,7 +21,9 @@ export type HGateElementProps = {
 
 export class HGateElement extends MenuableMixin(
   HelpableMixin(
-    IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+    IfableMixin(
+      ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+    )
   )
 ) {
   get operationType(): typeof SerializedHGateType {

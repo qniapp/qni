@@ -1,10 +1,11 @@
 measurement-gate {
-  @apply activateable;
-  @apply draggable;
-  @apply flaggable;
   @apply operation;
-
-  @apply rounded;
+  @apply operation-activateable;
+  @apply operation-draggable;
+  @apply operation-flaggable;
+  @apply operation-grabbable;
+  @apply operation-hoverable;
+  @apply operation-transparent;
 
   &::part(icon) {
     @apply text-purple-500;
@@ -17,7 +18,7 @@ measurement-gate {
 
   &[data-value='0']::part(icon),
   &[data-value='1']::part(icon) {
-    @apply text-gray-200;
+    @apply text-neutral-200;
   }
 
   &::part(value) {
@@ -45,5 +46,19 @@ measurement-gate {
   &[data-value='1']::part(value)::after {
     @apply text-blue-500;
     content: '1';
+  }
+
+  /* data-grabbed */
+
+  &[data-grabbed]::part(body) {
+    @apply bg-purple-500;
+  }
+
+  &[data-grabbed]::part(icon) {
+    @apply text-purple-400;
+  }
+
+  &[data-grabbed]::part(value)::after {
+    @apply text-white;
   }
 }

@@ -1,0 +1,521 @@
+---
+layout: page
+section: QPU 命令その 1
+title: 組合わせゲート
+description: ゲートを組合わせて別のゲートを作る
+prev: CLONE 命令!?
+prev_url: ./no_cloning_theorem.html
+next: 量子鍵配送
+next_url: ./quantum_key_distribution.html
+---
+
+<p>
+  ボブには生まれつきのハッカー気質があります。
+  同じ小学校に通うイブは、謎のルートで手に入れた最新の量子コンピュータ QStation 7
+  をいつもボブに自慢してきます。 ボブには型落ちの QStation 5 mini しかありません。
+  でも、ボブはたったそれだけの機材でイブに負けない量子回路をいつも作り上げてしまいます。
+</p>
+
+<p>
+  たとえば、ボブの QStation 5 mini には PHASE(π) ゲートがありません。 しかし、次のように H ゲートと
+  NOT ゲートを組合わせれば PHASE(π) を作れることをボブは発見しました。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <phase-gate data-angle="π"></phase-gate>
+    </circuit-dropzone>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>
+  こんな調子で、ボブは必要なゲートはいつも自分で作ってしまいます。
+  いつの間にか自然と身に付いた能力ですが、手元にあるものだけで何とかしようとするボブの姿勢は、ハッカーの独創性の源と言えます。
+</p>
+
+<p>
+  ボブのテクニックを再現してみましょう。 HXH の組合わせで PHASE(π) と同じ効果 ({% ket 1 %} の位相が
+  π 回転) ができれば成功です。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["{重ね合わせ"],["|0>"],["H"],["}"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  ボブは秘密のテクニックを使って、まったく新しいゲートを作り出すこともできます。 たとえば H ゲートと
+  PHASE(π/2) ゲートを組合わせると、次の不思議な<mark>平方根 X ゲート</mark>が誕生します。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <rnot-gate></rnot-gate>
+    </circuit-dropzone>
+  </div>
+</div>
+
+<p>平方根 X ゲートはその名の通り、2 回掛けると X ゲートになるゲートです。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <x-gate></x-gate>
+    </circuit-dropzone>
+  </div>
+</div>
+
+<p>
+  平方根 X ゲートを 2 回適用し、X ゲートと同じ効果 (ビットの反転) が起こることを確かめましょう。
+  ここでは {% ket 0 %} が {% ket 1 %} になれば成功です。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <rnot-gate data-hoverable></rnot-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  なぜ、平方根 X ゲートを 2 回適用すると X ゲートになるのでしょうか?
+  ボブの最初のテクニック、PHASE(π) ゲートを作る方法を思い出してください。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <phase-gate data-angle="π"></phase-gate>
+    </circuit-dropzone>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>
+  左右はまったく同じ効果を持つので、両者を H
+  ゲートで挟んだもの同士もやはりまったく同じ効果を持つはずです。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>
+  H ゲートはそれ自体が H ゲートの逆演算だったので、HH
+  のように連続して掛けると「何もしない」と同じことになります。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum> </circuit-dropzone>
+  </div>
+</div>
+
+<p>これを使うと 2 つ上の図は次のように書き換えられます。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>
+  つまり、X ゲートを H と PHASE(π) ゲートで表現できることが分かりました。 ここでボブの 2
+  つめのテクニック、平方根 X ゲートの作りかたを見てみましょう。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+      <rnot-gate></rnot-gate>
+    </circuit-dropzone>
+  </div>
+</div>
+
+<p>左右をそれぞれ 2 回繰り返してみます。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>連続する 2 個の H は何もしないので消すと、</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π/2"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>連続する 2 つの PHASE(π/2) は PHASE(π) と同じなので、置き換えると、</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <phase-gate data-angle="π"></phase-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<p>
+  この左側は、最初に示したように X ゲートと同等です。そこで次のように書き換えることができ、結局 2
+  個の平方根 X ゲートは X ゲートと等しいことが示せました。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <x-gate></x-gate>
+      </circuit-dropzone>
+    </div>
+
+    <span>=</span>
+
+    <div class="flex flex-row">
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+      <circuit-dropzone data-input-wire-quantum data-output-wire-quantum>
+        <rnot-gate></rnot-gate>
+      </circuit-dropzone>
+    </div>
+  </div>
+</div>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="H ゲートを連続して 2 回置いた回路は何と同等?"
+    answer="何もしない回路"
+    answer-attachments="https://qniapp.github.io/qni/images/HH.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="2 つの連続する H ゲートが「消える」のはなぜ?"
+    answer="H ゲートはそれ自体の逆演算でもあるから"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π/2) ゲートを連続して 2 回置いた回路は何と同等?"
+    answer="PHASE(π)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π) ゲート、PHASE(π/2) ゲートのみを置いた回路は何と同等?"
+    answer="PHASE(3π/2)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE(π) ゲートを H, X ゲートだけで作ると?"
+    answer="H-X-H"
+    answer-attachments="https://qniapp.github.io/qni/images/HXH.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="平方根 X ゲートはどんなゲート?"
+    answer="2 回掛けると X になるゲート"
+    answer-attachments="https://qniapp.github.io/qni/images/2rnots.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="平方根 X ゲートを H, PHASE(π/2) ゲートだけで作ると?"
+    answer="H-PHASE(π/2)-H"
+    answer-attachments="https://qniapp.github.io/qni/images/rnot_gate_decomposition.png"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="X ゲートを H, PHASE(π) ゲートだけで作ると?"
+    answer="H-PHASE(π)-H"
+    answer-attachments="https://qniapp.github.io/qni/images/X_gate_decomposition.png"
+  >
+  </orbit-prompt>
+</orbit-reviewarea>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

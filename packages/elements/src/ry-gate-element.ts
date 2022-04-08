@@ -4,6 +4,7 @@ import {
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
+  HoverableMixin,
   IconableMixin,
   IfableMixin,
   MenuableMixin
@@ -22,7 +23,9 @@ export type RyGateElementProps = {
 export class RyGateElement extends MenuableMixin(
   HelpableMixin(
     IfableMixin(
-      ControllableMixin(AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+      ControllableMixin(
+        AngleableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+      )
     )
   )
 ) {

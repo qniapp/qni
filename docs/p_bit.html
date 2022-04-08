@@ -1,130 +1,1148 @@
----
-layout: page
-title: 確率的ビット
-description: 量子ビットの確率的な性質
----
+<!DOCTYPE html>
+<html lang="ja" class="h-full">
+  <head>
+    <title>確率的ビット</title>
 
-<p>
-  量子コンピュータの計算結果を取り出すには、測定という確率に基づいた奇妙な操作があるのでした (<a
-    href="./what_qpu_do_faster.html"
-    >QPU は何が得意?</a
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+    <script type="module">
+      import {
+        Application,
+        Controller,
+      } from 'https://unpkg.com/@hotwired/stimulus/dist/stimulus.js'
+      window.Stimulus = Application.start()
+
+      Stimulus.register(
+        'sidebar',
+        class extends Controller {
+          static targets = ['menu', 'body', 'bodyMd']
+
+          connect() {
+            let bodyMdScroll = sessionStorage.getItem('sidebar-md-scroll')
+            if (bodyMdScroll !== null) {
+              this.bodyMdTarget.scrollTop = parseInt(bodyMdScroll, 10)
+            }
+
+            window.addEventListener('beforeunload', () => {
+              sessionStorage.setItem('sidebar-scroll', this.bodyTarget.scrollTop)
+              sessionStorage.setItem('sidebar-md-scroll', this.bodyMdTarget.scrollTop)
+            })
+          }
+
+          open() {
+            this.menuTarget.classList.remove('hidden')
+
+            let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+            if (sidebarScroll !== null) {
+              this.bodyTarget.scrollTop = parseInt(sidebarScroll, 10)
+            }
+          }
+
+          close() {
+            this.menuTarget.classList.add('hidden')
+          }
+        }
+      )
+    </script>
+  </head>
+  <body class="h-full">
+    <div data-controller="sidebar">
+  <div
+  class="fixed inset-0 z-[200] flex hidden md:hidden"
+  role="dialog"
+  aria-modal="true"
+  data-sidebar-target="menu"
+>
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+  <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
+    <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <button
+        type="button"
+        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        data-action="click->sidebar#close"
+      >
+        <svg class="h-6 w-6 text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      </button>
+    </div>
+
+    <div class="flex flex-shrink-0 items-center px-4">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-end">
+        <span
+          class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+          >Qni</span
+        >
+        <span
+          class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+          >Tutorial</span
+        >
+      </div>
+    </div>
+    <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
-  参照)。 序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+
+  <div class="w-14 flex-shrink-0" aria-hidden="true">
+    <!-- Dummy element to force sidebar to shrink to fit close icon -->
+  </div>
+</div>
+ <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+  <div class="flex flex-grow flex-col bg-white">
+    <div class="flex h-16 flex-shrink-0 items-center border-b border-slate-900/10 px-8">
+      <a href="/" class="flex flex-shrink-0 cursor-pointer flex-row">
+        <img class="mr-2 h-7 w-7" src="./images/qni-icon-512.png" alt="Qni" />
+        <div class="flex flex-row items-center">
+          <div class="flex flex-row items-end">
+            <span
+              class="select-none font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+              >Qni</span
+            >
+            <span
+              class="ml-0.5 select-none font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+              >Tutorial</span
+            >
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="flex h-0 flex-grow flex-col overflow-y-auto md:py-6" data-sidebar-target="bodyMd">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="flex flex-1 flex-col md:pl-64">
+    <div
+      class="sticky top-0 z-[100] flex h-16 flex-shrink-0 border-0 border-slate-900/10 bg-white/95 shadow backdrop-blur md:border-b md:shadow-none"
+    >
+      <button
+        type="button"
+        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+        data-action="click->sidebar#open"
+      >
+        <span class="sr-only">Open sidebar</span>
+        <svg
+    class="h-6 w-6"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <div class="flex w-full items-center justify-end">
+        <a
+          href="https://github.com/qniapp/qni"
+          class="block pr-8 text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+        >
+          <svg class="w-5 h-5" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.49933 0.25C3.49635 0.25 0.25 3.49593 0.25 7.50024C0.25 10.703 2.32715 13.4206 5.2081 14.3797C5.57084 14.446 5.70302 14.2222 5.70302 14.0299C5.70302 13.8576 5.69679 13.4019 5.69323 12.797C3.67661 13.235 3.25112 11.825 3.25112 11.825C2.92132 10.9874 2.44599 10.7644 2.44599 10.7644C1.78773 10.3149 2.49584 10.3238 2.49584 10.3238C3.22353 10.375 3.60629 11.0711 3.60629 11.0711C4.25298 12.1788 5.30335 11.8588 5.71638 11.6732C5.78225 11.205 5.96962 10.8854 6.17658 10.7043C4.56675 10.5209 2.87415 9.89918 2.87415 7.12104C2.87415 6.32925 3.15677 5.68257 3.62053 5.17563C3.54576 4.99226 3.29697 4.25521 3.69174 3.25691C3.69174 3.25691 4.30015 3.06196 5.68522 3.99973C6.26337 3.83906 6.8838 3.75895 7.50022 3.75583C8.1162 3.75895 8.73619 3.83906 9.31523 3.99973C10.6994 3.06196 11.3069 3.25691 11.3069 3.25691C11.7026 4.25521 11.4538 4.99226 11.3795 5.17563C11.8441 5.68257 12.1245 6.32925 12.1245 7.12104C12.1245 9.9063 10.4292 10.5192 8.81452 10.6985C9.07444 10.9224 9.30633 11.3648 9.30633 12.0413C9.30633 13.0102 9.29742 13.7922 9.29742 14.0299C9.29742 14.2239 9.42828 14.4496 9.79591 14.3788C12.6746 13.4179 14.75 10.7025 14.75 7.50024C14.75 3.49593 11.5036 0.25 7.49933 0.25Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <article class="prose prose-neutral max-w-none">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
+                量子ビット
+              </p>
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  確率的ビット
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">確率的性質を持つビットの重ね合わせ状態と測定</p>
+            </div>
+            <div class="content-with-margin"><p>
+  量子コンピュータの計算結果を取り出すには、<mark>確率に基づいた測定という操作</mark>があるのでした<label for="margin-note-what-qpu-do-faster" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-what-qpu-do-faster" class="margin-note__toggle hidden"><span class="margin-note"><a href="./what_qpu_do_faster.html">QPU は何が得意?</a>
+  を参照。</span>。
+  序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
 </p>
 
 <p>
-  この節では、ふつうのコンピュータが持つビット (古典ビット)
-  をおさらいした後、確率と確率的ビットを学びます。
+  この節では、現在のコンピュータが持つビットをおさらいした後、<mark>確率と確率的ビット</mark>を学びます。
   確率的ビットは量子コンピュータの量子ビットによく似ているので、確率的ビットを通して量子ビットの重要な側面を理解できます。
-  ここでは、確率的ビットの状態はどんなものか、また測定によって確率的ビットからどのように情報を取り出すことができるかを学びます。
+  ここでは、確率的ビットの状態はどんなものか、また測定によって確率的ビットからどのように情報を取り出せるかを見ていきます。
 </p>
 
 <h2>古典ビット</h2>
+
 <p>
-  ご存知のように、従来のビット (古典ビット{% include margin_note.html
-  content="量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。"
-  %}) は <code>0</code> または
-  <code>1</code> のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は
-  <code>0</code> か <code>1</code> のみで、また計算中のその中身 (状態) も常に <code>0</code> か
-  <code>1</code> です。
+  ご存知のように、従来のビット (古典ビット<label for="margin-note-classical-bit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-classical-bit" class="margin-note__toggle hidden"><span class="margin-note">量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。</span>とも呼ぶ) は 0 または 1
+  のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は 0 か 1 のみです。
+  また計算中のその中身 (状態) も常に 0 か 1 です。
 </p>
 
 <h2>確率</h2>
 <p>
-  確率とは「元旦には <code>10%</code> の確率で雪が降る」とか「<code>80%</code>
-  の確率で日本列島に台風が上陸する」といったイベントが起こる可能性を数値化したものです。確実に発生するイベントなら
-  <code>100%</code>、絶対に発生しないイベントなら <code>0%</code> の確率を持ちます。
+  確率とは「元旦には 10% の確率で雪が降る」とか「80%
+  の確率で日本列島に台風が上陸する」などのように、あるイベントが起こる可能性を数値化したものです。
+  確実に発生するイベントなら 100%、絶対に発生しないイベントなら 0% の確率を持ちます。
 </p>
 
 <p>
-  例として、コイントスを考えてみましょう。コインを投げて手でキャッチすると、「コインが表」または「コインが裏」のイベントが起こります。
-  偏りのないコインならば、それぞれのイベントの確率は <code>50%</code> ずつです。
-  また、表の出やすいコイン (表 <code>60.8%</code>、裏 <code>39.2%</code>)
-  や絶対に裏しか出ないインチキコイン (表: <code>0%</code>、裏: <code>100%</code>)
+  確率の例として、コイントスを考えてみましょう。
+  コインを投げてそれを見ずに手で覆うと、手の中ではコインが「表」または「裏」の 2
+  通りのイベントが発生します。 偏りのないコインならば、それぞれのイベントの確率は 50% ずつです。
+  また、表の出やすいコイン (表 60.8%、裏 39.2%) や両面が裏のインチキコイン (表: 0%、裏: 100%)
   など、無限のバリエーションが存在します。
 </p>
 
 <p>
-  表と裏の確率を足すと必ず
-  <code>100%</code>
-  になることを考えると、表と裏になる確率すべての組合わせを次のグラフのように図式化できます。
-  横軸は表の出る確率 (<code>0</code>〜<code>100%</code>)、縦軸は裏の出る確率
-  (<code>0</code>〜<code>100%</code>)
-  で、さまざまなコインが持ちうる確率のすべての組合わせは青色の線分になります。
+  表と裏の確率を足すと必ず 100% になる<label for="margin-note-probability-100" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probability-100" class="margin-note__toggle hidden"><span class="margin-note">確率論では、起こりうるすべてのイベントの確率を足すと 100% になります。</span>ことを考えると、表と裏になる確率すべての組合わせを次のグラフに図式化できます。
+  横軸は表の出る確率 (0〜100%)、縦軸は裏の出る確率 (0〜100%) です。
+  あらゆるコインの性質を表と裏が出る確率で特徴付けしたとき、任意のコインはこの線分上のどれか 1
+  点として表せます。
 </p>
 
-<p>
-  <img src="./images/p_bit_graph.png" class="h-auto w-full md:mx-auto md:w-1/3" />
-</p>
+<figure>
+  <img src="./images/p_bit_graph.png" class="h-auto w-full" />
+</figure>
 
 <h2>確率的ビット</h2>
 
 <p>
-  確率的ビットは、コイントスと同じ確率的な性質を持っています。計算中の確率的ビットの状態は、コインが宙に浮いていてまだ表か裏か定まっていない状態と同じと考えることができます。
-  コインの表を値 <code>0</code>、コインの裏を値
-  <code>1</code> とすると、確率的ビットはたとえば「<code>60%</code> の確率で <code>0</code>、<code
-    >40%</code
-  >
-  の確率で <code>1</code>」などという状態を取ることができます。
+  確率的ビットは、コイントスと同じ確率的な性質を持っています。
+  計算中の確率的ビットの状態は、コインが手の中にあり表か裏かまだ分かっていない状態と同じと考えられます。
+  コインの表を値 0、コインの裏を値 1 とすると、確率的ビットはたとえば「60% の確率で 0、40% の確率で
+  1」などという状態を取ることができます。
 </p>
 
 <p>
-  計算後、値を取り出す操作 (測定) をした後の確率的ビットは、手の中のコイン (表か裏かが定まった状態)
-  に対応します。 つまり、値を取り出した時点で確率は消え <code>0</code> か
-  <code>1</code> かが確定するので、古典ビットとまったく見分けがつきません。
+  計算後、値を取り出す操作 (測定)
+  をした後の確率的ビットは、コインの表か裏かが定まった状態に対応します。
+  つまり、値を取り出した時点で確率は消え 0 か 1
+  かが確定するので、古典ビットとまったく見分けがつきません。
 </p>
 
 <p>
-  こうした確率的な情報はいったいコンピュータの計算に使えるのでしょうか？ 古典ビットの値
-  <code>0</code> と <code>1</code> は確定した値を表しているのに対し、確率的ビットはおおよその知識
-  (または知識の欠如) を表しているので、あまり役に立たないと思うかもしれません。
+  こうした確率的な情報はいったいコンピュータの計算に使えるのでしょうか? 古典ビットの値 0 と 1
+  は確定した値を表しているのに対し、確率的ビットはおおよその知識 (または知識の欠如)
+  を表しているので、あまり役に立たないと思うかもしれません。
   確率ビットの利点は、部分的な知識をより正確に表現できることです。
-  もし何かが完全に分かっていないのであれば、計算をあきらめるのではなくそれを認め、確率のまま計算を進めてしまおうというのが確率的ビットの考えかたです。
+  もし何かが完全に分かっていないのであれば、計算をあきらめるのではなくそれを認め、<mark>確率のまま計算を進めてしまおう</mark>というのが確率的ビットの考えかたです。
 </p>
 
 <h2>重ね合わせはなぜ強力?</h2>
 
 <p>
-  確率的ビットの確率的な <code>0</code> と <code>1</code> の状態 (コインが宙を舞っている状態)
-  を重ね合わせ状態と言います。 <code>0</code> と <code>1</code> が完全に確定しない状態のまま、2
-  つの値を重ね合わせて計算を進めるイメージです。
-  よく「量子コンピュータは重ね合わせと量子もつれを使った強力なコンピュータである」と言いますが、なぜ重ね合わせが強力なのでしょうか?
+  確率的ビットの確率的な 0 と 1 の状態を<mark>重ね合わせ状態</mark>と言います。 0 または 1 が起こる
+  2 つの確率を重ね合わせ、「0 が 60%、1 が40%」という 1 つの状態として扱うイメージです。
+  重ね合わせは量子コンピュータが強力である 1 つの理由としてよく挙げられますが、それはなぜでしょうか?
 </p>
 
 <p>
-  直感的に納得する方法の 1 つは、先ほどのグラフ上で古典ビットと確率的ビットを比べてみることです。
-  古典ビットは常に <code>0</code> または
-  <code>1</code> の状態しか取りませんから、先程のグラフ同様に表すと古典ビットの取りうる状態は 2
+  直感的に納得する方法の 1
+  つは、先ほどのグラフ上で古典ビットと確率的ビットを直接比べてみることです。 古典ビットは常に 0
+  または 1 の状態しか取りませんから、先程のグラフ上に表すと古典ビットの取りうる状態は 2
   点になります。
 </p>
 
+<figure>
+  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full" />
+</figure>
+
 <p>
-  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full md:mx-auto md:w-2/3" />
+  一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。
+  このように取りうる状態の数で比較すると、古典ビットは 2
+  個であるのに対して確率的ビットは無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
 </p>
 
 <p>
-  一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。このように取りうる状態の数で比較すると
-  2 個 vs. 無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
-</p>
-
-<p>
-  またはこう考えることもできます。たとえば確率的ビットが <code>0</code> になる確率を
-  <code>0.11001001011...%</code> のように好きな <code>0</code> と
-  <code>1</code> の並びにセットできるとします。 そしてそこにすべての Wikipedia の記事と YouTube
+  またはこう考えることもできます。 確率的ビットの状態は「0 が 0.11001001011%、1 が
+  99.88998998989%」のようにいくらでも細かくセットできます。 ここで 0 の確率の少数点以下を 2
+  進数と見て、そこにすべての Wikipedia の記事と YouTube
   の全動画データ、そしてインターネットでみつかるすべての猫画像を 2 進数として埋め込みます。
   それはなんと、確率的ビットたった 1 個に超巨大なデータを埋め込めることにほかなりません!
 </p>
 
-<figure>
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full border border-neutral-300" />
-  <figcaption class="pt-4 text-center">
-    すべての Wikipedia 記事と YouTube 動画、そしてネットの猫画像をまとめて 0 と 1
-    で表現し、確率的ビットが <code>0</code> となる確率に埋め込む!
-  </figcaption>
+<figure class="!w-full">
+  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full" />
 </figure>
 
 <p>
-  ...実際に埋め込めたとしても、測定によって <code>0</code> としか
-  <code>1</code> しか取り出せないなら確率に乗せたデータは消えてしまうのではないでしょうか？
-  チュートリアル後半では、確率のデータをなんとかして取り出すための量子アルゴリズムを紹介します。
+  …実際に埋め込めたとしても、測定によって 0 または 1
+  しか取り出せないなら、確率に乗せたデータは消えてしまうのではないでしょうか?
+  たしかにその通りですが、<mark>測定前なら確率の値を計算データとして使えます</mark>。
+  このように、膨大なデータでも確率の形にエンコードして持つことができ、それを計算データとして使える<label for="margin-note-probablity-data" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probablity-data" class="margin-note__toggle hidden"><span class="margin-note">量子機械学習アルゴリズムでは、膨大なデータをこのように確率として量子ビットに埋め込むことで量子コンピュータに入力し計算します。</span>のが確率的ビットの強みです。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="量子力学と古典力学の対比から、従来のビットを{古典ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+    question="1 つの古典ビットが持ちうる状態はいくつ?"
+    answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="1 つの古典ビットから取り出せる値はいくつ?"
+    answer="2 つ (0 と 1)"
+  ></orbit-prompt>
+  <orbit-prompt cloze="「60%で0」のように確率的な状態を持つビットを{確率的ビット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt cloze="確率的に 0 または 1 を持つ状態を{重ね合わせ状態}と呼ぶ"> </orbit-prompt>
+  <orbit-prompt question="1 つの確率的ビットが持ちうる状態はいくつ?" answer="無限大"></orbit-prompt>
+  <orbit-prompt question="1 つの確率的ビットを測定して取り出せる値は何?" answer="0 または 1">
+  </orbit-prompt>
+  <orbit-prompt
+    question="1 つの確率的ビットが持ちうる状態を、横軸 0 の確率、縦軸 1 の確率とそれぞれ取ると、どんなグラフになる?"
+    answer-attachments="https://qniapp.github.io/qni/images/p_bit_graph.png"
+    answer="線分"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典ビットよりも確率的ビットの方が強力な理由を、それぞれが取りうる状態の数に着目して説明すると?"
+    answer="古典ビットは 2 通りの状態しか持てないのに対し、確率的ビットは無限大通りの状態を持てる"
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="大きなデータを 1 つの確率的ビットに埋め込む方法は?"
+    answer="データの 2 進表現を、確率的ビットが 0 となる確率の値にエンコードする"
+  >
+  </orbit-prompt>
+</orbit-reviewarea>
+<footer class="mt-12 text-sm leading-6">
+  <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
+    
+    <a
+      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./qni_intro.html"
+      ><svg
+  class="mr-3 h-4 w-auto overflow-visible text-slate-400
+      group-hover:text-slate-600 dark:group-hover:text-slate-300"
+  width="15"
+  height="15"
+  viewBox="0 0 15 15"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
+    fill="currentColor"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+  ></path>
+</svg>
+Qni 入門</a
+    >
+     
+    <a
+      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./superposition.html"
+      >重ね合わせ状態<svg class="ml-3 h-4 w-auto overflow-visible
+      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+</a
+    >
+    
+  </div>
+</footer>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+  </body>
+</html>

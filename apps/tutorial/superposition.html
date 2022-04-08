@@ -1,0 +1,141 @@
+---
+layout: page
+section: 量子ビット
+title: 重ね合わせ状態
+description: 円表示による重ね合わせ状態の視覚化
+prev: 確率的ビット
+prev_url: ./p_bit.html
+next: 量子ビット
+next_url: ./qubit.html
+---
+
+<p>Qni では、1 ビットでの 0 と 1 の重ね合わせ状態を次のように 2 つの円で表示します。</p>
+
+<div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
+  <circle-notation
+    data-size="xl"
+    data-magnitudes="0.7071067811865475,0.7071067811865475"
+    data-phases="0,0"
+    data-show-kets
+  ></circle-notation>
+</div>
+
+<p>
+  2 個の円はそれぞれ古典ビット 0 (左) と 1 (右)
+  を表しており、中の青い部分の面積はそれぞれの確率を表しています。
+  この状態ではどちらも五分五分なので、0 と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
+  円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
+</p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  これからは古典ビット 0 と 1 をそれぞれ記号 {% ket 0 %} と {% ket 1 %} で表します。
+  これらは量子力学や量子コンピュータでよく使われる記号で、「ディラックのケット
+  (または単にケット)」と呼ばれます。 後に詳しく説明しますが、現時点では 0 と 1
+  の状態を区別するための単なるラベルと考えて大丈夫です。
+</div>
+
+<p>
+  {% ket 0 %} と {% ket 1 %} の確率は、合計が 100%
+  という条件さえ満たせば好きな値を取ることができます。
+  たとえば、次のようなさまざまな状態のバリエーションが考えられます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>確率</th>
+        <th>円表示</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle">{% ket 0 %} が 100%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="1,0"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">{% ket 1 %} が 100%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0,1"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0.7071067811865475,0.7071067811865475"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0.8944271909999159,0.4472135954999579"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  表の 1 行目と 2 行目は、古典ビットと同じ状態を表しています。 {% ket 0 %} が 100% または {% ket 1
+  %} が 100% の状態では重ね合わせは生じていないため、それぞれ古典ビット 0 と 1
+  でも表現できるからです。 {% ket 0 %} が 100% の状態を、単に状態 {% ket 0 %} と呼びます。同様に、{%
+  ket 1 %} が 100% の状態を状態 {% ket 1 %} と呼びます。
+</p>
+
+<p>
+  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (青く塗り潰された円)
+  は破壊され、状態 {% ket 0 %} または {% ket 1 %} に変化します。
+  つまり、重ね合わせ状態にあるビットを測定すると、古典ビット 0 または 1
+  で表すことのできる状態に変化します。
+</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="Qni の円表示において、青い部分の{面積}は 0 または 1 の確率を表す">
+  </orbit-prompt>
+  <orbit-prompt cloze="ビットの状態 0 は記号 {$|0\rangle$} で表せる"> </orbit-prompt>
+  <orbit-prompt cloze="ビットの状態 1 は記号 {$|1\rangle$} で表せる"> </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 0 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 1 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="記号 $|0\rangle$ や $|1\rangle$ などをディラックの{ケット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+    question="この状態を測定すると、何%の確率でどんな状態になる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%の確率で $|0\rangle$ または $|1\rangle$"
+  ></orbit-prompt>
+</orbit-reviewarea>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+simple_circle_notation_popup.html %}

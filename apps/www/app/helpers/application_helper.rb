@@ -12,10 +12,6 @@ module ApplicationHelper
     render 'share_modal'
   end
 
-  def menu
-    render 'menu'
-  end
-
   def palette
     render 'palette'
   end

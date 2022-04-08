@@ -1,15 +1,16 @@
 control-gate {
-  @apply activateable;
-  @apply draggable;
   @apply operation;
-
-  @apply rounded;
+  @apply operation-activateable;
+  @apply operation-draggable;
+  @apply operation-grabbable;
+  @apply operation-hoverable;
+  @apply operation-transparent;
 
   &::part(icon) {
-    @apply text-green-500;
+    @apply text-emerald-500;
   }
 
-  &[data-disabled]::part(icon) {
+  &[data-disabled]:not([data-grabbed])::part(icon) {
     @apply text-gray-500;
   }
 }

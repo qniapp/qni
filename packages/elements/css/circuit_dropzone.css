@@ -15,18 +15,22 @@ circuit-dropzone {
     @apply md:rotate-0;
   }
 
+  circuit-step.no-rotation &::part(wires) {
+    @apply rotate-0;
+  }
+
   &[data-shadow]::part(wires) {
     display: none;
   }
 
   &::part(connect-top),
   &::part(connect-bottom) {
-    @apply text-green-500;
+    @apply text-emerald-500;
   }
 
   &::part(wire-input),
   &::part(wire-output) {
-    @apply text-gray-200;
+    @apply text-neutral-200;
   }
 
   &::part(wire-input) {
@@ -56,7 +60,7 @@ circuit-dropzone {
 
   &[data-input-wire-quantum]::part(wire-input),
   &[data-output-wire-quantum]::part(wire-output) {
-    @apply text-gray-900;
+    @apply text-neutral-900;
   }
 
   &[data-operation-name='write-gate']::part(wire-input),

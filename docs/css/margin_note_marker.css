@@ -1,7 +1,0 @@
-.margin-note-marker::after {
-  counter-increment: MarginNoteMarker;
-  content: counter(MarginNoteMarker);
-  vertical-align: super;
-  line-height: 0;
-  font-size: 70%;
-}

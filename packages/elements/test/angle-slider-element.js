@@ -1,6 +1,7 @@
 import '../dist/index'
 import {assert} from '@esm-bundle/chai'
-import {testElementCreation} from './common/test-element-creation.js'
+import {once} from './common/once'
+import {testElementCreation} from './common/test-element-creation'
 
 describe('angle-slider element', function () {
   describe('element creation', function () {
@@ -61,9 +62,3 @@ describe('angle-slider element', function () {
     })
   })
 })
-
-function once(element, eventName) {
-  return new Promise(resolve => {
-    element.addEventListener(eventName, resolve, {once: true})
-  })
-}
