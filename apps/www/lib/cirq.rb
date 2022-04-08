@@ -194,8 +194,6 @@ class cirqbridge:
                     _key = measurement_moment[i][0][j][0]
                     _qubit = measurement_moment[i][0][j][1]
                     _step = i
-
-                    sys.stdout.flush()
                     if _key not in step.measurements:
                         break
                     _value= step.measurements[_key][0]
