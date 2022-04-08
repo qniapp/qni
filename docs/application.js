@@ -4508,7 +4508,7 @@ __name(findTargets, "findTargets");
 
 // ../../node_modules/@github/catalyst/lib/target.js
 function target(proto, key) {
-  return Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key, {
     configurable: true,
     get() {
       return findTarget(this, key);
@@ -4517,7 +4517,7 @@ function target(proto, key) {
 }
 __name(target, "target");
 function targets(proto, key) {
-  return Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key, {
     configurable: true,
     get() {
       return findTargets(this, key);
@@ -12225,7 +12225,7 @@ function v(s) {
       this.snapped = false;
       this.bit = -1;
       this.debugDraggable = false;
-      this.draggableMachine = createMachine({ id: "draggable", initial: "idle", states: { idle: { on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { GRAB: { target: "grabbed", actions: ["grab"] }, UNSET_INTERACT: { target: "idle" } } }, grabbed: { on: { START_DRAGGING: { target: "dragging", actions: ["startDragging"] }, UNGRAB: [{ target: "grabbable", actions: ["unGrab"], cond: "isOnCircuitDropzone" }, { target: "deleted", actions: ["unGrab"], cond: "isOnPaletteDropzone" }] } }, dragging: { type: "compound", initial: "unknown", on: { END_DRAGGING: { target: "dropped", actions: ["endDragging"] } }, states: { unknown: { always: [{ target: "snapped", cond: "isOnCircuitDropzone" }, { target: "unsnapped", cond: "isOnPaletteDropzone" }] }, snapped: { entry: ["snap"], on: { UNSNAP: { target: "unsnapped" } } }, unsnapped: { entry: ["unsnap"], on: { SNAP: { target: "snapped" } } } } }, dropped: { entry: ["drop"], always: [{ target: "grabbable", cond: "droppedOnCircuitDropzone" }, { target: "deleted", cond: "trashed" }] }, deleted: { type: "final", entry: "delete" } } }, { actions: { setInteract: () => {
+      this.draggableMachine = createMachine({ id: "draggable", initial: "idle", states: { idle: { on: { SET_INTERACT: { target: "grabbable", actions: ["setInteract"] } } }, grabbable: { on: { GRAB: { target: "grabbed", actions: ["grab"] }, UNSET_INTERACT: { target: "idle" } } }, grabbed: { always: [{ target: "dragging", cond: "isOnCircuitDropzone" }], on: { START_DRAGGING: { target: "dragging" }, UNGRAB: [{ target: "grabbable", actions: ["unGrab"], cond: "isOnCircuitDropzone" }, { target: "deleted", actions: ["unGrab"], cond: "isOnPaletteDropzone" }] } }, dragging: { type: "compound", initial: "unknown", on: { END_DRAGGING: { target: "dropped", actions: ["endDragging"] } }, states: { unknown: { entry: ["startDragging"], always: [{ target: "snapped", cond: "isOnCircuitDropzone" }, { target: "unsnapped", cond: "isOnPaletteDropzone" }] }, snapped: { entry: ["snap"], on: { UNSNAP: { target: "unsnapped" } } }, unsnapped: { entry: ["unsnap"], on: { SNAP: { target: "snapped" } } } } }, dropped: { entry: ["drop"], always: [{ target: "grabbable", cond: "isDroppedOnCircuitDropzone" }, { target: "deleted", cond: "isTrashed" }] }, deleted: { type: "final", entry: "delete" } } }, { actions: { setInteract: () => {
         let i = (0, import_interactjs.default)(this);
         i.styleCursor(false), i.on("down", this.grab.bind(this)), i.on("up", this.unGrab.bind(this)), i.draggable({ onstart: this.startDragging.bind(this), onmove: this.dragMove.bind(this), onend: this.endDragging.bind(this) });
         let n = this.dropzone;
@@ -12246,7 +12246,7 @@ function v(s) {
         !this.snapped || (this.moveTo(0, 0), this.dispatchEvent(new Event("operation-drop", { bubbles: true })));
       }, delete: () => {
         (0, import_interactjs.default)(this).unset(), this.dispatchEvent(new Event("operation-delete", { bubbles: true }));
-      } }, guards: { isOnCircuitDropzone: () => Et(this.dropzone), isOnPaletteDropzone: () => It(this.dropzone), droppedOnCircuitDropzone: () => this.snapped && Et(this.dropzone), trashed: () => !this.snapped } });
+      } }, guards: { isOnCircuitDropzone: () => Et(this.dropzone), isOnPaletteDropzone: () => It(this.dropzone), isDroppedOnCircuitDropzone: () => this.snapped && Et(this.dropzone), isTrashed: () => !this.snapped } });
     }
     set draggable(i) {
       this.maybeInitStateMachine(), i ? this.draggableService.send({ type: "SET_INTERACT" }) : this.draggableService.send({ type: "UNSET_INTERACT" });

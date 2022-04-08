@@ -80,10 +80,10 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           grabbed: {
+            always: [{target: 'dragging', cond: 'isOnCircuitDropzone'}],
             on: {
               START_DRAGGING: {
-                target: 'dragging',
-                actions: ['startDragging']
+                target: 'dragging'
               },
               UNGRAB: [
                 {
@@ -110,6 +110,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             },
             states: {
               unknown: {
+                entry: ['startDragging'],
                 always: [
                   {target: 'snapped', cond: 'isOnCircuitDropzone'},
                   {target: 'unsnapped', cond: 'isOnPaletteDropzone'}
