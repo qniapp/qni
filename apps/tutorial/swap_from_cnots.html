@@ -1,0 +1,91 @@
+---
+layout: page
+section: QPU 命令その 2
+title: SWAP パズル
+description: CNOT から SWAP を作るには?
+prev: CNOT ゲート
+prev_url: ./cnot_gate.html
+next: CPHASE ゲート
+next_url: ./cphase.html
+---
+
+<p>
+  いつもならとっくに寝ているはずの時間ですが、アリスは自宅ガレージで量子フーリエ変換回路の調整にいそしんでいます。
+  明日は小学校の量子コンピュータクラブの発表会で、自慢の量子プログラムをみんなの前でお披露目するからです。
+</p>
+
+<p>「そっちはどんな調子?」</p>
+
+<p>
+  同じクラブのボブから、チャットが飛び込みました。
+  返信しようとした瞬間、アリスは飲んでいた牛乳をカスタムキーボードの上にこぼしてしまいました。
+  これは自作量子コンピュータを操作するための特製キーボードで、 量子ゲートを入力するための CNOT や
+  SWAP といった特別なキーが並んでいます。
+</p>
+
+<p>「あっ、SWAP キーが動かなくなっちゃった!」</p>
+
+<p>SWAP キーが動かなければ、明日のデモはできません。 幸いなことに、CNOT キーはまだ生きています。</p>
+
+<h2>問題: CNOT から SWAP を作るには?</h2>
+
+<p>
+  CNOT を何度か組合わせて SWAP と同じ働きをする量子回路を作ってください。 完成したら MEASUREMENT
+  命令を使って、確かにビットが入れ替わっていることを確認してください。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <control-gate data-hoverable></control-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <measurement-gate data-hoverable></measurement-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>","|1>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

@@ -1,0 +1,180 @@
+---
+layout: page
+section: 複数量子ビット
+title: 1 ビット測定
+description: 複数量子ビットのうち 1 量子ビットのみを測定する
+prev: PHASE ゲート
+prev_url: ./multi_qubit_phase_gate.html
+next: SWAP ゲート
+next_url: ./swap_gate.html
+---
+
+<p>
+  今までは複数の量子ビットをすべてまとめて測定してきましたが、1
+  量子ビットだけを測定することもできます。 測定も QPU 命令の 1 つ (MEASUREMENT 命令)
+  なので、演算ペアの考えかたを使います。
+</p>
+
+<p>たとえば以下の状態ベクトルについて、ビット 1 のみを測定する場合を考えます。</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mx-4 flex flex-row justify-between">
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+      <span class="basis-1/4 text-center text-purple-600">0%</span>
+      <span class="basis-1/4 text-center text-purple-600">33%</span>
+    </div>
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  ビット 1 に QPU 命令を適用する場合、隣同士の円 ({% ket 0 %} と {% ket 1 %}、{% ket 2 %} と {% ket
+  3 %}) の演算ペアを考えるのでした。 MEASUREMENT 命令をビット 1 に適用すると、0 または 1
+  が得られます。 このときそれぞれの確率は、次のように計算できます。
+</p>
+
+<ul class="list-disc">
+  <li>
+    {% bold 0 になる確率: %} 演算ペアの<mark>左の円</mark> ({% ket 0 %} と {% ket 2 %}) の確率を足す
+    (= 33%)
+  </li>
+  <li>
+    {% bold 1 になる確率: %} 演算ペアの<mark>右の円</mark> ({% ket 1 %} と {% ket 3 %}) の確率を足す
+    (= 66%)
+  </li>
+</ul>
+
+<p>
+  33% の確率でビット 1 が 0 になった場合、{% ket 1 %} と {% ket 3 %} の円は空になります。
+  なぜならば、1 と 3 を 2 進数で表した場合それぞれのビット 1 は 1 のため、測定されたビット 1 が 0
+  という結果に反するからです。 そして残った円 ({% ket 0 %} と {% ket 2 %}) の確率は、全体で確率が
+  100% となるようにノーマライズされます。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-0-before"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-0-before')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <span>ビット 1 を測定し 0 が出た</span>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-0-after"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-0-after')
+        circleNotation.setAmplitudes({
+          0: 1,
+          1: 0,
+          2: 0,
+          3: 0,
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<p>
+  66% の確率でビット 1 が 1 になった場合、{% ket 0 %} と {% ket 2 %} の円は空になります。
+  そして残った円 {% ket 1 %} と {% ket 3 %} の確率が全体で 100% となるようにノーマライズされます。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col items-center">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-1-before"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-1-before')
+        circleNotation.setAmplitudes({
+          0: Math.sqrt(0.333333),
+          1: Math.sqrt(0.333333),
+          2: 0,
+          3: Math.sqrt(0.333333),
+        })
+      </script>
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
+      <span>ビット 1 を測定し 1 が出た</span>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-bit1-1-after"
+        data-multi-qubits
+        data-qubit-count="2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+
+      <script type="module">
+        let circleNotation = document.getElementById('circle-notation-bit1-1-after')
+        circleNotation.setAmplitudes({
+          0: 0,
+          1: Math.sqrt(0.5),
+          2: 0,
+          3: Math.sqrt(0.5),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

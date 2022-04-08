@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.32",
+  "version": "0.0.43",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -11,20 +11,14 @@
     "css:watch": "yarn build:css --watch"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.32",
-    "@qni/simulator": "^0.0.32",
+    "@qni/elements": "^0.0.43",
+    "@qni/simulator": "^0.0.43",
     "cookie-parser": "~1.4.4",
     "debug": "~4.3",
     "ejs": "~3.1",
     "express": "~4.17",
     "http-errors": "~2.0",
     "morgan": "~1.10"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.8.1",
-    "@typescript-eslint/parser": "^5.8.1",
-    "esbuild": "^0.14.5",
-    "tailwindcss": "~3.0"
   },
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }

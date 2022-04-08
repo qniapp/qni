@@ -1,0 +1,464 @@
+---
+layout: page
+section: 量子テレポーテーション
+title: テレポーテーション回路
+description: 2 つの古典ビットで 1 量子ビットを送る
+prev: 超密度符号化回路
+prev_url: ./superdense_coding_circuit.html
+next: 多段テレポーテーション
+next_url: ./cascading_teleportation.html
+---
+
+<p>
+  量子コンピュータクラブでは今、ボブが開発した量子コンピュータゲーム「クオンタム・バトルシップ」が流行っています。
+  これは 2
+  人プレイの対戦ゲームで、戦艦ゲームに量子もつれや重ね合わせをミックスした複雑なルールが特徴です。
+</p>
+
+<p>
+  このゲーム、対戦のためには 2
+  台の量子コンピュータを特殊な対戦ケーブルで接続する必要があるため、みんなが集まる学校でしか遊べないという欠点があります。
+  「自宅でも友達と対戦できたらなあ」作者であるボブ自身が、ゲームに一番のめりこんでいるようです。
+  自宅にいるボブとアリスがリモート対戦するには、量子ビットを直接やりとりできる特別な量子インターネット回線が必要です。
+  しかしボブの家にはマンション契約の古いインターネット回線しかありません。
+</p>
+
+<p>普通のインターネット経由で量子ビットをやりとりするには、どうすればよいでしょうか?</p>
+
+<p>
+  超密度符号化アルゴリズムでは、もつれた量子ビットのペアがあったときに、1 つの量子ビットを送ることで
+  2 古典ビット分の情報を送れることを見ました。 これを応用すれば、2
+  つの古典ビットをインターネット経由で送ることで、1 つの量子ビットを送ることもできそうです。
+</p>
+
+<p>
+  ボブはこれを実証するために、テスト駆動でちょっとずつ実験しながら量子回路を組み上げようと考えました。
+  まず、アリスにもつれた量子ビットを作ってもらい、片方の量子ビットを学校で受け取りました。
+  ボブの手元には、アリスに送信しようとしている量子ビットと、もつれた片方の量子ビット、合計 2
+  量子ビットがあります。 アリスの手元には、もつれた片方の 1 量子ビットがあります。
+  これを回路で表すと次のようになり、上 2 量子ビットがボブ、最後の 1
+  量子ビットがアリスの量子ビットを表します。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  次のステップは何をすべきでしょうか? 最終的には、アリスがボブの量子ビットを受け取ることが目的です。
+  量子ビットは複製できないので、アリスが量子ビットを受け取る前に、ボブは送ろうとしている量子ビットを破壊するアクション
+  (測定) を必ずどこかで起こす必要があります。
+  しかし、量子ビットを単純に測定するだけでは、その振幅の大きさや位相を取り出すことはできません。
+  つまり、ボブは送りたい量子ビットと、もつれた片方の量子ビットに何らかの操作をしてから測定する必要がありそうです。
+</p>
+
+<p>
+  2 つの量子ビットを操作し測定するテクニックと言えば、超密度符号化で紹介したベル測定です。
+  ボブは試しに、アリスに送信する量子ビットともつれた片方の量子ビットをベル測定することにしてみました。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  ボブによる測定の後、生き残るのはアリスの持つ 1 量子ビットです。
+  ボブの量子ビットの状態がもつれを通して、このアリスの量子ビットに移動すれば成功です。
+  これを確認するために、アリスの量子ビットにブロッホ球を置いてボブの量子ビットと比べてみましょう。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{アリス"],[1,1,"Bloch"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<h2>文字化け</h2>
+
+<p>
+  この回路を右下のボタンで何度か再実行すると、ボブの送った {% ket 0 %} (ブロッホ球が上向きの状態)
+  が、アリスの量子ビットではたまにひっくり返って {% ket 1 %} (ブロッホ球が下向きの状態)
+  となることが分かります。
+</p>
+
+<p>ボブは注意深くこの「文字化け」を観察し、次のパターンがあることを発見しました。</p>
+
+<ul>
+  <li>1 量子ビット目のベル測定結果はアリスの量子ビットの状態と関係がない</li>
+  <li>
+    2 量子ビット目のベル測定結果が 1 のときだけ、アリスの量子ビットがひっくり返って {% ket 1 %}
+    になる
+  </li>
+</ul>
+
+<p>
+  この文字化けを直すには、2 量子ビット目の測定結果が 1 のときだけ、アリスの量子ビットを X
+  ゲートでひっくり返せば良さそうです。
+  つまり、ボブはベル測定の結果をアリスへインターネット経由で送り、アリスは 2
+  ビット目の測定結果と自分の量子ビットに CNOT ゲートをかけます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["}"],[1],["{アリス"],[1,1,"Bloch"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  文字化けは直りました! しかし、ボブが送信に成功したのは重ね合わせのない {% ket 0 %} のみです。
+  重ね合わせ状態の量子ビットも送れるでしょうか?
+</p>
+
+<h2>重ね合わせの送信</h2>
+
+<p>次は H ゲートで重ね合わせ状態にした量子ビットを送ってみましょう。</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["}"],[1],["{アリス"],[1,1,"Bloch"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  今度は別のパターンの文字化けが発生しました。 ボブの緻密なデバッグによると、1 ビット目が 1
+  のときだけ、アリスの量子ビットがブロッホ球の手前から奥へ反転しています。
+</p>
+
+<p>
+  これは Z 軸 (縦向きの軸) まわりの反転なので、Z ゲートによって修正できそうです。 アリスはベル測定の
+  1 ビット目と、自分の量子ビットに CZ ゲートをかけます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["•",1,"Z"],["}"],[1],["{アリス"],[1,1,"Bloch"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  これもうまく行きました!
+  ボブは念のために、さらに複雑な重ね合わせ状態についてもテストし、成功することを確認しました。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[[1,"|0>","|0>"],["{もつれの準備"],[1,"H"],[1,"•","X"],["}"],[1],["{ボブの量子ビット"],["|0>"],["H"],["P(π/4)"],["H"],["Bloch"],["}"],[1],["{ベル測定"],["•","X"],["H"],["Measure","Measure"],["}"],[1],["{文字化けを直す"],[1,"•","X"],["•",1,"Z"],["}"],[1],["{アリス"],[1,1,"Bloch"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<h2>まとめ</h2>
+
+<p>
+  ボブはテスト駆動開発的なテクニックによって、量子ビットをインターネット (古典の通信路)
+  経由で送れることを突き止めました。
+  ボブが作った量子回路は量子テレポーテーション回路と呼ばれ、もともと物理学者チャールズ・ベネットらが
+  1993 年に発見したものです。
+</p>
+
+<p>
+  テレポーテーションと言うと宇宙船が別の惑星や銀河に移動するイメージですが、そうではないことを見てきました。
+  つまり実際には、1 つの量子ビットの状態 (振幅の大きさと位相)
+  をベル測定によって破壊すると、状態が別の量子ビットに移動します。
+  つまり物質自体が移動するのではなく、1
+  つの量子ビットが持つ情報が、別の量子ビットに移動するだけです。
+  こうして見ると、宇宙船や人間のような大量の原子でできた物体をテレポートするには、まだまだ技術的革新が必要そうです。
+</p>
+
+<p>
+  量子テレポーテーションを実行するためには、あらかじめ送受信者間で、もつれた量子ビットを作って共有しておく必要があります。
+  このように前準備が必要なものの、もつれた量子ビットを作る操作はテレポートする量子ビットの内容によらないので、ベル回路を実行するだけで比較的簡単に準備できます。
+</p>
+
+<p>
+  量子テレポーテーションは量子インターネットの基本そのものです。
+  量子インターネットでは送受信者間のエンドツーエンドで量子もつれを作り、量子テレポーテーションによって量子ビットの情報を移動します。
+  量子インターネットの応用として、複数の量子コンピュータを接続した分散計算があります。 大規模な 1
+  台の量子コンピュータを作るのは技術的にも金銭的にも大変なので、小〜中規模の量子コンピュータをたくさんつなげて、分散計算しようというわけです。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

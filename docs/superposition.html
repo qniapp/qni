@@ -1,15 +1,962 @@
----
-layout: page
-title: 重ね合わせ状態
-description: いろんな重ね合わせ状態を作ってみよう
----
+<!DOCTYPE html>
+<html lang="ja" class="h-full">
+  <head>
+    <title>重ね合わせ状態</title>
 
-<p>
-  量子ビットは確率的ビットによく似ており、1 量子ビットは <code>0</code> と <code>1</code>
-  の重ね合わせ状態をとることができます。Qni では、これを次のように円で視覚化します。
-</p>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<div class="flex flex-row items-center justify-center pb-10">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+    <script type="module">
+      import {
+        Application,
+        Controller,
+      } from 'https://unpkg.com/@hotwired/stimulus/dist/stimulus.js'
+      window.Stimulus = Application.start()
+
+      Stimulus.register(
+        'sidebar',
+        class extends Controller {
+          static targets = ['menu', 'body', 'bodyMd']
+
+          connect() {
+            let bodyMdScroll = sessionStorage.getItem('sidebar-md-scroll')
+            if (bodyMdScroll !== null) {
+              this.bodyMdTarget.scrollTop = parseInt(bodyMdScroll, 10)
+            }
+
+            window.addEventListener('beforeunload', () => {
+              sessionStorage.setItem('sidebar-scroll', this.bodyTarget.scrollTop)
+              sessionStorage.setItem('sidebar-md-scroll', this.bodyMdTarget.scrollTop)
+            })
+          }
+
+          open() {
+            this.menuTarget.classList.remove('hidden')
+
+            let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+            if (sidebarScroll !== null) {
+              this.bodyTarget.scrollTop = parseInt(sidebarScroll, 10)
+            }
+          }
+
+          close() {
+            this.menuTarget.classList.add('hidden')
+          }
+        }
+      )
+    </script>
+  </head>
+  <body class="h-full">
+    <div data-controller="sidebar">
+  <div
+  class="fixed inset-0 z-[200] flex hidden md:hidden"
+  role="dialog"
+  aria-modal="true"
+  data-sidebar-target="menu"
+>
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+  <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
+    <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <button
+        type="button"
+        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        data-action="click->sidebar#close"
+      >
+        <svg class="h-6 w-6 text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      </button>
+    </div>
+
+    <div class="flex flex-shrink-0 items-center px-4">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-end">
+        <span
+          class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+          >Qni</span
+        >
+        <span
+          class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+          >Tutorial</span
+        >
+      </div>
+    </div>
+    <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+
+  <div class="w-14 flex-shrink-0" aria-hidden="true">
+    <!-- Dummy element to force sidebar to shrink to fit close icon -->
+  </div>
+</div>
+ <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+  <div class="flex flex-grow flex-col bg-white">
+    <div class="flex h-16 flex-shrink-0 items-center border-b border-slate-900/10 px-8">
+      <a href="/" class="flex flex-shrink-0 cursor-pointer flex-row">
+        <img class="mr-2 h-7 w-7" src="./images/qni-icon-512.png" alt="Qni" />
+        <div class="flex flex-row items-center">
+          <div class="flex flex-row items-end">
+            <span
+              class="select-none font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+              >Qni</span
+            >
+            <span
+              class="ml-0.5 select-none font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+              >Tutorial</span
+            >
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="flex h-0 flex-grow flex-col overflow-y-auto md:py-6" data-sidebar-target="bodyMd">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="flex flex-1 flex-col md:pl-64">
+    <div
+      class="sticky top-0 z-[100] flex h-16 flex-shrink-0 border-0 border-slate-900/10 bg-white/95 shadow backdrop-blur md:border-b md:shadow-none"
+    >
+      <button
+        type="button"
+        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+        data-action="click->sidebar#open"
+      >
+        <span class="sr-only">Open sidebar</span>
+        <svg
+    class="h-6 w-6"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <div class="flex w-full items-center justify-end">
+        <a
+          href="https://github.com/qniapp/qni"
+          class="block pr-8 text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+        >
+          <svg class="w-5 h-5" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.49933 0.25C3.49635 0.25 0.25 3.49593 0.25 7.50024C0.25 10.703 2.32715 13.4206 5.2081 14.3797C5.57084 14.446 5.70302 14.2222 5.70302 14.0299C5.70302 13.8576 5.69679 13.4019 5.69323 12.797C3.67661 13.235 3.25112 11.825 3.25112 11.825C2.92132 10.9874 2.44599 10.7644 2.44599 10.7644C1.78773 10.3149 2.49584 10.3238 2.49584 10.3238C3.22353 10.375 3.60629 11.0711 3.60629 11.0711C4.25298 12.1788 5.30335 11.8588 5.71638 11.6732C5.78225 11.205 5.96962 10.8854 6.17658 10.7043C4.56675 10.5209 2.87415 9.89918 2.87415 7.12104C2.87415 6.32925 3.15677 5.68257 3.62053 5.17563C3.54576 4.99226 3.29697 4.25521 3.69174 3.25691C3.69174 3.25691 4.30015 3.06196 5.68522 3.99973C6.26337 3.83906 6.8838 3.75895 7.50022 3.75583C8.1162 3.75895 8.73619 3.83906 9.31523 3.99973C10.6994 3.06196 11.3069 3.25691 11.3069 3.25691C11.7026 4.25521 11.4538 4.99226 11.3795 5.17563C11.8441 5.68257 12.1245 6.32925 12.1245 7.12104C12.1245 9.9063 10.4292 10.5192 8.81452 10.6985C9.07444 10.9224 9.30633 11.3648 9.30633 12.0413C9.30633 13.0102 9.29742 13.7922 9.29742 14.0299C9.29742 14.2239 9.42828 14.4496 9.79591 14.3788C12.6746 13.4179 14.75 10.7025 14.75 7.50024C14.75 3.49593 11.5036 0.25 7.49933 0.25Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <article class="prose prose-neutral max-w-none">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
+            <div class="mb-10 border-b border-gray-200 pb-10">
+              <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
+                量子ビット
+              </p>
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
+                  重ね合わせ状態
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-gray-500">円表示による重ね合わせ状態の視覚化</p>
+            </div>
+            <div class="content-with-margin"><p>Qni では、1 ビットでの 0 と 1 の重ね合わせ状態を次のように 2 つの円で表示します。</p>
+
+<div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
   <circle-notation
     data-size="xl"
     data-magnitudes="0.7071067811865475,0.7071067811865475"
@@ -19,92 +966,76 @@ description: いろんな重ね合わせ状態を作ってみよう
 </div>
 
 <p>
-  2 個の円はそれぞれ状態 <code>0</code> (左) と <code>1</code> (右)
-  をあらわしており、中の青い部分の面積はそれぞれの確率を表しています。
-  この状態ではどちらも五分五分なので、<code>0</code> と <code>1</code> がそれぞれ
-  <code>50%</code> の確率で重ね合わされていると言います。
+  2 個の円はそれぞれ古典ビット 0 (左) と 1 (右)
+  を表しており、中の青い部分の面積はそれぞれの確率を表しています。
+  この状態ではどちらも五分五分なので、0 と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
+  円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
 </p>
 
-<div class="mb-10 border-l-4 border-blue-400 bg-blue-50 p-4">
-  <p class="!pb-0">
-    これからは状態 <code>0</code> と <code>1</code> をそれぞれ記号 <code>|0⟩</code> と
-    <code>|1⟩</code> で表します。
-    これらは量子力学や量子コンピュータでよく使われる記号で、「ディラックのケット
-    (または単にケット)」と呼ばれます。 後に詳しく説明しますが、現時点では <code>0</code> と
-    <code>1</code>
-    の状態を区別するための単なるラベルだと考えて大丈夫です。
-  </p>
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  これからは古典ビット 0 と 1 をそれぞれ記号 \(|0\rangle\) と \(|1\rangle\) で表します。
+  これらは量子力学や量子コンピュータでよく使われる記号で、「ディラックのケット
+  (または単にケット)」と呼ばれます。 後に詳しく説明しますが、現時点では 0 と 1
+  の状態を区別するための単なるラベルと考えて大丈夫です。
 </div>
 
 <p>
-  <code>|0⟩</code> と <code>|1⟩</code> の確率は、合計が <code>100%</code>
+  \(|0\rangle\) と \(|1\rangle\) の確率は、合計が 100%
   という条件さえ満たせば好きな値を取ることができます。
   たとえば、次のようなさまざまな状態のバリエーションが考えられます。
 </p>
 
-<div class="pb-10">
-  <table class="table-auto border-collapse border border-slate-400">
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
     <thead>
       <tr>
-        <th class="border border-slate-300 bg-slate-800 py-2 px-4 text-white">確率</th>
-        <th class="border border-slate-300 bg-slate-800 text-white">円表示</th>
+        <th>確率</th>
+        <th>円表示</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="border border-slate-300 py-2 px-4"><code>|0⟩</code> が 100%</td>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row items-center justify-center pb-4">
-            <circle-notation
-              data-size="xl"
-              data-magnitudes="1,0"
-              data-phases="0,0"
-              data-show-kets
-            ></circle-notation>
-          </div>
+        <td class="align-middle">\(|0\rangle\) が 100%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="1,0"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
         </td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4"><code>|1⟩</code> が 100%</td>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row items-center justify-center pb-4">
-            <circle-notation
-              data-size="xl"
-              data-magnitudes="0,1"
-              data-phases="0,0"
-              data-show-kets
-            ></circle-notation>
-          </div>
+        <td class="align-middle">\(|1\rangle\) が 100%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0,1"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
         </td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <code>|0⟩</code> と <code>|1⟩</code> が 50%
-        </td>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row items-center justify-center pb-4">
-            <circle-notation
-              data-size="xl"
-              data-magnitudes="0.7071067811865475,0.7071067811865475"
-              data-phases="0,0"
-              data-show-kets
-            ></circle-notation>
-          </div>
+        <td class="align-middle">\(|0\rangle\) と \(|1\rangle\) が 50%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0.7071067811865475,0.7071067811865475"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
         </td>
       </tr>
       <tr>
-        <td class="border border-slate-300 py-2 px-4">
-          <code>|0⟩</code> が 80%, <code>|1⟩</code> が 20%
-        </td>
-        <td class="border border-slate-300 py-2 px-4">
-          <div class="flex flex-row items-center justify-center pb-4">
-            <circle-notation
-              data-size="xl"
-              data-magnitudes="0.8944271909999159,0.4472135954999579"
-              data-phases="0,0"
-              data-show-kets
-            ></circle-notation>
-          </div>
+        <td class="align-middle">\(|0\rangle\) が 80%, \(|1\rangle\) が 20%</td>
+        <td class="pb-6">
+          <circle-notation
+            data-size="xl"
+            data-magnitudes="0.8944271909999159,0.4472135954999579"
+            data-phases="0,0"
+            data-show-kets
+          ></circle-notation>
         </td>
       </tr>
     </tbody>
@@ -112,96 +1043,42 @@ description: いろんな重ね合わせ状態を作ってみよう
 </div>
 
 <p>
-  円の中にある時計の針のようなものは、量子ビットが持つ<span class="font-bold">位相</span
-  >というデータを表します。 位相とは量子ビットが持つある種の回転を表します。
-  <a href="./what_qpu_do_faster.html">QPU は何が得意？</a>の例で出てきたように、
-  量子コンピュータはルービックキューブのようないろいろな方向への回転操作を量子ビットに対して行います。
-  この回転により、量子ビットの位相が変化します。
+  表の 1 行目と 2 行目は、古典ビットと同じ状態を表しています。 \(|0\rangle\) が 100% または \(|1\rangle\) が 100% の状態では重ね合わせは生じていないため、それぞれ古典ビット 0 と 1
+  でも表現できるからです。 \(|0\rangle\) が 100% の状態を、単に状態 \(|0\rangle\) と呼びます。同様に、\(|1\rangle\) が 100% の状態を状態 \(|1\rangle\) と呼びます。
 </p>
-
-<h2>Qni で重ね合わせ実験</h2>
 
 <p>
-  いよいよ Qni を使った最初の実験です。 回路に QPU 演算をドラッグアンドドロップすることで、<code
-    >|0⟩</code
-  >
-  と <code>|1⟩</code> の確率が変化するのを見てみましょう。
-  それぞれの命令が何をしているかはまだ気にしなくてかまいません。
-  命令によっては確率がまったく変化しないかわりに、位相 (時計の針) だけを回転させるものもあります。
-  また、両方を変化させるものもあります。 ここで確認しておきたいポイントは、QPU
-  命令が確率や位相を変化させ、命令の種類によってその変化が異なる、という 2 つです。
+  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (青く塗り潰された円)
+  は破壊され、状態 \(|0\rangle\) または \(|1\rangle\) に変化します。
+  つまり、重ね合わせ状態にあるビットを測定すると、古典ビット 0 または 1
+  で表すことのできる状態に変化します。
 </p>
 
-<div class="relative mb-10 overflow-hidden rounded-2xl bg-gray-50 p-8">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <h-gate></h-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <x-gate></x-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <y-gate></y-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <z-gate></z-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <phase-gate data-angle="π/2"></phase-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <rnot-gate></rnot-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <rx-gate data-angle="π/2"></rx-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <ry-gate data-angle="π/2"></ry-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <rz-gate data-angle="π/2"></rz-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-2xl bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
-        data-multi-qubits
-        data-show-kets
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+<orbit-reviewarea color="blue">
+  <orbit-prompt cloze="Qni の円表示において、青い部分の{面積}は 0 または 1 の確率を表す">
+  </orbit-prompt>
+  <orbit-prompt cloze="ビットの状態 0 は記号 {$|0\rangle$} で表せる"> </orbit-prompt>
+  <orbit-prompt cloze="ビットの状態 1 は記号 {$|1\rangle$} で表せる"> </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 0 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt
+    question="古典ビット 1 を Qni の円表示で表すと?"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+    answer=""
+  >
+  </orbit-prompt>
+  <orbit-prompt cloze="記号 $|0\rangle$ や $|1\rangle$ などをディラックの{ケット}と呼ぶ">
+  </orbit-prompt>
+  <orbit-prompt
+    question="この状態を測定すると、何%の確率でどんな状態になる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%の確率で $|0\rangle$ または $|1\rangle$"
+  ></orbit-prompt>
+</orbit-reviewarea>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
@@ -225,7 +1102,22 @@ description: いろんな重ね合わせ状態を作ってみよう
         class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
         disabled
       >
-        {% include angle.svg class="h-5 w-5" %}
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
       </button>
 
       <button
@@ -246,38 +1138,40 @@ description: いろんな重ね合わせ状態を作ってみよう
       data-operation-menu-delete
       class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
     >
-      {% include trash.svg class="h-4 w-4" %}
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
     </div>
   </div>
 </template>
-
-<template id="operation-inspector-template">
-  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
     <div class="items-left flex flex-col space-y-4 divide-y">
       <div id="conditional-gate-pane" class="items-left flex flex-col">
-        <h1 class="font-bold text-gray-900">If Conditional</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
           <input
             data-target="operation-inspector.ifInput"
             type="text"
             name="if"
             id="if-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
       </div>
 
       <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Angle</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
 
         <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
           <label
             for="angle-input"
-            class="select-none font-normal text-gray-700"
+            class="select-none font-normal text-neutral-700"
             data-target="operation-inspector.angleInputLabel"
             >Angle</label
           >
@@ -287,7 +1181,7 @@ description: いろんな重ね合わせ状態を作ってみよう
             name="angle"
             id="angle-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
           <angle-slider
@@ -295,7 +1189,7 @@ description: いろんな重ね合わせ状態を作ってみよう
             class="ml-2 inline-block"
           ></angle-slider>
 
-          <label for="denominator-input" class="block text-sm font-normal text-gray-700"
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
             >Denom</label
           >
           <input
@@ -304,10 +1198,10 @@ description: いろんな重ね合わせ状態を作ってみよう
             min="2"
             name="denominator"
             id="denominator-input"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
-          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
             <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
               data-target="operation-inspector.denominatorLabel"
               class="font-bold text-yellow-600"
@@ -316,7 +1210,7 @@ description: いろんな重ね合わせ状態を作ってみよう
           </div>
 
           <div class="min-w-0 flex-1 text-sm">
-            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700"
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
               >Reduce</label
             >
           </div>
@@ -326,24 +1220,24 @@ description: いろんな重ね合わせ状態を作ってみよう
               id="reduce-fraction-checkbox"
               name="reduce-fraction"
               type="checkbox"
-              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
             />
           </div>
         </div>
       </div>
 
       <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
-        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
 
         <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
-          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
           <input
             data-target="operation-inspector.flagInput"
             type="text"
             name="flag"
             id="flag-input"
             spellcheck="false"
-            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autocomplete="off"
           />
         </div>
@@ -351,5 +1245,61 @@ description: いろんな重ね合わせ状態を作ってみよう
     </div>
   </operation-inspector>
 </template>
+ <template id="circle-notation-popup">
+  <div class="p-2">
+    <ul class="list-none">
+      <li>
+        確率:
+        <span
+          class="circle-notation-popup__probability font-mono font-bold text-neutral-800"
+        ></span>
+      </li>
+    </ul>
+  </div>
+</template>
 
-{% include circle_notation_popup.html %}
+<footer class="mt-12 text-sm leading-6">
+  <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
+    
+    <a
+      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./p_bit.html"
+      ><svg
+  class="mr-3 h-4 w-auto overflow-visible text-slate-400
+      group-hover:text-slate-600 dark:group-hover:text-slate-300"
+  width="15"
+  height="15"
+  viewBox="0 0 15 15"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
+    fill="currentColor"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+  ></path>
+</svg>
+確率的ビット</a
+    >
+     
+    <a
+      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./qubit.html"
+      >量子ビット<svg class="ml-3 h-4 w-auto overflow-visible
+      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+</a
+    >
+    
+  </div>
+</footer>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+  </body>
+</html>

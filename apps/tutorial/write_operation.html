@@ -1,0 +1,128 @@
+---
+layout: page
+section: QPU 命令その 1
+title: WRITE 命令
+description: 量子ビットの初期化とリセット
+prev: PHASE ゲート
+prev_url: ./phase_gate.html
+next: MEASUREMENT 命令
+next_url: ./measurement_operation.html
+---
+
+<p>
+  WRITE 命令は量子ビットの状態を {% ket 0 %} または {% ket 1 %} に初期化する命令です。
+  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。 通常は回路の先頭に WRITE
+  命令を置くことで量子ビットを {% ket 0 %} や {% ket 1 %} に初期化します。 続けて H ゲートなどの QPU
+  命令を置いていくことで量子プログラムを記述します。
+</p>
+
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを {% ket 0 %} に初期化してからゲートを配置</div>
+  <quantum-circuit>
+    <circuit-step>
+      <circuit-dropzone>
+        <write-gate data-value="0"></write-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <y-gate></y-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </quantum-circuit>
+</div>
+
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div>量子ビットを {% ket 1 %} に初期化してからゲートを配置</div>
+  <quantum-circuit>
+    <circuit-step>
+      <circuit-dropzone>
+        <write-gate data-value="1"></write-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <z-gate></z-gate>
+      </circuit-dropzone>
+    </circuit-step>
+    <circuit-step>
+      <circuit-dropzone>
+        <h-gate></h-gate>
+      </circuit-dropzone>
+    </circuit-step>
+  </quantum-circuit>
+</div>
+
+<p>
+  WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
+  つまり量子ビットの状態がどんな状態にあっても、たとえば {% ket 0 %}
+  命令を置いた時点で振幅の大きさと位相の情報は破壊され、{% ket 0 %} に初期化されます。
+  これは元に戻すのに必要な情報を損失していることになるため、WRITE 命令は非可逆です。
+</p>
+
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="mb-8 flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-WRITE0-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <write-gate data-value="0"></write-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        id="circle-notation-WRITE0-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+    </div>
+
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-WRITE1-before"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <write-gate data-value="1"></write-gate>
+        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+      </div>
+      <circle-notation
+        id="circle-notation-WRITE1-after"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationWrite0Before = document.getElementById('circle-notation-WRITE0-before')
+    let circleNotationWrite0After = document.getElementById('circle-notation-WRITE0-after')
+    let circleNotationWrite1Before = document.getElementById('circle-notation-WRITE1-before')
+    let circleNotationWrite1After = document.getElementById('circle-notation-WRITE1-after')
+
+    circleNotationWrite0Before.setAmplitudes({
+      0: new Complex(-0.38268, 0),
+      1: new Complex(0.7855, -0.48636),
+    })
+    circleNotationWrite0After.setAmplitudes({ 0: 1, 1: 0 })
+    circleNotationWrite1Before.setAmplitudes({
+      0: new Complex(0.28483, -0.34391),
+      1: new Complex(-0.82603, 0.34391),
+    })
+    circleNotationWrite1After.setAmplitudes({ 0: 0, 1: 1 })
+  </script>
+</div>
+
+{% include circle_notation_popup.html %}

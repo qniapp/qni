@@ -1,22 +1,10 @@
 rnot-gate {
-  @apply activateable;
-  @apply draggable;
-  @apply ifable;
   @apply operation;
-
-  @apply rounded;
-
-  &::part(body) {
-    @apply h-full w-full;
-    @apply bg-green-500;
-    @apply rounded;
-  }
-
-  &[data-disabled]::part(body) {
-    @apply bg-gray-500;
-  }
-
-  &::part(icon) {
-    @apply text-white;
-  }
+  @apply operation-activateable;
+  @apply operation-disableable;
+  @apply operation-draggable;
+  @apply operation-grabbable;
+  @apply operation-hoverable;
+  @apply operation-ifable;
+  @apply operation-square;
 }

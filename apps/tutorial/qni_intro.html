@@ -1,0 +1,243 @@
+---
+layout: page
+section: イントロダクション
+title: Qni 入門
+description: QPU シミュレータ Qni の使い方
+prev: 量子回路
+prev_url: ./quantum_circuit.html
+next: 確率的ビット
+next_url: ./p_bit.html
+---
+
+<p>
+  本チュートリアルでは、量子コンピュータシミュレータ Qni を使います。
+  なぜ、実機ではなくシミュレータを使うのでしょう?
+  現在、さまざまな実機の量子コンピュータがクラウド経由で利用可能ですが、残念ながら次の理由により初心者の学習にはあまり向いていません。
+</p>
+
+<ul>
+  <li>
+    <p><strong>待ち時間がかかる</strong></p>
+    <p>
+      実機でのプログラムはキューイングシステム経由で実行されるので、結果を得るまでに数分かかります。
+    </p>
+  </li>
+  <li>
+    <p><strong>計算結果が合わない</strong></p>
+    <p>実機はエラーが発生するため、小規模なプログラムであっても正しい結果が返ってきません。</p>
+  </li>
+  <li>
+    <p><strong>お金がかかる</strong></p>
+    <p>ほとんどの実機は有料であるため、学習のための実験や試行錯誤には気軽に使えません。</p>
+  </li>
+</ul>
+
+<p>
+  そこで本チュートリアルでは、使える量子ビット数は実機よりも少なくなってしまいますが{% nmargin_note
+  qubit-real-vs-simulator %}実機の量子ビット数は数十〜百量子ビット程度です。
+  これに対してシミュレータの量子ビット数は 10 量子ビット程度です。{% endnmargin_note %}、Qni
+  シミュレータを使います。
+  このチュートリアルの方針は、大きなシステムに焦点を当てるのではなく、小さいシステムを詳細に説明することで、量子コンピュータの最も基本的で興味深く、時に不穏な動作を説明することです。
+  小さい量子コンピュータの考え方を学ぶことで、より大きな量子コンピュータがどのように、そしてなぜ強力であるかを感じることができるようになります。
+</p>
+
+<p>
+  何より Qni は自分専用かつ無料で使えるので、実機と違って好きなだけ使い倒すことができます!
+  またリアルタイムに実行結果が返ってきますので、初心者にとって重要なトライアル &
+  エラーにもってこいです。 そして真の量子コンピュータ (エラーゼロの理想的な量子コンピュータ)
+  と同じ動きをしますので、チュートリアルの説明通りの実行結果を得ることができます。
+</p>
+
+<p>
+  初心者にとって Qni
+  が最適なもうひとつの理由は、グラフィカルにプログラミングできることです。ほとんどの量子コンピュータでは、プログラミングに
+  Python などの量子計算ライブラリを使います。量子コンピュータを始めるためにはまず Python
+  と専用ライブラリの勉強から、、、というわけです。 一方 Qni では、GUI
+  によって直接量子回路を編集したり実行したりできるので、ハードルが相当低くなっています。
+</p>
+
+<h2>Qni のユーザインタフェース</h2>
+<p>これから Qni をひんぱんに使いますので、使いかたについて少し時間をとって確認してください。</p>
+
+<p>
+  チュートリアル中には次のような mini Qni がいたる所に埋め込まれています。
+  これを使うことで、学んだことをその場ですぐに実験できるようになっています。
+  それぞれのツールの名前と使い方を見て行きましょう。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <y-gate data-hoverable></y-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <z-gate data-hoverable></z-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="5"
+        data-json='{"cols":[["|0>"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
+        data-multi-qubits
+        data-show-kets
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<h3>命令パレット</h3>
+<p>
+  量子回路に配置する QPU 命令の並んだツールです。
+  ここからドラッグアンドドロップで量子回路に命令を置いていくことで、量子プログラムを記述できます。
+  それぞれの QPU 命令の働きについては、後の項目でそれぞれ詳しく紹介します。
+</p>
+
+<div
+  class="my-5 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+>
+  <palette-dropzone>
+    <h-gate></h-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <x-gate></x-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <y-gate></y-gate>
+  </palette-dropzone>
+  <palette-dropzone>
+    <z-gate></z-gate>
+  </palette-dropzone>
+</div>
+
+<h3>量子回路エディタ</h3>
+<p>
+  量子回路を表示したり編集したりするためのエディタです。
+  後で説明しますが、量子回路エディタはステップ実行やブレークポイントといったデバッグにも使います。
+</p>
+
+<quantum-circuit
+  class="my-5"
+  data-target="quantum-simulator.circuit circuit-editor.circuit"
+  data-min-wire-count="1"
+  data-max-wire-count="1"
+  data-min-step-count="5"
+  data-json='{"cols":[["|0>","|0>"],["H"],["•","X"],["Measure"],[1,"Measure"]]}'
+>
+</quantum-circuit>
+
+<h3>状態ベクトル表示</h3>
+<p>
+  量子ビットの状態を視覚的に表示します。表示の読み方や使い方については、<a
+    href="./circle_notation.html"
+    >状態ベクトル表示</a
+  >で詳しく説明します。
+</p>
+
+<div class="my-5 flex md:mr-auto md:w-7/12">
+  <div class="flex flex-col">
+    <div class="flex flex-row items-center space-x-1">
+      <circle-notation
+        id="circle-notation-3qubit-superposition"
+        data-multi-qubits
+        data-qubit-count="3"
+        data-size="xl"
+      ></circle-notation>
+
+      <script type="module">
+        import { Complex } from './application.js'
+
+        let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
+        circleNotation.setAmplitudes({
+          0: new Complex(0.42678, -0.17678),
+          1: new Complex(0.17678, -0.07322),
+          2: new Complex(0.17678, 0.42678),
+          3: new Complex(0.07322, 0.17678),
+          4: new Complex(-0.42678, 0.17678),
+          5: new Complex(-0.17678, 0.07322),
+          6: new Complex(-0.17678, -0.42678),
+          7: new Complex(-0.07322, -0.17678),
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<h2>ライブプログラミングによる開発</h2>
+<p>
+  Qni の一番の特徴はそのリアルタイム性です。QPU
+  命令をドラッグして好きな場所に動かすだけで、実行結果をリアルタイムに描画します。これによって、命令の働きや編集結果を素早く確認できます。
+</p>
+
+<figure>
+  {% margin_note qni-live-programming %}リアルタイムに量子ビットの状態変化を表示{% endmargin_note %}
+  <img src="./images/qni_live_programming.gif" class="h-auto w-full border border-neutral-300" />
+</figure>
+
+<p>
+  デバッグも簡単です。プログラムの途中状態を確認したい場合には、量子回路の任意の場所にマウスポインタをホバーするだけでその箇所での状態ベクトルを表示できます。
+  これはいわゆるステップ実行として使うことができます。
+</p>
+
+<p>
+  また、量子回路の任意の場所をクリックすることで、その場所にブレークポイント (濃い紫の線)
+  をセットできます。
+  プログラム中の異なる地点での状態ベクトルの変化を確認するには、基準となる地点にブレークポイントを設定しておき、別の場所にマウスポインタをホバーするだけです。
+</p>
+
+<figure>
+  {% margin_note qni-breakpoint %}ブレークポイントによる量子回路のデバッグ{% endmargin_note %}
+  <img src="./images/qni_step_execution.gif" class="h-auto w-full border border-neutral-300" />
+</figure>
+
+<h2>動かして学ぶ</h2>
+
+<p>
+  本チュートリアルは触って動かせる mini Qni
+  を読書体験に埋め込むことで、最短ルートで量子コンピュータの基本を学べることを目指しています。
+  Python
+  やエディタなど他の言語やツールを行ったり来たりしなくても、ブラウザだけで量子コンピュータプログラミング体験を完結できるよう設計されています。
+  これによって、「説明を読む → 自分で実験する →
+  実行結果を理解する」の学習ループを可能な限りタイトに回すことができます。
+  この「動かして学ぶ」というアプローチは、私の経験上、量子コンピュータプログラミングのような高度なトピックでも途中で挫折せず、楽しく継続的に学べる良い方法です。
+</p>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}

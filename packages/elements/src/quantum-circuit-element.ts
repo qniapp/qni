@@ -12,9 +12,10 @@ import {TGateElement, TGateElementProps} from './t-gate-element'
 import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
+import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
@@ -91,6 +92,8 @@ export class QuantumCircuitElement extends HTMLElement {
   // CPHASE
   @attr phasePhaseDisabled = false
   @attr phasePhaseMaxTargetGates = 0
+
+  @targets blocks!: CircuitBlockElement[]
 
   private quantumCircuitMachine = createMachine<QuantumCircuitContext, QuantumCircuitEvent>({
     id: 'quantum-circuit',
@@ -279,6 +282,8 @@ export class QuantumCircuitElement extends HTMLElement {
     this.addEventListener('circuit-step-unsnap', this.updateChangedWire)
     this.addEventListener('circuit-step-delete-operation', this.updateStep)
     this.addEventListener('circuit-step-delete-operation', this.updateChangedWire)
+
+    this.dispatchEvent(new Event('quantum-circuit-init', {bubbles: true}))
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
@@ -374,14 +379,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   h(...args: number[] | [HGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -389,7 +394,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const h = new HGateElement()
       if (disabled) h.disable()
       return h
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -400,14 +405,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   x(...args: number[] | [XGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -415,7 +420,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const x = new XGateElement()
       if (disabled) x.disable()
       return x
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -424,14 +429,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   y(...args: number[] | [YGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -439,7 +444,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const y = new YGateElement()
       if (disabled) y.disable()
       return y
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -448,14 +453,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   z(...args: number[] | [ZGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -463,7 +468,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const z = new ZGateElement()
       if (disabled) z.disable()
       return z
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -473,17 +478,17 @@ export class QuantumCircuitElement extends HTMLElement {
    */
   phase(...args: number[] | [string, ...number[]] | [PhaseGateElementProps]): QuantumCircuitElement {
     let angle = ''
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else if (typeof args[0] === 'string') {
       angle = args[0]
-      targets = args.slice(1) as number[]
+      targetBits = args.slice(1) as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -492,8 +497,8 @@ export class QuantumCircuitElement extends HTMLElement {
       phase.angle = angle
       if (disabled) phase.disable()
       return phase
-    }, ...targets)
-    if (targets.length > 1) this.updateStepOperationAttributes(step)
+    }, ...targetBits)
+    if (targetBits.length > 1) this.updateStepOperationAttributes(step)
 
     return this
   }
@@ -502,14 +507,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   t(...args: number[] | [TGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -517,7 +522,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const t = new TGateElement()
       if (disabled) t.disable()
       return t
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -528,14 +533,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rnot(...args: number[] | [RnotGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -543,7 +548,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rnot = new RnotGateElement()
       if (disabled) rnot.disable()
       return rnot
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -552,14 +557,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rx(...args: number[] | [RxGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -567,7 +572,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rx = new RxGateElement()
       if (disabled) rx.disable()
       return rx
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -576,14 +581,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   ry(...args: number[] | [RyGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -591,7 +596,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const ry = new RyGateElement()
       if (disabled) ry.disable()
       return ry
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -600,14 +605,14 @@ export class QuantumCircuitElement extends HTMLElement {
    * @category Circuit Operation
    */
   rz(...args: number[] | [RzGateElementProps]): QuantumCircuitElement {
-    let targets: number[]
+    let targetBits: number[]
     let disabled: boolean | undefined
 
     if (typeof args[0] === 'number') {
-      targets = args as number[]
+      targetBits = args as number[]
     } else {
       const props = args[0]
-      targets = props.targets
+      targetBits = props.targets
       disabled = props.disabled
     }
 
@@ -615,7 +620,7 @@ export class QuantumCircuitElement extends HTMLElement {
       const rz = new RzGateElement()
       if (disabled) rz.disable()
       return rz
-    }, ...targets)
+    }, ...targetBits)
 
     return this
   }
@@ -623,8 +628,8 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  swap(...targets: number[]): QuantumCircuitElement {
-    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targets)
+  swap(...targetBits: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new SwapGateElement(), ...targetBits)
     this.updateStepOperationAttributes(step)
     return this
   }
@@ -632,8 +637,8 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  control(...targets: number[]): QuantumCircuitElement {
-    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targets)
+  control(...targetBits: number[]): QuantumCircuitElement {
+    const step = this.applyOperationToTargets(() => new ControlGateElement(), ...targetBits)
     this.updateStepOperationAttributes(step)
     return this
   }
@@ -641,20 +646,20 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  bloch(...targets: number[]): QuantumCircuitElement {
-    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targets)
+  bloch(...targetBits: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new BlochDisplayElement(), ...targetBits)
     return this
   }
 
   /**
    * @category Circuit Operation
    */
-  write(value: '0' | '1', ...targets: number[]): QuantumCircuitElement {
+  write(value: '0' | '1', ...targetBits: number[]): QuantumCircuitElement {
     this.applyOperationToTargets(() => {
       const writeGate = new WriteGateElement()
       writeGate.value = value
       return writeGate
-    }, ...targets)
+    }, ...targetBits)
 
     this.resize()
 
@@ -664,17 +669,17 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  measure(...targets: number[]): QuantumCircuitElement {
-    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targets)
+  measure(...targetBits: number[]): QuantumCircuitElement {
+    this.applyOperationToTargets(() => new MeasurementGateElement(), ...targetBits)
     this.resize()
     return this
   }
 
-  private applyOperationToTargets(constructor: () => Operation, ...targets: number[]): CircuitStepElement {
-    const nbit = Math.max(...targets) + 1
+  private applyOperationToTargets(constructor: () => Operation, ...targetBits: number[]): CircuitStepElement {
+    const nbit = Math.max(...targetBits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of targets) {
+    for (const each of targetBits) {
       const operation = constructor()
       step.dropzoneAt(each).put(operation)
     }
@@ -775,11 +780,11 @@ export class QuantumCircuitElement extends HTMLElement {
   /**
    * @category Circuit Operation
    */
-  cc(...targets: number[]): QuantumCircuitElement {
-    const nbit = Math.max(...targets) + 1
+  cc(...targetBits: number[]): QuantumCircuitElement {
+    const nbit = Math.max(...targetBits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of targets) {
+    for (const each of targetBits) {
       step.dropzoneAt(each).put(new ControlGateElement())
     }
 
@@ -805,17 +810,17 @@ export class QuantumCircuitElement extends HTMLElement {
     control: number | number[],
     target: number | number[]
   ): void {
-    const controls = ([] as number[]).concat(...[control])
-    const targets = ([] as number[]).concat(...[target])
+    const controlBits = ([] as number[]).concat(...[control])
+    const targetBits = ([] as number[]).concat(...[target])
 
-    const bits = controls.concat(targets)
+    const bits = controlBits.concat(targetBits)
     const nbit = Math.max(...bits) + 1
     const step = this.appendStepWithDropzones(nbit)
 
-    for (const each of controls) {
+    for (const each of controlBits) {
       step.dropzoneAt(each).put(new ControlGateElement())
     }
-    for (const each of targets) {
+    for (const each of targetBits) {
       step.dropzoneAt(each).put(new constructor())
     }
 
@@ -824,10 +829,21 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private appendStep(): CircuitStepElement {
-    const step = new CircuitStepElement()
+    // const step = new CircuitStepElement()
 
-    this.append(step)
-    return step
+    // this.append(step)
+    // return step
+
+    const el = new CircuitStepElement()
+
+    const lastBlock = this.blocks.slice(-1)[0] || null
+    if (lastBlock === null || lastBlock.finalized) {
+      this.append(el)
+    } else {
+      lastBlock.append(el)
+    }
+
+    return el
   }
 
   private appendStepWithDropzones(nbit: number): CircuitStepElement {
@@ -880,211 +896,180 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   private loadFromJson(): void {
-    let jsonString
-    // let circuitBlock = null
+    let json
+    let circuitBlock = null
 
-    if (this.updateUrl) {
-      jsonString = this.urlJson
+    if (this.hasAttribute('data-update-url')) {
+      json = this.urlJson
     } else {
-      jsonString = this.json
+      json = this.json
     }
 
-    if (jsonString === '' || jsonString === 'new') {
-      if (this.updateUrl) {
+    if (json === '' || json === 'new') {
+      if (this.hasAttribute('data-update-url')) {
         this.resize()
       }
       return
     }
 
-    const jsonData = JSON.parse(jsonString)
-    this.circuitTitle = (jsonData.title || '').trim()
+    const circuit = JSON.parse(json)
+    this.circuitTitle = (circuit.title || '').trim()
 
-    for (const step of jsonData.cols) {
-      const circuitStep = this.appendStep()
-
-      for (const instruction of step) {
+    for (const step of circuit.cols) {
+      const newStep = this.appendStep()
+      for (const operation of step) {
         switch (true) {
-          case /^\|0>$/.test(instruction): {
+          case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '0'
-            circuitStep.appendOperation(writeGate)
+            newStep.appendOperation(writeGate)
             break
           }
-          case /^\|1>$/.test(instruction): {
+          case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '1'
-            circuitStep.appendOperation(writeGate)
+            newStep.appendOperation(writeGate)
             break
           }
-          case /^H$/.test(instruction): {
+          case /^H/.test(operation): {
             const hGate = new HGateElement()
-            circuitStep.appendOperation(hGate)
+            hGate.hoverable = true
+            hGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(hGate)
             break
           }
-          case /^H<(.+)$/.test(instruction): {
-            const hGate = new HGateElement()
-            hGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(hGate)
-            break
-          }
-          case /^X$/.test(instruction): {
+          case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
-            circuitStep.appendOperation(xGate)
+            xGate.hoverable = true
+            xGate.if = operation.slice(2).trim()
+            newStep.appendOperation(xGate)
             break
           }
-          case /^X<(.+)$/.test(instruction): {
-            const xGate = new XGateElement()
-            xGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(xGate)
-            break
-          }
-          case /^Y$/.test(instruction): {
+          case /^Y/.test(operation): {
             const yGate = new YGateElement()
-            circuitStep.appendOperation(yGate)
+            yGate.hoverable = true
+            yGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(yGate)
             break
           }
-          case /^Y<(.+)$/.test(instruction): {
-            const yGate = new YGateElement()
-            yGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(yGate)
-            break
-          }
-          case /^Z$/.test(instruction): {
+          case /^Z/.test(operation): {
             const zGate = new ZGateElement()
-            circuitStep.appendOperation(zGate)
+            zGate.hoverable = true
+            zGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(zGate)
             break
           }
-          case /^Z<(.+)$/.test(instruction): {
-            const zGate = new ZGateElement()
-            zGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(zGate)
-            break
-          }
-          case /^P$/.test(instruction): {
+          case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
-            circuitStep.appendOperation(phaseGate)
+            phaseGate.hoverable = true
+            phaseGate.angle = this.angleParameter(operation.slice(1))
+            newStep.appendOperation(phaseGate)
             break
           }
-          case /^P\((.+)\)$/.test(instruction): {
-            const phaseGate = new PhaseGateElement()
-            phaseGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(phaseGate)
-            break
-          }
-          case /^T$/.test(instruction): {
+          case /^T/.test(operation): {
             const tGate = new TGateElement()
-            circuitStep.appendOperation(tGate)
+            tGate.hoverable = true
+            tGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(tGate)
             break
           }
-          case /^T<(.+)$/.test(instruction): {
-            const tGate = new TGateElement()
-            tGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(tGate)
-            break
-          }
-          case /^X\^½$/.test(instruction): {
+          case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
-            circuitStep.appendOperation(rnotGate)
+            rnotGate.hoverable = true
+            rnotGate.if = this.ifVariable(operation.slice(3))
+            newStep.appendOperation(rnotGate)
             break
           }
-          case /^X\^½<(.+)$/.test(instruction): {
-            const rnotGate = new RnotGateElement()
-            rnotGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(rnotGate)
-            break
-          }
-          case /^Rx$/.test(instruction): {
+          case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
-            circuitStep.appendOperation(rxGate)
+            rxGate.hoverable = true
+            rxGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(rxGate)
             break
           }
-          case /^Rx\((.+)\)$/.test(instruction): {
-            const rxGate = new RxGateElement()
-            rxGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(rxGate)
-            break
-          }
-          case /^Ry$/.test(instruction): {
+          case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
-            circuitStep.appendOperation(ryGate)
+            ryGate.hoverable = true
+            ryGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(ryGate)
             break
           }
-          case /^Ry\((.+)\)$/.test(instruction): {
-            const ryGate = new RyGateElement()
-            ryGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(ryGate)
-            break
-          }
-          case /^Rz$/.test(instruction): {
+          case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
-            circuitStep.appendOperation(rzGate)
+            rzGate.hoverable = true
+            rzGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(rzGate)
             break
           }
-          case /^Rz\((.+)\)$/.test(instruction): {
-            const rzGate = new RzGateElement()
-            rzGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(rzGate)
-            break
-          }
-          case /^Swap$/.test(instruction): {
+          case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            circuitStep.appendOperation(swapGate)
+            swapGate.hoverable = true
+            newStep.appendOperation(swapGate)
             break
           }
-          case /^•$/.test(instruction): {
+          case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            circuitStep.appendOperation(controlGate)
+            controlGate.hoverable = true
+            newStep.appendOperation(controlGate)
             break
           }
-          case /^Bloch$/.test(instruction): {
+          case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            circuitStep.appendOperation(blochDisplay)
+            blochDisplay.hoverable = true
+            newStep.appendOperation(blochDisplay)
             break
           }
-          case /^Measure$/.test(instruction): {
+          case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
-            circuitStep.appendOperation(measurementGate)
+            const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
+            measurementGate.hoverable = true
+            measurementGate.flag = flag
+            newStep.appendOperation(measurementGate)
             break
           }
-          case /^Measure>(.+)$/.test(instruction): {
-            const measurementGate = new MeasurementGateElement()
-            measurementGate.flag = RegExp.$1.trim()
-            circuitStep.appendOperation(measurementGate)
+          case /^[[{](.+)$/.test(operation): {
+            const comment = operation.slice(1)
+            newStep.remove()
+            circuitBlock = new CircuitBlockElement()
+            circuitBlock.comment = comment
+            circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
+            this.append(circuitBlock)
             break
           }
-          case /^[[{](.+)$/.test(instruction): {
-            // const comment = RegExp.$1
-            // circuitStep.remove()
-            // circuitBlock = new CircuitBlockElement()
-            // circuitBlock.comment = comment
-            // circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
-            // this.append(circuitBlock)
-            break
-          }
-          case /^[\]}]$/.test(instruction): {
-            // circuitStep.remove()
-            // circuitBlock!.finalize()
+          case /^[\]}]$/.test(operation): {
+            newStep.remove()
+            circuitBlock!.finalize()
             break
           }
           default: {
-            if (instruction === 1) {
-              // if (circuitStep.qubitCount === 0) {
-              //   circuitStep.keep = true
-              // } else {
-              //   circuitStep.keep = false
-              // }
+            if (operation === 1) {
+              if (newStep.dropzones.length === newStep.freeDropzones.length) {
+                newStep.keep = true
+              } else {
+                newStep.keep = false
+              }
             } else {
-              throw new Error(`Unknown instruction: ${instruction}`)
+              throw new Error(`Unknown operation: ${operation}`)
             }
-            circuitStep.appendDropzone()
+            newStep.appendDropzone()
           }
         }
         // circuitStep.updateConnections()
-        circuitStep.updateOperationAttributes()
+        newStep.updateOperationAttributes()
       }
     }
 
     this.resize()
+  }
+
+  private ifVariable(operation: string): string {
+    return ((/^<(.+)$/.exec(operation) || [])[1] || '').trim()
+  }
+
+  private angleParameter(operation: string): string {
+    return ((/^\((.+)\)$/.exec(operation) || [])[1] || '').trim().replace('_', '/')
   }
 
   private appendMinimumWires(): void {
@@ -1115,6 +1100,20 @@ export class QuantumCircuitElement extends HTMLElement {
         dropzone.inputWireQuantum = wireQuantum
         dropzone.outputWireQuantum = false
         wireQuantum = false
+      } else if (dropzone.operationName === 'swap-gate') {
+        const swapDropzones = step.dropzones.filter(each => each.operationName === 'swap-gate')
+        if (swapDropzones.length === 2) {
+          const dropzoneBits = swapDropzones.map(each => step.bit(each))
+          const bit = step.bit(dropzone)
+          const otherDropzoneBit = dropzoneBits[0] === bit ? dropzoneBits[1] : dropzoneBits[0]
+          const otherDropzone = step.dropzoneAt(otherDropzoneBit)
+          dropzone.inputWireQuantum = wireQuantum
+          dropzone.outputWireQuantum = otherDropzone.inputWireQuantum
+          wireQuantum = otherDropzone.inputWireQuantum
+        } else {
+          dropzone.inputWireQuantum = wireQuantum
+          dropzone.outputWireQuantum = wireQuantum
+        }
       } else {
         dropzone.inputWireQuantum = wireQuantum
         dropzone.outputWireQuantum = wireQuantum
@@ -1269,10 +1268,27 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   toJson(): string {
+    let isInBlock = false
     const cols = []
 
     for (const each of this.nonEmptySteps) {
+      if (each.isInBlock) {
+        if (!isInBlock) {
+          const block = each.block
+          cols.push(`["[${block.comment}"]`)
+          isInBlock = true
+        }
+      } else {
+        if (isInBlock) {
+          cols.push('["]"]')
+          isInBlock = false
+        }
+      }
       cols.push(each.toJson())
+    }
+
+    if (isInBlock) {
+      cols.push('["]"]')
     }
 
     if (this.circuitTitle !== '') {
@@ -1280,35 +1296,6 @@ export class QuantumCircuitElement extends HTMLElement {
     } else {
       return `{"cols":[${cols.join(',')}]}`
     }
-
-    // let isInBlock = false
-    // const cols = []
-
-    // for (const each of this.nonEmptySteps) {
-    //   if (each.isInBlock) {
-    //     if (!isInBlock) {
-    //       const block = each.block
-    //       cols.push(`["[${block.comment}"]`)
-    //       isInBlock = true
-    //     }
-    //   } else {
-    //     if (isInBlock) {
-    //       cols.push('["]"]')
-    //       isInBlock = false
-    //     }
-    //   }
-    //   cols.push(each.toJson())
-    // }
-
-    // if (isInBlock) {
-    //   cols.push('["]"]')
-    // }
-
-    // if (this.circuitTitle !== '') {
-    //   return `{"cols":[${cols.join(',')}],"title":"${this.circuitTitle}"}`
-    // } else {
-    //   return `{"cols":[${cols.join(',')}]}`
-    // }
   }
 }
 

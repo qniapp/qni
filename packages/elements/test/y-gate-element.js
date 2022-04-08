@@ -1,13 +1,23 @@
 import '../dist/index'
-import {testDisableable} from './common/test-disableable.js'
-import {testDraggableOperation} from './common/test-draggable.js'
-import {testElementCreation} from './common/test-element-creation.js'
-import {testIconable} from './common/test-iconable.js'
-import {testWireableOperation} from './common/test-wireable.js'
+import {testActivateable} from './common/test-activateable'
+import {testDisableable} from './common/test-disableable'
+import {testDraggableOperation} from './common/test-draggable'
+import {testElementCreation} from './common/test-element-creation'
+import {testHoverable} from './common/test-hoverable'
+import {testIconable} from './common/test-iconable'
+import {testWireableOperation} from './common/test-wireable'
 
 describe('y-gate element', function () {
   describe('element creation', function () {
     testElementCreation(window.YGateElement, 'y-gate')
+  })
+
+  describe('hoverable', function () {
+    testHoverable('y-gate')
+  })
+
+  describe('activateable', function () {
+    testActivateable('y-gate')
   })
 
   describe('iconable', function () {
