@@ -4508,7 +4508,7 @@ __name(findTargets, "findTargets");
 
 // ../../node_modules/@github/catalyst/lib/target.js
 function target(proto, key) {
-  return Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key, {
     configurable: true,
     get() {
       return findTarget(this, key);
@@ -4517,7 +4517,7 @@ function target(proto, key) {
 }
 __name(target, "target");
 function targets(proto, key) {
-  return Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key, {
     configurable: true,
     get() {
       return findTargets(this, key);
@@ -15240,7 +15240,7 @@ var b = /* @__PURE__ */ __name(class extends HTMLElement {
     }).start(), this.attachShadow({ mode: "open" }), this.update(), this.loadFromJson(), this.appendMinimumSteps(), this.appendMinimumWires(), this.updateAllWires(), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("circuit-step-update", this.updateStep), this.addEventListener("circuit-step-snap", this.updateStep), this.addEventListener("circuit-step-snap", this.updateChangedWire), this.addEventListener("circuit-step-unsnap", this.updateStep), this.addEventListener("circuit-step-unsnap", this.updateChangedWire), this.addEventListener("circuit-step-delete-operation", this.updateStep), this.addEventListener("circuit-step-delete-operation", this.updateChangedWire), this.dispatchEvent(new Event("quantum-circuit-init", { bubbles: true }));
   }
   attributeChangedCallback(t, e, i) {
-    e !== i && t === "data-editing" && (i !== null ? this.quantumCircuitService.send({ type: "EDIT" }) : this.quantumCircuitService.send({ type: "EDIT_DONE" }));
+    e !== i && (t === "data-editing" && (i !== null ? this.quantumCircuitService.send({ type: "EDIT" }) : this.quantumCircuitService.send({ type: "EDIT_DONE" })), t === "data-json" && i !== "" && this.loadFromJson());
   }
   update() {
     render2(html`<slot></slot>`, this.shadowRoot);

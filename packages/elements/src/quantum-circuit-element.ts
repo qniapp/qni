@@ -297,7 +297,7 @@ export class QuantumCircuitElement extends HTMLElement {
       }
     }
 
-    if (name === 'data-json') {
+    if (name === 'data-json' && newValue !== '') {
       this.loadFromJson()
     }
   }
