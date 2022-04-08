@@ -22,11 +22,10 @@ class cirqbridge:
         transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
         circuit_from_qni = []
         for a in _circuit_from_qni:
-            if len(a) != 0:
-                circuit_from_qni.append(a)
+            circuit_from_qni.append(a)
+            sys.stdout.flush()
         qubits = cirq.LineQubit.range(numofqubits)
         c = cirq.Circuit()
-        i = 0
         m = 0
         measurement_moment = []
         _current_index = 0
@@ -35,10 +34,10 @@ class cirqbridge:
             #sys.stdout.flush()
             moment = []
             measurement_moment.append([])
-            i = i + 1
-            j = 0
+            if len(column_qni)==0: # null or invalid step is converted to I gate
+                _c = [cirq.I(qubits[0])]
+                moment.append(_c)
             for circuit_qni in column_qni:
-                j = j + 1
                 if circuit_qni['type'] == u'H':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if not "controls" in circuit_qni:
