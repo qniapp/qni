@@ -139,6 +139,8 @@ class cirqbridge:
                     targetqubit0=qubits[circuit_qni['targets'][0]]
                     targetqubit1=qubits[circuit_qni['targets'][1]]
                     _c = (cirq.SWAP(targetqubit0,targetqubit1))
+                elif circuit_qni['type'] == u'Bloch':
+                    _c = [cirq.I(qubits[0])] # add a dummy gate to count Bloch operation as a step
                 elif circuit_qni['type'] == u'':
                     pass #nop
                 else:
@@ -150,7 +152,8 @@ class cirqbridge:
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
 #        sys.stdout.flush()
         return c, measurement_moment
-    def run_circuit_until_step_index(self, c, measurement_moment, until):
+
+    def run_circuit_until_step_index(self, c, measurement_moment, until, steps, step_index):
         print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
@@ -160,10 +163,16 @@ class cirqbridge:
         cirq_simulator = cirq.Simulator()
         _data = []
         for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+            print("current step from qni")
+            print(steps[counter])
             sys.stdout.flush()
             dic = {}
+            dic[':blochVectors']={}
+            if steps[counter][0]['type'] == 'Bloch':
+                for _bloch_target in steps[counter][0]['targets']:
+                    blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
+                    dic[':blochVectors'][_bloch_target] = blochxyz
             dic[':measuredBits'] = {}
-            dic[':blochVectors'] = {}
             _data.append(dic)
             if counter == until:
                 dic[':amplitude'] = step.state_vector()
@@ -176,6 +185,7 @@ class cirqbridge:
                     _key = measurement_moment[i][0][j][0]
                     _qubit = measurement_moment[i][0][j][1]
                     _step = i
+
                     sys.stdout.flush()
                     if _key not in step.measurements:
                         break
@@ -215,13 +225,17 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index).to_a
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index, @steps, @step_index).to_a
     result_list = []
     for var in _result_list do
         hash = {}
         a = var.to_h
         hash[:measuredBits]=a[":measuredBits"].to_h
-        hash[:blochVectors]=a[":blochVectors"]
+        hash[:blochVectors]={}
+        for b in a[":blochVectors"].to_h do
+          c = Array[b[1][0].to_f, b[1][1].to_f, b[1][2].to_f]
+          hash[:blochVectors][b[0]] = c
+        end
         result_list.push(hash)
     end
     _amplitudes=_result_list[_step_index][':amplitude']
