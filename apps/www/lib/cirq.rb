@@ -129,10 +129,10 @@ class cirqbridge:
                     _c.append([ cirq.X(index) for index in targetqubits])
                 elif circuit_qni['type'] == u'Measure':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                    _c = [ cirq.measure(index, key = 'm' + str(m + i))  for i, index in enumerate(targetqubits)]
-                    __m = [ 'm' + str(m + i)  for i, index in enumerate(targetqubits)]
-                    _m = [[__m[i], circuit_qni['targets'][i]] for i, index in enumerate(targetqubits)]
-                    measurement_moment[i-1].append(_m)
+                    _c = [ cirq.measure(targetqubits[index], key = 'm' + str(m + index)) for index in range(len(targetqubits))]
+                    __m = [ 'm' + str(m + index) for index in range(len(targetqubits))]
+                    _m = [[__m[index], circuit_qni['targets'][index]] for index in range(len(targetqubits))]
+                    measurement_moment[_current_index].append(_m)
                     m = m + len(targetqubits)
                 elif circuit_qni['type'] == u'Swap':
                     targetqubit0=qubits[circuit_qni['targets'][0]]
@@ -149,20 +149,26 @@ class cirqbridge:
                 for __c in _c:
                     moment.append(__c)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
+            _current_index = _current_index + 1
 #        sys.stdout.flush()
         return c, measurement_moment
 
-    def run_circuit_until_step_index(self, c, measurement_moment, until, steps, step_index):
+    def run_circuit_until_step_index(self, c, measurement_moment, until, steps):
         print("run_circuit_until_step_index")
         print("circuit:")
         print(c)
         sys.stdout.flush()
 #        print("until (corrected):", until)
 #        sys.stdout.flush()
+#        print("steps(len):", len(steps))
+#        sys.stdout.flush()
         cirq_simulator = cirq.Simulator()
         _data = []
         for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
-            print("current step from qni")
+            if counter == len(steps):
+                break
+#            print("current step from qni", counter)
+#            sys.stdout.flush()
             if steps[counter] == []:
                 print(steps[counter], "null step!")
                 sys.stdout.flush()
@@ -228,7 +234,7 @@ class Cirq
       _step_index = _step_index + 1
       i = i + 1
     end
-    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index, @steps, @step_index).to_a
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index, @steps).to_a
     result_list = []
     for var in _result_list do
         hash = {}
