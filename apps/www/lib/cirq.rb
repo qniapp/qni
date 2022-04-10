@@ -169,8 +169,9 @@ class cirqbridge:
             dic[':blochVectors']={}
             dic[':measuredBits'] = {}
             if steps[counter] == []:
-                print(steps[counter], "null step!")
-                sys.stdout.flush()
+                pass
+#                print(steps[counter], "null step!")
+#                sys.stdout.flush()
             elif steps[counter][0]['type'] == 'Bloch':
                 for _bloch_target in steps[counter][0]['targets']:
                     blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
@@ -191,8 +192,8 @@ class cirqbridge:
                         print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
                         sys.stdout.flush()
                         _data[i][':measuredBits'][_qubit] = _value
-        print("_data ", _data)
-        sys.stdout.flush()
+#        print("_data ", _data)
+#        sys.stdout.flush()
         return _data
 
 PYTHON
