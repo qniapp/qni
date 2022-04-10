@@ -170,7 +170,6 @@ class cirqbridge:
             dic[':measuredBits'] = {}
             if steps[counter] == []:
                 print(steps[counter], "null step!")
-                print("homa ", step.state_vector())
                 sys.stdout.flush()
             elif steps[counter][0]['type'] == 'Bloch':
                 for _bloch_target in steps[counter][0]['targets']:
