@@ -165,41 +165,35 @@ class cirqbridge:
         cirq_simulator = cirq.Simulator()
         _data = []
         for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
-            if counter == len(steps):
-                break
-#            print("current step from qni", counter)
-#            sys.stdout.flush()
-            if steps[counter] == []:
-                print(steps[counter], "null step!")
-                sys.stdout.flush()
-                break
-            print(steps[counter])
-            sys.stdout.flush()
             dic = {}
             dic[':blochVectors']={}
-            if steps[counter][0]['type'] == 'Bloch':
+            dic[':measuredBits'] = {}
+            if steps[counter] == []:
+                print(steps[counter], "null step!")
+                print("homa ", step.state_vector())
+                sys.stdout.flush()
+            elif steps[counter][0]['type'] == 'Bloch':
                 for _bloch_target in steps[counter][0]['targets']:
                     blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
                     dic[':blochVectors'][_bloch_target] = blochxyz
-            dic[':measuredBits'] = {}
-            _data.append(dic)
             if counter == until:
                 dic[':amplitude'] = step.state_vector()
-        if len(step.measurements) == 0:
-            return _data
-
-        for i in range(len(measurement_moment)):
-            if len(measurement_moment[i]) !=0:
-                for j in range(len(measurement_moment[i][0])):
-                    _key = measurement_moment[i][0][j][0]
-                    _qubit = measurement_moment[i][0][j][1]
-                    _step = i
-                    if _key not in step.measurements:
-                        break
-                    _value= step.measurements[_key][0]
-                    print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
-                    sys.stdout.flush()
-                    _data[i][':measuredBits'][_qubit] = _value
+            _data.append(dic)
+        if len(step.measurements) != 0:
+            for i in range(len(measurement_moment)):
+                if len(measurement_moment[i]) !=0:
+                    for j in range(len(measurement_moment[i][0])):
+                        _key = measurement_moment[i][0][j][0]
+                        _qubit = measurement_moment[i][0][j][1]
+                        _step = i
+                        if _key not in step.measurements:
+                            break
+                        _value= step.measurements[_key][0]
+                        print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
+                        sys.stdout.flush()
+                        _data[i][':measuredBits'][_qubit] = _value
+        print("_data ", _data)
+        sys.stdout.flush()
         return _data
 
 PYTHON
