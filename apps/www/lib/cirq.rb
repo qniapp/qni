@@ -169,14 +169,21 @@ class cirqbridge:
             dic = {}
             dic[':blochVectors']={}
             dic[':measuredBits'] = {}
+#            print("steps from qni[%d]" % counter, steps[counter])
+#            sys.stdout.flush()
             if steps[counter] == []:
                 pass
-#                print(steps[counter], "null step!")
+            else:
+                bloch_index = -1
+                for _bloch_index in range(len(steps[counter])):
+                    if steps[counter][_bloch_index]['type'] == 'Bloch':
+                        bloch_index = _bloch_index
+#                print("bloch_index ", bloch_index)
 #                sys.stdout.flush()
-            elif steps[counter][0]['type'] == 'Bloch':
-                for _bloch_target in steps[counter][0]['targets']:
-                    blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
-                    dic[':blochVectors'][_bloch_target] = blochxyz
+                if bloch_index != -1:
+                    for _bloch_target in steps[counter][bloch_index]['targets']:
+                        blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
+                        dic[':blochVectors'][_bloch_target] = blochxyz
             if counter == until:
                 dic[':amplitude'] = step.state_vector()
             _data.append(dic)
