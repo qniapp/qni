@@ -30,7 +30,7 @@ class cirqbridge:
         measurement_moment = []
         _current_index = 0
         for column_qni in circuit_from_qni:
-            #print("circuit column", i, column_qni)
+            #print("circuit column", column_qni)
             #sys.stdout.flush()
             moment = []
             measurement_moment.append([])
@@ -139,7 +139,8 @@ class cirqbridge:
                     targetqubit1=qubits[circuit_qni['targets'][1]]
                     _c = (cirq.SWAP(targetqubit0,targetqubit1))
                 elif circuit_qni['type'] == u'Bloch':
-                    _c = [cirq.I(qubits[0])] # add a dummy gate to count Bloch operation as a step
+                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                    _c = [ cirq.ops.I(index) for index in targetqubits] # add a dummy gate to count Bloch operation as a step
                 elif circuit_qni['type'] == u'':
                     pass #nop
                 else:
