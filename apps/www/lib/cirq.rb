@@ -163,14 +163,31 @@ class cirqbridge:
 #        sys.stdout.flush()
 #        print("steps(len):", len(steps))
 #        sys.stdout.flush()
+        print("steps:", steps)
+        sys.stdout.flush()
         cirq_simulator = cirq.Simulator()
         _data = []
-        for counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+        counter = -1
+        sleep_flag = 0 # we need padding for |1> because implimented as R + X
+        for _counter, step in enumerate(cirq_simulator.simulate_moment_steps(c)):
+            if sleep_flag == 0:
+                counter = counter + 1
             dic = {}
             dic[':blochVectors']={}
             dic[':measuredBits'] = {}
-#            print("steps from qni[%d]" % counter, steps[counter])
-#            sys.stdout.flush()
+            if sleep_flag == 0:
+                for _d in steps[counter]:
+                    if 'type' in _d:
+                        if _d['type'] == u'|1>':
+                            sleep_flag = 1
+            else:
+                sleep_flag = 0
+            if sleep_flag == 1:
+                continue
+
+            print("current step[%d]" % counter, steps[counter])
+            sys.stdout.flush()
+
             if steps[counter] == []:
                 pass
             else:
@@ -184,8 +201,12 @@ class cirqbridge:
                     for _bloch_target in steps[counter][bloch_index]['targets']:
                         blochxyz=cirq.qis.bloch_vector_from_state_vector(step.state_vector(),_bloch_target)
                         dic[':blochVectors'][_bloch_target] = blochxyz
+                        print("bloch sphere: ", blochxyz) 
+                        sys.stdout.flush()
             if counter == until:
                 dic[':amplitude'] = step.state_vector()
+                print("amplitudes: ", step.state_vector())
+                sys.stdout.flush()
             _data.append(dic)
         if len(step.measurements) != 0:
             for i in range(len(measurement_moment)):
@@ -218,23 +239,7 @@ class Cirq
   def run
     cirqbridge = PyCall.eval('cirqbridge').call
     cirq_circuit, measurement_moment = cirqbridge.build_circuit(@qubit_count, @steps)
-    # @step_index must be incremented when we add a gate, which intialize a qubit to |1>.
-    # Note: Initalize to |1> means initalize to |0> and follwed by negation
-    _step_index = 0
-    i = 0 
-    for a in @steps do
-      for b in a do
-        if b['type'] == '|1>' then
-          _step_index = _step_index + 1
-        end
-      end
-      if i >= @step_index then
-        break
-      end
-      _step_index = _step_index + 1
-      i = i + 1
-    end
-    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, _step_index, @steps).to_a
+    _result_list = cirqbridge.run_circuit_until_step_index(cirq_circuit, measurement_moment, @step_index, @steps).to_a
     result_list = []
     for var in _result_list do
         hash = {}
@@ -247,12 +252,12 @@ class Cirq
         end
         result_list.push(hash)
     end
-    _amplitudes=_result_list[_step_index][':amplitude']
+    _amplitudes=_result_list[@step_index][':amplitude']
     amplitudes = {}
     for num in 0.._amplitudes.size-1 do
         amplitudes.store(num,Array[_amplitudes[num].real.to_f,_amplitudes[num].imag.to_f])
     end
-    result_list[_step_index][:amplitudes]=amplitudes
+    result_list[@step_index][:amplitudes]=amplitudes
     p result_list
     result_list
   end
