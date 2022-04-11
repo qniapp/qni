@@ -137,7 +137,8 @@ class cirqbridge:
                 elif circuit_qni['type'] == u'Swap':
                     targetqubit0=qubits[circuit_qni['targets'][0]]
                     targetqubit1=qubits[circuit_qni['targets'][1]]
-                    _c = (cirq.SWAP(targetqubit0,targetqubit1))
+                    _c = []
+                    _c.append(cirq.SWAP(targetqubit0,targetqubit1))
                 elif circuit_qni['type'] == u'Bloch':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     _c = [ cirq.ops.I(index) for index in targetqubits] # add a dummy gate to count Bloch operation as a step
