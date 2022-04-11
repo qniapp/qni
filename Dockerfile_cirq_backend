@@ -84,7 +84,7 @@ RUN cd /home/$DOCKER_USER && echo "export CUQUANTUM_DIR=/usr/local" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && echo "export LANG=C.UTF-8" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && echo "export LC_CTYPE=C.UTF-8" >> ~/.bashrc
 RUN cd /home/$DOCKER_USER && echo "export LD_LIBRARY_PATH=${CUQUANTUM_DIR}/lib64:${LD_LIBRARY_PATH}" >> ~/.bashrc
-RUN cd /home/$DOCKER_USER && git clone https://github.com/nakatamaho/qni.git
+RUN cd /home/$DOCKER_USER && git clone https://github.com/qniapp/qni.git
 RUN cd /home/$DOCKER_USER && cd qni && git fetch origin cirq-backend
 RUN cd /home/$DOCKER_USER && cd qni && git checkout cirq-backend
 RUN cd /home/$DOCKER_USER && cd qni && git log -1
