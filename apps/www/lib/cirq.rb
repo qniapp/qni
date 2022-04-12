@@ -30,8 +30,8 @@ class cirqbridge:
         measurement_moment = []
         _current_index = 0
         for column_qni in circuit_from_qni:
-            #print("circuit column", column_qni)
-            #sys.stdout.flush()
+            print("circuit column", column_qni)
+            sys.stdout.flush()
             moment = []
             measurement_moment.append([])
             if len(column_qni)==0: # null or invalid step is converted to I gate
@@ -121,12 +121,25 @@ class cirqbridge:
                         controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
                         _c = [ cirq.ControlledOperation(controledqubits, cirq.X(index)**0.5) for index in targetqubits ]
                 elif circuit_qni['type'] == u'•':
+                    if "controls" in circuit_qni:
+                        print("control is not supported for CZ gate", circuit_qni['type'])
+                        sys.stdout.flush()
+                        exit(1)
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                    if not "controls" in circuit_qni:
+                    if len(targetqubits) == 2:
                         _c = [ cirq.CZ(index) for index in targetqubits]
+                    elif len(targetqubits) < 2:
+                        print("the number of target qubits must be larger than 2")
+                        sys.stdout.flush()
+                        exit(1)
                     else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        _c = [ cirq.ControlledOperation(controledqubits, cirq.CZ(index)) for index in targetqubits ]
+                        # we regard the first and the second qubit as the target qubits,
+                        # and others are controlled qubits.
+                        controledqubits = []
+                        for _i in range(len(circuit_qni['targets'])-2):
+                            controledqubits.append(qubits[circuit_qni['targets'][_i+2]])
+                        sys.stdout.flush()
+                        _c = [ cirq.ControlledOperation(controledqubits, cirq.CZ(qubits[circuit_qni['targets'][0]], qubits[circuit_qni['targets'][1]])) ]
                 elif circuit_qni['type'] == u'|0>':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     _c = [ cirq.ops.reset(index) for index in targetqubits]
