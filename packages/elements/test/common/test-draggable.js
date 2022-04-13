@@ -109,7 +109,7 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
   })
 
-  it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs', function () {
+  it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs (palette dropzone)', function () {
     const container = document.createElement('div')
     container.innerHTML = `
   <palette-dropzone>
@@ -122,6 +122,23 @@ export function testDraggableOperation(operationName) {
     mouseup(operation)
 
     assert.deepEqual(operation.draggableService.state.value, 'deleted')
+  })
+
+  it('should reach "grabbable" given "dragging" when "END_DRAGGING" event occurs (circuit dropzone)', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <circuit-dropzone>
+    <${operationName}></${operationName}>
+  </circuit-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    operation.draggable = true
+    mousedown(operation)
+
+    dragstart(operation)
+    mouseup(operation)
+
+    assert.deepEqual(operation.draggableService.state.value, 'grabbable')
   })
 
   // TODO: operation-grab イベントをどこかで使っている？ 使っていないようならディスパッチしない
@@ -168,7 +185,7 @@ function mouseup(operation) {
   operation.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}))
 }
 
-function dragstart(operation, dx = 10, dy = 10) {
+function dragstart(operation, dx = 1, dy = 1) {
   operation.dispatchEvent(
     new PointerEvent('pointermove', {
       clientX: operation.getBoundingClientRect().left + dx,
