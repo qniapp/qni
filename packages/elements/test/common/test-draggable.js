@@ -109,6 +109,21 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
   })
 
+  it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    mousedown(operation)
+
+    mouseup(operation)
+
+    assert.deepEqual(operation.draggableService.state.value, 'deleted')
+  })
+
   // TODO: operation-grab イベントをどこかで使っている？ 使っていないようならディスパッチしない
   it(`dispatches operation-grab event on mousedown`, async function () {
     const container = document.createElement('div')
