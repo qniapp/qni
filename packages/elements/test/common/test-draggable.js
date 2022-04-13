@@ -6,34 +6,44 @@ export function testDraggableOperation(operationName) {
     document.body.textContent = ''
   })
 
-  it('should reach "grabbable" given "idle" when the "SET_INTERACT" event occurs', function () {
+  it('should reach "grabbable" when it is on a palette-dropzone', function () {
     const container = document.createElement('div')
     container.innerHTML = `
   <palette-dropzone>
     <${operationName}></${operationName}>
   </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+
+    assert.equal(operation.draggableService.state.value, 'grabbable')
+    assert.isTrue(operation.draggable)
+  })
+
+  it('should not a draggable when it is on a circuit-dropzone', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <circuit-dropzone>
+    <${operationName}></${operationName}>
+  </circuit-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+
+    assert.equal(operation.draggableService, undefined)
+    assert.isFalse(operation.draggable)
+  })
+
+  it('should reach "grabbable" given "idle" when the "SET_INTERACT" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <circuit-dropzone>
+    <${operationName}></${operationName}>
+  </circuit-dropzone>`
     document.body.append(container)
     const operation = document.querySelector(operationName)
 
     operation.draggable = true
 
     assert.equal(operation.draggableService.state.value, 'grabbable')
-  })
-
-  it('should reach "grabbed" given "grabbable" when the "GRAB" event occurs', function () {
-    const container = document.createElement('div')
-    container.innerHTML = `
-  <palette-dropzone>
-    <${operationName}></${operationName}>
-  </palette-dropzone>`
-    document.body.append(container)
-    const operation = document.querySelector(operationName)
-    operation.draggable = true
-
-    mousedown(operation)
-
-    assert.equal(operation.draggableService.state.value, 'grabbed')
-    assert.isTrue(operation.grabbed)
   })
 
   it('should reach "idle" given "grabbable" when the "UNSET_INTERACT" event occurs', function () {
@@ -44,11 +54,25 @@ export function testDraggableOperation(operationName) {
   </palette-dropzone>`
     document.body.append(container)
     const operation = document.querySelector(operationName)
-    operation.draggable = true
 
     operation.draggable = false
 
     assert.equal(operation.draggableService.state.value, 'idle')
+  })
+
+  it('should reach "grabbed" given "grabbable" when the "GRAB" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+
+    mousedown(operation)
+
+    assert.isTrue(operation.grabbed)
+    assert.equal(operation.draggableService.state.value, 'grabbed')
   })
 
   // it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
