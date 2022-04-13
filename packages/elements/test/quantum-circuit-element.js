@@ -8,18 +8,29 @@ describe('quantum-circuit element', function () {
   })
 
   describe('quantum-circuit data-json attribute', function () {
+    let circuit
+
+    // -|0>-H-•-M-
+    //        |
+    // -|0>---X-M-
+    const entanglementCircuitJson = '{"cols":[["{entangle"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure","Measure"]]}'
+
+    // -H-
+    // -H-
+    // -H-
+    const superpositionCircuitJson = '{"cols":[["H", "H", "H"]]}'
+
+    beforeEach(function () {
+      circuit = new window.QuantumCircuitElement()
+      document.body.append(circuit)
+    })
+
     afterEach(function () {
       document.body.textContent = ''
     })
 
     it('renders a quantum circuit', function () {
-      const circuit = new window.QuantumCircuitElement()
-      document.body.append(circuit)
-
-      // -|0>-H-•-M-
-      //        |
-      // -|0>---X-M-
-      circuit.json = '{"cols":[["{entangle"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure","Measure"]]}'
+      circuit.json = entanglementCircuitJson
 
       assert.equal(circuit.steps.length, 4)
 
@@ -39,17 +50,8 @@ describe('quantum-circuit element', function () {
     })
 
     it('redraws the circuit when given a different json', function () {
-      const circuit = new window.QuantumCircuitElement()
-      document.body.append(circuit)
-
-      // -|0>-H-•-M-
-      //        |
-      // -|0>---X-M-
-      circuit.json = '{"cols":[["{entangle"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure","Measure"]]}'
-      // -H
-      // -H
-      // -H
-      circuit.json = '{"cols":[["H", "H", "H"]]}'
+      circuit.json = entanglementCircuitJson
+      circuit.json = superpositionCircuitJson
 
       assert.equal(circuit.steps.length, 1)
 
@@ -59,15 +61,8 @@ describe('quantum-circuit element', function () {
     })
 
     it('does not change the circuit when given the same json', function () {
-      const circuit = new window.QuantumCircuitElement()
-      document.body.append(circuit)
-
-      // -|0>-H-•-M-
-      //        |
-      // -|0>---X-M-
-      const json = '{"cols":[["{entangle"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure","Measure"]]}'
-      circuit.json = json
-      circuit.json = json
+      circuit.json = entanglementCircuitJson
+      circuit.json = entanglementCircuitJson
 
       assert.equal(circuit.steps.length, 4)
 
