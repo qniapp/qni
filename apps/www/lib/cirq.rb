@@ -127,7 +127,7 @@ class cirqbridge:
                         exit(1)
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if len(targetqubits) == 2:
-                        _c = [ cirq.CZ(index) for index in targetqubits]
+                        _c = [ cirq.CZ(qubits[circuit_qni['targets'][0]], qubits[circuit_qni['targets'][1]]) ]
                     elif len(targetqubits) < 2:
                         print("the number of target qubits must be larger than 2")
                         sys.stdout.flush()
