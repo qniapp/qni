@@ -51,23 +51,23 @@ export function testDraggableOperation(operationName) {
     assert.equal(operation.draggableService.state.value, 'idle')
   })
 
-  it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
-    const container = document.createElement('div')
-    container.innerHTML = `
-  <palette-dropzone>
-    <${operationName}></${operationName}>
-  </palette-dropzone>`
-    document.body.append(container)
-    const operation = document.querySelector(operationName)
-    operation.draggable = true
-    mousedown(operation)
+  // it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
+  //   const container = document.createElement('div')
+  //   container.innerHTML = `
+  // <palette-dropzone>
+  //   <${operationName}></${operationName}>
+  // </palette-dropzone>`
+  //   document.body.append(container)
+  //   const operation = document.querySelector(operationName)
+  //   operation.draggable = true
+  //   mousedown(operation)
 
-    dragstart(operation)
+  //   dragstart(operation)
 
-    assert.isTrue(operation.dragging)
-    assert.isFalse(operation.snapped)
-    assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
-  })
+  //   assert.isTrue(operation.dragging)
+  //   assert.isFalse(operation.snapped)
+  //   assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
+  // })
 
   it('should reach "dragging (snapped)" given "grabbed" when the draggable is on circuit-dropzone', function () {
     const container = document.createElement('div')
