@@ -296,6 +296,10 @@ export class QuantumCircuitElement extends HTMLElement {
         this.quantumCircuitService.send({type: 'EDIT_DONE'})
       }
     }
+
+    if (name === 'data-json' && newValue !== '') {
+      this.loadFromJson()
+    }
   }
 
   private update(): void {
