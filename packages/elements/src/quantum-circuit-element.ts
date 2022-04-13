@@ -144,7 +144,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return index
   }
 
-  private get steps(): CircuitStepElement[] {
+  get steps(): CircuitStepElement[] {
     return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
@@ -298,6 +298,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     if (name === 'data-json' && newValue !== '') {
+      this.innerHTML = ''
       this.loadFromJson()
     }
   }
