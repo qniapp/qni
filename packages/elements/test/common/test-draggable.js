@@ -75,23 +75,22 @@ export function testDraggableOperation(operationName) {
     assert.equal(operation.draggableService.state.value, 'grabbed')
   })
 
-  // it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
-  //   const container = document.createElement('div')
-  //   container.innerHTML = `
-  // <palette-dropzone>
-  //   <${operationName}></${operationName}>
-  // </palette-dropzone>`
-  //   document.body.append(container)
-  //   const operation = document.querySelector(operationName)
-  //   operation.draggable = true
-  //   mousedown(operation)
+  it('should reach "dragging (unsnapped)" given "grabbed" when "START_DRAGGING" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <palette-dropzone>
+    <${operationName}></${operationName}>
+  </palette-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    mousedown(operation)
 
-  //   dragstart(operation)
+    dragstart(operation)
 
-  //   assert.isTrue(operation.dragging)
-  //   assert.isFalse(operation.snapped)
-  //   assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
-  // })
+    assert.isTrue(operation.dragging)
+    assert.isFalse(operation.snapped)
+    assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
+  })
 
   it('should reach "dragging (snapped)" given "grabbed" when the draggable is on circuit-dropzone', function () {
     const container = document.createElement('div')
@@ -154,11 +153,11 @@ function mouseup(operation) {
   operation.dispatchEvent(new PointerEvent('pointerup', {bubbles: true}))
 }
 
-function dragstart(operation) {
+function dragstart(operation, dx = 10, dy = 10) {
   operation.dispatchEvent(
     new PointerEvent('pointermove', {
-      clientX: operation.getBoundingClientRect().left,
-      clientY: operation.getBoundingClientRect().top,
+      clientX: operation.getBoundingClientRect().left + dx,
+      clientY: operation.getBoundingClientRect().top + dy,
       bubbles: true
     })
   )
