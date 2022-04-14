@@ -27,6 +27,8 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       const popupInstance = (this as TippyReferenceElement)._tippy
       if (popupInstance) return
 
+      if (this.menuContent === null) return
+
       this.addEventListener('click', this.dispatchShowMenuEvent)
 
       this.menu = tippy(this, {
@@ -67,9 +69,10 @@ export function MenuableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
       this.dispatchEvent(new Event('operation-show-menu', {bubbles: true}))
     }
 
-    private get menuContent(): DocumentFragment {
+    private get menuContent(): DocumentFragment | null {
       const template = document.getElementById('operation-menu') as HTMLTemplateElement
-      Util.notNull(template)
+      if (template === null) return null
+      if (template.content === undefined) return null
 
       const node = template.content.cloneNode(true)
       const content = document.createDocumentFragment()

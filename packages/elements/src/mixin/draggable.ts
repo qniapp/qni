@@ -18,6 +18,7 @@ export declare class Draggable {
   set operationX(value: number)
   get operationY(): number
   set operationY(value: number)
+  get draggable(): boolean
   set draggable(value: boolean)
   get grabbed(): boolean
   set grabbed(value: boolean)
@@ -80,17 +81,12 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           grabbed: {
+            always: [{target: 'dragging', cond: 'isOnCircuitDropzone'}],
             on: {
               START_DRAGGING: {
-                target: 'dragging',
-                actions: ['startDragging']
+                target: 'dragging'
               },
               UNGRAB: [
-                {
-                  target: 'grabbable',
-                  actions: ['unGrab'],
-                  cond: 'isOnCircuitDropzone'
-                },
                 {
                   target: 'deleted',
                   actions: ['unGrab'],
@@ -110,6 +106,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             },
             states: {
               unknown: {
+                entry: ['startDragging'],
                 always: [
                   {target: 'snapped', cond: 'isOnCircuitDropzone'},
                   {target: 'unsnapped', cond: 'isOnPaletteDropzone'}
@@ -136,8 +133,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           dropped: {
             entry: ['drop'],
             always: [
-              {target: 'grabbable', cond: 'droppedOnCircuitDropzone'},
-              {target: 'deleted', cond: 'trashed'}
+              {target: 'grabbable', cond: 'isDroppedOnCircuitDropzone'},
+              {target: 'deleted', cond: 'isTrashed'}
             ]
           },
           deleted: {
@@ -218,17 +215,21 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           isOnPaletteDropzone: () => {
             return isPaletteDropzoneElement(this.dropzone)
           },
-          droppedOnCircuitDropzone: () => {
+          isDroppedOnCircuitDropzone: () => {
             return this.snapped && isCircuitDropzoneElement(this.dropzone)
           },
-          trashed: () => {
+          isTrashed: () => {
             return !this.snapped
           }
         }
       }
     )
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
+    public draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
+
+    get draggable(): boolean {
+      return this.draggableService !== undefined
+    }
 
     set draggable(value: boolean) {
       this.maybeInitStateMachine()

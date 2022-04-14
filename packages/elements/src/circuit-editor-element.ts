@@ -255,6 +255,8 @@ export class CircuitEditorElement extends HTMLElement {
 
           const operation = event.operation
           if (operation.snapped) return
+
+          if (this.inspectorButton === undefined) return
           if (!this.inspectorButton.isInspectorShown) return
 
           this.inspectorButton.inspector.disableAllPanes()
@@ -304,6 +306,7 @@ export class CircuitEditorElement extends HTMLElement {
         },
         maybeUpdateOperationInspector: (_context, event) => {
           if (event.type !== 'ACTIVATE_OPERATION') return
+          if (this.inspectorButton === undefined) return
 
           const operation = event.operation
           if (this.inspectorButton.isInspectorShown) {
