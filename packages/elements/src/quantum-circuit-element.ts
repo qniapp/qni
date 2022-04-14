@@ -144,7 +144,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return index
   }
 
-  private get steps(): CircuitStepElement[] {
+  get steps(): CircuitStepElement[] {
     return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
@@ -269,7 +269,11 @@ export class QuantumCircuitElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.loadFromJson()
+    if (this.hasAttribute('data-update-url')) {
+      const json = this.urlJson
+      this.loadFromJson(json)
+    }
+
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -298,7 +302,7 @@ export class QuantumCircuitElement extends HTMLElement {
     }
 
     if (name === 'data-json' && newValue !== '') {
-      this.loadFromJson()
+      this.loadFromJson(newValue)
     }
   }
 
@@ -899,17 +903,12 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private loadFromJson(): void {
-    let json
+  private loadFromJson(json: string): void {
+    this.innerHTML = ''
+
     let circuitBlock = null
 
-    if (this.hasAttribute('data-update-url')) {
-      json = this.urlJson
-    } else {
-      json = this.json
-    }
-
-    if (json === '' || json === 'new') {
+    if (json === '') {
       if (this.hasAttribute('data-update-url')) {
         this.resize()
       }

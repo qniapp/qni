@@ -12566,12 +12566,16 @@ var ae = /* @__PURE__ */ __name(class extends HTMLElement {
     return window.getComputedStyle(this).flexDirection === "column";
   }
   connectedCallback() {
-    this.quantumCircuitService = Ke(this.quantumCircuitMachine).onTransition((e) => {
+    if (this.quantumCircuitService = Ke(this.quantumCircuitMachine).onTransition((e) => {
       this.debug && console.log(`quantum-circuit: ${e.value}`);
-    }).start(), this.attachShadow({ mode: "open" }), this.update(), this.loadFromJson(), this.appendMinimumSteps(), this.appendMinimumWires(), this.updateAllWires(), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("circuit-step-update", this.updateStep), this.addEventListener("circuit-step-snap", this.updateStep), this.addEventListener("circuit-step-snap", this.updateChangedWire), this.addEventListener("circuit-step-unsnap", this.updateStep), this.addEventListener("circuit-step-unsnap", this.updateChangedWire), this.addEventListener("circuit-step-delete-operation", this.updateStep), this.addEventListener("circuit-step-delete-operation", this.updateChangedWire), this.dispatchEvent(new Event("quantum-circuit-init", { bubbles: true }));
+    }).start(), this.attachShadow({ mode: "open" }), this.update(), this.hasAttribute("data-update-url")) {
+      let e = this.urlJson;
+      this.loadFromJson(e);
+    }
+    this.appendMinimumSteps(), this.appendMinimumWires(), this.updateAllWires(), this.addEventListener("mouseleave", this.dispatchMouseleaveEvent), this.addEventListener("circuit-step-update", this.updateStep), this.addEventListener("circuit-step-snap", this.updateStep), this.addEventListener("circuit-step-snap", this.updateChangedWire), this.addEventListener("circuit-step-unsnap", this.updateStep), this.addEventListener("circuit-step-unsnap", this.updateChangedWire), this.addEventListener("circuit-step-delete-operation", this.updateStep), this.addEventListener("circuit-step-delete-operation", this.updateChangedWire), this.dispatchEvent(new Event("quantum-circuit-init", { bubbles: true }));
   }
   attributeChangedCallback(e, t, i) {
-    t !== i && (e === "data-editing" && (i !== null ? this.quantumCircuitService.send({ type: "EDIT" }) : this.quantumCircuitService.send({ type: "EDIT_DONE" })), e === "data-json" && i !== "" && this.loadFromJson());
+    t !== i && (e === "data-editing" && (i !== null ? this.quantumCircuitService.send({ type: "EDIT" }) : this.quantumCircuitService.send({ type: "EDIT_DONE" })), e === "data-json" && i !== "" && this.loadFromJson(i));
   }
   update() {
     te(K`<slot></slot>`, this.shadowRoot);
@@ -12836,9 +12840,10 @@ var ae = /* @__PURE__ */ __name(class extends HTMLElement {
     for (let e of this.emptySteps)
       e.remove();
   }
-  loadFromJson() {
-    let e, t = null;
-    if (this.hasAttribute("data-update-url") ? e = this.urlJson : e = this.json, e === "" || e === "new") {
+  loadFromJson(e) {
+    this.innerHTML = "";
+    let t = null;
+    if (e === "") {
       this.hasAttribute("data-update-url") && this.resize();
       return;
     }
