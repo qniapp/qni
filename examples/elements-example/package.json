@@ -20,5 +20,8 @@
     "http-errors": "~2.0",
     "morgan": "~1.10"
   },
-  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
+  "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779",
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
+  }
 }
