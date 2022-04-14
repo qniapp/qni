@@ -924,110 +924,94 @@ export class QuantumCircuitElement extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
-            writeGate.hoverable = true
             writeGate.value = '0'
             newStep.appendOperation(writeGate)
             break
           }
           case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
-            writeGate.hoverable = true
             writeGate.value = '1'
             newStep.appendOperation(writeGate)
             break
           }
           case /^H/.test(operation): {
             const hGate = new HGateElement()
-            hGate.hoverable = true
             hGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(hGate)
             break
           }
           case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
-            xGate.hoverable = true
             xGate.if = operation.slice(2).trim()
             newStep.appendOperation(xGate)
             break
           }
           case /^Y/.test(operation): {
             const yGate = new YGateElement()
-            yGate.hoverable = true
             yGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(yGate)
             break
           }
           case /^Z/.test(operation): {
             const zGate = new ZGateElement()
-            zGate.hoverable = true
             zGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(zGate)
             break
           }
           case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
-            phaseGate.hoverable = true
             phaseGate.angle = this.angleParameter(operation.slice(1))
             newStep.appendOperation(phaseGate)
             break
           }
           case /^T/.test(operation): {
             const tGate = new TGateElement()
-            tGate.hoverable = true
             tGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(tGate)
             break
           }
           case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
-            rnotGate.hoverable = true
             rnotGate.if = this.ifVariable(operation.slice(3))
             newStep.appendOperation(rnotGate)
             break
           }
           case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
-            rxGate.hoverable = true
             rxGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rxGate)
             break
           }
           case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
-            ryGate.hoverable = true
             ryGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(ryGate)
             break
           }
           case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
-            rzGate.hoverable = true
             rzGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rzGate)
             break
           }
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            swapGate.hoverable = true
             newStep.appendOperation(swapGate)
             break
           }
           case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            controlGate.hoverable = true
             newStep.appendOperation(controlGate)
             break
           }
           case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            blochDisplay.hoverable = true
             newStep.appendOperation(blochDisplay)
             break
           }
           case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
             const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
-            measurementGate.hoverable = true
             measurementGate.flag = flag
             newStep.appendOperation(measurementGate)
             break

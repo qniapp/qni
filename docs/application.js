@@ -12855,82 +12855,82 @@ var ae = /* @__PURE__ */ __name(class extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(d2): {
             let v = new Bt();
-            v.hoverable = true, v.value = "0", c2.appendOperation(v);
+            v.value = "0", c2.appendOperation(v);
             break;
           }
           case /^\|1>$/.test(d2): {
             let v = new Bt();
-            v.hoverable = true, v.value = "1", c2.appendOperation(v);
+            v.value = "1", c2.appendOperation(v);
             break;
           }
           case /^H/.test(d2): {
             let v = new Yt();
-            v.hoverable = true, v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
+            v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
             break;
           }
           case (/^X$/.test(d2) || /^X<(.+)$/.test(d2)): {
             let v = new ir();
-            v.hoverable = true, v.if = d2.slice(2).trim(), c2.appendOperation(v);
+            v.if = d2.slice(2).trim(), c2.appendOperation(v);
             break;
           }
           case /^Y/.test(d2): {
             let v = new or();
-            v.hoverable = true, v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
+            v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
             break;
           }
           case /^Z/.test(d2): {
             let v = new ar();
-            v.hoverable = true, v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
+            v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
             break;
           }
           case /^P/.test(d2): {
             let v = new Kt();
-            v.hoverable = true, v.angle = this.angleParameter(d2.slice(1)), c2.appendOperation(v);
+            v.angle = this.angleParameter(d2.slice(1)), c2.appendOperation(v);
             break;
           }
           case /^T/.test(d2): {
             let v = new nr();
-            v.hoverable = true, v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
+            v.if = this.ifVariable(d2.slice(1)), c2.appendOperation(v);
             break;
           }
           case /^X\^½/.test(d2): {
             let v = new Jt();
-            v.hoverable = true, v.if = this.ifVariable(d2.slice(3)), c2.appendOperation(v);
+            v.if = this.ifVariable(d2.slice(3)), c2.appendOperation(v);
             break;
           }
           case /^Rx/.test(d2): {
             let v = new Qt();
-            v.hoverable = true, v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
+            v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
             break;
           }
           case /^Ry/.test(d2): {
             let v = new er();
-            v.hoverable = true, v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
+            v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
             break;
           }
           case /^Rz/.test(d2): {
             let v = new tr();
-            v.hoverable = true, v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
+            v.angle = this.angleParameter(d2.slice(2)), c2.appendOperation(v);
             break;
           }
           case /^Swap$/.test(d2): {
             let v = new rr();
-            v.hoverable = true, c2.appendOperation(v);
+            c2.appendOperation(v);
             break;
           }
           case /^•$/.test(d2): {
             let v = new jt();
-            v.hoverable = true, c2.appendOperation(v);
+            c2.appendOperation(v);
             break;
           }
           case /^Bloch$/.test(d2): {
             let v = new at();
-            v.hoverable = true, c2.appendOperation(v);
+            c2.appendOperation(v);
             break;
           }
           case /^Measure/.test(d2): {
             let v = new Zt(), b = ((/^>(.+)$/.exec(d2.slice(7)) || [])[1] || "").trim();
-            v.hoverable = true, v.flag = b, c2.appendOperation(v);
+            v.flag = b, c2.appendOperation(v);
             break;
           }
           case /^[[{](.+)$/.test(d2): {
