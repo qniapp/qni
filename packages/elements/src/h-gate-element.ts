@@ -3,10 +3,11 @@ import {
   DisableableMixin,
   DraggableMixin,
   HelpableMixin,
+  HoverableMixin,
   IconableMixin,
   IfableMixin,
   MenuableMixin
-} from './mixin/'
+} from './mixin'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedHGateType} from '@qni/common'
@@ -20,7 +21,9 @@ export type HGateElementProps = {
 
 export class HGateElement extends MenuableMixin(
   HelpableMixin(
-    IfableMixin(ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HTMLElement))))))
+    IfableMixin(
+      ControllableMixin(DraggableMixin(DisableableMixin(IconableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))))
+    )
   )
 ) {
   get operationType(): typeof SerializedHGateType {

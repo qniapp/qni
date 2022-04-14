@@ -144,7 +144,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return index
   }
 
-  private get steps(): CircuitStepElement[] {
+  get steps(): CircuitStepElement[] {
     return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
@@ -269,7 +269,11 @@ export class QuantumCircuitElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.loadFromJson()
+    if (this.hasAttribute('data-update-url')) {
+      const json = this.urlJson
+      this.loadFromJson(json)
+    }
+
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -295,6 +299,10 @@ export class QuantumCircuitElement extends HTMLElement {
       } else {
         this.quantumCircuitService.send({type: 'EDIT_DONE'})
       }
+    }
+
+    if (name === 'data-json' && newValue !== '') {
+      this.loadFromJson(newValue)
     }
   }
 
@@ -895,212 +903,176 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private loadFromJson(): void {
-    let jsonString
+  private loadFromJson(json: string): void {
+    this.innerHTML = ''
+
     let circuitBlock = null
 
-    if (this.updateUrl) {
-      jsonString = this.urlJson
-    } else {
-      jsonString = this.json
-    }
-
-    if (jsonString === '' || jsonString === 'new') {
-      if (this.updateUrl) {
+    if (json === '') {
+      if (this.hasAttribute('data-update-url')) {
         this.resize()
       }
       return
     }
 
-    const jsonData = JSON.parse(jsonString)
-    this.circuitTitle = (jsonData.title || '').trim()
+    const circuit = JSON.parse(json)
+    this.circuitTitle = (circuit.title || '').trim()
 
-    for (const step of jsonData.cols) {
-      const circuitStep = this.appendStep()
-
-      for (const instruction of step) {
+    for (const step of circuit.cols) {
+      const newStep = this.appendStep()
+      for (const operation of step) {
         switch (true) {
-          case /^\|0>$/.test(instruction): {
+          case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '0'
-            circuitStep.appendOperation(writeGate)
+            newStep.appendOperation(writeGate)
             break
           }
-          case /^\|1>$/.test(instruction): {
+          case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
+            writeGate.hoverable = true
             writeGate.value = '1'
-            circuitStep.appendOperation(writeGate)
+            newStep.appendOperation(writeGate)
             break
           }
-          case /^H$/.test(instruction): {
+          case /^H/.test(operation): {
             const hGate = new HGateElement()
-            circuitStep.appendOperation(hGate)
+            hGate.hoverable = true
+            hGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(hGate)
             break
           }
-          case /^H<(.+)$/.test(instruction): {
-            const hGate = new HGateElement()
-            hGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(hGate)
-            break
-          }
-          case /^X$/.test(instruction): {
+          case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
-            circuitStep.appendOperation(xGate)
+            xGate.hoverable = true
+            xGate.if = operation.slice(2).trim()
+            newStep.appendOperation(xGate)
             break
           }
-          case /^X<(.+)$/.test(instruction): {
-            const xGate = new XGateElement()
-            xGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(xGate)
-            break
-          }
-          case /^Y$/.test(instruction): {
+          case /^Y/.test(operation): {
             const yGate = new YGateElement()
-            circuitStep.appendOperation(yGate)
+            yGate.hoverable = true
+            yGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(yGate)
             break
           }
-          case /^Y<(.+)$/.test(instruction): {
-            const yGate = new YGateElement()
-            yGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(yGate)
-            break
-          }
-          case /^Z$/.test(instruction): {
+          case /^Z/.test(operation): {
             const zGate = new ZGateElement()
-            circuitStep.appendOperation(zGate)
+            zGate.hoverable = true
+            zGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(zGate)
             break
           }
-          case /^Z<(.+)$/.test(instruction): {
-            const zGate = new ZGateElement()
-            zGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(zGate)
-            break
-          }
-          case /^P$/.test(instruction): {
+          case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
-            circuitStep.appendOperation(phaseGate)
+            phaseGate.hoverable = true
+            phaseGate.angle = this.angleParameter(operation.slice(1))
+            newStep.appendOperation(phaseGate)
             break
           }
-          case /^P\((.+)\)$/.test(instruction): {
-            const phaseGate = new PhaseGateElement()
-            phaseGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(phaseGate)
-            break
-          }
-          case /^T$/.test(instruction): {
+          case /^T/.test(operation): {
             const tGate = new TGateElement()
-            circuitStep.appendOperation(tGate)
+            tGate.hoverable = true
+            tGate.if = this.ifVariable(operation.slice(1))
+            newStep.appendOperation(tGate)
             break
           }
-          case /^T<(.+)$/.test(instruction): {
-            const tGate = new TGateElement()
-            tGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(tGate)
-            break
-          }
-          case /^X\^½$/.test(instruction): {
+          case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
-            circuitStep.appendOperation(rnotGate)
+            rnotGate.hoverable = true
+            rnotGate.if = this.ifVariable(operation.slice(3))
+            newStep.appendOperation(rnotGate)
             break
           }
-          case /^X\^½<(.+)$/.test(instruction): {
-            const rnotGate = new RnotGateElement()
-            rnotGate.if = RegExp.$1.trim()
-            circuitStep.appendOperation(rnotGate)
-            break
-          }
-          case /^Rx$/.test(instruction): {
+          case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
-            circuitStep.appendOperation(rxGate)
+            rxGate.hoverable = true
+            rxGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(rxGate)
             break
           }
-          case /^Rx\((.+)\)$/.test(instruction): {
-            const rxGate = new RxGateElement()
-            rxGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(rxGate)
-            break
-          }
-          case /^Ry$/.test(instruction): {
+          case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
-            circuitStep.appendOperation(ryGate)
+            ryGate.hoverable = true
+            ryGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(ryGate)
             break
           }
-          case /^Ry\((.+)\)$/.test(instruction): {
-            const ryGate = new RyGateElement()
-            ryGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(ryGate)
-            break
-          }
-          case /^Rz$/.test(instruction): {
+          case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
-            circuitStep.appendOperation(rzGate)
+            rzGate.hoverable = true
+            rzGate.angle = this.angleParameter(operation.slice(2))
+            newStep.appendOperation(rzGate)
             break
           }
-          case /^Rz\((.+)\)$/.test(instruction): {
-            const rzGate = new RzGateElement()
-            rzGate.angle = RegExp.$1.replace('_', '/')
-            circuitStep.appendOperation(rzGate)
-            break
-          }
-          case /^Swap$/.test(instruction): {
+          case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            circuitStep.appendOperation(swapGate)
+            swapGate.hoverable = true
+            newStep.appendOperation(swapGate)
             break
           }
-          case /^•$/.test(instruction): {
+          case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            circuitStep.appendOperation(controlGate)
+            controlGate.hoverable = true
+            newStep.appendOperation(controlGate)
             break
           }
-          case /^Bloch$/.test(instruction): {
+          case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            circuitStep.appendOperation(blochDisplay)
+            blochDisplay.hoverable = true
+            newStep.appendOperation(blochDisplay)
             break
           }
-          case /^Measure$/.test(instruction): {
+          case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
-            circuitStep.appendOperation(measurementGate)
+            const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
+            measurementGate.hoverable = true
+            measurementGate.flag = flag
+            newStep.appendOperation(measurementGate)
             break
           }
-          case /^Measure>(.+)$/.test(instruction): {
-            const measurementGate = new MeasurementGateElement()
-            measurementGate.flag = RegExp.$1.trim()
-            circuitStep.appendOperation(measurementGate)
-            break
-          }
-          case /^[[{](.+)$/.test(instruction): {
-            const comment = RegExp.$1
-            circuitStep.remove()
+          case /^[[{](.+)$/.test(operation): {
+            const comment = operation.slice(1)
+            newStep.remove()
             circuitBlock = new CircuitBlockElement()
             circuitBlock.comment = comment
             circuitBlock.setAttribute('data-targets', 'quantum-circuit.blocks')
             this.append(circuitBlock)
             break
           }
-          case /^[\]}]$/.test(instruction): {
-            circuitStep.remove()
+          case /^[\]}]$/.test(operation): {
+            newStep.remove()
             circuitBlock!.finalize()
             break
           }
           default: {
-            if (instruction === 1) {
-              if (circuitStep.dropzones.length === circuitStep.freeDropzones.length) {
-                circuitStep.keep = true
+            if (operation === 1) {
+              if (newStep.dropzones.length === newStep.freeDropzones.length) {
+                newStep.keep = true
               } else {
-                circuitStep.keep = false
+                newStep.keep = false
               }
             } else {
-              throw new Error(`Unknown instruction: ${instruction}`)
+              throw new Error(`Unknown operation: ${operation}`)
             }
-            circuitStep.appendDropzone()
+            newStep.appendDropzone()
           }
         }
         // circuitStep.updateConnections()
-        circuitStep.updateOperationAttributes()
+        newStep.updateOperationAttributes()
       }
     }
 
     this.resize()
+  }
+
+  private ifVariable(operation: string): string {
+    return ((/^<(.+)$/.exec(operation) || [])[1] || '').trim()
+  }
+
+  private angleParameter(operation: string): string {
+    return ((/^\((.+)\)$/.exec(operation) || [])[1] || '').trim().replace('_', '/')
   }
 
   private appendMinimumWires(): void {

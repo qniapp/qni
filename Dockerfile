@@ -25,7 +25,7 @@ RUN echo "${TZ}" > /etc/timezone \
   && dpkg-reconfigure -f noninteractive tzdata
 
 RUN apt install -y build-essential
-RUN apt install -y git wget time curl libssl-dev zlib1g-dev libpq-dev
+RUN apt install -y git wget time curl libssl-dev zlib1g-dev libpq-dev libgtk2.0-0 libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 libgbm1
 RUN apt install -y redis-server
 RUN apt install -y ng-common ng-cjk emacs-nox
 RUN apt install -y postgresql postgresql-contrib

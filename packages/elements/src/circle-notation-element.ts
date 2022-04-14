@@ -42,7 +42,7 @@ export class CircleNotationElement extends HTMLElement {
     this.update()
     this.initQubitCirclePopup(this.qubitCircles)
 
-    if (this.multiQubits) {
+    if (this.hasAttribute('data-multi-qubits')) {
       this.startQubitCircleVisibilityObserver()
       this.dispatchLoadEvent()
     }
@@ -775,11 +775,10 @@ export class CircleNotationElement extends HTMLElement {
       this.shadowRoot!
     )
 
-    for (const [i, each] of this.magnitudes.split(',').entries()) {
+    for (const [i, each] of (this.getAttribute('data-magnitudes') || '1.0').split(',').entries()) {
       this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
     }
-    if (this.phases.trim() === '') return
-    for (const [i, each] of this.phases.split(',').entries()) {
+    for (const [i, each] of (this.getAttribute('data-phases') || '').split(',').entries()) {
       const qubitCircle = this.qubitCircles[i]
       const phase = each ? parseFloat(each) : 0
       this.setRoundedPhase(qubitCircle, phase)
@@ -812,7 +811,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get qubitCirclesHtml(): TemplateResult {
-    if (this.multiQubits) return this.stateVectorHtml(10)
+    if (this.hasAttribute('data-multi-qubits')) return this.stateVectorHtml(10)
 
     return html`${this.qubitCircleHtml(0)} ${this.qubitCircleHtml(1)}`
   }

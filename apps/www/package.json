@@ -1,6 +1,6 @@
 {
   "name": "@qni/www",
-  "version": "0.0.36",
+  "version": "0.0.46",
   "description": "Web service for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/apps/www#readme",
@@ -43,13 +43,12 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
-    "@qni/common": "^0.0.36",
-    "@qni/elements": "^0.0.36",
-    "@qni/simulator": "^0.0.36",
+    "@qni/common": "^0.0.46",
+    "@qni/elements": "^0.0.46",
+    "@qni/simulator": "^0.0.46",
     "@rails/ujs": "~7.0",
     "@svgdotjs/svg.filter.js": "^3.0.8",
     "@svgdotjs/svg.js": "^3.1.1",
-    "esbuild": "^0.14.21",
     "puppeteer": "~13.1",
     "turbolinks": "^5.2.0"
   },
@@ -57,7 +56,7 @@
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "~8.3",
     "autoprefixer": "^10.4.0",
-    "esbuild": "^0.14.21",
+    "esbuild": "^0.14.29",
     "eslint-config-prettier": "~8.3",
     "eslint-import-resolver-typescript": "~2.5",
     "eslint-plugin-github": "~4.3",
@@ -73,7 +72,8 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-dts": "^4.0.1",
     "rollup-plugin-replace": "^2.2.0",
-    "tailwindcss": "^3.0.22"
+    "tailwindcss": "^3.0.23",
+    "typescript": "~4.5"
   },
   "directories": {
     "doc": "doc",

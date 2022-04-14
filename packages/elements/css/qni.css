@@ -36,46 +36,145 @@
 @import 'tailwindcss/utilities';
 
 @layer utilities {
-  .activateable {
-    &[data-active]::after {
-      @apply border-opacity-100;
-    }
+  .operation {
+    @apply inline-block;
+    @apply relative;
+    @apply h-8 w-8;
 
-    &[data-active][data-grabbed]::after {
-      @apply bg-purple-500 bg-opacity-20;
+    &::after {
+      @apply absolute;
+
+      content: '';
     }
   }
 
-  .draggable {
-    touch-action: none;
+  /* operation sizes */
 
+  .operation-xs {
+    @apply h-4 w-4;
+  }
+
+  .operation-sm {
+    @apply h-6 w-6;
+  }
+
+  .operation-base {
+    @apply h-8 w-8;
+  }
+
+  .operation-lg {
+    @apply h-10 w-10;
+  }
+
+  .operation-xl {
+    @apply h-12 w-12;
+  }
+
+  .operation-2xl {
+    @apply h-16 w-16;
+  }
+
+  /* operation shapes */
+
+  .operation-square {
+    &::part(body) {
+      @apply bg-emerald-500;
+      @apply h-full w-full;
+      @apply rounded;
+    }
+
+    &::part(icon) {
+      @apply text-white;
+    }
+  }
+
+  .operation-circle {
+    &::part(body) {
+      @apply bg-emerald-500;
+      @apply h-full w-full;
+      @apply rounded-full;
+    }
+
+    &::part(icon) {
+      @apply text-white;
+    }
+  }
+
+  .operation-transparent {
+    &::part(body) {
+      @apply h-full w-full;
+      @apply rounded;
+    }
+  }
+
+  /* data-hoverable */
+
+  .operation-hoverable {
+    palette-dropzone &[data-hoverable]:hover::after,
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
+      @apply border-2 border-neutral-400;
+      @apply rounded-md;
+
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+    }
+  }
+
+  /* data-active */
+
+  .operation-activateable {
+    &[data-active]::after {
+      @apply border-2 border-purple-500;
+      @apply rounded-md;
+
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+    }
+  }
+
+  /* data-grabbed */
+
+  .operation-grabbable {
     &[data-grabbed] {
       @apply cursor-grabbing;
-      @apply bg-white;
+    }
+
+    &[data-grabbed]:not([data-snapped]) {
       @apply z-40;
     }
+
+    &[data-grabbed]::part(body) {
+      @apply bg-purple-500;
+    }
+
+    &[data-grabbed]::part(icon) {
+      @apply text-white;
+    }
+
+    &[data-grabbed]::after {
+      @apply border-none;
+    }
+  }
+
+  /* data-disabled */
+
+  .operation-disableable {
+    &[data-disabled]::part(body) {
+      @apply bg-gray-500;
+    }
+  }
+
+  .operation-draggable {
+    touch-action: none;
 
     /* grabbable cursor style */
     circuit-editor palette-dropzone &,
     circuit-editor quantum-circuit:not([data-editing]) & {
       @apply cursor-grab;
-    }
-
-    /* show border */
-    circuit-editor &::after {
-      @apply absolute inset-0;
-      @apply rounded;
-      @apply border-2 border-purple-500 border-opacity-0;
-
-      content: '';
-    }
-
-    palette-dropzone &:not([data-grabbed]):hover::after {
-      @apply border-opacity-100;
-    }
-
-    quantum-circuit:not([data-editing]) &:not([data-active]):hover::after {
-      @apply border-opacity-100;
     }
 
     quantum-circuit([data-editing]) &:not([data-operation-x='0']):not([data-operation-y='0']):hover::after {
@@ -93,37 +192,7 @@
     }
   }
 
-  .operation {
-    @apply inline-block;
-    @apply relative;
-    @apply h-8 w-8;
-
-    &[data-size='xs'] {
-      @apply h-4 w-4;
-    }
-
-    &[data-size='sm'] {
-      @apply h-6 w-6;
-    }
-
-    &[data-size='base'] {
-      @apply h-8 w-8;
-    }
-
-    &[data-size='lg'] {
-      @apply h-10 w-10;
-    }
-
-    &[data-size='xl'] {
-      @apply h-12 w-12;
-    }
-
-    &[data-size='2xl'] {
-      @apply h-16 w-16;
-    }
-  }
-
-  .ifable {
+  .operation-ifable {
     &[data-if]::before {
       @apply absolute;
       @apply flex justify-center;
@@ -167,7 +236,7 @@
 }
 
 @layer components {
-  .angleable {
+  .operation-angleable {
     &[data-angle]::before {
       @apply absolute;
       @apply flex justify-center;
@@ -219,27 +288,27 @@
 }
 
 @layer components {
-  .flaggable[data-flag]::before {
+  .operation-flaggable[data-flag]::before {
     @apply hidden;
     @apply font-mono tracking-tighter;
     @apply text-xs leading-3;
     @apply absolute;
   }
 
-  circuit-dropzone .flaggable[data-flag]:not([data-flag=''])::before {
+  circuit-dropzone .operation-flaggable[data-flag]:not([data-flag=''])::before {
     @apply flex justify-center;
 
     content: attr(data-flag) '';
   }
 
   /* top label */
-  circuit-dropzone:not([data-connect-top]) .flaggable[data-flag]::before {
+  circuit-dropzone:not([data-connect-top]) .operation-flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
   }
 
   /* top label over wire */
-  circuit-dropzone[data-connect-top][data-connect-bottom] .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top][data-connect-bottom] .operation-flaggable[data-flag]::before {
     @apply top-0 left-0 right-0;
     @apply -mt-3.5;
 
@@ -248,7 +317,7 @@
   }
 
   /* bottom label */
-  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .flaggable[data-flag]::before {
+  circuit-dropzone[data-connect-top]:not([data-connect-bottom]) .operation-flaggable[data-flag]::before {
     @apply bottom-0 left-0 right-0;
     @apply -mb-3.5;
   }

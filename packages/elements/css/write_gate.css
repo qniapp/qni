@@ -1,9 +1,10 @@
 write-gate {
-  @apply activateable;
-  @apply draggable;
   @apply operation;
-
-  @apply rounded;
+  @apply operation-activateable;
+  @apply operation-draggable;
+  @apply operation-grabbable;
+  @apply operation-hoverable;
+  @apply operation-transparent;
 
   &::part(icon) {
     @apply text-neutral-500;
@@ -37,5 +38,19 @@ write-gate {
   &[data-value='1']::part(value)::after {
     @apply text-blue-500;
     content: '1';
+  }
+
+  /* data-grabbed */
+
+  &[data-grabbed]::part(icon) {
+    @apply text-purple-400;
+  }
+
+  &[data-grabbed][data-value='0']::part(value)::after {
+    @apply text-white;
+  }
+
+  &[data-grabbed][data-value='1']::part(value)::after {
+    @apply text-white;
   }
 }
