@@ -20,7 +20,7 @@
     "build:js": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
     "pretest": "npm run build",
-    "test": "web-test-runner test/*.js --node-resolve",
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
     "watch:css": "yarn build:css --watch",

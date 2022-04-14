@@ -109,6 +109,46 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
   })
 
+  it('should reach "dragging (unsnapped)" given "dragging (snapped)" when "UNSNAP" event occurs', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <circuit-dropzone id="dropzone-a" style="width: 32px; height: 32px;">
+    <${operationName} style="width: 32px; height: 32px;"></${operationName}>
+  </circuit-dropzone>
+  <circuit-dropzone id="dropzone-b" style="width: 32px; height: 32px;">
+  </circuit-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    const dropzoneA = document.getElementById('dropzone-a')
+    const dropzoneB = document.getElementById('dropzone-b')
+    operation.draggable = true
+    operation.snapTargets = [dropzoneA.snapTarget, dropzoneB.snapTarget]
+    mousedown(operation)
+
+    // width, height を外部 CSS で指定しているので、デフォルトで 0, 0 になってしまう...
+    // とりあえず style= で設定しておく?
+    // → なぜか style で設定できない???
+    //
+    // web test runnner でスクショとか取れないか調べる
+    // https://modern-web.dev/docs/test-runner/overview/
+    console.log(dropzoneA.clientWidth)
+    console.log(dropzoneB.clientHeight)
+
+    // console.log(pointerX(operation))
+    // console.log(pointerY(operation))
+
+    move(operation, 8 - pointerX(operation), 8 - pointerY(operation))
+
+    console.log(dropzoneA.snapTarget)
+    console.log(dropzoneB.snapTarget)
+
+    console.log(dropzoneA)
+    console.log(dropzoneB)
+
+    // assert.isTrue(operation.snapped)
+    // assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
+  })
+
   it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs (palette dropzone)', function () {
     const container = document.createElement('div')
     container.innerHTML = `
@@ -212,4 +252,12 @@ function move(operation, dx = 1, dy = 1) {
       bubbles: true
     })
   )
+}
+
+function pointerX(operation) {
+  return operation.getBoundingClientRect().left + 16
+}
+
+function pointerY(operation) {
+  return operation.getBoundingClientRect().top + 16
 }
