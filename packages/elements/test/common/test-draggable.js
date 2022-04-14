@@ -1,5 +1,7 @@
+import styles from '../../dist/qni.css'
 import {assert} from '@esm-bundle/chai'
 import {once} from './once'
+import {sendMouse} from '@web/test-runner-commands'
 
 export function testDraggableOperation(operationName) {
   afterEach(function () {
@@ -85,7 +87,7 @@ export function testDraggableOperation(operationName) {
     const operation = document.querySelector(operationName)
     mousedown(operation)
 
-    move(operation)
+    move(operation, 1, 1)
 
     assert.isTrue(operation.dragging)
     assert.isFalse(operation.snapped)
@@ -109,44 +111,32 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
   })
 
-  it('should reach "dragging (unsnapped)" given "dragging (snapped)" when "UNSNAP" event occurs', function () {
+  it('should reach "dragging (unsnapped)" given "dragging (snapped)" when "UNSNAP" event occurs', async function () {
     const container = document.createElement('div')
     container.innerHTML = `
-  <circuit-dropzone id="dropzone-a" style="width: 32px; height: 32px;">
-    <${operationName} style="width: 32px; height: 32px;"></${operationName}>
+<circuit-editor>
+<quantum-circuit data-target="circuit-editor.circuit">
+    <circuit-step>
+  <circuit-dropzone id="dropzone">
+    <${operationName}></${operationName}>
   </circuit-dropzone>
-  <circuit-dropzone id="dropzone-b" style="width: 32px; height: 32px;">
-  </circuit-dropzone>`
+  <circuit-dropzone style="margin-top: 128px;">
+  </circuit-dropzone>
+</cicuit-step/>
+</quantum-circuit>
+</circuit-editor>`
     document.body.append(container)
     const operation = document.querySelector(operationName)
-    const dropzoneA = document.getElementById('dropzone-a')
-    const dropzoneB = document.getElementById('dropzone-b')
+    const dropzone = document.getElementById('dropzone')
     operation.draggable = true
-    operation.snapTargets = [dropzoneA.snapTarget, dropzoneB.snapTarget]
-    mousedown(operation)
+    operation.snapTargets = [dropzone.snapTarget]
+    await sendMouse({type: 'move', position: [dropzone.snapTarget.x, dropzone.snapTarget.y]})
+    await sendMouse({type: 'down'})
 
-    // width, height を外部 CSS で指定しているので、デフォルトで 0, 0 になってしまう...
-    // とりあえず style= で設定しておく?
-    // → なぜか style で設定できない???
-    //
-    // web test runnner でスクショとか取れないか調べる
-    // https://modern-web.dev/docs/test-runner/overview/
-    console.log(dropzoneA.clientWidth)
-    console.log(dropzoneB.clientHeight)
+    await sendMouse({type: 'move', position: [1000, 1000]})
 
-    // console.log(pointerX(operation))
-    // console.log(pointerY(operation))
-
-    move(operation, 8 - pointerX(operation), 8 - pointerY(operation))
-
-    console.log(dropzoneA.snapTarget)
-    console.log(dropzoneB.snapTarget)
-
-    console.log(dropzoneA)
-    console.log(dropzoneB)
-
-    // assert.isTrue(operation.snapped)
-    // assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
+    assert.isFalse(operation.snapped)
+    assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
   })
 
   it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs (palette dropzone)', function () {

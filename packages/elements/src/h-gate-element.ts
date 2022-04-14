@@ -7,7 +7,7 @@ import {
   IconableMixin,
   IfableMixin,
   MenuableMixin
-} from './mixin/'
+} from './mixin'
 import {html, render} from '@github/jtml'
 import {ControllableMixin} from './mixin/controllable'
 import {SerializedHGateType} from '@qni/common'
