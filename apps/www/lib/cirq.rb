@@ -23,10 +23,12 @@ class cirqbridge:
         print("_circuit", _circuit_from_qni)
         sys.stdout.flush()
         counter = 0
+        label_found = 0
         for _i in _circuit_from_qni:
-            print("_i", _i)
-            print("len(_i)", len(_i))
-            sys.stdout.flush()
+            if label_found == 1:
+                break
+#            print("_i, counter ", _i, counter)
+#            sys.stdout.flush()
             if _i == []:
                 continue
             for _p in range(len(_i)):
@@ -35,6 +37,7 @@ class cirqbridge:
                         counter = counter + 1
                     elif _i[_p]['type'] == "Measure" and _i[_p]['flag'] == label:
                         print("found flag _i[%d]" % _p,  _i[_p]['flag'])
+                        label_found = 1
                         break
             sys.stdout.flush()
         print("counter", counter)
@@ -207,6 +210,7 @@ class cirqbridge:
                     moment.append(__c)
             c.append(moment, strategy=InsertStrategy.NEW_THEN_INLINE)
             _current_index = _current_index + 1
+#        print(c)
 #        sys.stdout.flush()
         return c, measurement_moment
 
@@ -266,6 +270,7 @@ class cirqbridge:
         if len(step.measurements) != 0:
             for i in range(len(measurement_moment)):
                 if len(measurement_moment[i]) !=0:
+#                    print("searching key", measurement_moment[i])
                     for k in range(len(measurement_moment[i])):
                         for j in range(len(measurement_moment[i][k])):
                             _key = measurement_moment[i][k][j][0]
