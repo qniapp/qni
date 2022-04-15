@@ -16,6 +16,31 @@ class cirqbridge:
     def __init__(self):
         return
 
+    def lookup_measurement_label(self,_circuit_from_qni,label):
+        numofdevices=0
+        print("measurement_label: lookup for ", label)
+        sys.stdout.flush()
+        print("_circuit", _circuit_from_qni)
+        sys.stdout.flush()
+        counter = 0
+        for _i in _circuit_from_qni:
+            print("_i", _i)
+            print("len(_i)", len(_i))
+            sys.stdout.flush()
+            if _i == []:
+                continue
+            for _p in range(len(_i)):
+                if 'flag' in _i[_p]:
+                    if _i[_p]['type'] == "Measure" and _i[_p]['flag'] != label:
+                        counter = counter + 1
+                    elif _i[_p]['type'] == "Measure" and _i[_p]['flag'] == label:
+                        print("found flag _i[%d]" % _p,  _i[_p]['flag'])
+                        break
+            sys.stdout.flush()
+        print("counter", counter)
+        label='m' + str(counter)
+        return label
+
     def build_circuit(self,numofqubits,_circuit_from_qni):
 #        print("build_circuit")
 #        sys.stdout.flush()
@@ -39,19 +64,29 @@ class cirqbridge:
                 moment.append(_c)
             for circuit_qni in column_qni:
                 if circuit_qni['type'] == u'H':
-                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                    if not "controls" in circuit_qni:
-                        _c=[cirq.H(index) for index in targetqubits]
+                    if "if" in circuit_qni: # classical control
+                        targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                        label=self.lookup_measurement_label(_circuit_from_qni, circuit_qni['if'])
+                        _c=[cirq.H(index).with_classical_controls(label) for index in targetqubits]
                     else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        _c=[ cirq.ControlledOperation(controledqubits, cirq.H(index)) for index in targetqubits ]
+                        targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                        if not "controls" in circuit_qni:
+                            _c=[cirq.H(index) for index in targetqubits]
+                        else:
+                            controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
+                            _c=[ cirq.ControlledOperation(controledqubits, cirq.H(index)) for index in targetqubits ]
                 elif circuit_qni['type'] == u'X':
-                    targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
-                    if not "controls" in circuit_qni:
-                        _c=[ cirq.X(index) for index in targetqubits]
+                    if "if" in circuit_qni: # classical control
+                        targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                        label=self.lookup_measurement_label(_circuit_from_qni, circuit_qni['if'])
+                        _c=[cirq.X(index).with_classical_controls(label) for index in targetqubits]
                     else:
-                        controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
-                        _c=[ cirq.ControlledOperation(controledqubits, cirq.X(index)) for index in targetqubits ]
+                        targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
+                        if not "controls" in circuit_qni:
+                            _c=[ cirq.X(index) for index in targetqubits]
+                        else:
+                            controledqubits=[ qubits[index] for index in circuit_qni['controls'] ]
+                            _c=[ cirq.ControlledOperation(controledqubits, cirq.X(index)) for index in targetqubits ]
                 elif circuit_qni['type'] == u'Y':
                     targetqubits=[ qubits[index] for index in circuit_qni['targets'] ]
                     if not "controls" in circuit_qni:
@@ -208,7 +243,6 @@ class cirqbridge:
 
             print("current step[%d]" % counter, steps[counter])
             sys.stdout.flush()
-
             if steps[counter] == []:
                 pass
             else:
@@ -232,16 +266,17 @@ class cirqbridge:
         if len(step.measurements) != 0:
             for i in range(len(measurement_moment)):
                 if len(measurement_moment[i]) !=0:
-                    for j in range(len(measurement_moment[i][0])):
-                        _key = measurement_moment[i][0][j][0]
-                        _qubit = measurement_moment[i][0][j][1]
-                        _step = i
-                        if _key not in step.measurements:
-                            break
-                        _value= step.measurements[_key][0]
-                        print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
-                        sys.stdout.flush()
-                        _data[i][':measuredBits'][_qubit] = _value
+                    for k in range(len(measurement_moment[i])):
+                        for j in range(len(measurement_moment[i][k])):
+                            _key = measurement_moment[i][k][j][0]
+                            _qubit = measurement_moment[i][k][j][1]
+                            _step = i
+                            if _key not in step.measurements:
+                                break
+                            _value= step.measurements[_key][0]
+                            print("step: ", _step, "key:", _key, "target qubit", _qubit, "value ", _value)
+                            sys.stdout.flush()
+                            _data[i][':measuredBits'][_qubit] = _value
 #        print("_data ", _data)
 #        sys.stdout.flush()
         return _data
