@@ -1,5 +1,4 @@
-// export { Complex } from '@qni/common'
-// import '@qni/elements'
 export { Complex } from '@qni/elements'
+
 import '@qni/elements'
 import './serviceworker-companion'
