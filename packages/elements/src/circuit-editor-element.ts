@@ -332,6 +332,8 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
+    this.circuit.hoverable = true
+
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)

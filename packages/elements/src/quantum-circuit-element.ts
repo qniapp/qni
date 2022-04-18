@@ -21,6 +21,7 @@ import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
+import {HoverableMixin} from './mixin'
 
 export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -31,7 +32,7 @@ export type SnapTarget = {
 type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
-export class QuantumCircuitElement extends HTMLElement {
+export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr maxWireCount = 10
@@ -274,6 +275,12 @@ export class QuantumCircuitElement extends HTMLElement {
       this.loadFromJson(json)
     }
 
+    if (this.hoverable) {
+      for (const operation of this.operations) {
+        operation.hoverable = true
+      }
+    }
+
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -303,6 +310,11 @@ export class QuantumCircuitElement extends HTMLElement {
 
     if (name === 'data-json' && newValue !== '') {
       this.loadFromJson(newValue)
+      if (this.hoverable) {
+        for (const operation of this.operations) {
+          operation.hoverable = true
+        }
+      }
     }
   }
 
