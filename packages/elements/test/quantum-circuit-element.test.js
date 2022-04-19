@@ -12,6 +12,38 @@ describe('quantum-circuit element', function () {
     testHoverable('quantum-circuit')
   })
 
+  describe('circuit-editor quantum-circuit', function () {
+    it('automatically becomes hoverable = true when it is a child of <circuit-editor>', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+    <circuit-editor>
+      <quantum-circuit data-target="circuit-editor.circuit"></quantum-circuit>
+    </circuit-editor>`
+      document.body.append(container)
+      const circuit = document.querySelector('quantum-circuit')
+
+      assert.isTrue(circuit.hoverable)
+    })
+  })
+
+  describe('circuit-editor quantum-circuit operation', function () {
+    it('automatically set hoverable = true for descendant operations when it is a child of circuit-editor', function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+    <circuit-editor>
+      <quantum-circuit data-target="circuit-editor.circuit">
+        <circuit-dropzone>
+          <h-gate></h-gate>
+        <circuit-dropzone>
+      </quantum-circuit>
+    </circuit-editor>`
+      document.body.append(container)
+      const operation = document.querySelector('h-gate')
+
+      assert.isTrue(operation.hoverable)
+    })
+  })
+
   describe('quantum-circuit data-json attribute', function () {
     let circuit
 
