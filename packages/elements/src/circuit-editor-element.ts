@@ -354,14 +354,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
-
-    this.addEventListener('quantum-circuit-init', () => {
-      this.circuit.hoverable = true
-
-      for (const each of this.circuit.operations) {
-        each.initMenu()
-      }
-    })
+    this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
   }
 
   update(): void {
@@ -370,6 +363,19 @@ export class CircuitEditorElement extends HTMLElement {
 
   private get activeOperation(): Operation | null {
     return this.circuit.querySelector('circuit-dropzone > [data-active]')
+  }
+
+  private makeCircuitHoverable(event: Event): void {
+    const circuit = event.target as QuantumCircuitElement
+
+    if (circuit !== this.circuit) {
+      return
+    }
+
+    this.circuit.hoverable = true
+    for (const each of this.circuit.operations) {
+      each.initMenu()
+    }
   }
 
   private maybeDeactivateOperation(event: Event): void {
