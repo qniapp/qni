@@ -39,7 +39,7 @@ type DraggableEvent =
   | {type: 'UNSET_INTERACT'}
   | {type: 'DELETE'}
   | {type: 'GRAB'; x: number; y: number}
-  | {type: 'UNGRAB'}
+  | {type: 'RELEASE'}
   | {type: 'START_DRAGGING'}
   | {type: 'END_DRAGGING'}
   | {type: 'SNAP'}
@@ -86,15 +86,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
                 target: 'dragging',
                 actions: ['startDragging']
               },
-              UNGRAB: [
+              RELEASE: [
                 {
                   target: 'grabbable',
-                  actions: ['unGrab'],
+                  actions: ['release'],
                   cond: 'isOnCircuitDropzone'
                 },
                 {
                   target: 'deleted',
-                  actions: ['unGrab'],
+                  actions: ['release'],
                   cond: 'isOnPaletteDropzone'
                 }
               ]
@@ -153,7 +153,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             const interactable = interact(this)
             interactable.styleCursor(false)
             interactable.on('down', this.grab.bind(this))
-            interactable.on('up', this.unGrab.bind(this))
+            interactable.on('up', this.release.bind(this))
             interactable.draggable({
               onstart: this.startDragging.bind(this),
               onmove: this.dragMove.bind(this),
@@ -178,7 +178,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.moveByOffset(event.x, event.y)
             }
           },
-          unGrab: () => {
+          release: () => {
             this.grabbed = false
             this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
           },
@@ -312,8 +312,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.draggableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
     }
 
-    private unGrab(): void {
-      this.draggableService.send({type: 'UNGRAB'})
+    private release(): void {
+      this.draggableService.send({type: 'RELEASE'})
     }
 
     private startDragging(): void {

@@ -127,7 +127,7 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
   })
 
-  it('should reach "grabbable" given "grabbed" when "UNGRAB" event occurs (circuit dropzone)', function () {
+  it('should reach "grabbable" given "grabbed" when "RELEASE" event occurs (circuit dropzone)', function () {
     const container = document.createElement('div')
     container.innerHTML = `
   <circuit-dropzone>
@@ -143,7 +143,7 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, 'grabbable')
   })
 
-  it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs (palette dropzone)', function () {
+  it('should reach "deleted" given "grabbed" when "RELEASE" event occurs (palette dropzone)', function () {
     const container = document.createElement('div')
     container.innerHTML = `
   <palette-dropzone>
