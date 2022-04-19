@@ -21,7 +21,7 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
-  | {type: 'UNGRAB_OPERATION'; operation: Operation}
+  | {type: 'RELEASE_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
@@ -141,7 +141,7 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'editing',
                   actions: ['deactivateStep']
                 },
-                UNGRAB_OPERATION: {
+                RELEASE_OPERATION: {
                   target: 'idle',
                   actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
                 },
@@ -467,7 +467,7 @@ export class CircuitEditorElement extends HTMLElement {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
-    this.circuitEditorService.send({type: 'UNGRAB_OPERATION', operation})
+    this.circuitEditorService.send({type: 'RELEASE_OPERATION', operation})
   }
 
   private endDraggingOperation(event: Event): void {
