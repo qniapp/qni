@@ -6825,13 +6825,13 @@ function _e(r) {
       return this.draggableService !== void 0;
     }
     set draggable(i) {
-      this.maybeInitStateMachine(), i ? this.draggableService.send({ type: "SET_INTERACT" }) : this.draggableService.send({ type: "UNSET_INTERACT" });
+      this.maybeInitDraggableStateMachine(), i ? this.draggableService.send({ type: "SET_INTERACT" }) : this.draggableService.send({ type: "UNSET_INTERACT" });
     }
     get dropzone() {
       let i = this.parentElement;
       return ce.notNull(i), !Vs(i) && !Oa(i) ? null : i;
     }
-    maybeInitStateMachine() {
+    maybeInitDraggableStateMachine() {
       this.draggableService === void 0 && (this.draggableService = Fe(this.draggableMachine).onTransition((i) => {
         this.debugDraggable && console.log(`draggable: ${Ve(i.value)}`);
       }).start());
@@ -8509,12 +8509,12 @@ function we(r) {
       return this.hasAttribute("data-hoverable");
     }
     set hoverable(i) {
-      this.maybeInitStateMachine(), i ? this.hoverableService.send({ type: "SET_HOVERABLE" }) : this.hoverableService.send({ type: "UNSET_HOVERABLE" });
+      this.maybeInitHoverableStateMachine(), i ? this.hoverableService.send({ type: "SET_HOVERABLE" }) : this.hoverableService.send({ type: "UNSET_HOVERABLE" });
     }
     get debugHoverable() {
       return this.hasAttribute("data-debug-hoverable");
     }
-    maybeInitStateMachine() {
+    maybeInitHoverableStateMachine() {
       this.hoverableService === void 0 && (this.hoverableService = Fe(this.hoverableMachine).onTransition((i) => {
         this.debugHoverable && console.log(`hoverable: ${Ve(i.value)}`);
       }).start());

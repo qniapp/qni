@@ -232,7 +232,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     set draggable(value: boolean) {
-      this.maybeInitStateMachine()
+      this.maybeInitDraggableStateMachine()
 
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
@@ -251,7 +251,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return el as PaletteDropzoneElement | CircuitDropzoneElement
     }
 
-    private maybeInitStateMachine(): void {
+    private maybeInitDraggableStateMachine(): void {
       if (this.draggableService !== undefined) return
 
       this.draggableService = interpret(this.draggableMachine)
