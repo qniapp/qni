@@ -94,23 +94,6 @@ export function testDraggableOperation(operationName) {
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
   })
 
-  it('should reach "dragging (snapped)" given "grabbed" when the draggable is on circuit-dropzone', function () {
-    const container = document.createElement('div')
-    container.innerHTML = `
-  <circuit-dropzone>
-    <${operationName}></${operationName}>
-  </circuit-dropzone>`
-    document.body.append(container)
-    const operation = document.querySelector(operationName)
-    operation.draggable = true
-
-    mousedown(operation)
-
-    assert.isTrue(operation.dragging)
-    assert.isTrue(operation.snapped)
-    assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
-  })
-
   it('should reach "dragging (unsnapped)" given "dragging (snapped)" when "UNSNAP" event occurs', async function () {
     const container = document.createElement('div')
     container.innerHTML = `
@@ -122,7 +105,7 @@ export function testDraggableOperation(operationName) {
         </circuit-dropzone>
         <circuit-dropzone style="margin-top: 128px;">
         </circuit-dropzone>
-      </cicuit-step/>
+      </cicuit-step>
     </quantum-circuit>
   </circuit-editor>`
     document.body.append(container)
@@ -137,35 +120,27 @@ export function testDraggableOperation(operationName) {
 
     assert.isFalse(operation.snapped)
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'unsnapped'})
-  })
-
-  it('should reach "dragging (snapped)" given "dragging (unsnapped)" when "SNAP" event occurs', async function () {
-    const container = document.createElement('div')
-    container.innerHTML = `
-  <circuit-editor>
-    <quantum-circuit data-target="circuit-editor.circuit">
-      <circuit-step>
-        <circuit-dropzone id="dropzone">
-          <${operationName}></${operationName}>
-        </circuit-dropzone>
-        <circuit-dropzone style="margin-top: 128px;">
-        </circuit-dropzone>
-      </cicuit-step/>
-    </quantum-circuit>
-  </circuit-editor>`
-    document.body.append(container)
-    const operation = document.querySelector(operationName)
-    const dropzone = document.getElementById('dropzone')
-    operation.draggable = true
-    operation.snapTargets = [dropzone.snapTarget]
-    await sendMouse({type: 'move', position: [dropzone.snapTarget.x, dropzone.snapTarget.y]})
-    await sendMouse({type: 'down'})
-    await sendMouse({type: 'move', position: [1000, 1000]})
 
     await sendMouse({type: 'move', position: [dropzone.snapTarget.x, dropzone.snapTarget.y]})
 
     assert.isTrue(operation.snapped)
     assert.deepEqual(operation.draggableService.state.value, {dragging: 'snapped'})
+  })
+
+  it('should reach "grabbable" given "grabbed" when "UNGRAB" event occurs (circuit dropzone)', function () {
+    const container = document.createElement('div')
+    container.innerHTML = `
+  <circuit-dropzone>
+    <${operationName}></${operationName}>
+  </circuit-dropzone>`
+    document.body.append(container)
+    const operation = document.querySelector(operationName)
+    operation.draggable = true
+    mousedown(operation)
+
+    mouseup(operation)
+
+    assert.deepEqual(operation.draggableService.state.value, 'grabbable')
   })
 
   it('should reach "deleted" given "grabbed" when "UNGRAB" event occurs (palette dropzone)', function () {
