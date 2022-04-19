@@ -17,11 +17,11 @@ import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
+import {HoverableMixin} from './mixin'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
 import {WriteGateElement} from './write-gate-element'
-import {HoverableMixin} from './mixin'
 
 export type SnapTarget = {
   dropzone: CircuitDropzoneElement | null
@@ -276,11 +276,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
 
     if (this.hoverable) {
-      for (const operation of this.operations) {
-        operation.hoverable = true
-      }
+      this.makeOperationsHoverable()
     }
-
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -308,13 +305,21 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       }
     }
 
+    if (name === 'data-hoverable' && newValue !== null) {
+      this.makeOperationsHoverable()
+    }
+
     if (name === 'data-json' && newValue !== '') {
       this.loadFromJson(newValue)
       if (this.hoverable) {
-        for (const operation of this.operations) {
-          operation.hoverable = true
-        }
+        this.makeOperationsHoverable()
       }
+    }
+  }
+
+  private makeOperationsHoverable() {
+    for (const operation of this.operations) {
+      operation.hoverable = true
     }
   }
 

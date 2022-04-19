@@ -39,7 +39,7 @@ type DraggableEvent =
   | {type: 'UNSET_INTERACT'}
   | {type: 'DELETE'}
   | {type: 'GRAB'; x: number; y: number}
-  | {type: 'UNGRAB'}
+  | {type: 'RELEASE'}
   | {type: 'START_DRAGGING'}
   | {type: 'END_DRAGGING'}
   | {type: 'SNAP'}
@@ -81,15 +81,20 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             }
           },
           grabbed: {
-            always: [{target: 'dragging', cond: 'isOnCircuitDropzone'}],
             on: {
               START_DRAGGING: {
-                target: 'dragging'
+                target: 'dragging',
+                actions: ['startDragging']
               },
-              UNGRAB: [
+              RELEASE: [
+                {
+                  target: 'grabbable',
+                  actions: ['release'],
+                  cond: 'isOnCircuitDropzone'
+                },
                 {
                   target: 'deleted',
-                  actions: ['unGrab'],
+                  actions: ['release'],
                   cond: 'isOnPaletteDropzone'
                 }
               ]
@@ -106,7 +111,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             },
             states: {
               unknown: {
-                entry: ['startDragging'],
                 always: [
                   {target: 'snapped', cond: 'isOnCircuitDropzone'},
                   {target: 'unsnapped', cond: 'isOnPaletteDropzone'}
@@ -149,7 +153,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             const interactable = interact(this)
             interactable.styleCursor(false)
             interactable.on('down', this.grab.bind(this))
-            interactable.on('up', this.unGrab.bind(this))
+            interactable.on('up', this.release.bind(this))
             interactable.draggable({
               onstart: this.startDragging.bind(this),
               onmove: this.dragMove.bind(this),
@@ -174,9 +178,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.moveByOffset(event.x, event.y)
             }
           },
-          unGrab: () => {
+          release: () => {
             this.grabbed = false
-            this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
+            this.dispatchEvent(new Event('operation-release', {bubbles: true}))
           },
           startDragging: () => {
             this.dragging = true
@@ -232,7 +236,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     set draggable(value: boolean) {
-      this.maybeInitStateMachine()
+      this.maybeInitDraggableStateMachine()
 
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
@@ -251,7 +255,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       return el as PaletteDropzoneElement | CircuitDropzoneElement
     }
 
-    private maybeInitStateMachine(): void {
+    private maybeInitDraggableStateMachine(): void {
       if (this.draggableService !== undefined) return
 
       this.draggableService = interpret(this.draggableMachine)
@@ -308,8 +312,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.draggableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
     }
 
-    private unGrab(): void {
-      this.draggableService.send({type: 'UNGRAB'})
+    private release(): void {
+      this.draggableService.send({type: 'RELEASE'})
     }
 
     private startDragging(): void {

@@ -1,4 +1,5 @@
 import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Hoverable {
   get hoverable(): boolean
@@ -7,17 +8,7 @@ export declare class Hoverable {
 
 export function HoverableMixin<TBase extends Constructor<HTMLElement>>(Base: TBase): Constructor<Hoverable> & TBase {
   class HoverableMixinClass extends Base {
-    get hoverable(): boolean {
-      return this.hasAttribute('data-hoverable')
-    }
-
-    set hoverable(value: boolean) {
-      if (value) {
-        this.setAttribute('data-hoverable', '')
-      } else {
-        this.removeAttribute('data-hoverable')
-      }
-    }
+    @attr hoverable = false
   }
 
   return HoverableMixinClass as Constructor<Hoverable> & TBase

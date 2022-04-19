@@ -21,7 +21,7 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
-  | {type: 'UNGRAB_OPERATION'; operation: Operation}
+  | {type: 'RELEASE_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
@@ -141,7 +141,7 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'editing',
                   actions: ['deactivateStep']
                 },
-                UNGRAB_OPERATION: {
+                RELEASE_OPERATION: {
                   target: 'idle',
                   actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
                 },
@@ -332,8 +332,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.circuit.hoverable = true
-
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
@@ -345,7 +343,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
-    this.addEventListener('operation-ungrab', this.ungrabOperation)
+    this.addEventListener('operation-release', this.releaseOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
@@ -356,12 +354,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
-
-    this.addEventListener('quantum-circuit-init', () => {
-      for (const each of this.circuit.operations) {
-        each.initMenu()
-      }
-    })
+    this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
   }
 
   update(): void {
@@ -370,6 +363,19 @@ export class CircuitEditorElement extends HTMLElement {
 
   private get activeOperation(): Operation | null {
     return this.circuit.querySelector('circuit-dropzone > [data-active]')
+  }
+
+  private makeCircuitHoverable(event: Event): void {
+    const circuit = event.target as QuantumCircuitElement
+
+    if (circuit !== this.circuit) {
+      return
+    }
+
+    this.circuit.hoverable = true
+    for (const each of this.circuit.operations) {
+      each.initMenu()
+    }
   }
 
   private maybeDeactivateOperation(event: Event): void {
@@ -457,11 +463,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
   }
 
-  private ungrabOperation(event: Event): void {
+  private releaseOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
-    this.circuitEditorService.send({type: 'UNGRAB_OPERATION', operation})
+    this.circuitEditorService.send({type: 'RELEASE_OPERATION', operation})
   }
 
   private endDraggingOperation(event: Event): void {
