@@ -276,9 +276,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
 
     if (this.hoverable) {
-      for (const operation of this.operations) {
-        operation.hoverable = true
-      }
+      this.makeOperationsHoverable()
     }
     this.appendMinimumSteps()
     this.appendMinimumWires()
@@ -308,26 +306,22 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     }
 
     if (name === 'data-hoverable' && newValue !== null) {
-      for (const operation of this.operations) {
-        operation.hoverable = true
-      }
+      this.makeOperationsHoverable()
     }
 
     if (name === 'data-json' && newValue !== '') {
       this.loadFromJson(newValue)
       if (this.hoverable) {
-        for (const operation of this.operations) {
-          operation.hoverable = true
-        }
+        this.makeOperationsHoverable()
       }
     }
   }
 
-  // private makeOperationsHoverable() {
-  //   for (const operation of this.operations) {
-  //     operation.hoverable = true
-  //   }
-  // }
+  private makeOperationsHoverable() {
+    for (const operation of this.operations) {
+      operation.hoverable = true
+    }
+  }
 
   private update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
