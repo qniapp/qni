@@ -332,8 +332,6 @@ export class CircuitEditorElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.circuit.hoverable = true
-
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
@@ -358,6 +356,8 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
 
     this.addEventListener('quantum-circuit-init', () => {
+      this.circuit.hoverable = true
+
       for (const each of this.circuit.operations) {
         each.initMenu()
       }
