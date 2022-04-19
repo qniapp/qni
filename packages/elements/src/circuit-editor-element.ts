@@ -343,7 +343,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
-    this.addEventListener('operation-ungrab', this.ungrabOperation)
+    this.addEventListener('operation-release', this.releaseOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
@@ -463,7 +463,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
   }
 
-  private ungrabOperation(event: Event): void {
+  private releaseOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 

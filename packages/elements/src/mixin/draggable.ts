@@ -180,7 +180,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           },
           release: () => {
             this.grabbed = false
-            this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
+            this.dispatchEvent(new Event('operation-release', {bubbles: true}))
           },
           startDragging: () => {
             this.dragging = true
