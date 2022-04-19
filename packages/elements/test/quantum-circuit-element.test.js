@@ -1,10 +1,15 @@
 import '../dist/index'
 import {assert} from '@esm-bundle/chai'
 import {testElementCreation} from './common/test-element-creation'
+import {testHoverable} from './common/test-hoverable'
 
 describe('quantum-circuit element', function () {
   describe('element creation', function () {
     testElementCreation(window.QuantumCircuitElement, 'quantum-circuit')
+  })
+
+  describe('hoverable', function () {
+    testHoverable('quantum-circuit')
   })
 
   describe('quantum-circuit data-json attribute', function () {

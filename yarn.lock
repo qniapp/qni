@@ -59,10 +59,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@github/catalyst@~1.3":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.3.2.tgz#46d63722a9182f2b4da5a8b604ecb3bdaaa378d0"
-  integrity sha512-QAjk2cBIBK9VPOSMla6swI9R1GJIgMZ562T4iTYz6xvAimb12m5WSjfYa65cVQB9Lm4XV0KNF2myzKGw2LG3Ww==
+"@github/catalyst@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.3.0.tgz#b86ada2a726d3589c69b899953e8b6b8437b1e14"
+  integrity sha512-UW5aDJbyuPfTfLT8eIwHJue9sqDMDShp6WZT1HBwdBweje91nYObBPd+H96NDJ/24UL95JyZ2340S1/mvM60JA==
 
 "@github/jtml@~0.4":
   version "0.4.1"
