@@ -10,37 +10,13 @@ import {testIfable} from './common/test-ifable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('rz-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.RzGateElement, 'rz-gate')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('rz-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('rz-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('rz-gate')
-  })
-
-  describe('disableable', function () {
-    testDisableable('rz-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('rz-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('rz-gate')
-  })
-
-  describe('ifable', function () {
-    testIfable('rz-gate')
-  })
-
+  testActivateable('rz-gate')
   testControllable('rz-gate')
+  testDisableable('rz-gate')
+  testDraggableOperation('rz-gate')
+  testElementCreation(window.RzGateElement, 'rz-gate')
+  testHoverable('rz-gate')
+  testIconable('rz-gate')
+  testIfable('rz-gate')
+  testWireableOperation('rz-gate')
 })

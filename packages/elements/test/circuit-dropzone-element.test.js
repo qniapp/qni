@@ -3,9 +3,7 @@ import {assert} from '@esm-bundle/chai'
 import {testElementCreation} from './common/test-element-creation'
 
 describe('circuit-dropzone element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.CircuitDropzoneElement, 'circuit-dropzone')
-  })
+  testElementCreation(window.CircuitDropzoneElement, 'circuit-dropzone')
 
   describe('wireable', function () {
     afterEach(function () {

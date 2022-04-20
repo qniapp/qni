@@ -6,23 +6,9 @@ import {testHoverable} from './common/test-hoverable'
 import {testIconable} from './common/test-iconable'
 
 describe('measurement-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.MeasurementGateElement, 'measurement-gate')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('measurement-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('measurement-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('measurement-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('measurement-gate')
-  })
+  testActivateable('measurement-gate')
+  testDraggableOperation('measurement-gate')
+  testElementCreation(window.MeasurementGateElement, 'measurement-gate')
+  testHoverable('measurement-gate')
+  testIconable('measurement-gate')
 })

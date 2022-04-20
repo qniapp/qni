@@ -10,37 +10,13 @@ import {testIfable} from './common/test-ifable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('x-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.XGateElement, 'x-gate')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('x-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('x-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('x-gate')
-  })
-
-  describe('disableable', function () {
-    testDisableable('x-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('x-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('x-gate')
-  })
-
-  describe('ifable', function () {
-    testIfable('x-gate')
-  })
-
+  testActivateable('x-gate')
   testControllable('t-gate')
+  testDisableable('x-gate')
+  testDraggableOperation('x-gate')
+  testElementCreation(window.XGateElement, 'x-gate')
+  testHoverable('x-gate')
+  testIconable('x-gate')
+  testIfable('x-gate')
+  testWireableOperation('x-gate')
 })

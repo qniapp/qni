@@ -14,33 +14,12 @@ describe('h-gate element', function () {
     testElementCreation(window.HGateElement, 'h-gate')
   })
 
-  describe('hoverable', function () {
-    testHoverable('h-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('h-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('h-gate')
-  })
-
-  describe('disableable', function () {
-    testDisableable('h-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('h-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('h-gate')
-  })
-
-  describe('ifable', function () {
-    testIfable('h-gate')
-  })
-
+  testActivateable('h-gate')
   testControllable('h-gate')
+  testDisableable('h-gate')
+  testDraggableOperation('h-gate')
+  testHoverable('h-gate')
+  testIconable('h-gate')
+  testIfable('h-gate')
+  testWireableOperation('h-gate')
 })

@@ -9,33 +9,12 @@ import {testIconable} from './common/test-iconable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('swap-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.SwapGateElement, 'swap-gate')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('swap-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('swap-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('swap-gate')
-  })
-
-  describe('disableable', function () {
-    testDisableable('swap-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('swap-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('swap-gate')
-  })
-
+  testActivateable('swap-gate')
   testControllable('swap-gate')
+  testDisableable('swap-gate')
+  testDraggableOperation('swap-gate')
+  testElementCreation(window.SwapGateElement, 'swap-gate')
+  testHoverable('swap-gate')
+  testIconable('swap-gate')
+  testWireableOperation('swap-gate')
 })

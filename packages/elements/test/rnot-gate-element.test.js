@@ -10,37 +10,13 @@ import {testIfable} from './common/test-ifable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('rnot-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.RnotGateElement, 'rnot-gate')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('rnot-gate')
-  })
-
-  describe('activateable', function () {
-    testActivateable('rnot-gate')
-  })
-
-  describe('iconable', function () {
-    testIconable('rnot-gate')
-  })
-
-  describe('disableable', function () {
-    testDisableable('rnot-gate')
-  })
-
-  describe('wireable', function () {
-    testWireableOperation('rnot-gate')
-  })
-
-  describe('draggable', function () {
-    testDraggableOperation('rnot-gate')
-  })
-
-  describe('ifable', function () {
-    testIfable('rnot-gate')
-  })
-
+  testActivateable('rnot-gate')
   testControllable('rnot-gate')
+  testDisableable('rnot-gate')
+  testDraggableOperation('rnot-gate')
+  testElementCreation(window.RnotGateElement, 'rnot-gate')
+  testHoverable('rnot-gate')
+  testIconable('rnot-gate')
+  testIfable('rnot-gate')
+  testWireableOperation('rnot-gate')
 })

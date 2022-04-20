@@ -4,13 +4,8 @@ import {testElementCreation} from './common/test-element-creation'
 import {testHoverable} from './common/test-hoverable'
 
 describe('quantum-circuit element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.QuantumCircuitElement, 'quantum-circuit')
-  })
-
-  describe('hoverable', function () {
-    testHoverable('quantum-circuit')
-  })
+  testElementCreation(window.QuantumCircuitElement, 'quantum-circuit')
+  testHoverable('quantum-circuit')
 
   describe('circuit-editor quantum-circuit', function () {
     it('automatically becomes hoverable = true when it is a child of <circuit-editor>', function () {
