@@ -5,6 +5,7 @@ import {testDraggableOperation} from './common/test-draggable'
 import {testElementCreation} from './common/test-element-creation'
 import {testHoverable} from './common/test-hoverable'
 import {testIconable} from './common/test-iconable'
+import {testIfable} from './common/test-ifable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('rz-gate element', function () {
@@ -34,5 +35,9 @@ describe('rz-gate element', function () {
 
   describe('draggable', function () {
     testDraggableOperation('rz-gate')
+  })
+
+  describe('ifable', function () {
+    testIfable('rz-gate')
   })
 })
