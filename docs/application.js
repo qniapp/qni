@@ -9513,7 +9513,7 @@ var Ha = u((r) => r != null && r instanceof tr, "isRzGateElement");
 var Hp = u((r) => r != null && r instanceof rr, "isSwapGateElement");
 var yl = u((r) => r != null && r instanceof jt, "isControlGateElement");
 var $p = u((r) => r != null && r instanceof at, "isBlochDisplayElement");
-var fT = u((r) => r != null && r instanceof Bt, "isWriteGateElement");
+var dT = u((r) => r != null && r instanceof Bt, "isWriteGateElement");
 var Fp = u((r) => r != null && r instanceof Zt, "isMeasurementGateElement");
 function Up(r) {
   return /^-?\d+$/.test(r);

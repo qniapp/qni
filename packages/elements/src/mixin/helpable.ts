@@ -1,4 +1,4 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
+import {createMachine, interpret} from 'xstate'
 import tippy, {Instance, roundArrow} from 'tippy.js'
 import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
