@@ -1,4 +1,4 @@
-import styles from '../../dist/qni.css'
+import '../../dist/qni.css'
 import {assert} from '@esm-bundle/chai'
 import {once} from './once'
 import {sendMouse} from '@web/test-runner-commands'
