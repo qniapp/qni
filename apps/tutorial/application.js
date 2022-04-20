@@ -4190,26 +4190,6 @@ var bs = "Bloch";
 var Nu = "|0>";
 var Gu = "|1>";
 var oa = "Measure";
-function Ce(r) {
-  class e extends r {
-    get active() {
-      return this.hasAttribute("data-active");
-    }
-    set active(i) {
-      i ? this.activate() : this.deactivate();
-    }
-    activate() {
-      this.setAttribute("data-active", ""), this.dispatchEvent(new Event("operation-active", { bubbles: true }));
-    }
-    deactivate() {
-      this.removeAttribute("data-active");
-    }
-  }
-  __name(e, "e");
-  return u(e, "ActivateableMixinClass"), e;
-}
-__name(Ce, "Ce");
-u(Ce, "ActivateableMixin");
 var ys = /* @__PURE__ */ new WeakSet();
 function ws(r) {
   ys.add(r), r.shadowRoot && Es(r.shadowRoot), Ts(r), Ss(r.ownerDocument);
@@ -4402,6 +4382,24 @@ function ne(r) {
 }
 __name(ne, "ne");
 u(ne, "controller");
+function Ce(r) {
+  class e extends r {
+    constructor() {
+      super(...arguments);
+      this.active = false;
+    }
+    activate() {
+      this.active = true, this.dispatchEvent(new Event("operation-active", { bubbles: true }));
+    }
+    deactivate() {
+      this.active = false;
+    }
+  }
+  __name(e, "e");
+  return u(e, "ActivateableMixinClass"), z([j], e.prototype, "active", 2), e;
+}
+__name(Ce, "Ce");
+u(Ce, "ActivateableMixin");
 var yn = u((r) => typeof r == "object" && r !== null && typeof r.angle == "string" && typeof r.reducedAngle == "string", "isAngleable");
 function Qr(r) {
   class e extends r {
@@ -4534,12 +4532,12 @@ var wn = Se.Send;
 var la = Se.Cancel;
 var $u = Se.NullEvent;
 var Is = Se.Assign;
-var om = Se.After;
-var am = Se.DoneState;
+var am = Se.After;
+var sm = Se.DoneState;
 var ua = Se.Log;
 var Fu = Se.Init;
 var Bi = Se.Invoke;
-var sm = Se.ErrorExecution;
+var lm = Se.ErrorExecution;
 var Ds = Se.ErrorPlatform;
 var Rs = Se.ErrorCustom;
 var Hi = Se.Update;
@@ -4855,7 +4853,7 @@ u(tc, "isObservable");
 var wr = function() {
   return typeof Symbol == "function" && Symbol.observable || "@@observable";
 }();
-var hm = (da = {}, da[wr] = function() {
+var vm = (da = {}, da[wr] = function() {
   return this;
 }, da[Symbol.observable] = function() {
   return this;
@@ -8835,19 +8833,12 @@ var lv = vo((r) => (e) => {
 });
 function ke(r) {
   class e extends r {
-    constructor() {
-      super(...arguments);
-      this.icon = "";
-    }
     iconHtml(i) {
       return K`${this.iconStyle}
         <div id="icon" part="icon">${this.iconSvg(i)}</div>`;
     }
     iconSvg(i) {
-      if (this.icon === "")
-        return K([i]);
-      let l = document.getElementById(this.icon);
-      return l === null ? null : l.content.cloneNode(true);
+      return K([i]);
     }
     get iconStyle() {
       return K`<style>
@@ -8870,7 +8861,7 @@ function ke(r) {
     }
   }
   __name(e, "e");
-  return u(e, "IconableMixinClass"), z([j], e.prototype, "icon", 2), e;
+  return u(e, "IconableMixinClass"), e;
 }
 __name(ke, "ke");
 u(ke, "IconableMixin");
