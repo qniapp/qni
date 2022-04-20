@@ -247,11 +247,3 @@ function move(operation, dx = 1, dy = 1) {
     })
   )
 }
-
-function pointerX(operation) {
-  return operation.getBoundingClientRect().left + 16
-}
-
-function pointerY(operation) {
-  return operation.getBoundingClientRect().top + 16
-}
