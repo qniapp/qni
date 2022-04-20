@@ -1,5 +1,6 @@
 import '../dist/index'
 import {testActivateable} from './common/test-activateable'
+import {testControllable} from './common/test-controllable'
 import {testDisableable} from './common/test-disableable'
 import {testDraggableOperation} from './common/test-draggable'
 import {testElementCreation} from './common/test-element-creation'
@@ -40,4 +41,6 @@ describe('h-gate element', function () {
   describe('ifable', function () {
     testIfable('h-gate')
   })
+
+  testControllable('h-gate')
 })
