@@ -1,6 +1,6 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {attr, controller} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {isHelpable} from './mixin'
 
@@ -52,19 +52,16 @@ export class PaletteDropzoneElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private paletteDropzoneService!: Interpreter<PaletteDropzoneContext, any, PaletteDropzoneEvent>
+  private paletteDropzoneService = interpret(this.paletteDropzoneMachine)
+    .onTransition(state => {
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log(`palette-dropzone: ${state.value}`)
+      }
+    })
+    .start()
 
   connectedCallback(): void {
-    this.paletteDropzoneService = interpret(this.paletteDropzoneMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`palette-dropzone: ${state.value}`)
-        }
-      })
-      .start()
-
     this.attachShadow({mode: 'open'})
     this.update()
 

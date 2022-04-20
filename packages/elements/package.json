@@ -43,7 +43,7 @@
     "@qni/common": "^0.0.46",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
-    "xstate": "~4.30"
+    "xstate": "~4.31"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",

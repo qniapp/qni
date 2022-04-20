@@ -116,20 +116,17 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
         }
       }
     )
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private helpableService!: Interpreter<HelpableContext, any, HelpableEvent>
+    private helpableService = interpret(this.helpableMachine)
+      .onTransition(state => {
+        if (this.debugHelpable) {
+          // eslint-disable-next-line no-console
+          console.log(`helpable: ${describe(state.value)}`)
+        }
+      })
+      .start()
     private popup!: Instance
 
     initHelp(): void {
-      this.helpableService = interpret(this.helpableMachine)
-        .onTransition(state => {
-          if (this.debugHelpable) {
-            // eslint-disable-next-line no-console
-            console.log(`helpable: ${describe(state.value)}`)
-          }
-        })
-        .start()
-
       this.helpableService.send('INIT')
     }
 

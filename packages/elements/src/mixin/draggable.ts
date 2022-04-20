@@ -1,5 +1,5 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Util, describe} from '@qni/common'
+import {createMachine, interpret} from 'xstate'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
@@ -228,21 +228,33 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         }
       }
     )
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
+    public draggableService = interpret(this.draggableMachine).onTransition(state => {
+      if (this.debugDraggable) {
+        // eslint-disable-next-line no-console
+        console.log(`draggable: ${describe(state.value)}`)
+      }
+    })
 
     get draggable(): boolean {
-      return this.draggableService !== undefined
+      return this.draggableService.state !== undefined
     }
 
     set draggable(value: boolean) {
-      this.maybeInitDraggableStateMachine()
+      this.maybeStartDraggableStateMachine()
 
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
       } else {
         this.draggableService.send({type: 'UNSET_INTERACT'})
       }
+    }
+
+    private maybeStartDraggableStateMachine(): void {
+      if (this.draggableService.state !== undefined) {
+        return
+      }
+
+      this.draggableService.start()
     }
 
     get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement | null {
@@ -253,19 +265,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         return null
       }
       return el as PaletteDropzoneElement | CircuitDropzoneElement
-    }
-
-    private maybeInitDraggableStateMachine(): void {
-      if (this.draggableService !== undefined) return
-
-      this.draggableService = interpret(this.draggableMachine)
-        .onTransition(state => {
-          if (this.debugDraggable) {
-            // eslint-disable-next-line no-console
-            console.log(`draggable: ${describe(state.value)}`)
-          }
-        })
-        .start()
     }
 
     set snapTargets(values: Array<{x: number; y: number}>) {

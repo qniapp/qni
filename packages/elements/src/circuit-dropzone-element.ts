@@ -1,7 +1,7 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {Util} from '@qni/common'
 import interact from 'interactjs'
 import wiresIcon from '../icon/wires.svg'
@@ -121,8 +121,14 @@ export class CircuitDropzoneElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private circuitDropzoneService!: Interpreter<CircuitDropzoneContext, any, CircuitDropzoneEvent>
+  private circuitDropzoneService = interpret(this.circuitDropzoneMachine)
+    .onTransition(state => {
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log(`circuit-dropzone: ${state.value}`)
+      }
+    })
+    .start()
 
   get noConnections(): boolean {
     return !this.connectTop && !this.connectBottom
@@ -166,15 +172,6 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.circuitDropzoneService = interpret(this.circuitDropzoneMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`circuit-dropzone: ${state.value}`)
-        }
-      })
-      .start()
-
     this.attachShadow({mode: 'open'})
     this.update()
     if (this.operation !== null) this.initOperation(this.operation)

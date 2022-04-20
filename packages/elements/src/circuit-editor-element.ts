@@ -1,9 +1,9 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isIfable, isMenuable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {Util, describe} from '@qni/common'
 import {attr, controller, target} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
@@ -316,19 +316,15 @@ export class CircuitEditorElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private circuitEditorService!: Interpreter<CircuitEditorContext, any, CircuitEditorEvent>
+  private circuitEditorService = interpret(this.circuitEditorMachine).onTransition(state => {
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log(`circuit-editor: ${describe(state.value)}`)
+    }
+  })
 
   connectedCallback(): void {
-    this.circuitEditorService = interpret(this.circuitEditorMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`circuit-editor: ${describe(state.value)}`)
-        }
-      })
-      .start()
-
+    this.circuitEditorService.start()
     this.attachShadow({mode: 'open'})
     this.update()
 

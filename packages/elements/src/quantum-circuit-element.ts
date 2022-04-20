@@ -1,7 +1,6 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
@@ -13,6 +12,7 @@ import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
 import {attr, controller, targets} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
@@ -112,9 +112,14 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       }
     }
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
-
+  private quantumCircuitService = interpret(this.quantumCircuitMachine)
+    .onTransition(state => {
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log(`quantum-circuit: ${state.value}`)
+      }
+    })
+    .start()
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
@@ -258,15 +263,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   connectedCallback(): void {
-    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`quantum-circuit: ${state.value}`)
-        }
-      })
-      .start()
-
     this.attachShadow({mode: 'open'})
     this.update()
 

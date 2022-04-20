@@ -31,7 +31,6 @@ export function testDraggableOperation(operationName) {
       document.body.append(container)
       const operation = document.querySelector(operationName)
 
-      assert.equal(operation.draggableService, undefined)
       assert.isFalse(operation.draggable)
     })
 
