@@ -4659,6 +4659,7 @@ circuit-dropzone[data-operation-name='write-gate']::part(wire-output),
 palette-dropzone {
   height: 2rem;
   width: 2rem;
+  display: inline-block;
 }
 
 circuit-step {

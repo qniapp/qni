@@ -16,7 +16,6 @@ import {
   Util,
   describe
 } from '@qni/common'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {
   Operation,
   isControlGateElement,
@@ -34,6 +33,7 @@ import {
   isZGateElement
 } from './operation'
 import {attr, controller} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
@@ -342,7 +342,6 @@ export class CircuitStepElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private circuitStepService = interpret(this.circuitStepMachine).onTransition(state => {
     if (this.debug) {
       // eslint-disable-next-line no-console
