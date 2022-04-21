@@ -7,7 +7,7 @@ import {testElementCreation} from './common/test-element-creation'
 describe('circuit-dropzone element', function () {
   testElementCreation(window.CircuitDropzoneElement, 'circuit-dropzone')
 
-  describe('states', function () {
+  describe('initial states', function () {
     afterEach(async function () {
       document.body.textContent = ''
       await resetMouse()
@@ -17,11 +17,11 @@ describe('circuit-dropzone element', function () {
       const container = document.createElement('div')
       container.innerHTML = `<circuit-dropzone></circuit-dropzone>`
       document.body.append(container)
-      const dropzone = document.querySelector('circuit-dropzone')
+      const circuitDropzone = document.querySelector('circuit-dropzone')
 
-      assert.isFalse(dropzone.occupied)
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'empty')
-      assert.equal(dropzone.operationName, '')
+      assert.isFalse(circuitDropzone.occupied)
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'empty')
+      assert.equal(circuitDropzone.operationName, '')
     })
 
     it('should reach "occupied" when it has an operation', function () {
@@ -31,117 +31,101 @@ describe('circuit-dropzone element', function () {
       <h-gate></h-gate>
     </circuit-dropzone>`
       document.body.append(container)
-      const dropzone = document.querySelector('circuit-dropzone')
+      const circuitDropzone = document.querySelector('circuit-dropzone')
 
-      assert.isTrue(dropzone.occupied)
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'occupied')
-      assert.equal(dropzone.operationName, 'h-gate')
+      assert.isTrue(circuitDropzone.occupied)
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'occupied')
+      assert.equal(circuitDropzone.operationName, 'h-gate')
+    })
+  })
+
+  describe('state transitions', function () {
+    let circuitDropzone
+    let operation
+
+    beforeEach(function () {
+      const container = document.createElement('div')
+      container.innerHTML = `
+    <circuit-editor>
+      <palette-dropzone>
+        <h-gate></h-gate>
+      </palette-dropzone>
+
+      <quantum-circuit data-target="circuit-editor.circuit">
+        <circuit-dropzone></circuit-dropzone>
+      </quantum-circuit>
+    </circuit-editor>`
+      document.body.append(container)
+      operation = document.querySelector('h-gate')
+      circuitDropzone = document.querySelector('circuit-dropzone')
     })
 
-    it('should reach "occupied" when an operation is put', function () {
-      const container = document.createElement('div')
-      container.innerHTML = `<circuit-dropzone></circuit-dropzone>`
-      document.body.append(container)
-      const dropzone = document.querySelector('circuit-dropzone')
+    afterEach(async function () {
+      document.body.textContent = ''
+      await resetMouse()
+    })
 
-      dropzone.put(new window.HGateElement())
+    it('should reach "occupied" when put an operation on it', function () {
+      circuitDropzone.put(new window.HGateElement())
 
-      assert.isTrue(dropzone.occupied)
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'occupied')
-      assert.equal(dropzone.operationName, 'h-gate')
+      assert.isTrue(circuitDropzone.occupied)
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'occupied')
+      assert.equal(circuitDropzone.operationName, 'h-gate')
     })
 
     it('should reach "snapped" when hovering an operation over it', async function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-    <circuit-editor>
-      <palette-dropzone>
-        <h-gate></h-gate>
-      </palette-dropzone>
-
-      <quantum-circuit data-target="circuit-editor.circuit">
-        <circuit-step>
-          <circuit-dropzone></circuit-dropzone>
-        </circuit-step>
-      </quantum-circuit>
-    </circuit-editor>`
-      document.body.append(container)
-      const operation = document.querySelector('h-gate')
-      const dropzone = document.querySelector('circuit-dropzone')
-
       await sendMouse({
         type: 'move',
         position: xy(operation)
       })
       await sendMouse({type: 'down'})
-      await sendMouse({type: 'move', position: xy(dropzone)})
+      await sendMouse({type: 'move', position: xy(circuitDropzone)})
 
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'snapped')
-      assert.equal(dropzone.operationName, 'h-gate')
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'snapped')
+      assert.equal(circuitDropzone.operationName, 'h-gate')
     })
 
-    it('should reach "empty" given "snapped" when moving its operation away', async function () {
-      document.body.textContent = ''
-
-      const container = document.createElement('div')
-      container.innerHTML = `
-    <circuit-editor>
-      <palette-dropzone>
-        <h-gate></h-gate>
-      </palette-dropzone>
-
-      <quantum-circuit data-target="circuit-editor.circuit">
-        <circuit-step>
-          <circuit-dropzone></circuit-dropzone>
-        </circuit-step>
-      </quantum-circuit>
-    </circuit-editor>`
-      document.body.append(container)
-      const operation = document.querySelector('h-gate')
-      const dropzone = document.querySelector('circuit-dropzone')
+    it('should reach "empty" given "snapped" when move its operation away', async function () {
       await sendMouse({
         type: 'move',
         position: xy(operation)
       })
       await sendMouse({type: 'down'})
-      await sendMouse({type: 'move', position: xy(dropzone)})
+      await sendMouse({type: 'move', position: xy(circuitDropzone)})
 
       await sendMouse({type: 'move', position: [1000, 1000]})
 
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'empty')
-      assert.equal(dropzone.operationName, '')
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'empty')
+      assert.equal(circuitDropzone.operationName, '')
     })
 
     it('should reach "occupied" when drag & drop an operation onto it', async function () {
-      document.body.textContent = ''
-
-      const container = document.createElement('div')
-      container.innerHTML = `
-    <circuit-editor>
-      <palette-dropzone>
-        <h-gate></h-gate>
-      </palette-dropzone>
-
-      <quantum-circuit data-target="circuit-editor.circuit">
-        <circuit-step>
-          <circuit-dropzone></circuit-dropzone>
-        </circuit-step>
-      </quantum-circuit>
-    </circuit-editor>`
-      document.body.append(container)
-      const operation = document.querySelector('h-gate')
-      const dropzone = document.querySelector('circuit-dropzone')
-
       await sendMouse({
         type: 'move',
         position: xy(operation)
       })
       await sendMouse({type: 'down'})
-      await sendMouse({type: 'move', position: xy(dropzone)})
+      await sendMouse({type: 'move', position: xy(circuitDropzone)})
       await sendMouse({type: 'up'})
 
-      assert.equal(dropzone.circuitDropzoneService.state.value, 'occupied')
-      assert.equal(dropzone.operationName, 'h-gate')
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'occupied')
+      assert.equal(circuitDropzone.operationName, 'h-gate')
+    })
+
+    it('should reach "empty" when delete its operation', async function () {
+      await sendMouse({
+        type: 'move',
+        position: xy(operation)
+      })
+      await sendMouse({type: 'down'})
+      await sendMouse({type: 'move', position: xy(circuitDropzone)})
+      await sendMouse({type: 'up'})
+
+      operation.dispatchEvent(new Event('operation-delete', {bubbles: true}))
+
+      assert.equal(circuitDropzone.circuitDropzoneService.state.value, 'empty')
+      assert.equal(circuitDropzone.operation, null)
+      assert.equal(circuitDropzone.operationName, '')
     })
   })
 
