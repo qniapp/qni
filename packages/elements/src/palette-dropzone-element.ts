@@ -42,24 +42,25 @@ export class PaletteDropzoneElement extends HTMLElement {
   }
 
   private get operation(): Operation {
-    const children = Array.from(this.children)
-    const operations = children.filter((each): each is Operation => isOperation(each))
-
-    if (operations.length === 0) {
+    if (this.operations.length === 0) {
       throw new Error('palette-dropzone must have an operation.')
-    } else if (operations.length === 1) {
-      return operations[0]
+    } else if (this.operations.length === 1) {
+      return this.operations[0]
     } else {
       throw new Error('palette-dropzone cannot hold multiple operations.')
     }
   }
 
+  private get operations(): Operation[] {
+    return Array.from(this.children).filter((each): each is Operation => isOperation(each))
+  }
+
   private newOperation(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new TypeError(`${operation} isn't an operation.`)
+    this.assertOperation(operation)
 
     const newOperation = operation.cloneNode(false)
-    if (!isOperation(newOperation)) throw new TypeError(`${newOperation} isn't an operation.`)
+    this.assertOperation(newOperation)
 
     if (isHelpable(operation)) operation.disableHelp()
     this.prepend(newOperation)
@@ -68,9 +69,13 @@ export class PaletteDropzoneElement extends HTMLElement {
 
   private deleteOperation(event: Event): void {
     const operation = event.target
-    if (!isOperation(operation)) throw new TypeError(`${operation} isn't an operation.`)
+    this.assertOperation(operation)
 
     this.removeChild(operation)
+  }
+
+  private assertOperation(element: unknown): asserts element is Operation {
+    if (!isOperation(element)) throw new TypeError(`${element} isn't an operation.`)
   }
 }
 

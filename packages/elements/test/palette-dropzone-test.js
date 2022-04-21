@@ -8,20 +8,25 @@ describe('palette-dropzone element', function () {
   testElementCreation(window.PaletteDropzoneElement, 'palette-dropzone')
 
   describe('drag and drop', function () {
-    afterEach(function () {
-      document.body.textContent = ''
-    })
+    let dropzone
+    let operation
 
-    it('creates a new operation when its operation is grabbed', async function () {
+    beforeEach(function () {
       const container = document.createElement('div')
       container.innerHTML = `
   <palette-dropzone>
     <h-gate></h-gate>
   </palette-dropzone>`
       document.body.append(container)
-      const dropzone = document.querySelector('palette-dropzone')
-      const operation = document.querySelector('h-gate')
+      dropzone = document.querySelector('palette-dropzone')
+      operation = document.querySelector('h-gate')
+    })
 
+    afterEach(function () {
+      document.body.textContent = ''
+    })
+
+    it('creates a new operation when its operation is grabbed', async function () {
       await sendMouse({
         type: 'move',
         position: xy(operation)
@@ -34,15 +39,6 @@ describe('palette-dropzone element', function () {
     })
 
     it('deletes its operation when the operation is dropped', async function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-  <palette-dropzone>
-    <h-gate></h-gate>
-  </palette-dropzone>`
-      document.body.append(container)
-      const dropzone = document.querySelector('palette-dropzone')
-      const operation = document.querySelector('h-gate')
-
       await sendMouse({
         type: 'move',
         position: xy(operation)
