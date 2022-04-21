@@ -1,30 +1,32 @@
 import {assert} from '@esm-bundle/chai'
 
 export function testDisableable(operationName) {
-  beforeEach(function () {
-    const el = document.createElement(operationName)
-    document.body.append(el)
-  })
+  describe('disableable', function () {
+    beforeEach(function () {
+      const el = document.createElement(operationName)
+      document.body.append(el)
+    })
 
-  afterEach(function () {
-    document.body.textContent = ''
-  })
+    afterEach(function () {
+      document.body.textContent = ''
+    })
 
-  it('can be disabled', function () {
-    const operation = document.querySelector(operationName)
-    operation.disable()
+    it('can be disabled', function () {
+      const operation = document.querySelector(operationName)
+      operation.disable()
 
-    assert(operation.disabled)
-    assert(operation.hasAttribute('data-disabled'))
-  })
+      assert(operation.disabled)
+      assert(operation.hasAttribute('data-disabled'))
+    })
 
-  it('can be enabled', function () {
-    const operation = document.querySelector(operationName)
-    operation.disable()
+    it('can be enabled', function () {
+      const operation = document.querySelector(operationName)
+      operation.disable()
 
-    operation.enable()
+      operation.enable()
 
-    assert(operation.enabled)
-    assert(!operation.hasAttribute('data-disabled'))
+      assert(operation.enabled)
+      assert(!operation.hasAttribute('data-disabled'))
+    })
   })
 }

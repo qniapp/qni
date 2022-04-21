@@ -1,4 +1,5 @@
 import {Constructor} from './constructor'
+import {attr} from '@github/catalyst'
 
 export declare class Activateable {
   get active(): boolean
@@ -11,25 +12,15 @@ export function ActivateableMixin<TBase extends Constructor<HTMLElement>>(
   Base: TBase
 ): Constructor<Activateable> & TBase {
   class ActivateableMixinClass extends Base {
-    get active(): boolean {
-      return this.hasAttribute('data-active')
-    }
-
-    set active(value: boolean) {
-      if (value) {
-        this.activate()
-      } else {
-        this.deactivate()
-      }
-    }
+    @attr active = false
 
     activate() {
-      this.setAttribute('data-active', '')
+      this.active = true
       this.dispatchEvent(new Event('operation-active', {bubbles: true}))
     }
 
     deactivate() {
-      this.removeAttribute('data-active')
+      this.active = false
     }
   }
 

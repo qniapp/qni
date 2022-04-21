@@ -1,6 +1,6 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, target} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {describe} from '@qni/common'
 import reloadIcon from '../icon/reload.svg'
 import tailSpinIcon from '../icon/tail-spin.svg'
@@ -83,21 +83,18 @@ export class RunCircuitButtonElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private runCircuitButtonService!: Interpreter<RunCircuitButtonContext, any, RunCircuitButtonEvent>
+  private runCircuitButtonService = interpret(this.runCircuitButtonMachine).onTransition(state => {
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log(`run-circuit-button: ${describe(state.value)}`)
+    }
+  })
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.runCircuitButtonService = interpret(this.runCircuitButtonMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`run-circuit-button: ${describe(state.value)}`)
-        }
-      })
-      .start()
+    this.runCircuitButtonService.start()
 
     this.addEventListener('click', this.handleClickEvent)
   }

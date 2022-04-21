@@ -6,7 +6,7 @@ import tippy, {Instance, ReferenceElement, createSingleton, roundArrow} from 'ti
 export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
   @attr size = ''
-  @attr magnitudes = '1.0'
+  @attr magnitudes = ''
   @attr phases = ''
   @attr multiQubits = false
   @attr showKets = false
@@ -29,7 +29,6 @@ export class CircleNotationElement extends HTMLElement {
 
       const magnitude = amplitude.abs()
       this.setRoundedMagnitude(qubitCircle, magnitude)
-      if (magnitude === 0) continue
 
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
       this.setRoundedPhase(qubitCircle, phaseDeg)
@@ -775,15 +774,19 @@ export class CircleNotationElement extends HTMLElement {
       this.shadowRoot!
     )
 
-    for (const [i, each] of (this.getAttribute('data-magnitudes') || '1.0').split(',').entries()) {
-      this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
+    if (this.magnitudes !== '') {
+      for (const [i, each] of this.magnitudes.split(',').entries()) {
+        this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
+      }
     }
-    for (const [i, each] of (this.getAttribute('data-phases') || '').split(',').entries()) {
-      const qubitCircle = this.qubitCircles[i]
-      const phase = each ? parseFloat(each) : 0
-      this.setRoundedPhase(qubitCircle, phase)
-      const qubitCirclePhaseEl = qubitCircle!.querySelector('.qubit-circle__phase') as HTMLElement
-      qubitCirclePhaseEl!.style.transform = `rotate(${-phase}deg)`
+    if (this.phases !== '') {
+      for (const [i, each] of this.phases.split(',').entries()) {
+        const qubitCircle = this.qubitCircles[i]
+        const phase = each ? parseFloat(each) : 0
+        this.setRoundedPhase(qubitCircle, phase)
+        const qubitCirclePhaseEl = qubitCircle!.querySelector('.qubit-circle__phase') as HTMLElement
+        qubitCirclePhaseEl!.style.transform = `rotate(${-phase}deg)`
+      }
     }
   }
 

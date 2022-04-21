@@ -1,9 +1,9 @@
 import {Angleable, Flaggable, Ifable, isAngleable, isIfable, isMenuable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {Util, describe} from '@qni/common'
 import {attr, controller, target} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {InspectorButtonElement} from './inspector-button-element'
 import {OperationInspectorElement} from './operation-inspector-element'
@@ -21,7 +21,7 @@ type CircuitEditorEvent =
   | {type: 'SET_OPERATION_ANGLE'; operation: Angleable; angle: string; reducedAngle: string}
   | {type: 'SET_OPERATION_FLAG'; operation: Flaggable; flag: string}
   | {type: 'GRAB_OPERATION'; operation: Operation}
-  | {type: 'UNGRAB_OPERATION'; operation: Operation}
+  | {type: 'RELEASE_OPERATION'; operation: Operation}
   | {type: 'END_DRAGGING_OPERATION'; operation: Operation}
   | {type: 'DROP_OPERATION'; operation: Operation}
   | {type: 'DELETE_OPERATION'}
@@ -141,7 +141,7 @@ export class CircuitEditorElement extends HTMLElement {
                   target: 'editing',
                   actions: ['deactivateStep']
                 },
-                UNGRAB_OPERATION: {
+                RELEASE_OPERATION: {
                   target: 'idle',
                   actions: ['maybeRemoveLastEmptyWires', 'removeDocumentCursorGrabbingStyle', 'endCircuitEdit']
                 },
@@ -255,6 +255,8 @@ export class CircuitEditorElement extends HTMLElement {
 
           const operation = event.operation
           if (operation.snapped) return
+
+          if (this.inspectorButton === undefined) return
           if (!this.inspectorButton.isInspectorShown) return
 
           this.inspectorButton.inspector.disableAllPanes()
@@ -304,6 +306,7 @@ export class CircuitEditorElement extends HTMLElement {
         },
         maybeUpdateOperationInspector: (_context, event) => {
           if (event.type !== 'ACTIVATE_OPERATION') return
+          if (this.inspectorButton === undefined) return
 
           const operation = event.operation
           if (this.inspectorButton.isInspectorShown) {
@@ -313,19 +316,15 @@ export class CircuitEditorElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private circuitEditorService!: Interpreter<CircuitEditorContext, any, CircuitEditorEvent>
+  private circuitEditorService = interpret(this.circuitEditorMachine).onTransition(state => {
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log(`circuit-editor: ${describe(state.value)}`)
+    }
+  })
 
   connectedCallback(): void {
-    this.circuitEditorService = interpret(this.circuitEditorMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`circuit-editor: ${describe(state.value)}`)
-        }
-      })
-      .start()
-
+    this.circuitEditorService.start()
     this.attachShadow({mode: 'open'})
     this.update()
 
@@ -340,7 +339,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('operation-inspector-angle-update', this.setOperationAngle)
     this.addEventListener('operation-inspector-flag-change', this.setOperationFlag)
     this.addEventListener('operation-grab', this.grabOperation)
-    this.addEventListener('operation-ungrab', this.ungrabOperation)
+    this.addEventListener('operation-release', this.releaseOperation)
     this.addEventListener('operation-end-dragging', this.endDraggingOperation)
     this.addEventListener('operation-drop', this.dropOperation)
     this.addEventListener('operation-delete', this.deleteOperation)
@@ -351,12 +350,7 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseenter', this.mouseEnterStep)
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
-
-    this.addEventListener('quantum-circuit-init', () => {
-      for (const each of this.circuit.operations) {
-        each.initMenu()
-      }
-    })
+    this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
   }
 
   update(): void {
@@ -367,12 +361,26 @@ export class CircuitEditorElement extends HTMLElement {
     return this.circuit.querySelector('circuit-dropzone > [data-active]')
   }
 
+  private makeCircuitHoverable(event: Event): void {
+    const circuit = event.target as QuantumCircuitElement
+
+    if (circuit !== this.circuit) {
+      return
+    }
+
+    this.circuit.hoverable = true
+    for (const each of this.circuit.operations) {
+      each.initMenu()
+    }
+  }
+
   private maybeDeactivateOperation(event: Event): void {
     const clickedEl = event.target as HTMLElement
 
     if (
       !isOperation(clickedEl) &&
-      !this.inspectorButton.popup.popper.contains(clickedEl) &&
+      this.inspectorButton &&
+      !this.inspectorButton?.popup.popper.contains(clickedEl) &&
       !this.inspectorButton.popup.reference.contains(clickedEl) &&
       this.activeOperation !== null
     ) {
@@ -452,11 +460,11 @@ export class CircuitEditorElement extends HTMLElement {
     this.circuitEditorService.send({type: 'GRAB_OPERATION', operation})
   }
 
-  private ungrabOperation(event: Event): void {
+  private releaseOperation(event: Event): void {
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 
-    this.circuitEditorService.send({type: 'UNGRAB_OPERATION', operation})
+    this.circuitEditorService.send({type: 'RELEASE_OPERATION', operation})
   }
 
   private endDraggingOperation(event: Event): void {

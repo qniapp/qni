@@ -4,9 +4,7 @@ import {once} from './common/once'
 import {testElementCreation} from './common/test-element-creation'
 
 describe('angle-slider element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.AngleSliderElement, 'angle-slider')
-  })
+  testElementCreation(window.AngleSliderElement, 'angle-slider')
 
   describe('attributes', function () {
     let angleSlider

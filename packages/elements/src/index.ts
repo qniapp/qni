@@ -1,8 +1,11 @@
+export {Complex} from '@qni/common'
+
 export * from './operation'
 export * from './util'
 
 export * from './mixin/angleable'
 export * from './mixin/constructor'
+export * from './mixin/controllable'
 export * from './mixin/flaggable'
 export * from './mixin/ifable'
 

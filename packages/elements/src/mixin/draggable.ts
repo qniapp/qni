@@ -1,5 +1,5 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Util, describe} from '@qni/common'
+import {createMachine, interpret} from 'xstate'
 import {CircuitDropzoneElement} from '../circuit-dropzone-element'
 import {Constructor} from './constructor'
 import {InteractEvent} from '@interactjs/types'
@@ -18,6 +18,7 @@ export declare class Draggable {
   set operationX(value: number)
   get operationY(): number
   set operationY(value: number)
+  get draggable(): boolean
   set draggable(value: boolean)
   get grabbed(): boolean
   set grabbed(value: boolean)
@@ -38,7 +39,7 @@ type DraggableEvent =
   | {type: 'UNSET_INTERACT'}
   | {type: 'DELETE'}
   | {type: 'GRAB'; x: number; y: number}
-  | {type: 'UNGRAB'}
+  | {type: 'RELEASE'}
   | {type: 'START_DRAGGING'}
   | {type: 'END_DRAGGING'}
   | {type: 'SNAP'}
@@ -85,15 +86,15 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
                 target: 'dragging',
                 actions: ['startDragging']
               },
-              UNGRAB: [
+              RELEASE: [
                 {
                   target: 'grabbable',
-                  actions: ['unGrab'],
+                  actions: ['release'],
                   cond: 'isOnCircuitDropzone'
                 },
                 {
                   target: 'deleted',
-                  actions: ['unGrab'],
+                  actions: ['release'],
                   cond: 'isOnPaletteDropzone'
                 }
               ]
@@ -136,8 +137,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           dropped: {
             entry: ['drop'],
             always: [
-              {target: 'grabbable', cond: 'droppedOnCircuitDropzone'},
-              {target: 'deleted', cond: 'trashed'}
+              {target: 'grabbable', cond: 'isDroppedOnCircuitDropzone'},
+              {target: 'deleted', cond: 'isTrashed'}
             ]
           },
           deleted: {
@@ -152,7 +153,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             const interactable = interact(this)
             interactable.styleCursor(false)
             interactable.on('down', this.grab.bind(this))
-            interactable.on('up', this.unGrab.bind(this))
+            interactable.on('up', this.release.bind(this))
             interactable.draggable({
               onstart: this.startDragging.bind(this),
               onmove: this.dragMove.bind(this),
@@ -177,9 +178,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
               this.moveByOffset(event.x, event.y)
             }
           },
-          unGrab: () => {
+          release: () => {
             this.grabbed = false
-            this.dispatchEvent(new Event('operation-ungrab', {bubbles: true}))
+            this.dispatchEvent(new Event('operation-release', {bubbles: true}))
           },
           startDragging: () => {
             this.dragging = true
@@ -218,26 +219,42 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
           isOnPaletteDropzone: () => {
             return isPaletteDropzoneElement(this.dropzone)
           },
-          droppedOnCircuitDropzone: () => {
+          isDroppedOnCircuitDropzone: () => {
             return this.snapped && isCircuitDropzoneElement(this.dropzone)
           },
-          trashed: () => {
+          isTrashed: () => {
             return !this.snapped
           }
         }
       }
     )
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private draggableService!: Interpreter<DraggableContext, any, DraggableEvent>
+    public draggableService = interpret(this.draggableMachine).onTransition(state => {
+      if (this.debugDraggable) {
+        // eslint-disable-next-line no-console
+        console.log(`draggable: ${describe(state.value)}`)
+      }
+    })
+
+    get draggable(): boolean {
+      return this.draggableService.state !== undefined
+    }
 
     set draggable(value: boolean) {
-      this.maybeInitStateMachine()
+      this.maybeStartDraggableStateMachine()
 
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
       } else {
         this.draggableService.send({type: 'UNSET_INTERACT'})
       }
+    }
+
+    private maybeStartDraggableStateMachine(): void {
+      if (this.draggableService.state !== undefined) {
+        return
+      }
+
+      this.draggableService.start()
     }
 
     get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement | null {
@@ -248,19 +265,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         return null
       }
       return el as PaletteDropzoneElement | CircuitDropzoneElement
-    }
-
-    private maybeInitStateMachine(): void {
-      if (this.draggableService !== undefined) return
-
-      this.draggableService = interpret(this.draggableMachine)
-        .onTransition(state => {
-          if (this.debugDraggable) {
-            // eslint-disable-next-line no-console
-            console.log(`draggable: ${describe(state.value)}`)
-          }
-        })
-        .start()
     }
 
     set snapTargets(values: Array<{x: number; y: number}>) {
@@ -307,8 +311,8 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       this.draggableService.send({type: 'GRAB', x: event.offsetX, y: event.offsetY})
     }
 
-    private unGrab(): void {
-      this.draggableService.send({type: 'UNGRAB'})
+    private release(): void {
+      this.draggableService.send({type: 'RELEASE'})
     }
 
     private startDragging(): void {

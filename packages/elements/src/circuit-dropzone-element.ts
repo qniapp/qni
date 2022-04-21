@@ -1,7 +1,7 @@
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {Util} from '@qni/common'
 import interact from 'interactjs'
 import wiresIcon from '../icon/wires.svg'
@@ -11,7 +11,6 @@ export const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneEl
 
 type CircuitDropzoneContext = Record<string, never>
 type CircuitDropzoneEvent =
-  | {type: 'INIT_OPERATION'; operation: Operation}
   | {type: 'SNAP_OPERATION'}
   | {type: 'UNSNAP_OPERATION'}
   | {type: 'DROP_OPERATION'}
@@ -19,6 +18,8 @@ type CircuitDropzoneEvent =
   | {type: 'DELETE_OPERATION'; operation: Operation}
 
 export class CircuitDropzoneElement extends HTMLElement {
+  #eventAbortController: AbortController | null = null
+
   @attr operationName = ''
   @attr inputWireQuantum = false
   @attr outputWireQuantum = false
@@ -30,14 +31,16 @@ export class CircuitDropzoneElement extends HTMLElement {
   private circuitDropzoneMachine = createMachine<CircuitDropzoneContext, CircuitDropzoneEvent>(
     {
       id: 'circuit-dropzone',
-      initial: 'empty',
+      initial: 'unknown',
       states: {
+        unknown: {
+          always: [
+            {target: 'empty', cond: 'isEmpty'},
+            {target: 'occupied', cond: 'isOccupied', actions: ['initOperation']}
+          ]
+        },
         empty: {
           on: {
-            INIT_OPERATION: {
-              target: 'occupied',
-              actions: ['initOperation']
-            },
             SNAP_OPERATION: {
               target: 'snapped',
               actions: ['snapOperation']
@@ -45,10 +48,6 @@ export class CircuitDropzoneElement extends HTMLElement {
             PUT_OPERATION: {
               target: 'occupied',
               actions: ['putOperation']
-            },
-            DELETE_OPERATION: {
-              target: 'empty',
-              actions: ['deleteOperation', 'dispatchDeleteOperationEvent']
             }
           }
         },
@@ -81,6 +80,11 @@ export class CircuitDropzoneElement extends HTMLElement {
     },
     {
       actions: {
+        initOperation: () => {
+          Util.notNull(this.operation)
+
+          this.operation.snapped = true
+        },
         snapOperation: () => {
           Util.notNull(this.operation)
 
@@ -101,11 +105,6 @@ export class CircuitDropzoneElement extends HTMLElement {
           this.operationName = event.operation.tagName.toLocaleLowerCase()
           event.operation.snapped = true
         },
-        initOperation: (_context, event) => {
-          if (event.type !== 'INIT_OPERATION') return
-
-          event.operation.snapped = true
-        },
         deleteOperation: (_context, event) => {
           if (event.type !== 'DELETE_OPERATION') return
 
@@ -118,11 +117,23 @@ export class CircuitDropzoneElement extends HTMLElement {
         dispatchDeleteOperationEvent: () => {
           this.dispatchEvent(new Event('circuit-dropzone-operation-delete', {bubbles: true}))
         }
+      },
+      guards: {
+        isEmpty: () => {
+          return this.operation === null
+        },
+        isOccupied: () => {
+          return this.operation !== null
+        }
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private circuitDropzoneService!: Interpreter<CircuitDropzoneContext, any, CircuitDropzoneEvent>
+  private circuitDropzoneService = interpret(this.circuitDropzoneMachine).onTransition(state => {
+    if (this.debug) {
+      // eslint-disable-next-line no-console
+      console.log(`circuit-dropzone: ${state.value}`)
+    }
+  })
 
   get noConnections(): boolean {
     return !this.connectTop && !this.connectBottom
@@ -166,24 +177,21 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.circuitDropzoneService = interpret(this.circuitDropzoneMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`circuit-dropzone: ${state.value}`)
-        }
-      })
-      .start()
+    const {signal} = (this.#eventAbortController = new AbortController())
 
     this.attachShadow({mode: 'open'})
     this.update()
-    if (this.operation !== null) this.initOperation(this.operation)
     this.initDropzone()
+    this.circuitDropzoneService.start()
 
-    this.addEventListener('operation-snap', this.snapOperation)
-    this.addEventListener('operation-unsnap', this.unsnapOperation)
-    this.addEventListener('operation-end-dragging', this.dropOperation)
-    this.addEventListener('operation-delete', this.deleteOperation)
+    this.addEventListener('operation-snap', this.snapOperation, {signal})
+    this.addEventListener('operation-unsnap', this.unsnapOperation, {signal})
+    this.addEventListener('operation-end-dragging', this.dropOperation, {signal})
+    this.addEventListener('operation-delete', this.deleteOperation, {signal})
+  }
+
+  disconnectedCallback() {
+    this.#eventAbortController?.abort()
   }
 
   update(): void {
@@ -224,10 +232,6 @@ export class CircuitDropzoneElement extends HTMLElement {
 
   put(operation: Operation): void {
     this.circuitDropzoneService.send({type: 'PUT_OPERATION', operation})
-  }
-
-  private initOperation(operation: Operation): void {
-    this.circuitDropzoneService.send({type: 'INIT_OPERATION', operation})
   }
 
   private initDropzone(): void {

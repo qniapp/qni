@@ -1,6 +1,6 @@
 import {DetailedError, Util, angleDenominator, describe, radian as radianOf} from '@qni/common'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {attr, controller} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {InteractEvent} from '@interactjs/types'
 import interact from 'interactjs'
@@ -98,8 +98,14 @@ export class AngleSliderElement extends HTMLElement {
       }
     }
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private angleSliderService!: Interpreter<AngleSliderContext, any, AngleSliderEvent>
+  private angleSliderService = interpret(this.angleSliderMachine)
+    .onTransition(state => {
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log(`circuit-step: ${describe(state.value)}`)
+      }
+    })
+    .start()
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
@@ -108,21 +114,12 @@ export class AngleSliderElement extends HTMLElement {
     if (name === 'data-angle' && newValue !== '') {
       this.angleSliderService.send({type: 'SET_ANGLE'})
     }
-    if (name === 'data-denominator' && this.angleSliderService !== undefined) {
+    if (name === 'data-denominator' && this.shadowRoot !== null) {
       this.angleSliderService.send({type: 'SET_DENOMINATOR'})
     }
   }
 
   connectedCallback(): void {
-    this.angleSliderService = interpret(this.angleSliderMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`circuit-step: ${describe(state.value)}`)
-        }
-      })
-      .start()
-
     if (this.shadowRoot === null) {
       this.attachShadow({mode: 'open'})
     }

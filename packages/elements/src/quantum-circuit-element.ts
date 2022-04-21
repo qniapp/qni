@@ -1,7 +1,6 @@
 import {CircuitDropzoneElement, isCircuitDropzoneElement} from './circuit-dropzone-element'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {HGateElement, HGateElementProps} from './h-gate-element'
-import {Interpreter, createMachine, interpret} from 'xstate'
 import {PhaseGateElement, PhaseGateElementProps} from './phase-gate-element'
 import {RnotGateElement, RnotGateElementProps} from './rnot-gate-element'
 import {RxGateElement, RxGateElementProps} from './rx-gate-element'
@@ -13,10 +12,12 @@ import {XGateElement, XGateElementProps} from './x-gate-element'
 import {YGateElement, YGateElementProps} from './y-gate-element'
 import {ZGateElement, ZGateElementProps} from './z-gate-element'
 import {attr, controller, targets} from '@github/catalyst'
+import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
 import {BlochDisplayElement} from './bloch-display-element'
 import {CircuitBlockElement} from './circuit-block-element'
 import {ControlGateElement} from './control-gate-element'
+import {HoverableMixin} from './mixin'
 import {MeasurementGateElement} from './measurement-gate-element'
 import {Operation} from './operation'
 import {SwapGateElement} from './swap-gate-element'
@@ -31,7 +32,7 @@ export type SnapTarget = {
 type QuantumCircuitContext = Record<string, never>
 type QuantumCircuitEvent = {type: 'EDIT'} | {type: 'EDIT_DONE'}
 
-export class QuantumCircuitElement extends HTMLElement {
+export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   @attr minStepCount = 1
   @attr minWireCount = 1
   @attr maxWireCount = 10
@@ -111,9 +112,14 @@ export class QuantumCircuitElement extends HTMLElement {
       }
     }
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private quantumCircuitService!: Interpreter<QuantumCircuitContext, any, QuantumCircuitEvent>
-
+  private quantumCircuitService = interpret(this.quantumCircuitMachine)
+    .onTransition(state => {
+      if (this.debug) {
+        // eslint-disable-next-line no-console
+        console.log(`quantum-circuit: ${state.value}`)
+      }
+    })
+    .start()
   private snapTargets!: {
     [i: number]: {
       [j: number]: SnapTarget
@@ -144,7 +150,7 @@ export class QuantumCircuitElement extends HTMLElement {
     return index
   }
 
-  private get steps(): CircuitStepElement[] {
+  get steps(): CircuitStepElement[] {
     return Array.from<CircuitStepElement>(this.querySelectorAll('circuit-step'))
   }
 
@@ -257,19 +263,17 @@ export class QuantumCircuitElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.quantumCircuitService = interpret(this.quantumCircuitMachine)
-      .onTransition(state => {
-        if (this.debug) {
-          // eslint-disable-next-line no-console
-          console.log(`quantum-circuit: ${state.value}`)
-        }
-      })
-      .start()
-
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.loadFromJson()
+    if (this.hasAttribute('data-update-url')) {
+      const json = this.urlJson
+      this.loadFromJson(json)
+    }
+
+    if (this.hoverable) {
+      this.makeOperationsHoverable()
+    }
     this.appendMinimumSteps()
     this.appendMinimumWires()
     this.updateAllWires()
@@ -295,6 +299,23 @@ export class QuantumCircuitElement extends HTMLElement {
       } else {
         this.quantumCircuitService.send({type: 'EDIT_DONE'})
       }
+    }
+
+    if (name === 'data-hoverable' && newValue !== null) {
+      this.makeOperationsHoverable()
+    }
+
+    if (name === 'data-json' && newValue !== '') {
+      this.loadFromJson(newValue)
+      if (this.hoverable) {
+        this.makeOperationsHoverable()
+      }
+    }
+  }
+
+  private makeOperationsHoverable() {
+    for (const operation of this.operations) {
+      operation.hoverable = true
     }
   }
 
@@ -895,17 +916,12 @@ export class QuantumCircuitElement extends HTMLElement {
     }
   }
 
-  private loadFromJson(): void {
-    let json
+  private loadFromJson(json: string): void {
+    this.innerHTML = ''
+
     let circuitBlock = null
 
-    if (this.hasAttribute('data-update-url')) {
-      json = this.urlJson
-    } else {
-      json = this.json
-    }
-
-    if (json === '' || json === 'new') {
+    if (json === '') {
       if (this.hasAttribute('data-update-url')) {
         this.resize()
       }
@@ -921,110 +937,94 @@ export class QuantumCircuitElement extends HTMLElement {
         switch (true) {
           case /^\|0>$/.test(operation): {
             const writeGate = new WriteGateElement()
-            writeGate.hoverable = true
             writeGate.value = '0'
             newStep.appendOperation(writeGate)
             break
           }
           case /^\|1>$/.test(operation): {
             const writeGate = new WriteGateElement()
-            writeGate.hoverable = true
             writeGate.value = '1'
             newStep.appendOperation(writeGate)
             break
           }
           case /^H/.test(operation): {
             const hGate = new HGateElement()
-            hGate.hoverable = true
             hGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(hGate)
             break
           }
           case /^X$/.test(operation) || /^X<(.+)$/.test(operation): {
             const xGate = new XGateElement()
-            xGate.hoverable = true
             xGate.if = operation.slice(2).trim()
             newStep.appendOperation(xGate)
             break
           }
           case /^Y/.test(operation): {
             const yGate = new YGateElement()
-            yGate.hoverable = true
             yGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(yGate)
             break
           }
           case /^Z/.test(operation): {
             const zGate = new ZGateElement()
-            zGate.hoverable = true
             zGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(zGate)
             break
           }
           case /^P/.test(operation): {
             const phaseGate = new PhaseGateElement()
-            phaseGate.hoverable = true
             phaseGate.angle = this.angleParameter(operation.slice(1))
             newStep.appendOperation(phaseGate)
             break
           }
           case /^T/.test(operation): {
             const tGate = new TGateElement()
-            tGate.hoverable = true
             tGate.if = this.ifVariable(operation.slice(1))
             newStep.appendOperation(tGate)
             break
           }
           case /^X\^½/.test(operation): {
             const rnotGate = new RnotGateElement()
-            rnotGate.hoverable = true
             rnotGate.if = this.ifVariable(operation.slice(3))
             newStep.appendOperation(rnotGate)
             break
           }
           case /^Rx/.test(operation): {
             const rxGate = new RxGateElement()
-            rxGate.hoverable = true
             rxGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rxGate)
             break
           }
           case /^Ry/.test(operation): {
             const ryGate = new RyGateElement()
-            ryGate.hoverable = true
             ryGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(ryGate)
             break
           }
           case /^Rz/.test(operation): {
             const rzGate = new RzGateElement()
-            rzGate.hoverable = true
             rzGate.angle = this.angleParameter(operation.slice(2))
             newStep.appendOperation(rzGate)
             break
           }
           case /^Swap$/.test(operation): {
             const swapGate = new SwapGateElement()
-            swapGate.hoverable = true
             newStep.appendOperation(swapGate)
             break
           }
           case /^•$/.test(operation): {
             const controlGate = new ControlGateElement()
-            controlGate.hoverable = true
             newStep.appendOperation(controlGate)
             break
           }
           case /^Bloch$/.test(operation): {
             const blochDisplay = new BlochDisplayElement()
-            blochDisplay.hoverable = true
             newStep.appendOperation(blochDisplay)
             break
           }
           case /^Measure/.test(operation): {
             const measurementGate = new MeasurementGateElement()
             const flag = ((/^>(.+)$/.exec(operation.slice(7)) || [])[1] || '').trim()
-            measurementGate.hoverable = true
             measurementGate.flag = flag
             newStep.appendOperation(measurementGate)
             break
