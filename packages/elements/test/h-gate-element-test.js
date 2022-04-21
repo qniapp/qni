@@ -10,14 +10,11 @@ import {testIfable} from './common/test-ifable'
 import {testWireableOperation} from './common/test-wireable'
 
 describe('h-gate element', function () {
-  describe('element creation', function () {
-    testElementCreation(window.HGateElement, 'h-gate')
-  })
-
   testActivateable('h-gate')
   testControllable('h-gate')
   testDisableable('h-gate')
   testDraggableOperation('h-gate')
+  testElementCreation(window.HGateElement, 'h-gate')
   testHoverable('h-gate')
   testIconable('h-gate')
   testIfable('h-gate')
