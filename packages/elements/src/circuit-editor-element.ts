@@ -379,7 +379,8 @@ export class CircuitEditorElement extends HTMLElement {
 
     if (
       !isOperation(clickedEl) &&
-      !this.inspectorButton.popup.popper.contains(clickedEl) &&
+      this.inspectorButton &&
+      !this.inspectorButton?.popup.popper.contains(clickedEl) &&
       !this.inspectorButton.popup.reference.contains(clickedEl) &&
       this.activeOperation !== null
     ) {
