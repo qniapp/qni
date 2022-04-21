@@ -1,6 +1,6 @@
 {
   "name": "@qni/common",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "Common library for @qni.",
   "author": "@yasuhito",
   "homepage": "https://github.com/qniapp/qni/tree/main/packages/common#readme",
