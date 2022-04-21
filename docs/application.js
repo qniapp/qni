@@ -9784,7 +9784,7 @@ var sr = /* @__PURE__ */ __name(class extends HTMLElement {
     super(...arguments);
     this.qubitCount = 1;
     this.size = "";
-    this.magnitudes = "1.0";
+    this.magnitudes = "";
     this.phases = "";
     this.multiQubits = false;
     this.showKets = false;
@@ -9797,8 +9797,7 @@ var sr = /* @__PURE__ */ __name(class extends HTMLElement {
       let d = xr.from(l);
       c.setAttribute("data-amplitude-real", d.real.toString()), c.setAttribute("data-amplitude-imag", d.imag.toString());
       let v = d.abs();
-      if (this.setRoundedMagnitude(c, v), v === 0)
-        continue;
+      this.setRoundedMagnitude(c, v);
       let b = d.phase() / Math.PI * 180;
       this.setRoundedPhase(c, b);
     }
@@ -9834,7 +9833,7 @@ var sr = /* @__PURE__ */ __name(class extends HTMLElement {
     return [].concat(...e);
   }
   update() {
-    te(K`<style>
+    if (te(K`<style>
           @media (min-width: 768px) {
             :host([data-qubit-count='8']),
             :host([data-qubit-count='9']),
@@ -10491,15 +10490,16 @@ var sr = /* @__PURE__ */ __name(class extends HTMLElement {
           }
         </style>
 
-        <div id="body">${this.qubitCirclesHtml}</div>`, this.shadowRoot);
-    for (let [e, t] of (this.getAttribute("data-magnitudes") || "1.0").split(",").entries())
-      this.setRoundedMagnitude(this.qubitCircles[e], parseFloat(t));
-    for (let [e, t] of (this.getAttribute("data-phases") || "").split(",").entries()) {
-      let i = this.qubitCircles[e], l = t ? parseFloat(t) : 0;
-      this.setRoundedPhase(i, l);
-      let c = i.querySelector(".qubit-circle__phase");
-      c.style.transform = `rotate(${-l}deg)`;
-    }
+        <div id="body">${this.qubitCirclesHtml}</div>`, this.shadowRoot), this.magnitudes !== "")
+      for (let [e, t] of this.magnitudes.split(",").entries())
+        this.setRoundedMagnitude(this.qubitCircles[e], parseFloat(t));
+    if (this.phases !== "")
+      for (let [e, t] of this.phases.split(",").entries()) {
+        let i = this.qubitCircles[e], l = t ? parseFloat(t) : 0;
+        this.setRoundedPhase(i, l);
+        let c = i.querySelector(".qubit-circle__phase");
+        c.style.transform = `rotate(${-l}deg)`;
+      }
   }
   setRoundedMagnitude(e, t) {
     if (e === null || e === void 0)
