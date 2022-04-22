@@ -83,11 +83,11 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 CLICK_STEP: {
                   target: 'idle',
-                  actions: ['setBreakpoint']
+                  actions: ['deactivateAllSteps', 'setBreakpoint']
                 },
                 MOUSE_ENTER_STEP: {
                   target: 'idle',
-                  actions: ['activateStep']
+                  actions: ['deactivateAllSteps', 'activateStep']
                 },
                 MOUSE_LEAVE_STEP: {
                   target: 'idle',
@@ -135,7 +135,7 @@ export class CircuitEditorElement extends HTMLElement {
                 },
                 SNAP_STEP: {
                   target: 'editing',
-                  actions: ['activateStep']
+                  actions: ['deactivateAllSteps', 'activateStep']
                 },
                 UNSNAP_STEP: {
                   target: 'editing',
