@@ -5294,14 +5294,6 @@ mark {
   margin-bottom: 0.5rem;
 }
 
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
 .mr-4 {
   margin-right: 1rem;
 }
@@ -5342,6 +5334,10 @@ mark {
   margin-left: 0px;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -5356,6 +5352,10 @@ mark {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .block {
@@ -6125,6 +6125,16 @@ mark {
 .text-neutral-800 {
   --tw-text-opacity: 1;
   color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 .no-underline {
