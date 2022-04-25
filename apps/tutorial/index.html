@@ -98,7 +98,7 @@ next_url: ./qpu.html
         class="mb-10 flex w-min space-x-2 self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5 md:self-start"
       >
         <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
+          <write-gate data-value="0" data-hoverable data-help-id="write0-gate-help"></write-gate>
         </palette-dropzone>
         <palette-dropzone>
           <h-gate data-hoverable></h-gate>
@@ -214,5 +214,7 @@ next_url: ./qpu.html
   を送ってください。アップデートを続けていくことで、将来的には新しいトピックにも対応しつつ、初心者にも優しいチュートリアルを充実させていく予定です。
 </p>
 
-{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+{% include control_gate_help.html %} {% include h_gate_help.html %} {% include
+measurement_gate_help.html %} {% include write0_gate_help.html %} {% include x_gate_help.html %} {%
+include operation_menu.html %} {% include operation_inspector_template.html %} {% include
 circle_notation_popup.html %}

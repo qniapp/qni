@@ -125,7 +125,7 @@ class GatePopupTest < ApplicationSystemTestCase
     assert_popup <<~TEXT.chomp, operation
       Swap Gate
       Swap the values of two qubits.
-      (Place two in the same column.)
+      (Place two in the same step.)
     TEXT
   end
 
@@ -138,7 +138,7 @@ class GatePopupTest < ApplicationSystemTestCase
     assert_popup <<~TEXT.chomp, operation
       Control Gate
       Conditions on a qubit being ON.
-      Gates in the same column only apply to states meeting the condition.
+      Gates in the same step only apply to states meeting the condition.
     TEXT
   end
 

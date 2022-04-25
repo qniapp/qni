@@ -1,0 +1,34 @@
+<template id="rnot-gate-help">
+  <header>
+    <h1>平方根 NOT ゲート</h1>
+    <p>X 軸を中心に <code>π/2</code> だけ回転させる。</p>
+  </header>
+
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <rnot-gate class="operation-sm"></rnot-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation
+      data-magnitudes="0.7,0.7"
+      data-phases="45,-45"
+      data-show-kets
+    ></circle-notation>
+  </div>
+
+  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <rnot-gate class="operation-sm"></rnot-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation
+      data-magnitudes="0.7,0.7"
+      data-phases="-45,45"
+      data-show-kets
+    ></circle-notation>
+  </div>
+</template>
