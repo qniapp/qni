@@ -1033,6 +1033,22 @@
   </quantum-simulator>
 </div>
 
+<template id="control-gate-help">
+  <header>
+    <h1>コントロールゲート</h1>
+    <p>
+      量子ビットの適用を条件付きにする。 接続されたゲートは、条件を満たした場合のみに適用される。
+    </p>
+  </header>
+</template>
+
+<template id="measurement-gate-help">
+  <header>
+    <h1>測定ゲート</h1>
+    <p>量子ビットがオンかオフかを測定する。</p>
+  </header>
+</template>
+
 <template id="x-gate-help">
   <header>
     <h1>NOT ゲート (パウリ X ゲート)</h1>
@@ -1077,28 +1093,13 @@
 
     </div>
     <circle-notation
-      data-magnitudes="0.4,0.9"
-      data-phases="70,340"
-      data-show-kets
+        data-magnitudes="0.4,0.9"
+        data-phases="70,340"
+        data-show-kets
     ></circle-notation>
   </div>
 </template>
 
-<template id="control-gate-help">
-  <header>
-    <h1>コントロールゲート</h1>
-    <p>
-      量子ビットの適用を条件付きにする。 接続されたゲートは、条件を満たした場合のみに適用される。
-    </p>
-  </header>
-</template>
-
-<template id="measurement-gate-help">
-  <header>
-    <h1>測定ゲート</h1>
-    <p>量子ビットがオンかオフかを測定する。</p>
-  </header>
-</template>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">

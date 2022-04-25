@@ -1245,19 +1245,19 @@
   </div>
 
   <script type="module">
-    import { Complex } from './application.js'
+   import { Complex } from './application.js'
 
-    let circleNotationBefore = document.getElementById('circle-notation-H-superposition-before')
-    let circleNotationAfter = document.getElementById('circle-notation-H-superposition-after')
+   let circleNotationBefore = document.getElementById('circle-notation-H-superposition-before')
+   let circleNotationAfter = document.getElementById('circle-notation-H-superposition-after')
 
-    circleNotationBefore.setAmplitudes({
-      0: new Complex(-0.38268, 0),
-      1: new Complex(0.7855, -0.48636),
-    })
-    circleNotationAfter.setAmplitudes({
-      0: new Complex(0.28483, -0.34391),
-      1: new Complex(-0.82603, 0.34391),
-    })
+   circleNotationBefore.setAmplitudes({
+     0: new Complex(-0.38268, 0),
+     1: new Complex(0.7855, -0.48636),
+   })
+   circleNotationAfter.setAmplitudes({
+     0: new Complex(0.28483, -0.34391),
+     1: new Complex(-0.82603, 0.34391),
+   })
   </script>
 </div>
 
@@ -1343,12 +1343,13 @@
 
     </div>
     <circle-notation
-      data-magnitudes="0.4,0.9"
-      data-phases="70,340"
-      data-show-kets
+        data-magnitudes="0.4,0.9"
+        data-phases="70,340"
+        data-show-kets
     ></circle-notation>
   </div>
 </template>
+
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">

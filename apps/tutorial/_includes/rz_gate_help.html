@@ -1,0 +1,27 @@
+<template id="rz-gate-help">
+  <header>
+    <h1>Rz ゲート</h1>
+    <p>Z 軸を中心に角度 θ だけ回転させる。</p>
+    <p>デフォルトで θ = π/2。</p>
+  </header>
+
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="1,0" data-phases="-45,0" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="0,1" data-phases="0,45" data-show-kets></circle-notation>
+  </div>
+</template>
