@@ -557,5 +557,105 @@ next_url: ./entanglement.html
   </div>
 </div>
 
+<template id="phase-gate-help">
+  <header>
+    <h1>フェーズゲート</h1>
+    <p><code>|1⟩</code> の状態に e<sup>iφ</sup> の位相を適用する。</p>
+    <p>デフォルトで φ = π/2。</p>
+  </header>
+
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+    <circle-notation
+      data-magnitudes="0.9,0.4"
+      data-phases="340,70"
+      data-show-kets
+    ></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation
+      data-magnitudes="0.9,0.4"
+      data-phases="340,160"
+      data-show-kets
+    ></circle-notation>
+  </div>
+</template>
+
+<template id="control-gate-help">
+  <header>
+    <h1>コントロールゲート</h1>
+    <p>
+      量子ビットの適用を条件付きにする。 接続されたゲートは、条件を満たした場合のみに適用される。
+    </p>
+  </header>
+</template>
+
+<template id="z-gate-help">
+  <header>
+    <h1>パウリ Z ゲート</h1>
+    <p>量子ビットがオンのとき、位相を反転させる。</p>
+  </header>
+
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <z-gate class="operation-sm"></z-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 flex flex-row items-center space-x-1">
+    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <z-gate class="operation-sm"></z-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation data-magnitudes="0,1" data-phases="0,180" data-show-kets></circle-notation>
+  </div>
+
+  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
+    <circle-notation
+      data-magnitudes="0.9,0.4"
+      data-phases="340,70"
+      data-show-kets
+    ></circle-notation>
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
+      <z-gate class="operation-sm"></z-gate>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    </div>
+    <circle-notation
+      data-magnitudes="0.9,0.4"
+      data-phases="340,250"
+      data-show-kets
+    ></circle-notation>
+  </div>
+</template>
+
 {% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
 circle_notation_popup.html %}
