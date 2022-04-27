@@ -1,4 +1,5 @@
 palette-dropzone {
   @apply h-8 w-8;
   @apply inline-block;
+  @apply static;
 }

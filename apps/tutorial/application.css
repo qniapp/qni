@@ -4660,6 +4660,7 @@ palette-dropzone {
   height: 2rem;
   width: 2rem;
   display: inline-block;
+  position: static;
 }
 
 circuit-step {
