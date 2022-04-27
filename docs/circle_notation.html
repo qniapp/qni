@@ -955,10 +955,10 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">量子ビットの振幅や確率、位相の円表示</p>
             </div>
             <div class="content-with-margin"><p>
-  量子コンピュータが持つ量子ビット全体の状態を<mark>状態ベクトル</mark>と呼びます。
+  量子コンピュータが持つ量子ビット全体の状態を状態ベクトルと呼びます。
   状態ベクトルを使えば、量子コンピュータのある時点での状態をベクトル 1 つで表すことができます。
-  一般にベクトルとは数を並べたものですが、本チュートリアルでは<mark>円の並びで状態ベクトルを表現します</mark>。
-  ここでは、状態ベクトルの正しい読み方、特に量子ビットが持つ<mark>振幅や確率、位相</mark>の概念が円としてどう表されるか詳しく見ていきましょう。
+  一般にベクトルとは数を並べたものですが、本チュートリアルでは円の並びで状態ベクトルを表現します。
+  ここでは、状態ベクトルの正しい読み方、特に量子ビットが持つ振幅や確率、位相の概念が円としてどう表されるか詳しく見ていきましょう。
 </p>
 
 <h2>振幅</h2>
@@ -968,23 +968,18 @@
   重みは量子ビットの測定に関わる値で、測定によって \(|0\rangle\) や \(|1\rangle\)
   が出る可能性を表すものです。 たとえば確率は、\(|0\rangle\) または \(|1\rangle\)
   が測定される可能性を直接的に表した値です。 また位相は、\(|0\rangle\) や \(|1\rangle\)
-  が測定される確率を間接的に操作できます<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note"><a href="./phase.html">位相</a>を参照。</span>。 円それぞれに割り当てられた<mark
-    >振幅は、確率と位相の両方を 1 つの値で表します</mark
-  >。
+  が測定される確率を間接的に操作できます<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note"><a href="./phase.html">位相</a>を参照。</span>。 円それぞれに割り当てられた振幅は、確率と位相の両方を 1 つの値で表します。
 </p>
 
 <h2>振幅と確率の関係</h2>
 
 <p>
   量子ビットを測定した時に 0 または 1 を得る確率は、 \(|0\rangle\) と \(|1\rangle\) それぞれの振幅の 2
-  乗を計算することによって求められるのでした。 振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note__toggle hidden"><span class="margin-note"><a href="qubit.html">量子ビット</a>を参照</span>、より正しくは「<mark
-    >確率は振幅の大きさ<label for="margin-note-magnitude" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-magnitude" class="margin-note__toggle hidden"><span class="margin-note">ある振幅 (複素数) \(\alpha = a + bi\)
-    について、その大きさ \(|\alpha|\) は \(\sqrt{a^2 + b^2}\) で計算できます。確率は振幅の大きさの 2
-    乗なので、\(| \alpha|^2 = a^2 + b^2\) となります。</span> (magnitude) の 2
-    乗</mark
-  >」と言えます。
-  状態ベクトル表示では、<mark>青く塗りつぶされた円の半径は振幅の大きさを表す</mark>ので、その面積
-  (半径 x 半径 x π) はその確率に正比例します。
+  乗を計算することによって求められるのでした。 振幅は一般に複素数であるため<label for="margin-note-q-bit-1" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-q-bit-1" class="margin-note__toggle hidden"><span class="margin-note"><a href="qubit.html">量子ビット</a>を参照</span>、より正しくは「確率は振幅の大きさ<label for="margin-note-magnitude" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-magnitude" class="margin-note__toggle hidden"><span class="margin-note">ある振幅 (複素数) \(\alpha = a +
+  bi\) について、その大きさ \(|\alpha|\) は \(\sqrt{a^2 + b^2}\)
+  で計算できます。確率は振幅の大きさの 2 乗なので、\(| \alpha|^2 = a^2 + b^2\) となります。</span> (magnitude) の 2 乗」と言えます。
+  状態ベクトル表示では、青く塗りつぶされた円の半径は振幅の大きさを表すので、その面積 (半径 x 半径 x
+  π) はその確率に正比例します。
   状態ベクトルの円にマウスオーバーすると、それぞれの振幅と確率をポップアップ表示します。
   下の円それぞれにマウスオーバーして、たしかに振幅の大きさの 2
   乗が確率と等しくなっていることを確認しましょう。
@@ -1084,7 +1079,7 @@
      <p>
      \(|0\rangle\) を基準として \(|1\rangle\) がどれだけ回転しているかを位相と呼び、0 から 2π (360°) まで持つことができます。
      状態ベクトル表示では、位相は反時計まわりの方向に回転します。 位相は \(|0\rangle\) に対する
-     \(|1\rangle\) の相対的な回転を表すので、<mark>相対位相</mark>とも呼ばれます。
+     \(|1\rangle\) の相対的な回転を表すので、相対位相とも呼ばれます。
      </p>
 
      <div class="flex flex-row space-x-4 pb-14">
