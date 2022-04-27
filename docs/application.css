@@ -5284,6 +5284,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   margin-right: 1rem;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-12 {
   margin-top: 3rem;
 }
@@ -5298,10 +5302,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
 }
 
 .mb-6 {

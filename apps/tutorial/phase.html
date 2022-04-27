@@ -11,7 +11,7 @@ next_url: ./circle_notation.html
 
 <p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+<div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
   <circle-notation id="circle-notation-phases" data-size="xl" data-show-kets></circle-notation>
 
   <script type="module">
@@ -28,6 +28,44 @@ next_url: ./circle_notation.html
   位相は量子ビットが持つある種の回転を表します。 位相は反時計まわりの方向に回転し、-2π (-360°) から
   2π (360°) までの値を取ることができます。
 </p>
+
+<p>
+  量子コンピュータによる計算では、{% ket 0 %} の位相と {% ket 1 %} の位相差 (相対位相)
+  のみが意味を持ちます。 つまり、{% ket 0 %} の位相を基準とした {% ket 1 %}
+  の回転角度のみを考えます。 たとえば、以下の 2 つの状態では位相の差はどちらも π/2
+  なので、見た目は違いますが同じ状態を表しています。
+</p>
+
+<div class="mt-5 mb-8 md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center justify-center space-x-4">
+    <circle-notation
+      id="circle-notation-phase-3π/2-a"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+
+    <span>=</span>
+
+    <circle-notation
+      id="circle-notation-phase-3π/2-b"
+      data-size="xl"
+      data-show-kets
+    ></circle-notation>
+  </div>
+
+  <script type="module">
+    import { Complex } from './application.js'
+
+    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
+    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+
+    circleNotationA.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(0, -Math.sqrt(0.5)),
+    })
+    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
+  </script>
+</div>
 
 <p>
   確率と位相は、量子ビットが持つまったく独立した 2 つのプロパティです。
