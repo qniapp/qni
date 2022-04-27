@@ -144,17 +144,7 @@ export class CircuitDropzoneElement extends HTMLElement {
   }
 
   get operation(): Operation | null {
-    const children = Array.from(this.children)
-    const operations = children.filter((each): each is Operation => isOperation(each))
-
-    switch (operations.length) {
-      case 0:
-        return null
-      case 1:
-        return operations[0]
-      default:
-        throw new Error('circuit-dropzone cannot hold multiple operations.')
-    }
+    return this.firstElementChild as Operation
   }
 
   get snapTarget(): {x: number; y: number} {

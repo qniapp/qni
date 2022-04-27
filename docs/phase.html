@@ -975,9 +975,10 @@
 </p>
 
 <p>
-  量子コンピュータによる計算では、\(|0\rangle\) の位相と \(|1\rangle\) の位相差 (相対位相) のみが意味を持ちます。
-  つまり、\(|0\rangle\) の位相を基準とした \(|1\rangle\) の回転角度のみを考えます。
-  たとえば、以下の 2 つの状態では位相の差はどちらも π/2 なので、見た目は違いますが同じ状態を表しています。
+  量子コンピュータによる計算では、\(|0\rangle\) の位相と \(|1\rangle\) の位相差 (相対位相)
+  のみが意味を持ちます。 つまり、\(|0\rangle\) の位相を基準とした \(|1\rangle\)
+  の回転角度のみを考えます。 たとえば、以下の 2 つの状態では位相の差はどちらも π/2
+  なので、見た目は違いますが同じ状態を表しています。
 </p>
 
 <div class="mt-5 mb-8 md:mr-auto md:w-7/12">
@@ -998,16 +999,16 @@
   </div>
 
   <script type="module">
-   import { Complex } from './application.js'
+    import { Complex } from './application.js'
 
-   let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
-   let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
+    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
+    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
 
-   circleNotationA.setAmplitudes({
-     0: new Complex(Math.sqrt(0.5), 0),
-     1: new Complex(0, -Math.sqrt(0.5)),
-   })
-   circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
+    circleNotationA.setAmplitudes({
+      0: new Complex(Math.sqrt(0.5), 0),
+      1: new Complex(0, -Math.sqrt(0.5)),
+    })
+    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
   </script>
 </div>
 
