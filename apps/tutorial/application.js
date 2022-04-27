@@ -11988,108 +11988,108 @@ var ae = /* @__PURE__ */ __name(class extends we(HTMLElement) {
     }
     let i = JSON.parse(e);
     this.circuitTitle = (i.title || "").trim();
-    for (let l of i.cols) {
-      let c = this.appendStep();
-      for (let d of l) {
+    let l = false;
+    for (let c of i.cols) {
+      let d = this.appendStep();
+      l && (d.keep = true, l = false);
+      for (let v of c) {
         switch (true) {
-          case /^\|0>$/.test(d): {
-            let v = new Bt();
-            v.value = "0", c.appendOperation(v);
+          case /^\|0>$/.test(v): {
+            let b = new Bt();
+            b.value = "0", d.appendOperation(b);
             break;
           }
-          case /^\|1>$/.test(d): {
-            let v = new Bt();
-            v.value = "1", c.appendOperation(v);
+          case /^\|1>$/.test(v): {
+            let b = new Bt();
+            b.value = "1", d.appendOperation(b);
             break;
           }
-          case /^H/.test(d): {
-            let v = new Yt();
-            v.if = this.ifVariable(d.slice(1)), c.appendOperation(v);
+          case /^H/.test(v): {
+            let b = new Yt();
+            b.if = this.ifVariable(v.slice(1)), d.appendOperation(b);
             break;
           }
-          case (/^X$/.test(d) || /^X<(.+)$/.test(d)): {
-            let v = new ir();
-            v.if = d.slice(2).trim(), c.appendOperation(v);
+          case (/^X$/.test(v) || /^X<(.+)$/.test(v)): {
+            let b = new ir();
+            b.if = v.slice(2).trim(), d.appendOperation(b);
             break;
           }
-          case /^Y/.test(d): {
-            let v = new or();
-            v.if = this.ifVariable(d.slice(1)), c.appendOperation(v);
+          case /^Y/.test(v): {
+            let b = new or();
+            b.if = this.ifVariable(v.slice(1)), d.appendOperation(b);
             break;
           }
-          case /^Z/.test(d): {
-            let v = new ar();
-            v.if = this.ifVariable(d.slice(1)), c.appendOperation(v);
+          case /^Z/.test(v): {
+            let b = new ar();
+            b.if = this.ifVariable(v.slice(1)), d.appendOperation(b);
             break;
           }
-          case /^P/.test(d): {
-            let v = new Kt();
-            v.angle = this.angleParameter(d.slice(1)), c.appendOperation(v);
+          case /^P/.test(v): {
+            let b = new Kt();
+            b.angle = this.angleParameter(v.slice(1)), d.appendOperation(b);
             break;
           }
-          case /^T/.test(d): {
-            let v = new nr();
-            v.if = this.ifVariable(d.slice(1)), c.appendOperation(v);
+          case /^T/.test(v): {
+            let b = new nr();
+            b.if = this.ifVariable(v.slice(1)), d.appendOperation(b);
             break;
           }
-          case /^X\^½/.test(d): {
-            let v = new Jt();
-            v.if = this.ifVariable(d.slice(3)), c.appendOperation(v);
+          case /^X\^½/.test(v): {
+            let b = new Jt();
+            b.if = this.ifVariable(v.slice(3)), d.appendOperation(b);
             break;
           }
-          case /^Rx/.test(d): {
-            let v = new Qt();
-            v.angle = this.angleParameter(d.slice(2)), c.appendOperation(v);
+          case /^Rx/.test(v): {
+            let b = new Qt();
+            b.angle = this.angleParameter(v.slice(2)), d.appendOperation(b);
             break;
           }
-          case /^Ry/.test(d): {
-            let v = new er();
-            v.angle = this.angleParameter(d.slice(2)), c.appendOperation(v);
+          case /^Ry/.test(v): {
+            let b = new er();
+            b.angle = this.angleParameter(v.slice(2)), d.appendOperation(b);
             break;
           }
-          case /^Rz/.test(d): {
-            let v = new tr();
-            v.angle = this.angleParameter(d.slice(2)), c.appendOperation(v);
+          case /^Rz/.test(v): {
+            let b = new tr();
+            b.angle = this.angleParameter(v.slice(2)), d.appendOperation(b);
             break;
           }
-          case /^Swap$/.test(d): {
-            let v = new rr();
-            c.appendOperation(v);
+          case /^Swap$/.test(v): {
+            let b = new rr();
+            d.appendOperation(b);
             break;
           }
-          case /^•$/.test(d): {
-            let v = new jt();
-            c.appendOperation(v);
+          case /^•$/.test(v): {
+            let b = new jt();
+            d.appendOperation(b);
             break;
           }
-          case /^Bloch$/.test(d): {
-            let v = new nt();
-            c.appendOperation(v);
+          case /^Bloch$/.test(v): {
+            let b = new nt();
+            d.appendOperation(b);
             break;
           }
-          case /^Measure/.test(d): {
-            let v = new Zt(), b = ((/^>(.+)$/.exec(d.slice(7)) || [])[1] || "").trim();
-            v.flag = b, c.appendOperation(v);
+          case /^Measure/.test(v): {
+            let b = new Zt(), y = ((/^>(.+)$/.exec(v.slice(7)) || [])[1] || "").trim();
+            b.flag = y, d.appendOperation(b);
             break;
           }
-          case /^[[{](.+)$/.test(d): {
-            let v = d.slice(1);
-            c.remove(), t = new an(), t.comment = v, t.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(t);
+          case /^[[{](.+)$/.test(v): {
+            let b = v.slice(1);
+            d.remove(), t = new an(), t.comment = b, t.setAttribute("data-targets", "quantum-circuit.blocks"), this.append(t);
             break;
           }
-          case /^[\]}]$/.test(d): {
-            c.remove(), t.finalize();
+          case /^[\]}]$/.test(v): {
+            d.remove(), t.finalize(), l = true;
             break;
           }
           default: {
-            if (d === 1)
-              c.dropzones.length === c.freeDropzones.length ? c.keep = true : c.keep = false;
-            else
-              throw new Error(`Unknown operation: ${d}`);
-            c.appendDropzone();
+            if (v !== 1)
+              throw new Error(`Unknown operation: ${v}`);
+            d.appendDropzone();
           }
         }
-        c.updateOperationAttributes();
+        d.updateOperationAttributes();
       }
     }
     this.resize();

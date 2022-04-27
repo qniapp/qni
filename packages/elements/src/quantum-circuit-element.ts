@@ -931,8 +931,15 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
     const circuit = JSON.parse(json)
     this.circuitTitle = (circuit.title || '').trim()
 
+    let keepStep = false
+
     for (const step of circuit.cols) {
       const newStep = this.appendStep()
+      if (keepStep) {
+        newStep.keep = true
+        keepStep = false
+      }
+
       for (const operation of step) {
         switch (true) {
           case /^\|0>$/.test(operation): {
@@ -1041,16 +1048,11 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
           case /^[\]}]$/.test(operation): {
             newStep.remove()
             circuitBlock!.finalize()
+            keepStep = true
             break
           }
           default: {
-            if (operation === 1) {
-              if (newStep.dropzones.length === newStep.freeDropzones.length) {
-                newStep.keep = true
-              } else {
-                newStep.keep = false
-              }
-            } else {
+            if (operation !== 1) {
               throw new Error(`Unknown operation: ${operation}`)
             }
             newStep.appendDropzone()
