@@ -1,0 +1,201 @@
+<% content_for :meta_ogp do %>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= twitter_title %>" />
+  <% if @json %>
+    <meta property="og:url" content="<%= circuit_url @json %>" />
+    <meta property="og:description" content="<%= og_description @json %>" />
+  <% end %>
+  <% if @circuit&.social_image&.attached? %>
+    <meta property="og:image" content="<%= rails_blob_url(@circuit.social_image, disposition: 'inline') %>" />
+  <% end %>
+<% end %>
+
+<div class="relative flex w-full flex-row-reverse overflow-x-scroll md:flex-none md:flex-row">
+  <quantum-simulator class="inline-block" data-backend="cirq" data-update-url>
+    <circuit-editor class="flex w-full flex-row justify-end md:inline-block">
+      <div
+        data-controller="share"
+        data-share-default-title-value="Qni"
+        data-share-circuit-url-value="<%= circuit_url %>"
+      >
+        <%= share_modal %>
+        <%= menu %>
+      </div>
+
+      <div class="fixed top-0 right-0 z-40 rounded-bl-2xl bg-white drop-shadow-xl">
+        <inspector-button data-target="circuit-editor.inspectorButton" class="inline-block h-10 w-10 p-1">
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <%= icon :mixer_horizontal %>
+          </div>
+        </inspector-button>
+      </div>
+
+      <%= palette_md %>
+
+      <quantum-circuit
+        class="my-52 mx-6"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-update-url="true"
+        data-min-step-count="5"
+        data-min-wire-count="2"
+      ></quantum-circuit>
+
+      <div class="fixed bottom-0 left-0 right-0 z-30 mx-6 mb-6 flex flex-row items-center">
+        <%=
+          run_circuit_button class:
+                               'run-circuit-button--mobile inline-block md:hidden w-10 h-10 shrink-0 mr-2 bg-white rounded-full drop-shadow-md'
+        %>
+        <%= palette %>
+      </div>
+
+      <%= circle_notation %>
+    </circuit-editor>
+
+    <%=
+      run_circuit_button class:
+                           'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40'
+    %>
+  </quantum-simulator>
+</div>
+
+<%= palette_help_templates %>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <%= icon :angle %>
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">(<span class="italic">x</span>)</div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <%= icon :trash, class: 'h-4 w-4' %>
+    </div>
+  </div>
+</template>
+
+<template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-gray-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="font-bold text-gray-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-gray-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-gray-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider data-target="operation-inspector.angleSlider"></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-gray-700">Denom</label>
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-gray-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-gray-700">Reduce</label>
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="font-bold text-gray-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-gray-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-gray-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>

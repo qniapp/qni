@@ -3,15 +3,9 @@
 module Routing
   extend ActiveSupport::Concern
 
-  included do
-    include Rails.application.routes.url_helpers
-  end
+  included { include Rails.application.routes.url_helpers }
 
   def default_url_options
-    if Rails.env.production?
-      { host: 'qniapp.net' }
-    else
-      { host: 'localhost', port: 3000 }
-    end
+    Rails.env.production? ? { host: 'qniapp.net' } : { host: 'localhost', port: 3000 }
   end
 end

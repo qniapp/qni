@@ -17,6 +17,7 @@ type MessageEventData = {
 }
 
 export class QuantumSimulatorElement extends HTMLElement {
+  @attr backend = ''
   @attr updateUrl = false
 
   @target circuit!: QuantumCircuitElement
@@ -28,7 +29,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   declare worker: Worker
 
   connectedCallback(): void {
-    this.worker = new Worker('./serviceworker.js')
+    this.worker = new Worker('/serviceworker.js')
     this.visibleQubitCircleKets = []
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
@@ -145,11 +146,14 @@ export class QuantumSimulatorElement extends HTMLElement {
     const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
 
     this.circleNotation.qubitCount = qubitCount
+    const backend = this.backend.trim()
     this.worker.postMessage({
+      json: this.circuit.toJson(),
       qubitCount,
       stepIndex,
       steps: serializedSteps,
-      targets: this.visibleQubitCircleKets
+      targets: this.visibleQubitCircleKets,
+      backend: backend !== '' ? backend : null
     })
   }
 

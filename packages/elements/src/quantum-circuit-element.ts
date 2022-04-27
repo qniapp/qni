@@ -1259,7 +1259,8 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   private get urlJson(): string {
-    const json = window.location.href.toString().split(window.location.host)[1].slice(1)
+    const json = window.location.href.toString().split('/').pop()
+    Util.notNull(json)
     return decodeURIComponent(json)
   }
 
