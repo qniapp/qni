@@ -305,124 +305,6 @@ export class CircleNotationElement extends HTMLElement {
             }
           }
 
-          .qubit-circle {
-            position: relative;
-            height: 32px;
-            width: 32px;
-          }
-
-          :host([data-size='xs']) .qubit-circle {
-            height: 17px !important;
-            width: 17px !important;
-          }
-
-          :host([data-size='sm']) .qubit-circle {
-            height: 25px !important;
-            width: 25px !important;
-          }
-
-          :host([data-size='base']) .qubit-circle {
-            height: 32px !important;
-            width: 32px !important;
-          }
-
-          :host([data-size='lg']) .qubit-circle {
-            height: 48px !important;
-            width: 48px !important;
-          }
-
-          :host([data-size='xl']) .qubit-circle {
-            height: 64px !important;
-            width: 64px !important;
-          }
-
-          :host([data-qubit-count='1']:not([data-multi-qubits])) .qubit-circle {
-            height: 32px;
-            width: 32px;
-          }
-
-          :host([data-qubit-count='1']) .qubit-circle,
-          :host([data-qubit-count='2']) .qubit-circle {
-            height: 64px;
-            width: 64px;
-          }
-
-          :host([data-qubit-count='3']) .qubit-circle {
-            height: 48px;
-            width: 48px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='3']) .qubit-circle {
-              height: 64px;
-              width: 64px;
-            }
-          }
-
-          :host([data-qubit-count='4']) .qubit-circle {
-            height: 32px;
-            width: 32px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='4']) .qubit-circle {
-              height: 48px;
-              width: 48px;
-            }
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle {
-            height: 23px;
-            width: 23px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle {
-              height: 32px;
-              width: 32px;
-            }
-          }
-
-          :host([data-qubit-count='6']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='6']) .qubit-circle {
-              height: 25px;
-              width: 25px;
-            }
-          }
-
-          :host([data-qubit-count='7']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='7']) .qubit-circle {
-              height: 17px;
-              width: 17px;
-            }
-          }
-
-          :host([data-qubit-count='8']) .qubit-circle,
-          :host([data-qubit-count='9']) .qubit-circle,
-          :host([data-qubit-count='10']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='8']) .qubit-circle,
-            :host([data-qubit-count='9']) .qubit-circle,
-            :host([data-qubit-count='10']) .qubit-circle {
-              height: 17px;
-              width: 17px;
-            }
-          }
-
           :host([data-show-kets]) .qubit-circle::before {
             position: absolute;
             bottom: 0;
@@ -821,6 +703,7 @@ export class CircleNotationElement extends HTMLElement {
 
   private qubitCircleHtml(ket: number): TemplateResult {
     return html`<div
+      part="qubit-circle"
       class="qubit-circle"
       data-ket="${ket}"
       data-action="mouseenter:circle-notation#setPopupContent"
