@@ -3447,7 +3447,7 @@ circle-notation[data-qubit-count='6']::part(qubit-circle__magnitude), circle-not
 /* data-size */
 
 circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
-  circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
+    circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
   border-width: 1px;
 }
 
