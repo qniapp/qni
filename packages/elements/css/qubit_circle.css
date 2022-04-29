@@ -105,4 +105,164 @@ circle-notation {
     height: 64px;
     width: 64px;
   }
+
+  /* data-show-kets */
+
+  &[data-show-kets] {
+    @apply pb-5;
+  }
+
+  &[data-show-kets]::part(qubit-circle)::before {
+    @apply absolute;
+    @apply bottom-0 right-0 left-0;
+    @apply font-mono;
+    @apply text-sm;
+    @apply text-slate-500;
+    @apply -mb-5;
+    @apply whitespace-nowrap;
+    @apply flex justify-center;
+
+    content: '|' attr(data-ket) '⟩';
+  }
+
+  /* magnitude */
+
+  &::part(qubit-circle__magnitude) {
+    @apply absolute;
+    @apply inset-px;
+    @apply border-solid border-slate-200;
+    @apply rounded-full;
+  }
+
+  &[data-qubit-count='1']::part(qubit-circle__magnitude),
+  &[data-qubit-count='2']::part(qubit-circle__magnitude),
+  &[data-qubit-count='3']::part(qubit-circle__magnitude),
+  &[data-qubit-count='4']::part(qubit-circle__magnitude) {
+    @apply border-2;
+  }
+
+  &[data-qubit-count='5']::part(qubit-circle__magnitude) {
+    @apply border-2;
+
+    @media screen(md) {
+      @apply border;
+    }
+  }
+
+  &[data-qubit-count='6']::part(qubit-circle__magnitude),
+  &[data-qubit-count='7']::part(qubit-circle__magnitude),
+  &[data-qubit-count='8']::part(qubit-circle__magnitude),
+  &[data-qubit-count='9']::part(qubit-circle__magnitude),
+  &[data-qubit-count='10']::part(qubit-circle__magnitude) {
+    @apply border;
+  }
+
+  /* data-size */
+
+  &[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
+    &[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
+    border-width: 1px;
+  }
+  &[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
+  &[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
+  &[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
+    border-width: 2px;
+  }
+
+  &::part(qubit-circle__magnitude)::after {
+    @apply absolute;
+    @apply inset-0;
+    @apply rounded-full;
+    @apply bg-sky-500;
+    @apply origin-center transform;
+    @apply scale-0;
+
+    content: '';
+  }
+
+  /* phase */
+
+  &::part(qubit-circle__phase) {
+    @apply absolute;
+    @apply inset-px;
+    @apply rounded-full border-solid;
+    @apply border-slate-500;
+    @apply origin-center transform;
+  }
+
+  &[data-qubit-count='1']::part(qubit-circle__phase),
+  &[data-qubit-count='2']::part(qubit-circle__phase),
+  &[data-qubit-count='3']::part(qubit-circle__phase),
+  &[data-qubit-count='4']::part(qubit-circle__phase) {
+    @apply border-2;
+  }
+
+  &[data-qubit-count='5']::part(qubit-circle__phase) {
+    @apply border;
+
+    @media screen(md) {
+      @apply border-2;
+    }
+  }
+
+  &[data-qubit-count='6']::part(qubit-circle__phase),
+  &[data-qubit-count='7']::part(qubit-circle__phase),
+  &[data-qubit-count='8']::part(qubit-circle__phase),
+  &[data-qubit-count='9']::part(qubit-circle__phase),
+  &[data-qubit-count='10']::part(qubit-circle__phase) {
+    @apply border;
+  }
+
+  &[data-size='xs'][data-qubit-count]::part(qubit-circle__phase),
+  &[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
+    @apply border;
+  }
+  &[data-size='base'][data-qubit-count]::part(qubit-circle__phase),
+  &[data-size='lg'][data-qubit-count]::part(qubit-circle__phase),
+  &[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
+    @apply border-2;
+  }
+
+  &::part(qubit-circle__phase)::after {
+    @apply absolute top-0 right-0 left-0;
+    @apply bg-slate-900;
+    @apply h-1/2;
+    @apply ml-auto mr-auto;
+    @apply rounded-b;
+
+    content: '';
+  }
+
+  &[data-qubit-count='1']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='2']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='3']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='4']::part(qubit-circle__phase)::after {
+    @apply w-0.5;
+  }
+
+  &[data-qubit-count='5']::part(qubit-circle__phase)::after {
+    @apply w-px;
+
+    @media screen(md) {
+      @apply w-0.5;
+    }
+  }
+
+  &[data-qubit-count='6']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='7']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='8']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='9']::part(qubit-circle__phase)::after,
+  &[data-qubit-count='10']::part(qubit-circle__phase)::after {
+    @apply w-px;
+  }
+
+  &[data-size='xs']::part(qubit-circle__phase)::after,
+  &[data-size='sm']::part(qubit-circle__phase)::after {
+    @apply w-px;
+  }
+  &[data-size='base']::part(qubit-circle__phase)::after,
+  &[data-size='lg']::part(qubit-circle__phase)::after,
+  &[data-size='xl']::part(qubit-circle__phase)::after {
+    @apply w-0.5;
+  }
 }

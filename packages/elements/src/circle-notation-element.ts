@@ -305,161 +305,60 @@ export class CircleNotationElement extends HTMLElement {
             }
           }
 
-          :host([data-show-kets]) .qubit-circle::before {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            white-space: nowrap;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-              monospace;
-            font-size: 0.75rem;
-            color: var(--colors-wolf, #777777);
-            margin-bottom: -18px;
-            content: '|' attr(data-ket) '⟩';
-          }
-
-          .qubit-circle__magnitude {
-            border-width: 2px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-radius: 9999px;
-            border-color: #e5e5e5;
-            border-style: solid;
-          }
+          /* .qubit-circle__magnitude */
 
           .qubit-circle:hover > .qubit-circle__magnitude {
-            border-color: var(--colors-cardinal, #ff4b4b);
-          }
-
-          :host([data-size='xs']) .qubit-circle__magnitude,
-          :host([data-size='sm']) .qubit-circle__magnitude {
-            border-width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__magnitude,
-          :host([data-size='lg']) .qubit-circle__magnitude,
-          :host([data-size='xl']) .qubit-circle__magnitude {
-            border-width: 2px;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__magnitude,
-          :host([data-qubit-count='6']) .qubit-circle__magnitude,
-          :host([data-qubit-count='7']) .qubit-circle__magnitude,
-          :host([data-qubit-count='8']) .qubit-circle__magnitude,
-          :host([data-qubit-count='9']) .qubit-circle__magnitude,
-          :host([data-qubit-count='10']) .qubit-circle__magnitude {
-            border-width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__magnitude {
-              border-width: 2px;
-            }
-          }
-
-          .qubit-circle__magnitude::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            border-radius: 9999px;
-            content: '';
-            background-color: #1cb0f6;
-            transform: scaleX(0) scaleY(0);
-            transform-origin: center;
+            border-color: var(--colors-red-600, #dc2626) !important;
           }
 
           .qubit-circle:hover > .qubit-circle__magnitude::after {
-            background-color: var(--colors-fox, #ff9600);
+            background-color: var(--colors-orange-500, #f97516) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.1'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.1) scaleY(0.1);
+            transform: scaleX(0.1) scaleY(0.1) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.2'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.2) scaleY(0.2);
+            transform: scaleX(0.2) scaleY(0.2) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.3'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.3) scaleY(0.3);
+            transform: scaleX(0.3) scaleY(0.3) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.4'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.4) scaleY(0.4);
+            transform: scaleX(0.4) scaleY(0.4) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.5'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.5) scaleY(0.5);
+            transform: scaleX(0.5) scaleY(0.5) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.6'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.6) scaleY(0.6);
+            transform: scaleX(0.6) scaleY(0.6) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.7'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.7) scaleY(0.7);
+            transform: scaleX(0.7) scaleY(0.7) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.8'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.8) scaleY(0.8);
+            transform: scaleX(0.8) scaleY(0.8) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='0.9'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.9) scaleY(0.9);
+            transform: scaleX(0.9) scaleY(0.9) !important;
           }
 
           .qubit-circle[data-rounded-magnitude='1'] > .qubit-circle__magnitude::after {
-            transform: scaleX(1) scaleY(1);
+            transform: scaleX(1) scaleY(1) !important;
           }
 
-          .qubit-circle__phase {
-            border-width: 2px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-radius: 9999px;
-            border-color: #777777;
-            border-style: solid;
-            transform: rotate(0deg);
-            transform-origin: center;
-          }
+          /* .qubit-circle__phase */
 
           .qubit-circle:hover > .qubit-circle__phase {
-            border-color: var(--colors-cardinal, #ff4b4b);
-          }
-
-          :host([data-size='xs']) .qubit-circle__phase,
-          :host([data-size='sm']) .qubit-circle__phase {
-            border-width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__phase,
-          :host([data-size='lg']) .qubit-circle__phase,
-          :host([data-size='xl']) .qubit-circle__phase {
-            border-width: 2px;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__phase,
-          :host([data-qubit-count='6']) .qubit-circle__phase,
-          :host([data-qubit-count='7']) .qubit-circle__phase,
-          :host([data-qubit-count='8']) .qubit-circle__phase,
-          :host([data-qubit-count='9']) .qubit-circle__phase,
-          :host([data-qubit-count='10']) .qubit-circle__phase {
-            border-width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__phase {
-              border-width: 2px;
-            }
+            border-color: var(--colors-red-600, #dc2626) !important;
           }
 
           .qubit-circle:not([data-rounded-magnitude]) > .qubit-circle__phase,
@@ -468,187 +367,147 @@ export class CircleNotationElement extends HTMLElement {
           }
 
           .qubit-circle[data-rounded-phase='10'] > .qubit-circle__phase {
-            transform: rotate(-10deg);
+            transform: rotate(-10deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='20'] > .qubit-circle__phase {
-            transform: rotate(-20deg);
+            transform: rotate(-20deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='30'] > .qubit-circle__phase {
-            transform: rotate(-30deg);
+            transform: rotate(-30deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='40'] > .qubit-circle__phase {
-            transform: rotate(-40deg);
+            transform: rotate(-40deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='50'] > .qubit-circle__phase {
-            transform: rotate(-50deg);
+            transform: rotate(-50deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='60'] > .qubit-circle__phase {
-            transform: rotate(-60deg);
+            transform: rotate(-60deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='70'] > .qubit-circle__phase {
-            transform: rotate(-70deg);
+            transform: rotate(-70deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='80'] > .qubit-circle__phase {
-            transform: rotate(-80deg);
+            transform: rotate(-80deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='90'] > .qubit-circle__phase {
-            transform: rotate(-90deg);
+            transform: rotate(-90deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='100'] > .qubit-circle__phase {
-            transform: rotate(-100deg);
+            transform: rotate(-100deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='110'] > .qubit-circle__phase {
-            transform: rotate(-110deg);
+            transform: rotate(-110deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='120'] > .qubit-circle__phase {
-            transform: rotate(-120deg);
+            transform: rotate(-120deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='130'] > .qubit-circle__phase {
-            transform: rotate(-130deg);
+            transform: rotate(-130deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='140'] > .qubit-circle__phase {
-            transform: rotate(-140deg);
+            transform: rotate(-140deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='150'] > .qubit-circle__phase {
-            transform: rotate(-150deg);
+            transform: rotate(-150deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='160'] > .qubit-circle__phase {
-            transform: rotate(-160deg);
+            transform: rotate(-160deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='170'] > .qubit-circle__phase {
-            transform: rotate(-170deg);
+            transform: rotate(-170deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='180'] > .qubit-circle__phase {
-            transform: rotate(-180deg);
+            transform: rotate(-180deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='190'] > .qubit-circle__phase {
-            transform: rotate(-190deg);
+            transform: rotate(-190deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='200'] > .qubit-circle__phase {
-            transform: rotate(-200deg);
+            transform: rotate(-200deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='210'] > .qubit-circle__phase {
-            transform: rotate(-210deg);
+            transform: rotate(-210deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='220'] > .qubit-circle__phase {
-            transform: rotate(-220deg);
+            transform: rotate(-220deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='230'] > .qubit-circle__phase {
-            transform: rotate(-230deg);
+            transform: rotate(-230deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='240'] > .qubit-circle__phase {
-            transform: rotate(-240deg);
+            transform: rotate(-240deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='250'] > .qubit-circle__phase {
-            transform: rotate(-250deg);
+            transform: rotate(-250deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='260'] > .qubit-circle__phase {
-            transform: rotate(-260deg);
+            transform: rotate(-260deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='270'] > .qubit-circle__phase {
-            transform: rotate(-270deg);
+            transform: rotate(-270deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='280'] > .qubit-circle__phase {
-            transform: rotate(-280deg);
+            transform: rotate(-280deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='290'] > .qubit-circle__phase {
-            transform: rotate(-290deg);
+            transform: rotate(-290deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='300'] > .qubit-circle__phase {
-            transform: rotate(-300deg);
+            transform: rotate(-300deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='310'] > .qubit-circle__phase {
-            transform: rotate(-310deg);
+            transform: rotate(-310deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='320'] > .qubit-circle__phase {
-            transform: rotate(-320deg);
+            transform: rotate(-320deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='330'] > .qubit-circle__phase {
-            transform: rotate(-330deg);
+            transform: rotate(-330deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='340'] > .qubit-circle__phase {
-            transform: rotate(-340deg);
+            transform: rotate(-340deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='350'] > .qubit-circle__phase {
-            transform: rotate(-350deg);
+            transform: rotate(-350deg) !important;
           }
 
           .qubit-circle[data-rounded-phase='360'] > .qubit-circle__phase {
-            transform: rotate(-360deg);
-          }
-
-          .qubit-circle__phase::after {
-            width: 2px;
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            left: 0px;
-            background-color: #4b4b4b;
-            height: 50%;
-            margin-left: auto;
-            margin-right: auto;
-            border-bottom-right-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-            content: '';
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__phase::after,
-          :host([data-qubit-count='6']) .qubit-circle__phase::after,
-          :host([data-qubit-count='7']) .qubit-circle__phase::after,
-          :host([data-qubit-count='8']) .qubit-circle__phase::after,
-          :host([data-qubit-count='9']) .qubit-circle__phase::after,
-          :host([data-qubit-count='10']) .qubit-circle__phase::after {
-            width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__phase::after {
-              width: 2px;
-            }
-          }
-
-          :host([data-size='xs']) .qubit-circle__phase::after,
-          :host([data-size='sm']) .qubit-circle__phase::after {
-            width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__phase::after,
-          :host([data-size='lg']) .qubit-circle__phase::after,
-          :host([data-size='xl']) .qubit-circle__phase::after {
-            width: 2px;
+            transform: rotate(-360deg) !important;
           }
         </style>
 
@@ -709,8 +568,8 @@ export class CircleNotationElement extends HTMLElement {
       data-action="mouseenter:circle-notation#setPopupContent"
       data-targets="circle-notation.qubitCircles"
     >
-      <div class="qubit-circle__magnitude"></div>
-      <div class="qubit-circle__phase"></div>
+      <div class="qubit-circle__magnitude" part="qubit-circle__magnitude"></div>
+      <div class="qubit-circle__phase" part="qubit-circle__phase"></div>
     </div>`
   }
 
