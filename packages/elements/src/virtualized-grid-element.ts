@@ -1,16 +1,19 @@
 import {TemplateResult, html, render} from '@github/jtml'
-import {attr, controller} from '@github/catalyst'
+import {attr, controller, target} from '@github/catalyst'
 
 @controller
 export class VirtualizedGridElement extends HTMLElement {
   @attr cols = 0
   @attr rows = 0
-  @attr itemHeight = 40
-  @attr itemWidth = 100
+  @attr itemHeight = 0
+  @attr itemWidth = 0
   @attr colStartIndex = -1
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
   @attr rowEndIndex = -1
+
+  @target window!: HTMLElement
+  @target innerContainer!: HTMLElement
 
   get innerHeight(): number {
     return this.cols * this.itemHeight
@@ -27,7 +30,20 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   update(): void {
-    render(html`<slot></slot>`, this.shadowRoot!)
+    render(
+      html`<div
+          data-target="virtualized-grid.window"
+          data-action="scroll:virtualized-grid#updateItems"
+          style="width: 100%; height: 100%; overflow: auto;"
+        >
+          <div
+            data-target="virtualized-grid.innerContainer"
+            style="position: relative; height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+          ></div>
+        </div>
+        <slot></slot>`,
+      this.shadowRoot!
+    )
   }
 
   updateItems(): void {
@@ -55,13 +71,7 @@ export class VirtualizedGridElement extends HTMLElement {
       }
 
       const itemsHtml = (items: Array<{col: number; row: number}>) => html`${items.map(this.itemHtml.bind(this))}`
-
-      render(
-        html`<div style="position: relative; height: ${this.innerHeight}px; width: ${this.innerWidth}px">
-          ${itemsHtml(data)}
-        </div>`,
-        this
-      )
+      render(itemsHtml(data), this.innerContainer)
     }
   }
 
@@ -79,32 +89,32 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   private get calculateColStartIndex(): number {
-    return Math.floor(this.scrollTop / this.itemHeight)
+    return Math.floor(this.window.scrollTop / this.itemHeight)
   }
 
   private get calculateColEndIndex(): number {
     return Math.min(
       this.cols - 1, // don't render past the end of the list
-      Math.floor((this.scrollTop + this.windowHeight) / this.itemHeight)
+      Math.floor((this.window.scrollTop + this.windowHeight) / this.itemHeight)
     )
   }
 
   private get calculateRowStartIndex(): number {
-    return Math.floor(this.scrollLeft / this.itemWidth)
+    return Math.floor(this.window.scrollLeft / this.itemWidth)
   }
 
   private get calculateRowEndIndex(): number {
     return Math.min(
       this.rows - 1, // don't render past the end of the list
-      Math.floor((this.scrollLeft + this.windowWidth) / this.itemWidth)
+      Math.floor((this.window.scrollLeft + this.windowWidth) / this.itemWidth)
     )
   }
 
   private get windowHeight(): number {
-    return this.clientHeight
+    return this.window.clientHeight
   }
 
   private get windowWidth(): number {
-    return this.clientWidth
+    return this.window.clientWidth
   }
 }
