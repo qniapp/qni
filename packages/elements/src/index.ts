@@ -37,4 +37,4 @@ export * from './x-gate-element'
 export * from './y-gate-element'
 export * from './z-gate-element'
 
-export * from './virtualized-list-element'
+export * from './virtualized-grid-element'

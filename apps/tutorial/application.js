@@ -12093,7 +12093,7 @@ var lr = /* @__PURE__ */ __name(class extends HTMLElement {
     return this.clientWidth;
   }
 }, "lr");
-u(lr, "VirtualizedListElement"), k([L], lr.prototype, "cols", 2), k([L], lr.prototype, "rows", 2), k([L], lr.prototype, "itemHeight", 2), k([L], lr.prototype, "itemWidth", 2), k([L], lr.prototype, "colStartIndex", 2), k([L], lr.prototype, "colEndIndex", 2), k([L], lr.prototype, "rowStartIndex", 2), k([L], lr.prototype, "rowEndIndex", 2), lr = k([re], lr);
+u(lr, "VirtualizedGridElement"), k([L], lr.prototype, "cols", 2), k([L], lr.prototype, "rows", 2), k([L], lr.prototype, "itemHeight", 2), k([L], lr.prototype, "itemWidth", 2), k([L], lr.prototype, "colStartIndex", 2), k([L], lr.prototype, "colEndIndex", 2), k([L], lr.prototype, "rowStartIndex", 2), k([L], lr.prototype, "rowEndIndex", 2), lr = k([re], lr);
 
 // src/serviceworker-companion.js
 if (navigator.serviceWorker) {

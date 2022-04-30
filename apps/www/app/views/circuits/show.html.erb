@@ -48,13 +48,13 @@
         <%= palette %>
       </div>
 
-      <virtualized-list
-        data-action="scroll:virtualized-list#updateItems"
-        data-cols="1000"
-        data-rows="1000"
+      <virtualized-grid
+        data-action="scroll:virtualized-grid#updateItems"
+        data-cols="10"
+        data-rows="10"
         class="fixed left-1/2 right-auto bottom-0 mb-40 h-32 w-64 -translate-x-1/2 transform overflow-auto bg-white drop-shadow-md"
       >
-      </virtualized-list>
+      </virtualized-grid>
 
       <%= circle_notation %>
     </circuit-editor>
