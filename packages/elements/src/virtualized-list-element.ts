@@ -5,9 +5,8 @@ import {attr, controller} from '@github/catalyst'
 export class VirtualizedListElement extends HTMLElement {
   @attr numItems = 0
   @attr itemHeight = 40
-  @attr windowHeight = 128
-  @attr currentStartIndex = -1
-  @attr currentEndIndex = -1
+  @attr startIndex = -1
+  @attr endIndex = -1
 
   get innerHeight(): number {
     return this.numItems * this.itemHeight
@@ -19,12 +18,12 @@ export class VirtualizedListElement extends HTMLElement {
   }
 
   update(): void {
-    const startIndex = this.startIndex
-    const endIndex = this.endIndex
+    const startIndex = this.calculateStartIndex
+    const endIndex = this.calculateEndIndex
 
-    if (this.currentStartIndex !== startIndex || this.currentEndIndex !== endIndex) {
-      this.currentStartIndex = startIndex
-      this.currentEndIndex = endIndex
+    if (this.startIndex !== startIndex || this.endIndex !== endIndex) {
+      this.startIndex = startIndex
+      this.endIndex = endIndex
 
       let itemsHtml = html``
       for (let i = startIndex; i <= endIndex; i++) {
@@ -45,14 +44,18 @@ export class VirtualizedListElement extends HTMLElement {
     </div>`
   }
 
-  private get startIndex(): number {
+  private get calculateStartIndex(): number {
     return Math.floor(this.scrollTop / this.itemHeight)
   }
 
-  private get endIndex(): number {
+  private get calculateEndIndex(): number {
     return Math.min(
       this.numItems - 1, // don't render past the end of the list
       Math.floor((this.scrollTop + this.windowHeight) / this.itemHeight)
     )
+  }
+
+  private get windowHeight(): number {
+    return this.clientHeight
   }
 }
