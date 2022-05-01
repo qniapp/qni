@@ -18,14 +18,12 @@ export class VirtualizedGridElement extends HTMLElement {
   @targets qubitCircles!: HTMLElement[]
 
   // FIXME: set amplitudes() に変更
-  setAmplitudes(amplitudes: {[ket: number]: number | Complex}): void {
+  setAmplitudes(amplitudes: {[ket: number]: Complex}) {
     const qubitCircles = this.qubitCircles
 
-    for (const [i, each] of Object.entries(amplitudes)) {
+    for (const [i, amplitude] of Object.entries(amplitudes)) {
       const qubitCircle = qubitCircles[parseInt(i)]
       Util.notNull(qubitCircle)
-
-      const amplitude = Complex.from(each)
 
       qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())
       qubitCircle.setAttribute('data-amplitude-imag', amplitude.imag.toString())
@@ -38,10 +36,7 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
-  private setRoundedMagnitude(qubitCircle: HTMLElement | null | undefined, magnitude: number): void {
-    if (qubitCircle === null) return
-    if (qubitCircle === undefined) return
-
+  private setRoundedMagnitude(qubitCircle: HTMLElement, magnitude: number): void {
     let roundedMag = Math.round(magnitude * 100)
     roundedMag = roundedMag < 10 ? (roundedMag === 0 ? 0 : 10) : Math.round(roundedMag / 10) * 10
     roundedMag = roundedMag / 100
@@ -50,10 +45,7 @@ export class VirtualizedGridElement extends HTMLElement {
     qubitCircle.setAttribute('data-rounded-magnitude', roundedMag.toString())
   }
 
-  private setRoundedPhase(qubitCircle: HTMLElement | null | undefined, phase: number): void {
-    if (qubitCircle === null) return
-    if (qubitCircle === undefined) return
-
+  private setRoundedPhase(qubitCircle: HTMLElement, phase: number): void {
     let roundedPhase = Math.round(phase / 10) * 10
     if (roundedPhase < 0) roundedPhase = 360 + roundedPhase
 
