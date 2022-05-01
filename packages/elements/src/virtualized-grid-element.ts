@@ -46,7 +46,7 @@ export class VirtualizedGridElement extends HTMLElement {
     roundedMag = roundedMag < 10 ? (roundedMag === 0 ? 0 : 10) : Math.round(roundedMag / 10) * 10
     roundedMag = roundedMag / 100
 
-    qubitCircle.setAttribute('data-magnitude', magnitude.toString())
+    qubitCircle.setAttribute('data-magnitude', (Math.floor(magnitude * 100000) / 100000).toString())
     qubitCircle.setAttribute('data-rounded-magnitude', roundedMag.toString())
   }
 

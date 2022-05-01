@@ -12057,7 +12057,7 @@ var Ot = /* @__PURE__ */ __name(class extends HTMLElement {
     if (e === null || e === void 0)
       return;
     let i = Math.round(t * 100);
-    i = i < 10 ? i === 0 ? 0 : 10 : Math.round(i / 10) * 10, i = i / 100, e.setAttribute("data-magnitude", t.toString()), e.setAttribute("data-rounded-magnitude", i.toString());
+    i = i < 10 ? i === 0 ? 0 : 10 : Math.round(i / 10) * 10, i = i / 100, e.setAttribute("data-magnitude", (Math.floor(t * 1e5) / 1e5).toString()), e.setAttribute("data-rounded-magnitude", i.toString());
   }
   setRoundedPhase(e, t) {
     if (e === null || e === void 0)

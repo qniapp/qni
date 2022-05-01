@@ -103,147 +103,147 @@
     @apply scale-0;
   }
 
-  &[data-rounded-phase='10'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='10'] &__phase {
     transform: rotate(-10deg);
   }
 
-  &[data-rounded-phase='20'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='20'] &__phase {
     transform: rotate(-20deg);
   }
 
-  &[data-rounded-phase='30'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='30'] &__phase {
     transform: rotate(-30deg);
   }
 
-  &[data-rounded-phase='40'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='40'] &__phase {
     transform: rotate(-40deg);
   }
 
-  &[data-rounded-phase='50'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='50'] &__phase {
     transform: rotate(-50deg);
   }
 
-  &[data-rounded-phase='60'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='60'] &__phase {
     transform: rotate(-60deg);
   }
 
-  &[data-rounded-phase='70'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='70'] &__phase {
     transform: rotate(-70deg);
   }
 
-  &[data-rounded-phase='80'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='80'] &__phase {
     transform: rotate(-80deg);
   }
 
-  &[data-rounded-phase='90'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='90'] &__phase {
     transform: rotate(-90deg);
   }
 
-  &[data-rounded-phase='100'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='100'] &__phase {
     transform: rotate(-100deg);
   }
 
-  &[data-rounded-phase='110'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='110'] &__phase {
     transform: rotate(-110deg);
   }
 
-  &[data-rounded-phase='120'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='120'] &__phase {
     transform: rotate(-120deg);
   }
 
-  &[data-rounded-phase='130'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='130'] &__phase {
     transform: rotate(-130deg);
   }
 
-  &[data-rounded-phase='140'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='140'] &__phase {
     transform: rotate(-140deg);
   }
 
-  &[data-rounded-phase='150'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='150'] &__phase {
     transform: rotate(-150deg);
   }
 
-  &[data-rounded-phase='160'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='160'] &__phase {
     transform: rotate(-160deg);
   }
 
-  &[data-rounded-phase='170'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='170'] &__phase {
     transform: rotate(-170deg);
   }
 
-  &[data-rounded-phase='180'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='180'] &__phase {
     transform: rotate(-180deg);
   }
 
-  &[data-rounded-phase='190'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='190'] &__phase {
     transform: rotate(-190deg);
   }
 
-  &[data-rounded-phase='200'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='200'] &__phase {
     transform: rotate(-200deg);
   }
 
-  &[data-rounded-phase='210'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='210'] &__phase {
     transform: rotate(-210deg);
   }
 
-  &[data-rounded-phase='220'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='220'] &__phase {
     transform: rotate(-220deg);
   }
 
-  &[data-rounded-phase='230'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='230'] &__phase {
     transform: rotate(-230deg);
   }
 
-  &[data-rounded-phase='240'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='240'] &__phase {
     transform: rotate(-240deg);
   }
 
-  &[data-rounded-phase='250'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='250'] &__phase {
     transform: rotate(-250deg);
   }
 
-  &[data-rounded-phase='260'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='260'] &__phase {
     transform: rotate(-260deg);
   }
 
-  &[data-rounded-phase='270'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='270'] &__phase {
     transform: rotate(-270deg);
   }
 
-  &[data-rounded-phase='280'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='280'] &__phase {
     transform: rotate(-280deg);
   }
 
-  &[data-rounded-phase='290'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='290'] &__phase {
     transform: rotate(-290deg);
   }
 
-  &[data-rounded-phase='300'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='300'] &__phase {
     transform: rotate(-300deg);
   }
 
-  &[data-rounded-phase='310'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='310'] &__phase {
     transform: rotate(-310deg);
   }
 
-  &[data-rounded-phase='320'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='320'] &__phase {
     transform: rotate(-320deg);
   }
 
-  &[data-rounded-phase='330'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='330'] &__phase {
     transform: rotate(-330deg);
   }
 
-  &[data-rounded-phase='340'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='340'] &__phase {
     transform: rotate(-340deg);
   }
 
-  &[data-rounded-phase='350'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='350'] &__phase {
     transform: rotate(-350deg);
   }
 
-  &[data-rounded-phase='360'] &__phase {
+  &:not([data-rounded-magnitude='0'])[data-rounded-phase='360'] &__phase {
     transform: rotate(-360deg);
   }
 }
