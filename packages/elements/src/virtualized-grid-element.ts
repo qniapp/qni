@@ -1,12 +1,13 @@
+import {Complex, Util} from '@qni/common'
 import {TemplateResult, html, render} from '@github/jtml'
-import {attr, controller, target} from '@github/catalyst'
+import {attr, controller, target, targets} from '@github/catalyst'
 
 @controller
 export class VirtualizedGridElement extends HTMLElement {
   @attr cols = 0
   @attr rows = 0
-  @attr itemHeight = 0
-  @attr itemWidth = 0
+  @attr qubitCircleHeight = 0
+  @attr qubitCircleWidth = 0
   @attr colStartIndex = -1
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
@@ -14,100 +15,150 @@ export class VirtualizedGridElement extends HTMLElement {
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
+  @targets qubitCircles!: HTMLElement[]
+
+  // FIXME: set amplitudes() に変更
+  setAmplitudes(amplitudes: {[ket: number]: number | Complex}): void {
+    const qubitCircles = this.qubitCircles
+
+    for (const [i, each] of Object.entries(amplitudes)) {
+      const qubitCircle = qubitCircles[parseInt(i)]
+      Util.notNull(qubitCircle)
+
+      const amplitude = Complex.from(each)
+
+      qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())
+      qubitCircle.setAttribute('data-amplitude-imag', amplitude.imag.toString())
+
+      const magnitude = amplitude.abs()
+      this.setRoundedMagnitude(qubitCircle, magnitude)
+
+      const phaseDeg = (amplitude.phase() / Math.PI) * 180
+      this.setRoundedPhase(qubitCircle, phaseDeg)
+    }
+  }
+
+  private setRoundedMagnitude(qubitCircle: HTMLElement | null | undefined, magnitude: number): void {
+    if (qubitCircle === null) return
+    if (qubitCircle === undefined) return
+
+    let roundedMag = Math.round(magnitude * 100)
+    roundedMag = roundedMag < 10 ? (roundedMag === 0 ? 0 : 10) : Math.round(roundedMag / 10) * 10
+    roundedMag = roundedMag / 100
+
+    qubitCircle.setAttribute('data-magnitude', magnitude.toString())
+    qubitCircle.setAttribute('data-rounded-magnitude', roundedMag.toString())
+  }
+
+  private setRoundedPhase(qubitCircle: HTMLElement | null | undefined, phase: number): void {
+    if (qubitCircle === null) return
+    if (qubitCircle === undefined) return
+
+    let roundedPhase = Math.round(phase / 10) * 10
+    if (roundedPhase < 0) roundedPhase = 360 + roundedPhase
+
+    qubitCircle.setAttribute('data-phase', phase.toString())
+    qubitCircle.setAttribute('data-rounded-phase', roundedPhase.toString())
+  }
 
   get innerHeight(): number {
-    return this.cols * this.itemHeight
+    return this.rows * this.qubitCircleHeight
   }
 
   get innerWidth(): number {
-    return this.rows * this.itemWidth
+    return this.cols * this.qubitCircleWidth
   }
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
-    this.updateItems()
+    this.maybeRedrawQubitCircles()
   }
 
   update(): void {
     render(
       html`<div
-          data-target="virtualized-grid.window"
-          data-action="scroll:virtualized-grid#updateItems"
-          style="width: 100%; height: 100%; overflow: auto;"
-        >
-          <div
-            data-target="virtualized-grid.innerContainer"
-            style="position: relative; height: ${this.innerHeight}px; width: ${this.innerWidth}px"
-          ></div>
-        </div>
-        <slot></slot>`,
-      this.shadowRoot!
+        class="h-16 w-32"
+        data-target="virtualized-grid.window"
+        data-action="scroll:virtualized-grid#maybeRedrawQubitCircles"
+        style="overflow: auto;"
+      >
+        <div
+          data-target="virtualized-grid.innerContainer"
+          style="position: relative; height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+        ></div>
+      </div>`,
+      this
     )
+    render(html`<slot></slot>`, this.shadowRoot!)
   }
 
-  updateItems(): void {
+  private maybeRedrawQubitCircles(): void {
     const colStartIndex = this.calculateColStartIndex
     const colEndIndex = this.calculateColEndIndex
     const rowStartIndex = this.calculateRowStartIndex
     const rowEndIndex = this.calculateRowEndIndex
 
     if (
-      this.colStartIndex !== colStartIndex ||
-      this.colEndIndex !== colEndIndex ||
-      this.rowStartIndex !== rowStartIndex ||
-      this.rowEndIndex !== rowEndIndex
+      this.colStartIndex === colStartIndex &&
+      this.colEndIndex === colEndIndex &&
+      this.rowStartIndex === rowStartIndex &&
+      this.rowEndIndex === rowEndIndex
     ) {
-      this.colStartIndex = colStartIndex
-      this.colEndIndex = colEndIndex
-      this.rowStartIndex = rowStartIndex
-      this.rowEndIndex = rowEndIndex
-
-      const data = []
-      for (let col = colStartIndex; col <= colEndIndex; col++) {
-        for (let row = rowStartIndex; row <= rowEndIndex; row++) {
-          data.push({col, row})
-        }
-      }
-
-      const itemsHtml = (items: Array<{col: number; row: number}>) => html`${items.map(this.itemHtml.bind(this))}`
-      render(itemsHtml(data), this.innerContainer)
+      return
     }
+
+    this.colStartIndex = colStartIndex
+    this.colEndIndex = colEndIndex
+    this.rowStartIndex = rowStartIndex
+    this.rowEndIndex = rowEndIndex
+
+    const data = []
+    for (let row = rowStartIndex; row <= rowEndIndex; row++) {
+      for (let col = colStartIndex; col <= colEndIndex; col++) {
+        data.push({row, col})
+      }
+    }
+
+    render(this.allQubitCirclesHtml(data), this.innerContainer)
   }
 
-  private itemHtml(data: {col: number; row: number}): TemplateResult {
-    const index = data.col * 10 + data.row
-    const top = this.itemHeight * data.col
-    const left = this.itemWidth * data.row
+  private allQubitCirclesHtml(data: Array<{col: number; row: number}>): TemplateResult {
+    return html`${data.map(this.qubitCircleHtml.bind(this))}`
+  }
+
+  private qubitCircleHtml(data: {row: number; col: number}): TemplateResult {
+    const ket = data.col + data.row * 10
+    const top = this.qubitCircleHeight * data.row
+    const left = this.qubitCircleWidth * data.col
 
     return html`<div
-      style="position: absolute; top: ${top}px; left: ${left}px; height: ${this.itemHeight}px; width: ${this
-        .itemWidth}px; border-width: 1px; border-color: rgb(0 0 0); border-style: solid; box-sizing: border-box;"
+      class="qubit-circle"
+      data-ket="${ket}"
+      data-targets="virtualized-grid.qubitCircles"
+      style="position: absolute; top: ${top}px; left: ${left}px"
     >
-      ${index}
+      <div class="qubit-circle__body">
+        <div class="qubit-circle__magnitude"></div>
+        <div class="qubit-circle__phase"></div>
+      </div>
     </div>`
   }
 
   private get calculateColStartIndex(): number {
-    return Math.floor(this.window.scrollTop / this.itemHeight)
+    return Math.floor(this.window.scrollTop / this.qubitCircleHeight)
   }
 
   private get calculateColEndIndex(): number {
-    return Math.min(
-      this.cols - 1, // don't render past the end of the list
-      Math.floor((this.window.scrollTop + this.windowHeight) / this.itemHeight)
-    )
+    return Math.min(this.cols - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleHeight))
   }
 
   private get calculateRowStartIndex(): number {
-    return Math.floor(this.window.scrollLeft / this.itemWidth)
+    return Math.floor(this.window.scrollLeft / this.qubitCircleWidth)
   }
 
   private get calculateRowEndIndex(): number {
-    return Math.min(
-      this.rows - 1, // don't render past the end of the list
-      Math.floor((this.window.scrollLeft + this.windowWidth) / this.itemWidth)
-    )
+    return Math.min(this.rows - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleWidth))
   }
 
   private get windowHeight(): number {

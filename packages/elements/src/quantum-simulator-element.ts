@@ -6,6 +6,7 @@ import {isControllable, isIfable} from './mixin'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
+import {VirtualizedGridElement} from './virtualized-grid-element'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -21,6 +22,7 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   @target circuit!: QuantumCircuitElement
   @target circleNotation!: CircleNotationElement
+  @target virtualizedGrid!: VirtualizedGridElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
 
   private visibleQubitCircleKets!: number[]
@@ -109,6 +111,7 @@ export class QuantumSimulatorElement extends HTMLElement {
             complexAmplitudes[ket] = new Complex(c[0], c[1])
           }
           this.circleNotation?.setAmplitudes(complexAmplitudes)
+          this.virtualizedGrid?.setAmplitudes(complexAmplitudes)
         }
         break
       }

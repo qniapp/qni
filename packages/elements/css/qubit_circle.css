@@ -1,229 +1,91 @@
-circle-notation {
-  &::part(qubit-circle) {
+.qubit-circle {
+  $parent: &;
+
+  @apply h-16 w-16;
+
+  &__body {
     @apply relative;
-    @apply h-8 w-8;
+    @apply h-full w-full;
   }
 
-  /* data-qubit-count */
-
-  &[data-qubit-count='1']:not([data-multi-qubits])::part(qubit-circle) {
-    height: 32px;
-    width: 32px;
-  }
-
-  &[data-qubit-count='1']::part(qubit-circle),
-  &[data-qubit-count='2']::part(qubit-circle) {
-    height: 64px;
-    width: 64px;
-  }
-
-  &[data-qubit-count='3']::part(qubit-circle) {
-    height: 48px;
-    width: 48px;
-
-    @media screen(md) {
-      height: 64px;
-      width: 64px;
-    }
-  }
-
-  &[data-qubit-count='4']::part(qubit-circle) {
-    height: 32px;
-    width: 32px;
-
-    @media screen(md) {
-      height: 48px;
-      width: 48px;
-    }
-  }
-
-  &[data-qubit-count='5']::part(qubit-circle) {
-    height: 23px;
-    width: 23px;
-
-    @media screen(md) {
-      height: 32px;
-      width: 32px;
-    }
-  }
-
-  &[data-qubit-count='6']::part(qubit-circle) {
-    height: 15px;
-    width: 15px;
-
-    @media screen(md) {
-      height: 25px;
-      width: 25px;
-    }
-  }
-
-  &[data-qubit-count='7']::part(qubit-circle) {
-    height: 15px;
-    width: 15px;
-
-    @media screen(md) {
-      height: 17px;
-      width: 17px;
-    }
-  }
-
-  &[data-qubit-count='8']::part(qubit-circle),
-  &[data-qubit-count='9']::part(qubit-circle),
-  &[data-qubit-count='10']::part(qubit-circle) {
-    height: 15px;
-    width: 15px;
-
-    @media screen(md) {
-      height: 17px;
-      width: 17px;
-    }
-  }
-
-  /* data-size */
-
-  &[data-size='xs'][data-qubit-count]::part(qubit-circle) {
-    height: 17px;
-    width: 17px;
-  }
-
-  &[data-size='sm'][data-qubit-count]::part(qubit-circle) {
-    height: 25px;
-    width: 25px;
-  }
-
-  &[data-size='base'][data-qubit-count]::part(qubit-circle) {
-    height: 32px;
-    width: 32px;
-  }
-
-  &[data-size='lg'][data-qubit-count]::part(qubit-circle) {
-    height: 48px;
-    width: 48px;
-  }
-
-  &[data-size='xl'][data-qubit-count]::part(qubit-circle) {
-    height: 64px;
-    width: 64px;
-  }
-
-  /* data-show-kets */
-
-  &[data-show-kets] {
-    @apply pb-5;
-  }
-
-  &[data-show-kets]::part(qubit-circle)::before {
+  &__magnitude {
     @apply absolute;
-    @apply bottom-0 right-0 left-0;
-    @apply font-mono;
-    @apply text-sm;
-    @apply text-slate-500;
-    @apply -mb-5;
-    @apply whitespace-nowrap;
-    @apply flex justify-center;
-
-    content: '|' attr(data-ket) '⟩';
-  }
-
-  /* magnitude */
-
-  &::part(qubit-circle__magnitude) {
-    @apply absolute;
-    @apply inset-px;
     @apply border-solid border-slate-200;
+    @apply inset-px;
     @apply rounded-full;
   }
 
-  &[data-qubit-count='1']::part(qubit-circle__magnitude),
-  &[data-qubit-count='2']::part(qubit-circle__magnitude),
-  &[data-qubit-count='3']::part(qubit-circle__magnitude),
-  &[data-qubit-count='4']::part(qubit-circle__magnitude) {
+  /* circle-notation[data-qubit-count="1"] */
+  &__magnitude {
     @apply border-2;
   }
 
-  &[data-qubit-count='5']::part(qubit-circle__magnitude) {
-    @apply border-2;
-
-    @media screen(md) {
-      @apply border;
-    }
-  }
-
-  &[data-qubit-count='6']::part(qubit-circle__magnitude),
-  &[data-qubit-count='7']::part(qubit-circle__magnitude),
-  &[data-qubit-count='8']::part(qubit-circle__magnitude),
-  &[data-qubit-count='9']::part(qubit-circle__magnitude),
-  &[data-qubit-count='10']::part(qubit-circle__magnitude) {
-    @apply border;
-  }
-
-  /* data-size */
-
-  &[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
-    &[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
-    border-width: 1px;
-  }
-  &[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
-  &[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
-  &[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
-    border-width: 2px;
-  }
-
-  &::part(qubit-circle__magnitude)::after {
+  &__magnitude::after {
     @apply absolute;
     @apply inset-0;
     @apply rounded-full;
     @apply bg-sky-500;
     @apply origin-center transform;
-    @apply scale-0;
 
     content: '';
   }
 
-  /* phase */
+  &[data-rounded-magnitude='0'] &__magnitude::after {
+    @apply scale-0;
+  }
 
-  &::part(qubit-circle__phase) {
-    @apply absolute;
-    @apply inset-px;
-    @apply rounded-full border-solid;
-    @apply border-slate-500;
+  &[data-rounded-magnitude='0.1'] &__magnitude::after {
+    transform: scaleX(0.1) scaleY(0.1);
+  }
+
+  &[data-rounded-magnitude='0.2'] &__magnitude::after {
+    transform: scaleX(0.2) scaleY(0.2);
+  }
+
+  &[data-rounded-magnitude='0.3'] &__magnitude::after {
+    transform: scaleX(0.3) scaleY(0.3);
+  }
+
+  &[data-rounded-magnitude='0.4'] &__magnitude::after {
+    transform: scaleX(0.4) scaleY(0.4);
+  }
+
+  &[data-rounded-magnitude='0.5'] &__magnitude::after {
+    transform: scaleX(0.5) scaleY(0.5);
+  }
+
+  &[data-rounded-magnitude='0.6'] &__magnitude::after {
+    transform: scaleX(0.6) scaleY(0.6);
+  }
+
+  &[data-rounded-magnitude='0.7'] &__magnitude::after {
+    transform: scaleX(0.7) scaleY(0.7);
+  }
+
+  &[data-rounded-magnitude='0.8'] &__magnitude::after {
+    transform: scaleX(0.8) scaleY(0.8);
+  }
+
+  &[data-rounded-magnitude='0.9'] &__magnitude::after {
+    transform: scaleX(0.9) scaleY(0.9);
+  }
+
+  &[data-rounded-magnitude='1'] &__magnitude::after {
+    transform: scaleX(1) scaleY(1);
+  }
+
+  /* .qubit-circle__phase */
+
+  &__phase {
+    @apply absolute inset-px;
+    @apply rounded-full border-solid border-slate-500;
     @apply origin-center transform;
-  }
 
-  &[data-qubit-count='1']::part(qubit-circle__phase),
-  &[data-qubit-count='2']::part(qubit-circle__phase),
-  &[data-qubit-count='3']::part(qubit-circle__phase),
-  &[data-qubit-count='4']::part(qubit-circle__phase) {
+    /* circle-notation[data-qubit-count="1"] */
     @apply border-2;
   }
 
-  &[data-qubit-count='5']::part(qubit-circle__phase) {
-    @apply border;
-
-    @media screen(md) {
-      @apply border-2;
-    }
-  }
-
-  &[data-qubit-count='6']::part(qubit-circle__phase),
-  &[data-qubit-count='7']::part(qubit-circle__phase),
-  &[data-qubit-count='8']::part(qubit-circle__phase),
-  &[data-qubit-count='9']::part(qubit-circle__phase),
-  &[data-qubit-count='10']::part(qubit-circle__phase) {
-    @apply border;
-  }
-
-  &[data-size='xs'][data-qubit-count]::part(qubit-circle__phase),
-  &[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
-    @apply border;
-  }
-  &[data-size='base'][data-qubit-count]::part(qubit-circle__phase),
-  &[data-size='lg'][data-qubit-count]::part(qubit-circle__phase),
-  &[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
-    @apply border-2;
-  }
-
-  &::part(qubit-circle__phase)::after {
+  &__phase::after {
     @apply absolute top-0 right-0 left-0;
     @apply bg-slate-900;
     @apply h-1/2;
@@ -231,38 +93,157 @@ circle-notation {
     @apply rounded-b;
 
     content: '';
-  }
 
-  &[data-qubit-count='1']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='2']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='3']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='4']::part(qubit-circle__phase)::after {
+    /* circle-notation[data-qubit-count="1"] */
     @apply w-0.5;
   }
 
-  &[data-qubit-count='5']::part(qubit-circle__phase)::after {
-    @apply w-px;
-
-    @media screen(md) {
-      @apply w-0.5;
-    }
+  &:not([data-rounded-magnitude]) &__phase,
+  &[data-rounded-magnitude='0'] &__phase {
+    @apply scale-0;
   }
 
-  &[data-qubit-count='6']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='7']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='8']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='9']::part(qubit-circle__phase)::after,
-  &[data-qubit-count='10']::part(qubit-circle__phase)::after {
-    @apply w-px;
+  &[data-rounded-phase='10'] &__phase {
+    transform: rotate(-10deg);
   }
 
-  &[data-size='xs']::part(qubit-circle__phase)::after,
-  &[data-size='sm']::part(qubit-circle__phase)::after {
-    @apply w-px;
+  &[data-rounded-phase='20'] &__phase {
+    transform: rotate(-20deg);
   }
-  &[data-size='base']::part(qubit-circle__phase)::after,
-  &[data-size='lg']::part(qubit-circle__phase)::after,
-  &[data-size='xl']::part(qubit-circle__phase)::after {
-    @apply w-0.5;
+
+  &[data-rounded-phase='30'] &__phase {
+    transform: rotate(-30deg);
+  }
+
+  &[data-rounded-phase='40'] &__phase {
+    transform: rotate(-40deg);
+  }
+
+  &[data-rounded-phase='50'] &__phase {
+    transform: rotate(-50deg);
+  }
+
+  &[data-rounded-phase='60'] &__phase {
+    transform: rotate(-60deg);
+  }
+
+  &[data-rounded-phase='70'] &__phase {
+    transform: rotate(-70deg);
+  }
+
+  &[data-rounded-phase='80'] &__phase {
+    transform: rotate(-80deg);
+  }
+
+  &[data-rounded-phase='90'] &__phase {
+    transform: rotate(-90deg);
+  }
+
+  &[data-rounded-phase='100'] &__phase {
+    transform: rotate(-100deg);
+  }
+
+  &[data-rounded-phase='110'] &__phase {
+    transform: rotate(-110deg);
+  }
+
+  &[data-rounded-phase='120'] &__phase {
+    transform: rotate(-120deg);
+  }
+
+  &[data-rounded-phase='130'] &__phase {
+    transform: rotate(-130deg);
+  }
+
+  &[data-rounded-phase='140'] &__phase {
+    transform: rotate(-140deg);
+  }
+
+  &[data-rounded-phase='150'] &__phase {
+    transform: rotate(-150deg);
+  }
+
+  &[data-rounded-phase='160'] &__phase {
+    transform: rotate(-160deg);
+  }
+
+  &[data-rounded-phase='170'] &__phase {
+    transform: rotate(-170deg);
+  }
+
+  &[data-rounded-phase='180'] &__phase {
+    transform: rotate(-180deg);
+  }
+
+  &[data-rounded-phase='190'] &__phase {
+    transform: rotate(-190deg);
+  }
+
+  &[data-rounded-phase='200'] &__phase {
+    transform: rotate(-200deg);
+  }
+
+  &[data-rounded-phase='210'] &__phase {
+    transform: rotate(-210deg);
+  }
+
+  &[data-rounded-phase='220'] &__phase {
+    transform: rotate(-220deg);
+  }
+
+  &[data-rounded-phase='230'] &__phase {
+    transform: rotate(-230deg);
+  }
+
+  &[data-rounded-phase='240'] &__phase {
+    transform: rotate(-240deg);
+  }
+
+  &[data-rounded-phase='250'] &__phase {
+    transform: rotate(-250deg);
+  }
+
+  &[data-rounded-phase='260'] &__phase {
+    transform: rotate(-260deg);
+  }
+
+  &[data-rounded-phase='270'] &__phase {
+    transform: rotate(-270deg);
+  }
+
+  &[data-rounded-phase='280'] &__phase {
+    transform: rotate(-280deg);
+  }
+
+  &[data-rounded-phase='290'] &__phase {
+    transform: rotate(-290deg);
+  }
+
+  &[data-rounded-phase='300'] &__phase {
+    transform: rotate(-300deg);
+  }
+
+  &[data-rounded-phase='310'] &__phase {
+    transform: rotate(-310deg);
+  }
+
+  &[data-rounded-phase='320'] &__phase {
+    transform: rotate(-320deg);
+  }
+
+  &[data-rounded-phase='330'] &__phase {
+    transform: rotate(-330deg);
+  }
+
+  &[data-rounded-phase='340'] &__phase {
+    transform: rotate(-340deg);
+  }
+
+  &[data-rounded-phase='350'] &__phase {
+    transform: rotate(-350deg);
+  }
+
+  &[data-rounded-phase='360'] &__phase {
+    transform: rotate(-360deg);
   }
 }

@@ -2289,6 +2289,295 @@ bloch-display[data-size='lg']::part(vector-end-circle),
   width: 8px;
 }
 
+circle-notation::part(qubit-circle) {
+  position: relative;
+  height: 2rem;
+  width: 2rem;
+}
+
+/* data-qubit-count */
+
+circle-notation[data-qubit-count='1']:not([data-multi-qubits])::part(qubit-circle) {
+  height: 32px;
+  width: 32px;
+}
+
+circle-notation[data-qubit-count='1']::part(qubit-circle),
+  circle-notation[data-qubit-count='2']::part(qubit-circle) {
+  height: 64px;
+  width: 64px;
+}
+
+circle-notation[data-qubit-count='3']::part(qubit-circle) {
+  height: 48px;
+  width: 48px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='3']::part(qubit-circle) {
+    height: 64px;
+    width: 64px
+  }
+}
+
+circle-notation[data-qubit-count='4']::part(qubit-circle) {
+  height: 32px;
+  width: 32px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='4']::part(qubit-circle) {
+    height: 48px;
+    width: 48px
+  }
+}
+
+circle-notation[data-qubit-count='5']::part(qubit-circle) {
+  height: 23px;
+  width: 23px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='5']::part(qubit-circle) {
+    height: 32px;
+    width: 32px
+  }
+}
+
+circle-notation[data-qubit-count='6']::part(qubit-circle) {
+  height: 15px;
+  width: 15px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='6']::part(qubit-circle) {
+    height: 25px;
+    width: 25px
+  }
+}
+
+circle-notation[data-qubit-count='7']::part(qubit-circle) {
+  height: 15px;
+  width: 15px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='7']::part(qubit-circle) {
+    height: 17px;
+    width: 17px
+  }
+}
+
+circle-notation[data-qubit-count='8']::part(qubit-circle),
+  circle-notation[data-qubit-count='9']::part(qubit-circle),
+  circle-notation[data-qubit-count='10']::part(qubit-circle) {
+  height: 15px;
+  width: 15px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='8']::part(qubit-circle),
+  circle-notation[data-qubit-count='9']::part(qubit-circle),
+  circle-notation[data-qubit-count='10']::part(qubit-circle) {
+    height: 17px;
+    width: 17px
+  }
+}
+
+/* data-size */
+
+circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle) {
+  height: 17px;
+  width: 17px;
+}
+
+circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle) {
+  height: 25px;
+  width: 25px;
+}
+
+circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle) {
+  height: 32px;
+  width: 32px;
+}
+
+circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle) {
+  height: 48px;
+  width: 48px;
+}
+
+circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle) {
+  height: 64px;
+  width: 64px;
+}
+
+/* data-show-kets */
+
+circle-notation[data-show-kets] {
+  padding-bottom: 1.25rem;
+}
+
+circle-notation[data-show-kets]::part(qubit-circle)::before {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
+  margin-bottom: -1.25rem;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  content: '|' attr(data-ket) '⟩';
+}
+
+/* magnitude */
+
+circle-notation::part(qubit-circle__magnitude) {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-radius: 9999px;
+}
+
+circle-notation[data-qubit-count='1']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='2']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='3']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='4']::part(qubit-circle__magnitude) {
+  border-width: 2px;
+}
+
+circle-notation[data-qubit-count='5']::part(qubit-circle__magnitude) {
+  border-width: 2px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='5']::part(qubit-circle__magnitude) {
+    border-width: 1px;
+  }
+}
+
+circle-notation[data-qubit-count='6']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='7']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='8']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='9']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='10']::part(qubit-circle__magnitude) {
+  border-width: 1px;
+}
+
+/* data-size */
+
+circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
+    circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
+  border-width: 1px;
+}
+
+circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
+  circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
+  circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
+  border-width: 2px;
+}
+
+circle-notation::part(qubit-circle__magnitude)::after {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(14 165 233 / var(--tw-bg-opacity));
+  transform-origin: center;
+  --tw-scale-x: 0;
+  --tw-scale-y: 0;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  content: '';
+}
+
+/* phase */
+
+circle-notation::part(qubit-circle__phase) {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  border-radius: 9999px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(100 116 139 / var(--tw-border-opacity));
+  transform-origin: center;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+circle-notation[data-qubit-count='1']::part(qubit-circle__phase), circle-notation[data-qubit-count='2']::part(qubit-circle__phase), circle-notation[data-qubit-count='3']::part(qubit-circle__phase), circle-notation[data-qubit-count='4']::part(qubit-circle__phase) {
+  border-width: 2px;
+}
+
+circle-notation[data-qubit-count='5']::part(qubit-circle__phase) {
+  border-width: 1px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='5']::part(qubit-circle__phase) {
+    border-width: 2px;
+  }
+}
+
+circle-notation[data-qubit-count='6']::part(qubit-circle__phase), circle-notation[data-qubit-count='7']::part(qubit-circle__phase), circle-notation[data-qubit-count='8']::part(qubit-circle__phase), circle-notation[data-qubit-count='9']::part(qubit-circle__phase), circle-notation[data-qubit-count='10']::part(qubit-circle__phase) {
+  border-width: 1px;
+}
+
+circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
+  border-width: 1px;
+}
+
+circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
+  border-width: 2px;
+}
+
+circle-notation::part(qubit-circle__phase)::after {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+  height: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  content: '';
+}
+
+circle-notation[data-qubit-count='1']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='2']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='3']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='4']::part(qubit-circle__phase)::after {
+  width: 0.125rem;
+}
+
+circle-notation[data-qubit-count='5']::part(qubit-circle__phase)::after {
+  width: 1px;
+}
+
+@media (min-width: 768px) {
+  circle-notation[data-qubit-count='5']::part(qubit-circle__phase)::after {
+    width: 0.125rem;
+  }
+}
+
+circle-notation[data-qubit-count='6']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='7']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='8']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='9']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='10']::part(qubit-circle__phase)::after {
+  width: 1px;
+}
+
+circle-notation[data-size='xs']::part(qubit-circle__phase)::after, circle-notation[data-size='sm']::part(qubit-circle__phase)::after {
+  width: 1px;
+}
+
+circle-notation[data-size='base']::part(qubit-circle__phase)::after, circle-notation[data-size='lg']::part(qubit-circle__phase)::after, circle-notation[data-size='xl']::part(qubit-circle__phase)::after {
+  width: 0.125rem;
+}
+
 circuit-dropzone {
   /* Size */
   height: 3rem;
@@ -3267,197 +3556,37 @@ quantum-circuit {
   width: min-content;
 }
 
-circle-notation::part(qubit-circle) {
+.qubit-circle {
+  $parent: &;
+  height: 4rem;
+  width: 4rem;
+}
+
+.qubit-circle__body {
   position: relative;
-  height: 2rem;
-  width: 2rem;
+  height: 100%;
+  width: 100%;
 }
 
-/* data-qubit-count */
-
-circle-notation[data-qubit-count='1']:not([data-multi-qubits])::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation[data-qubit-count='1']::part(qubit-circle),
-  circle-notation[data-qubit-count='2']::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-circle-notation[data-qubit-count='3']::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='3']::part(qubit-circle) {
-    height: 64px;
-    width: 64px
-  }
-}
-
-circle-notation[data-qubit-count='4']::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='4']::part(qubit-circle) {
-    height: 48px;
-    width: 48px
-  }
-}
-
-circle-notation[data-qubit-count='5']::part(qubit-circle) {
-  height: 23px;
-  width: 23px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='5']::part(qubit-circle) {
-    height: 32px;
-    width: 32px
-  }
-}
-
-circle-notation[data-qubit-count='6']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='6']::part(qubit-circle) {
-    height: 25px;
-    width: 25px
-  }
-}
-
-circle-notation[data-qubit-count='7']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='7']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-circle-notation[data-qubit-count='8']::part(qubit-circle),
-  circle-notation[data-qubit-count='9']::part(qubit-circle),
-  circle-notation[data-qubit-count='10']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='8']::part(qubit-circle),
-  circle-notation[data-qubit-count='9']::part(qubit-circle),
-  circle-notation[data-qubit-count='10']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-/* data-size */
-
-circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle) {
-  height: 17px;
-  width: 17px;
-}
-
-circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle) {
-  height: 25px;
-  width: 25px;
-}
-
-circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-/* data-show-kets */
-
-circle-notation[data-show-kets] {
-  padding-bottom: 1.25rem;
-}
-
-circle-notation[data-show-kets]::part(qubit-circle)::before {
+.qubit-circle__magnitude {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
-  margin-bottom: -1.25rem;
-  white-space: nowrap;
-  display: flex;
-  justify-content: center;
-  content: '|' attr(data-ket) '⟩';
-}
-
-/* magnitude */
-
-circle-notation::part(qubit-circle__magnitude) {
-  position: absolute;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
   top: 1px;
   right: 1px;
   bottom: 1px;
   left: 1px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
   border-radius: 9999px;
 }
 
-circle-notation[data-qubit-count='1']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='2']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='3']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='4']::part(qubit-circle__magnitude) {
+/* circle-notation[data-qubit-count="1"] */
+
+.qubit-circle__magnitude {
   border-width: 2px;
 }
 
-circle-notation[data-qubit-count='5']::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='5']::part(qubit-circle__magnitude) {
-    border-width: 1px;
-  }
-}
-
-circle-notation[data-qubit-count='6']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='7']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='8']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='9']::part(qubit-circle__magnitude), circle-notation[data-qubit-count='10']::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-/* data-size */
-
-circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
-    circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-circle-notation::part(qubit-circle__magnitude)::after {
+.qubit-circle__magnitude::after {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -3467,15 +3596,59 @@ circle-notation::part(qubit-circle__magnitude)::after {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
   transform-origin: center;
-  --tw-scale-x: 0;
-  --tw-scale-y: 0;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   content: '';
 }
 
-/* phase */
+.qubit-circle[data-rounded-magnitude='0'] .qubit-circle__magnitude::after {
+  --tw-scale-x: 0;
+  --tw-scale-y: 0;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
 
-circle-notation::part(qubit-circle__phase) {
+.qubit-circle[data-rounded-magnitude='0.1'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.1) scaleY(0.1);
+}
+
+.qubit-circle[data-rounded-magnitude='0.2'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.2) scaleY(0.2);
+}
+
+.qubit-circle[data-rounded-magnitude='0.3'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.3) scaleY(0.3);
+}
+
+.qubit-circle[data-rounded-magnitude='0.4'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.4) scaleY(0.4);
+}
+
+.qubit-circle[data-rounded-magnitude='0.5'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.5) scaleY(0.5);
+}
+
+.qubit-circle[data-rounded-magnitude='0.6'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.6) scaleY(0.6);
+}
+
+.qubit-circle[data-rounded-magnitude='0.7'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.7) scaleY(0.7);
+}
+
+.qubit-circle[data-rounded-magnitude='0.8'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.8) scaleY(0.8);
+}
+
+.qubit-circle[data-rounded-magnitude='0.9'] .qubit-circle__magnitude::after {
+  transform: scaleX(0.9) scaleY(0.9);
+}
+
+.qubit-circle[data-rounded-magnitude='1'] .qubit-circle__magnitude::after {
+  transform: scaleX(1) scaleY(1);
+}
+
+/* .qubit-circle__phase */
+
+.qubit-circle__phase {
   position: absolute;
   top: 1px;
   right: 1px;
@@ -3487,35 +3660,11 @@ circle-notation::part(qubit-circle__phase) {
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
   transform-origin: center;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-circle-notation[data-qubit-count='1']::part(qubit-circle__phase), circle-notation[data-qubit-count='2']::part(qubit-circle__phase), circle-notation[data-qubit-count='3']::part(qubit-circle__phase), circle-notation[data-qubit-count='4']::part(qubit-circle__phase) {
+  /* circle-notation[data-qubit-count="1"] */
   border-width: 2px;
 }
 
-circle-notation[data-qubit-count='5']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='5']::part(qubit-circle__phase) {
-    border-width: 2px;
-  }
-}
-
-circle-notation[data-qubit-count='6']::part(qubit-circle__phase), circle-notation[data-qubit-count='7']::part(qubit-circle__phase), circle-notation[data-qubit-count='8']::part(qubit-circle__phase), circle-notation[data-qubit-count='9']::part(qubit-circle__phase), circle-notation[data-qubit-count='10']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation[data-size='xs'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation[data-size='base'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='lg'][data-qubit-count]::part(qubit-circle__phase), circle-notation[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 2px;
-}
-
-circle-notation::part(qubit-circle__phase)::after {
+.qubit-circle__phase::after {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -3528,32 +3677,158 @@ circle-notation::part(qubit-circle__phase)::after {
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
   content: '';
-}
-
-circle-notation[data-qubit-count='1']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='2']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='3']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='4']::part(qubit-circle__phase)::after {
+  /* circle-notation[data-qubit-count="1"] */
   width: 0.125rem;
 }
 
-circle-notation[data-qubit-count='5']::part(qubit-circle__phase)::after {
-  width: 1px;
+.qubit-circle:not([data-rounded-magnitude]) .qubit-circle__phase, .qubit-circle[data-rounded-magnitude='0'] .qubit-circle__phase {
+  --tw-scale-x: 0;
+  --tw-scale-y: 0;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
-  circle-notation[data-qubit-count='5']::part(qubit-circle__phase)::after {
-    width: 0.125rem;
-  }
+.qubit-circle[data-rounded-phase='10'] .qubit-circle__phase {
+  transform: rotate(-10deg);
 }
 
-circle-notation[data-qubit-count='6']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='7']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='8']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='9']::part(qubit-circle__phase)::after, circle-notation[data-qubit-count='10']::part(qubit-circle__phase)::after {
-  width: 1px;
+.qubit-circle[data-rounded-phase='20'] .qubit-circle__phase {
+  transform: rotate(-20deg);
 }
 
-circle-notation[data-size='xs']::part(qubit-circle__phase)::after, circle-notation[data-size='sm']::part(qubit-circle__phase)::after {
-  width: 1px;
+.qubit-circle[data-rounded-phase='30'] .qubit-circle__phase {
+  transform: rotate(-30deg);
 }
 
-circle-notation[data-size='base']::part(qubit-circle__phase)::after, circle-notation[data-size='lg']::part(qubit-circle__phase)::after, circle-notation[data-size='xl']::part(qubit-circle__phase)::after {
-  width: 0.125rem;
+.qubit-circle[data-rounded-phase='40'] .qubit-circle__phase {
+  transform: rotate(-40deg);
+}
+
+.qubit-circle[data-rounded-phase='50'] .qubit-circle__phase {
+  transform: rotate(-50deg);
+}
+
+.qubit-circle[data-rounded-phase='60'] .qubit-circle__phase {
+  transform: rotate(-60deg);
+}
+
+.qubit-circle[data-rounded-phase='70'] .qubit-circle__phase {
+  transform: rotate(-70deg);
+}
+
+.qubit-circle[data-rounded-phase='80'] .qubit-circle__phase {
+  transform: rotate(-80deg);
+}
+
+.qubit-circle[data-rounded-phase='90'] .qubit-circle__phase {
+  transform: rotate(-90deg);
+}
+
+.qubit-circle[data-rounded-phase='100'] .qubit-circle__phase {
+  transform: rotate(-100deg);
+}
+
+.qubit-circle[data-rounded-phase='110'] .qubit-circle__phase {
+  transform: rotate(-110deg);
+}
+
+.qubit-circle[data-rounded-phase='120'] .qubit-circle__phase {
+  transform: rotate(-120deg);
+}
+
+.qubit-circle[data-rounded-phase='130'] .qubit-circle__phase {
+  transform: rotate(-130deg);
+}
+
+.qubit-circle[data-rounded-phase='140'] .qubit-circle__phase {
+  transform: rotate(-140deg);
+}
+
+.qubit-circle[data-rounded-phase='150'] .qubit-circle__phase {
+  transform: rotate(-150deg);
+}
+
+.qubit-circle[data-rounded-phase='160'] .qubit-circle__phase {
+  transform: rotate(-160deg);
+}
+
+.qubit-circle[data-rounded-phase='170'] .qubit-circle__phase {
+  transform: rotate(-170deg);
+}
+
+.qubit-circle[data-rounded-phase='180'] .qubit-circle__phase {
+  transform: rotate(-180deg);
+}
+
+.qubit-circle[data-rounded-phase='190'] .qubit-circle__phase {
+  transform: rotate(-190deg);
+}
+
+.qubit-circle[data-rounded-phase='200'] .qubit-circle__phase {
+  transform: rotate(-200deg);
+}
+
+.qubit-circle[data-rounded-phase='210'] .qubit-circle__phase {
+  transform: rotate(-210deg);
+}
+
+.qubit-circle[data-rounded-phase='220'] .qubit-circle__phase {
+  transform: rotate(-220deg);
+}
+
+.qubit-circle[data-rounded-phase='230'] .qubit-circle__phase {
+  transform: rotate(-230deg);
+}
+
+.qubit-circle[data-rounded-phase='240'] .qubit-circle__phase {
+  transform: rotate(-240deg);
+}
+
+.qubit-circle[data-rounded-phase='250'] .qubit-circle__phase {
+  transform: rotate(-250deg);
+}
+
+.qubit-circle[data-rounded-phase='260'] .qubit-circle__phase {
+  transform: rotate(-260deg);
+}
+
+.qubit-circle[data-rounded-phase='270'] .qubit-circle__phase {
+  transform: rotate(-270deg);
+}
+
+.qubit-circle[data-rounded-phase='280'] .qubit-circle__phase {
+  transform: rotate(-280deg);
+}
+
+.qubit-circle[data-rounded-phase='290'] .qubit-circle__phase {
+  transform: rotate(-290deg);
+}
+
+.qubit-circle[data-rounded-phase='300'] .qubit-circle__phase {
+  transform: rotate(-300deg);
+}
+
+.qubit-circle[data-rounded-phase='310'] .qubit-circle__phase {
+  transform: rotate(-310deg);
+}
+
+.qubit-circle[data-rounded-phase='320'] .qubit-circle__phase {
+  transform: rotate(-320deg);
+}
+
+.qubit-circle[data-rounded-phase='330'] .qubit-circle__phase {
+  transform: rotate(-330deg);
+}
+
+.qubit-circle[data-rounded-phase='340'] .qubit-circle__phase {
+  transform: rotate(-340deg);
+}
+
+.qubit-circle[data-rounded-phase='350'] .qubit-circle__phase {
+  transform: rotate(-350deg);
+}
+
+.qubit-circle[data-rounded-phase='360'] .qubit-circle__phase {
+  transform: rotate(-360deg);
 }
 
 rnot-gate {
@@ -5167,6 +5442,14 @@ z-gate::part(icon) {
 
 .block {
   display: block;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .transform {
