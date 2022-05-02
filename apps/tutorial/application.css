@@ -3590,8 +3590,6 @@ quantum-circuit {
   width: min-content;
 }
 
-/* sizes */
-
 virtualized-grid[data-qubit-count='1'] .qubit-circle, virtualized-grid[data-qubit-count='2'] .qubit-circle, virtualized-grid[data-qubit-count='3'] .qubit-circle {
   height: 4rem;
   width: 4rem;
@@ -3600,6 +3598,11 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle, virtualized-grid[data-qubi
 virtualized-grid[data-qubit-count='4'] .qubit-circle {
   height: 3rem;
   width: 3rem;
+}
+
+virtualized-grid[data-qubit-count='5'] .qubit-circle {
+  height: 2rem;
+  width: 2rem;
 }
 
 .qubit-circle__body {

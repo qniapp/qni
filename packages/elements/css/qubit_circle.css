@@ -7,6 +7,9 @@
   virtualized-grid[data-qubit-count='4'] & {
     @apply h-12 w-12;
   }
+  virtualized-grid[data-qubit-count='5'] & {
+    @apply h-8 w-8;
+  }
 
   &__body {
     @apply relative;
