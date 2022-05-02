@@ -11605,6 +11605,10 @@ var bt = class extends HTMLElement {
           this.rows = 16, this.cols = 32;
           break;
         }
+        case "10": {
+          this.rows = 32, this.cols = 32;
+          break;
+        }
         default:
           throw new It("unsupported qubit count", i);
       }
@@ -11671,6 +11675,8 @@ var bt = class extends HTMLElement {
         return this.qubitCircleSize * 8;
       case 9:
         return this.qubitCircleSize * 8;
+      case 10:
+        return this.qubitCircleSize * 8;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
     }
@@ -11694,6 +11700,8 @@ var bt = class extends HTMLElement {
       case 8:
         return this.qubitCircleSize * 32;
       case 9:
+        return this.qubitCircleSize * 32;
+      case 10:
         return this.qubitCircleSize * 32;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
@@ -11737,6 +11745,8 @@ var bt = class extends HTMLElement {
         return 17;
       case 9:
         return 17;
+      case 10:
+        return 17;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
     }
@@ -11769,10 +11779,8 @@ var bt = class extends HTMLElement {
       data-targets="virtualized-grid.qubitCircles"
       style="position: absolute; top: ${i}px; left: ${l}px"
     >
-      <div class="qubit-circle__body">
-        <div class="qubit-circle__magnitude"></div>
-        <div class="qubit-circle__phase"></div>
-      </div>
+      <div class="qubit-circle__magnitude"></div>
+      <div class="qubit-circle__phase"></div>
     </div>`;
   }
   get calculateColStartIndex() {

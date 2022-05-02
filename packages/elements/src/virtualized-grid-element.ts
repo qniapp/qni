@@ -69,6 +69,11 @@ export class VirtualizedGridElement extends HTMLElement {
           this.cols = 32
           break
         }
+        case '10': {
+          this.rows = 32
+          this.cols = 32
+          break
+        }
         default:
           throw new DetailedError('unsupported qubit count', newValue)
       }
@@ -178,6 +183,9 @@ export class VirtualizedGridElement extends HTMLElement {
       case 9: {
         return this.qubitCircleSize * 8
       }
+      case 10: {
+        return this.qubitCircleSize * 8
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
@@ -210,6 +218,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 32
       }
       case 9: {
+        return this.qubitCircleSize * 32
+      }
+      case 10: {
         return this.qubitCircleSize * 32
       }
       default:
@@ -272,6 +283,9 @@ export class VirtualizedGridElement extends HTMLElement {
       case 9: {
         return 17
       }
+      case 10: {
+        return 17
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
@@ -308,11 +322,11 @@ export class VirtualizedGridElement extends HTMLElement {
     // console.log(`rowStartIndex = ${this.rowStartIndex}`)
     // console.log(`rowEndIndex = ${this.rowEndIndex}`)
 
-    // const start = new Date()
+    const start = new Date()
     // eslint-disable-next-line github/no-inner-html
     this.innerContainer.innerHTML = this.allQubitCirclesHtml(data)
-    // const end = new Date()
-    // console.log('経過時間 (ミリ秒):', end.getTime() - start.getTime())
+    const end = new Date()
+    console.log('経過時間 (ミリ秒):', end.getTime() - start.getTime())
 
     this.dispatchVisibilityChangedEvent()
   }
@@ -342,10 +356,8 @@ export class VirtualizedGridElement extends HTMLElement {
       data-targets="virtualized-grid.qubitCircles"
       style="position: absolute; top: ${top}px; left: ${left}px"
     >
-      <div class="qubit-circle__body">
-        <div class="qubit-circle__magnitude"></div>
-        <div class="qubit-circle__phase"></div>
-      </div>
+      <div class="qubit-circle__magnitude"></div>
+      <div class="qubit-circle__phase"></div>
     </div>`
   }
 
