@@ -14,7 +14,8 @@
   virtualized-grid[data-qubit-count='7'] &,
   virtualized-grid[data-qubit-count='8'] &,
   virtualized-grid[data-qubit-count='9'] &,
-  virtualized-grid[data-qubit-count='10'] & {
+  virtualized-grid[data-qubit-count='10'] &,
+  virtualized-grid[data-qubit-count='11'] & {
     height: 17px;
     width: 17px;
   }
@@ -42,7 +43,8 @@
   virtualized-grid[data-qubit-count='7'] &__magnitude,
   virtualized-grid[data-qubit-count='8'] &__magnitude,
   virtualized-grid[data-qubit-count='9'] &__magnitude,
-  virtualized-grid[data-qubit-count='10'] &__magnitude {
+  virtualized-grid[data-qubit-count='10'] &__magnitude,
+  virtualized-grid[data-qubit-count='11'] &__magnitude {
     @apply border;
   }
 
@@ -119,7 +121,8 @@
   virtualized-grid[data-qubit-count='7'] &__phase,
   virtualized-grid[data-qubit-count='8'] &__phase,
   virtualized-grid[data-qubit-count='9'] &__phase,
-  virtualized-grid[data-qubit-count='10'] &__phase {
+  virtualized-grid[data-qubit-count='10'] &__phase,
+  virtualized-grid[data-qubit-count='11'] &__phase {
     @apply border;
   }
 
@@ -144,7 +147,8 @@
   virtualized-grid[data-qubit-count='7'] &__phase::after,
   virtualized-grid[data-qubit-count='8'] &__phase::after,
   virtualized-grid[data-qubit-count='9'] &__phase::after,
-  virtualized-grid[data-qubit-count='10'] &__phase::after {
+  virtualized-grid[data-qubit-count='10'] &__phase::after,
+  virtualized-grid[data-qubit-count='11'] &__phase::after {
     @apply w-px;
   }
 

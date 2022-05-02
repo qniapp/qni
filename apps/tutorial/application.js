@@ -11609,6 +11609,10 @@ var bt = class extends HTMLElement {
           this.rows = 32, this.cols = 32;
           break;
         }
+        case "11": {
+          this.rows = 32, this.cols = 64;
+          break;
+        }
         default:
           throw new It("unsupported qubit count", i);
       }
@@ -11677,6 +11681,8 @@ var bt = class extends HTMLElement {
         return this.qubitCircleSize * 8;
       case 10:
         return this.qubitCircleSize * 8;
+      case 11:
+        return this.qubitCircleSize * 8;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
     }
@@ -11702,6 +11708,8 @@ var bt = class extends HTMLElement {
       case 9:
         return this.qubitCircleSize * 32;
       case 10:
+        return this.qubitCircleSize * 32;
+      case 11:
         return this.qubitCircleSize * 32;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
@@ -11746,6 +11754,8 @@ var bt = class extends HTMLElement {
       case 9:
         return 17;
       case 10:
+        return 17;
+      case 11:
         return 17;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
