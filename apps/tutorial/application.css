@@ -3605,6 +3605,11 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
   width: 2rem;
 }
 
+virtualized-grid[data-qubit-count='7'] .qubit-circle {
+  height: 17px;
+  width: 17px;
+}
+
 .qubit-circle__body {
   position: relative;
   height: 100%;
@@ -3623,10 +3628,12 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
   border-radius: 9999px;
 }
 
-/* circle-notation[data-qubit-count="1"] */
-
-.qubit-circle__magnitude {
+virtualized-grid[data-qubit-count='1'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='2'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='3'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='4'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='5'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='6'] .qubit-circle__magnitude {
   border-width: 2px;
+}
+
+virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude {
+  border-width: 1px;
 }
 
 .qubit-circle__magnitude::after {
@@ -3709,6 +3716,14 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
   border-width: 2px;
 }
 
+virtualized-grid[data-qubit-count='1'] .qubit-circle__phase, virtualized-grid[data-qubit-count='2'] .qubit-circle__phase, virtualized-grid[data-qubit-count='3'] .qubit-circle__phase, virtualized-grid[data-qubit-count='4'] .qubit-circle__phase, virtualized-grid[data-qubit-count='5'] .qubit-circle__phase, virtualized-grid[data-qubit-count='6'] .qubit-circle__phase {
+  border-width: 2px;
+}
+
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase {
+  border-width: 1px;
+}
+
 .qubit-circle__phase::after {
   position: absolute;
   top: 0px;
@@ -3722,8 +3737,14 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
   content: '';
-  /* circle-notation[data-qubit-count="1"] */
+}
+
+virtualized-grid[data-qubit-count='1'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='2'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='3'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='4'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='5'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='6'] .qubit-circle__phase::after {
   width: 0.125rem;
+}
+
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase::after {
+  width: 1px;
 }
 
 .qubit-circle:not([data-rounded-magnitude]) .qubit-circle__phase, .qubit-circle[data-rounded-magnitude='0'] .qubit-circle__phase {

@@ -12062,6 +12062,10 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
           this.rows = 4, this.cols = 16;
           break;
         }
+        case "7": {
+          this.rows = 4, this.cols = 32;
+          break;
+        }
         default:
           throw new Pt("unsupported qubit count", i);
       }
@@ -12122,6 +12126,8 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
         return this.qubitCircleSize * 2;
       case 6:
         return this.qubitCircleSize * 4;
+      case 7:
+        return this.qubitCircleSize * 4;
       default:
         throw new Pt("unsupported qubit count", this.qubitCount);
     }
@@ -12140,6 +12146,8 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
         return this.qubitCircleSize * 16;
       case 6:
         return this.qubitCircleSize * 16;
+      case 7:
+        return this.qubitCircleSize * 32;
       default:
         throw new Pt("unsupported qubit count", this.qubitCount);
     }
@@ -12170,6 +12178,8 @@ var Rt = /* @__PURE__ */ __name(class extends HTMLElement {
         return 32;
       case 6:
         return 32;
+      case 7:
+        return 17;
       default:
         throw new Pt("unsupported qubit count", this.qubitCount);
     }

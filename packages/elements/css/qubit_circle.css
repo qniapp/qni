@@ -11,6 +11,10 @@
   virtualized-grid[data-qubit-count='6'] & {
     @apply h-8 w-8;
   }
+  virtualized-grid[data-qubit-count='7'] & {
+    height: 17px;
+    width: 17px;
+  }
 
   &__body {
     @apply relative;
@@ -24,9 +28,16 @@
     @apply rounded-full;
   }
 
-  /* circle-notation[data-qubit-count="1"] */
-  &__magnitude {
+  virtualized-grid[data-qubit-count='1'] &__magnitude,
+  virtualized-grid[data-qubit-count='2'] &__magnitude,
+  virtualized-grid[data-qubit-count='3'] &__magnitude,
+  virtualized-grid[data-qubit-count='4'] &__magnitude,
+  virtualized-grid[data-qubit-count='5'] &__magnitude,
+  virtualized-grid[data-qubit-count='6'] &__magnitude {
     @apply border-2;
+  }
+  virtualized-grid[data-qubit-count='7'] &__magnitude {
+    @apply border;
   }
 
   &__magnitude::after {
@@ -94,6 +105,18 @@
     @apply border-2;
   }
 
+  virtualized-grid[data-qubit-count='1'] &__phase,
+  virtualized-grid[data-qubit-count='2'] &__phase,
+  virtualized-grid[data-qubit-count='3'] &__phase,
+  virtualized-grid[data-qubit-count='4'] &__phase,
+  virtualized-grid[data-qubit-count='5'] &__phase,
+  virtualized-grid[data-qubit-count='6'] &__phase {
+    @apply border-2;
+  }
+  virtualized-grid[data-qubit-count='7'] &__phase {
+    @apply border;
+  }
+
   &__phase::after {
     @apply absolute top-0 right-0 left-0;
     @apply bg-slate-900;
@@ -102,9 +125,18 @@
     @apply rounded-b;
 
     content: '';
+  }
 
-    /* circle-notation[data-qubit-count="1"] */
+  virtualized-grid[data-qubit-count='1'] &__phase::after,
+  virtualized-grid[data-qubit-count='2'] &__phase::after,
+  virtualized-grid[data-qubit-count='3'] &__phase::after,
+  virtualized-grid[data-qubit-count='4'] &__phase::after,
+  virtualized-grid[data-qubit-count='5'] &__phase::after,
+  virtualized-grid[data-qubit-count='6'] &__phase::after {
     @apply w-0.5;
+  }
+  virtualized-grid[data-qubit-count='7'] &__phase::after {
+    @apply w-px;
   }
 
   &:not([data-rounded-magnitude]) &__phase,
