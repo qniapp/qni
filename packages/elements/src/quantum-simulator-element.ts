@@ -3,7 +3,6 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {isControllable, isIfable} from './mixin'
-import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
 import {VirtualizedGridElement} from './virtualized-grid-element'
@@ -21,17 +20,13 @@ export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
 
   @target circuit!: QuantumCircuitElement
-  @target circleNotation!: CircleNotationElement
   @target virtualizedGrid!: VirtualizedGridElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
-
-  private visibleQubitCircleKets!: number[]
 
   declare worker: Worker
 
   connectedCallback(): void {
     this.worker = new Worker('./serviceworker.js')
-    this.visibleQubitCircleKets = []
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
     this.addEventListener('operation-inspector-if-change', this.run)
@@ -43,7 +38,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
-    this.addEventListener('circle-notation-visibility-change', this.updateVisibleQubitCircleKets)
     this.addEventListener('circle-notation-visibility-change', this.run)
     this.addEventListener('run-circuit-button-click', this.run)
 
@@ -110,7 +104,6 @@ export class QuantumSimulatorElement extends HTMLElement {
             const c = data.amplitudes[ket]
             complexAmplitudes[ket] = new Complex(c[0], c[1])
           }
-          this.circleNotation?.setAmplitudes(complexAmplitudes)
           this.virtualizedGrid?.setAmplitudes(complexAmplitudes)
         }
         break
@@ -127,7 +120,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private run(): void {
-    if (this.circleNotation === null) return
+    if (this.virtualizedGrid.visibleQubitCircleKets === undefined) return
 
     const stepIndex = this.activeStepIndex
     const serializedSteps = this.circuit.serialize()
@@ -146,13 +139,13 @@ export class QuantumSimulatorElement extends HTMLElement {
       )
     )
     const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
+    this.virtualizedGrid.qubitCount = qubitCount
 
-    this.circleNotation.qubitCount = qubitCount
     this.worker.postMessage({
       qubitCount,
       stepIndex,
       steps: serializedSteps,
-      targets: this.visibleQubitCircleKets
+      targets: this.virtualizedGrid.visibleQubitCircleKets
     })
   }
 
@@ -172,13 +165,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     }
 
     return this.circuit.fetchStepIndex(step)
-  }
-
-  private updateVisibleQubitCircleKets(event: Event): void {
-    const ketNumbers = (event as CustomEvent).detail as number[]
-    Util.notNull(ketNumbers)
-
-    this.visibleQubitCircleKets = ketNumbers
   }
 
   private maybeUpdateUrl(): void {

@@ -25,7 +25,7 @@
     @apply inset-0;
     @apply rounded-full;
     @apply bg-sky-500;
-    @apply origin-center transform;
+    @apply origin-center scale-0 transform;
 
     content: '';
   }

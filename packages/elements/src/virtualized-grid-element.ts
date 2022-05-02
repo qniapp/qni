@@ -1,9 +1,10 @@
-import {Complex, Util} from '@qni/common'
+import {Complex, DetailedError, Util} from '@qni/common'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, target, targets} from '@github/catalyst'
 
 @controller
 export class VirtualizedGridElement extends HTMLElement {
+  @attr qubitCount = 1
   @attr cols = 0
   @attr rows = 0
   @attr qubitCircleHeight = 0
@@ -17,22 +18,71 @@ export class VirtualizedGridElement extends HTMLElement {
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
 
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+
+    if (name === 'data-qubit-count') {
+      switch (newValue) {
+        case '1': {
+          this.rows = 1
+          this.cols = 2
+          break
+        }
+        case '2': {
+          this.rows = 1
+          this.cols = 4
+          break
+        }
+        case '3': {
+          this.rows = 1
+          this.cols = 8
+          break
+        }
+        default:
+          throw new DetailedError('unsupported qubit count', newValue)
+      }
+      this.redrawWindowAndInnerContainer()
+      this.maybeRedrawQubitCircles()
+    }
+  }
+
+  private dispatchVisibilityChangedEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent('circle-notation-visibility-change', {
+        detail: this.visibleQubitCircleKets,
+        bubbles: true
+      })
+    )
+  }
+
+  get visibleQubitCircleKets(): number[] {
+    const kets = this.qubitCircles.map(each => {
+      const ketStr = each.getAttribute('data-ket')
+      Util.notNull(ketStr)
+      return parseInt(ketStr)
+    })
+
+    return kets
+  }
+
   // FIXME: set amplitudes() に変更
   setAmplitudes(amplitudes: {[ket: number]: Complex}) {
-    const qubitCircles = this.qubitCircles
+    for (const each of this.qubitCircles) {
+      const ketStr = each.getAttribute('data-ket')
+      Util.notNull(ketStr)
 
-    for (const [i, amplitude] of Object.entries(amplitudes)) {
-      const qubitCircle = qubitCircles[parseInt(i)]
-      Util.notNull(qubitCircle)
+      const ket = parseInt(ketStr)
+      const amplitude = amplitudes[ket]
+      if (amplitude === undefined) continue
 
-      qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())
-      qubitCircle.setAttribute('data-amplitude-imag', amplitude.imag.toString())
+      each.setAttribute('data-amplitude-real', amplitude.real.toString())
+      each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
 
       const magnitude = amplitude.abs()
-      this.setRoundedMagnitude(qubitCircle, magnitude)
+      this.setRoundedMagnitude(each, magnitude)
 
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      this.setRoundedPhase(qubitCircle, phaseDeg)
+      this.setRoundedPhase(each, phaseDeg)
     }
   }
 
@@ -53,27 +103,67 @@ export class VirtualizedGridElement extends HTMLElement {
     qubitCircle.setAttribute('data-rounded-phase', roundedPhase.toString())
   }
 
-  get innerHeight(): number {
-    return this.rows * this.qubitCircleHeight
-  }
-
-  get innerWidth(): number {
-    return this.cols * this.qubitCircleWidth
-  }
-
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+    this.redrawWindowAndInnerContainer()
     this.maybeRedrawQubitCircles()
   }
 
   update(): void {
+    render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  /* inner container */
+
+  private get innerHeight(): number {
+    return this.rows * this.qubitCircleHeight
+  }
+
+  private get innerWidth(): number {
+    return this.cols * this.qubitCircleWidth
+  }
+
+  /* window */
+
+  private get windowHeight(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return this.qubitCircleHeight
+      }
+      case 2: {
+        return this.qubitCircleHeight
+      }
+      case 3: {
+        return this.qubitCircleHeight
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
+
+  private get windowWidth(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return this.qubitCircleWidth * 2
+      }
+      case 2: {
+        return this.qubitCircleWidth * 4
+      }
+      case 3: {
+        return this.qubitCircleWidth * 8
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
+
+  private redrawWindowAndInnerContainer(): void {
     render(
       html`<div
-        class="h-16 w-32"
         data-target="virtualized-grid.window"
         data-action="scroll:virtualized-grid#maybeRedrawQubitCircles"
-        style="overflow: auto;"
+        style="overflow: auto; height: ${this.windowHeight}px; width: ${this.windowWidth}px"
       >
         <div
           data-target="virtualized-grid.innerContainer"
@@ -82,8 +172,9 @@ export class VirtualizedGridElement extends HTMLElement {
       </div>`,
       this
     )
-    render(html`<slot></slot>`, this.shadowRoot!)
   }
+
+  /* qubit circles */
 
   private maybeRedrawQubitCircles(): void {
     const colStartIndex = this.calculateColStartIndex
@@ -100,6 +191,11 @@ export class VirtualizedGridElement extends HTMLElement {
       return
     }
 
+    // console.log(`colStartIndex = ${colStartIndex}`)
+    // console.log(`conEndIndex = ${colEndIndex}`)
+    // console.log(`rowStartIndex = ${rowStartIndex}`)
+    // console.log(`rowEndIndex = ${rowEndIndex}`)
+
     this.colStartIndex = colStartIndex
     this.colEndIndex = colEndIndex
     this.rowStartIndex = rowStartIndex
@@ -113,6 +209,8 @@ export class VirtualizedGridElement extends HTMLElement {
     }
 
     render(this.allQubitCirclesHtml(data), this.innerContainer)
+
+    this.dispatchVisibilityChangedEvent()
   }
 
   private allQubitCirclesHtml(data: Array<{col: number; row: number}>): TemplateResult {
@@ -138,26 +236,18 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   private get calculateColStartIndex(): number {
-    return Math.floor(this.window.scrollTop / this.qubitCircleHeight)
-  }
-
-  private get calculateColEndIndex(): number {
-    return Math.min(this.cols - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleHeight))
-  }
-
-  private get calculateRowStartIndex(): number {
     return Math.floor(this.window.scrollLeft / this.qubitCircleWidth)
   }
 
+  private get calculateColEndIndex(): number {
+    return Math.min(this.cols - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleWidth))
+  }
+
+  private get calculateRowStartIndex(): number {
+    return Math.floor(this.window.scrollTop / this.qubitCircleHeight)
+  }
+
   private get calculateRowEndIndex(): number {
-    return Math.min(this.rows - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleWidth))
-  }
-
-  private get windowHeight(): number {
-    return this.window.clientHeight
-  }
-
-  private get windowWidth(): number {
-    return this.window.clientWidth
+    return Math.min(this.rows - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleHeight))
   }
 }
