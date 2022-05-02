@@ -3600,7 +3600,7 @@ virtualized-grid[data-qubit-count='4'] .qubit-circle {
   width: 3rem;
 }
 
-virtualized-grid[data-qubit-count='5'] .qubit-circle {
+virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubit-count='6'] .qubit-circle {
   height: 2rem;
   width: 2rem;
 }
