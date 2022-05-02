@@ -116,11 +116,11 @@ export class VirtualizedGridElement extends HTMLElement {
   /* inner container */
 
   private get innerHeight(): number {
-    return this.rows * this.qubitCircleHeight
+    return this.rows * this.qubitCircleSize
   }
 
   private get innerWidth(): number {
-    return this.cols * this.qubitCircleWidth
+    return this.cols * this.qubitCircleSize
   }
 
   /* window */
@@ -128,19 +128,19 @@ export class VirtualizedGridElement extends HTMLElement {
   private get windowHeight(): number {
     switch (this.qubitCount) {
       case 1: {
-        return this.qubitCircleHeight
+        return this.qubitCircleSize
       }
       case 2: {
-        return this.qubitCircleHeight
+        return this.qubitCircleSize
       }
       case 3: {
-        return this.qubitCircleHeight
+        return this.qubitCircleSize
       }
       case 4: {
-        return this.qubitCircleHeight * 2
+        return this.qubitCircleSize * 2
       }
       case 5: {
-        return this.qubitCircleHeight * 2
+        return this.qubitCircleSize * 2
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -150,19 +150,19 @@ export class VirtualizedGridElement extends HTMLElement {
   private get windowWidth(): number {
     switch (this.qubitCount) {
       case 1: {
-        return this.qubitCircleWidth * 2
+        return this.qubitCircleSize * 2
       }
       case 2: {
-        return this.qubitCircleWidth * 4
+        return this.qubitCircleSize * 4
       }
       case 3: {
-        return this.qubitCircleWidth * 8
+        return this.qubitCircleSize * 8
       }
       case 4: {
-        return this.qubitCircleWidth * 8
+        return this.qubitCircleSize * 8
       }
       case 5: {
-        return this.qubitCircleWidth * 16
+        return this.qubitCircleSize * 16
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -187,29 +187,7 @@ export class VirtualizedGridElement extends HTMLElement {
 
   /* qubit circle */
 
-  private get qubitCircleHeight(): number {
-    switch (this.qubitCount) {
-      case 1: {
-        return 64
-      }
-      case 2: {
-        return 64
-      }
-      case 3: {
-        return 64
-      }
-      case 4: {
-        return 48
-      }
-      case 5: {
-        return 32
-      }
-      default:
-        throw new DetailedError('unsupported qubit count', this.qubitCount)
-    }
-  }
-
-  private get qubitCircleWidth(): number {
+  private get qubitCircleSize(): number {
     switch (this.qubitCount) {
       case 1: {
         return 64
@@ -278,8 +256,8 @@ export class VirtualizedGridElement extends HTMLElement {
 
   private qubitCircleHtml(data: {row: number; col: number}): TemplateResult {
     const ket = data.col + data.row * this.cols
-    const top = this.qubitCircleHeight * data.row
-    const left = this.qubitCircleWidth * data.col
+    const top = this.qubitCircleSize * data.row
+    const left = this.qubitCircleSize * data.col
 
     return html`<div
       class="qubit-circle"
@@ -295,18 +273,18 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   private get calculateColStartIndex(): number {
-    return Math.floor(this.window.scrollLeft / this.qubitCircleWidth)
+    return Math.floor(this.window.scrollLeft / this.qubitCircleSize)
   }
 
   private get calculateColEndIndex(): number {
-    return Math.min(this.cols - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleWidth))
+    return Math.min(this.cols - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleSize))
   }
 
   private get calculateRowStartIndex(): number {
-    return Math.floor(this.window.scrollTop / this.qubitCircleHeight)
+    return Math.floor(this.window.scrollTop / this.qubitCircleSize)
   }
 
   private get calculateRowEndIndex(): number {
-    return Math.min(this.rows - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleHeight))
+    return Math.min(this.rows - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleSize))
   }
 }
