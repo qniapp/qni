@@ -3590,10 +3590,16 @@ quantum-circuit {
   width: min-content;
 }
 
-.qubit-circle {
-  $parent: &;
+/* sizes */
+
+virtualized-grid[data-qubit-count='1'] .qubit-circle, virtualized-grid[data-qubit-count='2'] .qubit-circle, virtualized-grid[data-qubit-count='3'] .qubit-circle {
   height: 4rem;
   width: 4rem;
+}
+
+virtualized-grid[data-qubit-count='4'] .qubit-circle {
+  height: 3rem;
+  width: 3rem;
 }
 
 .qubit-circle__body {

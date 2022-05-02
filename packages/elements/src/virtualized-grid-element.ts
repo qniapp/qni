@@ -1,4 +1,4 @@
-import {Complex, DetailedError, Util} from '@qni/common'
+import {Complex, DetailedError, Util, describe} from '@qni/common'
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, target, targets} from '@github/catalyst'
 
@@ -7,8 +7,6 @@ export class VirtualizedGridElement extends HTMLElement {
   @attr qubitCount = 1
   @attr cols = 0
   @attr rows = 0
-  @attr qubitCircleHeight = 0
-  @attr qubitCircleWidth = 0
   @attr colStartIndex = -1
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
@@ -38,21 +36,17 @@ export class VirtualizedGridElement extends HTMLElement {
           this.cols = 8
           break
         }
+        case '4': {
+          this.rows = 2
+          this.cols = 8
+          break
+        }
         default:
           throw new DetailedError('unsupported qubit count', newValue)
       }
       this.redrawWindowAndInnerContainer()
       this.maybeRedrawQubitCircles()
     }
-  }
-
-  private dispatchVisibilityChangedEvent(): void {
-    this.dispatchEvent(
-      new CustomEvent('circle-notation-visibility-change', {
-        detail: this.visibleQubitCircleKets,
-        bubbles: true
-      })
-    )
   }
 
   get visibleQubitCircleKets(): number[] {
@@ -137,6 +131,9 @@ export class VirtualizedGridElement extends HTMLElement {
       case 3: {
         return this.qubitCircleHeight
       }
+      case 4: {
+        return this.qubitCircleHeight * 2
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
@@ -151,6 +148,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleWidth * 4
       }
       case 3: {
+        return this.qubitCircleWidth * 8
+      }
+      case 4: {
         return this.qubitCircleWidth * 8
       }
       default:
@@ -174,7 +174,45 @@ export class VirtualizedGridElement extends HTMLElement {
     )
   }
 
-  /* qubit circles */
+  /* qubit circle */
+
+  private get qubitCircleHeight(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return 64
+      }
+      case 2: {
+        return 64
+      }
+      case 3: {
+        return 64
+      }
+      case 4: {
+        return 48
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
+
+  private get qubitCircleWidth(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return 64
+      }
+      case 2: {
+        return 64
+      }
+      case 3: {
+        return 64
+      }
+      case 4: {
+        return 48
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
 
   private maybeRedrawQubitCircles(): void {
     const colStartIndex = this.calculateColStartIndex
@@ -190,11 +228,6 @@ export class VirtualizedGridElement extends HTMLElement {
     ) {
       return
     }
-
-    // console.log(`colStartIndex = ${colStartIndex}`)
-    // console.log(`conEndIndex = ${colEndIndex}`)
-    // console.log(`rowStartIndex = ${rowStartIndex}`)
-    // console.log(`rowEndIndex = ${rowEndIndex}`)
 
     this.colStartIndex = colStartIndex
     this.colEndIndex = colEndIndex
@@ -213,12 +246,21 @@ export class VirtualizedGridElement extends HTMLElement {
     this.dispatchVisibilityChangedEvent()
   }
 
+  private dispatchVisibilityChangedEvent(): void {
+    this.dispatchEvent(
+      new CustomEvent('circle-notation-visibility-change', {
+        detail: this.visibleQubitCircleKets,
+        bubbles: true
+      })
+    )
+  }
+
   private allQubitCirclesHtml(data: Array<{col: number; row: number}>): TemplateResult {
     return html`${data.map(this.qubitCircleHtml.bind(this))}`
   }
 
   private qubitCircleHtml(data: {row: number; col: number}): TemplateResult {
-    const ket = data.col + data.row * 10
+    const ket = data.col + data.row * this.cols
     const top = this.qubitCircleHeight * data.row
     const left = this.qubitCircleWidth * data.col
 

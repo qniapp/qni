@@ -1,7 +1,12 @@
 .qubit-circle {
-  $parent: &;
-
-  @apply h-16 w-16;
+  virtualized-grid[data-qubit-count='1'] &,
+  virtualized-grid[data-qubit-count='2'] &,
+  virtualized-grid[data-qubit-count='3'] & {
+    @apply h-16 w-16;
+  }
+  virtualized-grid[data-qubit-count='4'] & {
+    @apply h-12 w-12;
+  }
 
   &__body {
     @apply relative;
