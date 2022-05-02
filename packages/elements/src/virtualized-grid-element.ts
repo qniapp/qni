@@ -56,6 +56,11 @@ export class VirtualizedGridElement extends HTMLElement {
           this.cols = 32
           break
         }
+        case '8': {
+          this.rows = 8
+          this.cols = 32
+          break
+        }
         default:
           throw new DetailedError('unsupported qubit count', newValue)
       }
@@ -158,6 +163,9 @@ export class VirtualizedGridElement extends HTMLElement {
       case 7: {
         return this.qubitCircleSize * 4
       }
+      case 8: {
+        return this.qubitCircleSize * 8
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
@@ -184,6 +192,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 16
       }
       case 7: {
+        return this.qubitCircleSize * 32
+      }
+      case 8: {
         return this.qubitCircleSize * 32
       }
       default:
@@ -230,6 +241,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return 32
       }
       case 7: {
+        return 17
+      }
+      case 8: {
         return 17
       }
       default:

@@ -3605,7 +3605,8 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
   width: 2rem;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle {
+virtualized-grid[data-qubit-count='7'] .qubit-circle,
+  virtualized-grid[data-qubit-count='8'] .qubit-circle {
   height: 17px;
   width: 17px;
 }
@@ -3632,7 +3633,7 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle__magnitude, virtualized-gri
   border-width: 2px;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='8'] .qubit-circle__magnitude {
   border-width: 1px;
 }
 
@@ -3712,15 +3713,13 @@ virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude {
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
   transform-origin: center;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  /* circle-notation[data-qubit-count="1"] */
-  border-width: 2px;
 }
 
 virtualized-grid[data-qubit-count='1'] .qubit-circle__phase, virtualized-grid[data-qubit-count='2'] .qubit-circle__phase, virtualized-grid[data-qubit-count='3'] .qubit-circle__phase, virtualized-grid[data-qubit-count='4'] .qubit-circle__phase, virtualized-grid[data-qubit-count='5'] .qubit-circle__phase, virtualized-grid[data-qubit-count='6'] .qubit-circle__phase {
   border-width: 2px;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__phase {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase {
   border-width: 1px;
 }
 
@@ -3743,7 +3742,7 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle__phase::after, virtualized-
   width: 0.125rem;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__phase::after {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase::after {
   width: 1px;
 }
 

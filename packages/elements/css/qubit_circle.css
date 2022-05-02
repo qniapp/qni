@@ -11,7 +11,8 @@
   virtualized-grid[data-qubit-count='6'] & {
     @apply h-8 w-8;
   }
-  virtualized-grid[data-qubit-count='7'] & {
+  virtualized-grid[data-qubit-count='7'] &,
+  virtualized-grid[data-qubit-count='8'] & {
     height: 17px;
     width: 17px;
   }
@@ -36,7 +37,8 @@
   virtualized-grid[data-qubit-count='6'] &__magnitude {
     @apply border-2;
   }
-  virtualized-grid[data-qubit-count='7'] &__magnitude {
+  virtualized-grid[data-qubit-count='7'] &__magnitude,
+  virtualized-grid[data-qubit-count='8'] &__magnitude {
     @apply border;
   }
 
@@ -100,9 +102,6 @@
     @apply absolute inset-px;
     @apply rounded-full border-solid border-slate-500;
     @apply origin-center transform;
-
-    /* circle-notation[data-qubit-count="1"] */
-    @apply border-2;
   }
 
   virtualized-grid[data-qubit-count='1'] &__phase,
@@ -113,7 +112,8 @@
   virtualized-grid[data-qubit-count='6'] &__phase {
     @apply border-2;
   }
-  virtualized-grid[data-qubit-count='7'] &__phase {
+  virtualized-grid[data-qubit-count='7'] &__phase,
+  virtualized-grid[data-qubit-count='8'] &__phase {
     @apply border;
   }
 
@@ -135,7 +135,8 @@
   virtualized-grid[data-qubit-count='6'] &__phase::after {
     @apply w-0.5;
   }
-  virtualized-grid[data-qubit-count='7'] &__phase::after {
+  virtualized-grid[data-qubit-count='7'] &__phase::after,
+  virtualized-grid[data-qubit-count='8'] &__phase::after {
     @apply w-px;
   }
 
