@@ -71,6 +71,11 @@
   dependencies:
     "@github/template-parts" "^0.3.0"
 
+"@github/mini-throttle@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@github/mini-throttle/-/mini-throttle-2.1.0.tgz#583a1d5e383caa21a1c067a649f15f7ab575dccf"
+  integrity sha512-iEeR2OdVCPkdIPUszL8gJnKNu4MR8ANh7y0u/LPyaatYezgaWxUZEzhFntloqQq+HE6MZkFy+cl+xzCNuljOdw==
+
 "@github/prettier-config@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@github/prettier-config/-/prettier-config-0.0.4.tgz#cbfddb36a7f29a81c5af155dc5827e95b23b9ccd"

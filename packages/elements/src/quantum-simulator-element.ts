@@ -16,6 +16,7 @@ type MessageEventData = {
   flags: {[key: string]: boolean}
 }
 
+// TODO: QuantumCircuitSimulator にリネーム
 export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
 
@@ -38,6 +39,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
+    this.addEventListener('circle-notation-init', this.run)
     this.addEventListener('circle-notation-visibility-change', this.run)
     this.addEventListener('run-circuit-button-click', this.run)
 
@@ -49,7 +51,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.maybeUpdateUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
-    this.run()
   }
 
   update(): void {
@@ -120,8 +121,6 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private run(): void {
-    if (this.virtualizedGrid.visibleQubitCircleKets === undefined) return
-
     const stepIndex = this.activeStepIndex
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')

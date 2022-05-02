@@ -1,12 +1,15 @@
-import {Complex, DetailedError, Util, describe} from '@qni/common'
-import {TemplateResult, html, render} from '@github/jtml'
+import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
+import {html, render} from '@github/jtml'
+import {debounce} from '@github/mini-throttle/decorators'
 
 @controller
 export class VirtualizedGridElement extends HTMLElement {
   @attr qubitCount = 1
   @attr cols = 0
   @attr rows = 0
+  @attr paddingX = 16
+  @attr paddingY = 20
   @attr colStartIndex = -1
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
@@ -61,6 +64,11 @@ export class VirtualizedGridElement extends HTMLElement {
           this.cols = 32
           break
         }
+        case '9': {
+          this.rows = 16
+          this.cols = 32
+          break
+        }
         default:
           throw new DetailedError('unsupported qubit count', newValue)
       }
@@ -79,7 +87,6 @@ export class VirtualizedGridElement extends HTMLElement {
     return kets
   }
 
-  // FIXME: set amplitudes() に変更
   setAmplitudes(amplitudes: {[ket: number]: Complex}) {
     for (const each of this.qubitCircles) {
       const ketStr = each.getAttribute('data-ket')
@@ -122,6 +129,8 @@ export class VirtualizedGridElement extends HTMLElement {
     this.update()
     this.redrawWindowAndInnerContainer()
     this.maybeRedrawQubitCircles()
+
+    this.dispatchEvent(new Event('circle-notation-init', {bubbles: true}))
   }
 
   update(): void {
@@ -131,16 +140,16 @@ export class VirtualizedGridElement extends HTMLElement {
   /* inner container */
 
   private get innerHeight(): number {
-    return this.rows * this.qubitCircleSize
+    return this.rows * this.qubitCircleSize + this.paddingY * 2
   }
 
   private get innerWidth(): number {
-    return this.cols * this.qubitCircleSize
+    return this.cols * this.qubitCircleSize + this.paddingX * 2
   }
 
   /* window */
 
-  private get windowHeight(): number {
+  private get qubitCirclesAreaHeight(): number {
     switch (this.qubitCount) {
       case 1: {
         return this.qubitCircleSize
@@ -164,6 +173,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 4
       }
       case 8: {
+        return this.qubitCircleSize * 8
+      }
+      case 9: {
         return this.qubitCircleSize * 8
       }
       default:
@@ -171,7 +183,7 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
-  private get windowWidth(): number {
+  private get qubitCirclesAreaWidth(): number {
     switch (this.qubitCount) {
       case 1: {
         return this.qubitCircleSize * 2
@@ -197,9 +209,20 @@ export class VirtualizedGridElement extends HTMLElement {
       case 8: {
         return this.qubitCircleSize * 32
       }
+      case 9: {
+        return this.qubitCircleSize * 32
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
+  }
+
+  private get windowHeight(): number {
+    return this.qubitCirclesAreaHeight + this.paddingY * 2
+  }
+
+  private get windowWidth(): number {
+    return this.qubitCirclesAreaWidth + this.paddingX * 2
   }
 
   private redrawWindowAndInnerContainer(): void {
@@ -246,11 +269,15 @@ export class VirtualizedGridElement extends HTMLElement {
       case 8: {
         return 17
       }
+      case 9: {
+        return 17
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
   }
 
+  @debounce(100)
   private maybeRedrawQubitCircles(): void {
     const colStartIndex = this.calculateColStartIndex
     const colEndIndex = this.calculateColEndIndex
@@ -266,11 +293,6 @@ export class VirtualizedGridElement extends HTMLElement {
       return
     }
 
-    this.colStartIndex = colStartIndex
-    this.colEndIndex = colEndIndex
-    this.rowStartIndex = rowStartIndex
-    this.rowEndIndex = rowEndIndex
-
     const data = []
     for (let row = rowStartIndex; row <= rowEndIndex; row++) {
       for (let col = colStartIndex; col <= colEndIndex; col++) {
@@ -278,7 +300,19 @@ export class VirtualizedGridElement extends HTMLElement {
       }
     }
 
-    render(this.allQubitCirclesHtml(data), this.innerContainer)
+    this.colStartIndex = colStartIndex
+    this.colEndIndex = colEndIndex
+    this.rowStartIndex = rowStartIndex
+    this.rowEndIndex = rowEndIndex
+
+    // console.log(`rowStartIndex = ${this.rowStartIndex}`)
+    // console.log(`rowEndIndex = ${this.rowEndIndex}`)
+
+    // const start = new Date()
+    // eslint-disable-next-line github/no-inner-html
+    this.innerContainer.innerHTML = this.allQubitCirclesHtml(data)
+    // const end = new Date()
+    // console.log('経過時間 (ミリ秒):', end.getTime() - start.getTime())
 
     this.dispatchVisibilityChangedEvent()
   }
@@ -292,16 +326,17 @@ export class VirtualizedGridElement extends HTMLElement {
     )
   }
 
-  private allQubitCirclesHtml(data: Array<{col: number; row: number}>): TemplateResult {
-    return html`${data.map(this.qubitCircleHtml.bind(this))}`
+  private allQubitCirclesHtml(data: Array<{col: number; row: number}>): string {
+    return data.map(this.qubitCircleHtml.bind(this)).join('')
   }
 
-  private qubitCircleHtml(data: {row: number; col: number}): TemplateResult {
+  private qubitCircleHtml(data: {row: number; col: number}): string {
     const ket = data.col + data.row * this.cols
-    const top = this.qubitCircleSize * data.row
-    const left = this.qubitCircleSize * data.col
+    const top = this.qubitCircleSize * data.row + this.paddingY
+    const left = this.qubitCircleSize * data.col + this.paddingX
 
-    return html`<div
+    // eslint-disable-next-line github/unescaped-html-literal
+    return `<div
       class="qubit-circle"
       data-ket="${ket}"
       data-targets="virtualized-grid.qubitCircles"
@@ -315,18 +350,54 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   private get calculateColStartIndex(): number {
-    return Math.floor(this.window.scrollLeft / this.qubitCircleSize)
+    const scrollLeft = this.window.scrollLeft
+
+    if (scrollLeft < this.paddingX) {
+      return 0
+    } else {
+      return Math.floor((scrollLeft - this.paddingX) / this.qubitCircleSize)
+    }
   }
 
   private get calculateColEndIndex(): number {
-    return Math.min(this.cols - 1, Math.floor((this.window.scrollLeft + this.windowWidth) / this.qubitCircleSize))
+    const scrollLeft = this.window.scrollLeft
+
+    if (scrollLeft < this.paddingX) {
+      return Math.min(
+        this.cols - 1,
+        Math.floor((this.windowWidth - (this.paddingX - scrollLeft)) / this.qubitCircleSize)
+      )
+    } else {
+      return Math.min(
+        this.cols - 1,
+        Math.floor((this.windowWidth + (scrollLeft - this.paddingX)) / this.qubitCircleSize)
+      )
+    }
   }
 
   private get calculateRowStartIndex(): number {
-    return Math.floor(this.window.scrollTop / this.qubitCircleSize)
+    const scrollTop = this.window.scrollTop
+
+    if (scrollTop < this.paddingY) {
+      return 0
+    } else {
+      return Math.floor((scrollTop - this.paddingY) / this.qubitCircleSize)
+    }
   }
 
   private get calculateRowEndIndex(): number {
-    return Math.min(this.rows - 1, Math.floor((this.window.scrollTop + this.windowHeight) / this.qubitCircleSize))
+    const scrollTop = this.window.scrollTop
+
+    if (scrollTop < this.paddingY) {
+      return Math.min(
+        this.rows - 1,
+        Math.floor((this.windowHeight - (this.paddingY - scrollTop)) / this.qubitCircleSize)
+      )
+    } else {
+      return Math.min(
+        this.rows - 1,
+        Math.floor((this.windowHeight + (scrollTop - this.paddingY)) / this.qubitCircleSize)
+      )
+    }
   }
 }

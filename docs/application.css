@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -1081,7 +1081,7 @@ select {
 }
 
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -3606,7 +3606,8 @@ virtualized-grid[data-qubit-count='5'] .qubit-circle, virtualized-grid[data-qubi
 }
 
 virtualized-grid[data-qubit-count='7'] .qubit-circle,
-  virtualized-grid[data-qubit-count='8'] .qubit-circle {
+  virtualized-grid[data-qubit-count='8'] .qubit-circle,
+  virtualized-grid[data-qubit-count='9'] .qubit-circle {
   height: 17px;
   width: 17px;
 }
@@ -3633,7 +3634,7 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle__magnitude, virtualized-gri
   border-width: 2px;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='8'] .qubit-circle__magnitude {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='8'] .qubit-circle__magnitude, virtualized-grid[data-qubit-count='9'] .qubit-circle__magnitude {
   border-width: 1px;
 }
 
@@ -3719,7 +3720,7 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle__phase, virtualized-grid[da
   border-width: 2px;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__phase, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase, virtualized-grid[data-qubit-count='9'] .qubit-circle__phase {
   border-width: 1px;
 }
 
@@ -3742,7 +3743,7 @@ virtualized-grid[data-qubit-count='1'] .qubit-circle__phase::after, virtualized-
   width: 0.125rem;
 }
 
-virtualized-grid[data-qubit-count='7'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase::after {
+virtualized-grid[data-qubit-count='7'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='8'] .qubit-circle__phase::after, virtualized-grid[data-qubit-count='9'] .qubit-circle__phase::after {
   width: 1px;
 }
 

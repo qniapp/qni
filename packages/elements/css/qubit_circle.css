@@ -12,7 +12,8 @@
     @apply h-8 w-8;
   }
   virtualized-grid[data-qubit-count='7'] &,
-  virtualized-grid[data-qubit-count='8'] & {
+  virtualized-grid[data-qubit-count='8'] &,
+  virtualized-grid[data-qubit-count='9'] & {
     height: 17px;
     width: 17px;
   }
@@ -38,7 +39,8 @@
     @apply border-2;
   }
   virtualized-grid[data-qubit-count='7'] &__magnitude,
-  virtualized-grid[data-qubit-count='8'] &__magnitude {
+  virtualized-grid[data-qubit-count='8'] &__magnitude,
+  virtualized-grid[data-qubit-count='9'] &__magnitude {
     @apply border;
   }
 
@@ -113,7 +115,8 @@
     @apply border-2;
   }
   virtualized-grid[data-qubit-count='7'] &__phase,
-  virtualized-grid[data-qubit-count='8'] &__phase {
+  virtualized-grid[data-qubit-count='8'] &__phase,
+  virtualized-grid[data-qubit-count='9'] &__phase {
     @apply border;
   }
 
@@ -136,7 +139,8 @@
     @apply w-0.5;
   }
   virtualized-grid[data-qubit-count='7'] &__phase::after,
-  virtualized-grid[data-qubit-count='8'] &__phase::after {
+  virtualized-grid[data-qubit-count='8'] &__phase::after,
+  virtualized-grid[data-qubit-count='9'] &__phase::after {
     @apply w-px;
   }
 
