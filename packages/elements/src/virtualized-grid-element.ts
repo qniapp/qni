@@ -169,6 +169,14 @@ export class VirtualizedGridElement extends HTMLElement {
             --phase: 0deg;
           }
 
+          .virtualized-grid__window {
+            overflow: auto;
+          }
+
+          .virtualized-grid__inner-container {
+            position: relative;
+          }
+
           .qubit-circle {
             position: absolute;
           }
@@ -328,13 +336,15 @@ export class VirtualizedGridElement extends HTMLElement {
         </style>
 
         <div
+          class="virtualized-grid__window"
           data-target="virtualized-grid.window"
           data-action="scroll:virtualized-grid#maybeRedrawQubitCircles"
-          style="overflow: auto; height: ${this.windowHeight}px; width: ${this.windowWidth}px"
+          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
         >
           <div
+            class="virtualized-grid__inner-container"
             data-target="virtualized-grid.innerContainer"
-            style="position: relative; height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px"
           ></div>
         </div>`,
       this.shadowRoot!
@@ -565,8 +575,14 @@ export class VirtualizedGridElement extends HTMLElement {
     this.rowStartIndex = rowStartIndex
     this.rowEndIndex = rowEndIndex
 
-    // eslint-disable-next-line github/no-inner-html
-    this.innerContainer.innerHTML = this.allQubitCirclesHtml(data)
+    const fragment = document.createDocumentFragment()
+    for (const each of this.allQubitCircleElements(data)) {
+      fragment.appendChild(each)
+    }
+
+    this.innerContainer.textContent = ''
+    this.innerContainer.appendChild(fragment)
+
     this.dispatchVisibilityChangedEvent()
   }
 
@@ -579,27 +595,47 @@ export class VirtualizedGridElement extends HTMLElement {
     )
   }
 
-  private allQubitCirclesHtml(data: Array<{col: number; row: number}>): string {
-    return data.map(this.qubitCircleHtml.bind(this)).join('')
+  private allQubitCircleElements(data: Array<{col: number; row: number}>): HTMLDivElement[] {
+    return data.map(this.qubitCircleElement.bind(this))
   }
 
-  private qubitCircleHtml(data: {row: number; col: number}): string {
+  private qubitCircleElement(data: {row: number; col: number}): HTMLDivElement {
     const ket = data.col + data.row * this.cols
     const top = this.qubitCircleSize * data.row + this.paddingY
     const left = this.qubitCircleSize * data.col + this.paddingX
 
-    // eslint-disable-next-line github/unescaped-html-literal
-    return `<div
-      class="qubit-circle"
-      data-ket="${ket}"
-      data-targets="virtualized-grid.qubitCircles"
-      data-amplitude-real="0"
-      data-amplitude-imag="0"
-      style="top: ${top}px; left: ${left}px"
-    >
-      <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
-      <div class="qubit-circle__phase"></div>
-    </div>`
+    // <div
+    //   class="qubit-circle"
+    //   data-ket="${ket}"
+    //   data-targets="virtualized-grid.qubitCircles"
+    //   data-amplitude-real="0"
+    //   data-amplitude-imag="0"
+    //   style="top: ${top}px; left: ${left}px"
+    // >
+    //   <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
+    //   <div class="qubit-circle__phase"></div>
+    // </div>
+
+    const qubitCircle = document.createElement('div')
+    qubitCircle.className = 'qubit-circle'
+    qubitCircle.setAttribute('data-ket', ket.toString())
+    qubitCircle.setAttribute('data-targets', 'virtualized-grid.qubitCircles')
+    qubitCircle.setAttribute('data-amplitude-real', '0')
+    qubitCircle.setAttribute('data-amplitude-imag', '0')
+    qubitCircle.style.setProperty('top', `${top}px`)
+    qubitCircle.style.setProperty('left', `${left}px`)
+
+    const magnitude = document.createElement('div')
+    magnitude.className = 'qubit-circle__magnitude'
+    magnitude.style.setProperty('--magnitude', '0')
+
+    const phase = document.createElement('div')
+    phase.className = 'qubit-circle__phase'
+
+    qubitCircle.appendChild(magnitude)
+    qubitCircle.appendChild(phase)
+
+    return qubitCircle
   }
 
   private get calculateColStartIndex(): number {
