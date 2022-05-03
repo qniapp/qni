@@ -11621,6 +11621,10 @@ var bt = class extends HTMLElement {
           this.rows = 64, this.cols = 128;
           break;
         }
+        case "14": {
+          this.rows = 128, this.cols = 128;
+          break;
+        }
         default:
           throw new It("unsupported qubit count", i);
       }
@@ -11684,7 +11688,8 @@ var bt = class extends HTMLElement {
           :host([data-qubit-count='10']) .qubit-circle,
           :host([data-qubit-count='11']) .qubit-circle,
           :host([data-qubit-count='12']) .qubit-circle,
-          :host([data-qubit-count='13']) .qubit-circle {
+          :host([data-qubit-count='13']) .qubit-circle,
+          :host([data-qubit-count='14']) .qubit-circle {
             height: 17px;
             width: 17px;
           }
@@ -11716,7 +11721,8 @@ var bt = class extends HTMLElement {
           :host([data-qubit-count='10']) .qubit-circle__magnitude,
           :host([data-qubit-count='11']) .qubit-circle__magnitude,
           :host([data-qubit-count='12']) .qubit-circle__magnitude,
-          :host([data-qubit-count='13']) .qubit-circle__magnitude {
+          :host([data-qubit-count='13']) .qubit-circle__magnitude,
+          :host([data-qubit-count='14']) .qubit-circle__magnitude {
             border-width: 1px;
           }
 
@@ -11767,7 +11773,8 @@ var bt = class extends HTMLElement {
           :host([data-qubit-count='10']) .qubit-circle__phase,
           :host([data-qubit-count='11']) .qubit-circle__phase,
           :host([data-qubit-count='12']) .qubit-circle__phase,
-          :host([data-qubit-count='13']) .qubit-circle__phase {
+          :host([data-qubit-count='13']) .qubit-circle__phase,
+          :host([data-qubit-count='14']) .qubit-circle__phase {
             border-width: 1px;
           }
 
@@ -11800,7 +11807,8 @@ var bt = class extends HTMLElement {
           :host([data-qubit-count='10']) .qubit-circle__phase::after,
           :host([data-qubit-count='11']) .qubit-circle__phase::after,
           :host([data-qubit-count='12']) .qubit-circle__phase::after,
-          :host([data-qubit-count='13']) .qubit-circle__phase::after {
+          :host([data-qubit-count='13']) .qubit-circle__phase::after,
+          :host([data-qubit-count='14']) .qubit-circle__phase::after {
             width: 1px;
           }
         </style>
@@ -11850,6 +11858,8 @@ var bt = class extends HTMLElement {
         return this.qubitCircleSize * 8;
       case 13:
         return this.qubitCircleSize * 8;
+      case 14:
+        return this.qubitCircleSize * 8;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
     }
@@ -11881,6 +11891,8 @@ var bt = class extends HTMLElement {
       case 12:
         return this.qubitCircleSize * 32;
       case 13:
+        return this.qubitCircleSize * 32;
+      case 14:
         return this.qubitCircleSize * 32;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
@@ -11922,6 +11934,8 @@ var bt = class extends HTMLElement {
       case 12:
         return 17;
       case 13:
+        return 17;
+      case 14:
         return 17;
       default:
         throw new It("unsupported qubit count", this.qubitCount);
