@@ -136,13 +136,13 @@ export class VirtualizedGridElement extends HTMLElement {
 
       // set magnitude
       const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
-      const magnitudeEl = each.children.item(0)
+      const magnitudeEl = each.children.item(0) as HTMLElement
       Util.notNull(magnitudeEl)
       magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
 
       // set phase
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      const phaseEl = each.children.item(1)
+      const phaseEl = each.children.item(1) as HTMLElement
       Util.notNull(phaseEl)
 
       let cssPhaseDeg = Math.trunc(phaseDeg)
@@ -478,7 +478,6 @@ export class VirtualizedGridElement extends HTMLElement {
     this.window.style.width = `${this.windowWidth}px`
     this.innerContainer.style.height = `${this.innerHeight}px`
     this.innerContainer.style.width = `${this.innerWidth}px`
-    this.innerContainer.innerHTML = ''
   }
 
   /* qubit circle */
@@ -566,6 +565,7 @@ export class VirtualizedGridElement extends HTMLElement {
     this.rowStartIndex = rowStartIndex
     this.rowEndIndex = rowEndIndex
 
+    // eslint-disable-next-line github/no-inner-html
     this.innerContainer.innerHTML = this.allQubitCirclesHtml(data)
     this.dispatchVisibilityChangedEvent()
   }

@@ -11929,7 +11929,7 @@ var bt = class extends HTMLElement {
     return this.qubitCirclesAreaWidth + this.paddingX * 2;
   }
   redrawWindowAndInnerContainer() {
-    this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`, this.innerContainer.style.height = `${this.innerHeight}px`, this.innerContainer.style.width = `${this.innerWidth}px`, this.innerContainer.innerHTML = "");
+    this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`, this.innerContainer.style.height = `${this.innerHeight}px`, this.innerContainer.style.width = `${this.innerWidth}px`);
   }
   get qubitCircleSize() {
     switch (this.qubitCount) {
