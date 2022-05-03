@@ -109,29 +109,22 @@ export class VirtualizedGridElement extends HTMLElement {
       each.setAttribute('data-amplitude-real', amplitude.real.toString())
       each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
 
-      const magnitude = amplitude.abs()
-      this.setRoundedMagnitude(each, magnitude)
+      // set magnitude
+      const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
+      const magnitudeEl = each.children.item(0)
+      Util.notNull(magnitudeEl)
+      magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
 
+      // set phase
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      this.setRoundedPhase(each, phaseDeg)
+      const phaseEl = each.children.item(1)
+      Util.notNull(phaseEl)
+
+      let cssPhaseDeg = Math.trunc(phaseDeg)
+      if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
+
+      phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
     }
-  }
-
-  private setRoundedMagnitude(qubitCircle: HTMLElement, magnitude: number): void {
-    let roundedMag = Math.round(magnitude * 100)
-    roundedMag = roundedMag < 10 ? (roundedMag === 0 ? 0 : 10) : Math.round(roundedMag / 10) * 10
-    roundedMag = roundedMag / 100
-
-    qubitCircle.setAttribute('data-magnitude', (Math.floor(magnitude * 100000) / 100000).toString())
-    qubitCircle.setAttribute('data-rounded-magnitude', roundedMag.toString())
-  }
-
-  private setRoundedPhase(qubitCircle: HTMLElement, phase: number): void {
-    let roundedPhase = Math.round(phase / 10) * 10
-    if (roundedPhase < 0) roundedPhase = 360 + roundedPhase
-
-    qubitCircle.setAttribute('data-phase', phase.toString())
-    qubitCircle.setAttribute('data-rounded-phase', roundedPhase.toString())
   }
 
   connectedCallback(): void {
@@ -146,6 +139,11 @@ export class VirtualizedGridElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          :root {
+            --magnitude: 0;
+            --phase: 0deg;
+          }
+
           :host([data-qubit-count='1']) .qubit-circle,
           :host([data-qubit-count='2']) .qubit-circle,
           :host([data-qubit-count='3']) .qubit-circle {
@@ -208,53 +206,9 @@ export class VirtualizedGridElement extends HTMLElement {
             border-radius: 9999px;
             background-color: rgb(14 165 233); /* sky-500 */
             transform-origin: center;
-            transform: scaleX(0) scaleY(0);
+            transform: scaleX(var(--magnitude)) scaleY(var(--magnitude));
 
             content: '';
-          }
-
-          .qubit-circle[data-rounded-magnitude='0'] .qubit-circle__magnitude::after {
-            transform: scaleX(0) scaleY(0);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.1'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.1) scaleY(0.1);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.2'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.2) scaleY(0.2);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.3'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.3) scaleY(0.3);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.4'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.4) scaleY(0.4);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.5'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.5) scaleY(0.5);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.6'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.6) scaleY(0.6);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.7'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.7) scaleY(0.7);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.8'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.8) scaleY(0.8);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.9'] .qubit-circle__magnitude::after {
-            transform: scaleX(0.9) scaleY(0.9);
-          }
-
-          .qubit-circle[data-rounded-magnitude='1'] .qubit-circle__magnitude::after {
-            transform: scaleX(1) scaleY(1);
           }
 
           /* phase */
@@ -269,6 +223,11 @@ export class VirtualizedGridElement extends HTMLElement {
             border-color: rgb(100 116 139); /* slate-500 */
             border-radius: 9999px;
             transform-origin: center;
+            transform: rotate(var(--phase));
+          }
+
+          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
+            transform: scaleX(0) scaleY(0);
           }
 
           :host([data-qubit-count='1']) .qubit-circle__phase,
@@ -317,156 +276,8 @@ export class VirtualizedGridElement extends HTMLElement {
           :host([data-qubit-count='11']) .qubit-circle__phase::after {
             width: 1px;
           }
-
-          .qubit-circle:not([data-rounded-magnitude]) .qubit-circle__phase,
-          .qubit-circle[data-rounded-magnitude='0'] .qubit-circle__phase {
-            transform: scaleX(0) scaleY(0) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='10'] .qubit-circle__phase {
-            transform: rotate(-10deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='20'] .qubit-circle__phase {
-            transform: rotate(-20deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='30'] .qubit-circle__phase {
-            transform: rotate(-30deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='40'] .qubit-circle__phase {
-            transform: rotate(-40deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='50'] .qubit-circle__phase {
-            transform: rotate(-50deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='60'] .qubit-circle__phase {
-            transform: rotate(-60deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='70'] .qubit-circle__phase {
-            transform: rotate(-70deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='80'] .qubit-circle__phase {
-            transform: rotate(-80deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='90'] .qubit-circle__phase {
-            transform: rotate(-90deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='100'] .qubit-circle__phase {
-            transform: rotate(-100deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='110'] .qubit-circle__phase {
-            transform: rotate(-110deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='120'] .qubit-circle__phase {
-            transform: rotate(-120deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='130'] .qubit-circle__phase {
-            transform: rotate(-130deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='140'] .qubit-circle__phase {
-            transform: rotate(-140deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='150'] .qubit-circle__phase {
-            transform: rotate(-150deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='160'] .qubit-circle__phase {
-            transform: rotate(-160deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='170'] .qubit-circle__phase {
-            transform: rotate(-170deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='180'] .qubit-circle__phase {
-            transform: rotate(-180deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='190'] .qubit-circle__phase {
-            transform: rotate(-190deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='200'] .qubit-circle__phase {
-            transform: rotate(-200deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='210'] .qubit-circle__phase {
-            transform: rotate(-210deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='220'] .qubit-circle__phase {
-            transform: rotate(-220deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='230'] .qubit-circle__phase {
-            transform: rotate(-230deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='240'] .qubit-circle__phase {
-            transform: rotate(-240deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='250'] .qubit-circle__phase {
-            transform: rotate(-250deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='260'] .qubit-circle__phase {
-            transform: rotate(-260deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='270'] .qubit-circle__phase {
-            transform: rotate(-270deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='280'] .qubit-circle__phase {
-            transform: rotate(-280deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='290'] .qubit-circle__phase {
-            transform: rotate(-290deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='300'] .qubit-circle__phase {
-            transform: rotate(-300deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='310'] .qubit-circle__phase {
-            transform: rotate(-310deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='320'] .qubit-circle__phase {
-            transform: rotate(-320deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='330'] .qubit-circle__phase {
-            transform: rotate(-330deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='340'] .qubit-circle__phase {
-            transform: rotate(-340deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='350'] .qubit-circle__phase {
-            transform: rotate(-350deg) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='360'] .qubit-circle__phase {
-            transform: rotate(-360deg) !important;
-          }
         </style>
+
         <div
           data-target="virtualized-grid.window"
           data-action="scroll:virtualized-grid#maybeRedrawQubitCircles"
@@ -661,15 +472,7 @@ export class VirtualizedGridElement extends HTMLElement {
     this.rowStartIndex = rowStartIndex
     this.rowEndIndex = rowEndIndex
 
-    // console.log(`rowStartIndex = ${this.rowStartIndex}`)
-    // console.log(`rowEndIndex = ${this.rowEndIndex}`)
-
-    const start = new Date()
-    // eslint-disable-next-line github/no-inner-html
     this.innerContainer.innerHTML = this.allQubitCirclesHtml(data)
-    const end = new Date()
-    console.log('経過時間 (ミリ秒):', end.getTime() - start.getTime())
-
     this.dispatchVisibilityChangedEvent()
   }
 
@@ -696,9 +499,11 @@ export class VirtualizedGridElement extends HTMLElement {
       class="qubit-circle"
       data-ket="${ket}"
       data-targets="virtualized-grid.qubitCircles"
+      data-amplitude-real="0"
+      data-amplitude-imag="0"
       style="position: absolute; top: ${top}px; left: ${left}px"
     >
-      <div class="qubit-circle__magnitude"></div>
+      <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
       <div class="qubit-circle__phase"></div>
     </div>`
   }
