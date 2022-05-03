@@ -154,6 +154,10 @@ export class VirtualizedGridElement extends HTMLElement {
             --phase: 0deg;
           }
 
+          .qubit-circle {
+            position: absolute;
+          }
+
           :host([data-qubit-count='1']) .qubit-circle,
           :host([data-qubit-count='2']) .qubit-circle,
           :host([data-qubit-count='3']) .qubit-circle {
@@ -537,7 +541,7 @@ export class VirtualizedGridElement extends HTMLElement {
       data-targets="virtualized-grid.qubitCircles"
       data-amplitude-real="0"
       data-amplitude-imag="0"
-      style="position: absolute; top: ${top}px; left: ${left}px"
+      style="top: ${top}px; left: ${left}px"
     >
       <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
       <div class="qubit-circle__phase"></div>

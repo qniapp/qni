@@ -11659,6 +11659,10 @@ var bt = class extends HTMLElement {
             --phase: 0deg;
           }
 
+          .qubit-circle {
+            position: absolute;
+          }
+
           :host([data-qubit-count='1']) .qubit-circle,
           :host([data-qubit-count='2']) .qubit-circle,
           :host([data-qubit-count='3']) .qubit-circle {
@@ -11947,7 +11951,7 @@ var bt = class extends HTMLElement {
       data-targets="virtualized-grid.qubitCircles"
       data-amplitude-real="0"
       data-amplitude-imag="0"
-      style="position: absolute; top: ${i}px; left: ${l}px"
+      style="top: ${i}px; left: ${l}px"
     >
       <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
       <div class="qubit-circle__phase"></div>
