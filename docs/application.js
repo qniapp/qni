@@ -11958,17 +11958,18 @@ var ut = class extends HTMLElement {
     for (let v = i; v <= l; v++)
       for (let b = e; b <= t; b++)
         (b < this.colStartIndex || this.colEndIndex < b || v < this.rowStartIndex || this.rowEndIndex < v) && c.push({ col: b, row: v });
+    this.colStartIndex = e, this.colEndIndex = t, this.rowStartIndex = i, this.rowEndIndex = l;
+    let d = document.createDocumentFragment();
+    for (let v of this.allQubitCircleElements(c))
+      d.appendChild(v);
+    this.innerContainer.appendChild(d);
     for (let v of this.qubitCircles) {
       let b = v.getAttribute("data-col"), y = v.getAttribute("data-row");
       ie.notNull(b), ie.notNull(y);
       let w = parseInt(b), _ = parseInt(y);
       (w < e || t < w || _ < i || l < _) && v.remove();
     }
-    this.colStartIndex = e, this.colEndIndex = t, this.rowStartIndex = i, this.rowEndIndex = l;
-    let d = document.createDocumentFragment();
-    for (let v of this.allQubitCircleElements(c))
-      d.appendChild(v);
-    this.innerContainer.appendChild(d), this.dispatchVisibilityChangedEvent();
+    this.dispatchVisibilityChangedEvent();
   }
   dispatchVisibilityChangedEvent() {
     this.dispatchEvent(new CustomEvent("circle-notation-visibility-change", { detail: this.visibleQubitCircleKets, bubbles: true }));

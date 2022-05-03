@@ -559,6 +559,18 @@ export class VirtualizedGridElement extends HTMLElement {
       }
     }
 
+    this.colStartIndex = colStartIndex
+    this.colEndIndex = colEndIndex
+    this.rowStartIndex = rowStartIndex
+    this.rowEndIndex = rowEndIndex
+
+    const fragment = document.createDocumentFragment()
+    for (const each of this.allQubitCircleElements(positions)) {
+      fragment.appendChild(each)
+    }
+
+    this.innerContainer.appendChild(fragment)
+
     for (const each of this.qubitCircles) {
       const dataCol = each.getAttribute('data-col')
       const dataRow = each.getAttribute('data-row')
@@ -571,18 +583,6 @@ export class VirtualizedGridElement extends HTMLElement {
         each.remove()
       }
     }
-
-    this.colStartIndex = colStartIndex
-    this.colEndIndex = colEndIndex
-    this.rowStartIndex = rowStartIndex
-    this.rowEndIndex = rowEndIndex
-
-    const fragment = document.createDocumentFragment()
-    for (const each of this.allQubitCircleElements(positions)) {
-      fragment.appendChild(each)
-    }
-
-    this.innerContainer.appendChild(fragment)
 
     this.dispatchVisibilityChangedEvent()
   }
