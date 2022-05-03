@@ -84,6 +84,11 @@ export class VirtualizedGridElement extends HTMLElement {
           this.cols = 64
           break
         }
+        case '13': {
+          this.rows = 64
+          this.cols = 128
+          break
+        }
         default:
           throw new DetailedError('unsupported qubit count', newValue)
       }
@@ -169,7 +174,8 @@ export class VirtualizedGridElement extends HTMLElement {
           :host([data-qubit-count='9']) .qubit-circle,
           :host([data-qubit-count='10']) .qubit-circle,
           :host([data-qubit-count='11']) .qubit-circle,
-          :host([data-qubit-count='12']) .qubit-circle {
+          :host([data-qubit-count='12']) .qubit-circle,
+          :host([data-qubit-count='13']) .qubit-circle {
             height: 17px;
             width: 17px;
           }
@@ -200,7 +206,8 @@ export class VirtualizedGridElement extends HTMLElement {
           :host([data-qubit-count='9']) .qubit-circle__magnitude,
           :host([data-qubit-count='10']) .qubit-circle__magnitude,
           :host([data-qubit-count='11']) .qubit-circle__magnitude,
-          :host([data-qubit-count='12']) .qubit-circle__magnitude {
+          :host([data-qubit-count='12']) .qubit-circle__magnitude,
+          :host([data-qubit-count='13']) .qubit-circle__magnitude {
             border-width: 1px;
           }
 
@@ -250,7 +257,8 @@ export class VirtualizedGridElement extends HTMLElement {
           :host([data-qubit-count='9']) .qubit-circle__phase,
           :host([data-qubit-count='10']) .qubit-circle__phase,
           :host([data-qubit-count='11']) .qubit-circle__phase,
-          :host([data-qubit-count='12']) .qubit-circle__phase {
+          :host([data-qubit-count='12']) .qubit-circle__phase,
+          :host([data-qubit-count='13']) .qubit-circle__phase {
             border-width: 1px;
           }
 
@@ -282,7 +290,8 @@ export class VirtualizedGridElement extends HTMLElement {
           :host([data-qubit-count='9']) .qubit-circle__phase::after,
           :host([data-qubit-count='10']) .qubit-circle__phase::after,
           :host([data-qubit-count='11']) .qubit-circle__phase::after,
-          :host([data-qubit-count='12']) .qubit-circle__phase::after {
+          :host([data-qubit-count='12']) .qubit-circle__phase::after,
+          :host([data-qubit-count='13']) .qubit-circle__phase::after {
             width: 1px;
           }
         </style>
@@ -351,6 +360,9 @@ export class VirtualizedGridElement extends HTMLElement {
       case 12: {
         return this.qubitCircleSize * 8
       }
+      case 13: {
+        return this.qubitCircleSize * 8
+      }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
@@ -392,6 +404,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 32
       }
       case 12: {
+        return this.qubitCircleSize * 32
+      }
+      case 13: {
         return this.qubitCircleSize * 32
       }
       default:
@@ -455,6 +470,9 @@ export class VirtualizedGridElement extends HTMLElement {
         return 17
       }
       case 12: {
+        return 17
+      }
+      case 13: {
         return 17
       }
       default:
