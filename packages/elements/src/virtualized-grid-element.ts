@@ -6,6 +6,7 @@ import {debounce} from '@github/mini-throttle/decorators'
 @controller
 export class VirtualizedGridElement extends HTMLElement {
   @attr qubitCount = 1
+  @attr size = 'xl'
   @attr cols = 0
   @attr rows = 0
   @attr paddingX = 16
@@ -25,81 +26,97 @@ export class VirtualizedGridElement extends HTMLElement {
     if (name === 'data-qubit-count') {
       switch (newValue) {
         case '1': {
+          this.size = 'xl'
           this.rows = 1
           this.cols = 2
           break
         }
         case '2': {
+          this.size = 'xl'
           this.rows = 1
           this.cols = 4
           break
         }
         case '3': {
+          this.size = 'xl'
           this.rows = 1
           this.cols = 8
           break
         }
         case '4': {
+          this.size = 'lg'
           this.rows = 2
           this.cols = 8
           break
         }
         case '5': {
+          this.size = 'base'
           this.rows = 2
           this.cols = 16
           break
         }
         case '6': {
+          this.size = 'base'
           this.rows = 4
           this.cols = 16
           break
         }
         case '7': {
+          this.size = 'xs'
           this.rows = 4
           this.cols = 32
           break
         }
         case '8': {
+          this.size = 'xs'
           this.rows = 8
           this.cols = 32
           break
         }
         case '9': {
+          this.size = 'xs'
           this.rows = 16
           this.cols = 32
           break
         }
         case '10': {
+          this.size = 'xs'
           this.rows = 32
           this.cols = 32
           break
         }
         case '11': {
+          this.size = 'xs'
           this.rows = 32
           this.cols = 64
           break
         }
         case '12': {
+          this.size = 'xs'
           this.rows = 64
           this.cols = 64
           break
         }
         case '13': {
+          this.size = 'xs'
           this.rows = 64
           this.cols = 128
           break
         }
         case '14': {
+          this.size = 'xs'
           this.rows = 128
           this.cols = 128
           break
         }
         case '15': {
+          this.size = 'xs'
           this.rows = 128
           this.cols = 256
           break
         }
         case '16': {
+          this.size = 'xs'
           this.rows = 256
           this.cols = 256
           break
@@ -112,7 +129,7 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
-  get visibleQubitCircleKets(): number[] {
+  private get visibleQubitCircleKets(): number[] {
     const kets = this.qubitCircles.map(each => {
       const ketStr = each.getAttribute('data-ket')
       Util.notNull(ketStr)
@@ -181,31 +198,32 @@ export class VirtualizedGridElement extends HTMLElement {
             position: absolute;
           }
 
-          :host([data-qubit-count='1']) .qubit-circle,
-          :host([data-qubit-count='2']) .qubit-circle,
-          :host([data-qubit-count='3']) .qubit-circle {
+          :host([data-size='xl']) .qubit-circle {
             height: 64px;
             width: 64px;
           }
-          :host([data-qubit-count='4']) .qubit-circle {
+
+          :host([data-size='lg']) .qubit-circle {
             height: 48px;
             width: 48px;
           }
-          :host([data-qubit-count='5']) .qubit-circle,
-          :host([data-qubit-count='6']) .qubit-circle {
+
+          :host([data-size='lg']) .qubit-circle {
+            height: 48px;
+            width: 48px;
+          }
+
+          :host([data-size='base']) .qubit-circle {
             height: 32px;
             width: 32px;
           }
-          :host([data-qubit-count='7']) .qubit-circle,
-          :host([data-qubit-count='8']) .qubit-circle,
-          :host([data-qubit-count='9']) .qubit-circle,
-          :host([data-qubit-count='10']) .qubit-circle,
-          :host([data-qubit-count='11']) .qubit-circle,
-          :host([data-qubit-count='12']) .qubit-circle,
-          :host([data-qubit-count='13']) .qubit-circle,
-          :host([data-qubit-count='14']) .qubit-circle,
-          :host([data-qubit-count='15']) .qubit-circle,
-          :host([data-qubit-count='16']) .qubit-circle {
+
+          :host([data-size='sm']) .qubit-circle {
+            height: 23px;
+            width: 23px;
+          }
+
+          :host([data-size='xs']) .qubit-circle {
             height: 17px;
             width: 17px;
           }
@@ -223,24 +241,13 @@ export class VirtualizedGridElement extends HTMLElement {
             border-radius: 9999px;
           }
 
-          :host([data-qubit-count='1']) .qubit-circle__magnitude,
-          :host([data-qubit-count='2']) .qubit-circle__magnitude,
-          :host([data-qubit-count='3']) .qubit-circle__magnitude,
-          :host([data-qubit-count='4']) .qubit-circle__magnitude,
-          :host([data-qubit-count='5']) .qubit-circle__magnitude,
-          :host([data-qubit-count='6']) .qubit-circle__magnitude {
+          :host([data-size='xl']) .qubit-circle__magnitude,
+          :host([data-size='lg']) .qubit-circle__magnitude,
+          :host([data-size='base']) .qubit-circle__magnitude {
             border-width: 2px;
           }
-          :host([data-qubit-count='7']) .qubit-circle__magnitude,
-          :host([data-qubit-count='8']) .qubit-circle__magnitude,
-          :host([data-qubit-count='9']) .qubit-circle__magnitude,
-          :host([data-qubit-count='10']) .qubit-circle__magnitude,
-          :host([data-qubit-count='11']) .qubit-circle__magnitude,
-          :host([data-qubit-count='12']) .qubit-circle__magnitude,
-          :host([data-qubit-count='13']) .qubit-circle__magnitude,
-          :host([data-qubit-count='14']) .qubit-circle__magnitude,
-          :host([data-qubit-count='15']) .qubit-circle__magnitude,
-          :host([data-qubit-count='16']) .qubit-circle__magnitude {
+          :host([data-size='sm']) .qubit-circle__magnitude,
+          :host([data-size='xs']) .qubit-circle__magnitude {
             border-width: 1px;
           }
 
@@ -277,24 +284,13 @@ export class VirtualizedGridElement extends HTMLElement {
             transform: scaleX(0) scaleY(0);
           }
 
-          :host([data-qubit-count='1']) .qubit-circle__phase,
-          :host([data-qubit-count='2']) .qubit-circle__phase,
-          :host([data-qubit-count='3']) .qubit-circle__phase,
-          :host([data-qubit-count='4']) .qubit-circle__phase,
-          :host([data-qubit-count='5']) .qubit-circle__phase,
-          :host([data-qubit-count='6']) .qubit-circle__phase {
+          :host([data-size='xl']) .qubit-circle__phase,
+          :host([data-size='lg']) .qubit-circle__phase,
+          :host([data-size='base']) .qubit-circle__phase {
             border-width: 2px;
           }
-          :host([data-qubit-count='7']) .qubit-circle__phase,
-          :host([data-qubit-count='8']) .qubit-circle__phase,
-          :host([data-qubit-count='9']) .qubit-circle__phase,
-          :host([data-qubit-count='10']) .qubit-circle__phase,
-          :host([data-qubit-count='11']) .qubit-circle__phase,
-          :host([data-qubit-count='12']) .qubit-circle__phase,
-          :host([data-qubit-count='13']) .qubit-circle__phase,
-          :host([data-qubit-count='14']) .qubit-circle__phase,
-          :host([data-qubit-count='15']) .qubit-circle__phase,
-          :host([data-qubit-count='16']) .qubit-circle__phase {
+          :host([data-size='sm']) .qubit-circle__phase,
+          :host([data-size='xs']) .qubit-circle__phase {
             border-width: 1px;
           }
 
@@ -313,24 +309,13 @@ export class VirtualizedGridElement extends HTMLElement {
             content: '';
           }
 
-          :host([data-qubit-count='1']) .qubit-circle__phase::after,
-          :host([data-qubit-count='2']) .qubit-circle__phase::after,
-          :host([data-qubit-count='3']) .qubit-circle__phase::after,
-          :host([data-qubit-count='4']) .qubit-circle__phase::after,
-          :host([data-qubit-count='5']) .qubit-circle__phase::after,
-          :host([data-qubit-count='6']) .qubit-circle__phase::after {
+          :host([data-size='xl']) .qubit-circle__phase::after,
+          :host([data-size='lg']) .qubit-circle__phase::after,
+          :host([data-size='base']) .qubit-circle__phase::after {
             width: 0.125rem; /* 2px */
           }
-          :host([data-qubit-count='7']) .qubit-circle__phase::after,
-          :host([data-qubit-count='8']) .qubit-circle__phase::after,
-          :host([data-qubit-count='9']) .qubit-circle__phase::after,
-          :host([data-qubit-count='10']) .qubit-circle__phase::after,
-          :host([data-qubit-count='11']) .qubit-circle__phase::after,
-          :host([data-qubit-count='12']) .qubit-circle__phase::after,
-          :host([data-qubit-count='13']) .qubit-circle__phase::after,
-          :host([data-qubit-count='14']) .qubit-circle__phase::after,
-          :host([data-qubit-count='15']) .qubit-circle__phase::after,
-          :host([data-qubit-count='16']) .qubit-circle__phase::after {
+          :host([data-size='sm']) .qubit-circle__phase::after,
+          :host([data-size='xs']) .qubit-circle__phase::after {
             width: 1px;
           }
         </style>
@@ -547,8 +532,10 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
-  @debounce(16)
+  @debounce(10)
   private maybeRedrawQubitCircles(): void {
+    if (this.window === undefined) return
+
     const colStartIndex = this.calculateColStartIndex
     const colEndIndex = this.calculateColEndIndex
     const rowStartIndex = this.calculateRowStartIndex
@@ -563,10 +550,25 @@ export class VirtualizedGridElement extends HTMLElement {
       return
     }
 
-    const data = []
+    const positions = []
     for (let row = rowStartIndex; row <= rowEndIndex; row++) {
       for (let col = colStartIndex; col <= colEndIndex; col++) {
-        data.push({row, col})
+        if (col < this.colStartIndex || this.colEndIndex < col || row < this.rowStartIndex || this.rowEndIndex < row) {
+          positions.push({col, row})
+        }
+      }
+    }
+
+    for (const each of this.qubitCircles) {
+      const dataCol = each.getAttribute('data-col')
+      const dataRow = each.getAttribute('data-row')
+      Util.notNull(dataCol)
+      Util.notNull(dataRow)
+      const col = parseInt(dataCol)
+      const row = parseInt(dataRow)
+
+      if (col < colStartIndex || colEndIndex < col || row < rowStartIndex || rowEndIndex < row) {
+        each.remove()
       }
     }
 
@@ -576,11 +578,10 @@ export class VirtualizedGridElement extends HTMLElement {
     this.rowEndIndex = rowEndIndex
 
     const fragment = document.createDocumentFragment()
-    for (const each of this.allQubitCircleElements(data)) {
+    for (const each of this.allQubitCircleElements(positions)) {
       fragment.appendChild(each)
     }
 
-    this.innerContainer.textContent = ''
     this.innerContainer.appendChild(fragment)
 
     this.dispatchVisibilityChangedEvent()
@@ -595,14 +596,14 @@ export class VirtualizedGridElement extends HTMLElement {
     )
   }
 
-  private allQubitCircleElements(data: Array<{col: number; row: number}>): HTMLDivElement[] {
-    return data.map(this.qubitCircleElement.bind(this))
+  private allQubitCircleElements(positions: Array<{col: number; row: number}>): HTMLDivElement[] {
+    return positions.map(this.qubitCircleElement.bind(this))
   }
 
-  private qubitCircleElement(data: {row: number; col: number}): HTMLDivElement {
-    const ket = data.col + data.row * this.cols
-    const top = this.qubitCircleSize * data.row + this.paddingY
-    const left = this.qubitCircleSize * data.col + this.paddingX
+  private qubitCircleElement(position: {row: number; col: number}): HTMLDivElement {
+    const ket = position.col + position.row * this.cols
+    const top = this.qubitCircleSize * position.row + this.paddingY
+    const left = this.qubitCircleSize * position.col + this.paddingX
 
     // <div
     //   class="qubit-circle"
@@ -618,6 +619,8 @@ export class VirtualizedGridElement extends HTMLElement {
 
     const qubitCircle = document.createElement('div')
     qubitCircle.className = 'qubit-circle'
+    qubitCircle.setAttribute('data-col', position.col.toString())
+    qubitCircle.setAttribute('data-row', position.row.toString())
     qubitCircle.setAttribute('data-ket', ket.toString())
     qubitCircle.setAttribute('data-targets', 'virtualized-grid.qubitCircles')
     qubitCircle.setAttribute('data-amplitude-real', '0')
