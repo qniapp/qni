@@ -9,8 +9,8 @@ export class VirtualizedGridElement extends HTMLElement {
   @attr size = 'xl'
   @attr cols = 0
   @attr rows = 0
-  @attr paddingX = 16
-  @attr paddingY = 20
+  @attr paddingX = 0
+  @attr paddingY = 0
   @attr colStartIndex = -1
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
@@ -172,10 +172,22 @@ export class VirtualizedGridElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+
+    this.updatePadding()
     this.redrawWindowAndInnerContainer()
     this.maybeRedrawQubitCircles()
 
     this.dispatchEvent(new Event('circle-notation-init', {bubbles: true}))
+  }
+
+  private updatePadding(): void {
+    const style = window.getComputedStyle(this)
+    this.paddingX = parseInt(style.paddingLeft, 10)
+    this.paddingY = parseInt(style.paddingTop, 10)
+    this.style.paddingTop = '0px'
+    this.style.paddingRight = '0px'
+    this.style.paddingBottom = '0px'
+    this.style.paddingLeft = '0px'
   }
 
   update(): void {

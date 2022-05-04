@@ -11560,8 +11560,8 @@ var ut = class extends HTMLElement {
     this.size = "xl";
     this.cols = 0;
     this.rows = 0;
-    this.paddingX = 16;
-    this.paddingY = 20;
+    this.paddingX = 0;
+    this.paddingY = 0;
     this.colStartIndex = -1;
     this.colEndIndex = -1;
     this.rowStartIndex = -1;
@@ -11663,7 +11663,9 @@ var ut = class extends HTMLElement {
     }
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.update(), this.redrawWindowAndInnerContainer(), this.maybeRedrawQubitCircles(), this.dispatchEvent(new Event("circle-notation-init", { bubbles: true }));
+    this.attachShadow({ mode: "open" }), this.update();
+    let e = window.getComputedStyle(this);
+    this.paddingX = parseInt(e.paddingLeft, 10), this.paddingY = parseInt(e.paddingTop, 10), this.style.paddingTop = "0px", this.style.paddingRight = "0px", this.style.paddingBottom = "0px", this.style.paddingLeft = "0px", this.redrawWindowAndInnerContainer(), this.maybeRedrawQubitCircles(), this.dispatchEvent(new Event("circle-notation-init", { bubbles: true }));
   }
   update() {
     ee(Z`<style>
