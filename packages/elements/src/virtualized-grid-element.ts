@@ -15,6 +15,7 @@ export class VirtualizedGridElement extends HTMLElement {
   @attr colEndIndex = -1
   @attr rowStartIndex = -1
   @attr rowEndIndex = -1
+  @attr vertical = true
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
@@ -38,13 +39,23 @@ export class VirtualizedGridElement extends HTMLElement {
           break
         }
         case '3': {
-          this.size = 'xl'
-          this.rows = 1
-          this.cols = 8
+          if (this.vertical) {
+            this.size = 'lg'
+            this.rows = 2
+            this.cols = 4
+          } else {
+            this.size = 'xl'
+            this.rows = 1
+            this.cols = 8
+          }
           break
         }
         case '4': {
-          this.size = 'lg'
+          if (this.vertical) {
+            this.size = 'base'
+          } else {
+            this.size = 'lg'
+          }
           this.rows = 2
           this.cols = 8
           break
@@ -170,6 +181,7 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.startResizeObserver()
     this.attachShadow({mode: 'open'})
     this.update()
 
@@ -178,6 +190,21 @@ export class VirtualizedGridElement extends HTMLElement {
     this.maybeRedrawQubitCircles()
 
     this.dispatchEvent(new Event('circle-notation-init', {bubbles: true}))
+  }
+
+  private startResizeObserver(): void {
+    this.detectLayoutOrientation()
+    const ro = new ResizeObserver(this.detectLayoutOrientation)
+    ro.observe(document.body)
+  }
+
+  private detectLayoutOrientation(): void {
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    if (vw < 768) {
+      this.vertical = true
+    } else {
+      this.vertical = false
+    }
   }
 
   private updatePadding(): void {
@@ -369,7 +396,11 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize
       }
       case 3: {
-        return this.qubitCircleSize
+        if (this.vertical) {
+          return this.qubitCircleSize * 2
+        } else {
+          return this.qubitCircleSize
+        }
       }
       case 4: {
         return this.qubitCircleSize * 2
@@ -424,7 +455,11 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 4
       }
       case 3: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 4
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 4: {
         return this.qubitCircleSize * 8
@@ -498,10 +533,18 @@ export class VirtualizedGridElement extends HTMLElement {
         return 64
       }
       case 3: {
-        return 64
+        if (this.vertical) {
+          return 48
+        } else {
+          return 64
+        }
       }
       case 4: {
-        return 48
+        if (this.vertical) {
+          return 32
+        } else {
+          return 48
+        }
       }
       case 5: {
         return 32
