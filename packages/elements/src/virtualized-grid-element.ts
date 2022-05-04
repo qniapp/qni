@@ -61,9 +61,15 @@ export class VirtualizedGridElement extends HTMLElement {
           break
         }
         case '5': {
-          this.size = 'base'
-          this.rows = 2
-          this.cols = 16
+          if (this.vertical) {
+            this.size = 'sm'
+            this.rows = 4
+            this.cols = 8
+          } else {
+            this.size = 'base'
+            this.rows = 2
+            this.cols = 16
+          }
           break
         }
         case '6': {
@@ -406,7 +412,11 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 2
       }
       case 5: {
-        return this.qubitCircleSize * 2
+        if (this.vertical) {
+          return this.qubitCircleSize * 4
+        } else {
+          return this.qubitCircleSize * 2
+        }
       }
       case 6: {
         return this.qubitCircleSize * 4
@@ -465,7 +475,11 @@ export class VirtualizedGridElement extends HTMLElement {
         return this.qubitCircleSize * 8
       }
       case 5: {
-        return this.qubitCircleSize * 16
+        if (this.vertical) {
+          return this.qubitCircleSize * 8
+        } else {
+          return this.qubitCircleSize * 16
+        }
       }
       case 6: {
         return this.qubitCircleSize * 16
@@ -547,7 +561,11 @@ export class VirtualizedGridElement extends HTMLElement {
         }
       }
       case 5: {
-        return 32
+        if (this.vertical) {
+          return 23
+        } else {
+          return 32
+        }
       }
       case 6: {
         return 32
