@@ -25,125 +25,204 @@ export class VirtualizedGridElement extends HTMLElement {
     if (oldValue === newValue) return
 
     if (name === 'data-qubit-count') {
-      switch (newValue) {
-        case '1': {
-          this.size = 'xl'
-          this.rows = 1
-          this.cols = 2
-          break
-        }
-        case '2': {
-          this.size = 'xl'
-          this.rows = 1
-          this.cols = 4
-          break
-        }
-        case '3': {
-          if (this.vertical) {
-            this.size = 'lg'
-            this.rows = 2
-            this.cols = 4
-          } else {
-            this.size = 'xl'
-            this.rows = 1
-            this.cols = 8
-          }
-          break
-        }
-        case '4': {
-          if (this.vertical) {
-            this.size = 'base'
-          } else {
-            this.size = 'lg'
-          }
-          this.rows = 2
-          this.cols = 8
-          break
-        }
-        case '5': {
-          if (this.vertical) {
-            this.size = 'sm'
-            this.rows = 4
-            this.cols = 8
-          } else {
-            this.size = 'base'
-            this.rows = 2
-            this.cols = 16
-          }
-          break
-        }
-        case '6': {
-          this.size = 'base'
-          this.rows = 4
-          this.cols = 16
-          break
-        }
-        case '7': {
-          this.size = 'xs'
-          this.rows = 4
-          this.cols = 32
-          break
-        }
-        case '8': {
-          this.size = 'xs'
-          this.rows = 8
-          this.cols = 32
-          break
-        }
-        case '9': {
-          this.size = 'xs'
-          this.rows = 16
-          this.cols = 32
-          break
-        }
-        case '10': {
-          this.size = 'xs'
-          this.rows = 32
-          this.cols = 32
-          break
-        }
-        case '11': {
-          this.size = 'xs'
-          this.rows = 32
-          this.cols = 64
-          break
-        }
-        case '12': {
-          this.size = 'xs'
-          this.rows = 64
-          this.cols = 64
-          break
-        }
-        case '13': {
-          this.size = 'xs'
-          this.rows = 64
-          this.cols = 128
-          break
-        }
-        case '14': {
-          this.size = 'xs'
-          this.rows = 128
-          this.cols = 128
-          break
-        }
-        case '15': {
-          this.size = 'xs'
-          this.rows = 128
-          this.cols = 256
-          break
-        }
-        case '16': {
-          this.size = 'xs'
-          this.rows = 256
-          this.cols = 256
-          break
-        }
-        default:
-          throw new DetailedError('unsupported qubit count', newValue)
-      }
+      Util.notNull(newValue)
+
+      this.updateSize(parseInt(newValue))
+      this.updateDimension(parseInt(newValue))
       this.redrawWindowAndInnerContainer()
-      this.maybeRedrawQubitCircles()
+      this.clearInnerContainer()
+      this.drawQubitCircles()
+      this.dispatchVisibilityChangedEvent()
     }
+  }
+
+  private updateSize(qubitCount: number): void {
+    switch (qubitCount) {
+      case 1: {
+        this.size = 'xl'
+        break
+      }
+      case 2: {
+        this.size = 'xl'
+        break
+      }
+      case 3: {
+        if (this.vertical) {
+          this.size = 'lg'
+        } else {
+          this.size = 'xl'
+        }
+        break
+      }
+      case 4: {
+        if (this.vertical) {
+          this.size = 'base'
+        } else {
+          this.size = 'lg'
+        }
+        break
+      }
+      case 5: {
+        if (this.vertical) {
+          this.size = 'sm'
+        } else {
+          this.size = 'base'
+        }
+        break
+      }
+      case 6: {
+        if (this.vertical) {
+          this.size = 'xs'
+        } else {
+          this.size = 'base'
+        }
+        break
+      }
+      case 7: {
+        this.size = 'xs'
+        break
+      }
+      case 8: {
+        this.size = 'xs'
+        break
+      }
+      case 9: {
+        this.size = 'xs'
+        break
+      }
+      case 10: {
+        this.size = 'xs'
+        break
+      }
+      case 11: {
+        this.size = 'xs'
+        break
+      }
+      case 12: {
+        this.size = 'xs'
+        break
+      }
+      case 13: {
+        this.size = 'xs'
+        break
+      }
+      case 14: {
+        this.size = 'xs'
+        break
+      }
+      case 15: {
+        this.size = 'xs'
+        break
+      }
+      case 16: {
+        this.size = 'xs'
+        break
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', qubitCount)
+    }
+
+    // console.log(`size = ${this.size}`)
+  }
+
+  private updateDimension(qubitCount: number): void {
+    switch (qubitCount) {
+      case 1: {
+        this.rows = 1
+        this.cols = 2
+        break
+      }
+      case 2: {
+        this.rows = 1
+        this.cols = 4
+        break
+      }
+      case 3: {
+        if (this.vertical) {
+          this.rows = 2
+          this.cols = 4
+        } else {
+          this.rows = 1
+          this.cols = 8
+        }
+        break
+      }
+      case 4: {
+        this.rows = 2
+        this.cols = 8
+        break
+      }
+      case 5: {
+        if (this.vertical) {
+          this.rows = 4
+          this.cols = 8
+        } else {
+          this.rows = 2
+          this.cols = 16
+        }
+        break
+      }
+      case 6: {
+        this.rows = 4
+        this.cols = 16
+        break
+      }
+      case 7: {
+        this.rows = 4
+        this.cols = 32
+        break
+      }
+      case 8: {
+        this.rows = 8
+        this.cols = 32
+        break
+      }
+      case 9: {
+        this.rows = 16
+        this.cols = 32
+        break
+      }
+      case 10: {
+        this.rows = 32
+        this.cols = 32
+        break
+      }
+      case 11: {
+        this.rows = 32
+        this.cols = 64
+        break
+      }
+      case 12: {
+        this.rows = 64
+        this.cols = 64
+        break
+      }
+      case 13: {
+        this.rows = 64
+        this.cols = 128
+        break
+      }
+      case 14: {
+        this.rows = 128
+        this.cols = 128
+        break
+      }
+      case 15: {
+        this.rows = 128
+        this.cols = 256
+        break
+      }
+      case 16: {
+        this.rows = 256
+        this.cols = 256
+        break
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', qubitCount)
+    }
+
+    // console.log(`cols = ${this.cols}`)
+    // console.log(`rows = ${this.rows}`)
   }
 
   private get visibleQubitCircleKets(): number[] {
@@ -187,10 +266,10 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this.startResizeObserver()
     this.attachShadow({mode: 'open'})
     this.update()
 
+    this.startResizeObserver()
     this.updatePadding()
     this.redrawWindowAndInnerContainer()
     this.maybeRedrawQubitCircles()
@@ -200,20 +279,36 @@ export class VirtualizedGridElement extends HTMLElement {
 
   private startResizeObserver(): void {
     this.detectLayoutOrientation()
-    const ro = new ResizeObserver(this.detectLayoutOrientation)
+    const ro = new ResizeObserver(this.detectLayoutOrientation.bind(this))
     ro.observe(document.body)
   }
 
   private detectLayoutOrientation(): void {
+    let changed = false
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
     if (vw < 768) {
+      if (!this.vertical) changed = true
       this.vertical = true
     } else {
+      if (this.vertical) changed = true
       this.vertical = false
+    }
+
+    if (changed) {
+      this.updateSize(this.qubitCount)
+      this.updatePadding()
+      this.updateDimension(this.qubitCount)
+      this.redrawWindowAndInnerContainer()
+      this.clearInnerContainer()
+      this.drawQubitCircles()
+      this.dispatchVisibilityChangedEvent()
     }
   }
 
   private updatePadding(): void {
+    this.style.removeProperty('padding')
+
     const style = window.getComputedStyle(this)
     this.paddingX = parseInt(style.paddingLeft, 10)
     this.paddingY = parseInt(style.paddingTop, 10)
@@ -221,6 +316,9 @@ export class VirtualizedGridElement extends HTMLElement {
     this.style.paddingRight = '0px'
     this.style.paddingBottom = '0px'
     this.style.paddingLeft = '0px'
+
+    // console.log(`paddingX = ${this.paddingX}`)
+    // console.log(`paddingY = ${this.paddingY}`)
   }
 
   update(): void {
@@ -391,6 +489,12 @@ export class VirtualizedGridElement extends HTMLElement {
     return this.cols * this.qubitCircleSize + this.paddingX * 2
   }
 
+  private clearInnerContainer(): void {
+    if (this.innerContainer === undefined) return
+
+    this.innerContainer.textContent = ''
+  }
+
   /* window */
 
   private get qubitCirclesAreaHeight(): number {
@@ -534,6 +638,11 @@ export class VirtualizedGridElement extends HTMLElement {
     this.window.style.width = `${this.windowWidth}px`
     this.innerContainer.style.height = `${this.innerHeight}px`
     this.innerContainer.style.width = `${this.innerWidth}px`
+
+    // console.log(`window.height = ${this.windowHeight}`)
+    // console.log(`window.width = ${this.windowWidth}`)
+    // console.log(`innerContainer.height = ${this.innerHeight}`)
+    // console.log(`innerContainer.width = ${this.innerWidth}`)
   }
 
   /* qubit circle */
@@ -568,7 +677,11 @@ export class VirtualizedGridElement extends HTMLElement {
         }
       }
       case 6: {
-        return 32
+        if (this.vertical) {
+          return 17
+        } else {
+          return 32
+        }
       }
       case 7: {
         return 17
@@ -605,6 +718,29 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
+  private drawQubitCircles(): void {
+    if (this.window === undefined) return
+
+    this.colStartIndex = this.calculateColStartIndex
+    this.colEndIndex = this.calculateColEndIndex
+    this.rowStartIndex = this.calculateRowStartIndex
+    this.rowEndIndex = this.calculateRowEndIndex
+
+    const positions = []
+    for (let row = this.rowStartIndex; row <= this.rowEndIndex; row++) {
+      for (let col = this.colStartIndex; col <= this.colEndIndex; col++) {
+        positions.push({col, row})
+      }
+    }
+
+    const fragment = document.createDocumentFragment()
+    for (const each of this.allQubitCircleElements(positions)) {
+      fragment.appendChild(each)
+    }
+
+    this.innerContainer.appendChild(fragment)
+  }
+
   @debounce(10)
   private maybeRedrawQubitCircles(): void {
     if (this.window === undefined) return
@@ -622,6 +758,11 @@ export class VirtualizedGridElement extends HTMLElement {
     ) {
       return
     }
+
+    // console.log(`colStartIndex = ${colStartIndex}`)
+    // console.log(`colEndIndex = ${colEndIndex}`)
+    // console.log(`rowStartIndex = ${rowStartIndex}`)
+    // console.log(`rowEndIndex = ${rowEndIndex}`)
 
     const positions = []
     for (let row = rowStartIndex; row <= rowEndIndex; row++) {
