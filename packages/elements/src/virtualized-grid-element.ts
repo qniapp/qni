@@ -719,10 +719,10 @@ export class VirtualizedGridElement extends HTMLElement {
 
   private get windowWidth(): number {
     Util.notNull(this.parentElement)
-    const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX
+    const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
-      if (qubitCirclesAreaPlusPaddingWidth < this.parentElement.clientWidth) {
+      if (this.cols > 16 && qubitCirclesAreaPlusPaddingWidth < this.parentElement.clientWidth) {
         return this.parentElement.clientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth

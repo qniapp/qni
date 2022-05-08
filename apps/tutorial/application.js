@@ -11992,8 +11992,8 @@ var it = class extends HTMLElement {
   }
   get windowWidth() {
     ie.notNull(this.parentElement);
-    let e = this.qubitCirclesAreaWidth + this.paddingX;
-    return this.vertical && e < this.parentElement.clientWidth ? this.parentElement.clientWidth : e;
+    let e = this.qubitCirclesAreaWidth + this.paddingX * 2;
+    return this.vertical && this.cols > 16 && e < this.parentElement.clientWidth ? this.parentElement.clientWidth : e;
   }
   redrawWindowAndInnerContainer() {
     this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`, this.innerContainer.style.height = `${this.innerHeight}px`, this.innerContainer.style.width = `${this.innerWidth}px`);
