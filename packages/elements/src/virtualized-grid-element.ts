@@ -3,6 +3,7 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
 import {debounce} from '@github/mini-throttle/decorators'
+import {forceSigned} from './util'
 
 @controller
 export class VirtualizedGridElement extends HTMLElement {
@@ -17,6 +18,7 @@ export class VirtualizedGridElement extends HTMLElement {
   @attr rowStartIndex = -1
   @attr rowEndIndex = -1
   @attr vertical = true
+  @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
@@ -1029,43 +1031,48 @@ export class VirtualizedGridElement extends HTMLElement {
 
   /* popup */
 
-  showPopup(event: Event): void {
+  showPopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
-
-    // console.log('💬 showPopup')
 
     const popup = tippy(qubitCircle, {
       allowHTML: true,
       animation: false,
       arrow: roundArrow + roundArrow,
-      content: 'My tooltip!',
       delay: 0,
       theme: 'qni'
     })
 
-    if (this.popupEl === null) return
+    if (this.qubitCirclePopupTemplate === null) return
 
-    const ketAttr = qubitCircle.getAttribute('data-ket')
-    Util.notNull(ketAttr)
-    const ampRealAttr = qubitCircle.getAttribute('data-amplitude-real')
-    Util.notNull(ampRealAttr)
-    const ampImagAttr = qubitCircle.getAttribute('data-amplitude-imag')
-    Util.notNull(ampImagAttr)
+    const dataKet = qubitCircle.getAttribute('data-ket')
+    Util.notNull(dataKet)
+    const dataAmplitudeReal = qubitCircle.getAttribute('data-amplitude-real')
+    Util.notNull(dataAmplitudeReal)
+    const dataAmplitudeImag = qubitCircle.getAttribute('data-amplitude-imag')
+    Util.notNull(dataAmplitudeImag)
 
-    const ket = parseInt(ketAttr)
-    const ampReal = parseFloat(ampRealAttr)
-    const ampImag = parseFloat(ampImagAttr)
-    const amplitude = new Complex(ampReal, ampImag)
+    const ket = parseInt(dataKet)
+    const amplitudeReal = parseFloat(dataAmplitudeReal)
+    const amplitudeImag = parseFloat(dataAmplitudeImag)
+    const amplitude = new Complex(amplitudeReal, amplitudeImag)
     const magnitude = amplitude.abs()
     const phase = (amplitude.phase() / Math.PI) * 180
 
-    const ketBinaryEl = this.popupEl.content.querySelector('.circle-notation-popup__ket-binary')
-    const ketDecimalEl = this.popupEl.content.querySelector('.circle-notation-popup__ket-decimal')
-    const amplitudeRealEl = this.popupEl.content.querySelector('.circle-notation-popup__amplitude-real')
-    const amplitudeImagEl = this.popupEl.content.querySelector('.circle-notation-popup__amplitude-imag')
-    const probabilityEl = this.popupEl.content.querySelector('.circle-notation-popup__probability')
-    const phaseEl = this.popupEl.content.querySelector('.circle-notation-popup__phase')
+    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.qubit-circle-popup-template__ket-binary')
+    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector(
+      '.qubit-circle-popup-template__ket-decimal'
+    )
+    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector(
+      '.qubit-circle-popup-template__amplitude-real'
+    )
+    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector(
+      '.qubit-circle-popup-template__amplitude-imag'
+    )
+    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector(
+      '.qubit-circle-popup-template__probability'
+    )
+    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.qubit-circle-popup-template__phase')
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = ket.toString(2).padStart(this.qubitCount, '0')
@@ -1076,46 +1083,40 @@ export class VirtualizedGridElement extends HTMLElement {
     }
 
     if (amplitudeRealEl) {
-      amplitudeRealEl.textContent = this.forceSigned(amplitude.real, 5)
+      amplitudeRealEl.textContent = forceSigned(amplitude.real, 5)
     }
 
     if (amplitudeImagEl) {
-      amplitudeImagEl.textContent = `${this.forceSigned(amplitude.imag, 5)}i`
+      amplitudeImagEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
     }
 
     if (probabilityEl) {
-      probabilityEl.textContent = `${this.forceSigned(magnitude * magnitude * 100, 4)}%`
+      probabilityEl.textContent = `${forceSigned(magnitude * magnitude * 100, 4)}%`
     }
 
     if (phaseEl) {
-      phaseEl.textContent = `${this.forceSigned(phase, 2)}°`
+      phaseEl.textContent = `${forceSigned(phase, 2)}°`
     }
 
-    const div = document.createElement('div')
-    div.appendChild(this.popupEl.content.cloneNode(true))
+    const tmpDiv = document.createElement('div')
+    tmpDiv.appendChild(this.qubitCirclePopupTemplate.content.cloneNode(true))
 
     // eslint-disable-next-line github/no-inner-html
-    popup.setContent(div.innerHTML)
-
+    popup.setContent(tmpDiv.innerHTML)
     popup.show()
   }
 
-  hidePopup(event: Event): void {
+  hidePopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
 
-    // console.log('❌ hidePopup')
-
     const popup = (qubitCircle as ReferenceElement)._tippy as Instance
     Util.notNull(popup)
+
     popup.destroy()
   }
 
-  private get popupEl(): HTMLTemplateElement | null {
-    return document.getElementById('circle-notation-popup') as HTMLTemplateElement
-  }
-
-  private forceSigned(value: number, d: number): string {
-    return (value >= 0 ? '+' : '') + value.toFixed(d)
+  private get qubitCirclePopupTemplate(): HTMLTemplateElement | null {
+    return document.getElementById(this.qubitCirclePopupTemplateId) as HTMLTemplateElement
   }
 }
