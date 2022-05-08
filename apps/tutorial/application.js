@@ -11668,11 +11668,11 @@ var it = class extends HTMLElement {
         break;
       }
       case 7: {
-        this.rows = 4, this.cols = 32;
+        this.vertical ? (this.rows = 8, this.cols = 16) : (this.rows = 4, this.cols = 32);
         break;
       }
       case 8: {
-        this.rows = 8, this.cols = 32;
+        this.vertical ? (this.rows = 16, this.cols = 16) : (this.rows = 8, this.cols = 32);
         break;
       }
       case 9: {
@@ -11926,13 +11926,13 @@ var it = class extends HTMLElement {
       case 6:
         return this.qubitCircleSize * 4;
       case 7:
-        return this.qubitCircleSize * 4;
+        return this.vertical ? this.qubitCircleSize * 5 : this.qubitCircleSize * 4;
       case 8:
-        return this.qubitCircleSize * 8;
+        return this.vertical ? this.qubitCircleSize * 5 : this.qubitCircleSize * 8;
       case 9:
-        return this.qubitCircleSize * 8;
+        return this.vertical ? this.qubitCircleSize * 5 : this.qubitCircleSize * 8;
       case 10:
-        return this.qubitCircleSize * 8;
+        return this.vertical ? this.qubitCircleSize * 5 : this.qubitCircleSize * 8;
       case 11:
         return this.qubitCircleSize * 8;
       case 12:
@@ -11964,13 +11964,13 @@ var it = class extends HTMLElement {
       case 6:
         return this.qubitCircleSize * 16;
       case 7:
-        return this.qubitCircleSize * 32;
+        return this.vertical ? this.qubitCircleSize * 16 : this.qubitCircleSize * 32;
       case 8:
-        return this.qubitCircleSize * 32;
+        return this.vertical ? this.qubitCircleSize * 16 : this.qubitCircleSize * 32;
       case 9:
-        return this.qubitCircleSize * 32;
+        return this.vertical ? this.qubitCircleSize * 16 : this.qubitCircleSize * 32;
       case 10:
-        return this.qubitCircleSize * 32;
+        return this.vertical ? this.qubitCircleSize * 16 : this.qubitCircleSize * 32;
       case 11:
         return this.qubitCircleSize * 32;
       case 12:
