@@ -564,22 +564,46 @@ export class VirtualizedGridElement extends HTMLElement {
         }
       }
       case 11: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 12: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 13: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 14: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 15: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       case 16: {
-        return this.qubitCircleSize * 8
+        if (this.vertical) {
+          return this.qubitCircleSize * 5
+        } else {
+          return this.qubitCircleSize * 8
+        }
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -643,22 +667,46 @@ export class VirtualizedGridElement extends HTMLElement {
         }
       }
       case 11: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       case 12: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       case 13: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       case 14: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       case 15: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       case 16: {
-        return this.qubitCircleSize * 32
+        if (this.vertical) {
+          return this.qubitCircleSize * 16
+        } else {
+          return this.qubitCircleSize * 32
+        }
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -670,7 +718,18 @@ export class VirtualizedGridElement extends HTMLElement {
   }
 
   private get windowWidth(): number {
-    return this.qubitCirclesAreaWidth + this.paddingX * 2
+    Util.notNull(this.parentElement)
+    const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX
+
+    if (this.vertical) {
+      if (qubitCirclesAreaPlusPaddingWidth < this.parentElement.clientWidth) {
+        return this.parentElement.clientWidth
+      } else {
+        return qubitCirclesAreaPlusPaddingWidth
+      }
+    } else {
+      return qubitCirclesAreaPlusPaddingWidth
+    }
   }
 
   private redrawWindowAndInnerContainer(): void {
