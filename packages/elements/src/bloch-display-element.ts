@@ -3,6 +3,7 @@ import {SerializedBlochDisplayType, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
+import {forceSigned} from './util'
 
 export class BlochDisplayElement extends MenuableMixin(
   HelpableMixin(DraggableMixin(ActivateableMixin(HoverableMixin(HTMLElement))))
@@ -60,15 +61,15 @@ export class BlochDisplayElement extends MenuableMixin(
 
           <section>
             r:
-            <span class="bloch-display__inspector-d">${this.forceSigned(this.d)}</span>, ϕ:
-            <span class="bloch-display__inspector-phi">${this.forceSigned(this.phi, 2)}</span>, θ:
-            <span class="bloch-display__inspector-theta">${this.forceSigned(this.theta, 2)}</span>
+            <span class="bloch-display__inspector-d">${forceSigned(this.d)}</span>, ϕ:
+            <span class="bloch-display__inspector-phi">${forceSigned(this.phi, 2)}</span>, θ:
+            <span class="bloch-display__inspector-theta">${forceSigned(this.theta, 2)}</span>
           </section>
           <section>
             x:
-            <span class="bloch-display__inspector-x">${this.forceSigned(this.x)}</span>, y:
-            <span class="bloch-display__inspector-y">${this.forceSigned(this.y)}</span>, z:
-            <span class="bloch-display__inspector-z">${this.forceSigned(this.z)}</span>
+            <span class="bloch-display__inspector-x">${forceSigned(this.x)}</span>, y:
+            <span class="bloch-display__inspector-y">${forceSigned(this.y)}</span>, z:
+            <span class="bloch-display__inspector-z">${forceSigned(this.z)}</span>
           </section>
         </div>
       `,
@@ -308,10 +309,6 @@ export class BlochDisplayElement extends MenuableMixin(
   private thetaRadian(): number {
     const θ = Math.max(0, Math.PI / 2 - Math.atan2(this.z, Math.sqrt(this.y * this.y + this.x * this.x)))
     return (180 * θ) / Math.PI
-  }
-
-  private forceSigned(value: number, digits = 4): string {
-    return (value >= 0 ? '+' : '') + value.toFixed(digits)
   }
 }
 
