@@ -355,32 +355,32 @@ export class VirtualizedGridElement extends HTMLElement {
             position: absolute;
           }
 
-          :host([data-size='xl']) .qubit-circle {
+          :host([data-qubit-circle-size='xl']) .qubit-circle {
             height: 64px;
             width: 64px;
           }
 
-          :host([data-size='lg']) .qubit-circle {
+          :host([data-qubit-circle-size='lg']) .qubit-circle {
             height: 48px;
             width: 48px;
           }
 
-          :host([data-size='lg']) .qubit-circle {
+          :host([data-qubit-circle-size='lg']) .qubit-circle {
             height: 48px;
             width: 48px;
           }
 
-          :host([data-size='base']) .qubit-circle {
+          :host([data-qubit-circle-size='base']) .qubit-circle {
             height: 32px;
             width: 32px;
           }
 
-          :host([data-size='sm']) .qubit-circle {
+          :host([data-qubit-circle-size='sm']) .qubit-circle {
             height: 23px;
             width: 23px;
           }
 
-          :host([data-size='xs']) .qubit-circle {
+          :host([data-qubit-circle-size='xs']) .qubit-circle {
             height: 17px;
             width: 17px;
           }
@@ -402,13 +402,13 @@ export class VirtualizedGridElement extends HTMLElement {
             border-color: rgb(220 38 38); /* red-600 */
           }
 
-          :host([data-size='xl']) .qubit-circle__magnitude,
-          :host([data-size='lg']) .qubit-circle__magnitude,
-          :host([data-size='base']) .qubit-circle__magnitude {
+          :host([data-qubit-circle-size='xl']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='lg']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='base']) .qubit-circle__magnitude {
             border-width: 2px;
           }
-          :host([data-size='sm']) .qubit-circle__magnitude,
-          :host([data-size='xs']) .qubit-circle__magnitude {
+          :host([data-qubit-circle-size='sm']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='xs']) .qubit-circle__magnitude {
             border-width: 1px;
           }
 
@@ -453,13 +453,13 @@ export class VirtualizedGridElement extends HTMLElement {
             border-color: rgb(220 38 38); /* red-600 */
           }
 
-          :host([data-size='xl']) .qubit-circle__phase,
-          :host([data-size='lg']) .qubit-circle__phase,
-          :host([data-size='base']) .qubit-circle__phase {
+          :host([data-qubit-circle-size='xl']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='lg']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='base']) .qubit-circle__phase {
             border-width: 2px;
           }
-          :host([data-size='sm']) .qubit-circle__phase,
-          :host([data-size='xs']) .qubit-circle__phase {
+          :host([data-qubit-circle-size='sm']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='xs']) .qubit-circle__phase {
             border-width: 1px;
           }
 
@@ -478,13 +478,13 @@ export class VirtualizedGridElement extends HTMLElement {
             content: '';
           }
 
-          :host([data-size='xl']) .qubit-circle__phase::after,
-          :host([data-size='lg']) .qubit-circle__phase::after,
-          :host([data-size='base']) .qubit-circle__phase::after {
+          :host([data-qubit-circle-size='xl']) .qubit-circle__phase::after,
+          :host([data-qubit-circle-size='lg']) .qubit-circle__phase::after,
+          :host([data-qubit-circle-size='base']) .qubit-circle__phase::after {
             width: 0.125rem; /* 2px */
           }
-          :host([data-size='sm']) .qubit-circle__phase::after,
-          :host([data-size='xs']) .qubit-circle__phase::after {
+          :host([data-qubit-circle-size='sm']) .qubit-circle__phase::after,
+          :host([data-qubit-circle-size='xs']) .qubit-circle__phase::after {
             width: 1px;
           }
         </style>
