@@ -8,7 +8,7 @@ import {forceSigned} from './util'
 @controller
 export class VirtualizedGridElement extends HTMLElement {
   @attr qubitCount = 1
-  @attr size = 'xl'
+  @attr qubitCircleSize = 'xl'
   @attr cols = 0
   @attr rows = 0
   @attr paddingX = 0
@@ -30,8 +30,9 @@ export class VirtualizedGridElement extends HTMLElement {
     if (name === 'data-qubit-count') {
       Util.notNull(newValue)
 
-      this.updateSize(parseInt(newValue))
-      this.updateDimension(parseInt(newValue))
+      const qubitCount = parseInt(newValue)
+      this.updateQubitCircleSize(qubitCount)
+      this.updateDimension(qubitCount)
       this.redrawWindowAndInnerContainer()
       this.clearInnerContainer()
       this.drawQubitCircles()
@@ -39,86 +40,86 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
-  private updateSize(qubitCount: number): void {
+  private updateQubitCircleSize(qubitCount: number): void {
     switch (qubitCount) {
       case 1: {
-        this.size = 'xl'
+        this.qubitCircleSize = 'xl'
         break
       }
       case 2: {
-        this.size = 'xl'
+        this.qubitCircleSize = 'xl'
         break
       }
       case 3: {
         if (this.vertical) {
-          this.size = 'lg'
+          this.qubitCircleSize = 'lg'
         } else {
-          this.size = 'xl'
+          this.qubitCircleSize = 'xl'
         }
         break
       }
       case 4: {
         if (this.vertical) {
-          this.size = 'base'
+          this.qubitCircleSize = 'base'
         } else {
-          this.size = 'lg'
+          this.qubitCircleSize = 'lg'
         }
         break
       }
       case 5: {
         if (this.vertical) {
-          this.size = 'sm'
+          this.qubitCircleSize = 'sm'
         } else {
-          this.size = 'base'
+          this.qubitCircleSize = 'base'
         }
         break
       }
       case 6: {
         if (this.vertical) {
-          this.size = 'xs'
+          this.qubitCircleSize = 'xs'
         } else {
-          this.size = 'base'
+          this.qubitCircleSize = 'base'
         }
         break
       }
       case 7: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 8: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 9: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 10: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 11: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 12: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 13: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 14: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 15: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       case 16: {
-        this.size = 'xs'
+        this.qubitCircleSize = 'xs'
         break
       }
       default:
@@ -309,7 +310,7 @@ export class VirtualizedGridElement extends HTMLElement {
     }
 
     if (changed) {
-      this.updateSize(this.qubitCount)
+      this.updateQubitCircleSize(this.qubitCount)
       this.updatePadding()
       this.updateDimension(this.qubitCount)
       this.redrawWindowAndInnerContainer()
@@ -507,11 +508,11 @@ export class VirtualizedGridElement extends HTMLElement {
   /* inner container */
 
   private get innerHeight(): number {
-    return this.rows * this.qubitCircleSize + this.paddingY * 2
+    return this.rows * this.qubitCircleSizePx + this.paddingY * 2
   }
 
   private get innerWidth(): number {
-    return this.cols * this.qubitCircleSize + this.paddingX * 2
+    return this.cols * this.qubitCircleSizePx + this.paddingX * 2
   }
 
   private clearInnerContainer(): void {
@@ -525,99 +526,99 @@ export class VirtualizedGridElement extends HTMLElement {
   private get qubitCirclesAreaHeight(): number {
     switch (this.qubitCount) {
       case 1: {
-        return this.qubitCircleSize
+        return this.qubitCircleSizePx
       }
       case 2: {
-        return this.qubitCircleSize
+        return this.qubitCircleSizePx
       }
       case 3: {
         if (this.vertical) {
-          return this.qubitCircleSize * 2
+          return this.qubitCircleSizePx * 2
         } else {
-          return this.qubitCircleSize
+          return this.qubitCircleSizePx
         }
       }
       case 4: {
-        return this.qubitCircleSize * 2
+        return this.qubitCircleSizePx * 2
       }
       case 5: {
         if (this.vertical) {
-          return this.qubitCircleSize * 4
+          return this.qubitCircleSizePx * 4
         } else {
-          return this.qubitCircleSize * 2
+          return this.qubitCircleSizePx * 2
         }
       }
       case 6: {
-        return this.qubitCircleSize * 4
+        return this.qubitCircleSizePx * 4
       }
       case 7: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 4
+          return this.qubitCircleSizePx * 4
         }
       }
       case 8: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 9: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 10: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 11: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 12: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 13: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 14: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 15: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 16: {
         if (this.vertical) {
-          return this.qubitCircleSize * 5
+          return this.qubitCircleSizePx * 5
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       default:
@@ -628,99 +629,99 @@ export class VirtualizedGridElement extends HTMLElement {
   private get qubitCirclesAreaWidth(): number {
     switch (this.qubitCount) {
       case 1: {
-        return this.qubitCircleSize * 2
+        return this.qubitCircleSizePx * 2
       }
       case 2: {
-        return this.qubitCircleSize * 4
+        return this.qubitCircleSizePx * 4
       }
       case 3: {
         if (this.vertical) {
-          return this.qubitCircleSize * 4
+          return this.qubitCircleSizePx * 4
         } else {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         }
       }
       case 4: {
-        return this.qubitCircleSize * 8
+        return this.qubitCircleSizePx * 8
       }
       case 5: {
         if (this.vertical) {
-          return this.qubitCircleSize * 8
+          return this.qubitCircleSizePx * 8
         } else {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         }
       }
       case 6: {
-        return this.qubitCircleSize * 16
+        return this.qubitCircleSizePx * 16
       }
       case 7: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 8: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 9: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 10: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 11: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 12: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 13: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 14: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 15: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       case 16: {
         if (this.vertical) {
-          return this.qubitCircleSize * 16
+          return this.qubitCircleSizePx * 16
         } else {
-          return this.qubitCircleSize * 32
+          return this.qubitCircleSizePx * 32
         }
       }
       default:
@@ -747,6 +748,9 @@ export class VirtualizedGridElement extends HTMLElement {
     }
   }
 
+  // TODO: redrawWindow → maybeResizeWindow
+  // TODO: redrawInnerContainer → maybeResizeInnerContainer
+  // TODO: コメントを消す
   private redrawWindowAndInnerContainer(): void {
     if (this.window === undefined) return
 
@@ -763,7 +767,7 @@ export class VirtualizedGridElement extends HTMLElement {
 
   /* qubit circle */
 
-  private get qubitCircleSize(): number {
+  private get qubitCircleSizePx(): number {
     switch (this.qubitCount) {
       case 1: {
         return 64
@@ -934,13 +938,14 @@ export class VirtualizedGridElement extends HTMLElement {
 
   private qubitCircleElement(position: {row: number; col: number}): HTMLDivElement {
     const ket = position.col + position.row * this.cols
-    const top = this.qubitCircleSize * position.row + this.paddingY
-    const left = this.qubitCircleSize * position.col + this.paddingX
+    const top = this.qubitCircleSizePx * position.row + this.paddingY
+    const left = this.qubitCircleSizePx * position.col + this.paddingX
 
     // <div
     //   class="qubit-circle"
     //   data-ket="${ket}"
     //   data-targets="virtualized-grid.qubitCircles"
+    //   data-action="mouseenter:virtualized-grid#showQubitCirclePopup mouseleave:virtualized-grid#hideQubitCirclePopup"
     //   data-amplitude-real="0"
     //   data-amplitude-imag="0"
     //   style="top: ${top}px; left: ${left}px"
@@ -959,7 +964,7 @@ export class VirtualizedGridElement extends HTMLElement {
     qubitCircle.setAttribute('data-amplitude-imag', '0')
     qubitCircle.setAttribute(
       'data-action',
-      'mouseenter:virtualized-grid#showPopup mouseleave:virtualized-grid#hidePopup'
+      'mouseenter:virtualized-grid#showQubitCirclePopup mouseleave:virtualized-grid#hideQubitCirclePopup'
     )
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
@@ -983,7 +988,7 @@ export class VirtualizedGridElement extends HTMLElement {
     if (scrollLeft < this.paddingX) {
       return 0
     } else {
-      return Math.floor((scrollLeft - this.paddingX) / this.qubitCircleSize)
+      return Math.floor((scrollLeft - this.paddingX) / this.qubitCircleSizePx)
     }
   }
 
@@ -993,12 +998,12 @@ export class VirtualizedGridElement extends HTMLElement {
     if (scrollLeft < this.paddingX) {
       return Math.min(
         this.cols - 1,
-        Math.floor((this.windowWidth - (this.paddingX - scrollLeft)) / this.qubitCircleSize)
+        Math.floor((this.windowWidth - (this.paddingX - scrollLeft)) / this.qubitCircleSizePx)
       )
     } else {
       return Math.min(
         this.cols - 1,
-        Math.floor((this.windowWidth + (scrollLeft - this.paddingX)) / this.qubitCircleSize)
+        Math.floor((this.windowWidth + (scrollLeft - this.paddingX)) / this.qubitCircleSizePx)
       )
     }
   }
@@ -1009,7 +1014,7 @@ export class VirtualizedGridElement extends HTMLElement {
     if (scrollTop < this.paddingY) {
       return 0
     } else {
-      return Math.floor((scrollTop - this.paddingY) / this.qubitCircleSize)
+      return Math.floor((scrollTop - this.paddingY) / this.qubitCircleSizePx)
     }
   }
 
@@ -1019,19 +1024,19 @@ export class VirtualizedGridElement extends HTMLElement {
     if (scrollTop < this.paddingY) {
       return Math.min(
         this.rows - 1,
-        Math.floor((this.windowHeight - (this.paddingY - scrollTop)) / this.qubitCircleSize)
+        Math.floor((this.windowHeight - (this.paddingY - scrollTop)) / this.qubitCircleSizePx)
       )
     } else {
       return Math.min(
         this.rows - 1,
-        Math.floor((this.windowHeight + (scrollTop - this.paddingY)) / this.qubitCircleSize)
+        Math.floor((this.windowHeight + (scrollTop - this.paddingY)) / this.qubitCircleSizePx)
       )
     }
   }
 
-  /* popup */
+  /* qubit-circle popup */
 
-  showPopup(event: MouseEvent): void {
+  showQubitCirclePopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
 
@@ -1106,7 +1111,7 @@ export class VirtualizedGridElement extends HTMLElement {
     popup.show()
   }
 
-  hidePopup(event: MouseEvent): void {
+  hideQubitCirclePopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
 
