@@ -394,6 +394,10 @@ export class VirtualizedGridElement extends HTMLElement {
             border-radius: 9999px;
           }
 
+          .qubit-circle:hover > .qubit-circle__magnitude {
+            border-color: rgb(220 38 38); /* red-600 */
+          }
+
           :host([data-size='xl']) .qubit-circle__magnitude,
           :host([data-size='lg']) .qubit-circle__magnitude,
           :host([data-size='base']) .qubit-circle__magnitude {
@@ -418,6 +422,10 @@ export class VirtualizedGridElement extends HTMLElement {
             content: '';
           }
 
+          .qubit-circle:hover > .qubit-circle__magnitude::after {
+            background-color: rgb(249 115 22); /* orange-500 */
+          }
+
           /* phase */
 
           .qubit-circle__phase {
@@ -435,6 +443,10 @@ export class VirtualizedGridElement extends HTMLElement {
 
           .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
             transform: scaleX(0) scaleY(0);
+          }
+
+          .qubit-circle:hover > .qubit-circle__phase {
+            border-color: rgb(220 38 38); /* red-600 */
           }
 
           :host([data-size='xl']) .qubit-circle__phase,
@@ -940,6 +952,10 @@ export class VirtualizedGridElement extends HTMLElement {
     qubitCircle.setAttribute('data-targets', 'virtualized-grid.qubitCircles')
     qubitCircle.setAttribute('data-amplitude-real', '0')
     qubitCircle.setAttribute('data-amplitude-imag', '0')
+    qubitCircle.setAttribute(
+      'data-action',
+      'mouseenter:virtualized-grid#showPopup mouseleave:virtualized-grid#hidePopup'
+    )
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
 
@@ -1006,5 +1022,15 @@ export class VirtualizedGridElement extends HTMLElement {
         Math.floor((this.windowHeight + (scrollTop - this.paddingY)) / this.qubitCircleSize)
       )
     }
+  }
+
+  /* popup */
+
+  showPopup(): void {
+    console.log('💬 showPopup')
+  }
+
+  hidePopup(): void {
+    console.log('❌ hidePopup')
   }
 }
