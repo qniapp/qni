@@ -9310,7 +9310,7 @@ var fr = class extends HTMLElement {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initQubitCirclePopup(this.qubitCircles), this.hasAttribute("data-multi-qubits") && (this.startQubitCircleVisibilityObserver(), this.dispatchLoadEvent()));
   }
   dispatchLoadEvent() {
-    this.dispatchEvent(new Event("circle-notation.load", { bubbles: true }));
+    this.dispatchEvent(new Event("circle-notation-old.load", { bubbles: true }));
   }
   attributeChangedCallback(e, t, i) {
     this.shadowRoot !== null && t !== i && e === "data-qubit-count" && this.dispatchVisibilityChangedEvent();
@@ -9319,7 +9319,7 @@ var fr = class extends HTMLElement {
     let e = { root: this, threshold: [0, 0.2] }, t = u((l) => {
       for (let c of l) {
         let d = c.target;
-        c.intersectionRatio >= 0.2 ? (d.setAttribute("data-targets", "circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups"), this.dispatchVisibilityChangedEvent()) : c.intersectionRatio === 0 && d.setAttribute("data-targets", "circle-notation.qubitCircleGroups");
+        c.intersectionRatio >= 0.2 ? (d.setAttribute("data-targets", "circle-notation-old.qubitCircleGroups circle-notation-old.visibleQubitCircleGroups"), this.dispatchVisibilityChangedEvent()) : c.intersectionRatio === 0 && d.setAttribute("data-targets", "circle-notation-old.qubitCircleGroups");
       }
     }, "callback"), i = new IntersectionObserver(t, e);
     for (let l of this.qubitCircleGroups)
@@ -9766,8 +9766,8 @@ var fr = class extends HTMLElement {
       part="qubit-circle"
       class="qubit-circle"
       data-ket="${e}"
-      data-action="mouseenter:circle-notation#setPopupContent"
-      data-targets="circle-notation.qubitCircles"
+      data-action="mouseenter:circle-notation-old#setPopupContent"
+      data-targets="circle-notation-old.qubitCircles"
     >
       <div class="qubit-circle__magnitude" part="qubit-circle__magnitude"></div>
       <div class="qubit-circle__phase" part="qubit-circle__phase"></div>
@@ -9788,7 +9788,7 @@ var fr = class extends HTMLElement {
       else
         for (let v of c)
           d = Z`${d} ${this.qubitCircleHtml(v)}`;
-      return i === 64 ? Z`<div class="qubit-circle-group--size${i}" data-targets="circle-notation.qubitCircleGroups">
+      return i === 64 ? Z`<div class="qubit-circle-group--size${i}" data-targets="circle-notation-old.qubitCircleGroups">
           ${d}
         </div>` : Z`<div class="qubit-circle-group--size${i}">${d}</div>`;
     });
@@ -9809,13 +9809,13 @@ var fr = class extends HTMLElement {
     t._tippy.setContent(this.popupContent(e, i, l, c, d, v));
   }
   popupContent(e, t, i, l, c, d) {
-    let v = e.querySelector(".circle-notation-popup__ket-binary"), b = e.querySelector(".circle-notation-popup__ket-decimal"), y = e.querySelector(".circle-notation-popup__amplitude-real"), w = e.querySelector(".circle-notation-popup__amplitude-imag"), M = e.querySelector(".circle-notation-popup__probability"), C = e.querySelector(".circle-notation-popup__phase");
+    let v = e.querySelector(".circle-notation-old-popup__ket-binary"), b = e.querySelector(".circle-notation-old-popup__ket-decimal"), y = e.querySelector(".circle-notation-old-popup__amplitude-real"), w = e.querySelector(".circle-notation-old-popup__amplitude-imag"), M = e.querySelector(".circle-notation-old-popup__probability"), C = e.querySelector(".circle-notation-old-popup__phase");
     v && (v.textContent = t.toString(2).padStart(d, "0")), b && (b.textContent = t.toString()), y && (y.textContent = this.forceSigned(i.real, 5)), w && (w.textContent = `${this.forceSigned(i.imag, 5)}i`), M && (M.textContent = `${this.forceSigned(l * l * 100, 4)}%`), C && (C.textContent = `${this.forceSigned(c, 2)}\xB0`);
     let P = document.createElement("div");
     return P.appendChild(e.cloneNode(true)), P.innerHTML;
   }
   get popupEl() {
-    return document.getElementById("circle-notation-popup");
+    return document.getElementById("circle-notation-old-popup");
   }
   forceSigned(e, t) {
     return (e >= 0 ? "+" : "") + e.toFixed(t);
@@ -9825,7 +9825,7 @@ var fr = class extends HTMLElement {
     return parseInt(t);
   }
 };
-u(fr, "CircleNotationElement"), k([G], fr.prototype, "qubitCount", 2), k([G], fr.prototype, "size", 2), k([G], fr.prototype, "magnitudes", 2), k([G], fr.prototype, "phases", 2), k([G], fr.prototype, "multiQubits", 2), k([G], fr.prototype, "showKets", 2), k([Bt], fr.prototype, "qubitCircles", 2), k([Bt], fr.prototype, "qubitCircleGroups", 2), k([Bt], fr.prototype, "visibleQubitCircleGroups", 2);
+u(fr, "CircleNotationOldElement"), k([G], fr.prototype, "qubitCount", 2), k([G], fr.prototype, "size", 2), k([G], fr.prototype, "magnitudes", 2), k([G], fr.prototype, "phases", 2), k([G], fr.prototype, "multiQubits", 2), k([G], fr.prototype, "showKets", 2), k([Bt], fr.prototype, "qubitCircles", 2), k([Bt], fr.prototype, "qubitCircleGroups", 2), k([Bt], fr.prototype, "visibleQubitCircleGroups", 2);
 ne(fr);
 var ed = `<svg part="reload-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M1.84998 7.49998C1.84998 4.66458 4.05979 1.84998 7.49998 1.84998C10.2783 1.84998 11.6515 3.9064 12.2367 5H10.5C10.2239 5 10 5.22386 10 5.5C10 5.77614 10.2239 6 10.5 6H13.5C13.7761 6 14 5.77614 14 5.5V2.5C14 2.22386 13.7761 2 13.5 2C13.2239 2 13 2.22386 13 2.5V4.31318C12.2955 3.07126 10.6659 0.849976 7.49998 0.849976C3.43716 0.849976 0.849976 4.18537 0.849976 7.49998C0.849976 10.8146 3.43716 14.15 7.49998 14.15C9.44382 14.15 11.0622 13.3808 12.2145 12.2084C12.8315 11.5806 13.3133 10.839 13.6418 10.0407C13.7469 9.78536 13.6251 9.49315 13.3698 9.38806C13.1144 9.28296 12.8222 9.40478 12.7171 9.66014C12.4363 10.3425 12.0251 10.9745 11.5013 11.5074C10.5295 12.4963 9.16504 13.15 7.49998 13.15C4.05979 13.15 1.84998 10.3354 1.84998 7.49998Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>

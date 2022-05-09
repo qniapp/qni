@@ -3,7 +3,7 @@ import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, targets} from '@github/catalyst'
 import tippy, {Instance, ReferenceElement, createSingleton, roundArrow} from 'tippy.js'
 
-export class CircleNotationElement extends HTMLElement {
+export class CircleNotationOldElement extends HTMLElement {
   @attr qubitCount = 1
   @attr size = ''
   @attr magnitudes = ''
@@ -49,7 +49,7 @@ export class CircleNotationElement extends HTMLElement {
 
   private dispatchLoadEvent(): void {
     this.dispatchEvent(
-      new Event('circle-notation.load', {
+      new Event('circle-notation-old.load', {
         bubbles: true
       })
     )
@@ -75,11 +75,11 @@ export class CircleNotationElement extends HTMLElement {
         if (each.intersectionRatio >= 0.2) {
           group.setAttribute(
             'data-targets',
-            'circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups'
+            'circle-notation-old.qubitCircleGroups circle-notation-old.visibleQubitCircleGroups'
           )
           this.dispatchVisibilityChangedEvent()
         } else if (each.intersectionRatio === 0) {
-          group.setAttribute('data-targets', 'circle-notation.qubitCircleGroups')
+          group.setAttribute('data-targets', 'circle-notation-old.qubitCircleGroups')
         }
       }
     }
@@ -565,8 +565,8 @@ export class CircleNotationElement extends HTMLElement {
       part="qubit-circle"
       class="qubit-circle"
       data-ket="${ket}"
-      data-action="mouseenter:circle-notation#setPopupContent"
-      data-targets="circle-notation.qubitCircles"
+      data-action="mouseenter:circle-notation-old#setPopupContent"
+      data-targets="circle-notation-old.qubitCircles"
     >
       <div class="qubit-circle__magnitude" part="qubit-circle__magnitude"></div>
       <div class="qubit-circle__phase" part="qubit-circle__phase"></div>
@@ -628,7 +628,7 @@ export class CircleNotationElement extends HTMLElement {
       }
 
       if (size === 64) {
-        return html`<div class="qubit-circle-group--size${size}" data-targets="circle-notation.qubitCircleGroups">
+        return html`<div class="qubit-circle-group--size${size}" data-targets="circle-notation-old.qubitCircleGroups">
           ${group}
         </div>`
       } else {
@@ -707,12 +707,12 @@ export class CircleNotationElement extends HTMLElement {
     phase: number,
     nqubit: number
   ): string {
-    const ketBinaryEl = popupFrag.querySelector('.circle-notation-popup__ket-binary')
-    const ketDecimalEl = popupFrag.querySelector('.circle-notation-popup__ket-decimal')
-    const amplitudeRealEl = popupFrag.querySelector('.circle-notation-popup__amplitude-real')
-    const amplitudeImagEl = popupFrag.querySelector('.circle-notation-popup__amplitude-imag')
-    const probabilityEl = popupFrag.querySelector('.circle-notation-popup__probability')
-    const phaseEl = popupFrag.querySelector('.circle-notation-popup__phase')
+    const ketBinaryEl = popupFrag.querySelector('.circle-notation-old-popup__ket-binary')
+    const ketDecimalEl = popupFrag.querySelector('.circle-notation-old-popup__ket-decimal')
+    const amplitudeRealEl = popupFrag.querySelector('.circle-notation-old-popup__amplitude-real')
+    const amplitudeImagEl = popupFrag.querySelector('.circle-notation-old-popup__amplitude-imag')
+    const probabilityEl = popupFrag.querySelector('.circle-notation-old-popup__probability')
+    const phaseEl = popupFrag.querySelector('.circle-notation-old-popup__phase')
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = ket.toString(2).padStart(nqubit, '0')
@@ -746,7 +746,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get popupEl(): HTMLTemplateElement | null {
-    return document.getElementById('circle-notation-popup') as HTMLTemplateElement
+    return document.getElementById('circle-notation-old-popup') as HTMLTemplateElement
   }
 
   private forceSigned(value: number, d: number): string {
@@ -760,4 +760,4 @@ export class CircleNotationElement extends HTMLElement {
   }
 }
 
-controller(CircleNotationElement)
+controller(CircleNotationOldElement)

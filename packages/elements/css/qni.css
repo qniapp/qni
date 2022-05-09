@@ -12,6 +12,7 @@
 @import './run_circuit_button';
 
 @import './bloch_display';
+@import './circle_notation';
 @import './circuit_dropzone';
 @import './circuit_editor';
 @import './circuit_step';
