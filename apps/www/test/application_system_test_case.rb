@@ -74,21 +74,31 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def assert_qubit_circles(number)
-    qubit_circles = shadow_root(find('#circle-notation-old')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
     assert_equal number, qubit_circles.length
   end
 
   def assert_magnitudes(*magnitudes)
-    qubit_circles = shadow_root(find('#circle-notation-old')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+
     magnitudes.each_with_index do |each, index|
-      assert_in_delta each, qubit_circles[index]['data-magnitude'].to_f, 0.000001
+      qubit_circle = qubit_circles[index]
+      amplitude_real = qubit_circle['data-amplitude-real'].to_f
+      amplitude_imag = qubit_circle['data-amplitude-imag'].to_f
+      assert_in_delta each, Complex(amplitude_real, amplitude_imag).abs, 0.000001
     end
   end
 
   def assert_phases(*phases)
-    qubit_circles = shadow_root(find('#circle-notation-old')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+    qubit_circles = shadow_root(find('#circle-notation')).find_elements(:css, '.qubit-circle').filter(&:displayed?)
+
     phases.each_with_index do |each, index|
-      assert_equal each, qubit_circles[index]['data-phase'].to_i
+      qubit_circle = qubit_circles[index]
+      amplitude_real = qubit_circle['data-amplitude-real'].to_f
+      amplitude_imag = qubit_circle['data-amplitude-imag'].to_f
+      phase = Math.atan2(amplitude_imag, amplitude_real)
+      phase_deg = (phase / Math::PI) * 180
+      assert_equal each, phase_deg.to_i
     end
   end
 

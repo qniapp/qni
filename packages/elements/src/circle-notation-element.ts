@@ -6,7 +6,7 @@ import {debounce} from '@github/mini-throttle/decorators'
 import {forceSigned} from './util'
 
 @controller
-export class VirtualizedGridElement extends HTMLElement {
+export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
   @attr qubitCircleSize = 'xl'
   @attr cols = 0
@@ -239,7 +239,7 @@ export class VirtualizedGridElement extends HTMLElement {
     // console.log(`rows = ${this.rows}`)
   }
 
-  private get visibleQubitCircleKets(): number[] {
+  get visibleQubitCircleKets(): number[] {
     const kets = this.qubitCircles.map(each => {
       const ketStr = each.getAttribute('data-ket')
       Util.notNull(ketStr)
@@ -288,7 +288,7 @@ export class VirtualizedGridElement extends HTMLElement {
     this.redrawWindowAndInnerContainer()
     this.maybeRedrawQubitCircles()
 
-    this.dispatchEvent(new Event('circle-notation-init', {bubbles: true}))
+    this.dispatchEvent(new CustomEvent('circle-notation-init', {bubbles: true}))
   }
 
   private startResizeObserver(): void {
@@ -343,11 +343,11 @@ export class VirtualizedGridElement extends HTMLElement {
             --phase: 0deg;
           }
 
-          .virtualized-grid__window {
+          .circle-notation__window {
             overflow: auto;
           }
 
-          .virtualized-grid__inner-container {
+          .circle-notation__inner-container {
             position: relative;
           }
 
@@ -490,14 +490,14 @@ export class VirtualizedGridElement extends HTMLElement {
         </style>
 
         <div
-          class="virtualized-grid__window"
-          data-target="virtualized-grid.window"
-          data-action="scroll:virtualized-grid#maybeRedrawQubitCircles"
+          class="circle-notation__window"
+          data-target="circle-notation.window"
+          data-action="scroll:circle-notation#maybeRedrawQubitCircles"
           style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
         >
           <div
-            class="virtualized-grid__inner-container"
-            data-target="virtualized-grid.innerContainer"
+            class="circle-notation__inner-container"
+            data-target="circle-notation.innerContainer"
             style="height: ${this.innerHeight}px; width: ${this.innerWidth}px"
           ></div>
         </div>`,
@@ -944,8 +944,8 @@ export class VirtualizedGridElement extends HTMLElement {
     // <div
     //   class="qubit-circle"
     //   data-ket="${ket}"
-    //   data-targets="virtualized-grid.qubitCircles"
-    //   data-action="mouseenter:virtualized-grid#showQubitCirclePopup mouseleave:virtualized-grid#hideQubitCirclePopup"
+    //   data-targets="circle-notation.qubitCircles"
+    //   data-action="mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"
     //   data-amplitude-real="0"
     //   data-amplitude-imag="0"
     //   style="top: ${top}px; left: ${left}px"
@@ -959,12 +959,12 @@ export class VirtualizedGridElement extends HTMLElement {
     qubitCircle.setAttribute('data-col', position.col.toString())
     qubitCircle.setAttribute('data-row', position.row.toString())
     qubitCircle.setAttribute('data-ket', ket.toString())
-    qubitCircle.setAttribute('data-targets', 'virtualized-grid.qubitCircles')
+    qubitCircle.setAttribute('data-targets', 'circle-notation.qubitCircles')
     qubitCircle.setAttribute('data-amplitude-real', '0')
     qubitCircle.setAttribute('data-amplitude-imag', '0')
     qubitCircle.setAttribute(
       'data-action',
-      'mouseenter:virtualized-grid#showQubitCirclePopup mouseleave:virtualized-grid#hideQubitCirclePopup'
+      'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup'
     )
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)

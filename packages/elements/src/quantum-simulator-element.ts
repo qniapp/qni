@@ -3,9 +3,9 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {isBlochDisplayElement, isMeasurementGateElement} from './operation'
 import {isControllable, isIfable} from './mixin'
+import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
-import {VirtualizedGridElement} from './virtualized-grid-element'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -21,7 +21,7 @@ export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
 
   @target circuit!: QuantumCircuitElement
-  @target virtualizedGrid!: VirtualizedGridElement
+  @target circleNotation!: CircleNotationElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
 
   declare worker: Worker
@@ -51,6 +51,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.maybeUpdateUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
+    this.run()
   }
 
   update(): void {
@@ -105,7 +106,7 @@ export class QuantumSimulatorElement extends HTMLElement {
             const c = data.amplitudes[ket]
             complexAmplitudes[ket] = new Complex(c[0], c[1])
           }
-          this.virtualizedGrid?.setAmplitudes(complexAmplitudes)
+          this.circleNotation?.setAmplitudes(complexAmplitudes)
         }
         break
       }
@@ -138,13 +139,13 @@ export class QuantumSimulatorElement extends HTMLElement {
       )
     )
     const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
-    this.virtualizedGrid.qubitCount = qubitCount
+    this.circleNotation.qubitCount = qubitCount
 
     this.worker.postMessage({
       qubitCount,
       stepIndex,
       steps: serializedSteps,
-      targets: this.virtualizedGrid.visibleQubitCircleKets
+      targets: this.circleNotation.visibleQubitCircleKets
     })
   }
 
