@@ -50,13 +50,18 @@ next_url: ./multi_qubit_phase_gate.html
       >
       </quantum-circuit>
 
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center overflow-scroll rounded-xl border-2 border-b-4 border-gray-200 bg-white"
-        data-multi-qubits
+      <div
+        class="z-30 h-32 w-min items-center justify-center rounded-xl bg-white drop-shadow-md md:h-auto md:rounded-2xl"
       >
-      </circle-notation>
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="px-4 py-5"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </div>
     </circuit-editor>
 
     <run-circuit-button
@@ -102,13 +107,13 @@ next_url: ./multi_qubit_phase_gate.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-H1"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -127,13 +132,13 @@ next_url: ./multi_qubit_phase_gate.html
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-H1"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -166,13 +171,13 @@ next_url: ./multi_qubit_phase_gate.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-H2"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -192,13 +197,13 @@ next_url: ./multi_qubit_phase_gate.html
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-H2"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -227,13 +232,13 @@ next_url: ./multi_qubit_phase_gate.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-H3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -255,13 +260,13 @@ next_url: ./multi_qubit_phase_gate.html
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-H3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -322,13 +327,18 @@ next_url: ./multi_qubit_phase_gate.html
       >
       </quantum-circuit>
 
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        class="z-40 flex w-min flex-row justify-center overflow-scroll rounded-xl border-2 border-b-4 border-gray-200 bg-white"
-        data-multi-qubits
+      <div
+        class="z-30 h-32 w-min items-center justify-center rounded-xl bg-white drop-shadow-md md:h-auto md:rounded-2xl"
       >
-      </circle-notation>
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="px-4 py-5"
+          data-multi-qubits
+        >
+        </circle-notation>
+      </div>
     </circuit-editor>
 
     <run-circuit-button
@@ -344,23 +354,21 @@ next_url: ./multi_qubit_phase_gate.html
 </p>
 
 <template id="circle-notation-popup">
-  <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
-  </div>
+  <div class="text-wolf mb-2 text-base">|<span class="ket-decimal font-mono"></span>⟩</div>
 
   <ul class="list-none">
     <li>
       振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+      <span class="amplitude-real text-eel font-mono font-bold"></span>
+      <span class="amplitude-imag text-eel font-mono font-bold"></span>
     </li>
     <li>
       確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+      <span class="probability text-eel font-mono font-bold"></span>
     </li>
     <li>
       位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+      <span class="phase text-eel font-mono font-bold"></span>
     </li>
   </ul>
 </template>

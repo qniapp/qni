@@ -707,12 +707,12 @@ export class CircleNotationOldElement extends HTMLElement {
     phase: number,
     nqubit: number
   ): string {
-    const ketBinaryEl = popupFrag.querySelector('.circle-notation-old-popup__ket-binary')
-    const ketDecimalEl = popupFrag.querySelector('.circle-notation-old-popup__ket-decimal')
-    const amplitudeRealEl = popupFrag.querySelector('.circle-notation-old-popup__amplitude-real')
-    const amplitudeImagEl = popupFrag.querySelector('.circle-notation-old-popup__amplitude-imag')
-    const probabilityEl = popupFrag.querySelector('.circle-notation-old-popup__probability')
-    const phaseEl = popupFrag.querySelector('.circle-notation-old-popup__phase')
+    const ketBinaryEl = popupFrag.querySelector('.ket-binary')
+    const ketDecimalEl = popupFrag.querySelector('.ket-decimal')
+    const amplitudeRealEl = popupFrag.querySelector('.amplitude-real')
+    const amplitudeImagEl = popupFrag.querySelector('.amplitude-imag')
+    const probabilityEl = popupFrag.querySelector('.probability')
+    const phaseEl = popupFrag.querySelector('.phase')
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = ket.toString(2).padStart(nqubit, '0')
@@ -746,7 +746,7 @@ export class CircleNotationOldElement extends HTMLElement {
   }
 
   private get popupEl(): HTMLTemplateElement | null {
-    return document.getElementById('circle-notation-old-popup') as HTMLTemplateElement
+    return document.getElementById('circle-notation-popup') as HTMLTemplateElement
   }
 
   private forceSigned(value: number, d: number): string {

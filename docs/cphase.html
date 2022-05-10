@@ -1091,13 +1091,13 @@
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-P3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -1125,13 +1125,13 @@
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-P3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -1160,13 +1160,13 @@
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-CPHASE"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -1194,13 +1194,13 @@
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-CPHASE"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -1309,6 +1309,7 @@
         <circle-notation
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
           class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
           data-multi-qubits
         >
@@ -1491,6 +1492,7 @@
         <circle-notation
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
           class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
           data-multi-qubits
         >
@@ -1521,7 +1523,7 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1529,11 +1531,11 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
   </div>
 
   <div class="mt-5 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1541,15 +1543,19 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
+    <circle-notation-old
+      data-magnitudes="0,1"
+      data-phases="0,90"
+      data-show-kets
+    ></circle-notation-old>
   </div>
 
   <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.9,0.4"
       data-phases="340,70"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1557,11 +1563,11 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.9,0.4"
       data-phases="340,160"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
   </div>
 </template>
  <template id="z-gate-help">
@@ -1571,7 +1577,7 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1579,11 +1585,11 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
   </div>
 
   <div class="mt-5 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1591,15 +1597,19 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation data-magnitudes="0,1" data-phases="0,180" data-show-kets></circle-notation>
+    <circle-notation-old
+      data-magnitudes="0,1"
+      data-phases="0,180"
+      data-show-kets
+    ></circle-notation-old>
   </div>
 
   <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.9,0.4"
       data-phases="340,70"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
@@ -1607,11 +1617,11 @@
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.9,0.4"
       data-phases="340,250"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
   </div>
 </template>
  <template id="operation-menu">
@@ -1781,25 +1791,23 @@
 </template>
  <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
-    <div class="inline-block text-neutral-400">
-      |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩
-    </div>
+    |<span class="ket-decimal font-mono"></span>⟩
+    <div class="inline-block">(二進 |<span class="ket-binary font-mono"></span>⟩)</div>
   </div>
 
   <ul class="list-none">
     <li>
       振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+      <span class="amplitude-real text-eel font-mono font-bold"></span>
+      <span class="amplitude-imag text-eel font-mono font-bold"></span>
     </li>
     <li>
       確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+      <span class="probability text-eel font-mono font-bold"></span>
     </li>
     <li>
       位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+      <span class="phase text-eel font-mono font-bold"></span>
     </li>
   </ul>
 </template>

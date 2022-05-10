@@ -1064,20 +1064,12 @@ export class CircleNotationElement extends HTMLElement {
     const magnitude = amplitude.abs()
     const phase = (amplitude.phase() / Math.PI) * 180
 
-    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.qubit-circle-popup-template__ket-binary')
-    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector(
-      '.qubit-circle-popup-template__ket-decimal'
-    )
-    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector(
-      '.qubit-circle-popup-template__amplitude-real'
-    )
-    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector(
-      '.qubit-circle-popup-template__amplitude-imag'
-    )
-    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector(
-      '.qubit-circle-popup-template__probability'
-    )
-    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.qubit-circle-popup-template__phase')
+    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-binary')
+    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-decimal')
+    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-real')
+    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-imag')
+    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector('.probability')
+    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.phase')
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = ket.toString(2).padStart(this.qubitCount, '0')

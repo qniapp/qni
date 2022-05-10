@@ -13,6 +13,8 @@ const runSimulator = e => {
   Util.notNull(steps)
   Util.notNull(targets)
 
+  // const s_time = new Date()
+
   for (const [i, operations] of steps.entries()) {
     simulator.runStep(operations)
     self.postMessage({
@@ -24,6 +26,11 @@ const runSimulator = e => {
       flags: simulator.flags
     })
   }
+
+  // const e_time = new Date()
+  // const diff = e_time.getTime() - s_time.getTime()
+  // console.log(`${qubitCount} qubit simulation took ${diff} msec`)
+
   self.postMessage({type: 'finish'})
 }
 

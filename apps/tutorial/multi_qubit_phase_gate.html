@@ -23,21 +23,21 @@ next_url: ./partial_measurement.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-amp-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-amp-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -72,13 +72,13 @@ next_url: ./partial_measurement.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-P1"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -104,13 +104,13 @@ next_url: ./partial_measurement.html
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-P1"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -147,13 +147,13 @@ next_url: ./partial_measurement.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-P2"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -179,13 +179,13 @@ next_url: ./partial_measurement.html
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-P2"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -222,13 +222,13 @@ next_url: ./partial_measurement.html
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-before-P3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -254,13 +254,13 @@ next_url: ./partial_measurement.html
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-after-P3"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'
@@ -323,6 +323,7 @@ next_url: ./partial_measurement.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
