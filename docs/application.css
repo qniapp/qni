@@ -5511,6 +5511,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   z-index: 40;
 }
 
+.z-30 {
+  z-index: 30;
+}
+
 .z-\[200\] {
   z-index: 200;
 }
@@ -5717,6 +5721,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .h-auto {
   height: auto;
+}
+
+.h-32 {
+  height: 8rem;
 }
 
 .h-7 {
@@ -6630,6 +6638,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
     display: none;
   }
 
+  .md\:h-auto {
+    height: auto;
+  }
+
   .md\:w-7\/12 {
     width: 58.333333%;
   }
@@ -6644,6 +6656,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
   .md\:self-start {
     align-self: flex-start;
+  }
+
+  .md\:rounded-2xl {
+    border-radius: 1rem;
   }
 
   .md\:border-b {

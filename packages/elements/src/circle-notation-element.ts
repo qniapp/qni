@@ -2,7 +2,6 @@ import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
-import {debounce} from '@github/mini-throttle/decorators'
 import {forceSigned} from './util'
 
 @controller
@@ -23,6 +22,10 @@ export class CircleNotationElement extends HTMLElement {
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
+
+  lastParentElementClientWidth: number | null = null
+  lastWindowScrollTop: number | null = null
+  lastWindowScrollLeft: number | null = null
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
@@ -738,14 +741,28 @@ export class CircleNotationElement extends HTMLElement {
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
-      if (this.cols > 16 && qubitCirclesAreaPlusPaddingWidth < this.parentElement.clientWidth) {
-        return this.parentElement.clientWidth
+      const parentElementClientWidth = this.parentElementClientWidth
+      if (this.cols > 16 && qubitCirclesAreaPlusPaddingWidth < parentElementClientWidth) {
+        return parentElementClientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth
       }
     } else {
       return qubitCirclesAreaPlusPaddingWidth
     }
+  }
+
+  private get parentElementClientWidth(): number {
+    Util.notNull(this.parentElement)
+
+    if (this.lastParentElementClientWidth === null) {
+      this.lastParentElementClientWidth = this.parentElement.clientWidth
+
+      window.setTimeout(() => {
+        this.lastParentElementClientWidth = null
+      }, 10)
+    }
+    return this.lastParentElementClientWidth
   }
 
   // TODO: redrawWindow → maybeResizeWindow
@@ -861,7 +878,6 @@ export class CircleNotationElement extends HTMLElement {
     this.innerContainer.appendChild(fragment)
   }
 
-  @debounce(10)
   private maybeRedrawQubitCircles(): void {
     if (this.window === undefined) return
 
@@ -869,6 +885,8 @@ export class CircleNotationElement extends HTMLElement {
     const colEndIndex = this.calculateColEndIndex
     const rowStartIndex = this.calculateRowStartIndex
     const rowEndIndex = this.calculateRowEndIndex
+
+    if (colStartIndex === undefined) return
 
     if (
       this.colStartIndex === colStartIndex &&
@@ -878,11 +896,6 @@ export class CircleNotationElement extends HTMLElement {
     ) {
       return
     }
-
-    // console.log(`colStartIndex = ${colStartIndex}`)
-    // console.log(`colEndIndex = ${colEndIndex}`)
-    // console.log(`rowStartIndex = ${rowStartIndex}`)
-    // console.log(`rowEndIndex = ${rowEndIndex}`)
 
     const positions = []
     for (let row = rowStartIndex; row <= rowEndIndex; row++) {
@@ -983,55 +996,71 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get calculateColStartIndex(): number {
-    const scrollLeft = this.window.scrollLeft
-
-    if (scrollLeft < this.paddingX) {
+    if (this.windowScrollLeft < this.paddingX) {
       return 0
     } else {
-      return Math.floor((scrollLeft - this.paddingX) / this.qubitCircleSizePx)
+      return Math.floor((this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
     }
   }
 
   private get calculateColEndIndex(): number {
-    const scrollLeft = this.window.scrollLeft
-
-    if (scrollLeft < this.paddingX) {
+    if (this.windowScrollLeft < this.paddingX) {
       return Math.min(
         this.cols - 1,
-        Math.floor((this.windowWidth - (this.paddingX - scrollLeft)) / this.qubitCircleSizePx)
+        Math.floor((this.windowWidth - (this.paddingX - this.windowScrollLeft)) / this.qubitCircleSizePx)
       )
     } else {
       return Math.min(
         this.cols - 1,
-        Math.floor((this.windowWidth + (scrollLeft - this.paddingX)) / this.qubitCircleSizePx)
+        Math.floor((this.windowWidth + (this.windowScrollLeft - this.paddingX)) / this.qubitCircleSizePx)
       )
     }
   }
 
   private get calculateRowStartIndex(): number {
-    const scrollTop = this.window.scrollTop
-
-    if (scrollTop < this.paddingY) {
+    if (this.windowScrollTop < this.paddingY) {
       return 0
     } else {
-      return Math.floor((scrollTop - this.paddingY) / this.qubitCircleSizePx)
+      return Math.floor((this.windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
     }
   }
 
   private get calculateRowEndIndex(): number {
-    const scrollTop = this.window.scrollTop
-
-    if (scrollTop < this.paddingY) {
+    if (this.windowScrollTop < this.paddingY) {
       return Math.min(
         this.rows - 1,
-        Math.floor((this.windowHeight - (this.paddingY - scrollTop)) / this.qubitCircleSizePx)
+        Math.floor((this.windowHeight - (this.paddingY - this.windowScrollTop)) / this.qubitCircleSizePx)
       )
     } else {
       return Math.min(
         this.rows - 1,
-        Math.floor((this.windowHeight + (scrollTop - this.paddingY)) / this.qubitCircleSizePx)
+        Math.floor((this.windowHeight + (this.windowScrollTop - this.paddingY)) / this.qubitCircleSizePx)
       )
     }
+  }
+
+  private get windowScrollTop(): number {
+    if (this.lastWindowScrollTop === null) {
+      this.lastWindowScrollTop = this.window.scrollTop
+
+      window.setTimeout(() => {
+        this.lastWindowScrollTop = null
+      }, 10)
+    }
+
+    return this.lastWindowScrollTop
+  }
+
+  private get windowScrollLeft(): number {
+    if (this.lastWindowScrollLeft === null) {
+      this.lastWindowScrollLeft = this.window.scrollLeft
+
+      window.setTimeout(() => {
+        this.lastWindowScrollLeft = null
+      }, 10)
+    }
+
+    return this.lastWindowScrollLeft
   }
 
   /* qubit-circle popup */
