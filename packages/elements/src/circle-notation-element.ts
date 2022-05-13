@@ -2,6 +2,7 @@ import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import {debounce} from '@github/mini-throttle/decorators'
 import {forceSigned} from './util'
 
 @controller
@@ -12,10 +13,11 @@ export class CircleNotationElement extends HTMLElement {
   @attr rows = 0
   @attr paddingX = 0
   @attr paddingY = 0
-  @attr colStartIndex = -1
-  @attr colEndIndex = -1
-  @attr rowStartIndex = -1
-  @attr rowEndIndex = -1
+  @attr lastColStartIndex = -1
+  @attr lastColEndIndex = -1
+  @attr lastRowStartIndex = -1
+  @attr lastRowEndIndex = -1
+  @attr overscan = 0
   @attr vertical = true
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
 
@@ -23,6 +25,7 @@ export class CircleNotationElement extends HTMLElement {
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
 
+  debounceMsec = 10
   lastParentElementClientWidth: number | null = null
   lastWindowScrollTop: number | null = null
   lastWindowScrollLeft: number | null = null
@@ -289,7 +292,7 @@ export class CircleNotationElement extends HTMLElement {
     this.startResizeObserver()
     this.updatePadding()
     this.redrawWindowAndInnerContainer()
-    this.maybeRedrawQubitCircles()
+    this.drawNewlyVisibleQubuitCircles()
 
     this.dispatchEvent(new CustomEvent('circle-notation-init', {bubbles: true}))
   }
@@ -495,7 +498,7 @@ export class CircleNotationElement extends HTMLElement {
         <div
           class="circle-notation__window"
           data-target="circle-notation.window"
-          data-action="scroll:circle-notation#maybeRedrawQubitCircles"
+          data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
           style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
         >
           <div
@@ -858,14 +861,14 @@ export class CircleNotationElement extends HTMLElement {
   private drawQubitCircles(): void {
     if (this.window === undefined) return
 
-    this.colStartIndex = this.calculateColStartIndex
-    this.colEndIndex = this.calculateColEndIndex
-    this.rowStartIndex = this.calculateRowStartIndex
-    this.rowEndIndex = this.calculateRowEndIndex
+    this.lastColStartIndex = this.visibleColStartIndex
+    this.lastColEndIndex = this.visibleColEndIndex
+    this.lastRowStartIndex = this.visibleRowStartIndex
+    this.lastRowEndIndex = this.visibleRowEndIndex
 
     const positions = []
-    for (let row = this.rowStartIndex; row <= this.rowEndIndex; row++) {
-      for (let col = this.colStartIndex; col <= this.colEndIndex; col++) {
+    for (let row = this.lastRowStartIndex; row <= this.lastRowEndIndex; row++) {
+      for (let col = this.lastColStartIndex; col <= this.lastColEndIndex; col++) {
         positions.push({col, row})
       }
     }
@@ -878,21 +881,20 @@ export class CircleNotationElement extends HTMLElement {
     this.innerContainer.appendChild(fragment)
   }
 
-  private maybeRedrawQubitCircles(): void {
+  @debounce(10)
+  drawNewlyVisibleQubuitCircles(): void {
     if (this.window === undefined) return
 
-    const colStartIndex = this.calculateColStartIndex
-    const colEndIndex = this.calculateColEndIndex
-    const rowStartIndex = this.calculateRowStartIndex
-    const rowEndIndex = this.calculateRowEndIndex
-
-    if (colStartIndex === undefined) return
+    const colStartIndex = this.overscanColStartIndex
+    const colEndIndex = this.overscanColEndIndex
+    const rowStartIndex = this.overscanRowStartIndex
+    const rowEndIndex = this.overscanRowEndIndex
 
     if (
-      this.colStartIndex === colStartIndex &&
-      this.colEndIndex === colEndIndex &&
-      this.rowStartIndex === rowStartIndex &&
-      this.rowEndIndex === rowEndIndex
+      this.lastColStartIndex === colStartIndex &&
+      this.lastColEndIndex === colEndIndex &&
+      this.lastRowStartIndex === rowStartIndex &&
+      this.lastRowEndIndex === rowEndIndex
     ) {
       return
     }
@@ -900,16 +902,21 @@ export class CircleNotationElement extends HTMLElement {
     const positions = []
     for (let row = rowStartIndex; row <= rowEndIndex; row++) {
       for (let col = colStartIndex; col <= colEndIndex; col++) {
-        if (col < this.colStartIndex || this.colEndIndex < col || row < this.rowStartIndex || this.rowEndIndex < row) {
+        if (
+          col < this.lastColStartIndex ||
+          this.lastColEndIndex < col ||
+          row < this.lastRowStartIndex ||
+          this.lastRowEndIndex < row
+        ) {
           positions.push({col, row})
         }
       }
     }
 
-    this.colStartIndex = colStartIndex
-    this.colEndIndex = colEndIndex
-    this.rowStartIndex = rowStartIndex
-    this.rowEndIndex = rowEndIndex
+    this.lastColStartIndex = colStartIndex
+    this.lastColEndIndex = colEndIndex
+    this.lastRowStartIndex = rowStartIndex
+    this.lastRowEndIndex = rowEndIndex
 
     const fragment = document.createDocumentFragment()
     for (const each of this.allQubitCircleElements(positions)) {
@@ -917,6 +924,15 @@ export class CircleNotationElement extends HTMLElement {
     }
 
     this.innerContainer.appendChild(fragment)
+    this.dispatchVisibilityChangedEvent()
+  }
+
+  @debounce(100)
+  removeInvisibleQubitCircles(): void {
+    const colStartIndex = this.overscanColStartIndex
+    const colEndIndex = this.overscanColEndIndex
+    const rowStartIndex = this.overscanRowStartIndex
+    const rowEndIndex = this.overscanRowEndIndex
 
     for (const each of this.qubitCircles) {
       const dataCol = each.getAttribute('data-col')
@@ -932,8 +948,6 @@ export class CircleNotationElement extends HTMLElement {
         each.remove()
       }
     }
-
-    this.dispatchVisibilityChangedEvent()
   }
 
   private dispatchVisibilityChangedEvent(): void {
@@ -995,7 +1009,47 @@ export class CircleNotationElement extends HTMLElement {
     return qubitCircle
   }
 
-  private get calculateColStartIndex(): number {
+  private get overscanColStartIndex(): number {
+    const index = this.visibleColStartIndex - this.overscan
+
+    if (index < 0) {
+      return 0
+    } else {
+      return index
+    }
+  }
+
+  private get overscanColEndIndex(): number {
+    const index = this.visibleColEndIndex + this.overscan
+
+    if (index > this.cols - 1) {
+      return this.cols - 1
+    } else {
+      return index
+    }
+  }
+
+  private get overscanRowStartIndex(): number {
+    const index = this.visibleRowStartIndex - this.overscan
+
+    if (index < 0) {
+      return 0
+    } else {
+      return index
+    }
+  }
+
+  private get overscanRowEndIndex(): number {
+    const index = this.visibleRowEndIndex + this.overscan
+
+    if (index > this.rows - 1) {
+      return this.rows - 1
+    } else {
+      return index
+    }
+  }
+
+  private get visibleColStartIndex(): number {
     if (this.windowScrollLeft < this.paddingX) {
       return 0
     } else {
@@ -1003,7 +1057,7 @@ export class CircleNotationElement extends HTMLElement {
     }
   }
 
-  private get calculateColEndIndex(): number {
+  private get visibleColEndIndex(): number {
     if (this.windowScrollLeft < this.paddingX) {
       return Math.min(
         this.cols - 1,
@@ -1017,7 +1071,7 @@ export class CircleNotationElement extends HTMLElement {
     }
   }
 
-  private get calculateRowStartIndex(): number {
+  private get visibleRowStartIndex(): number {
     if (this.windowScrollTop < this.paddingY) {
       return 0
     } else {
@@ -1025,7 +1079,7 @@ export class CircleNotationElement extends HTMLElement {
     }
   }
 
-  private get calculateRowEndIndex(): number {
+  private get visibleRowEndIndex(): number {
     if (this.windowScrollTop < this.paddingY) {
       return Math.min(
         this.rows - 1,
