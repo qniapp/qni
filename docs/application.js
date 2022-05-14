@@ -9696,7 +9696,7 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
     if (t !== i && e === "data-qubit-count") {
       ee.notNull(i);
       let l = parseInt(i);
-      this.updateQubitCircleSize(l), this.updateDimension(l), this.redrawWindowAndInnerContainer(), this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
+      this.updateQubitCircleSize(l), this.updateDimension(l), this.resizeWindow(), this.resizeInnerContainer(), this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
     }
   }
   updateQubitCircleSize(e) {
@@ -9862,14 +9862,14 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
     }
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.update(), this.startResizeObserver(), this.updatePadding(), this.redrawWindowAndInnerContainer(), this.drawNewlyVisibleQubuitCircles(), this.dispatchEvent(new CustomEvent("circle-notation-init", { bubbles: true }));
+    this.attachShadow({ mode: "open" }), this.update(), this.startLayoutOrientationChangeObserver(), this.updatePadding(), this.resizeWindow(), this.resizeInnerContainer(), this.drawNewlyVisibleQubuitCircles(), this.dispatchEvent(new CustomEvent("circle-notation-init", { bubbles: true }));
   }
-  startResizeObserver() {
+  startLayoutOrientationChangeObserver() {
     this.detectLayoutOrientation(), new ResizeObserver(this.detectLayoutOrientation.bind(this)).observe(document.body);
   }
   detectLayoutOrientation() {
     let e = false;
-    Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 768 ? (this.vertical || (e = true), this.vertical = true) : (this.vertical && (e = true), this.vertical = false), e && (this.updateQubitCircleSize(this.qubitCount), this.updatePadding(), this.updateDimension(this.qubitCount), this.redrawWindowAndInnerContainer(), this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent());
+    Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 768 ? (this.vertical || (e = true), this.vertical = true) : (this.vertical && (e = true), this.vertical = false), e && (this.updateQubitCircleSize(this.qubitCount), this.updatePadding(), this.updateDimension(this.qubitCount), this.resizeWindow(), this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent());
   }
   updatePadding() {
     this.style.removeProperty("padding");
@@ -10144,8 +10144,11 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
       this.lastParentElementClientWidth = null;
     }, 10)), this.lastParentElementClientWidth;
   }
-  redrawWindowAndInnerContainer() {
-    this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`, this.innerContainer.style.height = `${this.innerHeight}px`, this.innerContainer.style.width = `${this.innerWidth}px`);
+  resizeWindow() {
+    this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`);
+  }
+  resizeInnerContainer() {
+    this.innerContainer !== void 0 && (this.innerContainer.style.height = `${this.innerHeight}px`, this.innerContainer.style.width = `${this.innerWidth}px`);
   }
   get qubitCircleSizePx() {
     switch (this.qubitCount) {
@@ -10257,16 +10260,19 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
     return e > this.rows - 1 ? this.rows - 1 : e;
   }
   get visibleColStartIndex() {
-    return this.windowScrollLeft < this.paddingX ? 0 : Math.floor((this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx);
+    let e = this.windowScrollLeft;
+    return e < this.paddingX ? 0 : Math.floor((e - this.paddingX) / this.qubitCircleSizePx);
   }
   get visibleColEndIndex() {
-    return this.windowScrollLeft < this.paddingX ? Math.min(this.cols - 1, Math.floor((this.windowWidth - (this.paddingX - this.windowScrollLeft)) / this.qubitCircleSizePx)) : Math.min(this.cols - 1, Math.floor((this.windowWidth + (this.windowScrollLeft - this.paddingX)) / this.qubitCircleSizePx));
+    return Math.min(this.cols - 1, Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx));
   }
   get visibleRowStartIndex() {
-    return this.windowScrollTop < this.paddingY ? 0 : Math.floor((this.windowScrollTop - this.paddingY) / this.qubitCircleSizePx);
+    let e = this.windowScrollTop;
+    return e < this.paddingY ? 0 : Math.floor((e - this.paddingY) / this.qubitCircleSizePx);
   }
   get visibleRowEndIndex() {
-    return this.windowScrollTop < this.paddingY ? Math.min(this.rows - 1, Math.floor((this.windowHeight - (this.paddingY - this.windowScrollTop)) / this.qubitCircleSizePx)) : Math.min(this.rows - 1, Math.floor((this.windowHeight + (this.windowScrollTop - this.paddingY)) / this.qubitCircleSizePx));
+    let e = this.windowScrollTop;
+    return Math.min(this.rows - 1, Math.floor((this.windowHeight + e - this.paddingY) / this.qubitCircleSizePx));
   }
   get windowScrollTop() {
     return this.lastWindowScrollTop === null && (this.lastWindowScrollTop = this.window.scrollTop, window.setTimeout(() => {

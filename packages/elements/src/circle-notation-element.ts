@@ -39,7 +39,8 @@ export class CircleNotationElement extends HTMLElement {
       const qubitCount = parseInt(newValue)
       this.updateQubitCircleSize(qubitCount)
       this.updateDimension(qubitCount)
-      this.redrawWindowAndInnerContainer()
+      this.resizeWindow()
+      this.resizeInnerContainer()
       this.clearInnerContainer()
       this.drawQubitCircles()
       this.dispatchVisibilityChangedEvent()
@@ -289,18 +290,19 @@ export class CircleNotationElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.update()
 
-    this.startResizeObserver()
+    this.startLayoutOrientationChangeObserver()
     this.updatePadding()
-    this.redrawWindowAndInnerContainer()
+    this.resizeWindow()
+    this.resizeInnerContainer()
     this.drawNewlyVisibleQubuitCircles()
 
     this.dispatchEvent(new CustomEvent('circle-notation-init', {bubbles: true}))
   }
 
-  private startResizeObserver(): void {
+  private startLayoutOrientationChangeObserver(): void {
     this.detectLayoutOrientation()
-    const ro = new ResizeObserver(this.detectLayoutOrientation.bind(this))
-    ro.observe(document.body)
+    const resizeObserver = new ResizeObserver(this.detectLayoutOrientation.bind(this))
+    resizeObserver.observe(document.body)
   }
 
   private detectLayoutOrientation(): void {
@@ -319,7 +321,7 @@ export class CircleNotationElement extends HTMLElement {
       this.updateQubitCircleSize(this.qubitCount)
       this.updatePadding()
       this.updateDimension(this.qubitCount)
-      this.redrawWindowAndInnerContainer()
+      this.resizeWindow()
       this.clearInnerContainer()
       this.drawQubitCircles()
       this.dispatchVisibilityChangedEvent()
@@ -336,9 +338,6 @@ export class CircleNotationElement extends HTMLElement {
     this.style.paddingRight = '0px'
     this.style.paddingBottom = '0px'
     this.style.paddingLeft = '0px'
-
-    // console.log(`paddingX = ${this.paddingX}`)
-    // console.log(`paddingY = ${this.paddingY}`)
   }
 
   update(): void {
@@ -768,21 +767,18 @@ export class CircleNotationElement extends HTMLElement {
     return this.lastParentElementClientWidth
   }
 
-  // TODO: redrawWindow → maybeResizeWindow
-  // TODO: redrawInnerContainer → maybeResizeInnerContainer
-  // TODO: コメントを消す
-  private redrawWindowAndInnerContainer(): void {
+  private resizeWindow(): void {
     if (this.window === undefined) return
 
     this.window.style.height = `${this.windowHeight}px`
     this.window.style.width = `${this.windowWidth}px`
+  }
+
+  private resizeInnerContainer(): void {
+    if (this.innerContainer === undefined) return
+
     this.innerContainer.style.height = `${this.innerHeight}px`
     this.innerContainer.style.width = `${this.innerWidth}px`
-
-    // console.log(`window.height = ${this.windowHeight}`)
-    // console.log(`window.width = ${this.windowWidth}`)
-    // console.log(`innerContainer.height = ${this.innerHeight}`)
-    // console.log(`innerContainer.width = ${this.innerWidth}`)
   }
 
   /* qubit circle */
@@ -1009,6 +1005,8 @@ export class CircleNotationElement extends HTMLElement {
     return qubitCircle
   }
 
+  /* visible row and column indices */
+
   private get overscanColStartIndex(): number {
     const index = this.visibleColStartIndex - this.overscan
 
@@ -1050,47 +1048,39 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get visibleColStartIndex(): number {
-    if (this.windowScrollLeft < this.paddingX) {
+    const windowScrollLeft = this.windowScrollLeft
+
+    if (windowScrollLeft < this.paddingX) {
       return 0
     } else {
-      return Math.floor((this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
+      return Math.floor((windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
     }
   }
 
   private get visibleColEndIndex(): number {
-    if (this.windowScrollLeft < this.paddingX) {
-      return Math.min(
-        this.cols - 1,
-        Math.floor((this.windowWidth - (this.paddingX - this.windowScrollLeft)) / this.qubitCircleSizePx)
-      )
-    } else {
-      return Math.min(
-        this.cols - 1,
-        Math.floor((this.windowWidth + (this.windowScrollLeft - this.paddingX)) / this.qubitCircleSizePx)
-      )
-    }
+    return Math.min(
+      this.cols - 1,
+      Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
+    )
   }
 
   private get visibleRowStartIndex(): number {
-    if (this.windowScrollTop < this.paddingY) {
+    const windowScrollTop = this.windowScrollTop
+
+    if (windowScrollTop < this.paddingY) {
       return 0
     } else {
-      return Math.floor((this.windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
+      return Math.floor((windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
     }
   }
 
   private get visibleRowEndIndex(): number {
-    if (this.windowScrollTop < this.paddingY) {
-      return Math.min(
-        this.rows - 1,
-        Math.floor((this.windowHeight - (this.paddingY - this.windowScrollTop)) / this.qubitCircleSizePx)
-      )
-    } else {
-      return Math.min(
-        this.rows - 1,
-        Math.floor((this.windowHeight + (this.windowScrollTop - this.paddingY)) / this.qubitCircleSizePx)
-      )
-    }
+    const windowScrollTop = this.windowScrollTop
+
+    return Math.min(
+      this.rows - 1,
+      Math.floor((this.windowHeight + windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
+    )
   }
 
   private get windowScrollTop(): number {
