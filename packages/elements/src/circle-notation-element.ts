@@ -3,6 +3,7 @@ import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
 import {debounce} from '@github/mini-throttle/decorators'
+import fastdom from 'fastdom'
 import {forceSigned} from './util'
 
 @controller
@@ -265,16 +266,12 @@ export class CircleNotationElement extends HTMLElement {
       const amplitude = amplitudes[ket]
       if (amplitude === undefined) continue
 
-      each.setAttribute('data-amplitude-real', amplitude.real.toString())
-      each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
-
-      // set magnitude
+      // magnitude
       const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
       const magnitudeEl = each.children.item(0) as HTMLElement
       Util.notNull(magnitudeEl)
-      magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
 
-      // set phase
+      // phase
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
       const phaseEl = each.children.item(1) as HTMLElement
       Util.notNull(phaseEl)
@@ -282,7 +279,13 @@ export class CircleNotationElement extends HTMLElement {
       let cssPhaseDeg = Math.trunc(phaseDeg)
       if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
 
-      phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
+      fastdom.mutate(() => {
+        each.setAttribute('data-amplitude-real', amplitude.real.toString())
+        each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
+
+        magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
+        phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
+      })
     }
   }
 
@@ -481,16 +484,6 @@ export class CircleNotationElement extends HTMLElement {
             border-bottom-left-radius: 0.25rem; /* 4px */
 
             content: '';
-          }
-
-          :host([data-qubit-circle-size='xl']) .qubit-circle__phase::after,
-          :host([data-qubit-circle-size='lg']) .qubit-circle__phase::after,
-          :host([data-qubit-circle-size='base']) .qubit-circle__phase::after {
-            width: 0.125rem; /* 2px */
-          }
-          :host([data-qubit-circle-size='sm']) .qubit-circle__phase::after,
-          :host([data-qubit-circle-size='xs']) .qubit-circle__phase::after {
-            width: 1px;
           }
         </style>
 
@@ -857,70 +850,87 @@ export class CircleNotationElement extends HTMLElement {
   private drawQubitCircles(): void {
     if (this.window === undefined) return
 
-    this.lastColStartIndex = this.visibleColStartIndex
-    this.lastColEndIndex = this.visibleColEndIndex
-    this.lastRowStartIndex = this.visibleRowStartIndex
-    this.lastRowEndIndex = this.visibleRowEndIndex
+    const positions: Array<{col: number; row: number}> = []
 
-    const positions = []
-    for (let row = this.lastRowStartIndex; row <= this.lastRowEndIndex; row++) {
-      for (let col = this.lastColStartIndex; col <= this.lastColEndIndex; col++) {
-        positions.push({col, row})
+    fastdom.measure(() => {
+      this.lastColStartIndex = this.visibleColStartIndex
+      this.lastColEndIndex = this.visibleColEndIndex
+      this.lastRowStartIndex = this.visibleRowStartIndex
+      this.lastRowEndIndex = this.visibleRowEndIndex
+
+      for (let row = this.lastRowStartIndex; row <= this.lastRowEndIndex; row++) {
+        for (let col = this.lastColStartIndex; col <= this.lastColEndIndex; col++) {
+          positions.push({col, row})
+        }
       }
-    }
+    })
 
-    const fragment = document.createDocumentFragment()
-    for (const each of this.allQubitCircleElements(positions)) {
-      fragment.appendChild(each)
-    }
+    fastdom.mutate(() => {
+      const fragment = document.createDocumentFragment()
+      for (const each of this.allQubitCircleElements(positions)) {
+        fragment.appendChild(each)
+      }
 
-    this.innerContainer.appendChild(fragment)
+      this.innerContainer.appendChild(fragment)
+    })
   }
 
   @debounce(10)
   drawNewlyVisibleQubuitCircles(): void {
     if (this.window === undefined) return
 
-    const colStartIndex = this.overscanColStartIndex
-    const colEndIndex = this.overscanColEndIndex
-    const rowStartIndex = this.overscanRowStartIndex
-    const rowEndIndex = this.overscanRowEndIndex
+    let colStartIndex
+    let colEndIndex
+    let rowStartIndex
+    let rowEndIndex
+    const positions: Array<{col: number; row: number}> = []
 
-    if (
-      this.lastColStartIndex === colStartIndex &&
-      this.lastColEndIndex === colEndIndex &&
-      this.lastRowStartIndex === rowStartIndex &&
-      this.lastRowEndIndex === rowEndIndex
-    ) {
-      return
-    }
+    fastdom.measure(() => {
+      colStartIndex = this.overscanColStartIndex
+      colEndIndex = this.overscanColEndIndex
+      rowStartIndex = this.overscanRowStartIndex
+      rowEndIndex = this.overscanRowEndIndex
 
-    const positions = []
-    for (let row = rowStartIndex; row <= rowEndIndex; row++) {
-      for (let col = colStartIndex; col <= colEndIndex; col++) {
-        if (
-          col < this.lastColStartIndex ||
-          this.lastColEndIndex < col ||
-          row < this.lastRowStartIndex ||
-          this.lastRowEndIndex < row
-        ) {
-          positions.push({col, row})
+      if (
+        this.lastColStartIndex === colStartIndex &&
+        this.lastColEndIndex === colEndIndex &&
+        this.lastRowStartIndex === rowStartIndex &&
+        this.lastRowEndIndex === rowEndIndex
+      ) {
+        return
+      }
+
+      for (let row = rowStartIndex; row <= rowEndIndex; row++) {
+        for (let col = colStartIndex; col <= colEndIndex; col++) {
+          if (
+            col < this.lastColStartIndex ||
+            this.lastColEndIndex < col ||
+            row < this.lastRowStartIndex ||
+            this.lastRowEndIndex < row
+          ) {
+            positions.push({col, row})
+          }
         }
       }
-    }
 
-    this.lastColStartIndex = colStartIndex
-    this.lastColEndIndex = colEndIndex
-    this.lastRowStartIndex = rowStartIndex
-    this.lastRowEndIndex = rowEndIndex
+      this.lastColStartIndex = colStartIndex
+      this.lastColEndIndex = colEndIndex
+      this.lastRowStartIndex = rowStartIndex
+      this.lastRowEndIndex = rowEndIndex
+    })
 
-    const fragment = document.createDocumentFragment()
-    for (const each of this.allQubitCircleElements(positions)) {
-      fragment.appendChild(each)
-    }
+    fastdom.mutate(() => {
+      const fragment = document.createDocumentFragment()
+      for (const each of this.allQubitCircleElements(positions)) {
+        fragment.appendChild(each)
+      }
 
-    this.innerContainer.appendChild(fragment)
-    this.dispatchVisibilityChangedEvent()
+      this.innerContainer.appendChild(fragment)
+
+      if (positions.length !== 0) {
+        this.dispatchVisibilityChangedEvent()
+      }
+    })
   }
 
   @debounce(100)
