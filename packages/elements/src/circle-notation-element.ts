@@ -1,91 +1,958 @@
-import {Complex, Util} from '@qni/common'
-import {TemplateResult, html, render} from '@github/jtml'
-import {attr, controller, targets} from '@github/catalyst'
-import tippy, {Instance, ReferenceElement, createSingleton, roundArrow} from 'tippy.js'
+import {Complex, DetailedError, Util} from '@qni/common'
+import {attr, controller, target, targets} from '@github/catalyst'
+import {html, render} from '@github/jtml'
+import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import {debounce} from '@github/mini-throttle/decorators'
+import fastdom from 'fastdom'
+import {forceSigned} from './util'
 
+@controller
 export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
-  @attr size = ''
-  @attr magnitudes = ''
-  @attr phases = ''
-  @attr multiQubits = false
-  @attr showKets = false
+  @attr qubitCircleSize = 'xl'
+  @attr cols = 0
+  @attr rows = 0
+  @attr paddingX = 0
+  @attr paddingY = 0
+  @attr lastColStartIndex = -1
+  @attr lastColEndIndex = -1
+  @attr lastRowStartIndex = -1
+  @attr lastRowEndIndex = -1
+  @attr overscan = 0
+  @attr vertical = true
+  @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
 
+  @target window!: HTMLElement
+  @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
-  @targets qubitCircleGroups!: HTMLElement[]
-  @targets visibleQubitCircleGroups!: HTMLElement[]
 
-  setAmplitudes(amplitudes: {[ket: number]: number | Complex}): void {
-    const qubitCircles = this.qubitCircles
-
-    for (const [i, each] of Object.entries(amplitudes)) {
-      const qubitCircle = qubitCircles[parseInt(i)]
-      Util.notNull(qubitCircle)
-
-      const amplitude = Complex.from(each)
-
-      qubitCircle.setAttribute('data-amplitude-real', amplitude.real.toString())
-      qubitCircle.setAttribute('data-amplitude-imag', amplitude.imag.toString())
-
-      const magnitude = amplitude.abs()
-      this.setRoundedMagnitude(qubitCircle, magnitude)
-
-      const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      this.setRoundedPhase(qubitCircle, phaseDeg)
-    }
-  }
-
-  connectedCallback(): void {
-    if (this.shadowRoot !== null) return
-    this.attachShadow({mode: 'open'})
-    this.update()
-    this.initQubitCirclePopup(this.qubitCircles)
-
-    if (this.hasAttribute('data-multi-qubits')) {
-      this.startQubitCircleVisibilityObserver()
-      this.dispatchLoadEvent()
-    }
-  }
-
-  private dispatchLoadEvent(): void {
-    this.dispatchEvent(
-      new Event('circle-notation.load', {
-        bubbles: true
-      })
-    )
-  }
+  debounceMsec = 10
+  lastParentElementClientWidth: number | null = null
+  lastWindowScrollTop: number | null = null
+  lastWindowScrollLeft: number | null = null
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
-    if (this.shadowRoot === null) return
     if (oldValue === newValue) return
 
     if (name === 'data-qubit-count') {
+      Util.notNull(newValue)
+
+      const qubitCount = parseInt(newValue)
+      this.updateQubitCircleSize(qubitCount)
+      this.updateDimension(qubitCount)
+      this.resizeWindow()
+      this.resizeInnerContainer()
+      this.clearInnerContainer()
+      this.drawQubitCircles()
       this.dispatchVisibilityChangedEvent()
     }
   }
 
-  private startQubitCircleVisibilityObserver(): void {
-    const options = {
-      root: this,
-      threshold: [0, 0.2]
+  private updateQubitCircleSize(qubitCount: number): void {
+    switch (qubitCount) {
+      case 1: {
+        this.qubitCircleSize = 'xl'
+        break
+      }
+      case 2: {
+        this.qubitCircleSize = 'xl'
+        break
+      }
+      case 3: {
+        if (this.vertical) {
+          this.qubitCircleSize = 'lg'
+        } else {
+          this.qubitCircleSize = 'xl'
+        }
+        break
+      }
+      case 4: {
+        if (this.vertical) {
+          this.qubitCircleSize = 'base'
+        } else {
+          this.qubitCircleSize = 'lg'
+        }
+        break
+      }
+      case 5: {
+        if (this.vertical) {
+          this.qubitCircleSize = 'sm'
+        } else {
+          this.qubitCircleSize = 'base'
+        }
+        break
+      }
+      case 6: {
+        if (this.vertical) {
+          this.qubitCircleSize = 'xs'
+        } else {
+          this.qubitCircleSize = 'base'
+        }
+        break
+      }
+      case 7: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 8: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 9: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 10: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 11: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 12: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 13: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 14: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 15: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      case 16: {
+        this.qubitCircleSize = 'xs'
+        break
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', qubitCount)
     }
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      for (const each of entries) {
-        const group = each.target
-        if (each.intersectionRatio >= 0.2) {
-          group.setAttribute(
-            'data-targets',
-            'circle-notation.qubitCircleGroups circle-notation.visibleQubitCircleGroups'
-          )
-          this.dispatchVisibilityChangedEvent()
-        } else if (each.intersectionRatio === 0) {
-          group.setAttribute('data-targets', 'circle-notation.qubitCircleGroups')
+
+    // console.log(`size = ${this.size}`)
+  }
+
+  private updateDimension(qubitCount: number): void {
+    switch (qubitCount) {
+      case 1: {
+        this.rows = 1
+        this.cols = 2
+        break
+      }
+      case 2: {
+        this.rows = 1
+        this.cols = 4
+        break
+      }
+      case 3: {
+        if (this.vertical) {
+          this.rows = 2
+          this.cols = 4
+        } else {
+          this.rows = 1
+          this.cols = 8
+        }
+        break
+      }
+      case 4: {
+        this.rows = 2
+        this.cols = 8
+        break
+      }
+      case 5: {
+        if (this.vertical) {
+          this.rows = 4
+          this.cols = 8
+        } else {
+          this.rows = 2
+          this.cols = 16
+        }
+        break
+      }
+      case 6: {
+        this.rows = 4
+        this.cols = 16
+        break
+      }
+      case 7: {
+        if (this.vertical) {
+          this.rows = 8
+          this.cols = 16
+        } else {
+          this.rows = 4
+          this.cols = 32
+        }
+        break
+      }
+      case 8: {
+        if (this.vertical) {
+          this.rows = 16
+          this.cols = 16
+        } else {
+          this.rows = 8
+          this.cols = 32
+        }
+        break
+      }
+      case 9: {
+        this.rows = 16
+        this.cols = 32
+        break
+      }
+      case 10: {
+        this.rows = 32
+        this.cols = 32
+        break
+      }
+      case 11: {
+        this.rows = 32
+        this.cols = 64
+        break
+      }
+      case 12: {
+        this.rows = 64
+        this.cols = 64
+        break
+      }
+      case 13: {
+        this.rows = 64
+        this.cols = 128
+        break
+      }
+      case 14: {
+        this.rows = 128
+        this.cols = 128
+        break
+      }
+      case 15: {
+        this.rows = 128
+        this.cols = 256
+        break
+      }
+      case 16: {
+        this.rows = 256
+        this.cols = 256
+        break
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', qubitCount)
+    }
+
+    // console.log(`cols = ${this.cols}`)
+    // console.log(`rows = ${this.rows}`)
+  }
+
+  get visibleQubitCircleKets(): number[] {
+    const kets = this.qubitCircles.map(each => {
+      const ketStr = each.getAttribute('data-ket')
+      Util.notNull(ketStr)
+      return parseInt(ketStr)
+    })
+
+    return kets
+  }
+
+  setAmplitudes(amplitudes: {[ket: number]: Complex}) {
+    for (const each of this.qubitCircles) {
+      const ketStr = each.getAttribute('data-ket')
+      Util.notNull(ketStr)
+
+      const ket = parseInt(ketStr)
+      const amplitude = amplitudes[ket]
+      if (amplitude === undefined) continue
+
+      // magnitude
+      const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
+      const magnitudeEl = each.children.item(0) as HTMLElement
+      Util.notNull(magnitudeEl)
+
+      // phase
+      const phaseDeg = (amplitude.phase() / Math.PI) * 180
+      const phaseEl = each.children.item(1) as HTMLElement
+      Util.notNull(phaseEl)
+
+      let cssPhaseDeg = Math.trunc(phaseDeg)
+      if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
+
+      fastdom.mutate(() => {
+        each.setAttribute('data-amplitude-real', amplitude.real.toString())
+        each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
+
+        magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
+        phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
+      })
+    }
+  }
+
+  connectedCallback(): void {
+    this.attachShadow({mode: 'open'})
+    this.update()
+
+    this.startLayoutOrientationChangeObserver()
+    this.updatePadding()
+    this.resizeWindow()
+    this.resizeInnerContainer()
+    this.drawNewlyVisibleQubuitCircles()
+
+    this.dispatchEvent(new CustomEvent('circle-notation-init', {bubbles: true}))
+  }
+
+  private startLayoutOrientationChangeObserver(): void {
+    this.detectLayoutOrientation()
+    const resizeObserver = new ResizeObserver(this.detectLayoutOrientation.bind(this))
+    resizeObserver.observe(document.body)
+  }
+
+  private detectLayoutOrientation(): void {
+    let changed = false
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+    if (vw < 768) {
+      if (!this.vertical) changed = true
+      this.vertical = true
+    } else {
+      if (this.vertical) changed = true
+      this.vertical = false
+    }
+
+    if (changed) {
+      this.updateQubitCircleSize(this.qubitCount)
+      this.updatePadding()
+      this.updateDimension(this.qubitCount)
+      this.resizeWindow()
+      this.clearInnerContainer()
+      this.drawQubitCircles()
+      this.dispatchVisibilityChangedEvent()
+    }
+  }
+
+  private updatePadding(): void {
+    this.style.removeProperty('padding')
+
+    const style = window.getComputedStyle(this)
+    this.paddingX = parseInt(style.paddingLeft, 10)
+    this.paddingY = parseInt(style.paddingTop, 10)
+    this.style.paddingTop = '0px'
+    this.style.paddingRight = '0px'
+    this.style.paddingBottom = '0px'
+    this.style.paddingLeft = '0px'
+  }
+
+  update(): void {
+    render(
+      html`<style>
+          :root {
+            --magnitude: 0;
+            --phase: 0deg;
+          }
+
+          .circle-notation__window {
+            overflow: auto;
+          }
+
+          .circle-notation__inner-container {
+            position: relative;
+          }
+
+          .qubit-circle {
+            position: absolute;
+          }
+
+          :host([data-qubit-circle-size='xl']) .qubit-circle {
+            height: 64px;
+            width: 64px;
+          }
+
+          :host([data-qubit-circle-size='lg']) .qubit-circle {
+            height: 48px;
+            width: 48px;
+          }
+
+          :host([data-qubit-circle-size='lg']) .qubit-circle {
+            height: 48px;
+            width: 48px;
+          }
+
+          :host([data-qubit-circle-size='base']) .qubit-circle {
+            height: 32px;
+            width: 32px;
+          }
+
+          :host([data-qubit-circle-size='sm']) .qubit-circle {
+            height: 23px;
+            width: 23px;
+          }
+
+          :host([data-qubit-circle-size='xs']) .qubit-circle {
+            height: 17px;
+            width: 17px;
+          }
+
+          /* magnitude */
+
+          .qubit-circle__magnitude {
+            position: absolute;
+            border-style: solid;
+            border-color: rgb(226 232 240); /* slate-200 */
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-radius: 9999px;
+          }
+
+          .qubit-circle:hover > .qubit-circle__magnitude {
+            border-color: rgb(220 38 38); /* red-600 */
+          }
+
+          :host([data-qubit-circle-size='xl']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='lg']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='base']) .qubit-circle__magnitude {
+            border-width: 2px;
+          }
+          :host([data-qubit-circle-size='sm']) .qubit-circle__magnitude,
+          :host([data-qubit-circle-size='xs']) .qubit-circle__magnitude {
+            border-width: 1px;
+          }
+
+          .qubit-circle__magnitude::after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            border-radius: 9999px;
+            background-color: rgb(14 165 233); /* sky-500 */
+            transform-origin: center;
+            transform: scaleX(var(--magnitude)) scaleY(var(--magnitude));
+
+            content: '';
+          }
+
+          .qubit-circle:hover > .qubit-circle__magnitude::after {
+            background-color: rgb(249 115 22); /* orange-500 */
+          }
+
+          /* phase */
+
+          .qubit-circle__phase {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-style: solid;
+            border-color: rgb(100 116 139); /* slate-500 */
+            border-radius: 9999px;
+            transform-origin: center;
+            transform: rotate(var(--phase));
+          }
+
+          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
+            transform: scaleX(0) scaleY(0);
+          }
+
+          .qubit-circle:hover > .qubit-circle__phase {
+            border-color: rgb(220 38 38); /* red-600 */
+          }
+
+          :host([data-qubit-circle-size='xl']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='lg']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='base']) .qubit-circle__phase {
+            border-width: 2px;
+          }
+          :host([data-qubit-circle-size='sm']) .qubit-circle__phase,
+          :host([data-qubit-circle-size='xs']) .qubit-circle__phase {
+            border-width: 1px;
+          }
+
+          .qubit-circle__phase::after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            left: 0px;
+            background-color: rgb(15 23 42); /* slate-900 */
+            height: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            border-bottom-right-radius: 0.25rem; /* 4px */
+            border-bottom-left-radius: 0.25rem; /* 4px */
+
+            content: '';
+          }
+        </style>
+
+        <div
+          class="circle-notation__window"
+          data-target="circle-notation.window"
+          data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
+          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
+        >
+          <div
+            class="circle-notation__inner-container"
+            data-target="circle-notation.innerContainer"
+            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+          ></div>
+        </div>`,
+      this.shadowRoot!
+    )
+  }
+
+  /* inner container */
+
+  private get innerHeight(): number {
+    return this.rows * this.qubitCircleSizePx + this.paddingY * 2
+  }
+
+  private get innerWidth(): number {
+    return this.cols * this.qubitCircleSizePx + this.paddingX * 2
+  }
+
+  private clearInnerContainer(): void {
+    if (this.innerContainer === undefined) return
+
+    this.innerContainer.textContent = ''
+  }
+
+  /* window */
+
+  private get qubitCirclesAreaHeight(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return this.qubitCircleSizePx
+      }
+      case 2: {
+        return this.qubitCircleSizePx
+      }
+      case 3: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 2
+        } else {
+          return this.qubitCircleSizePx
         }
       }
+      case 4: {
+        return this.qubitCircleSizePx * 2
+      }
+      case 5: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 4
+        } else {
+          return this.qubitCircleSizePx * 2
+        }
+      }
+      case 6: {
+        return this.qubitCircleSizePx * 4
+      }
+      case 7: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 4
+        }
+      }
+      case 8: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 9: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 10: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 11: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 12: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 13: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 14: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 15: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 16: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 5
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
-    const observer = new IntersectionObserver(callback, options)
-    for (const each of this.qubitCircleGroups) {
-      observer.observe(each)
+  }
+
+  private get qubitCirclesAreaWidth(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return this.qubitCircleSizePx * 2
+      }
+      case 2: {
+        return this.qubitCircleSizePx * 4
+      }
+      case 3: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 4
+        } else {
+          return this.qubitCircleSizePx * 8
+        }
+      }
+      case 4: {
+        return this.qubitCircleSizePx * 8
+      }
+      case 5: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 8
+        } else {
+          return this.qubitCircleSizePx * 16
+        }
+      }
+      case 6: {
+        return this.qubitCircleSizePx * 16
+      }
+      case 7: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 8: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 9: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 10: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 11: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 12: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 13: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 14: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 15: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      case 16: {
+        if (this.vertical) {
+          return this.qubitCircleSizePx * 16
+        } else {
+          return this.qubitCircleSizePx * 32
+        }
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
+
+  private get windowHeight(): number {
+    return this.qubitCirclesAreaHeight + this.paddingY * 2
+  }
+
+  private get windowWidth(): number {
+    Util.notNull(this.parentElement)
+    const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
+
+    if (this.vertical) {
+      const parentElementClientWidth = this.parentElementClientWidth
+      if (this.cols > 16 && qubitCirclesAreaPlusPaddingWidth < parentElementClientWidth) {
+        return parentElementClientWidth
+      } else {
+        return qubitCirclesAreaPlusPaddingWidth
+      }
+    } else {
+      return qubitCirclesAreaPlusPaddingWidth
+    }
+  }
+
+  private get parentElementClientWidth(): number {
+    Util.notNull(this.parentElement)
+
+    if (this.lastParentElementClientWidth === null) {
+      this.lastParentElementClientWidth = this.parentElement.clientWidth
+
+      window.setTimeout(() => {
+        this.lastParentElementClientWidth = null
+      }, 10)
+    }
+    return this.lastParentElementClientWidth
+  }
+
+  private resizeWindow(): void {
+    if (this.window === undefined) return
+
+    this.window.style.height = `${this.windowHeight}px`
+    this.window.style.width = `${this.windowWidth}px`
+  }
+
+  private resizeInnerContainer(): void {
+    if (this.innerContainer === undefined) return
+
+    this.innerContainer.style.height = `${this.innerHeight}px`
+    this.innerContainer.style.width = `${this.innerWidth}px`
+  }
+
+  /* qubit circle */
+
+  private get qubitCircleSizePx(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return 64
+      }
+      case 2: {
+        return 64
+      }
+      case 3: {
+        if (this.vertical) {
+          return 48
+        } else {
+          return 64
+        }
+      }
+      case 4: {
+        if (this.vertical) {
+          return 32
+        } else {
+          return 48
+        }
+      }
+      case 5: {
+        if (this.vertical) {
+          return 23
+        } else {
+          return 32
+        }
+      }
+      case 6: {
+        if (this.vertical) {
+          return 17
+        } else {
+          return 32
+        }
+      }
+      case 7: {
+        return 17
+      }
+      case 8: {
+        return 17
+      }
+      case 9: {
+        return 17
+      }
+      case 10: {
+        return 17
+      }
+      case 11: {
+        return 17
+      }
+      case 12: {
+        return 17
+      }
+      case 13: {
+        return 17
+      }
+      case 14: {
+        return 17
+      }
+      case 15: {
+        return 17
+      }
+      case 16: {
+        return 17
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
+  }
+
+  private drawQubitCircles(): void {
+    if (this.window === undefined) return
+
+    const positions: Array<{col: number; row: number}> = []
+
+    fastdom.measure(() => {
+      this.lastColStartIndex = this.visibleColStartIndex
+      this.lastColEndIndex = this.visibleColEndIndex
+      this.lastRowStartIndex = this.visibleRowStartIndex
+      this.lastRowEndIndex = this.visibleRowEndIndex
+
+      for (let row = this.lastRowStartIndex; row <= this.lastRowEndIndex; row++) {
+        for (let col = this.lastColStartIndex; col <= this.lastColEndIndex; col++) {
+          positions.push({col, row})
+        }
+      }
+    })
+
+    fastdom.mutate(() => {
+      const fragment = document.createDocumentFragment()
+      for (const each of this.allQubitCircleElements(positions)) {
+        fragment.appendChild(each)
+      }
+
+      this.innerContainer.appendChild(fragment)
+    })
+  }
+
+  @debounce(10)
+  drawNewlyVisibleQubuitCircles(): void {
+    if (this.window === undefined) return
+
+    let colStartIndex
+    let colEndIndex
+    let rowStartIndex
+    let rowEndIndex
+    const positions: Array<{col: number; row: number}> = []
+
+    fastdom.measure(() => {
+      colStartIndex = this.overscanColStartIndex
+      colEndIndex = this.overscanColEndIndex
+      rowStartIndex = this.overscanRowStartIndex
+      rowEndIndex = this.overscanRowEndIndex
+
+      if (
+        this.lastColStartIndex === colStartIndex &&
+        this.lastColEndIndex === colEndIndex &&
+        this.lastRowStartIndex === rowStartIndex &&
+        this.lastRowEndIndex === rowEndIndex
+      ) {
+        return
+      }
+
+      for (let row = rowStartIndex; row <= rowEndIndex; row++) {
+        for (let col = colStartIndex; col <= colEndIndex; col++) {
+          if (
+            col < this.lastColStartIndex ||
+            this.lastColEndIndex < col ||
+            row < this.lastRowStartIndex ||
+            this.lastRowEndIndex < row
+          ) {
+            positions.push({col, row})
+          }
+        }
+      }
+
+      this.lastColStartIndex = colStartIndex
+      this.lastColEndIndex = colEndIndex
+      this.lastRowStartIndex = rowStartIndex
+      this.lastRowEndIndex = rowEndIndex
+    })
+
+    fastdom.mutate(() => {
+      const fragment = document.createDocumentFragment()
+      for (const each of this.allQubitCircleElements(positions)) {
+        fragment.appendChild(each)
+      }
+
+      this.innerContainer.appendChild(fragment)
+
+      if (positions.length !== 0) {
+        this.dispatchVisibilityChangedEvent()
+      }
+    })
+  }
+
+  @debounce(100)
+  removeInvisibleQubitCircles(): void {
+    const colStartIndex = this.overscanColStartIndex
+    const colEndIndex = this.overscanColEndIndex
+    const rowStartIndex = this.overscanRowStartIndex
+    const rowEndIndex = this.overscanRowEndIndex
+
+    for (const each of this.qubitCircles) {
+      const dataCol = each.getAttribute('data-col')
+      const dataRow = each.getAttribute('data-row')
+      Util.notNull(dataCol)
+      Util.notNull(dataRow)
+      const col = parseInt(dataCol)
+      const row = parseInt(dataRow)
+
+      if (col < colStartIndex || colEndIndex < col || row < rowStartIndex || rowEndIndex < row) {
+        const popup = (each as ReferenceElement)._tippy as Instance
+        if (popup !== undefined) popup.destroy()
+        each.remove()
+      }
     }
   }
 
@@ -98,882 +965,197 @@ export class CircleNotationElement extends HTMLElement {
     )
   }
 
-  private get visibleQubitCircleKets(): number[] {
-    const maxKet = 2 ** this.qubitCount
-
-    return this.visibleQubitCircles.map(each => parseInt(each.getAttribute('data-ket')!)).filter(each => each < maxKet)
+  private allQubitCircleElements(positions: Array<{col: number; row: number}>): HTMLDivElement[] {
+    return positions.map(this.qubitCircleElement.bind(this))
   }
 
-  get visibleQubitCircles(): HTMLElement[] {
-    const groups = this.visibleQubitCircleGroups.map(
-      each => Array.from(each.querySelectorAll('.qubit-circle')) as HTMLElement[]
+  private qubitCircleElement(position: {row: number; col: number}): HTMLDivElement {
+    const ket = position.col + position.row * this.cols
+    const top = this.qubitCircleSizePx * position.row + this.paddingY
+    const left = this.qubitCircleSizePx * position.col + this.paddingX
+
+    // <div
+    //   class="qubit-circle"
+    //   data-ket="${ket}"
+    //   data-targets="circle-notation.qubitCircles"
+    //   data-action="mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"
+    //   data-amplitude-real="0"
+    //   data-amplitude-imag="0"
+    //   style="top: ${top}px; left: ${left}px"
+    // >
+    //   <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
+    //   <div class="qubit-circle__phase"></div>
+    // </div>
+
+    const qubitCircle = document.createElement('div')
+    qubitCircle.className = 'qubit-circle'
+    qubitCircle.setAttribute('data-col', position.col.toString())
+    qubitCircle.setAttribute('data-row', position.row.toString())
+    qubitCircle.setAttribute('data-ket', ket.toString())
+    qubitCircle.setAttribute('data-targets', 'circle-notation.qubitCircles')
+    qubitCircle.setAttribute('data-amplitude-real', '0')
+    qubitCircle.setAttribute('data-amplitude-imag', '0')
+    qubitCircle.setAttribute(
+      'data-action',
+      'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup'
     )
-    return ([] as HTMLElement[]).concat(...groups)
+    qubitCircle.style.setProperty('top', `${top}px`)
+    qubitCircle.style.setProperty('left', `${left}px`)
+
+    const magnitude = document.createElement('div')
+    magnitude.className = 'qubit-circle__magnitude'
+    magnitude.style.setProperty('--magnitude', '0')
+
+    const phase = document.createElement('div')
+    phase.className = 'qubit-circle__phase'
+
+    qubitCircle.appendChild(magnitude)
+    qubitCircle.appendChild(phase)
+
+    return qubitCircle
   }
 
-  update(): void {
-    render(
-      html`<style>
-          @media (min-width: 768px) {
-            :host([data-qubit-count='8']),
-            :host([data-qubit-count='9']),
-            :host([data-qubit-count='10']) {
-              height: 10rem !important;
-            }
-          }
-
-          .qubit-circle-group--size4 {
-            display: flex;
-            flex-direction: row;
-          }
-
-          .qubit-circle-group--size8 {
-            display: flex;
-            flex-direction: row;
-          }
-
-          :host([data-qubit-count='3']) .qubit-circle-group--size8 {
-            flex-direction: column;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='3']) .qubit-circle-group--size8 {
-              flex-direction: row;
-            }
-          }
-
-          .qubit-circle-group--size16 {
-            display: flex;
-            flex-direction: row;
-          }
-
-          @media (min-width: 768px) {
-            .qubit-circle-group--size16 {
-              flex-direction: row;
-            }
-          }
-
-          :host([data-qubit-count='4']) .qubit-circle-group--size16 {
-            flex-direction: column;
-          }
-
-          :host([data-qubit-count='4']) .qubit-circle-group--size16 .qubit-circle-group--size8:last-child {
-            margin-left: 0;
-            margin-top: 0;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle-group--size16 {
-            flex-direction: column;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle-group--size16 {
-              flex-direction: row;
-            }
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle-group--size16 .qubit-circle-group--size8:nth-child(even) {
-            margin-left: 0;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle-group--size16 .qubit-circle-group--size8:nth-child(even) {
-              margin-left: 0;
-            }
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='6']) .qubit-circle-group--size32 {
-              display: flex;
-              flex-direction: column;
-            }
-            :host([data-qubit-count='7']) .qubit-circle-group--size32,
-            :host([data-qubit-count='8']) .qubit-circle-group--size32,
-            :host([data-qubit-count='9']) .qubit-circle-group--size32,
-            :host([data-qubit-count='10']) .qubit-circle-group--size32 {
-              display: flex;
-              flex-direction: row;
-            }
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='6']) .qubit-circle-group--size64,
-            :host([data-qubit-count='7']) .qubit-circle-group--size64,
-            :host([data-qubit-count='8']) .qubit-circle-group--size64 {
-              display: flex;
-              flex-direction: column;
-            }
-
-            :host([data-qubit-count='9']) .qubit-circle-group--size64 {
-              display: flex;
-              flex-direction: column;
-            }
-
-            :host([data-qubit-count='10']) .qubit-circle-group--size64 {
-              display: flex;
-              flex-direction: column;
-            }
-          }
-
-          :host([data-qubit-count='1']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size8:nth-of-type(2),
-          :host([data-qubit-count='1']) .qubit-circle-group--size4:nth-of-type(2),
-          :host([data-qubit-count='1']) .qubit-circle:nth-of-type(n + 3) {
-            display: none;
-          }
-
-          :host([data-qubit-count='2']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size8:nth-of-type(2),
-          :host([data-qubit-count='2']) .qubit-circle-group--size4:nth-of-type(2),
-          :host([data-qubit-count='2']) .qubit-circle:nth-of-type(n + 5) {
-            display: none;
-          }
-
-          :host([data-qubit-count='3']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='3']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='3']) .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-qubit-count='3']) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-qubit-count='3']) .qubit-circle-group--size16:nth-of-type(2),
-          :host([data-qubit-count='3']) .qubit-circle-group--size8:nth-of-type(2) {
-            display: none;
-          }
-
-          :host([data-qubit-count='4']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='4']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='4']) .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-qubit-count='4']) .qubit-circle-group--size32:nth-of-type(2),
-          :host([data-qubit-count='4']) .qubit-circle-group--size16:nth-of-type(2) {
-            display: none;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='5']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='5']) .qubit-circle-group--size64:nth-of-type(n + 2),
-          :host([data-qubit-count='5']) .qubit-circle-group--size32:nth-of-type(2) {
-            display: none;
-          }
-
-          :host([data-qubit-count='6']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='6']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='6']) .qubit-circle-group--size64:nth-of-type(n + 2) {
-            display: none;
-          }
-
-          :host([data-qubit-count='7']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='7']) .qubit-circle-group--size128:nth-of-type(n + 2),
-          :host([data-qubit-count='7']) .qubit-circle-group--size64:nth-of-type(n + 3) {
-            display: none;
-          }
-
-          :host([data-qubit-count='8']) .qubit-circle-group--size256:nth-of-type(n + 2),
-          :host([data-qubit-count='8']) .qubit-circle-group--size128:nth-of-type(n + 3) {
-            display: none;
-          }
-
-          :host([data-qubit-count='9']) .qubit-circle-group--size256:nth-of-type(n + 3) {
-            display: none;
-          }
-
-          #body {
-            display: flex;
-            flex-direction: row;
-          }
-
-          :host([data-multi-qubits]) #body {
-            display: inline-block;
-            margin-top: auto;
-            margin-bottom: auto;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-multi-qubits]) #body {
-              display: inline-block;
-              padding-left: 1rem;
-              padding-right: 1rem;
-              padding-top: 1.25rem;
-              padding-bottom: 1.25rem;
-            }
-          }
-
-          .qubit-circle {
-            position: relative;
-            height: 32px;
-            width: 32px;
-          }
-
-          :host([data-size='xs']) .qubit-circle {
-            height: 17px !important;
-            width: 17px !important;
-          }
-
-          :host([data-size='sm']) .qubit-circle {
-            height: 25px !important;
-            width: 25px !important;
-          }
-
-          :host([data-size='base']) .qubit-circle {
-            height: 32px !important;
-            width: 32px !important;
-          }
-
-          :host([data-size='lg']) .qubit-circle {
-            height: 48px !important;
-            width: 48px !important;
-          }
-
-          :host([data-size='xl']) .qubit-circle {
-            height: 64px !important;
-            width: 64px !important;
-          }
-
-          :host([data-qubit-count='1']:not([data-multi-qubits])) .qubit-circle {
-            height: 32px;
-            width: 32px;
-          }
-
-          :host([data-qubit-count='1']) .qubit-circle,
-          :host([data-qubit-count='2']) .qubit-circle {
-            height: 64px;
-            width: 64px;
-          }
-
-          :host([data-qubit-count='3']) .qubit-circle {
-            height: 48px;
-            width: 48px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='3']) .qubit-circle {
-              height: 64px;
-              width: 64px;
-            }
-          }
-
-          :host([data-qubit-count='4']) .qubit-circle {
-            height: 32px;
-            width: 32px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='4']) .qubit-circle {
-              height: 48px;
-              width: 48px;
-            }
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle {
-            height: 23px;
-            width: 23px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle {
-              height: 32px;
-              width: 32px;
-            }
-          }
-
-          :host([data-qubit-count='6']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='6']) .qubit-circle {
-              height: 25px;
-              width: 25px;
-            }
-          }
-
-          :host([data-qubit-count='7']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='7']) .qubit-circle {
-              height: 17px;
-              width: 17px;
-            }
-          }
-
-          :host([data-qubit-count='8']) .qubit-circle,
-          :host([data-qubit-count='9']) .qubit-circle,
-          :host([data-qubit-count='10']) .qubit-circle {
-            height: 15px;
-            width: 15px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='8']) .qubit-circle,
-            :host([data-qubit-count='9']) .qubit-circle,
-            :host([data-qubit-count='10']) .qubit-circle {
-              height: 17px;
-              width: 17px;
-            }
-          }
-
-          :host([data-show-kets]) .qubit-circle::before {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            white-space: nowrap;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-              monospace;
-            font-size: 0.75rem;
-            color: var(--colors-wolf, #777777);
-            margin-bottom: -18px;
-            content: '|' attr(data-ket) '⟩';
-          }
-
-          .qubit-circle__magnitude {
-            border-width: 2px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-radius: 9999px;
-            border-color: #e5e5e5;
-            border-style: solid;
-          }
-
-          .qubit-circle:hover > .qubit-circle__magnitude {
-            border-color: var(--colors-cardinal, #ff4b4b);
-          }
-
-          :host([data-size='xs']) .qubit-circle__magnitude,
-          :host([data-size='sm']) .qubit-circle__magnitude {
-            border-width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__magnitude,
-          :host([data-size='lg']) .qubit-circle__magnitude,
-          :host([data-size='xl']) .qubit-circle__magnitude {
-            border-width: 2px;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__magnitude,
-          :host([data-qubit-count='6']) .qubit-circle__magnitude,
-          :host([data-qubit-count='7']) .qubit-circle__magnitude,
-          :host([data-qubit-count='8']) .qubit-circle__magnitude,
-          :host([data-qubit-count='9']) .qubit-circle__magnitude,
-          :host([data-qubit-count='10']) .qubit-circle__magnitude {
-            border-width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__magnitude {
-              border-width: 2px;
-            }
-          }
-
-          .qubit-circle__magnitude::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-            border-radius: 9999px;
-            content: '';
-            background-color: #1cb0f6;
-            transform: scaleX(0) scaleY(0);
-            transform-origin: center;
-          }
-
-          .qubit-circle:hover > .qubit-circle__magnitude::after {
-            background-color: var(--colors-fox, #ff9600);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.1'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.1) scaleY(0.1);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.2'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.2) scaleY(0.2);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.3'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.3) scaleY(0.3);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.4'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.4) scaleY(0.4);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.5'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.5) scaleY(0.5);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.6'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.6) scaleY(0.6);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.7'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.7) scaleY(0.7);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.8'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.8) scaleY(0.8);
-          }
-
-          .qubit-circle[data-rounded-magnitude='0.9'] > .qubit-circle__magnitude::after {
-            transform: scaleX(0.9) scaleY(0.9);
-          }
-
-          .qubit-circle[data-rounded-magnitude='1'] > .qubit-circle__magnitude::after {
-            transform: scaleX(1) scaleY(1);
-          }
-
-          .qubit-circle__phase {
-            border-width: 2px;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-radius: 9999px;
-            border-color: #777777;
-            border-style: solid;
-            transform: rotate(0deg);
-            transform-origin: center;
-          }
-
-          .qubit-circle:hover > .qubit-circle__phase {
-            border-color: var(--colors-cardinal, #ff4b4b);
-          }
-
-          :host([data-size='xs']) .qubit-circle__phase,
-          :host([data-size='sm']) .qubit-circle__phase {
-            border-width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__phase,
-          :host([data-size='lg']) .qubit-circle__phase,
-          :host([data-size='xl']) .qubit-circle__phase {
-            border-width: 2px;
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__phase,
-          :host([data-qubit-count='6']) .qubit-circle__phase,
-          :host([data-qubit-count='7']) .qubit-circle__phase,
-          :host([data-qubit-count='8']) .qubit-circle__phase,
-          :host([data-qubit-count='9']) .qubit-circle__phase,
-          :host([data-qubit-count='10']) .qubit-circle__phase {
-            border-width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__phase {
-              border-width: 2px;
-            }
-          }
-
-          .qubit-circle:not([data-rounded-magnitude]) > .qubit-circle__phase,
-          .qubit-circle[data-rounded-magnitude='0'] > .qubit-circle__phase {
-            transform: scaleX(0) scaleY(0) !important;
-          }
-
-          .qubit-circle[data-rounded-phase='10'] > .qubit-circle__phase {
-            transform: rotate(-10deg);
-          }
-
-          .qubit-circle[data-rounded-phase='20'] > .qubit-circle__phase {
-            transform: rotate(-20deg);
-          }
-
-          .qubit-circle[data-rounded-phase='30'] > .qubit-circle__phase {
-            transform: rotate(-30deg);
-          }
-
-          .qubit-circle[data-rounded-phase='40'] > .qubit-circle__phase {
-            transform: rotate(-40deg);
-          }
-
-          .qubit-circle[data-rounded-phase='50'] > .qubit-circle__phase {
-            transform: rotate(-50deg);
-          }
-
-          .qubit-circle[data-rounded-phase='60'] > .qubit-circle__phase {
-            transform: rotate(-60deg);
-          }
-
-          .qubit-circle[data-rounded-phase='70'] > .qubit-circle__phase {
-            transform: rotate(-70deg);
-          }
-
-          .qubit-circle[data-rounded-phase='80'] > .qubit-circle__phase {
-            transform: rotate(-80deg);
-          }
-
-          .qubit-circle[data-rounded-phase='90'] > .qubit-circle__phase {
-            transform: rotate(-90deg);
-          }
-
-          .qubit-circle[data-rounded-phase='100'] > .qubit-circle__phase {
-            transform: rotate(-100deg);
-          }
-
-          .qubit-circle[data-rounded-phase='110'] > .qubit-circle__phase {
-            transform: rotate(-110deg);
-          }
-
-          .qubit-circle[data-rounded-phase='120'] > .qubit-circle__phase {
-            transform: rotate(-120deg);
-          }
-
-          .qubit-circle[data-rounded-phase='130'] > .qubit-circle__phase {
-            transform: rotate(-130deg);
-          }
-
-          .qubit-circle[data-rounded-phase='140'] > .qubit-circle__phase {
-            transform: rotate(-140deg);
-          }
-
-          .qubit-circle[data-rounded-phase='150'] > .qubit-circle__phase {
-            transform: rotate(-150deg);
-          }
-
-          .qubit-circle[data-rounded-phase='160'] > .qubit-circle__phase {
-            transform: rotate(-160deg);
-          }
-
-          .qubit-circle[data-rounded-phase='170'] > .qubit-circle__phase {
-            transform: rotate(-170deg);
-          }
-
-          .qubit-circle[data-rounded-phase='180'] > .qubit-circle__phase {
-            transform: rotate(-180deg);
-          }
-
-          .qubit-circle[data-rounded-phase='190'] > .qubit-circle__phase {
-            transform: rotate(-190deg);
-          }
-
-          .qubit-circle[data-rounded-phase='200'] > .qubit-circle__phase {
-            transform: rotate(-200deg);
-          }
-
-          .qubit-circle[data-rounded-phase='210'] > .qubit-circle__phase {
-            transform: rotate(-210deg);
-          }
-
-          .qubit-circle[data-rounded-phase='220'] > .qubit-circle__phase {
-            transform: rotate(-220deg);
-          }
-
-          .qubit-circle[data-rounded-phase='230'] > .qubit-circle__phase {
-            transform: rotate(-230deg);
-          }
-
-          .qubit-circle[data-rounded-phase='240'] > .qubit-circle__phase {
-            transform: rotate(-240deg);
-          }
-
-          .qubit-circle[data-rounded-phase='250'] > .qubit-circle__phase {
-            transform: rotate(-250deg);
-          }
-
-          .qubit-circle[data-rounded-phase='260'] > .qubit-circle__phase {
-            transform: rotate(-260deg);
-          }
-
-          .qubit-circle[data-rounded-phase='270'] > .qubit-circle__phase {
-            transform: rotate(-270deg);
-          }
-
-          .qubit-circle[data-rounded-phase='280'] > .qubit-circle__phase {
-            transform: rotate(-280deg);
-          }
-
-          .qubit-circle[data-rounded-phase='290'] > .qubit-circle__phase {
-            transform: rotate(-290deg);
-          }
-
-          .qubit-circle[data-rounded-phase='300'] > .qubit-circle__phase {
-            transform: rotate(-300deg);
-          }
-
-          .qubit-circle[data-rounded-phase='310'] > .qubit-circle__phase {
-            transform: rotate(-310deg);
-          }
-
-          .qubit-circle[data-rounded-phase='320'] > .qubit-circle__phase {
-            transform: rotate(-320deg);
-          }
-
-          .qubit-circle[data-rounded-phase='330'] > .qubit-circle__phase {
-            transform: rotate(-330deg);
-          }
-
-          .qubit-circle[data-rounded-phase='340'] > .qubit-circle__phase {
-            transform: rotate(-340deg);
-          }
-
-          .qubit-circle[data-rounded-phase='350'] > .qubit-circle__phase {
-            transform: rotate(-350deg);
-          }
-
-          .qubit-circle[data-rounded-phase='360'] > .qubit-circle__phase {
-            transform: rotate(-360deg);
-          }
-
-          .qubit-circle__phase::after {
-            width: 2px;
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            left: 0px;
-            background-color: #4b4b4b;
-            height: 50%;
-            margin-left: auto;
-            margin-right: auto;
-            border-bottom-right-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-            content: '';
-          }
-
-          :host([data-qubit-count='5']) .qubit-circle__phase::after,
-          :host([data-qubit-count='6']) .qubit-circle__phase::after,
-          :host([data-qubit-count='7']) .qubit-circle__phase::after,
-          :host([data-qubit-count='8']) .qubit-circle__phase::after,
-          :host([data-qubit-count='9']) .qubit-circle__phase::after,
-          :host([data-qubit-count='10']) .qubit-circle__phase::after {
-            width: 1px;
-          }
-
-          @media (min-width: 768px) {
-            :host([data-qubit-count='5']) .qubit-circle__phase::after {
-              width: 2px;
-            }
-          }
-
-          :host([data-size='xs']) .qubit-circle__phase::after,
-          :host([data-size='sm']) .qubit-circle__phase::after {
-            width: 1px;
-          }
-          :host([data-size='base']) .qubit-circle__phase::after,
-          :host([data-size='lg']) .qubit-circle__phase::after,
-          :host([data-size='xl']) .qubit-circle__phase::after {
-            width: 2px;
-          }
-        </style>
-
-        <div id="body">${this.qubitCirclesHtml}</div>`,
-      this.shadowRoot!
+  /* visible row and column indices */
+
+  private get overscanColStartIndex(): number {
+    const index = this.visibleColStartIndex - this.overscan
+
+    if (index < 0) {
+      return 0
+    } else {
+      return index
+    }
+  }
+
+  private get overscanColEndIndex(): number {
+    const index = this.visibleColEndIndex + this.overscan
+
+    if (index > this.cols - 1) {
+      return this.cols - 1
+    } else {
+      return index
+    }
+  }
+
+  private get overscanRowStartIndex(): number {
+    const index = this.visibleRowStartIndex - this.overscan
+
+    if (index < 0) {
+      return 0
+    } else {
+      return index
+    }
+  }
+
+  private get overscanRowEndIndex(): number {
+    const index = this.visibleRowEndIndex + this.overscan
+
+    if (index > this.rows - 1) {
+      return this.rows - 1
+    } else {
+      return index
+    }
+  }
+
+  private get visibleColStartIndex(): number {
+    const windowScrollLeft = this.windowScrollLeft
+
+    if (windowScrollLeft < this.paddingX) {
+      return 0
+    } else {
+      return Math.floor((windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
+    }
+  }
+
+  private get visibleColEndIndex(): number {
+    return Math.min(
+      this.cols - 1,
+      Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / this.qubitCircleSizePx)
     )
+  }
 
-    if (this.magnitudes !== '') {
-      for (const [i, each] of this.magnitudes.split(',').entries()) {
-        this.setRoundedMagnitude(this.qubitCircles[i], parseFloat(each))
-      }
-    }
-    if (this.phases !== '') {
-      for (const [i, each] of this.phases.split(',').entries()) {
-        const qubitCircle = this.qubitCircles[i]
-        const phase = each ? parseFloat(each) : 0
-        this.setRoundedPhase(qubitCircle, phase)
-        const qubitCirclePhaseEl = qubitCircle!.querySelector('.qubit-circle__phase') as HTMLElement
-        qubitCirclePhaseEl!.style.transform = `rotate(${-phase}deg)`
-      }
+  private get visibleRowStartIndex(): number {
+    const windowScrollTop = this.windowScrollTop
+
+    if (windowScrollTop < this.paddingY) {
+      return 0
+    } else {
+      return Math.floor((windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
     }
   }
 
-  private setRoundedMagnitude(qubitCircle: HTMLElement | null | undefined, magnitude: number): void {
-    if (qubitCircle === null) return
-    if (qubitCircle === undefined) return
+  private get visibleRowEndIndex(): number {
+    const windowScrollTop = this.windowScrollTop
 
-    let roundedMag = Math.round(magnitude * 100)
-    roundedMag = roundedMag < 10 ? (roundedMag === 0 ? 0 : 10) : Math.round(roundedMag / 10) * 10
-    roundedMag = roundedMag / 100
-
-    qubitCircle.setAttribute('data-magnitude', magnitude.toString())
-    qubitCircle.setAttribute('data-rounded-magnitude', roundedMag.toString())
-  }
-
-  private setRoundedPhase(qubitCircle: HTMLElement | null | undefined, phase: number): void {
-    if (qubitCircle === null) return
-    if (qubitCircle === undefined) return
-
-    let roundedPhase = Math.round(phase / 10) * 10
-    if (roundedPhase < 0) roundedPhase = 360 + roundedPhase
-
-    qubitCircle.setAttribute('data-phase', phase.toString())
-    qubitCircle.setAttribute('data-rounded-phase', roundedPhase.toString())
-  }
-
-  private get qubitCirclesHtml(): TemplateResult {
-    if (this.hasAttribute('data-multi-qubits')) return this.stateVectorHtml(10)
-
-    return html`${this.qubitCircleHtml(0)} ${this.qubitCircleHtml(1)}`
-  }
-
-  private qubitCircleHtml(ket: number): TemplateResult {
-    return html`<div
-      class="qubit-circle"
-      data-ket="${ket}"
-      data-action="mouseenter:circle-notation#setPopupContent"
-      data-targets="circle-notation.qubitCircles"
-    >
-      <div class="qubit-circle__magnitude"></div>
-      <div class="qubit-circle__phase"></div>
-    </div>`
-  }
-
-  private stateVectorHtml(maxNqubit: number): TemplateResult {
-    let stateVector = html``
-
-    const groups = this.qubitCircleGroup(
-      [...Array(2 ** maxNqubit).keys()],
-      (qc256: number[]) => {
-        return this.qubitCircleGroup(qc256, (qc128: number[]) => {
-          return this.qubitCircleGroup(qc128, (qc64: number[]) => {
-            return this.qubitCircleGroup(qc64, (qc32: number[]) => {
-              return this.qubitCircleGroup(qc32, (qc16: number[]) => {
-                return this.qubitCircleGroup(qc16, (qc8: number[]) => {
-                  return this.qubitCircleGroup(qc8)
-                })
-              })
-            })
-          })
-        })
-      },
-      256
+    return Math.min(
+      this.rows - 1,
+      Math.floor((this.windowHeight + windowScrollTop - this.paddingY) / this.qubitCircleSizePx)
     )
-
-    for (const each of groups) {
-      stateVector = html`${stateVector} ${each}`
-    }
-
-    return stateVector
   }
 
-  private qubitCircleGroup(
-    kets: number[],
-    block?: (kets: number[]) => TemplateResult[],
-    size: number = kets.length / 2
-  ): TemplateResult[] {
-    const arrayChunk = (numbers: number[], chunkSize = 1): number[][] => {
-      return numbers.reduce(
-        (acc: number[][], _value: number, index: number) =>
-          index % chunkSize ? acc : [...acc, numbers.slice(index, index + chunkSize)],
-        []
-      )
+  private get windowScrollTop(): number {
+    if (this.lastWindowScrollTop === null) {
+      this.lastWindowScrollTop = this.window.scrollTop
+
+      window.setTimeout(() => {
+        this.lastWindowScrollTop = null
+      }, 10)
     }
 
-    return arrayChunk(kets, size).map(each => {
-      let group = html``
-
-      if (block) {
-        for (const subGroup of block(each)) {
-          group = html`${group} ${subGroup}`
-        }
-      } else {
-        for (const ket of each) {
-          group = html`${group} ${this.qubitCircleHtml(ket)}`
-        }
-      }
-
-      if (size === 64) {
-        return html`<div class="qubit-circle-group--size${size}" data-targets="circle-notation.qubitCircleGroups">
-          ${group}
-        </div>`
-      } else {
-        return html`<div class="qubit-circle-group--size${size}">${group}</div>`
-      }
-    })
+    return this.lastWindowScrollTop
   }
 
-  private initQubitCirclePopup(qubitCircles: HTMLElement[]): void {
-    const tippyInstances = tippy(qubitCircles)
+  private get windowScrollLeft(): number {
+    if (this.lastWindowScrollLeft === null) {
+      this.lastWindowScrollLeft = this.window.scrollLeft
 
-    createSingleton(tippyInstances, {
+      window.setTimeout(() => {
+        this.lastWindowScrollLeft = null
+      }, 10)
+    }
+
+    return this.lastWindowScrollLeft
+  }
+
+  /* qubit-circle popup */
+
+  showQubitCirclePopup(event: MouseEvent): void {
+    const qubitCircle = event.target as HTMLElement
+    Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
+
+    const popup = tippy(qubitCircle, {
       allowHTML: true,
       animation: false,
       arrow: roundArrow + roundArrow,
       delay: 0,
       theme: 'qni'
     })
-  }
 
-  setPopupContent(event: MouseEvent): void {
-    if (this.popupEl === null) return
+    if (this.qubitCirclePopupTemplate === null) return
 
-    const qubitCircleEl = event.target as HTMLElement
-    const ket = this.ketDecimal(qubitCircleEl)
-    const dataAmpReal = qubitCircleEl.getAttribute('data-amplitude-real')
-    const dataAmpImag = qubitCircleEl.getAttribute('data-amplitude-imag')
-    const dataMagnitude = qubitCircleEl.getAttribute('data-magnitude')
-    const dataPhase = qubitCircleEl.getAttribute('data-phase')
+    const dataKet = qubitCircle.getAttribute('data-ket')
+    Util.notNull(dataKet)
+    const dataAmplitudeReal = qubitCircle.getAttribute('data-amplitude-real')
+    Util.notNull(dataAmplitudeReal)
+    const dataAmplitudeImag = qubitCircle.getAttribute('data-amplitude-imag')
+    Util.notNull(dataAmplitudeImag)
 
-    let amplitude: Complex
+    const ket = parseInt(dataKet)
+    const amplitudeReal = parseFloat(dataAmplitudeReal)
+    const amplitudeImag = parseFloat(dataAmplitudeImag)
+    const amplitude = new Complex(amplitudeReal, amplitudeImag)
+    const magnitude = amplitude.abs()
+    const phase = (amplitude.phase() / Math.PI) * 180
 
-    if (dataAmpReal === null || dataAmpImag === null) {
-      amplitude = Complex.ZERO
-    } else {
-      amplitude = new Complex(parseFloat(dataAmpReal), parseFloat(dataAmpImag))
-    }
-
-    let phase
-
-    if (dataMagnitude && parseFloat(dataMagnitude) === 0) {
-      phase = 0
-    } else {
-      phase = dataPhase ? parseFloat(dataPhase) : 0
-    }
-
-    this.setQubitCirclePopupContent(
-      this.popupEl!.content,
-      qubitCircleEl,
-      ket,
-      amplitude,
-      dataMagnitude ? parseFloat(dataMagnitude) : 0,
-      phase,
-      this.qubitCount
-    )
-  }
-
-  private setQubitCirclePopupContent(
-    popupFrag: DocumentFragment,
-    qubitCircleEl: HTMLElement,
-    ket: number,
-    amplitude: Complex,
-    magnitude: number,
-    phase: number,
-    nqubit: number
-  ): void {
-    const popup = (qubitCircleEl as ReferenceElement)._tippy as Instance
-    popup.setContent(this.popupContent(popupFrag, ket, amplitude, magnitude, phase, nqubit))
-  }
-
-  private popupContent(
-    popupFrag: DocumentFragment,
-    ket: number,
-    amplitude: Complex,
-    magnitude: number,
-    phase: number,
-    nqubit: number
-  ): string {
-    const ketBinaryEl = popupFrag.querySelector('.circle-notation-popup__ket-binary')
-    const ketDecimalEl = popupFrag.querySelector('.circle-notation-popup__ket-decimal')
-    const amplitudeRealEl = popupFrag.querySelector('.circle-notation-popup__amplitude-real')
-    const amplitudeImagEl = popupFrag.querySelector('.circle-notation-popup__amplitude-imag')
-    const probabilityEl = popupFrag.querySelector('.circle-notation-popup__probability')
-    const phaseEl = popupFrag.querySelector('.circle-notation-popup__phase')
+    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-binary')
+    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-decimal')
+    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-real')
+    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-imag')
+    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector('.probability')
+    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.phase')
 
     if (ketBinaryEl) {
-      ketBinaryEl.textContent = ket.toString(2).padStart(nqubit, '0')
+      ketBinaryEl.textContent = ket.toString(2).padStart(this.qubitCount, '0')
     }
 
     if (ketDecimalEl) {
@@ -981,41 +1163,40 @@ export class CircleNotationElement extends HTMLElement {
     }
 
     if (amplitudeRealEl) {
-      amplitudeRealEl.textContent = this.forceSigned(amplitude.real, 5)
+      amplitudeRealEl.textContent = forceSigned(amplitude.real, 5)
     }
 
     if (amplitudeImagEl) {
-      amplitudeImagEl.textContent = `${this.forceSigned(amplitude.imag, 5)}i`
+      amplitudeImagEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
     }
 
     if (probabilityEl) {
-      probabilityEl.textContent = `${this.forceSigned(magnitude * magnitude * 100, 4)}%`
+      probabilityEl.textContent = `${forceSigned(magnitude * magnitude * 100, 4)}%`
     }
 
     if (phaseEl) {
-      phaseEl.textContent = `${this.forceSigned(phase, 2)}°`
+      phaseEl.textContent = `${forceSigned(phase, 2)}°`
     }
 
-    const div = document.createElement('div')
-    div.appendChild(popupFrag.cloneNode(true))
+    const tmpDiv = document.createElement('div')
+    tmpDiv.appendChild(this.qubitCirclePopupTemplate.content.cloneNode(true))
 
     // eslint-disable-next-line github/no-inner-html
-    return div.innerHTML
+    popup.setContent(tmpDiv.innerHTML)
+    popup.show()
   }
 
-  private get popupEl(): HTMLTemplateElement | null {
-    return document.getElementById('circle-notation-popup') as HTMLTemplateElement
+  hideQubitCirclePopup(event: MouseEvent): void {
+    const qubitCircle = event.target as HTMLElement
+    Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
+
+    const popup = (qubitCircle as ReferenceElement)._tippy as Instance
+    Util.notNull(popup)
+
+    popup.destroy()
   }
 
-  private forceSigned(value: number, d: number): string {
-    return (value >= 0 ? '+' : '') + value.toFixed(d)
-  }
-
-  private ketDecimal(el: HTMLElement): number {
-    const dataKet = el.getAttribute('data-ket')
-
-    return parseInt(dataKet!)
+  private get qubitCirclePopupTemplate(): HTMLTemplateElement | null {
+    return document.getElementById(this.qubitCirclePopupTemplateId) as HTMLTemplateElement
   }
 }
-
-controller(CircleNotationElement)

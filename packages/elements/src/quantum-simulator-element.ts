@@ -16,6 +16,7 @@ type MessageEventData = {
   flags: {[key: string]: boolean}
 }
 
+// TODO: QuantumCircuitSimulator にリネーム
 export class QuantumSimulatorElement extends HTMLElement {
   @attr updateUrl = false
 
@@ -23,13 +24,10 @@ export class QuantumSimulatorElement extends HTMLElement {
   @target circleNotation!: CircleNotationElement
   @targets runCircuitButtons!: RunCircuitButtonElement[]
 
-  private visibleQubitCircleKets!: number[]
-
   declare worker: Worker
 
   connectedCallback(): void {
     this.worker = new Worker('./serviceworker.js')
-    this.visibleQubitCircleKets = []
 
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
     this.addEventListener('operation-inspector-if-change', this.run)
@@ -41,7 +39,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
-    this.addEventListener('circle-notation-visibility-change', this.updateVisibleQubitCircleKets)
+    this.addEventListener('circle-notation-init', this.run)
     this.addEventListener('circle-notation-visibility-change', this.run)
     this.addEventListener('run-circuit-button-click', this.run)
 
@@ -124,8 +122,6 @@ export class QuantumSimulatorElement extends HTMLElement {
   }
 
   private run(): void {
-    if (this.circleNotation === null) return
-
     const stepIndex = this.activeStepIndex
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')
@@ -143,13 +139,13 @@ export class QuantumSimulatorElement extends HTMLElement {
       )
     )
     const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
-
     this.circleNotation.qubitCount = qubitCount
+
     this.worker.postMessage({
       qubitCount,
       stepIndex,
       steps: serializedSteps,
-      targets: this.visibleQubitCircleKets
+      targets: this.circleNotation.visibleQubitCircleKets
     })
   }
 
@@ -169,13 +165,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     }
 
     return this.circuit.fetchStepIndex(step)
-  }
-
-  private updateVisibleQubitCircleKets(event: Event): void {
-    const ketNumbers = (event as CustomEvent).detail as number[]
-    Util.notNull(ketNumbers)
-
-    this.visibleQubitCircleKets = ketNumbers
   }
 
   private maybeUpdateUrl(): void {

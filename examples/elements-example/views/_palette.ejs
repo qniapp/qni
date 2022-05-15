@@ -1,4 +1,4 @@
-<div class="hidden md:flex flex-row space-x-2 px-4 py-4 rounded-2xl bg-white drop-shadow mb-20">
+<div class="mb-20 hidden flex-row space-x-2 rounded-2xl bg-white px-4 py-4 drop-shadow md:flex">
   <palette-dropzone>
     <h-gate></h-gate>
   </palette-dropzone>
@@ -52,27 +52,27 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <h-gate class="operation-sm"></h-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-magnitudes="0.7,0.7" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0.7,0.7" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <h-gate class="operation-sm"></h-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="0,180"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="0,180"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -83,41 +83,41 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <x-gate class="operation-sm"></x-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <x-gate class="operation-sm"></x-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,70"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,70"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <x-gate class="operation-sm"></x-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.4,0.9"
-          data-phases="70,340"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.4,0.9"
+        data-phases="70,340"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -128,45 +128,45 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <y-gate class="operation-sm"></y-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0,1"
-          data-phases="0,90"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0,1"
+        data-phases="0,90"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="mt-5 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <y-gate class="operation-sm"></y-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-phases="-90,0" data-show-kets></circle-notation>
+      <circle-notation-old data-phases="-90,0" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,70"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,70"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <y-gate class="operation-sm"></y-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.4,0.9"
-          data-phases="160,250"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.4,0.9"
+        data-phases="160,250"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -177,45 +177,45 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <z-gate class="operation-sm"></z-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <z-gate class="operation-sm"></z-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0,1"
-          data-phases="0,180"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0,1"
+        data-phases="0,180"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,70"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,70"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <z-gate class="operation-sm"></z-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,250"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,250"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -227,45 +227,45 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0,1"
-          data-phases="0,90"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0,1"
+        data-phases="0,90"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,70"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,70"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.9,0.4"
-          data-phases="340,160"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.9,0.4"
+        data-phases="340,160"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -276,31 +276,31 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rnot-gate class="operation-sm"></rnot-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="45,-45"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="45,-45"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rnot-gate class="operation-sm"></rnot-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="-45,45"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="-45,45"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -312,31 +312,31 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="0,-90"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="0,-90"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="-90,0"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="-90,0"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -348,27 +348,27 @@
     </header>
 
     <div class="mt-5 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-magnitudes="0.7,0.7" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0.7,0.7" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0.7,0.7"
-          data-phases="180,0"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0.7,0.7"
+        data-phases="180,0"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -380,27 +380,27 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-phases="-45,0" data-show-kets></circle-notation>
+      <circle-notation-old data-phases="-45,0" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation
-          data-magnitudes="0,1"
-          data-phases="0,45"
-          data-show-kets
-      ></circle-notation>
+      <circle-notation-old
+        data-magnitudes="0,1"
+        data-phases="0,45"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </template>
 
@@ -434,23 +434,23 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <write-gate data-value="0" class="operation-sm"></write-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <write-gate data-value="0" class="operation-sm"></write-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
     </div>
   </template>
 
@@ -461,23 +461,23 @@
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-1">
-      <circle-notation data-show-kets></circle-notation>
+      <circle-notation-old data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <write-gate data-value="1" class="operation-sm"></write-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     </div>
 
     <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
       <div class="flex flex-row items-center">
         <% include('./common/_icon_minus') %>
         <write-gate data-value="1" class="operation-sm"></write-gate>
         <% include('./common/_icon_arrow_right') %>
       </div>
-      <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+      <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     </div>
   </template>
 

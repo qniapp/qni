@@ -71,6 +71,11 @@
   dependencies:
     "@github/template-parts" "^0.3.0"
 
+"@github/mini-throttle@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@github/mini-throttle/-/mini-throttle-2.1.0.tgz#583a1d5e383caa21a1c067a649f15f7ab575dccf"
+  integrity sha512-iEeR2OdVCPkdIPUszL8gJnKNu4MR8ANh7y0u/LPyaatYezgaWxUZEzhFntloqQq+HE6MZkFy+cl+xzCNuljOdw==
+
 "@github/prettier-config@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@github/prettier-config/-/prettier-config-0.0.4.tgz#cbfddb36a7f29a81c5af155dc5827e95b23b9ccd"
@@ -4017,6 +4022,13 @@ fast-levenshtein@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fastdom@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/fastdom/-/fastdom-1.0.10.tgz#4f2c7c9b24e7e249fc70c63131842b859b92bf09"
+  integrity sha512-sbL4h358IlZn8VsTvA5TYnKVLYif46XhPEll+HTSxVtDSpqZEO/17D/QqlxE9V2K7AQ82GXeYeQLU2HWwKgk1A==
+  dependencies:
+    strictdom "^1.0.1"
 
 fastq@^1.6.0:
   version "1.13.0"
@@ -8266,6 +8278,11 @@ strict-uri-encode@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
   integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
+
+strictdom@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/strictdom/-/strictdom-1.0.1.tgz#189de91649f73d44d59b8432efa68ef9d2659460"
+  integrity sha1-GJ3pFkn3PUTVm4Qy76aO+dJllGA=
 
 string-hash@^1.1.1:
   version "1.1.3"

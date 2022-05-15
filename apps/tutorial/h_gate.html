@@ -25,39 +25,39 @@ next_url: ./phase_gate.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-H0-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-H0-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-H1-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-H1-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -150,6 +150,7 @@ next_url: ./phase_gate.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
@@ -171,35 +172,59 @@ next_url: ./phase_gate.html
 <div class="mx-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-H0-a" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H0-a"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation id="circle-notation-H0-b" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H0-b"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation id="circle-notation-H0-c" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H0-c"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-H1-a" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H1-a"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation id="circle-notation-H1-b" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H1-b"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation id="circle-notation-H1-c" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-H1-c"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -268,21 +293,21 @@ next_url: ./phase_gate.html
 
 <div class="my-5 flex flex-row justify-center space-x-4 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center space-x-1">
-    <circle-notation
+    <circle-notation-old
       id="circle-notation-H-superposition-before"
       data-size="xl"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <h-gate></h-gate>
       {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
-    <circle-notation
+    <circle-notation-old
       id="circle-notation-H-superposition-after"
       data-size="xl"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
   </div>
 
   <script type="module">

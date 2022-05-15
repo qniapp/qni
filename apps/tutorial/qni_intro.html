@@ -114,6 +114,7 @@ next_url: ./p_bit.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
@@ -174,12 +175,12 @@ next_url: ./p_bit.html
 <div class="my-5 flex md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-3qubit-superposition"
         data-multi-qubits
         data-qubit-count="3"
         data-size="xl"
-      ></circle-notation>
+      ></circle-notation-old>
 
       <script type="module">
         import { Complex } from './application.js'

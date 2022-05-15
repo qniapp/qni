@@ -18,57 +18,57 @@ next_url: ./write_operation.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-π/4-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-π/4-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-π/2-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-π/2-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-13π/8-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="13π/8"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-13π/8-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -121,21 +121,21 @@ next_url: ./write_operation.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-amp-before"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-P-amp-after"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -162,19 +162,31 @@ next_url: ./write_operation.html
 <div class="mx-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-P-a" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-P-a"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation id="circle-notation-P-b" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-P-b"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="-π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation id="circle-notation-P-c" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-P-c"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -246,6 +258,7 @@ next_url: ./write_operation.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets

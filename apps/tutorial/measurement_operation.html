@@ -20,23 +20,39 @@ next_url: ./no_cloning_theorem.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-0" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-0"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation id="circle-notation-1" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-1"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation id="circle-notation-2" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-2"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation id="circle-notation-3" data-size="xl" data-show-kets></circle-notation>
+      <circle-notation-old
+        id="circle-notation-3"
+        data-size="xl"
+        data-show-kets
+      ></circle-notation-old>
     </div>
   </div>
 
@@ -66,11 +82,11 @@ next_url: ./no_cloning_theorem.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation
+      <circle-notation-old
         id="circle-notation-superposition-before-MEASUREMENT"
         data-size="xl"
         data-show-kets
-      ></circle-notation>
+      ></circle-notation-old>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
@@ -79,11 +95,19 @@ next_url: ./no_cloning_theorem.html
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row">
           <div class="my-auto mr-4 text-purple-600">25%</div>
-          <circle-notation id="circle-notation-4" data-size="xl" data-show-kets></circle-notation>
+          <circle-notation-old
+            id="circle-notation-4"
+            data-size="xl"
+            data-show-kets
+          ></circle-notation-old>
         </div>
         <div class="flex flex-row">
           <div class="my-auto mr-4 text-purple-600">75%</div>
-          <circle-notation id="circle-notation-5" data-size="xl" data-show-kets></circle-notation>
+          <circle-notation-old
+            id="circle-notation-5"
+            data-size="xl"
+            data-show-kets
+          ></circle-notation-old>
         </div>
       </div>
     </div>
@@ -151,6 +175,7 @@ next_url: ./no_cloning_theorem.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets

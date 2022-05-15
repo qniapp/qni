@@ -5,40 +5,48 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="1,0" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <y-gate class="operation-sm"></y-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation data-magnitudes="0,1" data-phases="0,90" data-show-kets></circle-notation>
+    <circle-notation-old
+      data-magnitudes="0,1"
+      data-phases="0,90"
+      data-show-kets
+    ></circle-notation-old>
   </div>
 
   <div class="mt-5 flex flex-row items-center space-x-1">
-    <circle-notation data-magnitudes="0,1" data-show-kets></circle-notation>
+    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <y-gate class="operation-sm"></y-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation data-magnitudes="1,0" data-phases="-90,0" data-show-kets></circle-notation>
+    <circle-notation-old
+      data-magnitudes="1,0"
+      data-phases="-90,0"
+      data-show-kets
+    ></circle-notation-old>
   </div>
 
   <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.9,0.4"
       data-phases="340,70"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <y-gate class="operation-sm"></y-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation
+    <circle-notation-old
       data-magnitudes="0.4,0.9"
       data-phases="160,250"
       data-show-kets
-    ></circle-notation>
+    ></circle-notation-old>
   </div>
 </template>

@@ -32,7 +32,11 @@ next_url: ./phase.html
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation id="circle-notation-80-20" data-size="xl" data-show-kets></circle-notation>
+  <circle-notation-old
+    id="circle-notation-80-20"
+    data-size="xl"
+    data-show-kets
+  ></circle-notation-old>
   <script type="module">
     import { Complex } from './application.js'
 
@@ -186,6 +190,7 @@ next_url: ./phase.html
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
         data-multi-qubits
         data-show-kets
@@ -199,15 +204,15 @@ next_url: ./phase.html
   <ul class="list-none">
     <li>
       振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
+      <span class="amplitude-real text-eel font-mono font-bold"></span>
     </li>
     <li>
       確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+      <span class="probability text-eel font-mono font-bold"></span>
     </li>
     <li>
       位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+      <span class="phase text-eel font-mono font-bold"></span>
     </li>
   </ul>
 </template>

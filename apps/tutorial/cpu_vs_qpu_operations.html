@@ -34,23 +34,23 @@ next_url: ./x_gate.html
 
     <div class="my-5 flex items-center justify-center overflow-x-auto">
       <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-        <circle-notation
+        <circle-notation-old
           data-size="xl"
           data-magnitudes="0.8944271909999159,0.4472135954999579"
           data-phases="-20,70"
           data-show-kets
-        ></circle-notation>
+        ></circle-notation-old>
         <div class="flex flex-row items-center">
           {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
           <span class="rounded bg-emerald-500 p-2 text-white">QPU 命令</span>
           {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
         </div>
-        <circle-notation
+        <circle-notation-old
           data-size="xl"
           data-magnitudes="0.4472135954999579,0.8944271909999159"
           data-phases="70,-20"
           data-show-kets
-        ></circle-notation>
+        ></circle-notation-old>
       </div>
     </div>
   </li>
@@ -69,23 +69,23 @@ next_url: ./x_gate.html
 
     <div class="my-5 flex items-center justify-center overflow-x-auto">
       <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-        <circle-notation
+        <circle-notation-old
           data-size="lg"
           data-magnitudes="0.8944271909999159,0.4472135954999579"
           data-phases="-20,70"
           data-show-kets
-        ></circle-notation>
+        ></circle-notation-old>
         <div class="flex flex-row items-center">
           {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
           <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">命令</span>
           {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
         </div>
-        <circle-notation
+        <circle-notation-old
           data-size="lg"
           data-magnitudes="0.4472135954999579,0.8944271909999159"
           data-phases="70,-20"
           data-show-kets
-        ></circle-notation>
+        ></circle-notation-old>
         <div class="flex flex-row items-center">
           {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
           <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white"
@@ -93,12 +93,12 @@ next_url: ./x_gate.html
           >
           {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
         </div>
-        <circle-notation
+        <circle-notation-old
           data-size="lg"
           data-magnitudes="0.8944271909999159,0.4472135954999579"
           data-phases="-20,70"
           data-show-kets
-        ></circle-notation>
+        ></circle-notation-old>
       </div>
     </div>
   </li>
@@ -123,11 +123,11 @@ next_url: ./x_gate.html
   <ul class="list-none">
     <li>
       確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+      <span class="probability text-eel font-mono font-bold"></span>
     </li>
     <li>
       位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+      <span class="phase text-eel font-mono font-bold"></span>
     </li>
   </ul>
 </template>

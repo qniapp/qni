@@ -1009,6 +1009,7 @@
         <circle-notation
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
           class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white px-4 py-4"
           data-multi-qubits
           data-show-kets
@@ -1191,25 +1192,23 @@
 </template>
  <template id="circle-notation-popup">
   <div class="text-wolf mb-2 text-base">
-    |<span class="circle-notation-popup__ket-decimal font-mono"></span>⟩
-    <div class="inline-block text-neutral-400">
-      |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩
-    </div>
+    |<span class="ket-decimal font-mono"></span>⟩
+    <div class="inline-block">(二進 |<span class="ket-binary font-mono"></span>⟩)</div>
   </div>
 
   <ul class="list-none">
     <li>
       振幅:
-      <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-      <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
+      <span class="amplitude-real text-eel font-mono font-bold"></span>
+      <span class="amplitude-imag text-eel font-mono font-bold"></span>
     </li>
     <li>
       確率:
-      <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
+      <span class="probability text-eel font-mono font-bold"></span>
     </li>
     <li>
       位相:
-      <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
+      <span class="phase text-eel font-mono font-bold"></span>
     </li>
   </ul>
 </template>

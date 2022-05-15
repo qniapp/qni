@@ -1,11 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "composite": true,
     "declaration": true,
     "experimentalDecorators": true,
-    "typeRoots": ["src/@types"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["src/@types"]
   },
   "include": ["src/**/*"],
   "files": ["src/index.ts", "src/custom.d.ts"]

@@ -11,27 +11,28 @@
 @import './operation_inspector';
 @import './run_circuit_button';
 
-@import './html';
+@import './bloch_display';
+@import './circle_notation';
+@import './circuit_dropzone';
+@import './circuit_editor';
+@import './circuit_step';
+@import './control_gate';
 @import './h_gate';
-@import './x_gate';
-@import './y_gate';
-@import './z_gate';
+@import './html';
+@import './measurement_gate';
+@import './palette_dropzone';
 @import './phase_gate';
-@import './t_gate';
+@import './quantum_circuit';
 @import './rnot_gate';
 @import './rx_gate';
 @import './ry_gate';
 @import './rz_gate';
 @import './swap_gate';
-@import './control_gate';
-@import './bloch_display';
+@import './t_gate';
 @import './write_gate';
-@import './measurement_gate';
-@import './circuit_dropzone';
-@import './palette_dropzone';
-@import './circuit_step';
-@import './quantum_circuit';
-@import './circuit_editor';
+@import './x_gate';
+@import './y_gate';
+@import './z_gate';
 
 @import 'tailwindcss/utilities';
 
