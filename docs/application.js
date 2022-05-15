@@ -9924,9 +9924,9 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
       let l = parseInt(i), c = e[l];
       if (c === void 0)
         continue;
-      let d = Math.floor(c.abs() * 1e5) / 1e5, v = t.children.item(0);
+      let d = Math.floor(c.abs() * 1e5) / 1e5, v = t.children.item(1);
       ee.notNull(v);
-      let b = c.phase() / Math.PI * 180, y = t.children.item(1);
+      let b = c.phase() / Math.PI * 180, y = t.children.item(2);
       ee.notNull(y);
       let x = Math.trunc(b);
       x < 0 && (x = 360 + x), yi.default.mutate(() => {
@@ -9958,28 +9958,25 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
             --phase: 0deg;
           }
 
-          .circle-notation__window {
-            overflow: auto;
-          }
+          /* border */
 
-          .circle-notation__inner-container {
-            position: relative;
-          }
-
-          .qubit-circle {
+          .qubit-circle__border {
             position: absolute;
-            outline-width: 1px;
-            outline-offset: -2px;
-            outline-style: solid;
-            outline-color: rgb(226 232 240); /* slate-200 */
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
           }
 
-          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) {
-            outline-color: rgb(100 116 139); /* slate-500 */
+          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) .qubit-circle__border {
+            border-color: rgb(100 116 139); /* slate-500 */
           }
 
-          .qubit-circle:hover {
+          .qubit-circle:hover .qubit-circle__border {
             outline-color: rgb(220 38 38); /* red-600 */
           }
 
@@ -10029,12 +10026,12 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
           class="circle-notation__window"
           data-target="circle-notation.window"
           data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
-          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
+          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px; overflow: auto;"
         >
           <div
             class="circle-notation__inner-container"
             data-target="circle-notation.innerContainer"
-            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px; position: relative;"
           ></div>
         </div>`, this.shadowRoot);
   }
@@ -10238,11 +10235,13 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   qubitCircleElement(e) {
     let t = e.col + e.row * this.cols, i = this.qubitCircleSizePx * e.row + this.paddingY, l = this.qubitCircleSizePx * e.col + this.paddingX, c = document.createElement("div");
-    c.className = "qubit-circle", c.setAttribute("data-col", e.col.toString()), c.setAttribute("data-row", e.row.toString()), c.setAttribute("data-ket", t.toString()), c.setAttribute("data-targets", "circle-notation.qubitCircles"), c.setAttribute("data-amplitude-real", "0"), c.setAttribute("data-amplitude-imag", "0"), c.setAttribute("data-action", "mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"), c.style.setProperty("top", `${i}px`), c.style.setProperty("left", `${l}px`), c.style.setProperty("width", `${this.qubitCircleSizePx}px`), c.style.setProperty("height", `${this.qubitCircleSizePx}px`);
+    c.className = "qubit-circle", c.setAttribute("data-col", e.col.toString()), c.setAttribute("data-row", e.row.toString()), c.setAttribute("data-ket", t.toString()), c.setAttribute("data-targets", "circle-notation.qubitCircles"), c.setAttribute("data-amplitude-real", "0"), c.setAttribute("data-amplitude-imag", "0"), c.setAttribute("data-action", "mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"), c.style.setProperty("position", "absolute"), c.style.setProperty("top", `${i}px`), c.style.setProperty("left", `${l}px`), c.style.setProperty("width", `${this.qubitCircleSizePx}px`), c.style.setProperty("height", `${this.qubitCircleSizePx}px`);
     let d = document.createElement("div");
-    d.className = "qubit-circle__magnitude", d.style.setProperty("--magnitude", "0");
+    d.className = "qubit-circle__border";
     let v = document.createElement("div");
-    return v.className = "qubit-circle__phase", c.appendChild(d), c.appendChild(v), c;
+    v.className = "qubit-circle__magnitude", v.style.setProperty("--magnitude", "0");
+    let b = document.createElement("div");
+    return b.className = "qubit-circle__phase", c.appendChild(d), c.appendChild(v), c.appendChild(b), c;
   }
   get overscanColStartIndex() {
     let e = this.visibleColStartIndex - this.overscan;

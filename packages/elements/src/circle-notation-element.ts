@@ -133,8 +133,6 @@ export class CircleNotationElement extends HTMLElement {
       default:
         throw new DetailedError('unsupported qubit count', qubitCount)
     }
-
-    // console.log(`size = ${this.size}`)
   }
 
   private updateDimension(qubitCount: number): void {
@@ -242,9 +240,6 @@ export class CircleNotationElement extends HTMLElement {
       default:
         throw new DetailedError('unsupported qubit count', qubitCount)
     }
-
-    // console.log(`cols = ${this.cols}`)
-    // console.log(`rows = ${this.rows}`)
   }
 
   get visibleQubitCircleKets(): number[] {
@@ -268,12 +263,12 @@ export class CircleNotationElement extends HTMLElement {
 
       // magnitude
       const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
-      const magnitudeEl = each.children.item(0) as HTMLElement
+      const magnitudeEl = each.children.item(1) as HTMLElement
       Util.notNull(magnitudeEl)
 
       // phase
       const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      const phaseEl = each.children.item(1) as HTMLElement
+      const phaseEl = each.children.item(2) as HTMLElement
       Util.notNull(phaseEl)
 
       let cssPhaseDeg = Math.trunc(phaseDeg)
@@ -360,28 +355,25 @@ export class CircleNotationElement extends HTMLElement {
             --phase: 0deg;
           }
 
-          .circle-notation__window {
-            overflow: auto;
-          }
+          /* border */
 
-          .circle-notation__inner-container {
-            position: relative;
-          }
-
-          .qubit-circle {
+          .qubit-circle__border {
             position: absolute;
-            outline-width: 1px;
-            outline-offset: -2px;
-            outline-style: solid;
-            outline-color: rgb(226 232 240); /* slate-200 */
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
           }
 
-          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) {
-            outline-color: rgb(100 116 139); /* slate-500 */
+          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) .qubit-circle__border {
+            border-color: rgb(100 116 139); /* slate-500 */
           }
 
-          .qubit-circle:hover {
+          .qubit-circle:hover .qubit-circle__border {
             outline-color: rgb(220 38 38); /* red-600 */
           }
 
@@ -431,12 +423,12 @@ export class CircleNotationElement extends HTMLElement {
           class="circle-notation__window"
           data-target="circle-notation.window"
           data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
-          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px"
+          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px; overflow: auto;"
         >
           <div
             class="circle-notation__inner-container"
             data-target="circle-notation.innerContainer"
-            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px"
+            style="height: ${this.innerHeight}px; width: ${this.innerWidth}px; position: relative;"
           ></div>
         </div>`,
       this.shadowRoot!
@@ -921,8 +913,9 @@ export class CircleNotationElement extends HTMLElement {
     //   data-action="mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"
     //   data-amplitude-real="0"
     //   data-amplitude-imag="0"
-    //   style="top: ${top}px; left: ${left}px"
+    //   style="position: absolute; top: ${top}px; left: ${left}px"
     // >
+    //   <div class="qubit-circle__border"></div>
     //   <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
     //   <div class="qubit-circle__phase"></div>
     // </div>
@@ -939,10 +932,14 @@ export class CircleNotationElement extends HTMLElement {
       'data-action',
       'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup'
     )
+    qubitCircle.style.setProperty('position', 'absolute')
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
     qubitCircle.style.setProperty('width', `${this.qubitCircleSizePx}px`)
     qubitCircle.style.setProperty('height', `${this.qubitCircleSizePx}px`)
+
+    const border = document.createElement('div')
+    border.className = 'qubit-circle__border'
 
     const magnitude = document.createElement('div')
     magnitude.className = 'qubit-circle__magnitude'
@@ -951,6 +948,7 @@ export class CircleNotationElement extends HTMLElement {
     const phase = document.createElement('div')
     phase.className = 'qubit-circle__phase'
 
+    qubitCircle.appendChild(border)
     qubitCircle.appendChild(magnitude)
     qubitCircle.appendChild(phase)
 
