@@ -332,6 +332,15 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private updatePadding(): void {
+    if (
+      this.style.paddingTop === '0px' &&
+      this.style.paddingRight === '0px' &&
+      this.style.paddingBottom === '0px' &&
+      this.style.paddingLeft === '0px'
+    ) {
+      return
+    }
+
     this.style.removeProperty('padding')
 
     const style = window.getComputedStyle(this)
@@ -361,80 +370,36 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle {
             position: absolute;
+            outline-width: 1px;
+            outline-offset: -2px;
+            outline-style: solid;
+            outline-color: rgb(226 232 240); /* slate-200 */
+            border-radius: 9999px;
           }
 
-          :host([data-qubit-circle-size='xl']) .qubit-circle {
-            height: 64px;
-            width: 64px;
+          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) {
+            outline-color: rgb(100 116 139); /* slate-500 */
           }
 
-          :host([data-qubit-circle-size='lg']) .qubit-circle {
-            height: 48px;
-            width: 48px;
-          }
-
-          :host([data-qubit-circle-size='lg']) .qubit-circle {
-            height: 48px;
-            width: 48px;
-          }
-
-          :host([data-qubit-circle-size='base']) .qubit-circle {
-            height: 32px;
-            width: 32px;
-          }
-
-          :host([data-qubit-circle-size='sm']) .qubit-circle {
-            height: 23px;
-            width: 23px;
-          }
-
-          :host([data-qubit-circle-size='xs']) .qubit-circle {
-            height: 17px;
-            width: 17px;
+          .qubit-circle:hover {
+            outline-color: rgb(220 38 38); /* red-600 */
           }
 
           /* magnitude */
 
           .qubit-circle__magnitude {
             position: absolute;
-            border-style: solid;
-            border-color: rgb(226 232 240); /* slate-200 */
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-radius: 9999px;
-          }
-
-          .qubit-circle:hover > .qubit-circle__magnitude {
-            border-color: rgb(220 38 38); /* red-600 */
-          }
-
-          :host([data-qubit-circle-size='xl']) .qubit-circle__magnitude,
-          :host([data-qubit-circle-size='lg']) .qubit-circle__magnitude,
-          :host([data-qubit-circle-size='base']) .qubit-circle__magnitude {
-            border-width: 2px;
-          }
-          :host([data-qubit-circle-size='sm']) .qubit-circle__magnitude,
-          :host([data-qubit-circle-size='xs']) .qubit-circle__magnitude {
-            border-width: 1px;
-          }
-
-          .qubit-circle__magnitude::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
+            top: 2px;
+            right: 2px;
+            bottom: 2px;
+            left: 2px;
             border-radius: 9999px;
             background-color: rgb(14 165 233); /* sky-500 */
             transform-origin: center;
             transform: scaleX(var(--magnitude)) scaleY(var(--magnitude));
-
-            content: '';
           }
 
-          .qubit-circle:hover > .qubit-circle__magnitude::after {
+          .qubit-circle:hover .qubit-circle__magnitude {
             background-color: rgb(249 115 22); /* orange-500 */
           }
 
@@ -442,48 +407,23 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle__phase {
             position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-style: solid;
-            border-color: rgb(100 116 139); /* slate-500 */
-            border-radius: 9999px;
-            transform-origin: center;
-            transform: rotate(var(--phase));
-          }
-
-          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
-            transform: scaleX(0) scaleY(0);
-          }
-
-          .qubit-circle:hover > .qubit-circle__phase {
-            border-color: rgb(220 38 38); /* red-600 */
-          }
-
-          :host([data-qubit-circle-size='xl']) .qubit-circle__phase,
-          :host([data-qubit-circle-size='lg']) .qubit-circle__phase,
-          :host([data-qubit-circle-size='base']) .qubit-circle__phase {
-            border-width: 2px;
-          }
-          :host([data-qubit-circle-size='sm']) .qubit-circle__phase,
-          :host([data-qubit-circle-size='xs']) .qubit-circle__phase {
-            border-width: 1px;
-          }
-
-          .qubit-circle__phase::after {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            left: 0px;
+            top: 2px;
+            right: 2px;
+            bottom: 2px;
+            left: 2px;
             background-color: rgb(15 23 42); /* slate-900 */
-            height: 50%;
+            height: calc(50% - 2px);
+            width: 1px;
             margin-left: auto;
             margin-right: auto;
             border-bottom-right-radius: 0.25rem; /* 4px */
             border-bottom-left-radius: 0.25rem; /* 4px */
+            transform-origin: bottom;
+            transform: rotate(var(--phase));
+          }
 
-            content: '';
+          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
+            display: none;
           }
         </style>
 
@@ -779,37 +719,37 @@ export class CircleNotationElement extends HTMLElement {
   private get qubitCircleSizePx(): number {
     switch (this.qubitCount) {
       case 1: {
-        return 64
+        return 63
       }
       case 2: {
-        return 64
+        return 63
       }
       case 3: {
         if (this.vertical) {
-          return 48
+          return 47
         } else {
-          return 64
+          return 63
         }
       }
       case 4: {
         if (this.vertical) {
-          return 32
+          return 31
         } else {
-          return 48
+          return 47
         }
       }
       case 5: {
         if (this.vertical) {
           return 23
         } else {
-          return 32
+          return 31
         }
       }
       case 6: {
         if (this.vertical) {
           return 17
         } else {
-          return 32
+          return 31
         }
       }
       case 7: {
@@ -1001,6 +941,8 @@ export class CircleNotationElement extends HTMLElement {
     )
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
+    qubitCircle.style.setProperty('width', `${this.qubitCircleSizePx}px`)
+    qubitCircle.style.setProperty('height', `${this.qubitCircleSizePx}px`)
 
     const magnitude = document.createElement('div')
     magnitude.className = 'qubit-circle__magnitude'
