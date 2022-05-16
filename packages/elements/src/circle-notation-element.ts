@@ -350,7 +350,8 @@ export class CircleNotationElement extends HTMLElement {
             border-radius: 9999px;
           }
 
-          .qubit-circle:hover {
+          .qubit-circle:hover,
+          .qubit-circle:not(.magnitude-0):hover {
             border-color: rgb(220 38 38); /* red-600 */
           }
 
