@@ -9918,21 +9918,21 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
     });
   }
   setAmplitudes(e) {
-    for (let t of this.qubitCircles) {
-      let i = t.getAttribute("data-ket");
-      ee.notNull(i);
-      let l = parseInt(i), c = e[l];
-      if (c === void 0)
-        continue;
-      let d = Math.floor(c.abs() * 1e5) / 1e5, v = t.children.item(1);
-      ee.notNull(v);
-      let b = c.phase() / Math.PI * 180, y = t.children.item(2);
-      ee.notNull(y);
-      let x = Math.trunc(b);
-      x < 0 && (x = 360 + x), yi.default.mutate(() => {
-        t.setAttribute("data-amplitude-real", c.real.toString()), t.setAttribute("data-amplitude-imag", c.imag.toString()), v.style.setProperty("--magnitude", d.toString()), y.style.setProperty("--phase", `-${x.toString()}deg`);
-      });
-    }
+    yi.default.mutate(() => {
+      for (let t of this.qubitCircles) {
+        let i = t.getAttribute("data-ket");
+        ee.notNull(i);
+        let l = parseInt(i), c = e[l];
+        if (c === void 0)
+          continue;
+        let d = Math.floor(c.abs() * 1e5) / 1e5, v = t.children.item(0);
+        ee.notNull(v);
+        let b = c.phase() / Math.PI * 180, y = t.children.item(1);
+        ee.notNull(y);
+        let x = Math.trunc(b);
+        x < 0 && (x = 360 + x), t.setAttribute("data-amplitude-real", c.real.toString()), t.setAttribute("data-amplitude-imag", c.imag.toString()), d === 0 ? t.classList.add("magnitude-0") : t.classList.remove("magnitude-0"), v.style.setProperty("--magnitude", d.toString()), y.style.setProperty("--phase", `-${x.toString()}deg`);
+      }
+    });
   }
   connectedCallback() {
     this.attachShadow({ mode: "open" }), this.update(), this.startLayoutOrientationChangeObserver(), this.updatePadding(), this.resizeWindow(), this.resizeInnerContainer(), this.drawNewlyVisibleQubuitCircles(), this.dispatchEvent(new CustomEvent("circle-notation-init", { bubbles: true }));
@@ -9958,28 +9958,6 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
             --phase: 0deg;
           }
 
-          /* border */
-
-          .qubit-circle__border {
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgb(226 232 240); /* slate-200 */
-            border-radius: 9999px;
-          }
-
-          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) .qubit-circle__border {
-            border-color: rgb(100 116 139); /* slate-500 */
-          }
-
-          .qubit-circle:hover .qubit-circle__border {
-            outline-color: rgb(220 38 38); /* red-600 */
-          }
-
           /* magnitude */
 
           .qubit-circle__magnitude {
@@ -10002,12 +9980,12 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
 
           .qubit-circle__phase {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            bottom: 2px;
-            left: 2px;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
             background-color: rgb(15 23 42); /* slate-900 */
-            height: calc(50% - 2px);
+            height: calc(50% - 1px);
             width: 1px;
             margin-left: auto;
             margin-right: auto;
@@ -10017,8 +9995,30 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
+          .qubit-circle.magnitude-0 .qubit-circle__phase {
             display: none;
+          }
+
+          /* border */
+
+          .qubit-circle__border {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(226 232 240); /* slate-200 */
+            border-radius: 9999px;
+          }
+
+          .qubit-circle:hover .qubit-circle__border {
+            border-color: rgb(220 38 38); /* red-600 */
+          }
+
+          .qubit-circle:not(.magnitude-0) .qubit-circle__border {
+            border-color: rgb(100 116 139); /* slate-500 */
           }
         </style>
 
@@ -10235,13 +10235,13 @@ var We = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   qubitCircleElement(e) {
     let t = e.col + e.row * this.cols, i = this.qubitCircleSizePx * e.row + this.paddingY, l = this.qubitCircleSizePx * e.col + this.paddingX, c = document.createElement("div");
-    c.className = "qubit-circle", c.setAttribute("data-col", e.col.toString()), c.setAttribute("data-row", e.row.toString()), c.setAttribute("data-ket", t.toString()), c.setAttribute("data-targets", "circle-notation.qubitCircles"), c.setAttribute("data-amplitude-real", "0"), c.setAttribute("data-amplitude-imag", "0"), c.setAttribute("data-action", "mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"), c.style.setProperty("position", "absolute"), c.style.setProperty("top", `${i}px`), c.style.setProperty("left", `${l}px`), c.style.setProperty("width", `${this.qubitCircleSizePx}px`), c.style.setProperty("height", `${this.qubitCircleSizePx}px`);
+    c.className = "qubit-circle magnitude-0", c.setAttribute("data-col", e.col.toString()), c.setAttribute("data-row", e.row.toString()), c.setAttribute("data-ket", t.toString()), c.setAttribute("data-targets", "circle-notation.qubitCircles"), c.setAttribute("data-amplitude-real", "0"), c.setAttribute("data-amplitude-imag", "0"), c.setAttribute("data-action", "mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"), c.style.setProperty("position", "absolute"), c.style.setProperty("top", `${i}px`), c.style.setProperty("left", `${l}px`), c.style.setProperty("width", `${this.qubitCircleSizePx}px`), c.style.setProperty("height", `${this.qubitCircleSizePx}px`);
     let d = document.createElement("div");
-    d.className = "qubit-circle__border";
+    d.className = "qubit-circle__magnitude", d.style.setProperty("--magnitude", "0");
     let v = document.createElement("div");
-    v.className = "qubit-circle__magnitude", v.style.setProperty("--magnitude", "0");
+    v.className = "qubit-circle__phase";
     let b = document.createElement("div");
-    return b.className = "qubit-circle__phase", c.appendChild(d), c.appendChild(v), c.appendChild(b), c;
+    return b.className = "qubit-circle__border", c.appendChild(d), c.appendChild(v), c.appendChild(b), c;
   }
   get overscanColStartIndex() {
     let e = this.visibleColStartIndex - this.overscan;

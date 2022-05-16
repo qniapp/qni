@@ -253,35 +253,41 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   setAmplitudes(amplitudes: {[ket: number]: Complex}) {
-    for (const each of this.qubitCircles) {
-      const ketStr = each.getAttribute('data-ket')
-      Util.notNull(ketStr)
+    fastdom.mutate(() => {
+      for (const each of this.qubitCircles) {
+        const ketStr = each.getAttribute('data-ket')
+        Util.notNull(ketStr)
 
-      const ket = parseInt(ketStr)
-      const amplitude = amplitudes[ket]
-      if (amplitude === undefined) continue
+        const ket = parseInt(ketStr)
+        const amplitude = amplitudes[ket]
+        if (amplitude === undefined) continue
 
-      // magnitude
-      const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
-      const magnitudeEl = each.children.item(1) as HTMLElement
-      Util.notNull(magnitudeEl)
+        // magnitude
+        const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
+        const magnitudeEl = each.children.item(0) as HTMLElement
+        Util.notNull(magnitudeEl)
 
-      // phase
-      const phaseDeg = (amplitude.phase() / Math.PI) * 180
-      const phaseEl = each.children.item(2) as HTMLElement
-      Util.notNull(phaseEl)
+        // phase
+        const phaseDeg = (amplitude.phase() / Math.PI) * 180
+        const phaseEl = each.children.item(1) as HTMLElement
+        Util.notNull(phaseEl)
 
-      let cssPhaseDeg = Math.trunc(phaseDeg)
-      if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
+        let cssPhaseDeg = Math.trunc(phaseDeg)
+        if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
 
-      fastdom.mutate(() => {
         each.setAttribute('data-amplitude-real', amplitude.real.toString())
         each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
 
+        if (magnitude === 0) {
+          each.classList.add('magnitude-0')
+        } else {
+          each.classList.remove('magnitude-0')
+        }
         magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
+
         phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
-      })
-    }
+      }
+    })
   }
 
   connectedCallback(): void {
@@ -355,28 +361,6 @@ export class CircleNotationElement extends HTMLElement {
             --phase: 0deg;
           }
 
-          /* border */
-
-          .qubit-circle__border {
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            bottom: 1px;
-            left: 1px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgb(226 232 240); /* slate-200 */
-            border-radius: 9999px;
-          }
-
-          .qubit-circle:not([data-amplitude-real='0'][data-amplitude-imag='0']) .qubit-circle__border {
-            border-color: rgb(100 116 139); /* slate-500 */
-          }
-
-          .qubit-circle:hover .qubit-circle__border {
-            outline-color: rgb(220 38 38); /* red-600 */
-          }
-
           /* magnitude */
 
           .qubit-circle__magnitude {
@@ -399,12 +383,12 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle__phase {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            bottom: 2px;
-            left: 2px;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
             background-color: rgb(15 23 42); /* slate-900 */
-            height: calc(50% - 2px);
+            height: calc(50% - 1px);
             width: 1px;
             margin-left: auto;
             margin-right: auto;
@@ -414,8 +398,30 @@ export class CircleNotationElement extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          .qubit-circle[data-amplitude-real='0'][data-amplitude-imag='0'] .qubit-circle__phase {
+          .qubit-circle.magnitude-0 .qubit-circle__phase {
             display: none;
+          }
+
+          /* border */
+
+          .qubit-circle__border {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            bottom: 1px;
+            left: 1px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(226 232 240); /* slate-200 */
+            border-radius: 9999px;
+          }
+
+          .qubit-circle:hover .qubit-circle__border {
+            border-color: rgb(220 38 38); /* red-600 */
+          }
+
+          .qubit-circle:not(.magnitude-0) .qubit-circle__border {
+            border-color: rgb(100 116 139); /* slate-500 */
           }
         </style>
 
@@ -915,13 +921,13 @@ export class CircleNotationElement extends HTMLElement {
     //   data-amplitude-imag="0"
     //   style="position: absolute; top: ${top}px; left: ${left}px"
     // >
-    //   <div class="qubit-circle__border"></div>
     //   <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
     //   <div class="qubit-circle__phase"></div>
+    //   <div class="qubit-circle__border"></div>
     // </div>
 
     const qubitCircle = document.createElement('div')
-    qubitCircle.className = 'qubit-circle'
+    qubitCircle.className = 'qubit-circle magnitude-0'
     qubitCircle.setAttribute('data-col', position.col.toString())
     qubitCircle.setAttribute('data-row', position.row.toString())
     qubitCircle.setAttribute('data-ket', ket.toString())
@@ -938,9 +944,6 @@ export class CircleNotationElement extends HTMLElement {
     qubitCircle.style.setProperty('width', `${this.qubitCircleSizePx}px`)
     qubitCircle.style.setProperty('height', `${this.qubitCircleSizePx}px`)
 
-    const border = document.createElement('div')
-    border.className = 'qubit-circle__border'
-
     const magnitude = document.createElement('div')
     magnitude.className = 'qubit-circle__magnitude'
     magnitude.style.setProperty('--magnitude', '0')
@@ -948,9 +951,12 @@ export class CircleNotationElement extends HTMLElement {
     const phase = document.createElement('div')
     phase.className = 'qubit-circle__phase'
 
-    qubitCircle.appendChild(border)
+    const border = document.createElement('div')
+    border.className = 'qubit-circle__border'
+
     qubitCircle.appendChild(magnitude)
     qubitCircle.appendChild(phase)
+    qubitCircle.appendChild(border)
 
     return qubitCircle
   }
