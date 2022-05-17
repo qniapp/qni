@@ -12,7 +12,6 @@ describe('circle-notation element', function () {
 
     beforeEach(function () {
       circleNotation = document.createElement('circle-notation')
-      circleNotation.setAttribute('data-gap', '0')
       circleNotation.style.setProperty('display', 'flex')
       circleNotation.style.setProperty('width', 'auto')
       document.body.append(circleNotation)
@@ -28,7 +27,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="1" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '63px')
+      circleNotation.style.setProperty('height', '64px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 1
@@ -51,7 +50,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="2" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '63px')
+      circleNotation.style.setProperty('height', '64px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 2
@@ -74,7 +73,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="3" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '94px') // 47px * 2
+      circleNotation.style.setProperty('height', '101px') // 48px * 2 + 5
       await setViewportMobile()
 
       circleNotation.qubitCount = 3
@@ -97,7 +96,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="4" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '62px') // 31px * 2
+      circleNotation.style.setProperty('height', '67px') // 32px * 2 + 5
       await setViewportMobile()
 
       circleNotation.qubitCount = 4
@@ -120,7 +119,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="5" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '92x') // 23px * 4
+      circleNotation.style.setProperty('height', '101px') // 23px * 4 + 3 * 3
       await setViewportMobile()
 
       circleNotation.qubitCount = 5
@@ -143,7 +142,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="6" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '68px') // 17px * 4
+      circleNotation.style.setProperty('height', '77px') // 17px * 4 + 3 * 3
       await setViewportMobile()
 
       circleNotation.qubitCount = 6
@@ -166,7 +165,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="7" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px') // 17px * 5 + 3 * 4
       await setViewportMobile()
 
       circleNotation.qubitCount = 7
@@ -189,7 +188,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="8" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 8
@@ -212,7 +211,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="9" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 9
@@ -235,7 +234,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="10" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 10
@@ -258,7 +257,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="11" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 11
@@ -281,7 +280,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="12" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 12
@@ -304,7 +303,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="13" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 13
@@ -327,7 +326,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="14" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 14
@@ -350,7 +349,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="15" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 15
@@ -373,7 +372,7 @@ describe('circle-notation element', function () {
     })
 
     it('data-qubit-count="16" (mobile)', async function () {
-      circleNotation.style.setProperty('height', '85px') // 17px * 5
+      circleNotation.style.setProperty('height', '97px')
       await setViewportMobile()
 
       circleNotation.qubitCount = 16
