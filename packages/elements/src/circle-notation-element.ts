@@ -660,7 +660,7 @@ export class CircleNotationElement extends HTMLElement {
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
-      const clientWidth = this.cachedClientWidth
+      const clientWidth = this.clientWidth
       if (this.cols > 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
         return clientWidth
       } else {
@@ -669,28 +669,6 @@ export class CircleNotationElement extends HTMLElement {
     } else {
       return qubitCirclesAreaPlusPaddingWidth
     }
-  }
-
-  private get cachedClientHeight(): number {
-    if (this.lastClientHeight === null) {
-      this.lastClientHeight = this.clientHeight
-
-      window.setTimeout(() => {
-        this.lastClientHeight = null
-      }, 10)
-    }
-    return this.lastClientHeight
-  }
-
-  private get cachedClientWidth(): number {
-    if (this.lastClientWidth === null) {
-      this.lastClientWidth = this.clientWidth
-
-      window.setTimeout(() => {
-        this.lastClientWidth = null
-      }, 10)
-    }
-    return this.lastClientWidth
   }
 
   private resizeWindow(): void {

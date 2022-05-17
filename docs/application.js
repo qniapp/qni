@@ -10123,20 +10123,10 @@ var it = /* @__PURE__ */ __name(class extends HTMLElement {
   get windowWidth() {
     let e = this.qubitCirclesAreaWidth + this.paddingX * 2;
     if (this.vertical) {
-      let t = this.cachedClientWidth;
+      let t = this.clientWidth;
       return this.cols > 16 && t < e ? t : e;
     } else
       return e;
-  }
-  get cachedClientHeight() {
-    return this.lastClientHeight === null && (this.lastClientHeight = this.clientHeight, window.setTimeout(() => {
-      this.lastClientHeight = null;
-    }, 10)), this.lastClientHeight;
-  }
-  get cachedClientWidth() {
-    return this.lastClientWidth === null && (this.lastClientWidth = this.clientWidth, window.setTimeout(() => {
-      this.lastClientWidth = null;
-    }, 10)), this.lastClientWidth;
   }
   resizeWindow() {
     this.window !== void 0 && (this.window.style.height = `${this.windowHeight}px`, this.window.style.width = `${this.windowWidth}px`);
