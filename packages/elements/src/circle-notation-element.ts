@@ -14,18 +14,16 @@ export class CircleNotationElement extends HTMLElement {
   @attr rows = 0
   @attr paddingX = 0
   @attr paddingY = 0
-  @attr gap = 4
   @attr overscan = 0
-  @attr vertical = true
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
 
-  debounceMsec = 10
-  lastParentElementClientHeight: number | null = null
-  lastParentElementClientWidth: number | null = null
+  vertical = true
+  lastClientHeight: number | null = null
+  lastClientWidth: number | null = null
   lastWindowScrollTop: number | null = null
   lastWindowScrollLeft: number | null = null
   lastColStartIndex = -1
@@ -305,12 +303,12 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private startLayoutOrientationChangeObserver(): void {
-    this.detectLayoutOrientation()
-    const resizeObserver = new ResizeObserver(this.detectLayoutOrientation.bind(this))
+    this.detectViewportOrientation()
+    const resizeObserver = new ResizeObserver(this.detectViewportOrientation.bind(this))
     resizeObserver.observe(document.body)
   }
 
-  private detectLayoutOrientation(): void {
+  private detectViewportOrientation(): void {
     let changed = false
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
@@ -344,7 +342,6 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle {
             position: absolute;
-            border-width: 1px;
             border-style: solid;
             border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
@@ -387,7 +384,6 @@ export class CircleNotationElement extends HTMLElement {
             left: 0px;
             background-color: rgb(15 23 42); /* slate-900 */
             height: 50%;
-            width: 1px;
             margin-left: auto;
             margin-right: auto;
             border-bottom-right-radius: 0.25rem; /* 4px */
@@ -642,13 +638,12 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowHeight(): number {
-    Util.notNull(this.parentElement)
     const qubitCirclesAreaPlusPaddingHeight = this.qubitCirclesAreaHeight + this.paddingY * 2
 
     if (this.vertical) {
-      const parentElementClientHeight = this.parentElementClientHeight
-      if (this.rows > 4 && parentElementClientHeight < qubitCirclesAreaPlusPaddingHeight) {
-        return parentElementClientHeight
+      const clientHeight = this.clientHeight
+      if (this.rows > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
+        return clientHeight
       } else {
         return qubitCirclesAreaPlusPaddingHeight
       }
@@ -658,45 +653,18 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowWidth(): number {
-    Util.notNull(this.parentElement)
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
-      const parentElementClientWidth = this.parentElementClientWidth
-      if (this.cols > 16 && parentElementClientWidth < qubitCirclesAreaPlusPaddingWidth) {
-        return parentElementClientWidth
+      const clientWidth = this.clientWidth
+      if (this.cols > 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
+        return clientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth
       }
     } else {
       return qubitCirclesAreaPlusPaddingWidth
     }
-  }
-
-  private get parentElementClientHeight(): number {
-    Util.notNull(this.parentElement)
-
-    if (this.lastParentElementClientHeight === null) {
-      this.lastParentElementClientHeight = this.parentElement.clientHeight
-
-      window.setTimeout(() => {
-        this.lastParentElementClientHeight = null
-      }, 10)
-    }
-    return this.lastParentElementClientHeight
-  }
-
-  private get parentElementClientWidth(): number {
-    Util.notNull(this.parentElement)
-
-    if (this.lastParentElementClientWidth === null) {
-      this.lastParentElementClientWidth = this.parentElement.clientWidth
-
-      window.setTimeout(() => {
-        this.lastParentElementClientWidth = null
-      }, 10)
-    }
-    return this.lastParentElementClientWidth
   }
 
   private resizeWindow(): void {
@@ -718,37 +686,37 @@ export class CircleNotationElement extends HTMLElement {
   private get qubitCircleSizePx(): number {
     switch (this.qubitCount) {
       case 1: {
-        return 63
+        return 64
       }
       case 2: {
-        return 63
+        return 64
       }
       case 3: {
         if (this.vertical) {
-          return 47
+          return 48
         } else {
-          return 63
+          return 64
         }
       }
       case 4: {
         if (this.vertical) {
-          return 31
+          return 32
         } else {
-          return 47
+          return 48
         }
       }
       case 5: {
         if (this.vertical) {
           return 23
         } else {
-          return 31
+          return 32
         }
       }
       case 6: {
         if (this.vertical) {
           return 17
         } else {
-          return 31
+          return 32
         }
       }
       case 7: {
@@ -874,10 +842,10 @@ export class CircleNotationElement extends HTMLElement {
 
   @debounce(100)
   removeInvisibleQubitCircles(): void {
-    let colStartIndex
-    let colEndIndex
-    let rowStartIndex
-    let rowEndIndex
+    let colStartIndex: number
+    let colEndIndex: number
+    let rowStartIndex: number
+    let rowEndIndex: number
 
     fastdom.measure(() => {
       colStartIndex = this.overscanColStartIndex
@@ -929,7 +897,7 @@ export class CircleNotationElement extends HTMLElement {
     //   data-action="mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup"
     //   data-amplitude-real="0"
     //   data-amplitude-imag="0"
-    //   style="position: absolute; top: ${top}px; left: ${left}px"
+    //   style="position: absolute; top: ${top}px; left: ${left}px; border-width: ${borderWidth}px"
     // >
     //   <div class="qubit-circle__magnitude" style="--magnitude:0;"></div>
     //   <div class="qubit-circle__phase"></div>
@@ -952,6 +920,7 @@ export class CircleNotationElement extends HTMLElement {
     qubitCircle.style.setProperty('left', `${left}px`)
     qubitCircle.style.setProperty('width', `${this.qubitCircleSizePx}px`)
     qubitCircle.style.setProperty('height', `${this.qubitCircleSizePx}px`)
+    qubitCircle.style.setProperty('border-width', `${this.qubitCircleLineWidth}px`)
 
     const magnitude = document.createElement('div')
     magnitude.className = 'qubit-circle__magnitude'
@@ -959,11 +928,79 @@ export class CircleNotationElement extends HTMLElement {
 
     const phase = document.createElement('div')
     phase.className = 'qubit-circle__phase'
+    phase.style.setProperty('width', `${this.qubitCircleLineWidth}px`)
 
     qubitCircle.appendChild(magnitude)
     qubitCircle.appendChild(phase)
 
     return qubitCircle
+  }
+
+  private get gap(): number {
+    return this.qubitCircleLineWidth * 2 + 1
+  }
+
+  private get qubitCircleLineWidth(): number {
+    switch (this.qubitCount) {
+      case 1: {
+        return 2
+      }
+      case 2: {
+        return 2
+      }
+      case 3: {
+        return 2
+      }
+      case 4: {
+        return 2
+      }
+      case 5: {
+        if (this.vertical) {
+          return 1
+        } else {
+          return 2
+        }
+      }
+      case 6: {
+        if (this.vertical) {
+          return 1
+        } else {
+          return 2
+        }
+      }
+      case 7: {
+        return 1
+      }
+      case 8: {
+        return 1
+      }
+      case 9: {
+        return 1
+      }
+      case 10: {
+        return 1
+      }
+      case 11: {
+        return 1
+      }
+      case 12: {
+        return 1
+      }
+      case 13: {
+        return 1
+      }
+      case 14: {
+        return 1
+      }
+      case 15: {
+        return 1
+      }
+      case 16: {
+        return 1
+      }
+      default:
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
+    }
   }
 
   /* visible row and column indices */
@@ -1009,39 +1046,49 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get visibleColStartIndex(): number {
-    const windowScrollLeft = this.windowScrollLeft
+    const width = this.windowScrollLeft - this.paddingX
+    if (width < 0) return 0
 
-    if (windowScrollLeft < this.paddingX) {
-      return 0
-    } else {
-      return Math.floor((windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap))
-    }
+    let index = Math.floor(width / (this.qubitCircleSizePx + this.gap))
+    const rest = width % this.qubitCirclesSizePx
+    if (rest > this.qubitCircleElement) index++
+
+    return index
   }
 
   private get visibleColEndIndex(): number {
-    return Math.min(
-      this.cols - 1,
-      Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap))
-    )
+    const width = this.windowWidth + this.windowScrollLeft - this.paddingX
+    let index = Math.floor(width / (this.qubitCircleSizePx + this.gap))
+    const rest = width % this.qubitCirclesSizePx
+
+    if (rest > this.qubitCircleSizePx) {
+      index++
+    }
+
+    return Math.min(this.cols - 1, index)
   }
 
   private get visibleRowStartIndex(): number {
-    const windowScrollTop = this.windowScrollTop
+    const height = this.windowScrollTop - this.paddingY
+    if (height < 0) return 0
 
-    if (windowScrollTop < this.paddingY) {
-      return 0
-    } else {
-      return Math.floor((windowScrollTop - this.paddingY) / (this.qubitCircleSizePx + this.gap))
-    }
+    let index = Math.floor(height / (this.qubitCircleSizePx + this.gap))
+    const rest = height % this.qubitCirclesSizePx
+    if (rest > this.qubitCircleElement) index++
+
+    return index
   }
 
   private get visibleRowEndIndex(): number {
-    const windowScrollTop = this.windowScrollTop
+    const height = this.windowHeight + this.windowScrollTop - this.paddingY
+    let index = Math.floor(height / (this.qubitCircleSizePx + this.gap))
+    const rest = height % this.qubitCirclesSizePx
 
-    return Math.min(
-      this.rows - 1,
-      Math.floor((this.windowHeight + windowScrollTop - this.paddingY) / (this.qubitCircleSizePx + this.gap))
-    )
+    if (rest > this.qubitCircleSizePx) {
+      index++
+    }
+
+    return Math.min(this.rows - 1, index)
   }
 
   private get windowScrollTop(): number {
