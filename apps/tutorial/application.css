@@ -5777,12 +5777,12 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   width: 100% !important;
 }
 
-.\!w-auto {
-  width: auto !important;
-}
-
 .w-auto {
   width: auto;
+}
+
+.\!w-auto {
+  width: auto !important;
 }
 
 .w-7 {
@@ -6156,11 +6156,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .\!py-4 {
