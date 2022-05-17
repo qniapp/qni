@@ -35,6 +35,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2)
+      assert.equal(circleNotation.rows, 1)
+      assert.equal(circleNotation.cols, 2)
     })
 
     it('data-qubit-count="1"', async function () {
@@ -44,6 +46,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2)
+      assert.equal(circleNotation.rows, 1)
+      assert.equal(circleNotation.cols, 2)
     })
 
     it('data-qubit-count="2" (mobile)', async function () {
@@ -54,6 +58,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 2)
+      assert.equal(circleNotation.rows, 1)
+      assert.equal(circleNotation.cols, 4)
     })
 
     it('data-qubit-count="2"', async function () {
@@ -63,6 +69,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 2)
+      assert.equal(circleNotation.rows, 1)
+      assert.equal(circleNotation.cols, 4)
     })
 
     it('data-qubit-count="3" (mobile)', async function () {
@@ -73,6 +81,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 3)
+      assert.equal(circleNotation.rows, 2)
+      assert.equal(circleNotation.cols, 4)
     })
 
     it('data-qubit-count="3"', async function () {
@@ -82,6 +92,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 3)
+      assert.equal(circleNotation.rows, 1)
+      assert.equal(circleNotation.cols, 8)
     })
 
     it('data-qubit-count="4" (mobile)', async function () {
@@ -92,6 +104,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 4)
+      assert.equal(circleNotation.rows, 2)
+      assert.equal(circleNotation.cols, 8)
     })
 
     it('data-qubit-count="4"', async function () {
@@ -101,6 +115,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 4)
+      assert.equal(circleNotation.rows, 2)
+      assert.equal(circleNotation.cols, 8)
     })
 
     it('data-qubit-count="5" (mobile)', async function () {
@@ -111,6 +127,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 5)
+      assert.equal(circleNotation.rows, 4)
+      assert.equal(circleNotation.cols, 8)
     })
 
     it('data-qubit-count="5"', async function () {
@@ -120,6 +138,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 5)
+      assert.equal(circleNotation.rows, 2)
+      assert.equal(circleNotation.cols, 16)
     })
 
     it('data-qubit-count="6" (mobile)', async function () {
@@ -130,6 +150,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 6)
+      assert.equal(circleNotation.rows, 4)
+      assert.equal(circleNotation.cols, 16)
     })
 
     it('data-qubit-count="6"', async function () {
@@ -139,6 +161,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 6)
+      assert.equal(circleNotation.rows, 4)
+      assert.equal(circleNotation.cols, 16)
     })
 
     it('data-qubit-count="7" (mobile)', async function () {
@@ -149,6 +173,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 8)
+      assert.equal(circleNotation.cols, 16)
     })
 
     it('data-qubit-count="7"', async function () {
@@ -158,6 +184,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 2 ** 7)
+      assert.equal(circleNotation.rows, 4)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="8" (mobile)', async function () {
@@ -168,6 +196,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 16)
+      assert.equal(circleNotation.cols, 16)
     })
 
     it('data-qubit-count="8"', async function () {
@@ -177,6 +207,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 8)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="9" (mobile)', async function () {
@@ -187,6 +219,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 16)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="9"', async function () {
@@ -196,6 +230,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 16)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="10" (mobile)', async function () {
@@ -206,6 +242,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 32)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="10"', async function () {
@@ -215,6 +253,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 32)
+      assert.equal(circleNotation.cols, 32)
     })
 
     it('data-qubit-count="11" (mobile)', async function () {
@@ -225,6 +265,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 32)
+      assert.equal(circleNotation.cols, 64)
     })
 
     it('data-qubit-count="11"', async function () {
@@ -234,6 +276,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 32)
+      assert.equal(circleNotation.cols, 64)
     })
 
     it('data-qubit-count="12" (mobile)', async function () {
@@ -244,6 +288,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 64)
+      assert.equal(circleNotation.cols, 64)
     })
 
     it('data-qubit-count="12"', async function () {
@@ -253,6 +299,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 64)
+      assert.equal(circleNotation.cols, 64)
     })
 
     it('data-qubit-count="13" (mobile)', async function () {
@@ -263,6 +311,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 64)
+      assert.equal(circleNotation.cols, 128)
     })
 
     it('data-qubit-count="13"', async function () {
@@ -272,6 +322,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 64)
+      assert.equal(circleNotation.cols, 128)
     })
 
     it('data-qubit-count="14" (mobile)', async function () {
@@ -282,6 +334,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 128)
+      assert.equal(circleNotation.cols, 128)
     })
 
     it('data-qubit-count="14"', async function () {
@@ -291,6 +345,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 128)
+      assert.equal(circleNotation.cols, 128)
     })
 
     it('data-qubit-count="15" (mobile)', async function () {
@@ -301,6 +357,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 128)
+      assert.equal(circleNotation.cols, 256)
     })
 
     it('data-qubit-count="15"', async function () {
@@ -310,6 +368,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 128)
+      assert.equal(circleNotation.cols, 256)
     })
 
     it('data-qubit-count="16" (mobile)', async function () {
@@ -320,6 +380,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 80)
+      assert.equal(circleNotation.rows, 256)
+      assert.equal(circleNotation.cols, 256)
     })
 
     it('data-qubit-count="16"', async function () {
@@ -329,6 +391,8 @@ describe('circle-notation element', function () {
       flushFastDom()
 
       assert.equal(circleNotation.qubitCircles.length, 256)
+      assert.equal(circleNotation.rows, 256)
+      assert.equal(circleNotation.cols, 256)
     })
 
     async function setViewportMobile() {
