@@ -16,14 +16,13 @@ export class CircleNotationElement extends HTMLElement {
   @attr paddingY = 0
   @attr gap = 4
   @attr overscan = 0
-  @attr vertical = true
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
 
-  debounceMsec = 10
+  vertical = true
   lastClientHeight: number | null = null
   lastClientWidth: number | null = null
   lastWindowScrollTop: number | null = null
