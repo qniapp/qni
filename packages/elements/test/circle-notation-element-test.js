@@ -1,8 +1,7 @@
 import '../dist/index'
-import {assert} from '@esm-bundle/chai'
-import {once} from './common/once'
-import {testElementCreation} from './common/test-element-creation'
 import 'fastdom'
+import {assert} from '@esm-bundle/chai'
+import {testElementCreation} from './common/test-element-creation'
 
 describe('circle-notation element', function () {
   testElementCreation(window.CircleNotationElement, 'circle-notation')
@@ -22,19 +21,17 @@ describe('circle-notation element', function () {
       document.body.textContent = ''
     })
 
-    if (
-      ('data-qubit-count="1" by default',
-      function () {
-        assert.equal(circleNotation.qubitCount, 1)
-      })
-    )
-      it('data-qubit-count="1"', function () {
-        circleNotation.qubitCount = 1
+    it('data-qubit-count="1" by default', function () {
+      assert.equal(circleNotation.qubitCount, 1)
+    })
 
-        flushFastDom()
+    it('data-qubit-count="1"', function () {
+      circleNotation.qubitCount = 1
 
-        assert.equal(circleNotation.qubitCircles.length, 2)
-      })
+      flushFastDom()
+
+      assert.equal(circleNotation.qubitCircles.length, 2)
+    })
 
     it('data-qubit-count="2"', function () {
       circleNotation.qubitCount = 2
