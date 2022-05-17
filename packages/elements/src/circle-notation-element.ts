@@ -24,8 +24,8 @@ export class CircleNotationElement extends HTMLElement {
   @targets qubitCircles!: HTMLElement[]
 
   debounceMsec = 10
-  lastParentElementClientHeight: number | null = null
-  lastParentElementClientWidth: number | null = null
+  lastClientHeight: number | null = null
+  lastClientWidth: number | null = null
   lastWindowScrollTop: number | null = null
   lastWindowScrollLeft: number | null = null
   lastColStartIndex = -1
@@ -642,13 +642,12 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowHeight(): number {
-    Util.notNull(this.parentElement)
     const qubitCirclesAreaPlusPaddingHeight = this.qubitCirclesAreaHeight + this.paddingY * 2
 
     if (this.vertical) {
-      const parentElementClientHeight = this.parentElementClientHeight
-      if (this.rows > 4 && parentElementClientHeight < qubitCirclesAreaPlusPaddingHeight) {
-        return parentElementClientHeight
+      const clientHeight = this.cachedClientHeight
+      if (this.rows > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
+        return clientHeight
       } else {
         return qubitCirclesAreaPlusPaddingHeight
       }
@@ -658,13 +657,12 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowWidth(): number {
-    Util.notNull(this.parentElement)
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
-      const parentElementClientWidth = this.parentElementClientWidth
-      if (this.cols > 16 && parentElementClientWidth < qubitCirclesAreaPlusPaddingWidth) {
-        return parentElementClientWidth
+      const clientWidth = this.cachedClientWidth
+      if (this.cols > 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
+        return clientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth
       }
@@ -673,30 +671,26 @@ export class CircleNotationElement extends HTMLElement {
     }
   }
 
-  private get parentElementClientHeight(): number {
-    Util.notNull(this.parentElement)
-
-    if (this.lastParentElementClientHeight === null) {
-      this.lastParentElementClientHeight = this.parentElement.clientHeight
+  private get cachedClientHeight(): number {
+    if (this.lastClientHeight === null) {
+      this.lastClientHeight = this.clientHeight
 
       window.setTimeout(() => {
-        this.lastParentElementClientHeight = null
+        this.lastClientHeight = null
       }, 10)
     }
-    return this.lastParentElementClientHeight
+    return this.lastClientHeight
   }
 
-  private get parentElementClientWidth(): number {
-    Util.notNull(this.parentElement)
-
-    if (this.lastParentElementClientWidth === null) {
-      this.lastParentElementClientWidth = this.parentElement.clientWidth
+  private get cachedClientWidth(): number {
+    if (this.lastClientWidth === null) {
+      this.lastClientWidth = this.clientWidth
 
       window.setTimeout(() => {
-        this.lastParentElementClientWidth = null
+        this.lastClientWidth = null
       }, 10)
     }
-    return this.lastParentElementClientWidth
+    return this.lastClientWidth
   }
 
   private resizeWindow(): void {
@@ -874,10 +868,10 @@ export class CircleNotationElement extends HTMLElement {
 
   @debounce(100)
   removeInvisibleQubitCircles(): void {
-    let colStartIndex
-    let colEndIndex
-    let rowStartIndex
-    let rowEndIndex
+    let colStartIndex: number
+    let colEndIndex: number
+    let rowStartIndex: number
+    let rowEndIndex: number
 
     fastdom.measure(() => {
       colStartIndex = this.overscanColStartIndex
