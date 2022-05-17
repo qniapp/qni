@@ -9940,9 +9940,9 @@ var it = /* @__PURE__ */ __name(class extends HTMLElement {
     this.attachShadow({ mode: "open" }), this.update(), this.startLayoutOrientationChangeObserver(), this.resizeWindow(), this.resizeInnerContainer(), this.drawNewlyVisibleQubuitCircles(), this.dispatchEvent(new CustomEvent("circle-notation-init", { bubbles: true }));
   }
   startLayoutOrientationChangeObserver() {
-    this.detectLayoutOrientation(), new ResizeObserver(this.detectLayoutOrientation.bind(this)).observe(document.body);
+    this.detectViewportOrientation(), new ResizeObserver(this.detectViewportOrientation.bind(this)).observe(document.body);
   }
-  detectLayoutOrientation() {
+  detectViewportOrientation() {
     let e = false;
     Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 768 ? (this.vertical || (e = true), this.vertical = true) : (this.vertical && (e = true), this.vertical = false), e && (this.updateQubitCircleSize(this.qubitCount), this.updateDimension(this.qubitCount), this.resizeWindow(), this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent());
   }
@@ -10115,7 +10115,7 @@ var it = /* @__PURE__ */ __name(class extends HTMLElement {
   get windowHeight() {
     let e = this.qubitCirclesAreaHeight + this.paddingY * 2;
     if (this.vertical) {
-      let t = this.cachedClientHeight;
+      let t = this.clientHeight;
       return this.rows > 4 && t < e ? t : e;
     } else
       return e;
@@ -10267,7 +10267,7 @@ var it = /* @__PURE__ */ __name(class extends HTMLElement {
     return e < this.paddingX ? 0 : Math.floor((e - this.paddingX) / (this.qubitCircleSizePx + this.gap));
   }
   get visibleColEndIndex() {
-    return Math.min(this.cols - 1, Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap)));
+    return Math.min(this.cols - 1, Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap)) - 1);
   }
   get visibleRowStartIndex() {
     let e = this.windowScrollTop;
@@ -10275,7 +10275,7 @@ var it = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   get visibleRowEndIndex() {
     let e = this.windowScrollTop;
-    return Math.min(this.rows - 1, Math.floor((this.windowHeight + e - this.paddingY) / (this.qubitCircleSizePx + this.gap)));
+    return Math.min(this.rows - 1, Math.floor((this.windowHeight + e - this.paddingY) / (this.qubitCircleSizePx + this.gap)) - 1);
   }
   get windowScrollTop() {
     return this.lastWindowScrollTop === null && (this.lastWindowScrollTop = this.window.scrollTop, window.setTimeout(() => {

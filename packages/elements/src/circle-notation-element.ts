@@ -305,12 +305,12 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private startLayoutOrientationChangeObserver(): void {
-    this.detectLayoutOrientation()
-    const resizeObserver = new ResizeObserver(this.detectLayoutOrientation.bind(this))
+    this.detectViewportOrientation()
+    const resizeObserver = new ResizeObserver(this.detectViewportOrientation.bind(this))
     resizeObserver.observe(document.body)
   }
 
-  private detectLayoutOrientation(): void {
+  private detectViewportOrientation(): void {
     let changed = false
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
@@ -645,7 +645,7 @@ export class CircleNotationElement extends HTMLElement {
     const qubitCirclesAreaPlusPaddingHeight = this.qubitCirclesAreaHeight + this.paddingY * 2
 
     if (this.vertical) {
-      const clientHeight = this.cachedClientHeight
+      const clientHeight = this.clientHeight
       if (this.rows > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
         return clientHeight
       } else {
@@ -1015,7 +1015,7 @@ export class CircleNotationElement extends HTMLElement {
   private get visibleColEndIndex(): number {
     return Math.min(
       this.cols - 1,
-      Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap))
+      Math.floor((this.windowWidth + this.windowScrollLeft - this.paddingX) / (this.qubitCircleSizePx + this.gap)) - 1
     )
   }
 
@@ -1034,7 +1034,7 @@ export class CircleNotationElement extends HTMLElement {
 
     return Math.min(
       this.rows - 1,
-      Math.floor((this.windowHeight + windowScrollTop - this.paddingY) / (this.qubitCircleSizePx + this.gap))
+      Math.floor((this.windowHeight + windowScrollTop - this.paddingY) / (this.qubitCircleSizePx + this.gap)) - 1
     )
   }
 
