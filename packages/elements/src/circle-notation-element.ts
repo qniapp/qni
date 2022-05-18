@@ -1051,8 +1051,8 @@ export class CircleNotationElement extends HTMLElement {
     if (width < 0) return 0
 
     let index = Math.floor(width / (this.qubitCircleSizePx + this.gap))
-    const rest = width % this.qubitCirclesSizePx
-    if (rest > this.qubitCircleElement) index++
+    const rest = width % this.qubitCircleSizePx
+    if (rest > this.qubitCircleSizePx) index++
 
     return index
   }
@@ -1060,7 +1060,7 @@ export class CircleNotationElement extends HTMLElement {
   private get visibleColEndIndex(): number {
     const width = this.windowWidth + this.windowScrollLeft - this.paddingX
     let index = Math.floor(width / (this.qubitCircleSizePx + this.gap))
-    const rest = width % this.qubitCirclesSizePx
+    const rest = width % this.qubitCircleSizePx
 
     if (rest > this.qubitCircleSizePx) {
       index++
@@ -1074,8 +1074,8 @@ export class CircleNotationElement extends HTMLElement {
     if (height < 0) return 0
 
     let index = Math.floor(height / (this.qubitCircleSizePx + this.gap))
-    const rest = height % this.qubitCirclesSizePx
-    if (rest > this.qubitCircleElement) index++
+    const rest = height % this.qubitCircleSizePx
+    if (rest > this.qubitCircleSizePx) index++
 
     return index
   }
@@ -1083,7 +1083,7 @@ export class CircleNotationElement extends HTMLElement {
   private get visibleRowEndIndex(): number {
     const height = this.windowHeight + this.windowScrollTop - this.paddingY
     let index = Math.floor(height / (this.qubitCircleSizePx + this.gap))
-    const rest = height % this.qubitCirclesSizePx
+    const rest = height % this.qubitCircleSizePx
 
     if (rest > this.qubitCircleSizePx) {
       index++
