@@ -342,9 +342,10 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle {
             position: absolute;
-            border-style: solid;
             border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
+            border-style: solid;
+            box-sizing: border-box;
           }
 
           .qubit-circle:hover,
@@ -386,8 +387,8 @@ export class CircleNotationElement extends HTMLElement {
             height: 50%;
             margin-left: auto;
             margin-right: auto;
-            border-bottom-right-radius: 0.25rem; /* 4px */
-            border-bottom-left-radius: 0.25rem; /* 4px */
+            border-bottom-right-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
             transform-origin: bottom;
             transform: rotate(var(--phase));
           }
@@ -707,47 +708,47 @@ export class CircleNotationElement extends HTMLElement {
       }
       case 5: {
         if (this.vertical) {
-          return 23
+          return 24
         } else {
           return 32
         }
       }
       case 6: {
         if (this.vertical) {
-          return 17
+          return 18
         } else {
           return 32
         }
       }
       case 7: {
-        return 17
+        return 18
       }
       case 8: {
-        return 17
+        return 18
       }
       case 9: {
-        return 17
+        return 18
       }
       case 10: {
-        return 17
+        return 18
       }
       case 11: {
-        return 17
+        return 18
       }
       case 12: {
-        return 17
+        return 18
       }
       case 13: {
-        return 17
+        return 18
       }
       case 14: {
-        return 17
+        return 18
       }
       case 15: {
-        return 17
+        return 18
       }
       case 16: {
-        return 17
+        return 18
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -937,7 +938,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get gap(): number {
-    return this.qubitCircleLineWidth * 2 + 1
+    return this.qubitCircleLineWidth
   }
 
   private get qubitCircleLineWidth(): number {

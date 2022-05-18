@@ -9955,9 +9955,10 @@ var bt = /* @__PURE__ */ __name(class extends HTMLElement {
 
           .qubit-circle {
             position: absolute;
-            border-style: solid;
             border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
+            border-style: solid;
+            box-sizing: border-box;
           }
 
           .qubit-circle:hover,
@@ -10141,29 +10142,29 @@ var bt = /* @__PURE__ */ __name(class extends HTMLElement {
       case 4:
         return this.vertical ? 32 : 48;
       case 5:
-        return this.vertical ? 23 : 32;
+        return this.vertical ? 24 : 32;
       case 6:
-        return this.vertical ? 17 : 32;
+        return this.vertical ? 18 : 32;
       case 7:
-        return 17;
+        return 18;
       case 8:
-        return 17;
+        return 18;
       case 9:
-        return 17;
+        return 18;
       case 10:
-        return 17;
+        return 18;
       case 11:
-        return 17;
+        return 18;
       case 12:
-        return 17;
+        return 18;
       case 13:
-        return 17;
+        return 18;
       case 14:
-        return 17;
+        return 18;
       case 15:
-        return 17;
+        return 18;
       case 16:
-        return 17;
+        return 18;
       default:
         throw new xt("unsupported qubit count", this.qubitCount);
     }
@@ -10233,7 +10234,7 @@ var bt = /* @__PURE__ */ __name(class extends HTMLElement {
     return v.className = "qubit-circle__phase", v.style.setProperty("width", `${this.qubitCircleLineWidth}px`), c.appendChild(d), c.appendChild(v), c;
   }
   get gap() {
-    return this.qubitCircleLineWidth * 2 + 1;
+    return this.qubitCircleLineWidth;
   }
   get qubitCircleLineWidth() {
     switch (this.qubitCount) {
