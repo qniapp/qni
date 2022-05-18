@@ -16,6 +16,7 @@ export class CircleNotationElement extends HTMLElement {
   @attr paddingY = 0
   @attr overscan = 0
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
+  @attr coloredPhase = false
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
@@ -285,6 +286,42 @@ export class CircleNotationElement extends HTMLElement {
         }
         magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
 
+        if (this.coloredPhase) {
+          each.classList.add('phase-hidden')
+
+          if (magnitude === 0) {
+            magnitudeEl.style.setProperty('--magnitude', '0')
+          } else {
+            magnitudeEl.style.setProperty('--magnitude', '1')
+          }
+
+          if (
+            (-22.5 <= phaseDeg && phaseDeg < 22.5) ||
+            (337.5 <= phaseDeg && phaseDeg <= 360) ||
+            (-337.5 < phaseDeg && phaseDeg <= -360)
+          ) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(168 85 247)') // purple-500
+          } else if ((22.5 <= phaseDeg && phaseDeg < 67.5) || (-337.5 <= phaseDeg && phaseDeg < -292.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(236 72 153)') // pink-500
+          } else if ((67.5 <= phaseDeg && phaseDeg < 112.5) || (-292.5 <= phaseDeg && phaseDeg < -247.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(239 68 68)') // red-500
+          } else if ((112.5 <= phaseDeg && phaseDeg < 157.5) || (-247.5 <= phaseDeg && phaseDeg < -202.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(234 179 8)') // yellow-500
+          } else if ((157.5 <= phaseDeg && phaseDeg < 202.5) || (-202.5 <= phaseDeg && phaseDeg < -157.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(132 204 22)') // lime-500
+          } else if ((202.5 <= phaseDeg && phaseDeg < 247.5) || (-157.5 <= phaseDeg && phaseDeg < -112.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(34 197 94)') // green-500
+          } else if ((247.5 <= phaseDeg && phaseDeg < 292.5) || (-112.5 <= phaseDeg && phaseDeg < -67.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(6 182 212)') // cyan-500
+          } else if ((292.5 <= phaseDeg && phaseDeg < 337.5) || (-67.5 <= phaseDeg && phaseDeg < -22.5)) {
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(99 102 241)') // indigo-500
+          } else {
+            magnitudeEl.style.removeProperty('--magnitude-color')
+          }
+        } else {
+          magnitudeEl.style.setProperty('--magnitude-color', 'rgb(14 165 233)')
+        }
+
         phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
       }
     })
@@ -333,8 +370,9 @@ export class CircleNotationElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
-          :root {
+          circle-notation {
             --magnitude: 0;
+            --magnitude-color: rgb(14 165 233); /* sky-500 */
             --phase: 0deg;
           }
 
@@ -366,7 +404,7 @@ export class CircleNotationElement extends HTMLElement {
             bottom: 0px;
             left: 0px;
             border-radius: 9999px;
-            background-color: rgb(14 165 233); /* sky-500 */
+            background-color: var(--magnitude-color);
             transform-origin: center;
             transform: scaleX(var(--magnitude)) scaleY(var(--magnitude));
           }
@@ -393,7 +431,8 @@ export class CircleNotationElement extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          .qubit-circle.magnitude-0 .qubit-circle__phase {
+          .qubit-circle.magnitude-0 .qubit-circle__phase,
+          .qubit-circle.phase-hidden .qubit-circle__phase {
             display: none;
           }
         </style>
