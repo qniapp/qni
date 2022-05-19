@@ -1,32 +1,12 @@
-<div
-  class="fixed top-0 left-0 right-0 z-30 mx-6 mt-12 mb-8 h-32 w-auto rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl"
+<circle-notation
+  id="circle-notation"
+  class="<%= options[:class] %>"
+  data-qubit-count="1"
+  data-target="quantum-simulator.circleNotation"
+  data-overscan="<%= options[:overscan] %>"
+  data-padding-X="<%= options[:padding_x] %>"
+  data-padding-Y="<%= options[:padding_y] %>"
 >
-  <circle-notation-old
-    id="circle-notation"
-    class="circle-notation flex h-full w-full flex-row justify-center overflow-y-auto"
-    data-target="quantum-simulator.circleNotation"
-    data-multi-qubits
-  >
-    <template id="circle-notation-popup">
-      <div class="text-wolf mb-2 text-base">
-        |<span class="circle-notation-popup__ket-binary font-mono"></span>⟩ (decimal
-        <span class="circle-notation-popup__ket-decimal"></span>)
-      </div>
-      <ul class="list-none">
-        <li>
-          Amplitude:
-          <span class="circle-notation-popup__amplitude-real text-eel font-mono font-bold"></span>
-          <span class="circle-notation-popup__amplitude-imag text-eel font-mono font-bold"></span>
-        </li>
-        <li>
-          Probability:
-          <span class="circle-notation-popup__probability text-eel font-mono font-bold"></span>
-        </li>
-        <li>
-          Phase:
-          <span class="circle-notation-popup__phase text-eel font-mono font-bold"></span>
-        </li>
-      </ul>
-    </template>
-  </circle-notation-old>
-</div>
+  <%= circle_notation_mode_toggle %>
+  <%= qubit_circle_popup_template %>
+</circle-notation>

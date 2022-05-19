@@ -49,67 +49,13 @@
         <%= palette %>
       </div>
 
-      <circle-notation
-        id="circle-notation"
-        class="fixed top-0 left-0 right-0 z-30 mx-6 mt-12 mb-20 flex h-32 w-auto items-center justify-center rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl"
-        data-qubit-count="1"
-        data-target="quantum-simulator.circleNotation"
-        data-overscan="5"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-        <div
-          class="absolute left-0 -bottom-14 z-30 flex h-auto w-auto items-center rounded-xl bg-white px-2 py-2 drop-shadow-md md:rounded-2xl"
-        >
-          <div class="flex flex-row gap-2">
-            <button
-              class="cursor-pointer rounded-lg border-2 border-sky-300 p-0.5"
-              data-target="circle-notation.basicCircleNotationButton"
-              data-action="click:circle-notation#startBasicCircleNotationMode"
-            >
-              <div class="relative h-6 w-6 rounded-full">
-                <div class="absolute inset-0 rounded-full border border-slate-500"></div>
-                <div class="absolute inset-0 scale-[0.7] transform rounded-full bg-sky-500"></div>
-                <div
-                  class="absolute inset-0 mx-auto h-1/2 w-px origin-bottom rotate-[135deg] transform bg-slate-900"
-                ></div>
-              </div>
-            </button>
-
-            <button
-              class="cursor-pointer rounded-lg border-2 border-transparent p-0.5 hover:border-slate-300"
-              data-target="circle-notation.coloredPhaseButton"
-              data-action="click:circle-notation#startColoredPhaseMode"
-            >
-              <div
-                class="relative h-6 w-6 rounded-full"
-                style="background: conic-gradient(rgb(168 85 247) 22.5deg, rgb(236 72 153) 22.5deg 67.5deg, rgb(249 115 22) 67.5deg 112.5deg, rgb(234 179 8) 112.5deg 157.5deg, rgb(132 204 22) 157.5deg 202.5deg, rgb(34 197 94) 202.5deg 247.5deg, rgb(14 165 233) 247.5deg 292.5deg, rgb(99 102 241) 292.5deg 337.5deg, rgb(168 85 247) 337.5deg 360deg);"
-              ></div>
-            </button>
-          </div>
-        </div>
-
-        <template id="qubit-circle-popup-template">
-          <div class="text-wolf mb-2 text-base">
-            |<span class="ket-binary font-mono"></span>⟩ (decimal <span class="ket-decimal"></span>)
-          </div>
-          <ul class="list-none">
-            <li>
-              Amplitude:
-              <span class="amplitude-real text-eel font-mono font-bold"></span>
-              <span class="amplitude-imag text-eel font-mono font-bold"></span>
-            </li>
-            <li>
-              Probability:
-              <span class="probability text-eel font-mono font-bold"></span>
-            </li>
-            <li>
-              Phase:
-              <span class="phase text-eel font-mono font-bold"></span>
-            </li>
-          </ul>
-        </template>
-      </circle-notation>
+      <%=
+        circle_notation class:
+                          'fixed top-0 left-0 right-0 z-30 mx-6 mt-12 mb-20 flex h-32 w-auto items-center justify-center rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl',
+                        overscan: 5,
+                        padding_x: 16,
+                        padding_y: 20
+      %>
     </circuit-editor>
 
     <%=
