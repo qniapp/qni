@@ -344,7 +344,7 @@ export class CircleNotationElement extends HTMLElement {
           } else if ((22.5 <= phaseDeg && phaseDeg < 67.5) || (-337.5 <= phaseDeg && phaseDeg < -292.5)) {
             magnitudeEl.style.setProperty('--magnitude-color', 'rgb(236 72 153)') // pink-500
           } else if ((67.5 <= phaseDeg && phaseDeg < 112.5) || (-292.5 <= phaseDeg && phaseDeg < -247.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(239 68 68)') // red-500
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(249 115 22)') // orange-500
           } else if ((112.5 <= phaseDeg && phaseDeg < 157.5) || (-247.5 <= phaseDeg && phaseDeg < -202.5)) {
             magnitudeEl.style.setProperty('--magnitude-color', 'rgb(234 179 8)') // yellow-500
           } else if ((157.5 <= phaseDeg && phaseDeg < 202.5) || (-202.5 <= phaseDeg && phaseDeg < -157.5)) {
@@ -352,7 +352,7 @@ export class CircleNotationElement extends HTMLElement {
           } else if ((202.5 <= phaseDeg && phaseDeg < 247.5) || (-157.5 <= phaseDeg && phaseDeg < -112.5)) {
             magnitudeEl.style.setProperty('--magnitude-color', 'rgb(34 197 94)') // green-500
           } else if ((247.5 <= phaseDeg && phaseDeg < 292.5) || (-112.5 <= phaseDeg && phaseDeg < -67.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(6 182 212)') // cyan-500
+            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(14 165 233)') // sky-500
           } else if ((292.5 <= phaseDeg && phaseDeg < 337.5) || (-67.5 <= phaseDeg && phaseDeg < -22.5)) {
             magnitudeEl.style.setProperty('--magnitude-color', 'rgb(99 102 241)') // indigo-500
           } else {
