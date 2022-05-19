@@ -20,6 +20,8 @@ export class CircleNotationElement extends HTMLElement {
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
+  @target basicCircleNotationButton!: HTMLButtonElement
+  @target coloredPhaseButton!: HTMLButtonElement
   @targets qubitCircles!: HTMLElement[]
 
   vertical = true
@@ -31,6 +33,36 @@ export class CircleNotationElement extends HTMLElement {
   lastColEndIndex = -1
   lastRowStartIndex = -1
   lastRowEndIndex = -1
+
+  startBasicCircleNotationMode(): void {
+    this.basicCircleNotationButton.classList.remove('hover:border-slate-300')
+    this.basicCircleNotationButton.classList.add('border-transparent')
+    this.basicCircleNotationButton.classList.add('border-sky-300')
+
+    this.coloredPhaseButton.classList.remove('border-sky-300')
+    this.coloredPhaseButton.classList.add('border-transparent')
+    this.coloredPhaseButton.classList.add('hover:border-slate-300')
+
+    this.coloredPhase = false
+    this.clearInnerContainer()
+    this.drawQubitCircles()
+    this.dispatchVisibilityChangedEvent()
+  }
+
+  startColoredPhaseMode(): void {
+    this.coloredPhaseButton.classList.remove('hover:border-slate-300')
+    this.coloredPhaseButton.classList.remove('border-transparent')
+    this.coloredPhaseButton.classList.add('border-sky-300')
+
+    this.basicCircleNotationButton.classList.remove('border-sky-300')
+    this.basicCircleNotationButton.classList.add('border-transparent')
+    this.basicCircleNotationButton.classList.add('hover:border-slate-300')
+
+    this.coloredPhase = true
+    this.clearInnerContainer()
+    this.drawQubitCircles()
+    this.dispatchVisibilityChangedEvent()
+  }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
@@ -436,6 +468,8 @@ export class CircleNotationElement extends HTMLElement {
             display: none;
           }
         </style>
+
+        <slot></slot>
 
         <div
           class="circle-notation__window"
