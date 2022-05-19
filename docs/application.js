@@ -9766,10 +9766,10 @@ var Ke = /* @__PURE__ */ __name(class extends HTMLElement {
     this.lastRowEndIndex = -1;
   }
   startBasicCircleNotationMode() {
-    this.basicCircleNotationButton.classList.remove("hover:border-slate-300"), this.basicCircleNotationButton.classList.add("border-transparent"), this.basicCircleNotationButton.classList.add("border-sky-300"), this.coloredPhaseButton.classList.remove("border-sky-300"), this.coloredPhaseButton.classList.add("border-transparent"), this.coloredPhaseButton.classList.add("hover:border-slate-300"), this.coloredPhase = false, this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
+    this.basicCircleNotationButton !== void 0 && (this.basicCircleNotationButton.classList.remove("hover:border-slate-300"), this.basicCircleNotationButton.classList.add("border-transparent"), this.basicCircleNotationButton.classList.add("border-sky-300")), this.coloredPhaseButton !== void 0 && (this.coloredPhaseButton.classList.remove("border-sky-300"), this.coloredPhaseButton.classList.add("border-transparent"), this.coloredPhaseButton.classList.add("hover:border-slate-300")), this.coloredPhase = false, this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
   }
   startColoredPhaseMode() {
-    this.coloredPhaseButton.classList.remove("hover:border-slate-300"), this.coloredPhaseButton.classList.remove("border-transparent"), this.coloredPhaseButton.classList.add("border-sky-300"), this.basicCircleNotationButton.classList.remove("border-sky-300"), this.basicCircleNotationButton.classList.add("border-transparent"), this.basicCircleNotationButton.classList.add("hover:border-slate-300"), this.coloredPhase = true, this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
+    this.coloredPhaseButton !== void 0 && (this.coloredPhaseButton.classList.remove("hover:border-slate-300"), this.coloredPhaseButton.classList.remove("border-transparent"), this.coloredPhaseButton.classList.add("border-sky-300")), this.basicCircleNotationButton !== void 0 && (this.basicCircleNotationButton.classList.remove("border-sky-300"), this.basicCircleNotationButton.classList.add("border-transparent"), this.basicCircleNotationButton.classList.add("hover:border-slate-300")), this.coloredPhase = true, this.clearInnerContainer(), this.drawQubitCircles(), this.dispatchVisibilityChangedEvent();
   }
   attributeChangedCallback(e, t, i) {
     if (t !== i && e === "data-qubit-count") {

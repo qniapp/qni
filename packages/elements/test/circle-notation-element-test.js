@@ -5,11 +5,11 @@ import {setViewport} from '@web/test-runner-commands'
 import {testElementCreation} from './common/test-element-creation'
 
 describe('circle-notation element', function () {
+  let circleNotation
+
   testElementCreation(window.CircleNotationElement, 'circle-notation')
 
   describe('data-qubit-count', function () {
-    let circleNotation
-
     beforeEach(function () {
       circleNotation = document.createElement('circle-notation')
       circleNotation.style.setProperty('display', 'flex')
@@ -393,22 +393,53 @@ describe('circle-notation element', function () {
       assert.equal(circleNotation.rows, 256)
       assert.equal(circleNotation.cols, 256)
     })
-
-    async function setViewportMobile() {
-      await setViewport({width: 360, height: 640})
-      circleNotation.detectViewportOrientation()
-      flushFastDom()
-    }
-
-    async function setViewportDesktop() {
-      await setViewport({width: 1200, height: 640})
-      circleNotation.detectViewportOrientation()
-      flushFastDom()
-    }
-
-    function flushFastDom() {
-      window.fastdom.runTasks(window.fastdom.reads)
-      window.fastdom.runTasks(window.fastdom.writes)
-    }
   })
+
+  describe('data-colored-phase', function () {
+    beforeEach(function () {
+      circleNotation = document.createElement('circle-notation')
+      circleNotation.style.setProperty('display', 'flex')
+      circleNotation.style.setProperty('width', 'auto')
+      document.body.append(circleNotation)
+      flushFastDom()
+    })
+
+    afterEach(function () {
+      document.body.textContent = ''
+    })
+
+    it('coloredPhase=false by default', function () {
+      assert.isFalse(circleNotation.coloredPhase)
+    })
+
+    it('starts colored phase mode', function () {
+      circleNotation.startColoredPhaseMode()
+
+      assert.isTrue(circleNotation.coloredPhase)
+    })
+
+    it('starts basic circle notation mode', function () {
+      circleNotation.startColoredPhaseMode()
+      circleNotation.startBasicCircleNotationMode()
+
+      assert.isFalse(circleNotation.coloredPhase)
+    })
+  })
+
+  async function setViewportMobile() {
+    await setViewport({width: 360, height: 640})
+    circleNotation.detectViewportOrientation()
+    flushFastDom()
+  }
+
+  async function setViewportDesktop() {
+    await setViewport({width: 1200, height: 640})
+    circleNotation.detectViewportOrientation()
+    flushFastDom()
+  }
+
+  function flushFastDom() {
+    window.fastdom.runTasks(window.fastdom.reads)
+    window.fastdom.runTasks(window.fastdom.writes)
+  }
 })
