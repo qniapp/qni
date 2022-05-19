@@ -24,8 +24,16 @@ module ApplicationHelper
     render 'palette_help_templates'
   end
 
-  def circle_notation
-    render 'circle_notation'
+  def circle_notation(options)
+    render 'circle_notation', options: options
+  end
+
+  def qubit_circle_popup_template
+    render 'qubit_circle_popup_template'
+  end
+
+  def circle_notation_mode_toggle
+    render 'circle_notation_mode_toggle'
   end
 
   def run_circuit_button(options)

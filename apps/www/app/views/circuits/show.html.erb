@@ -49,36 +49,13 @@
         <%= palette %>
       </div>
 
-      <circle-notation
-        id="circle-notation"
-        class="fixed top-0 left-0 right-0 z-30 mx-6 mt-12 mb-8 flex h-32 w-auto items-center justify-center rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl"
-        data-qubit-count="1"
-        data-target="quantum-simulator.circleNotation"
-        data-overscan="5"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-        <template id="qubit-circle-popup-template">
-          <div class="text-wolf mb-2 text-base">
-            |<span class="ket-binary font-mono"></span>⟩ (decimal <span class="ket-decimal"></span>)
-          </div>
-          <ul class="list-none">
-            <li>
-              Amplitude:
-              <span class="amplitude-real text-eel font-mono font-bold"></span>
-              <span class="amplitude-imag text-eel font-mono font-bold"></span>
-            </li>
-            <li>
-              Probability:
-              <span class="probability text-eel font-mono font-bold"></span>
-            </li>
-            <li>
-              Phase:
-              <span class="phase text-eel font-mono font-bold"></span>
-            </li>
-          </ul>
-        </template>
-      </circle-notation>
+      <%=
+        circle_notation class:
+                          'fixed top-0 left-0 right-0 z-30 mx-6 mt-12 mb-20 flex h-32 w-auto items-center justify-center rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl',
+                        overscan: 5,
+                        padding_x: 16,
+                        padding_y: 20
+      %>
     </circuit-editor>
 
     <%=
