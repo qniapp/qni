@@ -37,7 +37,7 @@ export class CircleNotationElement extends HTMLElement {
   startBasicCircleNotationMode(): void {
     if (this.basicCircleNotationButton !== undefined) {
       this.basicCircleNotationButton.classList.remove('hover:border-slate-300')
-      this.basicCircleNotationButton.classList.add('border-transparent')
+      this.basicCircleNotationButton.classList.remove('border-transparent')
       this.basicCircleNotationButton.classList.add('border-sky-300')
     }
 
