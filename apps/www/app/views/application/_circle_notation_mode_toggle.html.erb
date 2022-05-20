@@ -1,22 +1,21 @@
 <div
   id="circle-notation-mode-toggle"
-  class="absolute left-0 -bottom-14 z-30 flex h-auto w-auto items-center rounded-xl bg-white px-2 py-2 drop-shadow-md md:rounded-2xl"
+  class="absolute left-0 -bottom-14 z-30 flex h-auto w-auto flex-row gap-1 rounded-xl bg-white px-2 py-2 drop-shadow-md md:rounded-2xl"
 >
-  <div class="flex flex-row gap-1">
-    <button
-      class="cursor-pointer rounded-lg border-2 border-sky-300 p-0.5"
-      data-target="circle-notation.basicCircleNotationButton"
-      data-action="click:circle-notation#startBasicCircleNotationMode"
-    >
-      <%= render QniIconComponent.new(size: 6) %>
-    </button>
+  <button
+    class="circle-notation-mode-toggle-button p-0.5"
+    data-target="circle-notation.basicCircleNotationButton"
+    data-action="click:circle-notation#startBasicCircleNotationMode"
+    data-active
+  >
+    <%= render QniIconComponent.new(size: 6) %>
+  </button>
 
-    <button
-      class="cursor-pointer rounded-lg border-2 border-transparent p-0.5 hover:border-slate-300"
-      data-target="circle-notation.coloredPhaseButton"
-      data-action="click:circle-notation#startColoredPhaseMode"
-    >
-      <%= render ColoredPhaseIconComponent.new(size: 6) %>
-    </button>
-  </div>
+  <button
+    class="circle-notation-mode-toggle-button p-0.5"
+    data-target="circle-notation.coloredPhaseButton"
+    data-action="click:circle-notation#startColoredPhaseMode"
+  >
+    <%= render ColoredPhaseIconComponent.new(size: 6) %>
+  </button>
 </div>

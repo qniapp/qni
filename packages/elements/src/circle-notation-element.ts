@@ -20,8 +20,8 @@ export class CircleNotationElement extends HTMLElement {
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
-  @target basicCircleNotationButton: HTMLButtonElement | undefined
-  @target coloredPhaseButton: HTMLButtonElement | undefined
+  @target basicCircleNotationButton: HTMLElement | undefined
+  @target coloredPhaseButton: HTMLElement | undefined
   @targets qubitCircles!: HTMLElement[]
 
   vertical = true
@@ -36,15 +36,12 @@ export class CircleNotationElement extends HTMLElement {
 
   startBasicCircleNotationMode(): void {
     if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.classList.remove('hover:border-slate-300')
-      this.basicCircleNotationButton.classList.remove('border-transparent')
-      this.basicCircleNotationButton.classList.add('border-sky-300')
+      this.basicCircleNotationButton.setAttribute('data-active', '')
+      // this.basicCircleNotationButton.active = true
     }
-
     if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.classList.remove('border-sky-300')
-      this.coloredPhaseButton.classList.add('border-transparent')
-      this.coloredPhaseButton.classList.add('hover:border-slate-300')
+      this.coloredPhaseButton.removeAttribute('data-active')
+      // this.coloredPhaseButton.active = false
     }
 
     this.coloredPhase = false
@@ -55,15 +52,12 @@ export class CircleNotationElement extends HTMLElement {
 
   startColoredPhaseMode(): void {
     if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.classList.remove('hover:border-slate-300')
-      this.coloredPhaseButton.classList.remove('border-transparent')
-      this.coloredPhaseButton.classList.add('border-sky-300')
+      this.coloredPhaseButton.setAttribute('data-active', '')
+      // this.coloredPhaseButton.active = true
     }
-
     if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.classList.remove('border-sky-300')
-      this.basicCircleNotationButton.classList.add('border-transparent')
-      this.basicCircleNotationButton.classList.add('hover:border-slate-300')
+      this.basicCircleNotationButton.removeAttribute('data-active')
+      // this.basicCircleNotationButton.active = false
     }
 
     this.coloredPhase = true
