@@ -10,7 +10,6 @@
 @import './operation_menu';
 @import './operation_inspector';
 @import './run_circuit_button';
-@import './circle_notation_mode_toggle_button';
 
 @import './bloch_display';
 @import './circle_notation';

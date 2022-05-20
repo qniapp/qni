@@ -32,8 +32,8 @@ module ApplicationHelper
     render 'qubit_circle_popup_template'
   end
 
-  def circle_notation_mode_toggle
-    render 'circle_notation_mode_toggle'
+  def circle_notation_mode_switch
+    render 'circle_notation_mode_switch'
   end
 
   def run_circuit_button(options)

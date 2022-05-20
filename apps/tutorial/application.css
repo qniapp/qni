@@ -2166,29 +2166,6 @@ run-circuit-button.run-circuit-button--mobile::part(ripple) {
   background-color: rgb(168 85 247 / 0.7);
 }
 
-.circle-notation-mode-toggle-button {
-  border-width: 2px;
-  cursor: pointer;
-  padding: 0.125rem;
-  border-radius: 0.5rem;
-  border-color: transparent;
-}
-
-.circle-notation-mode-toggle-button:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity));
-}
-
-.circle-notation-mode-toggle-button[data-active] {
-  --tw-border-opacity: 1;
-  border-color: rgb(125 211 252 / var(--tw-border-opacity));
-}
-
-.circle-notation-mode-toggle-button[data-active]:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(56 189 248 / var(--tw-border-opacity));
-}
-
 bloch-display {
   display: inline-block;
   position: relative;

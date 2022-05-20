@@ -20,8 +20,6 @@ export class CircleNotationElement extends HTMLElement {
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
-  @target basicCircleNotationButton: HTMLElement | undefined
-  @target coloredPhaseButton: HTMLElement | undefined
   @targets qubitCircles!: HTMLElement[]
 
   vertical = true
@@ -35,15 +33,6 @@ export class CircleNotationElement extends HTMLElement {
   lastRowEndIndex = -1
 
   startBasicCircleNotationMode(): void {
-    if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.setAttribute('data-active', '')
-      // this.basicCircleNotationButton.active = true
-    }
-    if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.removeAttribute('data-active')
-      // this.coloredPhaseButton.active = false
-    }
-
     this.coloredPhase = false
     this.clearInnerContainer()
     this.drawQubitCircles()
@@ -51,15 +40,6 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   startColoredPhaseMode(): void {
-    if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.setAttribute('data-active', '')
-      // this.coloredPhaseButton.active = true
-    }
-    if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.removeAttribute('data-active')
-      // this.basicCircleNotationButton.active = false
-    }
-
     this.coloredPhase = true
     this.clearInnerContainer()
     this.drawQubitCircles()

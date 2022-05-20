@@ -10,6 +10,7 @@ export * from './mixin/flaggable'
 export * from './mixin/ifable'
 
 export * from './angle-slider-element'
+export * from './button-group-element'
 export * from './circle-notation-element'
 export * from './circle-notation-old-element'
 export * from './inspector-button-element'
