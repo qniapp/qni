@@ -20,8 +20,6 @@ export class CircleNotationElement extends HTMLElement {
 
   @target window!: HTMLElement
   @target innerContainer!: HTMLElement
-  @target basicCircleNotationButton: HTMLButtonElement | undefined
-  @target coloredPhaseButton: HTMLButtonElement | undefined
   @targets qubitCircles!: HTMLElement[]
 
   vertical = true
@@ -35,18 +33,6 @@ export class CircleNotationElement extends HTMLElement {
   lastRowEndIndex = -1
 
   startBasicCircleNotationMode(): void {
-    if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.classList.remove('hover:border-slate-300')
-      this.basicCircleNotationButton.classList.remove('border-transparent')
-      this.basicCircleNotationButton.classList.add('border-sky-300')
-    }
-
-    if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.classList.remove('border-sky-300')
-      this.coloredPhaseButton.classList.add('border-transparent')
-      this.coloredPhaseButton.classList.add('hover:border-slate-300')
-    }
-
     this.coloredPhase = false
     this.clearInnerContainer()
     this.drawQubitCircles()
@@ -54,18 +40,6 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   startColoredPhaseMode(): void {
-    if (this.coloredPhaseButton !== undefined) {
-      this.coloredPhaseButton.classList.remove('hover:border-slate-300')
-      this.coloredPhaseButton.classList.remove('border-transparent')
-      this.coloredPhaseButton.classList.add('border-sky-300')
-    }
-
-    if (this.basicCircleNotationButton !== undefined) {
-      this.basicCircleNotationButton.classList.remove('border-sky-300')
-      this.basicCircleNotationButton.classList.add('border-transparent')
-      this.basicCircleNotationButton.classList.add('hover:border-slate-300')
-    }
-
     this.coloredPhase = true
     this.clearInnerContainer()
     this.drawQubitCircles()

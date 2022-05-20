@@ -5215,15 +5215,6 @@ z-gate::part(icon) {
   border-width: 1px;
 }
 
-.border-transparent {
-  border-color: transparent;
-}
-
-.border-sky-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(125 211 252 / var(--tw-border-opacity));
-}
-
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -5299,11 +5290,6 @@ z-gate::part(icon) {
 /* top label over wire */
 
 /* bottom label */
-
-.hover\:border-slate-300:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity));
-}
 
 body {
   counter-reset: margin-note-counter;
