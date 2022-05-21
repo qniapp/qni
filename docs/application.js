@@ -10147,7 +10147,7 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
   get windowWidth() {
     let e = this.qubitCirclesAreaWidth + this.paddingX * 2;
     if (this.vertical) {
-      let t = this.clientWidth, i = this.clientHeight;
+      let t = this.clientWidth;
       return this.cols >= 16 && t < e ? t : e;
     } else
       return e;
