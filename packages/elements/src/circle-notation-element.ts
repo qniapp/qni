@@ -633,60 +633,28 @@ export class CircleNotationElement extends HTMLElement {
         }
       }
       case 9: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 10: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 11: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 12: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 13: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 14: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 15: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       case 16: {
-        if (this.vertical) {
-          return this.qubitCircleSizePx * 16 + this.gap * 15
-        } else {
-          return this.qubitCircleSizePx * 32 + this.gap * 31
-        }
+        return this.qubitCircleSizePx * 32 + this.gap * 31
       }
       default:
         throw new DetailedError('unsupported qubit count', this.qubitCount)
@@ -698,6 +666,7 @@ export class CircleNotationElement extends HTMLElement {
 
     if (this.vertical) {
       const clientHeight = this.clientHeight
+
       if (this.rows > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
         return clientHeight
       } else {
@@ -713,7 +682,8 @@ export class CircleNotationElement extends HTMLElement {
 
     if (this.vertical) {
       const clientWidth = this.clientWidth
-      if (this.cols > 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
+
+      if (this.cols >= 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
         return clientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth
