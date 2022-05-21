@@ -10042,7 +10042,7 @@ var ut = /* @__PURE__ */ __name(class extends HTMLElement {
           class="circle-notation__window"
           data-target="circle-notation.window"
           data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
-          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px; overflow: auto;"
+          style="height: ${this.windowHeight}px; width: ${this.windowWidth}px; overflow: auto; overscroll-behavior: none;"
         >
           <div
             class="circle-notation__inner-container"
