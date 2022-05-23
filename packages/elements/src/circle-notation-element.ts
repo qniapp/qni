@@ -9,7 +9,7 @@ import {forceSigned} from './util'
 @controller
 export class CircleNotationElement extends HTMLElement {
   @attr qubitCount = 1
-  @attr qubitCircleSize = 'xl'
+  @attr qubitCircleSize: 'xs' | 'sm' | 'base' | 'lg' | 'xl' = 'xl'
   @attr cols = 0
   @attr rows = 0
   @attr paddingX = 0
