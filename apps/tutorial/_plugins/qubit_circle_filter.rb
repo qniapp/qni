@@ -49,6 +49,7 @@ module Jekyll
         <div class="flex w-#{tw_wrapper_size} flex-col items-start">
           <qubit-circle
             class="#{klass}"
+            data-ket="#{ket}"
             data-amplitude="#{amplitude}"
             data-popup-template-id="circle-notation-popup"
           ></qubit-circle>
