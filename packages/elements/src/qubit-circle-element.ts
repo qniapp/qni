@@ -72,7 +72,7 @@ export class QubitCircleElement extends HTMLElement {
             border-bottom-right-radius: 0.25rem;
             border-bottom-left-radius: 0.25rem;
             transform-origin: bottom;
-            transform: rotate(${this.phase}deg);
+            transform: rotate(${this.cssPhaseDeg}deg);
           }
 
           :host([data-hide-phase]) #phase {
@@ -157,6 +157,10 @@ export class QubitCircleElement extends HTMLElement {
 
   private get phaseDeg(): number {
     return (this.phase / Math.PI) * 180
+  }
+
+  private get cssPhaseDeg(): number {
+    return -1 * this.phaseDeg
   }
 
   private hidePopup(): void {

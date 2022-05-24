@@ -10908,7 +10908,7 @@ var Ur = class extends HTMLElement {
             border-bottom-right-radius: 0.25rem;
             border-bottom-left-radius: 0.25rem;
             transform-origin: bottom;
-            transform: rotate(${this.phase}deg);
+            transform: rotate(${this.cssPhaseDeg}deg);
           }
 
           :host([data-hide-phase]) #phase {
@@ -10941,6 +10941,9 @@ var Ur = class extends HTMLElement {
   }
   get phaseDeg() {
     return this.phase / Math.PI * 180;
+  }
+  get cssPhaseDeg() {
+    return -1 * this.phaseDeg;
   }
   hidePopup() {
     let e = this._tippy;

@@ -12,20 +12,7 @@ next_url: ./circle_notation.html
 <p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
 
 <div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    id="circle-notation-phases"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation-old>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-phases').setAmplitudes({
-      0: new Complex(-0.20015, 0.44444),
-      1: new Complex(0.67819, -0.54997),
-    })
-  </script>
+  {{ '-0.20015 + 0.44444i' | qubit_circle: 0 }} {{ '0.67819 - 0.54997i' | qubit_circle: 1 }}
 </div>
 
 <p>
@@ -42,33 +29,17 @@ next_url: ./circle_notation.html
 
 <div class="mt-5 mb-8 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center justify-center space-x-4">
-    <circle-notation-old
-      id="circle-notation-phase-3π/2-a"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | prepend: '-' | append: 'i' | qubit_circle:
+      1 }}
+    </div>
 
     <span>=</span>
 
-    <circle-notation-old
-      id="circle-notation-phase-3π/2-b"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ '0.5 + 0.5i' | qubit_circle: 0 }} {{ '0.5 - 0.5i' | qubit_circle: 1 }}
+    </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
-    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
-
-    circleNotationA.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
-  </script>
 </div>
 
 <p>

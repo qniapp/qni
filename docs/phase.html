@@ -957,20 +957,28 @@
             <div class="content-with-margin"><p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
 
 <div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    id="circle-notation-phases"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation-old>
+  <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="-0.20015 + 0.44444i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
 
-  <script type="module">
-    import { Complex } from './application.js'
+  <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.67819 - 0.54997i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
 
-    document.getElementById('circle-notation-phases').setAmplitudes({
-      0: new Complex(-0.20015, 0.44444),
-      1: new Complex(0.67819, -0.54997),
-    })
-  </script>
 </div>
 
 <p>
@@ -987,33 +995,58 @@
 
 <div class="mt-5 mb-8 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center justify-center space-x-4">
-    <circle-notation-old
-      id="circle-notation-phase-3π/2-a"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.7071067811865476"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
+
+      <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="-0.7071067811865476i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
+    </div>
 
     <span>=</span>
 
-    <circle-notation-old
-      id="circle-notation-phase-3π/2-b"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.5 + 0.5i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
   </div>
+</div>
 
-  <script type="module">
-    import { Complex } from './application.js'
+      <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.5 - 0.5i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
 
-    let circleNotationA = document.getElementById('circle-notation-phase-3π/2-a')
-    let circleNotationB = document.getElementById('circle-notation-phase-3π/2-b')
-
-    circleNotationA.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-    circleNotationB.setAmplitudes({ 0: new Complex(0.5, 0.5), 1: new Complex(0.5, -0.5) })
-  </script>
+    </div>
+  </div>
 </div>
 
 <p>
