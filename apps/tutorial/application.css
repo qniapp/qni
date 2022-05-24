@@ -5918,6 +5918,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-end {
   justify-content: flex-end;
 }
@@ -6270,6 +6274,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
 }
 
 .text-center {

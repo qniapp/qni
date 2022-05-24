@@ -44,31 +44,17 @@ next_url: ./cpu_vs_qpu_operations.html
   乗が確率と等しくなっていることを確認しましょう。
 </p>
 
-<div class="flex flex-row space-x-4 overflow-x-auto pb-14">
-  <circle-notation-old id="circle-notation-A" data-size="xl" data-show-kets></circle-notation-old>
-  <circle-notation-old id="circle-notation-B" data-size="xl" data-show-kets></circle-notation-old>
-  <circle-notation-old id="circle-notation-C" data-size="xl" data-show-kets></circle-notation-old>
-  <circle-notation-old id="circle-notation-D" data-size="xl" data-show-kets></circle-notation-old>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationA = document.getElementById('circle-notation-A')
-    let circleNotationB = document.getElementById('circle-notation-B')
-    let circleNotationC = document.getElementById('circle-notation-C')
-    let circleNotationD = document.getElementById('circle-notation-D')
-
-    circleNotationA.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotationB.setAmplitudes({ 0: 0, 1: 1 })
-    circleNotationC.setAmplitudes({
-      0: new Complex(1 / Math.sqrt(2), 0),
-      1: new Complex(1 / Math.sqrt(2), 0),
-    })
-    circleNotationD.setAmplitudes({
-      0: new Complex(Math.sqrt(0.8), 0),
-      1: new Complex(Math.sqrt(0.2), 0),
-    })
-  </script>
+<div class="flex flex-col justify-start">
+  <div class="flex flex-row">{{ 1 | qubit_circle: 0 }} {{ 0 | qubit_circle: 1 }}</div>
+  <div class="flex flex-row">
+    {{ 0 | qubit_circle: 0, 'lime' }} {{ 1 | qubit_circle: 1, 'lime' }}
+  </div>
+  <div class="flex flex-row">
+    {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
+  </div>
+  <div class="flex flex-row">
+    {{ 0.8 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'lime' }}
+  </div>
 </div>
 
 <h2>振幅と位相の関係</h2>
@@ -88,62 +74,51 @@ next_url: ./cpu_vs_qpu_operations.html
   となります。 余裕のある人は、ほかの偏角と振幅も確認してみましょう。
 </p>
 
-<div class="flex flex-row space-x-4 overflow-x-auto pb-14">
-  <div class="flex flex-col items-center">
-    <span class="pb-2">π/4</span>
-    <circle-notation-old
-      id="circle-notation-phase-π/4"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
-  </div>
-  <div class="flex flex-col items-center">
-    <span class="pb-2">π/2</span>
-    <circle-notation-old
-      id="circle-notation-phase-π/2"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
-  </div>
-  <div class="flex flex-col items-center">
-    <span class="pb-2">π</span>
-    <circle-notation-old
-      id="circle-notation-phase-π"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
-  </div>
-  <div class="flex flex-col items-center">
-    <span class="pb-2">3π/2</span>
-    <circle-notation-old
-      id="circle-notation-phase-3π/2"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
-  </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationA = document.getElementById('circle-notation-phase-π/4')
-    let circleNotationB = document.getElementById('circle-notation-phase-π/2')
-    let circleNotationC = document.getElementById('circle-notation-phase-π')
-    let circleNotationD = document.getElementById('circle-notation-phase-3π/2')
-
-    circleNotationA.setAmplitudes({ 0: new Complex(Math.sqrt(0.5), 0), 1: new Complex(0.5, 0.5) })
-    circleNotationB.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, Math.sqrt(0.5)),
-    })
-    circleNotationC.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-    circleNotationD.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(0, -Math.sqrt(0.5)),
-    })
-  </script>
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>偏角</th>
+        <th>円表示</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-middle">π/4</td>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0 }} {{ '0.5 + 0.5i' | qubit_circle: 1 }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">π/2</td>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle:
+            1, 'lime' }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">π</td>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1 }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="align-middle">3π/2</td>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.5 | sqrt | prepend: '-' | append: 'i' |
+            qubit_circle: 1, 'lime' }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <orbit-reviewarea color="blue">
