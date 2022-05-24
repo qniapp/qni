@@ -37,32 +37,14 @@ next_url: ./operator_pair.html
   と {% ket 3 %}、… それぞれのペアの左右の円が、X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="my-5 flex">
-  <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-X1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-X1')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.42678, -0.17678),
-          1: new Complex(0.17678, -0.07322),
-          2: new Complex(0.17678, 0.42678),
-          3: new Complex(0.07322, 0.17678),
-          4: new Complex(-0.42678, 0.17678),
-          5: new Complex(-0.17678, 0.07322),
-          6: new Complex(-0.17678, -0.42678),
-          7: new Complex(-0.07322, -0.17678),
-        })
-      </script>
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.42678 - 0.17678i' | qubit_circle: 0, 'lg' }} {{ '0.17678 - 0.07322i' | qubit_circle: 1,
+      'lg' }} {{ '0.17678 + 0.42678i' | qubit_circle: 2, 'lg' }} {{ '0.07322 + 0.17678i' |
+      qubit_circle: 3, 'lg' }} {{ '-0.42678 + 0.17678i' | qubit_circle: 4, 'lg' }} {{ '-0.17678 +
+      0.07322i' | qubit_circle: 5, 'lg' }} {{ '-0.17678 - 0.42678i' | qubit_circle: 6, 'lg' }} {{
+      '-0.07322 - 0.17678i' | qubit_circle: 7, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -71,30 +53,12 @@ next_url: ./operator_pair.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-X1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-X1')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.17678, -0.07322),
-          1: new Complex(0.42678, -0.17678),
-          2: new Complex(0.07322, 0.17678),
-          3: new Complex(0.17678, 0.42678),
-          4: new Complex(-0.17678, 0.07322),
-          5: new Complex(-0.42678, 0.17678),
-          6: new Complex(-0.07322, -0.17678),
-          7: new Complex(-0.17678, -0.42678),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ '0.17678 - 0.07322i' | qubit_circle: 0, 'lg' }} {{ '0.42678 - 0.17678i' | qubit_circle: 1,
+      'lg' }} {{ '0.07322 + 0.17678i' | qubit_circle: 2, 'lg' }} {{ '0.17678 + 0.42678i' |
+      qubit_circle: 3, 'lg' }} {{ '-0.17678 + 0.07322i' | qubit_circle: 4, 'lg' }} {{ '-0.42678 +
+      0.17678i' | qubit_circle: 5, 'lg' }} {{ '-0.07322 - 0.17678i' | qubit_circle: 6, 'lg' }} {{
+      '-0.17678 - 0.42678i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>
@@ -131,14 +95,14 @@ next_url: ./operator_pair.html
       >
       </quantum-circuit>
 
-      <circle-notation-old
+      <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
         data-padding-X="16"
         data-padding-Y="20"
       >
-      </circle-notation-old>
+      </circle-notation>
     </circuit-editor>
 
     <run-circuit-button
@@ -167,32 +131,14 @@ next_url: ./operator_pair.html
   ket 7 %} が X ゲートによって入れ替わることが分かります。
 </p>
 
-<div class="my-5 flex">
-  <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-X2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-X2')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.42678, -0.17678),
-          1: new Complex(0.17678, -0.07322),
-          2: new Complex(0.17678, 0.42678),
-          3: new Complex(0.07322, 0.17678),
-          4: new Complex(-0.42678, 0.17678),
-          5: new Complex(-0.17678, 0.07322),
-          6: new Complex(-0.17678, -0.42678),
-          7: new Complex(-0.07322, -0.17678),
-        })
-      </script>
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.42678 - 0.17678i' | qubit_circle: 0, 'lg' }} {{ '0.17678 - 0.07322i' | qubit_circle: 1,
+      'lg' }} {{ '0.17678 + 0.42678i' | qubit_circle: 2, 'lg' }} {{ '0.07322 + 0.17678i' |
+      qubit_circle: 3, 'lg' }} {{ '-0.42678 + 0.17678i' | qubit_circle: 4, 'lg' }} {{ '-0.17678 +
+      0.07322i' | qubit_circle: 5, 'lg' }} {{ '-0.17678 - 0.42678i' | qubit_circle: 6, 'lg' }} {{
+      '-0.07322 - 0.17678i' | qubit_circle: 7, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -201,30 +147,12 @@ next_url: ./operator_pair.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-X2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-X2')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.17678, 0.42678),
-          1: new Complex(0.07322, 0.17678),
-          2: new Complex(0.42678, -0.17678),
-          3: new Complex(0.17678, -0.07322),
-          4: new Complex(-0.17678, -0.42678),
-          5: new Complex(-0.07322, -0.17678),
-          6: new Complex(-0.42678, 0.17678),
-          7: new Complex(-0.17678, 0.07322),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ '0.17678 + 0.42678i' | qubit_circle: 0, 'lg' }} {{ '0.07322 + 0.17678i' | qubit_circle: 1,
+      'lg' }} {{ '0.42678 - 0.17678i' | qubit_circle: 2, 'lg' }} {{ '0.17678 - 0.07322i' |
+      qubit_circle: 3, 'lg' }} {{ '-0.17678 - 0.42678i' | qubit_circle: 4, 'lg' }} {{ '-0.07322 -
+      0.17678i' | qubit_circle: 5, 'lg' }} {{ '-0.42678 + 0.17678i' | qubit_circle: 6, 'lg' }} {{
+      '-0.17678 + 0.07322i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>
@@ -257,14 +185,14 @@ next_url: ./operator_pair.html
       >
       </quantum-circuit>
 
-      <circle-notation-old
+      <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
         class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
         data-padding-X="16"
         data-padding-Y="20"
       >
-      </circle-notation-old>
+      </circle-notation>
     </circuit-editor>
 
     <run-circuit-button
@@ -288,32 +216,14 @@ next_url: ./operator_pair.html
 
 <p>これはちょうど、円の前半 4 つと後半 4 つがそっくり入れ替わった形になります。</p>
 
-<div class="my-5 flex">
-  <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-X3"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-X3')
-        circleNotation.setAmplitudes({
-          0: new Complex(0.42678, -0.17678),
-          1: new Complex(0.17678, -0.07322),
-          2: new Complex(0.17678, 0.42678),
-          3: new Complex(0.07322, 0.17678),
-          4: new Complex(-0.42678, 0.17678),
-          5: new Complex(-0.17678, 0.07322),
-          6: new Complex(-0.17678, -0.42678),
-          7: new Complex(-0.07322, -0.17678),
-        })
-      </script>
+<div class="my-5 flex overflow-auto">
+  <div class="flex flex-col items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.42678 - 0.17678i' | qubit_circle: 0, 'lg' }} {{ '0.17678 - 0.07322i' | qubit_circle: 1,
+      'lg' }} {{ '0.17678 + 0.42678i' | qubit_circle: 2, 'lg' }} {{ '0.07322 + 0.17678i' |
+      qubit_circle: 3, 'lg' }} {{ '-0.42678 + 0.17678i' | qubit_circle: 4, 'lg' }} {{ '-0.17678 +
+      0.07322i' | qubit_circle: 5, 'lg' }} {{ '-0.17678 - 0.42678i' | qubit_circle: 6, 'lg' }} {{
+      '-0.07322 - 0.17678i' | qubit_circle: 7, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -322,30 +232,12 @@ next_url: ./operator_pair.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-X3"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-X3')
-        circleNotation.setAmplitudes({
-          0: new Complex(-0.42678, 0.17678),
-          1: new Complex(-0.17678, 0.07322),
-          2: new Complex(-0.17678, -0.42678),
-          3: new Complex(-0.07322, -0.17678),
-          4: new Complex(0.42678, -0.17678),
-          5: new Complex(0.17678, -0.07322),
-          6: new Complex(0.17678, 0.42678),
-          7: new Complex(0.07322, 0.17678),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ '-0.42678 + 0.17678i' | qubit_circle: 0, 'lg' }} {{ '-0.17678 + 0.07322i' | qubit_circle:
+      1, 'lg' }} {{ '-0.17678 - 0.42678i' | qubit_circle: 2, 'lg' }} {{ '-0.07322 - 0.17678i' |
+      qubit_circle: 3, 'lg' }} {{ '0.42678 - 0.17678i' | qubit_circle: 4, 'lg' }} {{ '0.17678 -
+      0.07322i' | qubit_circle: 5, 'lg' }} {{ '0.17678 + 0.42678i' | qubit_circle: 6, 'lg' }} {{
+      '0.07322 + 0.17678i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>
