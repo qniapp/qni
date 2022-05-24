@@ -25,22 +25,18 @@ module Jekyll
 
     private
 
-    # rubocop:disable Metrics/MethodLength
     def parse_options(options)
-      key_values = {}
-      options.strip.split(/,\s*/).each do |each|
-        case each
-        when /ket: (\d+)/
-          key_values[:ket] = Regexp.last_match(1).to_i
-        when /magnitude: (\S+)/
-          key_values[:magnitude] = Regexp.last_match(1).to_f
-        when /color: (\S+)/
-          key_values[:color] = Regexp.last_match(1)
+      options.gsub("\n", '').split(/,\s*/).map do |each|
+        case each.strip
+        when /ket:\s*(\d+)/
+          [:ket, Regexp.last_match(1).to_i]
+        when /magnitude:\s*(\S+)/
+          [:magnitude, Regexp.last_match(1).to_f]
+        when /color:\s*(\S+)/
+          [:color, Regexp.last_match(1)]
         end
-      end
-      key_values
+      end.to_h
     end
-    # rubocop:enable Metrics/MethodLength
 
     def klass
       @options[:color] ? "h-16 w-16 magnitude-#{@options[:color]}" : 'h-16 w-16'
