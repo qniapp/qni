@@ -31,30 +31,33 @@ next_url: ./x_gate.html
       (重ね合わせ) を持つことができ、また位相という角度データも持つのでした。 QPU
       命令は量子ビットの持つ確率と位相の両方に作用します。
     </p>
-
-    <div class="my-5 flex items-center justify-center overflow-x-auto">
-      <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-        <circle-notation-old
-          data-size="xl"
-          data-magnitudes="0.8944271909999159,0.4472135954999579"
-          data-phases="-20,70"
-          data-show-kets
-        ></circle-notation-old>
-        <div class="flex flex-row items-center">
-          {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-          <span class="rounded bg-emerald-500 p-2 text-white">QPU 命令</span>
-          {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        </div>
-        <circle-notation-old
-          data-size="xl"
-          data-magnitudes="0.4472135954999579,0.8944271909999159"
-          data-phases="70,-20"
-          data-show-kets
-        ></circle-notation-old>
-      </div>
-    </div>
   </li>
-  <li>
+</ul>
+
+<div class="-mt-2.5 hidden h-12 w-12"></div>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-sm text-white">QPU命令</span>
+      {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'lg' }} {{ '-0.20015 + 0.44444i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+  </div>
+</div>
+
+<ul class="list-decimal">
+  <li value="2">
     <p><strong>QPU 命令の大部分は、逆方向の命令 (逆演算) を持ちます。</strong></p>
     <p>
       AND などの CPU 命令では、出力の 1 ビットから入力の 2 ビットを知ることはできません。
@@ -66,43 +69,39 @@ next_url: ./x_gate.html
       一方でほとんどの QPU 命令は可逆です。 つまりある QPU 命令に対応する逆命令 (逆演算)
       を適用することで、出力の量子ビットから元々の入力された量子ビットを得ることができます
     </p>
-
-    <div class="my-5 flex items-center justify-center overflow-x-auto">
-      <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-        <circle-notation-old
-          data-size="lg"
-          data-magnitudes="0.8944271909999159,0.4472135954999579"
-          data-phases="-20,70"
-          data-show-kets
-        ></circle-notation-old>
-        <div class="flex flex-row items-center">
-          {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
-          <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">命令</span>
-          {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
-        </div>
-        <circle-notation-old
-          data-size="lg"
-          data-magnitudes="0.4472135954999579,0.8944271909999159"
-          data-phases="70,-20"
-          data-show-kets
-        ></circle-notation-old>
-        <div class="flex flex-row items-center">
-          {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
-          <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white"
-            >逆演算</span
-          >
-          {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
-        </div>
-        <circle-notation-old
-          data-size="lg"
-          data-magnitudes="0.8944271909999159,0.4472135954999579"
-          data-phases="-20,70"
-          data-show-kets
-        ></circle-notation-old>
-      </div>
-    </div>
   </li>
 </ul>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">命令</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'lg' }} {{ '-0.20015 + 0.44444i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">逆演算</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.67819 - 0.54997i' | qubit_circle: 1, 'lg' }} {{ '-0.20015 + 0.44444i' | qubit_circle: 0,
+      'lg' }}
+    </div>
+  </div>
+</div>
 
 <p>逆演算は量子プログラミングでひんぱんに使うテクニックの 1 つです。</p>
 

@@ -47,13 +47,14 @@ next_url: ./cpu_vs_qpu_operations.html
 <div class="flex flex-col justify-start">
   <div class="flex flex-row">{{ 1 | qubit_circle: 0 }} {{ 0 | qubit_circle: 1 }}</div>
   <div class="flex flex-row">
-    {{ 0 | qubit_circle: 0, 'lime' }} {{ 1 | qubit_circle: 1, 'lime' }}
+    {{ 0 | qubit_circle: 0, 'xl', 'lime' }} {{ 1 | qubit_circle: 1, 'xl', 'lime' }}
   </div>
   <div class="flex flex-row">
     {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
   </div>
   <div class="flex flex-row">
-    {{ 0.8 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'lime' }}
+    {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'xl', 'lime'
+    }}
   </div>
 </div>
 
@@ -95,8 +96,8 @@ next_url: ./cpu_vs_qpu_operations.html
         <td class="align-middle">π/2</td>
         <td>
           <div class="flex flex-row">
-            {{ 0.5 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle:
-            1, 'lime' }}
+            {{ 0.5 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.5 | sqrt | append: 'i' |
+            qubit_circle: 1, 'xl', 'lime' }}
           </div>
         </td>
       </tr>
@@ -112,8 +113,8 @@ next_url: ./cpu_vs_qpu_operations.html
         <td class="align-middle">3π/2</td>
         <td>
           <div class="flex flex-row">
-            {{ 0.5 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.5 | sqrt | prepend: '-' | append: 'i' |
-            qubit_circle: 1, 'lime' }}
+            {{ 0.5 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.5 | sqrt | prepend: '-' | append:
+            'i' | qubit_circle: 1, 'xl', 'lime' }}
           </div>
         </td>
       </tr>

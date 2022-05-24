@@ -56,7 +56,7 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 1 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            {{ 0 | qubit_circle: 0, 'lime' }} {{ 1 | qubit_circle: 1, 'lime' }}
+            {{ 0 | qubit_circle: 0, 'xl', 'lime' }} {{ 1 | qubit_circle: 1, 'xl', 'lime' }}
           </div>
         </td>
       </tr>
@@ -72,7 +72,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
         <td>
           <div class="flex flex-row">
-            {{ 0.8 | sqrt | qubit_circle: 0, 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'lime' }}
+            {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'xl',
+            'lime' }}
           </div>
         </td>
       </tr>

@@ -2,23 +2,58 @@
 
 module Jekyll
   module QubitCircleFilter
-    # あとで qubit_circle に直す
-    def qubit_circle(amplitude, ket, color = '')
+    def qubit_circle(amplitude, ket, size = 'xl', color = '')
+      tw_size = case size
+                when 'xl'
+                  16
+                when 'lg'
+                  12
+                else
+                  raise 'not implemented'
+                end
+
+      tw_wrapper_size = case size
+                        when 'xl'
+                          20
+                        when 'lg'
+                          16
+                        else
+                          raise 'not implemented'
+                        end
+
+      tw_ket_mt = case size
+                  when 'xl'
+                    '-mt-3'
+                  when 'lg'
+                    '-mt-2.5'
+                  else
+                    raise 'not implemented'
+                  end
+
+      tw_font_size = case size
+                     when 'xl'
+                       'base'
+                     when 'lg'
+                       'sm'
+                     else
+                       raise 'not implemented'
+                     end
+
       klass = if color == ''
-                'h-16 w-16'
+                "h-#{tw_size} w-#{tw_size}"
               else
-                "h-16 w-16 magnitude-#{color}"
+                "h-#{tw_size} w-#{tw_size} magnitude-#{color}"
               end
 
       <<~HTML
-        <div class="flex w-20 flex-col items-start">
+        <div class="flex w-#{tw_wrapper_size} flex-col items-start">
           <qubit-circle
             class="#{klass}"
             data-amplitude="#{amplitude}"
             data-popup-template-id="circle-notation-popup"
           ></qubit-circle>
-          <div class="-mt-3 flex w-full flex-row justify-end">
-            <span class="font-mono text-slate-500">|#{ket}⟩</span>
+          <div class="#{tw_ket_mt} flex w-full flex-row justify-end">
+            <span class="font-mono text-slate-500 text-#{tw_font_size}">|#{ket}⟩</span>
           </div>
         </div>
       HTML
