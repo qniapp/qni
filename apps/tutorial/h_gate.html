@@ -25,67 +25,34 @@ next_url: ./phase_gate.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-H0-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H0-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-H1-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H1-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
+        'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationH0before = document.getElementById('circle-notation-H0-before')
-    let circleNotationH1before = document.getElementById('circle-notation-H1-before')
-    let circleNotationH0after = document.getElementById('circle-notation-H0-after')
-    let circleNotationH1after = document.getElementById('circle-notation-H1-after')
-
-    circleNotationH0before.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-    circleNotationH0after.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
-    })
-    circleNotationH1before.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-    circleNotationH1after.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-  </script>
 </div>
 
 <p>
@@ -172,98 +139,58 @@ next_url: ./phase_gate.html
 <div class="mx-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-H0-a"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
+
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H0-b"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
+
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H0-c"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-H1-a"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
+
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H1-b"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
+        'lg' }}
+      </div>
+
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <h-gate></h-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-H1-c"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationH0a = document.getElementById('circle-notation-H0-a')
-    let circleNotationH0b = document.getElementById('circle-notation-H0-b')
-    let circleNotationH0c = document.getElementById('circle-notation-H0-c')
-    let circleNotationH1a = document.getElementById('circle-notation-H1-a')
-    let circleNotationH1b = document.getElementById('circle-notation-H1-b')
-    let circleNotationH1c = document.getElementById('circle-notation-H1-c')
-
-    circleNotationH0a.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-    circleNotationH0b.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
-    })
-    circleNotationH0c.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-
-    circleNotationH1a.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-    circleNotationH1b.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-    circleNotationH1c.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-  </script>
 </div>
 
 <h2>H ゲートを回転として見る</h2>
@@ -293,38 +220,21 @@ next_url: ./phase_gate.html
 
 <div class="my-5 flex flex-row justify-center space-x-4 md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center space-x-1">
-    <circle-notation-old
-      id="circle-notation-H-superposition-before"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ -0.38268 | qubit_circle: 0, 'lg' }} {{ '0.7855 - 0.48636i' | qubit_circle: 1, 'lg' }}
+    </div>
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <h-gate></h-gate>
       {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
-    <circle-notation-old
-      id="circle-notation-H-superposition-after"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+
+    <div class="flex flex-row">
+      {{ '0.28483 - 0.34391i' | qubit_circle: 0, 'lg' }} {{ '-0.82603 + 0.34391i' | qubit_circle: 1,
+      'lg' }}
+    </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationBefore = document.getElementById('circle-notation-H-superposition-before')
-    let circleNotationAfter = document.getElementById('circle-notation-H-superposition-after')
-
-    circleNotationBefore.setAmplitudes({
-      0: new Complex(-0.38268, 0),
-      1: new Complex(0.7855, -0.48636),
-    })
-    circleNotationAfter.setAmplitudes({
-      0: new Complex(0.28483, -0.34391),
-      1: new Complex(-0.82603, 0.34391),
-    })
-  </script>
 </div>
 
 <p>
