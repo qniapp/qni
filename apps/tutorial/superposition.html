@@ -13,28 +13,8 @@ next_url: ./qubit.html
 
 <div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-row">
-    <div class="flex w-20 flex-col items-start">
-      <qubit-circle
-        class="h-16 w-16"
-        data-magnitude="0.707106781186548"
-        data-qubit-circle-popup-template-id="circle-notation-popup"
-        data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-      ></qubit-circle>
-      <div class="-mt-3 flex w-full flex-row justify-end">
-        <span class="font-mono text-slate-500">|0⟩</span>
-      </div>
-    </div>
-    <div class="flex w-20 flex-col items-start">
-      <qubit-circle
-        class="h-16 w-16"
-        data-magnitude="0.707106781186548"
-        data-qubit-circle-popup-template-id="circle-notation-popup"
-        data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-      ></qubit-circle>
-      <div class="-mt-3 flex w-full flex-row justify-end">
-        <span class="font-mono text-slate-500">|1⟩</span>
-      </div>
-    </div>
+    {% qubit_circle ket: 0, magnitude: 0.707106781186548 %} {% qubit_circle ket: 1, magnitude:
+    0.707106781186548 %}
   </div>
 </div>
 
