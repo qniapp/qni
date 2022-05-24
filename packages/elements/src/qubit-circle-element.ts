@@ -11,11 +11,12 @@ export class QubitCircleElement extends HTMLElement {
   @attr magnitude = 0
   @attr phase = 0
   @attr amplitude = ''
-  @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
+  @attr popupTemplateId = 'qubit-circle-popup-template'
 
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+    this.addPopupEventListeners()
   }
 
   update(): void {
@@ -92,7 +93,12 @@ export class QubitCircleElement extends HTMLElement {
     )
   }
 
-  showQubitCirclePopup(): void {
+  private addPopupEventListeners(): void {
+    this.addEventListener('mouseenter', this.showPopup)
+    this.addEventListener('mouseleave', this.hidePopup)
+  }
+
+  private showPopup(): void {
     const popup = tippy(this, {
       allowHTML: true,
       animation: false,
@@ -101,7 +107,7 @@ export class QubitCircleElement extends HTMLElement {
       theme: 'qni'
     })
 
-    if (this.qubitCirclePopupTemplate === null) return
+    if (this.popupTemplate === null) return
 
     const amplitude = new Complex(0, 0)
     let magnitude = 0
@@ -117,12 +123,12 @@ export class QubitCircleElement extends HTMLElement {
       phase = this.phase
     }
 
-    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-binary')
-    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-decimal')
-    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-real')
-    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-imag')
-    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector('.probability')
-    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.phase')
+    const ketBinaryEl = this.popupTemplate.content.querySelector('.ket-binary')
+    const ketDecimalEl = this.popupTemplate.content.querySelector('.ket-decimal')
+    const amplitudeRealEl = this.popupTemplate.content.querySelector('.amplitude-real')
+    const amplitudeImagEl = this.popupTemplate.content.querySelector('.amplitude-imag')
+    const probabilityEl = this.popupTemplate.content.querySelector('.probability')
+    const phaseEl = this.popupTemplate.content.querySelector('.phase')
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = this.ket.toString(2).padStart(this.qubitCount, '0')
@@ -149,21 +155,21 @@ export class QubitCircleElement extends HTMLElement {
     }
 
     const tmpDiv = document.createElement('div')
-    tmpDiv.appendChild(this.qubitCirclePopupTemplate.content.cloneNode(true))
+    tmpDiv.appendChild(this.popupTemplate.content.cloneNode(true))
 
     // eslint-disable-next-line github/no-inner-html
     popup.setContent(tmpDiv.innerHTML)
     popup.show()
   }
 
-  hideQubitCirclePopup(): void {
+  private hidePopup(): void {
     const popup = (this as ReferenceElement)._tippy as Instance
     Util.notNull(popup)
 
     popup.destroy()
   }
 
-  private get qubitCirclePopupTemplate(): HTMLTemplateElement | null {
-    return document.getElementById(this.qubitCirclePopupTemplateId) as HTMLTemplateElement
+  private get popupTemplate(): HTMLTemplateElement | null {
+    return document.getElementById(this.popupTemplateId) as HTMLTemplateElement
   }
 }

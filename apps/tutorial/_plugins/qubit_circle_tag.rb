@@ -13,8 +13,7 @@ module Jekyll
           <qubit-circle
             class="#{klass}"
             data-magnitude="#{@options[:magnitude] || 0}"
-            data-qubit-circle-popup-template-id="circle-notation-popup"
-            data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+            data-popup-template-id="circle-notation-popup"
           ></qubit-circle>
           <div class="-mt-3 flex w-full flex-row justify-end">
             <span class="font-mono text-slate-500">|#{@options[:ket]}⟩</span>
