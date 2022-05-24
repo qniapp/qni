@@ -11135,7 +11135,8 @@ var Ir = /* @__PURE__ */ __name(class extends HTMLElement {
             transform: rotate(${this.phase}deg);
           }
 
-          :host([data-magnitude="0"]) #phase {
+          :host([data-magnitude='0']) #phase,
+          :host([data-magnitude='0.0']) #phase {
             display: none;
           }
         </style>

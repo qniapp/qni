@@ -12,7 +12,7 @@ module Jekyll
         <div class="flex w-20 flex-col items-start">
           <qubit-circle
             class="#{klass}"
-            data-magnitude="#{@options[:magnitude]}"
+            data-magnitude="#{@options[:magnitude] || 0}"
             data-qubit-circle-popup-template-id="circle-notation-popup"
             data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
           ></qubit-circle>

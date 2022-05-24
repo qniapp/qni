@@ -1,3 +1,7 @@
 qubit-circle.magnitude-lime::part(magnitude) {
   @apply bg-lime-500;
 }
+
+qubit-circle.magnitude-lime:hover::part(magnitude) {
+  @apply bg-orange-500;
+}
