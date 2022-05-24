@@ -20,55 +20,33 @@ next_url: ./no_cloning_theorem.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-0"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-1"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotation0 = document.getElementById('circle-notation-0')
-    let circleNotation1 = document.getElementById('circle-notation-1')
-    let circleNotation2 = document.getElementById('circle-notation-2')
-    let circleNotation3 = document.getElementById('circle-notation-3')
-
-    circleNotation0.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation1.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation2.setAmplitudes({ 0: 0, 1: 1 })
-    circleNotation3.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
 </div>
 
 <h2>重ね合わせ状態の測定</h2>
@@ -82,11 +60,10 @@ next_url: ./no_cloning_theorem.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-superposition-before-MEASUREMENT"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ '0.25 + 0.43301i' | qubit_circle: 0, 'lg' }} {{ '0.43301 - 0.75i' | qubit_circle: 1, 'lg'
+        }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <measurement-gate></measurement-gate>
@@ -95,40 +72,19 @@ next_url: ./no_cloning_theorem.html
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row">
           <div class="my-auto mr-4 text-purple-600">25%</div>
-          <circle-notation-old
-            id="circle-notation-4"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+          </div>
         </div>
         <div class="flex flex-row">
           <div class="my-auto mr-4 text-purple-600">75%</div>
-          <circle-notation-old
-            id="circle-notation-5"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circuleNotationBefore = document.getElementById(
-      'circle-notation-superposition-before-MEASUREMENT'
-    )
-    let circleNotation4 = document.getElementById('circle-notation-4')
-    let circleNotation5 = document.getElementById('circle-notation-5')
-
-    circuleNotationBefore.setAmplitudes({
-      0: new Complex(0.25, 0.43301),
-      1: new Complex(0.43301, -0.75),
-    })
-    circleNotation4.setAmplitudes({ 0: 1, 1: 0 })
-    circleNotation5.setAmplitudes({ 0: 0, 1: 1 })
-  </script>
 </div>
 
 <p>
