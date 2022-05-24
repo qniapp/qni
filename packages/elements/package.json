@@ -42,6 +42,7 @@
     "@github/jtml": "~0.4",
     "@github/mini-throttle": "^2.1.0",
     "@qni/common": "^0.0.61",
+    "complex.js": "^2.1.1",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
     "xstate": "~4.31"

@@ -1,16 +1,16 @@
-import {Complex, Util} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import Complex from 'complex.js'
+import {Util} from '@qni/common'
 import {forceSigned} from './util'
 
 @controller
 export class QubitCircleElement extends HTMLElement {
   @attr ket = 0
   @attr qubitCount = 1
-  @attr magnitude = 0
-  @attr phase = 0
   @attr amplitude = ''
+  @attr hidePhase = false
   @attr popupTemplateId = 'qubit-circle-popup-template'
 
   connectedCallback(): void {
@@ -22,10 +22,6 @@ export class QubitCircleElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
-          qubit-circle {
-            --phase: 0deg;
-          }
-
           #border {
             position: relative;
 
@@ -79,8 +75,7 @@ export class QubitCircleElement extends HTMLElement {
             transform: rotate(${this.phase}deg);
           }
 
-          :host([data-magnitude='0']) #phase,
-          :host([data-magnitude='0.0']) #phase {
+          :host([data-hide-phase]) #phase {
             display: none;
           }
         </style>
@@ -91,6 +86,7 @@ export class QubitCircleElement extends HTMLElement {
         </div>`,
       this.shadowRoot!
     )
+    if (this.magnitude === 0) this.hidePhase = true
   }
 
   private addPopupEventListeners(): void {
@@ -109,20 +105,7 @@ export class QubitCircleElement extends HTMLElement {
 
     if (this.popupTemplate === null) return
 
-    const amplitude = new Complex(0, 0)
-    let magnitude = 0
-    let phase = 0
-
-    if (this.amplitude !== '') {
-      // TODO: amplitude に "0.707 + 0.707i" のような文字列が来たときにパースして Complex を作る
-      // amplitude = new Complex(this.amplitudeReal, this.amplitudeImag)
-      // magnitude = amplitude.abs()
-      // phase = (amplitude.phase() / Math.PI) * 180
-    } else {
-      magnitude = this.magnitude
-      phase = this.phase
-    }
-
+    const amplitude = new Complex(this.amplitude)
     const ketBinaryEl = this.popupTemplate.content.querySelector('.ket-binary')
     const ketDecimalEl = this.popupTemplate.content.querySelector('.ket-decimal')
     const amplitudeRealEl = this.popupTemplate.content.querySelector('.amplitude-real')
@@ -139,19 +122,19 @@ export class QubitCircleElement extends HTMLElement {
     }
 
     if (amplitudeRealEl) {
-      amplitudeRealEl.textContent = forceSigned(amplitude.real, 5)
+      amplitudeRealEl.textContent = forceSigned(amplitude.re, 5)
     }
 
     if (amplitudeImagEl) {
-      amplitudeImagEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
+      amplitudeImagEl.textContent = `${forceSigned(amplitude.im, 5)}i`
     }
 
     if (probabilityEl) {
-      probabilityEl.textContent = `${forceSigned(magnitude * magnitude * 100, 4)}%`
+      probabilityEl.textContent = `${forceSigned(this.magnitude * this.magnitude * 100, 4)}%`
     }
 
     if (phaseEl) {
-      phaseEl.textContent = `${forceSigned(phase, 2)}°`
+      phaseEl.textContent = `${forceSigned(this.phaseDeg, 2)}°`
     }
 
     const tmpDiv = document.createElement('div')
@@ -160,6 +143,20 @@ export class QubitCircleElement extends HTMLElement {
     // eslint-disable-next-line github/no-inner-html
     popup.setContent(tmpDiv.innerHTML)
     popup.show()
+  }
+
+  private get magnitude(): number {
+    const amplitude = new Complex(this.amplitude)
+    return amplitude.abs()
+  }
+
+  private get phase(): number {
+    const amplitude = new Complex(this.amplitude)
+    return amplitude.arg()
+  }
+
+  private get phaseDeg(): number {
+    return (this.phase / Math.PI) * 180
   }
 
   private hidePopup(): void {

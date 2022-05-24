@@ -13,7 +13,7 @@ next_url: ./qubit.html
 
 <div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-row">
-    {% qubit_circle ket: 0, magnitude: 0.707106781186548 %} {% qubit_circle ket: 1, magnitude:
+    {% qubit_circle ket: 0, amplitude: 0.707106781186548 %} {% qubit_circle ket: 1, amplitude:
     0.707106781186548 %}
   </div>
 </div>
@@ -51,7 +51,7 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            {% qubit_circle ket: 0, magnitude: 1 %} {% qubit_circle ket: 1, magnitude: 0 %}
+            {% qubit_circle ket: 0, amplitude: 1 %} {% qubit_circle ket: 1, amplitude: 0 %}
           </div>
         </td>
       </tr>
@@ -59,7 +59,7 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 1 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            {% qubit_circle ket: 0, magnitude: 0, color: line %} {% qubit_circle ket: 1, magnitude:
+            {% qubit_circle ket: 0, amplitude: 0, color: lime %} {% qubit_circle ket: 1, amplitude:
             1, color: lime %}
           </div>
         </td>
@@ -68,8 +68,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
         <td>
           <div class="flex flex-row">
-            {% qubit_circle ket: 0, magnitude: 0.707106781186548 %} {% qubit_circle ket: 1,
-            magnitude: 0.707106781186548 %}
+            {% qubit_circle ket: 0, amplitude: 0.707106781186548 %} {% qubit_circle ket: 1,
+            amplitude: 0.707106781186548 %}
           </div>
         </td>
       </tr>
@@ -77,8 +77,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
         <td>
           <div class="flex flex-row">
-            {% qubit_circle ket: 0, magnitude: 0.894427190999916, color: lime %} {% qubit_circle
-            ket: 1, magnitude: 0.447213595499958, color: lime %}
+            {% qubit_circle ket: 0, amplitude: 0.894427190999916, color: lime %} {% qubit_circle
+            ket: 1, amplitude: 0.447213595499958, color: lime %}
           </div>
         </td>
       </tr>

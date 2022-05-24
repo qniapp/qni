@@ -12,6 +12,7 @@ module Jekyll
         <div class="flex w-20 flex-col items-start">
           <qubit-circle
             class="#{klass}"
+            data-amplitude="#{@options[:amplitude]}"
             data-magnitude="#{@options[:magnitude] || 0}"
             data-popup-template-id="circle-notation-popup"
           ></qubit-circle>
@@ -29,6 +30,8 @@ module Jekyll
         case each.strip
         when /ket:\s*(\d+)/
           [:ket, Regexp.last_match(1).to_i]
+        when /amplitude:(.*)/
+          [:amplitude, Regexp.last_match(1).strip]
         when /magnitude:\s*(\S+)/
           [:magnitude, Regexp.last_match(1).to_f]
         when /color:\s*(\S+)/
