@@ -14,29 +14,25 @@ next_url: ./x_gate.html
   命令と CPU 命令には、次の大きな違いがあります。
 </p>
 
-<ul class="list-decimal">
-  <li>
-    <p><strong>QPU 命令は重ね合わせ状態に作用できます。</strong></p>
-    <p>
-      CPU 論理演算は 0 または 1 のみを入力・出力します。 0 と 1 は古典 1
-      ビットで表せる値のすべてです。
-    </p>
+<h2>QPU 命令は重ね合わせ状態に作用できる</h2>
 
-    <figure class="!w-full">
-      <img src="./images/logic_gates_and_not.png" class="h-auto w-full" />
-    </figure>
+<p>
+  CPU 論理演算は 0 または 1 のみを入力・出力します。 0 と 1 は古典 1 ビットで表せる値のすべてです。
+</p>
 
-    <p>
-      一方で QPU 命令は量子ビットを入出力します。 量子ビットは 0 と 1 だけでなく、0 と 1 の確率
-      (重ね合わせ) を持つことができ、また位相という角度データも持つのでした。 QPU
-      命令は量子ビットの持つ確率と位相の両方に作用します。
-    </p>
-  </li>
-</ul>
+<figure>
+  <img src="./images/logic_gates_and_not.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  一方で QPU 命令は量子ビットを入出力します。 量子ビットは 0 と 1 だけでなく、0 と 1 の確率
+  (重ね合わせ) を持つことができ、また位相という角度データも持つのでした。 QPU
+  命令は量子ビットの持つ確率と位相の両方に作用します。
+</p>
 
 <div class="-mt-2.5 hidden h-12 w-12"></div>
 
-<div class="my-5 flex overflow-x-auto">
+<div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
   <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
     <div class="flex flex-row">
       {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
@@ -56,23 +52,20 @@ next_url: ./x_gate.html
   </div>
 </div>
 
-<ul class="list-decimal">
-  <li value="2">
-    <p><strong>QPU 命令の大部分は、逆方向の命令 (逆演算) を持ちます。</strong></p>
-    <p>
-      AND などの CPU 命令では、出力の 1 ビットから入力の 2 ビットを知ることはできません。
-      たとえば、AND の出力が 0 だった場合には、入力は 00/01/10 の 3 通りで、どれか 1
-      つに特定することはできません。 これを「AND は非可逆である」と言います。
-    </p>
+<h2>QPU 命令の大部分は逆方向の命令 (逆演算) を持つ</h2>
 
-    <p>
-      一方でほとんどの QPU 命令は可逆です。 つまりある QPU 命令に対応する逆命令 (逆演算)
-      を適用することで、出力の量子ビットから元々の入力された量子ビットを得ることができます
-    </p>
-  </li>
-</ul>
+<p>
+  AND などの CPU 命令では、出力の 1 ビットから入力の 2 ビットを知ることはできません。 たとえば、AND
+  の出力が 0 だった場合には、入力は 00/01/10 の 3 通りで、どれか 1 つに特定することはできません。
+  これを「AND は非可逆である」と言います。
+</p>
 
-<div class="my-5 flex overflow-x-auto">
+<p>
+  一方でほとんどの QPU 命令は可逆です。 つまりある QPU 命令に対応する逆命令 (逆演算)
+  を適用することで、出力の量子ビットから元々の入力された量子ビットを得ることができます
+</p>
+
+<div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
   <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
     <div class="flex flex-row">
       {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
