@@ -976,19 +976,28 @@
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    id="circle-notation-80-20"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation-old>
-  <script type="module">
-    import { Complex } from './application.js'
+  <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.8944271909999159"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
 
-    document.getElementById('circle-notation-80-20').setAmplitudes({
-      0: Math.sqrt(0.8),
-      1: Math.sqrt(0.2),
-    })
-  </script>
+  <div class="flex w-20 flex-col items-start">
+  <qubit-circle
+    class="h-16 w-16"
+    data-amplitude="0.4472135954999579"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
 </div>
 
 <h2>確率</h2>
