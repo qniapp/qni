@@ -985,8 +985,8 @@
 
 <p>
   2 個の円はそれぞれ古典ビット 0 (左) と 1 (右)
-  を表しており、内側の円の面積はそれぞれの確率を表しています。
-  この状態ではどちらも五分五分なので、0 と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
+  を表しており、内側の円の面積はそれぞれの確率を表しています。 この状態ではどちらも五分五分なので、0
+  と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
   円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
 </p>
 
@@ -1017,27 +1017,29 @@
         <td>
           <div class="flex flex-row">
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="1"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16"
+    data-magnitude="1.0"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
+
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16"
+    data-magnitude="0.0"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
           </div>
         </td>
       </tr>
@@ -1046,27 +1048,29 @@
         <td>
           <div class="flex flex-row">
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16 magnitude-line"
+    data-magnitude="0.0"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
+
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16 magnitude-lime"
-                data-magnitude="1"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16 magnitude-lime"
+    data-magnitude="1.0"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
           </div>
         </td>
       </tr>
@@ -1075,27 +1079,29 @@
         <td>
           <div class="flex flex-row">
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0.707106781186548"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16"
+    data-magnitude="0.707106781186548"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
+
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0.707106781186548"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16"
+    data-magnitude="0.707106781186548"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
           </div>
         </td>
       </tr>
@@ -1104,27 +1110,29 @@
         <td>
           <div class="flex flex-row">
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16 magnitude-lime"
-                data-magnitude="0.894427190999916"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16 magnitude-lime"
+    data-magnitude="0.894427190999916"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|0⟩</span>
+  </div>
+</div>
+
             <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16 magnitude-lime"
-                data-magnitude="0.447213595499958"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+  <qubit-circle
+    class="h-16 w-16 magnitude-lime"
+    data-magnitude="0.447213595499958"
+    data-qubit-circle-popup-template-id="circle-notation-popup"
+    data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
+  ></qubit-circle>
+  <div class="-mt-3 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500">|1⟩</span>
+  </div>
+</div>
+
           </div>
         </td>
       </tr>

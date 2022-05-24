@@ -71,28 +71,7 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="1"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+            {% qubit_circle ket: 0, magnitude: 1 %} {% qubit_circle ket: 1, magnitude: 0 %}
           </div>
         </td>
       </tr>
@@ -100,28 +79,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 1 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="magnitude-lime h-16 w-16"
-                data-magnitude="1"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+            {% qubit_circle ket: 0, magnitude: 0, color: line %} {% qubit_circle ket: 1, magnitude:
+            1, color: lime %}
           </div>
         </td>
       </tr>
@@ -129,28 +88,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
         <td>
           <div class="flex flex-row">
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0.707106781186548"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="h-16 w-16"
-                data-magnitude="0.707106781186548"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+            {% qubit_circle ket: 0, magnitude: 0.707106781186548 %} {% qubit_circle ket: 1,
+            magnitude: 0.707106781186548 %}
           </div>
         </td>
       </tr>
@@ -158,28 +97,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
         <td>
           <div class="flex flex-row">
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="magnitude-lime h-16 w-16"
-                data-magnitude="0.894427190999916"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|0⟩</span>
-              </div>
-            </div>
-            <div class="flex w-20 flex-col items-start">
-              <qubit-circle
-                class="magnitude-lime h-16 w-16"
-                data-magnitude="0.447213595499958"
-                data-qubit-circle-popup-template-id="circle-notation-popup"
-                data-action="mouseenter:qubit-circle#showQubitCirclePopup mouseleave:qubit-circle#hideQubitCirclePopup"
-              ></qubit-circle>
-              <div class="-mt-3 flex w-full flex-row justify-end">
-                <span class="font-mono text-slate-500">|1⟩</span>
-              </div>
-            </div>
+            {% qubit_circle ket: 0, magnitude: 0.894427190999916, color: lime %} {% qubit_circle
+            ket: 1, magnitude: 0.447213595499958, color: lime %}
           </div>
         </td>
       </tr>
