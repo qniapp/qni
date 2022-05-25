@@ -127,6 +127,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     const stepIndex = this.activeStepIndex
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')
+    const circuitJson = this.circuit.toJson()
 
     const maxControlTargetBit = Math.max(
       ...serializedSteps.map(serializedStep =>
@@ -146,6 +147,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker.postMessage({
       qubitCount,
       stepIndex,
+      circuitJson,
       steps: serializedSteps,
       targets: this.circleNotation.visibleQubitCircleKets
     })
