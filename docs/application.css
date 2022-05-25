@@ -5816,10 +5816,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   width: auto !important;
 }
 
-.w-11 {
-  width: 2.75rem;
-}
-
 .w-7 {
   width: 1.75rem;
 }
@@ -5846,6 +5842,10 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .w-12 {
   width: 3rem;
+}
+
+.w-11 {
+  width: 2.75rem;
 }
 
 .min-w-0 {
