@@ -1081,7 +1081,7 @@ select {
 }
 
 /*
-! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -5688,10 +5688,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .ml-2 {
   margin-left: 0.5rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
 }
 
 .mt-1 {

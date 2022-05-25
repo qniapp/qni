@@ -36,7 +36,7 @@ class GatePopupTest < ApplicationSystemTestCase
 
     assert_popup <<~TEXT.chomp, operation
       Pauli Y Gate
-      The combination of the X and Z gates.
+      A combination of the X and Z gates.
     TEXT
   end
 
