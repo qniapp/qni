@@ -7,7 +7,9 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    </div>
 
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
@@ -15,11 +17,16 @@
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
 
-    {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | qubit_circle: 1, 'base'
+      }}
+    </div>
   </div>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    </div>
 
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
@@ -27,7 +34,9 @@
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
 
-    {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | prepend: '-' |
-    qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | prepend: '-' |
+      qubit_circle: 1, 'base' }}
+    </div>
   </div>
 </template>

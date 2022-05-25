@@ -5,7 +5,9 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    </div>
 
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
@@ -13,11 +15,15 @@
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
 
-    {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    </div>
   </div>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    </div>
 
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
@@ -25,12 +31,16 @@
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
 
-    {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    </div>
   </div>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    {{ '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 0, 'base', 'emerald' }} {{
-    '0.15295625823231337 + 0.42024324273873803i' | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 0, 'base', 'emerald' }} {{
+      '0.15295625823231337 + 0.42024324273873803i' | qubit_circle: 1, 'base' }}
+    </div>
 
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
@@ -38,7 +48,9 @@
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
 
-    {{ '0.15295625823231337 + 0.42024324273873803i' | qubit_circle: 0, 'base', 'emerald' }} {{
-    '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 1, 'base' }}
+    <div class="flex flex-row">
+      {{ '0.15295625823231337 + 0.42024324273873803i' | qubit_circle: 0, 'base', 'emerald' }} {{
+      '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 1, 'base' }}
+    </div>
   </div>
 </template>
