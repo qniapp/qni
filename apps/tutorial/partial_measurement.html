@@ -19,30 +19,23 @@ next_url: ./swap_gate.html
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mx-4 flex flex-row justify-between">
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
-      <span class="basis-1/4 text-center text-purple-600">0%</span>
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
+    <div class="flex flex-row justify-between">
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">0%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
     </div>
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0.333333 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 1, 'lg' }} {{
+      0 | qubit_circle: 2, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 3, 'lg' }}
     </div>
   </div>
 </div>
@@ -71,24 +64,9 @@ next_url: ./swap_gate.html
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-0-before"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-0-before')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0.333333 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 1, 'lg' }} {{
+      0 | qubit_circle: 2, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 3, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -97,24 +75,9 @@ next_url: ./swap_gate.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-0-after"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-0-after')
-        circleNotation.setAmplitudes({
-          0: 1,
-          1: 0,
-          2: 0,
-          3: 0,
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }} {{ 0 | qubit_circle: 2, 'lg'
+      }} {{ 0 | qubit_circle: 3, 'lg' }}
     </div>
   </div>
 </div>
@@ -126,24 +89,9 @@ next_url: ./swap_gate.html
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-1-before"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-1-before')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0.333333 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 1, 'lg' }} {{
+      0 | qubit_circle: 2, 'lg' }} {{ 0.333333 | sqrt | qubit_circle: 3, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -152,24 +100,9 @@ next_url: ./swap_gate.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-1-after"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-1-after')
-        circleNotation.setAmplitudes({
-          0: 0,
-          1: Math.sqrt(0.5),
-          2: 0,
-          3: Math.sqrt(0.5),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0 | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }} {{ 0 | qubit_circle:
+      2, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 3, 'lg' }}
     </div>
   </div>
 </div>

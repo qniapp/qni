@@ -5839,6 +5839,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   width: 3rem;
 }
 
+.w-1\/4 {
+  width: 25%;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -5868,6 +5872,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 }
 
 .flex-grow {
+  flex-grow: 1;
+}
+
+.grow {
   flex-grow: 1;
 }
 
