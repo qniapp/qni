@@ -12,18 +12,15 @@ next_url: ./qubit.html
 <p>Qni では、1 ビットでの 0 と 1 の重ね合わせ状態を次のように 2 つの円で表示します。</p>
 
 <div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    data-size="xl"
-    data-magnitudes="0.7071067811865475,0.7071067811865475"
-    data-phases="0,0"
-    data-show-kets
-  ></circle-notation-old>
+  <div class="flex flex-row">
+    {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
+  </div>
 </div>
 
 <p>
   2 個の円はそれぞれ古典ビット 0 (左) と 1 (右)
-  を表しており、中の青い部分の面積はそれぞれの確率を表しています。
-  この状態ではどちらも五分五分なので、0 と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
+  を表しており、内側の円の面積はそれぞれの確率を表しています。 この状態ではどちらも五分五分なので、0
+  と 1 がそれぞれ 50% の確率で重ね合っていると読みます。
   円の上にマウスポインタをホバーすることで、これらの確率を表示できます。
 </p>
 
@@ -51,46 +48,33 @@ next_url: ./qubit.html
     <tbody>
       <tr>
         <td class="align-middle">{% ket 0 %} が 100%</td>
-        <td class="pb-6">
-          <circle-notation-old
-            data-size="xl"
-            data-magnitudes="1,0"
-            data-phases="0,0"
-            data-show-kets
-          ></circle-notation-old>
+        <td>
+          <div class="flex flex-row">{{ 1 | qubit_circle: 0 }} {{ 0 | qubit_circle: 1 }}</div>
         </td>
       </tr>
       <tr>
         <td class="align-middle">{% ket 1 %} が 100%</td>
-        <td class="pb-6">
-          <circle-notation-old
-            data-size="xl"
-            data-magnitudes="0,1"
-            data-phases="0,0"
-            data-show-kets
-          ></circle-notation-old>
+        <td>
+          <div class="flex flex-row">
+            {{ 0 | qubit_circle: 0, 'xl', 'lime' }} {{ 1 | qubit_circle: 1, 'xl', 'lime' }}
+          </div>
         </td>
       </tr>
       <tr>
         <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
-        <td class="pb-6">
-          <circle-notation-old
-            data-size="xl"
-            data-magnitudes="0.7071067811865475,0.7071067811865475"
-            data-phases="0,0"
-            data-show-kets
-          ></circle-notation-old>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
+          </div>
         </td>
       </tr>
       <tr>
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
-        <td class="pb-6">
-          <circle-notation-old
-            data-size="xl"
-            data-magnitudes="0.8944271909999159,0.4472135954999579"
-            data-phases="0,0"
-            data-show-kets
-          ></circle-notation-old>
+        <td>
+          <div class="flex flex-row">
+            {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'xl',
+            'lime' }}
+          </div>
         </td>
       </tr>
     </tbody>
@@ -105,14 +89,14 @@ next_url: ./qubit.html
 </p>
 
 <p>
-  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (青く塗り潰された円)
+  表の 3 行目と 4 行目は重ね合わせ状態にあります。 これらを測定すると確率の情報 (内側の円)
   は破壊され、状態 {% ket 0 %} または {% ket 1 %} に変化します。
   つまり、重ね合わせ状態にあるビットを測定すると、古典ビット 0 または 1
   で表すことのできる状態に変化します。
 </p>
 
 <orbit-reviewarea color="blue">
-  <orbit-prompt cloze="Qni の円表示において、青い部分の{面積}は 0 または 1 の確率を表す">
+  <orbit-prompt cloze="Qni の円表示において、内側の円の{面積}は 0 または 1 の確率を表す">
   </orbit-prompt>
   <orbit-prompt cloze="ビットの状態 0 は記号 {$|0\rangle$} で表せる"> </orbit-prompt>
   <orbit-prompt cloze="ビットの状態 1 は記号 {$|1\rangle$} で表せる"> </orbit-prompt>

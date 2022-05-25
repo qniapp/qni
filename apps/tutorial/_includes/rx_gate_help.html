@@ -1,35 +1,41 @@
 <template id="rx-gate-help">
   <header>
     <h1>Rx ゲート</h1>
-    <p>X 軸を中心に角度 θ だけ回転させる。</p>
+    <p>X 軸を中心に角度 θ 回転させる。</p>
     <p>デフォルトで θ = π/2。</p>
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
+    <div class="flex flex-row">
+      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    </div>
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation-old
-      data-magnitudes="0.7,0.7"
-      data-phases="0,-90"
-      data-show-kets
-    ></circle-notation-old>
+
+    <div class="flex flex-row">
+      {{ 0.7071067811865476 | qubit_circle: 0, 'base', 'emerald' }} {{ '-0.7071067811865475i' |
+      qubit_circle: 1, 'base' }}
+    </div>
   </div>
 
-  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
+  <div class="mt-5 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+    </div>
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation-old
-      data-magnitudes="0.7,0.7"
-      data-phases="-90,0"
-      data-show-kets
-    ></circle-notation-old>
+
+    <div class="flex flex-row">
+      {{ '-0.7071067811865476i' | qubit_circle: 0, 'base', 'emerald' }} {{ 0.7071067811865475 |
+      qubit_circle: 1, 'base' }}
+    </div>
   </div>
 </template>

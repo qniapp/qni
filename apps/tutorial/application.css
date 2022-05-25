@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -5291,6 +5291,16 @@ z-gate::part(icon) {
 
 /* bottom label */
 
+@media (min-width: 768px) {
+  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
+    margin-right: auto;
+  }
+
+  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
+    width: 58.333333%;
+  }
+}
+
 body {
   counter-reset: margin-note-counter;
 }
@@ -5437,14 +5447,24 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   border-radius: 0.375rem;
 }
 
-@media (min-width: 768px) {
-  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
-    margin-right: auto;
-  }
+qubit-circle.magnitude-lime::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(132 204 22 / var(--tw-bg-opacity));
+}
 
-  .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
-    width: 58.333333%;
-  }
+qubit-circle.magnitude-lime:hover::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
+}
+
+qubit-circle.magnitude-emerald::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+
+qubit-circle.magnitude-emerald:hover::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .sr-only {
@@ -5547,11 +5567,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   margin-bottom: auto;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -5603,6 +5618,18 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   margin-bottom: 1rem;
 }
 
+.-mt-2\.5 {
+  margin-top: -0.625rem;
+}
+
+.-mt-2 {
+  margin-top: -0.5rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -5613,10 +5640,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .mr-4 {
   margin-right: 1rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
 }
 
 .mt-12 {
@@ -5633,10 +5656,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
 }
 
 .-mr-12 {
@@ -5673,6 +5692,14 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.-mt-3 {
+  margin-top: -0.75rem;
+}
+
+.-mt-1 {
+  margin-top: -0.25rem;
 }
 
 .block {
@@ -5727,6 +5754,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   height: auto;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -5773,16 +5804,24 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   width: 1.5rem;
 }
 
-.\!w-full {
-  width: 100% !important;
+.w-12 {
+  width: 3rem;
 }
 
 .w-auto {
   width: auto;
 }
 
+.\!w-full {
+  width: 100% !important;
+}
+
 .\!w-auto {
   width: auto !important;
+}
+
+.w-11 {
+  width: 2.75rem;
 }
 
 .w-7 {
@@ -5856,12 +5895,12 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
           user-select: none;
 }
 
-.list-decimal {
-  list-style-type: decimal;
-}
-
 .list-none {
   list-style-type: none;
+}
+
+.list-decimal {
+  list-style-type: decimal;
 }
 
 .list-disc {
@@ -5888,12 +5927,20 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   flex-direction: column;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .items-end {
   align-items: flex-end;
 }
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-end {
@@ -5918,16 +5965,16 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1rem * var(--tw-space-x-reverse));
-  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -5956,6 +6003,10 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 
 .self-center {
   align-self: center;
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-hidden {
@@ -6198,20 +6249,12 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   padding-right: 2rem;
 }
 
-.pb-14 {
-  padding-bottom: 3.5rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
-.pb-6 {
-  padding-bottom: 1.5rem;
-}
-
 .\!pb-0 {
   padding-bottom: 0px !important;
+}
+
+.pb-14 {
+  padding-bottom: 3.5rem;
 }
 
 .pl-4 {
@@ -6270,6 +6313,11 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -6283,11 +6331,6 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .text-xl {
@@ -6441,6 +6484,11 @@ label.margin-note--numbered + input.margin-note__toggle + .margin-note::before {
 .text-neutral-800 {
   --tw-text-opacity: 1;
   color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+
+.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 .no-underline {

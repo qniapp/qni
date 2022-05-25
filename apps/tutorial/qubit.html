@@ -32,19 +32,7 @@ next_url: ./phase.html
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    id="circle-notation-80-20"
-    data-size="xl"
-    data-show-kets
-  ></circle-notation-old>
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-80-20').setAmplitudes({
-      0: Math.sqrt(0.8),
-      1: Math.sqrt(0.2),
-    })
-  </script>
+  {{ 0.8 | sqrt | qubit_circle: 0 }} {{ 0.2 | sqrt | qubit_circle: 1 }}
 </div>
 
 <h2>確率</h2>

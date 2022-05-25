@@ -15,6 +15,7 @@ export * from './circle-notation-element'
 export * from './circle-notation-old-element'
 export * from './inspector-button-element'
 export * from './operation-inspector-element'
+export * from './qubit-circle-element'
 export * from './run-circuit-button-element'
 
 export * from './bloch-display-element'

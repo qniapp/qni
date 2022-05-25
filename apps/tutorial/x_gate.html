@@ -34,39 +34,31 @@ next_url: ./h_gate.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        data-size="xl"
-        data-magnitudes="1,0"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <x-gate></x-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        data-size="xl"
-        data-magnitudes="0,1"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        data-size="xl"
-        data-magnitudes="0,1"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <x-gate></x-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        data-size="xl"
-        data-magnitudes="1,0"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
 </div>
@@ -131,12 +123,9 @@ next_url: ./h_gate.html
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <circle-notation-old
-    data-size="xl"
-    data-magnitudes="0.8944271909999159,0.4472135954999579"
-    data-phases="-20,70"
-    data-show-kets
-  ></circle-notation-old>
+  <div class="flex flex-row">
+    {{ '-0.20015 + 0.44444i' | qubit_circle: 0 }} {{ '0.67819 - 0.54997i' | qubit_circle: 1 }}
+  </div>
 </div>
 
 <p>
@@ -146,23 +135,19 @@ next_url: ./h_gate.html
 
 <div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
   <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-    <circle-notation-old
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
+      'lg' }}
+    </div>
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <x-gate></x-gate>
       {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
-    <circle-notation-old
-      data-size="xl"
-      data-magnitudes="0.4472135954999579,0.8944271909999159"
-      data-phases="70,-20"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'lg' }} {{ '-0.20015 + 0.44444i' | qubit_circle: 1,
+      'lg' }}
+    </div>
   </div>
 </div>
 
@@ -175,34 +160,32 @@ next_url: ./h_gate.html
 
 <div class="my-5 flex overflow-x-auto">
   <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
-    <circle-notation-old
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation-old>
+    <div class="flex flex-row">
+      {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <x-gate></x-gate>
       {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
-    <circle-notation-old
-      data-size="xl"
-      data-magnitudes="0.4472135954999579,0.8944271909999159"
-      data-phases="70,-20"
-      data-show-kets
-    ></circle-notation-old>
+
+    <div class="flex flex-row">
+      {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'lg' }} {{ '-0.20015 + 0.44444i' | qubit_circle: 1,
+      'lg' }}
+    </div>
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <x-gate></x-gate>
       {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
     </div>
-    <circle-notation-old
-      data-size="xl"
-      data-magnitudes="0.8944271909999159,0.4472135954999579"
-      data-phases="-20,70"
-      data-show-kets
-    ></circle-notation-old>
+
+    <div class="flex flex-row">
+      {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
+      'lg' }}
+    </div>
   </div>
 </div>
 

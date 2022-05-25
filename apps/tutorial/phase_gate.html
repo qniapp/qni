@@ -18,88 +18,49 @@ next_url: ./write_operation.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-π/4-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-π/4-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ '0.5 + 0.5i' | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-π/2-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg', 'lime' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg',
+        'lime' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-π/2-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg', 'lime' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle:
+        1, 'lg', 'lime' }}
+      </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-13π/8-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="13π/8"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-13π/8-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ '0.2706 - 0.65328i' | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-P-π/4-before').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: Math.sqrt(0.5),
-    })
-    document.getElementById('circle-notation-P-π/4-after').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: new Complex(0.5, 0.5),
-    })
-    document.getElementById('circle-notation-P-π/2-before').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: Math.sqrt(0.5),
-    })
-    document.getElementById('circle-notation-P-π/2-after').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: new Complex(0, Math.sqrt(0.5)),
-    })
-    document.getElementById('circle-notation-P-13π/8-before').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: Math.sqrt(0.5),
-    })
-    document.getElementById('circle-notation-P-13π/8-after').setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: new Complex(0.2706, -0.65328),
-    })
-  </script>
 </div>
 
 <p>
@@ -121,36 +82,19 @@ next_url: ./write_operation.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-amp-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ 0.38268 | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-amp-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ '0.2706 + 0.2706i' | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-P-amp-before').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.38268, 0),
-    })
-    document.getElementById('circle-notation-P-amp-after').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.2706, 0.2706),
-    })
-  </script>
 </div>
 
 <p>
@@ -162,49 +106,34 @@ next_url: ./write_operation.html
 <div class="mx-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-a"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-b"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle: 1, 'lg'
+        }}
+      </div>
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
         <phase-gate data-angle="-π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-c"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
 
   <script type="module">
     import { Complex } from './application.js'
 
-    let circleNotationH0a = document.getElementById('circle-notation-P-a')
-    let circleNotationH0b = document.getElementById('circle-notation-P-b')
     let circleNotationH0c = document.getElementById('circle-notation-P-c')
 
-    circleNotationH0a.setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: Math.sqrt(0.5),
-    })
-    circleNotationH0b.setAmplitudes({
-      0: Math.sqrt(0.5),
-      1: new Complex(0, Math.sqrt(0.5)),
-    })
     circleNotationH0c.setAmplitudes({
       0: Math.sqrt(0.5),
       1: Math.sqrt(0.5),

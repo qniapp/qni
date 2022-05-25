@@ -964,30 +964,66 @@
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mx-4 flex flex-row justify-between">
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
-      <span class="basis-1/4 text-center text-purple-600">0%</span>
-      <span class="basis-1/4 text-center text-purple-600">33%</span>
+    <div class="flex flex-row justify-between">
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">0%</span>
+      </div>
+      <div class="mr-4 basis-1/4 text-center">
+        <span class="text-purple-600">33%</span>
+      </div>
     </div>
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
 
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
     </div>
   </div>
 </div>
@@ -1015,24 +1051,52 @@
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-0-before"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
 
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-0-before')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -1043,24 +1107,52 @@
 
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-0-after"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="1"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
 
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-0-after')
-        circleNotation.setAmplitudes({
-          0: 1,
-          1: 0,
-          2: 0,
-          3: 0,
-        })
-      </script>
     </div>
   </div>
 </div>
@@ -1072,24 +1164,52 @@
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-1-before"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0.577349980514419"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
 
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-1-before')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.333333),
-          1: Math.sqrt(0.333333),
-          2: 0,
-          3: Math.sqrt(0.333333),
-        })
-      </script>
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -1100,24 +1220,52 @@
 
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-bit1-1-after"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+    <div class="flex flex-row">
+      <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0.7071067811865476"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0.7071067811865476"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
 
-      <script type="module">
-        let circleNotation = document.getElementById('circle-notation-bit1-1-after')
-        circleNotation.setAmplitudes({
-          0: 0,
-          1: Math.sqrt(0.5),
-          2: 0,
-          3: Math.sqrt(0.5),
-        })
-      </script>
     </div>
   </div>
 </div>

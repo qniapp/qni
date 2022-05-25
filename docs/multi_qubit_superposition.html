@@ -964,24 +964,99 @@
   が得られます。 \(|2\rangle\) 以外の確率はすべて 0% なので、これは重ね合わせ状態でありません。
 </p>
 
-<div class="my-5 flex flex-col">
-  <div class="flex flex-row items-center space-x-1">
-    <circle-notation-old
-      id="circle-notation-3qubit-nonsuperposition"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row">
+    <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="1"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
 
-    <script type="module">
-      let circleNotation = document.getElementById('circle-notation-3qubit-nonsuperposition')
-      circleNotation.setAmplitudes({
-        0: 0,
-        1: 0,
-        2: 1,
-      })
-    </script>
+    <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="4"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="5"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
+  </div>
+</div>
+
+    <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="6"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="7"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
+  </div>
+</div>
+
   </div>
 </div>
 
@@ -1038,28 +1113,97 @@
   になり、この場合もそうなっていることを確認してください。
 </p>
 
-<div class="my-5 flex flex-col">
-  <div class="flex flex-row items-center space-x-1">
-    <circle-notation-old
-      id="circle-notation-3qubit-simple-superposition"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row">
+    <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0.5"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0.5"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="4"
+    data-amplitude="0.5"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="5"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="6"
+    data-amplitude="0.5"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="7"
+    data-amplitude="0"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
+  </div>
+</div>
 
-    <script type="module">
-      let circleNotation = document.getElementById('circle-notation-3qubit-simple-superposition')
-      circleNotation.setAmplitudes({
-        0: 0.5,
-        1: 0,
-        2: 0.5,
-        3: 0,
-        4: 0.5,
-        5: 0,
-        6: 0.5,
-      })
-    </script>
   </div>
 </div>
 
@@ -1112,36 +1256,109 @@
   最後はそれぞれの確率が異なり、さらに位相も異なる例です。
   今までの例と同じく、それぞれの確率に応じて \(|0\rangle\) 〜 \(|7\rangle\)
   のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
-  そして位相と確率はそれぞれ独立した量子ビットのプロパティなので、位相は確率にまったく影響しないことを思い出しておきましょう<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note">位相の意味や使い途については<a href="./phase.html">位相</a>を参照してください。</span>。
 </p>
 
-<div class="my-5 flex flex-col">
-  <div class="flex flex-row items-center space-x-1">
-    <circle-notation-old
-      id="circle-notation-3qubit-superposition"
-      data-multi-qubits
-      data-qubit-count="3"
-      data-size="xl"
-      data-show-kets
-    ></circle-notation-old>
-
-    <script type="module">
-      import { Complex } from './application.js'
-
-      let circleNotation = document.getElementById('circle-notation-3qubit-superposition')
-      circleNotation.setAmplitudes({
-        0: new Complex(0.42678, -0.17678),
-        1: new Complex(0.17678, -0.07322),
-        2: new Complex(0.17678, 0.42678),
-        3: new Complex(0.07322, 0.17678),
-        4: new Complex(-0.42678, 0.17678),
-        5: new Complex(-0.17678, 0.07322),
-        6: new Complex(-0.17678, -0.42678),
-        7: new Complex(-0.07322, -0.17678),
-      })
-    </script>
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row">
+    <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="0"
+    data-amplitude="0.42678 - 0.17678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
   </div>
 </div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="1"
+    data-amplitude="0.17678 - 0.07322i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="2"
+    data-amplitude="0.17678 + 0.42678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="3"
+    data-amplitude="0.07322 + 0.17678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="4"
+    data-amplitude="-0.42678 + 0.17678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="5"
+    data-amplitude="-0.17678 +
+    0.07322i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="6"
+    data-amplitude="-0.17678 - 0.42678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
+  </div>
+</div>
+ <div class="flex w-16 flex-col items-start">
+  <qubit-circle
+    class="h-12 w-12"
+    data-ket="7"
+    data-amplitude="-0.07322 - 0.17678i"
+    data-popup-template-id="circle-notation-popup"
+  ></qubit-circle>
+  <div class="-mt-2.5 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<p>
+  ここから分かるように、位相<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note">位相の意味や使い途については<a href="./phase.html"
+    >位相</a
+  >を参照。</span>と確率はそれぞれ独立した量子ビットのプロパティなので、
+  お互いに関係なく任意の値を取ることができます。
+</p>
 
 <div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">

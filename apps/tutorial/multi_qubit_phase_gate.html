@@ -23,36 +23,21 @@ next_url: ./partial_measurement.html
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-P-amp-before"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+      <div class="flex flex-row">
+        {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ 0.38268 | qubit_circle: 1, 'lg' }}
+      </div>
+
       <div class="flex flex-row items-center">
         {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
       </div>
-      <circle-notation-old
-        id="circle-notation-P-amp-after"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
+
+      <div class="flex flex-row">
+        {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ '0.2706 + 0.2706i' | qubit_circle: 1, 'lg' }}
+      </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    document.getElementById('circle-notation-P-amp-before').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.38268, 0),
-    })
-    document.getElementById('circle-notation-P-amp-after').setAmplitudes({
-      0: new Complex(0.92388, 0),
-      1: new Complex(0.2706, 0.2706),
-    })
-  </script>
 </div>
 
 <h2>PHASE ゲートを 1 ビット目に置いた場合</h2>
@@ -71,30 +56,11 @@ next_url: ./partial_measurement.html
 
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-P1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-P1')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: Math.sqrt(0.125),
-          7: Math.sqrt(0.125),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
+      | sqrt | qubit_circle: 2, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 3, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 4, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 5, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 6, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 7, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -103,30 +69,11 @@ next_url: ./partial_measurement.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-P1"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P1')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: new Complex(0.25, 0.25),
-          2: Math.sqrt(0.125),
-          3: new Complex(0.25, 0.25),
-          4: Math.sqrt(0.125),
-          5: new Complex(0.25, 0.25),
-          6: Math.sqrt(0.125),
-          7: new Complex(0.25, 0.25),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 1, 'lg' }} {{
+      0.125 | sqrt | qubit_circle: 2, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 3, 'lg' }} {{ 0.125
+      | sqrt | qubit_circle: 4, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 5, 'lg' }} {{ 0.125 | sqrt
+      | qubit_circle: 6, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>
@@ -146,30 +93,11 @@ next_url: ./partial_measurement.html
 
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-P2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-P2')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: Math.sqrt(0.125),
-          7: Math.sqrt(0.125),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
+      | sqrt | qubit_circle: 2, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 3, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 4, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 5, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 6, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 7, 'lg' }}
     </div>
 
     <div class="flex flex-col items-center space-y-2">
@@ -178,30 +106,11 @@ next_url: ./partial_measurement.html
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-P2"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P2')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: new Complex(0.25, 0.25),
-          3: new Complex(0.25, 0.25),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: new Complex(0.25, 0.25),
-          7: new Complex(0.25, 0.25),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ '0.25
+      + 0.25i' | qubit_circle: 2, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 3, 'lg' }} {{ 0.125 |
+      sqrt | qubit_circle: 4, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 5, 'lg' }} {{ '0.25 + 0.25i' |
+      qubit_circle: 6, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>
@@ -221,62 +130,24 @@ next_url: ./partial_measurement.html
 
 <div class="my-5 flex">
   <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-P3"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-P3')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: Math.sqrt(0.125),
-          5: Math.sqrt(0.125),
-          6: Math.sqrt(0.125),
-          7: Math.sqrt(0.125),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
+      | sqrt | qubit_circle: 2, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 3, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 4, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 5, 'lg' }} {{ 0.125 | sqrt |
+      qubit_circle: 6, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 7, 'lg' }}
     </div>
 
-    <div class="flex flex-col items-center space-y-2">
+    <div class="mb-4 flex flex-col items-center space-y-2">
       {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
       <div>PHASE(π/4) ゲートを 3 ビット目に適用</div>
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-P3"
-        data-multi-qubits
-        data-qubit-count="3"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-P3')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.125),
-          1: Math.sqrt(0.125),
-          2: Math.sqrt(0.125),
-          3: Math.sqrt(0.125),
-          4: new Complex(0.25, 0.25),
-          5: new Complex(0.25, 0.25),
-          6: new Complex(0.25, 0.25),
-          7: new Complex(0.25, 0.25),
-        })
-      </script>
+    <div class="mb-4 flex flex-row items-center">
+      {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
+      | sqrt | qubit_circle: 2, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 3, 'lg' }} {{ '0.25 + 0.25i'
+      | qubit_circle: 4, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 5, 'lg' }} {{ '0.25 + 0.25i' |
+      qubit_circle: 6, 'lg' }} {{ '0.25 + 0.25i' | qubit_circle: 7, 'lg' }}
     </div>
   </div>
 </div>

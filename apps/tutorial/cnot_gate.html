@@ -131,49 +131,20 @@ next_url: ./swap_from_cnots.html
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-H1"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-H1')
-        circleNotation.setAmplitudes({
-          0: 1,
-        })
-      </script>
+    <div class="mb-4 flex flex-row">
+      {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }} {{ 0 | qubit_circle: 2, 'lg'
+      }} {{ 0 | qubit_circle: 3, 'lg' }}
     </div>
 
-    <div class="flex flex-col items-center space-y-2">
+    <div class="mb-4 flex flex-col items-center space-y-2">
       {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
       <div>H ゲートを 1 ビット目に適用</div>
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-H1"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-H1')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.5),
-          1: Math.sqrt(0.5),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }} {{ 0 |
+      qubit_circle: 2, 'lg' }} {{ 0 | qubit_circle: 3, 'lg' }}
     </div>
   </div>
 </div>
@@ -197,52 +168,20 @@ next_url: ./swap_from_cnots.html
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col items-center">
-    <div class="mb-4 flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-before-CNOT"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-before-CNOT')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.5),
-          1: Math.sqrt(0.5),
-        })
-      </script>
+    <div class="mb-4 flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }} {{ 0 |
+      qubit_circle: 2, 'lg' }} {{ 0 | qubit_circle: 3, 'lg' }}
     </div>
 
-    <div class="flex flex-col items-center space-y-2">
+    <div class="mb-4 flex flex-col items-center space-y-2">
       {% include divider_vertical.svg class="h-6 w-6 fill-current text-gray-400" %}
       <div>CNOT (コントロールビット 1, ターゲットビット 2) を適用</div>
       {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-gray-400" %}
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-CNOT"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.5),
-          1: 0,
-          2: 0,
-          3: Math.sqrt(0.5),
-        })
-      </script>
+    <div class="flex flex-row">
+      {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }} {{ 0 | qubit_circle:
+      2, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 3, 'lg' }}
     </div>
   </div>
 </div>

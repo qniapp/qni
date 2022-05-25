@@ -75,39 +75,31 @@ next_url: ./bb84_circuit.html
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
-          <circle-notation-old
-            id="circle-notation-NOP-0-before"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+          </div>
           <div class="flex flex-row items-center">
             {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
             <div>NOP</div>
             {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
           </div>
-          <circle-notation-old
-            id="circle-notation-NOP-0-after"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+          </div>
         </div>
 
         <div class="flex flex-row items-center space-x-1">
-          <circle-notation-old
-            id="circle-notation-H0-before"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+          </div>
           <div class="flex flex-row items-center">
             {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
             <h-gate></h-gate>
             {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
           </div>
-          <circle-notation-old
-            id="circle-notation-H0-after"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+          </div>
         </div>
       </div>
     </div>
@@ -124,90 +116,36 @@ next_url: ./bb84_circuit.html
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
-          <circle-notation-old
-            id="circle-notation-NOP-1-before"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+          </div>
           <div class="flex flex-row items-center">
             {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
             <div>NOP</div>
             {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
           </div>
-          <circle-notation-old
-            id="circle-notation-NOP-1-after"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+          </div>
         </div>
 
         <div class="mb-8 flex flex-row items-center space-x-1">
-          <circle-notation-old
-            id="circle-notation-H1-before"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+          </div>
           <div class="flex flex-row items-center">
             {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
             <h-gate></h-gate>
             {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
           </div>
-          <circle-notation-old
-            id="circle-notation-H1-after"
-            data-size="xl"
-            data-show-kets
-          ></circle-notation-old>
+          <div class="flex flex-row">
+            {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
+            'lg' }}
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <script type="module">
-    import { Complex } from './application.js'
-
-    let circleNotationNOP0Before = document.getElementById('circle-notation-NOP-0-before')
-    let circleNotationNOP0After = document.getElementById('circle-notation-NOP-0-after')
-    let circleNotationH0before = document.getElementById('circle-notation-H0-before')
-    let circleNotationH1before = document.getElementById('circle-notation-H1-before')
-
-    let circleNotationNOP1Before = document.getElementById('circle-notation-NOP-1-before')
-    let circleNotationNOP1After = document.getElementById('circle-notation-NOP-1-after')
-    let circleNotationH0after = document.getElementById('circle-notation-H0-after')
-    let circleNotationH1after = document.getElementById('circle-notation-H1-after')
-
-    circleNotationNOP0Before.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-    circleNotationNOP0After.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-    circleNotationH0before.setAmplitudes({
-      0: 1,
-      1: 0,
-    })
-    circleNotationH0after.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(Math.sqrt(0.5), 0),
-    })
-    circleNotationNOP1Before.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-    circleNotationNOP1After.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-    circleNotationH1before.setAmplitudes({
-      0: 0,
-      1: 1,
-    })
-    circleNotationH1after.setAmplitudes({
-      0: new Complex(Math.sqrt(0.5), 0),
-      1: new Complex(-Math.sqrt(0.5), 0),
-    })
-  </script>
 </div>
 
 <p>
