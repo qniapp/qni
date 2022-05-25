@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.23 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -5457,6 +5457,16 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
+qubit-circle.magnitude-emerald::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+
+qubit-circle.magnitude-emerald:hover::part(magnitude) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -5557,11 +5567,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   margin-bottom: auto;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -5613,6 +5618,18 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   margin-bottom: 1rem;
 }
 
+.-mt-2\.5 {
+  margin-top: -0.625rem;
+}
+
+.-mt-2 {
+  margin-top: -0.5rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -5623,10 +5640,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 
 .mr-4 {
   margin-right: 1rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
 }
 
 .mt-12 {
@@ -5643,10 +5656,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
 }
 
 .-mr-12 {
@@ -5681,6 +5690,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   margin-left: 0.5rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -5689,12 +5702,8 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   margin-top: -0.75rem;
 }
 
-.-mt-2\.5 {
-  margin-top: -0.625rem;
-}
-
-.-mt-2 {
-  margin-top: -0.5rem;
+.-mt-1 {
+  margin-top: -0.25rem;
 }
 
 .block {
@@ -5749,6 +5758,10 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   height: auto;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -5767,10 +5780,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 
 .h-8 {
   height: 2rem;
-}
-
-.h-12 {
-  height: 3rem;
 }
 
 .w-min {
@@ -5799,16 +5808,24 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   width: 1.5rem;
 }
 
-.\!w-full {
-  width: 100% !important;
+.w-12 {
+  width: 3rem;
 }
 
 .w-auto {
   width: auto;
 }
 
+.\!w-full {
+  width: 100% !important;
+}
+
 .\!w-auto {
   width: auto !important;
+}
+
+.w-11 {
+  width: 2.75rem;
 }
 
 .w-7 {
@@ -5829,18 +5846,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 
 .w-5 {
   width: 1.25rem;
-}
-
-.w-20 {
-  width: 5rem;
-}
-
-.w-12 {
-  width: 3rem;
-}
-
-.w-1\/4 {
-  width: 25%;
 }
 
 .min-w-0 {
@@ -5875,10 +5880,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   flex-grow: 1;
 }
 
-.grow {
-  flex-grow: 1;
-}
-
 .basis-1\/4 {
   flex-basis: 25%;
 }
@@ -5898,12 +5899,12 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
           user-select: none;
 }
 
-.list-decimal {
-  list-style-type: decimal;
-}
-
 .list-none {
   list-style-type: none;
+}
+
+.list-decimal {
+  list-style-type: decimal;
 }
 
 .list-disc {
@@ -5968,16 +5969,16 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1rem * var(--tw-space-x-reverse));
-  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -6252,16 +6253,12 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   padding-right: 2rem;
 }
 
-.pb-14 {
-  padding-bottom: 3.5rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .\!pb-0 {
   padding-bottom: 0px !important;
+}
+
+.pb-14 {
+  padding-bottom: 3.5rem;
 }
 
 .pl-4 {
@@ -6304,10 +6301,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   padding-bottom: 2.5rem;
 }
 
-.pb-5 {
-  padding-bottom: 1.25rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -6324,6 +6317,11 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -6337,11 +6335,6 @@ qubit-circle.magnitude-lime:hover::part(magnitude) {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .text-xl {

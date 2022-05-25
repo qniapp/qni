@@ -8,6 +8,8 @@ module Jekyll
                   16
                 when 'lg'
                   12
+                when 'base'
+                  8
                 else
                   raise 'not implemented'
                 end
@@ -17,6 +19,8 @@ module Jekyll
                           20
                         when 'lg'
                           16
+                        when 'base'
+                          11
                         else
                           raise 'not implemented'
                         end
@@ -26,6 +30,8 @@ module Jekyll
                     '-mt-3'
                   when 'lg'
                     '-mt-2.5'
+                  when 'base'
+                    '-mt-1'
                   else
                     raise 'not implemented'
                   end
@@ -35,6 +41,8 @@ module Jekyll
                        'base'
                      when 'lg'
                        'sm'
+                     when 'base'
+                       'xs'
                      else
                        raise 'not implemented'
                      end

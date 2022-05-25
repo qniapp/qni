@@ -1,3 +1,5 @@
+<div class="hidden w-11"></div>
+
 <template id="h-gate-help">
   <header>
     <h1>アダマールゲート</h1>
@@ -5,26 +7,27 @@
   </header>
 
   <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
+    {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <h-gate class="operation-sm"></h-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation-old data-magnitudes="0.7,0.7" data-show-kets></circle-notation-old>
+
+    {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | qubit_circle: 1, 'base' }}
   </div>
 
-  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
+  <div class="mt-4 flex flex-row items-center space-x-1">
+    {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
+
     <div class="flex flex-row items-center">
       {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
       <h-gate class="operation-sm"></h-gate>
       {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
     </div>
-    <circle-notation-old
-      data-magnitudes="0.7,0.7"
-      data-phases="0,180"
-      data-show-kets
-    ></circle-notation-old>
+
+    {{ 0.5 | sqrt | qubit_circle: 0, 'base', 'emerald' }} {{ 0.5 | sqrt | prepend: '-' |
+    qubit_circle: 1, 'base' }}
   </div>
 </template>
