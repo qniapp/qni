@@ -116,31 +116,12 @@ next_url: ./entanglement_operation.html
   </quantum-circuit>
 </div>
 
-<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-col items-center">
-    <div class="flex flex-row items-center space-x-1">
-      <circle-notation-old
-        id="circle-notation-3qubit-after-CNOT"
-        data-multi-qubits
-        data-qubit-count="2"
-        data-size="xl"
-        data-show-kets
-      ></circle-notation-old>
-
-      <script type="module">
-        import { Complex } from './application.js'
-
-        let circleNotation = document.getElementById('circle-notation-3qubit-after-CNOT')
-        circleNotation.setAmplitudes({
-          0: Math.sqrt(0.5),
-          1: 0,
-          2: 0,
-          3: Math.sqrt(0.5),
-        })
-      </script>
-    </div>
-    <span>ベル状態 (ベルペア)</span>
+<div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row">
+    {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }} {{ 0 | qubit_circle: 2,
+    'lg' }} {{ 0.5 | sqrt | qubit_circle: 3, 'lg' }}
   </div>
+  <span class="mt-4">ベル状態 (ベルペア)</span>
 </div>
 
 <p>
