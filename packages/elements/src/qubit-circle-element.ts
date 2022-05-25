@@ -14,6 +14,8 @@ export class QubitCircleElement extends HTMLElement {
   @attr popupTemplateId = 'qubit-circle-popup-template'
 
   connectedCallback(): void {
+    if (this.shadowRoot !== null) return
+
     this.attachShadow({mode: 'open'})
     this.update()
     this.addPopupEventListeners()

@@ -10854,7 +10854,7 @@ var Ur = class extends HTMLElement {
     this.popupTemplateId = "qubit-circle-popup-template";
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.update(), this.addPopupEventListeners();
+    this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.addPopupEventListeners());
   }
   update() {
     Q(Z`<style>
