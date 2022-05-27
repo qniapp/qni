@@ -24,7 +24,7 @@ function runSimulator(e) {
     resultCache[circuitJson] = {}
   }
 
-  let cacheHit = false
+  // let cacheHit = false
 
   for (const [i, operations] of steps.entries()) {
     let stepResult = {}
@@ -39,7 +39,7 @@ function runSimulator(e) {
       cachedStepResult.targets === undefined ||
       cachedStepResult.targets.length < targets.length
     ) {
-      cacheHit = false
+      // cacheHit = false
 
       simulator.runStep(operations)
 
