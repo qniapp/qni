@@ -6,7 +6,6 @@ import {isControllable, isIfable} from './mixin'
 import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
-import {debounce} from '@github/mini-throttle/decorators'
 
 type MessageEventData = {
   type: 'step' | 'finish'
@@ -121,7 +120,6 @@ export class QuantumSimulatorElement extends HTMLElement {
     }
   }
 
-  @debounce(10)
   private run(): void {
     this._run(false)
   }

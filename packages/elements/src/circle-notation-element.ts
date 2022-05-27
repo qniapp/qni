@@ -284,15 +284,8 @@ export class CircleNotationElement extends HTMLElement {
         const amplitude = amplitudes[ket]
         if (amplitude === undefined) continue
 
-        // magnitude
         const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
-        const magnitudeEl = each.children.item(0) as HTMLElement
-        Util.notNull(magnitudeEl)
-
-        // phase
         const phaseDeg = (amplitude.phase() / Math.PI) * 180
-        const phaseEl = each.children.item(1) as HTMLElement
-        Util.notNull(phaseEl)
 
         let cssPhaseDeg = Math.trunc(phaseDeg)
         if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
@@ -304,16 +297,18 @@ export class CircleNotationElement extends HTMLElement {
           each.classList.add('magnitude-0')
         } else {
           each.classList.remove('magnitude-0')
+          each.style.setProperty('--magnitude', magnitude.toString())
         }
-        magnitudeEl.style.setProperty('--magnitude', magnitude.toString())
+
+        each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
 
         if (this.coloredPhase) {
           each.classList.add('phase-hidden')
 
           if (magnitude === 0) {
-            magnitudeEl.style.setProperty('--magnitude', '0')
+            each.style.setProperty('--magnitude', '0')
           } else {
-            magnitudeEl.style.setProperty('--magnitude', '1')
+            each.style.setProperty('--magnitude', '1')
           }
 
           if (
@@ -321,29 +316,25 @@ export class CircleNotationElement extends HTMLElement {
             (337.5 <= phaseDeg && phaseDeg <= 360) ||
             (-337.5 < phaseDeg && phaseDeg <= -360)
           ) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(168 85 247)') // purple-500
+            each.style.setProperty('--magnitude-color', 'rgb(168 85 247)') // purple-500
           } else if ((22.5 <= phaseDeg && phaseDeg < 67.5) || (-337.5 <= phaseDeg && phaseDeg < -292.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(236 72 153)') // pink-500
+            each.style.setProperty('--magnitude-color', 'rgb(236 72 153)') // pink-500
           } else if ((67.5 <= phaseDeg && phaseDeg < 112.5) || (-292.5 <= phaseDeg && phaseDeg < -247.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(249 115 22)') // orange-500
+            each.style.setProperty('--magnitude-color', 'rgb(249 115 22)') // orange-500
           } else if ((112.5 <= phaseDeg && phaseDeg < 157.5) || (-247.5 <= phaseDeg && phaseDeg < -202.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(234 179 8)') // yellow-500
+            each.style.setProperty('--magnitude-color', 'rgb(234 179 8)') // yellow-500
           } else if ((157.5 <= phaseDeg && phaseDeg < 202.5) || (-202.5 <= phaseDeg && phaseDeg < -157.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(132 204 22)') // lime-500
+            each.style.setProperty('--magnitude-color', 'rgb(132 204 22)') // lime-500
           } else if ((202.5 <= phaseDeg && phaseDeg < 247.5) || (-157.5 <= phaseDeg && phaseDeg < -112.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(34 197 94)') // green-500
+            each.style.setProperty('--magnitude-color', 'rgb(34 197 94)') // green-500
           } else if ((247.5 <= phaseDeg && phaseDeg < 292.5) || (-112.5 <= phaseDeg && phaseDeg < -67.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(14 165 233)') // sky-500
+            each.style.setProperty('--magnitude-color', 'rgb(14 165 233)') // sky-500
           } else if ((292.5 <= phaseDeg && phaseDeg < 337.5) || (-67.5 <= phaseDeg && phaseDeg < -22.5)) {
-            magnitudeEl.style.setProperty('--magnitude-color', 'rgb(99 102 241)') // indigo-500
+            each.style.setProperty('--magnitude-color', 'rgb(99 102 241)') // indigo-500
           } else {
-            magnitudeEl.style.removeProperty('--magnitude-color')
+            each.style.removeProperty('--magnitude-color')
           }
-        } else {
-          magnitudeEl.style.setProperty('--magnitude-color', 'rgb(14 165 233)')
         }
-
-        phaseEl.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
       }
     })
   }
@@ -396,15 +387,21 @@ export class CircleNotationElement extends HTMLElement {
             --magnitude: 0;
             --magnitude-color: rgb(14 165 233); /* sky-500 */
             --phase: 0deg;
+            --width: 0px;
+            --border-width: 0px;
+            --phase-width: 0px;
           }
 
           /* border */
 
           .qubit-circle {
             position: absolute;
+            width: var(--width);
+            height: var(--height);
             border-color: rgb(226 232 240); /* slate-200 */
             border-radius: 9999px;
             border-style: solid;
+            border-width: var(--border-width);
             box-sizing: border-box;
           }
 
@@ -431,6 +428,10 @@ export class CircleNotationElement extends HTMLElement {
             transform: scaleX(var(--magnitude)) scaleY(var(--magnitude));
           }
 
+          .qubit-circle.magnitude-0 .qubit-circle__magnitude {
+            display: none;
+          }
+
           .qubit-circle:hover .qubit-circle__magnitude {
             background-color: rgb(249 115 22); /* orange-500 */
           }
@@ -445,6 +446,7 @@ export class CircleNotationElement extends HTMLElement {
             left: 0px;
             background-color: rgb(15 23 42); /* slate-900 */
             height: 50%;
+            width: var(--phase-width);
             margin-left: auto;
             margin-right: auto;
             border-bottom-right-radius: 0.25rem;
@@ -798,6 +800,13 @@ export class CircleNotationElement extends HTMLElement {
     if (this.qubitCount === 0) return
 
     fastdom.mutate(() => {
+      this.style.setProperty('--width', `${this.qubitCircleSizePx}px`)
+      this.style.setProperty('--height', `${this.qubitCircleSizePx}px`)
+      this.style.setProperty('--magnitude', '0')
+      this.style.setProperty('--magnitude-color', 'rgb(14 165 233)')
+      this.style.setProperty('--border-width', `${this.qubitCircleLineWidth}px`)
+      this.style.setProperty('--phase-width', `${this.qubitCircleLineWidth}px`)
+
       const positions: Array<{col: number; row: number}> = []
 
       this.lastColStartIndex = this.visibleColStartIndex
@@ -882,24 +891,18 @@ export class CircleNotationElement extends HTMLElement {
 
   @debounce(100)
   removeInvisibleQubitCircles(): void {
-    let colStartIndex: number
-    let colEndIndex: number
-    let rowStartIndex: number
-    let rowEndIndex: number
-
     fastdom.measure(() => {
-      colStartIndex = this.overscanColStartIndex
-      colEndIndex = this.overscanColEndIndex
-      rowStartIndex = this.overscanRowStartIndex
-      rowEndIndex = this.overscanRowEndIndex
-    })
+      const colStartIndex = this.overscanColStartIndex
+      const colEndIndex = this.overscanColEndIndex
+      const rowStartIndex = this.overscanRowStartIndex
+      const rowEndIndex = this.overscanRowEndIndex
 
-    fastdom.mutate(() => {
       for (const each of this.qubitCircles) {
         const dataCol = each.getAttribute('data-col')
         const dataRow = each.getAttribute('data-row')
         Util.notNull(dataCol)
         Util.notNull(dataRow)
+
         const col = parseInt(dataCol)
         const row = parseInt(dataRow)
 
@@ -946,20 +949,14 @@ export class CircleNotationElement extends HTMLElement {
       'data-action',
       'mouseenter:circle-notation#showQubitCirclePopup mouseleave:circle-notation#hideQubitCirclePopup'
     )
-    qubitCircle.style.setProperty('position', 'absolute')
     qubitCircle.style.setProperty('top', `${top}px`)
     qubitCircle.style.setProperty('left', `${left}px`)
-    qubitCircle.style.setProperty('width', `${this.qubitCircleSizePx}px`)
-    qubitCircle.style.setProperty('height', `${this.qubitCircleSizePx}px`)
-    qubitCircle.style.setProperty('border-width', `${this.qubitCircleLineWidth}px`)
 
     const magnitude = document.createElement('div')
     magnitude.className = 'qubit-circle__magnitude'
-    magnitude.style.setProperty('--magnitude', '0')
 
     const phase = document.createElement('div')
     phase.className = 'qubit-circle__phase'
-    phase.style.setProperty('width', `${this.qubitCircleLineWidth}px`)
 
     qubitCircle.appendChild(magnitude)
     qubitCircle.appendChild(phase)
