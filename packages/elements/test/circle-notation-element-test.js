@@ -22,8 +22,8 @@ describe('circle-notation element', function () {
       document.body.textContent = ''
     })
 
-    it('data-qubit-count="1" by default', function () {
-      assert.equal(circleNotation.qubitCount, 1)
+    it('data-qubit-count="0" by default', function () {
+      assert.equal(circleNotation.qubitCount, 0)
     })
 
     it('data-qubit-count="1" (mobile)', async function () {

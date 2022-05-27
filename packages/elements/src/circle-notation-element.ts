@@ -8,7 +8,7 @@ import {forceSigned} from './util'
 
 @controller
 export class CircleNotationElement extends HTMLElement {
-  @attr qubitCount = 1
+  @attr qubitCount = 0
   @attr qubitCircleSize: 'xs' | 'sm' | 'base' | 'lg' | 'xl' = 'xl'
   @attr cols = 0
   @attr rows = 0
@@ -22,6 +22,7 @@ export class CircleNotationElement extends HTMLElement {
   @target innerContainer!: HTMLElement
   @targets qubitCircles!: HTMLElement[]
 
+  visibleQubitCircleKets: number[] = []
   vertical = true
   lastClientHeight: number | null = null
   lastClientWidth: number | null = null
@@ -34,37 +35,32 @@ export class CircleNotationElement extends HTMLElement {
 
   startBasicCircleNotationMode(): void {
     this.coloredPhase = false
-    this.clearInnerContainer()
     this.drawQubitCircles()
-    this.dispatchVisibilityChangedEvent()
   }
 
   startColoredPhaseMode(): void {
     this.coloredPhase = true
-    this.clearInnerContainer()
     this.drawQubitCircles()
-    this.dispatchVisibilityChangedEvent()
   }
 
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
 
-    if (name === 'data-qubit-count') {
+    if (name === 'data-qubit-count' && this.window !== undefined && this.innerContainer !== undefined) {
       Util.notNull(newValue)
 
-      const qubitCount = parseInt(newValue)
-      this.updateQubitCircleSize(qubitCount)
-      this.updateDimension(qubitCount)
+      this.updateQubitCircleSize()
+      this.updateDimension()
       this.resizeWindow()
       this.resizeInnerContainer()
-      this.clearInnerContainer()
       this.drawQubitCircles()
-      this.dispatchVisibilityChangedEvent()
     }
   }
 
-  private updateQubitCircleSize(qubitCount: number): void {
-    switch (qubitCount) {
+  private updateQubitCircleSize(): void {
+    if (this.qubitCount === 0) return
+
+    switch (this.qubitCount) {
       case 1: {
         this.qubitCircleSize = 'xl'
         break
@@ -146,12 +142,14 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       default:
-        throw new DetailedError('unsupported qubit count', qubitCount)
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
   }
 
-  private updateDimension(qubitCount: number): void {
-    switch (qubitCount) {
+  private updateDimension(): void {
+    if (this.qubitCount === 0) return
+
+    switch (this.qubitCount) {
       case 1: {
         this.rows = 1
         this.cols = 2
@@ -253,18 +251,27 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       default:
-        throw new DetailedError('unsupported qubit count', qubitCount)
+        throw new DetailedError('unsupported qubit count', this.qubitCount)
     }
   }
 
-  get visibleQubitCircleKets(): number[] {
-    const kets = this.qubitCircles.map(each => {
+  private updateVisibleQubitCircleKets(): void {
+    this.visibleQubitCircleKets = this.qubitCircles.map(each => {
       const ketStr = each.getAttribute('data-ket')
       Util.notNull(ketStr)
       return parseInt(ketStr)
     })
+    Util.need(
+      this.visibleQubitCircleKets.length <= 2 ** this.qubitCount,
+      `visibleQubitCircleKets.length (= ${this.visibleQubitCircleKets.length}) must be <= 2^${this.qubitCount}`
+    )
 
-    return kets
+    this.dispatchEvent(
+      new CustomEvent('circle-notation-visibility-change', {
+        detail: this.visibleQubitCircleKets,
+        bubbles: true
+      })
+    )
   }
 
   setAmplitudes(amplitudes: {[ket: number]: Complex}) {
@@ -346,24 +353,22 @@ export class CircleNotationElement extends HTMLElement {
     this.update()
 
     this.startLayoutOrientationChangeObserver()
+    this.updateDimension()
     this.resizeWindow()
     this.resizeInnerContainer()
-    this.drawNewlyVisibleQubuitCircles()
-
-    this.dispatchEvent(new CustomEvent('circle-notation-init', {bubbles: true}))
+    this.drawQubitCircles()
   }
 
   private startLayoutOrientationChangeObserver(): void {
-    this.detectViewportOrientation()
+    this.vertical = this.isVertical()
     const resizeObserver = new ResizeObserver(this.detectViewportOrientation.bind(this))
     resizeObserver.observe(document.body)
   }
 
   private detectViewportOrientation(): void {
     let changed = false
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
-    if (vw < 768) {
+    if (this.isVertical()) {
       if (!this.vertical) changed = true
       this.vertical = true
     } else {
@@ -372,13 +377,16 @@ export class CircleNotationElement extends HTMLElement {
     }
 
     if (changed) {
-      this.updateQubitCircleSize(this.qubitCount)
-      this.updateDimension(this.qubitCount)
+      this.updateQubitCircleSize()
+      this.updateDimension()
       this.resizeWindow()
-      this.clearInnerContainer()
       this.drawQubitCircles()
-      this.dispatchVisibilityChangedEvent()
     }
+  }
+
+  private isVertical(): boolean {
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    return vw < 768
   }
 
   update(): void {
@@ -473,17 +481,15 @@ export class CircleNotationElement extends HTMLElement {
   /* inner container */
 
   private get innerHeight(): number {
+    if (this.qubitCount === 0) return 0
+
     return this.rows * this.qubitCircleSizePx + (this.rows - 1) * this.gap + this.paddingY * 2
   }
 
   private get innerWidth(): number {
+    if (this.qubitCount === 0) return 0
+
     return this.cols * this.qubitCircleSizePx + (this.cols - 1) * this.gap + this.paddingX * 2
-  }
-
-  private clearInnerContainer(): void {
-    if (this.innerContainer === undefined) return
-
-    this.innerContainer.textContent = ''
   }
 
   /* window */
@@ -663,6 +669,8 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowHeight(): number {
+    if (this.qubitCount === 0) return 0
+
     const qubitCirclesAreaPlusPaddingHeight = this.qubitCirclesAreaHeight + this.paddingY * 2
 
     if (this.vertical) {
@@ -679,6 +687,8 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get windowWidth(): number {
+    if (this.qubitCount === 0) return 0
+
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
     if (this.vertical) {
@@ -782,11 +792,14 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private drawQubitCircles(): void {
-    if (this.window === undefined) return
+    Util.notNull(this.window)
+    Util.notNull(this.innerContainer)
 
-    const positions: Array<{col: number; row: number}> = []
+    if (this.qubitCount === 0) return
 
-    fastdom.measure(() => {
+    fastdom.mutate(() => {
+      const positions: Array<{col: number; row: number}> = []
+
       this.lastColStartIndex = this.visibleColStartIndex
       this.lastColEndIndex = this.visibleColEndIndex
       this.lastRowStartIndex = this.visibleRowStartIndex
@@ -797,21 +810,21 @@ export class CircleNotationElement extends HTMLElement {
           positions.push({col, row})
         }
       }
-    })
 
-    fastdom.mutate(() => {
       const fragment = document.createDocumentFragment()
       for (const each of this.allQubitCircleElements(positions)) {
         fragment.appendChild(each)
       }
 
+      this.innerContainer.textContent = ''
       this.innerContainer.appendChild(fragment)
+      this.updateVisibleQubitCircleKets()
     })
   }
 
-  @debounce(10)
   drawNewlyVisibleQubuitCircles(): void {
     if (this.window === undefined) return
+    if (this.innerContainer === undefined) return
 
     let colStartIndex
     let colEndIndex
@@ -862,7 +875,7 @@ export class CircleNotationElement extends HTMLElement {
       this.innerContainer.appendChild(fragment)
 
       if (positions.length !== 0) {
-        this.dispatchVisibilityChangedEvent()
+        this.updateVisibleQubitCircleKets()
       }
     })
   }
@@ -897,15 +910,6 @@ export class CircleNotationElement extends HTMLElement {
         }
       }
     })
-  }
-
-  private dispatchVisibilityChangedEvent(): void {
-    this.dispatchEvent(
-      new CustomEvent('circle-notation-visibility-change', {
-        detail: this.visibleQubitCircleKets,
-        bubbles: true
-      })
-    )
   }
 
   private allQubitCircleElements(positions: Array<{col: number; row: number}>): HTMLDivElement[] {

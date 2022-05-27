@@ -1,14 +1,15 @@
 import {Simulator} from '@qni/simulator'
 import {Util} from '@qni/common'
 
-const simulationCache = {}
+let resultCache = {}
 
-const runSimulator = e => {
+function runSimulator(e) {
   const circuitJson = e.data.circuitJson
   const qubitCount = e.data.qubitCount
   const stepIndex = e.data.stepIndex
   const steps = e.data.steps
   const targets = e.data.targets
+  const invalidateCaches = e.data.invalidateCaches
   const simulator = new Simulator('0'.repeat(qubitCount))
 
   Util.notNull(qubitCount)
@@ -16,92 +17,106 @@ const runSimulator = e => {
   Util.notNull(steps)
   Util.notNull(targets)
 
-  const s_time = new Date()
+  // const s_time = new Date()
 
-  if (simulationCache[circuitJson] === undefined) {
-    Object.keys(simulationCache).map(key => delete simulationCache[key])
-    simulationCache[circuitJson] = {}
+  if (resultCache[circuitJson] === undefined || invalidateCaches) {
+    resultCache = {}
+    resultCache[circuitJson] = {}
   }
 
-  for (const [i, operations] of steps.entries()) {
-    let stepResult
-    const cachedResult = simulationCache[circuitJson][i]
+  let cacheHit = false
 
-    if (cachedResult === undefined) {
+  for (const [i, operations] of steps.entries()) {
+    let stepResult = {}
+
+    if (resultCache[circuitJson][i] === undefined) {
+      resultCache[circuitJson][i] = {}
+    }
+    const cachedStepResult = resultCache[circuitJson][i]
+
+    if (
+      cachedStepResult === undefined ||
+      cachedStepResult.targets === undefined ||
+      cachedStepResult.targets.length < targets.length
+    ) {
+      cacheHit = false
+
       simulator.runStep(operations)
 
-      const amplitudes = simulator.amplitudes()
+      const allAmplitudes = simulator.state.matrix
+      const blochVectors = Object.assign({}, simulator.blochVectors)
+      const measuredBits = Object.assign({}, simulator.measuredBits)
+      const flags = Object.assign({}, simulator.flags)
 
-      simulationCache[circuitJson][i] = {
+      resultCache[circuitJson][i] = {
         type: 'step',
         step: i,
-        amplitudes: amplitudes,
-        blochVectors: simulator.blochVectors,
-        measuredBits: simulator.measuredBits,
-        flags: simulator.flags
+        amplitudes: allAmplitudes,
+        targets,
+        blochVectors,
+        measuredBits,
+        flags
       }
 
-      if (i !== stepIndex) {
+      if (i === stepIndex) {
+        const amplitudes = pickTargetAmplitudes(targets, allAmplitudes)
+
+        stepResult = {
+          type: 'step',
+          step: i,
+          amplitudes,
+          blochVectors,
+          measuredBits,
+          flags
+        }
+      } else {
         stepResult = {
           type: 'step',
           step: i,
           amplitudes: [],
-          blochVectors: simulator.blochVectors,
-          measuredBits: simulator.measuredBits,
-          flags: simulator.flags
-        }
-      } else {
-        let targetAmplitudes
-
-        if (targets.length > 0) {
-          targetAmplitudes = pickTargetAmplitudes(targets, amplitudes)
-        } else {
-          targetAmplitudes = amplitudes
-        }
-        stepResult = {
-          type: 'step',
-          step: i,
-          amplitudes: targetAmplitudes,
-          blochVectors: simulator.blochVectors,
-          measuredBits: simulator.measuredBits,
-          flags: simulator.flags
+          blochVectors,
+          measuredBits,
+          flags
         }
       }
     } else {
+      cacheHit = true
+
       stepResult = {
         type: 'step',
-        step: cachedResult.step,
+        step: i,
         amplitudes: [],
-        blochVectors: cachedResult.blochVectors,
-        measuredBits: cachedResult.measuredBits,
-        flags: cachedResult.flags
+        blochVectors: cachedStepResult.blochVectors,
+        measuredBits: cachedStepResult.measuredBits,
+        flags: cachedStepResult.flags
       }
 
       if (i === stepIndex) {
-        stepResult.amplitudes = pickTargetAmplitudes(targets, cachedResult.amplitudes)
+        stepResult.amplitudes = pickTargetAmplitudes(targets, cachedStepResult.amplitudes)
       }
     }
 
     self.postMessage(stepResult)
   }
 
-  const e_time = new Date()
-  const diff = e_time.getTime() - s_time.getTime()
-  console.log(`${qubitCount} qubit simulation took ${diff} msec`)
+  // const e_time = new Date()
+  // const diff = e_time.getTime() - s_time.getTime()
+  // const cacheDesc = cacheHit ? "🎯 CACHE HIT" : "💦 CACHE MISS"
+  // console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
 
   self.postMessage({type: 'finish'})
 }
 
 const pickTargetAmplitudes = (targets, amplitudes) => {
   return targets.reduce((map, each) => {
-    const c = amplitudes[each]
-    if (c === undefined) {
+    if (each >= amplitudes.height) {
       map[each] = [0, 0]
     } else {
-      map[each] = c
+      const c = amplitudes.cell(0, each)
+      map[each] = [c.real, c.imag]
     }
     return map
   }, {})
 }
 
-self.addEventListener('message', runSimulator, false)
+self.addEventListener('message', runSimulator)
