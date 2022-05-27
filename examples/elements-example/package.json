@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements-example",
-  "version": "0.0.62",
+  "version": "0.0.63",
   "description": "An example project for @qni/elements.",
   "author": "@yasuhito",
   "license": "MIT",
@@ -11,8 +11,8 @@
     "css:watch": "yarn build:css --watch"
   },
   "dependencies": {
-    "@qni/elements": "^0.0.62",
-    "@qni/simulator": "^0.0.62",
+    "@qni/elements": "^0.0.63",
+    "@qni/simulator": "^0.0.63",
     "cookie-parser": "~1.4.4",
     "debug": "~4.3",
     "ejs": "~3.1",
