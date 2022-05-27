@@ -29,8 +29,8 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   connectedCallback(): void {
     this.worker = new Worker('./serviceworker.js')
-
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
+
     this.addEventListener('operation-inspector-if-change', this.run)
     this.addEventListener('operation-inspector-angle-change', this.run)
     this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)
@@ -40,10 +40,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('circuit-step-snap', this.run)
     this.addEventListener('circuit-step-unsnap', this.run)
     this.addEventListener('circuit-step-update', this.run)
-    this.addEventListener('circle-notation-init', this.run)
     this.addEventListener('circle-notation-visibility-change', this.run)
-    this.addEventListener('run-circuit-button-click', this.run)
-
+    this.addEventListener('run-circuit-button-click', this.freshRun)
     this.addEventListener('circuit-step-snap', this.maybeUpdateUrl)
     this.addEventListener('circuit-step-unsnap', this.maybeUpdateUrl)
 
@@ -52,7 +50,8 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.maybeUpdateUrl()
 
     this.circuit.setBreakpoint(this.circuit.stepAt(0))
-    this.run()
+
+    this.setCircleNotationQubitCount()
   }
 
   update(): void {
@@ -124,7 +123,31 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   @debounce(10)
   private run(): void {
+    this._run(false)
+  }
+
+  private freshRun(): void {
+    this._run(true)
+  }
+
+  private _run(invalidateCaches: boolean): void {
     const stepIndex = this.activeStepIndex
+    const serializedSteps = this.circuit.serialize()
+    Util.need(serializedSteps.length > 0, 'non-zero step length')
+    const circuitJson = this.circuit.toJson()
+    const qubitCount = this.setCircleNotationQubitCount()
+
+    this.worker.postMessage({
+      qubitCount,
+      stepIndex,
+      circuitJson,
+      invalidateCaches,
+      steps: serializedSteps,
+      targets: this.circleNotation.visibleQubitCircleKets
+    })
+  }
+
+  private setCircleNotationQubitCount(): number {
     const serializedSteps = this.circuit.serialize()
     Util.need(serializedSteps.length > 0, 'non-zero step length')
 
@@ -143,12 +166,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     const qubitCount = maxControlTargetBit >= 0 ? maxControlTargetBit + 1 : 1
     this.circleNotation.qubitCount = qubitCount
 
-    this.worker.postMessage({
-      qubitCount,
-      stepIndex,
-      steps: serializedSteps,
-      targets: this.circleNotation.visibleQubitCircleKets
-    })
+    return qubitCount
   }
 
   private runUnlessEditing(): void {

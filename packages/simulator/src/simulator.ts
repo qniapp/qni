@@ -1,5 +1,6 @@
 import {
   Complex,
+  describe,
   SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
@@ -34,6 +35,7 @@ export class Simulator {
     } else {
       this.state = bits
     }
+
     this.measuredBits = {}
     this.flags = {}
   }
@@ -310,24 +312,8 @@ export class Simulator {
     return this
   }
 
-  amplitudes(targets: number[] = []): {[ket: number]: [number, number]} {
-    const stateVector = this.state.matrix.columnAt(0)
-
-    if (targets.length > 0) {
-      return targets.reduce((map: {[ket: number]: [number, number]}, each) => {
-        const c = stateVector[each]
-        if (c === undefined) {
-          map[each] = [0, 0]
-        } else {
-          map[each] = [c.real, c.imag]
-        }
-        return map
-      }, {})
-    } else {
-      return stateVector.map(each => {
-        return [each.real, each.imag]
-      })
-    }
+  amplitudes(): Complex[] {
+    return this.state.matrix.columnAt(0)
   }
 
   private u(u: Matrix, ...targets: number[]): void {

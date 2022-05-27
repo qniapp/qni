@@ -1,11 +1,15 @@
 import {Simulator} from '@qni/simulator'
 import {Util} from '@qni/common'
 
-const runSimulator = e => {
+let resultCache = {}
+
+function runSimulator(e) {
+  const circuitJson = e.data.circuitJson
   const qubitCount = e.data.qubitCount
   const stepIndex = e.data.stepIndex
   const steps = e.data.steps
   const targets = e.data.targets
+  const invalidateCaches = e.data.invalidateCaches
   const simulator = new Simulator('0'.repeat(qubitCount))
 
   Util.notNull(qubitCount)
@@ -15,23 +19,104 @@ const runSimulator = e => {
 
   // const s_time = new Date()
 
+  if (resultCache[circuitJson] === undefined || invalidateCaches) {
+    resultCache = {}
+    resultCache[circuitJson] = {}
+  }
+
+  let cacheHit = false
+
   for (const [i, operations] of steps.entries()) {
-    simulator.runStep(operations)
-    self.postMessage({
-      type: 'step',
-      step: i,
-      amplitudes: i === stepIndex ? simulator.amplitudes(targets) : [],
-      blochVectors: simulator.blochVectors,
-      measuredBits: simulator.measuredBits,
-      flags: simulator.flags
-    })
+    let stepResult = {}
+
+    if (resultCache[circuitJson][i] === undefined) {
+      resultCache[circuitJson][i] = {}
+    }
+    const cachedStepResult = resultCache[circuitJson][i]
+
+    if (
+      cachedStepResult === undefined ||
+      cachedStepResult.targets === undefined ||
+      cachedStepResult.targets.length < targets.length
+    ) {
+      cacheHit = false
+
+      simulator.runStep(operations)
+
+      const allAmplitudes = simulator.state.matrix
+      const blochVectors = Object.assign({}, simulator.blochVectors)
+      const measuredBits = Object.assign({}, simulator.measuredBits)
+      const flags = Object.assign({}, simulator.flags)
+
+      resultCache[circuitJson][i] = {
+        type: 'step',
+        step: i,
+        amplitudes: allAmplitudes,
+        targets,
+        blochVectors,
+        measuredBits,
+        flags
+      }
+
+      if (i === stepIndex) {
+        const amplitudes = pickTargetAmplitudes(targets, allAmplitudes)
+
+        stepResult = {
+          type: 'step',
+          step: i,
+          amplitudes,
+          blochVectors,
+          measuredBits,
+          flags
+        }
+      } else {
+        stepResult = {
+          type: 'step',
+          step: i,
+          amplitudes: [],
+          blochVectors,
+          measuredBits,
+          flags
+        }
+      }
+    } else {
+      cacheHit = true
+
+      stepResult = {
+        type: 'step',
+        step: i,
+        amplitudes: [],
+        blochVectors: cachedStepResult.blochVectors,
+        measuredBits: cachedStepResult.measuredBits,
+        flags: cachedStepResult.flags
+      }
+
+      if (i === stepIndex) {
+        stepResult.amplitudes = pickTargetAmplitudes(targets, cachedStepResult.amplitudes)
+      }
+    }
+
+    self.postMessage(stepResult)
   }
 
   // const e_time = new Date()
   // const diff = e_time.getTime() - s_time.getTime()
-  // console.log(`${qubitCount} qubit simulation took ${diff} msec`)
+  // const cacheDesc = cacheHit ? "🎯 CACHE HIT" : "💦 CACHE MISS"
+  // console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
 
   self.postMessage({type: 'finish'})
 }
 
-self.addEventListener('message', runSimulator, false)
+const pickTargetAmplitudes = (targets, amplitudes) => {
+  return targets.reduce((map, each) => {
+    if (each >= amplitudes.height) {
+      map[each] = [0, 0]
+    } else {
+      const c = amplitudes.cell(0, each)
+      map[each] = [c.real, c.imag]
+    }
+    return map
+  }, {})
+}
+
+self.addEventListener('message', runSimulator)
