@@ -305,7 +305,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
       this.makeOperationsHoverable()
     }
 
-    if (name === 'data-json' && newValue !== '') {
+    if (name === 'data-json' && newValue !== '' && newValue !== null) {
       this.loadFromJson(newValue)
       if (this.hoverable) {
         this.makeOperationsHoverable()
