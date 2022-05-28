@@ -24,7 +24,7 @@
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
     "watch:css": "yarn build:css --watch",
-    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected"
+    "docs": "typedoc --excludeExternals --excludePrivate --excludeProtected --excludeInternal"
   },
   "keywords": [
     "quantum",

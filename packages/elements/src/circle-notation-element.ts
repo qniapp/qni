@@ -2,47 +2,63 @@ import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
-import {debounce} from '@github/mini-throttle/decorators'
 import fastdom from 'fastdom'
 import {forceSigned} from './util'
 
 @controller
 export class CircleNotationElement extends HTMLElement {
+  /** Number of qubits. */
   @attr qubitCount = 0
-  @attr qubitCircleSize: 'xs' | 'sm' | 'base' | 'lg' | 'xl' = 'xl'
-  @attr cols = 0
-  @attr rows = 0
+  /** Size of qubit circles. */
+  @attr qubitCircleSize: 'xs' | 'sm' | 'base' | 'lg' | 'xl' = 'base'
+  /** Number of columns. */
+  @attr colCount = 0
+  /** Number of rows. */
+  @attr rowCount = 0
+  /** Control the horizontal padding of the inner container. */
   @attr paddingX = 0
+  /** Control the vertical padding of the inner container. */
   @attr paddingY = 0
-  @attr overscan = 0
-  @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
+  /**
+   * Number of rows/columns to render above/below the visible bounds.
+   * This can help reduce flickering during scrolling.
+   */
+  @attr overscanCount = 0
+  /** Controls colored phase mode ON/OFF */
   @attr coloredPhase = false
+  /** ID of qubit circle popup template element */
+  @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
+  /** @internal */
+  @attr vertical = true
 
+  /** @internal */
   @target window!: HTMLElement
+  /** @internal */
   @target innerContainer!: HTMLElement
+  /** @internal */
   @targets qubitCircles!: HTMLElement[]
 
   visibleQubitCircleKets: number[] = []
-  vertical = true
-  lastClientHeight: number | null = null
-  lastClientWidth: number | null = null
-  lastWindowScrollTop: number | null = null
-  lastWindowScrollLeft: number | null = null
-  lastColStartIndex = -1
-  lastColEndIndex = -1
-  lastRowStartIndex = -1
-  lastRowEndIndex = -1
 
+  private lastWindowScrollTop: number | null = null
+  private lastWindowScrollLeft: number | null = null
+  private lastColStartIndex = -1
+  private lastColEndIndex = -1
+  private lastRowStartIndex = -1
+  private lastRowEndIndex = -1
+  private qubitCirclePositions: Array<{col: number; row: number}> = []
+
+  /** @internal */
   startBasicCircleNotationMode(): void {
     this.coloredPhase = false
-    this.drawQubitCircles()
   }
 
+  /** @internal */
   startColoredPhaseMode(): void {
     this.coloredPhase = true
-    this.drawQubitCircles()
   }
 
+  /** @internal */
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     if (oldValue === newValue) return
 
@@ -53,6 +69,10 @@ export class CircleNotationElement extends HTMLElement {
       this.updateDimension()
       this.resizeWindow()
       this.resizeInnerContainer()
+      this.drawQubitCircles()
+    }
+
+    if (name === 'data-colored-phase') {
       this.drawQubitCircles()
     }
   }
@@ -151,103 +171,103 @@ export class CircleNotationElement extends HTMLElement {
 
     switch (this.qubitCount) {
       case 1: {
-        this.rows = 1
-        this.cols = 2
+        this.rowCount = 1
+        this.colCount = 2
         break
       }
       case 2: {
-        this.rows = 1
-        this.cols = 4
+        this.rowCount = 1
+        this.colCount = 4
         break
       }
       case 3: {
         if (this.vertical) {
-          this.rows = 2
-          this.cols = 4
+          this.rowCount = 2
+          this.colCount = 4
         } else {
-          this.rows = 1
-          this.cols = 8
+          this.rowCount = 1
+          this.colCount = 8
         }
         break
       }
       case 4: {
-        this.rows = 2
-        this.cols = 8
+        this.rowCount = 2
+        this.colCount = 8
         break
       }
       case 5: {
         if (this.vertical) {
-          this.rows = 4
-          this.cols = 8
+          this.rowCount = 4
+          this.colCount = 8
         } else {
-          this.rows = 2
-          this.cols = 16
+          this.rowCount = 2
+          this.colCount = 16
         }
         break
       }
       case 6: {
-        this.rows = 4
-        this.cols = 16
+        this.rowCount = 4
+        this.colCount = 16
         break
       }
       case 7: {
         if (this.vertical) {
-          this.rows = 8
-          this.cols = 16
+          this.rowCount = 8
+          this.colCount = 16
         } else {
-          this.rows = 4
-          this.cols = 32
+          this.rowCount = 4
+          this.colCount = 32
         }
         break
       }
       case 8: {
         if (this.vertical) {
-          this.rows = 16
-          this.cols = 16
+          this.rowCount = 16
+          this.colCount = 16
         } else {
-          this.rows = 8
-          this.cols = 32
+          this.rowCount = 8
+          this.colCount = 32
         }
         break
       }
       case 9: {
-        this.rows = 16
-        this.cols = 32
+        this.rowCount = 16
+        this.colCount = 32
         break
       }
       case 10: {
-        this.rows = 32
-        this.cols = 32
+        this.rowCount = 32
+        this.colCount = 32
         break
       }
       case 11: {
-        this.rows = 32
-        this.cols = 64
+        this.rowCount = 32
+        this.colCount = 64
         break
       }
       case 12: {
-        this.rows = 64
-        this.cols = 64
+        this.rowCount = 64
+        this.colCount = 64
         break
       }
       case 13: {
-        this.rows = 64
-        this.cols = 128
+        this.rowCount = 64
+        this.colCount = 128
         break
       }
       case 14: {
-        this.rows = 128
-        this.cols = 128
+        this.rowCount = 128
+        this.colCount = 128
         break
       }
       case 15: {
-        this.rows = 128
-        this.cols = 256
+        this.rowCount = 128
+        this.colCount = 256
         break
       }
       case 16: {
-        this.rows = 256
-        this.cols = 256
+        this.rowCount = 256
+        this.colCount = 256
         break
       }
       default:
@@ -287,9 +307,6 @@ export class CircleNotationElement extends HTMLElement {
         const magnitude = Math.floor(amplitude.abs() * 100000) / 100000
         const phaseDeg = (amplitude.phase() / Math.PI) * 180
 
-        let cssPhaseDeg = Math.trunc(phaseDeg)
-        if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
-
         each.setAttribute('data-amplitude-real', amplitude.real.toString())
         each.setAttribute('data-amplitude-imag', amplitude.imag.toString())
 
@@ -300,11 +317,7 @@ export class CircleNotationElement extends HTMLElement {
           each.style.setProperty('--magnitude', magnitude.toString())
         }
 
-        each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
-
         if (this.coloredPhase) {
-          each.classList.add('phase-hidden')
-
           if (magnitude === 0) {
             each.style.setProperty('--magnitude', '0')
           } else {
@@ -334,14 +347,20 @@ export class CircleNotationElement extends HTMLElement {
           } else {
             each.style.removeProperty('--magnitude-color')
           }
+        } else {
+          let cssPhaseDeg = Math.trunc(phaseDeg)
+          if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
+
+          each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
         }
       }
     })
   }
 
+  /** @internal */
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
-    this.update()
+    this.renderShadowRoot()
 
     this.startLayoutOrientationChangeObserver()
     this.updateDimension()
@@ -380,7 +399,7 @@ export class CircleNotationElement extends HTMLElement {
     return vw < 768
   }
 
-  update(): void {
+  private renderShadowRoot(): void {
     render(
       html`<style>
           circle-notation {
@@ -455,8 +474,8 @@ export class CircleNotationElement extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          .qubit-circle.magnitude-0 .qubit-circle__phase,
-          .qubit-circle.phase-hidden .qubit-circle__phase {
+          :host([data-colored-phase]) .qubit-circle__phase,
+          .qubit-circle.magnitude-0 .qubit-circle__phase {
             display: none;
           }
         </style>
@@ -466,7 +485,7 @@ export class CircleNotationElement extends HTMLElement {
         <div
           class="circle-notation__window"
           data-target="circle-notation.window"
-          data-action="scroll:circle-notation#drawNewlyVisibleQubuitCircles scroll:circle-notation#removeInvisibleQubitCircles"
+          data-action="scroll:circle-notation#update"
           style="height: ${this.windowHeight}px; width: ${this
             .windowWidth}px; overflow: auto; overscroll-behavior: none;"
         >
@@ -485,13 +504,13 @@ export class CircleNotationElement extends HTMLElement {
   private get innerHeight(): number {
     if (this.qubitCount === 0) return 0
 
-    return this.rows * this.qubitCircleSizePx + (this.rows - 1) * this.gap + this.paddingY * 2
+    return this.rowCount * this.qubitCircleSizePx + (this.rowCount - 1) * this.gap + this.paddingY * 2
   }
 
   private get innerWidth(): number {
     if (this.qubitCount === 0) return 0
 
-    return this.cols * this.qubitCircleSizePx + (this.cols - 1) * this.gap + this.paddingX * 2
+    return this.colCount * this.qubitCircleSizePx + (this.colCount - 1) * this.gap + this.paddingX * 2
   }
 
   /* window */
@@ -678,7 +697,7 @@ export class CircleNotationElement extends HTMLElement {
     if (this.vertical) {
       const clientHeight = this.clientHeight
 
-      if (this.rows > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
+      if (this.rowCount > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
         return clientHeight
       } else {
         return qubitCirclesAreaPlusPaddingHeight
@@ -696,7 +715,7 @@ export class CircleNotationElement extends HTMLElement {
     if (this.vertical) {
       const clientWidth = this.clientWidth
 
-      if (this.cols >= 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
+      if (this.colCount >= 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
         return clientWidth
       } else {
         return qubitCirclesAreaPlusPaddingWidth
@@ -831,21 +850,22 @@ export class CircleNotationElement extends HTMLElement {
     })
   }
 
-  drawNewlyVisibleQubuitCircles(): void {
+  /** @internal */
+  update() {
+    this.drawNewlyVisibleQubitCircles()
+    this.removeInvisibleQubitCircles()
+  }
+
+  private drawNewlyVisibleQubitCircles(): void {
     if (this.window === undefined) return
     if (this.innerContainer === undefined) return
 
-    let colStartIndex
-    let colEndIndex
-    let rowStartIndex
-    let rowEndIndex
-    const positions: Array<{col: number; row: number}> = []
-
     fastdom.measure(() => {
-      colStartIndex = this.overscanColStartIndex
-      colEndIndex = this.overscanColEndIndex
-      rowStartIndex = this.overscanRowStartIndex
-      rowEndIndex = this.overscanRowEndIndex
+      this.qubitCirclePositions = []
+      const colStartIndex = this.overscanColStartIndex
+      const colEndIndex = this.overscanColEndIndex
+      const rowStartIndex = this.overscanRowStartIndex
+      const rowEndIndex = this.overscanRowEndIndex
 
       if (
         this.lastColStartIndex === colStartIndex &&
@@ -864,7 +884,7 @@ export class CircleNotationElement extends HTMLElement {
             row < this.lastRowStartIndex ||
             this.lastRowEndIndex < row
           ) {
-            positions.push({col, row})
+            this.qubitCirclePositions.push({col, row})
           }
         }
       }
@@ -877,26 +897,20 @@ export class CircleNotationElement extends HTMLElement {
 
     fastdom.mutate(() => {
       const fragment = document.createDocumentFragment()
-      for (const each of this.allQubitCircleElements(positions)) {
+      for (const each of this.allQubitCircleElements(this.qubitCirclePositions)) {
         fragment.appendChild(each)
       }
 
       this.innerContainer.appendChild(fragment)
 
-      if (positions.length !== 0) {
+      if (this.qubitCirclePositions.length !== 0) {
         this.updateVisibleQubitCircleKets()
       }
     })
   }
 
-  @debounce(100)
-  removeInvisibleQubitCircles(): void {
-    fastdom.measure(() => {
-      const colStartIndex = this.overscanColStartIndex
-      const colEndIndex = this.overscanColEndIndex
-      const rowStartIndex = this.overscanRowStartIndex
-      const rowEndIndex = this.overscanRowEndIndex
-
+  private removeInvisibleQubitCircles() {
+    fastdom.mutate(() => {
       for (const each of this.qubitCircles) {
         const dataCol = each.getAttribute('data-col')
         const dataRow = each.getAttribute('data-row')
@@ -906,7 +920,12 @@ export class CircleNotationElement extends HTMLElement {
         const col = parseInt(dataCol)
         const row = parseInt(dataRow)
 
-        if (col < colStartIndex || colEndIndex < col || row < rowStartIndex || rowEndIndex < row) {
+        if (
+          col < this.lastColStartIndex ||
+          this.lastColEndIndex < col ||
+          row < this.lastRowStartIndex ||
+          this.lastRowEndIndex < row
+        ) {
           const popup = (each as ReferenceElement)._tippy as Instance
           if (popup !== undefined) popup.destroy()
           each.remove()
@@ -920,7 +939,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private qubitCircleElement(position: {row: number; col: number}): HTMLDivElement {
-    const ket = position.col + position.row * this.cols
+    const ket = position.col + position.row * this.colCount
     const top = this.qubitCircleSizePx * position.row + position.row * this.gap + this.paddingY
     const left = this.qubitCircleSizePx * position.col + position.col * this.gap + this.paddingX
 
@@ -1034,7 +1053,7 @@ export class CircleNotationElement extends HTMLElement {
   /* visible row and column indices */
 
   private get overscanColStartIndex(): number {
-    const index = this.visibleColStartIndex - this.overscan
+    const index = this.visibleColStartIndex - this.overscanCount
 
     if (index < 0) {
       return 0
@@ -1044,17 +1063,17 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get overscanColEndIndex(): number {
-    const index = this.visibleColEndIndex + this.overscan
+    const index = this.visibleColEndIndex + this.overscanCount
 
-    if (index > this.cols - 1) {
-      return this.cols - 1
+    if (index > this.colCount - 1) {
+      return this.colCount - 1
     } else {
       return index
     }
   }
 
   private get overscanRowStartIndex(): number {
-    const index = this.visibleRowStartIndex - this.overscan
+    const index = this.visibleRowStartIndex - this.overscanCount
 
     if (index < 0) {
       return 0
@@ -1064,10 +1083,10 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private get overscanRowEndIndex(): number {
-    const index = this.visibleRowEndIndex + this.overscan
+    const index = this.visibleRowEndIndex + this.overscanCount
 
-    if (index > this.rows - 1) {
-      return this.rows - 1
+    if (index > this.rowCount - 1) {
+      return this.rowCount - 1
     } else {
       return index
     }
@@ -1093,7 +1112,7 @@ export class CircleNotationElement extends HTMLElement {
       index++
     }
 
-    return Math.min(this.cols - 1, index)
+    return Math.min(this.colCount - 1, index)
   }
 
   private get visibleRowStartIndex(): number {
@@ -1116,7 +1135,7 @@ export class CircleNotationElement extends HTMLElement {
       index++
     }
 
-    return Math.min(this.rows - 1, index)
+    return Math.min(this.rowCount - 1, index)
   }
 
   private get windowScrollTop(): number {
@@ -1145,6 +1164,7 @@ export class CircleNotationElement extends HTMLElement {
 
   /* qubit-circle popup */
 
+  /** @internal */
   showQubitCirclePopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')
@@ -1212,6 +1232,7 @@ export class CircleNotationElement extends HTMLElement {
     popup.show()
   }
 
+  /** @internal */
   hideQubitCirclePopup(event: MouseEvent): void {
     const qubitCircle = event.target as HTMLElement
     Util.need(qubitCircle.classList.contains('qubit-circle'), 'not a qubit-circle')

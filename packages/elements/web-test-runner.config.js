@@ -18,7 +18,8 @@ export default {
     }),
     postcss({include: ['dist/qni.css'], modules: true}),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      preventAssignment: true
     })
   ]
 }
