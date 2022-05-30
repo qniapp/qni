@@ -90,12 +90,14 @@
   pages:
     - name: テレポーテーション回路
       link: ./teleportation_circuit.html
-      new: true
     - name: 多段テレポーテーション
       link: ./cascading_teleportation.html
-      new: true
     - name: 長距離間の量子もつれ
       link: ./long_distance_entanglement.html
+- name: 重ね合わせ上での演算
+  pages:
+    - name: インクリメント回路
+      link: ./increment_circuit.html
       new: true
 - name: ふろく
   pages:
