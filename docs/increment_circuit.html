@@ -973,29 +973,30 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">重ね合わせた数に +1 する</p>
             </div>
             <div class="content-with-margin"><p>
-  量子コンピュータが従来の古典コンピュータを凌駕できる理由の一つが、重ね合わせ上で演算を実行できることです。
+  量子コンピュータが従来の古典コンピュータを凌駕できると言われる理由の一つが、重ね合わせ上で演算を実行できることです。
   たとえば、1 から 100 の数字が書かれた一山のカードがあるとします。
   量子コンピュータの重ね合わせ演算では、この山に含まれるカードすべてに対して「数を 3
-  で割った余りを計算する」といった計算をまとめて一度に実行できます。
+  で割った余りを計算する」といった演算をまとめて一度に実行できます。
+  つまり量子コンピュータは計算を並列に実行できると言えます。
   一方で古典コンピュータでは、カード 1 枚ずつに対して「数を 3 で割った余りを計算する」という計算を計
-  100 回繰り返す必要があります。 つまり量子コンピュータは「計算を並列に実行できる」とも言えます。
-  もし重ね合わせたカードが 1 万枚、100
-  万枚とどんなに増えてもまとめて並列に計算できるため、繰り返し処理が必要な古典コンピュータよりも明らかに高速です。
+  100 回繰り返す必要があります。
+  もし重ね合わせたカードが 1 万枚、100 万枚とどんなに増えても、量子コンピュータなら重ね合わせによって並列に計算できるため、
+  繰り返し処理が必要な古典コンピュータよりもその点では強力です。
 </p>
 
 <p>
-  では、重ね合わせに対して実行する計算は、量子回路でどのように書けるでしょうか？
-  実は基本的には、従来のデジタル回路 (古典の回路) で行う論理演算 (AND、OR など)
-  と仕組み的には変わりありません。 ただし量子回路では AND や OR
-  といった従来の論理ゲートの変わりに、<x-gate class="operation-xs"></x-gate> や
-  <control-gate class="operation-xs"></control-gate> といった量子ゲートを使います。
-  量子ゲートは重ね合わせ状態を入力できるので、いったん量子版の計算回路を作ってしまえば、自動的に重ね合わせにも対応できていることになります。
+  では、重ね合わせに対して実行する計算は、具体的に量子回路でどのように書けるでしょうか？
+  実は基本的には、従来のデジタル回路 (古典の回路) で行うビット単位の論理演算 (AND や NOT、OR など)
+  と量子版の論理演算には大きな違いはありません。ただし、量子回路では AND や NOT
+  といった従来の論理ゲートの代わりに、<control-gate class="operation-xs"></control-gate> や <x-gate class="operation-xs"></x-gate> といった量子ゲートを使うという違いがあります。
+  もう一つの違いは、量子ゲートは重ね合わせ状態を入力できる点です。
+  このため、いったん量子版の論理演算回路を作ってしまえば、重ね合わせた量子ビットの演算にも自動的に対応できます。
 </p>
 
 <p>
   まず簡単な例として、「数字に +1 する」つまりインクリメントする回路を作ってみましょう。
-  これを量子ゲートで実装するためには、「数字に +1
-  する」という処理をビット単位での演算、つまり二進数での演算に置き換える必要があります。
+  これを量子ゲートで実現するためには、「数字に +1
+  する」という処理をビット単位での演算、つまり二進数での演算で考える必要があります。
 </p>
 
 <p>
@@ -1026,17 +1027,17 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["{入力0"],["|0>"],["}"],[1],["{インクリメント"],["X"],["}"],[1]]}'
+        data-json='{"cols":[["{0"],["|0>"],["}"],[1],["{インクリメント"],["X"],["}"],[1]]}'
       >
       </quantum-circuit>
 
       <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="circle-notation-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
       >
       </circle-notation>
     </circuit-editor>
@@ -1047,7 +1048,8 @@
   次は入力を 1 として、インクリメントして 2 を計算する回路を考えます。 1 を二進数で表すと 01、2
   を二進数で表すと 10 なので、これは 01 → 10 に変換する回路と言えます。 これはつまり、ビット 0 が 1
   であればビット 2 を反転し、その後にビット 0 を反転させれば良さそうです。
-  こうした条件付き反転は、CNOT ゲートで次のように書けます。
+  こうした「ビット 0 が 1 であればビット 2 を反転」という条件付き反転は、CNOT ゲートで書けます。
+  これと <x-gate class="operation-xs"></x-gate> によるビット 0 の反転を組合わせると、1 を 2 にインクリメントする回路は次のように書けます。
 </p>
 
 <div class="mini-qni">
@@ -1073,7 +1075,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["{入力1"],["|0>","|0>"],["X"],["}"],[1],["{インクリメント"],["•","X"],["X"],["}"],[1]]}'
+        data-json='{"cols":[["{1"],["|0>","|0>"],["X"],["}"],[1],["{インクリメント"],["•","X"],["X"],["}"],[1]]}'
       >
       </quantum-circuit>
 
@@ -1091,10 +1093,10 @@
 </div>
 
 <p>
-  この CNOT ゲートはビット 0 が 1 の時にもうひとつ上のビット 1 を反転させるので、繰り上げ
-  (論理演算では「キャリー」と呼ばれる) を計算しています。 また、CNOT ゲートはビット 0 が 1
-  の時にしか発動しないため、最初の X ゲート 1 つの回路を含んでいます。 つまり、0 または 1 に +1
-  する回路は、上の回路ひとつにまとめることができます。
+  この CNOT ゲートはビット 0 が 1 の時に一桁上のビット 1 を 1 に反転させるので、繰り上げ
+  (ビット演算では「キャリー」と呼ばれる) を計算しています。 この CNOT ゲートはビット 0 が 1
+  の時にしか発動しないため、最初の 0 を 1 にインクリメントする回路 (X ゲート 1 つの回路) の機能も含んでいます。
+  つまり、0 または 1 をインクリメントする回路は、この CNOT と X による回路ひとつで表すことができます。
 </p>
 
 <p>
@@ -1138,7 +1140,7 @@
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="8"
-        data-json='{"cols":[["{1を作る"],["|0>","|0>","|0>","|0>"],["X",1,1,1],["}"],[1],["{インクリメント"],["•","•","•","X"],["•","•","X",1],["•","X",1,1],["X",1,1,1],["}"],[1]]}'
+        data-json='{"cols":[["{3ビット入力"],["|0>","|0>","|0>","|0>"],["X",1,1,1],["}"],[1],["{インクリメント"],["•","•","•","X"],["•","•","X",1],["•","X",1,1],["X",1,1,1],["}"],[1]]}'
       >
       </quantum-circuit>
 
@@ -1218,10 +1220,150 @@
   </quantum-simulator>
 </div>
 
+<h2>ハンズオン</h2>
+
 <p>
   入力を作る <x-gate class="operation-xs"></x-gate> と
   <h-gate class="operation-xs"></h-gate>
-  の配置を変えることで、いろいろな重ね合わせに対して確かにインクリメント回路が動作することを確認しましょう。
+  の配置を変えることで、いろいろな重ね合わせに対してインクリメント回路を動作させてみましょう。
+</p>
+
+<ul>
+  <li>5 と 7 の重ね合わせを入力するにはどうしたらよいでしょうか?</li>
+  <li>0 〜 7 すべての重ね合わせを入力するにはどうしたらよいでしょうか？</li>
+</ul>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["{3ビット入力"],["|0>","|0>","|0>","|0>"],["X",1,1,1],[1,1,"H",1],["}"],[1],["{インクリメント"],["•","•","•","X"],["•","•","X",1],["•","X",1,1],["X",1,1,1],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<h2>注意点: 重ね合わせはそのまま取り出せない</h2>
+
+<p>
+  重ね合わせ演算を入力して何らかの算術演算をすると、同様に重ね合わされた状態が出力されます。
+  注意しなければならないのは (そしてすぐ忘れてしまいがちなのは)、重ね合わせはそのまま取り出せず、測定によってどれか 1 つの値だけしか確率的に取り出せないということです。
+  Qni はシミュレータであるため、実行中の量子コンピュータの重ね合わせ状態を見ることができますが、通常は量子コンピュータから値を取り出すには必ず測定をしなければなりません。
+  量子回路で表すと、計算結果を取り出すには次のように <measurement-gate class="operation-xs"></measurement-gate> ゲートを用いて値を取り出す必要があります。
+</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X",1,1,1],[1,1,"H",1],["}"],[1],["{インクリメント"],["•","•","•","X"],["•","•","X",1],["•","X",1,1],["X",1,1,1],["}"],[1],["{測定"],["Measure","Measure","Measure","Measure"],["}"],["1"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  「なんだ、たとえ 100,000 個の重ね合わせに並列に計算を実行できても、そのうち 1 個しか計算結果を取り出せないんなら、並列の意味がないじゃないか」。
+  そう思うかもしれません。
+</p>
+
+<p>
+  しかし、<a href="./index.html">はじめに</a>で紹介したグローヴァーのアルゴリズム (量子探索) では、この重ね合わせ演算を次のようにうまくデータ探索に活用します。
+</p>
+
+<ul class="list-decimal">
+  <li>たくさんの重ね合わせデータに対して並列に演算を行う。この演算は算術演算ではなく、「条件に合うデータ (みつけたいデータ) に印をつける」という処理を並列に行う。</li>
+  <li>印をつけたデータの確率を増幅させ、測定したときに印をつけたデータが出力される確率を上げる</li>
+</ul>
+
+<p>
+  つまり、グローヴァーのアルゴリズムでは「大量のデータのうち条件にあうものに印をつける」という処理に重ね合わせによる並列処理を使います。
+  2 の確率を増幅させる操作はまだ説明していませんが、これを振幅増幅と呼び後の項目で詳しく扱います。
+  それまでは、重ね合わせ上の演算テクニックについてより詳しく見ていきましょう。
 </p>
 
 <template id="operation-menu">
