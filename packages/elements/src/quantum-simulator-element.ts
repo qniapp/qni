@@ -30,6 +30,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.worker = new Worker('./serviceworker.js')
     this.worker.addEventListener('message', this.handleServiceWorkerMessage.bind(this))
 
+    this.addEventListener('operation-delete', this.freshRun)
     this.addEventListener('operation-inspector-if-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-change', this.freshRun)
     this.addEventListener('operation-inspector-angle-update', this.maybeUpdateUrl)
