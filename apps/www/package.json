@@ -25,6 +25,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "clean": "./bin/rails javascript:clobber",
     "dev": "./bin/dev",
     "lint": "eslint . --ext .js,.ts",
     "typecheck": "tsc --noEmit",

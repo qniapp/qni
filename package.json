@@ -18,6 +18,7 @@
     "examples/elements-example"
   ],
   "scripts": {
+    "clean": "lerna run clean --stream",
     "build": "lerna run build --stream",
     "pretty-quick": "pretty-quick",
     "lint": "lerna run lint",
