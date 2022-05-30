@@ -4732,6 +4732,11 @@ write-gate[data-value='1']::part(value)::after {
   content: '1';
 }
 
+write-gate.operation-xs::part(value)::after {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 /* data-grabbed */
 
 write-gate[data-grabbed]::part(icon) {
