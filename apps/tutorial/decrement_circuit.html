@@ -1,0 +1,187 @@
+---
+layout: page
+section: 重ね合わせ上での演算
+title: デクリメント回路
+description: インクリメントの逆演算
+prev: インクリメント回路
+prev_url: ./increment_circuit.html
+---
+
+<p>
+  数に +1 する<a href="./increment_circuit.html">インクリメント回路</a>とは逆に、-1
+  するデクリメント回路を作ってみましょう。
+  今回はビット演算から考えるのではなく、「デクリメントはインクリメントの逆」という発想を使います。
+  つまり、前回に作ったインクリメント回路の逆演算回路を考えることで、デクリメント回路が作れるかどうか実験してみることにしましょう。
+</p>
+
+<p>
+  逆演算回路とは、元の回路と並べることで全体を打ち消す回路でした (<a href="./disentangle"
+    >もつれをほどく</a
+  >の逆ベル回路を参照)。 これを作るために、元のインクリメント回路を振り返りましょう。 次は 3
+  ビットまでの数をインクリメントする回路です。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["{3ビット入力"],["|0>","|0>","|0>","|0>"],["X"],["}"],[1],["{インクリメント"],["•","•","•","X"],["•","•","X",1],["•","X"],["X",1,1,1],["}"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  まずは「インクリメント」部分の一番右の
+  <x-gate class="operation-xs"></x-gate>から消していくことを考えます。
+  <x-gate class="operation-xs"></x-gate> の逆演算は
+  <x-gate class="operation-xs"></x-gate> 自身なので、次のように
+  <x-gate class="operation-xs"></x-gate> を置きます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["•","•","•","X"],["•","•","X",1],["•","X"],["X"],["X"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>すると <x-gate class="operation-xs"></x-gate> 2 個が打ち消しあい、次の回路になります。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["•","•","•","X"],["•","•","X",1],["•","X"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  同様に一番右の CNOT を消します。CNOT の逆演算も CNOT 自身なので、次のように CNOT を適用します。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["•","•","•","X"],["•","•","X",1],["•","X"],["•","X"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>すると次のように CNOT が消えました。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["•","•","•","X"],["•","•","X",1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  続くゲートもまったく同じパターンで消していくことができ、最終的にインクリメント回路をすべて消す逆演算回路は、次のようになります。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-max-wire-count="4"
+    data-min-step-count="5"
+    data-json='{"cols":[["{逆インクリメント"],["X"],["•","X"],["•","•","X"],["•","•","•","X"],["}"]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>問題は、本当にこれがデクリメントになっているかどうかです。さっそく実験してみましょう。</p>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <x-gate data-hoverable></x-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
+            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+        class="mb-10"
+        data-target="quantum-simulator.circuit circuit-editor.circuit"
+        data-min-wire-count="1"
+        data-max-wire-count="1"
+        data-min-step-count="8"
+        data-json='{"cols":[["{1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X",1,1,1],[1,1,"H",1],["}"],[1],["{デクリメント?"],["X"],["•","X"],["•","•","X"],["•","•","•","X"],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+        id="circle-notation"
+        data-target="quantum-simulator.circleNotation"
+        data-qubit-circle-popup-template-id="circle-notation-popup"
+        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+        data-padding-X="16"
+        data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<p>
+  たしかに、1 と 5 の重ね合わせをデクリメントに通すと 0 と 4 の重ね合わせが得られます
+  (ほかの入力も試してみてください!)。
+</p>
+
+<p>
+  量子回路ではこのように、ある算術演算を行う回路の逆回路を作ることで、逆の算術演算を行う回路を作ることができます。
+  これは、量子ゲートの可逆性を利用したおもしろい性質です。
+</p>
+
+<p>
+  ただし逆演算回路を作るには、もとの回路が <x-gate class="operation-xs"></x-gate> や
+  <h-gate class="operation-xs"></h-gate> といった可逆なゲートのみから構成されている必要があります。
+  ほとんどの量子ゲートは可逆ですが、<measurement-gate class="operation-xs"></measurement-gate> や
+  <write-gate data-value="0" class="operation-xs"></write-gate>、<write-gate
+    data-value="1"
+    class="operation-xs"
+  ></write-gate
+  >は非可逆です。
+</p>
+
+<p>
+  <a href="./increment_circuit.html">インクリメント回路</a
+  >で説明したように、量子コンピュータの強力さの一因は、重ね合わせ上で演算できることです。
+  可逆なゲートは重ね合わせを入出力できるのでこれを満たしていますが、非可逆な
+  <measurement-gate class="operation-xs"></measurement-gate>
+  <write-gate data-value="0" class="operation-xs"></write-gate>
+  <write-gate data-value="1" class="operation-xs"></write-gate>
+  は重ね合わせを出力できず、重ね合わせを強制的に重ね合わせのない {% ket 0 %} または {% ket 1 %}
+  にリセットします。
+  このため、これらの非可逆なゲートは量子というよりも、従来型のコンピュータに近い命令と言えます。
+  よって、従来の算術演算を量子コンピュータ上でうまく実現しようとする場合、つまり重ね合わせ上での演算を可能にしようとする場合には、<measurement-gate
+    class="operation-xs"
+  ></measurement-gate>
+  <write-gate data-value="0" class="operation-xs"></write-gate>
+  <write-gate data-value="1" class="operation-xs"></write-gate> を使うことはできません。
+</p>

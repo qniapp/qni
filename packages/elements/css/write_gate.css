@@ -40,6 +40,10 @@ write-gate {
     content: '1';
   }
 
+  &.operation-xs::part(value)::after {
+    @apply text-xs;
+  }
+
   /* data-grabbed */
 
   &[data-grabbed]::part(icon) {

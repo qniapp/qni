@@ -99,6 +99,9 @@
 #     - name: インクリメント回路
 #       link: ./increment_circuit.html
 #       new: true
+#     - name: デクリメント回路
+#       link: ./decrement_circuit.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
