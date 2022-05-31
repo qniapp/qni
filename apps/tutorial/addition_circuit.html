@@ -5,6 +5,8 @@ title: 足し算回路
 description: 任意の数を足す
 prev: デクリメント回路
 prev_url: ./decrement_circuit.html
+next: 引き算回路
+next_url: ./subtraction_circuit.html
 ---
 
 <p>
@@ -153,9 +155,9 @@ prev_url: ./decrement_circuit.html
 </div>
 
 <p>
-  \(a\) と \(b\) の再下位ビット同士の足し算を計算している部分は、下の回路で左から 4 番目のステップの
-  CNOT です。 \(b\) の再下位ビットを <control-gate class="operation-xs"></control-gate> とし、\(a\)
-  の再下位ビットに <x-gate class="operation-xs"></x-gate> を適用しています。
+  \(a\) と \(b\) の最下位ビット同士の足し算を計算している部分は、下の回路で左から 4 番目のステップの
+  CNOT です。 \(b\) の最下位ビットを <control-gate class="operation-xs"></control-gate> とし、\(a\)
+  の最下位ビットに <x-gate class="operation-xs"></x-gate> を適用しています。
   これを論理演算の用語で言えば、「CNOT は XOR の計算を (重ね合わせに対しても)
   実行できる」と言えます。
 </p>
@@ -169,8 +171,8 @@ prev_url: ./decrement_circuit.html
 </div>
 
 <p>
-  再下位ビットの足し算で繰り上がった 1 をセットする部分は、左から 3 番目の CCNOT です。 \(a\)
-  の再下位ビットと \(b\) の再下位ビット \(b\) を
+  最下位ビットの足し算で繰り上がった 1 をセットする部分は、左から 3 番目の CCNOT です。 \(a\)
+  の最下位ビットと \(b\) の最下位ビット \(b\) を
   <control-gate class="operation-xs"></control-gate> とし、両方が 1 だった場合に繰り上がるビット (a
   の 2 ビット目) に <x-gate class="operation-xs"></x-gate> を適用します。
 </p>
