@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>確率的ビット</title>
+    <title>足し算回路</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -156,7 +156,7 @@
    
   <a
     href="./p_bit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">確率的ビット</span>
     
@@ -491,7 +491,7 @@
    
   <a
     href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">足し算回路</span>
     
@@ -595,7 +595,7 @@
    
   <a
     href="./p_bit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">確率的ビット</span>
     
@@ -930,7 +930,7 @@
    
   <a
     href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">足し算回路</span>
     
@@ -1003,168 +1003,466 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
-                量子ビット
+                重ね合わせ上での演算
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  確率的ビット
+                  足し算回路
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">確率的性質を持つビットの重ね合わせ状態と測定</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">任意の数を足す</p>
             </div>
             <div class="content-with-margin"><p>
-  量子コンピュータの計算結果を取り出すには、確率に基づいた測定という操作があるのでした<label for="margin-note-what-qpu-do-faster" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-what-qpu-do-faster" class="margin-note__toggle hidden"><span class="margin-note"><a href="./what_qpu_do_faster.html">QPU は何が得意?</a>
-  を参照。</span>。
-  序盤でいきなり迷子にならないためにも、まずは簡単な確率の世界に慣れておく必要があります。
+  これまでは、+1 や -1 のように定数を足す回路を見てきました。
+  これだけではほとんど何もできずつまらないので、任意の数を足し合わせる回路を考えてみましょう。
 </p>
 
 <p>
-  この節では、現在のコンピュータが持つビットをおさらいした後、確率と確率的ビットを学びます。
-  確率的ビットは量子コンピュータの量子ビットによく似ているので、確率的ビットを通して量子ビットの重要な側面を理解できます。
-  ここでは、確率的ビットの状態はどんなものか、また測定によって確率的ビットからどのように情報を取り出せるかを見ていきます。
-</p>
-
-<h2>古典ビット</h2>
-
-<p>
-  ご存知のように、従来のビット (古典ビット<label for="margin-note-classical-bit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-classical-bit" class="margin-note__toggle hidden"><span class="margin-note">量子力学と古典力学との対比から、量子コンピュータのビットを量子ビットと呼ぶときは、現在のコンピュータのビットを古典ビットと呼びます。</span>とも呼ぶ) は 0 または 1
-  のどちらかの値をとります。ごく当たり前のことですが、古典ビットから取り出せる値は 0 か 1 のみです。
-  また計算中のその中身 (状態) も常に 0 か 1 です。
-</p>
-
-<h2>確率</h2>
-<p>
-  確率とは「元旦には 10% の確率で雪が降る」とか「80%
-  の確率で日本列島に台風が上陸する」などのように、あるイベントが起こる可能性を数値化したものです。
-  確実に発生するイベントなら 100%、絶対に発生しないイベントなら 0% の確率を持ちます。
+  足し算というと \(a + b = c\) という式をすぐに思い付きますが、これは可逆な回路として実装できません。
+  なぜかと言うと、\(a\) と \(b\) から \(c\) を求めることはできても、逆に \(c\) から \(a\) と \(b\) を一意に求めることができないからです。
+  つまり足し算 \(a + b = c\) に逆演算が存在しないことになり、よって可逆な回路としては実装できない (= 重ね合わせをそのまま出力できない) ことになります。
 </p>
 
 <p>
-  確率の例として、コイントスを考えてみましょう。
-  コインを投げてそれを見ずに手で覆うと、手の中ではコインが「表」または「裏」の 2
-  通りのイベントが発生します。 偏りのないコインならば、それぞれのイベントの確率は 50% ずつです。
-  また、表の出やすいコイン (表 60.8%、裏 39.2%) や両面が裏のインチキコイン (表: 0%、裏: 100%)
-  など、無限のバリエーションが存在します。
+  そのかわりに、\(a \mathrel{+}= b\) という回路を実装します。
+  これはプログラミングによく出てくる演算子で、\(a\) に \(a + b\) の結果を代入することを意味します。
+  もし \(a\) を元の値に戻したくなった場合、\(a \mathrel{-}= b\) (\(a\) に \(a - b\) の結果を代入) という逆演算が存在するので、逆回路も問題なく実装できそうです。
+</p>
+
+<h2>足し算回路</h2>
+
+<p>
+  以下が \(a \mathrel{+}= b\) を実装した量子回路です。
+  \(a\) に 1 と 5 を重ね合わせた値をセットし、\(b\) には 3 をセットします。
+  \(a \mathrel{+}= b\) を実行すると \(a\) には 4 と 8 を重ね合わせた値が残ります。
+  \(b\) は変化しません。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+            class="mb-10"
+            data-target="quantum-simulator.circuit circuit-editor.circuit"
+            data-min-wire-count="1"
+            data-max-wire-count="1"
+            data-min-step-count="8"
+            data-json='{"cols":[["{a=1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X"],[1,1,"H"],["}"],[1],["{b=3"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X","X"],["}"],[1],["{a+=b (a=4と8の重ね合わせ)"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+          class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+          data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  インクリメントやデクリメント回路と大きく違う点は、b をセットするブロック (\(b = 3\)) が存在することです。
+  \(a\) の値は 7 量子ビットの下位 4 ビット、\(b\) の値は上位 3 ビットを使って表されていることに注意してください。
+  ここで \(b\) の値は 3 (二進数で 011) にセットされており、また計算中は \(b\) の値はずっと変わらず 011 のままなので、\(b = 3\) のブロック以降の円表示では、上位 3 ビットが必ず 011 となります。
 </p>
 
 <p>
-  表と裏の確率を足すと必ず 100% になる<label for="margin-note-probability-100" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probability-100" class="margin-note__toggle hidden"><span class="margin-note">確率論では、起こりうるすべてのイベントの確率を足すと 100% になります。</span>ことを考えると、表と裏になる確率すべての組合わせを次のグラフに図式化できます。
-  横軸は表の出る確率 (0〜100%)、縦軸は裏の出る確率 (0〜100%) です。
-  あらゆるコインの性質を表と裏が出る確率で特徴付けしたとき、任意のコインはこの線分上のどれか 1
-  点として表せます。
+  このため、計算結果の見方には注意が必要です。
+  計算結果の \(a\) の値は 4 と 8 (二進数で 0100 と 1000) の重ね合わせになっているはずですが、円表示で見ると 52 と 56 (二進数で 0110100 と 0111000) になっています。
+  これは計算結果に \(b\) の値 3 (二進数で 011) もあわせて表示されているためで、これが上位 3 ビットなので二進数では 0110000 (十進数で 48) が足し合わされています。
+  そこで \(a\) の値だけを読み取るには上位 3 ビットの 011 を無視するか、十進数で 48 を引いてやる必要があります。
 </p>
 
-<figure>
-  <img src="./images/p_bit_graph.png" class="h-auto w-full" />
-</figure>
-
-<h2>確率的ビット</h2>
+<h2>a += b 回路の仕組み</h2>
 
 <p>
-  確率的ビットは、コイントスと同じ確率的な性質を持っています。
-  計算中の確率的ビットの状態は、コインが手の中にあり表か裏かまだ分かっていない状態と同じと考えられます。
-  コインの表を値 0、コインの裏を値 1 とすると、確率的ビットはたとえば「60% の確率で 0、40% の確率で
-  1」などという状態を取ることができます。
+  この回路はやや複雑に見えますが、やっていることは次の 2 つの繰り返しです。
 </p>
 
+<ul>
+  <li>\(a\) と \(b\) の対応するビット同士で、一番下のビットから順に二進数の足し算をする</li>
+  <li>足し算で 1 + 1 が起こった場合、1 つ上のビットに 1 繰り上げる</li>
+</ul>
+
 <p>
-  計算後、値を取り出す操作 (測定)
-  をした後の確率的ビットは、コインの表か裏かが定まった状態に対応します。
-  つまり、値を取り出した時点で確率は消え 0 か 1
-  かが確定するので、古典ビットとまったく見分けがつきません。
+  それぞれの計算をどの部分で行っているか、\(a \mathrel{+}= b\) のブロックを見ていきましょう。
 </p>
 
 <p>
-  こうした確率的な情報はいったいコンピュータの計算に使えるのでしょうか? 古典ビットの値 0 と 1
-  は確定した値を表しているのに対し、確率的ビットはおおよその知識 (または知識の欠如)
-  を表しているので、あまり役に立たないと思うかもしれません。
-  確率ビットの利点は、部分的な知識をより正確に表現できることです。
-  もし何かが完全に分かっていないのであれば、計算をあきらめるのではなくそれを認め、確率のまま計算を進めてしまおうというのが確率的ビットの考えかたです。
+  \(a\) と \(b\) のビット同士の足し算では、それぞれのビットの値によって次の 4 パターンが起こります。
+  表をよく見ると、\(a\) と \(b\) どちらかのビットだけが 1 の時のみ、\(a + b\) は 1 になります。
+  論理演算に詳しい人なら、これは XOR (排他的論理和) と同じ、ということに気付くでしょう。
 </p>
 
-<h2>重ね合わせはなぜ強力?</h2>
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>a のビット</th>
+        <th>b のビット</th>
+        <th>a + b</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          0
+        </td>
+        <td>
+          0
+        </td>
+        <td>
+          0
+        </td>
+      </tr>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          0
+        </td>
+        <td>
+          1
+        </td>
+      </tr>
+      <tr>
+        <td>
+          0
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          1
+        </td>
+      </tr>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          0 (1 繰り上げ)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <p>
-  確率的ビットの確率的な 0 と 1 の状態を重ね合わせ状態と言います。 0 または 1 が起こる 2
-  つの確率を重ね合わせ、「0 が 60%、1 が40%」という 1 つの状態として扱うイメージです。
-  重ね合わせは量子コンピュータが強力である 1 つの理由としてよく挙げられますが、それはなぜでしょうか?
+  \(a\) と \(b\) の再下位ビット同士の足し算を計算している部分は、下の回路で左から 4 番目のステップの CNOT です。
+  \(b\) の再下位ビットを <control-gate class="operation-xs"></control-gate> とし、\(a\) の再下位ビットに <x-gate class="operation-xs"></x-gate> を適用しています。
+  これを論理演算の用語で言えば、「CNOT は XOR の計算を (重ね合わせに対しても) 実行できる」と言えます。
 </p>
 
-<p>
-  直感的に納得する方法の 1
-  つは、先ほどのグラフ上で古典ビットと確率的ビットを直接比べてみることです。 古典ビットは常に 0
-  または 1 の状態しか取りませんから、先程のグラフ上に表すと古典ビットの取りうる状態は 2
-  点になります。
-</p>
-
-<figure>
-  <img src="./images/c_bit_and_p_bit.png" class="h-auto w-full" />
-</figure>
-
-<p>
-  一方で、確率的ビットは線分上のすべての点、つまり無限個の状態を持ちえるのでした。
-  このように取りうる状態の数で比較すると、古典ビットは 2
-  個であるのに対して確率的ビットは無限個なので、確率的ビットのほうが (なんとなく) 強力に見えます。
-</p>
-
-<p>
-  またはこう考えることもできます。 確率的ビットの状態は「0 が 0.11001001011%、1 が
-  99.88998998989%」のようにいくらでも細かくセットできます。 ここで 0 の確率の少数点以下を 2
-  進数と見て、そこにすべての Wikipedia の記事と YouTube
-  の全動画データ、そしてインターネットでみつかるすべての猫画像を 2 進数として埋め込みます。
-  それはなんと、確率的ビットたった 1 個に超巨大なデータを埋め込めることにほかなりません!
-</p>
-
-<figure class="!w-full">
-  <img src="./images/wikipedia_youtube_cat.png" class="h-auto w-full" />
-</figure>
-
-<p>
-  …実際に埋め込めたとしても、測定によって 0 または 1
-  しか取り出せないなら、確率に乗せたデータは消えてしまうのではないでしょうか?
-  たしかにその通りですが、測定前なら確率の値を計算データとして使えます。
-  このように、膨大なデータでも確率の形にエンコードして持つことができ、それを計算データとして使える<label for="margin-note-probablity-data" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-probablity-data" class="margin-note__toggle hidden"><span class="margin-note">量子機械学習アルゴリズムでは、膨大なデータをこのように確率として量子ビットに埋め込むことで量子コンピュータに入力し計算します。</span>のが確率的ビットの強みです。
-</p>
-
-<orbit-reviewarea color="blue">
-  <orbit-prompt cloze="量子力学と古典力学の対比から、従来のビットを{古典ビット}と呼ぶ">
-  </orbit-prompt>
-  <orbit-prompt
-    question="1 つの古典ビットが持ちうる状態はいくつ?"
-    answer="2 つ (0 と 1)"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="1 つの古典ビットから取り出せる値はいくつ?"
-    answer="2 つ (0 と 1)"
-  ></orbit-prompt>
-  <orbit-prompt cloze="「60%で0」のように確率的な状態を持つビットを{確率的ビット}と呼ぶ">
-  </orbit-prompt>
-  <orbit-prompt cloze="確率的に 0 または 1 を持つ状態を{重ね合わせ状態}と呼ぶ"> </orbit-prompt>
-  <orbit-prompt question="1 つの確率的ビットが持ちうる状態はいくつ?" answer="無限大"></orbit-prompt>
-  <orbit-prompt question="1 つの確率的ビットを測定して取り出せる値は何?" answer="0 または 1">
-  </orbit-prompt>
-  <orbit-prompt
-    question="1 つの確率的ビットが持ちうる状態を、横軸 0 の確率、縦軸 1 の確率とそれぞれ取ると、どんなグラフになる?"
-    answer-attachments="https://qniapp.github.io/qni/images/p_bit_graph.png"
-    answer="線分"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="古典ビットよりも確率的ビットの方が強力な理由を、それぞれが取りうる状態の数に着目して説明すると?"
-    answer="古典ビットは 2 通りの状態しか持てないのに対し、確率的ビットは無限大通りの状態を持てる"
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+      data-max-wire-count="7"
+      data-json='{"cols":[["{a += b"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
   >
-  </orbit-prompt>
-  <orbit-prompt
-    question="大きなデータを 1 つの確率的ビットに埋め込む方法は?"
-    answer="データの 2 進表現を、確率的ビットが 0 となる確率の値にエンコードする"
-  >
-  </orbit-prompt>
-</orbit-reviewarea>
+  </quantum-circuit>
+</div>
+
+<p>
+  再下位ビットの足し算で繰り上がった 1 をセットする部分は、左から 3 番目の CCNOT です。
+  \(a\) の再下位ビットと \(b\) の再下位ビット \(b\) を <control-gate class="operation-xs"></control-gate> とし、両方が 1 だった場合に繰り上がるビット (a の 2 ビット目) に <x-gate class="operation-xs"></x-gate> を適用します。
+</p>
+
+<p>
+  以上の足し算と繰り上がりをビットごとに繰り返し行うことで、\(a \mathrel{+}= b\) の回路ができあがります。
+</p>
+
+<h2>重ね合わせに重ね合わせを足す</h2>
+
+<p>
+  先ほどの例では \(b\) に 3 をセットしていましたが、これを重ね合わせにするとどうなるでしょうか？
+  たとえば \(a\) を 1 と 5 の重ね合わせ、\(b\) を 2 と 6 の組合わせにして足すと、和はどんな重ね合わせになるでしょう？
+</p>
+
+<p>
+  1 と 5 の重ね合わせ + 2 と 6 の重ね合わせ = ???
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+            class="mb-10"
+            data-target="quantum-simulator.circuit circuit-editor.circuit"
+            data-min-wire-count="1"
+            data-max-wire-count="1"
+            data-min-step-count="8"
+            data-json='{"cols":[["{a=1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X"],[1,1,"H"],["}"],[1],["{b=2と6の重ね合わせ"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,1,"X"],[1,1,1,1,1,1,"H"],["}"],[1],["{a+=b=???"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+          class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+          data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  上の回路の実行結果を見ると、35 (二進数で 0100011)、39 (二進数で 0100111)、103 (二進数で 1100111)、107 (二進数で 1101011) の重ね合わせが出力されています。
+  ここで \(b\) の値は 2 と 6 の重ね合わせ (それぞれ二進数で 010 と 110) なので、これら上位 3 ビットを無視すると、
+  出力結果は 0011, 0111, 0111, 1011 であり、ダブった値 0111 を除くと 3 通りになります。
+  これは十進数で 3 (= 1 + 2), 7 (= 1 + 6 または 5 + 2), 11 (= 5 + 6) となり、重ね合わせの和がすべての通りについて出ていることが分かります。
+</p>
+
+<template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
+    </div>
+  </div>
+</template>
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-neutral-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+ <template id="circle-notation-popup">
+  <div class="text-wolf mb-2 text-base">
+    |<span class="ket-decimal font-mono"></span>⟩
+    <div class="inline-block">(二進 |<span class="ket-binary font-mono"></span>⟩)</div>
+  </div>
+
+  <ul class="list-none">
+    <li>
+      振幅:
+      <span class="amplitude-real text-eel font-mono font-bold"></span>
+      <span class="amplitude-imag text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      確率:
+      <span class="probability text-eel font-mono font-bold"></span>
+    </li>
+    <li>
+      位相:
+      <span class="phase text-eel font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./qni_intro.html"
+      href="./decrement_circuit.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1181,17 +1479,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-Qni 入門</a
+デクリメント回路</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./superposition.html"
-      >重ね合わせ状態<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>
