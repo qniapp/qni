@@ -102,6 +102,9 @@
 #     - name: デクリメント回路
 #       link: ./decrement_circuit.html
 #       new: true
+#     - name: 足し算回路
+#       link: ./addition_circuit.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
