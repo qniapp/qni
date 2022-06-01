@@ -16,7 +16,7 @@ next_url: ./subtraction_circuit.html
 
 <p>
   足し算というと \(a + b = c\)
-  という式をすぐに思い付きますが、これは可逆な回路として実装できません。 なぜかと言うと、\(a\) と
+  という式をすぐに思い付きますが、これは可逆な回路として実装できません。 なぜかと言うと、 \(a\) と
   \(b\) から \(c\) を求めることはできても、逆に \(c\) から \(a\) と \(b\)
   を一意に求めることができないからです。 つまり足し算 \(a + b = c\)
   に逆演算が存在しないことになり、よって可逆な回路としては実装できない (=
@@ -105,82 +105,74 @@ next_url: ./subtraction_circuit.html
 
 <h2>a += b 回路の仕組み</h2>
 
-<p>この回路はやや複雑に見えますが、やっていることは次の 2 つの繰り返しです。</p>
+<p>
+  この回路はやや複雑に見えますが、よく見るとインクリメント回路の各ステップに
+  <control-gate class="operation-xs"></control-gate> を足したものを、ビットをずらしながら 3
+  回繰り返していることがわかります。 そして、<control-gate class="operation-xs"></control-gate> は b
+  の各ビットにかかっています。 つまりこれは、「a の各ビットに b
+  の対応するビットを条件としてインクリメント」を行う回路です。
+</p>
 
-<ul>
-  <li>\(a\) と \(b\) の対応するビット同士で、一番下のビットから順に二進数の足し算をする</li>
-  <li>足し算で 1 + 1 が起こった場合、1 つ上のビットに 1 繰り上げる</li>
+<ul class="list-decimal">
+  <li>
+    \(b\) のビット 0 が 1 なら、\(a\) を 1 インクリメントする (= ビット 0 をインクリメントする)
+  </li>
+  <li>\(b\) のビット 1 が 1 なら、\(a\) のビット 1 をインクリメントする</li>
+  <li>\(b\) のビット 2 が 1 なら、\(a\) のビット 2 をインクリメントする</li>
 </ul>
 
-<p>それぞれの計算をどの部分で行っているか、\(a \mathrel{+}= b\) のブロックを見ていきましょう。</p>
-
 <p>
-  \(a\) と \(b\) のビット同士の足し算では、それぞれのビットの値によって次の 4 パターンが起こります。
-  表をよく見ると、\(a\) と \(b\) どちらかのビットだけが 1 の時のみ、\(a + b\) は 1 になります。
-  論理演算に詳しい人なら、これは XOR (排他的論理和) と同じ、ということに気付くでしょう。
+  これは、ビットごとに 2 進数の足し算を行っていることになり、結果として \(a \mathrel{+}= b\)
+  が計算できます。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <table>
-    <thead>
-      <tr>
-        <th>a のビット</th>
-        <th>b のビット</th>
-        <th>a + b</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>0 (1 繰り上げ)</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{a=1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X"],[1,1,"H"],["}"],[1],["{b=3"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X","X"],["}"],[1],["{ビット0"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],["}"],[1],["{ビット1"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],["}"],[1],["{ビット2"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
 </div>
-
-<p>
-  \(a\) と \(b\) の最下位ビット同士の足し算を計算している部分は、下の回路で左から 4 番目のステップの
-  CNOT です。 \(b\) の最下位ビットを <control-gate class="operation-xs"></control-gate> とし、\(a\)
-  の最下位ビットに <x-gate class="operation-xs"></x-gate> を適用しています。
-  これを論理演算の用語で言えば、「CNOT は XOR の計算を (重ね合わせに対しても)
-  実行できる」と言えます。
-</p>
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-max-wire-count="7"
-    data-json='{"cols":[["{a += b"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
-  >
-  </quantum-circuit>
-</div>
-
-<p>
-  最下位ビットの足し算で繰り上がった 1 をセットする部分は、左から 3 番目の CCNOT です。 \(a\)
-  の最下位ビットと \(b\) の最下位ビット \(b\) を
-  <control-gate class="operation-xs"></control-gate> とし、両方が 1 だった場合に繰り上がるビット (a
-  の 2 ビット目) に <x-gate class="operation-xs"></x-gate> を適用します。
-</p>
-
-<p>
-  以上の足し算と繰り上がりをビットごとに繰り返し行うことで、\(a \mathrel{+}= b\)
-  の回路ができあがります。
-</p>
 
 <h2>重ね合わせに重ね合わせを足す</h2>
 

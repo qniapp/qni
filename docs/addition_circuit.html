@@ -949,7 +949,8 @@
 
 <p>
   足し算というと \(a + b = c\)
-  という式をすぐに思い付きますが、これは可逆な回路として実装できません。 なぜかと言うと、\(a\) と
+  という式をすぐに思い付きますが、これは可逆な回路として実装できません。 なぜかと言うと、
+  \(a\) と
   \(b\) から \(c\) を求めることはできても、逆に \(c\) から \(a\) と \(b\)
   を一意に求めることができないからです。 つまり足し算 \(a + b = c\)
   に逆演算が存在しないことになり、よって可逆な回路としては実装できない (=
@@ -1039,82 +1040,70 @@
 
 <h2>a += b 回路の仕組み</h2>
 
-<p>この回路はやや複雑に見えますが、やっていることは次の 2 つの繰り返しです。</p>
+<p>
+  この回路はやや複雑に見えますが、よく見るとインクリメント回路の各ステップに <control-gate class="operation-xs"></control-gate> を足したものを、ビットをずらしながら 3 回繰り返していることがわかります。
+  そして、<control-gate class="operation-xs"></control-gate> は b の各ビットにかかっています。
+  つまりこれは、「a の各ビットに b の対応するビットを条件としてインクリメント」を行う回路です。
+</p>
 
-<ul>
-  <li>\(a\) と \(b\) の対応するビット同士で、一番下のビットから順に二進数の足し算をする</li>
-  <li>足し算で 1 + 1 が起こった場合、1 つ上のビットに 1 繰り上げる</li>
+<ul class="list-decimal">
+  <li>\(b\) のビット 0 が 1 なら、\(a\) を 1 インクリメントする (= ビット 0 をインクリメントする)</li>
+  <li>\(b\) のビット 1 が 1 なら、\(a\) のビット 1 をインクリメントする</li>
+  <li>\(b\) のビット 2 が 1 なら、\(a\) のビット 2 をインクリメントする</li>
 </ul>
 
-<p>それぞれの計算をどの部分で行っているか、\(a \mathrel{+}= b\) のブロックを見ていきましょう。</p>
-
 <p>
-  \(a\) と \(b\) のビット同士の足し算では、それぞれのビットの値によって次の 4 パターンが起こります。
-  表をよく見ると、\(a\) と \(b\) どちらかのビットだけが 1 の時のみ、\(a + b\) は 1 になります。
-  論理演算に詳しい人なら、これは XOR (排他的論理和) と同じ、ということに気付くでしょう。
+  これは、ビットごとに 2 進数の足し算を行っていることになり、結果として \(a \mathrel{+}= b\) が計算できます。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <table>
-    <thead>
-      <tr>
-        <th>a のビット</th>
-        <th>b のビット</th>
-        <th>a + b</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>0 (1 繰り上げ)</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{a=1と5の重ね合わせ"],["|0>","|0>","|0>","|0>"],["X"],[1,1,"H"],["}"],[1],["{b=3"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X","X"],["}"],[1],["{ビット0"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],["}"],[1],["{ビット1"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],["}"],[1],["{ビット2"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
 </div>
-
-<p>
-  \(a\) と \(b\) の最下位ビット同士の足し算を計算している部分は、下の回路で左から 4 番目のステップの
-  CNOT です。 \(b\) の最下位ビットを <control-gate class="operation-xs"></control-gate> とし、\(a\)
-  の最下位ビットに <x-gate class="operation-xs"></x-gate> を適用しています。
-  これを論理演算の用語で言えば、「CNOT は XOR の計算を (重ね合わせに対しても)
-  実行できる」と言えます。
-</p>
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <quantum-circuit
-    data-max-wire-count="7"
-    data-json='{"cols":[["{a += b"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
-  >
-  </quantum-circuit>
-</div>
-
-<p>
-  最下位ビットの足し算で繰り上がった 1 をセットする部分は、左から 3 番目の CCNOT です。 \(a\)
-  の最下位ビットと \(b\) の最下位ビット \(b\) を
-  <control-gate class="operation-xs"></control-gate> とし、両方が 1 だった場合に繰り上がるビット (a
-  の 2 ビット目) に <x-gate class="operation-xs"></x-gate> を適用します。
-</p>
-
-<p>
-  以上の足し算と繰り上がりをビットごとに繰り返し行うことで、\(a \mathrel{+}= b\)
-  の回路ができあがります。
-</p>
 
 <h2>重ね合わせに重ね合わせを足す</h2>
 
