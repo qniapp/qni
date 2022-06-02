@@ -2,125 +2,16 @@
 layout: page
 section: 重ね合わせ上での演算
 title: 引き算回路
-description: 負の数を二進数で表現
+description: 足し算回路をひっくり返す
 prev: 足し算回路
 prev_url: ./addition_circuit.html
+next: かけ算回路
+next_url: ./multiplication_circuit.html
 ---
 
 <p>
-  ビット演算で引き算を表現するには、引き算を「マイナスの数を足す」という風に足し算として考えます。
-  たとえば、\(a \mathrel{-}= b\) は足し算で \(a \mathrel{+}= -b\) と書き直すことができます。
-  このためには、負の数を二進数で表現する必要があります。
-</p>
-
-<p>
-  負の数を二進数で表現するには、「2 の補数表現」を使います。
-  ビット演算になじみがない場合には聞き慣れない用語ですが、その意味はいったん置いておいて、具体的に負の数が二進数でどのように書けるか見てみましょう。
-</p>
-
-<p>
-  たとえば、負の数 -1 は二進数で 111 とあらわせます。 1 は二進数で 001 であることを考えると、-1 =
-  111 がどこから来たのかは直感的には分かりません。 これを理解するためには、あらためて「2
-  の補数」の定義を知る必要があります。
-</p>
-
-<p>
-  2 の補数とは、「ある自然数を 2
-  進数で表したときに、足し合わせるとちょうど桁が一つ増える最小の数」です。 たとえば 1 (二進数で 001)
-  の補数は 111 です。 なぜならば、001 に 111 を足すと \(001 + 111 = 1000\)
-  となり、ちょうど桁が一つ増えるためです。 1 から 3 の整数と、それに対する 2
-  の補数は次のようになります。
-</p>
-
-<div class="my-5 md:mr-auto md:w-7/12">
-  <table>
-    <thead>
-      <tr>
-        <th>十進数</th>
-        <th>二進数</th>
-        <th>2 の補数 (負の数)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>001</td>
-        <td>111</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>010</td>
-        <td>110</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>011</td>
-        <td>101</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<p>
-  上の表から推測できるように、2 の補数は最上位ビットが必ず 1 になります。 つまり 2
-  の補数を使っている場合には、最上位ビットを見ればその数が正か負かがすぐ分かります。
-</p>
-
-<p>ある自然数に対する 2 の補数は、一般に次のように求めることができます。</p>
-
-<ul class="list-decimal">
-  <li>すべてのビットを反転する (<x-gate class="operation-xs"></x-gate>)</li>
-  <li>+1 する (<a href="./increment_circuit.html">インクリメント回路</a>)</li>
-</ul>
-
-<p>
-  これは量子回路で次のように実装できます。 入力する数を a とすると、これは \(a = -a\)
-  を計算する回路と見ることができます。 この回路は可逆なゲートのみで実装されており可逆です。
-  このため可逆な引き算回路の一部に適用できます。
-</p>
-
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["{1をセット"],["|0>","|0>","|0>","|0>"],["X"],["}"],[1],["{ビット反転と+1"],["X","X","X","X"],["•","•","•","X"],["•","•","X"],["•","X"],["X"],["}"],[1]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="circle-notation-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
-
-<p>
-  この \(a = -a\) 回路と足し算回路を単純に組合わせれば、引き算回路 (\(a \mathrel{-}= b\))
-  を次のように作ることができます。
+  インクリメント回路をひっくり返すだけでデクリメント回路ができたように、足し算回路をひっくり返すだけで引き算回路ができます。
+  できた回路は重ね合わせにも自動的に対応しています。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -148,7 +39,130 @@ prev_url: ./addition_circuit.html
           data-min-wire-count="1"
           data-max-wire-count="1"
           data-min-step-count="8"
-          data-json='{"cols":[["[a=0と2の重ね合わせ"],["|0>","|0>","|0>","|0>"],[1,"X"],[1,"H"],["]"],[1],["[b=3"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X","X"],["]"],[1],["[b=-3"],[1,1,1,1,"X","X","X"],[1,1,1,1,"•","•","X"],[1,1,1,1,"•","X"],[1,1,1,1,"X"],["]"],[1],["[a+=b (a=-3と-1の重ね合わせ)"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["]"],[1]]}'
+          data-json='{"cols":[["{a=4と6の重ね合わせ"],["|0>","|0>","|0>","|0>"],[1,1,"X"],[1,"H"],["}"],[1],["{b=2と3の重ね合わせ"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,1,"X"],[1,1,1,1,"H"],["}"],[1],["{a-=b → 1,2,3,4 の重ね合わせ"],[1,1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,"•","X",1,1,"•"],[1,"•","•","X",1,"•"],["X",1,1,1,"•"],["•","X",1,1,"•"],["•","•","X",1,"•"],["•","•","•","X","•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+<h2>負の数</h2>
+
+<p>
+  上の例では \(a\) が \(b\) よりも大きいため、\(a \mathrel{-}= b\) の値は正の数になります。 逆に
+  \(b\) を \(a\) よりも大きくすると負の数が出てくるはずです。
+</p>
+
+<p>
+  負の数は二進数でどう書けるでしょうか。 負の数を二進数で表現するには、「2 の補数表現」を使います。
+  2 の補数とは、「ある自然数を 2
+  進数で表したときに、足し合わせるとちょうど桁が一つ増える最小の数」です。 たとえば 1 (二進数で 001)
+  の補数は 111 です。 なぜならば、001 に 111 を足すと \(001 + 111 = 1000\)
+  となり、ちょうど桁が一つ増えるためです。 よって、1 の補数である 111 は二進数での -1 となります。
+</p>
+
+<p>1 から 4 までの補数は次のようになります。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>十進数</th>
+        <th>二進数</th>
+        <th>2 の補数 (負の数)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>0001</td>
+        <td>1111</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>0010</td>
+        <td>1110</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>0011</td>
+        <td>1101</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>0100</td>
+        <td>1100</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  表から推測できるように、2 の補数は最上位ビットが必ず 1 になります。 つまり 2
+  の補数表現では、最上位ビットを見ればその数が正か負かがすぐ分かります。
+</p>
+
+<p>ある自然数を \(-1\) 倍した数 (2 の補数) は、一般に次のように求めることができます。</p>
+
+<ul class="list-decimal">
+  <li>自然数を二進数にして、すべてのビットを反転する</li>
+  <li>\(+1\) する</li>
+</ul>
+
+<p>負の二進数から正の二進数を求めるには、逆のステップを行います。</p>
+
+<ul class="list-decimal">
+  <li>\(-1\) する</li>
+  <li>すべてのビットを反転する</li>
+</ul>
+
+<p>
+  このことを頭に入れて、実行結果が負となる引き算回路を実行してみましょう。 出力が \(-1, -2, -3\)
+  の重ね合わせになることを確認してください。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{b=2と3の重ね合わせ"],["|0>","|0>","|0>","|0>"],[1,"X"],["H"],["}"],[1],["{a=4と5の重ね合わせ"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,1,1,"X"],[1,1,1,1,"H"],["}"],[1],["{a-=b → -1,-2,-3 の重ね合わせ"],[1,1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,"•","X",1,1,"•"],[1,"•","•","X",1,"•"],["X",1,1,1,"•"],["•","X",1,1,"•"],["•","•","X",1,"•"],["•","•","•","X","•"],["}"],[1]]}'
         >
         </quantum-circuit>
 
@@ -173,8 +187,8 @@ prev_url: ./addition_circuit.html
 
 <p>
   このように、2
-  の補数のような古典コンピュータのビット演算で使われるデータ表現は、量子コンピュータのビット演算でもそのまま使うことができます。
-  そして、量子回路上では重ね合わせして計算できてしまうのがおもしろいところです。
+  の補数のような古典コンピュータの算術演算で使われるデータ表現は、量子コンピュータの算術演算でもそのまま使うことができます。
+  そして、量子コンピュータ上ではさらに重ね合わせて計算できてしまうのがおもしろいところです。
 </p>
 
 {% include operation_menu.html %} {% include operation_inspector_template.html %} {% include

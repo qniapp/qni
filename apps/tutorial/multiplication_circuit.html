@@ -1,0 +1,59 @@
+---
+layout: page
+section: 重ね合わせ上での演算
+title: かけ算回路
+description: 補助ビットの使い方
+prev: 引き算回路
+prev_url: ./multiplication_circuit.html
+---
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[a=2"],["|0>","|0>","|0>","|0>"],[1,"X"],["]"],[1],["[b=3"],[1,1,1,1,"|0>","|0>"],[1,1,1,1,"X","X"],["]"],[1],["[c=a*b"],[1,1,1,1,1,1,"|0>","|0>","|0>","|0>"],["•",1,1,1,"•",1,"X"],[1,"•",1,1,"•",1,1,"X",1,1,"|0>","|0>"],["•",1,1,1,1,"•",1,1,1,1,"X"],[1,"•",1,1,1,"•",1,1,1,1,1,"X"],[1,1,1,1,1,1,1,"•","X",1,"•"],[1,1,1,1,1,1,1,"X",1,1,"•"],[1,1,1,1,1,1,1,1,"X",1,1,"•"],["}"],[1],["{アンコンピュート"],[1,"•",1,1,1,"•",1,1,1,1,1,"X"],["•",1,1,1,1,"•",1,1,1,1,"X"],["]"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="circle-notation-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
+      ></run-circuit-button>
+    </quantum-simulator>
+  </div>
+</div>
+
+{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
+circle_notation_popup.html %}
