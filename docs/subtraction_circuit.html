@@ -465,51 +465,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    重ね合わせ上での演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -914,51 +869,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    重ね合わせ上での演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1023,7 +933,7 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
-                重ね合わせ上での演算
+                重ね合わせ上での算術演算
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
@@ -1089,24 +999,19 @@
 <h2>負の数</h2>
 
 <p>
-  上の例では \(a\) が \(b\) よりも大きいため、\(a \mathrel{-}= b\) の値は正の数になります。
-  逆に \(b\) を \(a\) よりも大きくすると負の数が出てくるはずです。
+  上の例では \(a\) が \(b\) よりも大きいため、\(a \mathrel{-}= b\) の値は正の数になります。 逆に
+  \(b\) を \(a\) よりも大きくすると負の数が出てくるはずです。
 </p>
 
 <p>
-  負の数は二進数でどう書けるでしょうか。
-  負の数を二進数で表現するには、「2 の補数表現」を使います。
+  負の数は二進数でどう書けるでしょうか。 負の数を二進数で表現するには、「2 の補数表現」を使います。
   2 の補数とは、「ある自然数を 2
   進数で表したときに、足し合わせるとちょうど桁が一つ増える最小の数」です。 たとえば 1 (二進数で 001)
   の補数は 111 です。 なぜならば、001 に 111 を足すと \(001 + 111 = 1000\)
-  となり、ちょうど桁が一つ増えるためです。
-  よって、1 の補数である 111 は二進数での -1 となります。
+  となり、ちょうど桁が一つ増えるためです。 よって、1 の補数である 111 は二進数での -1 となります。
 </p>
 
-<p>
-  1 から 4 までの補数は次のようになります。
-</p>
-
+<p>1 から 4 までの補数は次のようになります。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <table>
@@ -1154,9 +1059,7 @@
   <li>\(+1\) する</li>
 </ul>
 
-<p>
-  負の二進数から正の二進数を求めるには、逆のステップを行います。
-</p>
+<p>負の二進数から正の二進数を求めるには、逆のステップを行います。</p>
 
 <ul class="list-decimal">
   <li>\(-1\) する</li>
@@ -1164,8 +1067,8 @@
 </ul>
 
 <p>
-  このことを頭に入れて、実行結果が負となる引き算回路を実行してみましょう。
-  出力が \(-1, -2, -3\) の重ね合わせになることを確認してください。
+  このことを頭に入れて、実行結果が負となる引き算回路を実行してみましょう。 出力が \(-1, -2, -3\)
+  の重ね合わせになることを確認してください。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">

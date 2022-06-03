@@ -465,51 +465,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    重ね合わせ上での演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -914,51 +869,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    重ね合わせ上での演算
-  </div>
-
-   
-  <a
-    href="./increment_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">インクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./decrement_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">デクリメント回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./addition_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">足し算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <a
-    href="./subtraction_circuit.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
-  >
-    <span class="flex-1">引き算回路</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1023,7 +933,7 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
-                重ね合わせ上での演算
+                重ね合わせ上での算術演算
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
@@ -1032,7 +942,46 @@
               </div>
               <p class="mt-1 mb-0 text-lg text-gray-500">補助ビットの使い方</p>
             </div>
-            <div class="content-with-margin"><div class="relative mb-10 rounded-md bg-neutral-50">
+            <div class="content-with-margin"><p>
+  かけ算回路は、(私が知る限り) \(a \mathrel{*}= b\) のように実装することができません。 このため、\(a
+  * b\) の結果を入れるためのビット列が必要になります。
+  またこのため、左右をひっくり返すだけで割り算回路を作ることもできません。
+  しかしかけ算は様々な算術演算の重要部品なので、基本的な実装方法を見ておきましょう。
+</p>
+
+<p>
+  かけ算を実装するには、二進数のかけ算をおさらいしておく必要があります。 たとえば二進数で \(2 \times
+  3\) (\(10 \times 11\)) を計算するには、十進数と同様に筆算を行います。
+</p>
+
+<p>
+  \begin{array}{r} 10 \\[-3pt] \underline{\times\phantom{0}11}\\[-3pt] 10 \\[-3pt]
+  \underline{\phantom{0}10\phantom{0}} \\[-3pt] 110 \end{array}
+</p>
+
+<p>二進数筆算のやり方は、十進数の場合とまったく同じです。</p>
+
+<ul class="list-decimal">
+  <li>10 に 11 の一桁目 (1) をかけた結果 10 を書く</li>
+  <li>10 に 11 の二桁目 (1) をかけた結果 10 を 1 ビットずらして書く</li>
+  <li>1 と 2 の結果を足す</li>
+</ul>
+
+<p>
+  これをそのまま回路に変換することで、かけ算回路を実装できます。 a と b がそれぞれ 2
+  ビットの場合、かけ算回路には全部で 10 ビット必要です。
+</p>
+
+<ul>
+  <li>a (2 ビット): a の入力</li>
+  <li>b (2 ビット): b の入力</li>
+  <li>m (4 ビット): 計算結果 a * b の出力</li>
+  <li>tmp (2 ビット): 計算中の一時ビット</li>
+</ul>
+
+<p>これを頭に入れて、次のかけ算回路を見ていきましょう。</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
@@ -1053,12 +1002,12 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["[a=2"],["|0>","|0>","|0>","|0>"],[1,"X"],["]"],[1],["[b=3"],[1,1,1,1,"|0>","|0>"],[1,1,1,1,"X","X"],["]"],[1],["[c=a*b"],[1,1,1,1,1,1,"|0>","|0>","|0>","|0>"],["•",1,1,1,"•",1,"X"],[1,"•",1,1,"•",1,1,"X",1,1,"|0>","|0>"],["•",1,1,1,1,"•",1,1,1,1,"X"],[1,"•",1,1,1,"•",1,1,1,1,1,"X"],[1,1,1,1,1,1,1,"•","X",1,"•"],[1,1,1,1,1,1,1,"X",1,1,"•"],[1,1,1,1,1,1,1,1,"X",1,1,"•"],["}"],[1],["{アンコンピュート"],[1,"•",1,1,1,"•",1,1,1,1,1,"X"],["•",1,1,1,1,"•",1,1,1,1,"X"],["]"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[a=2"],["|0>","|0>"],[1,"X"],["]"],[1],["[b=3"],[1,1,"|0>","|0>"],[1,1,"X","X"],["]"],[1],["[c=a*b"],[1,1,1,1,"|0>","|0>","|0>","|0>"],["•",1,"•",1,"X"],[1,"•","•",1,1,"X"],[1,1,1,1,1,1,1,1,"|0>","|0>"],["•",1,1,"•",1,1,1,1,"X"],[1,"•",1,"•",1,1,1,1,1,"X"],[1,1,1,1,1,"•","•","X","•"],[1,1,1,1,1,"•","X",1,"•"],[1,1,1,1,1,"X",1,1,"•"],[1,1,1,1,1,1,"•","X",1,"•"],[1,1,1,1,1,1,"X",1,1,"•"],["}"],[1],["[tmpをクリア"],[1,"•",1,"•",1,1,1,1,1,"X"],["•",1,1,"•",1,1,1,1,"X"],["}"],[1]]}'
         >
         </quantum-circuit>
 
@@ -1074,12 +1023,71 @@
       </circuit-editor>
 
       <run-circuit-button
-          class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
-          data-targets="quantum-simulator.runCircuitButtons"
+        class="absolute bottom-0 right-0 z-40 mr-6 mb-8 hidden h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md md:inline-block"
+        data-targets="quantum-simulator.runCircuitButtons"
       ></run-circuit-button>
     </quantum-simulator>
   </div>
 </div>
+
+<p>
+  最初の \(a=2\) と \(b=3\) のブロックでは、入力 \(a\) と \(b\) をセットします。それぞれ 2
+  ビットの値を取ることができます。
+</p>
+
+<p>次の c=a*b のブロックがかけ算回路の本体であり、筆算手順を回路にしたものです。</p>
+
+<p>
+  最初の 2 つの CCNOT では、a に b の一桁目をかけた値を、m の下位 2 ビットにセットします。
+  二進数のかけ算では \(1 \times 1\) の場合だけ \(1\)、それ以外の \(1 \times 0\) などは 0
+  になります。 よって、a の数と b の一桁目がそれぞれ 1 だった場合のみ、CCNOT の
+  <x-gate class="operation-xs"></x-gate> で m のビットを 1 に反転します。
+</p>
+
+<p>
+  次の 2 つの CCNOT では同様に、a に b の二桁目をかけた値を、一時ビット tmp にセットします。
+  この値は次に m に足し合わされます。
+</p>
+
+<p>
+  最後に m の値と tmp を足し合わせます。 この足し算では m の値を 1 ビットずらす必要があるので、tmp
+  の 1 ビット目を m の 2 ビット目、tmp の 2 ビット目を m の 3 ビット目に<a
+    href="addition_circuit.html"
+    >足し算回路</a
+  >で足します。 こうして、m に a * b の結果が残ります。
+</p>
+
+<h2>一時ビット tmp のクリア</h2>
+
+<p>
+  tmp は a と b の二桁目のかけ算結果のための一時ビットで、計算が終わった後は不要です。
+  量子ビットは貴重なので、残った値をクリアして再利用できるようにしたほうがよいでしょう。
+</p>
+
+<p>
+  ここで安直に tmp の 2 ビットそれぞれに
+  <write-gate data-value="0" class="operation-xs"></write-gate> を置いてリセットしてはいけません!
+  tmp のビットは、計算中に a や b のビットと一緒に CCNOT
+  をしており、そこにはもつれが発生している可能性があります。 もしリセットするために tmp
+  のビットを操作すると、<a href="./entanglement_operation.html">もつれを操作する</a
+  >で見たように、もつれている他方のビット (a や b) も壊してしまう可能性があります。
+</p>
+
+<p>
+  そこで、<a href="./disentangle.html">もつれをほどく</a>で見たように、tmp に値をセットした CCNOT 2
+  つの逆回路をかけてやることで、tmp だけを初期状態に戻すことができます。 こうすれば、a や b
+  のビットを壊すことなく tmp のビットだけ 0 に戻すことができます。
+</p>
+
+<p>
+  この操作は一般的に「アンコンピュテーション
+  (uncomputation、逆計算)」と呼ばれ、量子コンピュータプログラミングで必ず使われるテクニックです。
+  アンコンピュテーションは不要となった一時ビットに逆演算を行うことで、原状復帰して再利用できるようにします。
+  いわば量子コンピュータ版の <span class="mono">malloc()</span> に対する
+  <span class="mono">free()</span> のようなものと言えるでしょうか。 量子コンピュータは低レベルなので
+  GC (ガベージ・コレクション)
+  のような便利な機能はありませんから、ちょっと大変ですが明示的に一時ビットを開放するプログラムが必要です。
+</p>
 
 <template id="operation-menu">
   <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
