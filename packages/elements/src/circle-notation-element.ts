@@ -317,6 +317,11 @@ export class CircleNotationElement extends HTMLElement {
           each.style.setProperty('--magnitude', magnitude.toString())
         }
 
+        let cssPhaseDeg = Math.trunc(phaseDeg)
+        if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
+
+        each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
+
         if (this.coloredPhase) {
           if (magnitude === 0) {
             each.style.setProperty('--magnitude', '0')
@@ -347,11 +352,6 @@ export class CircleNotationElement extends HTMLElement {
           } else {
             each.style.removeProperty('--magnitude-color')
           }
-        } else {
-          let cssPhaseDeg = Math.trunc(phaseDeg)
-          if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
-
-          each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
         }
       }
     })
@@ -474,7 +474,6 @@ export class CircleNotationElement extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          :host([data-colored-phase]) .qubit-circle__phase,
           .qubit-circle.magnitude-0 .qubit-circle__phase {
             display: none;
           }

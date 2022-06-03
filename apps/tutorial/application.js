@@ -10204,12 +10204,9 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
         if (c === void 0)
           continue;
         let f = Math.floor(c.abs() * 1e5) / 1e5, g = c.phase() / Math.PI * 180;
-        if (t.setAttribute("data-amplitude-real", c.real.toString()), t.setAttribute("data-amplitude-imag", c.imag.toString()), f === 0 ? t.classList.add("magnitude-0") : (t.classList.remove("magnitude-0"), t.style.setProperty("--magnitude", f.toString())), this.coloredPhase)
-          f === 0 ? t.style.setProperty("--magnitude", "0") : t.style.setProperty("--magnitude", "1"), -22.5 <= g && g < 22.5 || 337.5 <= g && g <= 360 || -337.5 < g && g <= -360 ? t.style.setProperty("--magnitude-color", "rgb(168 85 247)") : 22.5 <= g && g < 67.5 || -337.5 <= g && g < -292.5 ? t.style.setProperty("--magnitude-color", "rgb(236 72 153)") : 67.5 <= g && g < 112.5 || -292.5 <= g && g < -247.5 ? t.style.setProperty("--magnitude-color", "rgb(249 115 22)") : 112.5 <= g && g < 157.5 || -247.5 <= g && g < -202.5 ? t.style.setProperty("--magnitude-color", "rgb(234 179 8)") : 157.5 <= g && g < 202.5 || -202.5 <= g && g < -157.5 ? t.style.setProperty("--magnitude-color", "rgb(132 204 22)") : 202.5 <= g && g < 247.5 || -157.5 <= g && g < -112.5 ? t.style.setProperty("--magnitude-color", "rgb(34 197 94)") : 247.5 <= g && g < 292.5 || -112.5 <= g && g < -67.5 ? t.style.setProperty("--magnitude-color", "rgb(14 165 233)") : 292.5 <= g && g < 337.5 || -67.5 <= g && g < -22.5 ? t.style.setProperty("--magnitude-color", "rgb(99 102 241)") : t.style.removeProperty("--magnitude-color");
-        else {
-          let h = Math.trunc(g);
-          h < 0 && (h = 360 + h), t.style.setProperty("--phase", `-${h.toString()}deg`);
-        }
+        t.setAttribute("data-amplitude-real", c.real.toString()), t.setAttribute("data-amplitude-imag", c.imag.toString()), f === 0 ? t.classList.add("magnitude-0") : (t.classList.remove("magnitude-0"), t.style.setProperty("--magnitude", f.toString()));
+        let h = Math.trunc(g);
+        h < 0 && (h = 360 + h), t.style.setProperty("--phase", `-${h.toString()}deg`), this.coloredPhase && (f === 0 ? t.style.setProperty("--magnitude", "0") : t.style.setProperty("--magnitude", "1"), -22.5 <= g && g < 22.5 || 337.5 <= g && g <= 360 || -337.5 < g && g <= -360 ? t.style.setProperty("--magnitude-color", "rgb(168 85 247)") : 22.5 <= g && g < 67.5 || -337.5 <= g && g < -292.5 ? t.style.setProperty("--magnitude-color", "rgb(236 72 153)") : 67.5 <= g && g < 112.5 || -292.5 <= g && g < -247.5 ? t.style.setProperty("--magnitude-color", "rgb(249 115 22)") : 112.5 <= g && g < 157.5 || -247.5 <= g && g < -202.5 ? t.style.setProperty("--magnitude-color", "rgb(234 179 8)") : 157.5 <= g && g < 202.5 || -202.5 <= g && g < -157.5 ? t.style.setProperty("--magnitude-color", "rgb(132 204 22)") : 202.5 <= g && g < 247.5 || -157.5 <= g && g < -112.5 ? t.style.setProperty("--magnitude-color", "rgb(34 197 94)") : 247.5 <= g && g < 292.5 || -112.5 <= g && g < -67.5 ? t.style.setProperty("--magnitude-color", "rgb(14 165 233)") : 292.5 <= g && g < 337.5 || -67.5 <= g && g < -22.5 ? t.style.setProperty("--magnitude-color", "rgb(99 102 241)") : t.style.removeProperty("--magnitude-color"));
       }
     });
   }
@@ -10300,7 +10297,6 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
             transform: rotate(var(--phase));
           }
 
-          :host([data-colored-phase]) .qubit-circle__phase,
           .qubit-circle.magnitude-0 .qubit-circle__phase {
             display: none;
           }

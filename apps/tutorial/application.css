@@ -5512,14 +5512,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   left: 0px;
 }
 
-.left-0 {
-  left: 0px;
-}
-
-.top-0 {
-  top: 0px;
-}
-
 .top-px {
   top: 1px;
 }
@@ -5534,6 +5526,14 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .right-0 {
   right: 0px;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.top-0 {
+  top: 0px;
 }
 
 .z-40 {
@@ -5591,6 +5591,14 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   margin-bottom: 2.5rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -5605,14 +5613,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .mb-40 {
   margin-bottom: 10rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.mr-6 {
-  margin-right: 1.5rem;
 }
 
 .mr-8 {
@@ -5783,12 +5783,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   height: 3rem;
 }
 
-.w-min {
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
-}
-
 .w-10 {
   width: 2.5rem;
 }
@@ -5799,6 +5793,12 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-min {
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
 }
 
 .w-16 {
@@ -5904,12 +5904,12 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
           user-select: none;
 }
 
-.list-none {
-  list-style-type: none;
-}
-
 .list-decimal {
   list-style-type: decimal;
+}
+
+.list-none {
+  list-style-type: none;
 }
 
 .list-disc {
@@ -6405,9 +6405,9 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   letter-spacing: -0.025em;
 }
 
-.text-neutral-700 {
+.text-gray-700 {
   --tw-text-opacity: 1;
-  color: rgb(64 64 64 / var(--tw-text-opacity));
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -6415,14 +6415,14 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-neutral-700 {
+  --tw-text-opacity: 1;
+  color: rgb(64 64 64 / var(--tw-text-opacity));
+}
+
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .text-neutral-400 {
@@ -6545,14 +6545,14 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
-.hover\:bg-neutral-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-neutral-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue-50:hover {
