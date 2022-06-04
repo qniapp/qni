@@ -452,14 +452,14 @@ describe('circle-notation element', function () {
       assert.isFalse(circleNotation.colorPhase)
     })
 
-    it('starts colored phase mode', function () {
-      circleNotation.startColoredPhaseMode()
+    it('starts color phase mode', function () {
+      circleNotation.startColorPhaseMode()
 
       assert.isTrue(circleNotation.colorPhase)
     })
 
     it('starts basic circle notation mode', function () {
-      circleNotation.startColoredPhaseMode()
+      circleNotation.startColorPhaseMode()
       circleNotation.startBasicCircleNotationMode()
 
       assert.isFalse(circleNotation.colorPhase)

@@ -54,7 +54,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   /** @internal */
-  startColoredPhaseMode(): void {
+  startColorPhaseMode(): void {
     this.colorPhase = true
   }
 

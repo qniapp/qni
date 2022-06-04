@@ -10041,7 +10041,7 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
   startBasicCircleNotationMode() {
     this.colorPhase = false;
   }
-  startColoredPhaseMode() {
+  startColorPhaseMode() {
     this.colorPhase = true;
   }
   attributeChangedCallback(e, t, i) {
