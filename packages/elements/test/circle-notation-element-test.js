@@ -435,7 +435,7 @@ describe('circle-notation element', function () {
     })
   })
 
-  describe('data-colored-phase', function () {
+  describe('data-color-phase', function () {
     beforeEach(function () {
       circleNotation = document.createElement('circle-notation')
       circleNotation.style.setProperty('display', 'flex')
@@ -448,21 +448,21 @@ describe('circle-notation element', function () {
       document.body.textContent = ''
     })
 
-    it('coloredPhase=false by default', function () {
-      assert.isFalse(circleNotation.coloredPhase)
+    it('colorPhase=false by default', function () {
+      assert.isFalse(circleNotation.colorPhase)
     })
 
     it('starts colored phase mode', function () {
       circleNotation.startColoredPhaseMode()
 
-      assert.isTrue(circleNotation.coloredPhase)
+      assert.isTrue(circleNotation.colorPhase)
     })
 
     it('starts basic circle notation mode', function () {
       circleNotation.startColoredPhaseMode()
       circleNotation.startBasicCircleNotationMode()
 
-      assert.isFalse(circleNotation.coloredPhase)
+      assert.isFalse(circleNotation.colorPhase)
     })
   })
 

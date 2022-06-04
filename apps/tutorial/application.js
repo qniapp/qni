@@ -10026,7 +10026,7 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.paddingX = 0;
     this.paddingY = 0;
     this.overscanCount = 0;
-    this.coloredPhase = false;
+    this.colorPhase = false;
     this.qubitCirclePopupTemplateId = "qubit-circle-popup-template";
     this.vertical = true;
     this.visibleQubitCircleKets = [];
@@ -10039,13 +10039,13 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.qubitCirclePositions = [];
   }
   startBasicCircleNotationMode() {
-    this.coloredPhase = false;
+    this.colorPhase = false;
   }
   startColoredPhaseMode() {
-    this.coloredPhase = true;
+    this.colorPhase = true;
   }
   attributeChangedCallback(e, t, i) {
-    t !== i && (e === "data-qubit-count" && this.window !== void 0 && this.innerContainer !== void 0 && (Q.notNull(i), this.updateQubitCircleSize(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles()), e === "data-colored-phase" && this.drawQubitCircles());
+    t !== i && (e === "data-qubit-count" && this.window !== void 0 && this.innerContainer !== void 0 && (Q.notNull(i), this.updateQubitCircleSize(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles()), e === "data-color-phase" && this.drawQubitCircles());
   }
   updateQubitCircleSize() {
     if (this.qubitCount !== 0)
@@ -10206,7 +10206,7 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
         let f = Math.floor(c.abs() * 1e5) / 1e5, g = c.phase() / Math.PI * 180;
         t.setAttribute("data-amplitude-real", c.real.toString()), t.setAttribute("data-amplitude-imag", c.imag.toString()), f === 0 ? t.classList.add("magnitude-0") : (t.classList.remove("magnitude-0"), t.style.setProperty("--magnitude", f.toString()));
         let h = Math.trunc(g);
-        h < 0 && (h = 360 + h), t.style.setProperty("--phase", `-${h.toString()}deg`), this.coloredPhase && (f === 0 ? t.style.setProperty("--magnitude", "0") : t.style.setProperty("--magnitude", "1"), -22.5 <= g && g < 22.5 || 337.5 <= g && g <= 360 || -337.5 < g && g <= -360 ? t.style.setProperty("--magnitude-color", "rgb(168 85 247)") : 22.5 <= g && g < 67.5 || -337.5 <= g && g < -292.5 ? t.style.setProperty("--magnitude-color", "rgb(236 72 153)") : 67.5 <= g && g < 112.5 || -292.5 <= g && g < -247.5 ? t.style.setProperty("--magnitude-color", "rgb(249 115 22)") : 112.5 <= g && g < 157.5 || -247.5 <= g && g < -202.5 ? t.style.setProperty("--magnitude-color", "rgb(234 179 8)") : 157.5 <= g && g < 202.5 || -202.5 <= g && g < -157.5 ? t.style.setProperty("--magnitude-color", "rgb(132 204 22)") : 202.5 <= g && g < 247.5 || -157.5 <= g && g < -112.5 ? t.style.setProperty("--magnitude-color", "rgb(34 197 94)") : 247.5 <= g && g < 292.5 || -112.5 <= g && g < -67.5 ? t.style.setProperty("--magnitude-color", "rgb(14 165 233)") : 292.5 <= g && g < 337.5 || -67.5 <= g && g < -22.5 ? t.style.setProperty("--magnitude-color", "rgb(99 102 241)") : t.style.removeProperty("--magnitude-color"));
+        h < 0 && (h = 360 + h), t.style.setProperty("--phase", `-${h.toString()}deg`), this.colorPhase && (f === 0 ? t.style.setProperty("--magnitude", "0") : t.style.setProperty("--magnitude", "1"), -22.5 <= g && g < 22.5 || 337.5 <= g && g <= 360 || -337.5 < g && g <= -360 ? t.style.setProperty("--magnitude-color", "rgb(168 85 247)") : 22.5 <= g && g < 67.5 || -337.5 <= g && g < -292.5 ? t.style.setProperty("--magnitude-color", "rgb(236 72 153)") : 67.5 <= g && g < 112.5 || -292.5 <= g && g < -247.5 ? t.style.setProperty("--magnitude-color", "rgb(249 115 22)") : 112.5 <= g && g < 157.5 || -247.5 <= g && g < -202.5 ? t.style.setProperty("--magnitude-color", "rgb(234 179 8)") : 157.5 <= g && g < 202.5 || -202.5 <= g && g < -157.5 ? t.style.setProperty("--magnitude-color", "rgb(132 204 22)") : 202.5 <= g && g < 247.5 || -157.5 <= g && g < -112.5 ? t.style.setProperty("--magnitude-color", "rgb(34 197 94)") : 247.5 <= g && g < 292.5 || -112.5 <= g && g < -67.5 ? t.style.setProperty("--magnitude-color", "rgb(14 165 233)") : 292.5 <= g && g < 337.5 || -67.5 <= g && g < -22.5 ? t.style.setProperty("--magnitude-color", "rgb(99 102 241)") : t.style.removeProperty("--magnitude-color"));
       }
     });
   }
@@ -10247,9 +10247,13 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
             box-sizing: border-box;
           }
 
-          .qubit-circle:hover,
-          .qubit-circle:not(.magnitude-0):hover {
-            border-color: rgb(220 38 38); /* red-600 */
+          // .qubit-circle:hover,
+          // .qubit-circle:not(.magnitude-0):hover {
+          //   filter: brightness(.9);
+          // }
+
+          .qubit-circle:hover {
+            filter: brightness(.9);
           }
 
           .qubit-circle:not(.magnitude-0) {
@@ -10272,10 +10276,6 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
 
           .qubit-circle.magnitude-0 .qubit-circle__magnitude {
             display: none;
-          }
-
-          .qubit-circle:hover .qubit-circle__magnitude {
-            background-color: rgb(249 115 22); /* orange-500 */
           }
 
           /* phase */
@@ -10637,7 +10637,7 @@ var wt = /* @__PURE__ */ __name(class extends HTMLElement {
     return document.getElementById(this.qubitCirclePopupTemplateId);
   }
 }, "wt");
-u(wt, "CircleNotationElement"), D([G], wt.prototype, "qubitCount", 2), D([G], wt.prototype, "qubitCircleSize", 2), D([G], wt.prototype, "colCount", 2), D([G], wt.prototype, "rowCount", 2), D([G], wt.prototype, "paddingX", 2), D([G], wt.prototype, "paddingY", 2), D([G], wt.prototype, "overscanCount", 2), D([G], wt.prototype, "coloredPhase", 2), D([G], wt.prototype, "qubitCirclePopupTemplateId", 2), D([G], wt.prototype, "vertical", 2), D([ze], wt.prototype, "window", 2), D([ze], wt.prototype, "innerContainer", 2), D([Mt], wt.prototype, "qubitCircles", 2), wt = D([re], wt);
+u(wt, "CircleNotationElement"), D([G], wt.prototype, "qubitCount", 2), D([G], wt.prototype, "qubitCircleSize", 2), D([G], wt.prototype, "colCount", 2), D([G], wt.prototype, "rowCount", 2), D([G], wt.prototype, "paddingX", 2), D([G], wt.prototype, "paddingY", 2), D([G], wt.prototype, "overscanCount", 2), D([G], wt.prototype, "colorPhase", 2), D([G], wt.prototype, "qubitCirclePopupTemplateId", 2), D([G], wt.prototype, "vertical", 2), D([ze], wt.prototype, "window", 2), D([ze], wt.prototype, "innerContainer", 2), D([Mt], wt.prototype, "qubitCircles", 2), wt = D([re], wt);
 var fr = /* @__PURE__ */ __name(class extends HTMLElement {
   constructor() {
     super(...arguments);

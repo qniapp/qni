@@ -24,8 +24,8 @@ export class CircleNotationElement extends HTMLElement {
    * This can help reduce flickering during scrolling.
    */
   @attr overscanCount = 0
-  /** Controls colored phase mode ON/OFF */
-  @attr coloredPhase = false
+  /** Controls color phase mode ON/OFF */
+  @attr colorPhase = false
   /** ID of qubit circle popup template element */
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
   /** @internal */
@@ -50,12 +50,12 @@ export class CircleNotationElement extends HTMLElement {
 
   /** @internal */
   startBasicCircleNotationMode(): void {
-    this.coloredPhase = false
+    this.colorPhase = false
   }
 
   /** @internal */
   startColoredPhaseMode(): void {
-    this.coloredPhase = true
+    this.colorPhase = true
   }
 
   /** @internal */
@@ -72,7 +72,7 @@ export class CircleNotationElement extends HTMLElement {
       this.drawQubitCircles()
     }
 
-    if (name === 'data-colored-phase') {
+    if (name === 'data-color-phase') {
       this.drawQubitCircles()
     }
   }
@@ -322,7 +322,7 @@ export class CircleNotationElement extends HTMLElement {
 
         each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
 
-        if (this.coloredPhase) {
+        if (this.colorPhase) {
           if (magnitude === 0) {
             each.style.setProperty('--magnitude', '0')
           } else {
@@ -424,9 +424,8 @@ export class CircleNotationElement extends HTMLElement {
             box-sizing: border-box;
           }
 
-          .qubit-circle:hover,
-          .qubit-circle:not(.magnitude-0):hover {
-            border-color: rgb(220 38 38); /* red-600 */
+          .qubit-circle:hover {
+            filter: brightness(0.9);
           }
 
           .qubit-circle:not(.magnitude-0) {
@@ -449,10 +448,6 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle.magnitude-0 .qubit-circle__magnitude {
             display: none;
-          }
-
-          .qubit-circle:hover .qubit-circle__magnitude {
-            background-color: rgb(249 115 22); /* orange-500 */
           }
 
           /* phase */
