@@ -321,38 +321,6 @@ export class CircleNotationElement extends HTMLElement {
         if (cssPhaseDeg < 0) cssPhaseDeg = 360 + cssPhaseDeg
 
         each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
-
-        if (this.colorPhase) {
-          if (magnitude === 0) {
-            each.style.setProperty('--magnitude', '0')
-          } else {
-            each.style.setProperty('--magnitude', '1')
-          }
-
-          if (
-            (-22.5 <= phaseDeg && phaseDeg < 22.5) ||
-            (337.5 <= phaseDeg && phaseDeg <= 360) ||
-            (-337.5 < phaseDeg && phaseDeg <= -360)
-          ) {
-            each.style.setProperty('--magnitude-color', 'rgb(168 85 247)') // purple-500
-          } else if ((22.5 <= phaseDeg && phaseDeg < 67.5) || (-337.5 <= phaseDeg && phaseDeg < -292.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(236 72 153)') // pink-500
-          } else if ((67.5 <= phaseDeg && phaseDeg < 112.5) || (-292.5 <= phaseDeg && phaseDeg < -247.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(249 115 22)') // orange-500
-          } else if ((112.5 <= phaseDeg && phaseDeg < 157.5) || (-247.5 <= phaseDeg && phaseDeg < -202.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(234 179 8)') // yellow-500
-          } else if ((157.5 <= phaseDeg && phaseDeg < 202.5) || (-202.5 <= phaseDeg && phaseDeg < -157.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(132 204 22)') // lime-500
-          } else if ((202.5 <= phaseDeg && phaseDeg < 247.5) || (-157.5 <= phaseDeg && phaseDeg < -112.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(34 197 94)') // green-500
-          } else if ((247.5 <= phaseDeg && phaseDeg < 292.5) || (-112.5 <= phaseDeg && phaseDeg < -67.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(14 165 233)') // sky-500
-          } else if ((292.5 <= phaseDeg && phaseDeg < 337.5) || (-67.5 <= phaseDeg && phaseDeg < -22.5)) {
-            each.style.setProperty('--magnitude-color', 'rgb(99 102 241)') // indigo-500
-          } else {
-            each.style.removeProperty('--magnitude-color')
-          }
-        }
       }
     })
   }
@@ -448,6 +416,11 @@ export class CircleNotationElement extends HTMLElement {
 
           .qubit-circle.magnitude-0 .qubit-circle__magnitude {
             display: none;
+          }
+
+          :host([data-color-phase]) .qubit-circle__magnitude {
+            transform: scaleX(1) scaleY(1);
+            filter: hue-rotate(var(--phase));
           }
 
           /* phase */
