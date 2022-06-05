@@ -59,7 +59,7 @@ module Jekyll
             class="#{klass}"
             data-ket="#{ket}"
             data-amplitude="#{amplitude}"
-            data-popup-template-id="circle-notation-popup"
+            data-popup-template-id="qubit-circle-popup"
           ></qubit-circle>
           <div class="#{tw_ket_mt} flex w-full flex-row justify-end">
             <span class="font-mono text-slate-500 text-#{tw_font_size}">|#{ket}⟩</span>

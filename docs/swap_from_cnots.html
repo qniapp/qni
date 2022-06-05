@@ -1012,7 +1012,7 @@
       <circle-notation
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="circle-notation-popup"
+        data-qubit-circle-popup-template-id="qubit-circle-popup"
         class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white"
         data-padding-X="16"
         data-padding-Y="20"
@@ -1393,25 +1393,82 @@
     </div>
   </operation-inspector>
 </template>
- <template id="circle-notation-popup">
-  <div class="text-wolf mb-2 text-base">
-    |<span class="ket-decimal font-mono"></span>⟩
-    <div class="inline-block">(二進 |<span class="ket-binary font-mono"></span>⟩)</div>
+ <template id="qubit-circle-popup">
+  <div class="mb-2 text-lg">
+    |<span class="ket-binary font-mono"></span><span class="mr-2">⟩</span
+    ><span class="mr-1">decimal</span><span class="ket-decimal font-mono"></span>
   </div>
 
   <ul class="list-none">
-    <li>
-      振幅:
-      <span class="amplitude-real text-eel font-mono font-bold"></span>
-      <span class="amplitude-imag text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M12.1857 8.00006C12.1857 11.2575 9.88112 13.6786 7.29284 13.6786C4.70456 13.6786 2.40002 11.2575 2.40002 8.00006C2.40002 4.7426 4.70456 2.32153 7.29284 2.32153C9.88112 2.32153 12.1857 4.7426 12.1857 8.00006Z"
+    stroke="#0EA5E9"
+    stroke-width="2"
+  />
+  <path
+    d="M12.2428 2.73584C12.2428 2.73584 12.2428 10.4358 12.2428 12.0072C12.2428 13.5787 14.5999 12.793 14.5999 12.793"
+    stroke="#0EA5E9"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>
+
+      <span class="mr-1">振幅:</span>
+      <span class="amplitude-real font-mono font-bold"></span>
+      <span class="amplitude-imag font-mono font-bold"></span>
     </li>
-    <li>
-      確率:
-      <span class="probability text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle cx="7.99998" cy="7.99998" r="6.4" fill="white" />
+  <circle cx="8" cy="8" r="4" fill="#0EA5E9" />
+</svg>
+
+      <span class="mr-1">確率:</span>
+      <span class="probability font-mono font-bold"></span>
     </li>
-    <li>
-      位相:
-      <span class="phase text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <mask id="path-1-inside-1_897_48368" fill="white">
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M6.021 8.95146L7.2983 7.41248C7.32697 7.43627 7.35545 7.46028 7.38372 7.4845C7.6668 7.72719 7.93082 7.99149 8.17322 8.27482C8.59993 8.77407 8.95759 9.33083 9.23491 9.93042C9.63218 10.7894 9.8557 11.7171 9.89406 12.6602C9.89794 12.7573 9.8999 12.8549 9.8999 12.9529C9.8999 12.9809 9.89974 13.0088 9.89942 13.0367L7.89956 13.0134C7.89978 12.9933 7.8999 12.9731 7.8999 12.9529C7.8999 11.3438 7.16896 9.9053 6.021 8.95146Z"
+    />
+  </mask>
+  <path
+    d="M6.021 8.95146L4.482 7.67416L3.2054 9.21231L4.74285 10.4898L6.021 8.95146ZM7.2983 7.41248L8.5756 5.87348L7.03661 4.59618L5.7593 6.13517L7.2983 7.41248ZM7.38372 7.4845L8.68546 5.96612L8.68475 5.96551L7.38372 7.4845ZM8.17322 8.27482L9.69356 6.97538L9.69295 6.97466L8.17322 8.27482ZM9.23491 9.93042L7.41966 10.77L7.41966 10.77L9.23491 9.93042ZM9.89406 12.6602L11.8925 12.5804L11.8924 12.579L9.89406 12.6602ZM9.89942 13.0367L9.87614 15.0365L11.8765 15.0598L11.8993 13.0594L9.89942 13.0367ZM7.89956 13.0134L5.89969 12.9906L5.87691 14.99L7.87627 15.0132L7.89956 13.0134ZM7.55999 10.2288L8.83729 8.68978L5.7593 6.13517L4.482 7.67416L7.55999 10.2288ZM6.02099 8.95147C6.0417 8.96866 6.06227 8.986 6.08269 9.00349L8.68475 5.96551C8.64862 5.93457 8.61224 5.90389 8.5756 5.87348L6.02099 8.95147ZM9.69295 6.97466C9.38361 6.61308 9.04671 6.27583 8.68546 5.96612L6.08198 9.00288C6.28689 9.17855 6.47803 9.36989 6.65349 9.57498L9.69295 6.97466ZM6.65288 9.57427C6.96107 9.93485 7.21938 10.3369 7.41966 10.77L11.0502 9.09085C10.6958 8.32471 10.2388 7.61329 9.69356 6.97538L6.65288 9.57427ZM7.41966 10.77C7.70658 11.3903 7.86801 12.0604 7.89571 12.7415L11.8924 12.579C11.8434 11.3738 11.5578 10.1884 11.0502 9.09085L7.41966 10.77ZM11.8999 12.9529C11.8999 12.8282 11.8974 12.704 11.8925 12.5804L7.89566 12.7401C7.89847 12.8106 7.8999 12.8816 7.8999 12.9529H11.8999ZM11.8993 13.0594C11.8997 13.024 11.8999 12.9885 11.8999 12.9529H7.8999C7.8999 12.9733 7.89978 12.9936 7.89955 13.0139L11.8993 13.0594ZM9.9227 11.0368L7.92284 11.0135L7.87627 15.0132L9.87614 15.0365L9.9227 11.0368ZM9.89943 13.0362C9.89974 13.0084 9.8999 12.9807 9.8999 12.9529H5.8999C5.8999 12.9655 5.89983 12.9781 5.89969 12.9906L9.89943 13.0362ZM9.8999 12.9529C9.8999 10.7242 8.88483 8.7307 7.29915 7.41317L4.74285 10.4898C5.4531 11.0799 5.8999 11.9633 5.8999 12.9529H9.8999Z"
+    fill="white"
+    mask="url(#path-1-inside-1_897_48368)"
+  />
+  <path d="M2.5 12.645H14.1999" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" />
+  <line x1="2.26065" y1="12.5912" x2="10.2312" y2="3.09222" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" />
+</svg>
+
+      <span class="mr-1">位相:</span>
+      <span class="phase font-mono font-bold"></span>
     </li>
   </ul>
 </template>
