@@ -5477,19 +5477,9 @@ qubit-circle.magnitude-lime::part(magnitude) {
   background-color: rgb(132 204 22 / var(--tw-bg-opacity));
 }
 
-qubit-circle.magnitude-lime:hover::part(magnitude) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
-}
-
 qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-bg-opacity: 1;
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
-}
-
-qubit-circle.magnitude-emerald:hover::part(magnitude) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .sr-only {
