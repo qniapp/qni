@@ -1,7 +1,7 @@
 import {Complex, DetailedError, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import tippy, {Instance, ReferenceElement} from 'tippy.js'
 import fastdom from 'fastdom'
 import {forceSigned} from './util'
 
@@ -1139,9 +1139,9 @@ export class CircleNotationElement extends HTMLElement {
     const popup = tippy(qubitCircle, {
       allowHTML: true,
       animation: false,
-      arrow: roundArrow + roundArrow,
       delay: 0,
-      theme: 'qni'
+      theme: 'qubit-circle'
+      // trigger: 'manual', // debug
     })
 
     if (this.qubitCirclePopupTemplate === null) return
