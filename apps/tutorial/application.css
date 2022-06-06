@@ -5562,14 +5562,14 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   z-index: 100;
 }
 
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-}
-
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
+}
+
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
 }
 
 .my-2 {
@@ -5595,6 +5595,26 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .my-0 {
   margin-top: 0px;
   margin-bottom: 0px;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.-mt-2\.5 {
+  margin-top: -0.625rem;
+}
+
+.-mt-2 {
+  margin-top: -0.5rem;
+}
+
+.-mt-3 {
+  margin-top: -0.75rem;
+}
+
+.-mt-1 {
+  margin-top: -0.25rem;
 }
 
 .mb-10 {
@@ -5625,10 +5645,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-bottom: 10rem;
 }
 
-.mr-8 {
-  margin-right: 2rem;
-}
-
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -5641,8 +5657,8 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 1rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
+.mr-8 {
+  margin-right: 2rem;
 }
 
 .mr-4 {
@@ -5705,22 +5721,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 0.25rem;
 }
 
-.-mt-3 {
-  margin-top: -0.75rem;
-}
-
-.-mt-2\.5 {
-  margin-top: -0.625rem;
-}
-
-.-mt-2 {
-  margin-top: -0.5rem;
-}
-
-.-mt-1 {
-  margin-top: -0.25rem;
-}
-
 .block {
   display: block;
 }
@@ -5747,6 +5747,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .hidden {
   display: none;
+}
+
+.h-12 {
+  height: 3rem;
 }
 
 .h-10 {
@@ -5793,16 +5797,24 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   height: 2rem;
 }
 
-.h-12 {
-  height: 3rem;
+.w-20 {
+  width: 5rem;
 }
 
-.w-10 {
-  width: 2.5rem;
+.w-12 {
+  width: 3rem;
+}
+
+.w-11 {
+  width: 2.75rem;
 }
 
 .w-full {
   width: 100%;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .w-4 {
@@ -5853,18 +5865,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .w-5 {
   width: 1.25rem;
-}
-
-.w-20 {
-  width: 5rem;
-}
-
-.w-12 {
-  width: 3rem;
-}
-
-.w-11 {
-  width: 2.75rem;
 }
 
 .min-w-0 {
@@ -5918,12 +5918,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
           user-select: none;
 }
 
-.list-decimal {
-  list-style-type: decimal;
-}
-
 .list-none {
   list-style-type: none;
+}
+
+.list-decimal {
+  list-style-type: decimal;
 }
 
 .list-disc {
@@ -5982,12 +5982,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   gap: 0.5rem;
 }
 
-.space-x-1 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -6004,6 +5998,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -6202,6 +6202,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   fill: currentColor;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .p-8 {
   padding: 2rem;
 }
@@ -6212,10 +6216,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .p-0 {
   padding: 0px;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .p-4 {
@@ -6336,6 +6336,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -6344,11 +6349,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
 }
 
 .text-2xl {
@@ -6417,6 +6417,16 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .tracking-tight {
   letter-spacing: -0.025em;
+}
+
+.text-neutral-800 {
+  --tw-text-opacity: 1;
+  color: rgb(38 38 38 / var(--tw-text-opacity));
+}
+
+.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 .text-gray-700 {
