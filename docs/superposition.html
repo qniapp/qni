@@ -951,7 +951,7 @@
     class="h-16 w-16"
     data-ket="0"
     data-amplitude="0.7071067811865476"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|0⟩</span>
@@ -962,7 +962,7 @@
     class="h-16 w-16"
     data-ket="1"
     data-amplitude="0.7071067811865476"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|1⟩</span>
@@ -1009,7 +1009,7 @@
     class="h-16 w-16"
     data-ket="0"
     data-amplitude="1"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|0⟩</span>
@@ -1020,7 +1020,7 @@
     class="h-16 w-16"
     data-ket="1"
     data-amplitude="0"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|1⟩</span>
@@ -1038,7 +1038,7 @@
     class="h-16 w-16 magnitude-lime"
     data-ket="0"
     data-amplitude="0"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|0⟩</span>
@@ -1049,7 +1049,7 @@
     class="h-16 w-16 magnitude-lime"
     data-ket="1"
     data-amplitude="1"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|1⟩</span>
@@ -1068,7 +1068,7 @@
     class="h-16 w-16"
     data-ket="0"
     data-amplitude="0.7071067811865476"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|0⟩</span>
@@ -1079,7 +1079,7 @@
     class="h-16 w-16"
     data-ket="1"
     data-amplitude="0.7071067811865476"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|1⟩</span>
@@ -1098,7 +1098,7 @@
     class="h-16 w-16 magnitude-lime"
     data-ket="0"
     data-amplitude="0.8944271909999159"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|0⟩</span>
@@ -1109,7 +1109,7 @@
     class="h-16 w-16 magnitude-lime"
     data-ket="1"
     data-amplitude="0.4472135954999579"
-    data-popup-template-id="circle-notation-popup"
+    data-popup-template-id="qubit-circle-popup"
   ></qubit-circle>
   <div class="-mt-3 flex w-full flex-row justify-end">
     <span class="font-mono text-slate-500 text-base">|1⟩</span>
@@ -1326,15 +1326,25 @@
     </div>
   </operation-inspector>
 </template>
- <template id="circle-notation-popup">
-  <div class="p-2">
-    <ul class="list-none">
-      <li>
-        確率:
-        <span class="probability font-mono font-bold text-neutral-800"></span>
-      </li>
-    </ul>
-  </div>
+ <template id="qubit-circle-popup">
+  <ul class="list-none">
+    <li class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle cx="7.99998" cy="7.99998" r="6.4" fill="white" />
+  <circle cx="8" cy="8" r="4" fill="#0EA5E9" />
+</svg>
+
+      <span class="mr-1">確率:</span>
+      <span class="probability font-mono font-bold"></span>
+    </li>
+  </ul>
 </template>
 
 <footer class="mt-12 text-sm leading-6">

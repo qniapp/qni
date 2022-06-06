@@ -1,10 +1,9 @@
-<template id="circle-notation-popup">
-  <div class="p-2">
-    <ul class="list-none">
-      <li>
-        確率:
-        <span class="probability font-mono font-bold text-neutral-800"></span>
-      </li>
-    </ul>
-  </div>
+<template id="qubit-circle-popup">
+  <ul class="list-none">
+    <li class="flex items-center">
+      {% include probability.svg class="w-4 h-4 mr-1" %}
+      <span class="mr-1">確率:</span>
+      <span class="probability font-mono font-bold"></span>
+    </li>
+  </ul>
 </template>

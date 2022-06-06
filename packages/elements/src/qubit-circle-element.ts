@@ -1,6 +1,6 @@
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import tippy, {Instance, ReferenceElement, roundArrow} from 'tippy.js'
+import tippy, {Instance, ReferenceElement} from 'tippy.js'
 import Complex from 'complex.js'
 import {Util} from '@qni/common'
 import {forceSigned} from './util'
@@ -38,7 +38,7 @@ export class QubitCircleElement extends HTMLElement {
           }
 
           :host(:hover) #border {
-            border-color: rgb(220 38 38); /* red-600 */
+            filter: brightness(0.9);
           }
 
           #magnitude {
@@ -54,10 +54,6 @@ export class QubitCircleElement extends HTMLElement {
 
             transform-origin: center;
             transform: scaleX(${this.magnitude}) scaleY(${this.magnitude});
-          }
-
-          :host(:hover) #magnitude {
-            background-color: rgb(249 115 22); /* orange-500 */
           }
 
           #phase {
@@ -100,9 +96,9 @@ export class QubitCircleElement extends HTMLElement {
     const popup = tippy(this, {
       allowHTML: true,
       animation: false,
-      arrow: roundArrow + roundArrow,
       delay: 0,
-      theme: 'qni'
+      theme: 'qubit-circle'
+      // trigger: 'manual', // debug
     })
 
     if (this.popupTemplate === null) return

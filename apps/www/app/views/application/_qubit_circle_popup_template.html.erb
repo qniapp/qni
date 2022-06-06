@@ -1,20 +1,25 @@
 <template id="qubit-circle-popup-template">
-  <div class="text-wolf mb-2 text-base">
-    |<span class="ket-binary font-mono"></span>⟩ (decimal <span class="ket-decimal"></span>)
+  <div class="mb-2 text-lg">
+    |<span class="ket-binary font-mono"></span><span class="mr-2">⟩</span><span class="mr-1">decimal</span
+    ><span class="ket-decimal font-mono"></span>
   </div>
+
   <ul class="list-none">
-    <li>
-      Amplitude:
-      <span class="amplitude-real text-eel font-mono font-bold"></span>
-      <span class="amplitude-imag text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <%= icon 'amplitude', class: 'h-4 w-4 mr-1' %>
+      <span class="mr-1">Amplitude:</span>
+      <span class="amplitude-real font-mono font-bold"></span>
+      <span class="amplitude-imag font-mono font-bold"></span>
     </li>
-    <li>
-      Probability:
-      <span class="probability text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <%= icon 'probability', class: 'h-4 w-4 mr-1' %>
+      <span class="mr-1">Probability:</span>
+      <span class="probability font-mono font-bold"></span>
     </li>
-    <li>
-      Phase:
-      <span class="phase text-eel font-mono font-bold"></span>
+    <li class="flex items-center">
+      <%= icon 'phase', class: 'h-4 w-4 mr-1' %>
+      <span class="mr-1">Phase:</span>
+      <span class="phase font-mono font-bold"></span>
     </li>
   </ul>
 </template>

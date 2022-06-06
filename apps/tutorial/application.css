@@ -5477,19 +5477,9 @@ qubit-circle.magnitude-lime::part(magnitude) {
   background-color: rgb(132 204 22 / var(--tw-bg-opacity));
 }
 
-qubit-circle.magnitude-lime:hover::part(magnitude) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
-}
-
 qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-bg-opacity: 1;
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
-}
-
-qubit-circle.magnitude-emerald:hover::part(magnitude) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .sr-only {
@@ -5675,6 +5665,14 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   margin-right: 1rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .mt-12 {
   margin-top: 3rem;
 }
@@ -5697,10 +5695,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 
 .ml-1 {
   margin-left: 0.25rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .ml-0\.5 {
@@ -6362,6 +6356,11 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
   line-height: 2rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -6370,11 +6369,6 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .font-bold {
@@ -6518,6 +6512,11 @@ qubit-circle.magnitude-emerald:hover::part(magnitude) {
 .text-indigo-600 {
   --tw-text-opacity: 1;
   color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 .no-underline {
