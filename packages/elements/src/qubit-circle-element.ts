@@ -12,6 +12,10 @@ export class QubitCircleElement extends HTMLElement {
   @attr amplitude = ''
   @attr hidePhase = false
   @attr popupTemplateId = 'qubit-circle-popup-template'
+  @attr showPopupHeader = false
+  @attr showPopupAmplitude = false
+  @attr showPopupProbability = false
+  @attr showPopupPhase = false
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
@@ -103,40 +107,59 @@ export class QubitCircleElement extends HTMLElement {
 
     if (this.popupTemplate === null) return
 
+    const template = document.importNode(this.popupTemplate.content, true)
+
     const amplitude = new Complex(this.amplitude)
-    const ketBinaryEl = this.popupTemplate.content.querySelector('.ket-binary')
-    const ketDecimalEl = this.popupTemplate.content.querySelector('.ket-decimal')
-    const amplitudeRealEl = this.popupTemplate.content.querySelector('.amplitude-real')
-    const amplitudeImagEl = this.popupTemplate.content.querySelector('.amplitude-imag')
-    const probabilityEl = this.popupTemplate.content.querySelector('.probability')
-    const phaseEl = this.popupTemplate.content.querySelector('.phase')
+    const headerEl = template.getElementById('qubit-circle-popup--header')
+    const ketBinaryEl = template.querySelector('.ket-binary')
+    const ketDecimalEl = template.querySelector('.ket-decimal')
+    const amplitudeEl = template.getElementById('qubit-circle-popup--amplitude')
+    const amplitudeRealValueEl = template.getElementById('qubit-circle-popup--amplitude-real-value')
+    const amplitudeImagValueEl = template.getElementById('qubit-circle-popup--amplitude-imag-value')
+    const probabilityEl = template.getElementById('qubit-circle-popup--probability')
+    const probabilityValueEl = template.getElementById('qubit-circle-popup--probability-value')
+    const phaseEl = template.getElementById('qubit-circle-popup--phase')
+    const phaseValueEl = template.getElementById('qubit-circle-popup--phase-value')
 
-    if (ketBinaryEl) {
+    Util.notNull(headerEl)
+    Util.notNull(ketBinaryEl)
+    Util.notNull(ketDecimalEl)
+    Util.notNull(amplitudeEl)
+    Util.notNull(amplitudeRealValueEl)
+    Util.notNull(amplitudeImagValueEl)
+    Util.notNull(probabilityEl)
+    Util.notNull(probabilityValueEl)
+    Util.notNull(phaseEl)
+    Util.notNull(phaseValueEl)
+
+    if (this.showPopupHeader) {
       ketBinaryEl.textContent = this.ket.toString(2).padStart(this.qubitCount, '0')
-    }
-
-    if (ketDecimalEl) {
       ketDecimalEl.textContent = this.ket.toString()
+    } else {
+      headerEl.style.display = 'none'
     }
 
-    if (amplitudeRealEl) {
-      amplitudeRealEl.textContent = forceSigned(amplitude.re, 5)
+    if (this.showPopupAmplitude) {
+      amplitudeRealValueEl.textContent = forceSigned(amplitude.re, 5)
+      amplitudeImagValueEl.textContent = `${forceSigned(amplitude.im, 5)}i`
+    } else {
+      amplitudeEl.style.display = 'none'
     }
 
-    if (amplitudeImagEl) {
-      amplitudeImagEl.textContent = `${forceSigned(amplitude.im, 5)}i`
+    if (this.showPopupProbability) {
+      probabilityValueEl.textContent = `${forceSigned(this.magnitude * this.magnitude * 100, 4)}%`
+    } else {
+      probabilityEl.style.display = 'none'
     }
 
-    if (probabilityEl) {
-      probabilityEl.textContent = `${forceSigned(this.magnitude * this.magnitude * 100, 4)}%`
-    }
-
-    if (phaseEl) {
-      phaseEl.textContent = `${forceSigned(this.phaseDeg, 2)}°`
+    if (this.showPopupPhase) {
+      phaseValueEl.textContent = `${forceSigned(this.phase, 2)}°`
+    } else {
+      phaseEl.style.display = 'none'
     }
 
     const tmpDiv = document.createElement('div')
-    tmpDiv.appendChild(this.popupTemplate.content.cloneNode(true))
+    tmpDiv.appendChild(template)
 
     // eslint-disable-next-line github/no-inner-html
     popup.setContent(tmpDiv.innerHTML)

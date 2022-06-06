@@ -32,7 +32,7 @@ next_url: ./phase.html
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  {{ 0.8 | sqrt | qubit_circle: 0 }} {{ 0.2 | sqrt | qubit_circle: 1 }}
+  {{ 0.8 | sqrt | qubit_circle: 0, 'xl', '' }} {{ 0.2 | sqrt | qubit_circle: 1 }}
 </div>
 
 <h2>確率</h2>
@@ -187,23 +187,6 @@ next_url: ./phase.html
     </circuit-editor>
   </quantum-simulator>
 </div>
-
-<template id="qubit-circle-popup">
-  <ul class="list-none">
-    <li>
-      振幅:
-      <span class="amplitude-real text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      確率:
-      <span class="probability text-eel font-mono font-bold"></span>
-    </li>
-    <li>
-      位相:
-      <span class="phase text-eel font-mono font-bold"></span>
-    </li>
-  </ul>
-</template>
 
 {% include bloch_display_help.html %} {% include operation_menu.html %} {% include
 operation_inspector_template.html %}

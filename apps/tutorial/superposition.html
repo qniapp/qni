@@ -13,7 +13,8 @@ next_url: ./qubit.html
 
 <div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-row">
-    {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
+    {{ 0.5 | sqrt | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0.5 | sqrt | qubit_circle: 1,
+    'xl', '', 'probability' }}
   </div>
 </div>
 
@@ -49,14 +50,18 @@ next_url: ./qubit.html
       <tr>
         <td class="align-middle">{% ket 0 %} が 100%</td>
         <td>
-          <div class="flex flex-row">{{ 1 | qubit_circle: 0 }} {{ 0 | qubit_circle: 1 }}</div>
+          <div class="flex flex-row">
+            {{ 1 | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0 | qubit_circle: 1, 'xl', '',
+            'probability' }}
+          </div>
         </td>
       </tr>
       <tr>
         <td class="align-middle">{% ket 1 %} が 100%</td>
         <td>
           <div class="flex flex-row">
-            {{ 0 | qubit_circle: 0, 'xl', 'lime' }} {{ 1 | qubit_circle: 1, 'xl', 'lime' }}
+            {{ 0 | qubit_circle: 0, 'xl', 'lime', 'probability' }} {{ 1 | qubit_circle: 1, 'xl',
+            'lime', 'probability' }}
           </div>
         </td>
       </tr>
@@ -64,7 +69,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
         <td>
           <div class="flex flex-row">
-            {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | qubit_circle: 1 }}
+            {{ 0.5 | sqrt | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0.5 | sqrt |
+            qubit_circle: 1, 'xl', '', 'probability' }}
           </div>
         </td>
       </tr>
@@ -72,8 +78,8 @@ next_url: ./qubit.html
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
         <td>
           <div class="flex flex-row">
-            {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime' }} {{ 0.2 | sqrt | qubit_circle: 1, 'xl',
-            'lime' }}
+            {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime', 'probability' }} {{ 0.2 | sqrt |
+            qubit_circle: 1, 'xl', 'lime', 'probability' }}
           </div>
         </td>
       </tr>
@@ -121,5 +127,4 @@ next_url: ./qubit.html
   ></orbit-prompt>
 </orbit-reviewarea>
 
-{% include operation_menu.html %} {% include operation_inspector_template.html %} {% include
-simple_circle_notation_popup.html %}
+{% include operation_menu.html %} {% include operation_inspector_template.html %}

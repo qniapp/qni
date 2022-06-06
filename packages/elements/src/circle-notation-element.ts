@@ -1163,21 +1163,16 @@ export class CircleNotationElement extends HTMLElement {
     const magnitude = amplitude.abs()
     const phase = (amplitude.phase() / Math.PI) * 180
 
-    const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-binary')
-    const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-decimal')
-    const amplitudeEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--amplitude')
-    const amplitudeRealValueEl = this.qubitCirclePopupTemplate.content.getElementById(
-      'qubit-circle-popup--amplitude-real-value'
-    )
-    const amplitudeImagValueEl = this.qubitCirclePopupTemplate.content.getElementById(
-      'qubit-circle-popup--amplitude-imag-value'
-    )
-    const probabilityEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--probability')
-    const probabilityValueEl = this.qubitCirclePopupTemplate.content.getElementById(
-      'qubit-circle-popup--probability-value'
-    )
-    const phaseEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--phase')
-    const phaseValueEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--phase-value')
+    const template = document.importNode(this.qubitCirclePopupTemplate.content, true)
+    const ketBinaryEl = template.querySelector('.ket-binary')
+    const ketDecimalEl = template.querySelector('.ket-decimal')
+    const amplitudeEl = template.getElementById('qubit-circle-popup--amplitude')
+    const amplitudeRealValueEl = template.getElementById('qubit-circle-popup--amplitude-real-value')
+    const amplitudeImagValueEl = template.getElementById('qubit-circle-popup--amplitude-imag-value')
+    const probabilityEl = template.getElementById('qubit-circle-popup--probability')
+    const probabilityValueEl = template.getElementById('qubit-circle-popup--probability-value')
+    const phaseEl = template.getElementById('qubit-circle-popup--phase')
+    const phaseValueEl = template.getElementById('qubit-circle-popup--phase-value')
 
     Util.notNull(amplitudeEl)
     Util.notNull(amplitudeRealValueEl)
@@ -1215,7 +1210,7 @@ export class CircleNotationElement extends HTMLElement {
     }
 
     const tmpDiv = document.createElement('div')
-    tmpDiv.appendChild(this.qubitCirclePopupTemplate.content.cloneNode(true))
+    tmpDiv.appendChild(template)
 
     // eslint-disable-next-line github/no-inner-html
     popup.setContent(tmpDiv.innerHTML)
