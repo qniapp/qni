@@ -1164,8 +1164,8 @@ export class CircleNotationElement extends HTMLElement {
     const phase = (amplitude.phase() / Math.PI) * 180
 
     const template = document.importNode(this.qubitCirclePopupTemplate.content, true)
-    const ketBinaryEl = template.querySelector('.ket-binary')
-    const ketDecimalEl = template.querySelector('.ket-decimal')
+    const ketBinaryEl = template.getElementById('qubit-circle-popup--ket-binary-value')
+    const ketDecimalEl = template.getElementById('qubit-circle-popup--ket-decimal-value')
     const amplitudeEl = template.getElementById('qubit-circle-popup--amplitude')
     const amplitudeRealValueEl = template.getElementById('qubit-circle-popup--amplitude-real-value')
     const amplitudeImagValueEl = template.getElementById('qubit-circle-popup--amplitude-imag-value')

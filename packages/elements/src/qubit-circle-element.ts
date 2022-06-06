@@ -111,8 +111,8 @@ export class QubitCircleElement extends HTMLElement {
 
     const amplitude = new Complex(this.amplitude)
     const headerEl = template.getElementById('qubit-circle-popup--header')
-    const ketBinaryEl = template.querySelector('.ket-binary')
-    const ketDecimalEl = template.querySelector('.ket-decimal')
+    const ketBinaryEl = template.getElementById('qubit-circle-popup--ket-binary-value')
+    const ketDecimalEl = template.getElementById('qubit-circle-popup--ket-decimal-value')
     const amplitudeEl = template.getElementById('qubit-circle-popup--amplitude')
     const amplitudeRealValueEl = template.getElementById('qubit-circle-popup--amplitude-real-value')
     const amplitudeImagValueEl = template.getElementById('qubit-circle-popup--amplitude-imag-value')
