@@ -2,7 +2,7 @@
 
 module Jekyll
   module QubitCircleFilter
-    def qubit_circle(amplitude, ket, size = 'xl', color = '')
+    def qubit_circle(amplitude, ket, size = 'xl', color = '', *contents)
       tw_size = case size
                 when 'xl'
                   16
@@ -53,6 +53,13 @@ module Jekyll
                 "h-#{tw_size} w-#{tw_size} magnitude-#{color}"
               end
 
+      contents = %w[amplitude probability phase] if contents.empty?
+
+      show_popup_header = contents.include?('header')
+      show_popup_amplitude = contents.include?('amplitude')
+      show_popup_probability = contents.include?('probability')
+      show_popup_phase = contents.include?('phase')
+
       <<~HTML
         <div class="flex w-#{tw_wrapper_size} flex-col items-start">
           <qubit-circle
@@ -60,6 +67,10 @@ module Jekyll
             data-ket="#{ket}"
             data-amplitude="#{amplitude}"
             data-popup-template-id="qubit-circle-popup"
+            #{show_popup_header ? 'data-show-popup-header' : ''}
+            #{show_popup_amplitude ? 'data-show-popup-amplitude' : ''}
+            #{show_popup_probability ? 'data-show-popup-probability' : ''}
+            #{show_popup_phase ? 'data-show-popup-phase' : ''}
           ></qubit-circle>
           <div class="#{tw_ket_mt} flex w-full flex-row justify-end">
             <span class="font-mono text-slate-500 text-#{tw_font_size}">|#{ket}⟩</span>

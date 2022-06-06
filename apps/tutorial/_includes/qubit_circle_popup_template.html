@@ -1,24 +1,25 @@
-<template id="qubit-circle-popup-template">
+<template id="qubit-circle-popup">
   <div id="qubit-circle-popup--header" class="mb-2 text-lg">
-    |<span id="qubit-circle-popup--ket-binary-value" class="font-mono"></span><span class="mr-2">⟩</span
-    ><span class="mr-1">decimal</span><span id="qubit-circle-popup--ket-decimal-value" class="font-mono"></span>
+    |<span id="qubit-circle-popup--ket-binary-value" class="font-mono"></span
+    ><span class="mr-2">⟩</span><span class="mr-1">十進</span
+    ><span id="qubit-circle-popup--ket-decimal-value" class="font-mono"></span>
   </div>
 
   <ul class="list-none">
     <li id="qubit-circle-popup--amplitude" class="flex items-center">
-      <%= icon 'amplitude', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Amplitude:</span>
+      {% include amplitude.svg class="w-4 h-4 mr-1" %}
+      <span class="mr-1">振幅:</span>
       <span id="qubit-circle-popup--amplitude-real-value" class="font-mono font-bold"></span>
       <span id="qubit-circle-popup--amplitude-imag-value" class="font-mono font-bold"></span>
     </li>
     <li id="qubit-circle-popup--probability" class="flex items-center">
-      <%= icon 'probability', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Probability:</span>
+      {% include probability.svg class="w-4 h-4 mr-1" %}
+      <span class="mr-1">確率:</span>
       <span id="qubit-circle-popup--probability-value" class="font-mono font-bold"></span>
     </li>
     <li id="qubit-circle-popup--phase" class="flex items-center">
-      <%= icon 'phase', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Phase:</span>
+      {% include phase.svg class="w-4 h-4 mr-1" %}
+      <span class="mr-1">位相:</span>
       <span id="qubit-circle-popup--phase-value" class="font-mono font-bold"></span>
     </li>
   </ul>
