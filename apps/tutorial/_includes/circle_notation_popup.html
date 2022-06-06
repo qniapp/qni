@@ -1,22 +1,22 @@
 <template id="qubit-circle-popup">
   <div class="mb-2 text-lg">
     |<span class="ket-binary font-mono"></span><span class="mr-2">⟩</span
-    ><span class="mr-1">decimal</span><span class="ket-decimal font-mono"></span>
+    ><span class="mr-1">十進</span><span class="ket-decimal font-mono"></span>
   </div>
 
   <ul class="list-none">
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--amplitude" class="flex items-center">
       {% include amplitude.svg class="w-4 h-4 mr-1" %}
       <span class="mr-1">振幅:</span>
       <span class="amplitude-real font-mono font-bold"></span>
       <span class="amplitude-imag font-mono font-bold"></span>
     </li>
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--probability" class="flex items-center">
       {% include probability.svg class="w-4 h-4 mr-1" %}
       <span class="mr-1">確率:</span>
       <span class="probability font-mono font-bold"></span>
     </li>
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--phase" class="flex items-center">
       {% include phase.svg class="w-4 h-4 mr-1" %}
       <span class="mr-1">位相:</span>
       <span class="phase font-mono font-bold"></span>

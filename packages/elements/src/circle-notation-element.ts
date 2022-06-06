@@ -28,6 +28,9 @@ export class CircleNotationElement extends HTMLElement {
   @attr colorPhase = false
   /** ID of qubit circle popup template element */
   @attr qubitCirclePopupTemplateId = 'qubit-circle-popup-template'
+  @attr showQubitCirclePopupAmplitude = true
+  @attr showQubitCirclePopupProbability = true
+  @attr showQubitCirclePopupPhase = true
   /** @internal */
   @attr vertical = true
 
@@ -1162,10 +1165,27 @@ export class CircleNotationElement extends HTMLElement {
 
     const ketBinaryEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-binary')
     const ketDecimalEl = this.qubitCirclePopupTemplate.content.querySelector('.ket-decimal')
-    const amplitudeRealEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-real')
-    const amplitudeImagEl = this.qubitCirclePopupTemplate.content.querySelector('.amplitude-imag')
-    const probabilityEl = this.qubitCirclePopupTemplate.content.querySelector('.probability')
-    const phaseEl = this.qubitCirclePopupTemplate.content.querySelector('.phase')
+    const amplitudeEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--amplitude')
+    const amplitudeRealValueEl = this.qubitCirclePopupTemplate.content.getElementById(
+      'qubit-circle-popup--amplitude-real-value'
+    )
+    const amplitudeImagValueEl = this.qubitCirclePopupTemplate.content.getElementById(
+      'qubit-circle-popup--amplitude-imag-value'
+    )
+    const probabilityEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--probability')
+    const probabilityValueEl = this.qubitCirclePopupTemplate.content.getElementById(
+      'qubit-circle-popup--probability-value'
+    )
+    const phaseEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--phase')
+    const phaseValueEl = this.qubitCirclePopupTemplate.content.getElementById('qubit-circle-popup--phase-value')
+
+    Util.notNull(amplitudeEl)
+    Util.notNull(amplitudeRealValueEl)
+    Util.notNull(amplitudeImagValueEl)
+    Util.notNull(probabilityEl)
+    Util.notNull(probabilityValueEl)
+    Util.notNull(phaseEl)
+    Util.notNull(phaseValueEl)
 
     if (ketBinaryEl) {
       ketBinaryEl.textContent = ket.toString(2).padStart(this.qubitCount, '0')
@@ -1175,20 +1195,23 @@ export class CircleNotationElement extends HTMLElement {
       ketDecimalEl.textContent = ket.toString()
     }
 
-    if (amplitudeRealEl) {
-      amplitudeRealEl.textContent = forceSigned(amplitude.real, 5)
+    if (this.showQubitCirclePopupAmplitude) {
+      amplitudeRealValueEl.textContent = forceSigned(amplitude.real, 5)
+      amplitudeImagValueEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
+    } else {
+      amplitudeEl.style.display = 'none'
     }
 
-    if (amplitudeImagEl) {
-      amplitudeImagEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
+    if (this.showQubitCirclePopupProbability) {
+      probabilityValueEl.textContent = `${forceSigned(magnitude * magnitude * 100, 4)}%`
+    } else {
+      probabilityEl.style.display = 'none'
     }
 
-    if (probabilityEl) {
-      probabilityEl.textContent = `${forceSigned(magnitude * magnitude * 100, 4)}%`
-    }
-
-    if (phaseEl) {
-      phaseEl.textContent = `${forceSigned(phase, 2)}°`
+    if (this.showQubitCirclePopupPhase) {
+      phaseValueEl.textContent = `${forceSigned(phase, 2)}°`
+    } else {
+      phaseEl.style.display = 'none'
     }
 
     const tmpDiv = document.createElement('div')

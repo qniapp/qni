@@ -5,21 +5,21 @@
   </div>
 
   <ul class="list-none">
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--amplitude" class="flex items-center">
       <%= icon 'amplitude', class: 'h-4 w-4 mr-1' %>
       <span class="mr-1">Amplitude:</span>
-      <span class="amplitude-real font-mono font-bold"></span>
-      <span class="amplitude-imag font-mono font-bold"></span>
+      <span id="qubit-circle-popup--amplitude-real-value" class="font-mono font-bold"></span>
+      <span id="qubit-circle-popup--amplitude-imag-value" class="font-mono font-bold"></span>
     </li>
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--probability" class="flex items-center">
       <%= icon 'probability', class: 'h-4 w-4 mr-1' %>
       <span class="mr-1">Probability:</span>
-      <span class="probability font-mono font-bold"></span>
+      <span id="qubit-circle-popup--probability-value" class="font-mono font-bold"></span>
     </li>
-    <li class="flex items-center">
+    <li id="qubit-circle-popup--phase" class="flex items-center">
       <%= icon 'phase', class: 'h-4 w-4 mr-1' %>
       <span class="mr-1">Phase:</span>
-      <span class="phase font-mono font-bold"></span>
+      <span id="qubit-circle-popup--phase-value" class="font-mono font-bold"></span>
     </li>
   </ul>
 </template>
