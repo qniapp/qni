@@ -30,6 +30,12 @@
       <% end %>
       <%= menu_item_group do %>
         <%=
+          menu_item_link id: 'menu-item-tutorial',
+                         href: 'https://https://qniapp.github.io/qni/',
+                         icon: :tutorial,
+                         text: 'Tutorial (日本語)'
+        %>
+        <%=
           menu_item_link id: 'menu-item-github', href: 'https://github.com/qniapp/qni', icon: :github, text: 'GitHub'
         %>
         <%=
