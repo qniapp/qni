@@ -24,7 +24,7 @@ function runSimulator(e) {
     resultCache[circuitJson] = {}
   }
 
-  let cacheHit = false
+  // let cacheHit = false
 
   for (const [i, operations] of steps.entries()) {
     let stepResult = {}
@@ -39,11 +39,11 @@ function runSimulator(e) {
       cachedStepResult.targets === undefined ||
       cachedStepResult.targets.length < targets.length
     ) {
-      cacheHit = false
+      // cacheHit = false
 
       simulator.runStep(operations)
 
-      const allAmplitudes = simulator.state.matrix
+      const allAmplitudes = simulator.state.matrix.clone()
       const blochVectors = Object.assign({}, simulator.blochVectors)
       const measuredBits = Object.assign({}, simulator.measuredBits)
       const flags = Object.assign({}, simulator.flags)
@@ -80,7 +80,7 @@ function runSimulator(e) {
         }
       }
     } else {
-      cacheHit = true
+      // cacheHit = true
 
       stepResult = {
         type: 'step',
