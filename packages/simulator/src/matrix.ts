@@ -415,4 +415,8 @@ export class Matrix {
     const z = ar - dr
     return [x, y, z]
   }
+
+  clone(): Matrix {
+    return new Matrix(this.width, this.height, this.buffer.slice())
+  }
 }

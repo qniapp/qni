@@ -43,7 +43,7 @@ function runSimulator(e) {
 
       simulator.runStep(operations)
 
-      const allAmplitudes = simulator.state.matrix
+      const allAmplitudes = simulator.state.matrix.clone()
       const blochVectors = Object.assign({}, simulator.blochVectors)
       const measuredBits = Object.assign({}, simulator.measuredBits)
       const flags = Object.assign({}, simulator.flags)
@@ -80,7 +80,7 @@ function runSimulator(e) {
         }
       }
     } else {
-      cacheHit = true
+      // cacheHit = true
 
       stepResult = {
         type: 'step',
