@@ -62,12 +62,15 @@ export class GateCarouselElement extends HTMLElement {
             position: absolute;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
+            width: 48px;
             height: 100%;
             padding: 0;
             border-width: 0px;
             color: rgb(24 24 27);
             background-color: transparent;
+            touch-action: manipulation;
           }
 
           .body {
