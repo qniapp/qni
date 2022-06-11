@@ -3435,7 +3435,7 @@ phase-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-palette-dropzone phase-gate::before {
+phase-gate.angle-hidden::before, palette-dropzone phase-gate::before {
   display: none !important;
 }
 
@@ -3800,7 +3800,7 @@ rx-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-palette-dropzone rx-gate::before {
+rx-gate.angle-hidden::before, palette-dropzone rx-gate::before {
   display: none !important;
 }
 
@@ -4002,7 +4002,7 @@ ry-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-palette-dropzone ry-gate::before {
+ry-gate.angle-hidden::before, palette-dropzone ry-gate::before {
   display: none !important;
 }
 
@@ -4204,7 +4204,7 @@ rz-gate[data-reduced-angle='']:not([data-angle=''])::before {
   content: attr(data-angle) '';
 }
 
-palette-dropzone rz-gate::before {
+rz-gate.angle-hidden::before, palette-dropzone rz-gate::before {
   display: none !important;
 }
 
@@ -5226,6 +5226,10 @@ z-gate::part(icon) {
 
 .block {
   display: block;
+}
+
+.hidden {
+  display: none;
 }
 
 .transform {

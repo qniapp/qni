@@ -41,7 +41,38 @@
         data-max-wire-count="16"
       ></quantum-circuit>
 
-      <%= palette %>
+      <gate-carousel
+        id="gate-carousel"
+        class="fixed bottom-0 left-0 right-0 z-30 mx-6 mb-6 rounded-xl bg-white drop-shadow-xl md:hidden"
+        data-current-gate-set-index="0"
+      >
+        <div class="flex hidden w-full flex-row items-start gap-x-2 px-6" data-targets="gate-carousel.gateSets">
+          <h-gate class="operation-xl"></h-gate>
+          <x-gate class="operation-xl"></x-gate>
+          <y-gate class="operation-xl"></y-gate>
+          <z-gate class="operation-xl"></z-gate>
+        </div>
+        <div class="flex hidden w-full flex-row items-start gap-x-2 px-6" data-targets="gate-carousel.gateSets">
+          <phase-gate class="operation-xl angle-hidden" data-angle="π/2"></phase-gate>
+          <t-gate class="operation-xl"></t-gate>
+          <rnot-gate class="operation-xl"></rnot-gate>
+        </div>
+        <div class="flex hidden w-full flex-row items-start gap-x-2 px-6" data-targets="gate-carousel.gateSets">
+          <rx-gate class="operation-xl angle-hidden" data-angle="π/2"></rx-gate>
+          <rx-gate class="operation-xl angle-hidden" data-angle="π/2"></rx-gate>
+          <rx-gate class="operation-xl angle-hidden" data-angle="π/2"></rx-gate>
+        </div>
+        <div class="flex hidden w-full flex-row items-start gap-x-2 px-6" data-targets="gate-carousel.gateSets">
+          <control-gate class="operation-xl"></control-gate>
+          <swap-gate class="operation-xl"></swap-gate>
+        </div>
+        <div class="flex hidden w-full flex-row items-start gap-x-2 px-6" data-targets="gate-carousel.gateSets">
+          <write-gate data-value="0" class="operation-xl"></write-gate>
+          <write-gate data-value="1" class="operation-xl"></write-gate>
+          <measurement-gate class="operation-xl"></measurement-gate>
+          <bloch-display class="operation-xl"></bloch-display>
+        </div>
+      </gate-carousel>
 
       <%=
         circle_notation class:
