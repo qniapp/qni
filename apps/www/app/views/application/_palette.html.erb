@@ -1,50 +1,28 @@
-<div class="flex flex-row flex-wrap rounded-xl bg-white py-2 px-2 drop-shadow-md md:hidden">
-  <palette-dropzone class="m-1">
-    <h-gate></h-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <x-gate></x-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <y-gate></y-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <z-gate></z-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <phase-gate data-angle="π/2"></phase-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <t-gate></t-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <rnot-gate></rnot-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <rx-gate data-angle="π/2"></rx-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <ry-gate data-angle="π/2"></ry-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <rz-gate data-angle="π/2"></rz-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <swap-gate></swap-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <control-gate></control-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <bloch-display></bloch-display>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <write-gate data-value="0" data-help-id="write0-gate-help"></write-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <write-gate data-value="1" data-help-id="write1-gate-help"></write-gate>
-  </palette-dropzone>
-  <palette-dropzone class="m-1">
-    <measurement-gate></measurement-gate>
-  </palette-dropzone>
+<div
+  id="gate-carousel"
+  class="fixed bottom-0 left-0 right-0 z-30 mx-6 mb-6 rounded-xl bg-white drop-shadow-xl md:hidden"
+>
+  <button type="button" aria-label="carousel left" class="absolute left-0 flex h-full flex-col justify-center">
+    <%= icon :chevron_left, class: 'text-zinc-900' %>
+  </button>
+  <button type="button" aria-label="carousel right" class="absolute right-0 flex h-full flex-col justify-center">
+    <%= icon :chevron_right, class: 'text-zinc-900' %>
+  </button>
+
+  <div class="flex flex-col items-center pt-6">
+    <div class="flex w-full flex-row items-start gap-x-2 px-6">
+      <h-gate class="operation-xl"></h-gate>
+      <x-gate class="operation-xl"></x-gate>
+      <y-gate class="operation-xl"></y-gate>
+      <z-gate class="operation-xl"></z-gate>
+    </div>
+
+    <div class="flex flex-row gap-x-2 p-2">
+      <div class="h-2 w-2 rounded-full bg-sky-500"></div>
+      <div class="h-2 w-2 rounded-full bg-zinc-200"></div>
+      <div class="h-2 w-2 rounded-full bg-zinc-200"></div>
+      <div class="h-2 w-2 rounded-full bg-zinc-200"></div>
+      <div class="h-2 w-2 rounded-full bg-zinc-200"></div>
+    </div>
+  </div>
 </div>
