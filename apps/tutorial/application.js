@@ -12421,6 +12421,7 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitEditorService.send({ type: "SET_OPERATION_FLAG", operation: i, flag: t.flag });
   }
   grabOperation(e) {
+    console.log("grabOperation");
     let t = e.target;
     if (!pt(t))
       throw new Error(`${t} must be an Operation.`);
