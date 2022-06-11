@@ -256,6 +256,7 @@
       content: attr(data-angle) '';
     }
 
+    &.angle-hidden::before,
     palette-dropzone &::before {
       @apply hidden !important;
     }

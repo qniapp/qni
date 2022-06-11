@@ -176,6 +176,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             if (isPaletteDropzoneElement(this.dropzone)) {
               this.snapped = false
               this.moveByOffset(event.x, event.y)
+              this.classList.remove('operation-xl')
             }
           },
           release: () => {
@@ -283,7 +284,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     get snapRange(): number {
-      return this.offsetWidth
+      return 32
     }
 
     private moveEventListener(event: InteractEvent) {
