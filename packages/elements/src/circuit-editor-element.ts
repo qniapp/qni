@@ -454,8 +454,6 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private grabOperation(event: Event): void {
-    console.log('grabOperation')
-
     const operation = event.target
     if (!isOperation(operation)) throw new Error(`${operation} must be an Operation.`)
 

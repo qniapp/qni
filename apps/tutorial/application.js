@@ -7200,7 +7200,7 @@ function Me(r) {
       (0, lo.default)(this).draggable({ modifiers: [lo.default.modifiers.snap({ targets: i, range: this.snapRange, relativePoints: [{ x: 0.5, y: 0.5 }] })], listeners: { move: this.moveEventListener.bind(this) } });
     }
     get snapRange() {
-      return this.offsetWidth;
+      return 32;
     }
     moveEventListener(i) {
       let l = i.modifiers[0];
@@ -12297,7 +12297,7 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
         let c = l.stepIndex;
         K.notNull(c);
         let f = this.circuit.addShadowStepAfter(c), b = f.dropzones[l.wireIndex];
-        K.notNull(b), b.append(i), b.operationName = i.tagName.toLocaleLowerCase(), this.circuit.updateSnapTargets(f.dropzones);
+        K.notNull(b), console.log("newStep"), console.log(f), console.log("newDropzone"), console.log(b), b.append(i), b.operationName = i.tagName.toLocaleLowerCase(), this.circuit.updateSnapTargets(f.dropzones);
       } else
         l.dropzone.append(i);
     }, addDocumentCursorGrabbingStyle: () => {
@@ -12421,7 +12421,6 @@ var Si = /* @__PURE__ */ __name(class extends HTMLElement {
     this.circuitEditorService.send({ type: "SET_OPERATION_FLAG", operation: i, flag: t.flag });
   }
   grabOperation(e) {
-    console.log("grabOperation");
     let t = e.target;
     if (!pt(t))
       throw new Error(`${t} must be an Operation.`);
@@ -13126,7 +13125,7 @@ var se = /* @__PURE__ */ __name(class extends xe(HTMLElement) {
     Nl(l) && t.push(l);
     for (let [c, f] of Object.entries(this.dropzones)) {
       let b = f.snapTarget, h = this.isVertical ? b.y : b.x, p = this.isVertical ? b.x : b.y, v = parseInt(c) % this.wireCount, x = h - e.snapRange * 0.75, S = h + e.snapRange * 0.75;
-      parseInt(c) < this.wireCount && (this.isVertical ? i.push({ x: p, y: x }) : i.push({ x, y: p }), this.snapTargets[x] === void 0 && (this.snapTargets[x] = {}), this.snapTargets[x][p] === void 0 && (this.snapTargets[x][p] = { dropzone: null, stepIndex: -1, wireIndex: v })), this.isVertical ? i.push({ x: p, y: S }) : i.push({ x: S, y: p }), this.snapTargets[S] === void 0 && (this.snapTargets[S] = {}), this.snapTargets[S][p] === void 0 && (this.snapTargets[S][p] = { dropzone: null, stepIndex: Math.floor(parseInt(c) / this.wireCount), wireIndex: v }), (!f.occupied || f === l) && i.push(b), this.snapTargets[h] === void 0 && (this.snapTargets[h] = {}), this.snapTargets[h][p] === void 0 && (this.snapTargets[h][p] = { dropzone: f, stepIndex: null, wireIndex: v });
+      console.log("operation.snapRange"), console.log(e.snapRange), parseInt(c) < this.wireCount && (this.isVertical ? i.push({ x: p, y: x }) : i.push({ x, y: p }), this.snapTargets[x] === void 0 && (this.snapTargets[x] = {}), this.snapTargets[x][p] === void 0 && (this.snapTargets[x][p] = { dropzone: null, stepIndex: -1, wireIndex: v })), this.isVertical ? i.push({ x: p, y: S }) : i.push({ x: S, y: p }), this.snapTargets[S] === void 0 && (this.snapTargets[S] = {}), this.snapTargets[S][p] === void 0 && (this.snapTargets[S][p] = { dropzone: null, stepIndex: Math.floor(parseInt(c) / this.wireCount), wireIndex: v }), (!f.occupied || f === l) && i.push(b), this.snapTargets[h] === void 0 && (this.snapTargets[h] = {}), this.snapTargets[h][p] === void 0 && (this.snapTargets[h][p] = { dropzone: f, stepIndex: null, wireIndex: v });
     }
     e.snapTargets = i;
   }
@@ -13142,7 +13141,7 @@ var se = /* @__PURE__ */ __name(class extends xe(HTMLElement) {
         }
     for (let [l, c] of Object.entries(e)) {
       let f = c.snapTarget, b = this.isVertical ? f.y : f.x, h = this.isVertical ? f.x : f.y;
-      K.notNull(this.snapTargets[b]), this.snapTargets[b][h] = { dropzone: c, stepIndex: null, wireIndex: parseInt(l) };
+      console.log("snapTargets"), console.log(this.snapTargets), console.log(`snapTargets[${b}]`), console.log(this.snapTargets[b]), K.notNull(this.snapTargets[b]), this.snapTargets[b][h] = { dropzone: c, stepIndex: null, wireIndex: parseInt(l) };
     }
   }
   serialize() {

@@ -284,7 +284,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     get snapRange(): number {
-      return this.offsetWidth
+      return 32
     }
 
     private moveEventListener(event: InteractEvent) {
