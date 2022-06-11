@@ -7163,7 +7163,7 @@ function Me(r) {
         let l = this.dropzone;
         Na(l) ? this.snappedDropzone = l : this.snappedDropzone = null;
       }, grab: (i, l) => {
-        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), ol(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y)));
+        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), ol(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y), this.classList.remove("operation-xl")));
       }, release: () => {
         this.grabbed = false, this.dispatchEvent(new Event("operation-release", { bubbles: true }));
       }, startDragging: () => {
