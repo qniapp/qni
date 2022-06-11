@@ -1,5 +1,7 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, targets} from '@github/catalyst'
+import chevronLeftIcon from '../icon/chevron-left.svg'
+import chevronRightIcon from '../icon/chevron-right.svg'
 
 @controller
 export class GateCarouselElement extends HTMLElement {
@@ -98,32 +100,11 @@ export class GateCarouselElement extends HTMLElement {
           }
         </style>
 
-        <button type="button" aria-label="carousel left" data-action="click:gate-carousel#prevGateSet" style="left: 0">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <button type="button" aria-label="prev gate set" data-action="click:gate-carousel#prevGateSet" style="left: 0">
+          ${this.iconHtml(chevronLeftIcon)}
         </button>
-        <button
-          type="button"
-          aria-label="carousel right"
-          data-action="click:gate-carousel#nextGateSet"
-          style="right: 0"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <button type="button" aria-label="next gate set" data-action="click:gate-carousel#nextGateSet" style="right: 0">
+          ${this.iconHtml(chevronRightIcon)}
         </button>
 
         <div class="body">
@@ -134,6 +115,14 @@ export class GateCarouselElement extends HTMLElement {
       `,
       this.shadowRoot!
     )
+  }
+
+  private iconHtml(svg: string): TemplateResult {
+    return html`${this.iconSvg(svg)}`
+  }
+
+  private iconSvg(icon: string): TemplateResult {
+    return html(([icon] as unknown) as TemplateStringsArray)
   }
 
   private dotsHtml(): TemplateResult {
