@@ -4757,6 +4757,11 @@ write-gate.operation-xs::part(value)::after {
   line-height: 1rem;
 }
 
+write-gate.operation-xl::part(value)::after {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 /* data-grabbed */
 
 write-gate[data-grabbed]::part(icon) {

@@ -44,6 +44,10 @@ write-gate {
     @apply text-xs;
   }
 
+  &.operation-xl::part(value)::after {
+    @apply text-2xl;
+  }
+
   /* data-grabbed */
 
   &[data-grabbed]::part(icon) {
