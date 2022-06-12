@@ -1,5 +1,6 @@
 import {TemplateResult, html, render} from '@github/jtml'
 import {attr, controller, targets} from '@github/catalyst'
+import {Util} from '@qni/common'
 import chevronLeftIcon from '../icon/chevron-left.svg'
 import chevronRightIcon from '../icon/chevron-right.svg'
 
@@ -12,14 +13,23 @@ export class GateCarouselElement extends HTMLElement {
   connectedCallback(): void {
     this.attachShadow({mode: 'open'})
     this.update()
+    this.validateCurrentGateSetIndex()
     this.toggleGateSets()
     this.toggleDots()
+  }
+
+  private validateCurrentGateSetIndex(): void {
+    Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
+    Util.need(
+      this.currentGateSetIndex < this.gateSets.length,
+      `data-current-gate-set-index must be < ${this.gateSets.length}`
+    )
   }
 
   prevGateSet(): void {
     this.currentGateSetIndex--
     if (this.currentGateSetIndex < 0) {
-      this.currentGateSetIndex = this.dots.length - 1
+      this.currentGateSetIndex = this.gateSets.length - 1
     }
     this.toggleGateSets()
     this.toggleDots()
@@ -27,7 +37,7 @@ export class GateCarouselElement extends HTMLElement {
 
   nextGateSet(): void {
     this.currentGateSetIndex++
-    if (this.currentGateSetIndex >= this.dots.length) {
+    if (this.currentGateSetIndex >= this.gateSets.length) {
       this.currentGateSetIndex = 0
     }
     this.toggleGateSets()
@@ -54,7 +64,7 @@ export class GateCarouselElement extends HTMLElement {
     }
   }
 
-  update(): void {
+  private update(): void {
     render(
       html`
         <style>
@@ -68,7 +78,7 @@ export class GateCarouselElement extends HTMLElement {
             height: 100%;
             padding: 0;
             border-width: 0px;
-            color: rgb(24 24 27);
+            color: rgb(24 24 27); /* zinc-900 */
             background-color: transparent;
             touch-action: manipulation;
           }
@@ -121,11 +131,7 @@ export class GateCarouselElement extends HTMLElement {
   }
 
   private iconHtml(svg: string): TemplateResult {
-    return html`${this.iconSvg(svg)}`
-  }
-
-  private iconSvg(icon: string): TemplateResult {
-    return html(([icon] as unknown) as TemplateStringsArray)
+    return html(([svg] as unknown) as TemplateStringsArray)
   }
 
   private dotsHtml(): TemplateResult {

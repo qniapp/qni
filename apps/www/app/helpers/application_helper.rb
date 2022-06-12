@@ -36,6 +36,10 @@ module ApplicationHelper
     render 'circle_notation_mode_switch'
   end
 
+  def gate_carousel
+    render 'gate_carousel'
+  end
+
   def run_circuit_button(options)
     render 'run_circuit_button', options: options
   end

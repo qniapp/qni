@@ -1,0 +1,9 @@
+gate-carousel {
+  @apply fixed bottom-0 left-0 right-0;
+  @apply md:hidden;
+  @apply z-30;
+  @apply mx-6 mb-6;
+  @apply rounded-xl;
+  @apply bg-white;
+  @apply drop-shadow-xl;
+}
