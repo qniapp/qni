@@ -153,7 +153,7 @@ export class QubitCircleElement extends HTMLElement {
     }
 
     if (this.showPopupPhase) {
-      phaseValueEl.textContent = `${forceSigned(this.phase, 2)}°`
+      phaseValueEl.textContent = `${forceSigned(this.phaseDeg, 2)}°`
     } else {
       phaseEl.style.display = 'none'
     }
