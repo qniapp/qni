@@ -33,6 +33,7 @@ export class CircleNotationElement extends HTMLElement {
   @attr showQubitCirclePopupPhase = true
   /** @internal */
   @attr vertical = true
+  @attr slideIn = false
 
   /** @internal */
   @target window!: HTMLElement
@@ -330,21 +331,46 @@ export class CircleNotationElement extends HTMLElement {
 
   /** @internal */
   connectedCallback(): void {
+    this.prepareSlideInAnimation()
     this.attachShadow({mode: 'open'})
     this.renderShadowRoot()
-
     this.startLayoutOrientationChangeObserver()
     this.updateDimension()
     this.resizeWindow()
     this.resizeInnerContainer()
     this.drawQubitCircles()
-    this.startAnimation()
+    this.startSlideInAnimation()
   }
 
-  private startAnimation(): void {
+  private prepareSlideInAnimation(): void {
+    if (!this.slideIn) return
+    if (!this.isMobile()) return
+
     fastdom.mutate(() => {
-      this.classList.add('animate')
+      this.style.visibility = 'hidden'
+      this.style.top = '-240px'
     })
+  }
+
+  private startSlideInAnimation(): void {
+    if (!this.slideIn) return
+    if (!this.isMobile()) return
+
+    fastdom.mutate(() => {
+      this.style.visibility = 'visible'
+
+      this.animate(
+        [{transform: 'translateY(0px)'}, {transform: 'translateY(256px)'}, {transform: 'translateY(240px)'}],
+        {
+          duration: 400,
+          fill: 'forwards'
+        }
+      )
+    })
+  }
+
+  private isMobile(): boolean {
+    return !window.matchMedia('(min-width: 640px)').matches
   }
 
   private startLayoutOrientationChangeObserver(): void {
