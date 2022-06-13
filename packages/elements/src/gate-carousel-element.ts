@@ -1,5 +1,6 @@
+import {Operation, isOperation} from './operation'
 import {TemplateResult, html, render} from '@github/jtml'
-import {attr, controller, targets} from '@github/catalyst'
+import {attr, controller, target, targets} from '@github/catalyst'
 import {Util} from '@qni/common'
 import chevronLeftIcon from '../icon/chevron-left.svg'
 import chevronRightIcon from '../icon/chevron-right.svg'
@@ -7,6 +8,7 @@ import chevronRightIcon from '../icon/chevron-right.svg'
 @controller
 export class GateCarouselElement extends HTMLElement {
   @attr currentGateSetIndex = 0
+  @target contentClipper!: HTMLElement
   @targets gateSets!: HTMLElement[]
   @targets dots!: HTMLElement[]
 
@@ -16,6 +18,65 @@ export class GateCarouselElement extends HTMLElement {
     this.validateCurrentGateSetIndex()
     this.toggleGateSets()
     this.toggleDots()
+    this.startPopinAnimation()
+  }
+
+  private startPopinAnimation(): void {
+    let poppedinGateCount = 0
+    const popinGates: HTMLElement[] = []
+
+    this.addEventListener('animationend', event => {
+      if (isOperation(event.target)) {
+        poppedinGateCount++
+      }
+
+      if (poppedinGateCount === popinGates.length) {
+        for (const popinGate of popinGates) {
+          popinGate.parentElement?.removeChild(popinGate)
+        }
+        for (const gateSet of this.gateSets) {
+          gateSet.classList.remove('invisible')
+        }
+        this.contentClipper.style.overflow = 'visible'
+      }
+    })
+
+    const originalTop = window.innerHeight - this.getBoundingClientRect().top
+    this.style.top = `${window.innerHeight}px`
+    this.style.bottom = 'auto'
+    this.contentClipper.style.overflow = 'hidden'
+
+    for (const gate of this.gatesInActiveGateSet) {
+      const popinGate = gate.cloneNode(false) as HTMLElement
+
+      popinGate.style.position = 'fixed'
+      popinGate.style.top = `${originalTop}px`
+      popinGate.style.left = `${gate.offsetLeft}px`
+
+      this.append(popinGate)
+      popinGates.push(popinGate)
+    }
+
+    this.classList.add('animate')
+    for (const [i, popinGate] of popinGates.entries()) {
+      popinGate.classList.add(`animate-gate${i}`)
+    }
+  }
+
+  private get gatesInActiveGateSet(): Operation[] {
+    return Array.from(this.activeGateSet.children).map(each => {
+      const gate = each.children.item(0)
+      Util.need(isOperation(gate), `${gate} must be an operation.`)
+
+      return gate as Operation
+    })
+  }
+
+  private get activeGateSet(): HTMLElement {
+    const gateSet = this.gateSets[this.currentGateSetIndex]
+    Util.notNull(gateSet)
+
+    return gateSet
   }
 
   private validateCurrentGateSetIndex(): void {
@@ -83,7 +144,12 @@ export class GateCarouselElement extends HTMLElement {
             touch-action: manipulation;
           }
 
-          .body {
+          #content-clipper {
+            width: 100%;
+            height: 100%;
+          }
+
+          #body {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -94,7 +160,7 @@ export class GateCarouselElement extends HTMLElement {
             display: none;
           }
 
-          .dot-group {
+          #dot-group {
             display: flex;
             flex-direction: row;
             column-gap: 0.5rem;
@@ -113,17 +179,29 @@ export class GateCarouselElement extends HTMLElement {
           }
         </style>
 
-        <button type="button" aria-label="prev gate set" data-action="click:gate-carousel#prevGateSet" style="left: 0">
-          ${this.iconHtml(chevronLeftIcon)}
-        </button>
-        <button type="button" aria-label="next gate set" data-action="click:gate-carousel#nextGateSet" style="right: 0">
-          ${this.iconHtml(chevronRightIcon)}
-        </button>
+        <div id="content-clipper" data-target="gate-carousel.contentClipper">
+          <button
+            type="button"
+            aria-label="prev gate set"
+            data-action="click:gate-carousel#prevGateSet"
+            style="left: 0"
+          >
+            ${this.iconHtml(chevronLeftIcon)}
+          </button>
+          <button
+            type="button"
+            aria-label="next gate set"
+            data-action="click:gate-carousel#nextGateSet"
+            style="right: 0"
+          >
+            ${this.iconHtml(chevronRightIcon)}
+          </button>
 
-        <div class="body">
-          <slot></slot>
+          <div id="body">
+            <slot></slot>
 
-          <div class="dot-group">${this.dotsHtml()}</div>
+            <div id="dot-group">${this.dotsHtml()}</div>
+          </div>
         </div>
       `,
       this.shadowRoot!
