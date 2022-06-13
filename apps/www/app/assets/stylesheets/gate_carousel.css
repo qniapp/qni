@@ -8,7 +8,7 @@ gate-carousel {
   @apply drop-shadow-xl;
 
   &.animate {
-    animation: 0.4s ease-out 0s 1 normal forwards running popin;
+    animation: 0.4s ease-out 0s 1 normal forwards running gate-carousel-popin;
   }
 
   .animate-gate0 {
@@ -27,7 +27,7 @@ gate-carousel {
     animation: 0.8s ease-out 0s 1 normal forwards running gate-popin;
   }
 
-  @keyframes popin {
+  @keyframes gate-carousel-popin {
     0% {
       transform: translateY(0px);
     }
