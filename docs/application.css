@@ -5587,20 +5587,20 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   right: 1px;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
 .left-0 {
   left: 0px;
 }
 
 .top-0 {
   top: 0px;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.right-0 {
+  right: 0px;
 }
 
 .z-40 {
@@ -5658,14 +5658,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-bottom: 2.5rem;
 }
 
-.mr-6 {
-  margin-right: 1.5rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -5680,6 +5672,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .mb-40 {
   margin-bottom: 10rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
 }
 
 .mr-8 {
@@ -5758,6 +5754,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 0.25rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -5822,10 +5822,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   height: 1rem;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
 .h-6 {
   height: 1.5rem;
 }
@@ -5854,6 +5850,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   height: 2rem;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .h-12 {
   height: 3rem;
 }
@@ -5874,10 +5874,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
-}
-
-.w-16 {
-  width: 4rem;
 }
 
 .w-6 {
@@ -5914,6 +5910,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .w-20 {
@@ -6125,12 +6125,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   border-radius: 0.75rem;
 }
 
-.rounded-full {
-  border-radius: 9999px;
-}
-
 .rounded {
   border-radius: 0.25rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded-2xl {
@@ -6211,11 +6211,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-purple-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
-}
-
 .bg-emerald-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(16 185 129 / var(--tw-bg-opacity));
@@ -6249,6 +6244,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .bg-neutral-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+}
+
+.bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
 
 .bg-white\/95 {
@@ -6485,11 +6485,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .text-neutral-700 {
   --tw-text-opacity: 1;
   color: rgb(64 64 64 / var(--tw-text-opacity));
@@ -6503,6 +6498,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-neutral-400 {
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-purple-600 {
@@ -6750,10 +6750,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
   .md\:mt-0 {
     margin-top: 0px;
-  }
-
-  .md\:inline-block {
-    display: inline-block;
   }
 
   .md\:flex {
