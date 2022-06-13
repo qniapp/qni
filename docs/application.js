@@ -10215,7 +10215,10 @@ var Qt = /* @__PURE__ */ __name(class extends HTMLElement {
     });
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.renderShadowRoot(), this.startLayoutOrientationChangeObserver(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles();
+    this.attachShadow({ mode: "open" }), this.renderShadowRoot(), this.startLayoutOrientationChangeObserver(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles(), this.startAnimation();
+  }
+  startAnimation() {
+    this.classList.add("animate");
   }
   startLayoutOrientationChangeObserver() {
     this.vertical = this.isVertical(), new ResizeObserver(this.detectViewportOrientation.bind(this)).observe(document.body);

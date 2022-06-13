@@ -338,6 +338,11 @@ export class CircleNotationElement extends HTMLElement {
     this.resizeWindow()
     this.resizeInnerContainer()
     this.drawQubitCircles()
+    this.startAnimation()
+  }
+
+  private startAnimation(): void {
+    this.classList.add('animate')
   }
 
   private startLayoutOrientationChangeObserver(): void {

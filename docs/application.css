@@ -2343,6 +2343,46 @@ bloch-display[data-size='lg']::part(vector-end-circle),
   width: 8px;
 }
 
+circle-notation.animate {
+  -webkit-animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
+  animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
+}
+
+@media (min-width: 768px) {
+  circle-notation.animate {
+    -webkit-animation-name: none;
+    animation-name: none
+  }
+}
+
+@-webkit-keyframes circle-notation-slide-in {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(240px);
+  }
+
+  100% {
+    transform: translateY(224px);
+  }
+}
+
+@keyframes circle-notation-slide-in {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(240px);
+  }
+
+  100% {
+    transform: translateY(224px);
+  }
+}
+
 circle-notation-old::part(qubit-circle) {
   position: relative;
   height: 2rem;
