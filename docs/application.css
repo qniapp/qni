@@ -2361,11 +2361,11 @@ circle-notation.animate {
   }
 
   50% {
-    transform: translateY(240px);
+    transform: translateY(256px);
   }
 
   100% {
-    transform: translateY(224px);
+    transform: translateY(240px);
   }
 }
 
@@ -2375,11 +2375,11 @@ circle-notation.animate {
   }
 
   50% {
-    transform: translateY(240px);
+    transform: translateY(256px);
   }
 
   100% {
-    transform: translateY(224px);
+    transform: translateY(240px);
   }
 }
 

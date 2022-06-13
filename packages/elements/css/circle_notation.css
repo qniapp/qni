@@ -12,10 +12,10 @@ circle-notation {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(240px);
+      transform: translateY(256px);
     }
     100% {
-      transform: translateY(224px);
+      transform: translateY(240px);
     }
   }
 }

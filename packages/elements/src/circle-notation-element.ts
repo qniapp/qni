@@ -342,7 +342,9 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private startAnimation(): void {
-    this.classList.add('animate')
+    fastdom.mutate(() => {
+      this.classList.add('animate')
+    })
   }
 
   private startLayoutOrientationChangeObserver(): void {
