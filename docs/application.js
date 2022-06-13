@@ -9628,9 +9628,8 @@ var Bp = `<svg
   stroke="currentColor"
   stroke-width="2"
   stroke-linecap="round"
-  vector-effect="non-scaling-stroke"
 >
-  <path d="M17 24A7 7 0 1 0 31 24A7 7 0 1 0 17 24M19 34L29 13"/>
+  <path d="M17 24A7 7 0 1 0 31 24A7 7 0 1 0 17 24M19 34L29 13" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
 var nr = /* @__PURE__ */ __name(class extends At(It(Qt($t(rn(Pt(Bt(Rt(Mt(xt(HTMLElement)))))))))) {
