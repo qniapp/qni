@@ -1,12 +1,20 @@
-<circle-notation
-  id="circle-notation"
-  class="<%= options[:class] %>"
-  data-target="quantum-simulator.circleNotation"
-  data-overscan-count="<%= options[:overscan] %>"
-  data-padding-X="<%= options[:padding_x] %>"
-  data-padding-Y="<%= options[:padding_y] %>"
+<circle-notation-panel
+  class="fixed left-0 right-0 z-30 mx-6 mt-12 flex transform flex-col gap-y-1 sm:left-1/2 sm:right-auto sm:top-auto sm:bottom-0 sm:mx-0 sm:mt-0 sm:mb-8 sm:-translate-x-1/2"
+  data-duration="400"
   data-slide-in
 >
-  <%= qubit_circle_popup_template %>
-  <%= circle_notation_mode_switch %>
-</circle-notation>
+  <circle-notation
+    id="circle-notation"
+    class="<%= options[:class] %>"
+    data-target="quantum-simulator.circleNotation circle-notation-panel.circleNotation"
+    data-overscan-count="<%= options[:overscan] %>"
+    data-padding-X="<%= options[:padding_x] %>"
+    data-padding-Y="<%= options[:padding_y] %>"
+  >
+    <%= qubit_circle_popup_template %>
+  </circle-notation>
+
+  <div class="flex flex-row">
+    <%= circle_notation_mode_switch %>
+  </div>
+</circle-notation-panel>

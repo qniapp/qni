@@ -1,13 +1,13 @@
 <button-group
   id="circle-notation-mode-switch"
   role="group"
-  class="absolute left-0 -bottom-14 z-30 flex h-auto w-auto flex-row gap-1 rounded-xl bg-white px-2 py-2 drop-shadow-md md:rounded-2xl"
+  class="flex h-auto w-auto flex-row gap-1 rounded-xl bg-white px-2 py-2 drop-shadow-md sm:rounded-2xl"
 >
   <button
     aria-label="Basic mode"
     class="p-0.5"
     data-targets="button-group.buttons"
-    data-action="click:button-group#activateButton click:circle-notation#startBasicCircleNotationMode"
+    data-action="click:button-group#activateButton click:circle-notation-panel#startBasicCircleNotationMode"
     data-active
   >
     <%= render QniIconComponent.new(size: 6) %>
@@ -17,7 +17,7 @@
     aria-label="Color phase mode"
     class="p-0.5"
     data-targets="button-group.buttons"
-    data-action="click:button-group#activateButton click:circle-notation#startColorPhaseMode"
+    data-action="click:button-group#activateButton click:circle-notation-panel#startColorPhaseMode"
   >
     <%= render ColorPhaseIconComponent.new(size: 6) %>
   </button>
