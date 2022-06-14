@@ -3,7 +3,7 @@
   @apply border-2 border-solid border-gray-500;
   @apply text-gray-700;
   @apply text-xs;
-  @apply md:text-sm;
+  @apply sm:text-sm;
 
   /* The border */
   .tippy-svg-arrow > svg:first-child {

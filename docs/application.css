@@ -1980,7 +1980,7 @@ select {
   line-height: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .tippy-box[data-theme~='qni'] {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -2144,7 +2144,7 @@ run-circuit-button::part(reload-icon), run-circuit-button::part(tail-spin-icon) 
   width: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   run-circuit-button::part(reload-icon), run-circuit-button::part(tail-spin-icon) {
     height: 2rem;
   }
@@ -2161,7 +2161,7 @@ run-circuit-button::part(tail-spin-icon) {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   run-circuit-button::part(tail-spin-icon) {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -2348,7 +2348,7 @@ circle-notation.animate {
   animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation.animate {
     -webkit-animation-name: none;
     animation-name: none
@@ -2407,7 +2407,7 @@ circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
   width: 48px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
     height: 64px;
     width: 64px
@@ -2419,7 +2419,7 @@ circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
   width: 32px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
     height: 48px;
     width: 48px
@@ -2431,7 +2431,7 @@ circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
   width: 23px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
     height: 32px;
     width: 32px
@@ -2443,7 +2443,7 @@ circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
   width: 15px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
     height: 25px;
     width: 25px
@@ -2455,7 +2455,7 @@ circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
   width: 15px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
     height: 17px;
     width: 17px
@@ -2469,7 +2469,7 @@ circle-notation-old[data-qubit-count='8']::part(qubit-circle),
   width: 15px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='8']::part(qubit-circle),
   circle-notation-old[data-qubit-count='9']::part(qubit-circle),
   circle-notation-old[data-qubit-count='10']::part(qubit-circle) {
@@ -2550,7 +2550,7 @@ circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
   border-width: 2px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
     border-width: 1px;
   }
@@ -2613,7 +2613,7 @@ circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
   border-width: 1px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
     border-width: 2px;
   }
@@ -2654,7 +2654,7 @@ circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
   width: 1px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
     width: 0.125rem;
   }
@@ -2678,7 +2678,7 @@ circuit-dropzone {
   width: 2rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone {
     height: 2rem;
   }
@@ -2705,7 +2705,7 @@ circuit-dropzone::part(wires) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone::part(wires) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -2741,7 +2741,7 @@ circuit-dropzone::part(wire-output) {
   transform-origin: right;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone::part(wire-input),
     circuit-dropzone::part(wire-output) {
     transform: none;
@@ -2768,7 +2768,7 @@ circuit-dropzone[data-operation-name='write-gate']::part(wire-input),
   transform: scaleX(0.75) translateX(-33.3%);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone[data-operation-name='write-gate']::part(wire-input),
   circuit-dropzone[data-operation-name='measurement-gate']::part(wire-input) {
     transform: scaleX(0.33) translateX(0)
@@ -2780,7 +2780,7 @@ circuit-dropzone[data-operation-name='write-gate']::part(wire-output),
   transform: scaleX(0.75) translateX(33.3%);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone[data-operation-name='write-gate']::part(wire-output),
   circuit-dropzone[data-operation-name='measurement-gate']::part(wire-output) {
     transform: scaleX(0.33) translateX(0)
@@ -2799,7 +2799,7 @@ circuit-step {
   flex-direction: row-reverse;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step {
     flex-direction: column;
   }
@@ -2814,7 +2814,7 @@ circuit-step > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 1;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(0px * var(--tw-space-x-reverse));
@@ -2835,7 +2835,7 @@ circuit-step {
   padding-right: 2rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -2866,7 +2866,7 @@ circuit-step[data-shadow] {
   height: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step[data-shadow] {
     height: auto;
   }
@@ -2880,7 +2880,7 @@ circuit-step[data-shadow]::after {
   margin-bottom: -1.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step[data-shadow]::after {
     margin-bottom: 0px;
   }
@@ -2890,7 +2890,7 @@ circuit-step[data-shadow]::after {
   margin-right: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step[data-shadow]::after {
     margin-right: -1.5rem;
   }
@@ -2905,7 +2905,7 @@ circuit-step::after {
   left: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step::after {
     left: auto;
   }
@@ -2919,7 +2919,7 @@ circuit-step::after {
   bottom: -0.125rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step::after {
     bottom: 0px;
   }
@@ -2929,7 +2929,7 @@ circuit-step::after {
   right: 0px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step::after {
     right: -0.125rem;
   }
@@ -2939,7 +2939,7 @@ circuit-step::after {
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step::after {
     width: 0.25rem;
   }
@@ -2949,7 +2949,7 @@ circuit-step::after {
   height: 0.25rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-step::after {
     height: 100%;
   }
@@ -3351,7 +3351,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone measurement-gate[data-snapped]::part(icon) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -3378,7 +3378,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(value) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone measurement-gate[data-snapped]::part(value) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -3637,7 +3637,7 @@ quantum-circuit {
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   quantum-circuit {
     flex-direction: row;
   }
@@ -4742,7 +4742,7 @@ circuit-dropzone write-gate[data-snapped]::part(icon) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone write-gate[data-snapped]::part(icon) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4764,7 +4764,7 @@ circuit-dropzone write-gate[data-snapped]::part(value) {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   circuit-dropzone write-gate[data-snapped]::part(value) {
     --tw-rotate: 0deg;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));

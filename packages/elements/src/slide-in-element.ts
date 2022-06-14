@@ -3,6 +3,8 @@ import {html, render} from '@github/jtml'
 
 @controller
 export class SlideInElement extends HTMLElement {
+  @attr direction: 'up' | 'down' = 'up'
+  @attr directionDesktop: 'up' | 'down' = 'up'
   @attr duration = 800
   @attr marginTop = 0
   @attr marginBottom = 0
@@ -20,8 +22,8 @@ export class SlideInElement extends HTMLElement {
           this.marginTop = parseFloat(styles.getPropertyValue('margin-top')) || 0
           this.marginBottom = parseFloat(styles.getPropertyValue('margin-bottom')) || 0
 
-          this.prepareSlideInAnimation()
-          this.startSlideInAnimation()
+          this.prepareAnimation()
+          this.startAnimation()
         }
       }
     })
@@ -40,42 +42,65 @@ export class SlideInElement extends HTMLElement {
     this.mobile = mobileMediaQuery.matches
   }
 
-  private prepareSlideInAnimation(): void {
+  private prepareAnimation(): void {
     if (this.mobile) {
-      this.style.top = `-${this.offsetHeight}px`
+      if (this.direction === 'up') {
+        this.style.top = `-${this.offsetHeight}px`
+      }
     } else {
-      this.style.bottom = 'auto'
-      this.style.top = `${window.innerHeight}px`
+      if (this.directionDesktop === 'up') {
+        this.style.bottom = 'auto'
+        this.style.top = `${window.innerHeight}px`
+      } else {
+        this.style.top = `-${this.offsetHeight}px`
+      }
     }
   }
 
-  private startSlideInAnimation(): void {
+  private startAnimation(): void {
     if (this.mobile) {
-      this.animate(
-        [
-          {transform: 'translateY(0px)'},
-          {transform: `translateY(${this.offsetHeight + 16}px)`},
-          {transform: `translateY(${this.offsetHeight}px)`}
-        ],
-        {
-          duration: this.duration,
-          fill: 'forwards',
-          easing: 'ease-out'
-        }
-      )
+      if (this.direction === 'up') {
+        this.animate(
+          [
+            {transform: 'translateY(0px)'},
+            {transform: `translateY(${this.offsetHeight + 16}px)`},
+            {transform: `translateY(${this.offsetHeight}px)`}
+          ],
+          {
+            duration: this.duration,
+            fill: 'forwards',
+            easing: 'ease-out'
+          }
+        )
+      }
     } else {
-      this.animate(
-        [
-          {transform: 'translateY(0px)'},
-          {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
-          {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
-        ],
-        {
-          duration: this.duration,
-          fill: 'forwards',
-          easing: 'ease-out'
-        }
-      )
+      if (this.directionDesktop === 'up') {
+        this.animate(
+          [
+            {transform: 'translateY(0px)'},
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
+          ],
+          {
+            duration: this.duration,
+            fill: 'forwards',
+            easing: 'ease-out'
+          }
+        )
+      } else {
+        this.animate(
+          [
+            {transform: 'translateY(0px)'},
+            {transform: `translateY(${this.offsetHeight + 16}px)`},
+            {transform: `translateY(${this.offsetHeight}px)`}
+          ],
+          {
+            duration: this.duration,
+            fill: 'forwards',
+            easing: 'ease-out'
+          }
+        )
+      }
     }
   }
 

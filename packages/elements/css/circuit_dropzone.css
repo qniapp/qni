@@ -1,7 +1,7 @@
 circuit-dropzone {
   /* Size */
   @apply h-12 w-8;
-  @apply md:h-8 md:w-12;
+  @apply sm:h-8 sm:w-12;
 
   /* Wires */
   &::part(wires) {
@@ -12,7 +12,7 @@ circuit-dropzone {
     @apply overflow-visible;
     @apply origin-center transform-gpu;
     @apply rotate-90;
-    @apply md:rotate-0;
+    @apply sm:rotate-0;
   }
 
   circuit-step.no-rotation &::part(wires) {
@@ -41,7 +41,7 @@ circuit-dropzone {
     transform: translateX(25%) scaleX(1.5);
     transform-origin: right;
   }
-  @media screen(md) {
+  @media screen(sm) {
     &::part(wire-input),
     &::part(wire-output) {
       transform: none;
@@ -67,7 +67,7 @@ circuit-dropzone {
   &[data-operation-name='measurement-gate']::part(wire-input) {
     transform: scaleX(0.75) translateX(-33.3%);
 
-    @media screen(md) {
+    @media screen(sm) {
       transform: scaleX(0.33) translateX(0);
     }
   }
@@ -76,7 +76,7 @@ circuit-dropzone {
   &[data-operation-name='measurement-gate']::part(wire-output) {
     transform: scaleX(0.75) translateX(33.3%);
 
-    @media screen(md) {
+    @media screen(sm) {
       transform: scaleX(0.33) translateX(0);
     }
   }

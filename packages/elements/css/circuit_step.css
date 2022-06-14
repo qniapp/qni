@@ -2,13 +2,13 @@ circuit-step {
   @apply relative;
 
   @apply flex items-center justify-center;
-  @apply flex-row-reverse md:flex-col;
+  @apply flex-row-reverse sm:flex-col;
 
   @apply space-x-4 space-y-0 space-x-reverse;
-  @apply md:space-x-0 md:space-y-4;
+  @apply sm:space-x-0 sm:space-y-4;
 
   @apply py-0 px-8;
-  @apply md:py-8 md:px-0;
+  @apply sm:py-8 sm:px-0;
 
   &.no-rotation {
     @apply flex-col items-start;
@@ -17,12 +17,12 @@ circuit-step {
   }
 
   &[data-shadow] {
-    @apply h-0 md:h-auto;
-    @apply md:w-0;
+    @apply h-0 sm:h-auto;
+    @apply sm:w-0;
 
     &::after {
-      @apply -mb-6 md:mb-0;
-      @apply mr-0 md:-mr-6;
+      @apply -mb-6 sm:mb-0;
+      @apply mr-0 sm:-mr-6;
     }
   }
 
@@ -32,11 +32,11 @@ circuit-step {
     @apply bg-indigo-500;
     @apply opacity-0;
 
-    @apply left-0 md:left-auto md:top-0;
-    @apply -bottom-0.5 md:bottom-0;
-    @apply right-0 md:-right-0.5;
-    @apply w-full md:w-1;
-    @apply h-1 md:h-full;
+    @apply left-0 sm:left-auto sm:top-0;
+    @apply -bottom-0.5 sm:bottom-0;
+    @apply right-0 sm:-right-0.5;
+    @apply w-full sm:w-1;
+    @apply h-1 sm:h-full;
 
     content: '';
   }
