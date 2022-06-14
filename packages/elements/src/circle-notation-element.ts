@@ -31,7 +31,6 @@ export class CircleNotationElement extends HTMLElement {
   @attr showQubitCirclePopupAmplitude = true
   @attr showQubitCirclePopupProbability = true
   @attr showQubitCirclePopupPhase = true
-  @attr slideIn = false
 
   /** @internal */
   @target window!: HTMLElement
@@ -56,12 +55,10 @@ export class CircleNotationElement extends HTMLElement {
     this.attachShadow({mode: 'open'})
     this.renderShadowRoot()
     this.startViewSizeChangeEventListener()
-    // this.prepareSlideInAnimation()
     this.updateDimension()
     this.resizeWindow()
     this.resizeInnerContainer()
     this.drawQubitCircles()
-    // this.startSlideInAnimation()
   }
 
   private startViewSizeChangeEventListener(): void {
@@ -81,55 +78,6 @@ export class CircleNotationElement extends HTMLElement {
       this.resizeWindow()
       this.drawQubitCircles()
     }
-  }
-
-  private prepareSlideInAnimation(): void {
-    if (!this.slideIn) return
-
-    fastdom.mutate(() => {
-      this.style.visibility = 'hidden'
-
-      if (this.mobile) {
-        this.style.top = '-240px'
-      } else {
-        console.log(`window.innerHeight = ${window.innerHeight}`)
-        this.style.bottom = 'auto'
-        this.style.top = `${window.innerHeight}px`
-      }
-    })
-  }
-
-  private startSlideInAnimation(): void {
-    if (!this.slideIn) return
-
-    fastdom.mutate(() => {
-      this.style.visibility = 'visible'
-
-      if (this.mobile) {
-        this.animate(
-          [{transform: 'translateY(0px)'}, {transform: 'translateY(256px)'}, {transform: 'translateY(240px)'}],
-          {
-            duration: 400,
-            fill: 'forwards'
-          }
-        )
-      } else {
-        const rect = this.getBoundingClientRect()
-        const y = rect.bottom - rect.top
-
-        console.log(`rect.top = ${rect.top}`)
-        console.log(`rect.bottom = ${rect.bottom}`)
-        console.log(`y = ${y}`)
-
-        this.animate(
-          [{transform: 'translateY(0px)'}, {transform: `translateY(-${y + 16}px)`}, {transform: `translateY(-${y}px)`}],
-          {
-            duration: 400,
-            fill: 'forwards'
-          }
-        )
-      }
-    })
   }
 
   /** @internal */
