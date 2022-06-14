@@ -14,6 +14,8 @@ class WireTest < ApplicationSystemTestCase
   test 'add new wire on mousedown' do
     visit circuit_path
 
+    sleep 1
+
     page.driver.browser.action
         .move_to(palette('H').native, 0, 0)
         .click_and_hold

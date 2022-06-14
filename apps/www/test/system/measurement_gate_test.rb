@@ -6,6 +6,8 @@ class MeasurementGateTest < ApplicationSystemTestCase
   test 'measurement gate hovering on dropzone displays its value' do
     visit circuit_path
 
+    sleep 1
+
     measurement_gate = hover_operation('Measure', col: 0, row: 0)
 
     assert_value '0', measurement_gate

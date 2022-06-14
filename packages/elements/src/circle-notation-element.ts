@@ -31,9 +31,6 @@ export class CircleNotationElement extends HTMLElement {
   @attr showQubitCirclePopupAmplitude = true
   @attr showQubitCirclePopupProbability = true
   @attr showQubitCirclePopupPhase = true
-  /** @internal */
-  @attr vertical = true
-  @attr slideIn = false
 
   /** @internal */
   @target window!: HTMLElement
@@ -44,6 +41,7 @@ export class CircleNotationElement extends HTMLElement {
 
   visibleQubitCircleKets: number[] = []
 
+  private mobile: boolean | null = null
   private lastWindowScrollTop: number | null = null
   private lastWindowScrollLeft: number | null = null
   private lastColStartIndex = -1
@@ -51,6 +49,36 @@ export class CircleNotationElement extends HTMLElement {
   private lastRowStartIndex = -1
   private lastRowEndIndex = -1
   private qubitCirclePositions: Array<{col: number; row: number}> = []
+  private mobileMediaQuery = window.matchMedia('(max-width: 639px)')
+
+  /** @internal */
+  connectedCallback(): void {
+    this.attachShadow({mode: 'open'})
+    this.renderShadowRoot()
+    this.startViewSizeChangeEventListener()
+    this.updateDimension()
+    this.resizeWindow()
+    this.resizeInnerContainer()
+    this.drawQubitCircles()
+  }
+
+  private startViewSizeChangeEventListener(): void {
+    this.mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
+    this.handleViewSizeChange(this.mobileMediaQuery)
+  }
+
+  private handleViewSizeChange(mobileMediaQuery: MediaQueryList): void {
+    const changed = this.mobile !== null && this.mobile !== mobileMediaQuery.matches
+    this.mobile = mobileMediaQuery.matches
+
+    if (changed) {
+      if (!this.mobile) this.style.removeProperty('top')
+      this.updateQubitCircleSize()
+      this.updateDimension()
+      this.resizeWindow()
+      this.drawQubitCircles()
+    }
+  }
 
   /** @internal */
   startBasicCircleNotationMode(): void {
@@ -94,7 +122,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 3: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.qubitCircleSize = 'lg'
         } else {
           this.qubitCircleSize = 'xl'
@@ -102,7 +130,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 4: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.qubitCircleSize = 'base'
         } else {
           this.qubitCircleSize = 'lg'
@@ -110,7 +138,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.qubitCircleSize = 'sm'
         } else {
           this.qubitCircleSize = 'base'
@@ -118,7 +146,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 6: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.qubitCircleSize = 'xs'
         } else {
           this.qubitCircleSize = 'base'
@@ -185,7 +213,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 3: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.rowCount = 2
           this.colCount = 4
         } else {
@@ -200,7 +228,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.rowCount = 4
           this.colCount = 8
         } else {
@@ -215,7 +243,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 7: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.rowCount = 8
           this.colCount = 16
         } else {
@@ -225,7 +253,7 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 8: {
-        if (this.vertical) {
+        if (this.mobile) {
           this.rowCount = 16
           this.colCount = 16
         } else {
@@ -327,80 +355,6 @@ export class CircleNotationElement extends HTMLElement {
         each.style.setProperty('--phase', `-${cssPhaseDeg.toString()}deg`)
       }
     })
-  }
-
-  /** @internal */
-  connectedCallback(): void {
-    this.prepareSlideInAnimation()
-    this.attachShadow({mode: 'open'})
-    this.renderShadowRoot()
-    this.startLayoutOrientationChangeObserver()
-    this.updateDimension()
-    this.resizeWindow()
-    this.resizeInnerContainer()
-    this.drawQubitCircles()
-    this.startSlideInAnimation()
-  }
-
-  private prepareSlideInAnimation(): void {
-    if (!this.slideIn) return
-    if (!this.isMobile()) return
-
-    fastdom.mutate(() => {
-      this.style.visibility = 'hidden'
-      this.style.top = '-240px'
-    })
-  }
-
-  private startSlideInAnimation(): void {
-    if (!this.slideIn) return
-    if (!this.isMobile()) return
-
-    fastdom.mutate(() => {
-      this.style.visibility = 'visible'
-
-      this.animate(
-        [{transform: 'translateY(0px)'}, {transform: 'translateY(256px)'}, {transform: 'translateY(240px)'}],
-        {
-          duration: 400,
-          fill: 'forwards'
-        }
-      )
-    })
-  }
-
-  private isMobile(): boolean {
-    return !window.matchMedia('(min-width: 640px)').matches
-  }
-
-  private startLayoutOrientationChangeObserver(): void {
-    this.vertical = this.isVertical()
-    const resizeObserver = new ResizeObserver(this.detectViewportOrientation.bind(this))
-    resizeObserver.observe(document.body)
-  }
-
-  private detectViewportOrientation(): void {
-    let changed = false
-
-    if (this.isVertical()) {
-      if (!this.vertical) changed = true
-      this.vertical = true
-    } else {
-      if (this.vertical) changed = true
-      this.vertical = false
-    }
-
-    if (changed) {
-      this.updateQubitCircleSize()
-      this.updateDimension()
-      this.resizeWindow()
-      this.drawQubitCircles()
-    }
-  }
-
-  private isVertical(): boolean {
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-    return vw < 768
   }
 
   private renderShadowRoot(): void {
@@ -527,7 +481,7 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx
       }
       case 3: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 2 + this.gap
         } else {
           return this.qubitCircleSizePx
@@ -537,7 +491,7 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 2 + this.gap
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 4 + this.gap * 3
         } else {
           return this.qubitCircleSizePx * 2 + this.gap
@@ -547,70 +501,70 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 4 + this.gap * 3
       }
       case 7: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 4 + this.gap * 3
         }
       }
       case 8: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 9: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 10: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 11: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 12: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 13: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 14: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 15: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         }
       }
       case 16: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 5 + this.gap * 4
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
@@ -630,7 +584,7 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 4 + this.gap * 3
       }
       case 3: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 4 + this.gap * 3
         } else {
           return this.qubitCircleSizePx * 8 + this.gap * 7
@@ -640,7 +594,7 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 8 + this.gap * 7
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 8 + this.gap * 7
         } else {
           return this.qubitCircleSizePx * 16 + this.gap * 15
@@ -650,14 +604,14 @@ export class CircleNotationElement extends HTMLElement {
         return this.qubitCircleSizePx * 16 + this.gap * 15
       }
       case 7: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 16 + this.gap * 15
         } else {
           return this.qubitCircleSizePx * 32 + this.gap * 31
         }
       }
       case 8: {
-        if (this.vertical) {
+        if (this.mobile) {
           return this.qubitCircleSizePx * 16 + this.gap * 15
         } else {
           return this.qubitCircleSizePx * 32 + this.gap * 31
@@ -697,7 +651,7 @@ export class CircleNotationElement extends HTMLElement {
 
     const qubitCirclesAreaPlusPaddingHeight = this.qubitCirclesAreaHeight + this.paddingY * 2
 
-    if (this.vertical) {
+    if (this.mobile) {
       const clientHeight = this.clientHeight
 
       if (this.rowCount > 4 && clientHeight < qubitCirclesAreaPlusPaddingHeight) {
@@ -715,7 +669,7 @@ export class CircleNotationElement extends HTMLElement {
 
     const qubitCirclesAreaPlusPaddingWidth = this.qubitCirclesAreaWidth + this.paddingX * 2
 
-    if (this.vertical) {
+    if (this.mobile) {
       const clientWidth = this.clientWidth
 
       if (this.colCount >= 16 && clientWidth < qubitCirclesAreaPlusPaddingWidth) {
@@ -753,28 +707,28 @@ export class CircleNotationElement extends HTMLElement {
         return 64
       }
       case 3: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 48
         } else {
           return 64
         }
       }
       case 4: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 32
         } else {
           return 48
         }
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 24
         } else {
           return 32
         }
       }
       case 6: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 16
         } else {
           return 32
@@ -1005,14 +959,14 @@ export class CircleNotationElement extends HTMLElement {
         return 2
       }
       case 5: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 1
         } else {
           return 2
         }
       }
       case 6: {
-        if (this.vertical) {
+        if (this.mobile) {
           return 1
         } else {
           return 2

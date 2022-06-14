@@ -2,7 +2,7 @@ circle-notation {
   &.animate {
     animation: 0.4s ease-out 0s 1 normal forwards running circle-notation-slide-in;
 
-    @media screen(md) {
+    @media screen(sm) {
       animation-name: none;
     }
   }
@@ -43,7 +43,7 @@ circle-notation-old {
     height: 48px;
     width: 48px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 64px;
       width: 64px;
     }
@@ -53,7 +53,7 @@ circle-notation-old {
     height: 32px;
     width: 32px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 48px;
       width: 48px;
     }
@@ -63,7 +63,7 @@ circle-notation-old {
     height: 23px;
     width: 23px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 32px;
       width: 32px;
     }
@@ -73,7 +73,7 @@ circle-notation-old {
     height: 15px;
     width: 15px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 25px;
       width: 25px;
     }
@@ -83,7 +83,7 @@ circle-notation-old {
     height: 15px;
     width: 15px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 17px;
       width: 17px;
     }
@@ -95,7 +95,7 @@ circle-notation-old {
     height: 15px;
     width: 15px;
 
-    @media screen(md) {
+    @media screen(sm) {
       height: 17px;
       width: 17px;
     }
@@ -166,7 +166,7 @@ circle-notation-old {
   &[data-qubit-count='5']::part(qubit-circle__magnitude) {
     @apply border-2;
 
-    @media screen(md) {
+    @media screen(sm) {
       @apply border;
     }
   }
@@ -222,7 +222,7 @@ circle-notation-old {
   &[data-qubit-count='5']::part(qubit-circle__phase) {
     @apply border;
 
-    @media screen(md) {
+    @media screen(sm) {
       @apply border-2;
     }
   }
@@ -265,7 +265,7 @@ circle-notation-old {
   &[data-qubit-count='5']::part(qubit-circle__phase)::after {
     @apply w-px;
 
-    @media screen(md) {
+    @media screen(sm) {
       @apply w-0.5;
     }
   }

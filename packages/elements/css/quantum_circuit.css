@@ -1,5 +1,5 @@
 quantum-circuit {
-  @apply flex flex-col md:flex-row;
+  @apply flex flex-col sm:flex-row;
   @apply items-center;
   @apply w-min;
 }

@@ -33,7 +33,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 1
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2)
       assert.equal(circleNotation.rowCount, 1)
       assert.equal(circleNotation.colCount, 2)
@@ -45,7 +45,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 1
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2)
       assert.equal(circleNotation.rowCount, 1)
       assert.equal(circleNotation.colCount, 2)
@@ -58,7 +58,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 2
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 2)
       assert.equal(circleNotation.rowCount, 1)
       assert.equal(circleNotation.colCount, 4)
@@ -70,7 +70,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 2
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 2)
       assert.equal(circleNotation.rowCount, 1)
       assert.equal(circleNotation.colCount, 4)
@@ -83,7 +83,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 3
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 3)
       assert.equal(circleNotation.rowCount, 2)
       assert.equal(circleNotation.colCount, 4)
@@ -95,7 +95,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 3
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 3)
       assert.equal(circleNotation.rowCount, 1)
       assert.equal(circleNotation.colCount, 8)
@@ -108,7 +108,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 4
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 4)
       assert.equal(circleNotation.rowCount, 2)
       assert.equal(circleNotation.colCount, 8)
@@ -120,7 +120,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 4
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 4)
       assert.equal(circleNotation.rowCount, 2)
       assert.equal(circleNotation.colCount, 8)
@@ -133,7 +133,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 5
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 5)
       assert.equal(circleNotation.rowCount, 4)
       assert.equal(circleNotation.colCount, 8)
@@ -145,7 +145,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 5
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 5)
       assert.equal(circleNotation.rowCount, 2)
       assert.equal(circleNotation.colCount, 16)
@@ -158,7 +158,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 6
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 6)
       assert.equal(circleNotation.rowCount, 4)
       assert.equal(circleNotation.colCount, 16)
@@ -170,7 +170,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 6
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 6)
       assert.equal(circleNotation.rowCount, 4)
       assert.equal(circleNotation.colCount, 16)
@@ -183,7 +183,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 7
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 8)
       assert.equal(circleNotation.colCount, 16)
@@ -195,7 +195,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 7
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 2 ** 7)
       assert.equal(circleNotation.rowCount, 4)
       assert.equal(circleNotation.colCount, 32)
@@ -208,7 +208,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 8
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 16)
       assert.equal(circleNotation.colCount, 16)
@@ -220,7 +220,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 8
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 8)
       assert.equal(circleNotation.colCount, 32)
@@ -234,7 +234,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 9
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 16)
       assert.equal(circleNotation.colCount, 32)
@@ -246,7 +246,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 9
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 16)
       assert.equal(circleNotation.colCount, 32)
@@ -260,7 +260,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 10
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 32)
       assert.equal(circleNotation.colCount, 32)
@@ -272,7 +272,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 10
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 32)
       assert.equal(circleNotation.colCount, 32)
@@ -286,7 +286,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 11
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 32)
       assert.equal(circleNotation.colCount, 64)
@@ -298,7 +298,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 11
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 32)
       assert.equal(circleNotation.colCount, 64)
@@ -312,7 +312,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 12
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 64)
       assert.equal(circleNotation.colCount, 64)
@@ -324,7 +324,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 12
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 64)
       assert.equal(circleNotation.colCount, 64)
@@ -338,7 +338,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 13
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 64)
       assert.equal(circleNotation.colCount, 128)
@@ -350,7 +350,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 13
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 64)
       assert.equal(circleNotation.colCount, 128)
@@ -364,7 +364,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 14
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 128)
       assert.equal(circleNotation.colCount, 128)
@@ -376,7 +376,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 14
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 128)
       assert.equal(circleNotation.colCount, 128)
@@ -390,7 +390,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 15
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 128)
       assert.equal(circleNotation.colCount, 256)
@@ -402,7 +402,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 15
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 128)
       assert.equal(circleNotation.colCount, 256)
@@ -416,7 +416,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 16
       flushFastDom()
 
-      assert.isTrue(circleNotation.vertical)
+      assert.isTrue(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 80)
       assert.equal(circleNotation.rowCount, 256)
       assert.equal(circleNotation.colCount, 256)
@@ -428,7 +428,7 @@ describe('circle-notation element', function () {
       circleNotation.qubitCount = 16
       flushFastDom()
 
-      assert.isFalse(circleNotation.vertical)
+      assert.isFalse(circleNotation.mobile)
       assert.equal(circleNotation.qubitCircles.length, 256)
       assert.equal(circleNotation.rowCount, 256)
       assert.equal(circleNotation.colCount, 256)
@@ -468,13 +468,13 @@ describe('circle-notation element', function () {
 
   async function setViewportMobile() {
     await setViewport({width: 360, height: 640})
-    circleNotation.detectViewportOrientation()
+    circleNotation.handleViewSizeChange(circleNotation.mobileMediaQuery)
     flushFastDom()
   }
 
   async function setViewportDesktop() {
     await setViewport({width: 1200, height: 640})
-    circleNotation.detectViewportOrientation()
+    circleNotation.handleViewSizeChange(circleNotation.mobileMediaQuery)
     flushFastDom()
   }
 

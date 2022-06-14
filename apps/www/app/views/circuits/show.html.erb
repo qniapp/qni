@@ -10,9 +10,9 @@
   <% end %>
 <% end %>
 
-<div class="relative flex w-full flex-row-reverse overflow-x-scroll md:flex-none md:flex-row">
+<div class="relative flex w-full flex-row-reverse overflow-x-scroll sm:flex-none sm:flex-row">
   <quantum-simulator class="inline-block" data-update-url>
-    <circuit-editor class="flex w-full flex-row justify-end md:inline-block">
+    <circuit-editor class="flex w-full flex-row justify-end sm:inline-block">
       <div
         data-controller="share"
         data-share-default-title-value="Qni"
@@ -30,10 +30,12 @@
         </inspector-button>
       </div>
 
-      <%= palette_md %>
+      <slide-in class="fixed top-0 left-0 z-30 mt-14 ml-6 hidden sm:block" data-direction-desktop="down">
+        <%= palette_md %>
+      </slide-in>
 
       <quantum-circuit
-        class="my-60 mx-6 md:mt-48 md:mb-60"
+        class="my-56 mx-6 sm:mt-48 sm:mb-60"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-update-url="true"
         data-min-step-count="5"
@@ -41,20 +43,34 @@
         data-max-wire-count="16"
       ></quantum-circuit>
 
-      <%= gate_carousel %>
+      <slide-in class="fixed left-0 right-0 z-30 mx-6 mb-6 sm:hidden" data-direction="up" data-duration="400">
+        <%= gate_carousel %>
+      </slide-in>
 
-      <%=
-        circle_notation class:
-                          'fixed left-0 right-0 z-30 mx-6 mt-12 mb-20 flex h-32 items-center justify-center rounded-xl bg-white drop-shadow-md md:top-auto md:left-1/2 md:right-auto md:bottom-0 md:mx-0 md:mt-0 md:h-auto md:-translate-x-1/2 md:transform md:rounded-2xl',
-                        overscan: 5,
-                        padding_x: 16,
-                        padding_y: 20
-      %>
+      <slide-in
+        class="fixed left-0 right-0 z-30 mx-6 mt-12 transform sm:top-auto sm:bottom-0 sm:mx-auto sm:mt-0 sm:mb-8 sm:w-fit"
+        data-direction="down"
+        data-direction-desktop="up"
+        data-duration="800"
+      >
+        <circle-notation-panel class="flex flex-col gap-y-2">
+          <%=
+            circle_notation class:
+                              'flex h-30 items-center justify-center rounded-xl bg-white sm:h-auto sm:rounded-2xl drop-shadow-xl',
+                            overscan: 5,
+                            padding_x: 16,
+                            padding_y: 20
+          %>
+          <div class="flex flex-row">
+            <%= circle_notation_mode_switch %>
+          </div>
+        </circle-notation-panel>
+      </slide-in>
     </circuit-editor>
 
     <%=
       run_circuit_button class:
-                           'hidden md:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-md z-40'
+                           'hidden sm:inline-block fixed bottom-0 right-0 mr-6 mb-8 w-16 h-16 text-white bg-purple-500 rounded-full drop-shadow-xl z-40'
     %>
   </quantum-simulator>
 </div>

@@ -13,7 +13,7 @@ run-circuit-button {
   &::part(tail-spin-icon) {
     @apply h-4 w-4;
 
-    @media screen(md) {
+    @media screen(sm) {
       @apply h-8 w-8;
     }
   }
@@ -24,7 +24,7 @@ run-circuit-button {
     stroke: currentColor;
     @apply text-gray-700;
 
-    @media screen(md) {
+    @media screen(sm) {
       @apply text-white;
     }
   }

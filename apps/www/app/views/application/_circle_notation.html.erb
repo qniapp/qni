@@ -1,12 +1,10 @@
 <circle-notation
   id="circle-notation"
   class="<%= options[:class] %>"
-  data-target="quantum-simulator.circleNotation"
+  data-target="quantum-simulator.circleNotation circle-notation-panel.circleNotation"
   data-overscan-count="<%= options[:overscan] %>"
   data-padding-X="<%= options[:padding_x] %>"
   data-padding-Y="<%= options[:padding_y] %>"
-  data-slide-in
 >
   <%= qubit_circle_popup_template %>
-  <%= circle_notation_mode_switch %>
 </circle-notation>
