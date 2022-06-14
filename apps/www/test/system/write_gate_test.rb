@@ -26,6 +26,8 @@ class WriteGateTest < ApplicationSystemTestCase
   test 'preview the change in input and output wire states' do
     visit circuit_path
 
+    sleep 1
+
     hover_operation '|0>', col: 0, row: 0
 
     assert_input_wire_classical dropzone(0, 0)

@@ -49,6 +49,7 @@ export class CircleNotationElement extends HTMLElement {
   private lastRowStartIndex = -1
   private lastRowEndIndex = -1
   private qubitCirclePositions: Array<{col: number; row: number}> = []
+  private mobileMediaQuery = window.matchMedia('(max-width: 639px)')
 
   /** @internal */
   connectedCallback(): void {
@@ -62,9 +63,8 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private startViewSizeChangeEventListener(): void {
-    const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
-    mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
-    this.handleViewSizeChange(mobileMediaQuery)
+    this.mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
+    this.handleViewSizeChange(this.mobileMediaQuery)
   }
 
   private handleViewSizeChange(mobileMediaQuery: MediaQueryList): void {
