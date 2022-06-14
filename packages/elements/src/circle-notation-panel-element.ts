@@ -4,7 +4,6 @@ import {CircleNotationElement} from './circle-notation-element'
 
 @controller
 export class CircleNotationPanelElement extends HTMLElement {
-  @attr slideIn = false
   @attr duration = 400
   @attr marginTop = 0
   @attr marginBottom = 0
@@ -57,8 +56,6 @@ export class CircleNotationPanelElement extends HTMLElement {
   }
 
   private prepareSlideInAnimation(): void {
-    if (!this.slideIn) return
-
     if (this.mobile) {
       this.style.top = `-${this.offsetHeight}px`
     } else {
@@ -68,8 +65,6 @@ export class CircleNotationPanelElement extends HTMLElement {
   }
 
   private startSlideInAnimation(): void {
-    if (!this.slideIn) return
-
     if (this.mobile) {
       this.animate(
         [

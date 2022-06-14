@@ -43,13 +43,21 @@
 
       <%= gate_carousel %>
 
-      <%=
-        circle_notation class:
-                          'flex h-32 items-center justify-center rounded-xl bg-white sm:h-auto sm:rounded-2xl drop-shadow-md',
-                        overscan: 5,
-                        padding_x: 16,
-                        padding_y: 20
-      %>
+      <circle-notation-panel
+        class="fixed left-0 right-0 z-30 mx-6 mt-12 flex transform flex-col gap-y-1 sm:top-auto sm:bottom-0 sm:mx-auto sm:mt-0 sm:mb-8 sm:w-fit"
+        data-duration="800"
+      >
+        <%=
+          circle_notation class:
+                            'flex h-32 items-center justify-center rounded-xl bg-white sm:h-auto sm:rounded-2xl drop-shadow-md',
+                          overscan: 5,
+                          padding_x: 16,
+                          padding_y: 20
+        %>
+        <div class="flex flex-row">
+          <%= circle_notation_mode_switch %>
+        </div>
+      </circle-notation-panel>
     </circuit-editor>
 
     <%=
