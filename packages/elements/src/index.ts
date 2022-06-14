@@ -19,6 +19,7 @@ export * from './inspector-button-element'
 export * from './operation-inspector-element'
 export * from './qubit-circle-element'
 export * from './run-circuit-button-element'
+export * from './slide-in-element'
 
 export * from './bloch-display-element'
 export * from './circuit-block-element'
