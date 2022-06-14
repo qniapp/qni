@@ -5262,10 +5262,6 @@ z-gate::part(icon) {
   visibility: hidden;
 }
 
-.fixed {
-  position: fixed;
-}
-
 .absolute {
   position: absolute;
 }

@@ -35,7 +35,7 @@
       </slide-in>
 
       <quantum-circuit
-        class="my-60 mx-6 sm:mt-48 sm:mb-60"
+        class="my-56 mx-6 sm:mt-48 sm:mb-60"
         data-target="quantum-simulator.circuit circuit-editor.circuit"
         data-update-url="true"
         data-min-step-count="5"
@@ -43,10 +43,13 @@
         data-max-wire-count="16"
       ></quantum-circuit>
 
-      <%= gate_carousel %>
+      <slide-in class="fixed left-0 right-0 z-30 mx-6 mb-6 sm:hidden" data-direction="up" data-duration="400">
+        <%= gate_carousel %>
+      </slide-in>
 
       <slide-in
         class="fixed left-0 right-0 z-30 mx-6 mt-12 transform sm:top-auto sm:bottom-0 sm:mx-auto sm:mt-0 sm:mb-8 sm:w-fit"
+        data-direction="down"
         data-duration="800"
       >
         <circle-notation-panel class="flex flex-col gap-y-2">

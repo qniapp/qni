@@ -41,23 +41,19 @@ export class GateCarouselElement extends HTMLElement {
       }
     })
 
-    const originalTop = window.innerHeight - this.getBoundingClientRect().top
-    this.style.top = `${window.innerHeight}px`
-    this.style.bottom = 'auto'
     this.contentClipper.style.overflow = 'hidden'
 
     for (const gate of this.gatesInActiveGateSet) {
       const popinGate = gate.cloneNode(false) as HTMLElement
 
-      popinGate.style.position = 'fixed'
-      popinGate.style.top = `${originalTop}px`
+      popinGate.style.position = 'absolute'
+      popinGate.style.top = `${this.offsetHeight}px`
       popinGate.style.left = `${gate.offsetLeft}px`
 
       this.append(popinGate)
       popinGates.push(popinGate)
     }
 
-    this.classList.add('animate')
     for (const [i, popinGate] of popinGates.entries()) {
       popinGate.classList.add(`animate-gate${i}`)
     }
@@ -145,6 +141,7 @@ export class GateCarouselElement extends HTMLElement {
           }
 
           #content-clipper {
+            position: relative;
             width: 100%;
             height: 100%;
           }

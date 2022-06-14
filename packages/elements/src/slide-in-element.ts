@@ -3,8 +3,8 @@ import {html, render} from '@github/jtml'
 
 @controller
 export class SlideInElement extends HTMLElement {
-  @attr direction: 'up' | 'down' = 'up'
-  @attr directionDesktop: 'up' | 'down' = 'up'
+  @attr direction: 'up' | 'down' | '' = ''
+  @attr directionDesktop: 'up' | 'down' | '' = ''
   @attr duration = 800
   @attr marginTop = 0
   @attr marginBottom = 0
@@ -30,6 +30,8 @@ export class SlideInElement extends HTMLElement {
     observer.observe(shadowRoot, {childList: true})
 
     this.renderShadowRoot()
+
+    console.log('slide-in')
   }
 
   private startViewSizeChangeEventListener(): void {
@@ -45,13 +47,16 @@ export class SlideInElement extends HTMLElement {
   private prepareAnimation(): void {
     if (this.mobile) {
       if (this.direction === 'up') {
-        this.style.top = `-${this.offsetHeight}px`
+        this.style.bottom = 'auto'
+        this.style.top = `${window.innerHeight}px`
+      } else if (this.direction === 'down') {
+        this.style.top = `-${this.offsetHeight + this.marginTop}px`
       }
     } else {
       if (this.directionDesktop === 'up') {
         this.style.bottom = 'auto'
         this.style.top = `${window.innerHeight}px`
-      } else {
+      } else if (this.directionDesktop === 'down') {
         this.style.top = `-${this.offsetHeight}px`
       }
     }
@@ -60,11 +65,25 @@ export class SlideInElement extends HTMLElement {
   private startAnimation(): void {
     if (this.mobile) {
       if (this.direction === 'up') {
+        console.log('これです')
         this.animate(
           [
             {transform: 'translateY(0px)'},
-            {transform: `translateY(${this.offsetHeight + 16}px)`},
-            {transform: `translateY(${this.offsetHeight}px)`}
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
+            {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
+          ],
+          {
+            duration: this.duration,
+            fill: 'forwards',
+            easing: 'ease-out'
+          }
+        )
+      } else if (this.direction === 'down') {
+        this.animate(
+          [
+            {transform: 'translateY(0px)'},
+            {transform: `translateY(${this.offsetHeight + this.marginTop + 16}px)`},
+            {transform: `translateY(${this.offsetHeight + this.marginTop}px)`}
           ],
           {
             duration: this.duration,
@@ -87,7 +106,7 @@ export class SlideInElement extends HTMLElement {
             easing: 'ease-out'
           }
         )
-      } else {
+      } else if (this.directionDesktop === 'down') {
         this.animate(
           [
             {transform: 'translateY(0px)'},

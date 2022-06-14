@@ -1,16 +1,4 @@
 gate-carousel {
-  @apply fixed bottom-0 left-0 right-0;
-  @apply sm:hidden;
-  @apply z-30;
-  @apply mx-6 mb-6;
-  @apply rounded-xl;
-  @apply bg-white;
-  @apply drop-shadow-xl;
-
-  &.animate {
-    animation: 0.4s ease-out 0s 1 normal forwards running gate-carousel-popin;
-  }
-
   .animate-gate0 {
     animation: 0.5s ease-out 0s 1 normal forwards running gate-popin;
   }
@@ -27,18 +15,6 @@ gate-carousel {
     animation: 0.8s ease-out 0s 1 normal forwards running gate-popin;
   }
 
-  @keyframes gate-carousel-popin {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-136px);
-    }
-    100% {
-      transform: translateY(-120px);
-    }
-  }
-
   @keyframes gate-popin {
     0% {
       transform: translateY(0px);
@@ -47,10 +23,10 @@ gate-carousel {
       transform: translateY(0px);
     }
     60% {
-      transform: translateY(-112px);
+      transform: translateY(-88px);
     }
     100% {
-      transform: translateY(-96px);
+      transform: translateY(-72px);
     }
   }
 }
