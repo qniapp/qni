@@ -86,9 +86,9 @@ export class CircleNotationPanelElement extends HTMLElement {
     } else {
       this.animate(
         [
-          {transform: 'translateY(0px) translateX(-50%)'},
-          {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px) translateX(-50%)`},
-          {transform: `translateY(-${this.offsetHeight + this.marginBottom}px) translateX(-50%)`}
+          {transform: 'translateY(0px)'},
+          {transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)`},
+          {transform: `translateY(-${this.offsetHeight + this.marginBottom}px)`}
         ],
         {
           duration: this.duration,

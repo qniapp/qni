@@ -10695,7 +10695,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
     !this.slideIn || (this.mobile ? this.style.top = `-${this.offsetHeight}px` : (this.style.bottom = "auto", this.style.top = `${window.innerHeight}px`));
   }
   startSlideInAnimation() {
-    !this.slideIn || (this.mobile ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + 16}px)` }, { transform: `translateY(${this.offsetHeight}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.animate([{ transform: "translateY(0px) translateX(-50%)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px) translateX(-50%)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px) translateX(-50%)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }));
+    !this.slideIn || (this.mobile ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + 16}px)` }, { transform: `translateY(${this.offsetHeight}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }));
   }
 }, "Vr");
 c(Vr, "CircleNotationPanelElement"), A([N], Vr.prototype, "slideIn", 2), A([N], Vr.prototype, "duration", 2), A([N], Vr.prototype, "marginTop", 2), A([N], Vr.prototype, "marginBottom", 2), A([xt], Vr.prototype, "circleNotation", 2), Vr = A([et], Vr);
