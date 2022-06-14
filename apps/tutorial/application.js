@@ -10042,7 +10042,7 @@ var oe = /* @__PURE__ */ __name(class extends HTMLElement {
     this.qubitCirclePositions = [];
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.renderShadowRoot(), this.startViewSizeChangeEventListener(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles(), console.log("circle-notation");
+    this.attachShadow({ mode: "open" }), this.renderShadowRoot(), this.startViewSizeChangeEventListener(), this.updateDimension(), this.resizeWindow(), this.resizeInnerContainer(), this.drawQubitCircles();
   }
   startViewSizeChangeEventListener() {
     let t = window.matchMedia("(max-width: 639px)");
@@ -11224,7 +11224,11 @@ var cn = /* @__PURE__ */ __name(class extends HTMLElement {
     this.currentGateSetIndex = 0;
   }
   connectedCallback() {
-    this.attachShadow({ mode: "open" }), this.update(), this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots(), this.startPopinAnimation();
+    let t = this.attachShadow({ mode: "open" });
+    new MutationObserver((i) => {
+      for (let l of i)
+        l.addedNodes && (this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots(), this.startPopinAnimation());
+    }).observe(t, { childList: true }), this.update();
   }
   startPopinAnimation() {
     let t = 0, e = [];
@@ -11741,7 +11745,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
           let c = window.getComputedStyle(this);
           this.marginTop = parseFloat(c.getPropertyValue("margin-top")) || 0, this.marginBottom = parseFloat(c.getPropertyValue("margin-bottom")) || 0, this.prepareAnimation(), this.startAnimation();
         }
-    }).observe(t, { childList: true }), this.renderShadowRoot(), console.log("slide-in");
+    }).observe(t, { childList: true }), this.renderShadowRoot();
   }
   startViewSizeChangeEventListener() {
     let t = window.matchMedia("(max-width: 639px)");
@@ -11754,7 +11758,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
     this.mobile ? this.direction === "up" ? (this.style.bottom = "auto", this.style.top = `${window.innerHeight}px`) : this.direction === "down" && (this.style.top = `-${this.offsetHeight + this.marginTop}px`) : this.directionDesktop === "up" ? (this.style.bottom = "auto", this.style.top = `${window.innerHeight}px`) : this.directionDesktop === "down" && (this.style.top = `-${this.offsetHeight}px`);
   }
   startAnimation() {
-    this.mobile ? this.direction === "up" ? (console.log("\u3053\u308C\u3067\u3059"), this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" })) : this.direction === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + this.marginTop + 16}px)` }, { transform: `translateY(${this.offsetHeight + this.marginTop}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "up" ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + 16}px)` }, { transform: `translateY(${this.offsetHeight}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" });
+    this.mobile ? this.direction === "up" ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.direction === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + this.marginTop + 16}px)` }, { transform: `translateY(${this.offsetHeight + this.marginTop}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "up" ? this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(-${this.offsetHeight + this.marginBottom + 16}px)` }, { transform: `translateY(-${this.offsetHeight + this.marginBottom}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" }) : this.directionDesktop === "down" && this.animate([{ transform: "translateY(0px)" }, { transform: `translateY(${this.offsetHeight + 16}px)` }, { transform: `translateY(${this.offsetHeight}px)` }], { duration: this.duration, fill: "forwards", easing: "ease-out" });
   }
   renderShadowRoot() {
     Q(W`<slot></slot>`, this.shadowRoot);

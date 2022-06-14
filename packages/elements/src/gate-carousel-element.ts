@@ -13,12 +13,20 @@ export class GateCarouselElement extends HTMLElement {
   @targets dots!: HTMLElement[]
 
   connectedCallback(): void {
-    this.attachShadow({mode: 'open'})
+    const shadowRoot = this.attachShadow({mode: 'open'})
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (mutation.addedNodes) {
+          this.validateCurrentGateSetIndex()
+          this.toggleGateSets()
+          this.toggleDots()
+          this.startPopinAnimation()
+        }
+      }
+    })
+
+    observer.observe(shadowRoot, {childList: true})
     this.update()
-    this.validateCurrentGateSetIndex()
-    this.toggleGateSets()
-    this.toggleDots()
-    this.startPopinAnimation()
   }
 
   private startPopinAnimation(): void {

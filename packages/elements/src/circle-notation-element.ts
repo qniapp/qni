@@ -59,8 +59,6 @@ export class CircleNotationElement extends HTMLElement {
     this.resizeWindow()
     this.resizeInnerContainer()
     this.drawQubitCircles()
-
-    console.log('circle-notation')
   }
 
   private startViewSizeChangeEventListener(): void {

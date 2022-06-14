@@ -30,8 +30,6 @@ export class SlideInElement extends HTMLElement {
     observer.observe(shadowRoot, {childList: true})
 
     this.renderShadowRoot()
-
-    console.log('slide-in')
   }
 
   private startViewSizeChangeEventListener(): void {
@@ -65,7 +63,6 @@ export class SlideInElement extends HTMLElement {
   private startAnimation(): void {
     if (this.mobile) {
       if (this.direction === 'up') {
-        console.log('これです')
         this.animate(
           [
             {transform: 'translateY(0px)'},
