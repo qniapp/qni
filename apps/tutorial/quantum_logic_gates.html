@@ -2,16 +2,18 @@
 layout: page
 section: 論理演算
 title: 量子論理ゲート
-description: AND や OR の量子版
+description: 論理演算 AND や OR の量子版
 prev: かけ算回路
 prev_url: ./multiplication_circuit.html
+next: 重ね合わせ上での論理演算
+next_url: ./superposition_quantum_logic.html
 ---
 
 <p>
   古典コンピュータの電子回路が AND や OR
   などの論理ゲートから組み立てられているように、量子算術演算も量子版の論理ゲートから組み立てることができます。
-  量子回路で AND や OR などの論理演算ができれば、ビット演算や
-  <code>if</code> 文の条件部に使う論理式を量子回路として組み立てられるようになります。
+  量子回路で AND や OR などの論理演算ができれば、<code>if</code>
+  文の条件部になど使う論理式を量子回路として組み立てられるようになります。
   こうした論理式は、古典コンピュータだけではなく量子コンピュータでもアルゴリズムの中核をなすものです。
   古典の論理ゲートに対応する量子論理ゲートをひとつひとつ見ていきましょう。
 </p>
@@ -518,3 +520,11 @@ prev_url: ./multiplication_circuit.html
     </circuit-editor>
   </quantum-simulator>
 </div>
+
+<h2>まとめ</h2>
+
+<p>
+  量子論理演算は従来のデジタル回路の AND や OR といった論理演算を量子回路で実行するものです。
+  デジタル回路との大きな違いは、重ね合わせの入出力に対応していることです。
+  量子論理演算は振幅の大きさの重ね合わせを入力として取り、演算結果を同じく振幅の大きさとして出力します。
+</p>
