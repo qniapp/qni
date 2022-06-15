@@ -520,6 +520,41 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    論理演算
+  </div>
+
+   
+  <a
+    href="./quantum_logic_gates.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子論理ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./superposition_quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">重ね合わせ上での論理演算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -979,6 +1014,41 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    論理演算
+  </div>
+
+   
+  <a
+    href="./quantum_logic_gates.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子論理ゲート</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./superposition_quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">重ね合わせ上での論理演算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1053,17 +1123,16 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">論理演算を振幅として出力</p>
             </div>
             <div class="content-with-margin"><p>
-  前節で見た論理演算を組合わせて、結果がどのように出力されるか見てみましょう。
-  今回は、入力として a, b, c 3 ビットの均一な重ね合わせを取ります。
-  a, b, c はそれぞれ量子ビット 1, 2, 3 に割り当てます。
+  前節で見た論理演算を組合わせて、結果がどのように出力されるか見てみましょう。 今回は、入力として a,
+  b, c 3 ビットの均一な重ね合わせを取ります。 a, b, c はそれぞれ量子ビット 1, 2, 3 に割り当てます。
   その上で、論理式 <code>a OR (NOT b)</code> を計算します。
 </p>
 
 <p>
   答合わせ用に、真理値表を書いてすべての場合を調べてみましょう。
-  <code>a OR (NOT b)</code> が 1 となるのは、(a, b, c) が (1, 0, 0) または (1, 0, 1) または (1, 1, 1) の時です。
-  これはそれぞれ \(|4\rangle\), \(|5\rangle\), \(|7\rangle\) に対応します。
-  つまり答は 4, 5, 7 の 3 つです。
+  <code>a OR (NOT b)</code> が 1 となるのは、(a, b, c) が (1, 0, 0) または (1, 0, 1) または (1, 1,
+  1) の時です。 これはそれぞれ \(|4\rangle\), \(|5\rangle\), \(|7\rangle\) に対応します。 つまり答は 4, 5,
+  7 の 3 つです。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -1130,9 +1199,10 @@
 </div>
 
 <p>
-  <code>a OR (NOT b)</code> を前回の量子論理ゲートを使って実装したものが以下になります。
-  NOT と OR 演算にはそれぞれ出力用のビットが必要なので、<code>NOT b</code> の結果を d (ビット 4), a OR d の結果を e (ビット 5) に出力しています。
-  また、最後に結果 e 以外のビット (a, b, c, d) をアンコンピューテーションで戻しておきます。
+  <code>a OR (NOT b)</code> を前回の量子論理ゲートを使って実装したものが以下になります。 NOT と OR
+  演算にはそれぞれ出力用のビットが必要なので、<code>NOT b</code> の結果を d (ビット 4), a OR d
+  の結果を e (ビット 5) に出力しています。 また、最後に結果 e 以外のビット (a, b, c, d)
+  をアンコンピューテーションで戻しておきます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1156,22 +1226,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["{a,b,c=(0,1)"],["|0>","|0>","|0>","|0>","|0>"],["H","H","H"],["}"],[1],["{b = NOT b"],[1,"X"],["}"],[1],["{d = a OR b"],["X","X"],["•","•",1,"X"],["X","X",1,"X"],["}"],[1],["{e = c AND d"],[1,1,"•","•","X"],["}"],[1],["{アンコンピュート"],["X","X",1,"X"],["•","•",1,"X"],["X","X"],[1,"X"],["}"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{a,b,c=(0,1)"],["|0>","|0>","|0>","|0>","|0>"],["H","H","H"],["}"],[1],["{b = NOT b"],[1,"X"],["}"],[1],["{d = a OR b"],["X","X"],["•","•",1,"X"],["X","X",1,"X"],["}"],[1],["{e = c AND d"],[1,1,"•","•","X"],["}"],[1],["{アンコンピュート"],["X","X",1,"X"],["•","•",1,"X"],["X","X"],[1,"X"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1180,8 +1250,9 @@
 </div>
 
 <p>
-  実行結果は以下のようになります。答のビット e (5 ビット目) が 1 である振幅が <code>a OR (NOT b)</code> を満たす a, b, c を表し、
-  下の行の \(|10100\rangle\), \(|10101\rangle\), \(|10111\rangle\) がこれにあたります。d, e の上位 2 ビットを無視すると、確かに 4, 5, 6 が答として得られていることが分かります。
+  実行結果は以下のようになります。答のビット e (5 ビット目) が 1 である振幅が
+  <code>a OR (NOT b)</code> を満たす a, b, c を表し、 下の行の \(|10100\rangle\), \(|10101\rangle\), \(|10111\rangle\) がこれにあたります。d, e の上位 2 ビットを無視すると、確かに 4, 5, 6
+  が答として得られていることが分かります。
 </p>
 
 <figure>
@@ -1192,8 +1263,10 @@
 
 <p>
   この結果は量子コンピュータから効率的に読み出すことができません。
-  なぜならば、正しい答とそうでないものが同じ確率で重ね合わされているため、<code>a OR (NOT b)</code> を満たしていない (= 最上位ビット e が 1 でない) 振幅のほうが確率的に多く測定されてしまうためです。
-  今回のように 3 ビットなら答は 8 通り (それぞれの確率は 12.5%) なので、何百回か測定すれば 4, 5, 7 を読み出すことはできます。
+  なぜならば、正しい答とそうでないものが同じ確率で重ね合わされているため、<code>a OR (NOT b)</code>
+  を満たしていない (= 最上位ビット e が 1 でない) 振幅のほうが確率的に多く測定されてしまうためです。
+  今回のように 3 ビットなら答は 8 通り (それぞれの確率は 12.5%) なので、何百回か測定すれば 4, 5, 7
+  を読み出すことはできます。
   しかし、ビット数が増えるにつれひとつひとつの答の確率が指数的に小さくなるので、必要な測定回数が大幅に増えてしまいます。
 </p>
 

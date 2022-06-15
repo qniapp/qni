@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>重ね合わせ状態</title>
+    <title>位相論理演算</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -307,7 +307,7 @@
    
   <a
     href="./multi_qubit_superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">重ね合わせ状態</span>
     
@@ -546,7 +546,7 @@
    
   <a
     href="./phase_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">位相論理演算</span>
     
@@ -801,7 +801,7 @@
    
   <a
     href="./multi_qubit_superposition.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">重ね合わせ状態</span>
     
@@ -1040,7 +1040,7 @@
    
   <a
     href="./phase_logic.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">位相論理演算</span>
     
@@ -1113,156 +1113,48 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-gray-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-blue-600">
-                複数量子ビット
+                論理演算
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  重ね合わせ状態
+                  位相論理演算
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">複数量子ビットでの重ね合わせ</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">論理演算の結果を位相に出力する</p>
             </div>
             <div class="content-with-margin"><p>
-  1 量子ビットの場合と同じく、複数量子ビットでも重ね合わせ状態を取ることができます。 ここでは 3
-  量子ビットのいろいろな状態を考えてみましょう。
+  今回紹介する論理位相演算は、論理演算の結果を振幅の大きさではなく位相に出力するテクニックです。
+  状態ベクトルに位相として書き出した結果を後に紹介する<strong>振幅増幅</strong>にかけると、位相の差は振幅の大きさに変換され、結果的に読み出したい値の確率だけを上昇させ、ほかの確率を下降させることができます。
+  これによって、読み出したい値を効率的に読み出すことができます。
 </p>
+
+<figure>
+  <img src="./images/amplitude_amplification_overview.png" class="h-auto w-full" />
+</figure>
+
+<h2>位相論理 NOT (pNOT)</h2>
 
 <p>
-  次の状態では \(|2\rangle\) が確率 100% なので、3 量子ビットすべてを測定すると必ず \(|2\rangle\)
-  が得られます。 \(|2\rangle\) 以外の確率はすべて 0% なので、これは重ね合わせ状態でありません。
+  位相論理 NOT は論理 NOT と同様に入力そのものを反転する <code>a = pNOT a</code> という動作をします。
+  ここで論理 NOT と区別するために、pNOT という記号を導入しました。
+  入力は位相ではなく、論理 NOT と同じく振幅の大きさを取ることに注意してください (ほかの位相論理も同じです)。
 </p>
 
-<div class="my-5 overflow-x-auto">
-  <div class="flex flex-row">
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="2"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
-  </div>
-</div>
-
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="3"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="4"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="5"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
-  </div>
-</div>
-
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="6"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="7"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
-  </div>
-</div>
-
-  </div>
-</div>
-
-<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
       <div
         class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
@@ -1270,173 +1162,59 @@
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
         </inspector-button>
       </div>
 
       <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],[1,"X",1],["Measure","Measure","Measure"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>"],["{pNOT"],["X"],["P(π)"],["X"],["}"]]}'
       >
       </quantum-circuit>
 
       <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
       >
       </circle-notation>
     </circuit-editor>
   </quantum-simulator>
 </div>
 
+<h2>位相論理 AND (pAND)</h2>
+
 <p>
-  次は \(|0\rangle\), \(|2\rangle\), \(|4\rangle\), \(|6\rangle\) がそれぞれ確率 25%
-  の重ね合わせ状態にあります。 3 量子ビットすべてを測定すると \(|0\rangle\), \(|2\rangle\), \(|4\rangle\),
-  \(|6\rangle\) のいずれかが確率 25% ずつ (つまり 1/4 の確率) で得られます。
-  重ね合わせではすべての確率を足すと必ず 100%
-  になり、この場合もそうなっていることを確認してください。
+  位相論理 AND は、入力となる量子ビット a, b に a AND b の結果が位相として出力されます (ほんと?)。
 </p>
 
-<div class="my-5 overflow-x-auto">
-  <div class="flex flex-row">
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="0"
-    data-amplitude="0.5"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="2"
-    data-amplitude="0.5"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="3"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="4"
-    data-amplitude="0.5"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="5"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="6"
-    data-amplitude="0.5"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="7"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
-  </div>
-</div>
-
-  </div>
-</div>
-
-<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
       <div
         class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
@@ -1444,185 +1222,55 @@
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
         </inspector-button>
       </div>
 
       <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ状態の生成"],[1,"H","H"],["}"],["Measure","Measure","Measure"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|1>","|1>"],["{pAND"],["•","•"],["}"],[1]]}'
       >
       </quantum-circuit>
 
       <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
       >
       </circle-notation>
     </circuit-editor>
-
-    <run-circuit-button
-  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
-  data-targets="quantum-simulator.runCircuitButtons"
-></run-circuit-button>
-
   </quantum-simulator>
 </div>
 
-<p>
-  最後はそれぞれの確率が異なり、さらに位相も異なる例です。
-  今までの例と同じく、それぞれの確率に応じて \(|0\rangle\) 〜 \(|7\rangle\)
-  のいずれかが測定でき、すべての確率を足し合わせると 100% になります。
-</p>
+<h2>位相論理 OR (pOR)</h2>
 
-<div class="my-5 overflow-x-auto">
-  <div class="flex flex-row">
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="0"
-    data-amplitude="0.42678 - 0.17678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="1"
-    data-amplitude="0.17678 - 0.07322i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="2"
-    data-amplitude="0.17678 + 0.42678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|2⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="3"
-    data-amplitude="0.07322 + 0.17678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|3⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="4"
-    data-amplitude="-0.42678 + 0.17678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|4⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="5"
-    data-amplitude="-0.17678 +
-    0.07322i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|5⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="6"
-    data-amplitude="-0.17678 - 0.42678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|6⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="7"
-    data-amplitude="-0.07322 - 0.17678i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|7⟩</span>
-  </div>
-</div>
-
-  </div>
-</div>
-
-<p>
-  ここから分かるように、位相<label for="margin-note-" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-" class="margin-note__toggle hidden"><span class="margin-note">位相の意味や使い途については<a href="./phase.html"
-    >位相</a
-  >を参照。</span>と確率はそれぞれ独立した量子ビットのプロパティなので、
-  お互いに関係なく任意の値を取ることができます。
-</p>
-
-<div class="relative mb-10 overflow-hidden rounded-md bg-gray-50 p-8">
+<div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
       <div
         class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
       >
@@ -1630,39 +1278,203 @@
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
         </inspector-button>
       </div>
 
       <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["|0>","|0>","|0>"],["{重ね合わせ状態の生成"],["H","H","H"],["P(π_4)","P(π_2)","P(π)"],["Rx(π_2)"],["}"],["Measure","Measure","Measure"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>","|1>"],["{pOR"],["P(π)"],["•","•"],[1,"P(π)"],["}"],[1]]}'
       >
       </quantum-circuit>
 
       <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
       >
       </circle-notation>
     </circuit-editor>
+  </quantum-simulator>
+</div>
 
-    <run-circuit-button
-  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
-  data-targets="quantum-simulator.runCircuitButtons"
-></run-circuit-button>
+<h2>位相論理 NAND (pNAND)</h2>
 
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>","|0>"],["{pNAND"],["X","X"],["P(π)"],["•","•"],[1,"P(π)"],["X","X"],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<h2>位相論理 NOR (pNOR)</h2>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>","|0>"],["{pNOR"],["X","X"],["•","•"],["X","X"],["}"]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
+  </quantum-simulator>
+</div>
+
+<h2>位相論理 XOR (pXOR)</h2>
+
+<div class="mini-qni">
+  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+    <circuit-editor>
+      <div
+        id="palette"
+        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
+      >
+        <palette-dropzone>
+          <write-gate data-value="0" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+      </div>
+
+      <div
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+      >
+        <inspector-button
+          data-target="circuit-editor.inspectorButton"
+          class="inline-block h-10 w-10 p-1"
+        >
+          <div
+            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+          >
+            <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+          </div>
+        </inspector-button>
+      </div>
+
+      <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="5"
+          data-json='{"cols":[["|0>","|0>"],["{pXOR"],[1,1,"|0>"],[1,1,"X"],[1,1,"H"],["•",1,"X"],[1,"•","X"],[1,1,"H"],[1,1,"X"],["}"],[1]]}'
+      >
+      </quantum-circuit>
+
+      <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+      >
+      </circle-notation>
+    </circuit-editor>
   </quantum-simulator>
 </div>
 <footer class="mt-12 text-sm leading-6">
@@ -1670,7 +1482,7 @@
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./multi_qubit_circle_notation.html"
+      href="./superposition_quantum_logic.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1687,17 +1499,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-状態ベクトル表示</a
+重ね合わせ上での論理演算</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./multi_qubit_operation.html"
-      >複数量子ビットでの演算<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>

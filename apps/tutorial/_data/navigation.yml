@@ -111,17 +111,17 @@
     - name: かけ算回路
       link: ./multiplication_circuit.html
       new: true
-# - name: 論理演算
-#   pages:
-#     - name: 量子論理ゲート
-#       link: ./quantum_logic_gates.html
-#       new: true
-#     - name: 重ね合わせ上での論理演算
-#       link: ./superposition_quantum_logic.html
-#       new: true
-#     - name: 位相論理演算
-#       link: ./phase_logic.html
-#       new: true
+- name: 論理演算
+  pages:
+    - name: 量子論理ゲート
+      link: ./quantum_logic_gates.html
+      new: true
+    - name: 重ね合わせ上での論理演算
+      link: ./superposition_quantum_logic.html
+      new: true
+    - name: 位相論理演算
+      link: ./phase_logic.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
