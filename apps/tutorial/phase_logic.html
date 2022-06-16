@@ -5,6 +5,8 @@ title: 位相論理演算
 description: 論理演算の結果を位相に出力する
 prev: 重ね合わせ上での論理演算
 prev_url: ./superposition_quantum_logic.html
+next: 位相論理演算
+next_url: ./phase_logic_combination.html
 ---
 
 <p>
@@ -995,3 +997,14 @@ prev_url: ./superposition_quantum_logic.html
     </circuit-editor>
   </quantum-simulator>
 </div>
+
+<h2>まとめ</h2>
+
+<p>
+  位相論理演算は入力として振幅を取り、出力として位相に結果を書き込みます。
+  このとき振幅の大きさは変化せず、結果が 1 となる振幅の位相のみが反転する点がポイントです。
+  結果を位相に書き込む目的は、振幅増幅のプロセスを通じて振幅の大きさを増幅することで、<measurement-gate
+    class="operation-xs inline-block"
+  ></measurement-gate>
+  による測定で答を取り出しやすくすることです。
+</p>

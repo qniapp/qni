@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>重ね合わせ上での論理演算</title>
+    <title>位相論理演算の組合わせ</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -1047,92 +1047,27 @@
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-gray-900">
-                  重ね合わせ上での論理演算
+                  位相論理演算の組合わせ
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-gray-500">論理演算を振幅として出力</p>
+              <p class="mt-1 mb-0 text-lg text-gray-500">複雑な位相論理演算を組み立てる</p>
             </div>
             <div class="content-with-margin"><p>
-  前節で見た論理演算を組合わせて、結果がどのように出力されるか見てみましょう。 今回は、入力として a,
-  b, c 3 ビットの均一な重ね合わせを取ります。 a, b, c はそれぞれ量子ビット 1, 2, 3 に割り当てます。
-  その上で、論理式 <code>a OR (NOT b) AND c</code><label for="margin-note-logic" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-logic" class="margin-note__toggle hidden"><span class="margin-note">一般的なプログラミング言語の論理式では <code>a || !b && c</code> と書けます。</span> を計算します。
+  位相論理演算を組合せて、より複雑な論理式回路を作ってみましょう。
+  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a> で見た <code>a OR (NOT b) AND c</code> の位相版はどうなるでしょうか？
 </p>
 
 <p>
-  答合わせ用に、真理値表を書いてすべての場合を調べてみましょう。
-  <code>a OR (NOT b) AND c</code> が 1 となるのは、(a, b, c) が (1, 0, 0) または (1, 0, 1) または
-  (1, 1, 1) の時です。 これはそれぞれ \(|4\rangle\), \(|5\rangle\), \(|7\rangle\) に対応します。
-  つまり答は 4, 5, 7 の 3 つです。
+  位相論理演算を組合わせる場合、単純に pOR や pNOT を並べるだけでは動作しません。
+  なぜならば、位相論理演算は入力としての振幅を取るものの、出力は位相に書き込むからです。
+  このため、ただ並べただけでは入力と出力が合わずうまく連結できません。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <table>
-    <thead>
-      <tr>
-        <th>a</th>
-        <th>b</th>
-        <th>c</th>
-        <th>a OR (NOT b)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>0</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td><strong>1</strong></td>
-        <td><strong>0</strong></td>
-        <td><strong>0</strong></td>
-        <td><strong>1</strong></td>
-      </tr>
-      <tr>
-        <td><strong>1</strong></td>
-        <td><strong>0</strong></td>
-        <td><strong>1</strong></td>
-        <td><strong>1</strong></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td><strong>1</strong></td>
-        <td><strong>1</strong></td>
-        <td><strong>1</strong></td>
-        <td><strong>1</strong></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
 <p>
-  <code>a OR (NOT b) AND c</code> を前回の量子論理ゲートを使って実装したものが以下になります。 NOT
-  と OR 演算にはそれぞれ出力用のビットが必要なので、<code>NOT b</code> の結果を d (ビット 4), a OR d
-  の結果を e (ビット 5) に出力しています。 また、最後に結果 e 以外のビット (a, b, c, d)
-  をアンコンピューテーションで戻しておきます。
+  位相論理演算を連結するには、普通の論理演算と位相論理演算を組合わせる必要があります。
+  <code>a OR (NOT b) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code> とその結果を使った<code>a OR (NOT b)</code>) は普通の論理演算 NOT, OR を連結して回路を作り、
+  最後の <code>... AND c</code> の部分だけ位相論理演算 pAND にします。
+  このように最後の論理演算だけ位相論理演算にすることで入力と出力がマッチし、結果を位相に書き込むことができます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1161,17 +1096,17 @@
           data-min-wire-count="1"
           data-max-wire-count="1"
           data-min-step-count="8"
-          data-json='{"cols":[["{a,b,c=(0,1)"],["|0>","|0>","|0>","|0>","|0>"],["H","H","H"],["}"],[1],["{b = NOT b"],[1,"X"],["}"],[1],["{d = a OR b"],["X","X"],["•","•",1,"X"],["X","X",1,"X"],["}"],[1],["{e = c AND d"],[1,1,"•","•","X"],["}"],[1],["{アンコンピュート"],["X","X",1,"X"],["•","•",1,"X"],["X","X"],[1,"X"],["}"],[1]]}'
+          data-json='{"cols":[["{a,b,c=(0,1)"],["|0>","|0>","|0>","|0>"],["H","H","H"],["}"],[1],["{b = NOT b"],[1,"X"],["}"],[1],["{d = a OR b"],["X","X"],["•","•",1,"X"],["X","X",1,"X"],["}"],[1],["{c = c pAND d"],[1,1,"•","•"],["}"],[1],["{アンコンピュート"],["X","X",1,"X"],["•","•",1,"X"],["X","X"],[1,"X"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-          id="circle-notation"
-          data-target="quantum-simulator.circleNotation"
-          data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-          data-padding-X="16"
-          data-padding-Y="20"
+            id="circle-notation"
+            data-target="quantum-simulator.circleNotation"
+            data-qubit-circle-popup-template-id="qubit-circle-popup"
+            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+            data-padding-X="16"
+            data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1180,42 +1115,33 @@
 </div>
 
 <p>
-  この回路の実行結果は以下のようになります。答のビット e (5 ビット目) が 1 である振幅が
-  <code>a OR (NOT b) AND c</code> を満たす a, b, c を表し、 下の行の \(|10100\rangle\), \(|10101\rangle\), \(|10111\rangle\) がこれにあたります。d, e の上位 2 ビットを無視すると、確かに 4, 5, 7
-  が答として得られていることが分かります。
+  この回路の実行結果は以下のようになります。振幅の大きさは最初の均等な重ね合わせ状態から変化せず、答の 4, 5, 7 のみ位相が反転していることが分かります。
+</p>
+
+<figure>
+  <img src="./images/phase_logic_result.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a>で見た、論理演算回路の結果と比べてみましょう。
+  こちらは重ね合わせになっている振幅のうち、答の振幅とそうでない振幅の区別がつきません。
+  このため、読み出す確率が均等となり、答を読み出すのにたくさんの測定が必要になるのでした。
 </p>
 
 <figure>
   <img src="./images/quantum_logic_result.png" class="h-auto w-full" />
 </figure>
 
-<h2>答の読み出し</h2>
-
 <p>
-  この結果は量子コンピュータから効率的に読み出すことができません。
-  なぜならば、正しい答とそうでないものが同じ確率で重ね合わされているため、<code
-    >a OR (NOT b) AND c</code
-  >
-  を満たしていない (= 最上位ビット e が 1 でない) 振幅のほうが確率的に多く測定されてしまうためです。
-  今回のように 3 ビットなら答は 8 通り (それぞれの確率は 12.5%) なので、何百回か測定すれば 4, 5, 7
-  を読み出すことはできます。
-  しかし、ビット数が増えるにつれひとつひとつの答の確率が指数的に小さくなるので、必要な測定回数が大幅に増えてしまいます。
-</p>
-
-<p>
-  算術演算でも見てきたように、これは重ね合わせ上で計算をする場合に必ず出てくる問題です。
-  重ね合わせで並列計算ができても、その結果を読み出せなければ意味がありません。
-</p>
-
-<p>
-  そこで、次の回では量子論理ゲートを少し改造し、うまく読み出せるような形に出力する方法を見ていきます。
+  位相論理版の実行結果も振幅の大きさでは区別がつかないものの、位相ではっきりと区別がつきます。
+  繰り返しになりますが、これを後で紹介する振幅増幅プロセスにかけることによって、振幅の大きさへと反映でき、答をうまく読み出すことができるようになります。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./quantum_logic.html"
+      href="./phase_logic.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1232,17 +1158,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-量子論理ゲート</a
+位相論理演算</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./phase_logic.html"
-      >位相論理演算<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>
