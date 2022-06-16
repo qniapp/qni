@@ -1054,7 +1054,8 @@
             </div>
             <div class="content-with-margin"><p>
   位相論理演算を組合せて、より複雑な論理式回路を作ってみましょう。
-  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a> で見た <code>a OR (NOT b) AND c</code> の位相版はどうなるでしょうか？
+  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a> で見た
+  <code>a OR (NOT b) AND c</code> の位相版はどうなるでしょうか？
 </p>
 
 <p>
@@ -1065,7 +1066,8 @@
 
 <p>
   位相論理演算を連結するには、普通の論理演算と位相論理演算を組合わせる必要があります。
-  <code>a OR (NOT b) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code> とその結果を使った<code>a OR (NOT b)</code>) は普通の論理演算 NOT, OR を連結して回路を作り、
+  <code>a OR (NOT b) AND c</code> を例にとると、最初の 2 つの論理演算 (<code>NOT b</code>
+  とその結果を使った<code>a OR (NOT b)</code>) は普通の論理演算 NOT, OR を連結して回路を作り、
   最後の <code>... AND c</code> の部分だけ位相論理演算 pAND にします。
   このように最後の論理演算だけ位相論理演算にすることで入力と出力がマッチし、結果を位相に書き込むことができます。
 </p>
@@ -1101,12 +1103,12 @@
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1115,7 +1117,8 @@
 </div>
 
 <p>
-  この回路の実行結果は以下のようになります。振幅の大きさは最初の均等な重ね合わせ状態から変化せず、答の 4, 5, 7 のみ位相が反転していることが分かります。
+  この回路の実行結果は以下のようになります。振幅の大きさは最初の均等な重ね合わせ状態から変化せず、答の
+  4, 5, 7 のみ位相が反転していることが分かります。
 </p>
 
 <figure>
@@ -1123,7 +1126,8 @@
 </figure>
 
 <p>
-  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a>で見た、論理演算回路の結果と比べてみましょう。
+  <a href="./superposition_quantum_logic.html">重ね合わせ上での論理演算</a
+  >で見た、論理演算回路の結果と比べてみましょう。
   こちらは重ね合わせになっている振幅のうち、答の振幅とそうでない振幅の区別がつきません。
   このため、読み出す確率が均等となり、答を読み出すのにたくさんの測定が必要になるのでした。
 </p>
