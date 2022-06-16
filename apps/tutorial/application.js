@@ -13343,7 +13343,7 @@ var Vn = /* @__PURE__ */ __name(class extends HTMLElement {
     let e = this.activeStepIndex, i = this.circuit.serialize();
     Z.need(i.length > 0, "non-zero step length");
     let l = this.circuit.toJson(), c = this.setCircleNotationQubitCount();
-    this.worker.postMessage({ qubitCount: c, stepIndex: e, circuitJson: l, invalidateCaches: t, steps: i, targets: this.circleNotation.visibleQubitCircleKets });
+    this.worker.postMessage({ qubitCount: c, stepIndex: e, circuitJson: l, invalidateCaches: t, steps: i, targets: this.circleNotation.visibleQubitCircleKets, debug: window.debugServiceworker });
   }
   setCircleNotationQubitCount() {
     let t = this.circuit.serialize();

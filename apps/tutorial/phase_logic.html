@@ -8,9 +8,22 @@ prev_url: ./superposition_quantum_logic.html
 ---
 
 <p>
-  今回紹介する論理位相演算は、論理演算の結果を振幅の大きさではなく位相に出力するテクニックです。
-  状態ベクトルに位相として書き出した結果を後に紹介する<strong>振幅増幅</strong>にかけると、位相の差は振幅の大きさに変換され、結果的に読み出したい値の確率だけを上昇させ、ほかの確率を下降させることができます。
-  これによって、読み出したい値を効率的に読み出すことができます。
+  位相論理演算は、論理演算の結果を振幅の大きさではなく位相に出力するテクニックです。
+  位相バージョンの AND, OR
+  といった論理演算は、入力として論理演算と同じく振幅を取り、出力として位相<strong>のみ</strong>を変化させます。
+  位相は
+  <measurement-gate class="operation-xs inline-block"></measurement-gate>
+  では直接読み出せないため隠れた情報ですが、いくつかの計算で位相の値を利用できます。
+</p>
+
+<p>
+  たとえば後で紹介する<strong>振幅増幅</strong>は、位相を使った強力なテクニックの 1 つです。
+  以下のように位相論理演算によってある振幅の位相を反転 (πの回転) させ「マーク」をつけます。
+  振幅増幅は、各振幅の位相差を振幅の大きさの差に変換します。
+  これによって、マークを付けた値の確率だけを上昇させ、ほかの確率を下降させることによって、<measurement-gate
+    class="operation-xs inline-block"
+  ></measurement-gate>
+  で読み出しやすくします。
 </p>
 
 <figure>
@@ -20,10 +33,71 @@ prev_url: ./superposition_quantum_logic.html
 <h2>位相論理 NOT (pNOT)</h2>
 
 <p>
-  位相論理 NOT は論理 NOT と同様に入力そのものを反転する
-  <code>a = pNOT a</code> という動作をします。 ここで論理 NOT と区別するために、pNOT
-  という記号を導入しました。 入力は位相ではなく、論理 NOT
-  と同じく振幅の大きさを取ることに注意してください (ほかの位相論理も同じです)。
+  位相論理 NOT は 1 つの入力ビットの振幅のうち {% ket 0 %} の位相を反転します。
+  これは普通の論理演算で 0 を NOT で反転すると 1 (true) になるためです。 {% ket 0 %}, {% ket 1 %}
+  および重ね合わせ状態に pNOT を適用した結果は次のようになります{% nmargin_note phase_prefix_p
+  %}論理 NOT と区別するために、pNOT という記号を導入します。p は phase (位相)
+  を表しています。以降では同様に、pAND, pOR, ... のように p で区別していきます。{% endnmargin_note
+  %}。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-1' | qubit_circle: 0, 'lg', 'lime' }} {{ '0' | qubit_circle: 1, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOT</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-0.70711' | qubit_circle: 0, 'lg', 'lime' }} {{ '0.70711' | qubit_circle: 1, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<p>
+  pNOT 回路は次のように <x-gate class="operation-xs inline-block"></x-gate> と
+  <phase-gate class="operation-xs inline-block"></phase-gate> を組合わせて作ることができます。
 </p>
 
 <div class="mini-qni">
@@ -38,6 +112,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
@@ -82,7 +159,117 @@ prev_url: ./superposition_quantum_logic.html
 <h2>位相論理 AND (pAND)</h2>
 
 <p>
-  位相論理 AND は、入力となる量子ビット a, b に a AND b の結果が位相として出力されます (ほんと?)。
+  位相論理 AND は、2 つの入力ビット a, b を取り {% ket 3 %} の位相を反転させます。
+  これは、普通の論理演算で a と b がそれぞれ 1 (= 十進数で 3) のときのみ
+  <code>a AND b = 1</code> になるためです。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '-1' | qubit_circle: 3, 'lg', 'lime' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '-0.70711' | qubit_circle: 3, 'lg', 'lime' }}
+    </div>
+  </div>
+</div>
+
+<p>
+  pAND 回路は次のように CPHASE{% nmargin_note cphase %}π 回転の
+  <phase-gate class="operation-xs inline-block"></phase-gate>
+  を条件付きで実行するもの。<control-gate class="operation-xs inline-block"></control-gate> 2
+  つで略記できる。詳しくは<a href="./cphase.html">CPHASE ゲート</a>参照{% endnmargin_note %}
+  一個で表せます。
 </p>
 
 <div class="mini-qni">
@@ -97,6 +284,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
@@ -121,7 +311,7 @@ prev_url: ./superposition_quantum_logic.html
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="5"
-        data-json='{"cols":[["|1>","|1>"],["{pAND"],["•","•"],["}"],[1]]}'
+        data-json='{"cols":[["|0>","|0>"],["{pAND"],["•","•"],["}"],[1]]}'
       >
       </quantum-circuit>
 
@@ -140,6 +330,117 @@ prev_url: ./superposition_quantum_logic.html
 
 <h2>位相論理 OR (pOR)</h2>
 
+<p>
+  位相論理 OR は、2 つの入力ビット a, b を取り {% ket 1 %}, {% ket 2 %}, {% ket 3 %}
+  の位相を反転させます。 これは 1, 2, 3 を二進数で表した 01, 10, 11 のそれぞれ上下 2 ビット a, b
+  について、<code>a OR b = 1</code> が成り立つためです。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '-1' | qubit_circle: 1, 'lg', 'lime' }} {{ '0' |
+      qubit_circle: 2, 'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '-1' | qubit_circle: 2,
+      'lg', 'lime' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '-1' | qubit_circle: 3, 'lg', 'lime' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '-0.70711' | qubit_circle: 3, 'lg', 'lime' }}
+    </div>
+  </div>
+</div>
+
+<p>
+  pOR 回路は次のように π 回転の <phase-gate class="operation-xs inline-block"></phase-gate> と
+  CPHASE を組合わせて作ることができます。
+</p>
+
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -152,6 +453,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
@@ -176,7 +480,7 @@ prev_url: ./superposition_quantum_logic.html
         data-min-wire-count="1"
         data-max-wire-count="1"
         data-min-step-count="5"
-        data-json='{"cols":[["|0>","|1>"],["{pOR"],["P(π)"],["•","•"],[1,"P(π)"],["}"],[1]]}'
+        data-json='{"cols":[["|0>","|0>"],["{pOR"],["P(π)"],["•","•"],[1,"P(π)"],["}"],[1]]}'
       >
       </quantum-circuit>
 
@@ -195,6 +499,114 @@ prev_url: ./superposition_quantum_logic.html
 
 <h2>位相論理 NAND (pNAND)</h2>
 
+<p>
+  位相論理 NAND は、2 つの入力ビット a, b を取り {% ket 0 %}, {% ket 1 %}, {% ket 2 %}
+  の位相を反転させます。 こうなる理由は pAND の考え方と同じく、0, 1, 2 の上下 2 ビット a, b について
+  <code>a NAND b = 1</code> が成り立つためです。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-1' | qubit_circle: 0, 'lg', 'lime' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' |
+      qubit_circle: 2, 'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '-1' | qubit_circle: 1, 'lg', 'lime' }} {{ '0' |
+      qubit_circle: 2, 'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '-1' | qubit_circle: 2,
+      'lg', 'lime' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNAND</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-0.70711' | qubit_circle: 0, 'lg', 'lime' }} {{ '-0.70711' | qubit_circle: 1, 'lg', 'lime'
+      }} {{ '-0.70711' | qubit_circle: 2, 'lg', 'lime' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<p>pNAND 回路は以下のように作ることができます。</p>
+
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -207,6 +619,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
@@ -250,6 +665,113 @@ prev_url: ./superposition_quantum_logic.html
 
 <h2>位相論理 NOR (pNOR)</h2>
 
+<p>
+  位相論理 NOR は 2 つの入力ビット a, b を取り {% ket 0 %} の位相を反転させます。 これは「NOR = OR
+  の結果を NOT で反転させたもの」と考えると分かりやすいでしょう。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-1' | qubit_circle: 0, 'lg', 'lime' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' |
+      qubit_circle: 2, 'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pNOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '-0.70711' | qubit_circle: 0, 'lg', 'lime' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{
+      '0.70711' | qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<p>pNOR 回路は以下のように作ることができます。</p>
+
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -262,6 +784,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
@@ -305,6 +830,116 @@ prev_url: ./superposition_quantum_logic.html
 
 <h2>位相論理 XOR (pXOR)</h2>
 
+<p>
+  位相論理 NOR は 2 つの入力ビット a, b を取り, a XOR b の結果として {% ket 1 %} と {% ket 2 %}
+  の位相を反転させます。
+</p>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '1' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '1' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '-1' | qubit_circle: 1, 'lg', 'lime' }} {{ '0' |
+      qubit_circle: 2, 'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '-1' | qubit_circle: 2,
+      'lg', 'lime' }} {{ '0' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '0' | qubit_circle: 2,
+      'lg' }} {{ '1' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<div class="my-5 flex flex-row justify-center overflow-x-auto md:w-7/12">
+  <div class="mt-4 mb-2 flex flex-row items-center space-x-1">
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '0.70711' | qubit_circle: 1, 'lg' }} {{ '0.70711' |
+      qubit_circle: 2, 'lg' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+
+    <div class="flex flex-row items-center">
+      {% include minus.svg class="h-4 w-4 fill-current text-neutral-400" %}
+      <span class="whitespace-nowrap rounded bg-emerald-500 p-2 text-xs text-white">pXOR</span>
+      {% include arrow_right.svg class="h-4 w-4 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row">
+      {{ '0.70711' | qubit_circle: 0, 'lg' }} {{ '-0.70711' | qubit_circle: 1, 'lg', 'lime' }} {{
+      '-0.70711' | qubit_circle: 2, 'lg', 'lime' }} {{ '0.70711' | qubit_circle: 3, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<p>
+  pXOR 回路は他の位相論理回路と異なり、入力 a, b のほかに一時ビット c を必要とします。 c は pXOR
+  計算後にアンコンピュートされ {% ket 0 %} に戻ります。
+</p>
+
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -317,6 +952,9 @@ prev_url: ./superposition_quantum_logic.html
         </palette-dropzone>
         <palette-dropzone>
           <write-gate data-value="1" data-hoverable></write-gate>
+        </palette-dropzone>
+        <palette-dropzone>
+          <h-gate data-hoverable></h-gate>
         </palette-dropzone>
       </div>
 
