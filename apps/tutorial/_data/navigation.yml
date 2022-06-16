@@ -114,7 +114,7 @@
 # - name: 論理演算
 #   pages:
 #     - name: 量子論理ゲート
-#       link: ./quantum_logic_gates.html
+#       link: ./quantum_logic.html
 #       new: true
 #     - name: 重ね合わせ上での論理演算
 #       link: ./superposition_quantum_logic.html

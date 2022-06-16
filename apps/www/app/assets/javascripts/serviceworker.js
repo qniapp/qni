@@ -1,5 +1,5 @@
+import {Util, describe} from '@qni/common'
 import {Simulator} from '@qni/simulator'
-import {Util} from '@qni/common'
 
 let resultCache = {}
 
@@ -10,21 +10,32 @@ function runSimulator(e) {
   const steps = e.data.steps
   const targets = e.data.targets
   const invalidateCaches = e.data.invalidateCaches
-  const simulator = new Simulator('0'.repeat(qubitCount))
+  const debug = e.data.debug
 
   Util.notNull(qubitCount)
   Util.notNull(stepIndex)
   Util.notNull(steps)
   Util.notNull(targets)
 
-  // const s_time = new Date()
+  if (debug) {
+    console.log(
+      JSON.stringify(
+        e.data,
+        ['circuitJson', 'qubitCount', 'stepIndex', 'steps', 'type', 'targets', 'angle', 'invalidateCaches'],
+        2
+      )
+    )
+  }
+
+  const s_time = new Date()
+  const simulator = new Simulator('0'.repeat(qubitCount))
 
   if (resultCache[circuitJson] === undefined || invalidateCaches) {
     resultCache = {}
     resultCache[circuitJson] = {}
   }
 
-  // let cacheHit = false
+  let cacheHit = false
 
   for (const [i, operations] of steps.entries()) {
     let stepResult = {}
@@ -39,7 +50,7 @@ function runSimulator(e) {
       cachedStepResult.targets === undefined ||
       cachedStepResult.targets.length < targets.length
     ) {
-      // cacheHit = false
+      cacheHit = false
 
       simulator.runStep(operations)
 
@@ -80,7 +91,7 @@ function runSimulator(e) {
         }
       }
     } else {
-      // cacheHit = true
+      cacheHit = true
 
       stepResult = {
         type: 'step',
@@ -99,10 +110,12 @@ function runSimulator(e) {
     self.postMessage(stepResult)
   }
 
-  // const e_time = new Date()
-  // const diff = e_time.getTime() - s_time.getTime()
-  // const cacheDesc = cacheHit ? "🎯 CACHE HIT" : "💦 CACHE MISS"
-  // console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
+  const e_time = new Date()
+  const diff = e_time.getTime() - s_time.getTime()
+  const cacheDesc = cacheHit ? '🎯 CACHE HIT' : '💦 CACHE MISS'
+  if (debug) {
+    console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
+  }
 
   self.postMessage({type: 'finish'})
 }

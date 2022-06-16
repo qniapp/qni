@@ -7,6 +7,12 @@ import {CircleNotationElement} from './circle-notation-element'
 import {QuantumCircuitElement} from './quantum-circuit-element'
 import {RunCircuitButtonElement} from './run-circuit-button-element'
 
+declare global {
+  interface Window {
+    debugServiceworker: boolean
+  }
+}
+
 type MessageEventData = {
   type: 'step' | 'finish'
   blochVectors: {[bit: number]: [number, number, number]}
@@ -142,7 +148,8 @@ export class QuantumSimulatorElement extends HTMLElement {
       circuitJson,
       invalidateCaches,
       steps: serializedSteps,
-      targets: this.circleNotation.visibleQubitCircleKets
+      targets: this.circleNotation.visibleQubitCircleKets,
+      debug: window.debugServiceworker
     })
   }
 
