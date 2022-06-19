@@ -98,36 +98,31 @@
   pages:
     - name: インクリメント回路
       link: ./increment_circuit.html
-      new: true
     - name: デクリメント回路
       link: ./decrement_circuit.html
-      new: true
     - name: 足し算回路
       link: ./addition_circuit.html
-      new: true
     - name: 引き算回路
       link: ./subtraction_circuit.html
-      new: true
     - name: かけ算回路
       link: ./multiplication_circuit.html
+- name: 論理演算
+  pages:
+    - name: 量子論理ゲート
+      link: ./quantum_logic.html
       new: true
-# - name: 論理演算
-#   pages:
-#     - name: 量子論理ゲート
-#       link: ./quantum_logic.html
-#       new: true
-#     - name: 重ね合わせ上での論理演算
-#       link: ./superposition_quantum_logic.html
-#       new: true
-#     - name: 位相論理演算
-#       link: ./phase_logic.html
-#       new: true
-#     - name: 位相論理演算の組合わせ
-#       link: ./phase_logic_combination.html
-#       new: true
-#     - name: 充足可能性問題
-#       link: ./sat.html
-#       new: true
+    - name: 重ね合わせ上での論理演算
+      link: ./superposition_quantum_logic.html
+      new: true
+    - name: 位相論理演算
+      link: ./phase_logic.html
+      new: true
+    - name: 位相論理演算の組合わせ
+      link: ./phase_logic_combination.html
+      new: true
+    - name: 充足可能性問題
+      link: ./sat.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
