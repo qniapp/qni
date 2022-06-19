@@ -125,6 +125,9 @@
 #     - name: 位相論理演算の組合わせ
 #       link: ./phase_logic_combination.html
 #       new: true
+#     - name: 充足可能性問題
+#       link: ./sat.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
