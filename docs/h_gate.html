@@ -1751,6 +1751,41 @@
   ゲートを行列で表したもの (ゲートの行列表現) の知識が必要になります。
   詳しい方法はのちほど紹介します。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="重ね合わせ状態を作る量子ゲートの名前は?"
+    answer="H ゲート"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="H ゲートの作用は?"
+    answer="重ね合わせ状態を作る"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="H ゲートの別名は?"
+    answer="アダマールゲート"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="H ゲートを適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
+    answer="|0⟩ と |1⟩ の等しい重ね合わせができる"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="H ゲートを適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-0-100.png"
+    answer="|0⟩ と |1⟩ の等しい重ね合わせができ、|1⟩ のみ位相が反転する"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-minus-state.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットに H ゲートを 2 回連続して適用するとどうなる?"
+    answer="元に戻る"
+    answer-attachments="https://qniapp.github.io/qni/images/h-gate-reversibility.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    cloze="H ゲートはそれ自身を打ち消す効果を持っていることから、H ゲートはそれ自身の{逆演算}であると言う"
+  ></orbit-prompt>
+</orbit-reviewarea>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
