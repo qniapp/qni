@@ -1669,6 +1669,26 @@
     </circuit-editor>
   </quantum-simulator>
 </div>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    cloze="PHASE ゲートは重ね合わせ状態にある量子ビットの {|1⟩} の{位相}を{回転}させる"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE ゲート π/4 を適用するとどうなる?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="|1⟩ の位相が π/4 回転する"
+    answer-attachments="https://qniapp.github.io/qni/images/superposition-50-50-phase¼π.png"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE ゲート π/4 の逆演算は?"
+    answer="PHASE ゲート -π/4"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="PHASE ゲート -π/2 の逆演算は?"
+    answer="PHASE ゲート π/2"
+  ></orbit-prompt>
+</orbit-reviewarea>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
