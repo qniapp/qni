@@ -1143,7 +1143,7 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">位相を直接操作する</p>
             </div>
             <div class="content-with-margin"><p>
-  PHASE ゲートはその名の通り<label for="margin-note-phase-gate" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-phase-gate" class="margin-note__toggle hidden"><span class="margin-note">phase: 相、位相、フェーズ</span>、位相を操作するゲートです。 重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ \(|1\rangle\) の位相を回転できます。
+  PHASE ゲート <phase-gate class="inline-block operation-xs"></phase-gate> はその名の通り<label for="margin-note-phase-gate" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-phase-gate" class="margin-note__toggle hidden"><span class="margin-note">phase: 相、位相、フェーズ</span>、位相を操作するゲートです。 重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ \(|1\rangle\) の位相を回転できます。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1379,12 +1379,11 @@
 </div>
 
 <p>
-  PHASE ゲートは角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を π/2 回転する PHASE
-  ゲートは上に π/2 が付きます。文中では PHASE(π/2) などとパラメータを付けて書きます。
+  <phase-gate class="inline-block operation-xs"></phase-gate> は角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を π/2 回転する <phase-gate class="inline-block operation-xs"></phase-gate> は上に π/2 が付きます。文中では PHASE(π/2) などとパラメータを付けて書きます。
 </p>
 
 <p>
-  PHASE ゲートは \(|0\rangle\) に何の変化も与えないことに注意してください。 また PHASE ゲートは \(|1\rangle\)
+   <phase-gate class="inline-block operation-xs"></phase-gate> は \(|0\rangle\) に何の変化も与えないことに注意してください。 また  <phase-gate class="inline-block operation-xs"></phase-gate> は \(|1\rangle\)
   の位相のみを回転するので、振幅の大きさにも影響は与えません。また回転する角度は振幅の大きさの影響を受けません<label for="margin-note-phase-and-amplitude-norm" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-phase-and-amplitude-norm" class="margin-note__toggle hidden"><span class="margin-note">量子ビットの振幅の大きさと位相は独立したパラメータである、ということを思い出しましょう (<a
     href="./circle_notation.html"
     >状態ベクトル表示</a
@@ -1611,9 +1610,7 @@
 <h2>ハンズオン</h2>
 
 <p>
-  PHASE ゲートを重ね合わせ状態に適用して、\(|1\rangle\) の位相を回転してみましょう。 PHASE
-  ゲートの角度はデフォルトで π/2 にセットされています。変更するには、回路上に配置した PHASE
-  ゲートをクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
+  <phase-gate class="inline-block operation-xs"></phase-gate> を重ね合わせ状態に適用して、\(|1\rangle\) の位相を回転してみましょう。<phase-gate class="inline-block operation-xs"></phase-gate> の角度はデフォルトで π/2 にセットされています。変更するには、回路上に配置した <phase-gate class="inline-block operation-xs"></phase-gate> をクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
 </p>
 
 <div class="mini-qni">
