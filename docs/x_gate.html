@@ -1162,7 +1162,8 @@
 </div>
 
 <p>
-  X ゲート <x-gate class="inline-block operation-xs"></x-gate> は NOT 演算によく似ていて、量子ビットの \(|0\rangle\) と \(|1\rangle\) を入れ替えます。
+  X ゲート <x-gate class="operation-xs inline-block"></x-gate> は NOT
+  演算によく似ていて、量子ビットの \(|0\rangle\) と \(|1\rangle\) を入れ替えます。
   図で表すと、次のような "円の入れ替え" の働きをします。
 </p>
 
@@ -1378,8 +1379,9 @@
 </div>
 
 <p>
-   <x-gate class="inline-block operation-xs"></x-gate> が従来の NOT 演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。
-  たとえば、次の \(|0\rangle\) と \(|1\rangle\) の重ね合わせ状態にある量子ビットを考えましょう。
+  <x-gate class="operation-xs inline-block"></x-gate> が従来の NOT
+  演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。 たとえば、次の \(|0\rangle\) と
+  \(|1\rangle\) の重ね合わせ状態にある量子ビットを考えましょう。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1419,8 +1421,8 @@
 </div>
 
 <p>
-  これに <x-gate class="inline-block operation-xs"></x-gate> を適用すると、\(|0\rangle\) と \(|1\rangle\) の内容を交換します。
-  これはまさに、先ほど見た "\(|0\rangle\) と \(|1\rangle\) の入れ換え" という効果です。
+  これに <x-gate class="operation-xs inline-block"></x-gate> を適用すると、\(|0\rangle\) と \(|1\rangle\) の内容を交換します。 これはまさに、先ほど見た "\(|0\rangle\) と \(|1\rangle\) の入れ換え"
+  という効果です。
 </p>
 
 <div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
@@ -1502,9 +1504,9 @@
 </div>
 
 <p>
-   <x-gate class="inline-block operation-xs"></x-gate> を続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 \(|0\rangle\) と \(|1\rangle\)
-  が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
-  ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
+  <x-gate class="operation-xs inline-block"></x-gate> を続けて 2 回適用するとどうなるでしょうか?
+  図から分かるように、 \(|0\rangle\) と \(|1\rangle\) が 2 度入れ替わることで元の状態に戻ります。
+  つまり、量子 NOT ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
   ゲートはそれ自身の逆演算である」と言います。
 </p>
 
@@ -1633,10 +1635,12 @@
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      重ね合わせ状態の量子ビットに <x-gate class="inline-block operation-xs"></x-gate> を適用し、\(|0\rangle\) と \(|1\rangle\)
-      が入れ替わることを確認しましょう。
+      重ね合わせ状態の量子ビットに <x-gate class="operation-xs inline-block"></x-gate> を適用し、\(|0\rangle\) と \(|1\rangle\) が入れ替わることを確認しましょう。
     </li>
-    <li> <x-gate class="inline-block operation-xs"></x-gate> を 2 回適用すると元に戻ることを確認しましょう</li>
+    <li>
+      <x-gate class="operation-xs inline-block"></x-gate> を 2
+      回適用すると元に戻ることを確認しましょう
+    </li>
   </ul>
 </div>
 
@@ -1708,20 +1712,13 @@
 </p>
 
 <orbit-reviewarea color="blue">
-  <orbit-prompt
-    cloze="古典の NOT 演算では、NOT 0 → {1} になる"
-  ></orbit-prompt>
-  <orbit-prompt
-    cloze="古典の NOT 演算では、NOT 1 → {0} になる"
-  ></orbit-prompt>
+  <orbit-prompt cloze="古典の NOT 演算では、NOT 0 → {1} になる"></orbit-prompt>
+  <orbit-prompt cloze="古典の NOT 演算では、NOT 1 → {0} になる"></orbit-prompt>
   <orbit-prompt
     question="0 → 1, 1 → 0 という作用を持つ CPU 演算は?"
     answer="NOT 演算"
   ></orbit-prompt>
-  <orbit-prompt
-    question="古典の NOT 演算に対応する量子ゲートは?"
-    answer="X ゲート"
-  ></orbit-prompt>
+  <orbit-prompt question="古典の NOT 演算に対応する量子ゲートは?" answer="X ゲート"></orbit-prompt>
   <orbit-prompt
     question="X ゲートを適用するとどうなる?"
     question-attachments="https://qniapp.github.io/qni/images/superposition-100-0.png"
