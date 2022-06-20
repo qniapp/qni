@@ -1143,8 +1143,12 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">量子ビットの初期化とリセット</p>
             </div>
             <div class="content-with-margin"><p>
-  WRITE 命令 <write-gate data-value="0" class="inline-block operation-xs"></write-gate> <write-gate data-value="1" class="inline-block operation-xs"></write-gate> は量子ビットの状態を \(|0\rangle\) または \(|1\rangle\) に初期化する命令です。
-  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。通常は回路の先頭に <write-gate data-value="0" class="inline-block operation-xs"></write-gate> や <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を置くことで量子ビットを \(|0\rangle\) や \(|1\rangle\) に初期化します。 続けて H ゲートなどの QPU
+  WRITE 命令 <write-gate data-value="0" class="operation-xs inline-block"></write-gate>
+  <write-gate data-value="1" class="operation-xs inline-block"></write-gate> は量子ビットの状態を \(|0\rangle\) または \(|1\rangle\) に初期化する命令です。
+  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。通常は回路の先頭に
+  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
+  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
+  を置くことで量子ビットを \(|0\rangle\) や \(|1\rangle\) に初期化します。 続けて H ゲートなどの QPU
   命令を置いていくことで量子プログラムを記述します。
 </p>
 
@@ -1354,8 +1358,14 @@
 </div>
 
 <orbit-reviewarea color="blue">
-  <orbit-prompt question="量子ビットの状態を強制的に初期化する量子ゲートの名前は?" answer="WRITE ゲート"></orbit-prompt>
-  <orbit-prompt question="WRITE ゲートの作用は?" answer="量子ビットの状態を強制的に |0⟩ や |1⟩ に初期化する"></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットの状態を強制的に初期化する量子ゲートの名前は?"
+    answer="WRITE ゲート"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="WRITE ゲートの作用は?"
+    answer="量子ビットの状態を強制的に |0⟩ や |1⟩ に初期化する"
+  ></orbit-prompt>
   <orbit-prompt
     cloze="WRITE ゲートが量子ビットを強制的に初期化する際、量子ビットの{振幅の大きさ}と{位相}の情報を破壊する"
   ></orbit-prompt>
