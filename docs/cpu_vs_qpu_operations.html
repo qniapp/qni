@@ -1399,6 +1399,39 @@
 </p>
 
 <p>これらのテクニックの基本となる、代表的な QPU 命令と逆演算を具体的に見ていきましょう。</p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="CPU 論理演算が入力と出力に取ることのできる値は?"
+    answer="0 と 1"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典コンピュータの AND ゲートは、入力と出力の数はそれぞれいくつ?"
+    answer="入力が2つ、出力が1つ"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="QPU 命令の入力と出力は何か?"
+    answer="1 量子ビット"
+  ></orbit-prompt>
+  <orbit-prompt cloze="QPU 命令は入力した量子ビットの{確率(振幅の大きさの2乗)}と{位相}に作用する">
+  </orbit-prompt>
+  <orbit-prompt
+    question="QPU 命令の入力と出力は何か?"
+    answer="1 量子ビット"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="非可逆な CPU 命令を 1 つ挙げよ"
+    answer="AND, OR, NAND, XOR など"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="古典 AND ゲートはなぜ非可逆か?"
+    answer="出力の 1 ビットから入力の 2 ビットを一意に復元できないから"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="QPU 命令はなぜほとんどが可逆か?"
+    answer="逆演算を行う命令が存在するから"
+  ></orbit-prompt>
+</orbit-reviewarea>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
