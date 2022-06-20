@@ -1219,7 +1219,45 @@
 <h2>量子論理 AND</h2>
 
 <p>
-  量子論理 AND は、入力となる量子ビット a, b と、結果を入れる量子ビット c を使います。 c は \(|0\rangle\) に初期化され、<code>a AND b</code> の結果が出力されます。 これは「a かつ b だったときに c は
+  量子論理 AND は、入力となる量子ビット a, b と、結果を入れる量子ビット c を使います。 c は \(|0\rangle\) に初期化され、<code>a AND b</code> の結果が出力されます。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <table>
+    <thead>
+      <tr>
+        <th>a</th>
+        <th>b</th>
+        <th>c = a AND b</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  これは「a かつ b だったときに c は
   1」ですから、次のように CCNOT で表現できます。
 </p>
 
@@ -1384,9 +1422,9 @@
 </div>
 
 <p>
-  NOT ゲート <x-gate class="operation-xs inline-block"></x-gate> の記号がなぜ「+」かと言うと、CNOT
-  で <x-gate class="operation-xs inline-block"></x-gate> を置いたビットに XOR という足し算
-  (排他的論理和) が実行されるから、と考えることができます。
+  NOT ゲート <x-gate class="operation-xs inline-block"></x-gate> の記号はなぜ「+」か? と今まで疑問に思っていた人もいるかもしれません。
+  これは、CNOT で <x-gate class="operation-xs inline-block"></x-gate> を置いたビットに XOR という<strong>足し算
+  (排他的論理和)</strong> が実行されるから、と考えることができます。
 </p>
 
 <h2>量子論理 NAND</h2>
