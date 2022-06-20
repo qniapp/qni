@@ -1143,14 +1143,14 @@
               <p class="mt-1 mb-0 text-lg text-gray-500">シンプルな重ね合わせ状態を作る</p>
             </div>
             <div class="content-with-margin"><p>
-  H ゲートはフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon Hadamard, 1865 - 1963)
+  H ゲート <h-gate class="inline-block operation-xs"></h-gate> はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon Hadamard, 1865 - 1963)
   の名前を冠したゲートで、別名アダマールゲートとも呼びます<label for="margin-note-h-gate" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-h-gate" class="margin-note__toggle hidden"><span class="margin-note">英語では「ハダマードゲート (Hadamard
   gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h
   と最後の d を発音しない) に近いカタカナ表記です。</span>。
 </p>
 
 <p>
-  H ゲートはシンプルな重ね合わせ状態を作ります。 \(|0\rangle\) または \(|1\rangle\)
+   <h-gate class="inline-block operation-xs"></h-gate> はシンプルな重ね合わせ状態を作ります。 \(|0\rangle\) または \(|1\rangle\)
   に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
@@ -1311,12 +1311,12 @@
 </div>
 
 <p>
-  \(|1\rangle\) に対して H ゲートを適用したときのみ、\(|1\rangle\) の位相が π
-  変化していることに注意してください。 \(|0\rangle\) に対する H ゲート操作は、位相の回転を含みません。
+  \(|1\rangle\) に対して  <h-gate class="inline-block operation-xs"></h-gate> を適用したときのみ、\(|1\rangle\) の位相が π
+  変化していることに注意してください。 \(|0\rangle\) に対する  <h-gate class="inline-block operation-xs"></h-gate> 操作は、位相の回転を含みません。
 </p>
 
 <p>
-  H ゲートは QPU
+   <h-gate class="inline-block operation-xs"></h-gate> は QPU
   独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H
   ゲートに対応するものはありません。
 </p>
@@ -1324,7 +1324,7 @@
 <h2>ハンズオン</h2>
 
 <p>
-  H ゲートを \(|0\rangle\) と \(|1\rangle\) に適用して、重ね合わせ状態が作られることを確認しましょう。
+   <h-gate class="inline-block operation-xs"></h-gate> を \(|0\rangle\) と \(|1\rangle\) に適用して、重ね合わせ状態が作られることを確認しましょう。
   \(|0\rangle\) は最初から回路にセットされていますが、\(|1\rangle\) を作るにはどうしたらいいでしょうか?
   (ヒント: X ゲートを使います)
 </p>
@@ -1386,9 +1386,9 @@
 <h2>逆演算</h2>
 
 <p>
-  H ゲートを続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni
-  で試してみましょう! 実際に H ゲートを 2 個連続して置くと、\(|0\rangle\) も \(|1\rangle\)
-  もそれぞれ元の状態に戻ります。 つまり、H ゲートも X
+   <h-gate class="inline-block operation-xs"></h-gate> を続けて 2 回適用するとどうなるでしょうか? 直感的には分かりづらいですが、そんな時には Qni
+  で試してみましょう! 実際に  <h-gate class="inline-block operation-xs"></h-gate> を 2 個連続して置くと、\(|0\rangle\) も \(|1\rangle\)
+  もそれぞれ元の状態に戻ります。 つまり、 <h-gate class="inline-block operation-xs"></h-gate> も X
   ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
@@ -1639,8 +1639,8 @@
 <h2>H ゲートを回転として見る</h2>
 
 <p>
-  H ゲートを回転として見ると、H ゲートはブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180
-  度の回転となります。 たとえば北極の \(|0\rangle\) 状態に H ゲートを適用すると、赤い矢印に沿って X
+   <h-gate class="inline-block operation-xs"></h-gate> を回転として見ると、 <h-gate class="inline-block operation-xs"></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印) を軸とした 180
+  度の回転となります。 たとえば北極の \(|0\rangle\) 状態に  <h-gate class="inline-block operation-xs"></h-gate> を適用すると、赤い矢印に沿って X
   の文字の部分まで回転します。 もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります
   (逆演算)。
 </p>
