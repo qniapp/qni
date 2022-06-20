@@ -1195,10 +1195,9 @@
 </div>
 
 <p>
-  WRITE 命令は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  つまり量子ビットの状態がどんな状態にあっても、たとえば \(|0\rangle\)
-  命令を置いた時点で振幅の大きさと位相の情報は破壊され、\(|0\rangle\) に初期化されます。
-  これは元に戻すのに必要な情報を損失していることになるため、WRITE 命令は非可逆です。
+  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs inline-block"></write-gate> は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
+  つまり量子ビットの状態がどんな状態にあっても、たとえば <write-gate data-value="0" class="operation-xs inline-block"></write-gate> を置いた時点で振幅の大きさと位相の情報は破壊され、\(|0\rangle\) に初期化されます。
+  これは元に戻すのに必要な情報を損失していることになるため、<write-gate data-value="0" class="operation-xs inline-block"></write-gate> と <write-gate data-value="1" class="operation-xs inline-block"></write-gate> はどちらも非可逆です。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
