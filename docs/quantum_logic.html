@@ -1162,6 +1162,14 @@
   をそのまま使うだけです。
 </p>
 
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 NOT の動作を確認しましょう
+    </li>
+  </ul>
+</div>
+
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
     <circuit-editor>
@@ -1256,10 +1264,15 @@
   </table>
 </div>
 
-<p>
-  これは「a かつ b だったときに c は
-  1」ですから、次のように CCNOT で表現できます。
-</p>
+<p>これは「a かつ b だったときに c は 1」ですから、次のように CCNOT で表現できます。</p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 AND の動作を確認しましょう
+    </li>
+  </ul>
+</div>
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
@@ -1322,6 +1335,14 @@
   を出力する」という論理ゲートです。 量子版の論理 XOR は、`b = a XOR b` と書け、これは次のように
   CNOT ゲート 1 つで表すことができます。
 </p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 XOR の動作を確認しましょう
+    </li>
+  </ul>
+</div>
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
@@ -1422,9 +1443,12 @@
 </div>
 
 <p>
-  NOT ゲート <x-gate class="operation-xs inline-block"></x-gate> の記号はなぜ「+」か? と今まで疑問に思っていた人もいるかもしれません。
-  これは、CNOT で <x-gate class="operation-xs inline-block"></x-gate> を置いたビットに XOR という<strong>足し算
-  (排他的論理和)</strong> が実行されるから、と考えることができます。
+  NOT ゲート <x-gate class="operation-xs inline-block"></x-gate> の記号はなぜ「+」か?
+  と今まで疑問に思っていた人もいるかもしれません。 これは、CNOT で
+  <x-gate class="operation-xs inline-block"></x-gate> を置いたビットに XOR という<strong
+    >足し算 (排他的論理和)</strong
+  >
+  が実行されるから、と考えることができます。
 </p>
 
 <h2>量子論理 NAND</h2>
@@ -1434,6 +1458,14 @@
   これは入力 a, b、出力 c の場合には、`c = NOT(a AND b)` と書くことができ、 先ほどの量子論理 AND
   回路と <x-gate class="operation-xs inline-block"></x-gate> を組合わせることで実装できます。
 </p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 NAND の動作を確認しましょう
+    </li>
+  </ul>
+</div>
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
@@ -1495,6 +1527,14 @@
   量子論理 OR は、入力となる量子ビット a, b と、結果を入れる量子ビット c を使います。 c は \(|0\rangle\) に初期化され、<code>a OR b</code> の結果が出力されます。
   今までより少し複雑になりますが、量子論理 OR は次のように実装できます。
 </p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 OR の動作を確認しましょう
+    </li>
+  </ul>
+</div>
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
@@ -1642,6 +1682,14 @@
   <x-gate class="operation-xs inline-block"></x-gate> と打ち消しあって消えるので、最終的な NOR
   は次のようになります。
 </p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <ul class="my-0 !w-full list-disc px-4 !pb-0">
+    <li>
+      <write-gate data-value="0" class="inline-block operation-xs"></write-gate> と <write-gate data-value="1" class="inline-block operation-xs"></write-gate> を入れ替えて量子論理 NOR の動作を確認しましょう
+    </li>
+  </ul>
+</div>
 
 <div class="mini-qni">
   <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
