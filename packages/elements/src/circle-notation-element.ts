@@ -118,7 +118,11 @@ export class CircleNotationElement extends HTMLElement {
         break
       }
       case 2: {
-        this.qubitCircleSize = 'xl'
+        if (this.mobile) {
+          this.qubitCircleSize = 'lg'
+        } else {
+          this.qubitCircleSize = 'xl'
+        }
         break
       }
       case 3: {
@@ -704,7 +708,11 @@ export class CircleNotationElement extends HTMLElement {
         return 64
       }
       case 2: {
-        return 64
+        if (this.mobile) {
+          return 48
+        } else {
+          return 64
+        }
       }
       case 3: {
         if (this.mobile) {

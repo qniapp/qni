@@ -10069,7 +10069,7 @@ var oe = /* @__PURE__ */ __name(class extends HTMLElement {
           break;
         }
         case 2: {
-          this.qubitCircleSize = "xl";
+          this.mobile ? this.qubitCircleSize = "lg" : this.qubitCircleSize = "xl";
           break;
         }
         case 3: {
@@ -10431,7 +10431,7 @@ var oe = /* @__PURE__ */ __name(class extends HTMLElement {
       case 1:
         return 64;
       case 2:
-        return 64;
+        return this.mobile ? 48 : 64;
       case 3:
         return this.mobile ? 48 : 64;
       case 4:

@@ -103,11 +103,8 @@ next_url: ./qpu.html
     <circuit-editor class="flex h-full w-full flex-col">
       <div
         id="palette"
-        class="mb-10 flex w-min space-x-2 self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5 md:self-start"
+        class="mb-10 flex w-min space-x-2 self-center rounded-xl bg-white px-4 py-5 drop-shadow-xl md:self-start"
       >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable data-help-id="write0-gate-help"></write-gate>
-        </palette-dropzone>
         <palette-dropzone>
           <h-gate data-hoverable></h-gate>
         </palette-dropzone>
@@ -123,16 +120,14 @@ next_url: ./qpu.html
       </div>
 
       <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-2xl"
       >
         <inspector-button
           data-target="circuit-editor.inspectorButton"
           class="inline-block h-10 w-10 p-1"
         >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-zinc-200">
+            {% include settings_03.svg class="text-zinc-700" %}
           </div>
         </inspector-button>
       </div>
@@ -151,7 +146,7 @@ next_url: ./qpu.html
         id="circle-notation"
         data-target="quantum-simulator.circleNotation"
         data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-auto flex-row justify-center self-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white md:self-start"
+        class="z-40 flex w-auto flex-row justify-center self-center rounded-xl bg-white drop-shadow-xl md:self-start"
         data-padding-X="16"
         data-padding-Y="20"
       >
