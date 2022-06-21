@@ -5,5 +5,5 @@
   @apply p-8;
   @apply relative;
   @apply rounded-md;
-  @apply border border-zinc-100;
+  @apply border-2 border-sky-500;
 }
