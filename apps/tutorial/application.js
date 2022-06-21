@@ -11787,7 +11787,7 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
             position: absolute;
             display: flex;
             justify-content: center;
-            color: var(--colors-magnitude, #1cb0f6);
+            color: rgb(14 165 233); /* sky-500 */
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
               monospace;
             white-space: nowrap;
@@ -11825,7 +11825,7 @@ var pn = /* @__PURE__ */ __name(class extends HTMLElement {
           #body {
             display: flex;
             border-style: solid;
-            border-color: var(--colors-magnitude, #1cb0f6);
+            border-color: rgb(14 165 233); /* sky-500 */
             background-color: rgba(229, 229, 229, 0.3);
             flex-direction: column;
             margin-left: 1.5rem;

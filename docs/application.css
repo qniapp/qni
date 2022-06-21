@@ -6204,6 +6204,15 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   border-color: rgb(15 23 42 / 0.1);
 }
 
+.border-zinc-900\/10 {
+  border-color: rgb(24 24 27 / 0.1);
+}
+
+.border-zinc-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(228 228 231 / var(--tw-border-opacity));
+}
+
 .bg-neutral-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
@@ -6569,6 +6578,26 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 
+.text-zinc-500 {
+  --tw-text-opacity: 1;
+  color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+
+.text-zinc-400 {
+  --tw-text-opacity: 1;
+  color: rgb(161 161 170 / var(--tw-text-opacity));
+}
+
+.text-sky-600 {
+  --tw-text-opacity: 1;
+  color: rgb(2 132 199 / var(--tw-text-opacity));
+}
+
+.text-zinc-900 {
+  --tw-text-opacity: 1;
+  color: rgb(24 24 27 / var(--tw-text-opacity));
+}
+
 .text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
@@ -6659,9 +6688,9 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-.hover\:text-slate-500:hover {
+.hover\:text-zinc-500:hover {
   --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
+  color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
 .focus\:border-indigo-500:focus {
@@ -6716,9 +6745,9 @@ qubit-circle.magnitude-emerald::part(magnitude) {
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
 
-  .dark\:hover\:text-slate-300:hover {
+  .dark\:hover\:text-zinc-300:hover {
     --tw-text-opacity: 1;
-    color: rgb(203 213 225 / var(--tw-text-opacity));
+    color: rgb(212 212 216 / var(--tw-text-opacity));
   }
 
   .group:hover .dark\:group-hover\:text-slate-300 {
