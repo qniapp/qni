@@ -4788,7 +4788,7 @@ write-gate[data-value='0']::part(value)::after {
 
 write-gate[data-value='1']::part(value)::after {
   --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
+  color: rgb(14 165 233 / var(--tw-text-opacity));
   content: '1';
 }
 

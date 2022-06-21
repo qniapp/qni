@@ -36,7 +36,7 @@ write-gate {
   }
 
   &[data-value='1']::part(value)::after {
-    @apply text-blue-500;
+    @apply text-sky-500;
     content: '1';
   }
 
