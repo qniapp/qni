@@ -11,19 +11,19 @@ layout: default
     >
       <button
         type="button"
-        class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+        class="flex h-16 w-16 items-center justify-center border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
         data-action="click->sidebar#open"
       >
         <span class="sr-only">Open sidebar</span>
-        {% include hamburger_menu.svg %}
+        {% include menu.svg %}
       </button>
 
       <div class="flex w-full items-center justify-end">
         <a
           href="https://github.com/qniapp/qni"
-          class="block pr-8 text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+          class="block flex h-16 w-16 items-center justify-center text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
         >
-          {% include github_logo.svg class="w-5 h-5" %}
+          {% include github.svg %}
         </a>
       </div>
     </div>
