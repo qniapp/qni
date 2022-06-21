@@ -2900,7 +2900,7 @@ circuit-step::after {
   position: absolute;
   z-index: 10;
   --tw-bg-opacity: 1;
-  background-color: rgb(99 102 241 / var(--tw-bg-opacity));
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
   opacity: 0;
   left: 0px;
 }

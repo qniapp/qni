@@ -29,7 +29,7 @@ circuit-step {
   &::after {
     @apply absolute;
     @apply z-10;
-    @apply bg-indigo-500;
+    @apply bg-purple-500;
     @apply opacity-0;
 
     @apply left-0 sm:left-auto sm:top-0;
