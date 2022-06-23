@@ -6116,6 +6116,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   overflow-y: auto;
 }
 
+.scroll-auto {
+  scroll-behavior: auto;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
