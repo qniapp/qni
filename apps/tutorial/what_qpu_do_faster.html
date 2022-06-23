@@ -31,6 +31,20 @@ next_url: ./quantum_circuit.html
 </div>
 
 <p>
+  この行列とベクトルは、従来のコンピュータでは何に対応するでしょうか。
+  行列は、量子コンピュータが実行する命令にあたります。QPU
+  命令は数学的には巨大な行列として書き表すことができるためです。
+  ベクトルは量子ビットの内容を数として縦に並べたもので、ある時点での量子コンピュータの状態を表します。
+  つまり行列をベクトルに掛けるという操作は、QPU 命令を量子ビットに作用させることで、量子ビットの状態
+  (量子コンピュータの状態) を更新することにあたります。
+  つまり量子コンピュータは巨大な行列とベクトルの掛け算を高速に繰り返すことでその状態を更新し、これが量子コンピュータでのプログラム実行にあたります。
+</p>
+
+<figure>
+  <img src="./images/qpu_operations_matrix_and_state_vector.png" class="h-auto w-full" />
+</figure>
+
+<p>
   行列とベクトルの掛け算を知らなくても、行列計算がゲームの 3D CG
   やスパコンなどの数値計算などで活躍しているとなんとなく知っていれば、その重要さが分かるでしょう。
   行列とベクトルの掛け算には大量の足し算と掛け算が含まれるので、それがたった 1
@@ -63,7 +77,7 @@ next_url: ./quantum_circuit.html
   乗とまさに指数関数であることです。 たとえば 100 量子ビットでは
 </p>
 
-<p>$$2^{100} = 1267650600228229401496703205376$$</p>
+<p class="overflow-auto">$$2^{100} = 1267650600228229401496703205376$$</p>
 
 <p>
   もの数をセットしなければならず、これには 1,000
@@ -105,14 +119,14 @@ next_url: ./quantum_circuit.html
 
 <p>
   制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の可逆性)。 つまり、ある行列
-  \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(B\)
+  \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(A^{\prime}\)
   を掛けてやることで元のベクトルが得られる必要があります{% nmargin_note matrix-inverse
   %}行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。{% endnmargin_note %}。
   こちらもやはり、量子力学に由来する制限です。
 </p>
 
 <figure>
-  <img src="./images/matrix_multiplication_inverse.png" class="h-auto w-full" />
+  <img src="./images/reversible_matrix_multiplication.png" class="h-auto w-full" />
 </figure>
 
 <p>
@@ -163,7 +177,7 @@ next_url: ./quantum_circuit.html
 
 <p>ここで測定を行うと、それぞれの成分が二乗され、確率 (\(\%\)) として解釈されます。</p>
 
-<p>
+<p class="overflow-auto">
   $$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix} \longrightarrow
   \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \\ 0^2 \end{bmatrix}
   \longrightarrow \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\%
@@ -175,7 +189,7 @@ next_url: ./quantum_circuit.html
   ユーザはこれらのベクトルのうちどれか 1 つだけを、確率的に取り出すことしかできません。
 </p>
 
-<p>
+<p class="overflow-auto">
   $$ \begin{bmatrix} 0\% \\ \textcolor{red}{25\%} \\ 0\% \\ 0\% \\ \textcolor{red}{50\%} \\ 0\% \\
   \textcolor{red}{25\%} \\ 0\% \end{bmatrix} \longrightarrow \begin{bmatrix} 0 \\ \textcolor{red}{1}
   \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}\ または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\
