@@ -1,9 +1,8 @@
 .mini-qni {
   @apply bg-zinc-50;
-  @apply my-5;
   @apply overflow-hidden;
   @apply p-8;
   @apply relative;
-  @apply rounded-md;
+  @apply rounded-t-md rounded-br-md;
   @apply border-2 border-sky-500;
 }

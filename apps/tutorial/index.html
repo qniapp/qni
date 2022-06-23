@@ -98,62 +98,9 @@ next_url: ./qpu.html
   以下のようにチュートリアル中に埋め込まれた Qni で、学んだことをすぐ実験できるようになっています。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor class="flex h-full w-full flex-col">
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 self-center rounded-xl bg-white px-4 py-5 drop-shadow-xl md:self-start"
-      >
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <control-gate data-hoverable></control-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <x-gate data-hoverable></x-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <measurement-gate data-hoverable></measurement-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-2xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-zinc-200">
-            {% include settings_03.svg class="text-zinc-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10 self-center md:self-start"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="2"
-        data-min-step-count="5"
-        data-json='{"cols":[["{量子もつれ"],["|0>","|0>"],["H"],["•","X"],["}"],["Measure"],[1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-auto flex-row justify-center self-center rounded-xl bg-white drop-shadow-xl md:self-start"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %}
+{"cols":[["|0>","|0>"],["{量子もつれ"],["H"],["•","X"],["}"],["Measure"],[1,"Measure"]]} {%
+endcapture %} {{ json | strip | mini_qni }}
 
 <p>
   Qni
