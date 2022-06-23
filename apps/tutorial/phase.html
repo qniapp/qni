@@ -27,8 +27,8 @@ next_url: ./circle_notation.html
   なので、見た目は違いますが同じ状態を表しています。
 </p>
 
-<div class="mt-5 mb-8 md:mr-auto md:w-7/12">
-  <div class="flex flex-row items-center justify-center space-x-4">
+<div class="mt-5 mb-8 overflow-auto md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center space-x-4">
     <div class="flex flex-row">
       {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | prepend: '-' | append: 'i' | qubit_circle:
       1 }}

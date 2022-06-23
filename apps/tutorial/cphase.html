@@ -145,7 +145,7 @@ next_url: ./entanglement.html
   つまり、すべての円のうち半分の円のみに作用します。
 </p>
 
-<div class="my-5 flex">
+<div class="my-5 flex overflow-x-auto">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center">
       {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
@@ -175,7 +175,7 @@ next_url: ./entanglement.html
   %} と {% ket 5 %}」、「{% ket 3 %} と {% ket 7 %}」が PHASE ゲートの対象になります。
 </p>
 
-<div class="my-5 flex">
+<div class="my-5 flex overflow-x-auto">
   <div class="flex flex-col items-center">
     <div class="mb-4 flex flex-row items-center">
       {{ 0.125 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.125 | sqrt | qubit_circle: 1, 'lg' }} {{ 0.125
@@ -353,8 +353,8 @@ next_url: ./entanglement.html
   (つまり CZ) としても書けるからです。
 </p>
 
-<div class="my-5 md:mr-auto md:w-7/12">
-  <div class="flex flex-row items-center justify-center space-x-4">
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row items-center space-x-4">
     <circuit-step class="no-rotation p-0">
       <circuit-dropzone data-connect-bottom data-input-wire-quantum data-output-wire-quantum>
         <control-gate></control-gate>
