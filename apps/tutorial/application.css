@@ -5392,7 +5392,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
-  color: rgb(115 115 115 / var(--tw-text-opacity));
+  color: rgb(113 113 122 / var(--tw-text-opacity));
   display: none;
 }
 
@@ -5486,7 +5486,7 @@ body {
 
 .margin-note__toggle:after {
   --tw-bg-opacity: 1;
-  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+  background-color: rgb(224 242 254 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {
