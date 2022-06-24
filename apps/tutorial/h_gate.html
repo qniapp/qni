@@ -24,34 +24,40 @@ next_url: ./phase_gate.html
   0 %} または {% ket 1 %} に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
-<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
-      </div>
+    <div class="mb-8 flex flex-row items-center space-x-4">
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <div class="flex flex-row">
+          {{ 1 | qubit_circle: 0, 'base' }} {{ 0 | qubit_circle: 1, 'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <h-gate class="operation-sm absolute inset-0 m-auto"></h-gate>
+        </div>
       </div>
       <div class="flex flex-row">
-        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
+        {{ 0.5 | sqrt | qubit_circle: 0, 'base' }} {{ 0.5 | sqrt | qubit_circle: 1, 'base' }}
       </div>
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
-      </div>
+    <div class="flex flex-row items-center space-x-4">
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <div class="flex flex-row">
+          {{ 0 | qubit_circle: 0, 'base' }} {{ 1 | qubit_circle: 1, 'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <h-gate class="operation-sm absolute inset-0 m-auto"></h-gate>
+        </div>
       </div>
       <div class="flex flex-row">
-        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
-        'lg' }}
+        {{ 0.5 | sqrt | qubit_circle: 0, 'base' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
+        'base' }}
       </div>
     </div>
   </div>
@@ -141,58 +147,66 @@ next_url: ./phase_gate.html
   X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
-<div class="mx-5 flex overflow-x-auto">
-  <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
+<div class="my-5 flex overflow-x-auto pb-4 md:pb-0">
+  <div class="flex flex-col space-y-8">
+    <div class="flex flex-row items-center space-x-4">
+      <div class="flex flex-row items-center">
+        <div class="flex flex-row">
+          {{ 1 | qubit_circle: 0, 'base' }} {{ 0 | sqrt | qubit_circle: 1, 'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
+        </div>
       </div>
 
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <div class="flex flex-row">
+          {{ 0.5 | sqrt | qubit_circle: 0, 'base' }} {{ 0.5 | sqrt | qubit_circle: 1, 'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
+        </div>
       </div>
 
       <div class="flex flex-row">
-        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
-      </div>
-
-      <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
-      </div>
-
-      <div class="flex flex-row">
-        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | sqrt | qubit_circle: 1, 'lg' }}
+        {{ 1 | qubit_circle: 0, 'base' }} {{ 0 | sqrt | qubit_circle: 1, 'base' }}
       </div>
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
+    <div class="flex flex-row items-center space-x-4">
+      <div class="flex flex-row items-center">
+        <div class="flex flex-row">
+          {{ 0 | qubit_circle: 0, 'base' }} {{ 1 | sqrt | qubit_circle: 1, 'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
+        </div>
       </div>
 
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+        <div class="flex flex-row">
+          {{ 0.5 | sqrt | qubit_circle: 0, 'base' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
+          'base' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
+        </div>
       </div>
 
       <div class="flex flex-row">
-        {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | prepend: '-' | qubit_circle: 1,
-        'lg' }}
-      </div>
-
-      <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-        <h-gate></h-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
-      </div>
-
-      <div class="flex flex-row">
-        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | sqrt | qubit_circle: 1, 'lg' }}
+        {{ 0 | qubit_circle: 0, 'base' }} {{ 1 | sqrt | qubit_circle: 1, 'base' }}
       </div>
     </div>
   </div>
@@ -225,21 +239,22 @@ next_url: ./phase_gate.html
   ゲートを適用した場合、その変化はどのように理解するとよいでしょうか?
 </p>
 
-<div class="my-5 flex flex-row space-x-4 overflow-x-auto md:mr-auto md:w-7/12">
-  <div class="flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ -0.38268 | qubit_circle: 0, 'lg' }} {{ '0.7855 - 0.48636i' | qubit_circle: 1, 'lg' }}
-    </div>
-
+<div class="my-5 flex justify-center md:mr-auto md:w-7/12">
+  <div class="flex flex-row items-center space-x-4">
     <div class="flex flex-row items-center">
-      {% include minus.svg class="h-6 w-6 fill-current text-neutral-400" %}
-      <h-gate></h-gate>
-      {% include arrow_right.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      <div class="flex flex-row">
+        {{ -0.38268 | qubit_circle: 0, 'base' }} {{ '0.7855 - 0.48636i' | qubit_circle: 1, 'base' }}
+      </div>
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          {% include qubit_transition_arrow.svg %}
+        </div>
+        <h-gate class="operation-sm absolute inset-0 m-auto"></h-gate>
+      </div>
     </div>
-
     <div class="flex flex-row">
-      {{ '0.28483 - 0.34391i' | qubit_circle: 0, 'lg' }} {{ '-0.82603 + 0.34391i' | qubit_circle: 1,
-      'lg' }}
+      {{ '0.28483 - 0.34391i' | qubit_circle: 0, 'base' }} {{ '-0.82603 + 0.34391i' | qubit_circle:
+      1, 'base' }}
     </div>
   </div>
 </div>

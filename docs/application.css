@@ -5661,6 +5661,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 0.5rem;
 }
 
+.-mx-4 {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -6086,6 +6091,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -6361,6 +6372,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .\!pb-0 {
