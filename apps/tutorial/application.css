@@ -6843,6 +6843,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
     width: 16rem;
   }
 
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
   .md\:flex-col {
     flex-direction: column;
   }
@@ -6876,6 +6880,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
   .md\:pl-64 {
     padding-left: 16rem;
+  }
+
+  .md\:pb-0 {
+    padding-bottom: 0px;
   }
 
   .md\:shadow-none {
