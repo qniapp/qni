@@ -6023,6 +6023,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   flex-direction: column;
 }
 
+.content-end {
+  align-content: flex-end;
+}
+
 .items-start {
   align-items: flex-start;
 }
@@ -6421,6 +6425,14 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
 }
 
 .text-center {
@@ -6865,6 +6877,20 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
   .md\:flex-col {
     flex-direction: column;
+  }
+
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
   .md\:self-start {
