@@ -6617,6 +6617,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
+.text-zinc-300 {
+  --tw-text-opacity: 1;
+  color: rgb(212 212 216 / var(--tw-text-opacity));
+}
+
 .no-underline {
   -webkit-text-decoration-line: none;
           text-decoration-line: none;

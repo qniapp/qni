@@ -9,38 +9,50 @@ next: CLONE 命令!?
 next_url: ./no_cloning_theorem.html
 ---
 
+<p>
+  MEASUREMENT 命令は量子ビットから 0 または 1 の値を読み出します。
+  量子コンピュータの計算結果を何らかの形で利用するには、必ずこの MEASUREMENT
+  命令を実行する必要があります。
+</p>
+
 <h2>単純な状態の測定</h2>
 
 <p>
-  MEASUREMENT 命令は量子ビットから 0 または 1 の値を読み出します。
-  たとえば以下のように量子ビット状態が {% ket 0 %} または {% ket 1 %}
-  の状態にある場合、測定するとそのまま同じ {% ket 0 %} と {% ket 1 %} が返されます。
+  量子ビット状態が {% ket 0 %} または {% ket 1 %} の場合に MEASUREMENT
+  命令を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ {% ket 0 %} と {% ket 1 %}
+  が返されます。
 </p>
 
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
-      </div>
+    <div class="mb-8 flex flex-row items-center space-x-4">
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-        <measurement-gate></measurement-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <div class="flex flex-row">
+          {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <measurement-gate class="absolute inset-0 mx-auto"></measurement-gate>
+        </div>
       </div>
       <div class="flex flex-row">
         {{ 1 | qubit_circle: 0, 'lg' }} {{ 0 | qubit_circle: 1, 'lg' }}
       </div>
     </div>
 
-    <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
-        {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
-      </div>
+    <div class="flex flex-row items-center space-x-4">
       <div class="flex flex-row items-center">
-        {% include minus.svg class="h-6 w-6 fill-current text-gray-400" %}
-        <measurement-gate></measurement-gate>
-        {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
+        <div class="flex flex-row">
+          {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
+        </div>
+        <div class="relative h-8 w-16">
+          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+            {% include qubit_transition_arrow.svg %}
+          </div>
+          <measurement-gate class="absolute inset-0 mx-auto"></measurement-gate>
+        </div>
       </div>
       <div class="flex flex-row">
         {{ 0 | qubit_circle: 0, 'lg' }} {{ 1 | qubit_circle: 1, 'lg' }}
