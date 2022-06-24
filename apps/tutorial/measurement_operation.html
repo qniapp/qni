@@ -10,7 +10,9 @@ next_url: ./no_cloning_theorem.html
 ---
 
 <p>
-  MEASUREMENT 命令は量子ビットから 0 または 1 の値を読み出します。
+  MEASUREMENT 命令は量子ビットから 0 または 1 ({% ket 0 %} または {% ket 1 %}) の値を読み出します。
+  この読み出す操作 (Measurement) を測定または観測と呼びます {% nmargin_note measurement
+  %}本チュートリアルでは全体を通して Measurement の訳語に測定を使います。{% endnmargin_note %}。
   量子コンピュータの計算結果を何らかの形で利用するには、必ずこの MEASUREMENT
   命令を実行する必要があります。
 </p>
@@ -66,10 +68,10 @@ next_url: ./no_cloning_theorem.html
 <p>
   量子ビットが重ね合わせ状態にある場合、0 と 1 が出る確率は {% ket 0 %} と {% ket 1 %} の確率
   (青い円の面積 = 振幅の大きさの 2 乗) に応じて決まります。
-  つまり、測定の結果にはランダム性があります。
+  このように、測定の結果にはランダム性があります。
 </p>
 
-<div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
+<div class="my-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
       <div class="flex flex-row">
