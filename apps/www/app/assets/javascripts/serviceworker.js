@@ -1,5 +1,5 @@
-import {Util, describe} from '@qni/common'
 import {Simulator} from '@qni/simulator'
+import {Util} from '@qni/common'
 
 let resultCache = {}
 
@@ -18,6 +18,7 @@ function runSimulator(e) {
   Util.notNull(targets)
 
   if (debug) {
+    // eslint-disable-next-line no-console
     console.log(
       JSON.stringify(
         e.data,
@@ -114,6 +115,7 @@ function runSimulator(e) {
   const diff = e_time.getTime() - s_time.getTime()
   const cacheDesc = cacheHit ? '🎯 CACHE HIT' : '💦 CACHE MISS'
   if (debug) {
+    // eslint-disable-next-line no-console
     console.log(`⏱ simulation took ${diff} msec (${cacheDesc})`)
   }
 
