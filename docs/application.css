@@ -5622,6 +5622,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   z-index: 100;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
@@ -6620,6 +6624,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-zinc-300 {
   --tw-text-opacity: 1;
   color: rgb(212 212 216 / var(--tw-text-opacity));
+}
+
+.text-purple-500 {
+  --tw-text-opacity: 1;
+  color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
 .no-underline {
