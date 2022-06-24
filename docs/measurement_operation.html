@@ -1129,16 +1129,22 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子ビットから 0 または 1 を読み出す</p>
             </div>
             <div class="content-with-margin"><p>
-  MEASUREMENT 命令 <measurement-gate class="inline-block operation-xs"></measurement-gate> は量子ビットから 0 または 1 (\(|0\rangle\) または \(|1\rangle\)) の値を読み出します。
-  この読み出す操作 (Measurement) を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</span>。
-  量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate class="inline-block operation-xs"></measurement-gate> を実行する必要があります。
+  MEASUREMENT 命令
+  <measurement-gate class="operation-xs inline-block"></measurement-gate> は量子ビットから 0 または
+  1 (\(|0\rangle\) または \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement)
+  を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して
+  Measurement の訳語に測定を使います。</span>。
+  量子コンピュータの計算結果を何らかの形で利用するには、必ず
+  <measurement-gate class="operation-xs inline-block"></measurement-gate> を実行する必要があります。
 </p>
 
 <h2>単純な状態の測定</h2>
 
 <p>
-  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に <measurement-gate class="inline-block operation-xs"></measurement-gate> を作用させた結果は次の通りです。
-  それぞれ測定すると、そのまま同じ \(|0\rangle\) と \(|1\rangle\) が返されます。
+  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に
+  <measurement-gate class="operation-xs inline-block"></measurement-gate>
+  を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ \(|0\rangle\) と \(|1\rangle\)
+  が返されます。
 </p>
 
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
@@ -1435,15 +1441,30 @@
 </div>
 
 <p>
-  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate class="inline-block operation-xs"></measurement-gate> は <write-gate data-value="0" class="inline-block operation-xs"></write-gate> や <write-gate data-value="1" class="inline-block operation-xs"></write-gate> と同じく逆演算を持ちません。
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate
+    class="operation-xs inline-block"
+  ></measurement-gate>
+  は <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
+  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
+  と同じく逆演算を持ちません。
   また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
 </p>
 
 <h2>量子乱数ジェネレータ</h2>
 
 <p>
-  <measurement-gate class="inline-block operation-xs"></measurement-gate> とこれまでに学んだ <write-gate data-value="0" class="inline-block operation-xs"></write-gate> や <write-gate data-value="1" class="inline-block operation-xs"></write-gate>、<h-gate class="inline-block operation-xs"></h-gate> を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
-  <write-gate data-value="0" class="inline-block operation-xs"></write-gate> で \(|0\rangle\) に初期化した量子ビットを <h-gate class="inline-block operation-xs"></h-gate> で重ね合わせ状態にし、<measurement-gate class="inline-block operation-xs"></measurement-gate> で測定することで 0 または 1 をランダムに得ることができます。
+  <measurement-gate class="operation-xs inline-block"></measurement-gate> とこれまでに学んだ
+  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
+  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>、<h-gate
+    class="operation-xs inline-block"
+  ></h-gate>
+  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
+  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> で \(|0\rangle\)
+  に初期化した量子ビットを
+  <h-gate class="operation-xs inline-block"></h-gate> で重ね合わせ状態にし、<measurement-gate
+    class="operation-xs inline-block"
+  ></measurement-gate>
+  で測定することで 0 または 1 をランダムに得ることができます。
 </p>
 
 <div class="mini-qni">
@@ -1500,6 +1521,30 @@
     >Cambridge Quantum社、量子乱数生成サービス「Quantum Origin」を発表</a
   ></span>。
 </p>
+
+<orbit-reviewarea color="blue">
+  <orbit-prompt
+    question="量子ビットから 0 または 1 を読み出す QPU 命令は?"
+    answer="MEASUREMENT ゲート"
+  ></orbit-prompt>
+  <orbit-prompt cloze="量子ビットから 0 または 1 を読み出す操作を{測定}または{観測}と呼ぶ"></orbit-prompt>
+  <orbit-prompt cloze="|0⟩ を測定すると {100}% の確率で |0⟩ が得られる"></orbit-prompt>
+  <orbit-prompt cloze="|1⟩ を測定すると {100}% の確率で |1⟩ が得られる"></orbit-prompt>
+  <orbit-prompt
+    question="測定して |0⟩ が得られる確率は?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="測定して |1⟩ が得られる確率は?"
+    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
+    answer="50%"
+  ></orbit-prompt>
+  <orbit-prompt
+    question="量子ビットを測定して得られる乱数にはどんな特徴があるか?"
+    answer="原理的にまったく予測できない完璧な乱数"
+  ></orbit-prompt>
+</orbit-reviewarea>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
