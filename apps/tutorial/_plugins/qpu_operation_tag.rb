@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Jekyll
   class QpuOperationTag < Liquid::Tag
     def initialize(tag_name, op_type, tokens)
@@ -6,21 +8,20 @@ module Jekyll
     end
 
     def render(_context)
-      "<#{tag_name} class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
+      case @op_type
+      when '0', '1'
+        "<#{tag_name} data-value=\"#{@op_type}\" class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
+      else
+        "<#{tag_name} class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
+      end
     end
 
     def tag_name
       case @op_type
-      when 'h'
-        'h-gate'
-      when 'x'
-        'x-gate'
-      when 'y'
-        'y-gate'
-      when 'z'
-        'z-gate'
-      when 'phase'
-        'phase-gate'
+      when 'h', 'x', 'y', 'z', 'phase'
+        "#{@op_type}-gate"
+      when '0', '1'
+        'write-gate'
       else
         raise "Unknown operation type: #{@op_type}"
       end
