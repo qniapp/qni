@@ -9,16 +9,18 @@ module Jekyll
 
     def render(_context)
       case @op_type
+      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control'
+        "<#{tag_name} class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
       when '0', '1'
         "<#{tag_name} data-value=\"#{@op_type}\" class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
       else
-        "<#{tag_name} class=\"operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
+        raise "Unknown operation type: #{@op_type}"
       end
     end
 
     def tag_name
       case @op_type
-      when 'h', 'x', 'y', 'z', 'phase', 'measurement'
+      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control'
         "#{@op_type}-gate"
       when '0', '1'
         'write-gate'

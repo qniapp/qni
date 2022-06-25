@@ -1221,8 +1221,7 @@
 <p>
   最初の 2 つの CCNOT では、a に b の一桁目をかけた値を、m の下位 2 ビットにセットします。
   二進数のかけ算では \(1 \times 1\) の場合だけ \(1\)、それ以外の \(1 \times 0\) などは 0
-  になります。 よって、a の数と b の一桁目がそれぞれ 1 だった場合のみ、CCNOT の
-  <x-gate class="operation-xs"></x-gate> で m のビットを 1 に反転します。
+  になります。 よって、a の数と b の一桁目がそれぞれ 1 だった場合のみ、CCNOT の <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> で m のビットを 1 に反転します。
 </p>
 
 <p>
@@ -1246,9 +1245,8 @@
 </p>
 
 <p>
-  ここで安直に tmp の 2 ビットそれぞれに
-  <write-gate data-value="0" class="operation-xs"></write-gate> を置いてリセットしてはいけません!
-  tmp のビットは、計算中に a や b のビットと一緒に CCNOT
+  ここで安直に tmp の 2 ビットそれぞれに <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> を置いてリセットしてはいけません! tmp
+  のビットは、計算中に a や b のビットと一緒に CCNOT
   をしており、そこにはもつれが発生している可能性があります。 もしリセットするために tmp
   のビットを操作すると、<a href="./entanglement_operation.html">もつれを操作する</a
   >で見たように、もつれている他方のビット (a や b) も壊してしまう可能性があります。
