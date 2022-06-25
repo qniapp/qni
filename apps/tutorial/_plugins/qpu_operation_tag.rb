@@ -11,6 +11,8 @@ module Jekyll
 
     def tag_name
       case @op_type
+      when 'h'
+        'h-gate'
       when 'x'
         'x-gate'
       when 'y'
