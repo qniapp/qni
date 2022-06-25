@@ -10,18 +10,16 @@ next_url: ./phase_gate.html
 ---
 
 <p>
-  H ゲート
-  <h-gate class="operation-xs inline-block"></h-gate>
-  はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon Hadamard, 1865 - 1963)
-  の名前を冠したゲートで、別名アダマールゲートとも呼びます{% nmargin_note h-gate
-  %}英語では「ハダマードゲート (Hadamard
+  H ゲート {% qpu_operation h %} はフランスの数学者、ジャック・サロモン・アダマール (Jacques Salomon
+  Hadamard, 1865 - 1963) の名前を冠したゲートで、別名アダマールゲートとも呼びます{% nmargin_note
+  h-gate %}英語では「ハダマードゲート (Hadamard
   gate)」と言います。日本語の「アダマールゲート」は、フランス語の元々の発音 (Hadamard の最初の h
   と最後の d を発音しない) に近いカタカナ表記です。{% endnmargin_note %}。
 </p>
 
 <p>
-  <h-gate class="operation-xs inline-block"></h-gate> はシンプルな重ね合わせ状態を作ります。 {% ket
-  0 %} または {% ket 1 %} に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
+  {% qpu_operation h %} はシンプルな重ね合わせ状態を作ります。 {% ket 0 %} または {% ket 1 %}
+  に作用させると、次のように大きさの等しい重ねあわせ状態を作ります。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -64,13 +62,13 @@ next_url: ./phase_gate.html
 </div>
 
 <p>
-  {% ket 1 %} に対して <h-gate class="operation-xs inline-block"></h-gate> を適用したときのみ、{%
-  ket 1 %} の位相が π 変化していることに注意してください。 {% ket 0 %} に対する
-  <h-gate class="operation-xs inline-block"></h-gate> 操作は、位相の回転を含みません。
+  {% ket 1 %} に対して {% qpu_operation h %} を適用したときのみ、{% ket 1 %} の位相が π
+  変化していることに注意してください。 {% ket 0 %} に対する {% qpu_operation h %}
+  操作は、位相の回転を含みません。
 </p>
 
 <p>
-  <h-gate class="operation-xs inline-block"></h-gate> は QPU
+  {% qpu_operation h %} は QPU
   独自の命令です。量子ビットだけが持つ重ね合わせ状態を作るという性質を持つので、従来の論理演算には H
   ゲートに対応するものはありません。
 </p>
@@ -78,7 +76,7 @@ next_url: ./phase_gate.html
 <h2>ハンズオン</h2>
 
 <p>
-  <h-gate class="operation-xs inline-block"></h-gate> を {% ket 0 %} と {% ket 1 %}
+  {% qpu_operation h %} を {% ket 0 %} と {% ket 1 %}
   に適用して、重ね合わせ状態が作られることを確認しましょう。 {% ket 0 %}
   は最初から回路にセットされていますが、{% ket 1 %} を作るにはどうしたらいいでしょうか? (ヒント: X
   ゲートを使います)
@@ -140,11 +138,11 @@ next_url: ./phase_gate.html
 <h2>逆演算</h2>
 
 <p>
-  <h-gate class="operation-xs inline-block"></h-gate> を続けて 2 回適用するとどうなるでしょうか?
-  直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に
-  <h-gate class="operation-xs inline-block"></h-gate> を 2 個連続して置くと、{% ket 0 %} も {% ket 1
-  %} もそれぞれ元の状態に戻ります。 つまり、 <h-gate class="operation-xs inline-block"></h-gate> も
-  X ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
+  {% qpu_operation h %} を続けて 2 回適用するとどうなるでしょうか?
+  直感的には分かりづらいですが、そんな時には Qni で試してみましょう! 実際に {% qpu_operation h %} を
+  2 個連続して置くと、{% ket 0 %} も {% ket 1 %} もそれぞれ元の状態に戻ります。 つまり、 {%
+  qpu_operation h %} も X
+  ゲートと同様にそれ自身を打ち消す効果を持っているので、それ自身の逆演算です。
 </p>
 
 <div class="my-5 flex overflow-x-auto pb-4 md:pb-0">
@@ -215,12 +213,10 @@ next_url: ./phase_gate.html
 <h2>H ゲートを回転として見る</h2>
 
 <p>
-  <h-gate class="operation-xs inline-block"></h-gate> を回転として見ると、
-  <h-gate class="operation-xs inline-block"></h-gate> はブロッホ球の X 軸と Z 軸の中間 (黒い矢印)
-  を軸とした 180 度の回転となります。 たとえば北極の {% ket 0 %} 状態に
-  <h-gate class="operation-xs inline-block"></h-gate> を適用すると、赤い矢印に沿って X
-  の文字の部分まで回転します。 もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります
-  (逆演算)。
+  {% qpu_operation h %} を回転として見ると、 {% qpu_operation h %} はブロッホ球の X 軸と Z 軸の中間
+  (黒い矢印) を軸とした 180 度の回転となります。 たとえば北極の {% ket 0 %} 状態に {% qpu_operation
+  h %} を適用すると、赤い矢印に沿って X の文字の部分まで回転します。
+  もう一度適用すると、青い矢印に沿って 180 度回転し元の位置に戻ります (逆演算)。
 </p>
 
 <figure class="not-prose">

@@ -101,10 +101,9 @@ next_url: ./subtraction_circuit.html
 <h2>a += b 回路の仕組み</h2>
 
 <p>
-  この回路はやや複雑に見えますが、よく見るとインクリメント回路の各ステップに
-  <control-gate class="operation-xs"></control-gate> を足したものを、ビットをずらしながら 3
-  回繰り返していることがわかります。 そして、<control-gate class="operation-xs"></control-gate> は b
-  の各ビットにかかっています。 つまりこれは、「a の各ビットに b
+  この回路はやや複雑に見えますが、よく見るとインクリメント回路の各ステップに {% qpu_operation
+  control %} を足したものを、ビットをずらしながら 3 回繰り返していることがわかります。 そして、{%
+  qpu_operation control %} は b の各ビットにかかっています。 つまりこれは、「a の各ビットに b
   の対応するビットを条件としてインクリメント」を行う回路です。
 </p>
 

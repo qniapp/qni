@@ -1129,13 +1129,9 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子ビットの初期化とリセット</p>
             </div>
             <div class="content-with-margin"><p>
-  WRITE 命令 <write-gate data-value="0" class="operation-xs inline-block"></write-gate>
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate> は量子ビットの状態を \(|0\rangle\) または \(|1\rangle\) に初期化する命令です。
-  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。通常は回路の先頭に
-  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-  を置くことで量子ビットを \(|0\rangle\) や \(|1\rangle\) に初期化します。 続けて H ゲートなどの QPU
-  命令を置いていくことで量子プログラムを記述します。
+  WRITE 命令 <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate> は量子ビットの状態を \(|0\rangle\) または \(|1\rangle\) に初期化する命令です。
+  実は今まで断りなく何度か使ってきましたが、使いかたは簡単です。通常は回路の先頭に <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate> を置くことで量子ビットを \(|0\rangle\) や \(|1\rangle\) に初期化します。
+  続けて H ゲートなどの QPU 命令を置いていくことで量子プログラムを記述します。
 </p>
 
 <div class="my-5 flex flex-col items-center md:mr-auto md:w-7/12">
@@ -1181,18 +1177,11 @@
 </div>
 
 <p>
-  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
+  <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate>
   は量子ビットの状態を強制的にリセットするので、逆演算を持ちません。
-  つまり量子ビットの状態がどんな状態にあっても、たとえば
-  <write-gate data-value="0" class="operation-xs inline-block"></write-gate>
+  つまり量子ビットの状態がどんな状態にあっても、たとえば <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate>
   を置いた時点で振幅の大きさと位相の情報は破壊され、\(|0\rangle\) に初期化されます。
-  これは元に戻すのに必要な情報を損失していることになるため、<write-gate
-    data-value="0"
-    class="operation-xs inline-block"
-  ></write-gate>
-  と
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate> はどちらも非可逆です。
+  これは元に戻すのに必要な情報を損失していることになるため、<write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> と <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate> はどちらも非可逆です。
 </p>
 
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">

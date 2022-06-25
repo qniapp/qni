@@ -1144,8 +1144,8 @@
   では、重ね合わせに対して実行する計算は、具体的に量子回路でどのように書けるでしょうか？
   実は基本的には、従来のデジタル回路 (古典の回路) で行うビット単位の論理演算 (AND や NOT、OR など)
   と量子版の論理演算には大きな違いはありません。ただし、量子回路では AND や NOT
-  といった従来の論理ゲートの代わりに、<control-gate class="operation-xs"></control-gate> や
-  <x-gate class="operation-xs"></x-gate> といった量子ゲートを使うという違いがあります。
+  といった従来の論理ゲートの代わりに、<control-gate class="operation-xs relative top-0.5 inline-block"></control-gate> や <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate>
+  といった量子ゲートを使うという違いがあります。
   もう一つの違いは、量子ゲートは重ね合わせ状態を入力できる点です。
   このため、いったん量子版の論理演算回路を作ってしまえば、重ね合わせた量子ビットの演算にも自動的に対応できます。
 </p>
@@ -1160,7 +1160,7 @@
 
 <p>
   まずは入力を 0 として、インクリメントして 1 を計算する回路を考えます。 これは単純に 0 → 1
-  にすればいいのですから、次のように <x-gate class="operation-xs"></x-gate> で反転させれば OK です。
+  にすればいいのですから、次のように <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> で反転させれば OK です。
 </p>
 
 <div class="mini-qni">
@@ -1207,9 +1207,7 @@
   次は入力を 1 として、インクリメントして 2 を計算する回路を考えます。 1 を二進数で表すと 01、2
   を二進数で表すと 10 なので、これは 01 → 10 に変換する回路と言えます。 これはつまり、ビット 0 が 1
   であればビット 2 を反転し、その後にビット 0 を反転させれば良さそうです。 こうした「ビット 0 が 1
-  であればビット 2 を反転」という条件付き反転は、CNOT ゲートで書けます。 これと
-  <x-gate class="operation-xs"></x-gate> によるビット 0 の反転を組合わせると、1 を 2
-  にインクリメントする回路は次のように書けます。
+  であればビット 2 を反転」という条件付き反転は、CNOT ゲートで書けます。 これと <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> によるビット 0 の反転を組合わせると、1 を 2 にインクリメントする回路は次のように書けます。
 </p>
 
 <div class="mini-qni">
@@ -1322,9 +1320,9 @@
 
 <p>
   では、この回路が重ね合わせに対応していることを確認しましょう。
-  これまで見てきたように、重ね合わせを作るには <h-gate class="operation-xs"></h-gate> を使います。
-  たとえば以下のようにビット 0 に <x-gate class="operation-xs"></x-gate>、ビット 2 に
-  <h-gate class="operation-xs"></h-gate> を置くと、1 と 5 の重ね合わせを入力できます。
+  これまで見てきたように、重ね合わせを作るには <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を使います。
+  たとえば以下のようにビット 0 に <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate>、ビット 2 に <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を置くと、1 と 5 の重ね合わせを入力できます。
   これに対して先ほどのインクリメント回路を適用すると、1 と 5 それぞれに +1 した、2 と 6
   の重ね合わせが出力されます。
 </p>
@@ -1384,8 +1382,7 @@
 <h2>ハンズオン</h2>
 
 <p>
-  入力を作る <x-gate class="operation-xs"></x-gate> と
-  <h-gate class="operation-xs"></h-gate>
+  入力を作る <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> と <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
   の配置を変えることで、いろいろな重ね合わせに対してインクリメント回路を動作させてみましょう。
 </p>
 
@@ -1454,8 +1451,7 @@
   (そしてすぐ忘れてしまいがちなのは)、重ね合わせはそのまま取り出せず、測定によってどれか 1
   つの値だけしか確率的に取り出せないということです。 Qni
   はシミュレータであるため、実行中の量子コンピュータの重ね合わせ状態を見ることができますが、通常は量子コンピュータから値を取り出すには必ず測定をしなければなりません。
-  量子回路で表すと、計算結果を取り出すには次のように
-  <measurement-gate class="operation-xs"></measurement-gate>
+  量子回路で表すと、計算結果を取り出すには次のように <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
   ゲートを用いて値を取り出す必要があります。
 </p>
 

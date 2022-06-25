@@ -1129,20 +1129,14 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子ビットから 0 または 1 を読み出す</p>
             </div>
             <div class="content-with-margin"><p>
-  MEASUREMENT 命令
-  <measurement-gate class="operation-xs inline-block"></measurement-gate> は量子ビットから 0 または
-  1 (\(|0\rangle\) または \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement)
-  を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して
-  Measurement の訳語に測定を使います。</span>。
-  量子コンピュータの計算結果を何らかの形で利用するには、必ず
-  <measurement-gate class="operation-xs inline-block"></measurement-gate> を実行する必要があります。
+  MEASUREMENT 命令 <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> は量子ビットから 0 または 1 (\(|0\rangle\) または
+  \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement) を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</span>。 量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> を実行する必要があります。
 </p>
 
 <h2>単純な状態の測定</h2>
 
 <p>
-  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に
-  <measurement-gate class="operation-xs inline-block"></measurement-gate>
+  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
   を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ \(|0\rangle\) と \(|1\rangle\)
   が返されます。
 </p>
@@ -1447,30 +1441,18 @@
 </div>
 
 <p>
-  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate
-    class="operation-xs inline-block"
-  ></measurement-gate>
-  は <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-  と同じく逆演算を持ちません。
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
+  は <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate> と同じく逆演算を持ちません。
   また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
 </p>
 
 <h2>量子乱数ジェネレータ</h2>
 
 <p>
-  <measurement-gate class="operation-xs inline-block"></measurement-gate> とこれまでに学んだ
-  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> や
-  <write-gate data-value="1" class="operation-xs inline-block"></write-gate>、<h-gate
-    class="operation-xs inline-block"
-  ></h-gate>
-  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。
-  <write-gate data-value="0" class="operation-xs inline-block"></write-gate> で \(|0\rangle\)
-  に初期化した量子ビットを
-  <h-gate class="operation-xs inline-block"></h-gate> で重ね合わせ状態にし、<measurement-gate
-    class="operation-xs inline-block"
-  ></measurement-gate>
-  で測定することで 0 または 1 をランダムに得ることができます。
+  <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> とこれまでに学んだ <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate>、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。 <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> で \(|0\rangle\) に初期化した量子ビットを <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  で重ね合わせ状態にし、<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで 0 または 1
+  をランダムに得ることができます。
 </p>
 
 <div class="mini-qni">

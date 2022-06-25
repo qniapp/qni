@@ -33,11 +33,9 @@ next_url: ./addition_circuit.html
 </div>
 
 <p>
-  まずは「インクリメント」部分の一番右の
-  <x-gate class="operation-xs"></x-gate>から消していくことを考えます。
-  <x-gate class="operation-xs"></x-gate> の逆演算は
-  <x-gate class="operation-xs"></x-gate> 自身なので、次のように
-  <x-gate class="operation-xs"></x-gate> を置きます。
+  まずは「インクリメント」部分の一番右の {% qpu_operation x %}から消していくことを考えます。 {%
+  qpu_operation x %} の逆演算は {% qpu_operation x %} 自身なので、次のように {% qpu_operation x %}
+  を置きます。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -49,7 +47,7 @@ next_url: ./addition_circuit.html
   </quantum-circuit>
 </div>
 
-<p>すると <x-gate class="operation-xs"></x-gate> 2 個が打ち消しあい、次の回路になります。</p>
+<p>すると {% qpu_operation x %} 2 個が打ち消しあい、次の回路になります。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
@@ -153,29 +151,19 @@ next_url: ./addition_circuit.html
 </p>
 
 <p>
-  ただし逆演算回路を作るには、もとの回路が <x-gate class="operation-xs"></x-gate> や
-  <h-gate class="operation-xs"></h-gate> といった可逆なゲートのみから構成されている必要があります。
-  ほとんどの量子ゲートは可逆ですが、<measurement-gate class="operation-xs"></measurement-gate> や
-  <write-gate data-value="0" class="operation-xs"></write-gate>、<write-gate
-    data-value="1"
-    class="operation-xs"
-  ></write-gate
-  >は非可逆です。
+  ただし逆演算回路を作るには、もとの回路が {% qpu_operation x %} や {% qpu_operation h %}
+  といった可逆なゲートのみから構成されている必要があります。 ほとんどの量子ゲートは可逆ですが、{%
+  qpu_operation measurement %} や {% qpu_operation 0 %}、{% qpu_operation 1 %} は非可逆です。
 </p>
 
 <p>
   <a href="./increment_circuit.html">インクリメント回路</a
   >で説明したように、量子コンピュータの強力さの一因は、重ね合わせ上で演算できることです。
-  可逆なゲートは重ね合わせを入出力できるのでこれを満たしていますが、非可逆な
-  <measurement-gate class="operation-xs"></measurement-gate>
-  <write-gate data-value="0" class="operation-xs"></write-gate>
-  <write-gate data-value="1" class="operation-xs"></write-gate>
+  可逆なゲートは重ね合わせを入出力できるのでこれを満たしていますが、非可逆な {% qpu_operation
+  measurement %} {% qpu_operation 0 %} {% qpu_operation 1 %}
   は重ね合わせを出力できず、重ね合わせを強制的に重ね合わせのない {% ket 0 %} または {% ket 1 %}
   にリセットします。
   このため、これらの非可逆なゲートは量子というよりも、従来型のコンピュータに近い命令と言えます。
-  よって、従来の算術演算を量子コンピュータ上で重ね合わせを含めて実現しようとする場合には、<measurement-gate
-    class="operation-xs"
-  ></measurement-gate>
-  <write-gate data-value="0" class="operation-xs"></write-gate>
-  <write-gate data-value="1" class="operation-xs"></write-gate> を使うことはできません。
+  よって、従来の算術演算を量子コンピュータ上で重ね合わせを含めて実現しようとする場合には、{%
+  qpu_operation measurement %} {% qpu_operation 0 %} {% qpu_operation 1 %} を使うことはできません。
 </p>
