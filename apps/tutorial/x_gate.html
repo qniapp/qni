@@ -10,9 +10,9 @@ next_url: ./h_gate.html
 ---
 
 <p>
-  X ゲートは従来の NOT 演算に似た働きをします。 NOT 演算は、0 に適用するとビットが反転して 1
-  になり、逆に 1 に適用すると 0 になるのでした。つまり、NOT 演算は &quot;0 と 1 を入れ替える&quot;
-  という働きをします。
+  X ゲート {% qpu_operation x %} は従来の NOT 演算に似た働きをします。 NOT 演算は、0
+  に適用するとビットが反転して 1 になり、逆に 1 に適用すると 0 になるのでした。つまり、NOT 演算は
+  &quot;0 と 1 を入れ替える&quot; という働きをします。
 </p>
 
 <div class="flex justify-center md:mr-auto md:w-7/12">
@@ -27,7 +27,7 @@ next_url: ./h_gate.html
 </div>
 
 <p>
-  X ゲート {% qpu_operation x %} は NOT 演算によく似ていて、量子ビットの {% ket 0 %} と {% ket 1 %}
+  {% qpu_operation x %} は NOT 演算の量子版で、量子ビットの {% ket 0 %} と {% ket 1 %}
   を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
 </p>
 
