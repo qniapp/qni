@@ -10,7 +10,7 @@ next_url: ./bb84_protocol.html
 ---
 
 <p>
-  インターネットで買い物をする場合や友達とチャットする場合など、安全な通信を前提としたサービスが増えています。
+  インターネットショッピングやチャットアプリなど、安全な通信を前提としたサービスが増えています。
   通信を安全に行うには、暗号鍵と呼ばれる秘密の長い文字列を使って、送受信するデータを暗号化します。
   たとえば、買物サイトとの通信を暗号化するには、お客さんと買物サイト側で最初に同じ暗号鍵を共有する必要があります。
   暗号鍵を知らずに 2 者間の通信を盗み見ることは不可能です。
@@ -32,11 +32,8 @@ next_url: ./bb84_protocol.html
 </p>
 
 <p>
-  ここまでに習った <a href="x_gate.html">X ゲート</a>、<a href="h_gate.html">H ゲート</a>、<a
-    href="write_operation.html"
-    >WRITE 命令</a
-  >、<a href="measurement_operation.html">MEASUREMENT 命令</a
-  >だけを使って、この量子鍵配送の仕組みを説明します。
+  ここまでに習った {% qpu_operation x%} {% qpu_operation h %} {% qpu_operation 0 %} {% qpu_operation
+  measurement %} だけを使って、この量子鍵配送の仕組みを作ることができます。
   チャールズ・ベネットとジル・ブラッサールによって 1984 年に発明された BB84 プロトコル{%
   nmargin_note bb84 %}Charles H. Bennett, Gilles Brassard,
   <a href="https://arxiv.org/abs/2003.06557" class="italic"
