@@ -15,6 +15,8 @@ module Jekyll
         'x-gate'
       when 'y'
         'y-gate'
+      when 'z'
+        'z-gate'
       else
         raise "Unknown operation type: #{@op_type}"
       end
