@@ -10,10 +10,10 @@ next_url: ./write_operation.html
 ---
 
 <p>
-  PHASE ゲート <phase-gate class="operation-xs inline-block"></phase-gate> はその名の通り{%
-  nmargin_note phase-gate %}phase: 相、位相、フェーズ{% endnmargin_note
-  %}、位相を操作するゲートです。 重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ {%
-  ket 1 %} の位相を回転できます。
+  PHASE ゲート {% qpu_operation phase %} はその名の通り{% nmargin_note phase-gate %}phase:
+  相、位相、フェーズ{% endnmargin_note %}、位相を操作するゲートです。
+  重ね合わせ状態にある量子ビットに適用することで、指定した角度だけ {% ket 1 %}
+  の位相を回転できます。
 </p>
 
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
@@ -65,16 +65,14 @@ next_url: ./write_operation.html
 </div>
 
 <p>
-  <phase-gate class="operation-xs inline-block"></phase-gate> は角度を示すパラメータを必ず 1
-  つ持ちます。 たとえば、位相を π/2 回転する
-  <phase-gate class="operation-xs inline-block"></phase-gate> は上に π/2 が付きます。文中では
-  PHASE(π/2) などとパラメータを付けて書きます。
+  {% qpu_operation phase %} は角度を示すパラメータを必ず 1 つ持ちます。 たとえば、位相を π/2
+  回転する {% qpu_operation phase %} は上に π/2 が付きます。文中では PHASE(π/2)
+  などとパラメータを付けて書きます。
 </p>
 
 <p>
-  <phase-gate class="operation-xs inline-block"></phase-gate> は {% ket 0 %}
-  に何の変化も与えないことに注意してください。 また
-  <phase-gate class="operation-xs inline-block"></phase-gate> は {% ket 1 %}
+  {% qpu_operation phase %} は {% ket 0 %} に何の変化も与えないことに注意してください。 また {%
+  qpu_operation phase %} は {% ket 1 %}
   の位相のみを回転するので、振幅の大きさにも影響は与えません。また回転する角度は振幅の大きさの影響を受けません{%
   nmargin_note phase-and-amplitude-norm
   %}量子ビットの振幅の大きさと位相は独立したパラメータである、ということを思い出しましょう (<a
@@ -148,10 +146,9 @@ next_url: ./write_operation.html
 <h2>ハンズオン</h2>
 
 <p>
-  <phase-gate class="operation-xs inline-block"></phase-gate> を重ね合わせ状態に適用して、{% ket 1
-  %} の位相を回転してみましょう。<phase-gate class="operation-xs inline-block"></phase-gate>
-  の角度はデフォルトで π/2 にセットされています。変更するには、回路上に配置した
-  <phase-gate class="operation-xs inline-block"></phase-gate>
+  {% qpu_operation phase %} を重ね合わせ状態に適用して、{% ket 1 %} の位相を回転してみましょう。{%
+  qpu_operation phase %} の角度はデフォルトで π/2
+  にセットされています。変更するには、回路上に配置した {% qpu_operation phase %}
   をクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
 </p>
 

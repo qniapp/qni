@@ -19,6 +19,8 @@ module Jekyll
         'y-gate'
       when 'z'
         'z-gate'
+      when 'phase'
+        'phase-gate'
       else
         raise "Unknown operation type: #{@op_type}"
       end
