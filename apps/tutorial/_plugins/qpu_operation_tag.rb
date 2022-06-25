@@ -18,7 +18,7 @@ module Jekyll
 
     def tag_name
       case @op_type
-      when 'h', 'x', 'y', 'z', 'phase'
+      when 'h', 'x', 'y', 'z', 'phase', 'measurement'
         "#{@op_type}-gate"
       when '0', '1'
         'write-gate'
