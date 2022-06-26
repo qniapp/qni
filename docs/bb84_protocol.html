@@ -1129,8 +1129,7 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子力学を利用して暗号鍵の盗聴を検出する</p>
             </div>
             <div class="content-with-margin"><p>
-  暗号の話を始める前に、登場人物を紹介しましょう。同じ小学校に通うアリスとボブ、イブの 3
-  人です<label for="margin-note-alice-bob" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-alice-bob" class="margin-note__toggle hidden"><span class="margin-note">暗号技術の解説記事や論文では、説明のためによくこの架空の 3
+  暗号の話を始める前に、登場人物を紹介しましょう。同じ小学校に通うアリスとボブ、イブの 3 人です<label for="margin-note-alice-bob" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-alice-bob" class="margin-note__toggle hidden"><span class="margin-note">暗号技術の解説記事や論文では、説明のためによくこの架空の 3
   人が登場します。 たいていはアリス (Alice) がボブ (Bob) にメッセージを送り、悪いハッカーのイブ
   (Eve) が盗聴を企てます。複雑な暗号の例になるとさらに、チャーリー (Charlie)、デイヴ
   (Dave)、というように頭文字に A, B, C, D,... を持つキャラクター達が続々と登場します。</span>。
@@ -1174,14 +1173,12 @@
 <p>
   量子ビットを送る際に、アリスはイブの盗聴を検出するための仕掛けを量子ビットに仕込んでおきます<label for="margin-note-qkd_trick" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qkd_trick" class="margin-note__toggle hidden"><span class="margin-note">この仕掛けの効果については、後半で説明します</span>。
   アリスは、送信する 1 量子ビットごとにランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。
-  適用するかしないかは、送信する 1 量子ビットごとに量子乱数で生成した 0 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用しない) または 1 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用する) によって決めます。
-  そして、もし 1 だったら現在の量子ビットの通し番号 (382 番目など) をメモした上で、量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してからボブに送ります。
-  つまり、4,000 量子ビットをボブに送信した後、アリスの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット番号のリストが残ることになります。
+  適用するかしないかは、送信する 1 量子ビットごとに量子乱数で生成した 0 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用しない) または 1 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用する) によって決めます。 そして、もし 1
+  だったら現在の量子ビットの通し番号 (382 番目など) をメモした上で、量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してからボブに送ります。 つまり、4,000 量子ビットをボブに送信した後、アリスの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット番号のリストが残ることになります。
 </p>
 
-<p>
-  このときアリスの送る量子ビットは、次の 4 パターンのうちいずれか 1 つの状態になっています。
-</p>
+<p>このときアリスの送る量子ビットは、次の 4 パターンのうちいずれか 1 つの状態になっています。</p>
 
 <div class="mx-5 flex overflow-x-auto">
   <div class="flex flex-col">
@@ -1516,27 +1513,30 @@
 </div>
 
 <p>
-  受け取る側のボブも、1 量子ビットごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してから受け取ります。
+  受け取る側のボブも、1 量子ビットごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用してから受け取ります。
   この時ボブもまた、ゲートを適用した量子ビットの通し番号をメモしておきます。
-  ここで、アリスもボブの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビットの番号リストが残っていますが、それぞれ完全にランダムに選んだので、異なる量子ビット番号リストを持っていることに注意しましょう。
+  ここで、アリスもボブの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用した量子ビットの番号リストが残っていますが、それぞれ完全にランダムに選んだので、異なる量子ビット番号リストを持っていることに注意しましょう。
 </p>
 
 <p>
-  暗号鍵の送信が終わると、アリスとボブはそれぞれのリストをインターネット上で交換し、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した/しないが一致する量子ビットの番号一覧を得ます。
-  このとき一致するのは確率的に大体 50% ですから、手元にはもともと送った 4,000 量子ビットの半分、2,000 量子ビットのリストが残ります。
+  暗号鍵の送信が終わると、アリスとボブはそれぞれのリストをインターネット上で交換し、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した/しないが一致する量子ビットの番号一覧を得ます。 このとき一致するのは確率的に大体
+  50% ですから、手元にはもともと送った 4,000 量子ビットの半分、2,000 量子ビットのリストが残ります。
 </p>
 
 <p>
-  このリストの量子ビットをボブが測定します。
-  アリスとボブのどちらも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用しなかった量子ビット (0 で一致したもの) については、アリスがセットした \(|0\rangle\) または \(|1\rangle\)
-  がそのまま得られます。 アリスとボブの両者が <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット (1 で一致したもの) についても、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を 2
-  回適用することで元通りになるので (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> はそれ自身を打ち消す効果があるのでした)、やはりボブはアリスのセットした \(|0\rangle\) または \(|1\rangle\) を得ることができます。
+  このリストの量子ビットをボブが測定します。 アリスとボブのどちらも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用しなかった量子ビット (0 で一致したもの) については、アリスがセットした \(|0\rangle\) または \(|1\rangle\) がそのまま得られます。 アリスとボブの両者が <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット (1
+  で一致したもの) についても、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を 2 回適用することで元通りになるので (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> はそれ自身を打ち消す効果があるのでした)、やはりボブはアリスのセットした \(|0\rangle\) または \(|1\rangle\) を得ることができます。
 </p>
 
 <p>
   アリスとボブはさらに、得られた 2,000 文字のうち最初の半分 1,000
   文字をインターネット経由で交換し、確かに一致していることをお互いにチェックします。
-  このとき、アリスとボブは互いに一致する 2,000 文字を共有していることになり、そのうちインターネットに流していない残り 1,000 文字を秘密鍵として使えます。
+  このとき、アリスとボブは互いに一致する 2,000
+  文字を共有していることになり、そのうちインターネットに流していない残り 1,000
+  文字を秘密鍵として使えます。
 </p>
 
 <h2>イブの盗聴を検出する</h2>
@@ -1544,8 +1544,8 @@
 <p>
   もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか?
   クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-note__toggle hidden"><span class="margin-note"><a href="./no_cloning_theorem.html"
-                                                       >CLONE 命令!?</a
-                                                                    >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
+    >CLONE 命令!?</a
+  >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
   このため、盗聴するにはアリスの送った量子ビットをこっそり測定することで盗聴し、ボブへは別の適当に作りあげた量子ビットをアリスのふりをして送る必要があります。
 </p>
 
@@ -1560,7 +1560,8 @@
 <h2>まとめ</h2>
 
 <p>
-  BB84 は量子乱数の完全なランダム性や、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> がそれ自身の逆演算であるという性質、そしてクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
+  BB84 は量子乱数の完全なランダム性や、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  がそれ自身の逆演算であるという性質、そしてクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
   数種類の基本的な QPU
   命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも早く商業化できることが期待されています。
 </p>
