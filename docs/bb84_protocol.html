@@ -1145,20 +1145,19 @@
 <h2>暗号鍵の共有</h2>
 
 <p>
-  暗号鍵を共有するには、アリスが 0 と 1
-  をランダムに並べた長い文字列を作り、それを盗聴されないようにボブに送る必要があります。
-  普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数生成アルゴリズムを突き止めることで暗号鍵を盗んでしまう可能性があります。
+  暗号鍵は乱数で生成します。アリスが 0 と 1 をランダムに並べた長い文字列を作り、ボブに送る必要があります。
+  ただし、もし普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数生成アルゴリズムを突き止めることで暗号鍵を盗めてしまう可能性があります。
   そこで、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-note__toggle hidden"><span class="margin-note"><a
     href="./measurement_operation.html"
     >MEASUREMENT 命令</a
   >を参照</span>を使って、原理的にまったく予測できない完璧な乱数を生成します。
-  アリスは長めに 4,000 文字の暗号鍵を量子乱数で生成しました。
+  今回、アリスは 4,000 文字の暗号鍵を量子乱数で生成したこととします。
 </p>
 
 <p>
-  今度は、生成した暗号鍵をボブに送る必要があります。
+  今度は、生成した暗号鍵を盗聴されないようにボブへと送る必要があります。
   しかしイブはアリスの通信をいつでも盗聴でき、さらに最新の量子コンピュータまで持っています。
-  アリスが暗号鍵に普通の暗号をかけてボブにメールしようものなら、イブはたちどころにその暗号を解除してしまうでしょう。
+  アリスが暗号鍵に普通の暗号をかけてボブにメールしようものなら、イブはたちどころに解除してしまうでしょう。
   そこで BB84 プロトコルの出番です。
 </p>
 
@@ -1173,29 +1172,30 @@
 <p>
   量子ビットを送る際に、アリスはイブの盗聴を検出するための仕掛けを量子ビットに仕込んでおきます<label for="margin-note-qkd_trick" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qkd_trick" class="margin-note__toggle hidden"><span class="margin-note">この仕掛けの効果については、後半で説明します</span>。
   アリスは、送信する 1 量子ビットごとにランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。
-  適用するかしないかは、送信する 1 量子ビットごとに量子乱数で生成した 0 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用しない) または 1 (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用する) によって決めます。 そして、もし 1
-  だったら現在の量子ビットの通し番号 (382 番目など) をメモした上で、量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してからボブに送ります。 つまり、4,000 量子ビットをボブに送信した後、アリスの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット番号のリストが残ることになります。
+  適用するかしないかは、送信する 1 量子ビットごとに量子乱数 0 または 1 を作って決めます。
+  これがもし 1 だったら、量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してからボブに送ります。
+  そして、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビットの通し番号 (382 番目など) をメモしておきます。
+  4,000 量子ビットをボブに送信し終った後、アリスの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット番号のリストが残ることになります。
 </p>
 
 <p>このときアリスの送る量子ビットは、次の 4 パターンのうちいずれか 1 つの状態になっています。</p>
 
-<div class="mx-5 flex overflow-x-auto">
+<div class="my-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="flex flex-row items-center">
       <div class="mr-8">
         <div class="flex flex-col">
-          <div>ボブに \(|0\rangle\) を送る場合</div>
-          <div>(<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> なし/あり)</div>
+          <div class="whitespace-nowrap">ボブに \(|0\rangle\) を送る場合</div>
+          <div class="whitespace-nowrap">(<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> なし/あり)</div>
         </div>
       </div>
 
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1204,13 +1204,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1219,8 +1219,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1228,14 +1228,14 @@
           <div class="flex flex-row items-center">
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-            <div>NOP</div>
+            <div class="text-xs">NOP</div>
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1244,13 +1244,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1259,8 +1259,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1269,9 +1269,9 @@
 
         <div class="flex flex-row items-center space-x-1">
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1280,13 +1280,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1295,8 +1295,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1304,14 +1304,14 @@
           <div class="flex flex-row items-center">
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-            <h-gate></h-gate>
+            <h-gate class="operation-sm"></h-gate>
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="0.7071067811865476"
     data-popup-template-id="qubit-circle-popup"
@@ -1320,13 +1320,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="0.7071067811865476"
     data-popup-template-id="qubit-circle-popup"
@@ -1335,8 +1335,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1358,9 +1358,9 @@
       <div class="flex flex-col">
         <div class="mb-8 flex flex-row items-center space-x-1">
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1369,13 +1369,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1384,8 +1384,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1393,14 +1393,14 @@
           <div class="flex flex-row items-center">
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-            <div>NOP</div>
+            <div class="text-xs">NOP</div>
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1409,13 +1409,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1424,8 +1424,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1434,9 +1434,9 @@
 
         <div class="mb-8 flex flex-row items-center space-x-1">
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="0"
     data-popup-template-id="qubit-circle-popup"
@@ -1445,13 +1445,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="1"
     data-popup-template-id="qubit-circle-popup"
@@ -1460,8 +1460,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1469,14 +1469,14 @@
           <div class="flex flex-row items-center">
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-            <h-gate></h-gate>
+            <h-gate class="operation-sm"></h-gate>
             <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
           </div>
           <div class="flex flex-row">
-            <div class="flex w-16 flex-col items-start">
+            <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="0"
     data-amplitude="0.7071067811865476"
     data-popup-template-id="qubit-circle-popup"
@@ -1485,13 +1485,13 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
   </div>
 </div>
- <div class="flex w-16 flex-col items-start">
+ <div class="flex w-11 flex-col items-start">
   <qubit-circle
-    class="h-12 w-12"
+    class="h-8 w-8"
     data-ket="1"
     data-amplitude="-0.7071067811865476"
     data-popup-template-id="qubit-circle-popup"
@@ -1500,8 +1500,8 @@
     data-show-popup-probability
     data-show-popup-phase
   ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
+  <div class="-mt-1 flex w-full flex-row justify-end">
+    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
   </div>
 </div>
 
@@ -1513,47 +1513,69 @@
 </div>
 
 <p>
-  受け取る側のボブも、1 量子ビットごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用してから受け取ります。
-  この時ボブもまた、ゲートを適用した量子ビットの通し番号をメモしておきます。
-  ここで、アリスもボブの手元には <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用した量子ビットの番号リストが残っていますが、それぞれ完全にランダムに選んだので、異なる量子ビット番号リストを持っていることに注意しましょう。
+  ボブはアリスがランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> をかけた \(|0\rangle\) または \(|1\rangle\) を復号する必要があります。
+  このために、ボブも 1 量子ビットを受信するごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。
+  このときボブも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビットの通し番号を手元にメモしておきます。
+  アリスとボブは独立してランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用したので、お互いに異なる通し番号リストを持っていることに注意しましょう。
 </p>
 
 <p>
-  暗号鍵の送信が終わると、アリスとボブはそれぞれのリストをインターネット上で交換し、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した/しないが一致する量子ビットの番号一覧を得ます。 このとき一致するのは確率的に大体
-  50% ですから、手元にはもともと送った 4,000 量子ビットの半分、2,000 量子ビットのリストが残ります。
+  これによってボブはどんなデータを受け取ることができるか、詳しく見てみましょう。
+</p>
+
+<ul>
+  <li><p><strong>アリスとボブのどちらも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用しなかった場合</strong></p>
+    <p>アリスが送った \(|0\rangle\) または \(|1\rangle\) をボブがそのまま受信するだけなので、測定すると正しいビットが得られます。</p>
+  </li>
+
+  <li><p><strong>アリスとボブの両者が <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した場合</strong></p>
+    <p>アリスが適用した <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> はボブの適用する <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> によって打ち消されます。
+      よって、アリスが送った \(|0\rangle\) または \(|1\rangle\) をそのまま受信でき、測定すると正しいビットが得られます。</p>
+  </li>
+
+  <li><p><strong>アリスまたはボブの一方が <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した場合</strong></p>
+    <p>ボブの量子ビットは等しい重ね合わせ状態になるため、測定すると \(|0\rangle\) または \(|1\rangle\) が 50% ずつの確率で得られます。
+      つまりアリスが \(|0\rangle\) または \(|1\rangle\) のどちらを送ったかは分かりません。
+    </p>
+</ul>
+
+<p>
+  ボブがアリスの送ったビット列を正しく復号できるのは、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した/しないがお互いに一致した場合のみです。
+  そこで一致した量子ビットだけを得るために、アリスとボブはそれぞれの通し番号リストをインターネット上で交換し、一致した通し番号のリストを得ます。
+  ランダムな 0 と 1 が一致するのは確率的に大体 50% ですから、二人の手元にはもともと送った 4,000 量子ビットの半分、2,000 量子ビット分のリストが残ります。
+  この量子ビットをボブが測定すれば、アリスの送った \(|0\rangle\) または \(|1\rangle\) を正しく 0 または 1 に復号できます。
 </p>
 
 <p>
-  このリストの量子ビットをボブが測定します。 アリスとボブのどちらも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用しなかった量子ビット (0 で一致したもの) については、アリスがセットした \(|0\rangle\) または \(|1\rangle\) がそのまま得られます。 アリスとボブの両者が <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビット (1
-  で一致したもの) についても、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を 2 回適用することで元通りになるので (<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> はそれ自身を打ち消す効果があるのでした)、やはりボブはアリスのセットした \(|0\rangle\) または \(|1\rangle\) を得ることができます。
-</p>
-
-<p>
-  アリスとボブはさらに、得られた 2,000 文字のうち最初の半分 1,000
-  文字をインターネット経由で交換し、確かに一致していることをお互いにチェックします。
-  このとき、アリスとボブは互いに一致する 2,000
-  文字を共有していることになり、そのうちインターネットに流していない残り 1,000
-  文字を秘密鍵として使えます。
+  最後に、イブによる盗聴がないことを確認するために答あわせをします。
+  アリスとボブは得られた 2,000 文字のうち最初の半分 1,000 文字をインターネット経由で交換し、完全に一致していることをお互いにチェックします。
+  もし一致していれば、アリスとボブは完全に一致する 2,000 文字を共有していることが保証されます。
+  そのうちインターネットに流していない残り 1,000 文字は、二人以外にはまだ見られていません。
+  そこで、これを秘密の暗号鍵として使うことができます。
 </p>
 
 <h2>イブの盗聴を検出する</h2>
 
 <p>
   もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか?
+  アリスの送った量子ビットをイブが <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> で読み出そうとすると、アリスの送った量子ビットは \(|0\rangle\) または \(|1\rangle\) になってしまいます。
+  つまり、量子ビットの状態を壊さずに通信を覗き見ることはできません。また、
   クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-note__toggle hidden"><span class="margin-note"><a href="./no_cloning_theorem.html"
-    >CLONE 命令!?</a
-  >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製することはできません。
-  このため、盗聴するにはアリスの送った量子ビットをこっそり測定することで盗聴し、ボブへは別の適当に作りあげた量子ビットをアリスのふりをして送る必要があります。
+                                                       >CLONE 命令!?</a
+                                                                    >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製しておいて後で解析するといったことも不可能です。
 </p>
 
 <p>
-  間にイブがはさまることで、ボブが受け取る量子ビットの測定結果に影響が出ます。
+  イブが唯一できることは、アリスの送った量子ビットを 50% の確率で当てることです。
+  イブはアリスの量子ビットを横取りし <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで、\(|0\rangle\) または \(|1\rangle\) を得ます。
+  ただしアリスは <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> をランダムに適用しているので、アリスが \(|0\rangle\) と \(|1\rangle\) のどちらを送ったかは 50% の確率でしか当たりません。
+  また盗聴がバレないようにするために、適当に作りあげたニセ量子ビットをアリスのふりをしてボブへと送る必要があります。
+</p>
+
+<p>
+  このように間にイブがはさまることで、ボブが受け取る量子ビットの測定結果に影響が出ます。
   これは、アリスとボブが最終チェックで 1,000 文字の値を突き合わせる時に発覚します。
-  イブがでたらめに送った量子ビットのせいで、1,000 文字の約半分 500
-  文字が一致しなくなってしまうのです。
+  イブがでたらめに送った量子ビットのせいで、最後の答えあわせの際に 1,000 文字の約半分 500 文字が一致しなくなってしまうのです。
   こうなるとアリスとボブは別の通信方法を採るしかありませんが、イブによる暗号鍵ハッキングは未然に防げることになります。
 </p>
 
@@ -1561,7 +1583,7 @@
 
 <p>
   BB84 は量子乱数の完全なランダム性や、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  がそれ自身の逆演算であるという性質、そしてクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
+  がそれ自身の逆演算であるという性質、<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> による量子ビット状態の破壊やクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
   数種類の基本的な QPU
   命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも早く商業化できることが期待されています。
 </p>
