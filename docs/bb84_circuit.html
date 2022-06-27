@@ -1142,19 +1142,25 @@
   ボブは受け取った量子ビットにランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してから測定します。
 </p>
 
-<div class="relative mb-10 rounded-md bg-neutral-50">
+<p>
+  ランダムにゲートを適用するために、今回は Qni の新たな機能を使います。
+</p>
+
+<ul>
+  <li><measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> の上の文字列は、測定で得られた 0 または 1
+    を指定した変数にセットすることを表します。たとえば `aliceX` とラベルの付いた <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> が \(|1\rangle\) を測定した場合、変数 `aliceH` の値は 1 となります。</li>
+  <li><x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> や <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> の上の文字列は変数名を意味し、変数の値が 1 だった時のみゲートを適用することを意味します。
+    たとえば `aliceX` とラベルの付いた <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> は、同じく `aliceX` とラベルの付いた <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> の測定結果が \(|1\rangle\) だった時のみ適用されます。</li>
+</ul>
+
+<p>
+  以上を頭に入れて、BB84 回路の動作をひとつひとつ確認していきましょう。
+</p>
+
+<div class="my-5 relative mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
-        <div
-          id="palette"
-          class="absolute left-0 top-0 ml-6 mt-8 flex w-min rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-        >
-          <palette-dropzone>
-            <bloch-display data-hoverable></bloch-display>
-          </palette-dropzone>
-        </div>
-
         <div
           class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
@@ -1172,12 +1178,12 @@
         </div>
 
         <quantum-circuit
-          class="mt-32 mb-40"
+          class="mt-12 mb-40"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
           data-min-step-count="8"
-          data-json='{"cols":[["{送信内容を決める2つの乱数を生成"],["|0>"],["H"],["Measure>aliceX"],["|0>"],["H"],["Measure>aliceH"],["}"],["|0>"],["{|1⟩をセット?"],["X<aliceX"],["}"],["Bloch"],["{Hを適用?"],["H<aliceH"],["}"],["Bloch"],["Swap","Swap"],["{🕶イブ"],[1,"H"],[1,"Measure>eveX"],[1,"|0>"],[1,"X<eveX"],[1,"H"],[1,"Bloch"],["}"],[1],["{Hのための乱数を生成"],[1,1,"|0>"],[1,1,"H"],[1,1,"Measure>bobH"],["}"],[1,"Swap","Swap"],["{Hを適用?"],[1,1,"H<bobH"],["}"],[1,1,"Bloch"],["{測定"],[1,1,"Measure"],["}"]]}'
+          data-json='{"cols":[["{送信内容を決める2つの乱数を生成"],["|0>"],["H"],["Measure>aliceX"],["|0>"],["H"],["Measure>aliceH"],["}"],["|0>"],["{|1⟩をセット"],["X<aliceX"],["}"],["Bloch"],["{Hを適用"],["H<aliceH"],["}"],["Bloch"],["Swap","Swap"],["{🕶イブ"],[1,"H"],[1,"Measure>eveX"],[1,"|0>"],[1,"X<eveX"],[1,"H"],[1,"Bloch"],["}"],[1],["{Hのための乱数を生成"],[1,1,"|0>"],[1,1,"H"],[1,1,"Measure>bobH"],["}"],[1,"Swap","Swap"],["{Hを適用"],[1,1,"H<bobH"],["}"],[1,1,"Bloch"],["{測定"],[1,1,"Measure"],["}"]]}'
         >
         </quantum-circuit>
 
@@ -1209,8 +1215,7 @@
   を決めるため、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-note__toggle hidden"><span class="margin-note"><a
     href="./measurement_operation.html"
     >MEASUREMENT 命令</a
-  >を参照</span>で 0 または 1 を作り、変数 <code>aliceX</code> にセットします (<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> の上の文字列は、測定で得られた 0 または 1
-  を指定した変数にセットすることを表します)。同様に、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  >を参照</span>で 0 または 1 を作り、変数 <code>aliceX</code> にセットします。同様に、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
   を適用する/しないをランダムに決めるための変数
   <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
 </p>
@@ -1219,7 +1224,7 @@
   次に、このランダムな値 0 または 1 を持つ 2 つの変数 <code>aliceX</code> と
   <code>aliceH</code> を使って、暗号鍵の 1 ビット分を作ります。 \(|0\rangle\)
   に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate>
-  を適用します (<x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> の上の <code>if aliceX</code> がこの適用条件を表します)。
+  を適用します。
   これによって、アリスの量子ビットはランダムに \(|0\rangle\) または \(|1\rangle\) の状態を持ちます。
   同様に、ランダムな変数 <code>aliceH</code> の値が 1 だった場合に <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
   を適用します。 できあがった量子ビットを (イブにすぐ横取りされてしまうものの) ボブへと送ります。
