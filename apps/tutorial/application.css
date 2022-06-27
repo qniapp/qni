@@ -3392,6 +3392,8 @@ measurement-gate::part(value)::after {
   height: 100%;
   width: 100%;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 measurement-gate[data-value='0']::part(value)::after {

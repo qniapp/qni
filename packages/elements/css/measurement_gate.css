@@ -36,6 +36,7 @@ measurement-gate {
     @apply items-center;
     @apply h-full w-full;
     @apply font-mono;
+    @apply text-lg;
   }
 
   &[data-value='0']::part(value)::after {
