@@ -1514,7 +1514,7 @@
 
 <p>
   ボブはアリスがランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> をかけた \(|0\rangle\) または \(|1\rangle\)
-  を復号する必要があります。 このために、ボブも 1 量子ビットを受信するごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。 そしてボブも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  を正しく読み出す必要があります。 このために、ボブも 1 量子ビットを受信するごとに量子乱数でランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。 そしてボブも <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
   を適用した量子ビットの通し番号を手元にメモしておきます。 アリスとボブは独立してランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用したので、お互いに異なる通し番号リストを持っていることに注意しましょう。
 </p>
 
@@ -1549,7 +1549,7 @@
 </ul>
 
 <p>
-  ボブがアリスの送ったビット列を正しく復号できるのは、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  ボブがアリスの送ったビット列を正しく読み出せるのは、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
   を適用した/しないがお互いに一致した場合のみです。
   そこで一致した量子ビットだけを得るために、アリスとボブはそれぞれの通し番号リストをインターネット上で交換し、一致した通し番号のリストを得ます。
   ランダムな 0 と 1 が一致するのは確率的に大体 50% ですから、二人の手元にはもともと送った 4,000
