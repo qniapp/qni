@@ -23,18 +23,14 @@ next_url: ./superposition_quantum_logic.html
 <p>
   まずは論理 NOT の量子版です。 これは <code>a = NOT a</code> と書け、a の NOT を取ったものを a
   に代入します。 プログラミングに慣れている人ならば
-  <code>a != a</code> と書いたほうが分かりやすいかもしれません。 これは、<x-gate
-    class="operation-xs inline-block"
-  ></x-gate>
+  <code>a != a</code> と書いたほうが分かりやすいかもしれません。 これは、 {% qpu_operation x %}
   をそのまま使うだけです。
 </p>
 
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 NOT の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 NOT の動作を確認しましょう
     </li>
   </ul>
 </div>
@@ -138,9 +134,7 @@ next_url: ./superposition_quantum_logic.html
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 AND の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 AND の動作を確認しましょう
     </li>
   </ul>
 </div>
@@ -209,9 +203,7 @@ next_url: ./superposition_quantum_logic.html
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 XOR の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 XOR の動作を確認しましょう
     </li>
   </ul>
 </div>
@@ -314,11 +306,9 @@ next_url: ./superposition_quantum_logic.html
 </div>
 
 <p>
-  NOT ゲート <x-gate class="operation-xs inline-block"></x-gate> の記号はなぜ「+」か?
-  と今まで疑問に思っていた人もいるかもしれません。 これは、CNOT で
-  <x-gate class="operation-xs inline-block"></x-gate> を置いたビットに XOR という<strong
-    >足し算 (排他的論理和)</strong
-  >
+  NOT ゲート {% qpu_operation x %} の記号はなぜ「+」か?
+  と今まで疑問に思っていた人もいるかもしれません。 これは、CNOT で {% qpu_operation x %}
+  を置いたビットに XOR という<strong>足し算 (排他的論理和)</strong>
   が実行されるから、と考えることができます。
 </p>
 
@@ -327,15 +317,14 @@ next_url: ./superposition_quantum_logic.html
 <p>
   論理 NAND は NOT + AND の省略形で、入力がすべて 1 だった場合に 0、それ以外は 1 を返します。
   これは入力 a, b、出力 c の場合には、`c = NOT(a AND b)` と書くことができ、 先ほどの量子論理 AND
-  回路と <x-gate class="operation-xs inline-block"></x-gate> を組合わせることで実装できます。
+  回路と {% qpu_operation x %} を組合わせることで実装できます。
 </p>
 
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 NAND の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 NAND
+      の動作を確認しましょう
     </li>
   </ul>
 </div>
@@ -404,9 +393,7 @@ next_url: ./superposition_quantum_logic.html
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 OR の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 OR の動作を確認しましょう
     </li>
   </ul>
 </div>
@@ -528,9 +515,8 @@ next_url: ./superposition_quantum_logic.html
 <p>
   最後のステップで a, b に対してアンコンピュテーションすることで a, b
   を元に戻していることに注意しましょう。
-  <code>c = a OR b</code> の回路は a, b の値は書き換えないので、ふたたびそれぞれに
-  <x-gate class="operation-xs inline-block"></x-gate> を適用することで (= NOT a,b
-  の逆回路を適用することで) 元の状態に戻してやる必要があります。
+  <code>c = a OR b</code> の回路は a, b の値は書き換えないので、ふたたびそれぞれに {% qpu_operation
+  x %} を適用することで (= NOT a,b の逆回路を適用することで) 元の状態に戻してやる必要があります。
 </p>
 
 <h2>量子論理 NOR</h2>
@@ -551,17 +537,14 @@ next_url: ./superposition_quantum_logic.html
 </div>
 
 <p>
-  ここで NOT c の <x-gate class="operation-xs inline-block"></x-gate> は OR の
-  <x-gate class="operation-xs inline-block"></x-gate> と打ち消しあって消えるので、最終的な NOR
-  は次のようになります。
+  ここで NOT c の {% qpu_operation x %} は OR の {% qpu_operation x %}
+  と打ち消しあって消えるので、最終的な NOR は次のようになります。
 </p>
 
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      <write-gate data-value="0" class="operation-xs inline-block"></write-gate> と
-      <write-gate data-value="1" class="operation-xs inline-block"></write-gate>
-      を入れ替えて量子論理 NOR の動作を確認しましょう
+      {% qpu_operation 0 %} と {% qpu_operation 1 %} を入れ替えて量子論理 NOR の動作を確認しましょう
     </li>
   </ul>
 </div>

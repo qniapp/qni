@@ -45,8 +45,24 @@ write-gate {
     @apply text-xs;
   }
 
+  &.operation-sm::part(value)::after {
+    @apply text-sm;
+  }
+
+  &.operation-base::part(value)::after {
+    @apply text-lg;
+  }
+
+  &.operation-lg::part(value)::after {
+    @apply text-xl;
+  }
+
   &.operation-xl::part(value)::after {
     @apply text-2xl;
+  }
+
+  &.operation-2xl::part(value)::after {
+    @apply text-4xl;
   }
 
   /* data-grabbed */

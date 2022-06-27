@@ -4799,9 +4799,29 @@ write-gate.operation-xs::part(value)::after {
   line-height: 1rem;
 }
 
+write-gate.operation-sm::part(value)::after {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+write-gate.operation-base::part(value)::after {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+write-gate.operation-lg::part(value)::after {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 write-gate.operation-xl::part(value)::after {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+write-gate.operation-2xl::part(value)::after {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 /* data-grabbed */

@@ -13,8 +13,7 @@ next_url: ./phase_logic_combination.html
   位相論理演算は、論理演算の結果を振幅の大きさではなく位相に出力するテクニックです。
   位相バージョンの AND, OR
   といった論理演算は、入力として論理演算と同じく振幅を取り、出力として位相<strong>のみ</strong>を変化させます。
-  位相は
-  <measurement-gate class="operation-xs inline-block"></measurement-gate>
+  位相は {% qpu_operation measurement %}
   では直接読み出せないため隠れた情報ですが、いくつかの計算で位相の値を利用できます。
 </p>
 
@@ -22,10 +21,8 @@ next_url: ./phase_logic_combination.html
   たとえば後で紹介する<strong>振幅増幅</strong>は、位相を使った強力なテクニックの 1 つです。
   以下のように位相論理演算によってある振幅の位相を反転 (πの回転) させ「マーク」をつけます。
   振幅増幅は、各振幅の位相差を振幅の大きさの差に変換します。
-  これによって、マークを付けた値の確率だけを上昇させ、ほかの確率を下降させることによって、<measurement-gate
-    class="operation-xs inline-block"
-  ></measurement-gate>
-  で読み出しやすくします。
+  これによって、マークを付けた値の確率だけを上昇させ、ほかの確率を下降させることによって、{%
+  qpu_operation measurement %} で読み出しやすくします。
 </p>
 
 <figure>
@@ -98,8 +95,8 @@ next_url: ./phase_logic_combination.html
 </div>
 
 <p>
-  pNOT 回路は次のように <x-gate class="operation-xs inline-block"></x-gate> と
-  <phase-gate class="operation-xs inline-block"></phase-gate> を組合わせて作ることができます。
+  pNOT 回路は次のように {% qpu_operation x %} と {% qpu_operation phase %}
+  を組合わせて作ることができます。
 </p>
 
 <div class="mini-qni">
@@ -267,11 +264,11 @@ next_url: ./phase_logic_combination.html
 </div>
 
 <p>
-  pAND 回路は次のように CPHASE{% nmargin_note cphase %}π 回転の
-  <phase-gate class="operation-xs inline-block"></phase-gate>
-  を条件付きで実行するもの。<control-gate class="operation-xs inline-block"></control-gate> 2
-  つで略記できる。詳しくは<a href="./cphase.html">CPHASE ゲート</a>参照{% endnmargin_note %}
-  一個で表せます。
+  pAND 回路は次のように CPHASE{% nmargin_note cphase %}π 回転の {% qpu_operation phase %}
+  を条件付きで実行するもの。{% qpu_operation control %} 2 つで略記できる。詳しくは<a
+    href="./cphase.html"
+    >CPHASE ゲート</a
+  >参照{% endnmargin_note %} 一個で表せます。
 </p>
 
 <div class="mini-qni">
@@ -439,8 +436,7 @@ next_url: ./phase_logic_combination.html
 </div>
 
 <p>
-  pOR 回路は次のように π 回転の <phase-gate class="operation-xs inline-block"></phase-gate> と
-  CPHASE を組合わせて作ることができます。
+  pOR 回路は次のように π 回転の {% qpu_operation phase %} と CPHASE を組合わせて作ることができます。
 </p>
 
 <div class="mini-qni">
@@ -1003,8 +999,6 @@ next_url: ./phase_logic_combination.html
 <p>
   位相論理演算は入力として振幅を取り、出力として位相に結果を書き込みます。
   このとき振幅の大きさは変化せず、結果が 1 となる振幅の位相のみが反転する点がポイントです。
-  結果を位相に書き込む目的は、振幅増幅のプロセスを通じて振幅の大きさを増幅することで、<measurement-gate
-    class="operation-xs inline-block"
-  ></measurement-gate>
-  による測定で答を取り出しやすくすることです。
+  結果を位相に書き込む目的は、振幅増幅のプロセスを通じて振幅の大きさを増幅することで、 {%
+  qpu_operation measurement %} による測定で答を取り出しやすくすることです。
 </p>
