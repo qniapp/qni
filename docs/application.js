@@ -9736,7 +9736,7 @@ var sr = /* @__PURE__ */ __name(class extends At(It(Qt($t(nn(Pt(Bt(Rt(Mt(Et(HTML
 u(sr, "RzGateElement");
 et(sr);
 var Yp = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+  <path d="M12 36L36 12M12 12L36 36" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
 </svg>
 `;
 var lr = /* @__PURE__ */ __name(class extends At(It($t(Pt(Bt(Rt(Mt(Et(HTMLElement)))))))) {
