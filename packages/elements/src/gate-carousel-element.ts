@@ -11,35 +11,43 @@ export class GateCarouselElement extends HTMLElement {
   @target contentClipper!: HTMLElement
   @targets gateSets!: HTMLElement[]
   @targets dots!: HTMLElement[]
+  @targets popinGates!: HTMLElement[]
 
   connectedCallback(): void {
-    const shadowRoot = this.attachShadow({mode: 'open'})
-    const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
-        if (mutation.addedNodes) {
-          this.validateCurrentGateSetIndex()
-          this.toggleGateSets()
-          this.toggleDots()
-          this.startPopinAnimation()
-        }
-      }
+    window.addEventListener('load', () => {
+      this.validateCurrentGateSetIndex()
+      this.toggleGateSets()
+      this.toggleDots()
+      this.startPopinAnimation()
     })
 
-    observer.observe(shadowRoot, {childList: true})
+    this.attachShadow({mode: 'open'})
     this.update()
+    this.startBreakpointChangeEventListener()
+  }
+
+  private startBreakpointChangeEventListener(): void {
+    const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
+    mobileMediaQuery.addEventListener('change', this.handleBreakpointChange.bind(this))
+  }
+
+  private handleBreakpointChange(): void {
+    this.validateCurrentGateSetIndex()
+    this.toggleGateSets()
+    this.toggleDots()
+    this.startPopinAnimation()
   }
 
   private startPopinAnimation(): void {
     let poppedinGateCount = 0
-    const popinGates: HTMLElement[] = []
 
     this.addEventListener('animationend', event => {
       if (isOperation(event.target)) {
         poppedinGateCount++
       }
 
-      if (poppedinGateCount === popinGates.length) {
-        for (const popinGate of popinGates) {
+      if (poppedinGateCount === this.popinGates.length) {
+        for (const popinGate of this.popinGates) {
           popinGate.parentElement?.removeChild(popinGate)
         }
         for (const gateSet of this.gateSets) {
@@ -49,20 +57,29 @@ export class GateCarouselElement extends HTMLElement {
       }
     })
 
+    for (const popinGate of this.popinGates) {
+      popinGate.parentElement?.removeChild(popinGate)
+    }
+
     this.contentClipper.style.overflow = 'hidden'
+
+    for (const gateSet of this.gateSets) {
+      gateSet.classList.add('invisible')
+    }
 
     for (const gate of this.gatesInActiveGateSet) {
       const popinGate = gate.cloneNode(false) as HTMLElement
 
+      popinGate.setAttribute('data-targets', 'gate-carousel.popinGates')
       popinGate.style.position = 'absolute'
       popinGate.style.top = `${this.offsetHeight}px`
       popinGate.style.left = `${gate.offsetLeft}px`
 
       this.append(popinGate)
-      popinGates.push(popinGate)
+      this.popinGates.push(popinGate)
     }
 
-    for (const [i, popinGate] of popinGates.entries()) {
+    for (const [i, popinGate] of this.popinGates.entries()) {
       popinGate.classList.add(`animate-gate${i}`)
     }
   }

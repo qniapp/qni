@@ -12,33 +12,38 @@ export class SlideInElement extends HTMLElement {
   private mobile = false
 
   connectedCallback(): void {
-    this.startViewSizeChangeEventListener()
-    const shadowRoot = this.attachShadow({mode: 'open'})
+    window.addEventListener('load', () => {
+      const styles = window.getComputedStyle(this)
+      this.marginTop = parseFloat(styles.getPropertyValue('margin-top')) || 0
+      this.marginBottom = parseFloat(styles.getPropertyValue('margin-bottom')) || 0
 
-    const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
-        if (mutation.addedNodes) {
-          const styles = window.getComputedStyle(this)
-          this.marginTop = parseFloat(styles.getPropertyValue('margin-top')) || 0
-          this.marginBottom = parseFloat(styles.getPropertyValue('margin-bottom')) || 0
-
-          this.prepareAnimation()
-          this.startAnimation()
-        }
-      }
+      this.prepareAnimation()
+      this.startAnimation()
     })
-    observer.observe(shadowRoot, {childList: true})
 
+    this.attachShadow({mode: 'open'})
     this.renderShadowRoot()
+    this.startViewSizeChangeEventListener()
   }
 
   private startViewSizeChangeEventListener(): void {
     const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
     mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
-    this.handleViewSizeChange(mobileMediaQuery)
+    this.setMobileBreakpointFlag(mobileMediaQuery)
   }
 
   private handleViewSizeChange(mobileMediaQuery: MediaQueryList): void {
+    this.setMobileBreakpointFlag(mobileMediaQuery)
+
+    const styles = window.getComputedStyle(this)
+    this.marginTop = parseFloat(styles.getPropertyValue('margin-top')) || 0
+    this.marginBottom = parseFloat(styles.getPropertyValue('margin-bottom')) || 0
+
+    this.prepareAnimation()
+    this.startAnimation()
+  }
+
+  private setMobileBreakpointFlag(mobileMediaQuery: MediaQueryList): void {
     this.mobile = mobileMediaQuery.matches
   }
 
