@@ -14,31 +14,74 @@ export class GateCarouselElement extends HTMLElement {
   @targets popinGates!: HTMLElement[]
 
   connectedCallback(): void {
-    window.addEventListener('load', () => {
-      this.validateCurrentGateSetIndex()
-      this.toggleGateSets()
-      this.toggleDots()
-      this.startPopinAnimation()
-    })
+    window.addEventListener('load', this.startAnimation.bind(this))
+    this.startBreakpointChangeEventListener(this.startAnimation.bind(this))
 
     this.attachShadow({mode: 'open'})
     this.update()
-    this.startBreakpointChangeEventListener()
   }
 
-  private startBreakpointChangeEventListener(): void {
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    if (oldValue === newValue) return
+    if (newValue === null) return
+
+    if (name === 'data-current-gate-set-index') {
+      this.validateCurrentGateSetIndex()
+      this.toggleGateSets()
+      this.toggleDots()
+    }
+  }
+
+  prevGateSet(): void {
+    if (this.currentGateSetIndex === 0) {
+      this.currentGateSetIndex = this.gateSets.length - 1
+    } else {
+      this.currentGateSetIndex--
+    }
+  }
+
+  nextGateSet(): void {
+    if (this.currentGateSetIndex === this.gateSets.length - 1) {
+      this.currentGateSetIndex = 0
+    } else {
+      this.currentGateSetIndex++
+    }
+  }
+
+  private validateCurrentGateSetIndex(): void {
+    Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
+    Util.need(
+      this.currentGateSetIndex < this.gateSets.length,
+      `data-current-gate-set-index must be < ${this.gateSets.length}`
+    )
+  }
+
+  private startBreakpointChangeEventListener(listener: () => void): void {
     const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
-    mobileMediaQuery.addEventListener('change', this.handleBreakpointChange.bind(this))
+    mobileMediaQuery.addEventListener('change', listener)
   }
 
-  private handleBreakpointChange(): void {
-    this.validateCurrentGateSetIndex()
-    this.toggleGateSets()
-    this.toggleDots()
-    this.startPopinAnimation()
+  private toggleGateSets(): void {
+    for (const [i, gateSet] of this.gateSets.entries()) {
+      if (i === this.currentGateSetIndex) {
+        gateSet.classList.remove('hidden')
+      } else {
+        gateSet.classList.add('hidden')
+      }
+    }
   }
 
-  private startPopinAnimation(): void {
+  private toggleDots(): void {
+    for (const [i, dot] of this.dots.entries()) {
+      if (i === this.currentGateSetIndex) {
+        dot.classList.add('dot--active')
+      } else {
+        dot.classList.remove('dot--active')
+      }
+    }
+  }
+
+  private startAnimation(): void {
     let poppedinGateCount = 0
 
     this.addEventListener('animationend', event => {
@@ -47,9 +90,7 @@ export class GateCarouselElement extends HTMLElement {
       }
 
       if (poppedinGateCount === this.popinGates.length) {
-        for (const popinGate of this.popinGates) {
-          popinGate.parentElement?.removeChild(popinGate)
-        }
+        this.removePopinGates()
         for (const gateSet of this.gateSets) {
           gateSet.classList.remove('invisible')
         }
@@ -57,10 +98,7 @@ export class GateCarouselElement extends HTMLElement {
       }
     })
 
-    for (const popinGate of this.popinGates) {
-      popinGate.parentElement?.removeChild(popinGate)
-    }
-
+    this.removePopinGates()
     this.contentClipper.style.overflow = 'hidden'
 
     for (const gateSet of this.gateSets) {
@@ -76,11 +114,17 @@ export class GateCarouselElement extends HTMLElement {
       popinGate.style.left = `${gate.offsetLeft}px`
 
       this.append(popinGate)
-      this.popinGates.push(popinGate)
     }
 
     for (const [i, popinGate] of this.popinGates.entries()) {
+      Util.need(i < 4, '#popinGates must be < 4')
       popinGate.classList.add(`animate-gate${i}`)
+    }
+  }
+
+  private removePopinGates(): void {
+    for (const popinGate of this.popinGates) {
+      popinGate.parentElement?.removeChild(popinGate)
     }
   }
 
@@ -98,52 +142,6 @@ export class GateCarouselElement extends HTMLElement {
     Util.notNull(gateSet)
 
     return gateSet
-  }
-
-  private validateCurrentGateSetIndex(): void {
-    Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
-    Util.need(
-      this.currentGateSetIndex < this.gateSets.length,
-      `data-current-gate-set-index must be < ${this.gateSets.length}`
-    )
-  }
-
-  prevGateSet(): void {
-    this.currentGateSetIndex--
-    if (this.currentGateSetIndex < 0) {
-      this.currentGateSetIndex = this.gateSets.length - 1
-    }
-    this.toggleGateSets()
-    this.toggleDots()
-  }
-
-  nextGateSet(): void {
-    this.currentGateSetIndex++
-    if (this.currentGateSetIndex >= this.gateSets.length) {
-      this.currentGateSetIndex = 0
-    }
-    this.toggleGateSets()
-    this.toggleDots()
-  }
-
-  private toggleDots(): void {
-    for (const [i, dot] of this.dots.entries()) {
-      if (i === this.currentGateSetIndex) {
-        dot.classList.add('dot--active')
-      } else {
-        dot.classList.remove('dot--active')
-      }
-    }
-  }
-
-  private toggleGateSets(): void {
-    for (const [i, gateSet] of this.gateSets.entries()) {
-      if (i === this.currentGateSetIndex) {
-        gateSet.classList.remove('hidden')
-      } else {
-        gateSet.classList.add('hidden')
-      }
-    }
   }
 
   private update(): void {

@@ -11218,40 +11218,54 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
     this.currentGateSetIndex = 0;
   }
   connectedCallback() {
-    window.addEventListener("load", () => {
-      this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots(), this.startPopinAnimation();
-    }), this.attachShadow({ mode: "open" }), this.update(), this.startBreakpointChangeEventListener();
+    window.addEventListener("load", this.startAnimation.bind(this)), this.startBreakpointChangeEventListener(this.startAnimation.bind(this)), this.attachShadow({ mode: "open" }), this.update();
   }
-  startBreakpointChangeEventListener() {
-    window.matchMedia("(max-width: 639px)").addEventListener("change", this.handleBreakpointChange.bind(this));
+  attributeChangedCallback(t, e, i) {
+    e !== i && i !== null && t === "data-current-gate-set-index" && (this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots());
   }
-  handleBreakpointChange() {
-    this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots(), this.startPopinAnimation();
+  prevGateSet() {
+    this.currentGateSetIndex === 0 ? this.currentGateSetIndex = this.gateSets.length - 1 : this.currentGateSetIndex--;
   }
-  startPopinAnimation() {
-    var e;
+  nextGateSet() {
+    this.currentGateSetIndex === this.gateSets.length - 1 ? this.currentGateSetIndex = 0 : this.currentGateSetIndex++;
+  }
+  validateCurrentGateSetIndex() {
+    Z.need(this.currentGateSetIndex >= 0, "data-current-gate-set-index must be >= 0"), Z.need(this.currentGateSetIndex < this.gateSets.length, `data-current-gate-set-index must be < ${this.gateSets.length}`);
+  }
+  startBreakpointChangeEventListener(t) {
+    window.matchMedia("(max-width: 639px)").addEventListener("change", t);
+  }
+  toggleGateSets() {
+    for (let [t, e] of this.gateSets.entries())
+      t === this.currentGateSetIndex ? e.classList.remove("hidden") : e.classList.add("hidden");
+  }
+  toggleDots() {
+    for (let [t, e] of this.dots.entries())
+      t === this.currentGateSetIndex ? e.classList.add("dot--active") : e.classList.remove("dot--active");
+  }
+  startAnimation() {
     let t = 0;
-    this.addEventListener("animationend", (i) => {
-      var l;
-      if (Xt(i.target) && t++, t === this.popinGates.length) {
-        for (let c of this.popinGates)
-          (l = c.parentElement) == null || l.removeChild(c);
-        for (let c of this.gateSets)
-          c.classList.remove("invisible");
+    this.addEventListener("animationend", (e) => {
+      if (Xt(e.target) && t++, t === this.popinGates.length) {
+        this.removePopinGates();
+        for (let i of this.gateSets)
+          i.classList.remove("invisible");
         this.contentClipper.style.overflow = "visible";
       }
-    });
-    for (let i of this.popinGates)
-      (e = i.parentElement) == null || e.removeChild(i);
-    this.contentClipper.style.overflow = "hidden";
-    for (let i of this.gateSets)
-      i.classList.add("invisible");
-    for (let i of this.gatesInActiveGateSet) {
-      let l = i.cloneNode(false);
-      l.setAttribute("data-targets", "gate-carousel.popinGates"), l.style.position = "absolute", l.style.top = `${this.offsetHeight}px`, l.style.left = `${i.offsetLeft}px`, this.append(l), this.popinGates.push(l);
+    }), this.removePopinGates(), this.contentClipper.style.overflow = "hidden";
+    for (let e of this.gateSets)
+      e.classList.add("invisible");
+    for (let e of this.gatesInActiveGateSet) {
+      let i = e.cloneNode(false);
+      i.setAttribute("data-targets", "gate-carousel.popinGates"), i.style.position = "absolute", i.style.top = `${this.offsetHeight}px`, i.style.left = `${e.offsetLeft}px`, this.append(i);
     }
-    for (let [i, l] of this.popinGates.entries())
-      l.classList.add(`animate-gate${i}`);
+    for (let [e, i] of this.popinGates.entries())
+      Z.need(e < 4, "#popinGates must be < 4"), i.classList.add(`animate-gate${e}`);
+  }
+  removePopinGates() {
+    var t;
+    for (let e of this.popinGates)
+      (t = e.parentElement) == null || t.removeChild(e);
   }
   get gatesInActiveGateSet() {
     return Array.from(this.activeGateSet.children).map((t) => {
@@ -11262,23 +11276,6 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
   get activeGateSet() {
     let t = this.gateSets[this.currentGateSetIndex];
     return Z.notNull(t), t;
-  }
-  validateCurrentGateSetIndex() {
-    Z.need(this.currentGateSetIndex >= 0, "data-current-gate-set-index must be >= 0"), Z.need(this.currentGateSetIndex < this.gateSets.length, `data-current-gate-set-index must be < ${this.gateSets.length}`);
-  }
-  prevGateSet() {
-    this.currentGateSetIndex--, this.currentGateSetIndex < 0 && (this.currentGateSetIndex = this.gateSets.length - 1), this.toggleGateSets(), this.toggleDots();
-  }
-  nextGateSet() {
-    this.currentGateSetIndex++, this.currentGateSetIndex >= this.gateSets.length && (this.currentGateSetIndex = 0), this.toggleGateSets(), this.toggleDots();
-  }
-  toggleDots() {
-    for (let [t, e] of this.dots.entries())
-      t === this.currentGateSetIndex ? e.classList.add("dot--active") : e.classList.remove("dot--active");
-  }
-  toggleGateSets() {
-    for (let [t, e] of this.gateSets.entries())
-      t === this.currentGateSetIndex ? e.classList.remove("hidden") : e.classList.add("hidden");
   }
   update() {
     J(W`
