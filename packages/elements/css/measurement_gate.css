@@ -18,7 +18,7 @@ measurement-gate {
 
   &[data-value='0']::part(icon),
   &[data-value='1']::part(icon) {
-    @apply text-neutral-200;
+    @apply text-zinc-200;
   }
 
   &::part(value) {

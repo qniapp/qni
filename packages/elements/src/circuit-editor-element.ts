@@ -69,7 +69,6 @@ export class CircuitEditorElement extends HTMLElement {
               ]
             },
             idle: {
-              entry: 'enableDragging',
               on: {
                 GRAB_OPERATION: {
                   target: 'editing',
@@ -170,9 +169,6 @@ export class CircuitEditorElement extends HTMLElement {
         }
       },
       actions: {
-        enableDragging: () => {
-          this.circuit.draggable = true
-        },
         startCircuitEdit: () => {
           this.circuit.editing = true
         },
@@ -324,11 +320,8 @@ export class CircuitEditorElement extends HTMLElement {
   })
 
   connectedCallback(): void {
-    this.circuitEditorService.start()
-    this.attachShadow({mode: 'open'})
-    this.update()
-
     document.addEventListener('click', this.maybeDeactivateOperation.bind(this))
+    this.addEventListener('draggable-init', this.enableDragging)
     this.addEventListener('operation-active', this.activateOperation)
     this.addEventListener('operation-show-menu', this.showOperationMenu)
     this.addEventListener('operation-menu-if', this.showOperationInspectorIf)
@@ -351,10 +344,18 @@ export class CircuitEditorElement extends HTMLElement {
     this.addEventListener('circuit-step-mouseleave', this.mouseLeaveStep)
     this.addEventListener('quantum-circuit-mouseleave', this.mouseLeaveCircuit)
     this.addEventListener('quantum-circuit-init', this.makeCircuitHoverable)
+
+    this.circuitEditorService.start()
+    this.attachShadow({mode: 'open'})
+    this.update()
   }
 
   update(): void {
     render(html`<slot></slot>`, this.shadowRoot!)
+  }
+
+  private enableDragging(event: Event): void {
+    event.target.draggable = true
   }
 
   private get activeOperation(): Operation | null {

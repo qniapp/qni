@@ -3360,7 +3360,7 @@ circuit-dropzone measurement-gate[data-snapped]::part(icon) {
 
 measurement-gate[data-value='0']::part(icon), measurement-gate[data-value='1']::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(229 229 229 / var(--tw-text-opacity));
+  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 measurement-gate::part(value) {

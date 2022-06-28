@@ -34,6 +34,7 @@ export class RnotGateElement extends MenuableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})
     this.update()
+    this.initDraggable()
   }
 
   update(): void {

@@ -1139,15 +1139,6 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   /**
    * @category Drag and Drop
    */
-  set draggable(value: boolean) {
-    for (const each of this.operations) {
-      each.draggable = value
-    }
-  }
-
-  /**
-   * @category Drag and Drop
-   */
   snapTargetAt(x: number, y: number): SnapTarget {
     if (this.isVertical) {
       return this.snapTargets[y][x]

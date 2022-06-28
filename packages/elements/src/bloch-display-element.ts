@@ -83,6 +83,7 @@ export class BlochDisplayElement extends MenuableMixin(
     if (this.shadowRoot !== null) return
     this.attachShadow({mode: 'open'})
     this.update()
+    this.initDraggable()
     this.updateBlochVector()
     this.addEventListener('mouseenter', this.showInspector)
   }

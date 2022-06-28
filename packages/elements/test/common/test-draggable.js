@@ -22,18 +22,6 @@ export function testDraggableOperation(operationName) {
       assert.isTrue(operation.draggable)
     })
 
-    it('should not a draggable when it is on a circuit-dropzone', function () {
-      const container = document.createElement('div')
-      container.innerHTML = `
-  <circuit-dropzone>
-    <${operationName}></${operationName}>
-  </circuit-dropzone>`
-      document.body.append(container)
-      const operation = document.querySelector(operationName)
-
-      assert.isFalse(operation.draggable)
-    })
-
     it('should reach "grabbable" given "idle" when the "SET_INTERACT" event occurs', function () {
       const container = document.createElement('div')
       container.innerHTML = `

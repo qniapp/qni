@@ -31,6 +31,7 @@ export declare class Draggable {
   get dropzone(): PaletteDropzoneElement | CircuitDropzoneElement | null
   get snapRange(): number
   set snapTargets(value: Array<{x: number; y: number}>)
+  initDraggable(): void
 }
 
 type DraggableContext = Record<string, never>
@@ -62,6 +63,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
         initial: 'idle',
         states: {
           idle: {
+            entry: ['init'],
             on: {
               SET_INTERACT: {
                 target: 'grabbable',
@@ -149,6 +151,9 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       },
       {
         actions: {
+          init: () => {
+            this.dispatchEvent(new Event('draggable-init', {bubbles: true}))
+          },
           setInteract: () => {
             const interactable = interact(this)
             interactable.styleCursor(false)
@@ -241,8 +246,6 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
     }
 
     set draggable(value: boolean) {
-      this.maybeStartDraggableStateMachine()
-
       if (value) {
         this.draggableService.send({type: 'SET_INTERACT'})
       } else {
@@ -250,7 +253,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
       }
     }
 
-    private maybeStartDraggableStateMachine(): void {
+    initDraggable(): void {
       if (this.draggableService.state !== undefined) {
         return
       }
