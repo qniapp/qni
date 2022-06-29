@@ -16,6 +16,7 @@ export class GateCarouselElement extends HTMLElement {
   connectedCallback(): void {
     window.addEventListener('load', this.startAnimation.bind(this))
     this.startBreakpointChangeEventListener(this.startAnimation.bind(this))
+    this.addEventListener('animationend', this.tearDownAnimation.bind(this))
 
     this.attachShadow({mode: 'open'})
     this.update()
@@ -38,18 +39,6 @@ export class GateCarouselElement extends HTMLElement {
   }
 
   private startAnimation(): void {
-    let poppedinGateCount = 0
-
-    this.addEventListener('animationend', event => {
-      if (isOperation(event.target)) poppedinGateCount++
-
-      if (poppedinGateCount === this.popinAnimationGates.length) {
-        this.removePopinAnimationGates()
-        this.makeAllGateSetsVisible()
-        this.disableContentClipping()
-      }
-    })
-
     this.toggleGateSets()
     this.toggleDots()
     this.removePopinAnimationGates()
@@ -57,6 +46,16 @@ export class GateCarouselElement extends HTMLElement {
     this.makeAllGateSetsInvisible()
     this.createPopinAnimationGates()
     this.addPopinAnimationClasses()
+  }
+
+  private tearDownAnimation(event: Event): void {
+    const animGate = event.target
+
+    if (animGate === this.popinAnimationGates[this.popinAnimationGates.length - 1]) {
+      this.removePopinAnimationGates()
+      this.makeAllGateSetsVisible()
+      this.disableContentClipping()
+    }
   }
 
   private update(): void {
