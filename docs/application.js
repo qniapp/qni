@@ -11232,11 +11232,6 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
   update() {
     J(W`
         <style>
-          :host {
-            user-select: none;
-            -webkit-user-select: none;
-          }
-
           button {
             position: absolute;
             display: flex;
