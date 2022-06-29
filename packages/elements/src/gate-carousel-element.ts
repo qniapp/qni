@@ -51,6 +51,11 @@ export class GateCarouselElement extends HTMLElement {
     render(
       html`
         <style>
+          :host {
+            user-select: none;
+            -webkit-user-select: none;
+          }
+
           button {
             position: absolute;
             display: flex;
