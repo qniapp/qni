@@ -16,7 +16,6 @@ export class GateCarouselElement extends HTMLElement {
   connectedCallback(): void {
     window.addEventListener('load', this.startAnimation.bind(this))
     this.startBreakpointChangeEventListener(this.startAnimation.bind(this))
-    this.addEventListener('animationend', this.tearDownAnimation.bind(this))
 
     this.attachShadow({mode: 'open'})
     this.update()
@@ -45,17 +44,7 @@ export class GateCarouselElement extends HTMLElement {
     this.enableContentClipping()
     this.makeAllGateSetsInvisible()
     this.createPopinAnimationGates()
-    this.addPopinAnimationClasses()
-  }
-
-  private tearDownAnimation(event: Event): void {
-    const animGate = event.target
-
-    if (animGate === this.popinAnimationGates[this.popinAnimationGates.length - 1]) {
-      this.removePopinAnimationGates()
-      this.makeAllGateSetsVisible()
-      this.disableContentClipping()
-    }
+    this.animatePopinAnimationGates()
   }
 
   private update(): void {
@@ -68,7 +57,7 @@ export class GateCarouselElement extends HTMLElement {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 48px;
+            width: 36px;
             height: 100%;
             padding: 0;
             border-width: 0px;
@@ -251,10 +240,42 @@ export class GateCarouselElement extends HTMLElement {
     }
   }
 
-  private addPopinAnimationClasses(): void {
+  private animatePopinAnimationGates(): void {
     for (const [i, popinGate] of this.popinAnimationGates.entries()) {
       Util.need(i < 4, '#popinGates must be < 4')
-      popinGate.classList.add(`animate-gate${i}`)
+
+      let duration = 0
+      if (i === 0) {
+        duration = 500
+      } else if (i === 1) {
+        duration = 600
+      } else if (i === 2) {
+        duration = 700
+      } else if (i === 3) {
+        duration = 800
+      }
+
+      const animation = popinGate.animate(
+        [
+          {transform: 'translateY(0px)', offset: 0},
+          {transform: 'translateY(0px)', offset: 0.2},
+          {transform: 'translateY(-88px)', offset: 0.6},
+          {transform: 'translateY(-72px)', offset: 1}
+        ],
+        {
+          duration,
+          fill: 'forwards',
+          easing: 'ease-out'
+        }
+      )
+
+      animation.onfinish = () => {
+        if (popinGate === this.popinAnimationGates[this.popinAnimationGates.length - 1]) {
+          this.removePopinAnimationGates()
+          this.makeAllGateSetsVisible()
+          this.disableContentClipping()
+        }
+      }
     }
   }
 

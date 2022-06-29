@@ -3,6 +3,5 @@
 
 @import '@qni/elements/dist/qni';
 @import 'circle_notation_mode_switch';
-@import 'gate_carousel';
 
 @import 'tailwindcss/utilities';

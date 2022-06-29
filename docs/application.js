@@ -11218,7 +11218,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
     this.currentGateSetIndex = 0;
   }
   connectedCallback() {
-    window.addEventListener("load", this.startAnimation.bind(this)), this.startBreakpointChangeEventListener(this.startAnimation.bind(this)), this.addEventListener("animationend", this.tearDownAnimation.bind(this)), this.attachShadow({ mode: "open" }), this.update();
+    window.addEventListener("load", this.startAnimation.bind(this)), this.startBreakpointChangeEventListener(this.startAnimation.bind(this)), this.attachShadow({ mode: "open" }), this.update();
   }
   attributeChangedCallback(t, e, i) {
     e !== i && i !== null && t === "data-current-gate-set-index" && (this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots());
@@ -11227,10 +11227,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
     window.matchMedia("(max-width: 639px)").addEventListener("change", t);
   }
   startAnimation() {
-    this.toggleGateSets(), this.toggleDots(), this.removePopinAnimationGates(), this.enableContentClipping(), this.makeAllGateSetsInvisible(), this.createPopinAnimationGates(), this.addPopinAnimationClasses();
-  }
-  tearDownAnimation(t) {
-    t.target === this.popinAnimationGates[this.popinAnimationGates.length - 1] && (this.removePopinAnimationGates(), this.makeAllGateSetsVisible(), this.disableContentClipping());
+    this.toggleGateSets(), this.toggleDots(), this.removePopinAnimationGates(), this.enableContentClipping(), this.makeAllGateSetsInvisible(), this.createPopinAnimationGates(), this.animatePopinAnimationGates();
   }
   update() {
     J(W`
@@ -11241,7 +11238,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 48px;
+            width: 36px;
             height: 100%;
             padding: 0;
             border-width: 0px;
@@ -11370,9 +11367,16 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
       e.setAttribute("data-targets", "gate-carousel.popinAnimationGates"), e.style.position = "absolute", e.style.top = `${this.offsetHeight}px`, e.style.left = `${t.offsetLeft}px`, this.append(e);
     }
   }
-  addPopinAnimationClasses() {
-    for (let [t, e] of this.popinAnimationGates.entries())
-      Z.need(t < 4, "#popinGates must be < 4"), e.classList.add(`animate-gate${t}`);
+  animatePopinAnimationGates() {
+    for (let [t, e] of this.popinAnimationGates.entries()) {
+      Z.need(t < 4, "#popinGates must be < 4");
+      let i = 0;
+      t === 0 ? i = 500 : t === 1 ? i = 600 : t === 2 ? i = 700 : t === 3 && (i = 800);
+      let l = e.animate([{ transform: "translateY(0px)", offset: 0 }, { transform: "translateY(0px)", offset: 0.2 }, { transform: "translateY(-88px)", offset: 0.6 }, { transform: "translateY(-72px)", offset: 1 }], { duration: i, fill: "forwards", easing: "ease-out" });
+      l.onfinish = () => {
+        e === this.popinAnimationGates[this.popinAnimationGates.length - 1] && (this.removePopinAnimationGates(), this.makeAllGateSetsVisible(), this.disableContentClipping());
+      };
+    }
   }
   toggleDots() {
     for (let [t, e] of this.dots.entries())
