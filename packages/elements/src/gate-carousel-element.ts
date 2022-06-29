@@ -11,7 +11,7 @@ export class GateCarouselElement extends HTMLElement {
   @target contentClipper!: HTMLElement
   @targets gateSets!: HTMLElement[]
   @targets dots!: HTMLElement[]
-  @targets popinGates!: HTMLElement[]
+  @targets popinAnimationGates!: HTMLElement[]
 
   connectedCallback(): void {
     window.addEventListener('load', this.startAnimation.bind(this))
@@ -32,116 +32,31 @@ export class GateCarouselElement extends HTMLElement {
     }
   }
 
-  prevGateSet(): void {
-    if (this.currentGateSetIndex === 0) {
-      this.currentGateSetIndex = this.gateSets.length - 1
-    } else {
-      this.currentGateSetIndex--
-    }
-  }
-
-  nextGateSet(): void {
-    if (this.currentGateSetIndex === this.gateSets.length - 1) {
-      this.currentGateSetIndex = 0
-    } else {
-      this.currentGateSetIndex++
-    }
-  }
-
-  private validateCurrentGateSetIndex(): void {
-    Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
-    Util.need(
-      this.currentGateSetIndex < this.gateSets.length,
-      `data-current-gate-set-index must be < ${this.gateSets.length}`
-    )
-  }
-
   private startBreakpointChangeEventListener(listener: () => void): void {
     const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
     mobileMediaQuery.addEventListener('change', listener)
-  }
-
-  private toggleGateSets(): void {
-    for (const [i, gateSet] of this.gateSets.entries()) {
-      if (i === this.currentGateSetIndex) {
-        gateSet.classList.remove('hidden')
-      } else {
-        gateSet.classList.add('hidden')
-      }
-    }
-  }
-
-  private toggleDots(): void {
-    for (const [i, dot] of this.dots.entries()) {
-      if (i === this.currentGateSetIndex) {
-        dot.classList.add('dot--active')
-      } else {
-        dot.classList.remove('dot--active')
-      }
-    }
   }
 
   private startAnimation(): void {
     let poppedinGateCount = 0
 
     this.addEventListener('animationend', event => {
-      if (isOperation(event.target)) {
-        poppedinGateCount++
-      }
+      if (isOperation(event.target)) poppedinGateCount++
 
-      if (poppedinGateCount === this.popinGates.length) {
-        this.removePopinGates()
-        for (const gateSet of this.gateSets) {
-          gateSet.classList.remove('invisible')
-        }
-        this.contentClipper.style.overflow = 'visible'
+      if (poppedinGateCount === this.popinAnimationGates.length) {
+        this.removePopinAnimationGates()
+        this.makeAllGateSetsVisible()
+        this.disableContentClipping()
       }
     })
 
-    this.removePopinGates()
-    this.contentClipper.style.overflow = 'hidden'
-
-    for (const gateSet of this.gateSets) {
-      gateSet.classList.add('invisible')
-    }
-
-    for (const gate of this.gatesInActiveGateSet) {
-      const popinGate = gate.cloneNode(false) as HTMLElement
-
-      popinGate.setAttribute('data-targets', 'gate-carousel.popinGates')
-      popinGate.style.position = 'absolute'
-      popinGate.style.top = `${this.offsetHeight}px`
-      popinGate.style.left = `${gate.offsetLeft}px`
-
-      this.append(popinGate)
-    }
-
-    for (const [i, popinGate] of this.popinGates.entries()) {
-      Util.need(i < 4, '#popinGates must be < 4')
-      popinGate.classList.add(`animate-gate${i}`)
-    }
-  }
-
-  private removePopinGates(): void {
-    for (const popinGate of this.popinGates) {
-      popinGate.parentElement?.removeChild(popinGate)
-    }
-  }
-
-  private get gatesInActiveGateSet(): Operation[] {
-    return Array.from(this.activeGateSet.children).map(each => {
-      const gate = each.children.item(0)
-      Util.need(isOperation(gate), `${gate} must be an operation.`)
-
-      return gate as Operation
-    })
-  }
-
-  private get activeGateSet(): HTMLElement {
-    const gateSet = this.gateSets[this.currentGateSetIndex]
-    Util.notNull(gateSet)
-
-    return gateSet
+    this.toggleGateSets()
+    this.toggleDots()
+    this.removePopinAnimationGates()
+    this.enableContentClipping()
+    this.makeAllGateSetsInvisible()
+    this.createPopinAnimationGates()
+    this.addPopinAnimationClasses()
   }
 
   private update(): void {
@@ -240,5 +155,119 @@ export class GateCarouselElement extends HTMLElement {
         <div class="dot" data-targets="gate-carousel.dots"></div>`
     }
     return dots
+  }
+
+  /* content clipping */
+
+  private enableContentClipping(): void {
+    this.contentClipper.style.overflow = 'hidden'
+  }
+
+  private disableContentClipping(): void {
+    this.contentClipper.style.overflow = 'visible'
+  }
+
+  private removePopinAnimationGates(): void {
+    for (const popinGate of this.popinAnimationGates) {
+      popinGate.parentElement?.removeChild(popinGate)
+    }
+  }
+
+  /* gate sets */
+
+  prevGateSet(): void {
+    if (this.currentGateSetIndex === 0) {
+      this.currentGateSetIndex = this.gateSets.length - 1
+    } else {
+      this.currentGateSetIndex--
+    }
+  }
+
+  nextGateSet(): void {
+    if (this.currentGateSetIndex === this.gateSets.length - 1) {
+      this.currentGateSetIndex = 0
+    } else {
+      this.currentGateSetIndex++
+    }
+  }
+
+  private validateCurrentGateSetIndex(): void {
+    Util.need(this.currentGateSetIndex >= 0, 'data-current-gate-set-index must be >= 0')
+    Util.need(
+      this.currentGateSetIndex < this.gateSets.length,
+      `data-current-gate-set-index must be < ${this.gateSets.length}`
+    )
+  }
+
+  private toggleGateSets(): void {
+    for (const [i, gateSet] of this.gateSets.entries()) {
+      if (i === this.currentGateSetIndex) {
+        gateSet.classList.remove('hidden')
+      } else {
+        gateSet.classList.add('hidden')
+      }
+    }
+  }
+
+  private makeAllGateSetsVisible(): void {
+    for (const gateSet of this.gateSets) {
+      gateSet.classList.remove('invisible')
+    }
+  }
+
+  private makeAllGateSetsInvisible(): void {
+    for (const gateSet of this.gateSets) {
+      gateSet.classList.add('invisible')
+    }
+  }
+
+  private get activeGateSet(): HTMLElement {
+    const gateSet = this.gateSets[this.currentGateSetIndex]
+    Util.notNull(gateSet)
+
+    return gateSet
+  }
+
+  private get gatesInActiveGateSet(): Operation[] {
+    return Array.from(this.activeGateSet.children).map(each => {
+      const gate = each.children.item(0)
+      Util.need(isOperation(gate), `${gate} must be an operation.`)
+
+      return gate as Operation
+    })
+  }
+
+  /* pop-in animation gates */
+
+  private createPopinAnimationGates(): void {
+    for (const each of this.gatesInActiveGateSet) {
+      const gate = each.cloneNode(false) as HTMLElement
+
+      gate.setAttribute('data-targets', 'gate-carousel.popinAnimationGates')
+      gate.style.position = 'absolute'
+      gate.style.top = `${this.offsetHeight}px`
+      gate.style.left = `${each.offsetLeft}px`
+
+      this.append(gate)
+    }
+  }
+
+  private addPopinAnimationClasses(): void {
+    for (const [i, popinGate] of this.popinAnimationGates.entries()) {
+      Util.need(i < 4, '#popinGates must be < 4')
+      popinGate.classList.add(`animate-gate${i}`)
+    }
+  }
+
+  /* dots */
+
+  private toggleDots(): void {
+    for (const [i, dot] of this.dots.entries()) {
+      if (i === this.currentGateSetIndex) {
+        dot.classList.add('dot--active')
+      } else {
+        dot.classList.remove('dot--active')
+      }
+    }
   }
 }

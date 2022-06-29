@@ -11223,59 +11223,14 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
   attributeChangedCallback(t, e, i) {
     e !== i && i !== null && t === "data-current-gate-set-index" && (this.validateCurrentGateSetIndex(), this.toggleGateSets(), this.toggleDots());
   }
-  prevGateSet() {
-    this.currentGateSetIndex === 0 ? this.currentGateSetIndex = this.gateSets.length - 1 : this.currentGateSetIndex--;
-  }
-  nextGateSet() {
-    this.currentGateSetIndex === this.gateSets.length - 1 ? this.currentGateSetIndex = 0 : this.currentGateSetIndex++;
-  }
-  validateCurrentGateSetIndex() {
-    Z.need(this.currentGateSetIndex >= 0, "data-current-gate-set-index must be >= 0"), Z.need(this.currentGateSetIndex < this.gateSets.length, `data-current-gate-set-index must be < ${this.gateSets.length}`);
-  }
   startBreakpointChangeEventListener(t) {
     window.matchMedia("(max-width: 639px)").addEventListener("change", t);
-  }
-  toggleGateSets() {
-    for (let [t, e] of this.gateSets.entries())
-      t === this.currentGateSetIndex ? e.classList.remove("hidden") : e.classList.add("hidden");
-  }
-  toggleDots() {
-    for (let [t, e] of this.dots.entries())
-      t === this.currentGateSetIndex ? e.classList.add("dot--active") : e.classList.remove("dot--active");
   }
   startAnimation() {
     let t = 0;
     this.addEventListener("animationend", (e) => {
-      if (Xt(e.target) && t++, t === this.popinGates.length) {
-        this.removePopinGates();
-        for (let i of this.gateSets)
-          i.classList.remove("invisible");
-        this.contentClipper.style.overflow = "visible";
-      }
-    }), this.removePopinGates(), this.contentClipper.style.overflow = "hidden";
-    for (let e of this.gateSets)
-      e.classList.add("invisible");
-    for (let e of this.gatesInActiveGateSet) {
-      let i = e.cloneNode(false);
-      i.setAttribute("data-targets", "gate-carousel.popinGates"), i.style.position = "absolute", i.style.top = `${this.offsetHeight}px`, i.style.left = `${e.offsetLeft}px`, this.append(i);
-    }
-    for (let [e, i] of this.popinGates.entries())
-      Z.need(e < 4, "#popinGates must be < 4"), i.classList.add(`animate-gate${e}`);
-  }
-  removePopinGates() {
-    var t;
-    for (let e of this.popinGates)
-      (t = e.parentElement) == null || t.removeChild(e);
-  }
-  get gatesInActiveGateSet() {
-    return Array.from(this.activeGateSet.children).map((t) => {
-      let e = t.children.item(0);
-      return Z.need(Xt(e), `${e} must be an operation.`), e;
-    });
-  }
-  get activeGateSet() {
-    let t = this.gateSets[this.currentGateSetIndex];
-    return Z.notNull(t), t;
+      Xt(e.target) && t++, t === this.popinAnimationGates.length && (this.removePopinAnimationGates(), this.makeAllGateSetsVisible(), this.disableContentClipping());
+    }), this.toggleGateSets(), this.toggleDots(), this.removePopinAnimationGates(), this.enableContentClipping(), this.makeAllGateSetsInvisible(), this.createPopinAnimationGates(), this.addPopinAnimationClasses();
   }
   update() {
     J(W`
@@ -11329,6 +11284,37 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
           .dot--active {
             background-color: rgb(14 165 233); /* sky-500 */
           }
+
+          .animate-gate0 {
+            animation: 0.5s ease-out 0s 1 normal forwards running gate-popin;
+          }
+
+          .animate-gate1 {
+            animation: 0.6s ease-out 0s 1 normal forwards running gate-popin;
+          }
+
+          .animate-gate2 {
+            animation: 0.7s ease-out 0s 1 normal forwards running gate-popin;
+          }
+
+          .animate-gate3 {
+            animation: 0.8s ease-out 0s 1 normal forwards running gate-popin;
+          }
+
+          @keyframes gate-popin {
+            0% {
+              transform: translateY(0px);
+            }
+            20% {
+              transform: translateY(0px);
+            }
+            60% {
+              transform: translateY(-88px);
+            }
+            100% {
+              transform: translateY(-72px);
+            }
+          }
         </style>
 
         <div id="content-clipper" data-target="gate-carousel.contentClipper">
@@ -11367,8 +11353,64 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
         <div class="dot" data-targets="gate-carousel.dots"></div>`;
     return t;
   }
+  enableContentClipping() {
+    this.contentClipper.style.overflow = "hidden";
+  }
+  disableContentClipping() {
+    this.contentClipper.style.overflow = "visible";
+  }
+  removePopinAnimationGates() {
+    var t;
+    for (let e of this.popinAnimationGates)
+      (t = e.parentElement) == null || t.removeChild(e);
+  }
+  prevGateSet() {
+    this.currentGateSetIndex === 0 ? this.currentGateSetIndex = this.gateSets.length - 1 : this.currentGateSetIndex--;
+  }
+  nextGateSet() {
+    this.currentGateSetIndex === this.gateSets.length - 1 ? this.currentGateSetIndex = 0 : this.currentGateSetIndex++;
+  }
+  validateCurrentGateSetIndex() {
+    Z.need(this.currentGateSetIndex >= 0, "data-current-gate-set-index must be >= 0"), Z.need(this.currentGateSetIndex < this.gateSets.length, `data-current-gate-set-index must be < ${this.gateSets.length}`);
+  }
+  toggleGateSets() {
+    for (let [t, e] of this.gateSets.entries())
+      t === this.currentGateSetIndex ? e.classList.remove("hidden") : e.classList.add("hidden");
+  }
+  makeAllGateSetsVisible() {
+    for (let t of this.gateSets)
+      t.classList.remove("invisible");
+  }
+  makeAllGateSetsInvisible() {
+    for (let t of this.gateSets)
+      t.classList.add("invisible");
+  }
+  get activeGateSet() {
+    let t = this.gateSets[this.currentGateSetIndex];
+    return Z.notNull(t), t;
+  }
+  get gatesInActiveGateSet() {
+    return Array.from(this.activeGateSet.children).map((t) => {
+      let e = t.children.item(0);
+      return Z.need(Xt(e), `${e} must be an operation.`), e;
+    });
+  }
+  createPopinAnimationGates() {
+    for (let t of this.gatesInActiveGateSet) {
+      let e = t.cloneNode(false);
+      e.setAttribute("data-targets", "gate-carousel.popinAnimationGates"), e.style.position = "absolute", e.style.top = `${this.offsetHeight}px`, e.style.left = `${t.offsetLeft}px`, this.append(e);
+    }
+  }
+  addPopinAnimationClasses() {
+    for (let [t, e] of this.popinAnimationGates.entries())
+      Z.need(t < 4, "#popinGates must be < 4"), e.classList.add(`animate-gate${t}`);
+  }
+  toggleDots() {
+    for (let [t, e] of this.dots.entries())
+      t === this.currentGateSetIndex ? e.classList.add("dot--active") : e.classList.remove("dot--active");
+  }
 }, "Vr");
-u(Vr, "GateCarouselElement"), A([N], Vr.prototype, "currentGateSetIndex", 2), A([xt], Vr.prototype, "contentClipper", 2), A([ee], Vr.prototype, "gateSets", 2), A([ee], Vr.prototype, "dots", 2), A([ee], Vr.prototype, "popinGates", 2), Vr = A([et], Vr);
+u(Vr, "GateCarouselElement"), A([N], Vr.prototype, "currentGateSetIndex", 2), A([xt], Vr.prototype, "contentClipper", 2), A([ee], Vr.prototype, "gateSets", 2), A([ee], Vr.prototype, "dots", 2), A([ee], Vr.prototype, "popinAnimationGates", 2), Vr = A([et], Vr);
 var Nl = /* @__PURE__ */ __name(class extends HTMLElement {
   get isInspectorShown() {
     return this.popup.state.isVisible;
