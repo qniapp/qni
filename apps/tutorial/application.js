@@ -11247,6 +11247,16 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
             touch-action: manipulation;
           }
 
+          #prev-button {
+            border-top-left-radius: 0.75rem; /* 12px */
+            border-bottom-left-radius: 0.75rem; /* 12px */
+          }
+
+          #next-button {
+            border-top-right-radius: 0.75rem; /* 12px */
+            border-bottom-right-radius: 0.75rem; /* 12px */
+          }
+
           #content-clipper {
             position: relative;
             width: 100%;
@@ -11285,6 +11295,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
 
         <div id="content-clipper" data-target="gate-carousel.contentClipper">
           <button
+            id="prev-button"
             type="button"
             aria-label="prev gate set"
             data-action="click:gate-carousel#prevGateSet"
@@ -11293,6 +11304,7 @@ var Vr = /* @__PURE__ */ __name(class extends HTMLElement {
             ${this.iconHtml(pd)}
           </button>
           <button
+            id="next-button"
             type="button"
             aria-label="next gate set"
             data-action="click:gate-carousel#nextGateSet"
