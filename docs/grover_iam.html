@@ -565,21 +565,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    グローヴァー探索
-  </div>
-
-   
-  <a
-    href="./grover_iam.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">折り返し変換</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1073,21 +1058,6 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
-    グローヴァー探索
-  </div>
-
-   
-  <a
-    href="./grover_iam.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
-  >
-    <span class="flex-1">折り返し変換</span>
-    
-      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
-    
-  </a>
-   
-  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1160,13 +1130,13 @@
             </div>
             <div class="content-with-margin"><p>
   前節では、位相論理演算を使って計算結果を位相に出力する方法を見てきました。
-  たとえば充足可能性問題では、目指す論理式が true となるような変数の値 true/false の組合わせを探します。
+  たとえば充足可能性問題では、目指す論理式が true となるような変数の値 true/false
+  の組合わせを探します。
   これを位相論理演算で計算し、論理式を満たす振幅の位相を反転することで答が求まります。
 </p>
 
 <p>
-  しかし位相に埋め込んだ計算結果は簡単には取り出せません。
-  結果を取り出す唯一の手段は <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> であり、測定結果は確率 (振幅の大きさ) によってのみ決まるからです。
+  しかし位相に埋め込んだ計算結果は簡単には取り出せません。 結果を取り出す唯一の手段は <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> であり、測定結果は確率 (振幅の大きさ) によってのみ決まるからです。
   そこで位相から計算結果を取り出すには、位相の反転を確率の大きさに変換する必要があります。
 </p>
 
@@ -1180,33 +1150,39 @@
   <img src="./images/amplitude_amplification_overview.png" class="h-auto w-full" />
 </figure>
 
-<p>
-  今回はこの繰り返し変換を見ていきましょう。
-</p>
+<p>今回はこの繰り返し変換を見ていきましょう。</p>
 
 <h2>折り返し変換</h2>
 
 <p>
-  まずは折り返し変換の実行例を見てみましょう。
-  例題として 2 量子ビットについて、<code>上位ビット & 下位ビット = true</code> となる値を取り出すことを考えます。
-  2 量子ビットなので \(|00\rangle\), \(|01\rangle\), \(|10\rangle\), \(|11\rangle\) の 4 通りを考えると、このうち 上位ビット & 下位ビット = true となるのは \(|11\rangle\) ひとつです。
-  つまり折り返し変換によって \(|11\rangle\) の確率が大きくなれば成功です。
+  まずは折り返し変換の実行例を見てみましょう。 例題として 2 量子ビットについて、<code
+    >上位ビット & 下位ビット = true</code
+  >
+  となる値を取り出すことを考えます。 2 量子ビットなので \(|00\rangle\), \(|01\rangle\), \(|10\rangle\), \(|11\rangle\) の 4 通りを考えると、このうち 上位ビット & 下位ビット = true となるのは \(|11\rangle\)
+  ひとつです。 つまり折り返し変換によって \(|11\rangle\) の確率が大きくなれば成功です。
 </p>
 
-<p>
-  これは次の 3 つのブロックを組合わせた回路として実装できます。
-</p>
+<p>これは次の 3 つのブロックを組合わせた回路として実装できます。</p>
 
 <ul>
-  <li><p><strong>重ね合わせの準備</strong></p>
-    <p>最初にそれぞれの量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用し \(|00\rangle\), \(|01\rangle\), \(|10\rangle\), \(|11\rangle\) の確率をそれぞれ等しく 25% にします。</p>
+  <li>
+    <p><strong>重ね合わせの準備</strong></p>
+    <p>
+      最初にそれぞれの量子ビットに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用し \(|00\rangle\), \(|01\rangle\), \(|10\rangle\), \(|11\rangle\) の確率をそれぞれ等しく 25% にします。
+    </p>
   </li>
 
-  <li><p><strong>AND の結果を位相に書き込む</strong><p>
-    <p><code>上位ビット & 下位ビット = true</code> は位相論理演算の AND (pAND) ひとつで簡単に実装できます。</p>
+  <li>
+    <p><strong>AND の結果を位相に書き込む</strong></p>
+    <p></p>
+    <p>
+      <code>上位ビット & 下位ビット = true</code> は位相論理演算の AND (pAND)
+      ひとつで簡単に実装できます。
+    </p>
   </li>
 
-  <li><p><strong>折り返し変換</strong></p>
+  <li>
+    <p><strong>折り返し変換</strong></p>
     <p>
       以下の折り返し変換を適用すると、位相が反転した振幅の確率を増幅し、ほかの確率を減衰させることができます。
     </p>
@@ -1214,7 +1190,8 @@
 </ul>
 
 <p>
-  以下の回路を実行すると、確かに答である \(|11\rangle\) の確率が 100% になり、それ以外は 0% になっていることがわかります。
+  以下の回路を実行すると、確かに答である \(|11\rangle\) の確率が 100% になり、それ以外は 0%
+  になっていることがわかります。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1238,22 +1215,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>"],["{重ね合わせ"],["H","H"],["}"],[1],["{pAND"],["•","•"],["}"],[1],["{折り返し変換"],["H","H"],["X","X"],["•","•"],["X","X"],["H","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>"],["{重ね合わせ"],["H","H"],["}"],[1],["{pAND"],["•","•"],["}"],[1],["{折り返し変換"],["H","H"],["X","X"],["•","•"],["X","X"],["H","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1264,9 +1241,10 @@
 <h2>より大きな量子ビット数での折り返し変換</h2>
 
 <p>
-  折り返し変換の回路はほぼ形が決まっているので、量子ビットを増やしても同様に使えます。
-  たとえば 4 量子ビットの AND (答は \(|1111\rangle\)) でも、単純にゲートを増やすだけで構成できます。
-  以下の回路を実行すると \(|1111\rangle\) の確率が約 47.3 % に増幅され、その他の確率は約 3.5% まで減衰していることが分かります。
+  折り返し変換の回路はほぼ形が決まっているので、量子ビットを増やしても同様に使えます。 たとえば 4
+  量子ビットの AND (答は \(|1111\rangle\)) でも、単純にゲートを増やすだけで構成できます。
+  以下の回路を実行すると \(|1111\rangle\) の確率が約 47.3 % に増幅され、その他の確率は約 3.5%
+  まで減衰していることが分かります。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1290,22 +1268,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1314,8 +1292,9 @@
 </div>
 
 <p>
-  前回の充足可能性問題を解く回路にも適用してみましょう。
-  先ほどと同じく 4 量子ビットの折り返し変換の回路の末尾に追加するだけで、答の \(|00000000001000\rangle\) を確率的に浮かび上がらせることができます。
+  前回の充足可能性問題を解く回路にも適用してみましょう。 先ほどと同じく 4
+  量子ビットの折り返し変換の回路の末尾に追加するだけで、答の \(|00000000001000\rangle\)
+  を確率的に浮かび上がらせることができます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1339,22 +1318,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["[重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["]"],[1],["{一時ビット"],[1,1,1,1,"|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>"],["}"],[1],["{t1 = B4 ∨ A4"],[1,"X",1,"X"],[1,"•",1,"•","X"],[1,"X",1,"X","X"],["}"],[1],["{t2 = B4 ∨ A4 ∨ A1"],["X",1,1,1,"X"],["•",1,1,1,"•","X"],["X",1,1,1,"X","X"],["}"],[1],["{t3 = ¬A1 ∨ ¬A4"],["X","X"],["X","X"],["•","•",1,1,1,1,"X"],["X","X",1,1,1,1,"X"],["X","X"],["}"],[1],["{t4 = ¬A4 ∨ B1"],[1,"X"],[1,"X","X"],[1,"•","•",1,1,1,1,"X"],[1,"X","X",1,1,1,1,"X"],[1,"X"],["}"],[1],["{t5 = ¬A4 ∨ ¬B4"],[1,"X","X"],[1,"X","X"],[1,"•","•",1,1,1,1,1,"X"],[1,"X","X",1,1,1,1,1,"X"],[1,"X","X"],["}"],[1],["{t6 = ¬A1 ∨ B1"],["X"],["X",1,"X"],["•",1,"•",1,1,1,1,1,1,"X"],["X",1,"X",1,1,1,1,1,1,"X"],["X"],["}"],[1],["{t7 = B4 ∨ A4 ∨ B1"],[1,1,"X",1,"X"],[1,1,"•",1,"•",1,1,1,1,1,"X"],[1,1,"X",1,"X",1,1,1,1,1,"X"],["}"],[1],["{t8 = B4 ∨ B1"],[1,1,"X","X"],[1,1,"•","•",1,1,1,1,1,1,1,"X"],[1,1,"X","X",1,1,1,1,1,1,1,"X"],["}"],[1],["{t9 = ¬A1 ∨ ¬B4"],["X",1,1,"X"],["X",1,1,"X"],["•",1,1,"•",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X"],["}"],[1],["{t10 = ¬A1 ∧ ¬A4 ∧ ¬B1"],["X","X","X"],["•","•","•",1,1,1,1,1,1,1,1,1,1,"X"],["X","X","X"],["}"],[1],["{pAND t*"],[1,1,1,1,1,"•","•","•","•","•","•","•","•","•"],["}"],[1],["{一時ビットをアンコンピュート"],["X","X","X"],["•","•","•",1,1,1,1,1,1,1,1,1,1,"X"],["X","X","X"],["X",1,1,"X"],["X",1,1,"X",1,1,1,1,1,1,1,1,"X"],["•",1,1,"•",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X"],["X",1,1,"X"],[1,1,"X","X",1,1,1,1,1,1,1,"X"],[1,1,"•","•",1,1,1,1,1,1,1,"X"],[1,1,"X","X"],[1,1,"X",1,"X",1,1,1,1,1,"X"],[1,1,"•",1,"•",1,1,1,1,1,"X"],[1,1,"X",1,"X"],["X"],["X",1,"X",1,1,1,1,1,1,"X"],["•",1,"•",1,1,1,1,1,1,"X"],["X",1,"X"],["X"],[1,"X","X"],[1,"X","X",1,1,1,1,1,"X"],[1,"•","•",1,1,1,1,1,"X"],[1,"X","X"],[1,"X","X"],[1,"X"],[1,"X","X",1,1,1,1,"X"],[1,"•","•",1,1,1,1,"X"],[1,"X","X"],[1,"X"],["X","X"],["X","X",1,1,1,1,"X"],["•","•",1,1,1,1,"X"],["X","X"],["X","X"],["X",1,1,1,"X","X"],["•",1,1,1,"•","X"],["X",1,1,1,"X"],[1,"X",1,"X","X"],[1,"•",1,"•","X"],[1,"X",1,"X"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["]"],[1],["{一時ビット"],[1,1,1,1,"|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>","|0>"],["}"],[1],["{t1 = B4 ∨ A4"],[1,"X",1,"X"],[1,"•",1,"•","X"],[1,"X",1,"X","X"],["}"],[1],["{t2 = B4 ∨ A4 ∨ A1"],["X",1,1,1,"X"],["•",1,1,1,"•","X"],["X",1,1,1,"X","X"],["}"],[1],["{t3 = ¬A1 ∨ ¬A4"],["X","X"],["X","X"],["•","•",1,1,1,1,"X"],["X","X",1,1,1,1,"X"],["X","X"],["}"],[1],["{t4 = ¬A4 ∨ B1"],[1,"X"],[1,"X","X"],[1,"•","•",1,1,1,1,"X"],[1,"X","X",1,1,1,1,"X"],[1,"X"],["}"],[1],["{t5 = ¬A4 ∨ ¬B4"],[1,"X","X"],[1,"X","X"],[1,"•","•",1,1,1,1,1,"X"],[1,"X","X",1,1,1,1,1,"X"],[1,"X","X"],["}"],[1],["{t6 = ¬A1 ∨ B1"],["X"],["X",1,"X"],["•",1,"•",1,1,1,1,1,1,"X"],["X",1,"X",1,1,1,1,1,1,"X"],["X"],["}"],[1],["{t7 = B4 ∨ A4 ∨ B1"],[1,1,"X",1,"X"],[1,1,"•",1,"•",1,1,1,1,1,"X"],[1,1,"X",1,"X",1,1,1,1,1,"X"],["}"],[1],["{t8 = B4 ∨ B1"],[1,1,"X","X"],[1,1,"•","•",1,1,1,1,1,1,1,"X"],[1,1,"X","X",1,1,1,1,1,1,1,"X"],["}"],[1],["{t9 = ¬A1 ∨ ¬B4"],["X",1,1,"X"],["X",1,1,"X"],["•",1,1,"•",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X"],["}"],[1],["{t10 = ¬A1 ∧ ¬A4 ∧ ¬B1"],["X","X","X"],["•","•","•",1,1,1,1,1,1,1,1,1,1,"X"],["X","X","X"],["}"],[1],["{pAND t*"],[1,1,1,1,1,"•","•","•","•","•","•","•","•","•"],["}"],[1],["{一時ビットをアンコンピュート"],["X","X","X"],["•","•","•",1,1,1,1,1,1,1,1,1,1,"X"],["X","X","X"],["X",1,1,"X"],["X",1,1,"X",1,1,1,1,1,1,1,1,"X"],["•",1,1,"•",1,1,1,1,1,1,1,1,"X"],["X",1,1,"X"],["X",1,1,"X"],[1,1,"X","X",1,1,1,1,1,1,1,"X"],[1,1,"•","•",1,1,1,1,1,1,1,"X"],[1,1,"X","X"],[1,1,"X",1,"X",1,1,1,1,1,"X"],[1,1,"•",1,"•",1,1,1,1,1,"X"],[1,1,"X",1,"X"],["X"],["X",1,"X",1,1,1,1,1,1,"X"],["•",1,"•",1,1,1,1,1,1,"X"],["X",1,"X"],["X"],[1,"X","X"],[1,"X","X",1,1,1,1,1,"X"],[1,"•","•",1,1,1,1,1,"X"],[1,"X","X"],[1,"X","X"],[1,"X"],[1,"X","X",1,1,1,1,"X"],[1,"•","•",1,1,1,1,"X"],[1,"X","X"],[1,"X"],["X","X"],["X","X",1,1,1,1,"X"],["•","•",1,1,1,1,"X"],["X","X"],["X","X"],["X",1,1,1,"X","X"],["•",1,1,1,"•","X"],["X",1,1,1,"X"],[1,"X",1,"X","X"],[1,"•",1,"•","X"],[1,"X",1,"X"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1375,8 +1354,9 @@
 </p>
 
 <p>
-  次回は、振幅増幅を繰り返すことでさらに確率を増幅する方法を学びます。
-  確率を 100% 近くまで増幅することで、正しい答を <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> によって読み出せる確実性も高まります。
+  次回は、振幅増幅を繰り返すことでさらに確率を増幅する方法を学びます。 確率を 100%
+  近くまで増幅することで、正しい答を <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
+  によって読み出せる確実性も高まります。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
