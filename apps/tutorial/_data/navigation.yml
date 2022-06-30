@@ -123,6 +123,11 @@
     - name: 充足可能性問題
       link: ./sat.html
       new: true
+# - name: グローヴァー探索
+#   pages:
+#     - name: 折り返し変換
+#       link: ./grover_iam.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
