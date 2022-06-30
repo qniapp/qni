@@ -103,7 +103,7 @@ next_url: ./qpu.html
 
 {% capture json %}
 {"cols":[["|0>","|0>"],["{量子もつれ"],["H"],["•","X"],["}"],["Measure"],[1,"Measure"]]} {%
-endcapture %} {{ json | strip | mini_qni }}
+endcapture %} {{ json | strip | mini_qni: "H", "•", "X" }}
 
 <p>
   Qni

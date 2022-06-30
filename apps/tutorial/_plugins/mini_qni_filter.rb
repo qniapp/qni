@@ -3,12 +3,44 @@
 
 module Jekyll
   module MiniQniFilter
-    def mini_qni(json)
+    def mini_qni(json, *gates)
+      gate_htmls = gates.map do |each|
+        case each
+        when '|0>'
+          '<write-gate data-value="0"></write-gate>'
+        when '|1>'
+          '<write-gate data-value="1"></write-gate>'
+        when 'H'
+          '<h-gate></h-gate>'
+        when 'X'
+          '<x-gate></x-gate>'
+        when '•'
+          '<control-gate></control-gate>'
+        end
+      end.map do |each|
+        "<palette-dropzone>#{each}</palette-dropzone>"
+      end.join
+
+      palette_html = if gates.length.positive?
+                       <<~HTML
+                         <div
+                           id="palette"
+                           class="mb-10 flex w-min space-x-2 rounded-xl bg-white px-4 py-5 drop-shadow-xl"
+                         >
+                           #{gate_htmls}
+                         </div>
+                       HTML
+                     else
+                       ''
+                     end
+
       <<~HTML
         <div class="flex flex-col">
           <div class="mini-qni">
             <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
               <circuit-editor class="flex h-full w-full flex-col">
+                #{palette_html}
+
                 <div
                   class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-2xl"
                 >

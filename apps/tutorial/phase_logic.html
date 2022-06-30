@@ -99,61 +99,8 @@ next_url: ./phase_logic_combination.html
   を組合わせて作ることができます。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>"],["{pNOT"],["X"],["P(π)"],["X"],["}"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>"],["{pNOT"],["X"],["P(π)"],["X"],["}"]]} {% endcapture %} {{ json
+| strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>位相論理 AND (pAND)</h2>
 
@@ -271,61 +218,8 @@ next_url: ./phase_logic_combination.html
   >参照{% endnmargin_note %} 一個で表せます。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{pAND"],["•","•"],["}"],[1]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>","|0>"],["{pAND"],["•","•"],["}"],[1]]} {% endcapture %} {{ json |
+strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>位相論理 OR (pOR)</h2>
 
@@ -439,61 +333,8 @@ next_url: ./phase_logic_combination.html
   pOR 回路は次のように π 回転の {% qpu_operation phase %} と CPHASE を組合わせて作ることができます。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{pOR"],["P(π)"],["•","•"],[1,"P(π)"],["}"],[1]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>","|0>"],["{pOR"],["P(π)"],["•","•"],[1,"P(π)"],["}"],[1]]} {%
+endcapture %} {{ json | strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>位相論理 NAND (pNAND)</h2>
 
@@ -605,61 +446,9 @@ next_url: ./phase_logic_combination.html
 
 <p>pNAND 回路は以下のように作ることができます。</p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{pNAND"],["X","X"],["P(π)"],["•","•"],[1,"P(π)"],["X","X"],["}"],[1]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %}
+{"cols":[["|0>","|0>"],["{pNAND"],["X","X"],["P(π)"],["•","•"],[1,"P(π)"],["X","X"],["}"],[1]]} {%
+endcapture %} {{ json | strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>位相論理 NOR (pNOR)</h2>
 
@@ -770,61 +559,8 @@ next_url: ./phase_logic_combination.html
 
 <p>pNOR 回路は以下のように作ることができます。</p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{pNOR"],["X","X"],["•","•"],["X","X"],["}"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>","|0>"],["{pNOR"],["X","X"],["•","•"],["X","X"],["}"]]} {%
+endcapture %} {{ json | strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>位相論理 XOR (pXOR)</h2>
 
@@ -938,61 +674,9 @@ next_url: ./phase_logic_combination.html
   計算後にアンコンピュートされ {% ket 0 %} に戻ります。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <h-gate data-hoverable></h-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{pXOR"],[1,1,"|0>"],[1,1,"X"],[1,1,"H"],["•",1,"X"],[1,"•","X"],[1,1,"H"],[1,1,"X"],["}"],[1]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %}
+{"cols":[["|0>","|0>"],["{pXOR"],[1,1,"|0>"],[1,1,"X"],[1,1,"H"],["•",1,"X"],[1,"•","X"],[1,1,"H"],[1,1,"X"],["}"],[1]]}
+{% endcapture %} {{ json | strip | mini_qni: "|0>", "|1>", "H" }}
 
 <h2>まとめ</h2>
 
