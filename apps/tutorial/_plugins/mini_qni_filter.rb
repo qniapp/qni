@@ -7,15 +7,15 @@ module Jekyll
       gate_htmls = gates.map do |each|
         case each
         when '|0>'
-          '<write-gate data-value="0"></write-gate>'
+          '<write-gate data-value="0" data-hoverable></write-gate>'
         when '|1>'
-          '<write-gate data-value="1"></write-gate>'
+          '<write-gate data-value="1" data-hoverable></write-gate>'
         when 'H'
-          '<h-gate></h-gate>'
+          '<h-gate data-hoverable></h-gate>'
         when 'X'
-          '<x-gate></x-gate>'
+          '<x-gate data-hoverable></x-gate>'
         when '•'
-          '<control-gate></control-gate>'
+          '<control-gate data-hoverable></control-gate>'
         end
       end.map do |each|
         "<palette-dropzone>#{each}</palette-dropzone>"
