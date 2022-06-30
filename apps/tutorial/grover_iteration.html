@@ -1,0 +1,203 @@
+---
+layout: page
+section: グローヴァー探索
+title: グロヴァー反復
+description: 確率をさらに高めるのに最適な反復回数
+prev: 折り返し変換
+prev_url: ./grover_iam.html
+---
+
+<p>
+  前回学んだ折り返し変換を 4 量子ビット回路で行うと、答の {% ket 1111 %} は確率が約 47.3%
+  に上昇しましたが、さらに上昇させることはできるでしょうか? 答でない {% ket 0000 %}
+  などの確率はそれぞれ約 3.5% 残っていますから、これらの分を {% ket 1111 %}
+  の確率にさらに上積みできそうです。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  実際に、振幅増幅を繰り返すことで確率をさらに上昇させることができます。
+  これを<strong>グローヴァー反復</strong>と呼びます。 ためしに 2 回ほど反復してみると、以下のように
+  {% ket 1111 %} の確率は約 90.9% まで上昇します。 このとき、{% ket 0000 %} など他の確率は 0.6%
+  まで減衰しています。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>反復回数に限界はあるのでしょうか？ 同様に 3 回、4 回繰り返した結果は次のようになります。</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{重ね合わせ"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["{pAND"],["•","•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  実行結果を見ると、反復 3 回で {% ket 1111 %} の確率はさらに上昇し約 96.1% まで上がります。 しかし
+  4 回目の反復で確率は 58.2% まで低下します。 さらに反復を続けると 6
+  回までは確率が下降し続けますが、それを越えるとまた上昇しはじめ 9 回目で 99.9% の確率を得ます。
+  そしてまた下降し、というふうに確率の上昇下降は振動になっています。
+</p>
+
+<p>
+  このように、グローヴァー反復はほどほどで止めないと、かえって確率を下げてしまいます。
+  確率の上昇下降振動のうち、最初に確率が最大になる最小の反復回数は、\(n\)
+  を量子ビット数として一般に次の式で求めることができます。
+</p>
+
+<p class="flex justify-center">\(N_{iter} = \lfloor\frac{π}{4}\sqrt{2^n}\rfloor\)</p>
+
+<p>
+  たとえば量子ビット数 \(n = 4\) のとき反復回数 3 で {% ket 1111 %} の確率は約 96.1%
+  でしたが、この反復回数 3 は \(N_{iter}\) の式から計算できます。
+</p>
+
+<p>
+  \[ N_{iter} = \lfloor\frac{π}{4}\sqrt{2^4}\rfloor \\ = \lfloor\frac{π}{4} \times 4 \rfloor \\ =
+  \lfloor π \rfloor \\ = 3 \]
+</p>
+
+<h2>グローヴァー探索の計算量</h2>
+
+<p>ふつうの探索に比べて、グローヴァー探索がどのくらい効率的か見積もってみましょう。</p>
+
+<p>
+  ふつうの探索 (線形探索) では、要素の数が n 個あった場合に目的の要素をみつけるには最悪 \(n\)
+  回の繰り返しが必要です。 よって、ふつうの探索の計算量は \(O(n)\) であると言えます。
+</p>
+
+<p>
+  グローヴァー探索では、必要な反復回数は \(q\) を量子ビット数とすると
+  \(\lfloor\frac{π}{4}\sqrt{2^q}\rfloor\) でした。 ここで要素数を \(n\) とすると、\(q\)
+  量子で表せる要素数は \(2^q\) なので、要素数 \(n\) に対して必要な反復回数は
+  \(\lfloor\frac{π}{4}\sqrt{n}\rfloor\) となります。 計算量を見積もる上で不要な係数 \(\frac{π}{4}\)
+  などを除くと、グローヴァー探索の計算量は \(O(\sqrt{n})\) となり、ふつうの探索の計算量 \(O(n)\)
+  に比べて二次の加速であると言えます。
+</p>
+
+<p>
+  この差は \(n\) が大きいほど如実に現れます。 はじめにで見たように、2,500
+  万件が掲載された電話帳から特定の電話番号をみつけるには、最悪で 2,500
+  万件すべてに目を通す必要があります。 しかしグローヴァー探索を使えば、たった \(\sqrt{2,500万} =
+  5,000\) 回の繰り返しで目的の番号を見つけられます。
+</p>
