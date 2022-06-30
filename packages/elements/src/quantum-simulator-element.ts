@@ -50,6 +50,7 @@ export class QuantumSimulatorElement extends HTMLElement {
     this.addEventListener('run-circuit-button-click', this.freshRun)
     this.addEventListener('circuit-step-snap', this.maybeUpdateUrl)
     this.addEventListener('circuit-step-unsnap', this.maybeUpdateUrl)
+    this.addEventListener('circuit-editor-resize', this.freshRun)
 
     this.attachShadow({mode: 'open'})
     this.update()
@@ -177,7 +178,8 @@ export class QuantumSimulatorElement extends HTMLElement {
 
   private runUnlessEditing(): void {
     if (this.circuit.editing) return
-    this.run()
+
+    this._run(false)
   }
 
   private get activeStepIndex(): number {

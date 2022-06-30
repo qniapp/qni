@@ -222,6 +222,7 @@ export class CircuitEditorElement extends HTMLElement {
         },
         resizeCircuit: () => {
           this.circuit.resize()
+          this.dispatchEvent(new Event('circuit-editor-resize', {bubbles: true}))
         },
         setSnapTargets: (_context, event) => {
           if (event.type !== 'GRAB_OPERATION') return
