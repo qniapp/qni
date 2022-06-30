@@ -1,6 +1,5 @@
 import {
   Complex,
-  describe,
   SerializedBlochDisplayType,
   SerializedCircuitStep,
   SerializedControlGateType,
