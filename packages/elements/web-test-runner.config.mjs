@@ -1,7 +1,8 @@
+// eslint-disable-next-line filenames/match-regex
+import {fromRollup} from '@web/dev-server-rollup'
 import rollupCommonjs from '@rollup/plugin-commonjs'
 import rollupPostcss from 'rollup-plugin-postcss'
 import rollupReplace from '@rollup/plugin-replace'
-import {fromRollup} from '@web/dev-server-rollup'
 
 const commonjs = fromRollup(rollupCommonjs)
 const postcss = fromRollup(rollupPostcss)

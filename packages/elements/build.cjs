@@ -15,7 +15,8 @@ build({
   keepNames: true,
   format: 'esm',
   sourcemap: true,
-  target: 'es2017'
+  target: 'es2017',
+  external: Object.keys(pkg['dependencies'])
 })
 
 new Generator({

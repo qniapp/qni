@@ -7,6 +7,9 @@ import {PaletteDropzoneElement} from '../palette-dropzone-element'
 import {attr} from '@github/catalyst'
 import interact from 'interactjs'
 
+export const isDraggable = (arg: unknown): arg is Draggable =>
+  arg !== undefined && arg !== null && typeof (arg as Draggable).draggable === 'boolean'
+
 const isCircuitDropzoneElement = (arg: unknown): arg is CircuitDropzoneElement =>
   arg !== undefined && arg !== null && (arg as Element).tagName === 'CIRCUIT-DROPZONE'
 

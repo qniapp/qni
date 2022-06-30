@@ -1,4 +1,4 @@
-import {attr, controller, target} from '@github/catalyst'
+import {controller, target} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import {CircleNotationElement} from './circle-notation-element'
 

@@ -917,6 +917,7 @@ export class QuantumCircuitElement extends HoverableMixin(HTMLElement) {
   }
 
   private loadFromJson(json: string): void {
+    // eslint-disable-next-line github/no-inner-html
     this.innerHTML = ''
 
     let circuitBlock = null

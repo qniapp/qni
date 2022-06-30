@@ -63,7 +63,7 @@ export class CircleNotationElement extends HTMLElement {
   }
 
   private startViewSizeChangeEventListener(): void {
-    this.mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
+    this.mobileMediaQuery.addEventListener('change', () => this.handleViewSizeChange(this.mobileMediaQuery))
     this.handleViewSizeChange(this.mobileMediaQuery)
   }
 

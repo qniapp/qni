@@ -61,6 +61,17 @@ export class Complex {
     throw new DetailedError('Unrecognized value type.', {v})
   }
 
+  static parse(s: string): Complex {
+    const m = s.match(/^\s*([+-]?\d+(?:\.\d*)?(?:e[+-]?\d+)?)\s*(?:([+-])\s*i)?\s*$/)
+    if (m) {
+      const [, real, sign, imag] = m
+      const [realPart, imagPart] = [real, imag].map(x => parseFloat(x))
+      const [realSign, imagSign] = [sign, sign].map(x => (x === '-' ? -1 : 1))
+      return new Complex(realPart * realSign, imagPart * imagSign)
+    }
+    throw new DetailedError('Invalid complex number string.', {s})
+  }
+
   constructor(real: number, imag: number) {
     this.real = real
     this.imag = imag

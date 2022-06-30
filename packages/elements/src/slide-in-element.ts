@@ -28,7 +28,7 @@ export class SlideInElement extends HTMLElement {
 
   private startViewSizeChangeEventListener(): void {
     const mobileMediaQuery = window.matchMedia('(max-width: 639px)')
-    mobileMediaQuery.addEventListener('change', this.handleViewSizeChange.bind(this))
+    mobileMediaQuery.addEventListener('change', () => this.handleViewSizeChange(mobileMediaQuery))
     this.setMobileBreakpointFlag(mobileMediaQuery)
   }
 

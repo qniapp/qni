@@ -1,7 +1,7 @@
-import {Angleable, Flaggable, Ifable, isAngleable, isIfable, isMenuable} from './mixin'
+import {Angleable, Flaggable, Ifable, isAngleable, isDraggable, isIfable, isMenuable} from './mixin'
 import {CircuitStepElement, isCircuitStepElement} from './circuit-step-element'
 import {Operation, isOperation} from './operation'
-import {Util, describe} from '@qni/common'
+import {Util, describe, DetailedError} from '@qni/common'
 import {attr, controller, target} from '@github/catalyst'
 import {createMachine, interpret} from 'xstate'
 import {html, render} from '@github/jtml'
@@ -356,7 +356,13 @@ export class CircuitEditorElement extends HTMLElement {
   }
 
   private enableDragging(event: Event): void {
-    event.target.draggable = true
+    const el = event.target
+
+    if (isDraggable(el)) {
+      el.draggable = true
+    } else {
+      throw new DetailedError('Not a draggable element.', {el})
+    }
   }
 
   private get activeOperation(): Operation | null {

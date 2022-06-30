@@ -19,8 +19,10 @@
     "build": "yarn build:css && yarn build:js",
     "build:js": "node build.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs --postcss -i ./css/qni.css -o ./dist/qni.css",
+    "presize": "npm run build",
+    "size": "size-limit",
     "pretest": "npm run build",
-    "test": "web-test-runner test/**/*-test.js --node-resolve",
+    "test": "web-test-runner test/**/*-test.js --node-resolve && npm run size",
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
     "watch:css": "yarn build:css --watch",
@@ -41,16 +43,16 @@
     "@github/catalyst": "1.3.0",
     "@github/jtml": "~0.4",
     "@qni/common": "^0.0.78",
-    "complex.js": "^2.1.1",
     "interactjs": "^1.10.11",
     "tippy.js": "^6.3.7",
-    "xstate": "~4.31"
+    "xstate": "~4.32"
   },
   "devDependencies": {
     "@esm-bundle/chai": "^4.3.4-fix.0",
     "@github/prettier-config": "^0.0.4",
     "@rollup/plugin-commonjs": "^18",
     "@rollup/plugin-replace": "^3.0.1",
+    "@size-limit/preset-small-lib": "^7.0.8",
     "@web/dev-server-rollup": "^0.3.14",
     "@web/test-runner": "^0.13.25",
     "autoprefixer": "^10.4.0",
@@ -63,8 +65,9 @@
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
     "rollup-plugin-postcss": "^4.0.2",
-    "typedoc": "~0.22",
-    "typescript": "~4.6"
+    "size-limit": "^7.0.8",
+    "typedoc": "~0.23",
+    "typescript": "~4.7"
   },
   "eslintIgnore": [
     "dist/",
@@ -72,6 +75,12 @@
     "icon/",
     "tailwind.config.cjs",
     "web-test-runner.config.js"
+  ],
+  "size-limit": [
+    {
+      "limit": "107 kB",
+      "path": "dist/index.js"
+    }
   ],
   "gitHead": "a735e8013d45ba56fef6f3b6fcec597177f4c779"
 }
