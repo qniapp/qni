@@ -105,10 +105,10 @@
   resolved "https://registry.yarnpkg.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz#98c23c950a3d9b6c8f0daed06da6c3af06981340"
   integrity sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==
 
-"@interactjs/types@1.10.11":
-  version "1.10.11"
-  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.11.tgz#29be25d503f9c7842df062fa3cda5b044a47cf2a"
-  integrity sha512-YRsVFWjL8Gkkvlx3qnjeaxW4fnibSJ9791g8BA7Pv5ANByI64WmtR1vU7A2rXcrOn8XvyCEfY0ss1s8NhZP+MA==
+"@interactjs/types@1.10.14":
+  version "1.10.14"
+  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.14.tgz#0466d8f3c3681554a55bb09fc5d4ccc3ef4e5cf5"
+  integrity sha512-ds6wAI9aDzojzr7UBvifUJIgogCL1ZL0nfBrXDv5GVMaW7gBglqejaeiQ1a0cRiHII/8p8s5AwPhhODTDM8RCQ==
 
 "@isaacs/string-locale-compare@^1.1.0":
   version "1.1.0"
@@ -5081,12 +5081,12 @@ inquirer@^7.3.3:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-interactjs@^1.10.11:
-  version "1.10.11"
-  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.10.11.tgz#0b9eabe37f1f82fff68e22faad51269b8f2038ea"
-  integrity sha512-VPUWsGAOPmrZe1YF7Fq/4AIBBZ+3FikZRS8bpzT6VsAfUuhxl/CKJY73IAiZHd3fz9p174CXErn0Qs81XEFICA==
+interactjs@~1.10:
+  version "1.10.14"
+  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.10.14.tgz#9357fa8053ec00fb0533f3da47b646a742c23151"
+  integrity sha512-UhwZhuFqmKLSJ1o04LlvFMdxohwvuMjVrQC96TI8/dEhF/dS47Tqm3Po5i4yKXaCMIqI8qdvmyfeIWdGLYSClA==
   dependencies:
-    "@interactjs/types" "1.10.11"
+    "@interactjs/types" "1.10.14"
 
 internal-slot@^1.0.3:
   version "1.0.3"

@@ -43,7 +43,7 @@
     "@github/catalyst": "1.3.0",
     "@github/jtml": "~0.4",
     "@qni/common": "^0.0.78",
-    "interactjs": "^1.10.11",
+    "interactjs": "~1.10",
     "tippy.js": "^6.3.7",
     "xstate": "~4.32"
   },
