@@ -4292,7 +4292,9 @@ var o = /* @__PURE__ */ __name(class {
   static parse(e) {
     let r = e.match(/^\s*([+-]?\d+(?:\.\d*)?(?:e[+-]?\d+)?)\s*(?:([+-])\s*i)?\s*$/);
     if (r) {
-      let [, n, i, a] = r, [s2, m] = [n, a].map((S2) => parseFloat(S2)), [w2, I] = [i, i].map((S2) => S2 === "-" ? -1 : 1);
+      let [, n, i, a] = r;
+      n === void 0 && (n = "0"), i === void 0 && (i = "+"), a === void 0 && (a = "0");
+      let [s2, m] = [n, a].map((S2) => parseFloat(S2)), [w2, I] = [i, i].map((S2) => S2 === "-" ? -1 : 1);
       return new o(s2 * w2, m * I);
     }
     throw new d("Invalid complex number string.", { s: e });
@@ -4513,27 +4515,13 @@ function bindActions(el) {
 }
 __name(bindActions, "bindActions");
 
-// ../../node_modules/@github/catalyst/lib/dasherize.js
-var dasherize = /* @__PURE__ */ __name((str) => String(typeof str === "symbol" ? str.description : str).replace(/([A-Z]($|[a-z]))/g, "-$1").replace(/--/g, "-").replace(/^-|-$/, "").toLowerCase(), "dasherize");
-var mustDasherize = /* @__PURE__ */ __name((str, type = "property") => {
-  const dashed = dasherize(str);
-  if (!dashed.includes("-")) {
-    throw new DOMException(`${type}: ${String(str)} is not a valid ${type} name`, "SyntaxError");
-  }
-  return dashed;
-}, "mustDasherize");
-
 // ../../node_modules/@github/catalyst/lib/register.js
 function register(classObject) {
-  const name = dasherize(classObject.name).replace(/-element$/, "");
-  try {
+  const name = classObject.name.replace(/([A-Z]($|[a-z]))/g, "-$1").replace(/(^-|-Element$)/g, "").toLowerCase();
+  if (!window.customElements.get(name)) {
+    window[classObject.name] = classObject;
     window.customElements.define(name, classObject);
-    window[classObject.name] = customElements.get(name);
-  } catch (e) {
-    if (!(e instanceof DOMException && e.name === "NotSupportedError"))
-      throw e;
   }
-  return classObject;
 }
 __name(register, "register");
 
@@ -4569,6 +4557,26 @@ function findTargets(controller2, name) {
 }
 __name(findTargets, "findTargets");
 
+// ../../node_modules/@github/catalyst/lib/target.js
+function target(proto, key) {
+  return Object.defineProperty(proto, key, {
+    configurable: true,
+    get() {
+      return findTarget(this, key);
+    }
+  });
+}
+__name(target, "target");
+function targets(proto, key) {
+  return Object.defineProperty(proto, key, {
+    configurable: true,
+    get() {
+      return findTargets(this, key);
+    }
+  });
+}
+__name(targets, "targets");
+
 // ../../node_modules/@github/catalyst/lib/auto-shadow-root.js
 function autoShadowRoot(element) {
   for (const template of element.querySelectorAll("template[data-shadowroot]")) {
@@ -4582,23 +4590,19 @@ function autoShadowRoot(element) {
 __name(autoShadowRoot, "autoShadowRoot");
 
 // ../../node_modules/@github/catalyst/lib/attr.js
-var attrKey = "attr";
+var attrs = /* @__PURE__ */ new WeakMap();
 function attr(proto, key) {
-  meta(proto, attrKey).add(key);
+  if (!attrs.has(proto))
+    attrs.set(proto, []);
+  attrs.get(proto).push(key);
 }
 __name(attr, "attr");
-var initialized = /* @__PURE__ */ new WeakSet();
 function initializeAttrs(instance, names) {
-  if (initialized.has(instance))
-    return;
-  initialized.add(instance);
-  const proto = Object.getPrototypeOf(instance);
-  const prefix = proto?.constructor?.attrPrefix ?? "data-";
   if (!names)
-    names = meta(proto, attrKey);
+    names = getAttrNames(Object.getPrototypeOf(instance));
   for (const key of names) {
     const value = instance[key];
-    const name = mustDasherize(`${prefix}${key}`);
+    const name = attrToAttributeName(key);
     let descriptor = {
       configurable: true,
       get() {
@@ -4636,14 +4640,29 @@ function initializeAttrs(instance, names) {
   }
 }
 __name(initializeAttrs, "initializeAttrs");
+function getAttrNames(classObjectProto) {
+  const names = /* @__PURE__ */ new Set();
+  let proto = classObjectProto;
+  while (proto && proto !== HTMLElement) {
+    const attrNames = attrs.get(proto) || [];
+    for (const name of attrNames)
+      names.add(name);
+    proto = Object.getPrototypeOf(proto);
+  }
+  return names;
+}
+__name(getAttrNames, "getAttrNames");
+function attrToAttributeName(name) {
+  return `data-${name.replace(/([A-Z]($|[a-z]))/g, "-$1")}`.replace(/--/g, "-").toLowerCase();
+}
+__name(attrToAttributeName, "attrToAttributeName");
 function defineObservedAttributes(classObject) {
   let observed = classObject.observedAttributes || [];
-  const prefix = classObject.attrPrefix ?? "data-";
-  const attrToAttributeName = /* @__PURE__ */ __name((name) => mustDasherize(`${prefix}${name}`), "attrToAttributeName");
   Object.defineProperty(classObject, "observedAttributes", {
     configurable: true,
     get() {
-      return [...meta(classObject.prototype, attrKey)].map(attrToAttributeName).concat(observed);
+      const attrMap = getAttrNames(classObject.prototype);
+      return [...attrMap].map(attrToAttributeName).concat(observed);
     },
     set(attributes) {
       observed = attributes;
@@ -4653,101 +4672,33 @@ function defineObservedAttributes(classObject) {
 __name(defineObservedAttributes, "defineObservedAttributes");
 
 // ../../node_modules/@github/catalyst/lib/core.js
-var symbol = Symbol.for("catalyst");
-var CatalystDelegate = class {
-  constructor(classObject) {
-    const delegate = this;
-    const connectedCallback = classObject.prototype.connectedCallback;
-    classObject.prototype.connectedCallback = function() {
-      delegate.connectedCallback(this, connectedCallback);
-    };
-    const disconnectedCallback = classObject.prototype.disconnectedCallback;
-    classObject.prototype.disconnectedCallback = function() {
-      delegate.disconnectedCallback(this, disconnectedCallback);
-    };
-    const attributeChangedCallback = classObject.prototype.attributeChangedCallback;
-    classObject.prototype.attributeChangedCallback = function(name, oldValue, newValue) {
-      delegate.attributeChangedCallback(this, name, oldValue, newValue, attributeChangedCallback);
-    };
-    let observedAttributes = classObject.observedAttributes || [];
-    Object.defineProperty(classObject, "observedAttributes", {
-      configurable: true,
-      get() {
-        return delegate.observedAttributes(this, observedAttributes);
-      },
-      set(attributes) {
-        observedAttributes = attributes;
-      }
-    });
-    defineObservedAttributes(classObject);
-    register(classObject);
-  }
-  observedAttributes(instance, observedAttributes) {
-    return observedAttributes;
-  }
-  connectedCallback(instance, connectedCallback) {
-    instance.toggleAttribute("data-catalyst", true);
-    customElements.upgrade(instance);
-    autoShadowRoot(instance);
-    initializeAttrs(instance);
-    bind(instance);
-    connectedCallback?.call(instance);
-    if (instance.shadowRoot)
-      bindShadow(instance.shadowRoot);
-  }
-  disconnectedCallback(element, disconnectedCallback) {
-    disconnectedCallback?.call(element);
-  }
-  attributeChangedCallback(instance, name, oldValue, newValue, attributeChangedCallback) {
-    initializeAttrs(instance);
-    if (name !== "data-catalyst" && attributeChangedCallback) {
-      attributeChangedCallback.call(instance, name, oldValue, newValue);
-    }
-  }
-};
-__name(CatalystDelegate, "CatalystDelegate");
-function meta(proto, name) {
-  if (!Object.prototype.hasOwnProperty.call(proto, symbol)) {
-    const parent = proto[symbol];
-    const map2 = proto[symbol] = /* @__PURE__ */ new Map();
-    if (parent) {
-      for (const [key, value] of parent) {
-        map2.set(key, new Set(value));
-      }
-    }
-  }
-  const map = proto[symbol];
-  if (!map.has(name))
-    map.set(name, /* @__PURE__ */ new Set());
-  return map.get(name);
+var instances = /* @__PURE__ */ new WeakSet();
+function initializeInstance(instance, connect) {
+  instance.toggleAttribute("data-catalyst", true);
+  customElements.upgrade(instance);
+  instances.add(instance);
+  autoShadowRoot(instance);
+  initializeAttrs(instance);
+  bind(instance);
+  if (connect)
+    connect.call(instance);
+  if (instance.shadowRoot)
+    bindShadow(instance.shadowRoot);
 }
-__name(meta, "meta");
-
-// ../../node_modules/@github/catalyst/lib/target.js
-function target(proto, key) {
-  meta(proto, "target").add(key);
-  Object.defineProperty(proto, key, {
-    configurable: true,
-    get() {
-      return findTarget(this, key);
-    }
-  });
+__name(initializeInstance, "initializeInstance");
+function initializeClass(classObject) {
+  defineObservedAttributes(classObject);
+  register(classObject);
 }
-__name(target, "target");
-function targets(proto, key) {
-  meta(proto, "targets").add(key);
-  Object.defineProperty(proto, key, {
-    configurable: true,
-    get() {
-      return findTargets(this, key);
-    }
-  });
-}
-__name(targets, "targets");
+__name(initializeClass, "initializeClass");
 
 // ../../node_modules/@github/catalyst/lib/controller.js
 function controller(classObject) {
-  new CatalystDelegate(classObject);
+  const connect = classObject.prototype.connectedCallback;
+  classObject.prototype.connectedCallback = function() {
+    initializeInstance(this, connect);
+  };
+  initializeClass(classObject);
 }
 __name(controller, "controller");
 
@@ -5200,20 +5151,20 @@ function updateContext(context, _event, assignActions, state) {
   var updatedContext = context ? assignActions.reduce(function(acc, assignAction) {
     var e_7, _a2;
     var assignment = assignAction.assignment;
-    var meta2 = {
+    var meta = {
       state,
       action: assignAction,
       _event
     };
     var partialUpdate = {};
     if (isFunction(assignment)) {
-      partialUpdate = assignment(acc, _event.data, meta2);
+      partialUpdate = assignment(acc, _event.data, meta);
     } else {
       try {
         for (var _b = __values(Object.keys(assignment)), _c = _b.next(); !_c.done; _c = _b.next()) {
           var key = _c.value;
           var propAssignment = assignment[key];
-          partialUpdate[key] = isFunction(propAssignment) ? propAssignment(acc, _event.data, meta2) : propAssignment;
+          partialUpdate[key] = isFunction(propAssignment) ? propAssignment(acc, _event.data, meta) : propAssignment;
         }
       } catch (e_7_1) {
         e_7 = {
@@ -5505,18 +5456,18 @@ function send2(event2, options) {
 }
 __name(send2, "send");
 function resolveSend(action, ctx, _event, delaysMap) {
-  var meta2 = {
+  var meta = {
     _event
   };
-  var resolvedEvent = toSCXMLEvent(isFunction(action.event) ? action.event(ctx, _event.data, meta2) : action.event);
+  var resolvedEvent = toSCXMLEvent(isFunction(action.event) ? action.event(ctx, _event.data, meta) : action.event);
   var resolvedDelay;
   if (isString(action.delay)) {
     var configDelay = delaysMap && delaysMap[action.delay];
-    resolvedDelay = isFunction(configDelay) ? configDelay(ctx, _event.data, meta2) : configDelay;
+    resolvedDelay = isFunction(configDelay) ? configDelay(ctx, _event.data, meta) : configDelay;
   } else {
-    resolvedDelay = isFunction(action.delay) ? action.delay(ctx, _event.data, meta2) : action.delay;
+    resolvedDelay = isFunction(action.delay) ? action.delay(ctx, _event.data, meta) : action.delay;
   }
-  var resolvedTarget = isFunction(action.to) ? action.to(ctx, _event.data, meta2) : action.to;
+  var resolvedTarget = isFunction(action.to) ? action.to(ctx, _event.data, meta) : action.to;
   return __assign(__assign({}, action), {
     to: resolvedTarget,
     _event: resolvedEvent,
@@ -11546,14 +11497,14 @@ function tippy(targets2, optionalProps) {
     var isMoreThanOneReferenceElement = elements.length > 1;
     warnWhen(isSingleContentElement && isMoreThanOneReferenceElement, ["tippy() was passed an Element as the `content` prop, but more than", "one tippy instance was created by this invocation. This means the", "content element will only be appended to the last tippy instance.", "\n\n", "Instead, pass the .innerHTML of the element, or use a function that", "returns a cloned version of the element instead.", "\n\n", "1) content: element.innerHTML\n", "2) content: () => element.cloneNode(true)"].join(" "));
   }
-  var instances = elements.reduce(function(acc, reference2) {
+  var instances2 = elements.reduce(function(acc, reference2) {
     var instance = reference2 && createTippy(reference2, passedProps);
     if (instance) {
       acc.push(instance);
     }
     return acc;
   }, []);
-  return isElement2(targets2) ? instances[0] : instances;
+  return isElement2(targets2) ? instances2[0] : instances2;
 }
 __name(tippy, "tippy");
 tippy.defaultProps = defaultProps;

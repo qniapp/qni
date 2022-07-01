@@ -63,10 +63,16 @@ export class Complex {
 
   static parse(s: string): Complex {
     const m = s.match(/^\s*([+-]?\d+(?:\.\d*)?(?:e[+-]?\d+)?)\s*(?:([+-])\s*i)?\s*$/)
+
     if (m) {
-      const [, real, sign, imag] = m
+      let [, real, sign, imag] = m
+      if (real === undefined) real = '0'
+      if (sign === undefined) sign = '+'
+      if (imag === undefined) imag = '0'
+
       const [realPart, imagPart] = [real, imag].map(x => parseFloat(x))
       const [realSign, imagSign] = [sign, sign].map(x => (x === '-' ? -1 : 1))
+
       return new Complex(realPart * realSign, imagPart * imagSign)
     }
     throw new DetailedError('Invalid complex number string.', {s})
