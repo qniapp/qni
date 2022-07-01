@@ -1,7 +1,8 @@
-import {Complex, Util} from '@qni/common'
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement} from 'tippy.js'
+import {Complex} from 'complex.js'
+import {Util} from '@qni/common'
 import {forceSigned} from './util'
 
 @controller
@@ -108,7 +109,7 @@ export class QubitCircleElement extends HTMLElement {
 
     const template = document.importNode(this.popupTemplate.content, true)
 
-    const amplitude = Complex.parse(this.amplitude)
+    const amplitude = new Complex(this.amplitude)
     const headerEl = template.getElementById('qubit-circle-popup--header')
     const ketBinaryEl = template.getElementById('qubit-circle-popup--ket-binary-value')
     const ketDecimalEl = template.getElementById('qubit-circle-popup--ket-decimal-value')
@@ -139,8 +140,8 @@ export class QubitCircleElement extends HTMLElement {
     }
 
     if (this.showPopupAmplitude) {
-      amplitudeRealValueEl.textContent = forceSigned(amplitude.real, 5)
-      amplitudeImagValueEl.textContent = `${forceSigned(amplitude.imag, 5)}i`
+      amplitudeRealValueEl.textContent = forceSigned(amplitude.re, 5)
+      amplitudeImagValueEl.textContent = `${forceSigned(amplitude.im, 5)}i`
     } else {
       amplitudeEl.style.display = 'none'
     }
@@ -166,13 +167,13 @@ export class QubitCircleElement extends HTMLElement {
   }
 
   private get magnitude(): number {
-    const amplitude = Complex.parse(this.amplitude)
+    const amplitude = new Complex(this.amplitude)
     return amplitude.abs()
   }
 
   private get phase(): number {
-    const amplitude = Complex.parse(this.amplitude)
-    return amplitude.phase()
+    const amplitude = new Complex(this.amplitude)
+    return amplitude.arg()
   }
 
   private get phaseDeg(): number {

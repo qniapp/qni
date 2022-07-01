@@ -22,7 +22,7 @@
     "presize": "npm run build",
     "size": "size-limit",
     "pretest": "npm run build",
-    "test": "web-test-runner test/**/*-test.js --node-resolve && npm run size",
+    "test": "web-test-runner test/**/*-test.js --node-resolve",
     "test:ci": "yarn test",
     "test:watch": "yarn test --watch",
     "watch:css": "yarn build:css --watch",
@@ -43,6 +43,7 @@
     "@github/catalyst": "1.3.0",
     "@github/jtml": "~0.4",
     "@qni/common": "^0.0.80",
+    "complex.js": "^2.1.1",
     "interactjs": "~1.10",
     "tippy.js": "^6.3.7",
     "xstate": "~4.32"
