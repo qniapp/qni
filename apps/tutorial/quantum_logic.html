@@ -35,58 +35,8 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>"],["{a = NOT a"],["X"],["}"],["Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>"],["{a = NOT a"],["X"],["}"],["Measure"]]} {% endcapture %} {{
+json | strip | mini_qni: "|0>", "|1>" }}
 
 <h2>量子論理 AND</h2>
 
@@ -139,58 +89,9 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|1>","|1>"],["{c = a AND b"],[1,1,"|0>"],["•","•","X"],["}"],[1,1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|1>","|1>"],["{c = a AND
+b"],[1,1,"|0>"],["•","•","X"],["}"],[1,1,"Measure"]]} {% endcapture %} {{ json | strip | mini_qni:
+"|0>", "|1>" }}
 
 <h2>量子論理 XOR</h2>
 
@@ -208,58 +109,8 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|1>","|0>"],["{b = a XOR b"],["•","X"],["}"],[1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|1>","|0>"],["{b = a XOR b"],["•","X"],["}"],[1,"Measure"]]} {%
+endcapture %} {{ json | strip | mini_qni: "|0>", "|1>" }}
 
 <p>
   ちなみに XOR は足し算の一種であり、「a と b を足した値を 2 で割った余り
@@ -329,58 +180,9 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|1>","|1>"],["{c = NOT(a AND b)"],[1,1,"|0>"],["•","•","X"],[1,1,"X"],["}"],[1,1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|1>","|1>"],["{c = NOT(a AND
+b)"],[1,1,"|0>"],["•","•","X"],[1,1,"X"],["}"],[1,1,"Measure"]]} {% endcapture %} {{ json | strip |
+mini_qni: "|0>", "|1>" }}
 
 <h2>量子論理 OR</h2>
 
@@ -398,58 +200,9 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|1>","|0>"],["{c = a OR b"],[1,1,"|0>"],["X","X"],["•","•","X"],[1,1,"X"],["X","X"],["}"],[1,1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|1>","|0>"],["{c = a OR
+b"],[1,1,"|0>"],["X","X"],["•","•","X"],[1,1,"X"],["X","X"],["}"],[1,1,"Measure"]]} {% endcapture %}
+{{ json | strip | mini_qni: "|0>", "|1>" }}
 
 <p>
   OR がなぜこのような回路になるかは、OR が NAND と NOT で次のように書き直せることから来ています。
@@ -459,58 +212,9 @@ next_url: ./superposition_quantum_logic.html
 
 <p>つまり OR は、入力 a, b をそれぞれ NOT したものを入力とする NAND に分解できます。</p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|1>","|0>"],[1,1,"|0>"],["{NOT a,b"],["X","X"],["}"],[1],["{NAND"],["•","•","X"],[1,1,"X"],["}"],[1],["{アンコンピュート"],["X","X"],["}"],[1,1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|1>","|0>"],[1,1,"|0>"],["{NOT
+a,b"],["X","X"],["}"],[1],["{NAND"],["•","•","X"],[1,1,"X"],["}"],[1],["{アンコンピュート"],["X","X"],["}"],[1,1,"Measure"]]}
+{% endcapture %} {{ json | strip | mini_qni: "|0>", "|1>" }}
 
 <p>
   最後のステップで a, b に対してアンコンピュテーションすることで a, b
@@ -549,58 +253,9 @@ next_url: ./superposition_quantum_logic.html
   </ul>
 </div>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-neutral-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <write-gate data-value="0" data-hoverable></write-gate>
-        </palette-dropzone>
-        <palette-dropzone>
-          <write-gate data-value="1" data-hoverable></write-gate>
-        </palette-dropzone>
-      </div>
-
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div
-            class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
-          >
-            {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["|0>","|0>"],["{c = a NOR b"],[1,1,"|0>"],["X","X"],["•","•","X"],["X","X"],["}"],[1,1,"Measure"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-neutral-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
+{% capture json %} {"cols":[["|0>","|0>"],["{c = a NOR
+b"],[1,1,"|0>"],["X","X"],["•","•","X"],["X","X"],["}"],[1,1,"Measure"]]} {% endcapture %} {{ json |
+strip | mini_qni: "|0>", "|1>" }}
 
 <h2>まとめ</h2>
 
