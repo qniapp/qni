@@ -10,6 +10,7 @@ export declare class Menuable {
   initMenu(): void
   showMenu(): void
   hideMenu(): void
+  menu: TippyInstance
 }
 
 export const isMenuable = (arg: unknown): arg is Menuable =>

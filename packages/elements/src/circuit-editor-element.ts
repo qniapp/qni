@@ -73,6 +73,7 @@ export class CircuitEditorElement extends HTMLElement {
                 GRAB_OPERATION: {
                   target: 'editing',
                   actions: [
+                    'maybeHideOperationMenu',
                     'startCircuitEdit',
                     'setOperationActive',
                     'addDocumentCursorGrabbingStyle',
@@ -169,6 +170,14 @@ export class CircuitEditorElement extends HTMLElement {
         }
       },
       actions: {
+        maybeHideOperationMenu: (_context, event) => {
+          if (event.type !== 'GRAB_OPERATION') return
+
+          const operation = event.operation
+          if (isMenuable(operation) && operation.menu) {
+            operation.hideMenu()
+          }
+        },
         startCircuitEdit: () => {
           this.circuit.editing = true
         },
