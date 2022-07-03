@@ -52,7 +52,7 @@ measurement-gate {
   /* data-grabbed */
 
   &[data-grabbed]::part(body) {
-    @apply bg-purple-500;
+    @apply qpu-operation-bg-grab;
   }
 
   &[data-grabbed]::part(icon) {

@@ -12966,7 +12966,7 @@ function x(o2) {
         let n = this.dropzone;
         Nt(n) ? this.snappedDropzone = n : this.snappedDropzone = null;
       }, grab: (i, n) => {
-        n.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), jt(this.dropzone) && (this.snapped = false, this.moveByOffset(n.x, n.y), this.classList.remove("operation-xl")));
+        n.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), jt(this.dropzone) && (this.snapped = false, this.moveByOffset(n.x, n.y), this.classList.remove("qpu-operation-xl")));
       }, release: () => {
         this.grabbed = false, this.dispatchEvent(new Event("operation-release", { bubbles: true }));
       }, startDragging: () => {

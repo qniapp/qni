@@ -2250,7 +2250,7 @@ bloch-display[data-grabbed]:not([data-snapped]) {
 
 bloch-display[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 bloch-display[data-grabbed]::part(icon) {
@@ -3047,7 +3047,7 @@ control-gate[data-grabbed]:not([data-snapped]) {
 
 control-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 control-gate[data-grabbed]::part(icon) {
@@ -3126,8 +3126,9 @@ h-gate[data-active]::after {
 }
 
 h-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 h-gate {
@@ -3165,7 +3166,7 @@ h-gate[data-grabbed]:not([data-snapped]) {
 
 h-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 h-gate[data-grabbed]::part(icon) {
@@ -3245,10 +3246,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) h-gate[data-if]::b
 }
 
 h-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -3364,7 +3365,7 @@ measurement-gate[data-grabbed]:not([data-snapped]) {
 
 measurement-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 measurement-gate[data-grabbed]::part(icon) {
@@ -3476,7 +3477,7 @@ measurement-gate[data-value='1']::part(value)::after {
 
 measurement-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 measurement-gate[data-grabbed]::part(icon) {
@@ -3584,7 +3585,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
 
 phase-gate::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
   border-radius: 9999px;
@@ -3596,8 +3597,9 @@ phase-gate::part(icon) {
 }
 
 phase-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 phase-gate {
@@ -3635,7 +3637,7 @@ phase-gate[data-grabbed]:not([data-snapped]) {
 
 phase-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 phase-gate[data-grabbed]::part(icon) {
@@ -3762,8 +3764,9 @@ rnot-gate[data-active]::after {
 }
 
 rnot-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 rnot-gate {
@@ -3801,7 +3804,7 @@ rnot-gate[data-grabbed]:not([data-snapped]) {
 
 rnot-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 rnot-gate[data-grabbed]::part(icon) {
@@ -3881,10 +3884,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rnot-gate[data-if]
 }
 
 rnot-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -3980,8 +3983,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
 }
 
 rx-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 rx-gate {
@@ -4019,7 +4023,7 @@ rx-gate[data-grabbed]:not([data-snapped]) {
 
 rx-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 rx-gate[data-grabbed]::part(icon) {
@@ -4099,10 +4103,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-if]::
 }
 
 rx-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4198,8 +4202,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
 }
 
 ry-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 ry-gate {
@@ -4237,7 +4242,7 @@ ry-gate[data-grabbed]:not([data-snapped]) {
 
 ry-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 ry-gate[data-grabbed]::part(icon) {
@@ -4317,10 +4322,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-if]::
 }
 
 ry-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4416,8 +4421,9 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
 }
 
 rz-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 rz-gate {
@@ -4455,7 +4461,7 @@ rz-gate[data-grabbed]:not([data-snapped]) {
 
 rz-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 rz-gate[data-grabbed]::part(icon) {
@@ -4535,10 +4541,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-if]::
 }
 
 rz-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4611,7 +4617,7 @@ swap-gate[data-grabbed]:not([data-snapped]) {
 
 swap-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 swap-gate[data-grabbed]::part(icon) {
@@ -4690,8 +4696,9 @@ t-gate[data-active]::after {
 }
 
 t-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 t-gate {
@@ -4729,7 +4736,7 @@ t-gate[data-grabbed]:not([data-snapped]) {
 
 t-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 t-gate[data-grabbed]::part(icon) {
@@ -4809,10 +4816,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::b
 }
 
 t-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4885,7 +4892,7 @@ write-gate[data-grabbed]:not([data-snapped]) {
 
 write-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 write-gate[data-grabbed]::part(icon) {
@@ -4988,32 +4995,32 @@ write-gate[data-value='1']::part(value)::after {
   content: '1';
 }
 
-write-gate.operation-xs::part(value)::after {
+write-gate.qpu-operation-xs::part(value)::after {
   font-size: 0.75rem;
   line-height: 1rem;
 }
 
-write-gate.operation-sm::part(value)::after {
+write-gate.qpu-operation-sm::part(value)::after {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-write-gate.operation-base::part(value)::after {
+write-gate.qpu-operation-base::part(value)::after {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
 
-write-gate.operation-lg::part(value)::after {
+write-gate.qpu-operation-lg::part(value)::after {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
-write-gate.operation-xl::part(value)::after {
+write-gate.qpu-operation-xl::part(value)::after {
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
-write-gate.operation-2xl::part(value)::after {
+write-gate.qpu-operation-2xl::part(value)::after {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
@@ -5066,7 +5073,7 @@ x-gate[data-active]::after {
 
 x-gate::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
   border-radius: 9999px;
@@ -5078,8 +5085,9 @@ x-gate::part(icon) {
 }
 
 x-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 x-gate {
@@ -5117,7 +5125,7 @@ x-gate[data-grabbed]:not([data-snapped]) {
 
 x-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 x-gate[data-grabbed]::part(icon) {
@@ -5226,8 +5234,9 @@ y-gate[data-active]::after {
 }
 
 y-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 y-gate {
@@ -5265,7 +5274,7 @@ y-gate[data-grabbed]:not([data-snapped]) {
 
 y-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 y-gate[data-grabbed]::part(icon) {
@@ -5345,10 +5354,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) y-gate[data-if]::b
 }
 
 y-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -5387,8 +5396,9 @@ z-gate[data-active]::after {
 }
 
 z-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(82 82 91 / var(--tw-bg-opacity));
 }
 
 z-gate {
@@ -5426,7 +5436,7 @@ z-gate[data-grabbed]:not([data-snapped]) {
 
 z-gate[data-grabbed]::part(body) {
   --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 
 z-gate[data-grabbed]::part(icon) {
@@ -5506,10 +5516,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 }
 
 z-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -5585,37 +5595,43 @@ z-gate::part(icon) {
   content: '';
 }
 
-/* operation sizes */
+/* QPU operation size */
 
-.operation-xs {
+.qpu-operation-xs {
   height: 1rem;
   width: 1rem;
 }
 
-.operation-sm {
+.qpu-operation-sm {
   height: 1.5rem;
   width: 1.5rem;
 }
 
-.operation-base {
+.qpu-operation-base {
   height: 2rem;
   width: 2rem;
 }
 
-.operation-lg {
+.qpu-operation-lg {
   height: 2.5rem;
   width: 2.5rem;
 }
 
-.operation-xl {
+.qpu-operation-xl {
   height: 3rem;
   width: 3rem;
 }
 
-.operation-2xl {
+.qpu-operation-2xl {
   height: 4rem;
   width: 4rem;
 }
+
+/* QPU operation text color */
+
+/* QPU operation background color */
+
+/* QPU operation border radius */
 
 /* operation shapes */
 

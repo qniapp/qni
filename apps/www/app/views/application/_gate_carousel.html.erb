@@ -1,64 +1,64 @@
 <%= render GateCarouselComponent.new do %>
   <%= gate_set do %>
     <%= gate_carousel_dropzone do %>
-      <h-gate class="operation-xl"></h-gate>
+      <h-gate class="qpu-operation-xl"></h-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <x-gate class="operation-xl"></x-gate>
+      <x-gate class="qpu-operation-xl"></x-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <y-gate class="operation-xl"></y-gate>
+      <y-gate class="qpu-operation-xl"></y-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <z-gate class="operation-xl"></z-gate>
-    <% end %>
-  <% end %>
-
-  <%= gate_set do %>
-    <%= gate_carousel_dropzone do %>
-      <phase-gate class="operation-xl angle-hidden" data-angle="π/2"></phase-gate>
-    <% end %>
-    <%= gate_carousel_dropzone do %>
-      <t-gate class="operation-xl"></t-gate>
-    <% end %>
-    <%= gate_carousel_dropzone do %>
-      <rnot-gate class="operation-xl"></rnot-gate>
+      <z-gate class="qpu-operation-xl"></z-gate>
     <% end %>
   <% end %>
 
   <%= gate_set do %>
     <%= gate_carousel_dropzone do %>
-      <rx-gate class="operation-xl angle-hidden" data-angle="π/2"></rx-gate>
+      <phase-gate class="qpu-operation-xl angle-hidden" data-angle="π/2"></phase-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <ry-gate class="operation-xl angle-hidden" data-angle="π/2"></ry-gate>
+      <t-gate class="qpu-operation-xl"></t-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <rz-gate class="operation-xl angle-hidden" data-angle="π/2"></rz-gate>
-    <% end %>
-  <% end %>
-
-  <%= gate_set do %>
-    <%= gate_carousel_dropzone do %>
-      <control-gate class="operation-xl"></control-gate>
-    <% end %>
-    <%= gate_carousel_dropzone do %>
-      <swap-gate class="operation-xl"></swap-gate>
+      <rnot-gate class="qpu-operation-xl"></rnot-gate>
     <% end %>
   <% end %>
 
   <%= gate_set do %>
     <%= gate_carousel_dropzone do %>
-      <write-gate data-value="0" class="operation-xl"></write-gate>
+      <rx-gate class="qpu-operation-xl angle-hidden" data-angle="π/2"></rx-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <write-gate data-value="1" class="operation-xl"></write-gate>
+      <ry-gate class="qpu-operation-xl angle-hidden" data-angle="π/2"></ry-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <measurement-gate class="operation-xl"></measurement-gate>
+      <rz-gate class="qpu-operation-xl angle-hidden" data-angle="π/2"></rz-gate>
+    <% end %>
+  <% end %>
+
+  <%= gate_set do %>
+    <%= gate_carousel_dropzone do %>
+      <control-gate class="qpu-operation-xl"></control-gate>
     <% end %>
     <%= gate_carousel_dropzone do %>
-      <bloch-display class="operation-xl"></bloch-display>
+      <swap-gate class="qpu-operation-xl"></swap-gate>
+    <% end %>
+  <% end %>
+
+  <%= gate_set do %>
+    <%= gate_carousel_dropzone do %>
+      <write-gate data-value="0" class="qpu-operation-xl"></write-gate>
+    <% end %>
+    <%= gate_carousel_dropzone do %>
+      <write-gate data-value="1" class="qpu-operation-xl"></write-gate>
+    <% end %>
+    <%= gate_carousel_dropzone do %>
+      <measurement-gate class="qpu-operation-xl"></measurement-gate>
+    <% end %>
+    <%= gate_carousel_dropzone do %>
+      <bloch-display class="qpu-operation-xl"></bloch-display>
     <% end %>
   <% end %>
 <% end %>

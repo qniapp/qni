@@ -1137,21 +1137,21 @@
 <p>
   アリスは暗号鍵の 1 ビット分を表す量子ビットに \(|0\rangle\) または \(|1\rangle\)
   状態をセットし、ボブに送ろうとします。 イブはアリスとボブの中間 (真ん中のワイヤ)
-  で量子ビットを横取りし盗聴 <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
+  で量子ビットを横取りし盗聴 <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
   した後、アリスになりすまして偽装した量子ビットをボブに送ります。
-  ボブは受け取った量子ビットにランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用してから測定します。
+  ボブは受け取った量子ビットにランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用してから測定します。
 </p>
 
 <p>ランダムにゲートを適用するために、今回は Qni の新たな機能を使います。</p>
 
 <ul>
   <li>
-    <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> の上の文字列は、測定で得られた 0 または 1
-    を指定した変数にセットすることを表します。たとえば `aliceX` とラベルの付いた <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> が \(|1\rangle\) を測定した場合、変数 `aliceX` の値は 1 となります。
+    <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> の上の文字列は、測定で得られた 0 または 1
+    を指定した変数にセットすることを表します。たとえば `aliceX` とラベルの付いた <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> が \(|1\rangle\) を測定した場合、変数 `aliceX` の値は 1 となります。
   </li>
   <li>
-    <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> や <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> の上の文字列は変数名を意味し、変数の値が 1
-    だった時のみゲートを適用することを意味します。 たとえば `aliceX` とラベルの付いた <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> は、同じく `aliceX` とラベルの付いた <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
+    <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> や <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の上の文字列は変数名を意味し、変数の値が 1
+    だった時のみゲートを適用することを意味します。 たとえば `aliceX` とラベルの付いた <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> は、同じく `aliceX` とラベルの付いた <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
     の測定結果が \(|1\rangle\) だった時のみ適用されます。
   </li>
 </ul>
@@ -1217,7 +1217,7 @@
     href="./measurement_operation.html"
     >MEASUREMENT 命令</a
   >を参照</span>で 0 または 1 を作り、変数
-  <code>aliceX</code> にセットします。同様に、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  <code>aliceX</code> にセットします。同様に、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
   を適用する/しないをランダムに決めるための変数
   <code>aliceH</code> をもう一つの量子乱数ジェネレータでセットします。
 </p>
@@ -1225,15 +1225,15 @@
 <p>
   次に、このランダムな値 0 または 1 を持つ 2 つの変数 <code>aliceX</code> と
   <code>aliceH</code> を使って、暗号鍵の 1 ビット分を作ります。 \(|0\rangle\)
-  に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate>
+  に初期化した量子ビットに対して、<code>aliceX == 1</code> の場合だけ <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>
   を適用します。 これによって、アリスの量子ビットはランダムに \(|0\rangle\) または \(|1\rangle\)
-  の状態を持ちます。 同様に、ランダムな変数 <code>aliceH</code> の値が 1 だった場合に <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用します。 できあがった量子ビットを (イブにすぐ横取りされてしまうものの)
+  の状態を持ちます。 同様に、ランダムな変数 <code>aliceH</code> の値が 1 だった場合に <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用します。 できあがった量子ビットを (イブにすぐ横取りされてしまうものの)
   ボブへと送ります。
 </p>
 
 <p>
   アリスが送信する量子ビットの状態は、左から 2 つめのブロッホ球で確認できます。 「\(|0\rangle\) または
-  \(|1\rangle\)」の 2 通りと、「<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate> を適用する/しない」の 2 通りがあるので、計 \(2
+  \(|1\rangle\)」の 2 通りと、「<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用する/しない」の 2 通りがあるので、計 \(2
   \times 2 = 4\) 通りの状態を取りうることを確認してください。
 </p>
 
@@ -1245,10 +1245,10 @@
     href="./no_cloning_theorem.html"
     >CLONE 命令!?</a
   >を参照</span>によりアリスの量子ビットを複製できないため、測定して量子ビット状態を壊す以外に量子ビットの状態を推定することはできません。
-  さらにアリスが \(|0\rangle\) と \(|1\rangle\) のどちらを送ったのか、さらに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  さらにアリスが \(|0\rangle\) と \(|1\rangle\) のどちらを送ったのか、さらに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
   を適用したかどうかが測定結果からは分からないため、測定結果は 1/2 の確率でしか当たりません。
   また横取りによってボブに量子ビットが届かないと盗聴行為がすぐにバレてしまうため、測定結果と同じビットを
-  <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> で作ってボブへと送ります。
+  <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> で作ってボブへと送ります。
 </p>
 
 <p>
@@ -1260,8 +1260,8 @@
 <h2>ボブ</h2>
 
 <p>
-  ボブは BB84 プロトコルに従ってランダムに <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用し、アリスからの量子ビットを測定します。 そして <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
+  ボブは BB84 プロトコルに従ってランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用し、アリスからの量子ビットを測定します。 そして <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
   を適用した/しないがアリスと一致する量子ビットのうち、半分の測定結果を突き合わせ、等しいかどうかを確認します。
   このとき、イブが盗聴した影響でその約半分に不一致が置こるため、イブの盗聴が判明します。
 </p>
@@ -1366,7 +1366,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="operation-sm"></h-gate>
+      <h-gate class="qpu-operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1444,7 +1444,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="operation-sm"></h-gate>
+      <h-gate class="qpu-operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1535,7 +1535,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1613,7 +1613,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1691,7 +1691,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1938,7 +1938,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2016,7 +2016,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2101,7 +2101,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2177,7 +2177,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2260,7 +2260,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2338,7 +2338,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2422,7 +2422,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="operation-sm"></write-gate>
+      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2500,7 +2500,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="operation-sm"></write-gate>
+      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2584,7 +2584,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2662,7 +2662,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2740,7 +2740,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2824,7 +2824,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="operation-sm"></y-gate>
+      <y-gate class="qpu-operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2902,7 +2902,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="operation-sm"></y-gate>
+      <y-gate class="qpu-operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2986,7 +2986,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3064,7 +3064,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3142,7 +3142,7 @@ BB84 プロトコル</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>

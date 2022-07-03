@@ -1129,14 +1129,14 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子ビットから 0 または 1 を読み出す</p>
             </div>
             <div class="content-with-margin"><p>
-  MEASUREMENT 命令 <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> は量子ビットから 0 または 1 (\(|0\rangle\) または
-  \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement) を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</span>。 量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> を実行する必要があります。
+  MEASUREMENT 命令 <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> は量子ビットから 0 または 1 (\(|0\rangle\) または
+  \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement) を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</span>。 量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> を実行する必要があります。
 </p>
 
 <h2>単純な状態の測定</h2>
 
 <p>
-  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
+  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
   を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ \(|0\rangle\) と \(|1\rangle\)
   が返されます。
 </p>
@@ -1185,7 +1185,7 @@
 </svg>
 
           </div>
-          <measurement-gate class="operation-sm absolute inset-0 m-auto"></measurement-gate>
+          <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
         </div>
       </div>
       <div class="flex flex-row">
@@ -1265,7 +1265,7 @@
 </svg>
 
           </div>
-          <measurement-gate class="operation-sm absolute inset-0 m-auto"></measurement-gate>
+          <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
         </div>
       </div>
       <div class="flex flex-row">
@@ -1362,7 +1362,7 @@
   <path fill-rule="evenodd" clip-rule="evenodd" d="M13.855 24.0233H1.99805C1.44576 24.0233 0.998047 24.471 0.998047 25.0233C0.998047 25.5756 1.44576 26.0233 1.99805 26.0233H13.855V24.0233Z" fill="#D4D4D8"/>
 </svg>
 
-            <measurement-gate class="operation-sm absolute inset-0 m-auto"></measurement-gate>
+            <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
           </div>
           <span class="text-xs font-bold text-purple-500">75%</span>
         </div>
@@ -1441,17 +1441,17 @@
 </div>
 
 <p>
-  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate>
-  は <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate> と同じく逆演算を持ちません。
+  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
+  は <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> と同じく逆演算を持ちません。
   また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
 </p>
 
 <h2>量子乱数ジェネレータ</h2>
 
 <p>
-  <measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> とこれまでに学んだ <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="operation-xs relative top-0.5 inline-block"></write-gate>、<h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。 <write-gate data-value="0" class="operation-xs relative top-0.5 inline-block"></write-gate> で \(|0\rangle\) に初期化した量子ビットを <h-gate class="operation-xs relative top-0.5 inline-block"></h-gate>
-  で重ね合わせ状態にし、<measurement-gate class="operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで 0 または 1
+  <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> とこれまでに学んだ <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate>、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。 <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> で \(|0\rangle\) に初期化した量子ビットを <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  で重ね合わせ状態にし、<measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで 0 または 1
   をランダムに得ることができます。
 </p>
 
@@ -1641,7 +1641,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="operation-sm"></h-gate>
+      <h-gate class="qpu-operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1719,7 +1719,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="operation-sm"></h-gate>
+      <h-gate class="qpu-operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1810,7 +1810,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1888,7 +1888,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1966,7 +1966,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2213,7 +2213,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2291,7 +2291,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2376,7 +2376,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2452,7 +2452,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2535,7 +2535,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2613,7 +2613,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2697,7 +2697,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="operation-sm"></write-gate>
+      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2775,7 +2775,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="operation-sm"></write-gate>
+      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2859,7 +2859,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2937,7 +2937,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3015,7 +3015,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="operation-sm"></x-gate>
+      <x-gate class="qpu-operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3099,7 +3099,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="operation-sm"></y-gate>
+      <y-gate class="qpu-operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3177,7 +3177,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="operation-sm"></y-gate>
+      <y-gate class="qpu-operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3261,7 +3261,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3339,7 +3339,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3417,7 +3417,7 @@ WRITE 命令</a
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="operation-sm"></z-gate>
+      <z-gate class="qpu-operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
