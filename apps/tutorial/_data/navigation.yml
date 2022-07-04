@@ -110,30 +110,28 @@
   pages:
     - name: 量子論理ゲート
       link: ./quantum_logic.html
-      new: true
     - name: 重ね合わせ上での論理演算
       link: ./superposition_quantum_logic.html
-      new: true
     - name: 位相論理演算
       link: ./phase_logic.html
-      new: true
     - name: 位相論理演算の組合わせ
       link: ./phase_logic_combination.html
-      new: true
     - name: 充足可能性問題
       link: ./sat.html
+- name: グローヴァー探索
+  pages:
+    - name: 折り返し変換
+      link: ./grover_iam.html
       new: true
-# - name: グローヴァー探索
-#   pages:
-#     - name: 折り返し変換
-#       link: ./grover_iam.html
-#       new: true
-#     - name: グロヴァー反復
-#       link: ./grover_iteration.html
-#       new: true
-#     - name: 複数の振幅を増幅
-#       link: ./multiple_marked_values.html
-#       new: true
+    - name: グロヴァー反復
+      link: ./grover_iteration.html
+      new: true
+    - name: 複数の振幅を増幅
+      link: ./multiple_marked_values.html
+      new: true
+    - name: 折り返しの仕組み
+      link: ./grover_iam_indetail.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明

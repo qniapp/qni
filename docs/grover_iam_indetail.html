@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>QPU は何が得意?</title>
+    <title>折り返しの仕組み</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -127,7 +127,7 @@
    
   <a
     href="./what_qpu_do_faster.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">QPU は何が得意?</span>
     
@@ -591,7 +591,7 @@
    
   <a
     href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">折り返しの仕組み</span>
     
@@ -655,7 +655,7 @@
    
   <a
     href="./what_qpu_do_faster.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">QPU は何が得意?</span>
     
@@ -1119,7 +1119,7 @@
    
   <a
     href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">折り返しの仕組み</span>
     
@@ -1189,242 +1189,96 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-zinc-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                イントロダクション
+                グローヴァー探索
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  QPU は何が得意?
+                  折り返しの仕組み
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">量子コンピュータの得意分野と制限</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">折り返し変換の幾何学的説明</p>
             </div>
             <div class="content-with-margin"><p>
-  結局のところ、量子コンピュータ (QPU)
-  は何が得意なのでしょうか。そしてさらに重要なことですが、メカニズム上の制限はあるのでしょうか。
+  これまでは折り返し変換をブラックボックスとして使ってきました。
+  折り返し変換は回路の形が決まっているので、実際に中身を知らなくてもグローヴァー探索を実装できます。
 </p>
 
-<h2>いきなり結論</h2>
+<p>
+  しかし一体なぜ「折り返し」と呼ばれるのか、知っていても損はありません。
+  ここでは、位相反転した振幅の大きさがなぜ増幅するのか、折り返し変換を幾何学的に捉えることで直感的に説明します。
+</p>
+
+<h2>初期状態</h2>
 
 <p>
-  量子コンピュータが従来のコンピュータに勝てる計算は、行列の掛け算です。めちゃくちゃ大きい、指数関数的に巨大な行列を、同じように巨大なベクトルに対して、
-  たった 1 ステップで掛けることができます。
+  折り返し変換をかける前の状態ベクトルは、たとえば次のようになっています。
+  ここでは 4 つの振幅はすべて等しく確率が 25% で、1 つだけ位相が反転しています。
+  このとき、図のように青の円周と位相の交点の座標をそれぞれ求めておきます。
 </p>
 
 <figure>
-  <img src="./images/what-qpu-do-faster/matrix_multiplication.png" class="h-auto w-full" />
+  <img src="./images/grover_iam_coordinates.png" class="h-auto w-full" />
 </figure>
 
-<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
-  本節では QPU の原理を説明するために、行列やベクトルといった数学的な用語をちょっとだけ使います。
-  しかしあくまで概略を紹介するだけなので、これらの概念に馴染みがなくても大丈夫です。
-</div>
+<h2>平均を求める</h2>
 
 <p>
-  この行列とベクトルは、従来のコンピュータでは何に対応するでしょうか。
-  行列は、量子コンピュータが実行する命令にあたります。QPU
-  命令は数学的には巨大な行列として書き表すことができるためです。
-  ベクトルは量子ビットの内容を数として縦に並べたもので、ある時点での量子コンピュータの状態を表します。
-  つまり行列をベクトルに掛けるという操作は、QPU 命令を量子ビットに作用させることで、量子ビットの状態
-  (量子コンピュータの状態) を更新することにあたります。
-  つまり量子コンピュータは巨大な行列とベクトルの掛け算を高速に繰り返すことでその状態を更新し、これが量子コンピュータでのプログラム実行にあたります。
+  次に、それぞれの点の平均座標を求めます。
+  x 座標はそれぞれ 0 なので平均も 0 です。
+  y 座標は \((0.5 + 0.5 + 0.5 - 0.5) / 4 = 0.25\) となります。
+  求めた平均座標は赤い丸として円表示の中に描いておきます。
 </p>
 
 <figure>
-  <img
-    src="./images/what-qpu-do-faster/qpu_operations_matrix_and_state_vector.png"
-    class="h-auto w-full"
-  />
+  <img src="./images/grover_iam_coordinates_mean.png" class="h-auto w-full" />
 </figure>
 
-<p>
-  行列とベクトルの掛け算を知らなくても、行列計算がゲームの 3D CG
-  やスパコンなどの数値計算などで活躍しているとなんとなく知っていれば、その重要さが分かるでしょう。
-  行列とベクトルの掛け算には大量の足し算と掛け算が含まれるので、それがたった 1
-  ステップでできるという量子コンピュータの能力は驚くべきものです。しかし落とし穴もあります。
-</p>
-
-<ul class="list-decimal">
-  <li>巨大なベクトルを入力するのが大変なこと</li>
-  <li>使える行列に制限があること</li>
-  <li>計算結果が一筋縄では取り出せないこと</li>
-</ul>
-
-<h2>巨大なベクトルの入力</h2>
+<h2>平均で折り返す</h2>
 
 <p>
-  掛け算しようとするベクトルのデータは、当然ですが量子コンピュータに入力してやる必要があります。たとえば、3
-  量子ビット<label for="margin-note-qubit" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qubit" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータで扱う情報の最小単位を量子ビットと呼びます。量子ビット数の大きい量子コンピュータほど規模の大きい計算ができます。現在最も量子ビット数が大きいマシンは
-  100 量子ビットを越える程度です。</span>の量子コンピュータを持っている場合、入力するベクトルのデータは次のように数が 8
-  個ならんだものになります<label for="margin-note-state-vector-size" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-state-vector-size" class="margin-note__toggle hidden"><span class="margin-note">一般に、\(n\)
-  個の量子ビットを持つマシンでは、数を 2 の \(n\) 乗個ならべたベクトルの掛け算を実行します。</span>
-</p>
-
-<p>$$\begin{bmatrix} 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0 \\ 0.5 \\ 0 \end{bmatrix}$$</p>
-
-<p>
-  ここでの問題は、値をセットしなければならないベクトルのサイズが \(2\) の \(n\)
-  乗とまさに指数関数であることです。 たとえば 100 量子ビットでは
-</p>
-
-<p class="overflow-auto">$$2^{100} = 1267650600228229401496703205376$$</p>
-
-<p>
-  もの数をセットしなければならず、これには 1,000
-  年単位の膨大な時間がかかってしまいます。唯一の希望は、まっさらな初期状態のベクトルから始めて、量子コンピュータの中でいろんな行列を掛けていくことによって、計算的に入力データを作ることです。それでもほとんどの場合、合理的な時間では実行できません。
-</p>
-
-<orbit-reviewarea color="blue">
-  <orbit-prompt cloze="量子コンピュータが扱う情報の最小単位を{量子ビット}と呼ぶ"></orbit-prompt>
-  <orbit-prompt
-    question="4 量子ビットの量子コンピュータへ入力できるベクトルのサイズは?"
-    answer="$2^4 = 16$"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="多量子ビットを持つ量子コンピュータへのデータ入力の問題は?"
-    answer="入力データのサイズが $2^n$ と指数関数であるため、現実的な時間内で入力が終わらないこと"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータへ巨大なデータを入力するのに唯一可能な方法は?"
-    answer="量子コンピュータ内で計算的に入力データを作る"
-  ></orbit-prompt>
-</orbit-reviewarea>
-
-<h2>使える行列の制限</h2>
-
-<p>
-  量子コンピュータが扱うベクトルは常に「二乗和が 1」という性質を保つ必要があります<label for="margin-note-square-sum" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-square-sum" class="margin-note__toggle hidden"><span class="margin-note">ベクトルの数をそれぞれ 2 乗して足し合わせると 1 になること。</span>。
-  量子コンピュータに入力するベクトルと、行列とベクトルを掛けて新たにできるベクトルは、この性質を保たなければなりません。
+  次に、平均座標 (赤い丸) を中心にして、それぞれの元の座標 (白い丸) と対称な点を取ります。
+  これが折り返しという名前の由来です。
+  位相が上を向いている左の 3 つの振幅は、平均からそれほど離れていないため折り返した点が近くになります。
+  一方で、位相が下を向いている振幅は 1 つだけ平均から離れるため、折り返した点も遠くになります。
 </p>
 
 <figure>
-  <img src="./images/what-qpu-do-faster/state_vector_norm1.png" class="h-auto w-full" />
+  <img src="./images/grover_iam_flip.png" class="h-auto w-full" />
 </figure>
 
 <p>
-  別の言い方をすれば、行列の掛け算はベクトルの二乗和を変えてはいけません。
-  この行列に対する制限は、量子力学に由来するものです。
-</p>
-
-<p>
-  制限その 2 として、行列の掛け算はいつも元に戻せる必要があります (行列の可逆性)。 つまり、ある行列
-  \(A\) を掛けたあとにやっぱり元のベクトルがほしくなった時、さらに行列 \(A^{\prime}\)
-  を掛けてやることで元のベクトルが得られる必要があります<label for="margin-note-matrix-inverse" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-matrix-inverse" class="margin-note__toggle hidden"><span class="margin-note">行列の掛け算では、元に戻す行列 \(B\) が存在しないことがよくあります。</span>。
-  こちらもやはり、量子力学に由来する制限です。
+  最後に折り返しによって得られた点を元に、振幅の大きさと位相を描き直します。
+  ここでは左の 3 つは、振幅の大きさが 0 になります。
+  そして一番右の振幅は、大きさが 1 になり位相も上向きになります。
 </p>
 
 <figure>
-  <img
-    src="./images/what-qpu-do-faster/reversible_matrix_multiplication.png"
-    class="h-auto w-full"
-  />
+  <img src="./images/grover_iam_flip_result.png" class="h-auto w-full" />
 </figure>
 
 <p>
-  数学の用語では、これら 2 つの性質を満たす行列をユニタリ行列と呼びます。
-  なぜこの制限が難しいのか、著者が考えられる最も良い例えはルービックキューブです。
-  キューブをばらばらにして組み直すことで、直接的に色をそろえるのはルール違反です。
-  できるのは列を回転させることだけで、そこがチャレンジングな部分です。
-  量子コンピュータが扱うユニタリ行列も回転で構成されており、空間上の点や図形をある一定のルールで回転させる回転行列<label for="margin-note-rotation-matrix" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-rotation-matrix" class="margin-note__toggle hidden"><span class="margin-note">3D
-  ゲームのキャラクター表示やカメラ移動には、回転行列がたくさん使われています。</span>と呼ばれるものの一種です。
+  以上の手順により、2 量子ビットで 1 つだけ位相反転した状態ベクトルに折り返し変換をかけた結果は、次のようになります。
+  たしかに、位相反転した振幅だけ確率が 100% に増幅していることが分かります。
 </p>
 
-<orbit-reviewarea color="blue">
-  <orbit-prompt
-    question="次のベクトルの二乗和はいくつ? $$\begin{bmatrix} 0 \\ 1 \\ 2 \end{bmatrix}$$"
-    answer="$0^2 + 1^2 + 2^2 = 5$"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータへの入力データ (ベクトル) の二乗和についての制限は?"
-    answer="必ず 1 でなければならない"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータが掛ける行列について、ベクトルの二乗和に関する制限は?"
-    answer="掛け算で新たにできるベクトルの二乗和が 1 でなくてはならない"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子コンピュータがベクトルへ掛ける行列について、可逆性に関する制限は?"
-    answer="掛け算で新たにできるベクトルを元に戻す行列がなくてはならない"
-  ></orbit-prompt>
-  <orbit-prompt
-    cloze="量子コンピュータがベクトルへ掛けることのできる行列を{ユニタリ}行列と呼ぶ"
-  ></orbit-prompt>
-  <orbit-prompt cloze="ユニタリ行列は{回転}で構成されている"></orbit-prompt>
-</orbit-reviewarea>
-
-<h2>計算結果の取り出し</h2>
-
-<p>
-  ここがおそらく一番トリッキーな部分です。
-  行列とベクトルの掛け算の結果のベクトルは、なんとそのまま取り出すことができません。
-  唯一できることは測定という操作で得られる別のベクトルを取り出すことだけです。
-</p>
-
-<p>たとえば、量子コンピュータが掛け算の結果として次のベクトルを持っているとします。</p>
-
-<p>$$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix}$$</p>
-
-<p>ここで測定を行うと、それぞれの成分が二乗され、確率 (\(\%\)) として解釈されます。</p>
-
-<p class="overflow-auto">
-  $$\begin{bmatrix} 0 \\ 0.5 \\ 0 \\ 0 \\ 0.707 \\ 0 \\ 0.5 \\ 0 \end{bmatrix} \longrightarrow
-  \begin{bmatrix} 0^2 \\ (0.5)^2 \\ 0^2 \\ 0^2 \\ (0.707)^2 \\ 0^2 \\ (0.5)^2 \\ 0^2 \end{bmatrix}
-  \longrightarrow \begin{bmatrix} 0\% \\ 25\% \\ 0\% \\ 0\% \\ 50\% \\ 0\% \\ 25\% \\ 0\%
-  \end{bmatrix}$$
-</p>
-
-<p>
-  そしてそれぞれの確率に従って、その成分だけを 1 とするベクトルが出力されます。
-  ユーザはこれらのベクトルのうちどれか 1 つだけを、確率的に取り出すことしかできません。
-</p>
-
-<p class="overflow-auto">
-  $$ \begin{bmatrix} 0\% \\ \textcolor{red}{25\%} \\ 0\% \\ 0\% \\ \textcolor{red}{50\%} \\ 0\% \\
-  \textcolor{red}{25\%} \\ 0\% \end{bmatrix} \longrightarrow \begin{bmatrix} 0 \\ \textcolor{red}{1}
-  \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \end{bmatrix}\ または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\
-  \textcolor{red}{1} \\ 0 \\ 0 \\ 0 \end{bmatrix} または\ \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0
-  \\ \textcolor{red}{1} \\ 0 \end{bmatrix} $$
-</p>
-
-<p>
-  これは結局、何を意味するでしょうか?
-  量子コンピュータでの行列とベクトルの掛け算は、出力するベクトルを決める確率の<ruby
-    ><rb>素</rb><rt>もと</rt></ruby
-  >
-  (二乗すると確率になる数) を計算しているのです<label for="margin-note-amplitude" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-amplitude" class="margin-note__toggle hidden"><span class="margin-note">量子コンピュータが扱うベクトルの二乗和が 1
-  というルールは、確率から来ています。つまり、測定によって出てくるベクトルそれぞれの確率をすべて足すと
-  100% にならなければならないため、二乗和は必ず 1 となります。</span>。
-  測定した瞬間に元のベクトルは破壊され、最終的には 1 つの成分だけが 1 でほかはすべて 0
-  となるベクトルだけが確率的に取り出せます。
-  どう考えても奇妙な動作ですが、これも量子力学のルールに従ったものです。
-</p>
-
-<orbit-reviewarea color="blue">
-  <orbit-prompt cloze="量子コンピュータからベクトルを取り出す操作を{測定}と呼ぶ"></orbit-prompt>
-  <orbit-prompt
-    question="状態 $\begin{bmatrix} 0.5 \\ 0.707 \\ 0 \\ 0.5 \end{bmatrix}$ を測定し、ベクトル $\begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}$ が出てくる確率は何パーセントか?"
-    answer="25%"
-  ></orbit-prompt>
-</orbit-reviewarea>
+<figure>
+  <img src="./images/grover_iam_final_state.png" class="h-auto w-full" />
+</figure>
 
 <h2>まとめ</h2>
 
 <p>
-  量子コンピュータは巨大な行列とベクトルの掛け算を高速に行えます。しかし、入力データであるベクトルは巨大なため、計算的に作ることしかできません。
-  また、ベクトルに掛けることのできる行列は回転をあらわす特別な行列のみです。
-  そして、掛け算の結果を直接取り出すことはできず、必ず測定を通して単純なベクトルしか取り出せません。
-</p>
-
-<p>
-  こんなに厳しい制約が課せられた上でも、うまく動作する量子アルゴリズムがいろいろと提案されています。
-  たとえば後に見る量子フーリエ変換 (QFT)
-  アルゴリズムは、量子因数分解などの中間的なステップとして動作することで、測定することなく計算結果をそのまま次のステップへと渡します。
+  折り返し変換はいわば「平均を取って折り返す」という操作です。
+  ひとつだけ位相が反転している振幅の座標は、平均から大きく離れます。
+  このため、平均を中心として折り返した後の違いが顕著になります。
+  この操作を適切な回数繰り返すことで、位相の違いを振幅の大きさの違いにうまく変換できます。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./qpu.html"
+      href="./multiple_marked_values.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1441,17 +1295,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-QPU とは</a
+複数の振幅を増幅</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./quantum_circuit.html"
-      >量子回路<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>
