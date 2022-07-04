@@ -131,6 +131,9 @@
 #     - name: グロヴァー反復
 #       link: ./grover_iteration.html
 #       new: true
+#     - name: 複数の振幅を増幅
+#       link: ./multiple_marked_values.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
