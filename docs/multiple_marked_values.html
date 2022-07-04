@@ -1129,10 +1129,11 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">複数の位相が反転している場合のグローヴァー反復</p>
             </div>
             <div class="content-with-margin"><p>
-  反転した位相が複数ある場合のグローヴァー探索はどうなるでしょうか?
-  今までは答が 1 つ、つまり反転した位相が 1 つの場合を見てきました。
-  しかしグローヴァー探索の使い途の一つである充足可能性問題では、条件を満たす答が 2 つ以上になる場合もあります。
-  そこで試しに、以下のように \(|0111\rangle\) と \(|1111\rangle\) の 2 つを反転させ、折り返し変換を 1 回適用した結果を見てみます。
+  反転した位相が複数ある場合のグローヴァー探索はどうなるでしょうか? 今までは答が 1
+  つ、つまり反転した位相が 1 つの場合を見てきました。
+  しかしグローヴァー探索の使い途の一つである充足可能性問題では、条件を満たす答が 2
+  つ以上になる場合もあります。 そこで試しに、以下のように \(|0111\rangle\) と \(|1111\rangle\) の 2
+  つを反転させ、折り返し変換を 1 回適用した結果を見てみます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1156,22 +1157,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{|0111>と|1111>を反転"],["H","H","H","H"],["•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{|0111>と|1111>を反転"],["H","H","H","H"],["•","•","•"],["}"],[1],["{折り返し変換"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1181,28 +1182,33 @@
 
 <p>
   実行すると、反転した位相が複数ある場合でもグローヴァー探索はうまく動作することが分かります。
-  折り返し変換を 1 回実行すると、\(|0111\rangle\) と \(|1111\rangle\) の確率が約 39% まで増幅され、それ以外は 約 1.6% まで減衰します。
-  このように、答が複数ある場合でも振幅増幅 (グローヴァー反復) 回路の形は変わらず、位相反転が 1 個の場合とまったく同様に実行できます。
+  折り返し変換を 1 回実行すると、\(|0111\rangle\) と \(|1111\rangle\) の確率が約 39%
+  まで増幅され、それ以外は 約 1.6% まで減衰します。 このように、答が複数ある場合でも振幅増幅
+  (グローヴァー反復) 回路の形は変わらず、位相反転が 1 個の場合とまったく同様に実行できます。
 </p>
 
 <h2>位相反転が複数ある場合の最適な反復回数</h2>
 
 <p>
-  \(n\) を量子ビット数、位相反転の数を \(m\) とすると、位相反転が複数ある場合の最適な反復回数 \(N_{iter}\) は一般に次の式で求めることができます。
+  \(n\) を量子ビット数、位相反転の数を \(m\) とすると、位相反転が複数ある場合の最適な反復回数
+  \(N_{iter}\) は一般に次の式で求めることができます。
 </p>
 
 <p class="flex justify-center">\(N_{iter} = \lfloor\frac{π}{4}\sqrt{\frac{2^n}{m}}\rfloor\)</p>
 
 <p>
-  たとえば先ほどの例では量子ビット数 \(n = 4\), 位相反転の数 \(m = 2\) なので、最適な反復回数 \(N_{iter}\) は次のように 2 となります。
+  たとえば先ほどの例では量子ビット数 \(n = 4\), 位相反転の数 \(m = 2\) なので、最適な反復回数
+  \(N_{iter}\) は次のように 2 となります。
 </p>
 
-<p class="flex justify-center">\(N_{iter} = \lfloor\frac{π}{4}\sqrt{\frac{2^4}{2}}\rfloor = \lfloor\frac{π}{\sqrt{2}}\rfloor = 2\)</p>
+<p class="flex justify-center">
+  \(N_{iter} = \lfloor\frac{π}{4}\sqrt{\frac{2^4}{2}}\rfloor = \lfloor\frac{π}{\sqrt{2}}\rfloor =
+  2\)
+</p>
 
 <p>
-  確認のために、3 回まで反復した結果を以下の回路で確認してみましょう。
-  反復を 2 回行ったあとの \(|0111\rangle\) と \(|1111\rangle\) の確率は 1 回目の反復後の確率 約 39% よりも上昇し、約 47% となります。
-  そして、\(N_{iter} = 2\) なので、これ以上の反復は確率を減衰させることが予想できます。
+  確認のために、3 回まで反復した結果を以下の回路で確認してみましょう。 反復を 2 回行ったあとの \(|0111\rangle\) と \(|1111\rangle\) の確率は 1 回目の反復後の確率 約 39% よりも上昇し、約 47%
+  となります。 そして、\(N_{iter} = 2\) なので、これ以上の反復は確率を減衰させることが予想できます。
   実際に、さらに 3 回目の反復を行うと確率は 16.5% まで減衰します。
 </p>
 
@@ -1227,22 +1233,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{|0111>と|1111>を反転"],["H","H","H","H"],["•","•","•"],["}"],[1],["{折り返し変換 1"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["•","•","•"],["{折り返し変換 2"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["•","•","•"],["{折り返し変換 3"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["{|0111>と|1111>を反転"],["H","H","H","H"],["•","•","•"],["}"],[1],["{折り返し変換 1"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["•","•","•"],["{折り返し変換 2"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1],["•","•","•"],["{折り返し変換 3"],["H","H","H","H"],["X","X","X","X"],["•","•","•","•"],["X","X","X","X"],["H","H","H","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
