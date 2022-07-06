@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>量子鍵配送</title>
+    <title>折り返しの仕組み</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -270,7 +270,7 @@
    
   <a
     href="./quantum_key_distribution.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">量子鍵配送</span>
     
@@ -591,7 +591,7 @@
    
   <a
     href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">折り返しの仕組み</span>
     
@@ -798,7 +798,7 @@
    
   <a
     href="./quantum_key_distribution.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">量子鍵配送</span>
     
@@ -1119,7 +1119,7 @@
    
   <a
     href="./grover_iam_indetail.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">折り返しの仕組み</span>
     
@@ -1189,50 +1189,96 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-zinc-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                量子暗号通信
+                グローヴァー探索
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  量子鍵配送
+                  折り返しの仕組み
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">安全に暗号鍵を共有するためのプロトコル</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">折り返し変換の幾何学的説明</p>
             </div>
             <div class="content-with-margin"><p>
-  インターネットショッピングやチャットアプリなど、安全な通信を前提としたサービスが増えています。
-  通信を安全に行うには、暗号鍵と呼ばれる秘密の長い文字列を使って、送受信するデータを暗号化します。
-  たとえば、買物サイトとの通信を暗号化するには、お客さんと買物サイト側で最初に同じ暗号鍵を共有する必要があります。
-  暗号鍵を知らずに 2 者間の通信を盗み見ることは不可能です。
+  これまでは折り返し変換をブラックボックスとして使ってきました。
+  折り返し変換は回路の形が決まっているので、実際に中身を知らなくてもグローヴァー探索を実装できます。
 </p>
 
 <p>
-  一方で、暗号鍵をどのようにして安全に共有するかという問題が残ります。
-  これは、暗号鍵を共有するための通信を盗聴しようとする悪者がそこらじゅうにいるためです。
+  しかし一体なぜ「折り返し」と呼ばれるのか、知っていても損はありません。
+  ここでは、位相反転した振幅の大きさがなぜ増幅するのか、折り返し変換を幾何学的に捉えることで直感的に説明します。
 </p>
 
-<p>
-  暗号鍵を量子技術で共有する仕組みを、量子鍵配送と呼びます。
-  現在の通信では、暗号鍵を暗号アルゴリズムによって "隠して"
-  インターネットなどで送りますが、量子コンピュータの進化によっては簡単に暗号鍵を取り出せる可能性があります<label for="margin-note-factoring" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-factoring" class="margin-note__toggle hidden"><span class="margin-note"><a href="./index.html">はじめに</a>で紹介した量子素因数分解を使います。</span>。
-  量子鍵配送は、量子力学の原理によって暗号鍵の盗聴を検出できるようにするものです。
-  これによって、今後どんなに高速な量子コンピュータが登場しても、原理的に鍵の安全性を保証することができます。
-</p>
+<h2>初期状態</h2>
 
 <p>
-  ここまでに習った <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> だけを使って、この量子鍵配送の仕組みを作ることができます。
-  チャールズ・ベネットとジル・ブラッサールによって 1984 年に発明された BB84 プロトコル<label for="margin-note-bb84" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-bb84" class="margin-note__toggle hidden"><span class="margin-note">Charles H. Bennett, Gilles Brassard,
-  <a href="https://arxiv.org/abs/2003.06557" class="italic"
-    >Quantum cryptography: Public key distribution and coin tossing</a
-  >
-  (1984)</span>は、量子鍵配送の代表的な方法の 1 つです。 以降では実際に BB84
-  プロトコルを動かしてみることで、量子暗号の仕組みを理解しましょう。
+  折り返し変換をかける前の状態ベクトルは、たとえば次のようになっています。 ここでは 4
+  つの振幅はすべて等しく確率が 25% で、1 つだけ位相が反転しています。
+  このとき、図のように青の円周と位相の交点の座標をそれぞれ求めておきます。
+</p>
+
+<figure>
+  <img src="./images/grover_iam_coordinates.png" class="h-auto w-full" />
+</figure>
+
+<h2>平均を求める</h2>
+
+<p>
+  次に、それぞれの点の平均座標を求めます。 x 座標はそれぞれ 0 なので平均も 0 です。 y 座標は \((0.5
+  + 0.5 + 0.5 - 0.5) / 4 = 0.25\) となります。
+  求めた平均座標は赤い丸として円表示の中に描いておきます。
+</p>
+
+<figure>
+  <img src="./images/grover_iam_coordinates_mean.png" class="h-auto w-full" />
+</figure>
+
+<h2>平均で折り返す</h2>
+
+<p>
+  次に、平均座標 (赤い丸) を中心にして、それぞれの元の座標 (白い丸) と対称な点を取ります。
+  これが折り返しという名前の由来です。 位相が上を向いている左の 3
+  つの振幅は、平均からそれほど離れていないため折り返した点が近くになります。
+  一方で、位相が下を向いている振幅は 1 つだけ平均から離れるため、折り返した点も遠くになります。
+</p>
+
+<figure>
+  <img src="./images/grover_iam_flip.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  最後に折り返しによって得られた点を元に、振幅の大きさと位相を描き直します。 ここでは左の 3
+  つは、振幅の大きさが 0 になります。 そして一番右の振幅は、大きさが 1
+  になり位相も上向きになります。
+</p>
+
+<figure>
+  <img src="./images/grover_iam_flip_result.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  以上の手順により、2 量子ビットで 1
+  つだけ位相反転した状態ベクトルに折り返し変換をかけた結果は、次のようになります。
+  たしかに、位相反転した振幅だけ確率が 100% に増幅していることが分かります。
+</p>
+
+<figure>
+  <img src="./images/grover_iam_final_state.png" class="h-auto w-full" />
+</figure>
+
+<h2>まとめ</h2>
+
+<p>
+  折り返し変換はいわば「平均を取って折り返す」という操作です。
+  ひとつだけ位相が反転している振幅の座標は、平均から大きく離れます。
+  このため、平均を中心として折り返した後の違いが顕著になります。
+  この操作を適切な回数繰り返すことで、位相の違いを振幅の大きさの違いにうまく変換できます。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./gate_combination.html"
+      href="./multiple_marked_values.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1249,17 +1295,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-組合わせゲート</a
+複数の振幅を増幅</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./bb84_protocol.html"
-      >BB84 プロトコル<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>
@@ -1328,7 +1366,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="qpu-operation-sm"></h-gate>
+      <h-gate class="operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1406,7 +1444,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <h-gate class="qpu-operation-sm"></h-gate>
+      <h-gate class="operation-sm"></h-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1497,7 +1535,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1575,7 +1613,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1653,7 +1691,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1900,7 +1938,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -1978,7 +2016,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2063,7 +2101,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2139,7 +2177,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2222,7 +2260,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2300,7 +2338,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2384,7 +2422,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
+      <write-gate data-value="0" class="operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2462,7 +2500,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
+      <write-gate data-value="0" class="operation-sm"></write-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2546,7 +2584,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="qpu-operation-sm"></x-gate>
+      <x-gate class="operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2624,7 +2662,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="qpu-operation-sm"></x-gate>
+      <x-gate class="operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2702,7 +2740,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <x-gate class="qpu-operation-sm"></x-gate>
+      <x-gate class="operation-sm"></x-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2786,7 +2824,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="qpu-operation-sm"></y-gate>
+      <y-gate class="operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2864,7 +2902,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <y-gate class="qpu-operation-sm"></y-gate>
+      <y-gate class="operation-sm"></y-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -2948,7 +2986,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="qpu-operation-sm"></z-gate>
+      <z-gate class="operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3026,7 +3064,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="qpu-operation-sm"></z-gate>
+      <z-gate class="operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>
@@ -3104,7 +3142,7 @@
     <div class="flex flex-row items-center">
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-      <z-gate class="qpu-operation-sm"></z-gate>
+      <z-gate class="operation-sm"></z-gate>
       <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
     </div>

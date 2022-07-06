@@ -1,7 +1,7 @@
 import {attr, controller} from '@github/catalyst'
 import {html, render} from '@github/jtml'
 import tippy, {Instance, ReferenceElement} from 'tippy.js'
-import {Complex} from 'complex.js'
+import Complex from 'complex.js'
 import {Util} from '@qni/common'
 import {forceSigned} from './util'
 
