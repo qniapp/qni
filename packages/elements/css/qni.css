@@ -84,15 +84,15 @@
   /* QPU operation background color */
 
   .qpu-operation-bg-default {
-    @apply bg-emerald-600;
+    @apply bg-emerald-500;
   }
 
   .qpu-operation-bg-grab {
-    @apply bg-purple-600;
+    @apply bg-purple-500;
   }
 
   .qpu-operation-bg-disable {
-    @apply bg-zinc-600;
+    @apply bg-zinc-500;
   }
 
   /* QPU operation border radius */

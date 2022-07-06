@@ -7218,7 +7218,7 @@ function Mt(r) {
         let l = this.dropzone;
         qa(l) ? this.snappedDropzone = l : this.snappedDropzone = null;
       }, grab: (i, l) => {
-        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), gl(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y), this.classList.remove("operation-xl")));
+        l.type === "GRAB" && (this.grabbed = true, this.dispatchEvent(new Event("operation-grab", { bubbles: true })), gl(this.dropzone) && (this.snapped = false, this.moveByOffset(l.x, l.y), this.classList.remove("qpu-operation-xl")));
       }, release: () => {
         this.grabbed = false, this.dispatchEvent(new Event("operation-release", { bubbles: true }));
       }, startDragging: () => {
