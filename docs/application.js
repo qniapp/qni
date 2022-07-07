@@ -8872,7 +8872,7 @@ function Pt(r) {
       this.debugHelpable = false;
       this.helpableMachine = be({ id: "helpable", initial: "idle", states: { idle: { on: { INIT: { target: "initialized", actions: ["init"] } } }, initialized: { type: "compound", initial: "unknown", states: { unknown: { always: [{ target: "enabled", cond: "isEnabled" }, { target: "disabled", cond: "isDisabled" }] }, enabled: { on: { SHOW: { target: "enabled", actions: ["show"] }, DISABLE: { target: "disabled", actions: ["disable", "destroy"] } } }, disabled: { on: { ENABLE: { target: "enabled", actions: ["init", "enable"] } } } } } } }, { guards: { isEnabled: () => this.help, isDisabled: () => !this.help }, actions: { init: () => {
         let i = this.helpContent;
-        i !== null && (this.popup = fe(this, { allowHTML: true, animation: false, arrow: jr + jr, delay: 0, placement: "auto", theme: "qni", onShow(l) {
+        i !== null && (this.popup = fe(this, { allowHTML: true, animation: false, arrow: jr + jr, delay: 0, placement: "auto", theme: "qni", trigger: "manual", onShow(l) {
           l.setContent(i);
         } }), this.addEventListener("mouseenter", this.showHelp));
       }, show: () => {
@@ -11610,6 +11610,21 @@ var He = /* @__PURE__ */ __name(class extends HTMLElement {
   }
   update() {
     K(F`<style>
+          :host {
+            position: relative;
+          }
+
+          :host::after {
+            position: absolute;
+            bottom: -2px;
+            right: -12px;
+            font-size: 10px;
+            line-height: 10px;
+            white-space: nowrap;
+            content: '|' attr(data-ket) '⟩';
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          }
+
           #border {
             position: relative;
 

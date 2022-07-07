@@ -28,6 +28,22 @@ export class QubitCircleElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          :host {
+            position: relative;
+          }
+
+          :host::after {
+            position: absolute;
+            bottom: -2px;
+            right: -12px;
+            font-size: 10px;
+            line-height: 10px;
+            white-space: nowrap;
+            content: '|' attr(data-ket) '⟩';
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+              monospace;
+          }
+
           #border {
             position: relative;
 

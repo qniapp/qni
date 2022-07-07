@@ -1987,6 +1987,22 @@ select {
   }
 }
 
+.tippy-box[data-theme~='qni'] {
+  /* Description popup */
+  /* header h1 { */
+  /*   @apply font-bold; */
+  /*   @apply text-gray-900; */
+  /*   @apply text-lg; */
+  /* } */
+  /* header p { */
+  /*   @apply leading-tight; */
+  /* } */
+}
+
+.tippy-box[data-theme~='qni'] .tippy-content {
+  padding: 0px;
+}
+
 /* The border */
 
 .tippy-box[data-theme~='qni'] .tippy-svg-arrow > svg:first-child {
@@ -2013,20 +2029,6 @@ select {
 
 .tippy-box[data-theme~='qni'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
   right: 13px;
-}
-
-/* Description popup */
-
-.tippy-box[data-theme~='qni'] header h1 {
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.tippy-box[data-theme~='qni'] header p {
-  line-height: 1.25;
 }
 
 .tippy-box[data-theme~='operation-menu'] {
