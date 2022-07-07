@@ -87,10 +87,10 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
             this.popup = tippy(this, {
               allowHTML: true,
               animation: false,
-              arrow: roundArrow + roundArrow,
+              arrow: roundArrow,
               delay: 0,
               placement: 'auto',
-              theme: 'qni',
+              theme: 'tooltip',
               trigger: 'manual', // debug
               onShow(instance: Instance) {
                 instance.setContent(helpContent)

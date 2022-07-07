@@ -1,14 +1,14 @@
 <template id="h-gate-help">
-  <div class="p-3">
+  <div class="px-4 py-3">
     <header>
-      <h1 class="mb-1 text-lg font-bold leading-none text-zinc-900">Hadamard Gate</h1>
-      <p class="text-sm leading-none text-zinc-700">Creates simple superpositions.</p>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Hadamard Gate</h1>
+      <p class="text-sm leading-none text-zinc-200">Creates simple superpositions.</p>
     </header>
 
-    <div class="mt-4 flex flex-row items-center space-x-1">
+    <div class="mt-4 flex flex-row items-center space-x-2">
       <div class="flex flex-row space-x-2">
-        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1"></qubit-circle>
-        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0"></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
       </div>
 
       <div class="flex flex-row items-center">
@@ -18,15 +18,15 @@
       </div>
 
       <div class="flex flex-row space-x-2">
-        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071"></qubit-circle>
-        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071"></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
       </div>
     </div>
 
-    <div class="mt-2 flex flex-row items-center space-x-1">
+    <div class="mt-2 flex flex-row items-center space-x-2">
       <div class="flex flex-row space-x-2">
-        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0"></qubit-circle>
-        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1"></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
       </div>
 
       <div class="flex flex-row items-center">
@@ -36,8 +36,8 @@
       </div>
 
       <div class="flex flex-row space-x-2 pr-2">
-        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071"></qubit-circle>
-        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071"></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
       </div>
     </div>
   </div>
