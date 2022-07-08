@@ -487,56 +487,92 @@
 </template>
 
 <template id="write0-gate-help">
-  <header>
-    <h1><code>|0⟩</code> Operation</h1>
-    <p>(Re)sets a qubit to state <code>|0⟩</code>.</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white"><code>|0⟩</code> Operation</h1>
+      <p class="text-sm leading-none text-zinc-200">(Re)sets a qubit to state <code>|0⟩</code>.</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
-      <%= icon :arrow_right %>
-    </div>
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
-  </div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
-  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="0" class="qpu-operation-sm"></write-gate>
-      <%= icon :arrow_right %>
+      <div class="flex flex-row items-center">
+        <%= icon :minus %>
+        <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <%= icon :arrow_right %>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
+
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        <%= icon :minus %>
+        <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <%= icon :arrow_right %>
+      </div>
+
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
+    </div>
   </div>
 </template>
 
 <template id="write1-gate-help">
-  <header>
-    <h1><code>|1⟩</code> Operation</h1>
-    <p>(Re)sets a qubit to state <code>|1⟩</code>.</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white"><code>|1⟩</code> Operation</h1>
+      <p class="text-sm leading-none text-zinc-200">(Re)sets a qubit to state <code>|1⟩</code>.</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="1,0" data-show-kets></circle-notation-old>
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="1" class="qpu-operation-sm"></write-gate>
-      <%= icon :arrow_right %>
-    </div>
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
-  </div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
-  <div class="mt-5 mb-6 flex flex-row items-center space-x-1">
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="1" class="qpu-operation-sm"></write-gate>
-      <%= icon :arrow_right %>
+      <div class="flex flex-row items-center">
+        <%= icon :minus %>
+        <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <%= icon :arrow_right %>
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
-    <circle-notation-old data-magnitudes="0,1" data-show-kets></circle-notation-old>
+
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        <%= icon :minus %>
+        <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <%= icon :arrow_right %>
+      </div>
+
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
+    </div>
   </div>
 </template>
 

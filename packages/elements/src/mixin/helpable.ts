@@ -91,7 +91,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
               delay: 0,
               placement: 'auto',
               theme: 'tooltip',
-              trigger: 'manual', // debug
+              // trigger: 'manual', // debug
               onShow(instance: Instance) {
                 instance.setContent(helpContent)
               }
