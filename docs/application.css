@@ -1987,22 +1987,6 @@ select {
   }
 }
 
-.tippy-box[data-theme~='qni'] {
-  /* Description popup */
-  /* header h1 { */
-  /*   @apply font-bold; */
-  /*   @apply text-gray-900; */
-  /*   @apply text-lg; */
-  /* } */
-  /* header p { */
-  /*   @apply leading-tight; */
-  /* } */
-}
-
-.tippy-box[data-theme~='qni'] .tippy-content {
-  padding: 0px;
-}
-
 /* The border */
 
 .tippy-box[data-theme~='qni'] .tippy-svg-arrow > svg:first-child {
@@ -2029,6 +2013,56 @@ select {
 
 .tippy-box[data-theme~='qni'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
   right: 13px;
+}
+
+.tippy-box[data-theme~='qni'] header h1 {
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.tippy-box[data-theme~='qni'] header p {
+  line-height: 1.25;
+}
+
+.tippy-box[data-theme~='tooltip'] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  border-radius: 0.5rem;
+}
+
+.tippy-box[data-theme~='tooltip'] .tippy-content {
+  padding: 0px;
+}
+
+/* The border */
+
+.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:first-child {
+  fill: #18181b;
+}
+
+/* The fill */
+
+.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:last-child {
+  fill: #18181b;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='top'] > .tippy-svg-arrow svg:first-child {
+  top: 16px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
+  bottom: 16px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='left'] > .tippy-svg-arrow svg:first-child {
+  left: 11px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
+  right: 11px;
 }
 
 .tippy-box[data-theme~='operation-menu'] {
@@ -3535,11 +3569,12 @@ phase-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 phase-gate:not([data-reduced-angle=''])::before {
@@ -3558,21 +3593,21 @@ phase-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -3582,7 +3617,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 phase-gate::part(body) {
@@ -3934,11 +3969,12 @@ rx-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rx-gate:not([data-reduced-angle=''])::before {
@@ -3957,21 +3993,21 @@ rx-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -3981,7 +4017,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rx-gate[data-disabled]::part(body) {
@@ -4153,11 +4189,12 @@ ry-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 ry-gate:not([data-reduced-angle=''])::before {
@@ -4176,21 +4213,21 @@ ry-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4200,7 +4237,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 ry-gate[data-disabled]::part(body) {
@@ -4372,11 +4409,12 @@ rz-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rz-gate:not([data-reduced-angle=''])::before {
@@ -4395,21 +4433,21 @@ rz-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4419,7 +4457,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rz-gate[data-disabled]::part(body) {
