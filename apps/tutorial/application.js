@@ -8882,7 +8882,7 @@ function Pt(r) {
       this.debugHelpable = false;
       this.helpableMachine = be({ id: "helpable", initial: "idle", states: { idle: { on: { INIT: { target: "initialized", actions: ["init"] } } }, initialized: { type: "compound", initial: "unknown", states: { unknown: { always: [{ target: "enabled", cond: "isEnabled" }, { target: "disabled", cond: "isDisabled" }] }, enabled: { on: { SHOW: { target: "enabled", actions: ["show"] }, DISABLE: { target: "disabled", actions: ["disable", "destroy"] } } }, disabled: { on: { ENABLE: { target: "enabled", actions: ["init", "enable"] } } } } } } }, { guards: { isEnabled: () => this.help, isDisabled: () => !this.help }, actions: { init: () => {
         let i = this.helpContent;
-        i !== null && (this.popup = fe(this, { allowHTML: true, animation: false, arrow: nn, delay: 0, placement: "auto", theme: "tooltip", trigger: "manual", onShow(l) {
+        i !== null && (this.popup = fe(this, { allowHTML: true, animation: false, arrow: nn, delay: 0, placement: "auto", theme: "tooltip", onShow(l) {
           l.setContent(i);
         } }), this.addEventListener("mouseenter", this.showHelp));
       }, show: () => {
