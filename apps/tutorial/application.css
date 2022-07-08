@@ -4973,7 +4973,7 @@ write-gate::part(body) {
 
 write-gate::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(63 63 70 / var(--tw-text-opacity));
+  color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
 write-gate[data-dark-mode]::part(icon) {

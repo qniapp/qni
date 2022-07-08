@@ -7,7 +7,7 @@ write-gate {
   @apply operation-transparent;
 
   &::part(icon) {
-    @apply text-zinc-700;
+    @apply text-zinc-500;
   }
 
   &[data-dark-mode]::part(icon) {
