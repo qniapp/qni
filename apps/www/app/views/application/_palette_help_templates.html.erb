@@ -183,7 +183,7 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">Phase Gate</h1>
       <p class="text-sm leading-none text-zinc-200">Applies a phase of e<sup>iφ</sup> to the <code>|1⟩</code> state.</p>
-      <p class="text-sm leading-tight text-zinc-200">The default φ = π/2.</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">The default φ = π/2.</p>
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-2">
@@ -229,7 +229,7 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">T Gate</h1>
       <p class="text-sm leading-none text-zinc-200">A shortcut for <code>π/4</code> Phase gate.</p>
-      <p class="text-sm leading-tight text-zinc-200">
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">
         Applies a phase of e<sup>iπ/4</sup> to the <code>|1⟩</code> state.
       </p>
     </header>
@@ -322,7 +322,7 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">Rx Gate</h1>
       <p class="text-sm leading-none text-zinc-200">Rotates around the X-axis by the angle θ.</p>
-      <p class="text-sm leading-tight text-zinc-200">The default θ = π/2.</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">The default θ = π/2.</p>
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-2">
@@ -368,7 +368,7 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">Ry Gate</h1>
       <p class="text-sm leading-none text-zinc-200">Rotates around the Y-axis by the angle θ.</p>
-      <p class="text-sm leading-tight text-zinc-200">The default θ = π/2.</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">The default θ = π/2.</p>
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-2">
@@ -414,7 +414,7 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">Rz Gate</h1>
       <p class="text-sm leading-none text-zinc-200">Rotates around the Y-axis by the angle θ.</p>
-      <p class="text-sm leading-tight text-zinc-200">The default θ = π/2.</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">The default θ = π/2.</p>
     </header>
 
     <div class="mt-4 flex flex-row items-center space-x-2">
@@ -460,17 +460,21 @@
     <header>
       <h1 class="mb-1 text-lg font-bold leading-none text-white">Swap Gate</h1>
       <p class="text-sm leading-none text-zinc-200">Swap the values of two qubits.</p>
-      <p class="text-sm leading-tight text-zinc-200">(Place two in the same step.)</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">(Place two in the same step.)</p>
     </header>
   </div>
 </template>
 
 <template id="control-gate-help">
-  <header>
-    <h1>Control Gate</h1>
-    <p>Conditions on a qubit being ON.</p>
-    <p>Gates in the same step only apply to states meeting the condition.</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Control Gate</h1>
+      <p class="text-sm leading-none text-zinc-200">Conditions on a qubit being ON.</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">
+        Gates in the same step only apply to states meeting the condition.
+      </p>
+    </header>
+  </div>
 </template>
 
 <template id="bloch-display-help">
