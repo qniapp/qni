@@ -3569,11 +3569,12 @@ phase-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 phase-gate:not([data-reduced-angle=''])::before {
@@ -3592,21 +3593,21 @@ phase-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -3616,7 +3617,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 phase-gate::part(body) {
@@ -3968,11 +3969,12 @@ rx-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rx-gate:not([data-reduced-angle=''])::before {
@@ -3991,21 +3993,21 @@ rx-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4015,7 +4017,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rx-gate[data-disabled]::part(body) {
@@ -4187,11 +4189,12 @@ ry-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 ry-gate:not([data-reduced-angle=''])::before {
@@ -4210,21 +4213,21 @@ ry-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4234,7 +4237,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 ry-gate[data-disabled]::part(body) {
@@ -4406,11 +4409,12 @@ rz-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rz-gate:not([data-reduced-angle=''])::before {
@@ -4429,21 +4433,21 @@ rz-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4453,7 +4457,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rz-gate[data-disabled]::part(body) {

@@ -281,10 +281,10 @@
       @apply absolute;
       @apply flex justify-center;
       @apply font-mono tracking-tighter;
-      @apply text-xs leading-3;
+      @apply text-xs leading-none;
 
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     &:not([data-reduced-angle=''])::before {
@@ -303,18 +303,18 @@
     /* top label */
     &[data-angle][data-size='sm']::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     circuit-dropzone:not([data-connect-top]) &[data-angle]::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     /* top label over wire */
     circuit-dropzone[data-connect-top][data-connect-bottom] &[data-angle]::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
 
       text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
@@ -323,7 +323,7 @@
     /* bottom label */
     circuit-dropzone[data-connect-top]:not([data-connect-bottom]) &[data-angle]::before {
       @apply top-auto bottom-0 left-0 right-0;
-      @apply -mb-3.5;
+      @apply -mb-3;
     }
   }
 }
