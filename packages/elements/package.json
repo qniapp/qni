@@ -1,6 +1,6 @@
 {
   "name": "@qni/elements",
-  "version": "0.0.81",
+  "version": "0.0.82",
   "description": "Quantum circuit components.",
   "author": "@yasuhito",
   "license": "MIT",
