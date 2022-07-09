@@ -7,7 +7,11 @@ write-gate {
   @apply operation-transparent;
 
   &::part(icon) {
-    @apply text-neutral-500;
+    @apply text-zinc-500;
+  }
+
+  &[data-dark-mode]::part(icon) {
+    @apply text-zinc-200;
   }
 
   circuit-dropzone &[data-snapped]::part(icon) {
@@ -41,27 +45,27 @@ write-gate {
     content: '1';
   }
 
-  &.operation-xs::part(value)::after {
+  &.qpu-operation-xs::part(value)::after {
     @apply text-xs;
   }
 
-  &.operation-sm::part(value)::after {
+  &.qpu-operation-sm::part(value)::after {
     @apply text-sm;
   }
 
-  &.operation-base::part(value)::after {
+  &.qpu-operation-base::part(value)::after {
     @apply text-lg;
   }
 
-  &.operation-lg::part(value)::after {
+  &.qpu-operation-lg::part(value)::after {
     @apply text-xl;
   }
 
-  &.operation-xl::part(value)::after {
+  &.qpu-operation-xl::part(value)::after {
     @apply text-2xl;
   }
 
-  &.operation-2xl::part(value)::after {
+  &.qpu-operation-2xl::part(value)::after {
     @apply text-4xl;
   }
 

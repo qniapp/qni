@@ -184,7 +184,7 @@ export function DraggableMixin<TBase extends Constructor<HTMLElement>>(Base: TBa
             if (isPaletteDropzoneElement(this.dropzone)) {
               this.snapped = false
               this.moveByOffset(event.x, event.y)
-              this.classList.remove('operation-xl')
+              this.classList.remove('qpu-operation-xl')
             }
           },
           release: () => {

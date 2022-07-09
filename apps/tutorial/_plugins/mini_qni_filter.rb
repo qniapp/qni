@@ -9,13 +9,15 @@ module Jekyll
       gate_htmls = gates.map do |each|
         case each
         when '|0>'
-          '<write-gate data-value="0" data-hoverable></write-gate>'
+          '<write-gate data-value="0" data-hoverable data-help-id="write0-gate-help"></write-gate>'
         when '|1>'
-          '<write-gate data-value="1" data-hoverable></write-gate>'
+          '<write-gate data-value="1" data-hoverable data-help-id="write1-gate-help"></write-gate>'
         when 'H'
           '<h-gate data-hoverable></h-gate>'
         when 'X'
           '<x-gate data-hoverable></x-gate>'
+        when 'P'
+          '<phase-gate data-angle="π/2" data-hoverable></phase-gate>'
         when '•'
           '<control-gate data-hoverable></control-gate>'
         end

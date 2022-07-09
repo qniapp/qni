@@ -16,6 +16,7 @@ export class QubitCircleElement extends HTMLElement {
   @attr showPopupAmplitude = false
   @attr showPopupProbability = false
   @attr showPopupPhase = false
+  @attr darkMode = false
 
   connectedCallback(): void {
     if (this.shadowRoot !== null) return
@@ -28,6 +29,26 @@ export class QubitCircleElement extends HTMLElement {
   update(): void {
     render(
       html`<style>
+          :host {
+            position: relative;
+          }
+
+          :host::after {
+            position: absolute;
+            bottom: -3px;
+            right: -12px;
+            font-size: 10px;
+            line-height: 10px;
+            white-space: nowrap;
+            content: '|' attr(data-ket) '⟩';
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+              monospace;
+          }
+
+          :host([data-dark-mode])::after {
+            color: #ffffff;
+          }
+
           #border {
             position: relative;
 
@@ -39,6 +60,10 @@ export class QubitCircleElement extends HTMLElement {
 
             height: 100%;
             width: 100%;
+          }
+
+          :host([data-dark-mode]) #border {
+            border-color: rgb(228 228 231); /* zinc-200 */
           }
 
           :host(:hover) #border {
@@ -75,6 +100,10 @@ export class QubitCircleElement extends HTMLElement {
             border-bottom-left-radius: 0.25rem;
             transform-origin: bottom;
             transform: rotate(${this.cssPhaseDeg}deg);
+          }
+
+          :host([data-dark-mode]) #phase {
+            background-color: #ffffff;
           }
 
           :host([data-hide-phase]) #phase {

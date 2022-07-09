@@ -1199,7 +1199,7 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">演算ペアの入れ替え</p>
             </div>
             <div class="content-with-margin"><p>
-  X ゲート <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> は従来の NOT 演算に似た働きをします。 NOT 演算は、0
+  X ゲート <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> は従来の NOT 演算に似た働きをします。 NOT 演算は、0
   に適用するとビットが反転して 1 になり、逆に 1 に適用すると 0 になるのでした。つまり、NOT 演算は
   &quot;0 と 1 を入れ替える&quot; という働きをします。
 </p>
@@ -1207,179 +1207,139 @@
 <div class="flex justify-center md:mr-auto md:w-7/12">
   <ul class="mx-auto !w-auto p-0 text-2xl">
     <li class="flex flex-row items-center">
-      <span>NOT 0</span> <svg class="h-4 w-4 mx-2" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <span>NOT 0</span> <svg class="h-4 w-4 mx-2" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
  <span>1</span>
     </li>
     <li class="flex flex-row items-center">
-      <span>NOT 1</span> <svg class="h-4 w-4 mx-2" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <span>NOT 1</span> <svg class="h-4 w-4 mx-2" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
  <span>0</span>
     </li>
   </ul>
 </div>
 
 <p>
-  <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> は NOT 演算の量子版で、量子ビットの \(|0\rangle\) と \(|1\rangle\)
+  <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> は NOT 演算の量子版で、量子ビットの \(|0\rangle\) と \(|1\rangle\)
   を入れ替えます。 図で表すと、次のような "円の入れ替え" の働きをします。
 </p>
 
 <div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-4">
-      <div class="flex flex-row items-center">
-        <div class="flex flex-row">
-          <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="1"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-        </div>
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
 </svg>
 
-          </div>
-          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="1"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
     </div>
 
-    <div class="flex flex-row items-center space-x-4">
-      <div class="flex flex-row items-center">
-        <div class="flex flex-row">
-          <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="1"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
-        </div>
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+      </div>
+
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
 </svg>
 
-          </div>
-          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="1"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
     </div>
@@ -1442,88 +1402,69 @@
 </div>
 
 <p>
-  <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> が従来の NOT
+  <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> が従来の NOT
   演算と異なるのは、重ね合わせ状態にある量子ビットに作用できる点です。 たとえば、次の \(|0\rangle\) と
   \(|1\rangle\) の重ね合わせ状態にある量子ビットを考えましょう。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-row">
-    <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="0"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-16 flex-col items-start">
-  <qubit-circle
-    class="h-12 w-12"
-    data-ket="1"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-2.5 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-sm">|1⟩</span>
-  </div>
-</div>
+  <div class="flex flex-row space-x-2">
+    <qubit-circle
+  class="h-12 w-12 my-1"
+  data-ket="0"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-12 w-12 my-1"
+  data-ket="1"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
   </div>
 </div>
 
 <p>
-  これに <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> を適用すると、\(|0\rangle\) と \(|1\rangle\) の内容を交換します。
+  これに <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> を適用すると、\(|0\rangle\) と \(|1\rangle\) の内容を交換します。
   これはまさに、先ほど見た "\(|0\rangle\) と \(|1\rangle\) の入れ換え" という効果です。
 </p>
 
 <div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center space-x-4">
-    <div class="flex flex-row items-center">
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
+
       <div class="relative h-8 w-16">
         <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
           <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1531,47 +1472,38 @@
 </svg>
 
         </div>
-        <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
-    </div>
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
 
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+      </div>
     </div>
   </div>
 </div>
 
 <p>
-  <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> を続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 \(|0\rangle\)
+  <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> を続けて 2 回適用するとどうなるでしょうか? 図から分かるように、 \(|0\rangle\)
   と \(|1\rangle\) が 2 度入れ替わることで元の状態に戻ります。 つまり、量子 NOT
   ゲートはそれ自身を打ち消す効果を持っています。数学ではこれを、「量子 NOT
   ゲートはそれ自身の逆演算である」と言います。
@@ -1581,132 +1513,96 @@
   class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12 lg:justify-start lg:justify-center"
 >
   <div class="flex flex-col items-end space-y-4 lg:flex-row lg:items-center lg:space-y-0">
-    <div class="flex flex-row items-center">
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
 
-      <div class="pr-2">
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
 </svg>
 
-          </div>
-          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
 
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
-    </div>
 
-    <div class="flex flex-row items-center">
-      <div class="pr-2">
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
 </svg>
 
-          </div>
-          <x-gate class="operation-sm absolute inset-0 m-auto"></x-gate>
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
 
-      <div class="flex flex-row">
-        <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="0"
-    data-amplitude="-0.20015 + 0.44444i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.67819 - 0.54997i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="-0.20015 + 0.44444i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0.67819 - 0.54997i"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
 
       </div>
     </div>
@@ -1716,10 +1612,10 @@
 <div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
   <ul class="my-0 !w-full list-disc px-4 !pb-0">
     <li>
-      重ね合わせ状態の量子ビットに <x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> を適用し、\(|0\rangle\) と \(|1\rangle\)
+      重ね合わせ状態の量子ビットに <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> を適用し、\(|0\rangle\) と \(|1\rangle\)
       が入れ替わることを確認しましょう。
     </li>
-    <li><x-gate class="operation-xs relative top-0.5 inline-block"></x-gate> を 2 回適用すると元に戻ることを確認しましょう</li>
+    <li><x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> を 2 回適用すると元に戻ることを確認しましょう</li>
   </ul>
 </div>
 
@@ -1786,7 +1682,7 @@
 </figure>
 
 <p>
-  同様に、Y 軸で回転する Y ゲート <y-gate class="operation-xs relative top-0.5 inline-block"></y-gate>、Z 軸で回転する Z ゲート <z-gate class="operation-xs relative top-0.5 inline-block"></z-gate> も存在します。さまざまなゲートの回転については、他のゲートを学んだ後で詳しく説明します。
+  同様に、Y 軸で回転する Y ゲート <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>、Z 軸で回転する Z ゲート <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate> も存在します。さまざまなゲートの回転については、他のゲートを学んだ後で詳しく説明します。
 </p>
 
 <orbit-reviewarea color="blue">
@@ -1874,1870 +1770,706 @@ CPU 命令との違い</a
   </header>
 </template>
  <template id="control-gate-help">
-  <header>
-    <h1>コントロールゲート</h1>
-    <p>
-      量子ビットの適用を条件付きにする。 接続されたゲートは、条件を満たした場合のみに適用される。
-    </p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">コントロールゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">量子ビットの適用を条件付きにする。</p>
+      <p class="mt-0.5 mt-1 text-sm leading-none text-zinc-200">
+        接続されたゲートは、条件を満たした場合のみに適用される。
+      </p>
+    </header>
+  </div>
 </template>
  <template id="h-gate-help">
-  <header>
-    <h1>アダマールゲート</h1>
-    <p>シンプルな重ね合わせ状態を作る。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">アダマールゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">シンプルな重ね合わせ状態を作る。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <h-gate class="qpu-operation-sm"></h-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <h-gate class="operation-sm"></h-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <h-gate class="qpu-operation-sm"></h-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.7071067811865476"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.7071067811865476"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <h-gate class="operation-sm"></h-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.7071067811865476"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.7071067811865476"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="-0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="measurement-gate-help">
-  <header>
-    <h1>測定ゲート</h1>
-    <p>量子ビットがオンかオフかを測定する。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">測定ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">量子ビットが ON か OFF かを測定する。</p>
+    </header>
+  </div>
 </template>
  <template id="phase-gate-help">
-  <header>
-    <h1>フェーズゲート</h1>
-    <p><code>|1⟩</code> の状態に e<sup>iφ</sup> の位相を適用する。</p>
-    <p>デフォルトで φ = π/2。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">フェーズゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">
+        <code>|1⟩</code> の状態に e<sup>iφ</sup> の位相を適用する。
+      </p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">デフォルトで φ = π/2。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.15295625823231337 + 0.42024324273873803i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <phase-gate data-angle="π/2" class="operation-sm"></phase-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.4202438045756113 + 0.15295471459165755i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="rnot-gate-help">
-  <header>
-    <h1>平方根 NOT ゲート</h1>
-    <p>X 軸を中心に <code>π/2</code> 回転させる。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">平方根 NOT ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">X 軸を中心に <code>π/2</code> 回転させる。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <rnot-gate class="qpu-operation-sm"></rnot-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.5+0.5i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.5-0.5i"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <rnot-gate class="operation-sm"></rnot-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <rnot-gate class="qpu-operation-sm"></rnot-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.5 + 0.5i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.5 - 0.5i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <rnot-gate class="operation-sm"></rnot-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.5 - 0.5i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.5 + 0.5i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.5-0.5i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.5+0.5i"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="rx-gate-help">
-  <header>
-    <h1>Rx ゲート</h1>
-    <p>X 軸を中心に角度 θ 回転させる。</p>
-    <p>デフォルトで θ = π/2。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Rx ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">X 軸を中心に角度 θ 回転させる。</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">デフォルトで θ = π/2。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="-0.7071i"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.7071067811865476"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.7071067811865475i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <rx-gate data-angle="π/2" class="operation-sm"></rx-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="-0.7071067811865476i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.7071067811865475"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="-0.7071i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="ry-gate-help">
-  <header>
-    <h1>Ry ゲート</h1>
-    <p>Y 軸を中心に角度 θ 回転させる。</p>
-    <p>デフォルトで θ = π/2。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Ry ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">Y 軸を中心に角度 θ 回転させる。</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">デフォルトで θ = π/2。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
+        <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="-0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
-
-    <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.7071067811865475"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.7071067811865475"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <ry-gate data-angle="π/2" class="operation-sm"></ry-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="-0.7071067811865475"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.7071067811865475"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
   </div>
 </template>
  <template id="rz-gate-help">
-  <header>
-    <h1>Rz ゲート</h1>
-    <p>Z 軸を中心に角度 θ 回転させる。</p>
-    <p>デフォルトで θ = π/2。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Rz ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">Z 軸を中心に角度 θ 回転させる。</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">デフォルトで θ = π/2。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071-0.7071i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.7071067811865476 - 0.7071067811865476i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <rz-gate data-angle="π/2" class="operation-sm"></rz-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.7071067811865476 + 0.7071067811865476i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071+0.7071i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="write0-gate-help">
-  <header>
-    <h1><code>|0⟩</code> 命令</h1>
-    <p>量子ビットの状態を <code>|0⟩</code> にセット (リセット)。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white"><code>|0⟩</code> 命令</h1>
+      <p class="text-sm leading-none text-zinc-200">
+        量子ビットの状態を <code>|0⟩</code> にセット (リセット)。
+      </p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <write-gate data-value="0" class="operation-sm"></write-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <write-gate data-value="0" class="operation-sm"></write-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
- <template id="x-gate-help">
-  <header>
-    <h1>NOT ゲート (パウリ X ゲート)</h1>
-    <p>量子ビットペア <code>|0⟩</code> と <code>|1⟩</code> を入れ替える。</p>
-  </header>
+ <template id="write1-gate-help">
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white"><code>|1⟩</code> 命令</h1>
+      <p class="text-sm leading-none text-zinc-200">
+        量子ビットの状態を <code>|1⟩</code> にセット (リセット)。
+      </p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <x-gate class="operation-sm"></x-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
+</template>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+<template id="x-gate-help">
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">NOT ゲート (パウリ X ゲート)</h1>
+      <p class="text-sm leading-none text-zinc-200">
+        量子ビットペア <code>|0⟩</code> と <code>|1⟩</code> を入れ替える。
+      </p>
+    </header>
 
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <x-gate class="qpu-operation-sm"></x-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <x-gate class="operation-sm"></x-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <x-gate class="qpu-operation-sm"></x-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.15295625823231337 + 0.42024324273873803i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <x-gate class="operation-sm"></x-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.15295625823231337 + 0.42024324273873803i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="y-gate-help">
-  <header>
-    <h1>パウリ Y ゲート</h1>
-    <p>X ゲートと Z ゲートの組み合わせの一種。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">パウリ Y ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">X ゲートと Z ゲートの組み合わせの一種。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <y-gate class="qpu-operation-sm"></y-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <y-gate class="operation-sm"></y-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <y-gate class="qpu-operation-sm"></y-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <y-gate class="operation-sm"></y-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="-i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="-i"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
  <template id="z-gate-help">
-  <header>
-    <h1>パウリ Z ゲート</h1>
-    <p>量子ビットがオンのとき位相を反転させる。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">パウリ Z ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">量子ビットが ON のとき位相を反転させる。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
 
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+        <z-gate class="qpu-operation-sm"></z-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-      <z-gate class="operation-sm"></z-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      <div class="flex flex-row items-center">
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
 
-    </div>
+        <z-gate class="qpu-operation-sm"></z-gate>
+        <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
 
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
+      </div>
 
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <z-gate class="operation-sm"></z-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-1"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="0.15295625823231337 + 0.42024324273873803i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
-    </div>
-
-    <div class="flex flex-row items-center">
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-      <z-gate class="operation-sm"></z-gate>
-      <svg class="h-4 w-4 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-
-    </div>
-
-    <div class="flex flex-row">
-      <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8 magnitude-emerald"
-    data-ket="0"
-    data-amplitude="0.8404867973901246 - 0.30591165949157917i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|0⟩</span>
-  </div>
-</div>
- <div class="flex w-11 flex-col items-start">
-  <qubit-circle
-    class="h-8 w-8"
-    data-ket="1"
-    data-amplitude="-0.15295625823231337 - 0.42024324273873803i"
-    data-popup-template-id="qubit-circle-popup"
-    
-    data-show-popup-amplitude
-    data-show-popup-probability
-    data-show-popup-phase
-  ></qubit-circle>
-  <div class="-mt-1 flex w-full flex-row justify-end">
-    <span class="font-mono text-slate-500 text-xs">|1⟩</span>
-  </div>
-</div>
-
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="-1"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
   </div>
 </template>

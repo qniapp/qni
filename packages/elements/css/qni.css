@@ -49,55 +49,81 @@
     }
   }
 
-  /* operation sizes */
+  /* QPU operation size */
 
-  .operation-xs {
+  .qpu-operation-xs {
     @apply h-4 w-4;
   }
 
-  .operation-sm {
+  .qpu-operation-sm {
     @apply h-6 w-6;
   }
 
-  .operation-base {
+  .qpu-operation-base {
     @apply h-8 w-8;
   }
 
-  .operation-lg {
+  .qpu-operation-lg {
     @apply h-10 w-10;
   }
 
-  .operation-xl {
+  .qpu-operation-xl {
     @apply h-12 w-12;
   }
 
-  .operation-2xl {
+  .qpu-operation-2xl {
     @apply h-16 w-16;
+  }
+
+  /* QPU operation text color */
+
+  .qpu-operation-text {
+    @apply text-white;
+  }
+
+  /* QPU operation background color */
+
+  .qpu-operation-bg-default {
+    @apply bg-emerald-500;
+  }
+
+  .qpu-operation-bg-grab {
+    @apply bg-purple-500;
+  }
+
+  .qpu-operation-bg-disable {
+    @apply bg-zinc-500;
+  }
+
+  /* QPU operation border radius */
+
+  .qpu-operation-border-radius {
+    @apply rounded;
   }
 
   /* operation shapes */
 
   .operation-square {
     &::part(body) {
-      @apply bg-emerald-500;
       @apply h-full w-full;
-      @apply rounded;
+      @apply qpu-operation-bg-default;
+      @apply qpu-operation-border-radius;
     }
 
     &::part(icon) {
-      @apply text-white;
+      @apply qpu-operation-text;
     }
   }
 
   .operation-circle {
     &::part(body) {
-      @apply bg-emerald-500;
+      @apply qpu-operation-bg-default;
       @apply h-full w-full;
       @apply rounded-full;
     }
 
     &::part(icon) {
-      @apply text-white;
+      @apply qpu-operation-text;
     }
   }
 
@@ -161,7 +187,7 @@
     }
 
     &[data-grabbed]::part(body) {
-      @apply bg-purple-500;
+      @apply qpu-operation-bg-grab;
     }
 
     &[data-grabbed]::part(icon) {
@@ -177,7 +203,8 @@
 
   .operation-disableable {
     &[data-disabled]::part(body) {
-      @apply bg-gray-500;
+      /* @apply bg-gray-500; */
+      @apply qpu-operation-bg-disable;
     }
   }
 
@@ -254,10 +281,10 @@
       @apply absolute;
       @apply flex justify-center;
       @apply font-mono tracking-tighter;
-      @apply text-xs leading-3;
+      @apply text-xs leading-none;
 
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     &:not([data-reduced-angle=''])::before {
@@ -276,18 +303,18 @@
     /* top label */
     &[data-angle][data-size='sm']::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     circuit-dropzone:not([data-connect-top]) &[data-angle]::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
     }
 
     /* top label over wire */
     circuit-dropzone[data-connect-top][data-connect-bottom] &[data-angle]::before {
       @apply top-0 left-0 right-0;
-      @apply -mt-3.5;
+      @apply -mt-3;
 
       text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
@@ -296,7 +323,7 @@
     /* bottom label */
     circuit-dropzone[data-connect-top]:not([data-connect-bottom]) &[data-angle]::before {
       @apply top-auto bottom-0 left-0 right-0;
-      @apply -mb-3.5;
+      @apply -mb-3;
     }
   }
 }

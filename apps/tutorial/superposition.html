@@ -12,7 +12,7 @@ next_url: ./qubit.html
 <p>Qni では、1 ビットでの 0 と 1 の重ね合わせ状態を次のように 2 つの円で表示します。</p>
 
 <div class="my-5 flex flex-row items-center justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-row">
+  <div class="flex flex-row space-x-2">
     {{ 0.5 | sqrt | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0.5 | sqrt | qubit_circle: 1,
     'xl', '', 'probability' }}
   </div>
@@ -50,7 +50,7 @@ next_url: ./qubit.html
       <tr>
         <td class="align-middle">{% ket 0 %} が 100%</td>
         <td>
-          <div class="flex flex-row">
+          <div class="flex flex-row space-x-2">
             {{ 1 | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0 | qubit_circle: 1, 'xl', '',
             'probability' }}
           </div>
@@ -59,7 +59,7 @@ next_url: ./qubit.html
       <tr>
         <td class="align-middle">{% ket 1 %} が 100%</td>
         <td>
-          <div class="flex flex-row">
+          <div class="flex flex-row space-x-2">
             {{ 0 | qubit_circle: 0, 'xl', 'lime', 'probability' }} {{ 1 | qubit_circle: 1, 'xl',
             'lime', 'probability' }}
           </div>
@@ -68,7 +68,7 @@ next_url: ./qubit.html
       <tr>
         <td class="align-middle">{% ket 0 %} と {% ket 1 %} が 50%</td>
         <td>
-          <div class="flex flex-row">
+          <div class="flex flex-row space-x-2">
             {{ 0.5 | sqrt | qubit_circle: 0, 'xl', '', 'probability' }} {{ 0.5 | sqrt |
             qubit_circle: 1, 'xl', '', 'probability' }}
           </div>
@@ -77,7 +77,7 @@ next_url: ./qubit.html
       <tr>
         <td class="align-middle">{% ket 0 %} が 80%, {% ket 1 %} が 20%</td>
         <td>
-          <div class="flex flex-row">
+          <div class="flex flex-row space-x-2">
             {{ 0.8 | sqrt | qubit_circle: 0, 'xl', 'lime', 'probability' }} {{ 0.2 | sqrt |
             qubit_circle: 1, 'xl', 'lime', 'probability' }}
           </div>

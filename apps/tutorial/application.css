@@ -2015,8 +2015,6 @@ select {
   right: 13px;
 }
 
-/* Description popup */
-
 .tippy-box[data-theme~='qni'] header h1 {
   font-weight: 700;
   --tw-text-opacity: 1;
@@ -2027,6 +2025,44 @@ select {
 
 .tippy-box[data-theme~='qni'] header p {
   line-height: 1.25;
+}
+
+.tippy-box[data-theme~='tooltip'] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  border-radius: 0.5rem;
+}
+
+.tippy-box[data-theme~='tooltip'] .tippy-content {
+  padding: 0px;
+}
+
+/* The border */
+
+.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:first-child {
+  fill: #18181b;
+}
+
+/* The fill */
+
+.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:last-child {
+  fill: #18181b;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='top'] > .tippy-svg-arrow svg:first-child {
+  top: 16px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
+  bottom: 16px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='left'] > .tippy-svg-arrow svg:first-child {
+  left: 11px;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
+  right: 11px;
 }
 
 .tippy-box[data-theme~='operation-menu'] {
@@ -2397,295 +2433,6 @@ circle-notation.animate {
   100% {
     transform: translateY(240px);
   }
-}
-
-circle-notation-old::part(qubit-circle) {
-  position: relative;
-  height: 2rem;
-  width: 2rem;
-}
-
-/* data-qubit-count */
-
-circle-notation-old[data-qubit-count='1']:not([data-multi-qubits])::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='2']::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
-    height: 64px;
-    width: 64px
-  }
-}
-
-circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
-    height: 48px;
-    width: 48px
-  }
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
-  height: 23px;
-  width: 23px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
-    height: 32px;
-    width: 32px
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
-    height: 25px;
-    width: 25px
-  }
-}
-
-circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-circle-notation-old[data-qubit-count='8']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='9']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='10']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='8']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='9']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='10']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-/* data-size */
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle) {
-  height: 17px;
-  width: 17px;
-}
-
-circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle) {
-  height: 25px;
-  width: 25px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-/* data-show-kets */
-
-circle-notation-old[data-show-kets] {
-  padding-bottom: 1.25rem;
-}
-
-circle-notation-old[data-show-kets]::part(qubit-circle)::before {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
-  margin-bottom: -1.25rem;
-  white-space: nowrap;
-  display: flex;
-  justify-content: center;
-  content: '|' attr(data-ket) '⟩';
-}
-
-/* magnitude */
-
-circle-notation-old::part(qubit-circle__magnitude) {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
-  border-radius: 9999px;
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='2']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='3']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='4']::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
-    border-width: 1px;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='7']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='8']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='9']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='10']::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-/* data-size */
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
-    circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-circle-notation-old::part(qubit-circle__magnitude)::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 9999px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(14 165 233 / var(--tw-bg-opacity));
-  transform-origin: center;
-  --tw-scale-x: 0;
-  --tw-scale-y: 0;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  content: '';
-}
-
-/* phase */
-
-circle-notation-old::part(qubit-circle__phase) {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
-  border-radius: 9999px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(100 116 139 / var(--tw-border-opacity));
-  transform-origin: center;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='2']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='3']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='4']::part(qubit-circle__phase) {
-  border-width: 2px;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
-    border-width: 2px;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='7']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='8']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='9']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='10']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 2px;
-}
-
-circle-notation-old::part(qubit-circle__phase)::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-  height: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  border-bottom-right-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-  content: '';
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='2']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='3']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='4']::part(qubit-circle__phase)::after {
-  width: 0.125rem;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
-    width: 0.125rem;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='7']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='8']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='9']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='10']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-circle-notation-old[data-size='xs']::part(qubit-circle__phase)::after, circle-notation-old[data-size='sm']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-circle-notation-old[data-size='base']::part(qubit-circle__phase)::after, circle-notation-old[data-size='lg']::part(qubit-circle__phase)::after, circle-notation-old[data-size='xl']::part(qubit-circle__phase)::after {
-  width: 0.125rem;
 }
 
 circuit-dropzone {
@@ -3126,8 +2873,9 @@ h-gate[data-active]::after {
 }
 
 h-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 h-gate {
@@ -3245,10 +2993,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) h-gate[data-if]::b
 }
 
 h-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -3532,11 +3280,12 @@ phase-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 phase-gate:not([data-reduced-angle=''])::before {
@@ -3555,21 +3304,21 @@ phase-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] phase-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -3579,7 +3328,7 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) phase-gate[data-an
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 phase-gate::part(body) {
@@ -3596,8 +3345,9 @@ phase-gate::part(icon) {
 }
 
 phase-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 phase-gate {
@@ -3762,8 +3512,9 @@ rnot-gate[data-active]::after {
 }
 
 rnot-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 rnot-gate {
@@ -3881,10 +3632,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rnot-gate[data-if]
 }
 
 rnot-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -3929,11 +3680,12 @@ rx-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rx-gate:not([data-reduced-angle=''])::before {
@@ -3952,21 +3704,21 @@ rx-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rx-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -3976,12 +3728,13 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rx-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 rx-gate {
@@ -4099,10 +3852,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rx-gate[data-if]::
 }
 
 rx-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4147,11 +3900,12 @@ ry-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 ry-gate:not([data-reduced-angle=''])::before {
@@ -4170,21 +3924,21 @@ ry-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] ry-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4194,12 +3948,13 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 ry-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 ry-gate {
@@ -4317,10 +4072,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) ry-gate[data-if]::
 }
 
 ry-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4365,11 +4120,12 @@ rz-gate[data-angle]::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: -0.05em;
   font-size: 0.75rem;
-  line-height: .75rem;
+  line-height: 1rem;
+  line-height: 1;
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 rz-gate:not([data-reduced-angle=''])::before {
@@ -4388,21 +4144,21 @@ rz-gate[data-angle][data-size='sm']::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone:not([data-connect-top]) rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
 }
 
 circuit-dropzone[data-connect-top][data-connect-bottom] rz-gate[data-angle]::before {
   top: 0px;
   left: 0px;
   right: 0px;
-  margin-top: -0.875rem;
+  margin-top: -0.75rem;
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, 0px 1px 0 #fff, 0-1px 0 #fff,
         -1px 0 0 #fff, 1px 0 0 #fff;
 }
@@ -4412,12 +4168,13 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-angle
   bottom: 0px;
   left: 0px;
   right: 0px;
-  margin-bottom: -0.875rem;
+  margin-bottom: -0.75rem;
 }
 
 rz-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 rz-gate {
@@ -4535,10 +4292,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) rz-gate[data-if]::
 }
 
 rz-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4690,8 +4447,9 @@ t-gate[data-active]::after {
 }
 
 t-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 t-gate {
@@ -4809,10 +4567,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) t-gate[data-if]::b
 }
 
 t-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -4926,7 +4684,12 @@ write-gate::part(body) {
 
 write-gate::part(icon) {
   --tw-text-opacity: 1;
-  color: rgb(115 115 115 / var(--tw-text-opacity));
+  color: rgb(113 113 122 / var(--tw-text-opacity));
+}
+
+write-gate[data-dark-mode]::part(icon) {
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 circuit-dropzone write-gate[data-snapped]::part(icon) {
@@ -4988,32 +4751,32 @@ write-gate[data-value='1']::part(value)::after {
   content: '1';
 }
 
-write-gate.operation-xs::part(value)::after {
+write-gate.qpu-operation-xs::part(value)::after {
   font-size: 0.75rem;
   line-height: 1rem;
 }
 
-write-gate.operation-sm::part(value)::after {
+write-gate.qpu-operation-sm::part(value)::after {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-write-gate.operation-base::part(value)::after {
+write-gate.qpu-operation-base::part(value)::after {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
 
-write-gate.operation-lg::part(value)::after {
+write-gate.qpu-operation-lg::part(value)::after {
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
 
-write-gate.operation-xl::part(value)::after {
+write-gate.qpu-operation-xl::part(value)::after {
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
-write-gate.operation-2xl::part(value)::after {
+write-gate.qpu-operation-2xl::part(value)::after {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
@@ -5078,8 +4841,9 @@ x-gate::part(icon) {
 }
 
 x-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 x-gate {
@@ -5226,8 +4990,9 @@ y-gate[data-active]::after {
 }
 
 y-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 y-gate {
@@ -5345,10 +5110,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) y-gate[data-if]::b
 }
 
 y-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -5387,8 +5152,9 @@ z-gate[data-active]::after {
 }
 
 z-gate[data-disabled]::part(body) {
+  /* @apply bg-gray-500; */
   --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+  background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
 
 z-gate {
@@ -5506,10 +5272,10 @@ circuit-dropzone[data-connect-top]:not([data-connect-bottom]) z-gate[data-if]::b
 }
 
 z-gate::part(body) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   height: 100%;
   width: 100%;
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
   border-radius: 0.25rem;
 }
 
@@ -5585,37 +5351,43 @@ z-gate::part(icon) {
   content: '';
 }
 
-/* operation sizes */
+/* QPU operation size */
 
-.operation-xs {
+.qpu-operation-xs {
   height: 1rem;
   width: 1rem;
 }
 
-.operation-sm {
+.qpu-operation-sm {
   height: 1.5rem;
   width: 1.5rem;
 }
 
-.operation-base {
+.qpu-operation-base {
   height: 2rem;
   width: 2rem;
 }
 
-.operation-lg {
+.qpu-operation-lg {
   height: 2.5rem;
   width: 2.5rem;
 }
 
-.operation-xl {
+.qpu-operation-xl {
   height: 3rem;
   width: 3rem;
 }
 
-.operation-2xl {
+.qpu-operation-2xl {
   height: 4rem;
   width: 4rem;
 }
+
+/* QPU operation text color */
+
+/* QPU operation background color */
+
+/* QPU operation border radius */
 
 /* operation shapes */
 
@@ -5919,6 +5691,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 0.5rem;
 }
 
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -5967,6 +5744,22 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 1.25rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -5977,6 +5770,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .ml-3 {
   margin-left: 0.75rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
 .-mr-12 {
@@ -6019,24 +5816,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 1.5rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.-mt-3 {
-  margin-top: -0.75rem;
-}
-
 .-mt-2\.5 {
   margin-top: -0.625rem;
 }
 
 .-mt-2 {
   margin-top: -0.5rem;
-}
-
-.-mt-1 {
-  margin-top: -0.25rem;
 }
 
 .block {
@@ -6161,6 +5946,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   width: auto;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
 .w-7 {
   width: 1.75rem;
 }
@@ -6171,10 +5960,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .w-60 {
   width: 15rem;
-}
-
-.w-8 {
-  width: 2rem;
 }
 
 .w-5 {
@@ -6272,10 +6057,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   flex-direction: column;
 }
 
-.items-start {
-  align-items: flex-start;
-}
-
 .items-end {
   align-items: flex-end;
 }
@@ -6310,6 +6091,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -6320,12 +6107,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
@@ -6584,6 +6365,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   padding-bottom: 1rem !important;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6694,6 +6480,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   line-height: 2rem;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -6702,11 +6493,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .text-3xl {
@@ -6740,6 +6526,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .italic {
   font-style: italic;
+}
+
+.leading-none {
+  line-height: 1;
 }
 
 .leading-6 {
@@ -6800,6 +6590,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-purple-600 {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
+}
+
+.text-zinc-200 {
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 .text-slate-700 {
@@ -6880,11 +6675,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-zinc-700 {
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity));
-}
-
-.text-slate-500 {
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 .no-underline {

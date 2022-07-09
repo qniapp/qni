@@ -1,56 +1,49 @@
 <template id="z-gate-help">
-  <header>
-    <h1>パウリ Z ゲート</h1>
-    <p>量子ビットがオンのとき位相を反転させる。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">パウリ Z ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">量子ビットが ON のとき位相を反転させる。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-4 w-4 fill-current text-white" %}
+        <z-gate class="qpu-operation-sm"></z-gate>
+        {% include arrow_right.svg class="h-4 w-4 fill-current text-white" %}
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
-      <z-gate class="operation-sm"></z-gate>
-      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
-    </div>
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
 
-    <div class="flex flex-row">
-      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
-    </div>
-  </div>
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-4 w-4 fill-current text-white" %}
+        <z-gate class="qpu-operation-sm"></z-gate>
+        {% include arrow_right.svg class="h-4 w-4 fill-current text-white" %}
+      </div>
 
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
-    </div>
-
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
-      <z-gate class="operation-sm"></z-gate>
-      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
-    </div>
-
-    <div class="flex flex-row">
-      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ -1 | qubit_circle: 1, 'base' }}
-    </div>
-  </div>
-
-  <div class="mt-5 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 0, 'base', 'emerald' }} {{
-      '0.15295625823231337 + 0.42024324273873803i' | qubit_circle: 1, 'base' }}
-    </div>
-
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
-      <z-gate class="operation-sm"></z-gate>
-      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
-    </div>
-
-    <div class="flex flex-row">
-      {{ '0.8404867973901246 - 0.30591165949157917i' | qubit_circle: 0, 'base', 'emerald' }} {{
-      '-0.15295625823231337 - 0.42024324273873803i' | qubit_circle: 1, 'base' }}
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="-1"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
   </div>
 </template>
