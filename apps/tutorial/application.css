@@ -2435,295 +2435,6 @@ circle-notation.animate {
   }
 }
 
-circle-notation-old::part(qubit-circle) {
-  position: relative;
-  height: 2rem;
-  width: 2rem;
-}
-
-/* data-qubit-count */
-
-circle-notation-old[data-qubit-count='1']:not([data-multi-qubits])::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='2']::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='3']::part(qubit-circle) {
-    height: 64px;
-    width: 64px
-  }
-}
-
-circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='4']::part(qubit-circle) {
-    height: 48px;
-    width: 48px
-  }
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
-  height: 23px;
-  width: 23px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle) {
-    height: 32px;
-    width: 32px
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='6']::part(qubit-circle) {
-    height: 25px;
-    width: 25px
-  }
-}
-
-circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='7']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-circle-notation-old[data-qubit-count='8']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='9']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='10']::part(qubit-circle) {
-  height: 15px;
-  width: 15px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='8']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='9']::part(qubit-circle),
-  circle-notation-old[data-qubit-count='10']::part(qubit-circle) {
-    height: 17px;
-    width: 17px
-  }
-}
-
-/* data-size */
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle) {
-  height: 17px;
-  width: 17px;
-}
-
-circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle) {
-  height: 25px;
-  width: 25px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle) {
-  height: 32px;
-  width: 32px;
-}
-
-circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle) {
-  height: 48px;
-  width: 48px;
-}
-
-circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle) {
-  height: 64px;
-  width: 64px;
-}
-
-/* data-show-kets */
-
-circle-notation-old[data-show-kets] {
-  padding-bottom: 1.25rem;
-}
-
-circle-notation-old[data-show-kets]::part(qubit-circle)::before {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
-  margin-bottom: -1.25rem;
-  white-space: nowrap;
-  display: flex;
-  justify-content: center;
-  content: '|' attr(data-ket) '⟩';
-}
-
-/* magnitude */
-
-circle-notation-old::part(qubit-circle__magnitude) {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
-  border-radius: 9999px;
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='2']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='3']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='4']::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__magnitude) {
-    border-width: 1px;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='7']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='8']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='9']::part(qubit-circle__magnitude), circle-notation-old[data-qubit-count='10']::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-/* data-size */
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle__magnitude)
-    circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle__magnitude),
-  circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle__magnitude) {
-  border-width: 2px;
-}
-
-circle-notation-old::part(qubit-circle__magnitude)::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 9999px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(14 165 233 / var(--tw-bg-opacity));
-  transform-origin: center;
-  --tw-scale-x: 0;
-  --tw-scale-y: 0;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  content: '';
-}
-
-/* phase */
-
-circle-notation-old::part(qubit-circle__phase) {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
-  left: 1px;
-  border-radius: 9999px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(100 116 139 / var(--tw-border-opacity));
-  transform-origin: center;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='2']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='3']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='4']::part(qubit-circle__phase) {
-  border-width: 2px;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase) {
-    border-width: 2px;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='7']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='8']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='9']::part(qubit-circle__phase), circle-notation-old[data-qubit-count='10']::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='xs'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='sm'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 1px;
-}
-
-circle-notation-old[data-size='base'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='lg'][data-qubit-count]::part(qubit-circle__phase), circle-notation-old[data-size='xl'][data-qubit-count]::part(qubit-circle__phase) {
-  border-width: 2px;
-}
-
-circle-notation-old::part(qubit-circle__phase)::after {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-  height: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  border-bottom-right-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-  content: '';
-}
-
-circle-notation-old[data-qubit-count='1']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='2']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='3']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='4']::part(qubit-circle__phase)::after {
-  width: 0.125rem;
-}
-
-circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-@media (min-width: 640px) {
-  circle-notation-old[data-qubit-count='5']::part(qubit-circle__phase)::after {
-    width: 0.125rem;
-  }
-}
-
-circle-notation-old[data-qubit-count='6']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='7']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='8']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='9']::part(qubit-circle__phase)::after, circle-notation-old[data-qubit-count='10']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-circle-notation-old[data-size='xs']::part(qubit-circle__phase)::after, circle-notation-old[data-size='sm']::part(qubit-circle__phase)::after {
-  width: 1px;
-}
-
-circle-notation-old[data-size='base']::part(qubit-circle__phase)::after, circle-notation-old[data-size='lg']::part(qubit-circle__phase)::after, circle-notation-old[data-size='xl']::part(qubit-circle__phase)::after {
-  width: 0.125rem;
-}
-
 circuit-dropzone {
   /* Size */
   height: 3rem;
@@ -6033,6 +5744,22 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 1.25rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -6043,10 +5770,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
 }
 
 .mt-2 {
@@ -6093,32 +5816,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 1.5rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.-mt-3 {
-  margin-top: -0.75rem;
-}
-
 .-mt-2\.5 {
   margin-top: -0.625rem;
 }
 
 .-mt-2 {
   margin-top: -0.5rem;
-}
-
-.-mt-1 {
-  margin-top: -0.25rem;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
-.mt-0 {
-  margin-top: 0px;
 }
 
 .block {
@@ -6354,10 +6057,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   flex-direction: column;
 }
 
-.items-start {
-  align-items: flex-start;
-}
-
 .items-end {
   align-items: flex-end;
 }
@@ -6392,6 +6091,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -6402,12 +6107,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-8 > :not([hidden]) ~ :not([hidden]) {
@@ -6750,14 +6449,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   padding-bottom: 2.5rem;
 }
 
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
-.pb-1 {
-  padding-bottom: 0.25rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -6837,12 +6528,12 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   font-style: italic;
 }
 
-.leading-6 {
-  line-height: 1.5rem;
-}
-
 .leading-none {
   line-height: 1;
+}
+
+.leading-6 {
+  line-height: 1.5rem;
 }
 
 .tracking-wide {
@@ -6901,6 +6592,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 
+.text-zinc-200 {
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+
 .text-slate-700 {
   --tw-text-opacity: 1;
   color: rgb(51 65 85 / var(--tw-text-opacity));
@@ -6909,11 +6605,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-slate-400 {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
-}
-
-.text-zinc-200 {
-  --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 .text-blue-600 {
@@ -6984,11 +6675,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-zinc-700 {
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity));
-}
-
-.text-slate-500 {
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
 .no-underline {
