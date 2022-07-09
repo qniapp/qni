@@ -47,7 +47,8 @@
   @apply rounded-lg;
 
   .tippy-content {
-    @apply p-0;
+    @apply px-4;
+    @apply py-3;
   }
 
   /* The border */
@@ -85,18 +86,4 @@
   @apply rounded-2xl;
   @apply bg-white;
   @apply drop-shadow-lg;
-}
-
-.tippy-box[data-theme~='qubit-circle'] {
-  @apply bg-slate-900;
-  @apply rounded-lg;
-  @apply text-white;
-
-  .tippy-content {
-    @apply px-3 py-2;
-  }
-
-  .tippy-arrow {
-    @apply text-slate-900;
-  }
 }

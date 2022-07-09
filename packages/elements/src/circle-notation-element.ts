@@ -1138,7 +1138,7 @@ export class CircleNotationElement extends HTMLElement {
       allowHTML: true,
       animation: false,
       delay: 0,
-      theme: 'qubit-circle'
+      theme: 'tooltip'
       // trigger: 'manual', // debug
     })
 
