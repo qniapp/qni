@@ -4,6 +4,8 @@
 module Jekyll
   module MiniQniFilter
     def mini_qni(json, *gates)
+      json.gsub!(/[\r\n]/, ' ')
+
       gate_htmls = gates.map do |each|
         case each
         when '|0>'
