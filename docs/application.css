@@ -5980,6 +5980,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-right: 0.5rem;
 }
 
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -6106,6 +6111,14 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .-mt-1 {
   margin-top: -0.25rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+.mt-0 {
+  margin-top: 0px;
 }
 
 .block {

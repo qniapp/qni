@@ -19,7 +19,7 @@ next_url: ./write_operation.html
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
       </div>
       <div class="flex flex-row items-center">
@@ -27,13 +27,13 @@ next_url: ./write_operation.html
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ '0.5 + 0.5i' | qubit_circle: 1, 'lg' }}
       </div>
     </div>
 
     <div class="mb-8 flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg', 'lime' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg',
         'lime' }}
       </div>
@@ -42,14 +42,14 @@ next_url: ./write_operation.html
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg', 'lime' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle:
         1, 'lg', 'lime' }}
       </div>
     </div>
 
     <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
       </div>
       <div class="flex flex-row items-center">
@@ -57,7 +57,7 @@ next_url: ./write_operation.html
         <phase-gate data-angle="13π/8"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ '0.2706 - 0.65328i' | qubit_circle: 1, 'lg' }}
       </div>
     </div>
@@ -84,7 +84,7 @@ next_url: ./write_operation.html
 <div class="my-5 flex overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ 0.38268 | qubit_circle: 1, 'lg' }}
       </div>
       <div class="flex flex-row items-center">
@@ -92,7 +92,7 @@ next_url: ./write_operation.html
         <phase-gate data-angle="π/4"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.92388 | qubit_circle: 0, 'lg' }} {{ '0.2706 + 0.2706i' | qubit_circle: 1, 'lg' }}
       </div>
     </div>
@@ -108,7 +108,7 @@ next_url: ./write_operation.html
 <div class="my-5 flex overflow-x-auto">
   <div class="flex flex-col">
     <div class="flex flex-row items-center space-x-1">
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
       </div>
       <div class="flex flex-row items-center">
@@ -116,7 +116,7 @@ next_url: ./write_operation.html
         <phase-gate data-angle="π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | append: 'i' | qubit_circle: 1, 'lg'
         }}
       </div>
@@ -125,7 +125,7 @@ next_url: ./write_operation.html
         <phase-gate data-angle="-π/2"></phase-gate>
         {% include arrow_right.svg class="h-6 w-6 fill-current text-gray-400" %}
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ 0.5 | sqrt | qubit_circle: 0, 'lg' }} {{ 0.5 | sqrt | qubit_circle: 1, 'lg' }}
       </div>
     </div>
@@ -152,55 +152,10 @@ next_url: ./write_operation.html
   をクリックし、ポップアップメニューから角度のアイコンをクリックしてください。
 </p>
 
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        id="palette"
-        class="mb-10 flex w-min space-x-2 rounded-xl border-2 border-b-4 border-gray-200 bg-white px-4 py-5"
-      >
-        <palette-dropzone>
-          <phase-gate data-angle="π/2" data-hoverable></phase-gate>
-        </palette-dropzone>
-      </div>
+{% capture json %} {"cols":[["{重ね合わせ"],["|0>"],["H"],["}"]]} {% endcapture %} {{ json | strip |
+mini_qni: "P" }}
 
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
-        >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
-          </div>
-        </inspector-button>
-      </div>
-
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="5"
-        data-json='{"cols":[["{重ね合わせ"],["|0>"],["H"],["}"]]}'
-      >
-      </quantum-circuit>
-
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 border-gray-200 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-  </quantum-simulator>
-</div>
-
-<orbit-reviewarea color="blue">
+<orbit-reviewarea color="blue" class="mt-5">
   <orbit-prompt
     cloze="PHASE ゲートは重ね合わせ状態にある量子ビットの {|1⟩} の{位相}を{回転}させる"
   ></orbit-prompt>

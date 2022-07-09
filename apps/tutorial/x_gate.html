@@ -130,7 +130,7 @@ next_url: ./h_gate.html
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
-  <div class="flex flex-row">
+  <div class="flex flex-row space-x-2">
     {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'lg' }} {{ '0.67819 - 0.54997i' | qubit_circle: 1,
     'lg' }}
   </div>
@@ -143,21 +143,23 @@ next_url: ./h_gate.html
 
 <div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center space-x-4">
-    <div class="flex flex-row items-center">
-      <div class="flex flex-row">
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
         {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'base' }} {{ '0.67819 - 0.54997i' |
         qubit_circle: 1, 'base' }}
       </div>
+
       <div class="relative h-8 w-16">
         <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
           {% include qubit_transition_arrow.svg %}
         </div>
         <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
-    </div>
-    <div class="flex flex-row">
-      {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'base' }} {{ '-0.20015 + 0.44444i' | qubit_circle:
-      1, 'base' }}
+
+      <div class="flex flex-row space-x-2">
+        {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'base' }} {{ '-0.20015 + 0.44444i' |
+        qubit_circle: 1, 'base' }}
+      </div>
     </div>
   </div>
 </div>
@@ -173,38 +175,32 @@ next_url: ./h_gate.html
   class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12 lg:justify-start lg:justify-center"
 >
   <div class="flex flex-col items-end space-y-4 lg:flex-row lg:items-center lg:space-y-0">
-    <div class="flex flex-row items-center">
-      <div class="flex flex-row">
+    <div class="flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
         {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'base' }} {{ '0.67819 - 0.54997i' |
         qubit_circle: 1, 'base' }}
       </div>
 
-      <div class="pr-2">
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            {% include qubit_transition_arrow.svg %}
-          </div>
-          <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          {% include qubit_transition_arrow.svg %}
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
 
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ '0.67819 - 0.54997i' | qubit_circle: 0, 'base' }} {{ '-0.20015 + 0.44444i' |
         qubit_circle: 1, 'base' }}
       </div>
-    </div>
 
-    <div class="flex flex-row items-center">
-      <div class="pr-2">
-        <div class="relative h-8 w-16">
-          <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-            {% include qubit_transition_arrow.svg %}
-          </div>
-          <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
+      <div class="relative h-8 w-16">
+        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
+          {% include qubit_transition_arrow.svg %}
         </div>
+        <x-gate class="qpu-operation-sm absolute inset-0 m-auto"></x-gate>
       </div>
 
-      <div class="flex flex-row">
+      <div class="flex flex-row space-x-2">
         {{ '-0.20015 + 0.44444i' | qubit_circle: 0, 'base' }} {{ '0.67819 - 0.54997i' |
         qubit_circle: 1, 'base' }}
       </div>

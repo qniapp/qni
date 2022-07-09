@@ -14,6 +14,8 @@ module Jekyll
           '<h-gate data-hoverable></h-gate>'
         when 'X'
           '<x-gate data-hoverable></x-gate>'
+        when 'P'
+          '<phase-gate data-angle="π/2" data-hoverable></phase-gate>'
         when '•'
           '<control-gate data-hoverable></control-gate>'
         end

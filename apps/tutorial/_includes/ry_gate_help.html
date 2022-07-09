@@ -1,37 +1,65 @@
 <template id="ry-gate-help">
-  <header>
-    <h1>Ry ゲート</h1>
-    <p>Y 軸を中心に角度 θ 回転させる。</p>
-    <p>デフォルトで θ = π/2。</p>
-  </header>
+  <div class="px-4 py-3">
+    <header>
+      <h1 class="mb-1 text-lg font-bold leading-none text-white">Ry ゲート</h1>
+      <p class="text-sm leading-none text-zinc-200">Y 軸を中心に角度 θ 回転させる。</p>
+      <p class="mt-0.5 text-sm leading-none text-zinc-200">デフォルトで θ = π/2。</p>
+    </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ 1 | qubit_circle: 0, 'base', 'emerald' }} {{ 0 | qubit_circle: 1, 'base' }}
+    <div class="mt-4 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-4 w-4 fill-current text-white" %}
+        <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+        {% include arrow_right.svg class="h-4 w-4 fill-current text-white" %}
+      </div>
+
+      <div class="flex flex-row space-x-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
 
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
+    <div class="mt-2 flex flex-row items-center space-x-2">
+      <div class="flex flex-row space-x-2">
+        <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+        <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+      </div>
+
+      <div class="flex flex-row items-center">
+        {% include minus.svg class="h-4 w-4 fill-current text-white" %}
+        <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+        {% include arrow_right.svg class="h-4 w-4 fill-current text-white" %}
+      </div>
+
+      <div class="flex flex-row space-x-2 pr-2">
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="0"
+          data-amplitude="-0.7071"
+          data-dark-mode
+        ></qubit-circle>
+        <qubit-circle
+          class="h-8 w-8"
+          data-ket="1"
+          data-amplitude="0.7071"
+          data-dark-mode
+        ></qubit-circle>
+      </div>
     </div>
-
-    {{ 0.7071067811865475 | qubit_circle: 0, 'base', 'emerald' }} {{ 0.7071067811865475 |
-    qubit_circle: 1, 'base' }}
-  </div>
-
-  <div class="mt-4 flex flex-row items-center space-x-1">
-    <div class="flex flex-row">
-      {{ 0 | qubit_circle: 0, 'base', 'emerald' }} {{ 1 | qubit_circle: 1, 'base' }}
-    </div>
-
-    <div class="flex flex-row items-center">
-      {% include minus.svg class="h-4 w-4 fill-current text-gray-400" %}
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-      {% include arrow_right.svg class="h-4 w-4 fill-current text-gray-400" %}
-    </div>
-
-    {{ -0.7071067811865475 | qubit_circle: 0, 'base', 'emerald' }} {{ 0.7071067811865475 |
-    qubit_circle: 1, 'base' }}
   </div>
 </template>

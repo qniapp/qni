@@ -11,7 +11,7 @@ next_url: ./circle_notation.html
 
 <p>Qni で円の中にある時計の針のようなものは、量子ビットが持つ位相という角度データを表します。</p>
 
-<div class="mt-5 mb-8 flex justify-center md:mr-auto md:w-7/12">
+<div class="mt-5 mb-8 flex justify-center space-x-2 md:mr-auto md:w-7/12">
   {{ '-0.20015 + 0.44444i' | qubit_circle: 0 }} {{ '0.67819 - 0.54997i' | qubit_circle: 1 }}
 </div>
 
@@ -29,14 +29,14 @@ next_url: ./circle_notation.html
 
 <div class="mt-5 mb-8 overflow-auto md:mr-auto md:w-7/12">
   <div class="flex flex-row items-center space-x-4">
-    <div class="flex flex-row">
+    <div class="flex flex-row space-x-2">
       {{ 0.5 | sqrt | qubit_circle: 0 }} {{ 0.5 | sqrt | prepend: '-' | append: 'i' | qubit_circle:
       1 }}
     </div>
 
     <span>=</span>
 
-    <div class="flex flex-row">
+    <div class="flex flex-row space-x-2">
       {{ '0.5 + 0.5i' | qubit_circle: 0 }} {{ '0.5 - 0.5i' | qubit_circle: 1 }}
     </div>
   </div>

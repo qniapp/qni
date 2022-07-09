@@ -15,9 +15,9 @@ module Jekyll
                 end
 
       klass = if color == ''
-                "h-#{tw_size} w-#{tw_size} mb-1"
+                "h-#{tw_size} w-#{tw_size} my-1"
               else
-                "h-#{tw_size} w-#{tw_size} magnitude-#{color} mb-1"
+                "h-#{tw_size} w-#{tw_size} magnitude-#{color} my-1"
               end
 
       contents = %w[amplitude probability phase] if contents.empty?
