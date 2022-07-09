@@ -41,7 +41,7 @@ export class BlochDisplayElement extends MenuableMixin(
       arrow: roundArrow + roundArrow,
       delay: 0,
       placement: 'auto',
-      theme: 'qni',
+      theme: 'tooltip',
       onShow(instance: TippyInstance) {
         instance.setContent(content)
       }
@@ -61,15 +61,15 @@ export class BlochDisplayElement extends MenuableMixin(
 
           <section>
             r:
-            <span class="bloch-display__inspector-d">${forceSigned(this.d)}</span>, ϕ:
-            <span class="bloch-display__inspector-phi">${forceSigned(this.phi, 2)}</span>, θ:
-            <span class="bloch-display__inspector-theta">${forceSigned(this.theta, 2)}</span>
+            <span class="bloch-display__inspector-d font-mono font-bold">${forceSigned(this.d)}</span>, ϕ:
+            <span class="bloch-display__inspector-phi font-mono font-bold">${forceSigned(this.phi, 2)}</span>, θ:
+            <span class="bloch-display__inspector-theta font-mono font-bold">${forceSigned(this.theta, 2)}</span>
           </section>
           <section>
             x:
-            <span class="bloch-display__inspector-x">${forceSigned(this.x)}</span>, y:
-            <span class="bloch-display__inspector-y">${forceSigned(this.y)}</span>, z:
-            <span class="bloch-display__inspector-z">${forceSigned(this.z)}</span>
+            <span class="bloch-display__inspector-x font-mono font-bold">${forceSigned(this.x)}</span>, y:
+            <span class="bloch-display__inspector-y font-mono font-bold">${forceSigned(this.y)}</span>, z:
+            <span class="bloch-display__inspector-z font-mono font-bold">${forceSigned(this.z)}</span>
           </section>
         </div>
       `,
@@ -206,6 +206,15 @@ export class BlochDisplayElement extends MenuableMixin(
             right: 0px;
             bottom: 0px;
             left: 0px;
+          }
+
+          .font-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+              monospace;
+          }
+
+          .font-bold {
+            font-weight: 700;
           }
         </style>
 

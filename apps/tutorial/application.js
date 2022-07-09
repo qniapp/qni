@@ -9300,7 +9300,7 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
     let e = this._tippy;
     e && e.destroy();
     let t = this.blochInspectorPopupContent();
-    St(this, { allowHTML: true, animation: false, arrow: co + co, delay: 0, placement: "auto", theme: "qni", onShow(l) {
+    St(this, { allowHTML: true, animation: false, arrow: co + co, delay: 0, placement: "auto", theme: "tooltip", onShow(l) {
       l.setContent(t);
     } }).show();
   }
@@ -9314,15 +9314,15 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
 
           <section>
             r:
-            <span class="bloch-display__inspector-d">${bt(this.d)}</span>, ϕ:
-            <span class="bloch-display__inspector-phi">${bt(this.phi, 2)}</span>, θ:
-            <span class="bloch-display__inspector-theta">${bt(this.theta, 2)}</span>
+            <span class="bloch-display__inspector-d font-mono font-bold">${bt(this.d)}</span>, ϕ:
+            <span class="bloch-display__inspector-phi font-mono font-bold">${bt(this.phi, 2)}</span>, θ:
+            <span class="bloch-display__inspector-theta font-mono font-bold">${bt(this.theta, 2)}</span>
           </section>
           <section>
             x:
-            <span class="bloch-display__inspector-x">${bt(this.x)}</span>, y:
-            <span class="bloch-display__inspector-y">${bt(this.y)}</span>, z:
-            <span class="bloch-display__inspector-z">${bt(this.z)}</span>
+            <span class="bloch-display__inspector-x font-mono font-bold">${bt(this.x)}</span>, y:
+            <span class="bloch-display__inspector-y font-mono font-bold">${bt(this.y)}</span>, z:
+            <span class="bloch-display__inspector-z font-mono font-bold">${bt(this.z)}</span>
           </section>
         </div>
       `, e), e;
@@ -9424,6 +9424,14 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
             right: 0px;
             bottom: 0px;
             left: 0px;
+          }
+
+          .font-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+          }
+
+          .font-bold {
+            font-weight: 700;
           }
         </style>
 

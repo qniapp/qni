@@ -2015,14 +2015,6 @@ select {
   right: 13px;
 }
 
-.tippy-box[data-theme~='qni'] header h1 {
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .tippy-box[data-theme~='qni'] header p {
   line-height: 1.25;
 }
@@ -2066,6 +2058,28 @@ select {
 
 .tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
   right: 11px;
+}
+
+.tippy-box[data-theme~='tooltip'] header h1 {
+  font-weight: 700;
+  line-height: 1 !important;
+  margin-bottom: 0.25rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'] header p {
+  line-height: 1 !important;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'] header p:nth-child(n + 2) {
+  margin-top: 0.125rem;
 }
 
 .tippy-box[data-theme~='operation-menu'] {
@@ -5304,6 +5318,14 @@ z-gate::part(icon) {
 
 .border {
   border-width: 1px;
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .shadow {

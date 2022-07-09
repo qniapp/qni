@@ -31,12 +31,6 @@
     right: 13px;
   }
 
-  header h1 {
-    @apply font-bold;
-    @apply text-gray-900;
-    @apply text-lg;
-  }
-
   header p {
     @apply leading-tight;
   }
@@ -75,6 +69,24 @@
 
   &[data-placement^='right'] > .tippy-svg-arrow svg:first-child {
     right: 11px;
+  }
+
+  header h1 {
+    @apply font-bold;
+    @apply leading-none !important;
+    @apply mb-1;
+    @apply text-lg;
+    @apply text-white;
+  }
+
+  header p {
+    @apply leading-none !important;
+    @apply text-sm;
+    @apply text-zinc-200;
+  }
+
+  header p:nth-child(n + 2) {
+    @apply mt-0.5;
   }
 }
 
