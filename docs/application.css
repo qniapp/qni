@@ -2019,69 +2019,6 @@ select {
   line-height: 1.25;
 }
 
-.tippy-box[data-theme~='tooltip'] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
-  border-radius: 0.5rem;
-}
-
-.tippy-box[data-theme~='tooltip'] .tippy-content {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
-/* The border */
-
-.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:first-child {
-  fill: #18181b;
-}
-
-/* The fill */
-
-.tippy-box[data-theme~='tooltip'] .tippy-svg-arrow > svg:last-child {
-  fill: #18181b;
-}
-
-.tippy-box[data-theme~='tooltip'][data-placement^='top'] > .tippy-svg-arrow svg:first-child {
-  top: 16px;
-}
-
-.tippy-box[data-theme~='tooltip'][data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
-  bottom: 16px;
-}
-
-.tippy-box[data-theme~='tooltip'][data-placement^='left'] > .tippy-svg-arrow svg:first-child {
-  left: 11px;
-}
-
-.tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-svg-arrow svg:first-child {
-  right: 11px;
-}
-
-.tippy-box[data-theme~='tooltip'] header h1 {
-  font-weight: 700;
-  line-height: 1 !important;
-  margin-bottom: 0.25rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.tippy-box[data-theme~='tooltip'] header p {
-  line-height: 1 !important;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
-}
-
-.tippy-box[data-theme~='tooltip'] header p:nth-child(n + 2) {
-  margin-top: 0.125rem;
-}
-
 .tippy-box[data-theme~='operation-menu'] {
   background-color: transparent;
 }
@@ -2124,15 +2061,6 @@ angle-slider:hover::before {
   --tw-border-opacity: 0.2;
 }
 
-.operation-menu button:disabled {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
-.operation-menu button:disabled:hover {
-  background-color: transparent;
-}
-
 operation-inspector[data-conditional-gate-pane-disabled] #conditional-gate-pane h1 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -2158,6 +2086,15 @@ operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane 
 
 operation-inspector[data-conditional-flag-pane-disabled] #conditional-flag-pane .pane-body {
   display: none;
+}
+
+.operation-menu button:disabled {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.operation-menu button:disabled:hover {
+  background-color: transparent;
 }
 
 run-circuit-button[data-running] {
@@ -2217,6 +2154,68 @@ run-circuit-button::part(ripple) {
 
 run-circuit-button.run-circuit-button--mobile::part(ripple) {
   background-color: rgb(168 85 247 / 0.7);
+}
+
+.tippy-box[data-theme~='tooltip'] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
+  border-radius: 0.5rem;
+}
+
+.tippy-box[data-theme~='tooltip'] .tippy-content {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='top'] > .tippy-arrow::before {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(24 24 27 / var(--tw-border-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='bottom'] > .tippy-arrow::before {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(24 24 27 / var(--tw-border-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='left'] > .tippy-arrow::before {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(24 24 27 / var(--tw-border-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'][data-placement^='right'] > .tippy-arrow::before {
+  --tw-border-opacity: 1;
+  border-right-color: rgb(24 24 27 / var(--tw-border-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'] header h1 {
+  font-weight: 700;
+  line-height: 1 !important;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'] header p {
+  line-height: 1 !important;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(228 228 231 / var(--tw-text-opacity));
+}
+
+.tippy-box[data-theme~='tooltip'] header p:first-of-type {
+  margin-top: 0.25rem;
+}
+
+.tippy-box[data-theme~='tooltip'] header p:nth-of-type(n + 2) {
+  margin-top: 0.125rem;
+}
+
+.tippy-box[data-theme~='tooltip'] .body {
+  margin-top: 1rem;
 }
 
 bloch-display {
@@ -5414,6 +5413,8 @@ z-gate::part(icon) {
 
 /* bottom label */
 
+/* tooltip */
+
 @media (min-width: 768px) {
   .content-with-margin .mini-qni, .content-with-margin > p, .content-with-margin figure, .content-with-margin orbit-reviewarea, .content-with-margin ul, .content-with-margin footer {
     margin-right: auto;
@@ -5749,22 +5750,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 1.25rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-0 {
-  margin-top: 0px;
-}
-
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -5775,10 +5760,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
 }
 
 .-mr-12 {
@@ -5819,6 +5800,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .mr-6 {
   margin-right: 1.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .-mt-2\.5 {
@@ -6370,11 +6355,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   padding-bottom: 1rem !important;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6485,11 +6465,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   line-height: 2rem;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -6498,6 +6473,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-3xl {
@@ -6531,10 +6511,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .italic {
   font-style: italic;
-}
-
-.leading-none {
-  line-height: 1;
 }
 
 .leading-6 {
@@ -6595,11 +6571,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-purple-600 {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
-}
-
-.text-zinc-200 {
-  --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 .text-slate-700 {

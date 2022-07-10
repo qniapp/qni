@@ -4,39 +4,43 @@
     <p>Creates simple superpositions.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <h-gate class="qpu-operation-sm"></h-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <h-gate class="qpu-operation-sm"></h-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <h-gate class="qpu-operation-sm"></h-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <h-gate class="qpu-operation-sm"></h-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -47,39 +51,43 @@
     <p>Swaps the qubit pair of <code>|0⟩</code> and <code>|1⟩</code>.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <x-gate class="qpu-operation-sm"></x-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <x-gate class="qpu-operation-sm"></x-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <x-gate class="qpu-operation-sm"></x-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <x-gate class="qpu-operation-sm"></x-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -90,39 +98,43 @@
     <p>A combination of the X and Z gates.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <y-gate class="qpu-operation-sm"></y-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <y-gate class="qpu-operation-sm"></y-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <y-gate class="qpu-operation-sm"></y-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <y-gate class="qpu-operation-sm"></y-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-i" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-i" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -133,39 +145,43 @@
     <p>Negate phases when the qubit is ON.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <z-gate class="qpu-operation-sm"></z-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <z-gate class="qpu-operation-sm"></z-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <z-gate class="qpu-operation-sm"></z-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <z-gate class="qpu-operation-sm"></z-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-1" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-1" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -177,39 +193,43 @@
     <p>The default φ = π/2.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -221,39 +241,43 @@
     <p>Applies a phase of e<sup>iπ/4</sup> to the <code>|1⟩</code> state.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <t-gate class="qpu-operation-sm"></t-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <t-gate class="qpu-operation-sm"></t-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <t-gate class="qpu-operation-sm"></t-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <t-gate class="qpu-operation-sm"></t-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -264,39 +288,43 @@
     <p>Rotates around the X-axis by <code>π/2</code>.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rnot-gate class="qpu-operation-sm"></rnot-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rnot-gate class="qpu-operation-sm"></rnot-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rnot-gate class="qpu-operation-sm"></rnot-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rnot-gate class="qpu-operation-sm"></rnot-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -308,39 +336,43 @@
     <p>The default θ = π/2.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -352,39 +384,43 @@
     <p>The default θ = π/2.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -396,39 +432,43 @@
     <p>The default θ = π/2.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071-0.7071i" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071-0.7071i" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -462,39 +502,43 @@
     <p>(Re)sets a qubit to state <code>|0⟩</code>.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -505,39 +549,43 @@
     <p>(Re)sets a qubit to state <code>|1⟩</code>.</p>
   </header>
 
-  <div class="mt-4 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-    </div>
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
-  </div>
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
+      </div>
 
-  <div class="mt-2 flex flex-row items-center space-x-2">
-    <div class="flex flex-row space-x-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-    </div>
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
 
-    <div class="flex flex-row items-center">
-      <%= icon :minus %>
-      <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
-      <%= icon :arrow_right %>
-    </div>
+        <div class="flex flex-row items-center">
+          <%= icon :minus %>
+          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <%= icon :arrow_right %>
+        </div>
 
-    <div class="flex flex-row space-x-2 pr-2">
-      <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-      <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
+          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@ import {ActivateableMixin, DraggableMixin, HelpableMixin, HoverableMixin, Menuab
 import {SerializedBlochDisplayType, Util} from '@qni/common'
 import {attr, controller, target, targets} from '@github/catalyst'
 import {html, render} from '@github/jtml'
-import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement, roundArrow} from 'tippy.js'
+import tippy, {Instance as TippyInstance, ReferenceElement as TippyReferenceElement} from 'tippy.js'
 import {forceSigned} from './util'
 
 export class BlochDisplayElement extends MenuableMixin(
@@ -38,10 +38,11 @@ export class BlochDisplayElement extends MenuableMixin(
     const popup = tippy(this as Element, {
       allowHTML: true,
       animation: false,
-      arrow: roundArrow + roundArrow,
+      arrow: true,
       delay: 0,
       placement: 'auto',
       theme: 'tooltip',
+      // trigger: 'manual', // debug
       onShow(instance: TippyInstance) {
         instance.setContent(content)
       }
@@ -54,22 +55,22 @@ export class BlochDisplayElement extends MenuableMixin(
 
     render(
       html`
-        <div class="bloch-display__inspector">
-          <header>
-            <h1>Local State</h1>
-          </header>
+        <header>
+          <h1>Local State</h1>
+        </header>
 
+        <div class="body">
           <section>
             r:
-            <span class="bloch-display__inspector-d font-mono font-bold">${forceSigned(this.d)}</span>, ϕ:
-            <span class="bloch-display__inspector-phi font-mono font-bold">${forceSigned(this.phi, 2)}</span>, θ:
-            <span class="bloch-display__inspector-theta font-mono font-bold">${forceSigned(this.theta, 2)}</span>
+            <span class="font-mono font-bold">${forceSigned(this.d)}</span>, ϕ:
+            <span class="font-mono font-bold">${forceSigned(this.phi, 2)}</span>, θ:
+            <span class="font-mono font-bold">${forceSigned(this.theta, 2)}</span>
           </section>
           <section>
             x:
-            <span class="bloch-display__inspector-x font-mono font-bold">${forceSigned(this.x)}</span>, y:
-            <span class="bloch-display__inspector-y font-mono font-bold">${forceSigned(this.y)}</span>, z:
-            <span class="bloch-display__inspector-z font-mono font-bold">${forceSigned(this.z)}</span>
+            <span class="font-mono font-bold">${forceSigned(this.x)}</span>, y:
+            <span class="font-mono font-bold">${forceSigned(this.y)}</span>, z:
+            <span class="font-mono font-bold">${forceSigned(this.z)}</span>
           </section>
         </div>
       `,

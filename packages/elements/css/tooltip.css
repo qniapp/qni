@@ -1,0 +1,45 @@
+.tippy-box[data-theme~='tooltip'] {
+  @apply tooltip-bg;
+  @apply tooltip-border-radius;
+
+  .tippy-content {
+    @apply tooltip-px;
+    @apply tooltip-py;
+  }
+
+  &[data-placement^='top'] > .tippy-arrow::before {
+    @apply tooltip-arrow-top;
+  }
+
+  &[data-placement^='bottom'] > .tippy-arrow::before {
+    @apply tooltip-arrow-bottom;
+  }
+
+  &[data-placement^='left'] > .tippy-arrow::before {
+    @apply tooltip-arrow-left;
+  }
+
+  &[data-placement^='right'] > .tippy-arrow::before {
+    @apply tooltip-arrow-right;
+  }
+
+  header h1 {
+    @apply tooltip-heading;
+  }
+
+  header p {
+    @apply tooltip-subheading;
+  }
+
+  header p:first-of-type {
+    @apply tooltip-subheading-first;
+  }
+
+  header p:nth-of-type(n + 2) {
+    @apply tooltip-subheading-second-and-subsequent;
+  }
+
+  .body {
+    @apply tooltip-body;
+  }
+}

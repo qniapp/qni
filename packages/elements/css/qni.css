@@ -7,9 +7,10 @@
 @import './tippy';
 
 @import './angle_slider';
-@import './operation_menu';
 @import './operation_inspector';
+@import './operation_menu';
 @import './run_circuit_button';
+@import './tooltip';
 
 @import './bloch_display';
 @import './circle_notation';
@@ -272,6 +273,67 @@
       @apply bottom-0 left-0 right-0;
       @apply -mb-3.5;
     }
+  }
+}
+
+/* tooltip */
+
+@layer utilities {
+  .tooltip-bg {
+    @apply bg-zinc-900;
+  }
+
+  .tooltip-px {
+    @apply px-4;
+  }
+
+  .tooltip-py {
+    @apply py-3;
+  }
+
+  .tooltip-border-radius {
+    @apply rounded-lg;
+  }
+
+  .tooltip-arrow-top {
+    @apply border-t-zinc-900;
+  }
+
+  .tooltip-arrow-bottom {
+    @apply border-b-zinc-900;
+  }
+
+  .tooltip-arrow-left {
+    @apply border-l-zinc-900;
+  }
+
+  .tooltip-arrow-right {
+    @apply border-r-zinc-900;
+  }
+
+  .tooltip-heading {
+    @apply font-bold;
+    @apply leading-none !important;
+    @apply text-lg;
+    @apply text-white;
+  }
+
+  .tooltip-subheading {
+    @apply leading-none !important;
+    @apply text-sm;
+    @apply text-zinc-200;
+  }
+
+  .tooltip-subheading-first {
+    @apply mt-1;
+  }
+
+  .tooltip-subheading-second-and-subsequent {
+    @apply mt-0.5;
+  }
+
+  .tooltip-body {
+    @apply mt-4;
   }
 }
 

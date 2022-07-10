@@ -36,60 +36,6 @@
   }
 }
 
-.tippy-box[data-theme~='tooltip'] {
-  @apply bg-zinc-900;
-  @apply rounded-lg;
-
-  .tippy-content {
-    @apply px-4;
-    @apply py-3;
-  }
-
-  /* The border */
-  .tippy-svg-arrow > svg:first-child {
-    fill: theme('colors.zinc.900');
-  }
-
-  /* The fill */
-  .tippy-svg-arrow > svg:last-child {
-    fill: theme('colors.zinc.900');
-  }
-
-  &[data-placement^='top'] > .tippy-svg-arrow svg:first-child {
-    top: 16px;
-  }
-
-  &[data-placement^='bottom'] > .tippy-svg-arrow svg:first-child {
-    bottom: 16px;
-  }
-
-  &[data-placement^='left'] > .tippy-svg-arrow svg:first-child {
-    left: 11px;
-  }
-
-  &[data-placement^='right'] > .tippy-svg-arrow svg:first-child {
-    right: 11px;
-  }
-
-  header h1 {
-    @apply font-bold;
-    @apply leading-none !important;
-    @apply mb-1;
-    @apply text-lg;
-    @apply text-white;
-  }
-
-  header p {
-    @apply leading-none !important;
-    @apply text-sm;
-    @apply text-zinc-200;
-  }
-
-  header p:nth-child(n + 2) {
-    @apply mt-0.5;
-  }
-}
-
 .tippy-box[data-theme~='operation-menu'] {
   @apply bg-transparent;
 }

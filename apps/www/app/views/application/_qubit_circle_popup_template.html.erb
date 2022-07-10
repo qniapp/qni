@@ -1,25 +1,29 @@
 <template id="qubit-circle-popup-template">
-  <div id="qubit-circle-popup--header" class="mb-2 text-lg">
-    |<span id="qubit-circle-popup--ket-binary-value" class="font-mono"></span><span class="mr-2">⟩</span
-    ><span class="mr-1">decimal</span><span id="qubit-circle-popup--ket-decimal-value" class="font-mono"></span>
-  </div>
+  <header>
+    <h1 id="qubit-circle-popup--header">
+      |<span id="qubit-circle-popup--ket-binary-value" class="font-mono"></span><span class="mr-2">⟩</span
+      ><span class="mr-1">decimal</span><span id="qubit-circle-popup--ket-decimal-value" class="font-mono"></span>
+    </h1>
+  </header>
 
-  <ul class="list-none">
-    <li id="qubit-circle-popup--amplitude" class="flex items-center">
-      <%= icon 'amplitude', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Amplitude:</span>
-      <span id="qubit-circle-popup--amplitude-real-value" class="font-mono font-bold"></span>
-      <span id="qubit-circle-popup--amplitude-imag-value" class="font-mono font-bold"></span>
-    </li>
-    <li id="qubit-circle-popup--probability" class="flex items-center">
-      <%= icon 'probability', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Probability:</span>
-      <span id="qubit-circle-popup--probability-value" class="font-mono font-bold"></span>
-    </li>
-    <li id="qubit-circle-popup--phase" class="flex items-center">
-      <%= icon 'phase', class: 'h-4 w-4 mr-1' %>
-      <span class="mr-1">Phase:</span>
-      <span id="qubit-circle-popup--phase-value" class="font-mono font-bold"></span>
-    </li>
-  </ul>
+  <div class="body">
+    <ul class="list-none">
+      <li id="qubit-circle-popup--amplitude" class="flex items-center">
+        <%= icon 'amplitude', class: 'h-4 w-4 mr-1' %>
+        <span class="mr-1">Amplitude:</span>
+        <span id="qubit-circle-popup--amplitude-real-value" class="font-mono font-bold"></span>
+        <span id="qubit-circle-popup--amplitude-imag-value" class="font-mono font-bold"></span>
+      </li>
+      <li id="qubit-circle-popup--probability" class="flex items-center">
+        <%= icon 'probability', class: 'h-4 w-4 mr-1' %>
+        <span class="mr-1">Probability:</span>
+        <span id="qubit-circle-popup--probability-value" class="font-mono font-bold"></span>
+      </li>
+      <li id="qubit-circle-popup--phase" class="flex items-center">
+        <%= icon 'phase', class: 'h-4 w-4 mr-1' %>
+        <span class="mr-1">Phase:</span>
+        <span id="qubit-circle-popup--phase-value" class="font-mono font-bold"></span>
+      </li>
+    </ul>
+  </div>
 </template>

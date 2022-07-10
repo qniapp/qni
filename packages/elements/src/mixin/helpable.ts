@@ -1,5 +1,5 @@
 import {createMachine, interpret} from 'xstate'
-import tippy, {Instance, roundArrow} from 'tippy.js'
+import tippy, {Instance} from 'tippy.js'
 import {Constructor} from './constructor'
 import {attr} from '@github/catalyst'
 import {describe} from '@qni/common'
@@ -87,7 +87,7 @@ export function HelpableMixin<TBase extends Constructor<HTMLElement>>(Base: TBas
             this.popup = tippy(this, {
               allowHTML: true,
               animation: false,
-              arrow: roundArrow,
+              arrow: true,
               delay: 0,
               placement: 'auto',
               theme: 'tooltip',
