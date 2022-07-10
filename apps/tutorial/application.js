@@ -11066,7 +11066,7 @@ var Nt = /* @__PURE__ */ __name(class extends HTMLElement {
     this.addEventListener("mouseenter", this.showPopup), this.addEventListener("mouseleave", this.hidePopup);
   }
   showPopup() {
-    let e = St(this, { allowHTML: true, animation: false, delay: 0, theme: "qubit-circle" });
+    let e = St(this, { allowHTML: true, animation: false, delay: 0, theme: "tooltip" });
     if (this.popupTemplate === null)
       return;
     let t = document.importNode(this.popupTemplate.content, true), i = new rs.default(this.amplitude), l = t.getElementById("qubit-circle-popup--header"), c = t.getElementById("qubit-circle-popup--ket-binary-value"), f = t.getElementById("qubit-circle-popup--ket-decimal-value"), b = t.getElementById("qubit-circle-popup--amplitude"), v = t.getElementById("qubit-circle-popup--amplitude-real-value"), d = t.getElementById("qubit-circle-popup--amplitude-imag-value"), h = t.getElementById("qubit-circle-popup--probability"), x = t.getElementById("qubit-circle-popup--probability-value"), y = t.getElementById("qubit-circle-popup--phase"), S = t.getElementById("qubit-circle-popup--phase-value");
