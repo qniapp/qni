@@ -9,7 +9,7 @@ module Jekyll
 
     def render(_context)
       case @op_type
-      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control'
+      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control', 'swap'
         "<#{tag_name} class=\"qpu-operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
       when '0', '1'
         "<#{tag_name} data-value=\"#{@op_type}\" class=\"qpu-operation-xs relative top-0.5 inline-block\"></#{tag_name}>"
@@ -20,7 +20,7 @@ module Jekyll
 
     def tag_name
       case @op_type
-      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control'
+      when 'h', 'x', 'y', 'z', 'phase', 'measurement', 'control', 'swap'
         "#{@op_type}-gate"
       when '0', '1'
         'write-gate'
