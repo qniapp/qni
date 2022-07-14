@@ -1204,7 +1204,8 @@
 </p>
 
 <p>
-  今回紹介する量子フーリエ変換 (QFT) は、状態ベクトルに埋め込まれた<strong>パターン情報</strong>を取り出すためのサブルーチンです。
+  今回紹介する量子フーリエ変換 (QFT)
+  は、状態ベクトルに埋め込まれた<strong>パターン情報</strong>を取り出すためのサブルーチンです。
   パターンとはどのようなもので、それが何の役に立つかを見ていきましょう。
 </p>
 
@@ -1227,8 +1228,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="1"
   data-amplitude="0.17678 + 0.17678i"
@@ -1238,8 +1238,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="2"
   data-amplitude="0.25i"
@@ -1249,8 +1248,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="3"
   data-amplitude="-0.17678 + 0.17678i"
@@ -1260,8 +1258,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="4"
   data-amplitude="-0.25"
@@ -1271,8 +1268,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="5"
   data-amplitude="-0.17678 - 0.17678i"
@@ -1282,8 +1278,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="6"
   data-amplitude="-0.25i"
@@ -1293,8 +1288,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="7"
   data-amplitude="0.17678 - 0.17678i"
@@ -1304,8 +1298,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="8"
   data-amplitude="0.25"
@@ -1315,8 +1308,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="9"
   data-amplitude="0.17678 + 0.17678i"
@@ -1326,8 +1318,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="10"
   data-amplitude="0.25i"
@@ -1337,8 +1328,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="11"
   data-amplitude="-0.17678 + 0.17678i"
@@ -1348,8 +1338,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="12"
   data-amplitude="-0.25"
@@ -1359,8 +1348,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="13"
   data-amplitude="-0.17678 - 0.17678i"
@@ -1370,8 +1358,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="14"
   data-amplitude="-0.25i"
@@ -1381,8 +1368,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="15"
   data-amplitude="0.17678 - 0.17678i"
@@ -1397,25 +1383,27 @@
 </div>
 
 <p>
-  ここに見られるパターンは、回転の繰り返しです。
-  左の円 \(|0\rangle\) から順に位相が 45° ずつ回転していき、\(|8\rangle\) で元の位置に戻ります。
-  そのまま \(|9\rangle\) から \(|15\rangle\) まで進み \(|0\rangle\) に戻るともう一回転です。
-  このように全体では、位相が 2 回転しているということが分かります。
-  つまりここに含まれているパターンは、回転という繰り返しを 2 回行っているというものです。
+  ここに見られるパターンは、回転の繰り返しです。 左の円 \(|0\rangle\) から順に位相が 45°
+  ずつ回転していき、\(|8\rangle\) で元の位置に戻ります。 そのまま \(|9\rangle\) から \(|15\rangle\)
+  まで進み \(|0\rangle\) に戻るともう一回転です。 このように全体では、位相が 2
+  回転しているということが分かります。 つまりここに含まれているパターンは、回転という繰り返しを 2
+  回行っているというものです。
 </p>
 
 <h2>パターンの取り出し</h2>
 
 <p>
   このパターン情報は、今まで見てきた方法ではうまく取り出すことができません。
-  たとえば測定を行った場合、それぞれの確率は等しく 6.25% なので、0 から 15 までのランダムな数が出てくるだけです。
+  たとえば測定を行った場合、それぞれの確率は等しく 6.25% なので、0 から 15
+  までのランダムな数が出てくるだけです。
   また振幅増幅を使っても、それぞれの位相差は均等であるため、確率の差に変換することはできません。
 </p>
 
 <p>
   繰り返しが 2 回であるというパターン情報は、量子フーリエ変換 (QFT) によって取り出すことができます。
-  先ほどの状態ベクトルを入力として QFT を適用すると、繰り返しの数 = 2 が次のように \(|2\rangle\) の確率 100% に反映されます。
-  そして 4 量子ビットすべてを測定することによって、2 を取り出すことができます。
+  先ほどの状態ベクトルを入力として QFT を適用すると、繰り返しの数 = 2 が次のように \(|2\rangle\)
+  の確率 100% に反映されます。 そして 4 量子ビットすべてを測定することによって、2
+  を取り出すことができます。
 </p>
 
 <div class="my-5 flex overflow-x-auto">
@@ -1431,8 +1419,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="1"
   data-amplitude="0.17678 + 0.17678i"
@@ -1442,8 +1429,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="2"
   data-amplitude="0.25i"
@@ -1453,8 +1439,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="3"
   data-amplitude="-0.17678 + 0.17678i"
@@ -1464,8 +1449,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="4"
   data-amplitude="-0.25"
@@ -1475,8 +1459,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="5"
   data-amplitude="-0.17678 - 0.17678i"
@@ -1486,8 +1469,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="6"
   data-amplitude="-0.25i"
@@ -1497,8 +1479,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="7"
   data-amplitude="0.17678 - 0.17678i"
@@ -1508,8 +1489,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="8"
   data-amplitude="0.25"
@@ -1519,8 +1499,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="9"
   data-amplitude="0.17678 + 0.17678i"
@@ -1530,8 +1509,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="10"
   data-amplitude="0.25i"
@@ -1541,8 +1519,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="11"
   data-amplitude="-0.17678 + 0.17678i"
@@ -1552,8 +1529,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="12"
   data-amplitude="-0.25"
@@ -1563,8 +1539,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="13"
   data-amplitude="-0.17678 - 0.17678i"
@@ -1574,8 +1549,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="14"
   data-amplitude="-0.25i"
@@ -1585,8 +1559,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="15"
   data-amplitude="0.17678 - 0.17678i"
@@ -1618,8 +1591,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="1"
   data-amplitude="0"
@@ -1629,8 +1601,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="2"
   data-amplitude="1"
@@ -1640,8 +1611,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="3"
   data-amplitude="0"
@@ -1651,8 +1621,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="4"
   data-amplitude="0"
@@ -1662,8 +1631,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="5"
   data-amplitude="0"
@@ -1673,8 +1641,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="6"
   data-amplitude="0"
@@ -1684,8 +1651,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="7"
   data-amplitude="0"
@@ -1706,8 +1672,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="9"
   data-amplitude="0"
@@ -1717,8 +1682,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="10"
   data-amplitude="0"
@@ -1728,8 +1692,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="11"
   data-amplitude="0"
@@ -1739,8 +1702,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="12"
   data-amplitude="0"
@@ -1750,8 +1712,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="13"
   data-amplitude="0"
@@ -1761,8 +1722,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="14"
   data-amplitude="0"
@@ -1772,8 +1732,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-      <qubit-circle
+ <qubit-circle
   class="h-12 w-12 my-1"
   data-ket="15"
   data-amplitude="0"
@@ -1790,16 +1749,18 @@
 
 <p>
   QFT はフーリエ変換と呼ばれる幅広く使われるデータ処理ルーチンの量子版です。
-  フーリエ変換は入力に含まれる繰り返し (音の波形などの信号を入力とするとき、これを周波数と呼びます) を調べることができます。
-  QFT は状態ベクトルとしてエンコードされた周波数をフーリエ変換の仕組みによって取り出すことができます。
+  フーリエ変換は入力に含まれる繰り返し (音の波形などの信号を入力とするとき、これを周波数と呼びます)
+  を調べることができます。 QFT
+  は状態ベクトルとしてエンコードされた周波数をフーリエ変換の仕組みによって取り出すことができます。
 </p>
 
 <h2>QFT 回路</h2>
 
 <p>
-  QFT を使って周波数を取り出す回路は次のようになります。
-  最初のブロックでは <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> によって等しい重ね合わせを作り、続いて <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> によって回転を 2 回繰り返す周波数 2 の入力を作ります。
-  次のブロックでは QFT によって周波数を確率に変換し、最終的に \(|2\rangle\) が 100% の状態を作ることができます。
+  QFT を使って周波数を取り出す回路は次のようになります。 最初のブロックでは <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  によって等しい重ね合わせを作り、続いて <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> によって回転を 2 回繰り返す周波数
+  2 の入力を作ります。 次のブロックでは QFT によって周波数を確率に変換し、最終的に \(|2\rangle\) が
+  100% の状態を作ることができます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1823,22 +1784,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)"],["]"],[1],["[QFT"],[1,1,1,"H"],[1,1,"P(-π_2)","P(-π_2)"],[1,"P(-π_4)",1,"P(-π_4)"],["P(-π_8)",1,1,"P(-π_8)"],[1,1,"H"],[1,"P(-π_2)","P(-π_2)"],["P(-π_4)",1,"P(-π_4)"],[1,"H"],["P(-π_2)","P(-π_2)"],["H"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["]"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)"],["]"],[1],["[QFT"],[1,1,1,"H"],[1,1,"P(-π_2)","P(-π_2)"],[1,"P(-π_4)",1,"P(-π_4)"],["P(-π_8)",1,1,"P(-π_8)"],[1,1,"H"],[1,"P(-π_2)","P(-π_2)"],["P(-π_4)",1,"P(-π_4)"],[1,"H"],["P(-π_2)","P(-π_2)"],["H"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["]"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1847,9 +1808,11 @@
 </div>
 
 <p>
-  当面はこの QFT 回路をブラックボックスとしてこのまま使っていきます。
-  というのも、QFT の回路にはカスタマイズできる要素はなく、いつでも同じ形になるためです。
-  量子ビットの数に合わせて、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> と続く <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を階段状にならべ、最後に全ビットを <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> でスワップしたものが QFT の定型、と考えて OK です。
+  当面はこの QFT 回路をブラックボックスとしてこのまま使っていきます。 というのも、QFT
+  の回路にはカスタマイズできる要素はなく、いつでも同じ形になるためです。
+  量子ビットの数に合わせて、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> と続く <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  を階段状にならべ、最後に全ビットを <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> でスワップしたものが QFT
+  の定型、と考えて OK です。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
