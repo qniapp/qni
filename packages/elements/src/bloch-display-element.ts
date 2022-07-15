@@ -272,7 +272,6 @@ export class BlochDisplayElement extends MenuableMixin(
       this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this.theta}deg)`
     }
 
-    this.popup?.destroy()
     this.popup?.setContent(this.blochInspectorPopupContent())
   }
 
