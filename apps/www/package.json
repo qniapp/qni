@@ -68,7 +68,6 @@
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "~7.2",
-    "prettier-plugin-erb": "^0.4.0",
     "rollup": "~2.70",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-dts": "~4.2",

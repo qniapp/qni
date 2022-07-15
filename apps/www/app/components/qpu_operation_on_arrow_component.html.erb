@@ -1,0 +1,11 @@
+<div class="flex flex-row items-center">
+  <%= icon :arrow_start, class: 'w-3 h-6 text-zinc-200' %>
+  <% if @angle %>
+    <<%= @operation_tag %> class="qpu-operation-sm" data-angle="<%= @angle %>"></<%= @operation_tag %>>
+  <% elsif @value %>
+      <<%= @operation_tag %> class="qpu-operation-sm" data-value="<%= @value %>"></<%= @operation_tag %>>
+  <% else %>
+    <<%= @operation_tag %> class="qpu-operation-sm"></<%= @operation_tag %>>
+  <% end %>
+  <%= icon :arrow_end, class: 'w-3 h-6 text-zinc-200' %>
+</div>

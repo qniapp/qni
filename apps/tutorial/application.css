@@ -5750,22 +5750,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   margin-top: 1.25rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-0 {
-  margin-top: 0px;
-}
-
 .mr-3 {
   margin-right: 0.75rem;
 }
@@ -5776,10 +5760,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .ml-3 {
   margin-left: 0.75rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
 }
 
 .-mr-12 {
@@ -5820,6 +5800,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .mr-6 {
   margin-right: 1.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .-mt-2\.5 {
@@ -6371,11 +6355,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   padding-bottom: 1rem !important;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6486,11 +6465,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   line-height: 2rem;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -6504,6 +6478,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .font-bold {
@@ -6532,10 +6511,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .italic {
   font-style: italic;
-}
-
-.leading-none {
-  line-height: 1;
 }
 
 .leading-6 {
@@ -6596,11 +6571,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .text-purple-600 {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
-}
-
-.text-zinc-200 {
-  --tw-text-opacity: 1;
-  color: rgb(228 228 231 / var(--tw-text-opacity));
 }
 
 .text-slate-700 {

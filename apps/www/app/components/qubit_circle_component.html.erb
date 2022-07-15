@@ -1,0 +1,5 @@
+<% if @dark_mode %>
+  <qubit-circle class="h-8 w-8" data-ket="<%= @ket %>" data-amplitude="<%= @amplitude %>" data-dark-mode></qubit-circle>
+<% else %>
+  <qubit-circle class="h-8 w-8" data-ket="<%= @ket %>" data-amplitude="<%= @amplitude %>"></qubit-circle>
+<% end %>

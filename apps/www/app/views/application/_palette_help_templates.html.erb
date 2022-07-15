@@ -6,41 +6,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <h-gate class="qpu-operation-sm"></h-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <h-gate class="qpu-operation-sm"></h-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0.7071, 0.7071], operation: 'H', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0.7071, -0.7071], operation: 'H', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -53,41 +20,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <x-gate class="qpu-operation-sm"></x-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <x-gate class="qpu-operation-sm"></x-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0, 1], operation: 'X', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [1, 0], operation: 'X', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -100,41 +34,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <y-gate class="qpu-operation-sm"></y-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <y-gate class="qpu-operation-sm"></y-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-i" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0, 'i'], operation: 'Y', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: ['-i', 0], operation: 'Y', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -147,41 +48,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <z-gate class="qpu-operation-sm"></z-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <z-gate class="qpu-operation-sm"></z-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-1" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'Z', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, -1], operation: 'Z', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -195,41 +63,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'PHASE', angle: 'π/2', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, 'i'], operation: 'PHASE', angle: 'π/2', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -243,41 +78,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <t-gate class="qpu-operation-sm"></t-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <t-gate class="qpu-operation-sm"></t-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'T', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, '0.7071 + 0.7071i'], operation: 'T', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -290,41 +92,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rnot-gate class="qpu-operation-sm"></rnot-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rnot-gate class="qpu-operation-sm"></rnot-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.5-0.5i" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.5+0.5i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: ['0.5 + 0.5i', '0.5 - 0.5i'], operation: 'RNOT', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: ['0.5 - 0.5i', '0.5 + 0.5i'], operation: 'RNOT', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -338,41 +107,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071i" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0.7071, '-0.7071i'], operation: 'RX', angle: 'π/2', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: ['-0.7071i', 0.7071], operation: 'RX', angle: 'π/2', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -386,41 +122,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="-0.7071" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0.7071, 0.7071], operation: 'RY', angle: 'π/2', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [-0.7071, 0.7071], operation: 'RY', angle: 'π/2', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -434,41 +137,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0.7071-0.7071i" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0.7071+0.7071i" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: ['0.7071 - 0.7071i', 0], operation: 'RZ', angle: 'π/2', dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, '0.7071 + 0.7071i'], operation: 'RZ', angle: 'π/2', dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -504,41 +174,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [1, 0], operation: 'WRITE', value: 0, dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [1, 0], operation: 'WRITE', value: 0, dark_mode: true) %>
     </div>
   </div>
 </template>
@@ -551,41 +188,8 @@
 
   <div class="body">
     <div class="flex flex-col space-y-2">
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="1" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="0" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-      </div>
-
-      <div class="flex flex-row items-center space-x-2">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-
-        <div class="flex flex-row items-center">
-          <%= icon :minus %>
-          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
-          <%= icon :arrow_right %>
-        </div>
-
-        <div class="flex flex-row space-x-2 pr-2">
-          <qubit-circle class="h-8 w-8" data-ket="0" data-amplitude="0" data-dark-mode></qubit-circle>
-          <qubit-circle class="h-8 w-8" data-ket="1" data-amplitude="1" data-dark-mode></qubit-circle>
-        </div>
-      </div>
+      <%= render QubitTransitionComponent.new(from: [1, 0], to: [0, 1], operation: 'WRITE', value: 1, dark_mode: true) %>
+      <%= render QubitTransitionComponent.new(from: [0, 1], to: [0, 1], operation: 'WRITE', value: 1, dark_mode: true) %>
     </div>
   </div>
 </template>
