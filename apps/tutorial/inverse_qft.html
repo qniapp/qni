@@ -1,0 +1,123 @@
+---
+layout: page
+section: 量子フーリエ変換 (QFT)
+title: 逆 QFT
+description: 周期的に変化する位相を書き込む
+prev: パターンの読み出し
+prev_url: ./readout_of_patterns.html
+---
+
+<p>
+  足し算回路に対する引き算回路と同様に、QFT にも逆回路が存在します。 逆 QFT
+  と呼ばれるこの逆回路を状態ベクトルに適用すると、次のように変化させることができます。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }} {{ '0' | qubit_circle: 4, 'lg' }} {{ '0' |
+      qubit_circle: 5, 'lg' }} {{ '0' | qubit_circle: 6, 'lg' }} {{ '0' | qubit_circle: 7, 'lg' }}
+      {{ '0' | qubit_circle: 8, 'lg' }} {{ '0' | qubit_circle: 9, 'lg' }} {{ '0' | qubit_circle: 10,
+      'lg' }} {{ '0' | qubit_circle: 11, 'lg' }} {{ '0' | qubit_circle: 12, 'lg' }} {{ '0' |
+      qubit_circle: 13, 'lg' }} {{ '0' | qubit_circle: 14, 'lg' }} {{ '0' | qubit_circle: 15, 'lg'
+      }}
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      <div>逆 QFT</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      {{ '0.25' | qubit_circle: 0, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 1, 'lg' }} {{
+      '0.25i' | qubit_circle: 2, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 3, 'lg' }} {{
+      '-0.25' | qubit_circle: 4, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 5, 'lg' }} {{
+      '-0.25i' | qubit_circle: 6, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 7, 'lg' }} {{
+      '0.25' | qubit_circle: 8, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 9, 'lg' }} {{
+      '0.25i' | qubit_circle: 10, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 11, 'lg' }} {{
+      '-0.25' | qubit_circle: 12, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 13, 'lg' }} {{
+      '-0.25i' | qubit_circle: 14, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 15, 'lg' }}
+    </div>
+  </div>
+</div>
+
+<p>
+  逆 QFT はまさに QFT の逆処理で、指定したパターンを状態ベクトルに書き込みます。 入力として 2
+  のような周波数を取り、周期 2 で回転する位相の重ね合わせ状態を状態ベクトル上に作ります。
+</p>
+
+<h2>逆 QFT 回路</h2>
+
+<p>
+  逆 QFT は QFT 回路をもとにして作ることができます。
+  一般に逆回路を作るには、元の回路をうち消す回路を作るのでした。 よって逆 QFT
+  は次のように作ることができます。
+</p>
+
+<ul>
+  <li>QFT 回路を左右逆にする</li>
+  <li>CPHASE ゲートの角度をそれぞれマイナスからプラスにする</li>
+</ul>
+
+<p>
+  このようにして作った逆 QFT
+  回路に周波数の値を入力すると、位相が周期的に変化する重ね合わせ状態を作ることができます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{2 を入力"],["|0>","|0>","|0>","|0>"],[1,"X"],["}"],[1],["{逆QFT"],["Swap",1,1,"Swap"],[1,"Swap","Swap",1],["H",1,1,1],["P(π_2)","P(π_2)",1,1],["P(π_4)",1,"P(π_4)",1],["P(π_8)",1,1,"P(π_8)"],[1,"H",1,1],[1,"P(π_2)","P(π_2)",1],[1,"P(π_4)",1,"P(π_4)"],[1,1,"H",1],[1,1,"P(π_2)","P(π_2)"],[1,1,1,"H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>QFT と逆 QFT の役割は、それぞれ次のように考えることができます。</p>
+
+<ul>
+  <li>QFT は波が位相として表された世界から、周波数の世界への変換</li>
+  <li>逆 QFT は周波数の世界から位相の世界への逆変換</li>
+</ul>
+
+<p>
+  このように、QFT と逆 QFT
+  は位相の世界と周波数の世界を行ったり来たりするためのサブルーチンと考えることができます。
+  これがどう役に立つか、続いて見ていくことにしましょう。
+</p>
