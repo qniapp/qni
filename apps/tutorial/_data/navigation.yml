@@ -137,6 +137,9 @@
 #     - name: パターンの読み出し
 #       link: ./readout_of_patterns.html
 #       new: true
+#     - name: 逆 QFT
+#       link: ./inverse_qft.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
