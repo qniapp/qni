@@ -132,6 +132,11 @@
     - name: 折り返しの仕組み
       link: ./grover_iam_indetail.html
       new: true
+# - name: 量子フーリエ変換 (QFT)
+#   pages:
+#     - name: パターンの読み出し
+#       link: ./readout_of_patterns.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明

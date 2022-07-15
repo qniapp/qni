@@ -1,0 +1,161 @@
+---
+layout: page
+section: 量子フーリエ変換 (QFT)
+title: パターンの読み出し
+description: 状態ベクトルから周波数を取り出す
+prev: 折り返しの仕組み
+prev_url: ./grover_iam_indetail.html
+---
+
+<p>
+  振幅増幅は位相に埋め込まれた情報を取り出すためのサブルーチンの 1 つでした。
+  位相の差を振幅の大きさに変換することで、もともと位相でつけた「マーク」を取り出すことができます。
+</p>
+
+<p>
+  今回紹介する量子フーリエ変換 (QFT)
+  は、状態ベクトルに埋め込まれた<strong>パターン情報</strong>を取り出すためのサブルーチンです。
+  パターンとはどのようなもので、それが何の役に立つかを見ていきましょう。
+</p>
+
+<h2>パターンの例</h2>
+
+<p>
+  以下に 4 量子ビットの状態ベクトルがあります。
+  これにはあるパターンが隠されているのですが、みなさんには分かりますか?
+</p>
+
+<div class="my-5 overflow-x-auto">
+  <div class="flex flex-row space-x-2">
+    {{ '0.25' | qubit_circle: 0, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 1, 'lg' }} {{
+    '0.25i' | qubit_circle: 2, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 3, 'lg' }} {{
+    '-0.25' | qubit_circle: 4, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 5, 'lg' }} {{
+    '-0.25i' | qubit_circle: 6, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 7, 'lg' }} {{ '0.25'
+    | qubit_circle: 8, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 9, 'lg' }} {{ '0.25i' |
+    qubit_circle: 10, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 11, 'lg' }} {{ '-0.25' |
+    qubit_circle: 12, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 13, 'lg' }} {{ '-0.25i' |
+    qubit_circle: 14, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 15, 'lg' }}
+  </div>
+</div>
+
+<p>
+  ここに見られるパターンは、回転の繰り返しです。 左の円 {% ket 0 %} から順に位相が 45°
+  ずつ回転していき、{% ket 8 %} で元の位置に戻ります。 そのまま {% ket 9 %} から {% ket 15 %}
+  まで進み {% ket 0 %} に戻るともう一回転です。 このように全体では、位相が 2
+  回転しているということが分かります。 つまりここに含まれているパターンは、回転という繰り返しを 2
+  回行っているというものです。
+</p>
+
+<h2>パターンの取り出し</h2>
+
+<p>
+  このパターン情報は、今まで見てきた方法ではうまく取り出すことができません。
+  たとえば測定を行った場合、それぞれの確率は等しく 6.25% なので、0 から 15
+  までのランダムな数が出てくるだけです。
+  また振幅増幅を使っても、それぞれの位相差は均等であるため、確率の差に変換することはできません。
+</p>
+
+<p>
+  繰り返しが 2 回であるというパターン情報は、量子フーリエ変換 (QFT) によって取り出すことができます。
+  先ほどの状態ベクトルを入力として QFT を適用すると、繰り返しの数 = 2 が次のように {% ket 2 %}
+  の確率 100% に反映されます。 そして 4 量子ビットすべてを測定することによって、2
+  を取り出すことができます。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-col items-center">
+    <div class="mb-4 flex flex-row items-center space-x-2">
+      {{ '0.25' | qubit_circle: 0, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 1, 'lg' }} {{
+      '0.25i' | qubit_circle: 2, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 3, 'lg' }} {{
+      '-0.25' | qubit_circle: 4, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 5, 'lg' }} {{
+      '-0.25i' | qubit_circle: 6, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 7, 'lg' }} {{
+      '0.25' | qubit_circle: 8, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 9, 'lg' }} {{
+      '0.25i' | qubit_circle: 10, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 11, 'lg' }} {{
+      '-0.25' | qubit_circle: 12, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 13, 'lg' }} {{
+      '-0.25i' | qubit_circle: 14, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 15, 'lg' }}
+    </div>
+
+    <div class="flex flex-col items-center space-y-2">
+      {% include divider_vertical.svg class="h-6 w-6 fill-current text-neutral-400" %}
+      <div>QFT</div>
+      {% include arrow_down.svg class="h-6 w-6 mb-8 fill-current text-neutral-400" %}
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      {{ '0' | qubit_circle: 0, 'lg' }} {{ '0' | qubit_circle: 1, 'lg' }} {{ '1' | qubit_circle: 2,
+      'lg' }} {{ '0' | qubit_circle: 3, 'lg' }} {{ '0' | qubit_circle: 4, 'lg' }} {{ '0' |
+      qubit_circle: 5, 'lg' }} {{ '0' | qubit_circle: 6, 'lg' }} {{ '0' | qubit_circle: 7, 'lg' }}
+      {{ '0' | qubit_circle: 8, 'lg' }} {{ '0' | qubit_circle: 9, 'lg' }} {{ '0' | qubit_circle: 10,
+      'lg' }} {{ '0' | qubit_circle: 11, 'lg' }} {{ '0' | qubit_circle: 12, 'lg' }} {{ '0' |
+      qubit_circle: 13, 'lg' }} {{ '0' | qubit_circle: 14, 'lg' }} {{ '0' | qubit_circle: 15, 'lg'
+      }}
+    </div>
+  </div>
+</div>
+
+<p>
+  QFT はフーリエ変換と呼ばれる幅広く使われるデータ処理ルーチンの量子版です。
+  フーリエ変換は入力に含まれる繰り返し (音の波形などの信号を入力とするとき、これを周波数と呼びます)
+  を調べることができます。 QFT
+  は状態ベクトルとしてエンコードされた周波数をフーリエ変換の仕組みによって取り出すことができます。
+</p>
+
+<h2>QFT 回路</h2>
+
+<p>
+  QFT を使って周波数を取り出す回路は次のようになります。 最初のブロックでは {% qpu_operation h %}
+  によって等しい重ね合わせを作り、続いて {% qpu_operation phase %} によって回転を 2 回繰り返す周波数
+  2 の入力を作ります。 次のブロックでは QFT によって周波数を確率に変換し、最終的に {% ket 2 %} が
+  100% の状態を作ることができます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)"],["]"],[1],["[QFT"],[1,1,1,"H"],[1,1,"P(-π_2)","P(-π_2)"],[1,"P(-π_4)",1,"P(-π_4)"],["P(-π_8)",1,1,"P(-π_8)"],[1,1,"H"],[1,"P(-π_2)","P(-π_2)"],["P(-π_4)",1,"P(-π_4)"],[1,"H"],["P(-π_2)","P(-π_2)"],["H"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["]"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  当面はこの QFT 回路をブラックボックスとしてこのまま使っていきます。 というのも、QFT
+  の回路にはカスタマイズできる要素はなく、いつでも同じ形になるためです。
+  量子ビットの数に合わせて、{% qpu_operation h %} と続く {% qpu_operation phase %}
+  を階段状にならべ、最後に全ビットを {% qpu_operation swap %} でスワップしたものが QFT
+  の定型、と考えて OK です。
+</p>
