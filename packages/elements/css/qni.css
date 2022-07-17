@@ -102,6 +102,24 @@
     @apply rounded;
   }
 
+  /* QPU operation outline */
+
+  .qpu-operation-outline-hover {
+    @apply border-zinc-400;
+  }
+
+  .qpu-operation-outline-active {
+    @apply border-purple-400;
+  }
+
+  .qpu-operation-outline-width {
+    @apply border-2;
+  }
+
+  .qpu-operation-outline-border-radius {
+    @apply rounded-md;
+  }
+
   /* operation shapes */
 
   .operation-square {
@@ -138,21 +156,28 @@
   /* data-hoverable */
 
   .operation-hoverable {
-    palette-dropzone &[data-hoverable]:hover::after,
-    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
-      @apply rounded-md;
-      @apply border-zinc-400;
+    palette-dropzone &[data-hoverable]::after,
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active])::after {
+      @apply qpu-operation-outline-border-radius;
+      @apply border-transparent;
 
       @apply border-0;
 
-      top: -3px;
-      right: -3px;
-      bottom: -3px;
-      left: -3px;
+      top: -4px;
+      right: -4px;
+      bottom: -4px;
+      left: -4px;
 
       @screen sm {
-        @apply border-2;
+        @apply qpu-operation-outline-width;
       }
+    }
+  }
+
+  .operation-hoverable {
+    palette-dropzone &[data-hoverable]:hover::after,
+    quantum-circuit:not([data-editing]) &[data-hoverable]:not([data-active]):hover::after {
+      @apply qpu-operation-outline-hover;
     }
   }
 
@@ -160,18 +185,18 @@
 
   .operation-activateable {
     &[data-active]::after {
-      @apply rounded-md;
-      @apply border-purple-500;
+      @apply qpu-operation-outline-border-radius;
+      @apply qpu-operation-outline-active;
 
       @apply border-0;
 
-      top: -3px;
-      right: -3px;
-      bottom: -3px;
-      left: -3px;
+      top: -4px;
+      right: -4px;
+      bottom: -4px;
+      left: -4px;
 
       @screen sm {
-        @apply border-2;
+        @apply qpu-operation-outline-width;
       }
     }
   }
