@@ -31,11 +31,11 @@ export class BlochDisplayElement extends MenuableMixin(
 
     if (this.parentElement.tagName === 'PALETTE-DROPZONE') return
 
-    const popupInstance = (this as TippyReferenceElement)._tippy
+    const popupInstance = (this as TippyReferenceElement).popup
     if (popupInstance) popupInstance.destroy()
 
     const content = this.blochInspectorPopupContent()
-    const popup = tippy(this as Element, {
+    this.popup = tippy(this as Element, {
       allowHTML: true,
       animation: false,
       arrow: true,
@@ -47,7 +47,7 @@ export class BlochDisplayElement extends MenuableMixin(
         instance.setContent(content)
       }
     })
-    popup.show()
+    this.popup.show()
   }
 
   private blochInspectorPopupContent() {
@@ -90,7 +90,7 @@ export class BlochDisplayElement extends MenuableMixin(
   }
 
   disconnectedCallback(): void {
-    const instance = (this as TippyReferenceElement)._tippy
+    const instance = (this as TippyReferenceElement).popup
     instance?.destroy()
   }
 
@@ -272,8 +272,7 @@ export class BlochDisplayElement extends MenuableMixin(
       this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this.theta}deg)`
     }
 
-    const popupInstance = (this as TippyReferenceElement)._tippy
-    popupInstance?.setContent(this.blochInspectorPopupContent())
+    this.popup?.setContent(this.blochInspectorPopupContent())
   }
 
   private get d(): number {
