@@ -140,6 +140,9 @@
 #     - name: 逆 QFT
 #       link: ./inverse_qft.html
 #       new: true
+#     - name: QFT の内部
+#       link: ./inside_the_qft.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明

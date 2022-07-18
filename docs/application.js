@@ -9211,9 +9211,9 @@ var Hl = u((r) => typeof r == "object" && r !== null && typeof r.initMenu == "fu
 function Ie(r) {
   class e extends r {
     initMenu() {
-      this._tippy || this.menuContent !== null && (this.addEventListener("click", this.dispatchShowMenuEvent), this.menu = St(this, { allowHTML: true, animation: false, arrow: false, content: this.menuContent, interactive: true, appendTo: document.body, offset: [0, 16], placement: "top", theme: "operation-menu", trigger: "manual", onShow: this.initMenuItems.bind(this), onHide: () => {
-        var l, c, f, b;
-        (l = this.ifTooltip) == null || l.hide(), (c = this.angleTooltip) == null || c.hide(), (f = this.flagTooltip) == null || f.hide(), (b = this.deleteTooltip) == null || b.hide();
+      this.menu || this.menuContent !== null && (this.addEventListener("click", this.dispatchShowMenuEvent), this.menu = St(this, { allowHTML: true, animation: false, arrow: false, content: this.menuContent, interactive: true, appendTo: document.body, offset: [0, 16], placement: "top", theme: "operation-menu", trigger: "manual", onShow: this.initMenuItems.bind(this), onHide: () => {
+        var i, l, c, f;
+        (i = this.ifTooltip) == null || i.hide(), (l = this.angleTooltip) == null || l.hide(), (c = this.flagTooltip) == null || c.hide(), (f = this.deleteTooltip) == null || f.hide();
       } }));
     }
     showMenu() {
@@ -9223,8 +9223,7 @@ function Ie(r) {
       this.menu.hide();
     }
     destroyMenu() {
-      let i = this._tippy;
-      i == null || i.destroy();
+      this.menu.destroy();
     }
     dispatchShowMenuEvent() {
       this.dispatchEvent(new Event("operation-show-menu", { bubbles: true }));
@@ -9296,12 +9295,12 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
   showInspector() {
     if (F.notNull(this.parentElement), this.parentElement.tagName === "PALETTE-DROPZONE")
       return;
-    let e = this._tippy;
+    let e = this.popup;
     e && e.destroy();
     let t = this.blochInspectorPopupContent();
-    St(this, { allowHTML: true, animation: false, arrow: true, delay: 0, placement: "auto", theme: "tooltip", onShow(l) {
-      l.setContent(t);
-    } }).show();
+    this.popup = St(this, { allowHTML: true, animation: false, arrow: true, delay: 0, placement: "auto", theme: "tooltip", onShow(i) {
+      i.setContent(t);
+    } }), this.popup.show();
   }
   blochInspectorPopupContent() {
     let e = document.createDocumentFragment();
@@ -9330,7 +9329,7 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
     this.shadowRoot === null && (this.attachShadow({ mode: "open" }), this.update(), this.initDraggable(), this.updateBlochVector(), this.addEventListener("mouseenter", this.showInspector));
   }
   disconnectedCallback() {
-    let e = this._tippy;
+    let e = this.popup;
     e == null || e.destroy();
   }
   attributeChangedCallback(e, t, i) {
@@ -9475,10 +9474,9 @@ var at = /* @__PURE__ */ __name(class extends Ie(Pe(Me(Oe(xe(HTMLElement))))) {
     return `"${Bs}"`;
   }
   updateBlochVector() {
+    var t;
     let e = this.vectorEndCircles[0].offsetWidth;
-    this.vectorLine.style.height = `calc(${100 * this.d / 2}% - ${e / 2}px)`, this.vectorEnd.style.bottom = `calc(50% + ${100 * this.d / 2}% + ${e / 2}px)`, this.d !== 0 && (this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this.theta}deg)`);
-    let t = this._tippy;
-    t == null || t.setContent(this.blochInspectorPopupContent());
+    this.vectorLine.style.height = `calc(${100 * this.d / 2}% - ${e / 2}px)`, this.vectorEnd.style.bottom = `calc(50% + ${100 * this.d / 2}% + ${e / 2}px)`, this.d !== 0 && (this.vector.style.transform = `rotateY(${this.phi}deg) rotateX(${-this.theta}deg)`), (t = this.popup) == null || t.setContent(this.blochInspectorPopupContent());
   }
   get d() {
     let e = this.getAttribute("data-d");

@@ -1,0 +1,387 @@
+---
+layout: page
+section: 量子フーリエ変換 (QFT)
+title: QFT の内部
+description: QFT の仕組みを理解する
+prev: 逆 QFT
+prev_url: ./inverse_qft.html
+---
+
+<p>
+  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。逆
+  QFT の動作が理解できれば、逆回路にすることで QFT を作ることができるからです。
+</p>
+
+<p>
+  例として、周波数 2 のパターンを状態ベクトルに書き込む逆 QFT 回路を考えます。
+  これは前回に出てきた回路と同じで、次の形になります。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{2 を入力"],["|0>","|0>","|0>","|0>"],[1,"X"],["}"],[1],["{逆QFT"],["Swap",1,1,"Swap"],[1,"Swap","Swap",1],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],[1,1,"H",1],[1,1,"P(π_2)","•"],[1,1,1,"H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  一方で、<a href="./readout_of_patterns.html">パターンの読み出し</a>
+  では同等の状態ベクトルをもっと短い回路で準備しています。 つまり逆 QFT が入力 = 2
+  の時に以下の回路と同等になる、ということが分かれば、逆 QFT
+  の内部について理解が得られたことになります。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)"],["]"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>上の回路を冗長に書きなおすと、次の形に変換することができます。</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)","P(2π)"],["]"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  それぞれの {% qpu_operation phase %}
+  に指定した角度には、あるパターンがあることが分かるでしょうか？
+  回路を次のように書き直すと、このパターンが明らかになります。 それぞれの {% qpu_operation phase %}
+  は、各ビットを \(\frac{π}{4}\) の整数倍、位相を回転しています。
+  そして係数となる整数は、上位ビットになるにつれて 2 のべき乗で増えていくことも分かります。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{1xπ/4"],["P(π_4)"],["}"],[1],["{2xπ/4"],[1,"P(π_2)"],["}"],[1],["{4xπ/4"],[1,1,"P(π)"],["}"],[1],["{8xπ/4"],[1,1,1,"P(2π)"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  次に、逆 QFT がまったく同じ動作をすることを見ていきましょう。 逆 QFT
+  回路の構造は、最初の「2を入力」のブロックを除外すると、次のように 5
+  つのブロックに分割することができます。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{2 を入力"],["|0>","|0>","|0>","|0>"],[1,"X"],["}"],[1],["{4(0100)"],["Swap",1,1,"Swap"],[1,"Swap","Swap",1],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  最初の {% qpu_operation swap %} のペア 2 つは、量子ビットを上下にひっくり返します。 ここでは最初に
+  2 (2 進数で 0010) を入力しているので、これを上下にひっくり返して 4 (0100) に変換します。
+  つまり、下から 3 ビット目のみ 1 でそれ以外は 0 であり、次の回路と同等になります (入力の下から 3
+  ビット目が {% ket 1 %} に変わっていることに注意)。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{4を入力"],["|0>","|0>","|1>","|0>"],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>次に \(1 \times \frac{π}{4}\) のブロックを見てみましょう。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  最初の {% qpu_operation h %} で 1 ビット目が重ね合わせ状態になります。 次に \(\frac{π}{2},
+  \frac{π}{4}, \frac{π}{8}\) ほど位相を回転する {% qpu_operation control %} {% qpu_operation phase
+  %} の組が続きます。 ここで下から 3 ビット目のみが 1 なので、このうち発火する {% qpu_operation
+  phase %} は角度が \(\frac{π}{4}\) のもののみです。 つまり、全体では 1
+  ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
+</p>
+
+<p>次の \(2 \times \frac{π}{4}\) のブロックも同様です。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  最初の {% qpu_operation h %} で 2 ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2}
+  (= 2 \times \frac{π}{4})\) ほど回転させます。
+</p>
+
+<p>次の \(4 \times \frac{π}{4}\) のブロックは少し事情が異なります。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  入力の 3 ビット目は 1 なので、これに {% qpu_operation h %}
+  を適用すると、等しい重ね合わせを作ると同時に {% ket 1 %} の位相を π 回転させます。 これは \(4
+  \times \frac{π}{4}\) の回転です。 つまりここの {% qpu_operation h %} は、重ね合わせと位相の回転を
+  1 つの {% qpu_operation h %} で行っています。
+</p>
+
+<p>最後のブロックの {% qpu_operation h %} も重ね合わせと位相の回転を同時に行います。</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  しかしここでの回転は 2π であるため 0° の回転と同じであり、単純な重ね合わせと同じ効果を持ちます。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  逆 QFT の動作を追うことで、状態ベクトルに位相のパターンを書き込む方法を見てきました。 {%
+  qpu_operation h %} をうまく使うことで、
+  重ね合わせと位相の回転をコンパクトにまとめることができます。
+  また興味深いことに、入力や量子ビット数が変化してもこの仕組みは期待通りに動作します。
+</p>
