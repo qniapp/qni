@@ -1199,7 +1199,8 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">QFT の仕組みを理解する</p>
             </div>
             <div class="content-with-margin"><p>
-  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。逆 QFT の動作が理解できれば、逆回路にすることで QFT を作ることができるからです。
+  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。逆
+  QFT の動作が理解できれば、逆回路にすることで QFT を作ることができるからです。
 </p>
 
 <p>
@@ -1238,12 +1239,12 @@
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1252,8 +1253,10 @@
 </div>
 
 <p>
-  一方で、<a href="./readout_of_patterns.html">パターンの読み出し</a> では同等の状態ベクトルをもっと短い回路で準備しています。
-  つまり逆 QFT が入力 = 2 の時に以下の回路と同等になる、ということが分かれば、逆 QFT の内部について理解が得られたことになります。
+  一方で、<a href="./readout_of_patterns.html">パターンの読み出し</a>
+  では同等の状態ベクトルをもっと短い回路で準備しています。 つまり逆 QFT が入力 = 2
+  の時に以下の回路と同等になる、ということが分かれば、逆 QFT
+  の内部について理解が得られたことになります。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1287,12 +1290,12 @@
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1300,9 +1303,7 @@
   </div>
 </div>
 
-<p>
-  上の回路を冗長に書きなおすと、次の形に変換することができます。
-</p>
+<p>上の回路を冗長に書きなおすと、次の形に変換することができます。</p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
@@ -1325,22 +1326,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)","P(2π)"],["]"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[周波数2の状態を作る"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["P(π_4)","P(π_2)","P(π)","P(2π)"],["]"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1349,9 +1350,10 @@
 </div>
 
 <p>
-  それぞれの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> に指定した角度には、あるパターンがあることが分かるでしょうか？
-  回路を次のように書き直すと、このパターンが明らかになります。
-  それぞれの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> は、各ビットを \(\frac{π}{4}\) の整数倍、位相を回転しています。
+  それぞれの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  に指定した角度には、あるパターンがあることが分かるでしょうか？
+  回路を次のように書き直すと、このパターンが明らかになります。 それぞれの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  は、各ビットを \(\frac{π}{4}\) の整数倍、位相を回転しています。
   そして係数となる整数は、上位ビットになるにつれて 2 のべき乗で増えていくことも分かります。
 </p>
 
@@ -1376,22 +1378,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["{重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{1xπ/4"],["P(π_4)"],["}"],[1],["{2xπ/4"],[1,"P(π_2)"],["}"],[1],["{4xπ/4"],[1,1,"P(π)"],["}"],[1],["{8xπ/4"],[1,1,1,"P(2π)"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{1xπ/4"],["P(π_4)"],["}"],[1],["{2xπ/4"],[1,"P(π_2)"],["}"],[1],["{4xπ/4"],[1,1,"P(π)"],["}"],[1],["{8xπ/4"],[1,1,1,"P(2π)"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1400,8 +1402,9 @@
 </div>
 
 <p>
-  次に、逆 QFT がまったく同じ動作をすることを見ていきましょう。
-  逆 QFT 回路の構造は、最初の「2を入力」のブロックを除外すると、次のように 5 つのブロックに分割することができます。
+  次に、逆 QFT がまったく同じ動作をすることを見ていきましょう。 逆 QFT
+  回路の構造は、最初の「2を入力」のブロックを除外すると、次のように 5
+  つのブロックに分割することができます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1425,22 +1428,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["{2 を入力"],["|0>","|0>","|0>","|0>"],[1,"X"],["}"],[1],["{4(0100)"],["Swap",1,1,"Swap"],[1,"Swap","Swap",1],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{2 を入力"],["|0>","|0>","|0>","|0>"],[1,"X"],["}"],[1],["{4(0100)"],["Swap",1,1,"Swap"],[1,"Swap","Swap",1],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1449,9 +1452,10 @@
 </div>
 
 <p>
-  最初の <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> のペア 2 つは、量子ビットを上下にひっくり返します。
-  ここでは最初に 2 (2 進数で 0010) を入力しているので、これを上下にひっくり返して 4 (0100) に変換します。
-  つまり、下から 3 ビット目のみ 1 でそれ以外は 0 であり、次の回路と同等になります (入力の下から 3 ビット目が \(|1\rangle\) に変わっていることに注意)。
+  最初の <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> のペア 2 つは、量子ビットを上下にひっくり返します。 ここでは最初に
+  2 (2 進数で 0010) を入力しているので、これを上下にひっくり返して 4 (0100) に変換します。
+  つまり、下から 3 ビット目のみ 1 でそれ以外は 0 であり、次の回路と同等になります (入力の下から 3
+  ビット目が \(|1\rangle\) に変わっていることに注意)。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1475,22 +1479,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["{4を入力"],["|0>","|0>","|1>","|0>"],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{4を入力"],["|0>","|0>","|1>","|0>"],["}"],[1],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1498,75 +1502,68 @@
   </div>
 </div>
 
-<p>
-  次に \(1 \times \frac{π}{4}\) のブロックを見てみましょう。
-</p>
+<p>次に \(1 \times \frac{π}{4}\) のブロックを見てみましょう。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
-      data-min-wire-count="1"
-      data-max-wire-count="1"
-      data-min-step-count="5"
-      data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1]]}'
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{1xπ/4"],["H",1,1,1],["P(π_2)","•",1,1],["P(π_4)",1,"•",1],["P(π_8)",1,1,"•"],["}"],[1]]}'
   >
   </quantum-circuit>
 </div>
 
 <p>
-  最初の <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で 1 ビット目が重ね合わせ状態になります。
-  次に \(\frac{π}{2}, \frac{π}{4}, \frac{π}{8}\) ほど位相を回転する <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> の組が続きます。
-  ここで下から 3 ビット目のみが 1 なので、このうち発火する <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> は角度が \(\frac{π}{4}\) のもののみです。
-  つまり、全体では 1 ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
+  最初の <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で 1 ビット目が重ね合わせ状態になります。 次に \(\frac{π}{2},
+  \frac{π}{4}, \frac{π}{8}\) ほど位相を回転する <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> の組が続きます。 ここで下から 3 ビット目のみが 1 なので、このうち発火する <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> は角度が \(\frac{π}{4}\) のもののみです。 つまり、全体では 1
+  ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
 </p>
 
-<p>
-  次の \(2 \times \frac{π}{4}\) のブロックも同様です。
-</p>
+<p>次の \(2 \times \frac{π}{4}\) のブロックも同様です。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
-      data-min-wire-count="1"
-      data-max-wire-count="1"
-      data-min-step-count="5"
-      data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1]]}'
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{2xπ/4"],[1,"H",1,1],[1,"P(π_2)","•",1],[1,"P(π_4)",1,"•"],["}"],[1]]}'
   >
   </quantum-circuit>
 </div>
 
 <p>
-  最初の <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で 2 ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2} (= 2 \times \frac{π}{4})\) ほど回転させます。
+  最初の <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で 2 ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2}
+  (= 2 \times \frac{π}{4})\) ほど回転させます。
 </p>
 
-<p>
-  次の \(4 \times \frac{π}{4}\) のブロックは少し事情が異なります。
-</p>
+<p>次の \(4 \times \frac{π}{4}\) のブロックは少し事情が異なります。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
-      data-min-wire-count="1"
-      data-max-wire-count="1"
-      data-min-step-count="5"
-      data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1]]}'
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{4xπ/4"],[1,1,"H",1],[1,1,"P(π_2)","•"],["}"],[1]]}'
   >
   </quantum-circuit>
 </div>
 
 <p>
-  入力の 3 ビット目は 1 なので、これに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用すると、等しい重ね合わせを作ると同時に \(|1\rangle\) の位相を π 回転させます。
-  これは \(4 \times \frac{π}{4}\) の回転です。
-  つまりここの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> は、重ね合わせと位相の回転を 1 つの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で行っています。
+  入力の 3 ビット目は 1 なので、これに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用すると、等しい重ね合わせを作ると同時に \(|1\rangle\) の位相を π 回転させます。 これは \(4
+  \times \frac{π}{4}\) の回転です。 つまりここの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> は、重ね合わせと位相の回転を
+  1 つの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で行っています。
 </p>
 
-<p>
-  最後のブロックの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> も重ね合わせと位相の回転を同時に行います。
-</p>
+<p>最後のブロックの <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> も重ね合わせと位相の回転を同時に行います。</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
-      data-min-wire-count="1"
-      data-max-wire-count="1"
-      data-min-step-count="5"
-      data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["|0>","|0>","|1>","|0>"],["{8xπ/4"],[1,1,1,"H"],["}"],[1]]}'
   >
   </quantum-circuit>
 </div>
@@ -1578,8 +1575,7 @@
 <h2>まとめ</h2>
 
 <p>
-  逆 QFT の動作を追うことで、状態ベクトルに位相のパターンを書き込む方法を見てきました。
-  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> をうまく使うことで、
+  逆 QFT の動作を追うことで、状態ベクトルに位相のパターンを書き込む方法を見てきました。 <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> をうまく使うことで、
   重ね合わせと位相の回転をコンパクトにまとめることができます。
   また興味深いことに、入力や量子ビット数が変化してもこの仕組みは期待通りに動作します。
 </p>
