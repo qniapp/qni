@@ -8,8 +8,8 @@ prev_url: ./inverse_qft.html
 ---
 
 <p>
-  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。逆
-  QFT の動作が理解できれば、逆回路にすることで QFT を作ることができるからです。
+  QFT の動作を調べてみましょう。QFT を理解するには、逆 QFT 回路の動作を追ってみるのが簡単です。 逆
+  QFT の動作が理解できれば、単純な逆回路である QFT の動作も理解したことになります。
 </p>
 
 <p>
@@ -61,10 +61,9 @@ prev_url: ./inverse_qft.html
 </div>
 
 <p>
-  一方で、<a href="./readout_of_patterns.html">パターンの読み出し</a>
-  では同等の状態ベクトルをもっと短い回路で準備しています。 つまり逆 QFT が入力 = 2
-  の時に以下の回路と同等になる、ということが分かれば、逆 QFT
-  の内部について理解が得られたことになります。
+  <a href="./readout_of_patterns.html">パターンの読み出し</a
+  >では同じ状態ベクトルをもっと短い以下の回路で準備しました。
+  この回路が何をやっているか分析することで、逆 QFT の内部についても理解が進みます。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -110,7 +109,11 @@ prev_url: ./inverse_qft.html
   </div>
 </div>
 
-<p>上の回路を冗長に書きなおすと、次の形に変換することができます。</p>
+<p>
+  この回路では下から 4 ビット目にだけ {% qpu_operation phase %} がありません。 そこで角度が
+  \(2π\)、つまり何もしない {% qpu_operation phase %}
+  をあえて加えると、次の同等な回路に変換できます。
+</p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
@@ -156,8 +159,7 @@ prev_url: ./inverse_qft.html
 </div>
 
 <p>
-  それぞれの {% qpu_operation phase %}
-  に指定した角度には、あるパターンがあることが分かるでしょうか？
+  それぞれの {% qpu_operation phase %} の角度には、あるパターンがあることが分かるでしょうか？
   回路を次のように書き直すと、このパターンが明らかになります。 それぞれの {% qpu_operation phase %}
   は、各ビットを \(\frac{π}{4}\) の整数倍、位相を回転しています。
   そして係数となる整数は、上位ビットになるにつれて 2 のべき乗で増えていくことも分かります。
@@ -207,9 +209,83 @@ prev_url: ./inverse_qft.html
 </div>
 
 <p>
-  次に、逆 QFT がまったく同じ動作をすることを見ていきましょう。 逆 QFT
-  回路の構造は、最初の「2を入力」のブロックを除外すると、次のように 5
-  つのブロックに分割することができます。
+  ここで \(\frac{π}{4}\) は<strong>周波数 2 での位相の単位</strong>を表しています。 これは、周波数 2
+  の波を作るには、次のように隣りあう円同士で位相を \(\frac{π}{4}\)
+  ずらせば作ることができる、ということを表しています。
+</p>
+
+<div class="my-5 flex overflow-x-auto">
+  <div class="flex flex-row items-center space-x-2">
+    {{ '0.25' | qubit_circle: 0, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 1, 'lg' }} {{
+    '0.25i' | qubit_circle: 2, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 3, 'lg' }} {{
+    '-0.25' | qubit_circle: 4, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 5, 'lg' }} {{
+    '-0.25i' | qubit_circle: 6, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 7, 'lg' }} {{ '0.25'
+    | qubit_circle: 8, 'lg' }} {{ '0.17678 + 0.17678i' | qubit_circle: 9, 'lg' }} {{ '0.25i' |
+    qubit_circle: 10, 'lg' }} {{ '-0.17678 + 0.17678i' | qubit_circle: 11, 'lg' }} {{ '-0.25' |
+    qubit_circle: 12, 'lg' }} {{ '-0.17678 - 0.17678i' | qubit_circle: 13, 'lg' }} {{ '-0.25i' |
+    qubit_circle: 14, 'lg' }} {{ '0.17678 - 0.17678i' | qubit_circle: 15, 'lg' }}
+  </div>
+</div>
+
+<p>
+  一般に周波数 \(n\) の位相回転を作るには、量子ビット数を \(N\) とすると、位相の単位は \(n \times
+  \frac{2π}{2^N}\) となります。 そして 1 ビット目に \(1 \times n \times \frac{2π}{2^N}\), 2
+  ビット目に \(2 \times n \times \frac{2π}{2^N}\), 3 ビット目に \(4 \times n \times \frac{2π}{2^N}\)
+  の位相回転... という風に 2 のべき乗で回転する回路によって、周波数 n
+  の位相回転を作ることができます。
+</p>
+
+<p>
+  たとえば 4 量子ビットで周波数 3 の場合には、位相の単位は \(3 \times \frac{2π}{2^4} =
+  \frac{6π}{16}\) です。 これによって、周波数 3 の位相回転を作る回路は次のようになります。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{1x6π/16"],["P(6π_16)"],["}"],[1],["{2x6π/16"],[1,"P(12π_16)"],["}"],[1],["{4x6π/16"],[1,1,"P(24π_16)"],["}"],[1],["{8x6π/16"],[1,1,1,"P(48π_16)"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  これをふまえて、周波数 2 の場合について逆 QFT の動作を見ていきましょう。 逆 QFT
+  回路の構造は、次のように 5 つのブロックに分割できます (最初の「2を入力」のブロックは除く)。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -257,9 +333,9 @@ prev_url: ./inverse_qft.html
 
 <p>
   最初の {% qpu_operation swap %} のペア 2 つは、量子ビットを上下にひっくり返します。 ここでは最初に
-  2 (2 進数で 0010) を入力しているので、これを上下にひっくり返して 4 (0100) に変換します。
-  つまり、下から 3 ビット目のみ 1 でそれ以外は 0 であり、次の回路と同等になります (入力の下から 3
-  ビット目が {% ket 1 %} に変わっていることに注意)。
+  2 (2 進数で 0010) を入力しているので、{% qpu_operation swap %} はこれを上下にひっくり返して 4
+  (0100) に変換します。 これは次の回路と同等になります (入力の上から 3 ビット目が {% ket 1 %}
+  に変わっていることに注意)。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -325,7 +401,11 @@ prev_url: ./inverse_qft.html
   ビット目を等しい重ね合わせ状態にし、位相を \(\frac{π}{4}\) 回転していることが分かります。
 </p>
 
-<p>次の \(2 \times \frac{π}{4}\) のブロックも同様です。</p>
+<p>
+  次の \(2 \times \frac{π}{4}\) のブロックも同様です。 最初の {% qpu_operation h %} で 2
+  ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2} (= 2 \times \frac{π}{4})\)
+  ほど回転させます。
+</p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
   <quantum-circuit
@@ -336,11 +416,6 @@ prev_url: ./inverse_qft.html
   >
   </quantum-circuit>
 </div>
-
-<p>
-  最初の {% qpu_operation h %} で 2 ビット目を重ね合わせ状態にし、2 ビット目の位相を \(\frac{π}{2}
-  (= 2 \times \frac{π}{4})\) ほど回転させます。
-</p>
 
 <p>次の \(4 \times \frac{π}{4}\) のブロックは少し事情が異なります。</p>
 
@@ -383,5 +458,9 @@ prev_url: ./inverse_qft.html
   逆 QFT の動作を追うことで、状態ベクトルに位相のパターンを書き込む方法を見てきました。 {%
   qpu_operation h %} をうまく使うことで、
   重ね合わせと位相の回転をコンパクトにまとめることができます。
-  また興味深いことに、入力や量子ビット数が変化してもこの仕組みは期待通りに動作します。
+</p>
+
+<p>
+  この仕組みは、入力や量子ビット数が異なってもうまく動作します。 つまり QFT と逆 QFT
+  をブラックボックス的なサブルーチンと考え、他のいろいろな量子アルゴリズムの一部として便利に使うことができます。
 </p>
