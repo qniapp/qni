@@ -1747,7 +1747,8 @@
 
 <p>
   QFT はフーリエ変換と呼ばれる幅広く使われるデータ処理ルーチンの量子版です。
-  フーリエ変換は入力に含まれる繰り返し (音の波形などの信号を入力とするとき、これを<strong>周波数</strong>と呼びます)
+  フーリエ変換は入力に含まれる繰り返し
+  (音の波形などの信号を入力とするとき、これを<strong>周波数</strong>と呼びます)
   を調べることができます。 QFT
   は状態ベクトル中に位相の回転としてエンコードされた周波数をフーリエ変換によって取り出すことができます。
 </p>
@@ -1756,7 +1757,9 @@
 
 <p>
   QFT を使って周波数を取り出す回路は次のようになります。 最初のブロックでは <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  によって等しい重ね合わせを作り、続く 3 つの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> によって位相の回転を 2 回繰り返す入力を作ります<label for="margin-note-preparewave" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-preparewave" class="margin-note__toggle hidden"><span class="margin-note">なぜこの回路が周波数 2 の位相回転を作ることができるかは、<a href="./inside_the_qft.html">QFT の内部</a>で見ていきます。</span>。 次のブロックでは QFT によって周波数を確率に変換し、最終的に \(|2\rangle\) が
+  によって等しい重ね合わせを作り、続く 3 つの <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> によって位相の回転を 2
+  回繰り返す入力を作ります<label for="margin-note-preparewave" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-preparewave" class="margin-note__toggle hidden"><span class="margin-note">なぜこの回路が周波数 2
+  の位相回転を作ることができるかは、<a href="./inside_the_qft.html">QFT の内部</a>で見ていきます。</span>。 次のブロックでは QFT によって周波数を確率に変換し、最終的に \(|2\rangle\) が
   100% の状態を作ることができます。
 </p>
 
