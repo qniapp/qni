@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>MEASUREMENT 命令</title>
+    <title>QFT 足し算</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -241,7 +241,7 @@
    
   <a
     href="./measurement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">MEASUREMENT 命令</span>
     
@@ -636,7 +636,7 @@
    
   <a
     href="./qft_adder.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">QFT 足し算</span>
     
@@ -814,7 +814,7 @@
    
   <a
     href="./measurement_operation.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">MEASUREMENT 命令</span>
     
@@ -1209,7 +1209,7 @@
    
   <a
     href="./qft_adder.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">QFT 足し算</span>
     
@@ -1279,361 +1279,181 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-zinc-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                QPU 命令その 1
+                量子フーリエ変換 (QFT)
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  MEASUREMENT 命令
+                  QFT 足し算
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">量子ビットから 0 または 1 を読み出す</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">位相の回転で足し算を行う</p>
             </div>
             <div class="content-with-margin"><p>
-  MEASUREMENT 命令 <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> は量子ビットから 0 または 1 (\(|0\rangle\) または
-  \(|1\rangle\)) の値を読み出します。 この読み出す操作 (Measurement) を測定または観測と呼びます <label for="margin-note-measurement" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement" class="margin-note__toggle hidden"><span class="margin-note">本チュートリアルでは全体を通して Measurement の訳語に測定を使います。</span>。 量子コンピュータの計算結果を何らかの形で利用するには、必ず <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> を実行する必要があります。
+  QFT をサブルーチンとして捉えると、様々な回路を QFT を使って書くことができます。
+  一例として、<a href="./addition_circuit.html">足し算回路</a>で紹介した次の加算回路を考えてみましょう。
 </p>
 
-<h2>単純な状態の測定</h2>
-
-<p>
-  量子ビット状態が \(|0\rangle\) または \(|1\rangle\) の場合に <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
-  を作用させた結果は次の通りです。 それぞれ測定すると、そのまま同じ \(|0\rangle\) と \(|1\rangle\)
-  が返されます。
-</p>
-
-<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="mb-8 flex flex-row items-center space-x-2">
-      <div class="flex flex-row space-x-2">
-        <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-      </div>
-
-      <div class="relative h-8 w-16">
-        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
-</svg>
-
-        </div>
-        <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
-      </div>
-
-      <div class="flex flex-row space-x-2">
-        <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-      </div>
-    </div>
-
-    <div class="flex flex-row items-center space-x-2">
-      <div class="flex flex-row space-x-2">
-        <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-      </div>
-
-      <div class="relative h-8 w-16">
-        <div class="absolute inset-0 flex h-8 w-16 items-center text-zinc-300">
-          <svg width="65" height="13" viewBox="0 0 65 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M56.7613 0.265008C56.2968 -0.0337368 55.6781 0.100643 55.3793 0.565153C55.0806 1.02966 55.215 1.6484 55.6795 1.94715L60.5671 5.09056H48.4702V7.09056H60.5671L55.6795 10.234C55.215 10.5327 55.0806 11.1515 55.3793 11.616C55.6781 12.0805 56.2968 12.2149 56.7613 11.9161L64.5116 6.93163C64.7977 6.74761 64.9706 6.43075 64.9706 6.09056C64.9706 5.75037 64.7977 5.43351 64.5116 5.24949L56.7613 0.265008ZM17.4692 7.09056V5.09056H1.96875C1.41647 5.09056 0.96875 5.53828 0.96875 6.09056C0.96875 6.64285 1.41647 7.09056 1.96875 7.09056H17.4692Z" fill="currentColor"/>
-</svg>
-
-        </div>
-        <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
-      </div>
-
-      <div class="flex flex-row space-x-2">
-        <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<h2>重ね合わせ状態の測定</h2>
-
-<p>
-  量子ビットが重ね合わせ状態にある場合、0 と 1 が出る確率は \(|0\rangle\) と \(|1\rangle\) の確率
-  (青い円の面積 = 振幅の大きさの 2 乗) に応じて決まります。
-  このように、測定の結果にはランダム性があります。
-</p>
-
-<div class="my-5 flex justify-center overflow-x-auto md:mr-auto md:w-7/12">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center space-x-4">
-      <div class="flex flex-row space-x-2">
-        <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0.25 + 0.43301i"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0.43301 - 0.75i"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-      </div>
-
-      <div class="flex flex-col items-end">
-        <span class="text-xs font-bold text-purple-500">25%</span>
-        <div class="relative h-12 w-12">
-          <svg width="50" height="48" viewBox="0 0 50 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M42.9394 37.0213C42.5099 36.6741 41.8802 36.7409 41.5331 37.1704C41.1859 37.5999 41.2526 38.2295 41.6822 38.5767L45.174 41.399H24.2884V43.399H45.174L41.6822 46.2213C41.2526 46.5685 41.1859 47.1981 41.5331 47.6277C41.8802 48.0572 42.5099 48.124 42.9394 47.7768L48.6306 43.1767C48.8655 42.9869 49.002 42.701 49.002 42.399C49.002 42.097 48.8655 41.8112 48.6306 41.6213L42.9394 37.0213ZM1.52344 42.716V42.0821C1.49018 42.1817 1.47217 42.2882 1.47217 42.399C1.47217 42.5098 1.49018 42.6164 1.52344 42.716Z" fill="#D4D4D8"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M42.9394 0.223166C42.5099 -0.124005 41.8802 -0.057244 41.5331 0.37228C41.1859 0.801804 41.2526 1.43144 41.6822 1.77861L45.174 4.60093H24.2884V6.60093H45.174L41.6822 9.42324C41.2526 9.77041 41.1859 10.4 41.5331 10.8296C41.8802 11.2591 42.5099 11.3259 42.9394 10.9787L48.6306 6.37865C48.8655 6.18879 49.002 5.90295 49.002 5.60093C49.002 5.2989 48.8655 5.01306 48.6306 4.8232L42.9394 0.223166ZM1.52344 5.91787V5.28398C1.49018 5.38358 1.47217 5.49015 1.47217 5.60093C1.47217 5.71171 1.49018 5.81828 1.52344 5.91787Z" fill="#D4D4D8"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M24.2373 36.7792V42.4014C24.2373 42.9537 24.685 43.4014 25.2373 43.4014C25.7896 43.4014 26.2373 42.9537 26.2373 42.4014V36.7792H24.2373Z" fill="#D4D4D8"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M26.2373 6.11218C26.2373 5.5599 25.7896 5.11218 25.2373 5.11218C24.685 5.11218 24.2373 5.5599 24.2373 6.11218V12.2457H26.2373V6.11218Z" fill="#D4D4D8"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M13.855 24.0233H1.99805C1.44576 24.0233 0.998047 24.471 0.998047 25.0233C0.998047 25.5756 1.44576 26.0233 1.99805 26.0233H13.855V24.0233Z" fill="#D4D4D8"/>
-</svg>
-
-          <measurement-gate class="qpu-operation-sm absolute inset-0 m-auto"></measurement-gate>
-        </div>
-        <span class="text-xs font-bold text-purple-500">75%</span>
-      </div>
-
-      <div class="flex flex-col space-y-4">
-        <div class="flex flex-row space-x-2">
-          <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-        </div>
-        <div class="flex flex-row space-x-2">
-          <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<p>
-  測定によって量子ビットの振幅の大きさと位相の情報は破壊されるので、<measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
-  は <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> と同じく逆演算を持ちません。
-  また、位相と振幅の大きさは互いに独立したパラメータなので、位相の値は測定結果にまったく何の影響も及ぼしません。
-</p>
-
-<h2>量子乱数ジェネレータ</h2>
-
-<p>
-  <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> とこれまでに学んだ <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> や <write-gate data-value="1" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate>、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  を組合わせることで、最初の量子アプリケーション「量子乱数ジェネレータ」を作ることができます。 <write-gate data-value="0" class="qpu-operation-xs relative top-0.5 inline-block"></write-gate> で \(|0\rangle\) に初期化した量子ビットを <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  で重ね合わせ状態にし、<measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで 0 または 1
-  をランダムに得ることができます。
-</p>
-
-<div class="mini-qni">
-  <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
-    <circuit-editor>
-      <div
-        class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
-      >
-        <inspector-button
-          data-target="circuit-editor.inspectorButton"
-          class="inline-block h-10 w-10 p-1"
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
         >
-          <div class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200">
-            <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 
-          </div>
-        </inspector-button>
-      </div>
+            </div>
+          </inspector-button>
+        </div>
 
-      <quantum-circuit
-        class="mb-10"
-        data-target="quantum-simulator.circuit circuit-editor.circuit"
-        data-min-wire-count="1"
-        data-max-wire-count="1"
-        data-min-step-count="8"
-        data-json='{"cols":[["|0>"],["H"],["Measure"]]}'
-      >
-      </quantum-circuit>
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{a=3"],["|0>","|0>","|0>","|0>"],["X","X"],["}"],[1],["{b=1"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X"],["}"],[1],["{a+=b"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
 
-      <circle-notation
-        id="circle-notation"
-        data-target="quantum-simulator.circleNotation"
-        data-qubit-circle-popup-template-id="qubit-circle-popup"
-        class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-        data-padding-X="16"
-        data-padding-Y="20"
-      >
-      </circle-notation>
-    </circuit-editor>
-
-    <run-circuit-button
-  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
-  data-targets="quantum-simulator.runCircuitButtons"
-></run-circuit-button>
-
-  </quantum-simulator>
+        <circle-notation
+            id="circle-notation"
+            data-target="quantum-simulator.circleNotation"
+            data-qubit-circle-popup-template-id="qubit-circle-popup"
+            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+            data-padding-X="16"
+            data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
 </div>
 
 <p>
-  重ね合わせ状態を測定して得られる量子乱数は、従来のコンピュータで計算的に生成する疑似乱数と異なり、原理的にまったく予測できない完璧な乱数です。
-  単なる乱数生成と言ってもその用途は広く、セキュリティ分野での安全な暗号鍵の生成はもちろん、モンテカルロ法といった乱数を使ったアルゴリズムの速度や精度向上にもつながります。
-  実際に、量子乱数の生成はすでにサービス化もされています<label for="margin-note-quantum-origin" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-quantum-origin" class="margin-note__toggle hidden"><span class="margin-note"><a
-    href="https://www.quantumbusinessmagazine.com/post/cambrid"
-    >Cambridge Quantum社、量子乱数生成サービス「Quantum Origin」を発表</a
-  ></span>。
+  この回路は従来のデジタル回路と同様の論理演算を量子回路上に実装したものです。
+  これは各ビットのオン/オフを条件として <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> と <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> でビット演算を行うため、<control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> が多くやや複雑な回路となっています。
 </p>
 
-<orbit-reviewarea color="blue">
-  <orbit-prompt
-    question="量子ビットから 0 または 1 を読み出す QPU 命令は?"
-    answer="MEASUREMENT ゲート"
-  ></orbit-prompt>
-  <orbit-prompt
-    cloze="量子ビットから 0 または 1 を読み出す操作を{測定}または{観測}と呼ぶ"
-  ></orbit-prompt>
-  <orbit-prompt cloze="|0⟩ を測定すると {100}% の確率で |0⟩ が得られる"></orbit-prompt>
-  <orbit-prompt cloze="|1⟩ を測定すると {100}% の確率で |1⟩ が得られる"></orbit-prompt>
-  <orbit-prompt
-    question="測定して |0⟩ が得られる確率は?"
-    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
-    answer="50%"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="測定して |1⟩ が得られる確率は?"
-    question-attachments="https://qniapp.github.io/qni/images/superposition-50-50.png"
-    answer="50%"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="1 ビットの乱数を生成する回路はどのように構成できるか?"
-    answer="H ゲートと MEASUREMENT ゲート"
-    answer-attachments="https://qniapp.github.io/qni/images/random_bit_generator_circuit.png"
-  ></orbit-prompt>
-  <orbit-prompt
-    question="量子ビットを測定して得られる乱数にはどんな特徴があるか?"
-    answer="原理的にまったく予測できない完璧な乱数"
-  ></orbit-prompt>
-</orbit-reviewarea>
+<p>
+  一方で QFT を使った同じ足し算を行う回路は次のようになります。
+  大ざっぱな構造としては、最初に前処理として逆 QFT を行い、次に a+=b の計算を位相上で行った後、後処理として QFT を行う流れになっています。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              <svg class="h-4 w-4 text-gray-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+            class="mb-10"
+            data-target="quantum-simulator.circuit circuit-editor.circuit"
+            data-min-wire-count="1"
+            data-max-wire-count="1"
+            data-min-step-count="8"
+            data-json='{"cols":[["[a=3"],["|0>","|0>","|0>","|0>"],["X","X"],["]"],[1],["[b=1"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X"],["]"],[1],["[逆QFT"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["H"],["P(π_2)","•"],["P(π_4)",1,"•"],["P(π_8)",1,1,"•"],[1,"H"],[1,"P(π_2)","•"],[1,"P(π_4)",1,"•"],[1,1,"H"],[1,1,"P(π_2)","•"],[1,1,1,"H"],["]"],[1],["[a+=b"],[1,"P(π_4)",1,1,"•"],[1,"P(π_2)",1,1,1,"•"],[1,"P(π)",1,1,1,1,"•"],[1,1,"P(π_2)",1,"•"],[1,1,"P(π)",1,1,"•"],[1,1,1,"P(π)","•"],["P(π_8)",1,1,1,"•"],["P(π_4)",1,1,1,1,"•"],["P(π_2)",1,1,1,1,1,"•"],["]"],[1],["[QFT"],[1,1,1,"H"],[1,1,"•","P(-π_2)"],[1,1,"H"],[1,"•",1,"P(-π_4)"],[1,"•","P(-π_2)"],[1,"H"],["•",1,1,"P(-π_8)"],["•",1,"P(-π_4)"],["•","P(-π_2)"],["H"],[1,"Swap","Swap"],["Swap",1,1,"Swap"],["]"],[1]],"title":"QFT で足し算"}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+            id="circle-notation"
+            data-target="quantum-simulator.circleNotation"
+            data-qubit-circle-popup-template-id="qubit-circle-popup"
+            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+            data-padding-X="16"
+            data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  これは一見、最初の回路よりもかなり複雑に見えるかもしれません。
+  しかし、最初の逆 QFT と最後の QFT を除いた a += b のブロック (左から 3 番目) だけを見ると、最初の回路よりもかなり単純化できていることがわかります。
+  とくに <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> の数はかなり削減できています。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+      data-min-wire-count="1"
+      data-max-wire-count="1"
+      data-min-step-count="5"
+      data-json='{"cols":[["[a+=b (QFT足し算のコア部分)"],[1,"P(π_4)",1,1,"•"],[1,"P(π_2)",1,1,1,"•"],[1,"P(π)",1,1,1,1,"•"],[1,1,"P(π_2)",1,"•"],[1,1,"P(π)",1,1,"•"],[1,1,1,"P(π)","•"],["P(π_8)",1,1,1,"•"],["P(π_4)",1,1,1,1,"•"],["P(π_2)",1,1,1,1,1,"•"],["]"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  このように、QFT を使った算術演算回路では、実際に演算を行うコア部分に必要なゲートの数を削減することができます。
+  足し算 1 回だけの単純な回路では QFT 版のほうがずっと複雑です。
+  しかし、演算内容が大きくなるほど前後の QFT の大きさを無視することができ、またコア部分が単純になるため全体としてはゲート数を削減できます。
+</p>
+
+<h2>QFT 版足し算回路の内部</h2>
+
+<p>
+  QFT 版足し算回路は次のように動作します。
+</p>
+
+<ul class="list-decimal">
+  <li>a = 3 を逆 QFT で位相の回転に変換 (= 位相回転の世界へ移動)</li>
+  <li>b の値を位相の回転として a に加算<label for="margin-note-phase_adder" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-phase_adder" class="margin-note__toggle hidden"><span class="margin-note">ここでは詳しく解説しませんが、この部分の仕組みは QFT によく似ています。余裕のある人は動作を解読してみましょう。</span></li>
+  <li>a += b の結果を QFT で戻す (= 周波数の世界へ移動)</li>
+</ul>
+
+<p>
+  つまり、いったん位相回転の世界に移動することで、足し算を b の各ビットを条件とした位相回転として実行できます。
+  位相回転は <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> と <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> だけで書くことができるため、普通のデジタル加算回路よりもゲートを削減できるというわけです。
+  そして最後に QFT で計算結果を位相回転の世界から周波数の世界に逆変換することで、計算結果を確率に書き込みます。
+</p>
+
+<p>
+  QFT 足し算を少し改造するだけで QFT 引き算回路も作ることができます。
+  足し算のコア部分は角度を足すという単純な処理なので、角度の値をマイナスにするだけで引き算回路になります。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  QFT の応用例として、足し算を QFT で行う回路を紹介しました。
+  わざわざフーリエ変換を使って足し算を行う理由は、回路に必要なゲート数を削減するためです。
+  QFT によって位相回転の世界に移動すると、足し算や引き算といった算術演算を単純な回転として実装できます。
+</p>
+
+<p>
+  このように、QFT はたくさんの量子アルゴリズムの一部として利用されています。
+  位相回転の世界から周波数の世界へ移動する QFT と、その逆を行う逆 QFT の役割をよく理解しておきましょう。
+</p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./write_operation.html"
+      href="./inverse_qft.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1650,17 +1470,9 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-WRITE 命令</a
+QFT の内部</a
     >
      
-    <a
-      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./no_cloning_theorem.html"
-      >CLONE 命令!?<svg class="ml-3 h-4 w-auto overflow-visible
-      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-</a
-    >
-    
   </div>
 </footer>
 </div>

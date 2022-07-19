@@ -1,0 +1,180 @@
+---
+layout: page
+section: 量子フーリエ変換 (QFT)
+title: QFT 足し算
+description: 位相の回転で足し算を行う
+prev: QFT の内部
+prev_url: ./inverse_qft.html
+---
+
+<p>
+  QFT をサブルーチンとして捉えると、様々な回路を QFT を使って書くことができます。 一例として、<a
+    href="./addition_circuit.html"
+    >足し算回路</a
+  >で紹介した次の加算回路を考えてみましょう。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{a=3"],["|0>","|0>","|0>","|0>"],["X","X"],["}"],[1],["{b=1"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X"],["}"],[1],["{a+=b"],["•","•","•","X","•"],["•","•","X",1,"•"],["•","X",1,1,"•"],["X",1,1,1,"•"],[1,"•","•","X",1,"•"],[1,"•","X",1,1,"•"],[1,"X",1,1,1,"•"],[1,1,"•","X",1,1,"•"],[1,1,"X",1,1,1,"•"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  この回路は従来のデジタル回路と同様の論理演算を量子回路上に実装したものです。
+  これは各ビットのオン/オフを条件として {% qpu_operation control %} と {% qpu_operation x %}
+  でビット演算を行うため、{% qpu_operation control %} が多くやや複雑な回路となっています。
+</p>
+
+<p>
+  一方で QFT を使った同じ足し算を行う回路は次のようになります。
+  大ざっぱな構造としては、最初に前処理として逆 QFT を行い、次に a+=b
+  の計算を位相上で行った後、後処理として QFT を行う流れになっています。
+</p>
+
+<div class="relative mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[a=3"],["|0>","|0>","|0>","|0>"],["X","X"],["]"],[1],["[b=1"],[1,1,1,1,"|0>","|0>","|0>"],[1,1,1,1,"X"],["]"],[1],["[逆QFT"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["H"],["P(π_2)","•"],["P(π_4)",1,"•"],["P(π_8)",1,1,"•"],[1,"H"],[1,"P(π_2)","•"],[1,"P(π_4)",1,"•"],[1,1,"H"],[1,1,"P(π_2)","•"],[1,1,1,"H"],["]"],[1],["[a+=b"],[1,"P(π_4)",1,1,"•"],[1,"P(π_2)",1,1,1,"•"],[1,"P(π)",1,1,1,1,"•"],[1,1,"P(π_2)",1,"•"],[1,1,"P(π)",1,1,"•"],[1,1,1,"P(π)","•"],["P(π_8)",1,1,1,"•"],["P(π_4)",1,1,1,1,"•"],["P(π_2)",1,1,1,1,1,"•"],["]"],[1],["[QFT"],[1,1,1,"H"],[1,1,"•","P(-π_2)"],[1,1,"H"],[1,"•",1,"P(-π_4)"],[1,"•","P(-π_2)"],[1,"H"],["•",1,1,"P(-π_8)"],["•",1,"P(-π_4)"],["•","P(-π_2)"],["H"],[1,"Swap","Swap"],["Swap",1,1,"Swap"],["]"],[1]],"title":"QFT で足し算"}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  これは一見、最初の回路よりもかなり複雑に見えるかもしれません。 しかし、最初の逆 QFT と最後の QFT
+  を除いた a += b のブロック (左から 3 番目)
+  だけを見ると、最初の回路よりもかなり単純化できていることがわかります。 とくに {% qpu_operation
+  control %} の数はかなり削減できています。
+</p>
+
+<div class="my-5 md:mr-auto md:w-7/12">
+  <quantum-circuit
+    data-min-wire-count="1"
+    data-max-wire-count="1"
+    data-min-step-count="5"
+    data-json='{"cols":[["[a+=b (QFT足し算のコア部分)"],[1,"P(π_4)",1,1,"•"],[1,"P(π_2)",1,1,1,"•"],[1,"P(π)",1,1,1,1,"•"],[1,1,"P(π_2)",1,"•"],[1,1,"P(π)",1,1,"•"],[1,1,1,"P(π)","•"],["P(π_8)",1,1,1,"•"],["P(π_4)",1,1,1,1,"•"],["P(π_2)",1,1,1,1,1,"•"],["]"],[1]]}'
+  >
+  </quantum-circuit>
+</div>
+
+<p>
+  このように、QFT
+  を使った算術演算回路では、実際に演算を行うコア部分に必要なゲートの数を削減することができます。
+  足し算 1 回だけの単純な回路では QFT 版のほうがずっと複雑です。
+  しかし、演算内容が大きくなるほど前後の QFT
+  の大きさを無視することができ、またコア部分が単純になるため全体としてはゲート数を削減できます。
+</p>
+
+<h2>QFT 版足し算回路の内部</h2>
+
+<p>QFT 版足し算回路は次のように動作します。</p>
+
+<ul class="list-decimal">
+  <li>a = 3 を逆 QFT で位相の回転に変換 (= 位相回転の世界へ移動)</li>
+  <li>
+    b の値を位相の回転として a に加算{% nmargin_note phase_adder
+    %}ここでは詳しく解説しませんが、この部分の仕組みは QFT
+    によく似ています。余裕のある人は動作を解読してみましょう。{% endnmargin_note %}
+  </li>
+  <li>a += b の結果を QFT で戻す (= 周波数の世界へ移動)</li>
+</ul>
+
+<p>
+  つまり、いったん位相回転の世界に移動することで、足し算を b
+  の各ビットを条件とした位相回転として実行できます。 位相回転は {% qpu_operation control %} と {%
+  qpu_operation phase %}
+  だけで書くことができるため、普通のデジタル加算回路よりもゲートを削減できるというわけです。
+  そして最後に QFT
+  で計算結果を位相回転の世界から周波数の世界に逆変換することで、計算結果を確率に書き込みます。
+</p>
+
+<p>
+  QFT 足し算を少し改造するだけで QFT 引き算回路も作ることができます。
+  足し算のコア部分は角度を足すという単純な処理なので、角度の値をマイナスにするだけで引き算回路になります。
+</p>
+
+<h2>まとめ</h2>
+
+<p>
+  QFT の応用例として、足し算を QFT で行う回路を紹介しました。
+  わざわざフーリエ変換を使って足し算を行う理由は、回路に必要なゲート数を削減するためです。 QFT
+  によって位相回転の世界に移動すると、足し算や引き算といった算術演算を単純な回転として実装できます。
+</p>
+
+<p>
+  このように、QFT はたくさんの量子アルゴリズムの一部として利用されています。
+  位相回転の世界から周波数の世界へ移動する QFT と、その逆を行う逆 QFT
+  の役割をよく理解しておきましょう。
+</p>
