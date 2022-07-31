@@ -1298,22 +1298,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>","|0>","|0>"],["H","H","H","H"],[1,1,1,1,"|1>"],["•",1,1,1,"P(π_4)"],[1,"•",1,1,"P(π_4)"],[1,"•",1,1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["H","H","H","H"],[1,1,1,1,"|1>"],["•",1,1,1,"P(π_4)"],[1,"•",1,1,"P(π_4)"],[1,"•",1,1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,"•",1,"P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"],[1,1,1,"•","P(π_4)"]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1323,21 +1323,28 @@
 
 <p>
   この回路は <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> つき <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を何度も実行するものです。
-  最初の 4 ビットは <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> を置くための<strong>コントロールビット</strong>として使います。
-  最後の 1 ビットは \(|1\rangle\) に初期化した後、<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を実行するための<strong>ターゲットビット</strong>として使います。
+  最初の 4 ビットは <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate>
+  を置くための<strong>コントロールビット</strong>として使います。 最後の 1 ビットは \(|1\rangle\)
+  に初期化した後、<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  を実行するための<strong>ターゲットビット</strong>として使います。
 </p>
 
 <p>
-  実行結果は直感と反するものです。
-  最終的な状態ベクトルを最初の 4 ビット (コントロールビット) と最後の 1 ビット (ターゲットビット) に分けて円表示すると、次のようになります。
-  <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を実行したターゲットビットでは、状態は初期状態の \(|1\rangle\) からまったく変化していません。
-  一方で <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> に使った 4 つのコントロールビットは、<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を実行していないにもかかわらず、きれいに位相が π/4 刻みで回転しています。
+  実行結果は直感と反するものです。 最終的な状態ベクトルを最初の 4 ビット (コントロールビット)
+  と最後の 1 ビット (ターゲットビット) に分けて円表示すると、次のようになります。 <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を実行したターゲットビットでは、状態は初期状態の \(|1\rangle\)
+  からまったく変化していません。 一方で <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> に使った 4
+  つのコントロールビットは、<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を実行していないにもかかわらず、きれいに位相が
+  π/4 刻みで回転しています。
 </p>
 
 <div class="my-5 overflow-x-auto">
   <div class="flex flex-col space-y-4">
     <div class="flex flex-col">
-      <span><strong>最初の 4 ビット (<control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> を置いたコントロールビット):</strong></span>
+      <span
+        ><strong
+          >最初の 4 ビット (<control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> を置いたコントロールビット):</strong
+        ></span
+      >
       <div class="flex flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
@@ -1359,7 +1366,8 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
- <qubit-circle
+
+        <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="2"
   data-amplitude="0.25i"
@@ -1472,7 +1480,8 @@
  <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="13"
-  data-amplitude="-0.17678 - 0.17678i"
+  data-amplitude="-0.17678 -
+        0.17678i"
   data-popup-template-id="qubit-circle-popup"
   
   data-show-popup-amplitude
@@ -1503,7 +1512,11 @@
       </div>
     </div>
     <div class="flex flex-col">
-      <span><strong>最後の 1 ビット (<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を置いたターゲットビット):</strong></span>
+      <span
+        ><strong
+          >最後の 1 ビット (<phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を置いたターゲットビット):</strong
+        ></span
+      >
       <div class="flex flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
@@ -1533,15 +1546,18 @@
 
 <p>
   このように、位相回転の効果がなぜかコントロールビット側で起こるのが位相キックバックの効果です。
-  この現象は、ターゲットビットで位相回転したつもりが、その効果がコントロールビット側にはね返る (= キックバックされる) と解釈できます。
-  たとえば今回のように <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> を置くビットをずらしながら規則的に何度も位相キックバックすると、コントロールビット側に位相回転が蓄積され、位相回転のパターンを作ることができます。
+  この現象は、ターゲットビットで位相回転したつもりが、その効果がコントロールビット側にはね返る (=
+  キックバックされる) と解釈できます。 たとえば今回のように <control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate>
+  を置くビットをずらしながら規則的に何度も位相キックバックすると、コントロールビット側に位相回転が蓄積され、位相回転のパターンを作ることができます。
 </p>
 
 <p>
-  位相キックバックを起こすには、固有状態を考える必要があります。
-  <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> の固有状態の 1 つは \(|1\rangle\) で、その固有位相は <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> の回転角と同じ、ということを思い出してください。
-  <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> を置いた量子ビットの初期状態は、その固有状態である \(|1\rangle\) で初期化しました。
-  こうしておくと、コントロールビット側にキックバックが起こり固有位相分 (= 今回は π/4) の位相回転が起こります。
+  位相キックバックを起こすには、固有状態を考える必要があります。 <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  の固有状態の 1 つは \(|1\rangle\) で、その固有位相は <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  の回転角と同じ、ということを思い出してください。 <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  を置いた量子ビットの初期状態は、その固有状態である \(|1\rangle\) で初期化しました。
+  こうしておくと、コントロールビット側にキックバックが起こり固有位相分 (= 今回は π/4)
+  の位相回転が起こります。
 </p>
 
 <h2>量子位相推定回路での位相キックバック</h2>
@@ -1549,7 +1565,8 @@
 <p>
   量子位相推定回路の前半は、位相キックバックそのものです。
   量子位相推定によって固有位相を取り出したい QPU 命令を前回と同じ <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> だとします。
-  この時、位相キックバックを起こすためにターゲットビット側の初期状態を <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相 π に対応する <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有状態にセットします。
+  この時、位相キックバックを起こすためにターゲットビット側の初期状態を <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  の固有位相 π に対応する <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有状態にセットします。
   こうすることでコントロールビットに π 刻みの回転パターンが書き込まれます。
 </p>
 
@@ -1574,22 +1591,22 @@
         </div>
 
         <quantum-circuit
-            class="mb-10"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["|0>","|0>","|0>","|0>"],["H","H","H","H"],["{Hの固有状態を準備"],[1,1,1,1,"|0>"],[1,1,1,1,"Ry(5π/4)"],["}"],[1],["{H の固有位相 (π) を繰り返しキックバック"],["•",1,1,1,"H"],[1,"•",1,1,"H"],[1,"•",1,1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],["}"],[1]]}'
+          class="mb-10"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["|0>","|0>","|0>","|0>"],["H","H","H","H"],["{Hの固有状態を準備"],[1,1,1,1,"|0>"],[1,1,1,1,"Ry(5π/4)"],["}"],[1],["{H の固有位相 (π) を繰り返しキックバック"],["•",1,1,1,"H"],[1,"•",1,1,"H"],[1,"•",1,1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,"•",1,"H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],[1,1,1,"•","H"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>

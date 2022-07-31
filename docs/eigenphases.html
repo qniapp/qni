@@ -1678,9 +1678,8 @@
 </div>
 
 <p>
-  すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。 例として <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>, <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>, <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate>, <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> の固有状態と固有位相を示します。
-  それぞれの固有状態は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
-  などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
+  すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。 例として <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>, <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>, <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate>, <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  の固有状態と固有位相を示します。 それぞれの固有状態は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -1945,7 +1944,8 @@
 <p>
   量子位相推定は QPU 命令 (および QPU 命令のセット) の固有位相を取り出すためのサブルーチンです。
   なぜ固有位相を取り出す必要があるのか、現時点では分からなくても大丈夫です。
-  固有状態と付随する固有位相はそれぞれの QPU 命令に固有であり、演算内容を一意的に特徴付ける重要な情報です。
+  固有状態と付随する固有位相はそれぞれの QPU
+  命令に固有であり、演算内容を一意的に特徴付ける重要な情報です。
   実際にショアの量子因数分解アルゴリズムや、量子機械学習、量子化学計算など非常に多くのアルゴリズムの一部として、量子位相推定は使われます。
 </p>
 <footer class="mt-12 text-sm leading-6">
