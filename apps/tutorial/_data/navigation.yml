@@ -142,20 +142,20 @@
     - name: QFT 足し算
       link: ./qft_adder.html
       new: true
-# - name: 量子位相推定
-#   pages:
-#     - name: 固有位相
-#       link: ./eigenphases.html
-#       new: true
-#     - name: 量子位相推定回路
-#       link: ./quantum_phase_estimation_circuit.html
-#       new: true
-#     - name: 位相キックバック
-#       link: ./phase_kickback.html
-#       new: true
-#     - name: 量子位相推定の出力
-#       link: ./qpe_output.html
-#       new: true
+- name: 量子位相推定
+  pages:
+    - name: 固有位相
+      link: ./eigenphases.html
+      new: true
+    - name: 量子位相推定回路
+      link: ./quantum_phase_estimation_circuit.html
+      new: true
+    - name: 位相キックバック
+      link: ./phase_kickback.html
+      new: true
+    - name: 量子位相推定の出力
+      link: ./qpe_output.html
+      new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
