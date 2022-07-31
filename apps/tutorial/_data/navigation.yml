@@ -153,8 +153,8 @@
 #     - name: 位相キックバック
 #       link: ./phase_kickback.html
 #       new: true
-#     - name: 位相推定の仕組み
-#       link: ./how_qpe_works.html
+#     - name: 量子位相推定の出力
+#       link: ./qpe_output.html
 #       new: true
 - name: ふろく
   pages:
