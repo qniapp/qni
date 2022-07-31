@@ -1273,8 +1273,8 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">量子位相推定回路の作り方・使い方</p>
             </div>
             <div class="content-with-margin"><p>
-  量子位相推定回路の仕組みの前に、作り方と使い方を具体的に見ていきましょう。 ここでは例として <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相を求める場合について考えます。 前回見たように <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  には固有状態が 2 つありますが、今回はこのうち固有位相が π の場合について考えることとします。
+  量子位相推定回路の仕組みの前に、回路の作り方と使い方を具体的に見ていきましょう。 ここでは例として
+  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相を取り出す場合について考えます。 前回見たように <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> には固有状態が 2 つありますが、今回はこのうち固有位相が π の場合について考えることとします。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1396,7 +1396,7 @@
 
 
 <p>
-  量子位相推定回路には入力と出力が必要です。 入力として、固有位相を求めたい QPU 命令 (今回は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>) の固有状態を与えます。 出力として、求めた固有位相を書き出すための (複数)
+  量子位相推定回路には入力と出力が必要です。 入力として、固有位相を取り出したい QPU 命令 (今回は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>) の固有状態を与えます。 出力として、求めた固有位相を書き出すための (複数)
   量子ビットを準備します。
 </p>
 
@@ -1405,7 +1405,7 @@
 <p>
   量子位相推定回路の入力と前半は次のようになります。 最初の 4
   量子ビットは求めた固有位相を書き出すためのもので、必要なビット数は求める精度によって変化します
-  (ビット数の決めかたは最後に説明します)。 最後の 1 量子ビットは入力用で、固有位相を求めたい QPU
+  (ビット数の決めかたは最後に説明します)。 最後の 1 量子ビットは入力用で、固有位相を取り出したい QPU
   命令 (今回は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>) の固有状態を与えます。
 </p>
 
@@ -1422,10 +1422,10 @@
 <p>
   量子位相推定回路の前半では、最初に出力用ビットを <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
   で等しい重ね合わせ状態にします。 そして制御付き (<control-gate class="qpu-operation-xs relative top-0.5 inline-block"></control-gate> つき)
-  で固有位相を求めたい QPU 命令を繰り返し呼び出します。 呼出し方のパターンとしては、1
+  で固有位相を取り出したい QPU 命令を繰り返し呼び出します。 呼出し方のパターンとしては、1
   ビット目を制御として <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を 1 回、2 ビット目を制御として <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
   を 2 回, 3 ビット目を制御として <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を 4 回、... という風に 2
-  倍に増やしながら固有位相を求めたい QPU 命令を入力ビットに適用します。
+  倍に増やしながら固有位相を取り出したい QPU 命令を入力ビットに適用します。
   この回路は<strong>位相キックバック</strong>と呼ばれ、次回に詳しく説明します。
 </p>
 
@@ -1451,8 +1451,9 @@
 
 <p>
   どんな値が出力として得られるか、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相 π
-  を求める上記回路を動かしてみましょう。 実行するとすぐ分かるように、出力用ビットから約 85% の確率で
-  8 (二進数で 0001) が得られます。 これが <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相である π を表しています。
+  を取り出す上記回路を動かしてみましょう。 実行するとすぐ分かるように、出力用ビットから約 85%
+  の確率で 8 (二進数で 0001) が得られます。 これが <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相である π
+  を表していることになります。
 </p>
 
 <div class="relative mb-10 rounded-md bg-neutral-50">
@@ -1499,7 +1500,10 @@
   </div>
 </div>
 
+<h2>量子位相推定の出力を解釈する</h2>
+
 <p>
+  出力の 8 を固有位相として解釈するには、出力用量子ビットの数が 4 つであることを使います。
   出力用量子ビットのビット数は出力する固有位相角度の分解能を表します。 たとえば 4 ビットの場合 16
   通りの値が表せるので、4 ビットで表現できる角度は 360° を 16 分割した 360/16 = 22.5°
   刻みとなります。 π = 180° を 22.5° の倍数で表現すると、22.5° x 8 = 180° なので、8 でぴったり 180°
@@ -1554,6 +1558,14 @@
 固有位相</a
     >
      
+    <a
+      class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./phase_kickback.html"
+      >位相キックバック<svg class="ml-3 h-4 w-auto overflow-visible
+      text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+</a
+    >
+    
   </div>
 </footer>
 </div>
