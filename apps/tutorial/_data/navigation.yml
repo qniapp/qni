@@ -153,6 +153,9 @@
 #     - name: 位相キックバック
 #       link: ./phase_kickback.html
 #       new: true
+#     - name: 量子位相推定の出力
+#       link: ./qpe_output.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
