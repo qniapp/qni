@@ -1273,18 +1273,23 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">固有状態に対応する位相回転</p>
             </div>
             <div class="content-with-margin"><p>
-  本節では、振幅増幅や QFT と並び重要なサブルーチンである、<strong>量子位相推定</strong>を紹介します。
+  本節では、振幅増幅や QFT
+  と並び重要なサブルーチンである、<strong>量子位相推定</strong>を紹介します。
   量子位相推定は、振幅増幅や QFT とはかなり異質のサブルーチンです。
-  状態ベクトルから情報を取り出すのではなく、<strong>QPU 命令に関する情報を取り出す</strong>という特徴があります。
+  状態ベクトルから情報を取り出すのではなく、<strong>QPU 命令に関する情報を取り出す</strong
+  >という特徴があります。
   一見わかりづらいですが、動作イメージを理解するためにいくつかの新しい概念を導入します。
 </p>
 
 <h2>固有状態と固有位相</h2>
 
 <p>
-  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> といった QPU 命令は、それぞれ<strong>固有状態</strong>と呼ばれるユニークな状態ベクトルを持ちます。
-  たとえば以下のように、\(|0\rangle\) の確率が 85.3553%、\(|1\rangle\) の確率が 14.6447% の量子ビットに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用しても、その状態はまったく変わりません。
-  このように、固有状態とは QPU 命令を適用しても変化しない状態ベクトルのことで、QPU 命令それぞれが独自の (固有の) 状態ベクトルを持っています。
+  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate> といった QPU
+  命令は、それぞれ<strong>固有状態</strong>と呼ばれるユニークな状態ベクトルを持ちます。
+  たとえば以下のように、\(|0\rangle\) の確率が 85.3553%、\(|1\rangle\) の確率が 14.6447% の量子ビットに
+  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用しても、その状態はまったく変わりません。 このように、固有状態とは QPU
+  命令を適用しても変化しない状態ベクトルのことで、QPU 命令それぞれが独自の (固有の)
+  状態ベクトルを持っています。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1349,9 +1354,7 @@
   </div>
 </div>
 
-
-
-<div class="flex flex-col">
+ <div class="flex flex-col">
   <div class="mini-qni">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor class="flex h-full w-full flex-col">
@@ -1408,7 +1411,8 @@
 
 
 <p>
-  ある QPU 命令の固有状態は 1 つとは限りません。上の固有状態の \(|0\rangle\) と \(|1\rangle\) を入れ替え、\(|0\rangle\) の位相を π 回転したものも、同じく <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有状態です。
+  ある QPU 命令の固有状態は 1 つとは限りません。上の固有状態の \(|0\rangle\) と \(|1\rangle\)
+  を入れ替え、\(|0\rangle\) の位相を π 回転したものも、同じく <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有状態です。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1473,9 +1477,7 @@
   </div>
 </div>
 
-
-
-<div class="flex flex-col">
+ <div class="flex flex-col">
   <div class="mini-qni">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor class="flex h-full w-full flex-col">
@@ -1532,9 +1534,12 @@
 
 
 <p>
-  「左と右の状態ベクトルはまったく違うじゃないか!」と思うかもしれません。
-  しかし<a href="./phase.html">位相</a>で説明したように、量子コンピュータでは \(|0\rangle\) と \(|1\rangle\) の位相差 (相対位相) のみが意味を持つのでした。
-  上の左右を見比べてみると、\(|0\rangle\) と \(|1\rangle\) の確率は等しく、またそれぞれの位相差は π であるため、これらは実は同じものです。
+  「左と右の状態ベクトルはまったく違うじゃないか!」と思うかもしれません。 しかし<a
+    href="./phase.html"
+    >位相</a
+  >で説明したように、量子コンピュータでは \(|0\rangle\) と \(|1\rangle\) の位相差 (相対位相)
+  のみが意味を持つのでした。 上の左右を見比べてみると、\(|0\rangle\) と \(|1\rangle\)
+  の確率は等しく、またそれぞれの位相差は π であるため、これらは実は同じものです。
 </p>
 
 <div class="my-5 flex justify-center md:mr-auto md:w-7/12">
@@ -1563,7 +1568,7 @@
 
     </div>
 
-    <div class="h-8 w-8 flex justify-center">
+    <div class="flex h-8 w-8 justify-center">
       <span>=</span>
     </div>
 
@@ -1611,9 +1616,7 @@
     <tbody>
       <tr>
         <td rowspan="2" class="align-middle">
-          <div class="flex justify-center">
-            <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-          </div>
+          <div class="flex justify-center"><h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate></div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -1675,9 +1678,9 @@
 </div>
 
 <p>
-  すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。
-  例として <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>, <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>, <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate> の固有状態と固有位相を示します。
-  それぞれの固有状態は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
+  すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。 例として <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>, <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>, <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate> の固有状態と固有位相を示します。
+  それぞれの固有状態は <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> や <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate>
+  などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -1692,9 +1695,7 @@
     <tbody>
       <tr>
         <td rowspan="2" class="align-middle">
-          <div class="flex justify-center">
-            <x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate>
-          </div>
+          <div class="flex justify-center"><x-gate class="qpu-operation-xs relative top-0.5 inline-block"></x-gate></div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -1754,9 +1755,7 @@
 
       <tr>
         <td rowspan="2" class="align-middle">
-          <div class="flex justify-center">
-            <y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate>
-          </div>
+          <div class="flex justify-center"><y-gate class="qpu-operation-xs relative top-0.5 inline-block"></y-gate></div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -1816,9 +1815,7 @@
 
       <tr>
         <td rowspan="2" class="align-middle">
-          <div class="flex justify-center">
-            <z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate>
-          </div>
+          <div class="flex justify-center"><z-gate class="qpu-operation-xs relative top-0.5 inline-block"></z-gate></div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -1884,7 +1881,8 @@
 <p>
   量子位相推定は QPU 命令やそれらを組合わせた演算の固有位相を取り出すためのサブルーチンです。
   なぜ固有位相を取り出す必要があるのか、現時点では分からないかもしれません。
-  しかし固有状態と付随する固有位相は QPU 命令に固有のものであり、演算内容を一意的に特徴付ける重要な情報です。
+  しかし固有状態と付随する固有位相は QPU
+  命令に固有のものであり、演算内容を一意的に特徴付ける重要な情報です。
   次回では量子位相推定が実際にどう使えるかを見ていきましょう。
 </p>
 <footer class="mt-12 text-sm leading-6">
