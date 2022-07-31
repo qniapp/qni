@@ -1273,11 +1273,14 @@
               <p class="mt-1 mb-0 text-lg text-zinc-500">位相キックバックと逆QFTの結果を固有位相として解釈する</p>
             </div>
             <div class="content-with-margin"><p>
-  最後のまとめとして、量子位相推定回路の出力である逆 QFT の結果がなぜ固有位相として解釈できるかを確認しておきましょう。
+  最後のまとめとして、量子位相推定回路の出力である逆 QFT
+  の結果がなぜ固有位相として解釈できるかを確認しておきましょう。
 </p>
 
 <p>
-  QPU 命令として π/4 回転の <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> (固有位相は π/4) を \(2^0, 2^1, 2^2,\dots\) 回ずつ位相キックバックした場合、コントロールビット 4 つの状態ベクトルは最終的に次のようになるのでした。
+  QPU 命令として π/4 回転の <phase-gate class="qpu-operation-xs relative top-0.5 inline-block"></phase-gate> (固有位相は π/4) を \(2^0, 2^1, 2^2,\dots\)
+  回ずつ位相キックバックした場合、コントロールビット 4
+  つの状態ベクトルは最終的に次のようになるのでした。
 </p>
 
 <div class="my-5 overflow-x-auto">
@@ -1302,8 +1305,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-    <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="2"
   data-amplitude="0.25i"
@@ -1416,8 +1418,7 @@
  <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="13"
-  data-amplitude="-0.17678 -
-    0.17678i"
+  data-amplitude="-0.17678 - 0.17678i"
   data-popup-template-id="qubit-circle-popup"
   
   data-show-popup-amplitude
@@ -1449,22 +1450,21 @@
 </div>
 
 <p>
-  これを逆 QFT にかけると、周期 2 が得られます。
-  周期が 2 ということは、全体で 360° x 2 = 720° 回転していることになります。
-  ここで全体は 4 量子ビットによって \(2^4 = 16\) 個に分割されています。
-  よって、720 / 16 を計算すれば回転の 1 ステップ分の角度 (= つまり固有位相)、720° / 16 = 45° が求まります。
+  これを逆 QFT にかけると、周期 2 が得られます。 周期が 2 ということは、全体で 360° x 2 = 720°
+  回転していることになります。 ここで全体は 4 量子ビットによって \(2^4 = 16\) 個に分割されています。
+  よって、720 / 16 を計算すれば回転の 1 ステップ分の角度 (= つまり固有位相)、720° / 16 = 45°
+  が求まります。
 </p>
 
-<p>
-  以上をまとめると、固有位相は次の式で求められます。
-</p>
+<p>以上をまとめると、固有位相は次の式で求められます。</p>
 
 <p class="flex justify-center">
   \(固有位相 = \dfrac{360° \times 逆 QFT の結果}{2^{コントロールビットの数}}\)
 </p>
 
 <p>
-  確認のために、<a href="./quantum_phase_estimation_circuit.html">量子位相推定回路</a>で見た逆 QFT の結果 8 から、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相は π と解釈できることを見ておきましょう。
+  確認のために、<a href="./quantum_phase_estimation_circuit.html">量子位相推定回路</a>で見た逆 QFT
+  の結果 8 から、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> の固有位相は π と解釈できることを見ておきましょう。
   この回路でもコントロールビットの数は 4 量子ビットだったので、式に代入すると、
 </p>
 
@@ -1472,9 +1472,7 @@
   \(固有位相 = \dfrac{360° \times 8}{2^4} = \dfrac{360° \times 8}{16} = 180° = π \)
 </p>
 
-<p>
-  となり、たしかに正しい固有位相が出力されていることが分かります。
-</p>
+<p>となり、たしかに正しい固有位相が出力されていることが分かります。</p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
