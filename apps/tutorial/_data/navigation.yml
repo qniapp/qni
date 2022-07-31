@@ -142,6 +142,11 @@
     - name: QFT 足し算
       link: ./qft_adder.html
       new: true
+# - name: 量子位相推定
+#   pages:
+#     - name: 固有位相
+#       link: ./eigenphases.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
