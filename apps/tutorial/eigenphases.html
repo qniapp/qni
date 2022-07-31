@@ -152,9 +152,9 @@ next_url: ./quantum_phase_estimation_circuit.html
 
 <p>
   すべての QPU 命令はそれぞれ固有の固有状態とそれに対応する固有位相を持ちます。 例として {%
-  qpu_operation x %}, {% qpu_operation y %}, {% qpu_operation z %} の固有状態と固有位相を示します。
-  それぞれの固有状態は {% qpu_operation h %} や {% qpu_operation phase %}
-  などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
+  qpu_operation x %}, {% qpu_operation y %}, {% qpu_operation z %}, {% qpu_operation phase %}
+  の固有状態と固有位相を示します。 それぞれの固有状態は {% qpu_operation h %} や {% qpu_operation
+  phase %} などで簡単に作れるものばかりなので、実際に Qni で確認しておくことをおすすめします。
 </p>
 
 <div class="my-5 md:mr-auto md:w-7/12">
@@ -212,7 +212,9 @@ next_url: ./quantum_phase_estimation_circuit.html
 
       <tr>
         <td rowspan="2" class="align-middle">
-          <div class="flex justify-center">{% qpu_operation z %}</div>
+          <div class="flex justify-center">
+            <span>{% qpu_operation z %} (= {% qpu_operation phase %} π )</span>
+          </div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -229,6 +231,28 @@ next_url: ./quantum_phase_estimation_circuit.html
         </td>
         <td class="align-middle">π</td>
       </tr>
+
+      <tr>
+        <td rowspan="2" class="align-middle">
+          <div class="flex justify-center">
+            <span>{% qpu_operation phase %} Φ (Φ は任意の角度)</span>
+          </div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            {{ 1 | qubit_circle: 0, 'base' }} {{ 0 | qubit_circle: 1, 'base' }}
+          </div>
+        </td>
+        <td class="align-middle">0</td>
+      </tr>
+      <tr>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            {{ 0 | qubit_circle: 0, 'base' }} {{ 1 | qubit_circle: 1, 'base' }}
+          </div>
+        </td>
+        <td class="align-middle">Φ</td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -236,9 +260,9 @@ next_url: ./quantum_phase_estimation_circuit.html
 <h2>量子位相推定は何ができるか?</h2>
 
 <p>
-  量子位相推定は QPU 命令やそれらを組合わせた演算の固有位相を取り出すためのサブルーチンです。
-  なぜ固有位相を取り出す必要があるのか、現時点では分からないかもしれません。
-  しかし固有状態と付随する固有位相は QPU
-  命令に固有のものであり、演算内容を一意的に特徴付ける重要な情報です。
-  次回では量子位相推定が実際にどう使えるかを見ていきましょう。
+  量子位相推定は QPU 命令 (および QPU 命令のセット) の固有位相を取り出すためのサブルーチンです。
+  なぜ固有位相を取り出す必要があるのか、現時点では分からなくても大丈夫です。
+  固有状態と付随する固有位相はそれぞれの QPU
+  命令に固有であり、演算内容を一意的に特徴付ける重要な情報です。
+  実際にショアの量子因数分解アルゴリズムや、量子機械学習、量子化学計算など非常に多くのアルゴリズムの一部として、量子位相推定は使われます。
 </p>

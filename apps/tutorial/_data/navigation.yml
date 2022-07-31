@@ -150,6 +150,9 @@
 #     - name: 量子位相推定回路
 #       link: ./quantum_phase_estimation_circuit.html
 #       new: true
+#     - name: 位相キックバック
+#       link: ./phase_kickback.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
