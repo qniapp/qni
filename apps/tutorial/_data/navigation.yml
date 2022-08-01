@@ -132,16 +132,12 @@
   pages:
     - name: パターンの読み出し
       link: ./readout_of_patterns.html
-      new: true
     - name: 逆 QFT
       link: ./inverse_qft.html
-      new: true
     - name: QFT の内部
       link: ./inside_the_qft.html
-      new: true
     - name: QFT 足し算
       link: ./qft_adder.html
-      new: true
 - name: 量子位相推定
   pages:
     - name: 固有位相
