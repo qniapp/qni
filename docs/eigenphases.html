@@ -1682,7 +1682,8 @@
     <thead>
       <tr>
         <th>QPU 命令</th>
-        <th>固有状態</th>
+        <th>固有状態<br>(適用前)</th>
+        <th>固有状態<br>(適用後)</th>
         <th>固有位相</th>
       </tr>
     </thead>
@@ -1690,6 +1691,31 @@
       <tr>
         <td rowspan="2" class="align-middle">
           <div class="flex justify-center"><h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate></div>
+        </td>
+        <td>
+          <div class="flex flex-row space-x-2">
+            <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0.9238795325112868"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="0.3826834323650898"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+          </div>
         </td>
         <td>
           <div class="flex flex-row space-x-2">
@@ -1735,6 +1761,31 @@
   class="h-8 w-8 my-1"
   data-ket="1"
   data-amplitude="0.9238795325112868"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+
+          </div>
+        </td>
+        <td class="p-2">
+          <div class="flex flex-row space-x-2">
+            <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="0"
+  data-amplitude="0.3826834323650898"
+  data-popup-template-id="qubit-circle-popup"
+  
+  data-show-popup-amplitude
+  data-show-popup-probability
+  data-show-popup-phase
+></qubit-circle>
+ <qubit-circle
+  class="h-8 w-8 my-1"
+  data-ket="1"
+  data-amplitude="-0.9238795325112868"
   data-popup-template-id="qubit-circle-popup"
   
   data-show-popup-amplitude
