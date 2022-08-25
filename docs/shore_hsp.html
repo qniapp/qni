@@ -1,0 +1,2788 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-full">
+  <head>
+    <title>別問題に帰着する</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Untitled</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <script type="module" src="./application.js" defer></script>
+    <link href="./application.css" rel="stylesheet" />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script type="module" src="https://js.withorbit.com/orbit-web-component.js"></script>
+    <script
+      defer
+      data-domain="qniapp.github.io"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
+    <script type="module">
+      import {
+        Application,
+        Controller,
+      } from 'https://unpkg.com/@hotwired/stimulus/dist/stimulus.js'
+      window.Stimulus = Application.start()
+
+      Stimulus.register(
+        'sidebar',
+        class extends Controller {
+          static targets = ['menu', 'body', 'bodyMd']
+
+          connect() {
+            let bodyMdScroll = sessionStorage.getItem('sidebar-md-scroll')
+            if (bodyMdScroll !== null) {
+              this.bodyMdTarget.scrollTop = parseInt(bodyMdScroll, 10)
+            }
+
+            window.addEventListener('beforeunload', () => {
+              sessionStorage.setItem('sidebar-scroll', this.bodyTarget.scrollTop)
+              sessionStorage.setItem('sidebar-md-scroll', this.bodyMdTarget.scrollTop)
+            })
+          }
+
+          open() {
+            this.menuTarget.classList.remove('hidden')
+
+            let sidebarScroll = sessionStorage.getItem('sidebar-scroll')
+            if (sidebarScroll !== null) {
+              this.bodyTarget.scrollTop = parseInt(sidebarScroll, 10)
+            }
+          }
+
+          close() {
+            this.menuTarget.classList.add('hidden')
+          }
+        }
+      )
+    </script>
+  </head>
+  <body class="h-full">
+    <div data-controller="sidebar">
+  <div
+  class="fixed inset-0 z-[200] flex hidden md:hidden"
+  role="dialog"
+  aria-modal="true"
+  data-sidebar-target="menu"
+>
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+  <div class="relative flex w-full max-w-xs flex-1 transform flex-col bg-white pt-5 pb-4">
+    <div class="absolute top-0 right-0 -mr-12 pt-2">
+      <button
+        type="button"
+        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        data-action="click->sidebar#close"
+      >
+        <svg class="h-6 w-6 text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+      </button>
+    </div>
+
+    <div class="flex flex-shrink-0 items-center px-4">
+      <img class="mr-2 h-7 w-7" src="https://qniapp.net/icon-512.png" alt="Qni" />
+      <div class="flex flex-row items-end">
+        <span
+          class="font-sans text-xl font-bold tracking-wider text-neutral-900 subpixel-antialiased"
+          >Qni</span
+        >
+        <span
+          class="ml-0.5 font-sans text-base font-bold uppercase tracking-wider text-blue-400 subpixel-antialiased"
+          >Tutorial</span
+        >
+      </div>
+    </div>
+    <div class="mt-5 h-0 flex-1 overflow-y-auto" data-sidebar-target="body">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    算術演算
+  </div>
+
+   
+  <a
+    href="./increment_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">インクリメント回路</span>
+    
+  </a>
+   
+  <a
+    href="./decrement_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">デクリメント回路</span>
+    
+  </a>
+   
+  <a
+    href="./addition_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">足し算回路</span>
+    
+  </a>
+   
+  <a
+    href="./subtraction_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">引き算回路</span>
+    
+  </a>
+   
+  <a
+    href="./multiplication_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">かけ算回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    論理演算
+  </div>
+
+   
+  <a
+    href="./quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子論理ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./superposition_quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ上での論理演算</span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算</span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算の組合わせ</span>
+    
+  </a>
+   
+  <a
+    href="./sat.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">充足可能性問題</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    グローヴァー探索
+  </div>
+
+   
+  <a
+    href="./grover_iam.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">折り返し変換</span>
+    
+  </a>
+   
+  <a
+    href="./grover_iteration.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">グロヴァー反復</span>
+    
+  </a>
+   
+  <a
+    href="./multiple_marked_values.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数の振幅を増幅</span>
+    
+  </a>
+   
+  <a
+    href="./grover_iam_indetail.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">折り返しの仕組み</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子フーリエ変換 (QFT)
+  </div>
+
+   
+  <a
+    href="./readout_of_patterns.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">パターンの読み出し</span>
+    
+  </a>
+   
+  <a
+    href="./inverse_qft.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">逆 QFT</span>
+    
+  </a>
+   
+  <a
+    href="./inside_the_qft.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QFT の内部</span>
+    
+  </a>
+   
+  <a
+    href="./qft_adder.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QFT 足し算</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子位相推定
+  </div>
+
+   
+  <a
+    href="./eigenphases.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">固有位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./quantum_phase_estimation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子位相推定回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./phase_kickback.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相キックバック</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./qpe_output.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子位相推定の出力</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+
+  <div class="w-14 flex-shrink-0" aria-hidden="true">
+    <!-- Dummy element to force sidebar to shrink to fit close icon -->
+  </div>
+</div>
+ <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+  <div class="flex flex-grow flex-col bg-white">
+    <div class="flex h-16 flex-shrink-0 items-center border-b border-slate-900/10 px-8">
+      <a href="https://qniapp.github.io/qni/" class="flex flex-shrink-0 cursor-pointer flex-row">
+        <img class="mr-2" src="./images/qni_icon.svg" alt="Qni" />
+        <img src="./images/qni_tutorial_logo.svg" qlt="Qni Tutorial" />
+      </a>
+    </div>
+    <div class="flex h-0 flex-grow flex-col overflow-y-auto md:py-6" data-sidebar-target="bodyMd">
+      <nav class="flex-1 space-y-1 bg-white px-3 md:px-6 pb-14">
+  
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    イントロダクション
+  </div>
+
+   
+  <a
+    href="./"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">はじめに</span>
+    
+  </a>
+   
+  <a
+    href="./qpu.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU とは</span>
+    
+  </a>
+   
+  <a
+    href="./what_qpu_do_faster.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QPU は何が得意?</span>
+    
+  </a>
+   
+  <a
+    href="./quantum_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子回路</span>
+    
+  </a>
+   
+  <a
+    href="./qni_intro.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">Qni 入門</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子ビット
+  </div>
+
+   
+  <a
+    href="./p_bit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">確率的ビット</span>
+    
+  </a>
+   
+  <a
+    href="./superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./qubit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子ビット</span>
+    
+  </a>
+   
+  <a
+    href="./phase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相</span>
+    
+  </a>
+   
+  <a
+    href="./circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 1
+  </div>
+
+   
+  <a
+    href="./cpu_vs_qpu_operations.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPU 命令との違い</span>
+    
+  </a>
+   
+  <a
+    href="./x_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">X ゲート (量子 NOT)</span>
+    
+  </a>
+   
+  <a
+    href="./h_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">H ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./write_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">WRITE 命令</span>
+    
+  </a>
+   
+  <a
+    href="./measurement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">MEASUREMENT 命令</span>
+    
+  </a>
+   
+  <a
+    href="./no_cloning_theorem.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CLONE 命令!?</span>
+    
+  </a>
+   
+  <a
+    href="./gate_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">組合わせゲート</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子暗号通信
+  </div>
+
+   
+  <a
+    href="./quantum_key_distribution.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子鍵配送</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_protocol.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 プロトコル</span>
+    
+  </a>
+   
+  <a
+    href="./bb84_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">BB84 回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    複数量子ビット
+  </div>
+
+   
+  <a
+    href="./multi_qubit_circle_notation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">状態ベクトル表示</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_superposition.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ状態</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数量子ビットでの演算</span>
+    
+  </a>
+   
+  <a
+    href="./operator_pair.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">演算ペア</span>
+    
+  </a>
+   
+  <a
+    href="./random_byte_generator.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ランダムバイトジェネレータ</span>
+    
+  </a>
+   
+  <a
+    href="./multi_qubit_phase_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">PHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./partial_measurement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">1 ビット測定</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    QPU 命令その 2
+  </div>
+
+   
+  <a
+    href="./swap_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./cnot_gate.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CNOT ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./swap_from_cnots.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">SWAP パズル</span>
+    
+  </a>
+   
+  <a
+    href="./cphase.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">CPHASE ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    超密度符号化
+  </div>
+
+   
+  <a
+    href="./disentangle.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれをほどく</span>
+    
+  </a>
+   
+  <a
+    href="./entanglement_operation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">もつれを操作する</span>
+    
+  </a>
+   
+  <a
+    href="./discriminating_bell_states.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ベル状態の判別</span>
+    
+  </a>
+   
+  <a
+    href="./superdense_coding_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">超密度符号化回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子テレポーテーション
+  </div>
+
+   
+  <a
+    href="./teleportation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">テレポーテーション回路</span>
+    
+  </a>
+   
+  <a
+    href="./cascading_teleportation.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">多段テレポーテーション</span>
+    
+  </a>
+   
+  <a
+    href="./long_distance_entanglement.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">長距離間の量子もつれ</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    算術演算
+  </div>
+
+   
+  <a
+    href="./increment_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">インクリメント回路</span>
+    
+  </a>
+   
+  <a
+    href="./decrement_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">デクリメント回路</span>
+    
+  </a>
+   
+  <a
+    href="./addition_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">足し算回路</span>
+    
+  </a>
+   
+  <a
+    href="./subtraction_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">引き算回路</span>
+    
+  </a>
+   
+  <a
+    href="./multiplication_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">かけ算回路</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    論理演算
+  </div>
+
+   
+  <a
+    href="./quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子論理ゲート</span>
+    
+  </a>
+   
+  <a
+    href="./superposition_quantum_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">重ね合わせ上での論理演算</span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算</span>
+    
+  </a>
+   
+  <a
+    href="./phase_logic_combination.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相論理演算の組合わせ</span>
+    
+  </a>
+   
+  <a
+    href="./sat.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">充足可能性問題</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    グローヴァー探索
+  </div>
+
+   
+  <a
+    href="./grover_iam.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">折り返し変換</span>
+    
+  </a>
+   
+  <a
+    href="./grover_iteration.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">グロヴァー反復</span>
+    
+  </a>
+   
+  <a
+    href="./multiple_marked_values.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">複数の振幅を増幅</span>
+    
+  </a>
+   
+  <a
+    href="./grover_iam_indetail.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">折り返しの仕組み</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子フーリエ変換 (QFT)
+  </div>
+
+   
+  <a
+    href="./readout_of_patterns.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">パターンの読み出し</span>
+    
+  </a>
+   
+  <a
+    href="./inverse_qft.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">逆 QFT</span>
+    
+  </a>
+   
+  <a
+    href="./inside_the_qft.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QFT の内部</span>
+    
+  </a>
+   
+  <a
+    href="./qft_adder.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">QFT 足し算</span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    量子位相推定
+  </div>
+
+   
+  <a
+    href="./eigenphases.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">固有位相</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./quantum_phase_estimation_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子位相推定回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./phase_kickback.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">位相キックバック</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./qpe_output.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">量子位相推定の出力</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ふろく
+  </div>
+
+   
+  <a
+    href="./no_cloning_theorem_proof.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">クローン禁止定理の証明</span>
+    
+  </a>
+   
+</nav>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="flex flex-1 flex-col md:pl-64">
+    <div
+      class="sticky top-0 z-[100] flex h-16 flex-shrink-0 border-0 border-zinc-900/10 bg-white/95 shadow backdrop-blur md:border-b md:shadow-none"
+    >
+      <button
+        type="button"
+        class="flex h-16 w-16 items-center justify-center border-r border-zinc-200 text-zinc-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+        data-action="click->sidebar#open"
+      >
+        <span class="sr-only">Open sidebar</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+      </button>
+
+      <div class="flex w-full items-center justify-end">
+        <a
+          href="https://github.com/qniapp/qni"
+          class="block flex h-16 w-16 items-center justify-center text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#clip0_1399_76561)">
+    <path d="M9 19C4 20.5 4 16.5 2 16M16 22V18.13C16.0375 17.6532 15.9731 17.1738 15.811 16.7238C15.6489 16.2738 15.3929 15.8634 15.06 15.52C18.2 15.17 21.5 13.98 21.5 8.52C21.4997 7.12383 20.9627 5.7812 20 4.77C20.4559 3.54851 20.4236 2.19835 19.91 0.999999C19.91 0.999999 18.73 0.649999 16 2.48C13.708 1.85882 11.292 1.85882 9 2.48C6.27 0.649999 5.09 0.999999 5.09 0.999999C4.57638 2.19835 4.54414 3.54851 5 4.77C4.03013 5.7887 3.49252 7.14346 3.5 8.55C3.5 13.97 6.8 15.16 9.94 15.55C9.611 15.89 9.35726 16.2954 9.19531 16.7399C9.03335 17.1844 8.96681 17.6581 9 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <defs>
+    <clipPath id="clip0_1399_76561">
+      <rect width="24" height="24" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
+
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <article class="prose prose-neutral max-w-none">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+          <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
+            <div class="mb-10 border-b border-zinc-200 pb-10">
+              <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
+                ショアの素因数分解
+              </p>
+              <div>
+                <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
+                  別問題に帰着する
+                </h1>
+              </div>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">素因数分解を反復周期 (位数) 発見問題として解く</p>
+            </div>
+            <div class="content-with-margin"><p>
+  ショアの素因数分解アルゴリズムは、量子コンピュータが得意とする計算のうち最も有名なものの 1 つです。
+  <a href="./">はじめに</a>で述べたように、素因数分解が高速にできると、公開鍵暗号を現実的な時間のうちに解くことができます。
+  公開鍵暗号はインターネット通信やビットコイン技術等の拠り所であるため、これが解けるというインパクトは大きなものです。
+</p>
+
+<p>
+  ショアの素因数分解アルゴリズムはどれほど速いのでしょうか。
+  古典の素因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、素因数分解したい数が大きくなるにつれて指数関数的に増えます。
+  一方でショアのアルゴリズムは、多項式時間に留まります。
+  分かりやすく具体的な値で言うと、1024 ビットの整数を素因数分解するのに必要な計算量は、古典コンピュータ (一般数体ふるい法) で \(O(10^{278})\) です。
+  これに対して、ショアのアルゴリズムは \(O(10^{61})\) となり、計算量を約 200 桁も減らせます。
+</p>
+
+<h2>素因数分解を別問題として解く</h2>
+
+<p>
+  素因数分解のような整数の問題 (離散数学の問題) の多くは、別問題に帰着して解くことができます。
+  ショアのアルゴリズムでは、素因数分解を次の別問題に帰着します。
+</p>
+
+<div class="border-l-4 border-blue-400 bg-blue-50 px-4 py-1 md:mr-auto md:w-7/12">
+  <p>
+    <strong>反復周期 (位数とも呼ぶ) の発見問題</strong>
+  </p>
+
+  <p>
+    \(N\) を素因数分解したい整数とする。
+    このとき、適当な素数 \(a \lt N\) について、整数 \(x\) を変数とする次の関数を考える。
+  </p>
+
+  <p class="flex justify-center">
+    \(f(x) = a^x mod(N) \hspace{16pt} (X mod(Y) は X を Y で割った余りを表す)\)
+  </p>
+
+  <p>
+    これは周期関数となり、その反復周期 \(r\) から \(N\) の素因数を求めることができる。
+  </p>
+</div>
+
+<p>
+  分かりやすくするために、\(a\) や \(N\) に具体的な値を入れて関数 \(f(x)\) がどう動くか見ていきましょう。
+  素因数分解したい数 \(N\) を 15 とします。
+  \(a\) は \(N\) より小さい素数ならなんでも良いので、ここでは 2 とします。すると、\(f(x)\) は次のように書き直せます。
+</p>
+
+<p class="flex justify-center">
+  \(f(x) = 2^x mod(15)\)
+</p>
+
+<figure>
+  <img src="./images/shore_mod15.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  グラフから一目瞭然のとおり、この関数は周期関数になっており、反復周期 \(r\) は 4 です。x が 4 増えるごとに、まったく同じ形の波が現れるからです。
+</p>
+
+<p>
+  反復周期 \(r = 4\) が求まれば、\(N\) の素因数はそれぞれ次の単純な計算で求まります。
+</p>
+
+<ul>
+  <li>\(gcd(N, a^{r/2} + 1)\)</li>
+  <li>\(gcd(N, a^{r/2} - 1)\)</li>
+</ul>
+
+<p>
+  ここで出てくる \(gcd\) とは最大公約数 (greatest common divisor) の略で、古典コンピュータでも高速に計算できる処理です。
+  たとえば \(N = 15\) の場合で具体的に計算してみると、\(a = 2\), 周期 \(r = 4\) だったので、
+</p>
+
+<ul>
+  <li>\(gcd(N, a^{r/2} + 1) = gcd(15, 2^{4/2} + 1) = gcd(15, 5) = 5\)</li>
+  <li>\(gcd(N, a^{r/2} - 1) = gcd(15, a^{4/2} - 1) = gcd(15, 3) = 3\)</li>
+</ul>
+
+<p>
+  となり、たしかに \(15 = 5 \times 3\) が求まりました!
+</p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <strong>注意点:</strong> 周期 \(r\) が偶数の場合のみ gcd が計算できることに注意してください。
+  N=15 の場合、\(a\) を 2 とすると偶数の周期 \(r = 4\) が求まります。
+  選ぶ \(a\) の値によっては \(r\) が偶数になりません。
+  また \(r\) が偶数であっても、gcd の結果が \(N\) の素因数にならない場合があります (素因数かどうかは、積が \(N\) になるかどうかを調べるだけで簡単にチェックできます)。
+  このため実際のショアのアルゴリズムでは、\(r\) が偶数になり、かつ正しい素因数が求まるまで、\(a\) をランダムに選び計算を繰り返します。
+</div>
+
+<h2>まとめ</h2>
+
+<p>
+  ショアの素因数分解アルゴリズムは、関数 \(f(x) = a^x mod(N)\) の反復周期を求めるという別問題を解くことで素因数を求めます。
+  この \(a^x mod(N)\) の計算とその周期を求める部分は、古典コンピュータでは指数時間が必要なため、量子コンピュータを使います。
+  求めた周期を使って古典コンピュータで gcd を計算することで、素因数のペアが求まります。
+</p>
+<footer class="mt-12 text-sm leading-6">
+  <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
+    
+    <a
+      class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
+      href="./qpe_output.html"
+      ><svg
+  class="mr-3 h-4 w-auto overflow-visible text-slate-400
+      group-hover:text-slate-600 dark:group-hover:text-slate-300"
+  width="15"
+  height="15"
+  viewBox="0 0 15 15"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M8.84182 3.13514C9.04327 3.32401 9.05348 3.64042 8.86462 3.84188L5.43521 7.49991L8.86462 11.1579C9.05348 11.3594 9.04327 11.6758 8.84182 11.8647C8.64036 12.0535 8.32394 12.0433 8.13508 11.8419L4.38508 7.84188C4.20477 7.64955 4.20477 7.35027 4.38508 7.15794L8.13508 3.15794C8.32394 2.95648 8.64036 2.94628 8.84182 3.13514Z"
+    fill="currentColor"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+  ></path>
+</svg>
+量子位相推定の出力</a
+    >
+     
+  </div>
+</footer>
+</div>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</div>
+
+<template id="bloch-display-help">
+  <header>
+    <h1>ブロッホ球表示</h1>
+    <p>ワイヤのローカルな状態をブロッホ球上の点として表示する。</p>
+  </header>
+</template>
+ <template id="control-gate-help">
+  <header>
+    <h1>コントロールゲート</h1>
+    <p>量子ビットの適用を条件付きにする。</p>
+    <p>接続されたゲートは、条件を満たした場合のみに適用される。</p>
+  </header>
+</template>
+ <template id="h-gate-help">
+  <header>
+    <h1>アダマールゲート</h1>
+    <p>シンプルな重ね合わせ状態を作る。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <h-gate class="qpu-operation-sm"></h-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <h-gate class="qpu-operation-sm"></h-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="-0.7071"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="measurement-gate-help">
+  <header>
+    <h1>測定ゲート</h1>
+    <p>量子ビットが ON か OFF かを測定する。</p>
+  </header>
+</template>
+ <template id="phase-gate-help">
+  <header>
+    <h1>フェーズゲート</h1>
+    <p><code>|1⟩</code> の状態に e<sup>iφ</sup> の位相を適用する。</p>
+    <p>デフォルトで φ = π/2。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <phase-gate data-angle="π/2" class="qpu-operation-sm"></phase-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="rnot-gate-help">
+  <header>
+    <h1>平方根 NOT ゲート</h1>
+    <p>X 軸を中心に <code>π/2</code> 回転させる。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rnot-gate class="qpu-operation-sm"></rnot-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.5+0.5i"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.5-0.5i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rnot-gate class="qpu-operation-sm"></rnot-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.5-0.5i"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.5+0.5i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="rx-gate-help">
+  <header>
+    <h1>Rx ゲート</h1>
+    <p>X 軸を中心に角度 θ 回転させる。</p>
+    <p>デフォルトで θ = π/2。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="-0.7071i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rx-gate data-angle="π/2" class="qpu-operation-sm"></rx-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="-0.7071i"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="ry-gate-help">
+  <header>
+    <h1>Ry ゲート</h1>
+    <p>Y 軸を中心に角度 θ 回転させる。</p>
+    <p>デフォルトで θ = π/2。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <ry-gate data-angle="π/2" class="qpu-operation-sm"></ry-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="-0.7071"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.7071"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="rz-gate-help">
+  <header>
+    <h1>Rz ゲート</h1>
+    <p>Z 軸を中心に角度 θ 回転させる。</p>
+    <p>デフォルトで θ = π/2。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0.7071-0.7071i"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <rz-gate data-angle="π/2" class="qpu-operation-sm"></rz-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0.7071+0.7071i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="write0-gate-help">
+  <header>
+    <h1><code>|0⟩</code> 命令</h1>
+    <p>量子ビットの状態を <code>|0⟩</code> にセット (リセット)。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <write-gate data-value="0" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="write1-gate-help">
+  <header>
+    <h1><code>|1⟩</code> 命令</h1>
+    <p>量子ビットの状態を <code>|1⟩</code> にセット (リセット)。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <write-gate data-value="1" class="qpu-operation-sm" data-dark-mode></write-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="x-gate-help">
+  <header>
+    <h1>NOT ゲート (パウリ X ゲート)</h1>
+    <p>量子ビットペア <code>|0⟩</code> と <code>|1⟩</code> を入れ替える。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <x-gate class="qpu-operation-sm"></x-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <x-gate class="qpu-operation-sm"></x-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="y-gate-help">
+  <header>
+    <h1>パウリ Y ゲート</h1>
+    <p>X ゲートと Z ゲートの組み合わせの一種。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <y-gate class="qpu-operation-sm"></y-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="i"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <y-gate class="qpu-operation-sm"></y-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="-i"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="z-gate-help">
+  <header>
+    <h1>パウリ Z ゲート</h1>
+    <p>量子ビットが ON のとき位相を反転させる。</p>
+  </header>
+
+  <div class="body">
+    <div class="flex flex-col space-y-2">
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <z-gate class="qpu-operation-sm"></z-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+
+      <div class="flex flex-row items-center space-x-2">
+        <div class="flex flex-row space-x-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+
+        <div class="flex flex-row items-center">
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
+</svg>
+
+          <z-gate class="qpu-operation-sm"></z-gate>
+          <svg class="h-4 w-4 fill-current text-white" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
+
+        </div>
+
+        <div class="flex flex-row space-x-2 pr-2">
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="0"
+            data-amplitude="0"
+            data-dark-mode
+          ></qubit-circle>
+          <qubit-circle
+            class="h-8 w-8"
+            data-ket="1"
+            data-amplitude="-1"
+            data-dark-mode
+          ></qubit-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+ <template id="operation-menu">
+  <div class="operation-menu flex flex-row items-center space-x-2 text-gray-900">
+    <div class="flex flex-row rounded-2xl bg-white p-2 drop-shadow-lg">
+      <button
+        data-operation-menu-if
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold tracking-tighter">
+            if <span class="italic">x</span>
+          </div>
+        </div>
+      </button>
+
+      <button
+        data-operation-menu-angle
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <svg
+    class="h-5 w-5"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+      d="M8.8914 2.1937C9.1158 2.35464 9.16725 2.66701 9.00631 2.89141L2.47388 12H13.5C13.7761 12 14 12.2239 14 12.5C14 12.7762 13.7761 13 13.5 13H1.5C1.31254 13 1.14082 12.8952 1.0552 12.7284C0.969578 12.5616 0.984438 12.361 1.09369 12.2086L8.19369 2.30862C8.35462 2.08422 8.667 2.03277 8.8914 2.1937ZM11.1 6.50001C11.1 6.22387 11.3238 6.00001 11.6 6.00001C11.8761 6.00001 12.1 6.22387 12.1 6.50001C12.1 6.77615 11.8761 7.00001 11.6 7.00001C11.3238 7.00001 11.1 6.77615 11.1 6.50001ZM10.4 4.00001C10.1239 4.00001 9.90003 4.22387 9.90003 4.50001C9.90003 4.77615 10.1239 5.00001 10.4 5.00001C10.6762 5.00001 10.9 4.77615 10.9 4.50001C10.9 4.22387 10.6762 4.00001 10.4 4.00001ZM12.1 8.50001C12.1 8.22387 12.3238 8.00001 12.6 8.00001C12.8761 8.00001 13.1 8.22387 13.1 8.50001C13.1 8.77615 12.8761 9.00001 12.6 9.00001C12.3238 9.00001 12.1 8.77615 12.1 8.50001ZM13.4 10C13.1239 10 12.9 10.2239 12.9 10.5C12.9 10.7761 13.1239 11 13.4 11C13.6762 11 13.9 10.7761 13.9 10.5C13.9 10.2239 13.6762 10 13.4 10Z"
+      fill="currentColor"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+  ></path>
+</svg>
+
+      </button>
+
+      <button
+        data-operation-menu-flag
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded border border-transparent bg-white hover:bg-gray-200 focus:outline-none"
+        disabled
+      >
+        <div class="flex h-5 w-5 items-center justify-center">
+          <div class="whitespace-nowrap font-sans text-sm font-bold">
+            (<span class="italic">x</span>)
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div
+      data-operation-menu-delete
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white drop-shadow-lg hover:bg-red-200"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+</svg>
+
+    </div>
+  </div>
+</template>
+ <template id="operation-inspector-template">
+  <operation-inspector class="flex w-60 flex-col p-4 text-neutral-900">
+    <div class="items-left flex flex-col space-y-4 divide-y">
+      <div id="conditional-gate-pane" class="items-left flex flex-col">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">If Conditional</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="if-input" class="select-none font-normal text-neutral-700">If</label>
+          <input
+            data-target="operation-inspector.ifInput"
+            type="text"
+            name="if"
+            id="if-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div id="angle-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Angle</h1>
+
+        <div class="pane-body ml-4 mr-2 mt-4 grid grid-cols-3 grid-rows-3 items-center gap-2">
+          <label
+            for="angle-input"
+            class="select-none font-normal text-neutral-700"
+            data-target="operation-inspector.angleInputLabel"
+            >Angle</label
+          >
+          <input
+            data-target="operation-inspector.angleInput"
+            type="text"
+            name="angle"
+            id="angle-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <angle-slider
+            data-target="operation-inspector.angleSlider"
+            class="ml-2 inline-block"
+          ></angle-slider>
+
+          <label for="denominator-input" class="block text-sm font-normal text-neutral-700"
+            >Denom</label
+          >
+          <input
+            data-target="operation-inspector.denominatorInput"
+            type="number"
+            min="2"
+            name="denominator"
+            id="denominator-input"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+          <div class="whitespace-nowrap pl-2 text-sm text-neutral-500">
+            <span data-target="operation-inspector.denominatorVariableLabel"></span> = nπ/<span
+              data-target="operation-inspector.denominatorLabel"
+              class="font-bold text-yellow-600"
+              >?</span
+            >
+          </div>
+
+          <div class="min-w-0 flex-1 text-sm">
+            <label for="reduce-fraction-checkbox" class="select-none font-normal text-neutral-700"
+              >Reduce</label
+            >
+          </div>
+          <div class="flex h-5 items-center">
+            <input
+              data-target="operation-inspector.reduceAngleFractionCheckbox"
+              id="reduce-fraction-checkbox"
+              name="reduce-fraction"
+              type="checkbox"
+              class="h-4 w-4 rounded border-neutral-300 text-indigo-600 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="conditional-flag-pane" class="items-left mb-2 flex flex-col pt-4">
+        <h1 class="mb-0 text-base font-bold text-neutral-900">Conditional Flag</h1>
+
+        <div class="pane-body ml-4 mt-4 grid grid-cols-3 grid-rows-1 items-center gap-2">
+          <label for="flag-input" class="select-none font-normal text-neutral-700">Flag</label>
+          <input
+            data-target="operation-inspector.flagInput"
+            type="text"
+            name="flag"
+            id="flag-input"
+            spellcheck="false"
+            class="block w-full rounded-md border-transparent bg-neutral-100 py-1 pl-2 pr-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </operation-inspector>
+</template>
+ <template id="qubit-circle-popup">
+  <header>
+    <h1 id="qubit-circle-popup--header" class="mb-4">
+      |<span id="qubit-circle-popup--ket-binary-value" class="font-mono"></span
+      ><span class="mr-2">⟩</span><span class="mr-1">十進</span
+      ><span id="qubit-circle-popup--ket-decimal-value" class="font-mono"></span>
+    </h1>
+  </header>
+
+  <ul class="list-none">
+    <li id="qubit-circle-popup--amplitude" class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M12.1857 8.00006C12.1857 11.2575 9.88112 13.6786 7.29284 13.6786C4.70456 13.6786 2.40002 11.2575 2.40002 8.00006C2.40002 4.7426 4.70456 2.32153 7.29284 2.32153C9.88112 2.32153 12.1857 4.7426 12.1857 8.00006Z"
+    stroke="#0EA5E9"
+    stroke-width="2"
+  />
+  <path
+    d="M12.2428 2.73584C12.2428 2.73584 12.2428 10.4358 12.2428 12.0072C12.2428 13.5787 14.5999 12.793 14.5999 12.793"
+    stroke="#0EA5E9"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>
+
+      <span class="mr-1">振幅:</span>
+      <span id="qubit-circle-popup--amplitude-real-value" class="font-mono font-bold"></span>
+      <span id="qubit-circle-popup--amplitude-imag-value" class="font-mono font-bold"></span>
+    </li>
+    <li id="qubit-circle-popup--probability" class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle cx="7.99998" cy="7.99998" r="6.4" fill="white" />
+  <circle cx="8" cy="8" r="4" fill="#0EA5E9" />
+</svg>
+
+      <span class="mr-1">確率:</span>
+      <span id="qubit-circle-popup--probability-value" class="font-mono font-bold"></span>
+    </li>
+    <li id="qubit-circle-popup--phase" class="flex items-center">
+      <svg
+  class="w-4 h-4 mr-1"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <mask id="path-1-inside-1_897_48368" fill="white">
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M6.021 8.95146L7.2983 7.41248C7.32697 7.43627 7.35545 7.46028 7.38372 7.4845C7.6668 7.72719 7.93082 7.99149 8.17322 8.27482C8.59993 8.77407 8.95759 9.33083 9.23491 9.93042C9.63218 10.7894 9.8557 11.7171 9.89406 12.6602C9.89794 12.7573 9.8999 12.8549 9.8999 12.9529C9.8999 12.9809 9.89974 13.0088 9.89942 13.0367L7.89956 13.0134C7.89978 12.9933 7.8999 12.9731 7.8999 12.9529C7.8999 11.3438 7.16896 9.9053 6.021 8.95146Z"
+    />
+  </mask>
+  <path
+    d="M6.021 8.95146L4.482 7.67416L3.2054 9.21231L4.74285 10.4898L6.021 8.95146ZM7.2983 7.41248L8.5756 5.87348L7.03661 4.59618L5.7593 6.13517L7.2983 7.41248ZM7.38372 7.4845L8.68546 5.96612L8.68475 5.96551L7.38372 7.4845ZM8.17322 8.27482L9.69356 6.97538L9.69295 6.97466L8.17322 8.27482ZM9.23491 9.93042L7.41966 10.77L7.41966 10.77L9.23491 9.93042ZM9.89406 12.6602L11.8925 12.5804L11.8924 12.579L9.89406 12.6602ZM9.89942 13.0367L9.87614 15.0365L11.8765 15.0598L11.8993 13.0594L9.89942 13.0367ZM7.89956 13.0134L5.89969 12.9906L5.87691 14.99L7.87627 15.0132L7.89956 13.0134ZM7.55999 10.2288L8.83729 8.68978L5.7593 6.13517L4.482 7.67416L7.55999 10.2288ZM6.02099 8.95147C6.0417 8.96866 6.06227 8.986 6.08269 9.00349L8.68475 5.96551C8.64862 5.93457 8.61224 5.90389 8.5756 5.87348L6.02099 8.95147ZM9.69295 6.97466C9.38361 6.61308 9.04671 6.27583 8.68546 5.96612L6.08198 9.00288C6.28689 9.17855 6.47803 9.36989 6.65349 9.57498L9.69295 6.97466ZM6.65288 9.57427C6.96107 9.93485 7.21938 10.3369 7.41966 10.77L11.0502 9.09085C10.6958 8.32471 10.2388 7.61329 9.69356 6.97538L6.65288 9.57427ZM7.41966 10.77C7.70658 11.3903 7.86801 12.0604 7.89571 12.7415L11.8924 12.579C11.8434 11.3738 11.5578 10.1884 11.0502 9.09085L7.41966 10.77ZM11.8999 12.9529C11.8999 12.8282 11.8974 12.704 11.8925 12.5804L7.89566 12.7401C7.89847 12.8106 7.8999 12.8816 7.8999 12.9529H11.8999ZM11.8993 13.0594C11.8997 13.024 11.8999 12.9885 11.8999 12.9529H7.8999C7.8999 12.9733 7.89978 12.9936 7.89955 13.0139L11.8993 13.0594ZM9.9227 11.0368L7.92284 11.0135L7.87627 15.0132L9.87614 15.0365L9.9227 11.0368ZM9.89943 13.0362C9.89974 13.0084 9.8999 12.9807 9.8999 12.9529H5.8999C5.8999 12.9655 5.89983 12.9781 5.89969 12.9906L9.89943 13.0362ZM9.8999 12.9529C9.8999 10.7242 8.88483 8.7307 7.29915 7.41317L4.74285 10.4898C5.4531 11.0799 5.8999 11.9633 5.8999 12.9529H9.8999Z"
+    fill="white"
+    mask="url(#path-1-inside-1_897_48368)"
+  />
+  <path d="M2.5 12.645H14.1999" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" />
+  <line x1="2.26065" y1="12.5912" x2="10.2312" y2="3.09222" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" />
+</svg>
+
+      <span class="mr-1">位相:</span>
+      <span id="qubit-circle-popup--phase-value" class="font-mono font-bold"></span>
+    </li>
+  </ul>
+</template>
+
+
+  </body>
+</html>

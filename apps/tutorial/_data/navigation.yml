@@ -152,6 +152,11 @@
     - name: 量子位相推定の出力
       link: ./qpe_output.html
       new: true
+# - name: ショアの素因数分解
+#   pages:
+#     - name: 別問題に帰着する
+#       link: ./shore_hsp.html
+#       new: true
 - name: ふろく
   pages:
     - name: クローン禁止定理の証明
