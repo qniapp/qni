@@ -100,7 +100,7 @@ next_url: ./phase_kickback.html
   1000) が得られます。 これが {% qpu_operation h %} の固有位相である π を表していることになります。
 </p>
 
-<div class="relative mb-10 rounded-md bg-neutral-50">
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
   <div class="overflow-scroll p-8">
     <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
       <circuit-editor>
@@ -112,15 +112,15 @@ next_url: ./phase_kickback.html
             class="inline-block h-10 w-10 p-1"
           >
             <div
-              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-gray-200"
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
             >
-              {% include mixer_horizontal.svg class="h-4 w-4 text-gray-700" %}
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
             </div>
           </inspector-button>
         </div>
 
         <quantum-circuit
-          class="mb-10"
+          class="mt-12 mb-40"
           data-target="quantum-simulator.circuit circuit-editor.circuit"
           data-min-wire-count="1"
           data-max-wire-count="1"
@@ -133,12 +133,14 @@ next_url: ./phase_kickback.html
           id="circle-notation"
           data-target="quantum-simulator.circleNotation"
           data-qubit-circle-popup-template-id="qubit-circle-popup"
-          class="border-swan z-40 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
           data-padding-X="16"
           data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
+
+      {% include run_circuit_button.html %}
     </quantum-simulator>
   </div>
 </div>
@@ -149,8 +151,11 @@ next_url: ./phase_kickback.html
   出力の 8 を固有位相として解釈するには、出力用量子ビットの数が 4 つであることを使います。
   出力用量子ビットのビット数は出力する固有位相角度の分解能を表します。 たとえば 4 ビットの場合 16
   通りの値が表せるので、4 ビットで表現できる角度は 360° を 16 分割した 360/16 = 22.5°
-  刻みとなります。 π = 180° を 22.5° の倍数で表現すると、22.5° x 8 = 180° なので、8 でぴったり 180°
-  が表現できます。
+  刻みとなります。
+</p>
+
+<p>
+  π = 180° を 22.5° の倍数で表現すると、22.5° x 8 = 180° なので、8 でぴったり 180° が表現できます。
 </p>
 
 <p>
@@ -158,10 +163,133 @@ next_url: ./phase_kickback.html
   になるので、より微妙な角度も表現しやすくなります。
 </p>
 
+<h2>精度を高める</h2>
+
 <p>
-  また出力用量子ビット数を増やすことで、正しい固有位相が測定できる確率を改善できます。
-  一般に、固有位相の精度を \(n\) に指定したとき、1 - \(\epsilon\)
-  の成功確率で正確に固有位相を得るために必要な量子位相推定回路の量子ビット数 t
+  {% qpu_operation phase %} (2π/3) の固有位相 2π/3 を推定してみましょう。 出力用量子ビット数を 3
+  にした場合、次の回路になります。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[2π/3 (120°) の固有位相を推定"],[1,1,1,"|0>"],[1,1,1,"X"],["|0>","|0>","|0>"],["H","H","H"],["•",1,1,"P(2π_3)"],[1,"•",1,"P(2π_3)"],[1,"•",1,"P(2π_3)"],[1,1,"•","P(2π_3)"],[1,1,"•","P(2π_3)"],[1,1,"•","P(2π_3)"],[1,1,"•","P(2π_3)"],["Swap",1,"Swap"],["H"],["P(-π_2)","•"],["P(-π_4)",1,"•"],[1,"H"],[1,"P(-π_2)","•"],[1,1,"H"],["]"],[1],["[出力"],["Measure","Measure","Measure"],["]"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      {% include run_circuit_button.html %}
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  測定結果は 68.8% で 011 (10 進数で 3) となります。 3 量子ビットの場合、分解能は 45°
+  刻みなので、011 は 45° x 3 = 135° と読み取ることができます。 これは実際の値 120°
+  と比較すると、誤差が +15° あります。
+</p>
+
+<p>出力用量子ビットを 4 にして精度を上げてみましょう。</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              {% include mixer_horizontal.svg class="h-4 w-4 text-neutral-700" %}
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["[2π/3 (120°) の固有位相を推定"],[1,1,1,1,"|0>"],[1,1,1,1,"X"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["•",1,1,1,"P(2π_3)"],[1,"•",1,1,"P(2π_3)"],[1,"•",1,1,"P(2π_3)"],[1,1,"•",1,"P(2π_3)"],[1,1,"•",1,"P(2π_3)"],[1,1,"•",1,"P(2π_3)"],[1,1,"•",1,"P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],[1,1,1,"•","P(2π_3)"],["Swap",1,1,"Swap"],[1,"Swap","Swap"],["H"],["P(-π_2)","•"],["P(-π_4)",1,"•"],["P(-π_8)",1,1,"•"],[1,"H"],[1,"P(-π_2)","•"],[1,"P(-π_4)",1,"•"],[1,1,"H"],[1,1,"P(-π_2)","•"],[1,1,1,"H"],["]"],[1],["[出力"],["Measure","Measure","Measure","Measure"],["]"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      {% include run_circuit_button.html %}
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  精度は上がっているでしょうか？ 測定結果は 68.5% で 0101 (10 進数で 5) となります。 4
+  量子ビットの場合、分解能は 22.5° 刻みなので、0101 は 22.5° x 5 = 112.5° と読み取ることができます。
+  これは実際の固有位相 120° と比較すると誤差が -7.5° であり、3 量子ビットでの誤差 +15°
+  よりも小さくなっています。 確かに、出力用量子ビット数を増やすことで精度が上がりました。
+</p>
+
+<p>
+  出力用量子ビット数を増やすと、実は精度だけでなく固有位相の近似値が測定できる確率も改善します。 4
+  量子ビットの例では、最も高い確率で測定できる 0101 (68.5%) の右隣 0110 は 17.2%
+  の確率で測定できます。 0110 (10 進数で 6) は 22.5° x 6 = 135° なので、これは 3
+  量子ビットでの最良値と同じ値です。 これはつまり、4 量子ビットの場合には、3
+  量子ビットでの最良値と同じ (135°) かそれより良い値 (112.5°) が測定できていることになります。 135°
+  (0110) と 112.5° (0101) の確率を足すと 17.2% + 68.5% = 85.7% なので、3
+  量子ビットでの最良値が測定できる確率 68.8% よりも高まっています。 このように、精度を 3 量子ビット
+  (45° 刻み) で考えた時、4
+  量子ビットでは固有位相の近似値の精度と、近似値が測定できる確率も改善します。
+</p>
+
+<p>
+  一般に、精度を \(n\) ビットに指定したとき、少なくとも \(1 - \epsilon\)
+  の確率で固有位相の近似値を得るために必要な量子位相推定回路の量子ビット数 \(t\)
   は、次の式で計算できることが知られています。
 </p>
 
