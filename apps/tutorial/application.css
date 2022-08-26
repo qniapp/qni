@@ -5997,6 +5997,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   width: 4rem;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -6011,10 +6015,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .w-auto {
   width: auto;
-}
-
-.w-8 {
-  width: 2rem;
 }
 
 .w-7 {
@@ -6146,6 +6146,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-2 {
@@ -6432,6 +6436,11 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   padding-bottom: 1rem !important;
 }
 
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -6455,11 +6464,6 @@ qubit-circle.magnitude-emerald::part(magnitude) {
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .px-8 {
@@ -6515,6 +6519,10 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .align-middle {
   vertical-align: middle;
 }
@@ -6537,14 +6545,14 @@ qubit-circle.magnitude-emerald::part(magnitude) {
   line-height: 1.25rem;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-base {
