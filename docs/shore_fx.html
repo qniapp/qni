@@ -1349,7 +1349,9 @@
             <div class="content-with-margin"><p>
   ショアのアルゴリズムで \(a^xmod(N)\) (べき剰余) を求める回路は、まともに実装すると非常に複雑です。
   V. Vedral らの論文<label for="margin-note-vedral" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-vedral" class="margin-note__toggle hidden"><span class="margin-note">V. Vedral, A. Barenco, A. Ekert,
-  <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic">Quantum Networks for Elementary Arithmetic Operations</a>
+  <a href="https://arxiv.org/abs/quant-ph/9511018" class="italic"
+    >Quantum Networks for Elementary Arithmetic Operations</a
+  >
   (2021) </span>には、べき剰余回路の実現例が載っています。
 </p>
 
@@ -1358,9 +1360,9 @@
 </figure>
 
 <p>
-  この回路をざっと眺めてみると、べき剰余回路は Ctrl MULT MOD という部品と <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> をいくつか並べた形になるようです。
-  Ctrl MULT MOD は制御つき剰余乗算のことで、(その意味はともかく) 次のような回路になります。
-  この中にも ADDER MOD と呼ばれる別の部品が入っています。
+  この回路をざっと眺めてみると、べき剰余回路は Ctrl MULT MOD という部品と <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate>
+  をいくつか並べた形になるようです。 Ctrl MULT MOD は制御つき剰余乗算のことで、(その意味はともかく)
+  次のような回路になります。 この中にも ADDER MOD と呼ばれる別の部品が入っています。
   このように、べき剰余回路はさまざまな部品を階層的に組合わせることで構成できる巨大な回路です。
 </p>
 
@@ -1371,31 +1373,33 @@
 <h2>べき剰余の簡易実装</h2>
 
 <p>
-  まともにべき剰余回路を実装すると日が暮れてしまう (または、いつ実装できるか分からない) ので、今回は小さい実装を見てみましょう。
-  \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2 つから構成されます。
-  ごく特別な場合に限定されますが、それぞれを短く実装することができます。
+  まともにべき剰余回路を実装すると日が暮れてしまう (または、いつ実装できるか分からない)
+  ので、今回は小さい実装を見てみましょう。 \(a^xmod(N)\) はべき乗 \(a^x\) と剰余 \(mod(N)\) の 2
+  つから構成されます。 ごく特別な場合に限定されますが、それぞれを短く実装することができます。
 </p>
 
 <p>
-  まずべき乗 \(a^x\)について、今回は \(a = 2\) を選択したことを思い出してください。
-  \(2^x\) は論理演算ではシフト演算で簡単に実装できます。
-  つまり \(2^x\) を計算するには左シフトを \(x\) 回、つまり 2 進数として x ビットほど上位ビットへずらすだけです。
-  ビットをずらすという操作は <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> で実現できます。ビットのずらしを <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> によるビットの入れ替えとして書くことで、量子回路でのシフト演算が実現できます。
+  まずべき乗 \(a^x\)について、今回は \(a = 2\) を選択したことを思い出してください。 \(2^x\)
+  は論理演算ではシフト演算で簡単に実装できます。 つまり \(2^x\) を計算するには左シフトを \(x\)
+  回、つまり 2 進数として x ビットほど上位ビットへずらすだけです。 ビットをずらすという操作は <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> で実現できます。ビットのずらしを <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate>
+  によるビットの入れ替えとして書くことで、量子回路でのシフト演算が実現できます。
 </p>
 
 <p>
-  また、シフト演算でラップアラウンド (最上位ビットを左シフトすると最下位ビットになること) を実現することで、剰余 \(mod(N)\) も実現できます。
-  今回は \(mod(15)\) なので、たとえば 1000 (10 進数で 8) を左シフトで 2 倍すると、最上位ビットが最下位ビットにラップアラウンドして 0001 となります。
-  \(16 mod(15) = 1\) なので、確かに剰余が正しく求まっています。
+  また、シフト演算でラップアラウンド (最上位ビットを左シフトすると最下位ビットになること)
+  を実現することで、剰余 \(mod(N)\) も実現できます。 今回は \(mod(15)\) なので、たとえば 1000 (10
+  進数で 8) を左シフトで 2 倍すると、最上位ビットが最下位ビットにラップアラウンドして 0001
+  となります。 \(16 mod(15) = 1\) なので、確かに剰余が正しく求まっています。
 </p>
 
 <h2>べき剰余回路</h2>
 
 <p>
   シフト演算とラップアラウンドで \(2^x mod(15)\) を計算する回路を作ってみましょう。
-  ショアの回路では、量子ビットとして \(f(x) = 2^x mod(15)\) の値を保持する量子ビットと、x の値を保持する 2 種類の量子ビットを使います。
-  \(f(x)\) の量子ビットは mod(15) のラップアラウンドを実現するので 4 量子ビットとします。
-  また \(x\) の量子ビットもとりあえず同じ 4 量子ビットとしておきます。
+  ショアの回路では、量子ビットとして \(f(x) = 2^x mod(15)\) の値を保持する量子ビットと、x
+  の値を保持する 2 種類の量子ビットを使います。 \(f(x)\) の量子ビットは mod(15)
+  のラップアラウンドを実現するので 4 量子ビットとします。 また \(x\) の量子ビットもとりあえず同じ 4
+  量子ビットとしておきます。
 </p>
 
 <div class="relative my-5 mb-10 rounded-md bg-neutral-50">
@@ -1419,22 +1423,22 @@
         </div>
 
         <quantum-circuit
-            class="mt-12 mb-40"
-            data-target="quantum-simulator.circuit circuit-editor.circuit"
-            data-min-wire-count="1"
-            data-max-wire-count="1"
-            data-min-step-count="8"
-            data-json='{"cols":[["{f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["}"],[1],["{x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["}"],[1],["{2^x mod(15) を計算"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["}"],[1]]}'
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{f(x)を入れる用"],["|1>","|0>","|0>","|0>"],["}"],[1],["{x=0〜15"],[1,1,1,1,"|0>","|0>","|0>","|0>"],[1,1,1,1,"H","H","H","H"],["}"],[1],["{2^x mod(15) を計算"],[1,1,"Swap","Swap","•"],[1,"Swap","Swap",1,"•"],["Swap","Swap",1,1,"•"],[1,"Swap",1,"Swap",1,"•"],["Swap",1,"Swap",1,1,"•"],["}"],[1]]}'
         >
         </quantum-circuit>
 
         <circle-notation
-            id="circle-notation"
-            data-target="quantum-simulator.circleNotation"
-            data-qubit-circle-popup-template-id="qubit-circle-popup"
-            class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
-            data-padding-X="16"
-            data-padding-Y="20"
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
         >
         </circle-notation>
       </circuit-editor>
@@ -1449,60 +1453,66 @@
 </div>
 
 <p>
-  2 種類の量子ビットはそれぞれ次のように初期化しておきます。
-  \(f(x) = 2^x mod(15)\) の値を保持する 4 量子ビットは、\(x = 0\) のとき 1 なので \(|1\rangle\) で初期化します。
-  \(x\) の値を保持する 4 量子ビットは、\(0 \dots 15\) を重ね合わせるために全ビットに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用しておきます。
+  2 種類の量子ビットはそれぞれ次のように初期化しておきます。 \(f(x) = 2^x mod(15)\) の値を保持する 4
+  量子ビットは、\(x = 0\) のとき 1 なので \(|1\rangle\) で初期化します。 \(x\) の値を保持する 4
+  量子ビットは、\(0 \dots 15\) を重ね合わせるために全ビットに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  を適用しておきます。
 </p>
 
 <p>
-  この段階での状態ベクトルは、次のように円表示を正方形に並べると把握しやすくなります。
-  f(x) の値は縦方向 (列) に読みます。\(|1\rangle\) や \(|17\rangle\) などに確率が散らばっていますが、測定すると f(x) は 100% の確率で 1 となります。これは f(x) を \(|1\rangle\) に初期化したので当然です。
-  x の値は横方向 (行) に読みます。<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> で重ね合わせを作ったので、x の値は 0 から 15 までそれぞれ 6.25% の等しい重みを持ちます。
+  この段階での状態ベクトルは、次のように円表示を正方形に並べると把握しやすくなります。 f(x)
+  の値は縦方向 (列) に読みます。\(|1\rangle\) や \(|17\rangle\)
+  などに確率が散らばっていますが、測定すると f(x) は 100% の確率で 1 となります。これは f(x) を \(|1\rangle\) に初期化したので当然です。 x の値は横方向 (行) に読みます。<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
+  で重ね合わせを作ったので、x の値は 0 から 15 までそれぞれ 6.25% の等しい重みを持ちます。
 </p>
 
-<div class="flex flex-col w-min">
-  <div class="flex flex-row justify-center"><span class="text-xl font-bold mb-4">f(x) の値</span></div>
-  <div class="flex flex-row justify-end mb-2">
+<div class="flex w-min flex-col">
+  <div class="flex flex-row justify-center">
+    <span class="mb-4 text-xl font-bold">f(x) の値</span>
+  </div>
+  <div class="mb-2 flex flex-row justify-end">
     <div class="w-8 text-center"><span class="text-xl">0</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">1</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">2</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">3</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">4</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">5</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">6</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">7</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">8</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">9</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">10</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">11</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">12</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">13</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">14</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">15</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">1</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">2</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">3</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">4</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">5</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">6</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">7</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">8</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">9</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">10</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">11</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">12</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">13</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">14</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">15</span></div>
   </div>
 
   <div class="flex flex-row">
-    <div class="flex flex-col justify-center"><span class="text-xl font-bold mr-4 whitespace-nowrap">x の値</span></div>
-    <div class="flex flex-col mr-2">
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>0</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>1</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>2</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>3</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>4</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>5</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>6</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>7</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>8</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>9</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>10</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>11</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>12</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>13</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>14</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>15</span></div>
+    <div class="flex flex-col justify-center">
+      <span class="mr-4 whitespace-nowrap text-xl font-bold">x の値</span>
+    </div>
+    <div class="mr-2 flex flex-col">
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>0</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>1</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>2</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>3</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>4</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>5</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>6</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>7</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>8</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>9</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>10</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>11</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>12</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>13</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>14</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>15</span></div>
     </div>
     <div class="flex flex-col justify-start">
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="0"
@@ -1513,8 +1523,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="1"
   data-amplitude="0.25"
@@ -1524,8 +1533,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="2"
   data-amplitude="0"
@@ -1535,8 +1543,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="3"
   data-amplitude="0"
@@ -1546,8 +1553,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="4"
   data-amplitude="0"
@@ -1557,8 +1563,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="5"
   data-amplitude="0"
@@ -1568,8 +1573,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="6"
   data-amplitude="0"
@@ -1579,8 +1583,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="7"
   data-amplitude="0"
@@ -1590,8 +1593,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="8"
   data-amplitude="0"
@@ -1601,8 +1603,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="9"
   data-amplitude="0"
@@ -1612,8 +1613,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="10"
   data-amplitude="0"
@@ -1623,8 +1623,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="11"
   data-amplitude="0"
@@ -1634,8 +1633,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="12"
   data-amplitude="0"
@@ -1645,8 +1643,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="13"
   data-amplitude="0"
@@ -1656,8 +1653,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="14"
   data-amplitude="0"
@@ -1667,8 +1663,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="15"
   data-amplitude="0"
@@ -1680,7 +1675,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="16"
@@ -1691,8 +1686,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="17"
   data-amplitude="0.25"
@@ -1702,8 +1696,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="18"
   data-amplitude="0"
@@ -1713,8 +1706,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="19"
   data-amplitude="0"
@@ -1724,8 +1716,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="20"
   data-amplitude="0"
@@ -1735,8 +1726,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="21"
   data-amplitude="0"
@@ -1746,8 +1736,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="22"
   data-amplitude="0"
@@ -1757,8 +1746,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="23"
   data-amplitude="0"
@@ -1768,8 +1756,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="24"
   data-amplitude="0"
@@ -1779,8 +1766,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="25"
   data-amplitude="0"
@@ -1790,8 +1776,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="26"
   data-amplitude="0"
@@ -1801,8 +1786,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="27"
   data-amplitude="0"
@@ -1812,8 +1796,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="28"
   data-amplitude="0"
@@ -1823,8 +1806,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="29"
   data-amplitude="0"
@@ -1834,8 +1816,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="30"
   data-amplitude="0"
@@ -1845,8 +1826,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="31"
   data-amplitude="0"
@@ -1858,7 +1838,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="32"
@@ -1869,8 +1849,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="33"
   data-amplitude="0.25"
@@ -1880,8 +1859,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="34"
   data-amplitude="0"
@@ -1891,8 +1869,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="35"
   data-amplitude="0"
@@ -1902,8 +1879,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="36"
   data-amplitude="0"
@@ -1913,8 +1889,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="37"
   data-amplitude="0"
@@ -1924,8 +1899,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="38"
   data-amplitude="0"
@@ -1935,8 +1909,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="39"
   data-amplitude="0"
@@ -1946,8 +1919,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="40"
   data-amplitude="0"
@@ -1957,8 +1929,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="41"
   data-amplitude="0"
@@ -1968,8 +1939,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="42"
   data-amplitude="0"
@@ -1979,8 +1949,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="43"
   data-amplitude="0"
@@ -1990,8 +1959,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="44"
   data-amplitude="0"
@@ -2001,8 +1969,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="45"
   data-amplitude="0"
@@ -2012,8 +1979,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="46"
   data-amplitude="0"
@@ -2023,8 +1989,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="47"
   data-amplitude="0"
@@ -2036,7 +2001,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="48"
@@ -2047,8 +2012,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="49"
   data-amplitude="0.25"
@@ -2058,8 +2022,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="50"
   data-amplitude="0"
@@ -2069,8 +2032,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="51"
   data-amplitude="0"
@@ -2080,8 +2042,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="52"
   data-amplitude="0"
@@ -2091,8 +2052,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="53"
   data-amplitude="0"
@@ -2102,8 +2062,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="54"
   data-amplitude="0"
@@ -2113,8 +2072,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="55"
   data-amplitude="0"
@@ -2124,8 +2082,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="56"
   data-amplitude="0"
@@ -2135,8 +2092,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="57"
   data-amplitude="0"
@@ -2146,8 +2102,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="58"
   data-amplitude="0"
@@ -2157,8 +2112,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="59"
   data-amplitude="0"
@@ -2168,8 +2122,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="60"
   data-amplitude="0"
@@ -2179,8 +2132,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="61"
   data-amplitude="0"
@@ -2190,8 +2142,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="62"
   data-amplitude="0"
@@ -2201,8 +2152,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="63"
   data-amplitude="0"
@@ -2214,7 +2164,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="64"
@@ -2225,8 +2175,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="65"
   data-amplitude="0.25"
@@ -2236,8 +2185,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="66"
   data-amplitude="0"
@@ -2247,8 +2195,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="67"
   data-amplitude="0"
@@ -2258,8 +2205,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="68"
   data-amplitude="0"
@@ -2269,8 +2215,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="69"
   data-amplitude="0"
@@ -2280,8 +2225,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="70"
   data-amplitude="0"
@@ -2291,8 +2235,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="71"
   data-amplitude="0"
@@ -2302,8 +2245,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="72"
   data-amplitude="0"
@@ -2313,8 +2255,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="73"
   data-amplitude="0"
@@ -2324,8 +2265,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="74"
   data-amplitude="0"
@@ -2335,8 +2275,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="75"
   data-amplitude="0"
@@ -2346,8 +2285,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="76"
   data-amplitude="0"
@@ -2357,8 +2295,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="77"
   data-amplitude="0"
@@ -2368,8 +2305,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="78"
   data-amplitude="0"
@@ -2379,8 +2315,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="79"
   data-amplitude="0"
@@ -2392,7 +2327,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="80"
@@ -2403,8 +2338,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="81"
   data-amplitude="0.25"
@@ -2414,8 +2348,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="82"
   data-amplitude="0"
@@ -2425,8 +2358,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="83"
   data-amplitude="0"
@@ -2436,8 +2368,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="84"
   data-amplitude="0"
@@ -2447,8 +2378,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="85"
   data-amplitude="0"
@@ -2458,8 +2388,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="86"
   data-amplitude="0"
@@ -2469,8 +2398,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="87"
   data-amplitude="0"
@@ -2480,8 +2408,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="88"
   data-amplitude="0"
@@ -2491,8 +2418,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="89"
   data-amplitude="0"
@@ -2502,8 +2428,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="90"
   data-amplitude="0"
@@ -2513,8 +2438,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="91"
   data-amplitude="0"
@@ -2524,8 +2448,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="92"
   data-amplitude="0"
@@ -2535,8 +2458,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="93"
   data-amplitude="0"
@@ -2546,8 +2468,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="94"
   data-amplitude="0"
@@ -2557,8 +2478,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="95"
   data-amplitude="0"
@@ -2570,7 +2490,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="96"
@@ -2581,8 +2501,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="97"
   data-amplitude="0.25"
@@ -2592,8 +2511,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="98"
   data-amplitude="0"
@@ -2603,8 +2521,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="99"
   data-amplitude="0"
@@ -2614,8 +2531,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="100"
   data-amplitude="0"
@@ -2625,8 +2541,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="101"
   data-amplitude="0"
@@ -2636,8 +2551,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="102"
   data-amplitude="0"
@@ -2647,8 +2561,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="103"
   data-amplitude="0"
@@ -2658,8 +2571,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="104"
   data-amplitude="0"
@@ -2669,8 +2581,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="105"
   data-amplitude="0"
@@ -2680,8 +2591,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="106"
   data-amplitude="0"
@@ -2691,8 +2601,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="107"
   data-amplitude="0"
@@ -2713,8 +2622,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="109"
   data-amplitude="0"
@@ -2724,8 +2632,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="110"
   data-amplitude="0"
@@ -2735,8 +2642,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="111"
   data-amplitude="0"
@@ -2748,7 +2654,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="112"
@@ -2759,8 +2665,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="113"
   data-amplitude="0.25"
@@ -2770,8 +2675,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="114"
   data-amplitude="0"
@@ -2781,8 +2685,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="115"
   data-amplitude="0"
@@ -2792,8 +2695,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="116"
   data-amplitude="0"
@@ -2803,8 +2705,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="117"
   data-amplitude="0"
@@ -2814,8 +2715,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="118"
   data-amplitude="0"
@@ -2836,8 +2736,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="120"
   data-amplitude="0"
@@ -2847,8 +2746,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="121"
   data-amplitude="0"
@@ -2858,8 +2756,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="122"
   data-amplitude="0"
@@ -2869,8 +2766,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="123"
   data-amplitude="0"
@@ -2880,8 +2776,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="124"
   data-amplitude="0"
@@ -2891,8 +2786,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="125"
   data-amplitude="0"
@@ -2913,8 +2807,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="127"
   data-amplitude="0"
@@ -2926,7 +2819,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="128"
@@ -2937,8 +2830,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="129"
   data-amplitude="0.25"
@@ -2948,8 +2840,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="130"
   data-amplitude="0"
@@ -2959,8 +2850,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="131"
   data-amplitude="0"
@@ -2970,8 +2860,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="132"
   data-amplitude="0"
@@ -2981,8 +2870,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="133"
   data-amplitude="0"
@@ -2992,8 +2880,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="134"
   data-amplitude="0"
@@ -3014,8 +2901,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="136"
   data-amplitude="0"
@@ -3025,8 +2911,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="137"
   data-amplitude="0"
@@ -3036,8 +2921,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="138"
   data-amplitude="0"
@@ -3047,8 +2931,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="139"
   data-amplitude="0"
@@ -3058,8 +2941,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="140"
   data-amplitude="0"
@@ -3069,8 +2951,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="141"
   data-amplitude="0"
@@ -3091,8 +2972,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="143"
   data-amplitude="0"
@@ -3104,7 +2984,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="144"
@@ -3115,8 +2995,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="145"
   data-amplitude="0.25"
@@ -3126,8 +3005,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="146"
   data-amplitude="0"
@@ -3137,8 +3015,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="147"
   data-amplitude="0"
@@ -3148,8 +3025,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="148"
   data-amplitude="0"
@@ -3159,8 +3035,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="149"
   data-amplitude="0"
@@ -3170,8 +3045,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="150"
   data-amplitude="0"
@@ -3192,8 +3066,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="152"
   data-amplitude="0"
@@ -3203,8 +3076,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="153"
   data-amplitude="0"
@@ -3214,8 +3086,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="154"
   data-amplitude="0"
@@ -3225,8 +3096,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="155"
   data-amplitude="0"
@@ -3236,8 +3106,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="156"
   data-amplitude="0"
@@ -3247,8 +3116,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="157"
   data-amplitude="0"
@@ -3269,8 +3137,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="159"
   data-amplitude="0"
@@ -3282,7 +3149,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="160"
@@ -3293,8 +3160,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="161"
   data-amplitude="0.25"
@@ -3304,8 +3170,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="162"
   data-amplitude="0"
@@ -3315,8 +3180,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="163"
   data-amplitude="0"
@@ -3326,8 +3190,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="164"
   data-amplitude="0"
@@ -3337,8 +3200,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="165"
   data-amplitude="0"
@@ -3348,8 +3210,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="166"
   data-amplitude="0"
@@ -3370,8 +3231,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="168"
   data-amplitude="0"
@@ -3381,8 +3241,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="169"
   data-amplitude="0"
@@ -3392,8 +3251,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="170"
   data-amplitude="0"
@@ -3403,8 +3261,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="171"
   data-amplitude="0"
@@ -3414,8 +3271,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="172"
   data-amplitude="0"
@@ -3425,8 +3281,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="173"
   data-amplitude="0"
@@ -3447,8 +3302,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="175"
   data-amplitude="0"
@@ -3460,7 +3314,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="176"
@@ -3471,8 +3325,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="177"
   data-amplitude="0.25"
@@ -3482,8 +3335,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="178"
   data-amplitude="0"
@@ -3493,8 +3345,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="179"
   data-amplitude="0"
@@ -3504,8 +3355,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="180"
   data-amplitude="0"
@@ -3515,8 +3365,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="181"
   data-amplitude="0"
@@ -3526,8 +3375,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="182"
   data-amplitude="0"
@@ -3548,8 +3396,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="184"
   data-amplitude="0"
@@ -3559,8 +3406,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="185"
   data-amplitude="0"
@@ -3570,8 +3416,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="186"
   data-amplitude="0"
@@ -3581,8 +3426,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="187"
   data-amplitude="0"
@@ -3592,8 +3436,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="188"
   data-amplitude="0"
@@ -3603,8 +3446,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="189"
   data-amplitude="0"
@@ -3625,8 +3467,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="191"
   data-amplitude="0"
@@ -3638,7 +3479,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="192"
@@ -3649,8 +3490,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="193"
   data-amplitude="0.25"
@@ -3660,8 +3500,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="194"
   data-amplitude="0"
@@ -3671,8 +3510,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="195"
   data-amplitude="0"
@@ -3682,8 +3520,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="196"
   data-amplitude="0"
@@ -3693,8 +3530,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="197"
   data-amplitude="0"
@@ -3704,8 +3540,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="198"
   data-amplitude="0"
@@ -3726,8 +3561,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="200"
   data-amplitude="0"
@@ -3737,8 +3571,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="201"
   data-amplitude="0"
@@ -3748,8 +3581,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="202"
   data-amplitude="0"
@@ -3759,8 +3591,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="203"
   data-amplitude="0"
@@ -3770,8 +3601,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="204"
   data-amplitude="0"
@@ -3781,8 +3611,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="205"
   data-amplitude="0"
@@ -3803,8 +3632,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="207"
   data-amplitude="0"
@@ -3816,7 +3644,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="208"
@@ -3827,8 +3655,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="209"
   data-amplitude="0.25"
@@ -3838,8 +3665,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="210"
   data-amplitude="0"
@@ -3849,8 +3675,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="211"
   data-amplitude="0"
@@ -3860,8 +3685,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="212"
   data-amplitude="0"
@@ -3871,8 +3695,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="213"
   data-amplitude="0"
@@ -3882,8 +3705,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="214"
   data-amplitude="0"
@@ -3904,8 +3726,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="216"
   data-amplitude="0"
@@ -3915,8 +3736,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="217"
   data-amplitude="0"
@@ -3926,8 +3746,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="218"
   data-amplitude="0"
@@ -3937,8 +3756,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="219"
   data-amplitude="0"
@@ -3948,8 +3766,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="220"
   data-amplitude="0"
@@ -3959,8 +3776,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="221"
   data-amplitude="0"
@@ -3981,8 +3797,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="223"
   data-amplitude="0"
@@ -3994,7 +3809,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="224"
@@ -4005,8 +3820,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="225"
   data-amplitude="0.25"
@@ -4016,8 +3830,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="226"
   data-amplitude="0"
@@ -4027,8 +3840,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="227"
   data-amplitude="0"
@@ -4038,8 +3850,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="228"
   data-amplitude="0"
@@ -4049,8 +3860,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="229"
   data-amplitude="0"
@@ -4060,8 +3870,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="230"
   data-amplitude="0"
@@ -4082,8 +3891,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="232"
   data-amplitude="0"
@@ -4093,8 +3901,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="233"
   data-amplitude="0"
@@ -4104,8 +3911,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="234"
   data-amplitude="0"
@@ -4115,8 +3921,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="235"
   data-amplitude="0"
@@ -4126,8 +3931,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="236"
   data-amplitude="0"
@@ -4137,8 +3941,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="237"
   data-amplitude="0"
@@ -4159,8 +3962,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="239"
   data-amplitude="0"
@@ -4172,7 +3974,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="240"
@@ -4183,8 +3985,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0.25"
@@ -4194,8 +3995,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0"
@@ -4205,8 +4005,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="243"
   data-amplitude="0"
@@ -4216,8 +4015,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="244"
   data-amplitude="0"
@@ -4227,8 +4025,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="245"
   data-amplitude="0"
@@ -4238,8 +4035,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="246"
   data-amplitude="0"
@@ -4260,8 +4056,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="248"
   data-amplitude="0"
@@ -4271,8 +4066,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="249"
   data-amplitude="0"
@@ -4282,8 +4076,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="250"
   data-amplitude="0"
@@ -4293,8 +4086,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="251"
   data-amplitude="0"
@@ -4304,8 +4096,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="252"
   data-amplitude="0"
@@ -4315,8 +4106,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="253"
   data-amplitude="0"
@@ -4337,8 +4127,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="255"
   data-amplitude="0"
@@ -4355,55 +4144,61 @@
 </div>
 
 <p>
-  次の x の最下位ビットをコントロールビットとする <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> では、\(2mod(15)\) (左シフト演算一回とラップアラウンド) の計算を行います。
-  x の最下位ビットが 1 の場合、f(x) の各ビットを左シフトし 2 倍します。
+  次の x の最下位ビットをコントロールビットとする <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> では、\(2mod(15)\)
+  (左シフト演算一回とラップアラウンド) の計算を行います。 x の最下位ビットが 1 の場合、f(x)
+  の各ビットを左シフトし 2 倍します。
   そして最上位ビットを最下位ビットにラップアラウンドすることで、\(mod(15)\) を計算します。
-  この時、状態ベクトルは次の状態になり、x の最下位ビットが 1 の場合だけ f(x) が 2 倍されていることが分かります。
+  この時、状態ベクトルは次の状態になり、x の最下位ビットが 1 の場合だけ f(x) が 2
+  倍されていることが分かります。
 </p>
 
-<div class="flex flex-col w-min">
-  <div class="flex flex-row justify-center"><span class="text-xl font-bold mb-4">f(x) の値</span></div>
-  <div class="flex flex-row justify-end mb-2">
+<div class="flex w-min flex-col">
+  <div class="flex flex-row justify-center">
+    <span class="mb-4 text-xl font-bold">f(x) の値</span>
+  </div>
+  <div class="mb-2 flex flex-row justify-end">
     <div class="w-8 text-center"><span class="text-xl">0</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">1</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">2</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">3</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">4</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">5</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">6</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">7</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">8</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">9</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">10</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">11</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">12</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">13</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">14</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">15</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">1</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">2</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">3</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">4</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">5</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">6</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">7</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">8</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">9</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">10</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">11</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">12</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">13</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">14</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">15</span></div>
   </div>
 
   <div class="flex flex-row">
-    <div class="flex flex-col justify-center"><span class="text-xl font-bold mr-4 whitespace-nowrap">x の値</span></div>
-    <div class="flex flex-col mr-2">
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>0</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>1</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>2</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>3</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>4</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>5</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>6</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>7</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>8</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>9</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>10</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>11</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>12</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>13</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>14</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>15</span></div>
+    <div class="flex flex-col justify-center">
+      <span class="mr-4 whitespace-nowrap text-xl font-bold">x の値</span>
+    </div>
+    <div class="mr-2 flex flex-col">
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>0</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>1</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>2</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>3</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>4</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>5</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>6</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>7</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>8</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>9</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>10</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>11</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>12</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>13</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>14</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>15</span></div>
     </div>
     <div class="flex flex-col justify-start">
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="0"
@@ -4414,8 +4209,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="1"
   data-amplitude="0.25"
@@ -4425,8 +4219,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="2"
   data-amplitude="0"
@@ -4436,8 +4229,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="3"
   data-amplitude="0"
@@ -4447,8 +4239,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="4"
   data-amplitude="0"
@@ -4458,8 +4249,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="5"
   data-amplitude="0"
@@ -4469,8 +4259,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="6"
   data-amplitude="0"
@@ -4480,8 +4269,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="7"
   data-amplitude="0"
@@ -4491,8 +4279,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="8"
   data-amplitude="0"
@@ -4502,8 +4289,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="9"
   data-amplitude="0"
@@ -4513,8 +4299,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="10"
   data-amplitude="0"
@@ -4524,8 +4309,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="11"
   data-amplitude="0"
@@ -4535,8 +4319,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="12"
   data-amplitude="0"
@@ -4546,8 +4329,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="13"
   data-amplitude="0"
@@ -4557,8 +4339,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="14"
   data-amplitude="0"
@@ -4568,8 +4349,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="15"
   data-amplitude="0"
@@ -4581,7 +4361,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="16"
@@ -4592,8 +4372,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="17"
   data-amplitude="0"
@@ -4603,8 +4382,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="18"
   data-amplitude="0.25"
@@ -4614,8 +4392,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="19"
   data-amplitude="0"
@@ -4625,8 +4402,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="20"
   data-amplitude="0"
@@ -4636,8 +4412,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="21"
   data-amplitude="0"
@@ -4647,8 +4422,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="22"
   data-amplitude="0"
@@ -4658,8 +4432,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="23"
   data-amplitude="0"
@@ -4669,8 +4442,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="24"
   data-amplitude="0"
@@ -4680,8 +4452,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="25"
   data-amplitude="0"
@@ -4691,8 +4462,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="26"
   data-amplitude="0"
@@ -4702,8 +4472,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="27"
   data-amplitude="0"
@@ -4713,8 +4482,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="28"
   data-amplitude="0"
@@ -4724,8 +4492,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="29"
   data-amplitude="0"
@@ -4735,8 +4502,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="30"
   data-amplitude="0"
@@ -4746,8 +4512,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="31"
   data-amplitude="0"
@@ -4759,7 +4524,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="32"
@@ -4770,8 +4535,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="33"
   data-amplitude="0.25"
@@ -4781,8 +4545,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="34"
   data-amplitude="0"
@@ -4792,8 +4555,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="35"
   data-amplitude="0"
@@ -4803,8 +4565,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="36"
   data-amplitude="0"
@@ -4814,8 +4575,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="37"
   data-amplitude="0"
@@ -4825,8 +4585,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="38"
   data-amplitude="0"
@@ -4836,8 +4595,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="39"
   data-amplitude="0"
@@ -4847,8 +4605,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="40"
   data-amplitude="0"
@@ -4858,8 +4615,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="41"
   data-amplitude="0"
@@ -4869,8 +4625,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="42"
   data-amplitude="0"
@@ -4880,8 +4635,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="43"
   data-amplitude="0"
@@ -4891,8 +4645,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="44"
   data-amplitude="0"
@@ -4902,8 +4655,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="45"
   data-amplitude="0"
@@ -4913,8 +4665,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="46"
   data-amplitude="0"
@@ -4924,8 +4675,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="47"
   data-amplitude="0"
@@ -4937,7 +4687,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="48"
@@ -4948,8 +4698,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="49"
   data-amplitude="0"
@@ -4959,8 +4708,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="50"
   data-amplitude="0.25"
@@ -4970,8 +4718,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="51"
   data-amplitude="0"
@@ -4981,8 +4728,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="52"
   data-amplitude="0"
@@ -4992,8 +4738,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="53"
   data-amplitude="0"
@@ -5003,8 +4748,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="54"
   data-amplitude="0"
@@ -5014,8 +4758,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="55"
   data-amplitude="0"
@@ -5025,8 +4768,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="56"
   data-amplitude="0"
@@ -5036,8 +4778,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="57"
   data-amplitude="0"
@@ -5047,8 +4788,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="58"
   data-amplitude="0"
@@ -5058,8 +4798,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="59"
   data-amplitude="0"
@@ -5069,8 +4808,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="60"
   data-amplitude="0"
@@ -5080,8 +4818,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="61"
   data-amplitude="0"
@@ -5091,8 +4828,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="62"
   data-amplitude="0"
@@ -5102,8 +4838,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="63"
   data-amplitude="0"
@@ -5115,7 +4850,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="64"
@@ -5126,8 +4861,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="65"
   data-amplitude="0.25"
@@ -5137,8 +4871,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="66"
   data-amplitude="0"
@@ -5148,8 +4881,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="67"
   data-amplitude="0"
@@ -5159,8 +4891,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="68"
   data-amplitude="0"
@@ -5170,8 +4901,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="69"
   data-amplitude="0"
@@ -5181,8 +4911,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="70"
   data-amplitude="0"
@@ -5192,8 +4921,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="71"
   data-amplitude="0"
@@ -5203,8 +4931,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="72"
   data-amplitude="0"
@@ -5214,8 +4941,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="73"
   data-amplitude="0"
@@ -5225,8 +4951,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="74"
   data-amplitude="0"
@@ -5236,8 +4961,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="75"
   data-amplitude="0"
@@ -5247,8 +4971,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="76"
   data-amplitude="0"
@@ -5258,8 +4981,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="77"
   data-amplitude="0"
@@ -5269,8 +4991,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="78"
   data-amplitude="0"
@@ -5280,8 +5001,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="79"
   data-amplitude="0"
@@ -5293,7 +5013,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="80"
@@ -5304,8 +5024,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="81"
   data-amplitude="0"
@@ -5315,8 +5034,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="82"
   data-amplitude="0.25"
@@ -5326,8 +5044,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="83"
   data-amplitude="0"
@@ -5337,8 +5054,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="84"
   data-amplitude="0"
@@ -5348,8 +5064,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="85"
   data-amplitude="0"
@@ -5359,8 +5074,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="86"
   data-amplitude="0"
@@ -5370,8 +5084,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="87"
   data-amplitude="0"
@@ -5381,8 +5094,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="88"
   data-amplitude="0"
@@ -5392,8 +5104,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="89"
   data-amplitude="0"
@@ -5403,8 +5114,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="90"
   data-amplitude="0"
@@ -5414,8 +5124,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="91"
   data-amplitude="0"
@@ -5425,8 +5134,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="92"
   data-amplitude="0"
@@ -5436,8 +5144,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="93"
   data-amplitude="0"
@@ -5447,8 +5154,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="94"
   data-amplitude="0"
@@ -5458,8 +5164,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="95"
   data-amplitude="0"
@@ -5471,7 +5176,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="96"
@@ -5482,8 +5187,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="97"
   data-amplitude="0.25"
@@ -5493,8 +5197,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="98"
   data-amplitude="0"
@@ -5504,8 +5207,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="99"
   data-amplitude="0"
@@ -5515,8 +5217,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="100"
   data-amplitude="0"
@@ -5526,8 +5227,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="101"
   data-amplitude="0"
@@ -5537,8 +5237,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="102"
   data-amplitude="0"
@@ -5548,8 +5247,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="103"
   data-amplitude="0"
@@ -5559,8 +5257,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="104"
   data-amplitude="0"
@@ -5570,8 +5267,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="105"
   data-amplitude="0"
@@ -5581,8 +5277,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="106"
   data-amplitude="0"
@@ -5592,8 +5287,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="107"
   data-amplitude="0"
@@ -5614,8 +5308,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="109"
   data-amplitude="0"
@@ -5625,8 +5318,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="110"
   data-amplitude="0"
@@ -5636,8 +5328,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="111"
   data-amplitude="0"
@@ -5649,7 +5340,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="112"
@@ -5660,8 +5351,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="113"
   data-amplitude="0"
@@ -5671,8 +5361,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="114"
   data-amplitude="0.25"
@@ -5682,8 +5371,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="115"
   data-amplitude="0"
@@ -5693,8 +5381,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="116"
   data-amplitude="0"
@@ -5704,8 +5391,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="117"
   data-amplitude="0"
@@ -5715,8 +5401,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="118"
   data-amplitude="0"
@@ -5737,8 +5422,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="120"
   data-amplitude="0"
@@ -5748,8 +5432,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="121"
   data-amplitude="0"
@@ -5759,8 +5442,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="122"
   data-amplitude="0"
@@ -5770,8 +5452,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="123"
   data-amplitude="0"
@@ -5781,8 +5462,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="124"
   data-amplitude="0"
@@ -5792,8 +5472,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="125"
   data-amplitude="0"
@@ -5814,8 +5493,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="127"
   data-amplitude="0"
@@ -5827,7 +5505,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="128"
@@ -5838,8 +5516,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="129"
   data-amplitude="0.25"
@@ -5849,8 +5526,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="130"
   data-amplitude="0"
@@ -5860,8 +5536,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="131"
   data-amplitude="0"
@@ -5871,8 +5546,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="132"
   data-amplitude="0"
@@ -5882,8 +5556,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="133"
   data-amplitude="0"
@@ -5893,8 +5566,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="134"
   data-amplitude="0"
@@ -5915,8 +5587,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="136"
   data-amplitude="0"
@@ -5926,8 +5597,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="137"
   data-amplitude="0"
@@ -5937,8 +5607,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="138"
   data-amplitude="0"
@@ -5948,8 +5617,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="139"
   data-amplitude="0"
@@ -5959,8 +5627,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="140"
   data-amplitude="0"
@@ -5970,8 +5637,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="141"
   data-amplitude="0"
@@ -5992,8 +5658,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="143"
   data-amplitude="0"
@@ -6005,7 +5670,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="144"
@@ -6016,8 +5681,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="145"
   data-amplitude="0"
@@ -6027,8 +5691,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="146"
   data-amplitude="0.25"
@@ -6038,8 +5701,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="147"
   data-amplitude="0"
@@ -6049,8 +5711,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="148"
   data-amplitude="0"
@@ -6060,8 +5721,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="149"
   data-amplitude="0"
@@ -6071,8 +5731,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="150"
   data-amplitude="0"
@@ -6093,8 +5752,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="152"
   data-amplitude="0"
@@ -6104,8 +5762,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="153"
   data-amplitude="0"
@@ -6115,8 +5772,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="154"
   data-amplitude="0"
@@ -6126,8 +5782,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="155"
   data-amplitude="0"
@@ -6137,8 +5792,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="156"
   data-amplitude="0"
@@ -6148,8 +5802,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="157"
   data-amplitude="0"
@@ -6170,8 +5823,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="159"
   data-amplitude="0"
@@ -6183,7 +5835,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="160"
@@ -6194,8 +5846,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="161"
   data-amplitude="0.25"
@@ -6205,8 +5856,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="162"
   data-amplitude="0"
@@ -6216,8 +5866,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="163"
   data-amplitude="0"
@@ -6227,8 +5876,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="164"
   data-amplitude="0"
@@ -6238,8 +5886,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="165"
   data-amplitude="0"
@@ -6249,8 +5896,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="166"
   data-amplitude="0"
@@ -6271,8 +5917,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="168"
   data-amplitude="0"
@@ -6282,8 +5927,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="169"
   data-amplitude="0"
@@ -6293,8 +5937,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="170"
   data-amplitude="0"
@@ -6304,8 +5947,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="171"
   data-amplitude="0"
@@ -6315,8 +5957,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="172"
   data-amplitude="0"
@@ -6326,8 +5967,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="173"
   data-amplitude="0"
@@ -6348,8 +5988,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="175"
   data-amplitude="0"
@@ -6361,7 +6000,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="176"
@@ -6372,8 +6011,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="177"
   data-amplitude="0"
@@ -6383,8 +6021,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="178"
   data-amplitude="0.25"
@@ -6394,8 +6031,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="179"
   data-amplitude="0"
@@ -6405,8 +6041,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="180"
   data-amplitude="0"
@@ -6416,8 +6051,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="181"
   data-amplitude="0"
@@ -6427,8 +6061,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="182"
   data-amplitude="0"
@@ -6449,8 +6082,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="184"
   data-amplitude="0"
@@ -6460,8 +6092,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="185"
   data-amplitude="0"
@@ -6471,8 +6102,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="186"
   data-amplitude="0"
@@ -6482,8 +6112,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="187"
   data-amplitude="0"
@@ -6493,8 +6122,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="188"
   data-amplitude="0"
@@ -6504,8 +6132,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="189"
   data-amplitude="0"
@@ -6526,8 +6153,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="191"
   data-amplitude="0"
@@ -6539,7 +6165,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="192"
@@ -6550,8 +6176,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="193"
   data-amplitude="0.25"
@@ -6561,8 +6186,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="194"
   data-amplitude="0"
@@ -6572,8 +6196,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="195"
   data-amplitude="0"
@@ -6583,8 +6206,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="196"
   data-amplitude="0"
@@ -6594,8 +6216,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="197"
   data-amplitude="0"
@@ -6605,8 +6226,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="198"
   data-amplitude="0"
@@ -6627,8 +6247,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="200"
   data-amplitude="0"
@@ -6638,8 +6257,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="201"
   data-amplitude="0"
@@ -6649,8 +6267,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="202"
   data-amplitude="0"
@@ -6660,8 +6277,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="203"
   data-amplitude="0"
@@ -6671,8 +6287,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="204"
   data-amplitude="0"
@@ -6682,8 +6297,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="205"
   data-amplitude="0"
@@ -6704,8 +6318,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="207"
   data-amplitude="0"
@@ -6717,7 +6330,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="208"
@@ -6728,8 +6341,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="209"
   data-amplitude="0"
@@ -6739,8 +6351,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="210"
   data-amplitude="0.25"
@@ -6750,8 +6361,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="211"
   data-amplitude="0"
@@ -6761,8 +6371,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="212"
   data-amplitude="0"
@@ -6772,8 +6381,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="213"
   data-amplitude="0"
@@ -6783,8 +6391,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="214"
   data-amplitude="0"
@@ -6805,8 +6412,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="216"
   data-amplitude="0"
@@ -6816,8 +6422,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="217"
   data-amplitude="0"
@@ -6827,8 +6432,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="218"
   data-amplitude="0"
@@ -6838,8 +6442,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="219"
   data-amplitude="0"
@@ -6849,8 +6452,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="220"
   data-amplitude="0"
@@ -6860,8 +6462,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="221"
   data-amplitude="0"
@@ -6882,8 +6483,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="223"
   data-amplitude="0"
@@ -6895,7 +6495,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="224"
@@ -6906,8 +6506,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="225"
   data-amplitude="0.25"
@@ -6917,8 +6516,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="226"
   data-amplitude="0"
@@ -6928,8 +6526,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="227"
   data-amplitude="0"
@@ -6939,8 +6536,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="228"
   data-amplitude="0"
@@ -6950,8 +6546,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="229"
   data-amplitude="0"
@@ -6961,8 +6556,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="230"
   data-amplitude="0"
@@ -6983,8 +6577,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="232"
   data-amplitude="0"
@@ -6994,8 +6587,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="233"
   data-amplitude="0"
@@ -7005,8 +6597,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="234"
   data-amplitude="0"
@@ -7016,8 +6607,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="235"
   data-amplitude="0"
@@ -7027,8 +6617,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="236"
   data-amplitude="0"
@@ -7038,8 +6627,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="237"
   data-amplitude="0"
@@ -7060,8 +6648,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="239"
   data-amplitude="0"
@@ -7073,7 +6660,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="240"
@@ -7084,8 +6671,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0"
@@ -7095,8 +6681,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0.25"
@@ -7106,8 +6691,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="243"
   data-amplitude="0"
@@ -7117,8 +6701,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="244"
   data-amplitude="0"
@@ -7128,8 +6711,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="245"
   data-amplitude="0"
@@ -7139,8 +6721,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="246"
   data-amplitude="0"
@@ -7161,8 +6742,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="248"
   data-amplitude="0"
@@ -7172,8 +6752,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="249"
   data-amplitude="0"
@@ -7183,8 +6762,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="250"
   data-amplitude="0"
@@ -7194,8 +6772,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="251"
   data-amplitude="0"
@@ -7205,8 +6782,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="252"
   data-amplitude="0"
@@ -7216,8 +6792,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="253"
   data-amplitude="0"
@@ -7238,8 +6813,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="255"
   data-amplitude="0"
@@ -7256,55 +6830,61 @@
 </div>
 
 <p>
-  次の x の最下位から 2 ビット目をコントロールビットとする <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate> では、\(4mod(15)\) (左シフト演算二回とラップアラウンド) の計算を行います。
-  x の最下位ビットが 1 の場合、f(x) の各ビットを 2 回左シフトし 4 倍します。
+  次の x の最下位から 2 ビット目をコントロールビットとする <swap-gate class="qpu-operation-xs relative top-0.5 inline-block"></swap-gate>
+  では、\(4mod(15)\) (左シフト演算二回とラップアラウンド) の計算を行います。 x の最下位ビットが 1
+  の場合、f(x) の各ビットを 2 回左シフトし 4 倍します。
   そして最上位ビットを最下位ビットにラップアラウンドすることで、\(mod(15)\) を計算します。
-  この時、状態ベクトルは次の状態になり、x の最下位から 2 ビット目が 1 の場合だけ f(x) が 4 倍されていることが分かります。
+  この時、状態ベクトルは次の状態になり、x の最下位から 2 ビット目が 1 の場合だけ f(x) が 4
+  倍されていることが分かります。
 </p>
 
-<div class="flex flex-col w-min">
-  <div class="flex flex-row justify-center"><span class="text-xl font-bold mb-4">f(x) の値</span></div>
-  <div class="flex flex-row justify-end mb-2">
+<div class="flex w-min flex-col">
+  <div class="flex flex-row justify-center">
+    <span class="mb-4 text-xl font-bold">f(x) の値</span>
+  </div>
+  <div class="mb-2 flex flex-row justify-end">
     <div class="w-8 text-center"><span class="text-xl">0</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">1</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">2</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">3</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">4</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">5</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">6</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">7</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">8</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">9</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">10</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">11</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">12</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">13</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">14</span></div>
-    <div class="w-8 ml-2 text-center"><span class="text-xl">15</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">1</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">2</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">3</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">4</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">5</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">6</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">7</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">8</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">9</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">10</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">11</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">12</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">13</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">14</span></div>
+    <div class="ml-2 w-8 text-center"><span class="text-xl">15</span></div>
   </div>
 
   <div class="flex flex-row">
-    <div class="flex flex-col justify-center"><span class="text-xl font-bold mr-4 whitespace-nowrap">x の値</span></div>
-    <div class="flex flex-col mr-2">
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>0</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>1</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>2</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>3</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>4</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>5</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>6</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>7</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>8</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>9</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>10</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>11</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>12</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>13</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>14</span></div>
-      <div class="flex flex-col justify-center text-right text-xl h-8 my-1"><span>15</span></div>
+    <div class="flex flex-col justify-center">
+      <span class="mr-4 whitespace-nowrap text-xl font-bold">x の値</span>
+    </div>
+    <div class="mr-2 flex flex-col">
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>0</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>1</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>2</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>3</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>4</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>5</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>6</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>7</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>8</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>9</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>10</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>11</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>12</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>13</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>14</span></div>
+      <div class="my-1 flex h-8 flex-col justify-center text-right text-xl"><span>15</span></div>
     </div>
     <div class="flex flex-col justify-start">
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="0"
@@ -7315,8 +6895,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="1"
   data-amplitude="0.25"
@@ -7326,8 +6905,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="2"
   data-amplitude="0"
@@ -7337,8 +6915,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="3"
   data-amplitude="0"
@@ -7348,8 +6925,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="4"
   data-amplitude="0"
@@ -7359,8 +6935,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="5"
   data-amplitude="0"
@@ -7370,8 +6945,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="6"
   data-amplitude="0"
@@ -7381,8 +6955,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="7"
   data-amplitude="0"
@@ -7392,8 +6965,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="8"
   data-amplitude="0"
@@ -7403,8 +6975,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="9"
   data-amplitude="0"
@@ -7414,8 +6985,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="10"
   data-amplitude="0"
@@ -7425,8 +6995,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="11"
   data-amplitude="0"
@@ -7436,8 +7005,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="12"
   data-amplitude="0"
@@ -7447,8 +7015,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="13"
   data-amplitude="0"
@@ -7458,8 +7025,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="14"
   data-amplitude="0"
@@ -7469,8 +7035,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="15"
   data-amplitude="0"
@@ -7482,7 +7047,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="16"
@@ -7493,8 +7058,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="17"
   data-amplitude="0"
@@ -7504,8 +7068,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="18"
   data-amplitude="0.25"
@@ -7515,8 +7078,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="19"
   data-amplitude="0"
@@ -7526,8 +7088,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="20"
   data-amplitude="0"
@@ -7537,8 +7098,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="21"
   data-amplitude="0"
@@ -7548,8 +7108,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="22"
   data-amplitude="0"
@@ -7559,8 +7118,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="23"
   data-amplitude="0"
@@ -7570,8 +7128,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="24"
   data-amplitude="0"
@@ -7581,8 +7138,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="25"
   data-amplitude="0"
@@ -7592,8 +7148,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="26"
   data-amplitude="0"
@@ -7603,8 +7158,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="27"
   data-amplitude="0"
@@ -7614,8 +7168,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="28"
   data-amplitude="0"
@@ -7625,8 +7178,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="29"
   data-amplitude="0"
@@ -7636,8 +7188,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="30"
   data-amplitude="0"
@@ -7647,8 +7198,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="31"
   data-amplitude="0"
@@ -7660,7 +7210,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="32"
@@ -7671,8 +7221,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="33"
   data-amplitude="0"
@@ -7682,8 +7231,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="34"
   data-amplitude="0"
@@ -7693,8 +7241,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="35"
   data-amplitude="0"
@@ -7704,8 +7251,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="36"
   data-amplitude="0.25"
@@ -7715,8 +7261,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="37"
   data-amplitude="0"
@@ -7726,8 +7271,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="38"
   data-amplitude="0"
@@ -7737,8 +7281,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="39"
   data-amplitude="0"
@@ -7748,8 +7291,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="40"
   data-amplitude="0"
@@ -7759,8 +7301,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="41"
   data-amplitude="0"
@@ -7770,8 +7311,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="42"
   data-amplitude="0"
@@ -7781,8 +7321,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="43"
   data-amplitude="0"
@@ -7792,8 +7331,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="44"
   data-amplitude="0"
@@ -7803,8 +7341,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="45"
   data-amplitude="0"
@@ -7814,8 +7351,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="46"
   data-amplitude="0"
@@ -7825,8 +7361,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="47"
   data-amplitude="0"
@@ -7838,7 +7373,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="48"
@@ -7849,8 +7384,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="49"
   data-amplitude="0"
@@ -7860,8 +7394,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="50"
   data-amplitude="0"
@@ -7871,8 +7404,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="51"
   data-amplitude="0"
@@ -7882,8 +7414,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="52"
   data-amplitude="0"
@@ -7893,8 +7424,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="53"
   data-amplitude="0"
@@ -7904,8 +7434,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="54"
   data-amplitude="0"
@@ -7915,8 +7444,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="55"
   data-amplitude="0"
@@ -7926,8 +7454,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="56"
   data-amplitude="0.25"
@@ -7937,8 +7464,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="57"
   data-amplitude="0"
@@ -7948,8 +7474,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="58"
   data-amplitude="0"
@@ -7959,8 +7484,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="59"
   data-amplitude="0"
@@ -7970,8 +7494,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="60"
   data-amplitude="0"
@@ -7981,8 +7504,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="61"
   data-amplitude="0"
@@ -7992,8 +7514,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="62"
   data-amplitude="0"
@@ -8003,8 +7524,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="63"
   data-amplitude="0"
@@ -8016,7 +7536,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="64"
@@ -8027,8 +7547,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="65"
   data-amplitude="0.25"
@@ -8038,8 +7557,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="66"
   data-amplitude="0"
@@ -8049,8 +7567,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="67"
   data-amplitude="0"
@@ -8060,8 +7577,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="68"
   data-amplitude="0"
@@ -8071,8 +7587,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="69"
   data-amplitude="0"
@@ -8082,8 +7597,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="70"
   data-amplitude="0"
@@ -8093,8 +7607,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="71"
   data-amplitude="0"
@@ -8104,8 +7617,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="72"
   data-amplitude="0"
@@ -8115,8 +7627,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="73"
   data-amplitude="0"
@@ -8126,8 +7637,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="74"
   data-amplitude="0"
@@ -8137,8 +7647,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="75"
   data-amplitude="0"
@@ -8148,8 +7657,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="76"
   data-amplitude="0"
@@ -8159,8 +7667,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="77"
   data-amplitude="0"
@@ -8170,8 +7677,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="78"
   data-amplitude="0"
@@ -8181,8 +7687,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="79"
   data-amplitude="0"
@@ -8194,7 +7699,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="80"
@@ -8205,8 +7710,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="81"
   data-amplitude="0"
@@ -8216,8 +7720,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="82"
   data-amplitude="0.25"
@@ -8227,8 +7730,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="83"
   data-amplitude="0"
@@ -8238,8 +7740,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="84"
   data-amplitude="0"
@@ -8249,8 +7750,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="85"
   data-amplitude="0"
@@ -8260,8 +7760,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="86"
   data-amplitude="0"
@@ -8271,8 +7770,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="87"
   data-amplitude="0"
@@ -8282,8 +7780,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="88"
   data-amplitude="0"
@@ -8293,8 +7790,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="89"
   data-amplitude="0"
@@ -8304,8 +7800,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="90"
   data-amplitude="0"
@@ -8315,8 +7810,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="91"
   data-amplitude="0"
@@ -8326,8 +7820,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="92"
   data-amplitude="0"
@@ -8337,8 +7830,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="93"
   data-amplitude="0"
@@ -8348,8 +7840,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="94"
   data-amplitude="0"
@@ -8359,8 +7850,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="95"
   data-amplitude="0"
@@ -8372,7 +7862,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="96"
@@ -8383,8 +7873,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="97"
   data-amplitude="0"
@@ -8394,8 +7883,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="98"
   data-amplitude="0"
@@ -8405,8 +7893,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="99"
   data-amplitude="0"
@@ -8416,8 +7903,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="100"
   data-amplitude="0.25"
@@ -8427,8 +7913,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="101"
   data-amplitude="0"
@@ -8438,8 +7923,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="102"
   data-amplitude="0"
@@ -8460,8 +7944,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="104"
   data-amplitude="0"
@@ -8471,8 +7954,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="105"
   data-amplitude="0"
@@ -8482,8 +7964,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="106"
   data-amplitude="0"
@@ -8493,8 +7974,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="107"
   data-amplitude="0"
@@ -8504,8 +7984,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="108"
   data-amplitude="0"
@@ -8515,8 +7994,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="109"
   data-amplitude="0"
@@ -8537,8 +8015,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="111"
   data-amplitude="0"
@@ -8550,7 +8027,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="112"
@@ -8561,8 +8038,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="113"
   data-amplitude="0"
@@ -8572,8 +8048,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="114"
   data-amplitude="0"
@@ -8583,8 +8058,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="115"
   data-amplitude="0"
@@ -8594,8 +8068,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="116"
   data-amplitude="0"
@@ -8605,8 +8078,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="117"
   data-amplitude="0"
@@ -8616,8 +8088,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="118"
   data-amplitude="0"
@@ -8638,8 +8109,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="120"
   data-amplitude="0.25"
@@ -8649,8 +8119,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="121"
   data-amplitude="0"
@@ -8660,8 +8129,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="122"
   data-amplitude="0"
@@ -8671,8 +8139,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="123"
   data-amplitude="0"
@@ -8682,8 +8149,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="124"
   data-amplitude="0"
@@ -8693,8 +8159,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="125"
   data-amplitude="0"
@@ -8715,8 +8180,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="127"
   data-amplitude="0"
@@ -8728,7 +8192,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="128"
@@ -8739,8 +8203,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="129"
   data-amplitude="0.25"
@@ -8750,8 +8213,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="130"
   data-amplitude="0"
@@ -8761,8 +8223,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="131"
   data-amplitude="0"
@@ -8772,8 +8233,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="132"
   data-amplitude="0"
@@ -8783,8 +8243,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="133"
   data-amplitude="0"
@@ -8794,8 +8253,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="134"
   data-amplitude="0"
@@ -8816,8 +8274,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="136"
   data-amplitude="0"
@@ -8827,8 +8284,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="137"
   data-amplitude="0"
@@ -8838,8 +8294,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="138"
   data-amplitude="0"
@@ -8849,8 +8304,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="139"
   data-amplitude="0"
@@ -8860,8 +8314,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="140"
   data-amplitude="0"
@@ -8871,8 +8324,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="141"
   data-amplitude="0"
@@ -8893,8 +8345,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="143"
   data-amplitude="0"
@@ -8906,7 +8357,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="144"
@@ -8917,8 +8368,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="145"
   data-amplitude="0"
@@ -8928,8 +8378,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="146"
   data-amplitude="0.25"
@@ -8939,8 +8388,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="147"
   data-amplitude="0"
@@ -8950,8 +8398,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="148"
   data-amplitude="0"
@@ -8961,8 +8408,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="149"
   data-amplitude="0"
@@ -8972,8 +8418,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="150"
   data-amplitude="0"
@@ -8994,8 +8439,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="152"
   data-amplitude="0"
@@ -9005,8 +8449,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="153"
   data-amplitude="0"
@@ -9016,8 +8459,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="154"
   data-amplitude="0"
@@ -9027,8 +8469,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="155"
   data-amplitude="0"
@@ -9038,8 +8479,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="156"
   data-amplitude="0"
@@ -9049,8 +8489,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="157"
   data-amplitude="0"
@@ -9071,8 +8510,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="159"
   data-amplitude="0"
@@ -9084,7 +8522,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="160"
@@ -9095,8 +8533,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="161"
   data-amplitude="0"
@@ -9106,8 +8543,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="162"
   data-amplitude="0"
@@ -9117,8 +8553,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="163"
   data-amplitude="0"
@@ -9128,8 +8563,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="164"
   data-amplitude="0.25"
@@ -9139,8 +8573,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="165"
   data-amplitude="0"
@@ -9150,8 +8583,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="166"
   data-amplitude="0"
@@ -9172,8 +8604,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="168"
   data-amplitude="0"
@@ -9183,8 +8614,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="169"
   data-amplitude="0"
@@ -9194,8 +8624,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="170"
   data-amplitude="0"
@@ -9205,8 +8634,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="171"
   data-amplitude="0"
@@ -9216,8 +8644,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="172"
   data-amplitude="0"
@@ -9227,8 +8654,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="173"
   data-amplitude="0"
@@ -9249,8 +8675,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="175"
   data-amplitude="0"
@@ -9262,7 +8687,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="176"
@@ -9273,8 +8698,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="177"
   data-amplitude="0"
@@ -9284,8 +8708,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="178"
   data-amplitude="0"
@@ -9295,8 +8718,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="179"
   data-amplitude="0"
@@ -9306,8 +8728,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="180"
   data-amplitude="0"
@@ -9317,8 +8738,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="181"
   data-amplitude="0"
@@ -9328,8 +8748,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="182"
   data-amplitude="0"
@@ -9350,8 +8769,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="184"
   data-amplitude="0.25"
@@ -9361,8 +8779,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="185"
   data-amplitude="0"
@@ -9372,8 +8789,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="186"
   data-amplitude="0"
@@ -9383,8 +8799,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="187"
   data-amplitude="0"
@@ -9394,8 +8809,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="188"
   data-amplitude="0"
@@ -9405,8 +8819,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="189"
   data-amplitude="0"
@@ -9427,8 +8840,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="191"
   data-amplitude="0"
@@ -9440,7 +8852,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="192"
@@ -9451,8 +8863,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="193"
   data-amplitude="0.25"
@@ -9462,8 +8873,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="194"
   data-amplitude="0"
@@ -9473,8 +8883,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="195"
   data-amplitude="0"
@@ -9484,8 +8893,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="196"
   data-amplitude="0"
@@ -9495,8 +8903,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="197"
   data-amplitude="0"
@@ -9506,8 +8913,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="198"
   data-amplitude="0"
@@ -9528,8 +8934,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="200"
   data-amplitude="0"
@@ -9539,8 +8944,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="201"
   data-amplitude="0"
@@ -9550,8 +8954,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="202"
   data-amplitude="0"
@@ -9561,8 +8964,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="203"
   data-amplitude="0"
@@ -9572,8 +8974,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="204"
   data-amplitude="0"
@@ -9583,8 +8984,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="205"
   data-amplitude="0"
@@ -9605,8 +9005,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="207"
   data-amplitude="0"
@@ -9618,7 +9017,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="208"
@@ -9629,8 +9028,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="209"
   data-amplitude="0"
@@ -9640,8 +9038,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="210"
   data-amplitude="0.25"
@@ -9651,8 +9048,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="211"
   data-amplitude="0"
@@ -9662,8 +9058,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="212"
   data-amplitude="0"
@@ -9673,8 +9068,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="213"
   data-amplitude="0"
@@ -9684,8 +9078,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="214"
   data-amplitude="0"
@@ -9706,8 +9099,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="216"
   data-amplitude="0"
@@ -9717,8 +9109,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="217"
   data-amplitude="0"
@@ -9728,8 +9119,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="218"
   data-amplitude="0"
@@ -9739,8 +9129,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="219"
   data-amplitude="0"
@@ -9750,8 +9139,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="220"
   data-amplitude="0"
@@ -9761,8 +9149,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="221"
   data-amplitude="0"
@@ -9783,8 +9170,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="223"
   data-amplitude="0"
@@ -9796,7 +9182,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="224"
@@ -9807,8 +9193,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="225"
   data-amplitude="0"
@@ -9818,8 +9203,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="226"
   data-amplitude="0"
@@ -9829,8 +9213,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="227"
   data-amplitude="0"
@@ -9840,8 +9223,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="228"
   data-amplitude="0.25"
@@ -9851,8 +9233,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="229"
   data-amplitude="0"
@@ -9862,8 +9243,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="230"
   data-amplitude="0"
@@ -9884,8 +9264,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="232"
   data-amplitude="0"
@@ -9895,8 +9274,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="233"
   data-amplitude="0"
@@ -9906,8 +9284,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="234"
   data-amplitude="0"
@@ -9917,8 +9294,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="235"
   data-amplitude="0"
@@ -9928,8 +9304,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="236"
   data-amplitude="0"
@@ -9939,8 +9314,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="237"
   data-amplitude="0"
@@ -9961,8 +9335,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="239"
   data-amplitude="0"
@@ -9974,7 +9347,7 @@
 ></qubit-circle>
 
       </div>
-      <div class="flex flex-row space-x-2 w-min">
+      <div class="flex w-min flex-row space-x-2">
         <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="240"
@@ -9985,8 +9358,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0"
@@ -9996,8 +9368,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="241"
   data-amplitude="0"
@@ -10007,8 +9378,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="243"
   data-amplitude="0"
@@ -10018,8 +9388,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="244"
   data-amplitude="0"
@@ -10029,8 +9398,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="245"
   data-amplitude="0"
@@ -10040,8 +9408,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="246"
   data-amplitude="0"
@@ -10062,8 +9429,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="248"
   data-amplitude="0.25"
@@ -10073,8 +9439,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="249"
   data-amplitude="0"
@@ -10084,8 +9449,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="250"
   data-amplitude="0"
@@ -10095,8 +9459,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="251"
   data-amplitude="0"
@@ -10106,8 +9469,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="252"
   data-amplitude="0"
@@ -10117,8 +9479,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="253"
   data-amplitude="0"
@@ -10139,8 +9500,7 @@
   data-show-popup-probability
   data-show-popup-phase
 ></qubit-circle>
-
-        <qubit-circle
+ <qubit-circle
   class="h-8 w-8 my-1"
   data-ket="255"
   data-amplitude="0"
