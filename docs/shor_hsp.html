@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>BB84 プロトコル</title>
+    <title>別問題に帰着する</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -278,7 +278,7 @@
    
   <a
     href="./bb84_protocol.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">BB84 プロトコル</span>
     
@@ -680,7 +680,7 @@
    
   <a
     href="./shor_hsp.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">別問題に帰着する</span>
     
@@ -915,7 +915,7 @@
    
   <a
     href="./bb84_protocol.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
   >
     <span class="flex-1">BB84 プロトコル</span>
     
@@ -1317,7 +1317,7 @@
    
   <a
     href="./shor_hsp.html"
-    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
   >
     <span class="flex-1">別問題に帰着する</span>
     
@@ -1407,428 +1407,137 @@
           <div class="mt-5 mb-10 sm:mb-12 md:mt-0 lg:mb-16">
             <div class="mb-10 border-b border-zinc-200 pb-10">
               <p class="mt-8 mb-2 text-sm font-semibold leading-6 text-sky-600">
-                量子暗号通信
+                ショアの因数分解
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  BB84 プロトコル
+                  別問題に帰着する
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">量子力学を利用して暗号鍵の盗聴を検出する</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">因数分解を反復周期 (位数) 発見問題として解く</p>
             </div>
             <div class="content-with-margin"><p>
-  暗号の話を始める前に、登場人物を紹介しましょう。同じ小学校に通うアリスとボブ、イブの 3 人です<label for="margin-note-alice-bob" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-alice-bob" class="margin-note__toggle hidden"><span class="margin-note">暗号技術の解説記事や論文では、説明のためによくこの架空の 3
-  人が登場します。 たいていはアリス (Alice) がボブ (Bob) にメッセージを送り、悪いハッカーのイブ
-  (Eve) が盗聴を企てます。複雑な暗号の例になるとさらに、チャーリー (Charlie)、デイヴ
-  (Dave)、というように頭文字に A, B, C, D,... を持つキャラクター達が続々と登場します。</span>。
-  アリスは自宅ガレージで作った量子ドローンのファームウェアをボブに送ろうとしています。
-  イブは意地悪な天才ハッカーで、アリスの通信を盗聴し、ファームウェアにバックドアを仕掛けてドローンを乗っ取ってやろうともくろんでいます。
+  ショアの因数分解アルゴリズムは、量子コンピュータが得意とする計算のうち最も有名なものの 1 つです。
+  <a href="./">はじめに</a
+  >で述べたように、因数分解が高速にできると、公開鍵暗号を現実的な時間のうちに解くことができます。
+  公開鍵暗号はインターネット通信やビットコイン技術等の拠り所であるため、これが解けてしまうというインパクトは相当なものです。
 </p>
 
 <p>
-  イブの盗聴をアリスは知っているので、ボブとの通信には絶対に破られない量子暗号通信を使います。
-  量子暗号通信は、アリスとボブが暗号鍵を安全に共有することを可能にします。
+  ショアの因数分解アルゴリズムはどれほど速いのでしょうか。
+  古典の因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、因数分解したい数が大きくなるにつれて指数関数的に増えます。
+  一方でショアのアルゴリズムは、多項式時間に留まります。 分かりやすく具体的な値で言うと、1024
+  ビットの整数を因数分解するのに必要な計算量は、古典コンピュータ (一般数体ふるい法) で
+  \(O(10^{278})\) です。 これに対して、ショアのアルゴリズムは \(O(10^{61})\)
+  となり、\(10^{278} \rightarrow 10^{61}\) と計算量を大幅に減らせます。
 </p>
 
-<h2>暗号鍵の共有</h2>
+<h2>因数分解を別問題として解く</h2>
 
 <p>
-  暗号鍵は通常、乱数で生成します。アリスが 0 と 1 をランダムに並べた長い文字列を作りボブに送ります。
-  ただし、もし普通のコンピュータでランダム文字列を生成してしまうと、イブがアリスの乱数生成アルゴリズムを突き止めることで暗号鍵を完璧に再現できてしまいます。
-  そこで、量子乱数ジェネレータ<label for="margin-note-measurement-operation" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-measurement-operation" class="margin-note__toggle hidden"><span class="margin-note"><a
-    href="./measurement_operation.html"
-    >MEASUREMENT 命令</a
-  >を参照</span>を使って、原理的にまったく予測できない完璧な乱数を生成します。
-  今回、アリスは 4,000 文字の暗号鍵を量子乱数で生成したこととします。
+  因数分解のような整数問題の多くは、より解きやすい別問題に帰着させて解くことができます。
+  ショアのアルゴリズムでは、因数分解を次の別問題に帰着させます。
 </p>
 
-<p>
-  今度は、生成した暗号鍵を盗聴されないようにボブへと送る必要があります。
-  しかしイブはアリスの通信をいつでも盗聴できる上、暗号解読が可能な最新の量子コンピュータまで持っています。
-  アリスが暗号鍵に普通の暗号をかけてボブにメールしようものなら、イブはたちどころに解除してしまうでしょう。
-  そこで BB84 プロトコルの出番です。
-</p>
+<div class="border-l-4 border-blue-400 bg-blue-50 px-4 py-1 md:mr-auto md:w-7/12">
+  <p>
+    <strong>反復周期 (位数とも呼ぶ) の発見問題</strong>
+  </p>
 
-<h2>BB84 プロトコル</h2>
+  <p>
+    \(N\) を因数分解したい整数とする。 このとき、ある整数 \(a\) (\(a \lt N\), かつ \(a\) と \(N\)
+    は共通の因数を持たない) について、整数 \(x\) を変数とする次の関数を考える。
+  </p>
 
-<p>
-  BB84 では、盗聴を検知するために量子チャンネルを使って暗号鍵データを送ります。
-  量子チャンネルとは量子ビットを送受信できる通信路で、現在の技術では光ファイバを通じて光子を量子ビットとして送ることで、これを実現できます。
-  アリスは量子チャンネルを通じて、0 と 1 からなる 4,000 文字の暗号鍵を、\(|0\rangle\) または \(|1\rangle\) の状態をもつ 4,000 個の量子ビットとしてボブに送ります。
-</p>
+  <p class="flex justify-center">
+    \(f(x) = a^x mod(N) \hspace{16pt} (X mod(Y) は X を Y で割った余りを表す)\)
+  </p>
 
-<p>
-  量子ビットを送る際に、アリスはイブの盗聴を検出するための仕掛けを量子ビットに仕込んでおきます<label for="margin-note-qkd_trick" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qkd_trick" class="margin-note__toggle hidden"><span class="margin-note">この仕掛けの効果については、後半で説明します</span>。
-  アリスは、送信する 1 量子ビットごとにランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用します。
-  適用するかしないかは、送信する 1 量子ビットごとに量子乱数 0 または 1 を作って決めます。 これがもし
-  1 だったら、量子ビットに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用してからボブに送ります。 そして、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビットの通し番号 (382 番目など) をメモしておきます。 4,000
-  量子ビットをボブに送信し終った後、アリスの手元には <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用した量子ビット番号のリストが残ることになります。
-</p>
-
-<p>このときアリスの送る量子ビットは、次の 4 パターンのうちいずれか 1 つの状態になっています。</p>
-
-<div class="my-5 flex overflow-x-auto">
-  <div class="flex flex-col">
-    <div class="flex flex-row items-center">
-      <div class="mr-8">
-        <div class="flex flex-col">
-          <div class="whitespace-nowrap">ボブに \(|0\rangle\) を送る場合</div>
-          <div class="whitespace-nowrap">(<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> なし/あり)</div>
-        </div>
-      </div>
-
-      <div class="flex flex-col">
-        <div class="mb-8 flex flex-row items-center space-x-1">
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-          <div class="flex flex-row items-center">
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
-</svg>
-
-            <div class="text-xs">NOP</div>
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
-
-          </div>
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-        </div>
-
-        <div class="flex flex-row items-center space-x-1">
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-          <div class="flex flex-row items-center">
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
-</svg>
-
-            <h-gate class="qpu-operation-sm"></h-gate>
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
-
-          </div>
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0.7071067811865476"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="0.7071067811865476"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="mt-8 mb-4" />
-
-    <div class="flex flex-row items-center">
-      <div class="mr-8">
-        <div class="flex flex-col">
-          <div>ボブに \(|1\rangle\) を送る場合</div>
-          <div>(<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> なし/あり)</div>
-        </div>
-      </div>
-
-      <div class="flex flex-col">
-        <div class="mb-8 flex flex-row items-center space-x-1">
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-          <div class="flex flex-row items-center">
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
-</svg>
-
-            <div class="text-xs">NOP</div>
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
-
-          </div>
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-        </div>
-
-        <div class="mb-8 flex flex-row items-center space-x-1">
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="1"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-          <div class="flex flex-row items-center">
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M2.25 7.5C2.25 7.22386 2.47386 7 2.75 7H12.25C12.5261 7 12.75 7.22386 12.75 7.5C12.75 7.77614 12.5261 8 12.25 8H2.75C2.47386 8 2.25 7.77614 2.25 7.5Z" fill="currentColor" stroke-width="2" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path>
-</svg>
-
-            <h-gate class="qpu-operation-sm"></h-gate>
-            <svg class="h-6 w-6 fill-current text-gray-400" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" vector-effect="non-scaling-stroke"></path></svg>
-
-          </div>
-          <div class="flex flex-row space-x-2">
-            <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="0"
-  data-amplitude="0.7071067811865476"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
- <qubit-circle
-  class="h-8 w-8 my-1"
-  data-ket="1"
-  data-amplitude="-0.7071067811865476"
-  data-popup-template-id="qubit-circle-popup"
-  
-  data-show-popup-amplitude
-  data-show-popup-probability
-  data-show-popup-phase
-></qubit-circle>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <p>これは周期関数となり、その反復周期 \(r\) から \(N\) の因数を求められる。</p>
 </div>
 
 <p>
-  ボブはアリスがランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> をかけた \(|0\rangle\) または \(|1\rangle\)
-  を正しく読み出す必要があります。 このために、ボブも 1
-  量子ビットを受信するごとに量子乱数でランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用します。 そしてボブも
-  <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用した量子ビットの通し番号を手元にメモしておきます。
-  アリスとボブは独立してランダムに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用したので、お互いに異なる通し番号リストを持っていることに注意しましょう。
+  分かりやすくするために、\(a\) や \(N\) に具体的な値を入れて関数 \(f(x)\)
+  がどう動くか見ていきましょう。 因数分解したい数 \(N\) を 15 とします。 \(a\) は \(N\) より小さく
+  \(N\) と共通の因数を持たなければ何でも良いので、ここでは 2 とします。すると、\(f(x)\)
+  は次のように書き直せます。
 </p>
 
-<p>これによってボブはどんなデータを受け取ることができるか、詳しく見てみましょう。</p>
+<p class="flex justify-center">\(f(x) = 2^x mod(15)\)</p>
+
+<figure>
+  <img src="./images/shor_mod15.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  グラフから一目瞭然のとおり、この関数は周期関数になっており、反復周期 \(r\) は 4 です。x が 4
+  増えるごとに、まったく同じ形の波が現れるからです。
+</p>
+
+<p>反復周期 \(r = 4\) が求まれば、\(N\) の因数はそれぞれ次の単純な計算で求まります。</p>
 
 <ul>
-  <li>
-    <p><strong>アリスとボブのどちらも <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用しなかった場合</strong></p>
-    <p>
-      アリスが送った \(|0\rangle\) または \(|1\rangle\)
-      をボブがそのまま受信するだけなので、測定すると正しいビットが得られます。
-    </p>
-  </li>
-
-  <li>
-    <p><strong>アリスとボブの両者が <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用した場合</strong></p>
-    <p>
-      アリスが適用した <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> はボブの適用する <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-      によって打ち消されます。 よって、アリスが送った \(|0\rangle\) または \(|1\rangle\)
-      をそのまま受信でき、測定すると正しいビットが得られます。
-    </p>
-  </li>
-
-  <li>
-    <p><strong>アリスまたはボブの一方が <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用した場合</strong></p>
-    <p>
-      ボブの量子ビットは等しい重ね合わせ状態になるため、測定すると \(|0\rangle\) または \(|1\rangle\) が
-      50% ずつの確率で得られます。 つまりアリスが \(|0\rangle\) または \(|1\rangle\)
-      のどちらを送ったかは分かりません。
-    </p>
-  </li>
+  <li>\(gcd(N, a^{r/2} + 1)\)</li>
+  <li>\(gcd(N, a^{r/2} - 1)\)</li>
 </ul>
 
 <p>
-  ボブがアリスの送ったビット列を正しく読み出せるのは、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  を適用した/しないがお互いに一致した場合のみです。
-  そこで一致した量子ビットだけを得るために、アリスとボブはそれぞれの通し番号リストをインターネット上で交換し、一致した通し番号のリストを得ます。
-  ランダムな 0 と 1 が一致するのは確率的に大体 50% ですから、二人の手元にはもともと送った 4,000
-  量子ビットの半分、2,000 量子ビット分のリストが残ります。
-  この量子ビットをボブが測定すれば、アリスの送った \(|0\rangle\) または \(|1\rangle\)
-  を正しく読み出すことができます。
+  ここで出てくる \(gcd\) とは最大公約数 (greatest common divisor)
+  の略で、古典コンピュータでも高速に計算できる処理です。 たとえば \(N = 15\)
+  の場合で具体的に計算してみると、\(a = 2\), 周期 \(r = 4\) だったので、
 </p>
 
+<ul>
+  <li>\(gcd(N, a^{r/2} + 1) = gcd(15, 2^{4/2} + 1) = gcd(15, 5) = 5\)</li>
+  <li>\(gcd(N, a^{r/2} - 1) = gcd(15, a^{4/2} - 1) = gcd(15, 3) = 3\)</li>
+</ul>
+
+<p>となり、たしかに \(15 = 5 \times 3\) が求まりました!</p>
+
+<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
+  <strong>注意点:</strong> 周期 \(r\) が偶数の場合のみ gcd が計算できることに注意してください。 N=15
+  の場合、\(a\) を 2 とすると偶数の周期 \(r = 4\) が求まります。 選ぶ \(a\) の値によっては \(r\)
+  が偶数になりません。 また \(r\) が偶数であっても、gcd の結果が \(N\)
+  の因数にならない場合があります (因数かどうかは、積が \(N\)
+  になるかどうかを調べるだけで簡単にチェックできます)。
+  このため実際のショアのアルゴリズムでは、\(r\) が偶数になり、かつ正しい因数が求まるまで、\(a\)
+  をランダムに選び計算を繰り返します。
+</div>
+
+<h2>古典コンピュータでショアのアルゴリズムを実行すると?</h2>
+
 <p>
-  最後に、イブによる盗聴がないことを確認するために答あわせをします。 アリスとボブは得られた 2,000
-  文字のうち最初の半分 1,000
-  文字をインターネット経由で交換し、完全に一致していることをお互いにチェックします。
-  もし一致していれば、アリスとボブは完全に一致する 2,000 文字を共有していることが保証されます。
-  そのうちインターネットに流していない残り 1,000 文字は、二人以外にはまだ見られていません。
-  そこで、これを秘密の暗号鍵として使うことができます。
+  もしショアのアルゴリズムを古典コンピュータで実行すると、計算量はどうなるでしょうか。
+  ショアのアルゴリズムの核心は、f(x) の反復周期 r を求める部分でした。
+  古典コンピュータで周期を求めるには、f(x) の同じ値 (1, 2, 4, 8 など)
+  が出てくる間隔を求めることで周期が求まります。 これは、f(x) の 1 つの周期には同じ値が 1
+  度しか出てこないことが数学的に分かっているためです。 これを使えばたとえば、x を 1
+  つずつ増やしながら f(x) がふたたび 1 となる点の x を求めることで r も求まります。
 </p>
 
-<h2>イブの盗聴を検出する</h2>
+<figure>
+  <img src="./images/shor_mod15_r.png" class="h-auto w-full" />
+</figure>
 
 <p>
-  もしイブがアリスとボブの中間で量子ビットを盗聴していたら、結果はどう変わるでしょうか?
-  アリスの送った量子ビットをイブが <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
-  で読み出そうとすると、アリスの送った量子ビットは \(|0\rangle\) または \(|1\rangle\)
-  になってしまいます。 つまり、量子ビットの状態を壊さずに通信を覗き見ることはできません。また、
-  クローン禁止定理<label for="margin-note-no-cloning-theorem" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-no-cloning-theorem" class="margin-note__toggle hidden"><span class="margin-note"><a href="./no_cloning_theorem.html"
-    >CLONE 命令!?</a
-  >を参照</span>により、イブはアリスの送った量子ビットをそっくりそのまま複製しておいて後で解析するといったことも不可能です。
-</p>
-
-<p>
-  イブが唯一できることは、アリスの送った量子ビットを 50% の確率で当てることです。
-  イブはアリスの量子ビットを横取りし <measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate> で測定することで、\(|0\rangle\)
-  または \(|1\rangle\) を得ます。 ただしアリスは <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate>
-  をランダムに適用しているので、アリスが \(|0\rangle\) と \(|1\rangle\) のどちらを送ったかは 50%
-  の確率でしか当たりません。
-  また盗聴がバレないようにするために、適当に作りあげたニセ量子ビットをアリスのふりをしてボブへと送る必要があります。
-</p>
-
-<p>
-  このように間にイブがはさまることで、ボブが受け取る量子ビットの測定結果に影響が出ます。
-  これは、アリスとボブが最終チェックで 1,000 文字の値を突き合わせる時に発覚します。
-  イブがでたらめに送った量子ビットのせいで、最後の答えあわせの際に 1,000 文字の約半分 500
-  文字が一致しなくなってしまうのです。
-  こうなるとアリスとボブは別の通信方法を採るしかありませんが、イブによる暗号鍵ハッキングは未然に防げることになります。
+  問題は、N のビット数が増えるにつれて反復周期 r が指数関数的に増えることです。
+  このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。
 </p>
 
 <h2>まとめ</h2>
 
 <p>
-  BB84 は量子乱数の完全なランダム性や、<h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> がそれ自身の逆演算であるという性質、<measurement-gate class="qpu-operation-xs relative top-0.5 inline-block"></measurement-gate>
-  による量子ビット状態の破壊やクローン禁止定理から来る制約を組合わせた、巧妙な量子暗号通信プロトコルです。
-  数種類の基本的な QPU
-  命令だけで量子暗号を実現できるので、汎用の量子コンピュータよりも早く商業化できることが期待されています。
+  ショアの因数分解アルゴリズムは、関数 \(f(x) = a^x mod(N)\)
+  の反復周期を求めるという別問題を解くことで因数を求めます。
+  この周期を求める計算は、古典コンピュータでは指数時間が必要なため、量子コンピュータを使います。
+  求めた周期を使って古典コンピュータで gcd を計算することで、\(N\) の因数が求まります。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./quantum_key_distribution.html"
+      href="./qpe_output.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1845,13 +1554,13 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-量子鍵配送</a
+量子位相推定の出力</a
     >
      
     <a
       class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./bb84_circuit.html"
-      >BB84 回路<svg class="ml-3 h-4 w-auto overflow-visible
+      href="shor_fx.html"
+      >\(a^xmod(N)\) の計算<svg class="ml-3 h-4 w-auto overflow-visible
       text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 </a
     >

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-full">
   <head>
-    <title>別問題に帰着する</title>
+    <title>\(a^x\,mod(N)\) の計算</title>
 
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -674,6 +674,41 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ショアの因数分解
+  </div>
+
+   
+  <a
+    href="./shor_hsp.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">別問題に帰着する</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./shor_fx.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">\(a^xmod(N)\) の計算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./shor_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ショアの因数分解回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1276,6 +1311,41 @@
   </a>
    
   <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
+    ショアの因数分解
+  </div>
+
+   
+  <a
+    href="./shor_hsp.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">別問題に帰着する</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./shor_fx.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-900 bg-blue-100 "
+  >
+    <span class="flex-1">\(a^xmod(N)\) の計算</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <a
+    href="./shor_circuit.html"
+    class="flex group items-center pl-4 pr-2 py-2 text-sm font-medium rounded-md  text-gray-500 hover:text-gray-900 hover:bg-blue-50 "
+  >
+    <span class="flex-1">ショアの因数分解回路</span>
+    
+      <span class="bg-green-100 group-hover:bg-green-200 text-green-800 ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full"> new </span>
+    
+  </a>
+   
+  <div class="px-2 py-2 text-sm font-bold uppercase tracking-wide text-blue-600">
     ふろく
   </div>
 
@@ -1341,133 +1411,199 @@
               </p>
               <div>
                 <h1 class="mb-0 inline-block text-3xl font-extrabold tracking-tight text-zinc-900">
-                  別問題に帰着する
+                  \(a^x\,mod(N)\) の計算
                 </h1>
               </div>
-              <p class="mt-1 mb-0 text-lg text-zinc-500">因数分解を反復周期 (位数) 発見問題として解く</p>
+              <p class="mt-1 mb-0 text-lg text-zinc-500">べき乗余を計算する量子回路</p>
             </div>
             <div class="content-with-margin"><p>
-  ショアの因数分解アルゴリズムは、量子コンピュータが得意とする計算のうち最も有名なものの 1 つです。
-  <a href="./">はじめに</a
-  >で述べたように、因数分解が高速にできると、公開鍵暗号を現実的な時間のうちに解くことができます。
-  公開鍵暗号はインターネット通信やビットコイン技術等の拠り所であるため、これが解けてしまうというインパクトは相当なものです。
+  ショアの因数分解回路の具体的な実装に移る前に、仕組みの概要を押さえておきます。
+  前回に説明したように、ショアのアルゴリズムの量子部分は、大きく分けて次の 2 ステップからなります。
 </p>
 
-<p>
-  ショアの因数分解アルゴリズムはどれほど速いのでしょうか。
-  古典の因数分解アルゴリズムである「一般数体ふるい法」の実行時間は、因数分解したい数が大きくなるにつれて指数関数的に増えます。
-  一方でショアのアルゴリズムは、多項式時間に留まります。 分かりやすく具体的な値で言うと、1024
-  ビットの整数を因数分解するのに必要な計算量は、古典コンピュータ (一般数体ふるい法) で
-  \(O(10^{278})\) です。 これに対して、ショアのアルゴリズムは \(O(10^{61})\)
-  となり、計算量を大幅に減らせます。
-</p>
-
-<h2>因数分解を別問題として解く</h2>
-
-<p>
-  因数分解のような整数問題の多くは、より解きやすい別問題に帰着させて解くことができます。
-  ショアのアルゴリズムでは、因数分解を次の別問題に帰着させます。
-</p>
-
-<div class="border-l-4 border-blue-400 bg-blue-50 px-4 py-1 md:mr-auto md:w-7/12">
-  <p>
-    <strong>反復周期 (位数とも呼ぶ) の発見問題</strong>
-  </p>
-
-  <p>
-    \(N\) を因数分解したい整数とする。 このとき、ある整数 \(a\) (\(a \lt N\), かつ \(a\) と \(N\)
-    は共通の因数を持たない) について、整数 \(x\) を変数とする次の関数を考える。
-  </p>
-
-  <p class="flex justify-center">
-    \(f(x) = a^x mod(N) \hspace{16pt} (X mod(Y) は X を Y で割った余りを表す)\)
-  </p>
-
-  <p>これは周期関数となり、その反復周期 \(r\) から \(N\) の因数を求められる。</p>
-</div>
-
-<p>
-  分かりやすくするために、\(a\) や \(N\) に具体的な値を入れて関数 \(f(x)\)
-  がどう動くか見ていきましょう。 因数分解したい数 \(N\) を 15 とします。 \(a\) は \(N\) より小さく
-  \(N\) と共通の因数を持たなければ何でも良いので、ここでは 2 とします。すると、\(f(x)\)
-  は次のように書き直せます。
-</p>
-
-<p class="flex justify-center">\(f(x) = 2^x mod(15)\)</p>
-
-<figure>
-  <img src="./images/shore_mod15.png" class="h-auto w-full" />
-</figure>
-
-<p>
-  グラフから一目瞭然のとおり、この関数は周期関数になっており、反復周期 \(r\) は 4 です。x が 4
-  増えるごとに、まったく同じ形の波が現れるからです。
-</p>
-
-<p>反復周期 \(r = 4\) が求まれば、\(N\) の因数はそれぞれ次の単純な計算で求まります。</p>
-
-<ul>
-  <li>\(gcd(N, a^{r/2} + 1)\)</li>
-  <li>\(gcd(N, a^{r/2} - 1)\)</li>
+<ul class="list-decimal">
+  <li>\(f(x) = a^x\,mod(N)\) を計算する</li>
+  <li>\(f(x)\) の周期 \(r\) を求める</li>
 </ul>
 
 <p>
-  ここで出てくる \(gcd\) とは最大公約数 (greatest common divisor)
-  の略で、古典コンピュータでも高速に計算できる処理です。 たとえば \(N = 15\)
-  の場合で具体的に計算してみると、\(a = 2\), 周期 \(r = 4\) だったので、
+  今回はこのうち、最初の \(f(x) = a^x\,mod(N)\) を重ね合わせで計算する部分を見ていきます。
 </p>
 
-<ul>
-  <li>\(gcd(N, a^{r/2} + 1) = gcd(15, 2^{4/2} + 1) = gcd(15, 5) = 5\)</li>
-  <li>\(gcd(N, a^{r/2} - 1) = gcd(15, a^{4/2} - 1) = gcd(15, 3) = 3\)</li>
-</ul>
-
-<p>となり、たしかに \(15 = 5 \times 3\) が求まりました!</p>
-
-<div class="my-5 border-l-4 border-blue-400 bg-blue-50 p-4 md:mr-auto md:w-7/12">
-  <strong>注意点:</strong> 周期 \(r\) が偶数の場合のみ gcd が計算できることに注意してください。 N=15
-  の場合、\(a\) を 2 とすると偶数の周期 \(r = 4\) が求まります。 選ぶ \(a\) の値によっては \(r\)
-  が偶数になりません。 また \(r\) が偶数であっても、gcd の結果が \(N\)
-  の因数にならない場合があります (因数かどうかは、積が \(N\)
-  になるかどうかを調べるだけで簡単にチェックできます)。
-  このため実際のショアのアルゴリズムでは、\(r\) が偶数になり、かつ正しい因数が求まるまで、\(a\)
-  をランダムに選び計算を繰り返します。
-</div>
-
-<h2>古典コンピュータでショアのアルゴリズムを実行すると?</h2>
+<h2>\(f(x) = a^x\,mod(N)\) を計算する</h2>
 
 <p>
-  もしショアのアルゴリズムを古典コンピュータで実行すると、計算量はどうなるでしょうか。
-  ショアのアルゴリズムの核心は、f(x) の反復周期 r を求める部分でした。
-  古典コンピュータで周期を求めるには、f(x) の同じ値 (1, 2, 4, 8 など)
-  が出てくる間隔を求めることで周期が求まります。 これは、f(x) の 1 つの周期には同じ値が 1
-  度しか出てこないことが数学的に分かっているためです。 これを使えばたとえば、x を 1
-  つずつ増やしながら f(x) がふたたび 1 となる点の x を求めることで r も求まります。
+  \(f(x) = a^x\,mod(N)\) を計算するために、まずは変数 \(x\) を回路上に準備します。
+  たとえば \(x\) が 0 から 15 までの値を取るなら、\(x\) の値は 4 ビットで表せます。
+  \(|0\rangle\) で初期化した 4 つの量子ビットに <h-gate class="qpu-operation-xs relative top-0.5 inline-block"></h-gate> を適用することで、0, 1, ..., 15 を重ね合わせた \(x\) を作ることができます。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{0..15の重ね合わせ"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
+  data-targets="quantum-simulator.runCircuitButtons"
+></run-circuit-button>
+
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  次にこの重ね合わせた \(x\) の上で \(f(x) = a^x\, mod(N)\) を計算し、結果を別の量子ビットに書き込んでいきます。
+  \(x\) を入れた 4 量子ビットの下に、計算結果を入れるための量子ビットを 4 つ確保しておくこととします。
+  \(x\) が 0 の時 \(f(0) = 1\) なので、この量子ビットは \(|1\rangle\) で初期化しておきます。
+</p>
+
+<div class="relative my-5 mb-10 rounded-md bg-neutral-50">
+  <div class="overflow-scroll p-8">
+    <quantum-simulator class="flex flex-col" data-service-worker="/serviceworker.js">
+      <circuit-editor>
+        <div
+          class="absolute top-px right-px z-40 rounded-bl-2xl rounded-tr-md bg-white drop-shadow-xl"
+        >
+          <inspector-button
+            data-target="circuit-editor.inspectorButton"
+            class="inline-block h-10 w-10 p-1"
+          >
+            <div
+              class="flex h-full w-full items-center justify-center rounded-xl hover:bg-neutral-200"
+            >
+              <svg class="h-4 w-4 text-neutral-700" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3C4.67157 3 4 3.67157 4 4.5C4 5.32843 4.67157 6 5.5 6C6.32843 6 7 5.32843 7 4.5C7 3.67157 6.32843 3 5.5 3ZM3 5C3.01671 5 3.03323 4.99918 3.04952 4.99758C3.28022 6.1399 4.28967 7 5.5 7C6.71033 7 7.71978 6.1399 7.95048 4.99758C7.96677 4.99918 7.98329 5 8 5H13.5C13.7761 5 14 4.77614 14 4.5C14 4.22386 13.7761 4 13.5 4H8C7.98329 4 7.96677 4.00082 7.95048 4.00242C7.71978 2.86009 6.71033 2 5.5 2C4.28967 2 3.28022 2.86009 3.04952 4.00242C3.03323 4.00082 3.01671 4 3 4H1.5C1.22386 4 1 4.22386 1 4.5C1 4.77614 1.22386 5 1.5 5H3ZM11.9505 10.9976C11.7198 12.1399 10.7103 13 9.5 13C8.28967 13 7.28022 12.1399 7.04952 10.9976C7.03323 10.9992 7.01671 11 7 11H1.5C1.22386 11 1 10.7761 1 10.5C1 10.2239 1.22386 10 1.5 10H7C7.01671 10 7.03323 10.0008 7.04952 10.0024C7.28022 8.8601 8.28967 8 9.5 8C10.7103 8 11.7198 8.8601 11.9505 10.0024C11.9668 10.0008 11.9833 10 12 10H13.5C13.7761 10 14 10.2239 14 10.5C14 10.7761 13.7761 11 13.5 11H12C11.9833 11 11.9668 10.9992 11.9505 10.9976ZM8 10.5C8 9.67157 8.67157 9 9.5 9C10.3284 9 11 9.67157 11 10.5C11 11.3284 10.3284 12 9.5 12C8.67157 12 8 11.3284 8 10.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+
+            </div>
+          </inspector-button>
+        </div>
+
+        <quantum-circuit
+          class="mt-12 mb-40"
+          data-target="quantum-simulator.circuit circuit-editor.circuit"
+          data-min-wire-count="1"
+          data-max-wire-count="1"
+          data-min-step-count="8"
+          data-json='{"cols":[["{x"],["|0>","|0>","|0>","|0>"],["H","H","H","H"],["}"],[1],["{a^x mod(N)"],[1,1,1,1,"|1>","|0>","|0>","|0>"],["}"],[1]]}'
+        >
+        </quantum-circuit>
+
+        <circle-notation
+          id="circle-notation"
+          data-target="quantum-simulator.circleNotation"
+          data-qubit-circle-popup-template-id="qubit-circle-popup"
+          class="border-swan absolute left-0 bottom-0 z-40 ml-6 mb-8 flex w-min flex-row justify-center rounded-xl border-2 border-b-4 bg-white"
+          data-padding-X="16"
+          data-padding-Y="20"
+        >
+        </circle-notation>
+      </circuit-editor>
+
+      <run-circuit-button
+  class="absolute bottom-0 right-0 z-40 mr-6 mb-8 block h-16 w-16 rounded-full bg-purple-500 text-white drop-shadow-md"
+  data-targets="quantum-simulator.runCircuitButtons"
+></run-circuit-button>
+
+    </quantum-simulator>
+  </div>
+</div>
+
+<p>
+  ここで、実装がブラックボックスなゲート U というものを考えます。
+  この U を計算結果用の量子ビットに適用すると、現在の値を \(a\) 倍し、\(mod(N)\) した値を書き込んでくれるものとします。
+  目的は \(a^x\, mod(N)\) を計算することですから、U を \(x\) 回置けば計算結果用の量子ビットに \(a \times a \times \dots \times a\,mod(N) = a^x\, mod(N)\) の値が残ります。
 </p>
 
 <figure>
-  <img src="./images/shore_mod15_r.png" class="h-auto w-full" />
+  <img src="./images/shor_xtimes_u.png" class="h-auto w-full" />
 </figure>
 
 <p>
-  問題は、N のビット数が増えるにつれて反復周期 r が指数関数的に増えることです。
-  このため、古典コンピュータではショアのアルゴリズムを使ってもやはり指数時間かかってしまいます。
+  U を何回置くかという \(x\) の値は上の 4 量子ビットにエンコードされているので、これを使うことにしましょう。
+  \(x\) の値は二進数で量子ビットに格納されており、最下位ビットが \(2^0 = 1\)、次が \(2^1 = 2\)、... となっています。
+  このことから、制御付きの U を次のように置けば U を \(x\) 回適用したことになります。
+</p>
+
+<figure>
+  <img src="./images/shor_us.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  \(x\) の値は 0 〜 15 の重ね合わせであったため、計算結果用の 4 量子ビットにも \(a^x\, mod(N)\) の値の重ね合わせが書き込まれます。
+</p>
+
+<p>
+  この回路の形を見て、何か思い出した人はいるでしょうか？
+  そう、<a href="./quantum_phase_estimation_circuit.html">量子位相推定回路</a>の前半とそっくりです。
+  実際にショアの因数分解回路の後半では、\(f(x)\) の周期 \(r\) を求めるために逆 QFT を実行します。
+  こうなると量子位相推定回路と完全に見ためは一緒で、数学的にも同等です。
+</p>
+
+<figure>
+  <img src="./images/shor_us_and_inv_qft.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  なぜ周期 \(r\) を求める問題が最終的に固有位相の推定問題になるかは、少し難しい数学が必要なので割愛します<label for="margin-note-qiskit_shor" class="margin-note__toggle margin-note--numbered"></label><input type="checkbox" id="margin-note-qiskit_shor" class="margin-note__toggle hidden"><span class="margin-note">興味のある読者は、Qiskit チュートリアル 「ショアのアルゴリズム」を参照してください。<a href="https://qiskit.org/textbook/ja/ch-algorithms/shor.html">https://qiskit.org/textbook/ja/ch-algorithms/shor.html</a></span>。
+  逆 QFT のパートについては次の回に説明しますので、動作の理解には問題ありません。
 </p>
 
 <h2>まとめ</h2>
 
 <p>
-  ショアの因数分解アルゴリズムは、関数 \(f(x) = a^x mod(N)\)
-  の反復周期を求めるという別問題を解くことで因数を求めます。
-  この周期を求める計算は、古典コンピュータでは指数時間が必要なため、量子コンピュータを使います。
-  求めた周期を使って古典コンピュータで gcd を計算することで、\(N\) の因数が求まります。
+  \(a\,mod(N)\) を計算できるゲート U があったときに \(a^x\, mod(N)\) を計算する回路を見ました。
+  この回路を実行すると、量子ビット上に次のような周期関数の値が展開されます。
+</p>
+
+<figure>
+  <img src="./images/shor_mod15.png" class="h-auto w-full" />
+</figure>
+
+<p>
+  ここから周期 \(r\) を取り出すには、パターンを取り出すツールである逆 QFT を使います。
 </p>
 <footer class="mt-12 text-sm leading-6">
   <div class="mb-10 flex items-center font-semibold text-slate-700 dark:text-slate-200">
     
     <a
       class="group flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="./qpe_output.html"
+      href="./shor_hsp.html"
       ><svg
   class="mr-3 h-4 w-auto overflow-visible text-slate-400
       group-hover:text-slate-600 dark:group-hover:text-slate-300"
@@ -1484,13 +1620,13 @@
     clip-rule="evenodd"
   ></path>
 </svg>
-量子位相推定の出力</a
+別問題に帰着する</a
     >
      
     <a
       class="group ml-auto flex items-center no-underline hover:text-slate-900 dark:hover:text-white"
-      href="shore_fx.html"
-      >\(a^xmod(N)\) の計算<svg class="ml-3 h-4 w-auto overflow-visible
+      href="./shor_circuit.html"
+      >ショアの因数分解回路<svg class="ml-3 h-4 w-auto overflow-visible
       text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
 </a
     >
